@@ -1,0 +1,8 @@
+
+
+function checkForUpdates(){
+	
+}
+function update(){
+	
+}

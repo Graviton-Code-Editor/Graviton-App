@@ -1,0 +1,309 @@
+:root{
+	--primaryColor: #202020;
+    --secondaryColor: #171717;
+    --accentColor: #FDD835;
+    --editorBackgroundColor:black;
+    --white-black: white;
+    --CodeFontSize: 13px;
+    --buttonTouch: #757474;
+    --dropmenu-background:#3B3B3B;
+    --dropmenu-roundness: 3px;
+    --buttons-roundness:3px;
+}
+*{
+    font-family: "dejavu";
+    outline: 0;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+@font-face {
+    font-family: dejavu;
+    src: url(DejaVuSansCondensed.ttf);
+}
+#tabs_bar{
+    font-size: 15px;
+}
+#code-space {
+font-size: var(--CodeFontSize);
+font-family: ocp;
+}
+
+body , head{
+	margin: 0;
+    padding: 0;
+    background: var(--editorBackgroundColor);
+}
+
+::-webkit-scrollbar {
+    transition: 0.1s;
+    width: 8px;
+    background: transparent;
+
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    transition: 0.15s;
+    width:; 3px !important;
+    height: 3px !important;
+    background: gray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    transition: 0.15s;
+    background: lightgray;
+}
+::-webkit-scrollbar-corner{
+    visibility: hidden;
+    opacity: 0;
+    background: transparent;
+}
+
+#left-bar{
+
+    position: fixed;
+    left:0;
+    width:180px;
+    height: 95vh;
+    padding-bottom: 5vh;
+    overflow: scroll;
+    color:var(--white-black);
+    background: var(--primaryColor);
+
+}
+#tabs_bar{
+    height:height;
+    width: auto;
+    background:var(--primaryColor);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left:0;
+    margin: 0px;
+    padding: 0px;
+    color:var(--white-black);
+}
+#body-space{
+    font-size: var(--CodeFontSize);
+    left:0px;
+    right:0px;
+    top:0px;
+    margin: 0px 0px 0px 180px;
+	flex: 2 0 0;
+    height: 90%;
+    overflow: hidden;
+    color:var(--white-black);
+}
+
+#bottom-bar{
+    visibility: visible;
+    margin: 0px 0px 0px 180px;
+    color: var(--white-black);
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    padding:0;
+    height: 30px;
+    overflow: scroll;
+    background: var(--editorBackgroundColor);
+    z-index: 80;
+    width: 100%;
+    white-space: nowrap;
+}
+
+#bottom-bar > p{
+    vertical-align: middle;
+    position: fixed;
+    z-index: 85;
+    bottom: 0;
+    padding-left:20px;
+    margin:0;
+    float: right;
+    line-height: 25px;
+    color:var(--white-black);
+    font-size: 10px;
+    overflow: scroll;
+    white-space: nowrap;
+}
+.flex{
+
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+}
+.flex > div{
+
+    -webkit-flex: 1;  /* Safari 6.1+ */
+    -ms-flex: 1;  /* IE 10 */    
+    flex: 1;
+}
+
+
+.tabs{
+    transition: 0.10s;
+    color:var(--white-black);
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 0px;
+    height: auto;
+    display: inline-block;
+    background: var(--secondaryColor);
+    min-width: 200px;
+    max-width: 250px;
+
+
+}
+.tabs:hover{
+    transition: 0.10s;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px 0px;
+    height: auto;
+    background: var(--buttonTouch);
+}
+
+.close_tab{
+    display: inline-block;
+    top: 30%;
+    float: right;
+    margin-right: 20px;
+    vertical-align: center;
+    position: relative;
+    height: 15px;
+    width:15px;
+    border: none;
+    background: url(icons/close.svg) no-repeat center;
+
+}
+
+.close_tab:hover{
+    height: 15px;
+    width:15px;
+    border: none;
+    cursor: pointer;
+}
+.tab_text{
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+float: left;
+padding-left: 15px;
+width: 150px;
+white-space: nowrap;
+height: 15px;
+line-height: 20px;
+overflow: hidden;
+
+
+}
+
+.folder_list1{
+    color: var(--white-black);
+    border-radius: 70px;
+    padding-left:3px;
+    transition: 0.10s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background: transparent;
+    line-height: 0px;
+    height: 20px;
+    cursor: pointer;
+    background: transparent;
+}
+.folder_list1:hover{
+    border-radius: 4px;
+    padding-left:3px;
+    transition: 0.15s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background: transparent;
+    line-height: 0px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--buttonTouch);
+}
+
+.folder_list2{
+    color:var(--white-black);
+    border-radius: 70px;
+    padding-left:3px;
+    transition: 0.10s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background: transparent;
+    line-height: 25px;
+    height: 20px;
+    cursor: pointer;
+}
+.folder_list2:hover{
+    border-radius: 4px;
+    padding-left:3px;
+    transition: 0.15s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background: transparent;
+    line-height: 25px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--buttonTouch);
+}
+
+#control-bar {
+    color: var(--white-black);
+ -webkit-app-region: drag;
+ height: 30px; 
+ background-color: var(--primaryColor);
+ padding: none;
+ margin: 0px; 
+}
+
+.title {
+color: var(--white-black);
+ position: fixed;
+ top: 8px;
+ left: 8px; 
+ font-size: 12px;
+}
+
+#controls  {
+ -webkit-app-region: no-drag;
+ position: fixed;
+ top: 0px;
+ right: 6px;
+
+}
+
+
+.controls > button {
+    padding: 7px 13px;
+    height: 7px;
+    width: 10px;
+    margin: 0 auto;
+    border: none;
+}
+.controls > button:hover {
+    padding: 7px 13px;
+    height: 7px;
+    width: 10px;
+    margin: 0 auto;
+    border: none;
+    cursor: pointer;
+}
+

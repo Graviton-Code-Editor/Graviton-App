@@ -1,0 +1,18 @@
+{
+  "Name": "Light UI",
+  "Description":"An alternative white UI.",
+  "Author": "Marc Espín",
+  "GitRepositoryURL": "",
+  "Version": "0.1.0",
+  "Highlight" : "LightUI",
+  "Colors": {
+    "primaryColor": "#ECECEC",
+    "secondaryColor": "white",
+    "accentColor":"#fd0054",
+    "editorBackgroundColor": "white",
+    "white-black": "black",
+    "buttonTouch": "#D4D4D4",
+    "dropmenu-background": "#ECECEC",
+    "dropmenu-roundness": "5px"
+  }
+}

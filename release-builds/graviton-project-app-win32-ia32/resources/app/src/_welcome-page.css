@@ -1,0 +1,88 @@
+.body_window2{
+    transition: 0.10s;
+    color:var(--white-black);
+    font-size: 17px;
+    padding:20px;
+    overflow-y: scroll;
+    border-radius: 15px;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
+    z-index: 85;
+    width: 80%;
+    height: 80%;
+    margin: 0;
+    position: fixed;
+    text-align: left;
+    background: var(--secondaryColor);
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    opacity: 1;
+}
+
+#title_welcome{
+
+    left: 40%;
+    transform: translate(0%, -45%);
+	font-size: 35px;
+    position: fixed;
+	line-height: 0;
+
+}
+.title2{
+    padding-left: 7px;
+	font-size: 20px;
+}
+#recent_projects{
+overflow: auto;
+width: 100%;
+height: auto;
+overflow: auto;
+ white-space: nowrap;
+ margin-top: 55px;
+}
+#notes{
+    overflow: auto;
+width: 100%;
+height: auto;
+overflow: auto;
+ white-space: nowrap;
+ margin-top: 55px;
+}
+.project_div{
+    transition: 0.2s;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px;
+    min-width: 80px;
+    width: auto;
+    max-width: auto;
+    height: auto;
+    overflow: auto;
+    background: var(--primaryColor);
+    color:var(--white-black);
+}
+.project_div:hover{
+    transition: 0.2s;
+    background: var(--buttonTouch);
+    cursor: pointer;
+}
+.welcomeButtons{
+    position: fixed;
+    bottom: 15px;
+    right:15px;
+}
+.Button1{
+    transition: 0.1s;
+    border-radius: var(--buttons-roundness);
+    width: auto;
+    border: none;  
+    padding:10px 20px;
+    background: var(--primaryColor);
+    color: var(--white-black);
+     box-sizing: border-box;
+}
+.Button1:hover{
+    transition: 0.1s;
+    cursor: pointer;
+    background: var(--buttonTouch);
+}

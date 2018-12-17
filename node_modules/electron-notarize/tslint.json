@@ -1,0 +1,9 @@
+{
+  "extends": "tslint-config-airbnb",
+  "rules": {
+    "max-line-length": false,
+    "align": false,
+    "import-name": false,
+    "strict-boolean-expressions": false
+  }
+}

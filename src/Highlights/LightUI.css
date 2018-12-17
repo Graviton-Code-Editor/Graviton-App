@@ -1,0 +1,37 @@
+/*
+
+Thanks to Michael Kaminsky (http://github.com/mkaminsky11)
+
+*/
+
+
+.cm-s-lightui.CodeMirror, .cm-s-lightui .CodeMirror-gutters {
+  background-color: var(--editorBackgroundColor); !important;
+  color: #aaaaaa !important;
+  border: none;
+}
+.cm-s-lightui .CodeMirror-gutters { color: rgb(49,52,77);  }
+.cm-s-lightui .CodeMirror-cursor { border-left: solid thin #aaaaaa; }
+.cm-s-lightui .CodeMirror-linenumber { color: gray; }
+.cm-s-lightui .CodeMirror-selected { background: rgba(0, 0, 0, 0.10); border-radius: 5px; }
+.cm-s-lightui .CodeMirror-line::selection, .cm-s-lightui .CodeMirror-line > span::selection, .cm-s-lightui .CodeMirror-line > span > span::selection { background: rgba(0, 0, 0, 0.30); }
+.cm-s-lightui .CodeMirror-line::-moz-selection, .cm-s-lightui .CodeMirror-line > span::-moz-selection, .cm-s-lightui .CodeMirror-line > span > span::-moz-selection { background: rgba(0, 0, 0, 0.30); }
+.cm-s-lightui span.cm-comment { color: #7A839E; }
+.cm-s-lightui span.cm-string, .cm-s-lightui span.cm-string-2 { color: #33FF33; }
+.cm-s-lightui span.cm-number { color: #bd93f9; }
+.cm-s-lightui span.cm-variable { color: #50ACFD; }
+.cm-s-lightui span.cm-variable-2 { color: black; }
+.cm-s-lightui span.cm-def { color: #50ACFD; font-style: italic; }
+.cm-s-lightui span.cm-operator { color: #FF5733; }
+.cm-s-lightui span.cm-keyword { color: #FF5733; }
+.cm-s-lightui span.cm-atom { color: #bd93f9; }
+.cm-s-lightui span.cm-meta { color: #aaaaaa; }
+.cm-s-lightui span.cm-tag { color: #ff79c6; }
+.cm-s-lightui span.cm-attribute { color: #51C2FA; }
+.cm-s-lightui span.cm-qualifier { color: #50fa7b; }
+.cm-s-lightui span.cm-property { color: #66d9ef; }
+.cm-s-lightui span.cm-builtin { color: #50fa7b; }
+.cm-s-lightui span.cm-variable-3, .cm-s-lightui span.cm-type { color: #ffb86c; }
+
+.cm-s-lightui .CodeMirror-activeline-background { background: rgba(0,0,0,0.1); }
+.cm-s-lightui .CodeMirror-matchingbracket { text-decoration: underline; color: black !important; }

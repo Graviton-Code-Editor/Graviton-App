@@ -1,0 +1,135 @@
+
+<html>
+ 
+<div id="control-bar" style="-webkit-user-select: none; ">
+			<img  class="title" style="pointer-events: none; top:0; left:0; padding:3px 7px; margin:0;" height="24px" src="src/icons/logo.svg">
+      <div class="title" style="left:40px;">Graviton Project</div>
+      <div id="controls" class="controls">
+           <button id="minimize" style="background: url(src/icons/minimize.svg) no-repeat center;"></button>
+           <button id="maximize" style="background: url(src/icons/maximize.svg) no-repeat center;"></button>
+           <button  id="close" style="background: url(src/icons/close.svg) no-repeat center;"></button>
+      </div>
+      <ul style="padding-left:130px; width:auto; display:inline-block;clear: both; -webkit-app-region: no-drag;">
+			<div class="dropdown">
+			<button onclick="dropmenu('menu')"class="dropbtn">File</button>
+			  <div id="menu" class="dropdown-content hide">
+			    <a onclick="openFolder()">Open Folder</a>
+			    <a onclick="openFile()">Open</a>
+			    <a onclick="saveFileAs()">Save As</a>
+			    <a onclick="saveFile()">Save</a>
+			  </div>
+			</div>
+
+			<div class="dropdown">
+			<button onclick="dropmenu('tools')"class="dropbtn">Tools</button>
+			  <div id="tools" class="dropdown-content hide">
+			    <a onclick="openSettings()">Settings</a>
+			    <a onclick="zenMode(true)">Zen mode</a>
+			    <a onclick="">Extensions</a>
+			  </div>
+			</div>
+
+			<div class="dropdown">
+			<button onclick="dropmenu('help')"class="dropbtn">Help</button>
+			  <div id="help" class="dropdown-content hide">
+			    <a onclick="createDialog('update','Update avaiable!','Wanna update?','No','Yes','closeDialog(this)','update()')">Troubles</a>
+			    <a onclick="">Github</a>
+			    <a onclick="createDialog('about','About','Made by Marc Espin, version: 0.5.0','Update','Accept','update()','closeDialog(this)')">About</a>
+			  </div>
+			</div>
+
+						
+		</ul>
+
+ </div>
+
+<!-- Proton -->
+
+<script src="src/Javascript/scripts.js"></script>
+<script src="src/Javascript/_settings.js"></script>
+<script src="src/Javascript/_menus.js"></script>
+<script src="src/Javascript/_themes.js"></script>
+<script src="src/Javascript/_welcome-page.js"></script> 
+<script src="src/Javascript/_controlBar.js"></script>
+<script src="src/Javascript/_config.js"></script>
+<script src="src/Javascript/_updater.js"></script>
+
+<link rel="stylesheet" href="src/_styles.css">
+<link rel="stylesheet" href="src/_menus.css">
+<link rel="stylesheet" href="src/_settings.css">
+<link rel="stylesheet" href="src/_welcome-page.css">
+<link rel="stylesheet" href="src/dialogs.css">
+
+
+<!-- Codemirror -->
+
+<script src="src/lib/codemirror.js"></script>
+<script src="src/mode/css/css.js"></script>
+<script src="src/mode/xml/xml.js"></script>
+<script src="src/mode/javascript/javascript.js"></script>
+<script src="src/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="src/lib/codemirror.css">
+<link rel="stylesheet" href="src/Highlights/default.css">
+
+<body>
+
+	
+	<div class="flex">
+
+		<div id="left-bar" opened="false" style="-webkit-user-select: none;"> <!--Directories-->
+
+			<span id="openFolder" height="24px" width="24px" onclick="openFolder()" ></span>
+
+			<style>
+
+				#openFolder{
+					top: 45%;
+    			left: 50%;
+    			margin-right: -50%;
+    			transform: translate(-50%, -50%);
+					position: absolute; 
+					padding: 15px;
+					width: 70px;
+					height: 70px;
+					margin: 0 auto; 
+					background: url("src/icons/closed.svg") no-repeat center;
+					 background-size: 70px 70px;
+				}
+				#openFolder:hover{
+					cursor: pointer;
+					width: 70px;
+					height: 70px;
+					background: url("src/icons/open.svg") no-repeat center;
+					background-size: 70px 70px;
+				}
+
+			</style>
+		</div>
+
+		<div id="body-space">
+			<div id="tabs_bar" style="overflow: auto;" class="flex">
+
+			</div>
+			<div id="code-space" contenteditable="true" >
+
+			</div>
+		</div>
+		<div id="bottom-bar" style="-webkit-user-select: none; ">
+			<p id="plang"></p>
+		</div>
+
+	</div> 
+
+</body>	
+	<script>
+			var myCodeMirror = CodeMirror(document.getElementById('code-space'), {
+  value: `/*Welcome to Graviton ! :)
+  You can open some folder or file and start coding !!*/`,
+  mode:  "javascript",
+  htmlMode : false,
+  theme:'default',
+  lineNumbers: true
+});
+	</script>
+
+</html>

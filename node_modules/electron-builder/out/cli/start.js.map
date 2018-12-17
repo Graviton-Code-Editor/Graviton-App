@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../src/cli/start.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;;;AAAA;SACsB,K;;;;;;yCAAf,aAAoB;AACzB,IAAA,OAAO,CAAC,6BAAD,CAAP;AACD,G","sourcesContent":["/** @internal */\nexport async function start() {\n  require(\"electron-webpack/dev-runner\")\n}"],"sourceRoot":""}
