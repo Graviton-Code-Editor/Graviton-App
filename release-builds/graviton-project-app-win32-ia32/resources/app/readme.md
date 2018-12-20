@@ -1,1 +1,0 @@
-Free and open source code editor! It's on beta right now, no public releases.
