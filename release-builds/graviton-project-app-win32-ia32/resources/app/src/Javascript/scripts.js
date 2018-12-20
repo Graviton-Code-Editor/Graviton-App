@@ -1,4 +1,6 @@
 
+const myVersion = 171218;
+
 const fs = require('fs'); 
 const $ = require('jquery');
 const path = require('path');

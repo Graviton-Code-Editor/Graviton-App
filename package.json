@@ -1,6 +1,6 @@
 {
-  "name": "Graviton-Project",
-  "version": "0.5.0",
+  "name": "Graviton-Editor",
+  "version": "0.5.2",
   "description": "Graviton it's a free open source code editor!",
   "main": "main.js",
   "directories": {

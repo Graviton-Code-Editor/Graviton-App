@@ -47,7 +47,8 @@
 }
 
 .dropdown a:hover {
-    background-color: var(--buttonTouch);
+    color: var(--black-white);
+    background-color: var(--accentColor);
     cursor: pointer;
 }
 

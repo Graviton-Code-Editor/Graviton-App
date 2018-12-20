@@ -1,0 +1,19 @@
+{
+  "Name": "Light Accented",
+  "Description":"Light Accented theme.",
+  "Author": "Marc Espín",
+  "GitRepositoryURL": "",
+  "Version": "0.1.0",
+  "Highlight" : "LightUI",
+  "Colors": {
+    "primaryColor": "#ECECEC",
+    "secondaryColor": "white",
+    "accentColor":"#FD0054",
+    "editorBackgroundColor": "white",
+    "white-black": "black",
+    "black-white": "white",
+    "buttonTouch": "#D4D4D4",
+    "dropmenu-background": "#ECECEC",
+    "dropmenu-roundness": "5px"
+  }
+}

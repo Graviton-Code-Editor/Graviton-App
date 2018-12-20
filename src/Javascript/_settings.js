@@ -26,7 +26,7 @@ function openSettings(){
 		<input class="Input1" id="fs-input" type="number" value="`+FontSizeEditor+`">
 		</div>
 		<button class='Button1' id="saveSettings"	onclick='saveSettings()'> Save Changes </button>
-		<p >Version 0.5.0</p>
+		<p >Version 0.5.2</p>
 		<p> We will notify you when a new version is released  </p>
 		`
 

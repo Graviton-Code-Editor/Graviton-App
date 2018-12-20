@@ -45,9 +45,10 @@ fs.readFile(register, 'utf8', function (err,data) {
 	}
  });
  
- checkForUpdates(); //Call the function to check if there are updates
+ 
 
 }
 function hideWelcome(){
 	document.getElementById("welcome_window").remove();
+
 }

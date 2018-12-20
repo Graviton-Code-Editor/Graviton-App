@@ -27,7 +27,7 @@ function openSettings(){
 		</div>
 		<button class='Button1' id="saveSettings"	onclick='saveSettings()'> Save Changes </button>
 		<p >Version 0.5.0</p>
-		<button class='Button1' onclick="checkForUpdates()"> Check for updates </button>
+		<p> We will notify you when a new version is released  </p>
 		`
 
 	all.appendChild(background);

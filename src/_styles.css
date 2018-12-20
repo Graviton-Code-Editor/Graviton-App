@@ -9,6 +9,7 @@
     --dropmenu-background:#3B3B3B;
     --dropmenu-roundness: 3px;
     --buttons-roundness:3px;
+    --dropmenu-disabled: lightgray;
 }
 *{
     font-family: "dejavu";
@@ -295,15 +296,30 @@ color: var(--white-black);
     padding: 7px 13px;
     height: 7px;
     width: 10px;
-    margin: 0 auto;
+    margin: 0 5px;
     border: none;
 }
 .controls > button:hover {
     padding: 7px 13px;
     height: 7px;
     width: 10px;
-    margin: 0 auto;
+    margin: 0 5px;
     border: none;
     cursor: pointer;
+}
+.Button1{
+    transition: 0.1s;
+    border-radius: var(--buttons-roundness);
+    width: auto;
+    border: none;  
+    padding:10px 20px;
+    background: var(--primaryColor);
+    color: var(--white-black);
+    box-sizing: border-box;
+}
+.Button1:hover{
+    transition: 0.1s;
+    cursor: pointer;
+    background: var(--buttonTouch);    
 }
 

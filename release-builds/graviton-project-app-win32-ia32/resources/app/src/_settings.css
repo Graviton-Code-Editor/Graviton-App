@@ -33,7 +33,7 @@
 #theme_list{
 overflow: auto;
 width: 100%;
-height: 122px;
+height: auto;
 overflow: auto;
  white-space: nowrap;
 }

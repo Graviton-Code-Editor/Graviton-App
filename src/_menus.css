@@ -37,7 +37,7 @@
     box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
 }
 
-.dropdown-content a {
+.dropdown-content a:not(.disabled-button) {
     font-size: 13px;
     z-index: 80;
     color: var(--white-black);
@@ -46,7 +46,7 @@
     display: block;
 }
 
-.dropdown a:hover {
+.dropdown a:hover:not(.disabled-button) {
     color: var(--black-white);
     background-color: var(--accentColor);
     cursor: pointer;
@@ -68,4 +68,11 @@
     z-index: 50;
     visibility: hidden;
 }
-
+.disabled-button{
+     font-size: 13px;
+    z-index: 80;
+    color: var(--dropmenu-disabled);
+    padding: 7px 10px;
+    text-decoration: none;
+    display: block;
+}

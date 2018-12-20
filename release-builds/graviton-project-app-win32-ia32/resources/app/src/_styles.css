@@ -13,7 +13,6 @@
 *{
     font-family: "dejavu";
     outline: 0;
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.004);
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
 }
@@ -27,6 +26,7 @@
 #code-space {
 font-size: var(--CodeFontSize);
 font-family: ocp;
+text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
 }
 
 body , head{

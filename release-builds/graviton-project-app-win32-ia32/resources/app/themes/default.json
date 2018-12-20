@@ -8,9 +8,10 @@
   "Colors": {
     "primaryColor": "#202020",
     "secondaryColor": "#171717",
-    "accentColor":"#fd0054",
+    "accentColor":"#757474",
     "editorBackgroundColor": "#191919",
     "white-black": "white",
+    "black-white": "white",
     "buttonTouch": "#757474",
     "dropmenu-background": "#3B3B3B",
     "dropmenu-roundness": "5px"

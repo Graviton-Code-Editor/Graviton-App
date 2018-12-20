@@ -71,18 +71,3 @@ overflow: auto;
     bottom: 15px;
     right:15px;
 }
-.Button1{
-    transition: 0.1s;
-    border-radius: var(--buttons-roundness);
-    width: auto;
-    border: none;  
-    padding:10px 20px;
-    background: var(--primaryColor);
-    color: var(--white-black);
-     box-sizing: border-box;
-}
-.Button1:hover{
-    transition: 0.1s;
-    cursor: pointer;
-    background: var(--buttonTouch);
-}

@@ -12,8 +12,10 @@
   "author": "Marc Espín",
   "license": "MIT",
   "dependencies": {
+    "download-file": "^0.1.5",
     "fs": "0.0.1-security",
-    "jquery": "^3.3.1"
+    "jquery": "^3.3.1",
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "electron-builder": "^20.38.2",
