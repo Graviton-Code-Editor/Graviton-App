@@ -217,6 +217,7 @@ function createTab(object){ // create tabs on the element ' tabs_bar '
     document.getElementById("tabs_bar").appendChild(tab);
     tabs.push(tab);
     tabsEqualToFiles.push(object);
+    selected = object;
     var newPath = object.getAttribute("longPath");
     filepath = newPath;
     fs.readFile(newPath, 'utf8', function (err,data) {
@@ -253,7 +254,7 @@ function deleteTab(ele){
       }else if(index=== tabs.length){
 
         document.getElementById("body-space").style.height = "80%";
-        var selected = tabs[(Number(tabs.length)-1)].getAttribute("longPath");
+        var selected = tabs[(Number(tabs.length)-1)].getAttribute("longPath"); //#001
         
       }else if(index>=0 ){
 
@@ -409,8 +410,11 @@ function closeApp() {
   saveTimeSpent();
 
 
-  var window = require('electron').remote.getCurrentWindow();
+setTimeout(function(){  //Time to let Graviton save timeSpent
+   var window = require('electron').remote.getCurrentWindow();
                window.close();
+ }, 300); 
+ 
 }
 
 function EditorMessage(){

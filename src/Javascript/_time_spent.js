@@ -84,7 +84,7 @@ function saveTimeSpent(){
 	
 	var weekOut = {"week":week};
 	weekOut = JSON.stringify(weekOut);
-
+  console.log(weekOut);
 	fs.writeFile(timeSpentDir, weekOut, (err) => {
     if (err) {
       alert("An error ocurred updating the file" + err.message);

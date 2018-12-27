@@ -10,4 +10,9 @@ electron-packager . GravitonCodeEditor --overwrite --ignore="build.txt" --platfo
 Linux
 -----
 
-electron-packager . GravitonCodeEditor --overwrite --platform=linux --arch=x64 --icon=src/iconApp/app.ico --prune=true --out=release-builds
+electron-packager . GravitonCodeEditor --overwrite --platform=linux --ignore="build.txt" --arch=x64 --icon=src/iconApp/app.ico --prune=true --out=release-builds
+
+
+-----
+
+
