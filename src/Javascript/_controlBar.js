@@ -15,8 +15,7 @@
           });
 
           document.getElementById("close").addEventListener("click", function (e) {
-               var window = require('electron').remote.getCurrentWindow();
-               window.close();
+               closeApp();
           }); 
      }; 
 

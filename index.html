@@ -1,15 +1,26 @@
-
+ <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: #2E2E2E; ">
+ 	<img src="src/icons/logo.svg" height="100px" style="pointer-events: none;z-index: 210; position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%); height: 27%; width: 17%;">
+ </div>
 <html>
- 
+
+ <script>
+ 	
+function DeleteBoot(){
+	if(document.getElementById("bootanimation") != null){
+	document.getElementById("bootanimation").remove();
+}
+
+}
+ </script>
 <div id="control-bar" style="-webkit-user-select: none; ">
-			<img  class="title" style="pointer-events: none; top:0; left:0; padding:3px 6px; margin:0;" height="21px" src="src/icons/logo.svg">
-      <div class="title" style="left:40px;">Graviton Editor</div>
+			<img  class="title" style="pointer-events: none; top:0; left:0; padding:7px 10px; margin:0;" height="16px" src="src/icons/logo.svg">
+      <div class="title" style="left:30px;">Graviton Editor</div>
       <div id="controls" class="controls">
-           <button id="minimize" style="background: url(src/icons/minimize.svg) no-repeat center;"></button>
-           <button id="maximize" style="background: url(src/icons/maximize.svg) no-repeat center;"></button>
-           <button  id="close" style="background: url(src/icons/close.svg) no-repeat center;"></button>
+           <button id="minimize" style="background: transparent;  15px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="6.67" y="11.406" width="10.66" height="1.189" transform="matrix(1,0,0,1,0,0)" fill="var(--tileBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
+           <button id="maximize" style="background: transparent;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="6.834" y="15.431" width="10.332" height="1.735" transform="matrix(-1,0,0,-1,24,32.597122)" fill="var(--titleBar-icons-color)"/><rect x="6.834" y="6.834" width="10.332" height="1.735" transform="matrix(-1,0,0,-1,24,15.402878)" fill="var(--titleBar-icons-color)"/><rect x="11.132" y="11.132" width="10.332" height="1.735" transform="matrix(0,1,-1,0,28.298561,-4.298561)" fill="var(--titleBar-icons-color)"/><rect x="2.535" y="11.132" width="10.332" height="1.735" transform="matrix(0,1,-1,0,19.701439,4.298561)" fill="var(--titleBar-icons-color)"/></svg></button>
+           <button  id="close" style="background: transparent;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
       </div>
-      <ul style="padding-left:130px; width:auto; display:inline-block;clear: both; -webkit-app-region: no-drag;">
+      <ul style="padding-left:130px; width:auto;  display:inline-block;clear: both; -webkit-app-region: no-drag;">
 			<div class="dropdown">
 			<button onclick="dropmenu('menu')"class="dropbtn">File</button>
 			  <div id="menu" class="dropdown-content hide">
@@ -24,17 +35,29 @@
 			<button onclick="dropmenu('tools')"class="dropbtn">Tools</button>
 			  <div id="tools" class="dropdown-content hide">
 			    <a onclick="openSettings()">Settings</a>
-			    <a onclick="zenMode(true)">Zen mode</a>
 			    <a onclick="" class="disabled-button">Extensions</a>
+			    <a onclick="zenMode(true)">Zen mode</a>
+			    
 			  </div>
 			</div>
 
 			<div class="dropdown">
 			<button onclick="dropmenu('help')"class="dropbtn">Help</button>
 			  <div id="help" class="dropdown-content hide">
-			    <a onclick="window.open('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">Troubles</a>
-			    <a onclick="window.open('https://github.com/Graviton-Code-Editor')" >Github</a>
-			    <a onclick="createDialog('about','About','Made by Marc Espin, version: 0.5.0','Website','Accept','','closeDialog(this)')">About</a>
+			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">Troubles</a>
+			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')" >Github</a>
+			    <a onclick="shell.openExternal('https://www.paypal.me/mkenzo8')">Donate</a>
+			    <a onclick="createDialog('about','About','Made by Marc Espin, version: 0.6.0','Website','Accept','','closeDialog(this)')">About</a>
+			    
+			  </div>
+			</div>
+
+			<div  class="dropdown"  >	
+				
+				  <svg   style="padding: 4px 12px; margin: 0 auto; font-size: 13px;border: none;  z-index: 80; top:0; isolation:isolate; position: fixed; -webkit-app-region: no-drag;" viewBox="0 0 21 21" width="21" height="21"><path class="dropbtn"  onclick="dropmenu('graphic')" d="  M 5 12.722222 L 9.333333 12.722222 L 9.333333 18.5 L 5 18.5 L 5 12.722222 Z  M 9.833333 8.388889 L 14.166667 8.388889 L 14.166667 18.5 L 9.833333 18.5 L 9.833333 8.388889 Z  M 14.666667 5.5 L 19 5.5 L 19 18.5 L 14.666667 18.5 L 14.666667 5.5 Z " fill-rule="evenodd" fill="var(--titleBar-icons-color)"/></svg>
+				  
+			<div id="graphic" class="graphic-window dropdown-content  hide" >
+			    <div id="graphic_content"></div>
 			  </div>
 			</div>
 
@@ -43,37 +66,8 @@
 
  </div>
 
-<!-- Proton -->
-
-<script src="src/Javascript/scripts.js"></script>
-<script src="src/Javascript/_settings.js"></script>
-<script src="src/Javascript/_menus.js"></script>
-<script src="src/Javascript/_themes.js"></script>
-<script src="src/Javascript/_welcome-page.js"></script> 
-<script src="src/Javascript/_controlBar.js"></script>
-<script src="src/Javascript/_config.js"></script>
-<script src="src/Javascript/_updater.js"></script>
-
-<link rel="stylesheet" href="src/_styles.css">
-<link rel="stylesheet" href="src/_menus.css">
-<link rel="stylesheet" href="src/_settings.css">
-<link rel="stylesheet" href="src/_welcome-page.css">
-<link rel="stylesheet" href="src/dialogs.css">
-
-
-<!-- Codemirror -->
-
-<script src="src/lib/codemirror.js"></script>
-<script src="src/mode/css/css.js"></script>
-<script src="src/mode/xml/xml.js"></script>
-<script src="src/mode/javascript/javascript.js"></script>
-<script src="src/mode/htmlmixed/htmlmixed.js"></script>
-<link rel="stylesheet" href="src/lib/codemirror.css">
-<link rel="stylesheet" href="src/Highlights/default.css">
-
 <body>
 
-	
 	<div class="flex">
 
 		<div id="left-bar" opened="false" style="-webkit-user-select: none;"> <!--Directories-->
@@ -106,7 +100,8 @@
 			</style>
 		</div>
 
-		<div id="body-space">
+		<div id="body-space" style="height:85%;;;;;">
+			<div id="message"></div>
 			<div id="tabs_bar" style="overflow: auto;" class="flex">
 
 			</div>
@@ -121,15 +116,35 @@
 	</div> 
 
 </body>	
-	<script>
-			var myCodeMirror = CodeMirror(document.getElementById('code-space'), {
-  value: `/*Welcome to Graviton ! :)
-  You can open some folder or file and start coding !!*/`,
-  mode:  "javascript",
-  htmlMode : false,
-  theme:'default',
-  lineNumbers: true
-});
-	</script>
+
+<!-- Codemirror -->
+
+<script src="src/lib/codemirror.js"></script>
+<script src="src/mode/css/css.js"></script>
+<script src="src/mode/xml/xml.js"></script>
+<script src="src/mode/javascript/javascript.js"></script>
+<script src="src/mode/htmlmixed/htmlmixed.js"></script>
+<link rel="stylesheet" href="src/lib/codemirror.css">
+<link rel="stylesheet" href="src/Highlights/default.css">
+
+	<!-- Graviton Editor -->
+
+<script src="src/Javascript/scripts.js"></script>
+<script src="src/Javascript/_settings.js"></script>
+<script src="src/Javascript/_menus.js"></script>
+<script src="src/Javascript/_themes.js"></script>
+<script src="src/Javascript/_welcome-page.js"></script> 
+<script src="src/Javascript/_controlBar.js"></script>
+<script src="src/Javascript/_config.js"></script>
+<script src="src/Javascript/_updater.js"></script>
+<script src="src/Javascript/_time_spent.js"></script>
+
+<link rel="stylesheet" href="src/_styles.css">
+<link rel="stylesheet" href="src/_menus.css">
+<link rel="stylesheet" href="src/_settings.css">
+<link rel="stylesheet" href="src/_welcome-page.css">
+<link rel="stylesheet" href="src/dialogs.css">
+<link rel="stylesheet" href="src/_graphic.css">
+
 
 </html>

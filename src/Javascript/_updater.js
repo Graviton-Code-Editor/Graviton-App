@@ -1,6 +1,6 @@
 
 
-
+/*
 	
 var request = require('request');
 
@@ -10,9 +10,9 @@ request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/n
   if (!error && response.statusCode == 200) {
     var json = JSON.parse(body);
     if(json["LastUpdate"] > myVersion){
-    	/*
+    	
     	createDialog('update','Update avaiable!','Wanna update?','No','Yes','closeDialog(this)','update()');
-    	*/
+    	
     }
   } else {
     console.warn(error);
@@ -22,3 +22,6 @@ request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/n
 function update(){
 
 }
+
+*/
+

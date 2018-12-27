@@ -10,6 +10,7 @@
     --dropmenu-roundness: 3px;
     --buttons-roundness:3px;
     --dropmenu-disabled: lightgray;
+    --titleBar-icons-color:white;
 }
 *{
     font-family: "dejavu";
@@ -27,7 +28,7 @@
 #code-space {
 font-size: var(--CodeFontSize);
 font-family: ocp;
-text-shadow: 1px 1px 1px rgba(0,0,0,0.05);
+text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
 
 body , head{
@@ -49,7 +50,7 @@ body , head{
 
 ::-webkit-scrollbar-thumb {
     transition: 0.15s;
-    width:; 3px !important;
+    width: 3px !important;
     height: 3px !important;
     background: gray;
 }
@@ -95,8 +96,11 @@ body , head{
     top:0px;
     margin: 0px 0px 0px 180px;
 	flex: 2 0 0;
-    height: 90%;
-    overflow: hidden;
+
+    height: 80%;
+  
+    padding-bottom: 6%;
+    overflow:hidden;
     color:var(--white-black);
 }
 
@@ -107,26 +111,26 @@ body , head{
     bottom: 0;
     position: fixed;
     left: 0;
-    padding:0;
-    height: 30px;
+    vertical-align: middle; 
+
+    padding: 0px 0px 0px 5px;
+    height: 10%;
     overflow: scroll;
-    background: var(--editorBackgroundColor);
+    background: var(--primaryColor);
     z-index: 80;
     width: 100%;
     white-space: nowrap;
 }
 
 #bottom-bar > p{
+    position: relative;
     vertical-align: middle;
-    position: fixed;
     z-index: 85;
     bottom: 0;
-    padding-left:20px;
-    margin:0;
-    float: right;
-    line-height: 25px;
+    left:0;
+    margin:17px;
     color:var(--white-black);
-    font-size: 10px;
+    font-size: 15px;
     overflow: scroll;
     white-space: nowrap;
 }
@@ -149,8 +153,7 @@ body , head{
     color:var(--white-black);
     text-align: center;
     vertical-align: middle;
-    padding: 4px 0px;
-    height: auto;
+    height: 45px;
     display: inline-block;
     background: var(--secondaryColor);
     min-width: 200px;
@@ -163,8 +166,7 @@ body , head{
     cursor: pointer;
     text-align: center;
     vertical-align: middle;
-    padding: 4px 0px;
-    height: auto;
+    height: 45px;
     background: var(--buttonTouch);
 }
 
@@ -191,15 +193,13 @@ body , head{
 .tab_text{
     overflow: hidden;
     display: inline-block;
-    position: relative;
+    position: sticky;
 float: left;
 padding-left: 15px;
 width: 150px;
 white-space: nowrap;
-height: 15px;
-line-height: 20px;
-overflow: hidden;
-
+height: 18px;
+line-height: 13px;
 
 }
 
@@ -293,14 +293,14 @@ color: var(--white-black);
 
 
 .controls > button {
-    padding: 7px 13px;
+    padding: 3px 17px;
     height: 7px;
     width: 10px;
     margin: 0 5px;
     border: none;
 }
 .controls > button:hover {
-    padding: 7px 13px;
+    padding: 3px 17px;
     height: 7px;
     width: 10px;
     margin: 0 5px;

@@ -1,6 +1,16 @@
 
-const myVersion = 171218;
+const myVersion = 271218; //The release date
 
+const currentOS = process.platform; //Detect the Operative System
+  
+
+  if(currentOS=="win32"){ //Windows
+    var SlashesNum = "\\";
+  } else if(currentOS=="linux"){
+    var SlashesNum = "/";
+  }
+
+const { shell } = require('electron')
 const fs = require('fs'); 
 const $ = require('jquery');
 const path = require('path');
@@ -12,8 +22,19 @@ var FirstFolder;
 var touchTab = false;
 var editingTab = " ";
 var ids = 0;
-const register = __dirname+"\\log.json";
+const register = __dirname+ SlashesNum+"log.json";
 let plang = " ";
+
+  var myCodeMirror = CodeMirror(document.getElementById('code-space'), {
+  value: `/*Welcome to Graviton!
+Open some folder or file :)
+*/
+  `,
+  mode:  "javascript",
+  htmlMode : false,
+  theme:'default',
+  lineNumbers: true
+});
 
 function saveFileAs(){
   var content = document.getElementById('code-space').textContent;
@@ -62,6 +83,7 @@ function saveFile(){
 function loadDirs(dir,appendID,ft){
   
   FirstFolder = dir;
+  
   if(document.getElementById(appendID).getAttribute("opened")=="true"){
     document.getElementById(appendID).setAttribute("opened","false");
     document.getElementById(appendID).innerHTML = " ";
@@ -77,31 +99,37 @@ function loadDirs(dir,appendID,ft){
             touch.appendChild(image);  
     return;
   }else{
+
     document.getElementById(appendID).setAttribute("opened","true");
     if(ft=="no"){
       var click =  document.getElementById(appendID).children[0];
       click.children[0].setAttribute("src","src/icons/open.svg");
     }
-  }
 
-  if(ft=="yes"){
+  }
+if(ft=="yes"){
     registerNewProject(dir); //
     var _folder1 = document.createElement('div');
     $(document.getElementById(appendID)).children().remove();
+    document.getElementById(appendID).setAttribute("opened","false");
     _folder1.setAttribute('class','folder');
     _folder1.setAttribute('myPadding','50');
-     _folder1.setAttribute('style','padding-left:12px; font-size:20px; padding-top:15px;');
+     _folder1.setAttribute('style','padding-left:15px; font-size:17px; padding-top:3px;');
     ids=0;
     _folder1.innerText = path.basename(dir);
     document.getElementById(appendID).appendChild(_folder1);
   }else{
     var _folder1 = document.getElementById(appendID); 
   }
+
+  
   var paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 10; //Add padding
   fs.readdir(dir, (err, paths) => {
     paths.forEach(path => {
-      var longPath= dir+ "\\"+path;
-      longPath =  longPath.replace(/\\/g, '\\\\');
+      var longPath= dir+ SlashesNum+path;
+      if(currentOS=="win32"){
+        longPath =  longPath.replace(/\\/g, '\\\\'); //Delete \
+    }
       ids++;  
       if (path.indexOf('.') > -1){
         //If is file
@@ -199,32 +227,38 @@ function createTab(object){ // create tabs on the element ' tabs_bar '
       updateCodeMode(newPath);
       //Updated data 
     });
+    document.getElementById("body-space").style.height = "80%";
   } 
 }
 function deleteTab(ele){
   var object= document.getElementById(ele);
-  for(i=0; i<tabs.length; i++){
+  tabs.map((tab,index) =>{
+
+
   
-    if(tabs[i].id==ele)
+    if(tab.id==ele)
     {
-       tabsEqualToFiles.splice(i,1);
-      tabs.splice(i,1);
+       tabsEqualToFiles.splice(index,1);
+      tabs.splice(index,1);
       //myCodeMirror.setValue(" "); 
       object.remove();
 
       if(tabs.length === 0){ //Any tab
 
         updateCodeMode("open.js");
-        myCodeMirror.setValue("open something :P"); 
-        var selected = null;
+        myCodeMirror.setValue("Open something :p");
+        document.getElementById("body-space").style.height = "85%";
+
         
-      }else if(i=== tabs.length){
+      }else if(index=== tabs.length){
 
+        document.getElementById("body-space").style.height = "80%";
         var selected = tabs[(Number(tabs.length)-1)].getAttribute("longPath");
-      
-      }else if(i>=0 ){
+        
+      }else if(index>=0 ){
 
-        var selected = tabs[i].getAttribute("longPath");;
+        document.getElementById("body-space").style.height = "80%";
+        var selected = tab.getAttribute("longPath");;
         
       }
       
@@ -240,9 +274,9 @@ function deleteTab(ele){
             //Updated data 
         });
       }
-     break;
+     
     }
-  }
+  });
 } 
 function enableTab(status){
   touchTab = status;
@@ -291,6 +325,7 @@ function updateCodeMode(path){
           plang = "Javascript";
           break;
           default:
+          
         }
         loadBottom();
 }
@@ -368,4 +403,22 @@ function closeDialog(me){
 
 function loadBottom(){
   document.getElementById("plang").textContent = "Coding on "+plang;
+}
+
+function closeApp() {
+  saveTimeSpent();
+
+
+  var window = require('electron').remote.getCurrentWindow();
+               window.close();
+}
+
+function EditorMessage(){
+ let all =  document.createElement("div");
+   all.innerHTML = `
+   <div id="editor_message">
+   <p>Open some folder and start coding! </p>
+   </div>
+   `;
+   document.getElementById("body-space").appendChild(all);
 }

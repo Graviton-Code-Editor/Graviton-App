@@ -17,11 +17,13 @@
     border: none;
     cursor: pointer;
     z-index: 80;
+    top:0;
 }
 
 .dropbtn:hover, .dropbtn:focus {
     background-color:var(--buttonTouch);
 }
+
 
 .dropdown {
     position: relative;
@@ -34,6 +36,7 @@
     background-color: var(--dropmenu-background);
     width: 160px;
     overflow: auto;
+    z-index: 80;
     box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
 }
 
@@ -76,3 +79,9 @@
     text-decoration: none;
     display: block;
 }
+#graphic_button{
+    cursor: pointer;
+    
+}
+
+

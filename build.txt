@@ -1,1 +1,13 @@
-electron-packager . graviton-project-app --overwrite --ignore="build.txt" --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName="Graviton Project" --icon=src/iconApp/win.ico
+
+https://coursetro.com/posts/code/124/Electron-App-Deployment-Tutorial
+
+-------
+Windows
+-------
+electron-packager . GravitonCodeEditor --overwrite --ignore="build.txt" --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName="Graviton Project" --icon=src/iconApp/app.ico
+		
+-----
+Linux
+-----
+
+electron-packager . GravitonCodeEditor --overwrite --platform=linux --arch=x64 --icon=src/iconApp/app.ico --prune=true --out=release-builds

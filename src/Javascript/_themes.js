@@ -1,11 +1,11 @@
 
 var themes =[];
 var current_theme = " ";
-window.onload = function(){
-	var themes_folder = path.join(__dirname, '\\themes');
+	
+	var themes_folder = path.join(__dirname, SlashesNum+'themes');
 	fs.readdir(themes_folder, (err, paths) => {
   	paths.forEach(path => {
-  		fs.readFile(themes_folder+"\\"+path, 'utf8', function (err, data) {
+  		fs.readFile(themes_folder+SlashesNum+path, 'utf8', function (err, data) {
  		 	if (err) throw err;
  		 		obj = JSON.parse(data);
  		 		themes.push(obj); //Push the theme to the array
@@ -19,7 +19,7 @@ window.onload = function(){
   	loadConfig();
 	});
 	
-}
+
 
 function loadTheme(ThemeNumber){
 	var colors = themes[ThemeNumber]["Colors"]; //Take the colors object inside the json file of the selected theme

@@ -1,6 +1,8 @@
 
-function dropmenu(id) {
 
+
+
+function dropmenu(id) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
 
     for (i = 0; i < dropdowns.length; i++) {
@@ -11,7 +13,11 @@ function dropmenu(id) {
           dropdowns[i].classList.replace("show","hide"); //If clicked menu is opened
         }else{
           dropdowns[i].classList.replace("hide","show");  //If clicked menu is closed
+          if(id=="graphic"){
+            loadGraphic();
+          }
         }
+
       }
     }
   
@@ -32,3 +38,5 @@ window.onclick = function(event) {
   }
 	
 }
+
+

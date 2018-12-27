@@ -71,3 +71,22 @@ overflow: auto;
     bottom: 15px;
     right:15px;
 }
+
+
+.theme_div_welcomePage{
+    scale:1;
+    transition: 0.2s;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px;
+    min-width: 80px;
+    width: auto;
+    background: var(--primaryColor);
+    color:var(--white-black);
+}
+.theme_div_welcomePage:hover{
+    transition: 0.2s;
+    background: var(--buttonTouch);
+    cursor: pointer;
+
+}

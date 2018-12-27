@@ -15,6 +15,7 @@
     "buttonTouch": "#757474",
     "dropmenu-background": "#3B3B3B",
     "dropmenu-roundness": "5px",
-    "dropmenu-disabled":"gray"
+    "dropmenu-disabled":"gray",
+    "titleBar-icons-color":"gray"
   }
 }
