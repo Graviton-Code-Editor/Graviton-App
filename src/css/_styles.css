@@ -1,0 +1,349 @@
+:root{
+	--primaryColor: #222222;
+    --secondaryColor: #171717;
+    --accentColor: #FD0054;
+    --white-black: white;
+    --black-white:white;
+    --editor-background-color:black;
+    --editor-font-size: 13px;
+    --widget-color: #757474;
+    --buttons-roundness:3px;
+    --dropmenu-background-color:#3B3B3B;
+    --dropmenu-buttons-disabled-color: lightgray;
+    --titleBar-icons-color:white;
+    --window-radius:12px;
+    --notifications-background-color:#474747;
+    --notifications-window-radius:5px;
+}
+
+   
+
+@font-face {
+    font-family: _main_font;
+    src: url(../Roboto-Regular.ttf);
+}
+@font-face {
+    font-family: asap;
+    src: url(../Asap-Regular.ttf);
+}
+html{
+   font-family: _main_font;
+}
+*{
+    outline: 0;
+    text-rendering: optimizeLegibility !important;
+    -webkit-font-smoothing: antialiased !important;
+}
+
+
+.CodeMirror {
+    font-family: "asap";
+font-size: var(--editor-font-size);
+text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
+}
+
+
+
+body , head{
+	margin: 0;
+    padding: 0;
+    background: var(--editor-background-color);
+}
+
+::-webkit-scrollbar {
+    transition: 0.1s;
+    width: 8px;
+    height: 8px;
+    background: transparent;
+
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    transition: 0.15s;
+    width: 3px !important;
+    height: 3px !important;
+    background: lightgray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    transition: 0.15s;
+    background: gray;
+}
+::-webkit-scrollbar-corner{
+    visibility: hidden;
+    opacity: 0;
+    background: transparent;
+}
+
+
+ p.error-on-boot{
+    max-width: 500px;
+    color:black;
+    font-size: 17px;
+    position: absolute;
+    top: 67%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+button.error-on-boot{
+    cursor: pointer;
+    background: #555555;
+    color:white;
+    font-size: 17px;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    padding: 13px;
+    border:0;
+    border-radius: 4px;
+    transform: translate(-50%, -50%);
+}
+
+
+
+#left-bar{
+
+    position: fixed;
+    left:0;
+    width:180px;
+    height: 95%;
+    padding-bottom: 5%;
+    overflow: scroll;
+    font-size:12px;
+    color:var(--white-black);
+    background: var(--primaryColor);
+
+}
+#tabs_bar{
+    font-size: 15px;
+    height:height;
+    width: auto;
+    background:var(--primaryColor);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left:0;
+    margin: 0px;
+    padding: 0px;
+    color:var(--white-black);
+}
+
+#body-space{
+    font-size: var(--editor-font-size);
+    position: relative;
+    left:0px;
+    right:0px;
+    top:0px;
+    margin: 0px 0px 0px 180px;
+    height: 90%;
+    width: auto;
+    color:var(--white-black);
+    overflow: hidden;
+}
+
+
+
+.flex{
+
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    flex-direction: row;
+}
+.flex >div{
+    flex: 1;
+}
+
+
+.tabs{
+    transition: 0.10s;
+    color:var(--white-black);
+    text-align: center;
+    vertical-align: middle;
+    height: 37px;
+    white-space: nowrap;
+    display: inline-block;
+    background: var(--primaryColor);
+    min-width: 170px;
+    max-width: 180px;
+
+
+}
+.tabs.selected{
+    background: var(--secondaryColor);
+    
+}
+
+.tabs > p{
+    overflow: hidden;
+    display: inline-block;
+    position: sticky;
+float: left;
+padding-left: 10px;
+font-size: 14px;
+width: 100px;
+white-space: nowrap;
+height: 15px;
+line-height: 11px;
+
+}
+
+
+.close_tab{
+    position: relative;
+    top:18%;
+    display: inline-block;
+    right:0;
+    float: right;
+    margin-right: 30px;
+    vertical-align: center;
+    position: relative;
+    width: 5px;
+    border: none;
+    background: transparent;
+    fill: var(--white-black);
+
+}
+.close_tab:hover{
+    height: 10px;
+    width:10px;
+    border: none;
+    cursor: pointer;
+    fill: var(--accentColor);
+    stroke: var(--accentColor);
+}
+
+
+
+.icon:hover > svg > rect{ /*For the maximize icon*/
+    stroke: var(--accentColor);
+     border: 0;
+}
+
+.icon_border:hover > svg > rect{ /*For the other icons*/
+    fill:var(--accentColor);
+    stroke: var(--accentColor);
+    border: 0;
+}
+
+.folder_list1{
+    color: var(--white-black);
+    border-radius: 70px;
+    padding-left:3px;
+    transition: 0.10s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 4px;
+    background: transparent;
+    line-height: 0px;
+    height: 20px;
+    cursor: pointer;
+    background: transparent;
+}
+.folder_list1:hover{
+    border-radius: 4px;
+    padding-left:3px;
+    transition: 0.15s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+    padding-top: 1px;
+    padding-bottom: 4px;
+    background: transparent;
+    line-height: 0px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--widget-color);
+}
+
+.folder_list2{
+    color:var(--white-black);
+    border-radius: 70px;
+    padding-left:3px;
+    transition: 0.10s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+     padding-top: 1px;
+    padding-bottom: 4px;
+    background: transparent;
+    line-height: 25px;
+    height: 20px;
+    cursor: pointer;
+}
+.folder_list2:hover{
+    border-radius: 4px;
+    padding-left:3px;
+    transition: 0.15s;
+    clear: both;
+    white-space: nowrap;
+    font-size: 12px;
+     padding-top: 1px;
+    padding-bottom: 4px;
+    background: transparent;
+    line-height: 25px;
+    height: 20px;
+    cursor: pointer;
+    background: var(--widget-color);
+}
+
+#control-bar {
+    position: relative;
+    color: var(--white-black);
+ -webkit-app-region: drag;
+ height: 30px; 
+ background-color: var(--primaryColor);
+ padding: none;
+ margin: 0px; 
+}
+
+.title {
+color: var(--white-black);
+ position: fixed;
+ top: 8px;
+ left: 8px; 
+ font-size: 12px;
+}
+
+#controls  {
+ -webkit-app-region: no-drag;
+ position: fixed;
+ top: 0px;
+ right: 6px;
+
+}
+
+
+.controls > button {
+    padding: 3px 0px;
+    height: 7px;
+    width: 50px;
+
+    border: none;
+}
+.controls > button:hover {
+    fill:var(--accentColor);
+    cursor: pointer;
+  
+}
+.Button1{
+    transition: 0.1s;
+    border-radius: var(--buttons-roundness);
+    width: auto;
+    border: none;  
+    padding:10px 20px;
+    background: var(--secondaryColor);
+    color: var(--white-black);
+    box-sizing: border-box;
+}
+.Button1:hover{
+    transition: 0.1s;
+    cursor: pointer;
+    background: var(--widget-color);    
+}
+

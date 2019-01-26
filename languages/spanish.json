@@ -1,0 +1,31 @@
+{
+
+	"Name":"español",
+	"Help":"Ayuda",
+	"File":"Archivo",
+	"OpenFolder":"Abrir carpeta",
+	"OpenFile":"Abrir archivo",
+	"Save":"Guardar",
+	"SaveAs":"Guardar como",
+	"Extensions":"Extensiones",
+	"ZenMode":"Modo Zen",
+	"Tools":"Herramientas",
+	"Troubles":"Problemas",
+	"About":"Acerda de",
+	"Donate":"Donar",
+	"Settings":"Configuración",
+	"Customization":"Personalización",
+	"Language":"Lenguaje",
+	"Phrase1":"Tamaño del zoom",
+	"Phrase2":"Temas",
+	"Phrase3":"Hecho por: ",
+	"Phrase4":"Tamaño de la fuente del editor",
+	"Phrase5":"Tiempo destinado a programar",
+	"Phrase6":"Versión ",
+	"Phrase7":"Ultimas 7 veces: ",
+	"Phrase8":"Hoy: ",
+	"Accept":"Aceptar",
+	"Website":"Página Web"
+
+	
+}

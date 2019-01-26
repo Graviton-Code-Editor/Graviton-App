@@ -1,4 +1,4 @@
-let objectLog = " ";
+let objectLog="";
 
 function welcomePage(){
 
@@ -17,7 +17,8 @@ function welcomePage(){
 	body.innerHTML = `
 		<h1 id='title_welcome'>Welcome</h1> 
 		<div id='recent_projects'><h2 class='title2'>Recent projects</h2></div> 
-		<div id='notes'><h2 class='title2'>Notes</h2> 
+		<div id='notes'><h2 class='title2'>Notes</h2>
+		<p style="font-size:15px;" >- </p> 
 		<div class='welcomeButtons'>
 		<button onclick='openFolder(); hideWelcome();' id='open_folder_welcome' class='button1'>Open Folder</button> 
 		<button onclick='hideWelcome()' id='skip_welcome' class='button1'>Skip</button> 
@@ -26,7 +27,7 @@ function welcomePage(){
 	all.appendChild(background);
 	all.appendChild(body);
 	document.body.appendChild(all);
-fs.readFile(register, 'utf8', function (err,data) {
+fs.readFile(logDir, 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
@@ -39,14 +40,16 @@ fs.readFile(register, 'utf8', function (err,data) {
 		project.innerText=objectLog[i].Name;
 		let description = document.createElement("p");
 		description.innerText = objectLog[i].Path;
-		description.setAttribute("style","font-size:13px;")
+		description.setAttribute("style","font-size:12px;")
 		project.appendChild(description);
 		
 		document.getElementById("recent_projects").appendChild(project);
 	}
  });
 
- setTimeout(function(){ DeleteBoot(); }, 1000); //Delay to load all the config
+	
+
+ setTimeout(function(){ DeleteBoot(); }, 1500); //Delay to load all the config
  
 }
 function hideWelcome(){
@@ -70,21 +73,40 @@ function FirstTime(){
 	background.setAttribute("class","opened_window"); 
 	
 	let body = document.createElement("div");
-	body.setAttribute("class","body_window2 flex");
+	body.setAttribute("class","body_window2 ");
 	body.setAttribute("id","body_firstTime_window");
 
-	body.innerHTML = `
-		<h1  style="font-size:50px; text-align:center; position:absolute; left:50%; top: 40%;  transform: translate(-50%, -50%);">Welcome to Graviton!</h1> 
-		
-		<button onclick='FTGoPage("2")' style=" position:fixed; right:5%; bottom: 5%;  " class='button1'>Next</button> 
-		`;
-
-	all.appendChild(background);
+	body.innerHTML =`
+				
+				<h1 style="font-size:50px; text-align:center; " >Languages</h1> 
+				<div id='language_list'></div> 
+				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;  " class='button1'>Next</button> `;
+				
 	all.appendChild(body);
-	document.body.appendChild(all);
+	all.appendChild(background);
 	
-	fs.writeFile(register, "[]", (err) => { });
-	setTimeout(function(){ DeleteBoot(); }, 1000); //Delay to load all the config
+	document.body.appendChild(all);
+
+
+				for(i=0;i<languages.length; i++){
+
+						var languageDiv = document.createElement("div");
+						languageDiv.setAttribute("class","language_div");
+						languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["Name"]+"'); selectLang(this);");
+						languageDiv.innerText=languages[i]["Name"];
+						if(languages[i]["Name"] === selected_language["Name"]){
+
+							selectLang(languageDiv);
+						}
+
+					document.getElementById("language_list").appendChild(languageDiv);
+
+				}	
+
+	
+	
+	fs.writeFile(logDir, "[]", (err) => { });
+	DeleteBoot();
 }
 
 function FTGoPage(number){
@@ -121,8 +143,8 @@ function FTGoPage(number){
 
 	for(i=0;i<themes.length; i++){
 		var themeDiv = document.createElement("div");
-		themeDiv.classList.add("theme_div_welcomePage");
-		themeDiv.setAttribute("onclick","loadTheme('"+i+"')");
+		themeDiv.setAttribute("class","  theme_div_welcomePage ");
+		themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('2',this);");
 		themeDiv.innerText=themes[i].Name;
 		var author = document.createElement("p");
 		author.innerText = "Made by: " + themes[i]["Author"];
@@ -134,8 +156,15 @@ function FTGoPage(number){
 		themeDiv.appendChild(author);
 		themeDiv.appendChild(description);
 	
-		document.getElementById("theme_list").appendChild(themeDiv);
+		if(themes[i]["Name"] === current_theme["Name"]){
+
+							selectTheme("2",themeDiv);
+							console.log(themeDiv);
+		}
+document.getElementById("theme_list").appendChild(themeDiv);
+		
 	}
+	
 
 		break;
 		case "3":

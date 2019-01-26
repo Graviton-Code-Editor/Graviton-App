@@ -1,0 +1,78 @@
+/* Dialogs */
+.dialog_body{
+    transition: 0.10s;
+    color:var(--white-black);
+    font-size: 17px;
+    padding:15px;
+    overflow-y: scroll;
+    border-radius: var(--window-radius);
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
+    z-index: 85;
+    width: 275px;
+    min-height: 125px;
+    max-height: auto;
+    margin: 0;
+    position: fixed;
+    text-align: left;
+    background: var(--secondaryColor);
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    opacity: 1;
+    overflow: auto;
+}
+._dialog_button{
+    float: right;
+     width: auto;
+    border: none; 
+    margin-top: 15px;        
+    padding:10px 18px;
+    background: transparent;
+    color: var(--white-black);
+     box-sizing: border-box;
+    position: relative;
+    left:0px;
+    bottom: 0px;
+    display: inline-block;
+    border-radius: 3px;
+}
+
+._dialog_button:hover{
+
+    transition: 0.1s;
+    cursor: pointer;
+    background: var(--widget-color);
+
+}
+
+/* Notifications */
+.notificationBody{
+    width: 300px;
+    min-height: 75px;
+    height: auto;
+    background: var(--notifications-background-color);
+    position: relative;
+    color: var(--white-black);
+    padding: 10px;
+    margin: 10px;
+    border-radius: var(--notifications-window-radius);
+    box-shadow: 0px 5px 10px rgba(0,0,0,40%);
+
+}
+.notificationBody > button{
+    position: absolute;
+    right: 7px;
+    background: transparent;
+    border: 0;
+}
+.notificationBody > button>svg>rect{
+     fill:var(--white-black);
+    stroke: transparent;
+    border: 0;
+}
+.notificationBody>h1{
+    font-size: 18px;
+}
+.notificationBody>p{
+    font-size: 13px;
+}

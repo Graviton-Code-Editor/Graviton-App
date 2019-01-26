@@ -1,69 +1,105 @@
- <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: #2E2E2E; ">
+ <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: white; ">
  	<img src="src/icons/logo.svg" height="100px" style="pointer-events: none;z-index: 210; position: absolute; top: 50%; left: 50%;transform: translate(-50%, -50%); height: 27%; width: 17%;">
  </div>
-<html>
-
  <script>
- 	
+ 	var _error_detected = false;
 function DeleteBoot(){
-	if(document.getElementById("bootanimation") != null){
-	document.getElementById("bootanimation").remove();
+	if(document.getElementById("bootanimation") != null && _error_detected===false){
+		document.getElementById("bootanimation").remove();
+	}
+}
+window.onerror = function(){
+	printOnBoot("Something went wrong, try restarting the application.",1);
+	_error_detected = true;
 }
 
+function printOnBoot(message,type){
+	if(document.getElementById("bootanimation") != null){
+		switch (type){
+			case 1:
+				const screen = document.getElementById("bootanimation");
+			  var text = document.createElement("p");
+			  var button = document.createElement("button");
+			  button.classList.add("error-on-boot");
+			  button.innerText ="Close";
+			  button.setAttribute("onclick",' window.close();');
+			  text.classList.add("error-on-boot");
+			  text.innerText = message;
+			  screen.appendChild(text);
+			  screen.appendChild(button);
+	  	break;
+		}
+	}
 }
  </script>
-<div id="control-bar" style="-webkit-user-select: none; ">
+
+
+<html>
+
+
+
+<div id="control-bar" style="-webkit-user-select: none;  " >
 			<img  class="title" style="pointer-events: none; top:0; left:0; padding:7px 10px; margin:0;" height="16px" src="src/icons/logo.svg">
       <div class="title" style="left:30px;">Graviton Editor</div>
-      <div id="controls" class="controls">
-           <button id="minimize" style="background: transparent;  15px;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="6.67" y="11.406" width="10.66" height="1.189" transform="matrix(1,0,0,1,0,0)" fill="var(--tileBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
-           <button id="maximize" style="background: transparent;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="6.834" y="15.431" width="10.332" height="1.735" transform="matrix(-1,0,0,-1,24,32.597122)" fill="var(--titleBar-icons-color)"/><rect x="6.834" y="6.834" width="10.332" height="1.735" transform="matrix(-1,0,0,-1,24,15.402878)" fill="var(--titleBar-icons-color)"/><rect x="11.132" y="11.132" width="10.332" height="1.735" transform="matrix(0,1,-1,0,28.298561,-4.298561)" fill="var(--titleBar-icons-color)"/><rect x="2.535" y="11.132" width="10.332" height="1.735" transform="matrix(0,1,-1,0,19.701439,4.298561)" fill="var(--titleBar-icons-color)"/></svg></button>
-           <button  id="close" style="background: transparent;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
+      <div id="controls" class="controls" >
+           <button class="icon_border" id="minimize" style="z-index: 80;background: var(--primaryColor);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="7" y="11.5" width="10" height="0.7" transform="matrix(1,0,0,1,0,0)" fill="var(--titleBar-icons-color)"/></svg></button>
+           <button class="icon" id="maximize" style="z-index: 80;background: var(--primaryColor);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate;" viewBox="0 0 24 24" width="24" height="24"><rect x="7.5" y="7.5" width="9" height="9" transform="matrix(1,0,0,1,0,0)" fill="var(--primaryColor)" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
+           <button class="icon_border"  id="close" style="z-index: 80;background: var(--primaryColor);"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" /><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" /></svg></button>
       </div>
-      <ul style="padding-left:130px; width:auto;  display:inline-block;clear: both; -webkit-app-region: no-drag;">
+      <ul style="padding-left:130px; width:auto;  display:inline-block;clear: both; -webkit-app-region: no-drag; top:0;" >
 			<div class="dropdown">
-			<button onclick="dropmenu('menu')"class="dropbtn">File</button>
+			<button onclick="dropmenu('menu')"class="dropbtn TT" idT="File" >File</button>
 			  <div id="menu" class="dropdown-content hide">
-			    <a onclick="openFolder()">Open Folder</a>
-			    <a onclick="openFile()">Open</a>
-			    <a onclick="saveFileAs()">Save As</a>
-			    <a onclick="saveFile()">Save</a>
+			    <a onclick="openFolder()" class="TT" idT="OpenFolder">Open Folder</a>
+			    <a onclick="openFile()" class="TT" idT="OpenFile">Open File</a>
+			    <a onclick="saveFileAs()" class="TT" idT="SaveAs">Save As</a>
+			    <a onclick="saveFile()" class="TT" idT="Save">Save</a>
+			    <a onclick=" new Notification(Math.random(),'Graviton Code Editor has been updated!');" >TEST</a>
 			  </div>
 			</div>
 
 			<div class="dropdown">
-			<button onclick="dropmenu('tools')"class="dropbtn">Tools</button>
+			<button onclick="dropmenu('tools')" class="dropbtn TT" idT="Tools">Tools</button>
 			  <div id="tools" class="dropdown-content hide">
-			    <a onclick="openSettings()">Settings</a>
-			    <a onclick="" class="disabled-button">Extensions</a>
-			    <a onclick="zenMode(true)">Zen mode</a>
+			    <a onclick="" class="disabled-button" class="TT" idT="Extensions">Extensions</a>
+			    <a onclick="zenMode(true)" class="TT" idT="ZenMode">Zen mode</a>
+			    <span class="line"></span>
+			    <a onclick="openSettings(); goSPage('1');" class="TT" idT="Settings">Settings</a>
 			    
 			  </div>
 			</div>
 
-			<div class="dropdown">
-			<button onclick="dropmenu('help')"class="dropbtn">Help</button>
+			<div class="dropdown" >
+			<button onclick="dropmenu('help')" class="dropbtn TT" idT="Help">Help</button>
 			  <div id="help" class="dropdown-content hide">
-			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">Troubles</a>
-			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')" >Github</a>
-			    <a onclick="shell.openExternal('https://www.paypal.me/mkenzo8')">Donate</a>
-			    <a onclick="createDialog('about','About','Made by Marc Espin, version: 0.6.0','Website','Accept','','closeDialog(this)')">About</a>
-			    
+			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')"class="TT" idT="Troubles">Troubles</a>
+			    <a onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')" class="TT" idT="Source-Code">Source Code</a> 
+			    <a onclick="shell.openExternal('aa')" >Discord</a>
+			    <span class="line"></span>
+			    <a onclick="shell.openExternal('https://www.paypal.me/mkenzo8')" class="TT" idT="Donate">Donate</a>
+			    <a onclick="createDialog('about',selected_language['About'],selected_language['Phrase3']+' Marc Espin, '+selected_language['Phrase6']+version,selected_language['Website'] ,selected_language['Accept'],'','closeDialog(this)')" class="TT" idT="About">About</a>
+
 			  </div>
 			</div>
 
-			<div  class="dropdown"  >	
-				
-				  <svg   style="padding: 4px 12px; margin: 0 auto; font-size: 13px;border: none;  z-index: 80; top:0; isolation:isolate; position: fixed; -webkit-app-region: no-drag;" viewBox="0 0 21 21" width="21" height="21"><path class="dropbtn"  onclick="dropmenu('graphic')" d="  M 5 12.722222 L 9.333333 12.722222 L 9.333333 18.5 L 5 18.5 L 5 12.722222 Z  M 9.833333 8.388889 L 14.166667 8.388889 L 14.166667 18.5 L 9.833333 18.5 L 9.833333 8.388889 Z  M 14.666667 5.5 L 19 5.5 L 19 18.5 L 14.666667 18.5 L 14.666667 5.5 Z " fill-rule="evenodd" fill="var(--titleBar-icons-color)"/></svg>
-				  
-			<div id="graphic" class="graphic-window dropdown-content  hide" >
-			    <div id="graphic_content"></div>
-			  </div>
-			</div>
+			
 
 						
 		</ul>
+<div  class="dropdown " id ="graphicDiv"  >	
+				<button onclick="dropmenu('graphic')"class="icon_border "   style="border:0; box-sizing: border-box; -webkit-app-region: no-drag; background: transparent;">
 
+				  <svg  class="dropbtn" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 30" width="24" height="30"><path class="icon_border"d="M 5.403631 11 L 7.040813 11 C 7.784836 11 8.388889 11.604052 8.388889 12.348076 L 8.388889 20.151924 C 8.388889 20.895948 7.784836 21.5 7.040813 21.5 L 5.403631 21.5 C 4.659608 21.5 4.055556 20.895948 4.055556 20.151924 L 4.055556 12.348076 C 4.055556 11.604052 4.659608 11 5.403631 11 Z" style="stroke:none;fill:var(--white-black);stroke-miterlimit:10;"/><path class="icon_border"d="M 10.694587 14 L 13.305413 14 C 13.780752 14 14.166667 14.385915 14.166667 14.861254 L 14.166667 20.638746 C 14.166667 21.114085 13.780752 21.5 13.305413 21.5 L 10.694587 21.5 C 10.219248 21.5 9.833333 21.114085 9.833333 20.638746 L 9.833333 14.861254 C 9.833333 14.385915 10.219248 14 10.694587 14 Z" style="stroke:none;fill:var(--white-black);stroke-miterlimit:10;"/><path class="icon_border" d="M 16.611111 8.5 L 18.944444 8.5 C 19.496359 8.5 19.944444 8.948085 19.944444 9.5 L 19.944444 20.5 C 19.944444 21.051915 19.496359 21.5 18.944444 21.5 L 16.611111 21.5 C 16.059196 21.5 15.611111 21.051915 15.611111 20.5 L 15.611111 9.5 C 15.611111 8.948085 16.059196 8.5 16.611111 8.5 Z" style="stroke:none;fill:var(--white-black);stroke-miterlimit:10;"/></svg>
+				</button>
+				  
+			
+
+			
+
+			  <div id="graphic" class="graphic-window dropdown-content  hide" >
+			    <div id="graphic_content"></div>
+			  </div>
+			</div>
  </div>
 
 <body>
@@ -72,7 +108,7 @@ function DeleteBoot(){
 
 		<div id="left-bar" opened="false" style="-webkit-user-select: none;"> <!--Directories-->
 
-			<span id="openFolder" height="24px" width="24px" onclick="openFolder()" ></span>
+			<span id="openFolder" height="24px" width="24px" onclick="openFolder()"  ></span>
 
 			<style>
 
@@ -100,20 +136,21 @@ function DeleteBoot(){
 			</style>
 		</div>
 
-		<div id="body-space" style="height:85%;;;;;">
+		<div id="body-space" >
 			<div id="message"></div>
-			<div id="tabs_bar" style="overflow: auto;" class="flex">
+			<div id="tabs_bar" style="overflow: auto; -webkit-user-select: none;" class="flex">
 
 			</div>
-			<div id="code-space" contenteditable="true" >
+			<div id="code-space" contenteditable="true"  >
 
 			</div>
-		</div>
-		<div id="bottom-bar" style="-webkit-user-select: none; ">
-			<p id="plang"></p>
+				
 		</div>
 
 	</div> 
+	<div id="notifications" style="position: fixed; right: 20px; bottom: 20px; z-index: 200; ">
+		
+	</div>
 
 </body>	
 
@@ -130,21 +167,26 @@ function DeleteBoot(){
 	<!-- Graviton Editor -->
 
 <script src="src/Javascript/scripts.js"></script>
+<script src="src/Javascript/_config.js"></script>
+<script src="src/Javascript/_languages.js"></script>
+<script src="src/Javascript/_time_spent.js"></script>
+<script src="src/Javascript/_welcome-page.js"></script>
 <script src="src/Javascript/_settings.js"></script>
 <script src="src/Javascript/_menus.js"></script>
 <script src="src/Javascript/_themes.js"></script>
-<script src="src/Javascript/_welcome-page.js"></script> 
-<script src="src/Javascript/_controlBar.js"></script>
-<script src="src/Javascript/_config.js"></script>
-<script src="src/Javascript/_updater.js"></script>
-<script src="src/Javascript/_time_spent.js"></script>
 
-<link rel="stylesheet" href="src/_styles.css">
-<link rel="stylesheet" href="src/_menus.css">
-<link rel="stylesheet" href="src/_settings.css">
-<link rel="stylesheet" href="src/_welcome-page.css">
-<link rel="stylesheet" href="src/dialogs.css">
-<link rel="stylesheet" href="src/_graphic.css">
+
+
+<script src="src/Javascript/_controlBar.js"></script>
+<script src="src/Javascript/_updater.js"></script>
+
+
+<link rel="stylesheet" href="src/css/_styles.css">
+<link rel="stylesheet" href="src/css/_menus.css">
+<link rel="stylesheet" href="src/css/_settings.css">
+<link rel="stylesheet" href="src/css/_welcome-page.css">
+<link rel="stylesheet" href="src/css/_dialogs_&_notifications.css">
+<link rel="stylesheet" href="src/css/_graphic.css">
 
 
 </html>

@@ -9,13 +9,16 @@
     "primaryColor": "#ECECEC",
     "secondaryColor": "white",
     "accentColor":"#FD0054",
-    "editorBackgroundColor": "white",
+    "editor-background-color": "white",
     "white-black": "black",
     "black-white": "white",
-    "buttonTouch": "#D4D4D4",
-    "dropmenu-background": "#ECECEC",
-    "dropmenu-roundness": "5px",
-    "dropmenu-disabled":"gray",
-    "titleBar-icons-color":"#595959"
+    "widget-color": "#D4D4D4",
+    "buttons-roundness":"3px",
+    "dropmenu-background-color": "#ECECEC",
+    "dropmenu-buttons-disabled-color":"gray",
+    "titleBar-icons-color":"#595959",
+    "window-radius":"12px",
+    "notifications-background-color":"#ECECEC",
+    "notifications-window-radius":"5px"
   }
 }

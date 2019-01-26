@@ -6,16 +6,19 @@
   "Version": "0.1.0",
   "Highlight" : "default",
   "Colors": {
-    "primaryColor": "#202020",
+    "primaryColor": "#222222",
     "secondaryColor": "#171717",
-    "accentColor":"#FD0054",
-    "editorBackgroundColor": "#191919",
+    "accentColor":"#FF0048",
+    "editor-background-color": "#191919",
     "white-black": "white",
     "black-white": "white",
-    "buttonTouch": "#757474",
-    "dropmenu-background": "#3B3B3B",
-    "dropmenu-roundness": "5px",
-    "dropmenu-disabled":"gray",
-    "titleBar-icons-color":"gray"
+    "widget-color": "#757474",
+    "buttons-roundness":"3px",
+    "dropmenu-background-color": "#3B3B3B",
+    "dropmenu-buttons-disabled-color":"gray",
+    "titleBar-icons-color":"gray",
+    "window-radius":"12px",
+    "notifications-background-color":"#474747",
+    "notifications-window-radius":"5px"
   }
 }

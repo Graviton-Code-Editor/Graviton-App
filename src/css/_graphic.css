@@ -1,0 +1,49 @@
+.graphic-window {
+    border-radius: 3px;
+    position: fixed;
+    background-color: var(--dropmenu-background-color);
+    width: 200px;
+    height: auto;
+    overflow: auto;
+    z-index: 80;
+    padding: 10px;
+    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
+}
+
+.graphic-window.show {
+    transition: 0.10s; 
+    margin-top:-1px; 
+    opacity: 1;
+    display: block;
+     z-index: 80;
+     visibility: visible;
+}
+
+.graphic-window.hide{
+    transition: 0.07s;
+    margin-top: -4px;
+    opacity: 0.20;
+    z-index: 50;
+    visibility: hidden;
+}
+
+#graphic_content {
+height:auto;
+ width:auto;
+ color:var(--white-color);
+}
+
+
+.day{
+
+  display: inline;
+}
+.activity{
+  background:var(--accentColor);
+    display: inline-block;
+  width:18px;
+  margin:3px;
+  border-radius: 6px;
+  
+
+}

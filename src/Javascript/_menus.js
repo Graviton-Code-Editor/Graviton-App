@@ -1,7 +1,4 @@
 
-
-
-
 function dropmenu(id) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
 
@@ -25,9 +22,10 @@ function dropmenu(id) {
 	}
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
+  if (!(event.target.matches('.dropbtn') || event.target.matches('.icon_border')) ) {
 
     var dropdowns = document.getElementsByClassName("dropdown-content");
+    time_spent_graphic_counter = false;
 
     for (i = 0; i < dropdowns.length; i++) {
       var openDropdown = dropdowns[i];

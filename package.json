@@ -1,27 +1,61 @@
 {
   "name": "Graviton-Editor",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Graviton it's a free open source code editor!",
   "main": "main.js",
-  "directories": {
-    "lib": "lib"
-  },
   "scripts": {
-    "start": "electron ."
+    "start": "electron . GravitonCodeEditor ",
+    "pack": "build --dir",
+    "dist": "build"
   },
   "author": "Marc Espín",
   "license": "MIT",
   "dependencies": {
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
+    "fs-extra": "^7.0.1",
     "jquery": "^3.3.1",
+    "mkdirp": "^0.5.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "electron-builder": "^20.38.2",
-    "electron-packager": "^13.0.0",
-    "electron": "^3.0.10",
-    "fs": "0.0.1-security",
-    "jquery": "^3.3.1"
+    "electron": "^4.0.2",
+    "electron-builder": "^20.38.5",
+    "fs": "0.0.1-security"
+  },
+  "build": {
+    "appId": "graviton-editor",
+    "asar": false,
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    },
+    "fileAssociations": [
+      {
+        "ext": "grv",
+        "name": "Graviton Package File",
+        "role": "Editor"
+      }
+    ]
   }
 }

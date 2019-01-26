@@ -1,0 +1,24 @@
+{
+  "Name": "Mix ",
+  "Description":"A mix of themes.",
+  "Author": "Marc Espín",
+  "GitRepositoryURL": "",
+  "Version": "0.1.0",
+  "Highlight" : "default",
+  "Colors": {
+    "primaryColor": "#222222",
+    "secondaryColor": "#171717",
+    "accentColor":"#FFD500",
+    "editor-background-color": "#191919",
+    "white-black": "white",
+    "black-white": "white",
+    "widget-color": "#757474",
+    "buttons-roundness":"3px",
+    "dropmenu-background-color": "#3B3B3B",
+    "dropmenu-buttons-disabled-color":"gray",
+    "titleBar-icons-color":"gray",
+    "window-radius":"12px",
+    "notifications-background-color":"#474747",
+    "notifications-window-radius":"5px"
+  }
+}

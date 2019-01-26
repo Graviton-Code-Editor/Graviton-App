@@ -11,6 +11,7 @@ let mainWindow;
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
 		titleBarStyle: 'customButtonsOnHover', 
+		nodeIntegration: true,
 		frame: false, 
 		width: 900, 
 		height: 700 ,
@@ -23,13 +24,14 @@ app.on('ready', function(){
 		protocol: 'file:',
 		slashes: true,
 		
-		
 	}));
 
-	//mainWindow.webContents.openDevTools()
+	//mainWindow.webContents.openDevTools() 
 	//mainWindow.setMenu(null); 
 
 });
+
+
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');
 
 
