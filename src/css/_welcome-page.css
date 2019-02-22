@@ -19,7 +19,7 @@
     opacity: 1;
 }
 
-#title_welcome{
+.body_window2 > #title_welcome{
 
     left: 40%;
     transform: translate(0%, -45%);
@@ -29,12 +29,12 @@
     font-weight: bold;
 
 }
-.title2{
+.body_window2 > .title2{
     padding-left: 7px;
 	font-size: 20px;
     font-weight: bold;
 }
-#recent_projects{
+.body_window2 > #recent_projects{
 overflow: auto;
 width: 100%;
 height: auto;
@@ -42,7 +42,7 @@ overflow: auto;
  white-space: nowrap;
  margin-top: 55px;
 }
-#notes{
+.body_window2 > #notes{
     position: relative;
     overflow: auto;
 width: 100%;
@@ -52,10 +52,10 @@ overflow: auto;
  margin-top: 55px;
  margin-left: 5px;
 }
-.project_div{
+.body_window2 >#recent_projects> .project_div{
     transition: 0.1s;
     border-radius: 7px;
-    padding: 7px;
+    padding: 10px;
     margin: 5px 10px;
     min-width: 80px;
     width: auto;
@@ -65,12 +65,12 @@ overflow: auto;
     background: var(--primaryColor);
     color:var(--white-black);
 }
-.project_div:hover{
+.body_window2 >#recent_projects> .project_div:hover{
     transition: 0.1s;
     background: var(--widget-color);
     cursor: pointer;
 }
-.welcomeButtons{
+.body_window2 >#notes>.welcomeButtons{
     position: fixed;
     bottom: 15px;
     right:15px;

@@ -11,6 +11,8 @@
  
 
 button.dropbtn, svg.dropbtn {
+    position: relative;
+    display: inline-block;
     background-color: var(--primaryColor);
     color: var(--white-black);
     height: 29px;
@@ -45,7 +47,7 @@ svg.dropbtn:hover >path {
     width: 160px;
     overflow: auto;
     z-index: 80;
-    box-shadow: 0px 4px 10px 0px rgba(0,0,0,0.3);
+    box-shadow: 1px 3px 9px 0px rgba(0,0,0,0.3);
     padding: 5px;
 }
 
@@ -67,7 +69,14 @@ svg.dropbtn:hover >path {
     border-radius: 3px;
     cursor: pointer;
 }
-
+.dropdown-content >span.line{
+    width: auto;
+    display: block;
+    height: 2px;
+    margin: 5px 0px;
+    border-radius: 50px;
+    background: var(--widget-color);
+}
 .show {
     transition: 0.10s; 
     margin-top:-1px; 
@@ -97,11 +106,47 @@ svg.dropbtn:hover >path {
     
 }
 
-.line{
-    width: auto;
+
+
+@keyframes context_up{
+  from{
+    opacity: 0.3;
+    transform: scale(0.95);
+  }
+  to{
+    opacity: 1;
+    transform: scale(1);
+
+  }
+}
+#context_menu{
+    animation: context_up linear 0.10s;
+    border-radius: 3px;
+    position: fixed;
+    background-color: var(--dropmenu-background-color);
+    width: 160px;
+    overflow: auto;
+    z-index: 100;
+    box-shadow: 1px 3px 9px 0px rgba(0,0,0,0.3);
+    padding: 5px;
+}
+#context_menu > button{
+    border-radius: 3px;
+    border: 0;
+    font-size: 13px;
+    z-index: 80;
+    color: var(--white-black);
+    background-color: var(--dropmenu-background-color);
+    padding: 7px 10px;
+    width: 100%;
+    text-align: left;
+    text-decoration: none;
     display: block;
-    height: 2px;
-    margin: 2px 0px;
-    border-radius: 50px;
-    background: var(--widget-color);
+}
+
+#context_menu > button:hover {
+    color: var(--black-white);
+    background-color: var(--accentColor);
+    border-radius: 3px;
+    cursor: pointer;
 }

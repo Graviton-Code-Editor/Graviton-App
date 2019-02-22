@@ -1,8 +1,12 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 
+let {ipcMain} = electron;
+ipcMain.on('resize', function (e, x, y) {
+mainWindow.setSize(x, y);
+});
 const {app, BrowserWindow} = electron;
 const Menu = electron.Menu;
 
@@ -11,12 +15,16 @@ let mainWindow;
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
 		titleBarStyle: 'customButtonsOnHover', 
-		nodeIntegration: true,
+		webpreferences: {
+			nodeIntegration: true
+		},
 		frame: false, 
-		width: 900, 
-		height: 700 ,
-		'minHeight': 500,
-  	'minWidth': 550
+		x: 50,
+		y: 50,
+		width: 50, 
+		height: 50 ,
+		'minHeight': 300,
+  	'minWidth': 300
 	});
 
 	mainWindow.loadURL(url.format({

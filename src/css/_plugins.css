@@ -1,0 +1,23 @@
+#plugins_list{
+overflow: auto;
+width: 100%;
+height: auto;
+overflow: auto;
+ white-space: nowrap;
+}
+#plugins_list > .plugin_div{
+    transition: 0.12s;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 8px 3px;
+    min-width: 80px;
+    width: auto;
+    background: var(--primaryColor);
+    color:var(--white-black);
+}
+#plugins_list > .plugin_div:hover{
+    transition: 0.12s;
+   background: var(--widget-color);
+    cursor: pointer;
+
+}

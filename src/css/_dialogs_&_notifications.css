@@ -1,6 +1,17 @@
 /* Dialogs */
+@keyframes dialog_open_up{
+  from{
+    opacity: 0.2;
+    top:46% ;
+  }
+  to{
+    opacity: 1;
+    top: 45%  ;
+  }
+}
 .dialog_body{
-    transition: 0.10s;
+    position: absolute;
+    animation: dialog_open_up linear 0.10s;
     color:var(--white-black);
     font-size: 17px;
     padding:15px;
@@ -12,7 +23,6 @@
     min-height: 125px;
     max-height: auto;
     margin: 0;
-    position: fixed;
     text-align: left;
     background: var(--secondaryColor);
     top: 45%;
@@ -47,6 +57,8 @@
 
 /* Notifications */
 .notificationBody{
+
+    animation: open_up linear 0.15s;
     width: 300px;
     min-height: 75px;
     height: auto;
@@ -56,14 +68,26 @@
     padding: 10px;
     margin: 10px;
     border-radius: var(--notifications-window-radius);
-    box-shadow: 0px 5px 10px rgba(0,0,0,40%);
+    box-shadow: 1px 3px 7px rgba(0,0,0,40%);
 
 }
+@keyframes open_up{
+  from{
+    opacity: 0;
+    bottom:-15px;
+  }
+  to{
+    bottom:0px;
+    opacity: 1  ;
+  }
+}
+
 .notificationBody > button{
     position: absolute;
     right: 7px;
     background: transparent;
     border: 0;
+    cursor: pointer;
 }
 .notificationBody > button>svg>rect{
      fill:var(--white-black);

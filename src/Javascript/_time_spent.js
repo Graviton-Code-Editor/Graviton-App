@@ -1,9 +1,9 @@
 
-var week ;
+var week ="";
 var today ;
 
 var _started = new Date().getTime();
-var _now ;
+var _now = 0 ;
 var time;
 
 var allow_time_spent = "activated";
@@ -78,7 +78,9 @@ function saveTimeSpent(){
           clearTimeout(wait);
 
           _now = ((new Date().getTime()-_started)).toFixed(2); 
-          if(_now >55000000 ) RealToday = JSON.stringify(new Date()); //Will be restarted every 15 hours
+          if( _now > 55000000 ){ 
+            RealToday = JSON.stringify(new Date()); //Will be restarted every 15 hours
+          }
           time = secondsToTime(_now);
           
           fs.readFile(timeSpentDir, 'utf8', function (err,data) {
@@ -102,6 +104,7 @@ function saveTimeSpent(){
               return;
             }
           });
+
           saveTimeSpent();
         });
     
@@ -119,32 +122,34 @@ function saveTimeSpent(){
 
 function loadTimeSpent(){
 
-if(allow_time_spent==="activated"){
+  if(allow_time_spent==="activated"){
 
-    
+      
 
-    if (!fs.existsSync(timeSpentDir)) {
-       var data = {"week":["0","0","0","0","0","0","0"],"today": JSON.stringify(new Date())};
-       data = JSON.stringify(data);
-         fs.writeFile(timeSpentDir, data, (err) => { });//Create the TimeSpent JSON file 
-     
-      week = JSON.parse(data)["week"];
-      today = JSON.parse(data)["today"];
-   
+      if (!fs.existsSync(timeSpentDir)) {
 
-    }else{
-        fs.readFile(timeSpentDir, 'utf8', function (err,data) {
-      if (err) {
+        var data = {"week":["0","0","0","0","0","0","0"],"today": JSON.stringify(new Date())};
+        data = JSON.stringify(data);
+        fs.writeFile(timeSpentDir, data, (err) => { });//Create the TimeSpent JSON file 
+        week = JSON.parse(data)["week"];
+        today = JSON.parse(data)["today"];
+
+      }else{
+
+           fs.readFile(timeSpentDir, 'utf8', function (err,data) {
+          if (err) {
+            return console.log(err);
+          }
+          week = JSON.parse(data)["week"];
+          today = JSON.parse(data)["today"];
+          });
+
       }
-      week = JSON.parse(data)["week"];
-      today = JSON.parse(data)["today"];
-    });
-    }
-
-  	
    
   }else{
+
      document.getElementById("graphicDiv").style = "display:none"; //Hide the TimeSpent button of toolbar
+  
   }
 	if(_firsTime === false){
 	 welcomePage();

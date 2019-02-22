@@ -36,6 +36,7 @@ var _notifications = [];
         var configDir = path.join(DataFolderDir, 'config.json');
         var timeSpentDir = path.join(DataFolderDir, '_time_spent.json');
         var themes_folder = path.join(DataFolderDir,'themes');
+        var plugins_folder = path.join(DataFolderDir,'plugins');
 
     }catch (err) {
       console.error(err)
@@ -70,6 +71,10 @@ function restartApp(){
   remote.app.exit(0);
 }
 
+Mousetrap.bind('ctrl+s', function() {
+  saveFile();
+});
+
 function onChange(element){
     switch(element){
         case "time_spent_allow":
@@ -98,25 +103,24 @@ function Notification(title,message) {
       all.innerHTML = `
       <button  class=" icon_border" onclick="closeNotification(this)">`+close_icon+`</button>
       <h1>`+title+`</h1>
-      <p>`+message+`</p>`;
+      <p id="notification_message"></p>`;
+      document.getElementById("notifications").appendChild(all);
+      document.getElementById("notification_message").innerText = message;
       _notifications.push(all);
-    document.getElementById("notifications").appendChild(all);
+    
     
     let seveTS = new Promise((resolve, reject) => {
       let wait = setTimeout(() => {
         clearTimeout(wait);
         
           for(i = 0; i < _notifications.length;i++){
-            console.log(_notifications);
             if(_notifications[i] === all){
                
                _notifications.splice(i,1);
-              all.remove();
-              
+              all.remove();  
             }
-          
           }
-      }, 7000) 
+      }, 7000) //Wait 7 seconds until the notification auto deletes it selfs
   });
   
   let race = Promise.race([
@@ -333,6 +337,7 @@ function createTab(object){ // create tabs on the element ' tabs_bar '
       myCodeMirror.setValue(data); 
       updateCodeMode(newPath);
       editorIsReady = true;
+      document.getElementById("code-space").style = "height: calc(100% - (75px));";
       //Updated data 
     });
     editingTab = tab.id;
@@ -362,7 +367,8 @@ function deleteTab(ele){
 
       if(tabs.length === 0){ //0 tabs
         updateCodeMode("open.js");
-        myCodeMirror.setValue("Open something :p");        
+        myCodeMirror.setValue("Open something :p");
+        document.getElementById("body-space").style = " ";      
       }else if(index=== tabs.length){ //Last tab
         var selected = tabs[(Number(tabs.length)-1)];
       }else if(index>=0 ){
@@ -510,5 +516,4 @@ function closeDialog(me){
     dialog.remove(); 
   
 }
-
 

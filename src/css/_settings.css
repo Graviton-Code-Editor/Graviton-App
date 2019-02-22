@@ -14,7 +14,7 @@
 
 #nav_bar > ol>li{
     transition: 0.07s;
-    padding: 0px 2px;
+    padding: 2px;
     height: 25px;
     display: inline-block;
     border-bottom:3px solid transparent;
@@ -46,9 +46,18 @@
     position: fixed;
     z-index: 80;
 }
-
+@keyframes window_open_up{
+  from{
+    opacity: 0.2;
+    top:47% ;
+  }
+  to{
+    opacity: 1;
+    top: 45%  ;
+  }
+}
 .body_window{
-    transition: 0.10s;
+    animation: window_open_up linear 0.1s;
     color:var(--white-black);
     font-size: 17px;
     padding:12px;
@@ -56,7 +65,7 @@
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     z-index: 85;
-    width: 60%;
+    width: 70%;
     height: 80%;
     margin: 0;
     position: fixed;
@@ -70,19 +79,7 @@
 #body_content{
     padding: 0px 25px;
 }
-#body_content > button{ /*Factory Reset button allocated on the Advanced page on Setings*/
-    border-radius: 5px;
-     background-color: red;
-    color: white;
-    height: 30px;
-    padding:0px 7px;
-    font-size: 13px;
-    border: none;
-    cursor: pointer;
-}
-#body_content > button:hover{
-    background: darkred;
-}
+
 
 #theme_list{
 overflow: auto;

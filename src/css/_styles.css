@@ -7,7 +7,7 @@
     --editor-background-color:black;
     --editor-font-size: 13px;
     --widget-color: #757474;
-    --buttons-roundness:3px;
+    --buttons-roundness:5px;
     --dropmenu-background-color:#3B3B3B;
     --dropmenu-buttons-disabled-color: lightgray;
     --titleBar-icons-color:white;
@@ -38,8 +38,8 @@ html{
 
 .CodeMirror {
     font-family: "asap";
-font-size: var(--editor-font-size);
-text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
+    font-size: var(--editor-font-size);
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
 
 
@@ -83,29 +83,49 @@ body , head{
  p.error-on-boot{
     max-width: 500px;
     color:black;
-    font-size: 17px;
+    font-size: 18px;
     position: absolute;
-    top: 67%;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+div.error-on-boot{
+    position: absolute;
+    top: 80%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 button.error-on-boot{
     cursor: pointer;
-    background: #555555;
+    background: #444444;
     color:white;
     font-size: 17px;
-    position: absolute;
-    top: 80%;
-    left: 50%;
+    position: relative;
     padding: 13px;
     border:0;
     border-radius: 4px;
-    transform: translate(-50%, -50%);
+    display: inline-block;
+}
+button.error-on-boot:hover{
+    background: #333333;
+}
+button.error-on-boot-factory{
+    background: red;
+    cursor: pointer;
+    color:white;
+    font-size: 17px;
+    position: relative;
+    padding: 13px;
+    border:0;
+    border-radius: 4px;
+    display: inline-block;
+}
+button.error-on-boot-factory:hover{
+    background: darkred;
+ 
 }
 
-
-
-#left-bar{
+#editor_content > #left-bar{
 
     position: fixed;
     left:0;
@@ -116,11 +136,12 @@ button.error-on-boot{
     font-size:12px;
     color:var(--white-black);
     background: var(--primaryColor);
+    -webkit-user-select: none;
 
 }
-#tabs_bar{
+#editor_content > #body-space > #tabs_bar{
     font-size: 15px;
-    height:height;
+    height:auto;
     width: auto;
     background:var(--primaryColor);
     position: -webkit-sticky;
@@ -132,38 +153,42 @@ button.error-on-boot{
     color:var(--white-black);
 }
 
-#body-space{
+#editor_content > #body-space{
     font-size: var(--editor-font-size);
     position: relative;
     left:0px;
     right:0px;
     top:0px;
     margin: 0px 0px 0px 180px;
-    height: 90%;
+    height: height: calc(100% - (35px));;
     width: auto;
     color:var(--white-black);
     overflow: hidden;
+
 }
 
-
+#editor_content >#body-space > #code-space{
+     height: calc(100% - (35px));
+}
 
 .flex{
 
-    display: -webkit-flex; /* Safari */
     display: flex;
     flex-direction: row;
+
 }
 .flex >div{
     flex: 1;
 }
 
 
-.tabs{
+#editor_content > #body-space >#tabs_bar > .tabs{
+
     transition: 0.10s;
     color:var(--white-black);
     text-align: center;
     vertical-align: middle;
-    height: 37px;
+    height: 40px;
     white-space: nowrap;
     display: inline-block;
     background: var(--primaryColor);
@@ -172,12 +197,12 @@ button.error-on-boot{
 
 
 }
-.tabs.selected{
+#editor_content > #body-space >#tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
     
 }
 
-.tabs > p{
+#editor_content > #body-space >#tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
     position: sticky;
@@ -186,13 +211,13 @@ padding-left: 10px;
 font-size: 14px;
 width: 100px;
 white-space: nowrap;
-height: 15px;
-line-height: 11px;
+height: auto;
+line-height: 15px;
 
 }
 
 
-.close_tab{
+#editor_content > #body-space >#tabs_bar > .tabs > .close_tab{
     position: relative;
     top:18%;
     display: inline-block;
@@ -207,7 +232,7 @@ line-height: 11px;
     fill: var(--white-black);
 
 }
-.close_tab:hover{
+#editor_content > #body-space >#tabs_bar > .tabs > .close_tab:hover{
     height: 10px;
     width:10px;
     border: none;
@@ -221,15 +246,17 @@ line-height: 11px;
 .icon:hover > svg > rect{ /*For the maximize icon*/
     stroke: var(--accentColor);
      border: 0;
+      margin: 0;
 }
 
 .icon_border:hover > svg > rect{ /*For the other icons*/
     fill:var(--accentColor);
     stroke: var(--accentColor);
     border: 0;
+    margin: 0;
 }
 
-.folder_list1{
+#editor_content > #left-bar div.folder_list1{
     color: var(--white-black);
     border-radius: 70px;
     padding-left:3px;
@@ -245,7 +272,7 @@ line-height: 11px;
     cursor: pointer;
     background: transparent;
 }
-.folder_list1:hover{
+#editor_content > #left-bar div.folder_list1:hover{
     border-radius: 4px;
     padding-left:3px;
     transition: 0.15s;
@@ -261,7 +288,7 @@ line-height: 11px;
     background: var(--widget-color);
 }
 
-.folder_list2{
+#editor_content > #left-bar div.folder_list2{
     color:var(--white-black);
     border-radius: 70px;
     padding-left:3px;
@@ -276,7 +303,7 @@ line-height: 11px;
     height: 20px;
     cursor: pointer;
 }
-.folder_list2:hover{
+#editor_content > #left-bar div.folder_list2:hover{
     border-radius: 4px;
     padding-left:3px;
     transition: 0.15s;
@@ -293,16 +320,18 @@ line-height: 11px;
 }
 
 #control-bar {
+    -webkit-user-select: none;  
+    -webkit-app-region: drag;
     position: relative;
     color: var(--white-black);
- -webkit-app-region: drag;
- height: 30px; 
- background-color: var(--primaryColor);
- padding: none;
- margin: 0px; 
+    height: 30px; 
+    background-color: var(--primaryColor);
+    padding: none;
+    margin: 0px; 
+    overflow: hidden;
 }
 
-.title {
+#control-bar > .title {
 color: var(--white-black);
  position: fixed;
  top: 8px;
@@ -310,7 +339,7 @@ color: var(--white-black);
  font-size: 12px;
 }
 
-#controls  {
+#control-bar > #controls  {
  -webkit-app-region: no-drag;
  position: fixed;
  top: 0px;
@@ -319,14 +348,14 @@ color: var(--white-black);
 }
 
 
-.controls > button {
+#control-bar > .controls > button {
     padding: 3px 0px;
     height: 7px;
     width: 50px;
-
+    margin: 0;  
     border: none;
 }
-.controls > button:hover {
+#control-bar > .controls > button:hover {
     fill:var(--accentColor);
     cursor: pointer;
   
@@ -346,4 +375,18 @@ color: var(--white-black);
     cursor: pointer;
     background: var(--widget-color);    
 }
+.Button1.red{
+    background: red;
+    color:white;
+}
+.Button1.red:hover{
+    background: darkred;
+    color: white; 
+}
 
+.window_title{
+    font-size:25px; 
+    font-weight:800;
+     line-height:7px; 
+     text-align:center;
+}

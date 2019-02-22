@@ -7,7 +7,7 @@
 	"OpenFile":"Open file",
 	"Save":"Save",
 	"SaveAs":"Save as",
-	"Extensions":"Extensions",
+	"Plugins":"Plugins",
 	"ZenMode":"Zen Mode",
 	"Tools":"Tools",
 	"Troubles":"Troubles",
@@ -30,7 +30,9 @@
 	"Phrase8":"Today: ",
 	"Accept":"Accept",
 	"Decline":"No",
-	"Website":"Website"
+	"Website":"Website",
+	"Copy":"Copy",
+	"Paste":"Paste"
 	
 	
 }

@@ -26,7 +26,6 @@ var current_theme = " ";
 
      });
 
-
   }else{ //If the themes folder already exists
   	fs.readdir(themes_folder, (err, paths) => {
   	paths.forEach(dir => {
@@ -34,7 +33,6 @@ var current_theme = " ";
  		 	if (err) throw err;
  		 		obj = JSON.parse(data);
  		 		themes.push(obj); //Push the theme to the array
-
  		 		var newLink = document.createElement("link");
  		 		newLink.setAttribute("rel","stylesheet");
 				newLink.setAttribute("href","src/Highlights/"+obj["Highlight"]+".css"); //Link new themes 

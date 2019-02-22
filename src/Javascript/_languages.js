@@ -25,7 +25,10 @@ languages.map((item,index)=>{
 				toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
 		}
 	}
+
+	
 });
 
 
+  
 }

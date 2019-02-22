@@ -8,7 +8,7 @@ function hideSettings(){
 
 function openSettings(){
 	 nav_bar_settings =` 
-	 <p style='font-size:25px; font-weight:800; line-height:7px; text-align:center;'>`+selected_language["Settings"]+`</p> 
+	 <p class="window_title">`+selected_language["Settings"]+`</p> 
 			<div id="nav_bar">
 	        <ol>
 	          <li class="" id="navB1" onclick="goSPage('1')"><a>`+selected_language["Customization"]+`</a></li>
@@ -149,7 +149,7 @@ function goSPage(num){
 				document.getElementById("body_content").innerHTML=`
 				
 				<p>`+selected_language["FactoryReset"]+`</p>
-				<button onclick="hideSettings(); createDialog('factory_reset',selected_language['FactoryReset'],selected_language['FactoryReset-dialog-message'],selected_language['Decline'],selected_language['Accept'],'closeDialog(this); ','closeDialog(this); FactoryReset();')">Factory Reset</button> `;
+				<button class="button1 red" onclick="hideSettings(); createDialog('factory_reset',selected_language['FactoryReset'],selected_language['FactoryReset-dialog-message'],selected_language['Decline'],selected_language['Accept'],'closeDialog(this); ','closeDialog(this); FactoryReset();')">Factory Reset</button> `;
 
 				document.getElementById("navB3").classList.add("active");
 

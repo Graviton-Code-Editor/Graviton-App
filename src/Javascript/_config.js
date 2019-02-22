@@ -3,8 +3,11 @@ let zoom_app;
 var _firsTime;
 //Variables
 let FontSizeEditor = "20"; //Default
+
+
+
 function loadConfig(){ //Loads the configuration from the config.json
-	console.log(configDir);
+
 
 	if (!fs.existsSync(configDir)) {
 
@@ -33,6 +36,8 @@ function loadConfig(){ //Loads the configuration from the config.json
 
 		loadTimeSpent();
 
+		detectPlugins(); //Call the function to detect the installed plugins
+
 	}else{
 
 		fs.readFile(configDir, 'utf8', function (err,data) {
@@ -51,7 +56,12 @@ function loadConfig(){ //Loads the configuration from the config.json
 
 			loadTimeSpent();
 
+			detectPlugins(); //Call the function to detect the installed plugins
+
 	 	});
+		
+
+	 	 
 
 	}
 	

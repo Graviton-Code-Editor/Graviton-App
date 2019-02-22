@@ -1,0 +1,32 @@
+
+/* Css that needs to be loaded fast */
+
+#bootanimation_logo{
+	pointer-events: none;
+	z-index: 210;
+	position: absolute; 
+	top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  height: 27%; width: 17%;
+}
+#openFolder{
+	top: 45%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%);
+	position: absolute; 
+	padding: 15px;
+	width: 70px;
+	height: 70px;
+	margin: 0 auto; 
+	background: url("../icons/closed.svg") no-repeat center;
+	background-size: 70px 70px;
+				}
+#openFolder:hover{
+	cursor: pointer;
+	width: 70px;
+	height: 70px;
+	background: url("../icons/open.svg") no-repeat center;
+	background-size: 70px 70px;
+}
