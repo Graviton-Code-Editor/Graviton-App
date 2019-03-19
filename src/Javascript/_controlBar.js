@@ -1,6 +1,4 @@
 
-const remote = require('electron').remote;
-const BrowserWindow = require('electron').BrowserWindow; 
 
 (function () {
      

@@ -7,7 +7,7 @@
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     z-index: 85;
-    width: 80%;
+    width: 85%;
     height: 80%;
     margin: 0;
     position: fixed;
@@ -52,6 +52,9 @@ overflow: auto;
  margin-top: 55px;
  margin-left: 5px;
 }
+.body_window2 > #notes>p{
+    font-size: 15px;
+}
 .body_window2 >#recent_projects> .project_div{
     transition: 0.1s;
     border-radius: 7px;
@@ -79,6 +82,7 @@ overflow: auto;
 
 .theme_div_welcomePage{
     transition: 0.1s;
+    transform: scale(1);
     border-radius: 7px;
     padding: 10px;
     margin: 5px;
@@ -86,10 +90,19 @@ overflow: auto;
     width: auto;
     background: var(--primaryColor);
     color:var(--white-black);
+    font-size: 17px;
+
 
 }
+
 .theme_div_welcomePage:hover{
-    transition: 0.1s;
+    transition: 0.12s;
     background: var(--widget-color);
     cursor: pointer;
+}
+
+
+.theme_div_welcomePage:active{
+    transition: 0.12s;
+    transform: scale(0.98);
 }

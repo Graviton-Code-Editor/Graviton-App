@@ -18,7 +18,8 @@ function welcomePage(){
 		<h1 id='title_welcome'>Welcome</h1> 
 		<div id='recent_projects'><h2 class='title2'>Recent projects</h2></div> 
 		<div id='notes'><h2 class='title2'>Notes</h2>
-		<p style="font-size:15px;" >- </p> 
+		<p > Current build: `+ dateVersion +` </p> 
+		<p > OS: `+ graviton.currentOS() +` </p> 
 		<div class='welcomeButtons'>
 		<button onclick='openFolder(); hideWelcome();' id='open_folder_welcome' class='button1'>Open Folder</button> 
 		<button onclick='hideWelcome()' id='skip_welcome' class='button1'>Skip</button> 
@@ -105,7 +106,7 @@ function FirstTime(){
 
 	
 	
-	fs.writeFile(logDir, "[]", (err) => { });
+	fs.writeFile(logDir, "[]", (err) => { }); //Delete old log
 	DeleteBoot();
 }
 
@@ -134,7 +135,7 @@ function FTGoPage(number){
 
 		<div id='theme_list' style="height:60%;"></div> 
 		<button onclick='FTGoPage("1"); FirstTime();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1'>Back</button> 
-		<button onclick='hideFirstTime(); welcomePage();' style=" position:fixed; right:5%; bottom: 5%;  " class='button1'>Finish</button> 
+		<button id="FROM_THEMES_CONTINUE" onclick='hideFirstTime(); welcomePage();' style=" position:fixed; right:5%; bottom: 5%;  " class='button1 disabled'>Finish</button> 
 		`;
 
 	all.appendChild(background);
@@ -155,6 +156,10 @@ function FTGoPage(number){
 
 		themeDiv.appendChild(author);
 		themeDiv.appendChild(description);
+
+		themeDiv.addEventListener("click", function(){
+			document.getElementById("FROM_THEMES_CONTINUE").classList ="Button1";
+		});
 	
 		if(themes[i]["Name"] === current_theme["Name"]){
 

@@ -20,9 +20,9 @@ languages.map((item,index)=>{
 	if(item["Name"]===language){
 		selected_language = item;
 	
-	var toTranslate = document.getElementsByClassName("TT");
+	var toTranslate = document.getElementsByClassName("translate_word");
 		for(i=0;i<toTranslate.length;i++){
-				toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+				if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
 		}
 	}
 

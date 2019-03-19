@@ -3,28 +3,29 @@ const url = require('url');
 const path = require('path');
 const fs = require('fs');
 
+
 let {ipcMain} = electron;
 ipcMain.on('resize', function (e, x, y) {
-mainWindow.setSize(x, y);
+	mainWindow.setSize(x, y);
 });
 const {app, BrowserWindow} = electron;
 const Menu = electron.Menu;
 
 let mainWindow;
-
+	
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
 		titleBarStyle: 'customButtonsOnHover', 
-		webpreferences: {
-			nodeIntegration: true
+		webPreferences: {
+			nativeWindowOpen: true,
+			nodeIntegrationInWorker: true,
 		},
 		frame: false, 
-		x: 50,
-		y: 50,
-		width: 50, 
-		height: 50 ,
-		'minHeight': 300,
-  	'minWidth': 300
+		width: 750, 
+		height: 650 ,
+		'minHeight': 250,
+  	'minWidth': 250,
+  	backgroundColor: "#FFF"
 	});
 
 	mainWindow.loadURL(url.format({
@@ -38,7 +39,9 @@ app.on('ready', function(){
 	//mainWindow.setMenu(null); 
 
 });
-
+app.on('window-all-closed', ()=>{
+  app.quit();
+});
 
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');
 

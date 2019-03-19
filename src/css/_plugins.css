@@ -14,10 +14,16 @@ overflow: auto;
     width: auto;
     background: var(--primaryColor);
     color:var(--white-black);
+    transform: scale(1);
 }
 #plugins_list > .plugin_div:hover{
     transition: 0.12s;
    background: var(--widget-color);
     cursor: pointer;
 
+}
+
+#plugins_list > .plugin_div:active{
+    transition: 0.12s;
+    transform: scale(0.98);
 }

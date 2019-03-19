@@ -1,0 +1,12 @@
+{
+"name":"Example Plugin",
+"version":"0.1.0",
+"author":"Marc Espín",
+"description":"Example Plugin Test",
+"folder":"PluginTest",
+"main":"test.js",
+"javascript":[
+],
+"css":[
+]
+}

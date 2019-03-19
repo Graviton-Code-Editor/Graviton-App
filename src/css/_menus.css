@@ -1,33 +1,30 @@
-#minimize:hover{
-    background: red;
-}
- ul {
+
+ #control-bar >  #dropmenus_list {
     list-style-type: none;
-    margin: 0;
     padding: 0;
     overflow: hidden;
-
+    -webkit-app-region: no-drag; 
+    margin-left: 35px;  
+    border:0;
+    display: box;
+    position: absolute;
 }
- 
 
-button.dropbtn, svg.dropbtn {
+
+button.dropbtn {
     position: relative;
     display: inline-block;
     background-color: var(--primaryColor);
     color: var(--white-black);
-    height: 29px;
+    height: 30px;
     padding:0px 7px;
     margin: 0;
+    overflow: hidden;
     font-size: 13px;
     border: none;
     cursor: pointer;
     z-index: 80;
     top:0;
-
-}
-
-svg.dropbtn:hover >path {
-    fill: var(--white-black);
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -38,38 +35,50 @@ svg.dropbtn:hover >path {
 .dropdown {
     position: relative;
     display: inline-block;
+    margin: 0px;
+
 }
 
 .dropdown-content {
     border-radius: 3px;
     position: fixed;
     background-color: var(--dropmenu-background-color);
-    width: 160px;
+    min-width: auto;
     overflow: auto;
     z-index: 80;
     box-shadow: 1px 3px 9px 0px rgba(0,0,0,0.3);
     padding: 5px;
+    margin: 0;
 }
 
 
-.dropdown-content a:not(.disabled-button) {
+.dropdown-content > button:not( .dropbtn ) {
     font-size: 13px;
     z-index: 80;
     color: var(--white-black);
+    background-color: transparent;
     padding: 7px 10px;
-    width: auto;
+    width: 100%;
     text-decoration: none;
+    display: block;
+    border: 0;
+    border-radius: 5px;
+    text-align: left;
+
+}
+.dropdown-content > button:not( .dropbtn ) >img {
+    height: 100px;
     display: block;
 
 }
 
-.dropdown a:hover:not(.disabled-button) {
+.dropdown-content > button:hover:not( .dropbtn) {
     color: var(--black-white);
     background-color: var(--accentColor);
     border-radius: 3px;
     cursor: pointer;
 }
-.dropdown-content >span.line{
+span.line_space_menus{
     width: auto;
     display: block;
     height: 2px;
@@ -78,8 +87,8 @@ svg.dropbtn:hover >path {
     background: var(--widget-color);
 }
 .show {
-    transition: 0.10s; 
-    margin-top:-1px; 
+    transition: 0.07s; 
+    transform: translateY(0px);
     opacity: 1;
     display: block;
      z-index: 80;
@@ -87,25 +96,12 @@ svg.dropbtn:hover >path {
 }
 
 .hide{
-    transition: 0.10s;
-    margin-top: -4px;
-    opacity: 0.3;
+    transition: 0.07s;
+    transform: translateY(-4px);
+    opacity: 0.4;
     z-index: 50;
     visibility: hidden;
 }
-.disabled-button{
-     font-size: 13px;
-    z-index: 80;
-    color: var(--dropmenu-buttons-disabled-color);
-    padding: 7px 10px;
-    text-decoration: none;
-    display: block;
-}
-#graphic_button{
-    cursor: pointer;
-    
-}
-
 
 
 @keyframes context_up{
@@ -124,7 +120,8 @@ svg.dropbtn:hover >path {
     border-radius: 3px;
     position: fixed;
     background-color: var(--dropmenu-background-color);
-    width: 160px;
+    min-width: 100px;
+    width: auto;
     overflow: auto;
     z-index: 100;
     box-shadow: 1px 3px 9px 0px rgba(0,0,0,0.3);

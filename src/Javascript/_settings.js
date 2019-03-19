@@ -8,7 +8,7 @@ function hideSettings(){
 
 function openSettings(){
 	 nav_bar_settings =` 
-	 <p class="window_title">`+selected_language["Settings"]+`</p> 
+	 <p class="window_title" class="translate_word" idT="Settings">`+selected_language["Settings"]+`</p> 
 			<div id="nav_bar">
 	        <ol>
 	          <li class="" id="navB1" onclick="goSPage('1')"><a>`+selected_language["Customization"]+`</a></li>
@@ -51,7 +51,7 @@ function updateSettings(){
 
 	document.documentElement.style.setProperty("--editor-font-size",FontSizeEditor+"px"); //Update settings from start
 	
-	myCodeMirror.refresh();
+	editor.refresh();
 	if(zoom_app==0){
 		webFrame.setZoomFactor(0.8);
 	}else if(zoom_app==20){
@@ -84,28 +84,29 @@ function goSPage(num){
 				
 				document.getElementById("body_content").innerHTML=`
 				<div id="dpi">
-				<p>`+selected_language["Phrase1"]+`</p>
+				<p>`+selected_language["ZoomSize"]+`</p>
 				 <input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="`+zoom_app+`" class="slider" id="myRange">
 				</div>
-				<p>`+selected_language["Phrase2"]+`</p> 
-				<div id='theme_list'></div> 
+				<p>`+selected_language["Themes"]+`</p> 
+				<div id='theme_list'>
+
+				</div> 
+				<span>Wanna create your own?</span>
 				<div id="editor_fs">
-				<p>`+selected_language["Phrase4"]+`</p>
+				<p>`+selected_language["EditorFontSize"]+`</p>
 				<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
-				<p>`+selected_language["Phrase5"]+`</p>
-				<gv-switch id="time_spent_allow" class="`+allow_time_spent+`"></gv-switch>
 				</div>`;
 				for(i=0;i<themes.length; i++){
 					
 						var themeDiv = document.createElement("div");
 						themeDiv.setAttribute("class","theme_div");
 						themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('1',this);");
-						themeDiv.innerText=themes[i].Name;
+						themeDiv.innerText=themes[i].Name; //Theme's name
 						var author = document.createElement("p");
-						author.innerText = selected_language["Phrase3"] + themes[i]["Author"];
+						author.innerText = selected_language["MadeBy"] + themes[i]["Author"]; //Theme's autor's name
 						author.setAttribute("style","font-size:15px")
 						var description = document.createElement("p");
-						description.innerText = themes[i]["Description"];
+						description.innerText = themes[i]["Description"]; //Theme's description
 						description.setAttribute("style","font-size:13px; line-height:2px;");
 
 						themeDiv.appendChild(author);
@@ -207,12 +208,10 @@ function getState(element){
                     if( getState(this.id)) {
                         this.classList.replace("activated","desactivated");
                         dot.classList.replace("activated","desactivated");
-                        onChange(this.id);
                         return false;   
                     }else {
                         this.classList.replace("desactivated","activated");
                         dot.classList.replace("desactivated","activated");
-                        onChange(this.id);
                         return true;
                      }
                 }

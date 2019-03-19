@@ -1,98 +1,7 @@
-
-var plugins_list = [];
-function detectPlugins(){
-	if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
-	  fs.mkdirSync(plugins_folder);
-
-	}else{   //If the plugins folder already exist
-
-	fs.readdir(plugins_folder, (err, paths) => {
-	  	paths.forEach(dir => {
-	  		if (dir.indexOf('.') > -1){
-
-		  		fs.readFile(path.join(plugins_folder, dir), 'utf8', function (err, data) {
-		  			var config = JSON.parse(data);
-		 		 			if (err) throw err;
-		 		 			plugins_list.push(config);
-				 		 	const script = document.createElement("script");
-				 		 	script.setAttribute("src",path.join(plugins_folder,config["main"])),
-				 		 	document.body.appendChild(script);
-				 		
-					});
-	  	}
-	  	});
-	  	
-		});
-	}	
-}
-
-function dropMenu(panel){ //Create dropmenu panels from the plugin
-	const bar = document.getElementById("control-bar").children[3];
-	const newTab = document.createElement("div");
-	const droplist = document.createElement("div");
-	droplist.classList = "dropdown-content hide";
-	droplist.setAttribute("id",panel["button"]);
-	newTab.classList.add("dropdown");
-	newTab.innerHTML = `
-	<button onclick="dropmenu('`+panel["button"]+`')" class="dropbtn" >`+panel["button"]+`</button>
-
-	`
-		Object.keys(panel["list"]).forEach(function(key) {
-
-			droplist.innerHTML += `<a onclick="`+panel["list"][key]+`" >`+key+`</a>`
-
-		});
-
-	newTab.appendChild(droplist);
-	bar.appendChild(newTab);
-
-}
-var context_menu_list;
-function contextMenu(panel){ //Add buttons to the context menu from the plugin
-	Object.keys(panel).forEach(function(key) {
-		context_menu_list = { //Default Context menu
-		  "Copy" :" document.execCommand('copy');",
-		  "Paste" :" document.execCommand('paste');"
-		};	
-
-		context_menu_list[key] = panel[key];
-
-	});
-}
+var plugins_dbs= [];
 
 
 
-document.addEventListener('mousedown', function(event){ //Create the context menu
-	if(editor_booted===true){
-    if (event.button === 2) {
-      if(document.getElementById("context_menu")!==null ){
-        document.getElementById("context_menu").remove();
-      }
-      const context_menu = document.createElement("div");
-      context_menu.setAttribute("id","context_menu");
-      context_menu.style = "left:"+event.pageX+"; top:"+event.pageY+"px";
-
-      Object.keys(context_menu_list).forEach(function(key,index) {
-
-        const button = document.createElement("button");
-        button.classList.add("part_of_context_menu")
-        if(index <2){
-        	button.innerText = selected_language[key];
-      	}else{
-        	button.innerText = key;
-      	}
-        button.setAttribute("onclick",context_menu_list[key]+" document.getElementById('context_menu').remove();");
-        context_menu.appendChild(button);
-
-      });
-      document.body.appendChild(context_menu);
-
-    }else if(event.button ===0 && !(event.target.matches('#context_menu') || event.target.matches('.part_of_context_menu'))&& document.getElementById("context_menu")!==null){
-
-        document.getElementById("context_menu").remove();
-    }
-  }
-});
 function hidePlugins(){
 	document.getElementById("window").remove();
 	saveConfig();
@@ -115,7 +24,9 @@ function openPlugins(){
 	
 	var content = document.createElement("div");
 	content.setAttribute("id","plugins_list");
-	content.innerHTML = `<p class="window_title">`+selected_language["Plugins"]+`</p> `
+	content.innerHTML = `
+	<p class="window_title">`+selected_language["Plugins"]+`</p> 
+	`;
 
 	plugins_list.forEach(plugin => {
 
@@ -123,7 +34,7 @@ function openPlugins(){
 						pluginDiv.classList.add("plugin_div");
 						pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
 						var author = document.createElement("p");
-						author.innerText = selected_language["Phrase3"] + plugin["author"];
+						author.innerText = selected_language["MadeBy"] + plugin["author"];
 						author.setAttribute("style","font-size:15px")
 						var description = document.createElement("p");
 						description.innerText = plugin["description"];
@@ -135,7 +46,9 @@ function openPlugins(){
 						content.appendChild(pluginDiv);
 		
   	});
-
+	if(plugins_list.length ==0){
+		content.innerHTML += `<p>No plugins detected</p>`
+	}
 	
 	body.appendChild(content);
 
@@ -145,22 +58,113 @@ function openPlugins(){
 	
 }
 
+var plugins_list = [];
 
- const editor = {
- 	getCurrentText : function(){ //GEt all the text of the current file editing
- 		return myCodeMirror.getValue();
- 	},
- 	getCurrentTheme : function(){ //Get the fuckk object of the applied theme
- 		return current_theme;
- 	},
- 	getSelectedText: function(){ //Get te text you have selected
- 		const selected_text = window.getSelection().toString();
- 		if( selected_text !=""){
- 			return selected_text;
- 		} else return null; //Returns null if there is not text selected
- 	},
- 	setThemeByName: function(name){ //Set a theme by it's name
- 		return setThemeByName(name);
- 	}
- }	
+
+
+function detectPlugins(){
+
+	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
+	  fs.mkdirSync(plugins_db);
+
+
+	}else{   //If the plugins_db folder already exist
+
+	fs.readdir(plugins_db, (err, paths) => {
+	  	paths.forEach(dir => {
+	  		if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
+
+		  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
+
+				 		const db = {
+				 			plugin_name:path.basename(dir,".json"),
+				 			db:JSON.parse(data)
+				 		};
+				 		plugins_dbs.push(db);
+					});
+	  	}
+	  	});
+	 });
+	 } 	
+
+
+	if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
+	  fs.mkdirSync(plugins_folder);
+
+		fs.copy(path.join(__dirname,"plugins"),plugins_folder, err=> {
+
+ 			fs.readdir(plugins_folder, (err, paths) => {
+
+	  		paths.forEach(dir => {
+
+		  		const direct = fs.statSync(path.join(plugins_folder,dir));
+	      	if (!direct.isFile()){
+
+			  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
+			  			var config = JSON.parse(data);
+			 		 			if (err) throw err;
+			 		 			plugins_list.push(config);
+					 		 	const script = document.createElement("script");
+					 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
+					 		 	document.body.appendChild(script);
+
+					 		 	config["javascript"].forEach(file=>{
+					 		 		const script = document.createElement("script");
+					 		 		script.setAttribute("src",path.join(plugins_folder,config["folder"],file)),
+					 		 		document.body.appendChild(script);
+					 		 	});
+					 		 	config["css"].forEach(file=>{
+					 		 		const link = document.createElement("link");
+					 		 		link.setAttribute("rel","stylesheet");
+					 		 		link.setAttribute("href",path.join(plugins_folder,config["folder"],file)),
+					 		 		document.body.appendChild(link);
+					 		 	});
+					 		
+						});
+		  	}
+	  	});
+		});
+	  	
+    });
+
+	}else{   //If the plugins folder already exist
+
+	fs.readdir(plugins_folder, (err, paths) => {
+	  	paths.forEach(dir => {
+	  		const direct = fs.statSync(path.join(plugins_folder,dir));
+      	if (!direct.isFile()){
+
+		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
+		  			var config = JSON.parse(data);
+		 		 			if (err) throw err;
+		 		 			plugins_list.push(config);
+				 		 	const script = document.createElement("script");
+				 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
+				 		 	document.body.appendChild(script);
+
+				 		 	config["javascript"].forEach(file=>{
+				 		 		const script = document.createElement("script");
+				 		 		script.setAttribute("src",path.join(plugins_folder,config["folder"],file)),
+				 		 		document.body.appendChild(script);
+				 		 	});
+				 		 	config["css"].forEach(file=>{
+				 		 		const link = document.createElement("link");
+				 		 		link.setAttribute("rel","stylesheet");
+				 		 		link.setAttribute("href",path.join(plugins_folder,config["folder"],file)),
+				 		 		document.body.appendChild(link);
+				 		 	});
+				 		
+					});
+	  	}
+	  	});
+	  	
+		});
+
+
+	}	
+		
+	
+
+
+}
 

@@ -1,4 +1,4 @@
-:root{
+:root{ /*Color pallete */
 	--primaryColor: #222222;
     --secondaryColor: #171717;
     --accentColor: #FD0054;
@@ -23,8 +23,8 @@
     src: url(../Roboto-Regular.ttf);
 }
 @font-face {
-    font-family: asap;
-    src: url(../Asap-Regular.ttf);
+    font-family: hack;
+    src: url(../Hack-Regular.ttf);
 }
 html{
    font-family: _main_font;
@@ -37,7 +37,7 @@ html{
 
 
 .CodeMirror {
-    font-family: "asap";
+    font-family: "hack";
     font-size: var(--editor-font-size);
     text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
@@ -52,8 +52,8 @@ body , head{
 
 ::-webkit-scrollbar {
     transition: 0.1s;
-    width: 8px;
-    height: 8px;
+    width: 12px;
+    height: 12px;
     background: transparent;
 
 }
@@ -64,14 +64,14 @@ body , head{
 
 ::-webkit-scrollbar-thumb {
     transition: 0.15s;
-    width: 3px !important;
-    height: 3px !important;
-    background: lightgray;
+    width: 5px !important;
+    height: 5px !important;
+    background: var(--widget-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
     transition: 0.15s;
-    background: gray;
+    background: var(--widget-color);
 }
 ::-webkit-scrollbar-corner{
     visibility: hidden;
@@ -130,8 +130,7 @@ button.error-on-boot-factory:hover{
     position: fixed;
     left:0;
     width:180px;
-    height: 95%;
-    padding-bottom: 5%;
+    height: calc(100% - (30px));
     overflow: scroll;
     font-size:12px;
     color:var(--white-black);
@@ -151,24 +150,26 @@ button.error-on-boot-factory:hover{
     margin: 0px;
     padding: 0px;
     color:var(--white-black);
+    overflow-x: overlay;
 }
 
 #editor_content > #body-space{
     font-size: var(--editor-font-size);
+    background: var(--editor-background-color);
     position: relative;
     left:0px;
     right:0px;
     top:0px;
     margin: 0px 0px 0px 180px;
-    height: height: calc(100% - (35px));;
+    height:  calc(100% - (30px));
     width: auto;
     color:var(--white-black);
     overflow: hidden;
 
 }
 
-#editor_content >#body-space > #code-space{
-     height: calc(100% - (35px));
+#editor_content >#body-space > .code-space{
+     height: calc(100% - (2px));
 }
 
 .flex{
@@ -184,19 +185,25 @@ button.error-on-boot-factory:hover{
 
 #editor_content > #body-space >#tabs_bar > .tabs{
 
+    position: relative;
     transition: 0.10s;
     color:var(--white-black);
     text-align: center;
     vertical-align: middle;
-    height: 40px;
+    height: 37px;
     white-space: nowrap;
     display: inline-block;
     background: var(--primaryColor);
-    min-width: 170px;
-    max-width: 180px;
+
 
 
 }
+#editor_content > #body-space >#tabs_bar > .tabs:hover{
+
+    background: var(--widget-color);
+
+}
+
 #editor_content > #body-space >#tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
     
@@ -205,21 +212,23 @@ button.error-on-boot-factory:hover{
 #editor_content > #body-space >#tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
-    position: sticky;
-float: left;
-padding-left: 10px;
-font-size: 14px;
-width: 100px;
-white-space: nowrap;
-height: auto;
-line-height: 15px;
+    position: relative;
+    font-size: 12px;
+    min-width: 75px;
+    max-width: 70%;
+    white-space: nowrap;
+    height: auto;
+    line-height: 15px;
+    top: 0px;
+    left: 0px;
+    margin-left: 13px;
 
 }
 
 
 #editor_content > #body-space >#tabs_bar > .tabs > .close_tab{
     position: relative;
-    top:18%;
+    top:17%;
     display: inline-block;
     right:0;
     float: right;
@@ -241,25 +250,12 @@ line-height: 15px;
     stroke: var(--accentColor);
 }
 
-
-
-.icon:hover > svg > rect{ /*For the maximize icon*/
-    stroke: var(--accentColor);
-     border: 0;
-      margin: 0;
-}
-
-.icon_border:hover > svg > rect{ /*For the other icons*/
-    fill:var(--accentColor);
-    stroke: var(--accentColor);
-    border: 0;
-    margin: 0;
-}
-
 #editor_content > #left-bar div.folder_list1{
+    animation: directory_opening linear 0.1s;
     color: var(--white-black);
     border-radius: 70px;
-    padding-left:3px;
+    transform: translateX(3px);
+    padding-left: 3px;
     transition: 0.10s;
     clear: both;
     white-space: nowrap;
@@ -273,50 +269,45 @@ line-height: 15px;
     background: transparent;
 }
 #editor_content > #left-bar div.folder_list1:hover{
+    transition: 0.1s;
     border-radius: 4px;
-    padding-left:3px;
-    transition: 0.15s;
+    background: var(--widget-color);
+}
+
+#editor_content > #left-bar div.folder_list2{
+    animation: directory_opening linear 0.1s;
+    color:var(--white-black);
+    border-radius: 70px;
+    transform: translateX(3px);
+    padding-left: 3px;
+    transition: 0.10s;
     clear: both;
     white-space: nowrap;
     font-size: 12px;
     padding-top: 1px;
     padding-bottom: 4px;
     background: transparent;
-    line-height: 0px;
+    line-height: 25px;
     height: 20px;
     cursor: pointer;
+    transform: translateX(3px);
+}
+#editor_content > #left-bar div.folder_list2:hover{
+    transition: 0.1s;
+    border-radius: 4px;
     background: var(--widget-color);
 }
 
-#editor_content > #left-bar div.folder_list2{
-    color:var(--white-black);
-    border-radius: 70px;
-    padding-left:3px;
-    transition: 0.10s;
-    clear: both;
-    white-space: nowrap;
-    font-size: 12px;
-     padding-top: 1px;
-    padding-bottom: 4px;
-    background: transparent;
-    line-height: 25px;
-    height: 20px;
-    cursor: pointer;
-}
-#editor_content > #left-bar div.folder_list2:hover{
-    border-radius: 4px;
-    padding-left:3px;
-    transition: 0.15s;
-    clear: both;
-    white-space: nowrap;
-    font-size: 12px;
-     padding-top: 1px;
-    padding-bottom: 4px;
-    background: transparent;
-    line-height: 25px;
-    height: 20px;
-    cursor: pointer;
-    background: var(--widget-color);
+@keyframes directory_opening{
+  from{
+    opacity: 0.5;
+    transform: translateX(1px);
+  }
+  to{
+     transform: translateX(3px);
+    opacity: 1;
+
+  }
 }
 
 #control-bar {
@@ -326,14 +317,16 @@ line-height: 15px;
     color: var(--white-black);
     height: 30px; 
     background-color: var(--primaryColor);
-    padding: none;
+    padding: 0;
     margin: 0px; 
+    list-style-type: none;
     overflow: hidden;
+    margin: 0;
 }
 
 #control-bar > .title {
 color: var(--white-black);
- position: fixed;
+ position: relative;
  top: 8px;
  left: 8px; 
  font-size: 12px;
@@ -343,7 +336,8 @@ color: var(--white-black);
  -webkit-app-region: no-drag;
  position: fixed;
  top: 0px;
- right: 6px;
+ right: 0px;
+ width: 143px;
 
 }
 
@@ -351,14 +345,26 @@ color: var(--white-black);
 #control-bar > .controls > button {
     padding: 3px 0px;
     height: 7px;
-    width: 50px;
+    width: 45px;
     margin: 0;  
     border: none;
+    background: transparent;
 }
-#control-bar > .controls > button:hover {
-    fill:var(--accentColor);
-    cursor: pointer;
-  
+
+#control-bar > .controls > button:hover { 
+    background: var(--widget-color);
+}
+#control-bar > .controls > #minimize:hover >svg >rect { 
+    fill: var(--white-black);
+}
+#control-bar > .controls > #maximize:hover >svg >rect { 
+    stroke: var(--white-black);
+}
+#control-bar > .controls > #close:hover { 
+    background: red;
+}
+#control-bar > .controls > #close:hover>svg>rect { 
+    fill: white;
 }
 .Button1{
     transition: 0.1s;
@@ -373,7 +379,7 @@ color: var(--white-black);
 .Button1:hover{
     transition: 0.1s;
     cursor: pointer;
-    background: var(--widget-color);    
+    background: var(--primaryColor);    
 }
 .Button1.red{
     background: red;
@@ -383,10 +389,73 @@ color: var(--white-black);
     background: darkred;
     color: white; 
 }
+.Button1.disabled{
+    pointer-events: none;
+}
 
 .window_title{
     font-size:25px; 
     font-weight:800;
-     line-height:7px; 
-     text-align:center;
+    line-height:5px; 
+    text-align:center;
+}
+
+
+
+
+
+context {
+  position: absolute;
+  background-color: var(--primaryColor);
+  overflow: none;
+  border-radius: 3px;
+  display: none;
+  z-index: 70;
+  max-height: 300px;
+  box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.13);
+  padding: 5px;
+}
+
+context .menuWrapper {
+  overflow: auto;
+  max-height: 300px;
+}
+
+context .menuWrapper::-webkit-scrollbar {
+  width: 10px;
+  height: 100%;
+  background-color: var(--secondaryColor);
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+context .menuWrapper::-webkit-scrollbar-thumb {
+  background: var(--secondaryColor);
+  border-radius: 3px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+  padding: 5px;
+}
+
+context .menuWrapper .option {
+    height: 30px;
+    font-size: 13px;
+    z-index: 80;
+    color: var(--white-black);
+    background-color: transparent;
+    padding: 5px 10px;
+    width: 100%;
+    text-decoration: none;
+    display: block;
+    border: 0;
+    border-radius: 5px;
+    text-align: left;
+}
+
+context  .menuWrapper .option.hover{
+  background-color: var(--accentColor);
+}
+
+context .menuWrapper .option:last-child{
+  border-bottom: none;
 }

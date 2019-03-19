@@ -1,10 +1,10 @@
 {
   "name": "Graviton-Editor",
-  "version": "0.7.0",
-  "description": "Graviton it's a free open source code editor!",
+  "version": "0.7.1",
+  "description": "Graviton is a free & open source code editor!",
   "main": "main.js",
   "scripts": {
-    "start": "electron . GravitonCodeEditor ",
+    "start": "electron . GravitonEditor ",
     "pack": "build --dir",
     "dist": "build"
   },
@@ -16,16 +16,17 @@
     "fs-extra": "^7.0.1",
     "jquery": "^3.3.1",
     "mkdirp": "^0.5.1",
+    "npm": "^6.8.0",
     "request": "^2.88.0"
   },
   "devDependencies": {
-    "electron": "^4.0.2",
+    "electron": "^4.0.5",
     "electron-builder": "^20.38.5",
     "fs": "0.0.1-security"
   },
   "build": {
     "appId": "graviton-editor",
-    "asar": false,
+    "asar": true,
     "dmg": {
       "contents": [
         {

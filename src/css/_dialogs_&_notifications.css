@@ -1,26 +1,16 @@
 /* Dialogs */
-@keyframes dialog_open_up{
-  from{
-    opacity: 0.2;
-    top:46% ;
-  }
-  to{
-    opacity: 1;
-    top: 45%  ;
-  }
-}
+
 .dialog_body{
     position: absolute;
-    animation: dialog_open_up linear 0.10s;
     color:var(--white-black);
     font-size: 17px;
-    padding:15px;
+    padding:17px;
     overflow-y: scroll;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     z-index: 85;
     width: 275px;
-    min-height: 125px;
+    min-height: 110px;
     max-height: auto;
     margin: 0;
     text-align: left;
@@ -30,8 +20,10 @@
     transform: translate(-50%, -45%);
     opacity: 1;
     overflow: auto;
-}
+} 
+
 ._dialog_button{
+    font-weight: bold;
     float: right;
      width: auto;
     border: none; 
@@ -51,7 +43,7 @@
 
     transition: 0.1s;
     cursor: pointer;
-    background: var(--widget-color);
+    background: var(--primaryColor);
 
 }
 
@@ -60,12 +52,13 @@
 
     animation: open_up linear 0.15s;
     width: 300px;
-    min-height: 75px;
+    min-height: 65px;
     height: auto;
+    max-height: 310px;
     background: var(--notifications-background-color);
     position: relative;
     color: var(--white-black);
-    padding: 10px;
+    padding: 12px;
     margin: 10px;
     border-radius: var(--notifications-window-radius);
     box-shadow: 1px 3px 7px rgba(0,0,0,40%);
@@ -81,10 +74,16 @@
     opacity: 1  ;
   }
 }
+.notificationBody > div{
 
+    position: relative;
+    height: auto;
+    max-height: 100px;
+    overflow: auto;
+}
 .notificationBody > button{
     position: absolute;
-    right: 7px;
+    right: 10px;
     background: transparent;
     border: 0;
     cursor: pointer;
@@ -94,9 +93,48 @@
     stroke: transparent;
     border: 0;
 }
+.notificationBody > button:hover>svg >rect{
+     stroke:var(--accentColor);
+    border: 0;
+}
 .notificationBody>h1{
     font-size: 18px;
+    line-height: 1px;
 }
-.notificationBody>p{
-    font-size: 13px;
+.notificationBody > div > p{
+    font-size: 12px;
+}
+/* Floating Windows*/
+.floating_window{
+    animation: window_expand linear 0.2s;
+    z-index: 50;
+    top: 15px;
+    right: 40px;
+    transform: translate(20px, 40px);
+    background: red;
+    position:  fixed;
+    min-width: 50px;
+    min-height: 50px;
+    background: var(--notifications-background-color);
+    color: var(--white-black);
+    padding: 10px;
+    margin: 10px;
+    border-radius: var(--notifications-window-radius);
+    box-shadow: 1px 3px 7px rgba(0,0,0,40%);
+
+}
+
+@keyframes window_expand{
+  from{
+    opacity: 0;
+    top:25px;
+  }
+  to{
+    opacity: 1;
+    top:15px;
+  }
+}
+.floating_window *{
+    overflow: auto;
+
 }

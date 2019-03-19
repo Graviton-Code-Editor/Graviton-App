@@ -4,6 +4,7 @@
 <img src="example.jpg">
 <h2>Features?</h2>
 <p>- Themes</p>
+<p>- Plugins</p>
 <p>- Custom highlights</p>
 <p>- Directory tree view</p>
 <p>- Large language support</p>

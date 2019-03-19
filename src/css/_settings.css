@@ -37,8 +37,8 @@
     
 }
 .opened_window{
-    transition: 0.35s;
-    background: rgba(0,0,0,0.7);
+    transition: 0.15s;
+    background: rgba(0,0,0,0.6);
     top:0;
     left:0;
     height: 100%;
@@ -46,18 +46,9 @@
     position: fixed;
     z-index: 80;
 }
-@keyframes window_open_up{
-  from{
-    opacity: 0.2;
-    top:47% ;
-  }
-  to{
-    opacity: 1;
-    top: 45%  ;
-  }
-}
+
 .body_window{
-    animation: window_open_up linear 0.1s;
+    transition: 0.1s;
     color:var(--white-black);
     font-size: 17px;
     padding:12px;
@@ -65,10 +56,10 @@
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     z-index: 85;
-    width: 70%;
+    width: 85%;
     height: 80%;
     margin: 0;
-    position: fixed;
+    position: absolute;
     text-align: left;
     background: var(--secondaryColor);
     top: 45%;
@@ -103,7 +94,10 @@ overflow: auto;
     transition: 0.12s;
    background: var(--widget-color);
     cursor: pointer;
-
+}
+.theme_div:active{
+    transition: 0.12s;
+    transform: scale(0.97);
 }
 #language_list{
 overflow: auto;
@@ -183,16 +177,15 @@ input[type="number"] {
 
 
 .switch {
-    cursor: pointer;
-     box-sizing: border-box;
     width: 37px;
      height: 20px;
      border-radius: 20px;
      margin:12px;
-     position: relative;
+}
+.switch:hover{
+    cursor: pointer;
 }
 .switch > div{
-     box-sizing: border-box;
     height: 16px;
     width: 16px;
     border-radius: 50px;
@@ -201,33 +194,39 @@ input[type="number"] {
 }
 
 .activated.switch {
-    transition: 0.15s;
+ 
     background: var(--primaryColor);
 }
 .activated.switch > div{
-    transition: 0.15s;
+ 
     background: var(--accentColor);
     left:18px;
 }
 .desactivated.switch {
-    transition: 0.15s;
+ 
     background: lightgray;
 }
 
 .desactivated.switch > div{
-    transition: 0.15s;
+
     background: gray;
    left:3px;
 }
 
 .disabled.switch{
-    transition: 0.15s;
+    transition: 0.07s;
     background: lightgray;
     box-sizing: border-box;
 }
 .disabled.switch.desactivated > div {
-    transition: 0.15s;
+    transition: 0.07s;
     background-color: gray;
     left:-4px;
     position: relative;
+}
+.body_window span{
+
+    line-height: 30px;
+    font-size: 12px;
+    color: var(--white-black);
 }
