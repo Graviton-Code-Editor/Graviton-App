@@ -222,5 +222,6 @@ window.customElements.define('gv-switch', Switch);
 
 function FactoryReset(){
 	fs.unlinkSync(configDir, (err)=>{	});  
+
 	restartApp();
 }

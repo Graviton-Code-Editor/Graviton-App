@@ -3,24 +3,18 @@ const timeflow = new gPlugin({
   name: "Time Flow"
 })
 const dm1 = new dropMenu();
-
 timeflow.createData({
     "week":["0","0","0","0","0","0","0"],
     "today":new Date(),
     "status":"desactivated"
 });
-
-
 var _started = new Date().getTime();
 var _now = 0 ;
 var days;
 var myWeek = timeflow.getData()["week"];
-
 myWeek.splice(0,1);
 timeflow.setData("week",myWeek);
-
 function graphic(){
-
 	const week = timeflow.getData()["week"];
         days = `
         <div id="timeflow_content">
@@ -75,9 +69,9 @@ function loop(){
        
         _now = ((new Date().getTime()-_started)/1000).toFixed(2);
         time = secondsToTime(_now);
-        var week = timeflow.getData().week;
-        week[6] = _now;
-        timeflow.setData("week",week);
+        let new_data = timeflow.getData()["week"];
+        new_data[6] = _now;
+        timeflow.setData("week",new_data);
         graphic();
 	      if(timeflow.getData()["status"] ==="activated"){
 	      		loop();

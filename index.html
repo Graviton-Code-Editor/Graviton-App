@@ -1,15 +1,11 @@
  <!DOCTYPE>
-
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="src/css/fast_loading.css">
  <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: white; ">
  	<img id="bootanimation_logo" src="src/icons/logo.svg" height="125px" >
  </div>
- <script>
-
- 	var editor_booted = false;
-
- 	
+<script>
+let editor_booted = false;
 function DeleteBoot(){
 	if(document.getElementById("bootanimation") != null ){
 		/*const electron = require('electron');
