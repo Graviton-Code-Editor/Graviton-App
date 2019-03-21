@@ -17,7 +17,7 @@ var DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 var tabs = [];
 var tabsEqualToFiles = [];
 var FirstFolder = "not_selected";
-var editingTab = " ";
+var editingTab;
 var ids = 0;
 let plang = " ";
 var editorIsReady = false;
@@ -93,9 +93,9 @@ function filterIt(arr, searchKey, cb) {
   }
   return cb(list);
 }
-
-  editor.on("change", function() {
+editor.on("change", function() {
     //Save data when switching between tabs
+    if(editors.length!=1){ //Prevent from saving the start message
       document
         .getElementById(editingTab)
         .setAttribute("file_status", "unsaved");
@@ -108,26 +108,27 @@ function filterIt(arr, searchKey, cb) {
       document
         .getElementById(editingTab)
         .setAttribute("data", editor.getValue());
+    }
 
   //Getting Cursor Position
 
-  var cursorPos = editor.cursorCoords();
+  const cursorPos = editor.cursorCoords();
 
   //Getting Last Word
 
-  var A1 = editor.getCursor().line;
-  var A2 = editor.getCursor().ch;
+  const A1 = editor.getCursor().line;
+  const A2 = editor.getCursor().ch;
 
-  var B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-  var B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+  const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+  const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
 
-  var lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
+  const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
 
   //Context Menu
 
   filterIt(dictionary, lastWord, function(filterResult){
     if (filterResult.length > 0 && lastWord.length >= 3) {
-      var contextOptions;
+      let contextOptions;
       for (var i=0; i< filterResult.length; i++) {
         contextOptions +="<button class='option'>"+filterResult[i]._name+"</button>"
         contextOptions = contextOptions.replace("undefined","");
@@ -182,13 +183,13 @@ editor.on("keydown", function(editor, e){
     }
     //Selection key Triggers
     if (e.keyCode === 13) {
-      var A1 = editor.getCursor().line;
-      var A2 = editor.getCursor().ch;
+      const A1 = editor.getCursor().line;
+      const A2 = editor.getCursor().ch;
 
-      var B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-      var B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+      const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+      const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
 
-      var selected = $(this).text();
+      const selected = $(this).text();
       editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
       setTimeout(function() {
         $("context").fadeOut();
@@ -205,13 +206,13 @@ $("context .menuWrapper").on("mouseenter", "div.option", function(){
 });
 
 $("context .menuWrapper").on("mousedown", "div.option", function(e) {
-  var A1 = editor.getCursor().line;
-  var A2 = editor.getCursor().ch;
+  const A1 = editor.getCursor().line;
+  const A2 = editor.getCursor().ch;
 
-  var B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-  var B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+  const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+  const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
 
-  var selected = $(this).text();
+  const selected = $(this).text();
   editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
   $("context").fadeOut();
   $("context .menuWrapper").html("");
@@ -283,25 +284,26 @@ function openFolder() {
     selectedFiles => loadDirs(selectedFiles[0], "left-bar", true)
   );
 }
-
 function saveFile() {
-  fs.writeFile(filepath, editor.getValue(), err => {
-    if (err) {
-      return err;
-    }
-    document.getElementById(editingTab).setAttribute("file_status", "saved");
-    document
-      .getElementById(editingTab)
-      .children[1].setAttribute("onclick", "deleteTab('" + editingTab + "')");
-    document.getElementById(editingTab).children[1].innerHTML = close_icon;
-  });
+  if(editors.length!=1){ //Prevent from saving the start message
+    fs.writeFile(filepath, editor.getValue(), err => {
+      if (err) {
+        return err;
+      }
+      document.getElementById(editingTab).setAttribute("file_status", "saved");
+      document
+        .getElementById(editingTab)
+        .children[1].setAttribute("onclick", "deleteTab('" + editingTab + "')");
+      document.getElementById(editingTab).children[1].innerHTML = close_icon;
+    });
+  }
 }
 function loadDirs(dir, appendID, __FirstTime) {
+  let _SUBFOLDER;
   FirstFolder = dir;
-  var me = document.getElementById(appendID);
+  const me = document.getElementById(appendID);
   if (me.getAttribute("opened") == "true") {
     me.setAttribute("opened", "false");
-
     const dir_length = me.children.length;
     for (i = 0; i < dir_length; i++) {
       if (i == 0) {
@@ -310,7 +312,6 @@ function loadDirs(dir, appendID, __FirstTime) {
         me.children[1].remove();
       }
     }
-
     return;
   } else {
     document.getElementById(appendID).setAttribute("opened", "true");
@@ -321,98 +322,90 @@ function loadDirs(dir, appendID, __FirstTime) {
   }
   if (__FirstTime ) {
     registerNewProject(dir); //
-    var _folder1 = document.createElement("div");
+     _SUBFOLDER = document.createElement("div");
     for (i = 0; i < document.getElementById(appendID).children.length; i++) {
       document.getElementById(appendID).children[i].remove();
     }
     document.getElementById(appendID).setAttribute("opened", "false");
-    _folder1.setAttribute("class", "folder");
-    _folder1.setAttribute("myPadding", "50");
-    _folder1.setAttribute("style", "margin:10px 20px; font-size:17px; ");
+    _SUBFOLDER.setAttribute("class", "folder");
+    _SUBFOLDER.setAttribute("myPadding", "50");
+    _SUBFOLDER.setAttribute("style", "margin:10px 20px; font-size:17px; ");
     ids = 0;
-    _folder1.innerText = path.basename(dir);
-    document.getElementById(appendID).appendChild(_folder1);
+    _SUBFOLDER.innerText = path.basename(dir);
+    document.getElementById(appendID).appendChild(_SUBFOLDER);
   } else {
-    var _folder1 = document.getElementById(appendID);
+     _SUBFOLDER = document.getElementById(appendID);
   }
-
-  var paddingListDir =
-    Number(document.getElementById(appendID).getAttribute("myPadding")) + 5; //Add padding
+  const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 5; //Add padding
   fs.readdir(dir, (err, paths) => {
     for (i = 0; i < paths.length; i++) {
-      var dir2 = paths[i];
-
-      var longPath = path.join(dir, dir2);
+      let _LONGPATH = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
-        longPath = longPath.replace(/\\/g, "\\\\");
+        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\");
       }
       ids++;
-      const stats = fs.statSync(longPath);
+      const stats = fs.statSync(_LONGPATH);
       if (stats.isDirectory()) {
         //If is folder
         const element = document.createElement("div");
         element.setAttribute("opened", "false");
         element.setAttribute("ID", ids);
-        element.setAttribute("name", dir2);
+        element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
           "padding-left:" + paddingListDir + "px; vertical-align: middle;"
         );
         element.setAttribute("myPadding", paddingListDir);
-        element.setAttribute("longPath", longPath);
-        
+        element.setAttribute("longPath", _LONGPATH);
         const touch = document.createElement("div");
         touch.setAttribute(
           "onClick",
-          "loadDirs('" + longPath + "','" + ids + "',false)"
+          "loadDirs('" + _LONGPATH + "','" + ids + "',false)"
         );
-        touch.innerText = dir2;
+        touch.innerText = paths[i];
         touch.setAttribute("class", " folder_list2  ");
         touch.setAttribute(
           "style",
-          " width: " + Number(dir2.length * 6 + 55) + "px;"
+          " width: " + Number(paths[i].length * 6 + 55) + "px;"
         );
         const image = document.createElement("img");
         image.setAttribute("src", "src/icons/closed.svg");
         image.setAttribute("style", "float:left; margin-right:3px;");
         element.appendChild(touch);
         touch.appendChild(image);
-        _folder1.appendChild(element);
+        _SUBFOLDER.appendChild(element);
       }
     }
-
     for (i = 0; i < paths.length; i++) {
-      var dir2 = paths[i];
-
-      var longPath = path.join(dir, dir2);
+      let _LONGPATH = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
-        longPath = longPath.replace(/\\/g, "\\\\"); //Delete \
+        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\"); //Delete \
       }
       ids++;
-      const stats = fs.statSync(longPath);
+      const stats = fs.statSync(_LONGPATH);
       if (stats.isFile()) {
         //If it's file
         const element = document.createElement("div");
         element.setAttribute("class", "folder_list1");
         element.setAttribute("ID", ids + "B");
-        element.setAttribute("name", dir2);
+        element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
           "margin-left:" +
             paddingListDir +
             "px; vertical-align: middle; width:" +
-            Number(dir2.length * 6 + 55) +
+            Number(paths[i].length * 6 + 55) +
             "px;"
         );
         element.setAttribute("myPadding", paddingListDir);
-        element.setAttribute("longPath", longPath);
+        element.setAttribute("longPath", _LONGPATH);
         element.setAttribute("onClick", "createTab(this)");
-        _folder1.appendChild(element);
+        _SUBFOLDER.appendChild(element);
         const image = document.createElement("img");
-        image.setAttribute("src", "src/icons/" + getFormat(dir2) + ".svg");
+        image.setAttribute("src", "src/icons/" + getFormat(paths[i]) + ".svg");
         image.setAttribute("style", "float:left; margin-right:3px;");
         const p = document.createElement("p");
-        p.innerText = dir2;
+        p.innerText = paths[i];
         element.appendChild(image);
         element.appendChild(p);
       }
@@ -421,8 +414,7 @@ function loadDirs(dir, appendID, __FirstTime) {
 }
 
 function getFormat(text) {
-  var format = text.split(".").pop();
-  switch (format) {
+  switch (text.split(".").pop()) {
     case "html":
       return "html";
       break;
@@ -439,10 +431,8 @@ function getFormat(text) {
       return "file";
   }
 }
-
 function createTab(object) {
   // create tabs on the element ' tabs_bar '
-
   if (tabsEqualToFiles.includes(object) === false) {
     const tab = document.createElement("div");
     tab.setAttribute("ID", object.id + "A");

@@ -139,6 +139,8 @@ button.error-on-boot-factory:hover{
 
 }
 #editor_content > #body-space > #tabs_bar{
+    overflow: auto; 
+    -webkit-user-select: none;
     font-size: 15px;
     height:auto;
     width: auto;
