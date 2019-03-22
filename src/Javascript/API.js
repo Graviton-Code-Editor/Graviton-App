@@ -79,7 +79,6 @@ function dropMenu(obj){
 			const droplist = document.getElementById(this.id+"_dropbtn");
 			droplist.innerHTML = ""; //Remove current code and then add the updated one
 			droplist.parentElement.children[0].innerText = panel.button;
-			console.log(droplist.innerHTML);
 			let last;
 				Object.keys(panel).forEach(function(attr) {
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
@@ -170,7 +169,6 @@ const graviton = {
  				return editors[i];
  			}
  		}
-
  	},
  	getCurrentDirectory:function(){
  		return FirstFolder;
