@@ -1,11 +1,14 @@
 /* <-- Default NavBar >-- */
 const File = new dropMenu({
+  id:"file",
   translation: true
 });
 const Tools = new dropMenu({
+  if:"tools",
   translation: true
 });
 const Help = new dropMenu({
+  id:"help",
   translation: true
 });
 

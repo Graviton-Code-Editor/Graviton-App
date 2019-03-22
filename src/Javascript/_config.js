@@ -1,37 +1,27 @@
-
 let zoom_app;
 var _firsTime;
 //Variables
-let FontSizeEditor = "20"; //Default
-
-
-
+let FontSizeEditor = "15"; //Default
 function loadConfig(){ //Loads the configuration from the config.json
-
-
 	if (!fs.existsSync(configDir)) {
-
-		setThemeByName("Light Accented");
-	  	FontSizeEditorr = "20";
+		/*Default Config*/
+		setThemeByName("Light UI");
+	  	FontSizeEditorr = "15";
 	 		zoom_app = "20";
 	 		_firsTime = true;
 	 		selected_language = "english"; 
 
 	    var newConfig = {
 				FirstTime: _firsTime,
-				Theme:"Light Accented",
+				Theme:"Light UI",
 				FontSizeEditor: FontSizeEditorr,
 				Zoom:zoom_app,
 				Language:selected_language,
 			};
-
 		newConfig = JSON.stringify(newConfig);
 	  fs.writeFile(configDir, newConfig, (err) => {});
-
 	  updateSettings();
-		
 		loadLanguage(selected_language);
-
 		if(_firsTime === false){
 		 welcomePage();
 		}else{

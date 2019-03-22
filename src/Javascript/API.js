@@ -72,65 +72,74 @@ function gPlugin(obj) {
 	}
 }
 function dropMenu(obj){
-
-  if(obj!=null && obj!=undefined) this.translation = obj.translation
+	this.id = obj.id;
+  if(obj!=null && obj!=undefined) this.translation = obj.translation;
 		this.setList = function(panel){
-    if(document.getElementById(panel["button"]+"_dropbtn")!=undefined){
-			const droplist = document.getElementById(panel["button"]+"_dropbtn");
-			droplist.innerHTML = "";
-			if(panel["list"]!=undefined){
-				let toTransx = this.translation;
-					Object.keys(panel["list"]).forEach(function(key) {
-							if(key=="*line"){
-									droplist.innerHTML += `<span class="line_space_menus"></span>`;
+    if(document.getElementById(this.id+"_dropbtn")!=undefined){
+			const droplist = document.getElementById(this.id+"_dropbtn");
+			droplist.innerHTML = ""; //Remove current code and then add the updated one
+			droplist.parentElement.children[0].innerText = panel.button;
+			console.log(droplist.innerHTML);
+			let last;
+				Object.keys(panel).forEach(function(attr) {
+					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
+						last = "list";
+					let toTransx = this.translation;
+						Object.keys(panel["list"]).forEach(function(key) {
+						if(key=="*line"){
+								droplist.innerHTML += `<span class="line_space_menus"></span>`;
+						}else{
+							if(toTransx !=true){
+								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
 							}else{
-								if(toTransx !=true){
-									droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
-								}else{
-									droplist.innerHTML += `<button class="translate_word" idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
-								}
-							}
-				});
-			}
-			if(panel["custom"]!=undefined) droplist.innerHTML += panel["custom"];
+
+								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
+							}			
+						}
+					});
+				}
+				if(panel[attr]==panel["custom"] && panel["custom"]!=undefined && last !="custom"){ //Custom
+					droplist.innerHTML += panel["custom"];
+					last = "custom";
+				}
+			});
 	}else{
 			const bar = document.getElementById("dropmenus_list");
 			const newTab = document.createElement("div");
 			const droplist = document.createElement("div");
 			droplist.classList = "dropdown-content hide";
-			droplist.setAttribute("id",panel["button"]+"_dropbtn");
+			droplist.setAttribute("id",this.id+"_dropbtn");
 			newTab.classList.add("dropdown");
 			if(this.translation !=true){
 				newTab.innerHTML = `
-				<button onclick="interact_dropmenu('${panel["button"]}_dropbtn')" class="dropbtn" >${panel["button"]}</button>`
+				<button onclick="interact_dropmenu('${this.id}_dropbtn')" class="dropbtn" >${panel["button"]}</button>`
 			}else{
 				newTab.innerHTML = `
-				<button class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${panel["button"]}_dropbtn')"  >${panel["button"]}</button>`
+				<button class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${this.id}_dropbtn')"  >${panel["button"]}</button>`
 			}
-			
-			if(panel["list"]!=undefined){
-				let toTransx = this.translation;
-					Object.keys(panel["list"]).forEach(function(key) {
-
-					if(key=="*line"){
-							droplist.innerHTML += `<span class="line_space_menus"></span>`;
-					}else{
-
-						if(toTransx !=true){
-							droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
+			let last;
+				Object.keys(panel).forEach(function(attr) {
+					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
+						last = "list";
+					let toTransx = this.translation;
+						Object.keys(panel["list"]).forEach(function(key) {
+						if(key=="*line"){
+								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{
+							if(toTransx !=true){
+								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
+							}else{
 
-							droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
+								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
+							}			
 						}
-							
-					}
-
-				});
-			}
-			if(panel["custom"]!=undefined){
+					});
+				}
+				if(panel[attr]==panel["custom"] && panel["custom"]!=undefined && last !="custom"){ //Custom
 					droplist.innerHTML += panel["custom"];
-			}
-
+					last = "custom";
+				}
+			});
 			newTab.appendChild(droplist);
 			bar.appendChild(newTab);
 	}

@@ -179,40 +179,33 @@ function selectTheme(from,theme){
 	}
 	theme.style = "background: var(--accentColor); color:white;";
 }
-	
 function getState(element){
-
-        if(document.getElementById(element).classList.contains("disabled")){
+        if(element.classList.contains("disabled")){
             return "disabled";
         }else{
-            return document.getElementById(element).classList.contains("activated");
+            return element.classList.contains("activated");
         }
-
 }
-
 	class Switch extends  HTMLElement {
     constructor() {
         super(); 
     }
     connectedCallback(){
-        var body = document.createElement("div");
-        var dot = document.createElement("div");
+    		this.innerHTML = "";
+        const body = document.createElement("div");
+        const dot = document.createElement("div");
         body.setAttribute("class",this.getAttribute("class")+" switch");
-        body.setAttribute("id",this.id);
         this.appendChild(body);
         body.appendChild(dot);
-        this.removeAttribute('id');
-        body.addEventListener('click', function(){
-                var dot = this.childNodes[0];
+        this.addEventListener('click', function(){
+                const dot = this.childNodes[0];
                 if(this.classList.contains("disabled")===false){
-                    if( getState(this.id)) {
+                    if( getState(this)) {
                         this.classList.replace("activated","desactivated");
                         dot.classList.replace("activated","desactivated");
-                        return false;   
                     }else {
                         this.classList.replace("desactivated","activated");
                         dot.classList.replace("desactivated","activated");
-                        return true;
                      }
                 }
         });

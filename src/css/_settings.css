@@ -115,12 +115,17 @@ overflow: auto;
     width: auto;
     background: var(--primaryColor);
     color:var(--white-black);
+    transform: scale(1);
 }
 .language_div:hover{
     transition: 0.1s;
     background: var(--widget-color);
     cursor: pointer;
 
+}
+.language_div:active{
+    transition: 0.12s;
+    transform: scale(0.97);
 }
 .Input1{
     transition: 0.1s;

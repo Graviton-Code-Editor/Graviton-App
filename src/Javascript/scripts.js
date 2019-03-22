@@ -27,6 +27,8 @@ var editors = [];
 var editor;
 var editorID;
 var editor_mode = "normal";
+var _previewer;
+var _enable_preview = false;
 const dictionary = autocomplete.javascript;
 if (path.basename(__dirname) !== "Graviton-Editor") {
     DataFolderDir = path.join(
@@ -70,7 +72,6 @@ function loadEditor(path, data) {
     document.getElementById(path + "_editor").style.display = "block";
   } else {
     //Editor exists
-
     for (i = 0; i < editors.length; i++) {
       document.getElementById(editors[i].id).style.display = "none";
       if (editors[i].id == path + "_editor") {
@@ -109,13 +110,9 @@ editor.on("change", function() {
         .getElementById(editingTab)
         .setAttribute("data", editor.getValue());
     }
-
   //Getting Cursor Position
-
   const cursorPos = editor.cursorCoords();
-
   //Getting Last Word
-
   const A1 = editor.getCursor().line;
   const A2 = editor.getCursor().ch;
 
@@ -464,7 +461,6 @@ function createTab(object) {
     });
     tab.appendChild(tab_text);
     tab.appendChild(tab_x);
-
     document.getElementById("tabs_bar").appendChild(tab);
     tabs.push(tab);
     tabsEqualToFiles.push(object);
@@ -546,7 +542,6 @@ function loadTab(object) {
     applyHighlighter(currentTheme);
   }
 }
-
 function updateCodeMode(path) {
   switch (path.split(".").pop()) {
     case "html":
@@ -643,10 +638,6 @@ function zenMode() {
     document.getElementById("body-space").style = "margin:0px";
   }
 }
-
-
-var _previewer;
-var _enable_preview = false;
 function _preview() {
   const url = require("url");
   const BrowserWindow = remote.BrowserWindow;
