@@ -25,10 +25,10 @@
 ._dialog_button{
     font-weight: bold;
     float: right;
-     width: auto;
+    width: auto;
     border: none; 
     margin-top: 15px;        
-    padding:10px 18px;
+    padding:10px 16px;
     background: transparent;
     color: var(--white-black);
      box-sizing: border-box;
@@ -37,6 +37,10 @@
     bottom: 0px;
     display: inline-block;
     border-radius: 3px;
+    font-family: _main_font;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 11px;
 }
 
 ._dialog_button:hover{
@@ -49,7 +53,7 @@
 
 /* Notifications */
 .notificationBody{
-
+    -webkit-app-region: no-drag; 
     animation: open_up linear 0.15s;
     width: 300px;
     min-height: 65px;

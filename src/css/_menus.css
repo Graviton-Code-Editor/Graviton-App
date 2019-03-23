@@ -1,5 +1,4 @@
-
- #control-bar >  #dropmenus_list {
+#control-bar >  #dropmenus_list {
     list-style-type: none;
     padding: 0;
     overflow: hidden;
@@ -8,9 +7,8 @@
     border:0;
     display: box;
     position: absolute;
+
 }
-
-
 button.dropbtn {
     position: relative;
     display: inline-block;
@@ -23,22 +21,17 @@ button.dropbtn {
     font-size: 13px;
     border: none;
     cursor: pointer;
-    z-index: 80;
     top:0;
+    font-family: _main_font;
 }
-
 .dropbtn:hover, .dropbtn:focus {
     background-color:var(--widget-color);
 }
-
-
 .dropdown {
     position: relative;
     display: inline-block;
     margin: 0px;
-
 }
-
 .dropdown-content {
     border-radius: 3px;
     position: fixed;
@@ -50,11 +43,9 @@ button.dropbtn {
     padding: 5px;
     margin: 0;
 }
-
-
 .dropdown-content > button:not( .dropbtn ) {
+    font-family: _main_font;
     font-size: 13px;
-    z-index: 80;
     color: var(--white-black);
     background-color: transparent;
     padding: 7px 10px;
@@ -64,14 +55,11 @@ button.dropbtn {
     border: 0;
     border-radius: 5px;
     text-align: left;
-
 }
 .dropdown-content > button:not( .dropbtn ) >img {
     height: 100px;
     display: block;
-
 }
-
 .dropdown-content > button:hover:not( .dropbtn) {
     color: var(--black-white);
     background-color: var(--accentColor);
@@ -91,19 +79,14 @@ span.line_space_menus{
     transform: translateY(0px);
     opacity: 1;
     display: block;
-     z-index: 80;
      visibility: visible;
 }
-
 .hide{
-    transition: 0.07s;
+    transition: 0.07s; 
+    opacity: 0.2;
     transform: translateY(-4px);
-    opacity: 0.4;
-    z-index: 50;
     visibility: hidden;
 }
-
-
 @keyframes context_up{
   from{
     opacity: 0.3;

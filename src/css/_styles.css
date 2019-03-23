@@ -1,4 +1,4 @@
-:root{ /*Color pallete */
+:root{ /* Color pallete , themes will override this*/
 	--primaryColor: #222222;
     --secondaryColor: #171717;
     --accentColor: #FD0054;
@@ -16,11 +16,9 @@
     --notifications-window-radius:5px;
 }
 
-   
-
 @font-face {
     font-family: _main_font;
-    src: url(../Roboto-Regular.ttf);
+    src: url(../Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
 }
 @font-face {
     font-family: hack;
@@ -28,47 +26,39 @@
 }
 html{
    font-family: _main_font;
+   font-weight: 550;
 }
 *{
     outline: 0;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialiased !important;
 }
-
-
 .CodeMirror {
-    font-family: "hack";
+    z-index: 0;
+    font-family: "hack"; /*--Default font-size for the editor */
     font-size: var(--editor-font-size);
     text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
-
-
-
 body , head{
 	margin: 0;
     padding: 0;
     background: var(--editor-background-color);
 }
-
 ::-webkit-scrollbar {
     transition: 0.1s;
     width: 12px;
     height: 12px;
     background: transparent;
-
 }
-
 ::-webkit-scrollbar-track {
     background: transparent;
 }
-
 ::-webkit-scrollbar-thumb {
     transition: 0.15s;
     width: 5px !important;
     height: 5px !important;
     background: var(--widget-color);
 }
-
 ::-webkit-scrollbar-thumb:hover {
     transition: 0.15s;
     background: var(--widget-color);
@@ -78,9 +68,7 @@ body , head{
     opacity: 0;
     background: transparent;
 }
-
-
- p.error-on-boot{
+p.error-on-boot{
     max-width: 500px;
     color:black;
     font-size: 18px;
@@ -122,11 +110,8 @@ button.error-on-boot-factory{
 }
 button.error-on-boot-factory:hover{
     background: darkred;
- 
 }
-
 #editor_content > #left-bar{
-
     position: fixed;
     left:0;
     width:180px;
@@ -136,7 +121,6 @@ button.error-on-boot-factory:hover{
     color:var(--white-black);
     background: var(--primaryColor);
     -webkit-user-select: none;
-
 }
 #editor_content > #body-space > #tabs_bar{
     overflow: auto; 
@@ -154,7 +138,6 @@ button.error-on-boot-factory:hover{
     color:var(--white-black);
     overflow-x: overlay;
 }
-
 #editor_content > #body-space{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
@@ -167,26 +150,18 @@ button.error-on-boot-factory:hover{
     width: auto;
     color:var(--white-black);
     overflow: hidden;
-
 }
-
 #editor_content >#body-space > .code-space{
      height: calc(100% - (2px));
 }
-
 .flex{
-
     display: flex;
     flex-direction: row;
-
 }
 .flex >div{
     flex: 1;
 }
-
-
 #editor_content > #body-space >#tabs_bar > .tabs{
-
     position: relative;
     transition: 0.10s;
     color:var(--white-black);
@@ -196,21 +171,13 @@ button.error-on-boot-factory:hover{
     white-space: nowrap;
     display: inline-block;
     background: var(--primaryColor);
-
-
-
 }
 #editor_content > #body-space >#tabs_bar > .tabs:hover{
-
     background: var(--widget-color);
-
 }
-
 #editor_content > #body-space >#tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
-    
 }
-
 #editor_content > #body-space >#tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
@@ -226,8 +193,6 @@ button.error-on-boot-factory:hover{
     margin-left: 13px;
 
 }
-
-
 #editor_content > #body-space >#tabs_bar > .tabs > .close_tab{
     position: relative;
     top:17%;
@@ -241,7 +206,6 @@ button.error-on-boot-factory:hover{
     border: none;
     background: transparent;
     fill: var(--white-black);
-
 }
 #editor_content > #body-space >#tabs_bar > .tabs > .close_tab:hover{
     height: 10px;
@@ -251,7 +215,6 @@ button.error-on-boot-factory:hover{
     fill: var(--accentColor);
     stroke: var(--accentColor);
 }
-
 #editor_content > #left-bar div.folder_list1{
     animation: directory_opening linear 0.1s;
     color: var(--white-black);
@@ -275,7 +238,6 @@ button.error-on-boot-factory:hover{
     border-radius: 4px;
     background: var(--widget-color);
 }
-
 #editor_content > #left-bar div.folder_list2{
     animation: directory_opening linear 0.1s;
     color:var(--white-black);
@@ -299,7 +261,6 @@ button.error-on-boot-factory:hover{
     border-radius: 4px;
     background: var(--widget-color);
 }
-
 @keyframes directory_opening{
   from{
     opacity: 0.5;
@@ -311,7 +272,6 @@ button.error-on-boot-factory:hover{
 
   }
 }
-
 #control-bar {
     -webkit-user-select: none;  
     -webkit-app-region: drag;
@@ -323,9 +283,9 @@ button.error-on-boot-factory:hover{
     margin: 0px; 
     list-style-type: none;
     overflow: hidden;
+    font-family: _main_font;
     margin: 0;
 }
-
 #control-bar > .title {
 color: var(--white-black);
  position: relative;
@@ -333,7 +293,6 @@ color: var(--white-black);
  left: 8px; 
  font-size: 12px;
 }
-
 #control-bar > #controls  {
  -webkit-app-region: no-drag;
  position: fixed;
@@ -342,8 +301,6 @@ color: var(--white-black);
  width: 143px;
 
 }
-
-
 #control-bar > .controls > button {
     padding: 3px 0px;
     height: 7px;
@@ -369,6 +326,7 @@ color: var(--white-black);
     fill: white;
 }
 .Button1{
+    font-family: _main_font;
     transition: 0.1s;
     border-radius: var(--buttons-roundness);
     width: auto;
@@ -378,10 +336,15 @@ color: var(--white-black);
     color: var(--white-black);
     box-sizing: border-box;
 }
+.Button1.visible{ 
+    transition: 0.1s;
+    background-color:var(--primaryColor);
+}
+
 .Button1:hover{
     transition: 0.1s;
     cursor: pointer;
-    background: var(--primaryColor);    
+    background: var(--widget-color);    
 }
 .Button1.red{
     background: red;
@@ -394,18 +357,18 @@ color: var(--white-black);
 .Button1.disabled{
     pointer-events: none;
 }
-
 .window_title{
     font-size:25px; 
     font-weight:800;
     line-height:5px; 
     text-align:center;
 }
-
-
-
-
-
+.section{
+    margin: 6px;
+    padding: 10px;
+    border-radius: 7px;
+    background: var(--primaryColor);
+}
 context {
   position: absolute;
   background-color: var(--primaryColor);
@@ -417,12 +380,10 @@ context {
   box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.13);
   padding: 5px;
 }
-
 context .menuWrapper {
   overflow: auto;
   max-height: 300px;
 }
-
 context .menuWrapper::-webkit-scrollbar {
   width: 10px;
   height: 100%;
@@ -430,7 +391,6 @@ context .menuWrapper::-webkit-scrollbar {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
-
 context .menuWrapper::-webkit-scrollbar-thumb {
   background: var(--secondaryColor);
   border-radius: 3px;
@@ -438,7 +398,6 @@ context .menuWrapper::-webkit-scrollbar-thumb {
   background-clip: content-box;
   padding: 5px;
 }
-
 context .menuWrapper .option {
     height: 30px;
     font-size: 13px;
@@ -453,11 +412,10 @@ context .menuWrapper .option {
     border-radius: 5px;
     text-align: left;
 }
-
 context  .menuWrapper .option.hover{
   background-color: var(--accentColor);
+  color:var(--black-white);
 }
-
 context .menuWrapper .option:last-child{
   border-bottom: none;
 }

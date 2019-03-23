@@ -4,11 +4,8 @@ const path = require('path');
 const fs = require('fs');
 
 
-let {ipcMain} = electron;
-ipcMain.on('resize', function (e, x, y) {
-	mainWindow.setSize(x, y);
-});
-const {app, BrowserWindow} = electron;
+
+const {app, BrowserWindow,globalShortcut} = electron;
 const Menu = electron.Menu;
 
 let mainWindow;
@@ -27,18 +24,15 @@ app.on('ready', function(){
   	'minWidth': 250,
   	backgroundColor: "#FFF"
 	});
-
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),
 		protocol: 'file:',
 		slashes: true,
-		
 	}));
-
 	//mainWindow.webContents.openDevTools() 
 	//mainWindow.setMenu(null); 
-
 });
+
 app.on('window-all-closed', ()=>{
   app.quit();
 });

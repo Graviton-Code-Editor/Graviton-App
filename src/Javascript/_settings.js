@@ -84,17 +84,22 @@ function goSPage(num){
 				
 				document.getElementById("body_content").innerHTML=`
 				<div id="dpi">
-				<p>`+selected_language["ZoomSize"]+`</p>
-				 <input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="`+zoom_app+`" class="slider" id="myRange">
+						<h3>`+selected_language["ZoomSize"]+`</h3>
+						<div class="section">
+								<p>Adjust to the size you prefer.</p>
+								<input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="`+zoom_app+`" class="slider" id="myRange">
+						</div>
 				</div>
-				<p>`+selected_language["Themes"]+`</p> 
-				<div id='theme_list'>
-
-				</div> 
-				<span>Wanna create your own?</span>
+				<h3>`+selected_language["Themes"]+`</h3> 
+				<div class="section">
+					<div id='theme_list'></div> 
+					<span>Wanna create your own?</span>
+				</div>
 				<div id="editor_fs">
-				<p>`+selected_language["EditorFontSize"]+`</p>
-				<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
+				<h3>`+selected_language["EditorFontSize"]+`</h3>
+				<div class="section">
+					<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
+				<div>
 				</div>`;
 				for(i=0;i<themes.length; i++){
 					
@@ -149,8 +154,17 @@ function goSPage(num){
 				
 				document.getElementById("body_content").innerHTML=`
 				
-				<p>`+selected_language["FactoryReset"]+`</p>
-				<button class="button1 red" onclick="hideSettings(); createDialog('factory_reset',selected_language['FactoryReset'],selected_language['FactoryReset-dialog-message'],selected_language['Decline'],selected_language['Accept'],'closeDialog(this); ','closeDialog(this); FactoryReset();')">Factory Reset</button> `;
+				<h3>`+selected_language["FactoryReset"]+`</h3>
+				<div class="section">
+						<button class="button1 red" onclick=" createDialog('factory_reset',selected_language['FactoryReset'],selected_language['FactoryReset-dialog-message'],selected_language['Decline'],selected_language['Accept'],'closeDialog(this); ','closeDialog(this); FactoryReset();')">Factory Reset</button>
+				</div>
+				<h3>`+selected_language["CurrentVersion"]+`</h3>
+				<div class="section">
+						<p>Number: ${version}</p>
+						<p>By date: ${dateVersion}</p>
+						<button class="button1  " onclick="CHECK_UPDATES();">Check for updates</button>
+				</div>
+				`;
 
 				document.getElementById("navB3").classList.add("active");
 

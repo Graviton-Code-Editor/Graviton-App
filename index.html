@@ -2,133 +2,104 @@
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="src/css/fast_loading.css">
  <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: white; ">
- 	<img id="bootanimation_logo" src="src/icons/logo.svg" height="125px" >
+ 	<img id="bootanimation_logo" src="src/icons/logo.svg">
  </div>
 <script>
-let editor_booted = false;
-function DeleteBoot(){
-	if(document.getElementById("bootanimation") != null ){
-		/*const electron = require('electron');
-    let {ipcRenderer} = electron;
- 	 ipcRenderer.send('resize', 750, 650);*/
-		document.getElementById("bootanimation").remove();
-		editor_booted = true;
-
-	}
-}
-window.addEventListener("error",function(){
-
-	new Notification("Error detected",'An error has appeared!');
-
-});
-
-function printOnBoot(message,type){
-	if(document.getElementById("bootanimation") != null){
-		switch (type){
-			case 1:
-				const screen = document.getElementById("bootanimation");
-			  screen.innerHTML=`
-			  <p class="error-on-boot">`+message+`</p>
-			  <div class="error-on-boot">
-				  <button class="error-on-boot" onclick="window.close();"> Close </button>
-				  <button class="error-on-boot-factory" onclick="">Factory Reset</button>
-			  </div>`
-	  	break;
+	let editor_booted = false;
+	function DeleteBoot(){
+		if(document.getElementById("bootanimation") != null ){
+			document.getElementById("bootanimation").remove();
+			editor_booted = true;
 		}
 	}
-}
+	window.addEventListener("error",function(){
+
+		new Notification("Error detected",'An error has appeared!');
+	});
+
+	function printOnBoot(message,type){
+		if(document.getElementById("bootanimation") != null){
+			switch (type){
+				case 1:
+					const screen = document.getElementById("bootanimation");
+				  screen.innerHTML=`
+				  <p class="error-on-boot">`+message+`</p>
+				  <div class="error-on-boot">
+					  <button class="error-on-boot" onclick="window.close();"> Close </button>
+					  <button class="error-on-boot-factory" onclick="">Factory Reset</button>
+				  </div>`
+		  	break;
+			}
+		}
+	}
  </script>
-
 <html>
+		<div id="control-bar"  >
 
-<div id="control-bar"  >
-
-      <div id="controls" class="controls" >
-           <button  id="minimize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="7" y="11.5" width="10" height="0.7" transform="matrix(1,0,0,1,0,0)" fill="var(--titleBar-icons-color)"/></svg></button>
-           <button  id="maximize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate;" viewBox="0 0 24 24" width="24" height="24"><rect x="7.5" y="7.5" width="9" height="9" transform="matrix(1,0,0,1,0,0)" fill="transparent" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
-           <button   id="close" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" /><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" /></svg></button>
-      </div>
-      <img  class="title" style=" pointer-events: none; top:0; left:0; padding:7px 7px; margin:0; position: absolute;" height="16px"  src="src/icons/logo.svg">
-
-      <div id="dropmenus_list"  >	
-			
-					
- 			</div>
-								
-		</div>
-
-
-<body>
-
-	<div class="flex" id="editor_content">
-
-		<div id="left-bar" opened="false" > <!--Directories-->
-
-			<span id="openFolder" height="24px" width="24px" onclick="openFolder()"  ></span>
-
-		</div>
-	<context>
-      <div class="menuWrapper"></div>
-    </context>
-		<div id="body-space" >
-			<div id="message"></div>
-			<div id="tabs_bar" class="flex">
-
+		      <div id="controls" class="controls" >
+		           <button  id="minimize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="7" y="11.5" width="10" height="0.7" transform="matrix(1,0,0,1,0,0)" fill="var(--titleBar-icons-color)"/></svg>
+		           </button>
+		           <button  id="maximize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate;" viewBox="0 0 24 24" width="24" height="24"><rect x="7.5" y="7.5" width="9" height="9" transform="matrix(1,0,0,1,0,0)" fill="transparent" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
+		           <button   id="close" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" /><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" /></svg></button>
+		      </div>
+		      <img  class="title" style=" pointer-events: none; top:0; left:0; padding:7px 7px; margin:0; position: absolute;" height="16px"  src="src/icons/logo.svg">
+		      <div id="dropmenus_list">	</div> <!--Dropmenus list-->		
+				</div>
+		<body>
+			<div class="flex" id="editor_content">
+				<div id="left-bar" opened="false" > <!--Directories tree-view -->
+					<span id="openFolder" height="24px" width="24px" onclick="openFolder()"  ></span>
+				</div>
+			<context>
+		      <div class="menuWrapper"></div>
+		    </context>
+				<div id="body-space" >
+					<div id="message"></div>
+					<div id="tabs_bar" class="flex">
+					</div>	
+				</div>
+			</div> 
+			<div id="notifications" style="position: fixed; right: 20px; bottom: 20px; z-index: 200; "> <!-- Notifications list -->
 			</div>
+		</body>	
+		<!-- Codemirror -->
+		<script src="src/lib/codemirror.js"></script>
 
+		<script src="src/mode/css/css.js"></script>
+		<script src="src/mode/xml/xml.js"></script>
+		<script src="src/mode/javascript/javascript.js"></script>
+		<script src="src/mode/htmlmixed/htmlmixed.js"></script>
+		<script src="src/mode/go/go.js"></script>
+		<script src="src/mode/dart/dart.js"></script>
+		<script src="src/mode/pascal/pascal.js"></script>
+		<script src="src/mode/php/php.js"></script>
+		<script src="src/mode/ruby/ruby.js"></script>
+		<script src="src/mode/sql/sql.js"></script>
+		<script src="src/mode/sass/sass.js"></script>
 
-				
-		</div>
+		<link rel="stylesheet" href="src/lib/codemirror.css">
+		<link rel="stylesheet" href="src/Highlights/default.css">
 
-	</div> 
-	<div id="notifications" style="position: fixed; right: 20px; bottom: 20px; z-index: 200; ">
-		
-	</div>
+			<!-- Graviton Editor -->
 
-</body>	
+		<link rel="stylesheet" href="src/css/_styles.css">
+		<link rel="stylesheet" href="src/css/_menus.css">
+		<link rel="stylesheet" href="src/css/_settings.css">
+		<link rel="stylesheet" href="src/css/_welcome-page.css">
+		<link rel="stylesheet" href="src/css/_dialogs_&_notifications.css">
+		<link rel="stylesheet" href="src/css/_plugins.css">
 
-<!-- Codemirror -->
-
-<script src="src/lib/codemirror.js"></script>
-
-<script src="src/mode/css/css.js"></script>
-<script src="src/mode/xml/xml.js"></script>
-<script src="src/mode/javascript/javascript.js"></script>
-<script src="src/mode/htmlmixed/htmlmixed.js"></script>
-<script src="src/mode/go/go.js"></script>
-<script src="src/mode/dart/dart.js"></script>
-<script src="src/mode/pascal/pascal.js"></script>
-<script src="src/mode/php/php.js"></script>
-<script src="src/mode/ruby/ruby.js"></script>
-<script src="src/mode/sql/sql.js"></script>
-<script src="src/mode/sass/sass.js"></script>
-
-<link rel="stylesheet" href="src/lib/codemirror.css">
-<link rel="stylesheet" href="src/Highlights/default.css">
-
-	<!-- Graviton Editor -->
-
-<link rel="stylesheet" href="src/css/_styles.css">
-<link rel="stylesheet" href="src/css/_menus.css">
-<link rel="stylesheet" href="src/css/_settings.css">
-<link rel="stylesheet" href="src/css/_welcome-page.css">
-<link rel="stylesheet" href="src/css/_dialogs_&_notifications.css">
-<link rel="stylesheet" href="src/css/_plugins.css">
-
-
-
-<script type="text/javascript" src="src/Javascript/mousetrap.min.js"></script>
-<script src="src/Javascript/dictionary.js"></script>
-<script src="src/Javascript/API.js"></script>
-<script src="src/Javascript/scripts.js"></script>
-<script src="src/Javascript/_languages.js"></script>
-<script src="src/Javascript/_menus.js"></script>
-<script src="src/Javascript/_plugins.js"></script>
-<script src="src/Javascript/_config.js"></script>
-<script src="src/Javascript/_welcome-page.js"></script>
-<script src="src/Javascript/_settings.js"></script>
-<script src="src/Javascript/_themes.js"></script>
-<script src="src/Javascript/_controlBar.js"></script>
-<script src="src/Javascript/_updater.js"></script>
-
+		<script type="text/javascript" src="src/Javascript/mousetrap.min.js"></script>
+		<script src="src/Javascript/dictionary.js"></script>
+		<script src="src/Javascript/API.js"></script>
+		<script src="src/Javascript/scripts.js"></script>
+		<script src="src/Javascript/_languages.js"></script>
+		<script src="src/Javascript/_menus.js"></script>
+		<script src="src/Javascript/_plugins.js"></script>
+		<script src="src/Javascript/_config.js"></script>
+		<script src="src/Javascript/_welcome-page.js"></script>
+		<script src="src/Javascript/_settings.js"></script>
+		<script src="src/Javascript/_themes.js"></script>
+		<script src="src/Javascript/_controlBar.js"></script>
+		<script src="src/Javascript/_updater.js"></script>
 </html>

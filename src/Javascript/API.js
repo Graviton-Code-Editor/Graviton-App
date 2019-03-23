@@ -73,17 +73,17 @@ function gPlugin(obj) {
 }
 function dropMenu(obj){
 	this.id = obj.id;
-  if(obj!=null && obj!=undefined) this.translation = obj.translation;
-		this.setList = function(panel){
+  if(obj!=null && obj!=undefined) this.translation = obj.translation; //Detect if translation is enabled on the plugin's dropmenu
+	this.setList = function(panel){
     if(document.getElementById(this.id+"_dropbtn")!=undefined){
 			const droplist = document.getElementById(this.id+"_dropbtn");
 			droplist.innerHTML = ""; //Remove current code and then add the updated one
 			droplist.parentElement.children[0].innerText = panel.button;
 			let last;
+			let toTransx = this.translation;
 				Object.keys(panel).forEach(function(attr) {
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
-					let toTransx = this.translation;
 						Object.keys(panel["list"]).forEach(function(key) {
 						if(key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
@@ -91,7 +91,6 @@ function dropMenu(obj){
 							if(toTransx !=true){
 								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
 							}else{
-
 								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
 							}			
 						}
@@ -117,10 +116,10 @@ function dropMenu(obj){
 				<button class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${this.id}_dropbtn')"  >${panel["button"]}</button>`
 			}
 			let last;
+			let toTransx = this.translation;
 				Object.keys(panel).forEach(function(attr) {
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
-					let toTransx = this.translation;
 						Object.keys(panel["list"]).forEach(function(key) {
 						if(key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
@@ -318,7 +317,6 @@ function createDialog( //Method to create dialogs
   }
   all.appendChild(background);
   all.appendChild(body_dialog);
-
   document.body.appendChild(all);
 }
 function closeDialog(me) {

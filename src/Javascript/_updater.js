@@ -1,27 +1,24 @@
 
-
-/*
-	
-var request = require('request');
-
-
-
-request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/new_update.json', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    var json = JSON.parse(body);
-    if(json["LastUpdate"] > myVersion){
-    	
-    	createDialog('update','Update avaiable!','Wanna update?','No','Yes','closeDialog(this)','update()');
-    	
+function CHECK_UPDATES(){
+  const request = require('request');
+  request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/new_update.json', function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      var json = JSON.parse(body);
+      console.log(json["date"]);
+      console.log(dateVersion);
+      if(json["date"] > dateVersion){
+      	createDialog('update','Update avaiable!','Wanna update?','No','Yes','closeDialog(this)','update()');
+      }else{
+        new Notification("Graviton",'Any update has been found! ');
+      }
+    } else {
+      console.warn(error);
     }
-  } else {
-    console.warn(error);
+  });
+
+  function update(){
+    shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
   }
-});
-
-function update(){
-
 }
 
-*/
 

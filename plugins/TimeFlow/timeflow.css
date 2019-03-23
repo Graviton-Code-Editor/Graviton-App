@@ -5,14 +5,16 @@
  	width:auto;
  	color:var(--white-color);
  	padding: 7px;
+
 }
-#D7 > .activity{
-	background:var(--widget-color);
+.day > .activity:hover{
+	transform: scale(0.97);
 }
 .day{
   display: inline;
 }
 .day>.activity{
+	transform: scale(1);
   background:var(--accentColor);
     display: inline-block;
   width:18px;
