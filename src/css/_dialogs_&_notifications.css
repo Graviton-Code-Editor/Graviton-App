@@ -39,10 +39,9 @@
     border-radius: 3px;
     font-family: _main_font;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     font-size: 11px;
 }
-
 ._dialog_button:hover{
 
     transition: 0.1s;

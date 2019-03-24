@@ -11,6 +11,7 @@
   "author": "Marc Espín",
   "license": "MIT",
   "dependencies": {
+    "appdata-path": "^1.0.0",
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
@@ -42,10 +43,12 @@
       ]
     },
     "linux": {
+      "category": "Utility",
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "icon": "build/icon.png"
     },
     "win": {
       "target": "NSIS",

@@ -299,7 +299,6 @@ color: var(--white-black);
  top: 0px;
  right: 0px;
  width: 144px;
-
 }
 #control-bar > .controls > button {
     padding: 3px 0px;
@@ -309,7 +308,6 @@ color: var(--white-black);
     border: none;
     background: transparent;
 }
-
 #control-bar > .controls > button:hover { 
     background: var(--widget-color);
 }
