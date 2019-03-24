@@ -8,7 +8,6 @@
     overflow-y: scroll;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
-    z-index: 85;
     width: 275px;
     min-height: 110px;
     max-height: auto;
@@ -21,7 +20,6 @@
     opacity: 1;
     overflow: auto;
 } 
-
 ._dialog_button{
     font-weight: bold;
     float: right;
@@ -43,13 +41,10 @@
     font-size: 11px;
 }
 ._dialog_button:hover{
-
     transition: 0.1s;
     cursor: pointer;
     background: var(--primaryColor);
-
 }
-
 /* Notifications */
 .notificationBody{
     -webkit-app-region: no-drag; 

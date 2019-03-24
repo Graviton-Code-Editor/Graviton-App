@@ -38,7 +38,7 @@
 }
 .opened_window{
     transition: 0.15s;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.4); /*Background element on windowss*/
     top:0;
     left:0;
     height: 100%;

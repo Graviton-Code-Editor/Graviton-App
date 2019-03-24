@@ -21,7 +21,6 @@ var FirstFolder = "not_selected";
 var editingTab;
 var ids = 0;
 let plang = " ";
-var editorIsReady = false;
 var _notifications = [];
 var filepath = "start";
 var editors = [];
@@ -80,6 +79,7 @@ function loadEditor(path, data) {
       }
     }
   }
+
 function filterIt(arr, searchKey, cb) {
   var list = [];
   for (var i=0;i < arr.length; i++) {
@@ -92,6 +92,7 @@ function filterIt(arr, searchKey, cb) {
   }
   return cb(list);
 }
+
 editor.on("change", function() {
     //Save data when switching between tabs
     if(editors.length!=1){ //Prevent from saving the start message
@@ -100,7 +101,7 @@ editor.on("change", function() {
         .setAttribute("file_status", "unsaved");
       document
         .getElementById(editingTab)
-        .children[1].setAttribute("onclick", "saveFile()");
+        .children[1].setAttribute("onclick", "save_file_warn(this)");
       document.getElementById(
         editingTab
       ).children[1].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><ellipse vector-effect="non-scaling-stroke" cx="11.9999975" cy="11.9996439465" rx="6.303149298000001" ry="6.3035028515" fill="var(--accentColor)"/></svg>`;
@@ -138,6 +139,8 @@ editor.on("change", function() {
     }
   });
   });
+
+
 editor.on("keydown", function(editor, e){
   if ($("context").css("display") != "none") {
 
@@ -213,6 +216,7 @@ $("context .menuWrapper").on("mousedown", "div.option", function(e) {
   $("context .menuWrapper").html("");
   e.preventDefault();
 })
+
 editor.on("change", function() {    //Preview detector
       setTimeout(function() {
         if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
@@ -238,6 +242,13 @@ editor.setOption("extraKeys", { /*TEST*/
   Ctrl: function(editor) {  
   },
 });
+function save_file_warn(ele){
+  console.log(ele);
+  createDialog('saving_file_warn', "Warn" ,
+      "Are you sure you wanna close this file without saving?"
+      ,
+      "Yes, close","No, Save",`closeDialog(this); ${ele.getAttribute('onclose')}`,'saveFile(); closeDialog(this);');
+}
 function saveFileAs() {
   var content = document.getElementById("code-space").textContent;
   dialog.showSaveDialog(fileName => {
@@ -440,7 +451,8 @@ function createTab(object) {
     tab_text.innerText = object.getAttribute("name");
 
     const tab_x = document.createElement("button");
-    tab_x.setAttribute("onClick", "deleteTab('" + object.id + "A')");
+    tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
+    tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
     tab_x.setAttribute("class", "close_tab");
     tab_x.setAttribute("hovering", "false");
     tab_x.innerHTML = close_icon;
