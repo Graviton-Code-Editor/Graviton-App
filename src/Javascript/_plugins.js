@@ -6,26 +6,25 @@ function hidePlugins(){
 	document.getElementById("window").remove();
 	saveConfig();
 }
-
+function	OPEN_PLUGINS_FOLDER(){
+		const {shell} = require('electron') // deconstructing assignment
+		shell.openItem(plugins_folder)
+}
 function openPlugins(){
-
-
-	var all = document.createElement("div");
+	const all = document.createElement("div");
 	all.setAttribute("id","window");
 	all.setAttribute("style","-webkit-user-select: none;");
-
-	var background = document.createElement("div");
+	const background = document.createElement("div");
 	background.setAttribute("class","opened_window");
 	background.setAttribute("onclick","hideSettings()"); 
-	
-	var body = document.createElement("div");
+	const body = document.createElement("div");
 	body.setAttribute("class","body_window");
 	body.setAttribute("id","body_window");
-	
-	var content = document.createElement("div");
+	const content = document.createElement("div");
 	content.setAttribute("id","plugins_list");
 	content.innerHTML = `
 	<p class="window_title">`+selected_language["Plugins"]+`</p> 
+	<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
 	`;
 
 	plugins_list.forEach(plugin => {
@@ -47,11 +46,9 @@ function openPlugins(){
 		
   	});
 	if(plugins_list.length ==0){
-		content.innerHTML += `<p>No plugins detected</p>`
+		content.innerHTML += `<p>No plugins detected.</p>`
 	}
-	
 	body.appendChild(content);
-
 	all.appendChild(background);
 	all.appendChild(body);
 	document.body.appendChild(all);
@@ -135,7 +132,7 @@ function detectPlugins(){
       	if (!direct.isFile()){
 
 		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
-		  			var config = JSON.parse(data);
+		  			let config = JSON.parse(data);
 		 		 			if (err) throw err;
 		 		 			plugins_list.push(config);
 				 		 	const script = document.createElement("script");

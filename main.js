@@ -29,8 +29,8 @@ app.on('ready', function(){
 		protocol: 'file:',
 		slashes: true,
 	}));
-	//mainWindow.webContents.openDevTools() 
-	//mainWindow.setMenu(null); 
+	mainWindow.webContents.openDevTools() 
+	mainWindow.setMenu(null); 
 });
 
 app.on('window-all-closed', ()=>{

@@ -1,4 +1,4 @@
-const dateVersion = 190323; //The release date
+const dateVersion = 240323; //The release date
 const version = "0.7.2"; //Tagged num
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 /* Importing some required modules */
@@ -32,10 +32,7 @@ var _previewer;
 var _enable_preview = false;
 const dictionary = autocomplete.javascript;
 if (path.basename(__dirname) !== "Graviton-Editor") {
-    DataFolderDir = path.join(
-      path.join(getAppDataPath(),
-      ".graviton"
-    );
+    DataFolderDir = path.join(getAppDataPath(),".graviton");
 }
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); //Create .graviton if it doesn't exist
 /* Set path for graviton's files and dirs */
@@ -95,7 +92,6 @@ function filterIt(arr, searchKey, cb) {
   }
   return cb(list);
 }
-
 editor.on("change", function() {
     //Save data when switching between tabs
     if(editors.length!=1){ //Prevent from saving the start message
@@ -358,7 +354,7 @@ function loadDirs(dir, appendID, __FirstTime) {
         touch.setAttribute("class", " folder_list2  ");
         touch.setAttribute(
           "style",
-          " width: " + Number(paths[i].length * 6 + 35) + "px;"
+          " width: " + Number(paths[i].length * 6 + 45) + "px;"
         );
         const image = document.createElement("img");
         image.setAttribute("src", "src/icons/closed.svg");
@@ -386,7 +382,7 @@ function loadDirs(dir, appendID, __FirstTime) {
           "margin-left:" +
             paddingListDir +
             "px; vertical-align: middle; width:" +
-            Number(paths[i].length * 5 + 80) +
+            Number(paths[i].length * 6 + 45) +
             "px;"
         );
         element.setAttribute("myPadding", paddingListDir);

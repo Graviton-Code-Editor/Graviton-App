@@ -65,7 +65,6 @@
     margin: 10px;
     border-radius: var(--notifications-window-radius);
     box-shadow: 1px 3px 7px rgba(0,0,0,40%);
-
 }
 @keyframes open_up{
   from{
@@ -78,7 +77,6 @@
   }
 }
 .notificationBody > div{
-
     position: relative;
     height: auto;
     max-height: 100px;
@@ -98,6 +96,12 @@
 }
 .notificationBody > button:hover>svg >rect{
      stroke:var(--accentColor);
+     fill: var(--accentColor);
+    border: 0;
+}
+.notificationBody > button:hover>svg {
+     stroke:var(--accentColor);
+     fill: var(--accentColor);
     border: 0;
 }
 .notificationBody>h1{
