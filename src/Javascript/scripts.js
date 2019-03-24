@@ -14,7 +14,7 @@ const app = require("electron").remote.getCurrentWindow();
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
 var i;
-var DataFolderDir = path.join(getAppDataPath(),".graviton");
+var DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 var tabs = [];
 var tabsEqualToFiles = [];
 var FirstFolder = "not_selected";
@@ -33,7 +33,7 @@ var _enable_preview = false;
 const dictionary = autocomplete.javascript;
 if (path.basename(__dirname) !== "Graviton-Editor") {
     DataFolderDir = path.join(
-      path.join(__dirname, "..", "..", ".."),
+      path.join(getAppDataPath(),
       ".graviton"
     );
 }

@@ -1,5 +1,5 @@
 {
-  "name": "Graviton-Editor",
+  "name": "Graviton",
   "version": "0.7.2",
   "description": "Graviton is a free & open source code editor!",
   "main": "main.js",
@@ -8,7 +8,7 @@
     "pack": "build --dir",
     "dist": "build"
   },
-  "author": "Marc Espín",
+  "author": "Marc Espín <mespinsanz@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "appdata-path": "^1.0.0",
