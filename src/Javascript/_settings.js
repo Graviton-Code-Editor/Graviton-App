@@ -10,7 +10,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 const {webFrame} = require('electron');
 let nav_bar_settings ;
-let ANIMATIONS_STATUS = "activated"; //Animations are ON by default
 function hideSettings(){
 	document.getElementById("window").remove();
 	saveConfig();
@@ -173,7 +172,7 @@ function goSPage(num){
 	}
 	
 }
-function DISABLE_ANIMATIONS(me){
+function DISABLE_ANIMATIONS(){
 	if(ANIMATIONS_STATUS == "activated"){
 
 		if(document.getElementById("_ANIMATIONS") != null){

@@ -47,7 +47,7 @@ button.dropbtn {
 .dropdown-content {
     border-radius: 3px;
     position: fixed;
-    background-color: var(--primaryColor);
+    background-color: var(--dropmenu-background-color);
     min-width: auto;
     overflow: auto;
     z-index: 80;

@@ -337,11 +337,11 @@ color: var(--white-black);
 }
 .section{
     margin: 5px;
-    padding: 10px;
+    padding: 3px 3px;
+
     background: transparent;
     height: auto;
 }
-
 context {
   position: absolute;
   background-color: var(--primaryColor);
