@@ -1,3 +1,15 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+
 #control-bar >  #dropmenus_list {
     list-style-type: none;
     padding: 0;
@@ -35,7 +47,7 @@ button.dropbtn {
 .dropdown-content {
     border-radius: 3px;
     position: fixed;
-    background-color: var(--dropmenu-background-color);
+    background-color: var(--primaryColor);
     min-width: auto;
     overflow: auto;
     z-index: 80;
@@ -75,15 +87,15 @@ span.line_space_menus{
     background: var(--widget-color);
 }
 .show {
-    transition: 0.07s; 
+    transition: 0.05s; 
     transform: translateY(0px);
     opacity: 1;
     display: block;
      visibility: visible;
 }
 .hide{
-    transition: 0.07s; 
-    opacity: 0.2;
+    transition: 0.05s; 
+    opacity: 0.3;
     transform: translateY(-4px);
     visibility: hidden;
 }

@@ -1,5 +1,16 @@
-const dateVersion = 240323; //The release date
-const version = "0.7.2"; //Tagged num
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+const dateVersion = 190326; //The release date
+const version = "0.7.3"; //Tagged num
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 /* Importing some required modules */
 const { shell } = require("electron");
@@ -14,7 +25,7 @@ const app = require("electron").remote.getCurrentWindow();
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
 var i;
-var DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
+let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 var tabs = [];
 var tabsEqualToFiles = [];
 var FirstFolder = "not_selected";
@@ -29,6 +40,7 @@ var editorID;
 var editor_mode = "normal";
 var _previewer;
 var _enable_preview = false;
+var log = [];
 const dictionary = autocomplete.javascript;
 if (path.basename(__dirname) !== "Graviton-Editor") {
     DataFolderDir = path.join(getAppDataPath(),".graviton");
@@ -173,10 +185,12 @@ editor.on("keydown", function(editor, e){
     if (e.keyCode === 40 && !$("context .menuWrapper .option").last().hasClass("hover") && $("context").css("display") != "none") {
       $("context .menuWrapper .option").removeClass("hover")
       $(this).next().addClass("hover");
+      document.getElementById("context").scrollBy(0, 30);
       return false;
     } else if (e.keyCode === 38 && !$("context .menuWrapper .option").first().hasClass("hover") && $("context").css("display") != "none") {
       $("context .menuWrapper .option").removeClass("hover")
       $(this).prev().addClass("hover");
+      document.getElementById("context").scrollBy(0, -30);
       return false;
     }
     //Selection key Triggers
@@ -243,11 +257,16 @@ editor.setOption("extraKeys", { /*TEST*/
   },
 });
 function save_file_warn(ele){
-  console.log(ele);
-  createDialog('saving_file_warn', "Warn" ,
-      "Are you sure you wanna close this file without saving?"
-      ,
-      "Yes, close","No, Save",`closeDialog(this); ${ele.getAttribute('onclose')}`,'saveFile(); closeDialog(this);');
+  createDialog({
+    id:"saving_file_warn",
+    title:selected_language['Warn'],
+    content:selected_language["FileExit-dialog-message"],
+    buttons:{
+      [selected_language['FileExit-dialog-button-accept']]:`closeDialog(this); ${ele.getAttribute('onclose')}`,
+      [selected_language['FileExit-dialog-button-deny']]:'saveFile(); closeDialog(this);',
+    }
+
+  })
 }
 function saveFileAs() {
   var content = document.getElementById("code-space").textContent;
@@ -329,14 +348,14 @@ function loadDirs(dir, appendID, __FirstTime) {
     _SUBFOLDER.setAttribute("class", "folder");
     _SUBFOLDER.setAttribute("myPadding", "50");
     _SUBFOLDER.setAttribute("style", "margin:10px 20px; font-size:17px; ");
-    ids = 0;
     _SUBFOLDER.innerText = path.basename(dir);
     document.getElementById(appendID).appendChild(_SUBFOLDER);
   } else {
      _SUBFOLDER = document.getElementById(appendID);
   }
-  const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 5; //Add padding
+  const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 7; //Add padding
   fs.readdir(dir, (err, paths) => {
+    ids = 0;
     for (i = 0; i < paths.length; i++) {
       let _LONGPATH = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
@@ -348,7 +367,7 @@ function loadDirs(dir, appendID, __FirstTime) {
         //If is folder
         const element = document.createElement("div");
         element.setAttribute("opened", "false");
-        element.setAttribute("ID", ids);
+        element.setAttribute("ID", ids+dir);
         element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
@@ -359,13 +378,13 @@ function loadDirs(dir, appendID, __FirstTime) {
         const touch = document.createElement("div");
         touch.setAttribute(
           "onClick",
-          "loadDirs('" + _LONGPATH + "','" + ids + "',false)"
+          "loadDirs('" + _LONGPATH + "','" + ids+dir.replace(/\\/g, "\\\\") + "',false)"
         );
         touch.innerText = paths[i];
         touch.setAttribute("class", " folder_list2  ");
         touch.setAttribute(
           "style",
-          " width: " + Number(paths[i].length * 6 + 45) + "px;"
+          " width: " + Number(paths[i].length * 6 + 55) + "px;"
         );
         const image = document.createElement("img");
         image.setAttribute("src", "src/icons/closed.svg");
@@ -386,14 +405,14 @@ function loadDirs(dir, appendID, __FirstTime) {
         //If it's file
         const element = document.createElement("div");
         element.setAttribute("class", "folder_list1");
-        element.setAttribute("ID", ids + "B");
+        element.setAttribute("ID", ids+dir.replace(/\\/g, "\\\\") + "B");
         element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
           "margin-left:" +
             paddingListDir +
             "px; vertical-align: middle; width:" +
-            Number(paths[i].length * 6 + 45) +
+            Number(paths[i].length * 6 + 55) +
             "px;"
         );
         element.setAttribute("myPadding", paddingListDir);
@@ -411,7 +430,6 @@ function loadDirs(dir, appendID, __FirstTime) {
     }
   });
 }
-
 function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
@@ -426,108 +444,136 @@ function getFormat(text) {
     case "json":
       return "json";
       break;
+    case "go":
+      return "go";
+      break;
+    case "sql":
+      return  "sql";
+      break;
+    case "ruby":
+      return "ruby";
+      break;
+    case "php":
+      return "php";
+      break;
+    case "sass":
+      return "sass";
+      break;
+    case "dart":
+      return "dart";
+      break;
+    case "Pascal":
+      return "pascal";
+      break;
     default:
       return "file";
   }
 }
 function createTab(object) {
   // create tabs on the element ' tabs_bar '
-  if (tabsEqualToFiles.includes(object) === false) {
-    const tab = document.createElement("div");
-    tab.setAttribute("ID", object.id + "A");
-    tab.setAttribute("longPath", object.getAttribute("longpath"));
-    tab.setAttribute("class", "tabs");
-    tab.style =
-      "min-width: " +
-      (object.getAttribute("name").length * 4 + 115) +
-      "px; max-width: " +
-      (object.getAttribute("name").length * 5 + 100) +
-      "px";
-    tab.setAttribute("onclick", "loadTab(this)");
-    tab.setAttribute("file_status", "saved");
+  let NOT_CREATED =true;
+   for(i=0;i<tabsEqualToFiles.length;i++){ 
+    if (tabsEqualToFiles[i].id === object.id) {
+      NOT_CREATED = false;
+    }
+  }
+  if (NOT_CREATED == true) { //Tab doesn't exist
+          const tab = document.createElement("div");
+          tab.setAttribute("ID", object.id + "A");
+          tab.setAttribute("longPath", object.getAttribute("longpath"));
+          tab.setAttribute("class", "tabs");
+          tab.style =
+            "min-width: " +
+            (object.getAttribute("name").length * 4 + 115) +
+            "px; max-width: " +
+            (object.getAttribute("name").length * 5 + 100) +
+            "px";
+          tab.setAttribute("onclick", "loadTab(this)");
+          tab.setAttribute("file_status", "saved");
 
-    const tab_text = document.createElement("p");
-    tab_text.style = "float:left; text-align:center;";
-    tab_text.innerText = object.getAttribute("name");
+          const tab_text = document.createElement("p");
+          tab_text.style = "float:left; text-align:center;";
+          tab_text.innerText = object.getAttribute("name");
 
-    const tab_x = document.createElement("button");
-    tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
-    tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
-    tab_x.setAttribute("class", "close_tab");
-    tab_x.setAttribute("hovering", "false");
-    tab_x.innerHTML = close_icon;
-    tab_x.addEventListener("mouseover", function (e) {
-        this.setAttribute("hovering",true);
-    });
-    tab_x.addEventListener("mouseout", function (e) {
-        this.setAttribute("hovering",false);
-    });
-    tab.appendChild(tab_text);
-    tab.appendChild(tab_x);
-    document.getElementById("tabs_bar").appendChild(tab);
-    tabs.push(tab);
-    tabsEqualToFiles.push(object);
-    let NEWPATH__ = object.getAttribute("longPath");
-    filepath = NEWPATH__;
-    fs.readFile(NEWPATH__, "utf8", function(err, data) {
-      if (err) {
-        return console.log(err);
-      }
-      tab.setAttribute("data", data);
-      loadEditor(NEWPATH__, data);
-      updateCodeMode(NEWPATH__);
-      applyHighlighter(currentTheme);
-      document.getElementById(editorID).style.height = " calc(100% - (50px))";
-      editingTab = tab.id;
-      selected = object;
-      tabs.map(tab => {
-        if (tab.classList.contains("selected")) {
-          tab.classList.remove("selected");
-        }
-      });
-      tab.classList.add("selected");
-    });
+          const tab_x = document.createElement("button");
+          tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
+          tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
+          tab_x.setAttribute("class", "close_tab");
+          tab_x.setAttribute("hovering", "false");
+          tab_x.innerHTML = close_icon;
+          tab_x.addEventListener("mouseover", function (e) {
+              this.setAttribute("hovering",true);
+          });
+          tab_x.addEventListener("mouseout", function (e) {
+              this.setAttribute("hovering",false);
+          });
+          tab.appendChild(tab_text);
+          tab.appendChild(tab_x);
+          document.getElementById("tabs_bar").appendChild(tab);
+          tabs.push(tab);
+          tabsEqualToFiles.push(object);
+          let NEWPATH__ = object.getAttribute("longPath");
+          filepath = NEWPATH__;
+          fs.readFile(NEWPATH__, "utf8", function(err, data) {
+            if (err) {
+              return console.log(err);
+            }
+            tab.setAttribute("data", data);
+            loadEditor(NEWPATH__, data);
+            updateCodeMode(NEWPATH__);
+            applyHighlighter(currentTheme);
+            document.getElementById(editorID).style.height = " calc(100% - (50px))";
+            editingTab = tab.id;
+            selected = object;
+            tabs.map(tab => {
+              if (tab.classList.contains("selected")) {
+                tab.classList.remove("selected");
+              }
+            });
+            tab.classList.add("selected");
+          });
   }
 }
 function deleteTab(ele) {
-  const __OBJECT = document.getElementById(ele);
-  tabs.map((tab, index) => {
-   
-    if (tab.id == ele) {
-      tabsEqualToFiles.splice(index, 1);
-      tabs.splice(index, 1);
+  const __OBJECT = document.getElementById(ele.replace(/\\/g, "\\\\"));
+  for(i=0;i<tabs.length;i++){
+    const tab = tabs[i];
+    let NEW_SELECTED_TAB;
+    if (tab.id == ele.replace(/\\/g, "\\\\")) {
+      tabsEqualToFiles.splice(i, 1);
+      tabs.splice(i, 1);
       document
         .getElementById(__OBJECT.getAttribute("longPath") + "_editor")
         .remove();
-      editors.splice(index + 1, 1);
+      editors.splice(i + 1, 1);
       __OBJECT.remove();
-      if (tabs.length === 0) {
+    if (tabs.length === 0) {
         //0 tabs
         loadEditor("start");
         document.getElementById("body-space").style = " ";
         filepath = " ";
-      } else if (index === tabs.length) {
+    } else if (i === tabs.length) {
         //Last tab
-        var selected = tabs[Number(tabs.length) - 1];
-      } else if (index >= 0) {
-        var selected = tabs[index];
-      }
-      if (selected != undefined ) {
+        NEW_SELECTED_TAB = tabs[Number(tabs.length) - 1];
+    } else if (i >= 0) {
+        NEW_SELECTED_TAB = tabs[i];
+    }
+    if (NEW_SELECTED_TAB != undefined ) {
         tabs.map(tab => {
           if (tab.classList.contains("selected")) {
             tab.classList.remove("selected");
           }
         });
-        editingTab = selected.id;
-        selected.classList.add("selected");
-        const __NEWPATH = selected.getAttribute("longPath");
+        editingTab = NEW_SELECTED_TAB.id;
+        NEW_SELECTED_TAB.classList.add("selected");
+        const __NEWPATH = NEW_SELECTED_TAB.getAttribute("longPath");
         filepath = __NEWPATH;
         loadEditor(__NEWPATH, __OBJECT.getAttribute("data"));
         updateCodeMode(__NEWPATH);
         applyHighlighter(currentTheme);
       }
     }
-  });
+  }
 }
 function loadTab(object) {
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
@@ -605,7 +651,6 @@ function updateCodeMode(path) {
     default:
   }
 }
-var log = [];
 function registerNewProject(dir) {
   //Add a new folder directory to the history if it is the firs time taht has been opened in the editor
   fs.readFile(logDir, "utf8", function(err, data) {
@@ -644,13 +689,15 @@ function zenMode() {
 function _preview() {
   const url = require("url");
   const BrowserWindow = remote.BrowserWindow;
-  if (_enable_preview === false) {
+  if (_enable_preview === false ) {
+    if(getFormat(graviton.getCurrentFile().path)!="html"){
+      return;
+    }
     _enable_preview = true;
     _previewer = new BrowserWindow({
       width: 800,
       height: 600
     });
-
     _previewer.loadURL(
       url.format({
         pathname: graviton.getCurrentFile().path,
@@ -658,7 +705,6 @@ function _preview() {
         slashes: true
       })
     );
-
     _previewer.on("closed", () => {
       _enable_preview = false;
     });
@@ -669,21 +715,6 @@ function _preview() {
     _previewer.close();
   }
 }
-
 function openDevTools() {
   app.webContents.openDevTools();
-}
-function secondsToTime(secs) {
-  const hours = Math.floor(secs / (60 * 60));
-  const divisor_for_minutes = secs % (60 * 60);
-  const minutes = Math.floor(divisor_for_minutes / 60);
-  const divisor_for_seconds = divisor_for_minutes % 60;
-  const seconds = Math.ceil(divisor_for_seconds);
-
-  const obj = {
-    h: hours,
-    m: minutes,
-    s: seconds
-  };
-  return obj;
 }

@@ -1,3 +1,14 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
 :root{ /* Color pallete , themes will override this*/
 	--primaryColor: #222222;
     --secondaryColor: #171717;
@@ -18,11 +29,11 @@
 
 @font-face {
     font-family: _main_font;
-    src: url(../Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
+    src: url(../fonts/Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
 }
 @font-face {
     font-family: hack;
-    src: url(../Hack-Regular.ttf);
+    src: url(../fonts/Hack-Regular.ttf);
 }
 html{
    font-family: _main_font;
@@ -68,49 +79,6 @@ body , head{
     opacity: 0;
     background: transparent;
 }
-p.error-on-boot{
-    max-width: 500px;
-    color:black;
-    font-size: 18px;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-div.error-on-boot{
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-button.error-on-boot{
-    cursor: pointer;
-    background: #444444;
-    color:white;
-    font-size: 17px;
-    position: relative;
-    padding: 13px;
-    border:0;
-    border-radius: 4px;
-    display: inline-block;
-}
-button.error-on-boot:hover{
-    background: #333333;
-}
-button.error-on-boot-factory{
-    background: red;
-    cursor: pointer;
-    color:white;
-    font-size: 17px;
-    position: relative;
-    padding: 13px;
-    border:0;
-    border-radius: 4px;
-    display: inline-block;
-}
-button.error-on-boot-factory:hover{
-    background: darkred;
-}
 #editor_content > #left-bar{
     position: fixed;
     left:0;
@@ -134,9 +102,9 @@ button.error-on-boot-factory:hover{
     top: 0;
     left:0;
     margin: 0px;
-    padding: 0px;
+    padding: 0px 5px;
     color:var(--white-black);
-    overflow-x: overlay;
+    overflow-x: auto;
 }
 #editor_content > #body-space{
     font-size: var(--editor-font-size);
@@ -146,7 +114,7 @@ button.error-on-boot-factory:hover{
     right:0px;
     top:0px;
     margin: 0px 0px 0px 180px;
-    height:  calc(100% - (30px));
+    height:  calc(100% - (31px));
     width: auto;
     color:var(--white-black);
     overflow: hidden;
@@ -171,6 +139,13 @@ button.error-on-boot-factory:hover{
     white-space: nowrap;
     display: inline-block;
     background: var(--primaryColor);
+    cursor: pointer;
+}
+#editor_content > #body-space >#tabs_bar > .tabs:first-child{
+    border-top-left-radius: 5px;
+}
+#editor_content > #body-space >#tabs_bar > .tabs:last-child{
+    border-top-right-radius: 5px;
 }
 #editor_content > #body-space >#tabs_bar > .tabs:hover{
     background: var(--widget-color);
@@ -269,7 +244,6 @@ button.error-on-boot-factory:hover{
   to{
      transform: translateX(3px);
     opacity: 1;
-
   }
 }
 #control-bar {
@@ -308,19 +282,19 @@ color: var(--white-black);
     border: none;
     background: transparent;
 }
-#control-bar > .controls > button:hover { 
+#control-bar > .controls[os="windows"] > button:hover { 
     background: var(--widget-color);
 }
-#control-bar > .controls > #minimize:hover >svg >rect { 
+#control-bar > .controls[os="windows"] > #minimize:hover >svg >rect { 
     fill: var(--white-black);
 }
-#control-bar > .controls > #maximize:hover >svg >rect { 
+#control-bar > .controls[os="windows"] > #maximize:hover >svg >rect { 
     stroke: var(--white-black);
 }
-#control-bar > .controls > #close:hover { 
+#control-bar > .controls[os="windows"] > #close:hover { 
     background: red;
 }
-#control-bar > .controls > #close:hover>svg>rect { 
+#control-bar > .controls[os="windows"] > #close:hover>svg>rect { 
     fill: white;
 }
 .Button1{
@@ -330,7 +304,7 @@ color: var(--white-black);
     width: auto;
     border: none;  
     padding:10px 20px;
-    background: var(--secondaryColor);
+    background: var(--primaryColor);
     color: var(--white-black);
     box-sizing: border-box;
 }
@@ -357,16 +331,17 @@ color: var(--white-black);
 }
 .window_title{
     font-size:25px; 
-    font-weight:800;
+    font-weight:bold;
     line-height:5px; 
     text-align:center;
 }
 .section{
-    margin: 6px;
+    margin: 5px;
     padding: 10px;
-    border-radius: 7px;
-    background: var(--primaryColor);
+    background: transparent;
+    height: auto;
 }
+
 context {
   position: absolute;
   background-color: var(--primaryColor);

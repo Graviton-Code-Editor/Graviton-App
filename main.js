@@ -1,15 +1,20 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-
-
-
 const {app, BrowserWindow,globalShortcut} = electron;
 const Menu = electron.Menu;
-
 let mainWindow;
-	
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
 		titleBarStyle: 'customButtonsOnHover', 
@@ -32,11 +37,9 @@ app.on('ready', function(){
 	//mainWindow.webContents.openDevTools() 
 	//mainWindow.setMenu(null); 
 });
-
 app.on('window-all-closed', ()=>{
   app.quit();
 });
-
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');
 
 

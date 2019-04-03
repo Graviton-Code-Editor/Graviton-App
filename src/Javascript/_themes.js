@@ -1,6 +1,15 @@
+/*
+########################################
+              MIT License
 
-var themes =[];
-var current_theme = " ";
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+let themes =[];
+let current_theme = " ";
 	
 if (!fs.existsSync(highlights_folder)) { //If the themes folder doesn't exist
   fs.mkdirSync(highlights_folder)

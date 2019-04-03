@@ -1,3 +1,18 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+function messager(message){
+	console.log(message)
+}
+
 
 let context_menu_list = { //Initial value
 		  "Copy" :" document.execCommand('copy');",
@@ -36,14 +51,11 @@ function gPlugin(obj) {
 
   }
   this.createData = function(data){
-  	
-				 
 			if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
 				const db = {
 					 			plugin_name:this.name,
 					 			db:data
 				 			};
-
 				 plugins_dbs.push(db);
 				 b = plugins_dbs.length-1;
 
@@ -127,7 +139,6 @@ function dropMenu(obj){
 							if(toTransx !=true){
 								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
 							}else{
-
 								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
 							}			
 						}
@@ -199,7 +210,7 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";
       context_menu.setAttribute("id","context_menu");
-      context_menu.style = "left:"+event.pageX+"; top:"+event.pageY+"px";
+      context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
 
       Object.keys(context_menu_list).forEach(function(key,index) {
 
@@ -274,52 +285,38 @@ function closeNotification(element) {
     }
   }
 }
-
-function createDialog( //Method to create dialogs
-  id,
-  title,
-  description,
-  button1,
-  button2,
-  action1,
-  action2
-) {
+function closeDialog(me) {
+		document.getElementById(me.getAttribute("myID") + "D").remove();
+}
+function createDialog(obj) {
   const all = document.createElement("div");
-  all.setAttribute("id", id + "D");
+  all.setAttribute("id", obj.id + "D");
   all.setAttribute("style", "-webkit-user-select: none;");
   const background = document.createElement("div");
   background.setAttribute("class", "opened_window");
-  background.setAttribute("myID", id);
+  background.setAttribute("myID", obj.id);
   background.setAttribute("onclick", "closeDialog(this)");
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
-  body_dialog.innerHTML =
-    `
+  body_dialog.innerHTML =`
   <p style="font-size:25px; line-height:1px; white-space: nowrap; font-weight:bold;">    
-  ${title} 
+  		${obj.title} 
   </p>
   <p style="font-size:15px;">
-     ${description}
+    	${obj.content}
   </p>
-  <button class="_dialog_button" 
-    myID="${id}"
-    onclick="${action1}">
-    ${button1} 
-  </button>
+
   `;
-  if (button2 != null){
-    body_dialog.innerHTML +=
-      `<button class="_dialog_button" 
-        myID="${id}"
-        onclick="${action2}">
-        ${button2} 
-      </button>`;
-  }
+  Object.keys(obj.buttons).forEach(function(key,index) {
+  	const button = document.createElement("button");
+  	button.innerText = key;
+  	button.setAttribute("myID",obj.id);
+  	button.setAttribute("onclick",obj.buttons[key]);
+  	button.classList = "_dialog_button";
+  	body_dialog.appendChild(button);
+  });
+
   all.appendChild(background);
   all.appendChild(body_dialog);
   document.body.appendChild(all);
-}
-function closeDialog(me) {
-  let dialog = document.getElementById(me.getAttribute("myID") + "D");
-  dialog.remove();
 }

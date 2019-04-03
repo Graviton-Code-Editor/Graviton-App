@@ -1,6 +1,15 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
 let zoom_app;
-var _firsTime;
-//Variables
+let _firsTime;
 let FontSizeEditor = "15"; //Default
 function loadConfig(){ //Loads the configuration from the config.json
 	if (!fs.existsSync(configDir)) {
@@ -11,7 +20,7 @@ function loadConfig(){ //Loads the configuration from the config.json
 	 		_firsTime = true;
 	 		selected_language = "english"; 
 
-	    var newConfig = {
+	    const newConfig = {
 				FirstTime: _firsTime,
 				Theme:"Light UI",
 				FontSizeEditor: FontSizeEditorr,
@@ -27,13 +36,12 @@ function loadConfig(){ //Loads the configuration from the config.json
 		}else{
 			FirstTime();
 		}
-
 		detectPlugins(); //Call the function to detect the installed plugins
 
 	}else{
 
 		fs.readFile(configDir, 'utf8', function (err,data) {
-	  	var config = JSON.parse(data);
+	  	const config = JSON.parse(data);
 	 		//Load config
 	 		setThemeByName(config["Theme"]);
 	 		FontSizeEditor = config["FontSizeEditor"];
@@ -50,20 +58,13 @@ function loadConfig(){ //Loads the configuration from the config.json
 			}else{
 				FirstTime();
 			}
-
 			detectPlugins(); //Call the function to detect the installed plugins
-
 	 	});
-		
-
-	 	 
-
 	}
-	
 }
 
 function saveConfig(){ //Saves the configuration to config.json
-	var newConfig = {
+	let newConfig = {
 		FirstTime: _firsTime,
 		Theme:current_theme["Name"],
 		FontSizeEditor: FontSizeEditor,
@@ -72,8 +73,7 @@ function saveConfig(){ //Saves the configuration to config.json
 	};
 	FontSizeEditor = newConfig["FontSizeEditor"];
 	newConfig = JSON.stringify(newConfig);
-  fs.writeFile(configDir, newConfig, (err) => {
-    });
+  fs.writeFile(configDir, newConfig, (err) => {});
   editor.refresh();
 }
 

@@ -1,3 +1,4 @@
+
 const timeflow = new gPlugin({
   name: "Time Flow"
 })
@@ -37,7 +38,7 @@ function graphic(){
 				<span class="line_space_menus"></span>
 				<gv-switch  onclick="switchTimeFlow()" class="`+timeflow.getData()["status"]+`"></gv-switch>
 				`;
-				var myDropmenu ={
+				const myDropmenu ={
 				  "button": "Time Flow",
 				  "custom":days,
 				  "list":{
@@ -80,7 +81,7 @@ function loop(){
 	      		loop();
 	      }	   
 
-      }, 5000) //Call the function every 2.5minutes 150000
+      }, 150000) //Call the function every 2.5minutes 150000
   });
   
   let race = Promise.race([
@@ -91,9 +92,14 @@ function loop(){
 loop();
 
 function timeflowInfo(){
-	createDialog('timeflow_info', selected_language['About']+" Timeflow" ,
-      "TimeFlow collets the time you spent on coding by saving <strong>locally</strong> the data."
-      ,
-      selected_language['Accept'] 
-      ,null,'closeDialog(this)','')
+	 createDialog({
+    id:"timeflow_info",
+    title:selected_language['About']+" Timeflow" ,
+    content:"TimeFlow collets the time you spent on coding by saving <strong>locally</strong> the data.",
+    buttons:{
+      [selected_language['Accept']]:"closeDialog(this)",
+    }
+
+  })
 }
+

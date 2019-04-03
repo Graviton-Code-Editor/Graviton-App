@@ -1,5 +1,15 @@
-/* Dialogs */
+/*
+########################################
+              MIT License
 
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+/* Dialogs */
 .dialog_body{
     position: absolute;
     color:var(--white-black);
@@ -46,6 +56,12 @@
     background: var(--primaryColor);
 }
 /* Notifications */
+#notifications{
+    position: fixed; 
+    right: 20px;
+    bottom: 20px;
+    z-index: 200;
+}
 .notificationBody{
     -webkit-app-region: no-drag; 
     animation: open_up linear 0.15s;
@@ -108,9 +124,9 @@
 }
 /* Floating Windows*/
 .floating_window{
-    animation: window_expand linear 0.2s;
+    animation: window_in linear 0.2s;
     z-index: 50;
-    top: 15px;
+    top: 20px;
     right: 40px;
     transform: translate(20px, 40px);
     background: red;
@@ -123,17 +139,15 @@
     margin: 10px;
     border-radius: var(--notifications-window-radius);
     box-shadow: 1px 3px 7px rgba(0,0,0,40%);
-
 }
-
-@keyframes window_expand{
+@keyframes window_in{
   from{
     opacity: 0;
-    top:25px;
+    transform: translate(20px, 55px);
   }
   to{
     opacity: 1;
-    top:15px;
+    transform: translate(20px, 40px);
   }
 }
 .floating_window *{

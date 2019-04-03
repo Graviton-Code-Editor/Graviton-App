@@ -24,15 +24,24 @@
 	"ZoomSize":"Zoom-size",
 	"Themes":"Themes",
 	"MadeBy":"Made by: ",
+	"Warn":"Warn",
+	"Continue":"Continue",
 	"CurrentVersion":"Current version: ",
 	"EditorFontSize":"Editor's font-size",
 	"Version":"Version ",
 	"Accept":"Accept",
 	"Decline":"No",
 	"Website":"Website",
+	"Changelog":"Changelog",
 	"Copy":"Copy",
 	"Paste":"Paste",
-	"OS":"OS"
+	"OS":"OS",
+	"Performance":"Performance",
+	"Settings-Advanced-Performance-Animations":"Turn off to disable animations. ",
+	"Settings-Advanced-FactoryReset":"This will restart Graviton configuraton and logs.",
+	"FileExit-dialog-message":"Are you sure you wanna close this file without saving?",
+	"FileExit-dialog-button-accept":"Yes, close",
+	"FileExit-dialog-button-deny":"No, Save"
 	
 	
 }

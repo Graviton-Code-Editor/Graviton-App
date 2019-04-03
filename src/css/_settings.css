@@ -1,5 +1,16 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
 #nav_bar{
-    height: 70px;
+    height: 75px;
     white-space: nowrap;
     overflow-x: auto;
     width: auto;
@@ -9,32 +20,27 @@
     width: 8px;
     height: 0px;
     background: transparent;
-
 }
-
 #nav_bar > ol>li{
-    transition: 0.07s;
-    padding: 2px;
+    transition: 0.1s;
+    padding: 5px;
     height: 25px;
     display: inline-block;
-    border-bottom:3px solid transparent;
+    border-bottom: 2px transparent;
 }
 #nav_bar > ol>li.active{
-    transition: 0.07s;
-    padding: 0px 5px;
+    padding: 5px 10px;
     height: 25px;
     display: inline-block;
     color:var(--accentColor);
-    border-bottom:3px solid var(--accentColor);
- 
+    border-bottom: 2px solid var(--accentColor);
 }
-#nav_bar > ol>li:hover{
+#nav_bar > ol>li:hover:not(.active){
     transition: 0.1s;
     cursor:pointer;
     height: 25px;
     display: inline-block;
-    color:var(--accentColor);
-    
+    color:var(--accentColor);  
 }
 .opened_window{
     transition: 0.15s;
@@ -49,7 +55,6 @@
  font-weight: 570;
 }
 .body_window{
-    transition: 0.1s;
     color:var(--white-black);
     font-size: 17px;
     padding:12px;
@@ -59,13 +64,12 @@
     width: 85%;
     height: 80%;
     margin: 0;
-    position: absolute;
+    position: fixed;
     text-align: left;
     background: var(--secondaryColor);
     top: 45%;
     left: 50%;
     transform: translate(-50%, -45%);
-    opacity: 1;
 }
 #body_content{
     padding: 0px 25px;
@@ -85,7 +89,7 @@ overflow: auto;
     display: inline-block;
     min-width: 80px;
     width: auto;
-    background: var(--secondaryColor);
+    background: var(--primaryColor);
     color:var(--white-black);
 }
 .theme_div:hover{
@@ -125,6 +129,11 @@ overflow: auto;
     transition: 0.1s;
     transform: scale(0.98);
 }
+.body_window p{
+    font-size: 15px;
+    line-height: 15px;
+    margin: 20px 1px;
+}
 .Input1{
     transition: 0.1s;
     border-radius: var(--buttons-roundness);
@@ -132,7 +141,7 @@ overflow: auto;
     height: 30px;
     border: none;  
     padding:10px 10px;
-    background: var(--secondaryColor);
+    background: var(--primaryColor);
     color: var(--white-black);
     box-sizing: border-box;
 }
@@ -160,7 +169,7 @@ input[type="number"] {
   -webkit-appearance: none;
   width: auto;
   height: 22px;
-  background: var(--secondaryColor);
+  background: var(--primaryColor);
   outline: none;
   border-radius: 50px;
   padding:0px 4px 0px 4px;
@@ -227,3 +236,4 @@ input[type="number"] {
     font-size: 12px;
     color: var(--white-black);
 }
+

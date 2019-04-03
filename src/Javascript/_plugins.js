@@ -1,7 +1,15 @@
-var plugins_dbs= [];
+/*
+########################################
+              MIT License
 
+Copyright (c) 2019 Graviton Code Editor
 
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
+#########################################
+*/
+
+let plugins_dbs= [];
 function hidePlugins(){
 	document.getElementById("window").remove();
 	saveConfig();
@@ -23,7 +31,7 @@ function openPlugins(){
 	const content = document.createElement("div");
 	content.setAttribute("id","plugins_list");
 	content.innerHTML = `
-	<p class="window_title">`+selected_language["Plugins"]+`</p> 
+	<h2 class="window_title">`+selected_language["Plugins"]+`</h2> 
 	<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
 	`;
 
@@ -104,6 +112,7 @@ function detectPlugins(){
 					 		 	const script = document.createElement("script");
 					 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
 					 		 	document.body.appendChild(script);
+
 
 					 		 	config["javascript"].forEach(file=>{
 					 		 		const script = document.createElement("script");

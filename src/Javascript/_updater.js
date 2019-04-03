@@ -1,4 +1,13 @@
+/*
+########################################
+              MIT License
 
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
 function CHECK_UPDATES(){
   const request = require('request');
   request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/new_update.json', function (error, response, body) {
@@ -19,4 +28,13 @@ function CHECK_UPDATES(){
   }
 }
 
-
+const idea = {
+  beta:{
+    date:"190401",
+    version:"0.7.3"
+  },
+  stable:{
+    date:"181127",
+    version:"0.7.0"
+  }
+}

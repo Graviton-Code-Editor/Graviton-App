@@ -1,8 +1,19 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
 .body_window2{
     transition: 0.10s;
     color:var(--white-black);
     font-size: 17px;
-    padding:12px;
+    padding:35px;
     overflow-y: scroll;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
@@ -50,16 +61,16 @@ height: 70%;
 overflow: auto;
  white-space: nowrap;
  margin-top: 55px;
- margin-left: 5px;
+ margin-left: 25px;
 }
 .body_window2 > #notes>p{
     font-size: 15px;
 }
 .body_window2 >#recent_projects> .project_div{
-    transition: 0.1s;
+    transition: 0.05s;
     border-radius: 7px;
     padding: 10px;
-    margin: 5px 10px;
+    margin: 6px 0px;
     min-width: 80px;
     width: auto;
     max-width: auto;
@@ -69,7 +80,7 @@ overflow: auto;
     color:var(--white-black);
 }
 .body_window2 >#recent_projects> .project_div:hover{
-    transition: 0.1s;
+    transition: 0.05s;
     background: var(--widget-color);
     cursor: pointer;
 }

@@ -1,3 +1,14 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Graviton Code Editor
+
+Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
 /* <-- Default NavBar >-- */
 const File = new dropMenu({
   id:"file",
@@ -48,21 +59,25 @@ Help.setList({
   }
 });
 function createAboutDialog(){
-createDialog('about', selected_language['About'] ,selected_language['MadeBy'] +
-      " Marc Espin, <br>" +
+  createDialog({
+    id:"about",
+    title:selected_language['About'],
+    content:`Marc Espin, <br> `+
       selected_language['Version'] +
       version +
-      "<br>" +
+      `<br>` +
       selected_language['OS']+ 
-      ": "+
-      graviton.currentOS() 
-      ,
-      selected_language['Accept'] 
-      ,null,'closeDialog(this)','')
+      `: `+
+      graviton.currentOS(),
+    buttons:{
+      [selected_language['Accept']]:"closeDialog(this)",
+    }
+
+  })
+
 }
 function interact_dropmenu(id) {
-  var dropdowns = document.getElementsByClassName("dropdown-content");
-
+  const dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {
     if (dropdowns[i].id != id) {
       dropdowns[i].classList.replace("show", "hide"); //Close the other menus
@@ -80,14 +95,11 @@ function interact_dropmenu(id) {
 }
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
-  if (
-    !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
-  ) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
+  if (!(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))) {
+    const dropdowns = document.getElementsByClassName("dropdown-content");
     time_spent_graphic_counter = false;
-
     for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
+      const openDropdown = dropdowns[i];
       if (openDropdown.classList.contains("show")) {
         openDropdown.classList.replace("show", "hide");
       }
