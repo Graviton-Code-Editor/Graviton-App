@@ -11,10 +11,10 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-const fs = require('fs');
+const fs = require('fs'); 
 const {app, BrowserWindow,globalShortcut} = electron;
 const Menu = electron.Menu;
-let mainWindow;
+let mainWindow; 
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
 		titleBarStyle: "customButtonsOnHover", 

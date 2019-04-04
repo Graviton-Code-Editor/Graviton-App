@@ -10,7 +10,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 
 /* Css that needs to be loaded fast */
-#g_BOOTANIMATION{
+#g_bootanimation{
 		webkit-user-select: none; 
 		position: fixed;
 		z-index: 100;
@@ -18,7 +18,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 		width: 100%; 
 		background: white; 
 }
-#g_BOOTANIMATION > img{
+#g_bootanimation > img{
 	webkit-user-select: none; 
 	pointer-events: none;
 	z-index: 999;
@@ -31,13 +31,13 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 }
 #openFolder{
 	top: 45%;
-	left: 50%;
+	left: 52%;
 	margin-right: -50%;
 	transform: translate(-50%, -50%);
 	position: absolute; 
 	padding: 15px;
-	width: 70px;
-	height: 70px;
+	width: 24px;
+	height: 24px;
 	margin: 0 auto; 
 	background: url("../icons/closed.svg") no-repeat center;
 	background-size: 70px 70px;
@@ -49,7 +49,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 	background: url("../icons/open.svg") no-repeat center;
 	background-size: 70px 70px;
 }
-#g_CONTROL_BAR img{
+#g_control_bar img{
 	pointer-events: none;
 	top:0; 
 	left:0;

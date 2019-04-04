@@ -24,7 +24,6 @@ function openSettings(){
 	          <li class="" id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Advanced">`+selected_language["Advanced"]+`</a></li>
 	        </ol>
 	    </div>`;
-
 	const all = document.createElement("div");
 	all.setAttribute("id","window");
 	all.setAttribute("style","-webkit-user-select: none;");
@@ -84,17 +83,16 @@ function goSPage(num){
 				</div>
 				<h3>${selected_language["Themes"]}</h3> 
 				<div class="section">
-					<div id='theme_list'></div> 
-					<span>Wanna create your own?</span>
+						<div id='theme_list'></div> 
+						<span>Wanna create your own?</span>
 				</div>
 				<div id="editor_fs">
-				<h3>${selected_language["EditorFontSize"]}</h3>
-				<div class="section">
-					<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
-				<div>
+						<h3>${selected_language["EditorFontSize"]}</h3>
+						<div class="section">
+								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
+						<div>
 				</div>`;
-				for(i=0;i<themes.length; i++){
-					
+				for(i=0;i<themes.length; i++){			
 						const themeDiv = document.createElement("div");
 						themeDiv.setAttribute("class","theme_div");
 						themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('1',this);");
@@ -105,47 +103,32 @@ function goSPage(num){
 						const description = document.createElement("p");
 						description.innerText = themes[i]["Description"]; //Theme's description
 						description.setAttribute("style","font-size:13px; line-height:2px;");
-
 						themeDiv.appendChild(author);
-						themeDiv.appendChild(description);
-						
+						themeDiv.appendChild(description);				
 						if(themes[i]["Name"] === current_theme["Name"]){
-
 							selectTheme("1",themeDiv);
 						}
-
 						document.getElementById("theme_list").appendChild(themeDiv);
 				}
 				document.getElementById("navB1").classList.add("active");
 		break;
-		case "2":
-				
-				document.getElementById("body_content").innerHTML=`
-				
+		case "2":	
+				document.getElementById("body_content").innerHTML=`		
 				<div id='language_list'></div> `;
-
 				for(i=0;i<languages.length; i++){
-
 						const languageDiv = document.createElement("div");
 						languageDiv.setAttribute("class","language_div");
 						languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["Name"]+"'); selectLang(this);");
-						languageDiv.innerText=languages[i]["Name"];
-						
+						languageDiv.innerText=languages[i]["Name"];			
 						if(languages[i]["Name"] === selected_language["Name"]){
-
 							selectLang(languageDiv);
 						}
-
 					document.getElementById("language_list").appendChild(languageDiv);
-
 				}
 				document.getElementById("navB2").classList.add("active");
-
 		break;
-		case "3":
-				
+		case "3":	
 				document.getElementById("body_content").innerHTML=`
-
 				<h3>`+selected_language["Performance"]+`</h3>
 				<div class="section">
 						<p>${selected_language["Settings-Advanced-Performance-Animations"]}</p>
@@ -162,31 +145,18 @@ function goSPage(num){
 						<p>By date: ${dateVersion}</p>
 						<button class="button1  " onclick="CHECK_UPDATES();">Check for updates</button>
 				</div>
-
 				`;
-
 				document.getElementById("navB3").classList.add("active");
-
 		break;
-
 	}
-	
 }
 function DISABLE_ANIMATIONS(){
 	if(ANIMATIONS_STATUS == "activated"){
-
 		if(document.getElementById("_ANIMATIONS") != null){
-			document.getElementById("_ANIMATIONS").innerText =`*{
-			-webkit-transition: none !important;
-		  -moz-transition: none !important;
-		  -o-transition: none !important;
-		  transition: none !important;}`; 
+			document.getElementById("_ANIMATIONS").innerText =`*{  transition: none !important;}`; 
 		}else{
 			const  style = document.createElement("style");
-			style.innerText = `*{-webkit-transition: none !important;
-		  -moz-transition: none !important;
-		  -o-transition: none !important;
-		  transition: none !important;}`;
+			style.innerText = `*{  transition: none !important;}`;
 		  style.id = "_ANIMATIONS";
 		  document.body.insertBefore(style,document.body.children[0]);
 		}

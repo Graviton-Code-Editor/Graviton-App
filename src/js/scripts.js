@@ -8,13 +8,11 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-
 const dateVersion = 190326; //The release date
 const version = "0.7.3"; //Tagged num
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 /* Importing some required modules */
 const { shell } = require("electron");
-
 const fs = require("fs-extra");
 const path = require("path");
 const { dialog } = require("electron").remote;
@@ -91,7 +89,6 @@ function loadEditor(path, data) {
       }
     }
   }
-
 function filterIt(arr, searchKey, cb) {
   var list = [];
   for (var i=0;i < arr.length; i++) {
@@ -104,7 +101,6 @@ function filterIt(arr, searchKey, cb) {
   }
   return cb(list);
 }
-
 editor.on("change", function() {
     //Save data when switching between tabs
     if(editors.length!=1){ //Prevent from saving the start message
@@ -126,14 +122,10 @@ editor.on("change", function() {
   //Getting Last Word
   const A1 = editor.getCursor().line;
   const A2 = editor.getCursor().ch;
-
   const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
   const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-
   const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
-
   //Context Menu
-
   filterIt(dictionary, lastWord, function(filterResult){
     if (filterResult.length > 0 && lastWord.length >= 3) {
       let contextOptions;
@@ -151,13 +143,9 @@ editor.on("change", function() {
     }
   });
   });
-
-
 editor.on("keydown", function(editor, e){
   if ($("context").css("display") != "none") {
-
     //Ignore keys actions on context options displayed.
-
     editor.setOption("extraKeys", {
       "Up": function(){
         if(true) {
@@ -171,16 +159,12 @@ editor.on("keydown", function(editor, e){
       }
     });
   }else{
-
     //Reset keys actions.
-
     editor.setOption("extraKeys", {
       "Up": "goLineUp"
     });
   }
-
   //Context Options keys handler
-
   $("context .menuWrapper .option.hover").filter(function(){
     if (e.keyCode === 40 && !$("context .menuWrapper .option").last().hasClass("hover") && $("context").css("display") != "none") {
       $("context .menuWrapper .option").removeClass("hover")
@@ -210,8 +194,6 @@ editor.on("keydown", function(editor, e){
     }
   });
 });
-
-
 $("context .menuWrapper").on("mouseenter", "div.option", function(){
   $("context .menuWrapper .option").not(this).removeClass("hover");
   $(this).addClass("hover");
@@ -240,14 +222,12 @@ editor.on("change", function() {    //Preview detector
       }, 550);
   });
 }
-
 loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 
 function restartApp() {
   remote.app.relaunch();
   remote.app.exit(0);
 }
-
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
 });
@@ -265,7 +245,6 @@ function save_file_warn(ele){
       [selected_language['FileExit-dialog-button-accept']]:`closeDialog(this); ${ele.getAttribute('onclose')}`,
       [selected_language['FileExit-dialog-button-deny']]:'saveFile(); closeDialog(this);',
     }
-
   })
 }
 function saveFileAs() {
@@ -295,11 +274,13 @@ function openFile() {
   });
 }
 function openFolder() {
-  dialog.showOpenDialog(
-    {
-      properties: ["openDirectory"]
-    },
-    selectedFiles => loadDirs(selectedFiles[0], "left-bar", true)
+  dialog.showOpenDialog({properties: ["openDirectory"]},
+    selectedFiles =>{
+      if (selectedFiles === undefined) {
+      return;
+      }
+     loadDirs(selectedFiles[0], "left-bar", true)
+    }
   );
 }
 function saveFile() {
@@ -311,7 +292,7 @@ function saveFile() {
       document.getElementById(editingTab).setAttribute("file_status", "saved");
       document
         .getElementById(editingTab)
-        .children[1].setAttribute("onclick", "deleteTab('" + editingTab + "')");
+        .children[1].setAttribute("onclick", `deleteTab(${editingTab })`);
       document.getElementById(editingTab).children[1].innerHTML = close_icon;
     });
   }
@@ -371,20 +352,20 @@ function loadDirs(dir, appendID, __FirstTime) {
         element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
-          "padding-left:" + paddingListDir + "px; vertical-align: middle;"
+          `padding-left:${paddingListDir}px; vertical-align: middle;`
         );
         element.setAttribute("myPadding", paddingListDir);
         element.setAttribute("longPath", _LONGPATH);
         const touch = document.createElement("div");
         touch.setAttribute(
           "onClick",
-          "loadDirs('" + _LONGPATH + "','" + ids+dir.replace(/\\/g, "\\\\") + "',false)"
+          `loadDirs('${_LONGPATH}','${ids+dir.replace(/\\/g, "\\\\")}',false)`
         );
         touch.innerText = paths[i];
-        touch.setAttribute("class", " folder_list2  ");
+        touch.setAttribute("class", " folder_list2 ");
         touch.setAttribute(
           "style",
-          " width: " + Number(paths[i].length * 6 + 55) + "px;"
+          ` width:${Number(paths[i].length * 6 + 55)}px;`
         );
         const image = document.createElement("img");
         image.setAttribute("src", "src/icons/closed.svg");
@@ -409,18 +390,14 @@ function loadDirs(dir, appendID, __FirstTime) {
         element.setAttribute("name", paths[i]);
         element.setAttribute(
           "style",
-          "margin-left:" +
-            paddingListDir +
-            "px; vertical-align: middle; width:" +
-            Number(paths[i].length * 6 + 55) +
-            "px;"
-        );
+          `margin-left:${paddingListDir }px; 
+          vertical-align: middle; width:${paths[i].length * 6 + 55}px;`); //BUGG
         element.setAttribute("myPadding", paddingListDir);
         element.setAttribute("longPath", _LONGPATH);
         element.setAttribute("onClick", "createTab(this)");
         _SUBFOLDER.appendChild(element);
         const image = document.createElement("img");
-        image.setAttribute("src", "src/icons/" + getFormat(paths[i]) + ".svg");
+        image.setAttribute("src", `src/icons/${getFormat(paths[i])}.svg`);
         image.setAttribute("style", "float:left; margin-right:3px;");
         const p = document.createElement("p");
         p.innerText = paths[i];
