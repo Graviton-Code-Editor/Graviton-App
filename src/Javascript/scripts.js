@@ -715,6 +715,4 @@ function _preview() {
     _previewer.close();
   }
 }
-function openDevTools() {
-  app.webContents.openDevTools();
-}
+

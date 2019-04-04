@@ -36,7 +36,7 @@ app.on('ready', function(){
 		slashes: true,
 	}));
 	//mainWindow.webContents.openDevTools() //Disable the dev tools when opening Graviton
-	mainWindow.setMenu(null); 
+	//mainWindow.setMenu(null); 
 });
 app.on('window-all-closed', ()=>{
   app.quit();

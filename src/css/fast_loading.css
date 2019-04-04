@@ -19,9 +19,10 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 		background: white; 
 }
 #g_BOOTANIMATION > img{
+	webkit-user-select: none; 
 	pointer-events: none;
 	z-index: 999;
-	position: absolute; 
+	position: fixed; 
 	top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); 
@@ -40,11 +41,20 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 	margin: 0 auto; 
 	background: url("../icons/closed.svg") no-repeat center;
 	background-size: 70px 70px;
-				}
+}
 #openFolder:hover{
 	cursor: pointer;
 	width: 70px;
 	height: 70px;
 	background: url("../icons/open.svg") no-repeat center;
 	background-size: 70px 70px;
+}
+#g_CONTROL_BAR img{
+	pointer-events: none;
+	top:0; 
+	left:0;
+	padding:7px 7px;
+	margin:0;
+	position: absolute;
+	height: 16px;
 }

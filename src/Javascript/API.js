@@ -114,7 +114,7 @@ function dropMenu(obj){
 				}
 			});
 	}else{
-			const bar = document.getElementById("dropmenus_list");
+			const bar = document.getElementById("g_dropmenu_list");
 			const newTab = document.createElement("div");
 			const droplist = document.createElement("div");
 			droplist.classList = "dropdown-content hide";
@@ -185,6 +185,9 @@ const graviton = {
  	},
  	currentOS: function(){
  		return process.platform; 
+ 	},
+ 	openDevTools: function(){
+ 		app.webContents.openDevTools();
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin

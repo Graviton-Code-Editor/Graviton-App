@@ -37,7 +37,7 @@ Tools.setList({
   list: {
     Plugins: "openPlugins()",
     "Zen Mode": "zenMode(true)",
-    "Developer Tools": "openDevTools()",
+    "Developer Tools": "graviton.openDevTools",
     Previewer: "_preview()",
     "*line": "",
     Settings: "openSettings(); goSPage('1');"
