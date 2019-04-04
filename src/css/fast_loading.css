@@ -10,8 +10,15 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 
 /* Css that needs to be loaded fast */
-
-#bootanimation_logo{
+#g_BOOTANIMATION{
+		webkit-user-select: none; 
+		position: fixed;
+		z-index: 100;
+		height: 100%;
+		width: 100%; 
+		background: white; 
+}
+#g_BOOTANIMATION > img{
 	pointer-events: none;
 	z-index: 999;
 	position: absolute; 

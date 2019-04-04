@@ -9,13 +9,13 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 #########################################
 */
 
-:root{ /* Color pallete , themes will override this*/
+:root{                          /* Color pallete , themes will override this*/
 	--primaryColor: #222222;
     --secondaryColor: #171717;
     --accentColor: #FD0054;
     --white-black: white;
     --black-white:white;
-    --editor-background-color:black;
+    --editor-background-color: #191919;
     --editor-font-size: 13px;
     --widget-color: #757474;
     --buttons-roundness:5px;
@@ -26,7 +26,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
     --notifications-background-color:#474747;
     --notifications-window-radius:5px;
 }
-
 @font-face {
     font-family: _main_font;
     src: url(../fonts/Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
@@ -36,8 +35,8 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
     src: url(../fonts/Hack-Regular.ttf);
 }
 html{
-   font-family: _main_font;
-   font-weight: 550;
+    font-family: _main_font;
+    font-weight: 550;
 }
 *{
     outline: 0;
@@ -166,7 +165,6 @@ body , head{
     top: 0px;
     left: 0px;
     margin-left: 13px;
-
 }
 #editor_content > #body-space >#tabs_bar > .tabs > .close_tab{
     position: relative;
@@ -246,7 +244,7 @@ body , head{
     opacity: 1;
   }
 }
-#control-bar {
+#g_CONTROL_BAR {
     -webkit-user-select: none;  
     -webkit-app-region: drag;
     position: relative;
@@ -260,21 +258,21 @@ body , head{
     font-family: _main_font;
     margin: 0;
 }
-#control-bar > .title {
+#g_CONTROL_BAR > .title {
 color: var(--white-black);
  position: relative;
  top: 8px;
  left: 8px; 
  font-size: 12px;
 }
-#control-bar > #controls  {
+#g_CONTROL_BAR > #controls  {
  -webkit-app-region: no-drag;
  position: fixed;
  top: 0px;
  right: 0px;
- width: 144px;
+ width: 145px;
 }
-#control-bar > .controls > button {
+#g_CONTROL_BAR > .controls > button {
     padding: 3px 0px;
     height: 7px;
     width: 45px;
@@ -282,19 +280,19 @@ color: var(--white-black);
     border: none;
     background: transparent;
 }
-#control-bar > .controls[os="windows"] > button:hover { 
+#g_CONTROL_BAR > .controls> button:hover { 
     background: var(--widget-color);
 }
-#control-bar > .controls[os="windows"] > #minimize:hover >svg >rect { 
+#g_CONTROL_BAR > .controls > #minimize:hover >svg >rect { 
     fill: var(--white-black);
 }
-#control-bar > .controls[os="windows"] > #maximize:hover >svg >rect { 
+#g_CONTROL_BAR > .controls > #maximize:hover >svg >rect { 
     stroke: var(--white-black);
 }
-#control-bar > .controls[os="windows"] > #close:hover { 
+#g_CONTROL_BAR > .controls > #close:hover { 
     background: red;
 }
-#control-bar > .controls[os="windows"] > #close:hover>svg>rect { 
+#g_CONTROL_BAR > .controls > #close:hover>svg>rect { 
     fill: white;
 }
 .Button1{

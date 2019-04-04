@@ -1,7 +1,7 @@
 {
   "name": "Graviton",
   "version": "0.7.3",
-  "description": "Graviton is a function code editor.",
+  "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "scripts": {
     "start": "electron . GravitonEditor ",

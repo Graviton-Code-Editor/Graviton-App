@@ -11,14 +11,14 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 <!DOCTYPE>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="src/css/fast_loading.css">
- <div id="bootanimation" style="-webkit-user-select: none; position: fixed; z-index: 100;height: 100%; width: 100%; background: white; ">
- 	<img id="bootanimation_logo" src="src/icons/logo.svg">
- </div>
+<div id="g_BOOTANIMATION" >
+ 	<img src="src/icons/logo.svg">
+</div>
 <script>
 	let editor_booted = false;
 	function DeleteBoot(){
-		if(document.getElementById("bootanimation") != null ){
-			document.getElementById("bootanimation").remove();
+		if(document.getElementById("g_BOOTANIMATION") != null ){
+			document.getElementById("g_BOOTANIMATION").remove();
 			editor_booted = true;
 		}
 	}
@@ -26,9 +26,9 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 		new Notification("Error detected",'An error has appeared!');
 	});
 
- </script>
+</script>
 <html>
-		<div id="control-bar"  >
+		<div id="g_CONTROL_BAR">
 		    <div id="controls" class="controls" >
 					<!-- Control buttons -->
 		    </div>

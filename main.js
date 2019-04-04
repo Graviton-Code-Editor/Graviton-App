@@ -17,32 +17,28 @@ const Menu = electron.Menu;
 let mainWindow;
 app.on('ready', function(){
 	mainWindow = new BrowserWindow({
-		titleBarStyle: 'customButtonsOnHover', 
+		titleBarStyle: "customButtonsOnHover", 
 		webPreferences: {
 			nativeWindowOpen: true,
 			nodeIntegrationInWorker: true,
 		},
-		frame: false, 
+		frame: process.platform!="win32"? true:false, 
 		width: 750, 
 		height: 650 ,
 		'minHeight': 250,
   	'minWidth': 250,
-  	backgroundColor: "#FFF"
+  	backgroundColor: "#FFF",
+  	title:"Graviton"
 	});
 	mainWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'index.html'),
 		protocol: 'file:',
 		slashes: true,
 	}));
-	//mainWindow.webContents.openDevTools() 
-	//mainWindow.setMenu(null); 
+	//mainWindow.webContents.openDevTools() //Disable the dev tools when opening Graviton
+	mainWindow.setMenu(null); 
 });
 app.on('window-all-closed', ()=>{
   app.quit();
 });
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');
-
-
-
-
-

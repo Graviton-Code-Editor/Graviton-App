@@ -195,9 +195,7 @@ function DISABLE_ANIMATIONS(){
 		document.getElementById("_ANIMATIONS").innerText = "";
 		ANIMATIONS_STATUS = "activated";
 	}
-
 }
-
 function factory_reset_dialog(){
 	createDialog({
     id:"factory_reset",
@@ -207,7 +205,6 @@ function factory_reset_dialog(){
       [selected_language['Decline']]:"closeDialog(this)",
       [selected_language['Continue']]:"closeDialog(this); FactoryReset()",
     }
-
   })
 }
 function selectLang(lang){
@@ -217,7 +214,6 @@ function selectLang(lang){
 	}
 	lang.style = "background: var(--accentColor); color:white;";
 }
-
 function selectTheme(from,theme){
 	let themes_divs;
 	if(from==="1"){
