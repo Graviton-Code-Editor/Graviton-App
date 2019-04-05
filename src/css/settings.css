@@ -51,9 +51,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
     width: 100%;
     position: fixed;
 }
-.body_window h3{
- font-weight: 570;
-}
+
 .body_window{
     color:var(--white-black);
     font-size: 17px;

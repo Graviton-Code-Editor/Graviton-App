@@ -270,10 +270,9 @@ body , head{
 #g_control_bar > #controls button {
     padding: 3px 0px;
     height: 7px;
-    width: 45px;
-    margin: 0;  
+    width: 45px; 
     border: none;
-    background: transparent;
+    background: var(--primaryColor);
 }
 #g_control_bar> #controls button:hover { 
     background: var(--widget-color);
@@ -329,11 +328,15 @@ body , head{
     text-align:center;
 }
 .section{
-    margin: 5px;
-    padding: 3px 3px;
-
+    margin: 10px;
+    padding: 3px;
     background: transparent;
     height: auto;
+}
+.body_window h3{
+ font-weight: 570;
+ margin: 0;
+ padding: 0;
 }
 context {
   position: absolute;

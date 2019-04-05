@@ -19,9 +19,10 @@ function openSettings(){
 	 <h2 class="window_title translate_word"  idT="Settings">`+selected_language["Settings"]+`</h2> 
 			<div id="nav_bar">
 	        <ol>
-	          <li class="" id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">`+selected_language["Customization"]+`</a></li>
-	          <li class="" id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Language">`+selected_language["Language"]+`</a></li>
-	          <li class="" id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Advanced">`+selected_language["Advanced"]+`</a></li>
+	          <li class="" id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${selected_language["Customization"]}</a></li>
+	          <li class="" id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Language">${selected_language["Language"]}</a></li>
+	          <li class="" id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${selected_language["Editor"]}</a></li>
+	        	<li class="" id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${selected_language["Advanced"]}</a></li>
 	        </ol>
 	    </div>`;
 	const all = document.createElement("div");
@@ -47,23 +48,23 @@ function updateEditorFontSize() {
 }
 function updateSettings(){
 	document.documentElement.style.setProperty("--editor-font-size",FontSizeEditor+"px"); //Update settings from start
-	editor.refresh();
+	editor.refresh(); //Refresh codemirror to prevent bugs
 	if(zoom_app==0){
-		webFrame.setZoomFactor(0.8);
+		webFrame.setZoomFactor(0.8); //Small size
 	}else if(zoom_app==20){
-		webFrame.setZoomFactor(1);
+		webFrame.setZoomFactor(1); 	//Default size
 	}else if(zoom_app==40){ 
-		webFrame.setZoomFactor(1.2);
+		webFrame.setZoomFactor(1.2); //Big size
 	}
 }
 function updatezoom(){
 	const value = document.getElementById("slider_zoom").value;
 	if(value==0){
-		webFrame.setZoomFactor(0.8);
+		webFrame.setZoomFactor(0.8); //Small size
 	}else if(value==20){
-		webFrame.setZoomFactor(0.95);
+		webFrame.setZoomFactor(1); //Default size
 	}else if(value==40){ 
-		webFrame.setZoomFactor(1.2);
+		webFrame.setZoomFactor(1.2); //Big size
 	}
 	zoom_app = value;
 }
@@ -86,12 +87,12 @@ function goSPage(num){
 						<div id='theme_list'></div> 
 						<span>Wanna create your own?</span>
 				</div>
-				<div id="editor_fs">
-						<h3>${selected_language["EditorFontSize"]}</h3>
+				<h3>${selected_language["ZenMode"]}</h3>
 						<div class="section">
-								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
-						<div>
-				</div>`;
+								<p>${selected_language["ZenMode.ShowDirectoryExplorer"]}</p>
+								<gv-switch  onclick="zenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
+				</div>
+				`;
 				for(i=0;i<themes.length; i++){			
 						const themeDiv = document.createElement("div");
 						themeDiv.setAttribute("class","theme_div");
@@ -129,7 +130,18 @@ function goSPage(num){
 		break;
 		case "3":	
 				document.getElementById("body_content").innerHTML=`
-				<h3>`+selected_language["Performance"]+`</h3>
+				<div id="editor_fs">
+						<h3>${selected_language["FontSize"]}</h3>
+						<div class="section">
+								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
+						<div>
+				</div>
+				`;
+				document.getElementById("navB3").classList.add("active");
+		break;
+		case "4":	
+				document.getElementById("body_content").innerHTML=`
+				<h3>${selected_language["Performance"]}</h3>
 				<div class="section">
 						<p>${selected_language["Settings-Advanced-Performance-Animations"]}</p>
 						<gv-switch  onclick="DISABLE_ANIMATIONS(this)" class="${ANIMATIONS_STATUS}"></gv-switch>
@@ -146,7 +158,7 @@ function goSPage(num){
 						<button class="button1  " onclick="CHECK_UPDATES();">Check for updates</button>
 				</div>
 				`;
-				document.getElementById("navB3").classList.add("active");
+				document.getElementById("navB4").classList.add("active");
 		break;
 	}
 }
