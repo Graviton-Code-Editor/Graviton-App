@@ -48,7 +48,7 @@ fs.readFile(logDir, 'utf8', function (err,data) {
   	var realPath = objectLog[i].Path.replace(/\\/g, "\\\\"); //Replace \ with \\  
 		let project = document.createElement("div");
 		project.setAttribute("class","project_div");
-		project.setAttribute("onclick","loadDirs('"+realPath+"','left-bar','yes'); hideWelcome();");
+		project.setAttribute("onclick","loadDirs('"+realPath+"','g_directories','yes'); hideWelcome();");
 		project.innerText=objectLog[i].Name;
 		let description = document.createElement("p");
 		description.innerText = objectLog[i].Path;

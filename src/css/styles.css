@@ -79,7 +79,7 @@ body , head{
     opacity: 0;
     background: transparent;
 }
-#editor_content > #left-bar{
+#g_content > #g_directories{
     position: fixed;
     left:0;
     width:180px;
@@ -90,7 +90,7 @@ body , head{
     background: var(--primaryColor);
     -webkit-user-select: none;
 }
-#editor_content > #body-space > #tabs_bar{
+#g_content > #body-space > #tabs_bar{
     overflow: auto; 
     -webkit-user-select: none;
     font-size: 15px;
@@ -106,7 +106,7 @@ body , head{
     color:var(--white-black);
     overflow-x: auto;
 }
-#editor_content > #body-space{
+#g_content > #body-space{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
     position: relative;
@@ -119,7 +119,7 @@ body , head{
     color:var(--white-black);
     overflow: hidden;
 }
-#editor_content >#body-space > .code-space{
+#g_content >#body-space > .code-space{
      height: calc(100% - (2px));
 }
 .flex{
@@ -129,7 +129,7 @@ body , head{
 .flex >div{
     flex: 1;
 }
-#editor_content > #body-space >#tabs_bar > .tabs{
+#g_content > #body-space >#tabs_bar > .tabs{
     position: relative;
     transition: 0.10s;
     color:var(--white-black);
@@ -141,19 +141,19 @@ body , head{
     background: var(--primaryColor);
     cursor: pointer;
 }
-#editor_content > #body-space >#tabs_bar > .tabs:first-child{
+#g_content > #body-space >#tabs_bar > .tabs:first-child{
     border-top-left-radius: 5px;
 }
-#editor_content > #body-space >#tabs_bar > .tabs:last-child{
+#g_content > #body-space >#tabs_bar > .tabs:last-child{
     border-top-right-radius: 5px;
 }
-#editor_content > #body-space >#tabs_bar > .tabs:hover{
+#g_content > #body-space >#tabs_bar > .tabs:hover{
     background: var(--widget-color);
 }
-#editor_content > #body-space >#tabs_bar >.tabs.selected{
+#g_content > #body-space >#tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
 }
-#editor_content > #body-space >#tabs_bar >.tabs > p{
+#g_content > #body-space >#tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
     position: relative;
@@ -167,7 +167,7 @@ body , head{
     left: 0px;
     margin-left: 13px;
 }
-#editor_content > #body-space >#tabs_bar > .tabs > .close_tab{
+#g_content > #body-space >#tabs_bar > .tabs > .close_tab{
     position: relative;
     top:17%;
     display: inline-block;
@@ -181,7 +181,7 @@ body , head{
     background: transparent;
     fill: var(--white-black);
 }
-#editor_content > #body-space >#tabs_bar > .tabs > .close_tab:hover{
+#g_content > #body-space >#tabs_bar > .tabs > .close_tab:hover{
     height: 10px;
     width:10px;
     border: none;
@@ -189,7 +189,7 @@ body , head{
     fill: var(--accentColor);
     stroke: var(--accentColor);
 }
-#editor_content > #left-bar div.folder_list1{
+#g_content > #g_directories div.folder_list1{
     animation: directory_opening linear 0.1s;
     color: var(--white-black);
     border-radius: 70px;
@@ -207,12 +207,12 @@ body , head{
     cursor: pointer;
     background: transparent;
 }
-#editor_content > #left-bar div.folder_list1:hover{
+#g_content > #g_directories div.folder_list1:hover{
     transition: 0.1s;
     border-radius: 4px;
     background: var(--widget-color);
 }
-#editor_content > #left-bar div.folder_list2{
+#g_content > #g_directories div.folder_list2{
     animation: directory_opening linear 0.1s;
     color:var(--white-black);
     border-radius: 70px;
@@ -230,7 +230,7 @@ body , head{
     cursor: pointer;
     transform: translateX(3px);
 }
-#editor_content > #left-bar div.folder_list2:hover{
+#g_content > #g_directories div.folder_list2:hover{
     transition: 0.1s;
     border-radius: 4px;
     background: var(--widget-color);

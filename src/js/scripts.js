@@ -279,7 +279,7 @@ function openFolder() {
       if (selectedFiles === undefined) {
       return;
       }
-     loadDirs(selectedFiles[0], "left-bar", true)
+     loadDirs(selectedFiles[0], "g_directories", true)
     }
   );
 }
@@ -653,12 +653,12 @@ function registerNewProject(dir) {
 function zenMode() {
   if (editor_mode == "zen") {
     editor_mode = "normal";
-    document.getElementById("left-bar").style =
+    document.getElementById("g_directories").style =
       "visibility: visible; width:180px;";
     document.getElementById("body-space").style = "margin:0px 0px 0px 180px";
   } else {
     editor_mode = "zen";
-    document.getElementById("left-bar").style =
+    document.getElementById("g_directories").style =
       "visibility: hidden; width:0px;";
     document.getElementById("body-space").style = "margin:0px";
   }

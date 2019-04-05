@@ -11,88 +11,91 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 <!DOCTYPE>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="src/css/fast_loading.css">
-<div id="g_bootanimation" >
- 	<img src="src/icons/logo.svg">
+<div id="g_BOOTANIMATION" >
+   <img src="src/icons/logo.svg">
 </div>
 <script>
-	let editor_booted = false;
-	function DeleteBoot(){
-		if(document.getElementById("g_bootanimation") != null ){
-			document.getElementById("g_bootanimation").remove();
-			editor_booted = true;
-		}
-	}
-	window.addEventListener("error",function(){
-		new Notification("Error detected",'An error has appeared!');
-	});
+  let editor_booted = false;
+  function DeleteBoot(){
+    if(document.getElementById("g_BOOTANIMATION") != null ){
+      document.getElementById("g_BOOTANIMATION").remove();
+      editor_booted = true;
+    }
+  }
+  window.addEventListener("error",function(){
+    new Notification("Error detected",'An error has appeared!');
+  });
 
 </script>
 <html>
-		<div id="g_control_bar">
-		    <img src="src/icons/logo.svg">
-		    <div id="g_dropmenu_list">
-		    	<!--Dropmenus list-->	
-		    </div> 	
-		     <div id="controls" >
-					<!-- Control buttons (only for windows) -->
-		    </div>
-		</div>
-		<body>
-			<div class="flex" id="editor_content">
-				<div id="left-bar" opened="false" > <!--Directories tree-view -->
-					<span id="openFolder" onclick="openFolder()"  ></span>
-				</div>
-			<context >
-		      <div id="context" class="menuWrapper"></div>
-		  </context>
-			<div id="body-space" >
-					<div id="tabs_bar" class="flex">
-					</div>	
-			</div>
-			</div> 
-			<div id="notifications" > 
-				<!-- Notifications list -->
-			</div>
-		</body>	
-		<!-- Codemirror -->
-		<script src="src/lib/codemirror.js"></script>
+    <div id="g_control_bar">
+       
+        <img src="src/icons/logo.svg">
+        <div id="g_dropmenu_list">
+          <!--Dropmenus list-->  
+        </div>   
+         <div id="controls" >
+          <!-- Control buttons (only for windows) -->
+        </div>
+    </div>
+    <body>
+      <div id="g_content" >
+        <div id="g_directories" opened="false" > <!--Directories tree-view -->
+          <span id="openFolder" height="24px" width="24px" onclick="openFolder()"  ></span>
+      </div>
+      <context >
+          <div id="context" class="menuWrapper"></div>
+      </context>
+      <div id="body-space" >
+          <div id="message">
+          </div>
+          <div id="tabs_bar" class="flex">
+          </div>  
+      </div>
+      </div> 
+      <div id="notifications" > 
+        <!-- Notifications list -->
+      </div>
+    </body>  
+    <!-- Codemirror -->
+    <script src="src/lib/codemirror.js"></script>
 
-		<script src="src/mode/css/css.js"></script>
-		<script src="src/mode/xml/xml.js"></script>
-		<script src="src/mode/javascript/javascript.js"></script>
-		<script src="src/mode/htmlmixed/htmlmixed.js"></script>
-		<script src="src/mode/go/go.js"></script>
-		<script src="src/mode/dart/dart.js"></script>
-		<script src="src/mode/pascal/pascal.js"></script>
-		<script src="src/mode/php/php.js"></script>
-		<script src="src/mode/ruby/ruby.js"></script>
-		<script src="src/mode/sql/sql.js"></script>
-		<script src="src/mode/sass/sass.js"></script>
+    <script src="src/mode/css/css.js"></script>
+    <script src="src/mode/xml/xml.js"></script>
+    <script src="src/mode/javascript/javascript.js"></script>
+    <script src="src/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="src/mode/go/go.js"></script>
+    <script src="src/mode/dart/dart.js"></script>
+    <script src="src/mode/pascal/pascal.js"></script>
+    <script src="src/mode/php/php.js"></script>
+    <script src="src/mode/ruby/ruby.js"></script>
+    <script src="src/mode/sql/sql.js"></script>
+    <script src="src/mode/sass/sass.js"></script>
 
-		<link rel="stylesheet" href="src/lib/codemirror.css">
-		<link rel="stylesheet" href="src/Highlights/default.css">
+    <link rel="stylesheet" href="src/lib/codemirror.css">
+    <link rel="stylesheet" href="src/Highlights/default.css">
 
-			<!-- Graviton Editor -->
+      <!-- Graviton Editor -->
 
-		<link rel="stylesheet" href="src/css/styles.css">
-		<link rel="stylesheet" href="src/css/menus.css">
-		<link rel="stylesheet" href="src/css/settings.css">
-		<link rel="stylesheet" href="src/css/welcome-page.css">
-		<link rel="stylesheet" href="src/css/dialogs_&_notifications.css">
-		<link rel="stylesheet" href="src/css/plugins.css">
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/menus.css">
+    <link rel="stylesheet" href="src/css/settings.css">
+    <link rel="stylesheet" href="src/css/welcome-page.css">
+    <link rel="stylesheet" href="src/css/dialogs_&_notifications.css">
+    <link rel="stylesheet" href="src/css/plugins.css">
 
-		<script type="text/javascript" src="src/js/mousetrap.min.js"></script>
-		<script src="src/js/dictionary.js"></script>
-		<script  src="src/js/API.js"></script>
-		<script src="src/js/scripts.js"></script>
-		<script src="src/js/_languages.js"></script>
-		<script src="src/js/_menus.js"></script>
-		<script src="src/js/_plugins.js"></script>
-		<script src="src/js/_config.js"></script>
-		<script src="src/js/_welcome-page.js"></script>
-		<script src="src/js/_settings.js"></script>
-		<script src="src/js/_themes.js"></script>
-		<script src="src/js/_controlBar.js"></script>
-		<script src="src/js/_updater.js"></script>
-		
+    <script type="text/javascript" src="src/js/mousetrap.min.js"></script>
+    <script src="src/js/dictionary.js"></script>
+    <script  src="src/js/API.js"></script>
+    <script src="src/js/scripts.js"></script>
+    <script src="src/js/_languages.js"></script>
+    <script src="src/js/_menus.js"></script>
+    <script src="src/js/_plugins.js"></script>
+    <script src="src/js/_config.js"></script>
+    <script src="src/js/_welcome-page.js"></script>
+    <script src="src/js/_settings.js"></script>
+    <script src="src/js/_themes.js"></script>
+    <script src="src/js/_controlBar.js"></script>
+    <script src="src/js/_updater.js"></script>
+    
 </html>
