@@ -29,11 +29,11 @@ function welcomePage(){
 		<h1 id='title_welcome'>Welcome</h1> 
 		<div id='recent_projects'><h2 class='title2'>Recent projects</h2></div> 
 		<div id='notes'><h2 class='title2'>Notes</h2>
-		<p > Current build: `+ dateVersion +` </p> 
-		<p > OS: `+ graviton.currentOS() +` </p> 
+		<p > Current build: ${ dateVersion } </p> 
+		<p > OS: ${ graviton.currentOS() } </p> 
 		<div class='welcomeButtons'>
-		<button onclick='openFolder(); hideWelcome();' id='open_folder_welcome' class='button1'>Open Folder</button> 
-		<button onclick='hideWelcome()' id='skip_welcome' class='button1'>Skip</button> 
+		<button onclick='openFolder(); hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${selected_language["OpenFolder"]}</button> 
+		<button onclick='hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${selected_language["Skip"]}</button> 
 		</div> </div>`;
 
 	all.appendChild(background);
@@ -90,9 +90,9 @@ function FirstTime(){
 
 	body.innerHTML =`
 				
-				<h1 style="font-size:50px; text-align:center; " >Languages</h1> 
+				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${selected_language["Languages"]}</h1> 
 				<div id='language_list'></div> 
-				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;  " class='button1'>Next</button> `;
+				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${selected_language["Continue"]}</button> `;
 				
 	all.appendChild(body);
 	all.appendChild(background);
@@ -127,60 +127,60 @@ function FTGoPage(number){
 		document.getElementById("ft_2").remove();
 		break;
 		case "2":
-		document.getElementById("ft_1").remove();
+			document.getElementById("ft_1").remove();
 
-		let all = document.createElement("div");
-	all.setAttribute("id","ft_2");
-	all.setAttribute("style","-webkit-user-select: none;");
-	
-	let background = document.createElement("div");
-	background.setAttribute("class","opened_window"); 
+			let all = document.createElement("div");
+			all.setAttribute("id","ft_2");
+			all.setAttribute("style","-webkit-user-select: none;");
+			
+			let background = document.createElement("div");
+			background.setAttribute("class","opened_window"); 
 
-	
-	let body = document.createElement("div");
-	body.setAttribute("class","body_window2");
-	body.setAttribute("id","body_firstTime_window");
+			
+			let body = document.createElement("div");
+			body.setAttribute("class","body_window2");
+			body.setAttribute("id","body_firstTime_window");
 
-	body.innerHTML = `
-		<h1 style="font-size:50px;  text-align:center;" >Take a theme!</h1> 
+			body.innerHTML = `
+				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${selected_language["Welcome.TakeATheme"]}</h1> 
 
-		<div id='theme_list' style="height:60%;"></div> 
-		<button onclick='FTGoPage("1"); FirstTime();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1'>Back</button> 
-		<button id="FROM_THEMES_CONTINUE" onclick='hideFirstTime(); welcomePage();' style=" position:fixed; right:5%; bottom: 5%;  " class='button1 disabled'>Finish</button> 
-		`;
+				<div id='theme_list' style="height:60%;"></div> 
+				<button onclick='FTGoPage("1"); FirstTime();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${selected_language["Back"]}</button> 
+				<button id="FROM_THEMES_CONTINUE" onclick='hideFirstTime(); welcomePage();' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Finish">${selected_language["Finish"]}</button> 
+				`;
 
-	all.appendChild(background);
-	all.appendChild(body);
-	document.body.appendChild(all);
+			all.appendChild(background);
+			all.appendChild(body);
+			document.body.appendChild(all);
 
-	for(i=0;i<themes.length; i++){
-		var themeDiv = document.createElement("div");
-		themeDiv.setAttribute("class","  theme_div_welcomePage ");
-		themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('2',this);");
-		themeDiv.innerText=themes[i].Name;
-		var author = document.createElement("p");
-		author.innerText = "Made by: " + themes[i]["Author"];
-		author.setAttribute("style","font-size:15px")
-		var description = document.createElement("p");
-		description.innerText = themes[i]["Description"];
-		description.setAttribute("style","font-size:13px; line-height:2px;");
+			for(i=0;i<themes.length; i++){
+				var themeDiv = document.createElement("div");
+				themeDiv.setAttribute("class","  theme_div_welcomePage ");
+				themeDiv.setAttribute("onclick",`loadTheme('${i}'); selectTheme('2',this);`);
+				themeDiv.innerText=themes[i].Name;
+				var author = document.createElement("p");
+				author.innerText =`Made by: ${ themes[i]["Author"]}`;
+				author.setAttribute("style","font-size:15px")
+				var description = document.createElement("p");
+				description.innerText = themes[i]["Description"];
+				description.setAttribute("style","font-size:13px; line-height:2px;");
 
-		themeDiv.appendChild(author);
-		themeDiv.appendChild(description);
+				themeDiv.appendChild(author);
+				themeDiv.appendChild(description);
 
-		themeDiv.addEventListener("click", function(){
-			document.getElementById("FROM_THEMES_CONTINUE").classList ="Button1";
-		});
-	
-		if(themes[i]["Name"] === current_theme["Name"]){
+				themeDiv.addEventListener("click", function(){
+					document.getElementById("FROM_THEMES_CONTINUE").classList.remove("disabled") ;
+				});
+			
+				if(themes[i]["Name"] === current_theme["Name"]){
 
-							selectTheme("2",themeDiv);
-							console.log(themeDiv);
-		}
-document.getElementById("theme_list").appendChild(themeDiv);
-		
-	}
-	
+									selectTheme("2",themeDiv);
+									console.log(themeDiv);
+				}
+			document.getElementById("theme_list").appendChild(themeDiv);
+				
+			}
+			
 
 		break;
 		case "3":

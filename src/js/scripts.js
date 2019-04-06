@@ -11,7 +11,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 const dateVersion = 190405; //The release date
 const version = "0.7.3"; //Tagged num
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
-/* Importing some required modules */
+
 const { shell } = require("electron");
 const fs = require("fs-extra");
 const path = require("path");
@@ -36,6 +36,7 @@ var editors = [];
 var editor;
 var editorID;
 var editor_mode = "normal";
+let g_highlighting = "activated";
 var _previewer;
 var _enable_preview = false;
 var log = [];
@@ -58,10 +59,10 @@ function loadEditor(path, data) {
     const element = document.createElement("div");
     element.classList = "code-space";
     element.setAttribute("id", path + "_editor");
-    document.getElementById("body-space").appendChild(element);
+    document.getElementById("g_editors").appendChild(element);
     const codemirror = CodeMirror(document.getElementById(path + "_editor"), {
       value: data,
-      mode: "javascript",
+      mode: "text/plain",
       htmlMode: false,
       theme: "default",
       lineNumbers: true,
@@ -69,7 +70,8 @@ function loadEditor(path, data) {
     });
     const new_editor = {
       id: path + "_editor",
-      editor: codemirror
+      editor: codemirror,
+      path:path
     };
     editors.push(new_editor);
     if (document.getElementById(editorID) != undefined)
@@ -497,7 +499,7 @@ function createTab(object) {
             }
             tab.setAttribute("data", data);
             loadEditor(NEWPATH__, data);
-            updateCodeMode(NEWPATH__);
+            if(g_highlighting=="activated") updateCodeMode(NEWPATH__);
             applyHighlighter(currentTheme);
             document.getElementById(editorID).style.height = " calc(100% - (50px))";
             editingTab = tab.id;
@@ -527,7 +529,7 @@ function deleteTab(ele) {
     if (tabs.length === 0) {
         //0 tabs
         loadEditor("start");
-        document.getElementById("body-space").style = " ";
+        document.getElementById("g_editors").style = " ";
         filepath = " ";
     } else if (i === tabs.length) {
         //Last tab
@@ -546,7 +548,7 @@ function deleteTab(ele) {
         const __NEWPATH = NEW_SELECTED_TAB.getAttribute("longPath");
         filepath = __NEWPATH;
         loadEditor(__NEWPATH, __OBJECT.getAttribute("data"));
-        updateCodeMode(__NEWPATH);
+        if(g_highlighting=="activated") updateCodeMode(__NEWPATH);
         applyHighlighter(currentTheme);
       }
     }
@@ -563,69 +565,71 @@ function loadTab(object) {
     const __NEWPATH = object.getAttribute("longPath");
     filepath = __NEWPATH;
     loadEditor(__NEWPATH, object.getAttribute("data"));
-    updateCodeMode(__NEWPATH);
+    if(g_highlighting=="activated") updateCodeMode(__NEWPATH);
     editingTab = object.id;
     applyHighlighter(currentTheme);
   }
 }
 function updateCodeMode(path) {
-  switch (path.split(".").pop()) {
-    case "html":
-      editor.setOption("mode", "htmlmixed");
-      editor.setOption("htmlMode", true);
-      plang = "HTML";
-      break;
-    case "css":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "css");
-      plang = "CSS";
-      break;
-    case "js":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "javascript");
-      plang = "JavaScript";
-      break;
-    case "json":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "javascript");
-      plang = "JSON / JavaScript";
-      break;
-    case "go":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "go");
-      plang = "Go";
-      break;
-    case "sql":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "sql");
-      plang = "SQL";
-      break;
-    case "ruby":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "ruby");
-      plang = "Ruby";
-      break;
-    case "php":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "php");
-      plang = "PHP";
-      break;
-    case "sass":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "sass");
-      plang = "Sass";
-      break;
-    case "dart":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "dart");
-      plang = "Dart";
-      break;
-    case "Pascal":
-      editor.setOption("htmlMode", false);
-      editor.setOption("mode", "pascal");
-      plang = "Pascal";
-      break;
-    default:
+  if(g_highlighting=="activated"){
+    switch (path.split(".").pop()) {
+      case "html":
+        editor.setOption("mode", "htmlmixed");
+        editor.setOption("htmlMode", true);
+        plang = "HTML";
+        break;
+      case "css":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "css");
+        plang = "CSS";
+        break;
+      case "js":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "javascript");
+        plang = "JavaScript";
+        break;
+      case "json":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "javascript");
+        plang = "JSON / JavaScript";
+        break;
+      case "go":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "go");
+        plang = "Go";
+        break;
+      case "sql":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "sql");
+        plang = "SQL";
+        break;
+      case "ruby":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "ruby");
+        plang = "Ruby";
+        break;
+      case "php":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "php");
+        plang = "PHP";
+        break;
+      case "sass":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "sass");
+        plang = "Sass";
+        break;
+      case "dart":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "dart");
+        plang = "Dart";
+        break;
+      case "Pascal":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "pascal");
+        plang = "Pascal";
+        break;
+      default:
+    }
   }
 }
 function registerNewProject(dir) {
@@ -655,12 +659,12 @@ function zenMode() {
     editor_mode = "normal";
     document.getElementById("g_directories").style =
       "visibility: visible; width:180px;";
-    document.getElementById("body-space").style = "margin:0px 0px 0px 180px";
+    document.getElementById("g_editors").style = "margin:0px 0px 0px 180px";
   } else {
     editor_mode = "zen";
     document.getElementById("g_directories").style =
       "visibility: hidden; width:0px;";
-    document.getElementById("body-space").style = "margin:0px";
+    document.getElementById("g_editors").style = "margin:0px";
   }
 }
 function _preview() {

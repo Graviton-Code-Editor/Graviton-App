@@ -21,12 +21,15 @@
 	"Advanced":"Advanced",
 	"FactoryReset":"Factory Reset",
 	"FactoryReset-dialog-message":"Do you want to Restart Graviton Code Editor?",
-	"Language":"Language",
+	"Languages":"Languages",
 	"ZoomSize":"Zoom-size",
 	"Themes":"Themes",
 	"MadeBy":"Made by: ",
 	"Warn":"Warn",
 	"Continue":"Continue",
+	"Skip":"Skip",
+	"Back":"Back",
+	"Finish":"Finish",
 	"CurrentVersion":"Current version: ",
 	"Editor":"Editor",
 	"FontSize":"Font-size",
@@ -39,11 +42,14 @@
 	"Paste":"Paste",
 	"OS":"OS",
 	"Performance":"Performance",
+	"Highlighting":"Highlighting",
 	"Settings-Advanced-Performance-Animations":"Turn off to disable animations. ",
 	"Settings-Advanced-FactoryReset":"This will restart Graviton configuraton and logs.",
 	"FileExit-dialog-message":"Are you sure you wanna close this file without saving?",
 	"FileExit-dialog-button-accept":"Yes, close",
-	"FileExit-dialog-button-deny":"No, Save"
+	"FileExit-dialog-button-deny":"No, Save",
+	"Welcome":"Welcome",
+	"Welcome.TakeATheme":"Take a theme:"
 	
 	
 }

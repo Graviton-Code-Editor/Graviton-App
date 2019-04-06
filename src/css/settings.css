@@ -163,6 +163,11 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+input[type="number"]::selection {
+  background-color: var(--accentColor);
+  color:var(--black-white);
+}
 .slider {
   -webkit-appearance: none;
   width: auto;

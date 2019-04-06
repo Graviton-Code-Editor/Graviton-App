@@ -11,14 +11,14 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 <!DOCTYPE>
 <meta charset="utf-8"/>
 <link rel="stylesheet" href="src/css/fast_loading.css">
-<div id="g_BOOTANIMATION" >
+<div id="g_bootanimation" >
    <img src="src/icons/logo.svg">
 </div>
 <script>
   let editor_booted = false;
   function DeleteBoot(){
-    if(document.getElementById("g_BOOTANIMATION") != null ){
-      document.getElementById("g_BOOTANIMATION").remove();
+    if(document.getElementById("g_bootanimation") != null ){
+      document.getElementById("g_bootanimation").remove();
       editor_booted = true;
     }
   }
@@ -46,9 +46,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
       <context >
           <div id="context" class="menuWrapper"></div>
       </context>
-      <div id="body-space" >
-          <div id="message">
-          </div>
+      <div id="g_editors" >
           <div id="tabs_bar" class="flex">
           </div>  
       </div>

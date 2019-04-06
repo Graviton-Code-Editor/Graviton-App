@@ -19,10 +19,10 @@ function openSettings(){
 	 <h2 class="window_title translate_word"  idT="Settings">`+selected_language["Settings"]+`</h2> 
 			<div id="nav_bar">
 	        <ol>
-	          <li class="" id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${selected_language["Customization"]}</a></li>
-	          <li class="" id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Language">${selected_language["Language"]}</a></li>
-	          <li class="" id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${selected_language["Editor"]}</a></li>
-	        	<li class="" id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${selected_language["Advanced"]}</a></li>
+	          <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${selected_language["Customization"]}</a></li>
+	          <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${selected_language["Languages"]}</a></li>
+	          <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${selected_language["Editor"]}</a></li>
+	        	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${selected_language["Advanced"]}</a></li>
 	        </ol>
 	    </div>`;
 	const all = document.createElement("div");
@@ -88,7 +88,7 @@ function goSPage(num){
 						<span>Wanna create your own?</span>
 				</div>
 				<h3>${selected_language["ZenMode"]}</h3>
-						<div class="section">
+				<div class="section">
 								<p>${selected_language["ZenMode.ShowDirectoryExplorer"]}</p>
 								<gv-switch  onclick="zenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
 				</div>
@@ -135,6 +135,7 @@ function goSPage(num){
 						<div class="section">
 								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
 						<div>
+						
 				</div>
 				`;
 				document.getElementById("navB3").classList.add("active");
@@ -144,8 +145,12 @@ function goSPage(num){
 				<h3>${selected_language["Performance"]}</h3>
 				<div class="section">
 						<p>${selected_language["Settings-Advanced-Performance-Animations"]}</p>
-						<gv-switch  onclick="DISABLE_ANIMATIONS(this)" class="${ANIMATIONS_STATUS}"></gv-switch>
+						<gv-switch  onclick="g_disable_animations(this)" class="${ANIMATIONS_STATUS}"></gv-switch>
 				</div>
+						<div class="section">
+								<p>${selected_language["Highlighting"]}</p>
+								<gv-switch  onclick="g_highlightingTurn(true)" class="${g_highlighting}"></gv-switch>
+						</div>
 				<h3>`+selected_language["FactoryReset"]+`</h3>
 				<div class="section">
 						<p>${selected_language["Settings-Advanced-FactoryReset"]}</p>
@@ -162,7 +167,28 @@ function goSPage(num){
 		break;
 	}
 }
-function DISABLE_ANIMATIONS(){
+
+function g_highlightingTurn(){
+	if(g_highlighting == "activated"){
+		for(i=0;i<editors.length;i++){
+			editors[i].editor.setOption("mode","text/plain");
+			editors[i].editor.refresh();
+		}
+		g_highlighting = "desactivated";
+	}else{
+		for(i=0;i<editors.length;i++){
+			if(editors[i].path.split(".").pop()=="html"){
+				editors[i].editor.setOption("mode", "htmlmixed");
+        editors[i].editor.setOption("htmlMode", true);
+			}else{
+				editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
+			}
+			editors[i].editor.refresh();
+		}
+		g_highlighting = "activated";
+	}
+}
+function g_disable_animations(){
 	if(ANIMATIONS_STATUS == "activated"){
 		if(document.getElementById("_ANIMATIONS") != null){
 			document.getElementById("_ANIMATIONS").innerText =`*{  transition: none !important;}`; 
