@@ -308,7 +308,7 @@ function loadDirs(dir, appendID, __FirstTime) {
     const dir_length = me.children.length;
     for (i = 0; i < dir_length; i++) {
       if (i == 0) {
-        me.children[0].children[0].setAttribute("src", "src/icons/closed.svg");
+        me.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"close"));
       } else {
         me.children[1].remove();
       }
@@ -318,7 +318,7 @@ function loadDirs(dir, appendID, __FirstTime) {
     document.getElementById(appendID).setAttribute("opened", "true");
     if (__FirstTime === false) {
       var click = document.getElementById(appendID).children[0];
-      click.children[0].setAttribute("src", "src/icons/open.svg");
+      click.children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"open"));
     }
   }
   if (__FirstTime ) {
@@ -370,7 +370,9 @@ function loadDirs(dir, appendID, __FirstTime) {
           ` width:${Number(paths[i].length * 6 + 55)}px;`
         );
         const image = document.createElement("img");
-        image.setAttribute("src", "src/icons/closed.svg");
+        image.setAttribute("src", g_getCustomFolder(paths[i],"close"));
+        
+        
         image.setAttribute("style", "float:left; margin-right:3px;");
         element.appendChild(touch);
         touch.appendChild(image);
@@ -399,7 +401,7 @@ function loadDirs(dir, appendID, __FirstTime) {
         element.setAttribute("onClick", "createTab(this)");
         _SUBFOLDER.appendChild(element);
         const image = document.createElement("img");
-        image.setAttribute("src", `src/icons/${getFormat(paths[i])}.svg`);
+        image.setAttribute("src", `src/icons/files/${getFormat(paths[i])}.svg`);
         image.setAttribute("style", "float:left; margin-right:3px;");
         const p = document.createElement("p");
         p.innerText = paths[i];
@@ -409,6 +411,25 @@ function loadDirs(dir, appendID, __FirstTime) {
     }
   });
 }
+function g_getCustomFolder(path,state){
+    console.log(path,state);
+    switch(path){
+          case"node_modules":
+              return "src/icons/custom_icons/node_modules.svg"
+          break;
+          case".git":
+              return "src/icons/custom_icons/git.svg"
+          break;
+          default:
+
+              if(state=="close"){
+                  return "src/icons/closed.svg";
+              }else{
+                  return "src/icons/open.svg";
+              }
+    }
+}
+
 function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
@@ -445,7 +466,7 @@ function getFormat(text) {
       return "pascal";
       break;
     default:
-      return "file";
+      return "unknown";
   }
 }
 function createTab(object) {

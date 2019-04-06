@@ -57,8 +57,8 @@ body , head{
 }
 ::-webkit-scrollbar {
     transition: 0.1s;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background: transparent;
 }
 ::-webkit-scrollbar-track {
@@ -85,7 +85,7 @@ body , head{
 #g_content > #g_directories{
     position: fixed;
     left:0;
-    width:180px;
+    width:200px;
     height: calc(100% - (30px));
     overflow: scroll;
     font-size:12px;
@@ -116,7 +116,7 @@ body , head{
     left:0px;
     right:0px;
     top:0px;
-    margin: 0px 0px 0px 180px;
+    margin: 0px 0px 0px 200px;
     height:  calc(100% - (31px));
     width: auto;
     color:var(--white-black);
