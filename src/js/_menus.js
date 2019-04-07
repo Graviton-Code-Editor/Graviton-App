@@ -29,7 +29,8 @@ File.setList({
     "Open Folder": "openFolder()",
     "Open File": "openFile()",
     "Save As": "saveFileAs()",
-    Save: "saveFile()"
+    Save: "saveFile()",
+    "New Project":"g_openNewProjects(); g_NPgoPage('1')"
   }
 });
 Tools.setList({

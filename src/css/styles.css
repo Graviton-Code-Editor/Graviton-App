@@ -348,10 +348,28 @@ body , head{
     text-align:center;
 }
 .section{
-    margin: 10px;
+    margin: 7px;
     padding: 3px;
     background: transparent;
     height: auto;
+}
+.section_hover{
+    transition: 0.1s;
+    margin: 7px;
+    padding: 12px 15px;
+    background: var(--primaryColor);
+    cursor: pointer;
+    height: auto;
+    border-radius: 8px;
+    transform: scale(1);
+}
+.section_hover:hover{
+    transition: 0.1s;
+    background: var(--widget-color);
+}
+.section_hover:active{
+    transition: 0.1s;
+    transform: scale(0.98);
 }
 .body_window h3{
  font-weight: 570;
@@ -407,4 +425,11 @@ context  .menuWrapper .option.hover{
 }
 context .menuWrapper .option:last-child{
   border-bottom: none;
+}
+#plugins_list{
+overflow: auto;
+width: 100%;
+height: auto;
+overflow: auto;
+ white-space: nowrap;
 }

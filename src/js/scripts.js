@@ -80,7 +80,7 @@ function loadEditor(dir, data) {
     editorID = new_editor.id;
     editor = new_editor.editor;
     document.getElementById(dir + "_editor").style.display = "block";
-  } else {
+  }else{
     //Editor exists
     for (i = 0; i < editors.length; i++) {
       document.getElementById(editors[i].id).style.display = "none";
@@ -131,7 +131,7 @@ editor.on("change", function() {
   const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
   const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
   //Context Menu
-  filterIt(dictionary, lastWord, function(filterResult){
+filterIt(dictionary, lastWord, function(filterResult){
     if (filterResult.length > 0 && lastWord.length >= 3) {
       let contextOptions;
       for (var i=0; i< filterResult.length; i++) {
@@ -692,18 +692,18 @@ function _preview() {
     if(getFormat(graviton.getCurrentFile().path)!="html"){
       return;
     }
-    _enable_preview = true;
-    _previewer = new BrowserWindow({
-      width: 800,
-      height: 600
-    });
-    _previewer.loadURL(
-      url.format({
-        pathname: graviton.getCurrentFile().path,
-        protocol: "file:",
-        slashes: true
-      })
-    );
+    _enable_preview = true;                                                                   
+    _previewer = new BrowserWindow({                                                          
+      width: 800,                                                                             
+      height: 600                                                                        
+    });                                                                             
+    _previewer.loadURL(                                     
+      url.format({                                                                  
+        pathname: graviton.getCurrentFile().path,                                       
+        protocol: "file:",                                                       
+        slashes: true                                                         
+      })                                                                      
+    );                                                                            
     _previewer.on("closed", () => {
       _enable_preview = false;
     });
@@ -714,4 +714,77 @@ function _preview() {
     _previewer.close();
   }
 }
+const HTML_template =`
+<!DOCTYPE html>
 
+<html lang="en">
+      <head>
+
+          <meta charset="utf-8">
+
+          <title>New Project</title>
+
+          <meta name="description" content="Graviton Project">
+
+      </head>
+
+      <body>
+
+          <h1>Hello World!</p>
+
+      </body>
+</html>
+`
+const g_newProject = function(template){
+  dialog.showOpenDialog({properties: ["openDirectory"]},
+    selectedFiles =>{
+      if (selectedFiles === undefined) {
+        return;
+      }else{
+        switch(template){
+          case"html":
+            const g_project_dir = path.join(selectedFiles[0], ".GravitonProject "+Date.now());
+             fs.mkdirSync(g_project_dir);
+              fs.writeFile(path.join(g_project_dir,"index.html"),HTML_template, err => {
+                  if (err) {
+                    return err;
+                  }
+                  loadDirs(g_project_dir, "g_directories", true)
+            });
+          break;
+        }
+      }
+    }
+  );
+}
+function g_openNewProjects(){
+  const g_all_window = document.createElement("div");
+  g_all_window.setAttribute("id","window");
+  g_all_window.setAttribute("style","-webkit-user-select: none;");
+  const g_background = document.createElement("div");
+  g_background.setAttribute("class","opened_window");
+  g_background.setAttribute("onclick","g_hideNewProjects()"); 
+  const g_body = document.createElement("div");
+  g_body.setAttribute("class","body_window");
+  g_body.setAttribute("id","body_window");
+  g_all_window.appendChild(g_background);
+  g_all_window.appendChild(g_body);
+  document.body.appendChild(g_all_window);
+}
+function g_NPgoPage(num){
+  switch (num){
+    case "1":
+        document.getElementById("body_window").innerHTML=`
+
+            <h2 class="window_title">${selected_language["Templates"]}</h2> 
+
+            <div onclick="g_newProject('html'); g_hideNewProjects();" class="section_hover">
+                <p>HTML</p>
+            </div>
+        `;
+    break;
+  }
+}
+function g_hideNewProjects(){
+  document.getElementById("window").remove();
+}

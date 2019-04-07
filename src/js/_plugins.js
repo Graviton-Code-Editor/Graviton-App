@@ -32,13 +32,15 @@ function openPlugins(){
 	content.setAttribute("id","plugins_list");
 	content.innerHTML = `
 	<h2 class="window_title">`+selected_language["Plugins"]+`</h2> 
-	<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
+	    <div class="section">
+	    		<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
+			</div>
 	`;
 
 	plugins_list.forEach(plugin => {
 
  		 				var pluginDiv = document.createElement("div");
-						pluginDiv.classList.add("plugin_div");
+						pluginDiv.classList.add("section_hover");
 						pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
 						var author = document.createElement("p");
 						author.innerText = selected_language["MadeBy"] + plugin["author"];
@@ -47,7 +49,6 @@ function openPlugins(){
 						description.innerText = plugin["description"];
 						description.setAttribute("style","font-size:13px; line-height:2px;");
 
-						
 						pluginDiv.appendChild(author);
 						pluginDiv.appendChild(description);
 						content.appendChild(pluginDiv);
