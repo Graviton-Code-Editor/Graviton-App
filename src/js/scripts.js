@@ -122,31 +122,33 @@ editor.on("change", function() {
         .getElementById(editingTab)
         .setAttribute("data", editor.getValue());
     }
-  //Getting Cursor Position
-  const cursorPos = editor.cursorCoords();
-  //Getting Last Word
-  const A1 = editor.getCursor().line;
-  const A2 = editor.getCursor().ch;
-  const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-  const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-  const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
-  //Context Menu
-filterIt(dictionary, lastWord, function(filterResult){
-    if (filterResult.length > 0 && lastWord.length >= 3) {
-      let contextOptions;
-      for (var i=0; i< filterResult.length; i++) {
-        contextOptions +="<button class='option'>"+filterResult[i]._name+"</button>"
-        contextOptions = contextOptions.replace("undefined","");
-        $("context .menuWrapper").html(contextOptions);
-      }
-      $("context").fadeIn();
-      $("context").css({"top":(cursorPos.top + 30)+"px", "left":cursorPos.left+"px"});
-      $("context .menuWrapper .option").first().addClass("hover");
-    }else if (filterResult.length === 0 || lastWord.length < 3){
-      $("context").fadeOut();
-      $("context .menuWrapper").html("");
+  if(plang=="JavaScript"){
+      //Getting Cursor Position
+      const cursorPos = editor.cursorCoords();
+      //Getting Last Word
+      const A1 = editor.getCursor().line;
+      const A2 = editor.getCursor().ch;
+      const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+      const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+      const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
+      //Context Menu
+    filterIt(dictionary, lastWord, function(filterResult){
+        if (filterResult.length > 0 && lastWord.length >= 3) {
+          let contextOptions;
+          for (var i=0; i< filterResult.length; i++) {
+            contextOptions +="<button class='option'>"+filterResult[i]._name+"</button>"
+            contextOptions = contextOptions.replace("undefined","");
+            $("context .menuWrapper").html(contextOptions);
+          }
+          $("context").fadeIn();
+          $("context").css({"top":(cursorPos.top + 30)+"px", "left":cursorPos.left+"px"});
+          $("context .menuWrapper .option").first().addClass("hover");
+        }else if (filterResult.length === 0 || lastWord.length < 3){
+          $("context").fadeOut();
+          $("context .menuWrapper").html("");
+        }
+      });
     }
-  });
   });
 editor.on("keydown", function(editor, e){
   if ($("context").css("display") != "none") {
@@ -297,7 +299,7 @@ function saveFile() {
       document.getElementById(editingTab).setAttribute("file_status", "saved");
       document
         .getElementById(editingTab)
-        .children[1].setAttribute("onclick", `deleteTab(${editingTab })`);
+        .children[1].setAttribute("onclick", document.getElementById(editingTab).children[1].getAttribute("onclose"));
       document.getElementById(editingTab).children[1].innerHTML = close_icon;
     });
   }
@@ -678,11 +680,13 @@ const zenMode = function() {
     document.getElementById("g_directories").style =
       "visibility: visible; width:200px;";
     document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
+    document.getElementById("g_status_bar").style = "margin:0px 0px 0px 200px";
   }else{
     editor_mode = "zen";
     document.getElementById("g_directories").style =
       "visibility: hidden; width:0px;";
     document.getElementById("g_editors").style = "margin:0px";
+     document.getElementById("g_status_bar").style = "margin:0px";
   }
 }
 function _preview() {

@@ -104,8 +104,8 @@ body , head{
     position: sticky;
     top: 0;
     left:0;
-    margin: 0px;
-    padding: 0px 5px;
+    margin: 0;
+    padding: 0;
     color:var(--white-black);
     overflow-x: auto;
 }
@@ -319,12 +319,8 @@ body , head{
     background: var(--primaryColor);
     color: var(--white-black);
     box-sizing: border-box;
+    border: 2px solid transparent;
 }
-.Button1.visible{ 
-    transition: 0.1s;
-    background-color:var(--primaryColor);
-}
-
 .Button1:hover{
     transition: 0.1s;
     cursor: pointer;
@@ -340,6 +336,11 @@ body , head{
 }
 .Button1.disabled{
     pointer-events: none;
+}
+.Button1:active{
+    transition: 0.1s;
+    box-sizing: border-box;
+    transform: scale(0.95);
 }
 .window_title{
     font-size:25px; 

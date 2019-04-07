@@ -160,7 +160,7 @@ function goSPage(num){
 				<div class="section">
 						<p>Number: ${version}</p>
 						<p>By date: ${dateVersion}</p>
-						<button class="button1  " onclick="CHECK_UPDATES();">Check for updates</button>
+						<button class="button1" onclick="CHECK_UPDATES();">Check for updates</button>
 				</div>
 				`;
 				document.getElementById("navB4").classList.add("active");
