@@ -167,8 +167,7 @@ function goSPage(num){
 		break;
 	}
 }
-
-function g_highlightingTurn(){
+const g_highlightingTurn = function(){
 	if(g_highlighting == "activated"){
 		for(i=0;i<editors.length;i++){
 			editors[i].editor.setOption("mode","text/plain");

@@ -117,13 +117,30 @@ body , head{
     right:0px;
     top:0px;
     margin: 0px 0px 0px 200px;
-    height:  calc(100% - (31px));
+    height:  calc(100% - (59px));
     width: auto;
     color:var(--white-black);
     overflow: hidden;
 }
 #g_content >#g_editors > .code-space{
      height: calc(100% - (2px));
+}
+#g_content > #g_status_bar{
+    height: 25px;
+    margin-left: 200px;
+    background: var(--primaryColor);
+    padding: 0px 10px;
+    padding-top: 4px ;
+    border: none;
+    display: flex;
+}
+#g_content > #g_status_bar *{
+    padding: 0;
+    margin: 0;
+    color: var(--white-black);
+    flex: 1;
+    font-size: 13px;
+    user-select: none;
 }
 .flex{
     display: flex;

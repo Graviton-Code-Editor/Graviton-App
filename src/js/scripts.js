@@ -53,14 +53,14 @@ var themes_folder = path.join(DataFolderDir, "themes");
 var highlights_folder = path.join(DataFolderDir, "highlights");
 var plugins_folder = path.join(DataFolderDir, "plugins");
 var plugins_db = path.join(DataFolderDir, "plugins_db");
-function loadEditor(path, data) {
-  if (document.getElementById(path + "_editor") == undefined) {
+function loadEditor(dir, data) {
+  if (document.getElementById(dir + "_editor") == undefined) {
     //Editor doesn't exist
     const element = document.createElement("div");
     element.classList = "code-space";
-    element.setAttribute("id", path + "_editor");
+    element.setAttribute("id", dir + "_editor");
     document.getElementById("g_editors").appendChild(element);
-    const codemirror = CodeMirror(document.getElementById(path + "_editor"), {
+    const codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
       value: data,
       mode: "text/plain",
       htmlMode: false,
@@ -68,28 +68,31 @@ function loadEditor(path, data) {
       lineNumbers: true,
       autoCloseTags: true
     });
+    document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
     const new_editor = {
-      id: path + "_editor",
+      id: dir + "_editor",
       editor: codemirror,
-      path:path
+      path:dir
     };
     editors.push(new_editor);
     if (document.getElementById(editorID) != undefined)
       document.getElementById(editorID).style.display = "none";
     editorID = new_editor.id;
     editor = new_editor.editor;
-    document.getElementById(path + "_editor").style.display = "block";
+    document.getElementById(dir + "_editor").style.display = "block";
   } else {
     //Editor exists
     for (i = 0; i < editors.length; i++) {
       document.getElementById(editors[i].id).style.display = "none";
-      if (editors[i].id == path + "_editor") {
+      if (editors[i].id == dir + "_editor") {
         editor = editors[i].editor;
         //editor.setValue(data);
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
+        document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
       }
     }
+
   }
 function filterIt(arr, searchKey, cb) {
   var list = [];
@@ -227,8 +230,8 @@ editor.on("change", function() {    //Preview detector
 loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 
 function restartApp() {
-  remote.app.relaunch();
-  remote.app.exit(0);
+    remote.app.relaunch();
+    remote.app.exit(0);
 }
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
@@ -305,19 +308,15 @@ function loadDirs(dir, appendID, __FirstTime) {
   const me = document.getElementById(appendID);
   if (me.getAttribute("opened") == "true") {
     me.setAttribute("opened", "false");
+
     const dir_length = me.children.length;
-    for (i = 0; i < dir_length; i++) {
-      if (i == 0) {
-        me.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"close"));
-      } else {
-        me.children[1].remove();
-      }
-    }
+    me.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"close"));
+    me.children[1].innerHTML = "";
     return;
   } else {
     document.getElementById(appendID).setAttribute("opened", "true");
     if (__FirstTime === false) {
-      var click = document.getElementById(appendID).children[0];
+      const click = document.getElementById(appendID).children[0];
       click.children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"open"));
     }
   }
@@ -334,7 +333,7 @@ function loadDirs(dir, appendID, __FirstTime) {
     _SUBFOLDER.innerText = path.basename(dir);
     document.getElementById(appendID).appendChild(_SUBFOLDER);
   } else {
-     _SUBFOLDER = document.getElementById(appendID);
+     _SUBFOLDER = document.getElementById(appendID).children[1];
   }
   const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 7; //Add padding
   fs.readdir(dir, (err, paths) => {
@@ -356,6 +355,7 @@ function loadDirs(dir, appendID, __FirstTime) {
           "style",
           `padding-left:${paddingListDir}px; vertical-align: middle;`
         );
+        const list = document.createElement("div");
         element.setAttribute("myPadding", paddingListDir);
         element.setAttribute("longPath", _LONGPATH);
         const touch = document.createElement("div");
@@ -372,17 +372,17 @@ function loadDirs(dir, appendID, __FirstTime) {
         const image = document.createElement("img");
         image.setAttribute("src", g_getCustomFolder(paths[i],"close"));
         
-        
         image.setAttribute("style", "float:left; margin-right:3px;");
         element.appendChild(touch);
         touch.appendChild(image);
+        element.appendChild(list);
         _SUBFOLDER.appendChild(element);
       }
     }
     for (i = 0; i < paths.length; i++) {
       let _LONGPATH = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
-        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\"); //Delete \
+        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\"); //Delete
       }
       ids++;
       const stats = fs.statSync(_LONGPATH);
@@ -412,7 +412,6 @@ function loadDirs(dir, appendID, __FirstTime) {
   });
 }
 function g_getCustomFolder(path,state){
-    console.log(path,state);
     switch(path){
           case"node_modules":
               return "src/icons/custom_icons/node_modules.svg"
@@ -429,7 +428,6 @@ function g_getCustomFolder(path,state){
               }
     }
 }
-
 function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
@@ -471,13 +469,13 @@ function getFormat(text) {
 }
 function createTab(object) {
   // create tabs on the element ' tabs_bar '
-  let NOT_CREATED =true;
+  let NOT_CREATED = true;
    for(i=0;i<tabsEqualToFiles.length;i++){ 
     if (tabsEqualToFiles[i].id === object.id) {
       NOT_CREATED = false;
     }
   }
-  if (NOT_CREATED == true) { //Tab doesn't exist
+  if (NOT_CREATED === true) { //Tab doesn't exist
           const tab = document.createElement("div");
           tab.setAttribute("ID", object.id + "A");
           tab.setAttribute("longPath", object.getAttribute("longpath"));
@@ -644,7 +642,7 @@ function updateCodeMode(path) {
         editor.setOption("mode", "dart");
         plang = "Dart";
         break;
-      case "Pascal":
+      case "pascal":
         editor.setOption("htmlMode", false);
         editor.setOption("mode", "pascal");
         plang = "Pascal";
@@ -658,30 +656,29 @@ function registerNewProject(dir) {
   fs.readFile(logDir, "utf8", function(err, data) {
     if(err) return;
     log = JSON.parse(data);
-    let __CONTINUE = true;
+    let g_continue = true;
     for (i = 0; i < log.length; i++) {
       if (log[i].Path == dir) {
-        __CONTINUE = false;
+        g_continue = false;
         return;
       }
     }
-    if (__CONTINUE) {
-      var new1 = {
+    if (g_continue) {
+      log.unshift({
         Name: path.basename(dir),
-        Path: dir
-      };
-      log.unshift(new1);
-      fs.writeFile(logDir, JSON.stringify(log), err => {});
+        Path: dir}
+      );
+      fs.writeFile(logDir, JSON.stringify(log));
     }
   });
 }
-function zenMode() {
+const zenMode = function() {
   if (editor_mode == "zen") {
     editor_mode = "normal";
     document.getElementById("g_directories").style =
-      "visibility: visible; width:180px;";
-    document.getElementById("g_editors").style = "margin:0px 0px 0px 180px";
-  } else {
+      "visibility: visible; width:200px;";
+    document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
+  }else{
     editor_mode = "zen";
     document.getElementById("g_directories").style =
       "visibility: hidden; width:0px;";
@@ -691,7 +688,7 @@ function zenMode() {
 function _preview() {
   const url = require("url");
   const BrowserWindow = remote.BrowserWindow;
-  if (_enable_preview === false ) {
+  if (_enable_preview === false){
     if(getFormat(graviton.getCurrentFile().path)!="html"){
       return;
     }
