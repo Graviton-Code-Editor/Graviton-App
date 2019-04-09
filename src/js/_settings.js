@@ -90,7 +90,7 @@ function goSPage(num){
 				<h3>${selected_language["ZenMode"]}</h3>
 				<div class="section">
 								<p>${selected_language["ZenMode.ShowDirectoryExplorer"]}</p>
-								<gv-switch  onclick="zenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
+								<gv-switch  onclick="g_ZenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
 				</div>
 				`;
 				for(i=0;i<themes.length; i++){			
@@ -210,7 +210,7 @@ function factory_reset_dialog(){
     content:selected_language['FactoryReset-dialog-message'],
     buttons:{
       [selected_language['Decline']]:"closeDialog(this)",
-      [selected_language['Continue']]:"closeDialog(this); FactoryReset()",
+      [selected_language['Yes']+", "+selected_language['Continue']]:"closeDialog(this); FactoryReset()",
     }
   })
 }

@@ -35,9 +35,9 @@ function loadConfig(){ //Loads the configuration from the config.jsons for the f
 	  updateSettings();
 		loadLanguage(selected_language);
 		if(_firsTime === false){
-		 welcomePage();
+		 g_welcomePage();
 		}else{
-			FirstTime();
+			g_Setup();
 		}
 		detectPlugins(); //Call the function to detect the installed plugins
 
@@ -58,9 +58,9 @@ function loadConfig(){ //Loads the configuration from the config.jsons for the f
 			loadLanguage(selected_language);
 
 			if(_firsTime === false){
-			 welcomePage();
+			 g_welcomePage();
 			}else{
-				FirstTime();
+				g_Setup();
 			}
 			if(ANIMATIONS_STATUS=="desactivated"){
 		  	const  style = document.createElement("style");

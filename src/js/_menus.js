@@ -37,9 +37,9 @@ Tools.setList({
   button: "Tools",
   list: {
     Plugins: "openPlugins()",
-    "Zen Mode": "zenMode(true)",
+    "Zen Mode": "g_ZenMode(true)",
     "Developer Tools": "graviton.openDevTools",
-    Previewer: "_preview()",
+    Previewer: "g_preview()",
     "*line": "",
     Settings: "openSettings(); goSPage('1');"
   }
@@ -55,6 +55,7 @@ Help.setList({
     "*line": "",
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
     FAQs: "",
+    "Show welcome":"g_welcomePage()",
     About:"createAboutDialog()"
       
   }

@@ -471,71 +471,66 @@ function getFormat(text) {
 }
 function createTab(object) {
   // create tabs on the element ' tabs_bar '
-  let NOT_CREATED = true;
-   for(i=0;i<tabsEqualToFiles.length;i++){ 
-    if (tabsEqualToFiles[i].id === object.id) {
-      NOT_CREATED = false;
-    }
-  }
-  if (NOT_CREATED === true) { //Tab doesn't exist
+  for(i=0;i<tabsEqualToFiles.length+1;i++){ 
+      if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
+        return;
+      }else if(i==tabsEqualToFiles.length) {
           const tab = document.createElement("div");
-          tab.setAttribute("ID", object.id + "A");
-          tab.setAttribute("longPath", object.getAttribute("longpath"));
-          tab.setAttribute("class", "tabs");
-          tab.style =
-            "min-width: " +
-            (object.getAttribute("name").length * 4 + 115) +
-            "px; max-width: " +
-            (object.getAttribute("name").length * 5 + 100) +
-            "px";
-          tab.setAttribute("onclick", "loadTab(this)");
-          tab.setAttribute("file_status", "saved");
-
-          const tab_text = document.createElement("p");
-          tab_text.style = "float:left; text-align:center;";
-          tab_text.innerText = object.getAttribute("name");
-
-          const tab_x = document.createElement("button");
-          tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
-          tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
-          tab_x.setAttribute("class", "close_tab");
-          tab_x.setAttribute("hovering", "false");
-          tab_x.innerHTML = close_icon;
-          tab_x.addEventListener("mouseover", function (e) {
-              this.setAttribute("hovering",true);
-          });
-          tab_x.addEventListener("mouseout", function (e) {
-              this.setAttribute("hovering",false);
-          });
-          tab.appendChild(tab_text);
-          tab.appendChild(tab_x);
-          document.getElementById("tabs_bar").appendChild(tab);
-          tabs.push(tab);
-          tabsEqualToFiles.push(object);
-          let NEWPATH__ = object.getAttribute("longPath");
-          filepath = NEWPATH__;
-          fs.readFile(NEWPATH__, "utf8", function(err, data) {
-            if (err) {
-              return console.log(err);
-            }
-            tab.setAttribute("data", data);
-            loadEditor(NEWPATH__, data);
-            if(g_highlighting=="activated") updateCodeMode(NEWPATH__);
-            applyHighlighter(currentTheme);
-            document.getElementById(editorID).style.height = " calc(100% - (50px))";
-            editingTab = tab.id;
-            selected = object;
-            tabs.map(tab => {
+      tab.setAttribute("ID", object.id + "A");
+      tab.setAttribute("longPath", object.getAttribute("longpath"));
+      tab.setAttribute("class", "tabs");
+      tab.style =
+        "min-width: " +
+        (object.getAttribute("name").length * 4 + 115) +
+        "px; max-width: " +
+        (object.getAttribute("name").length * 5 + 100) +
+        "px";
+      tab.setAttribute("onclick", "loadTab(this)");
+      tab.setAttribute("file_status", "saved");
+      const tab_text = document.createElement("p");
+      tab_text.style = "float:left; text-align:center;";
+      tab_text.innerText = object.getAttribute("name");
+      const tab_x = document.createElement("button");
+      tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
+      tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
+      tab_x.setAttribute("class", "close_tab");
+      tab_x.setAttribute("hovering", "false");
+      tab_x.innerHTML = close_icon;
+      tab_x.addEventListener("mouseover", function (e) {
+          this.setAttribute("hovering",true);
+      });
+      tab_x.addEventListener("mouseout", function (e) {
+          this.setAttribute("hovering",false);
+      });
+      tab.appendChild(tab_text);
+      tab.appendChild(tab_x);
+      document.getElementById("tabs_bar").appendChild(tab);
+      tabs.push(tab);
+      tabsEqualToFiles.push(object);
+      const g_newPath = object.getAttribute("longPath");
+      filepath = g_newPath;
+      fs.readFile(g_newPath, "utf8", function(err, data) {
+          if (err) return console.log(err);
+          tab.setAttribute("data", data);
+          loadEditor(g_newPath, data);
+          if(g_highlighting=="activated") updateCodeMode(g_newPath);
+          applyHighlighter(currentTheme);
+          document.getElementById(editorID).style.height = " calc(100% - (50px))";
+          editingTab = tab.id;
+          selected = object;
+          tabs.map(tab => {
               if (tab.classList.contains("selected")) {
-                tab.classList.remove("selected");
+                  tab.classList.remove("selected");
               }
-            });
-            tab.classList.add("selected");
           });
+          tab.classList.add("selected");
+      });
+      return;
+      }
   }
 }
 function deleteTab(ele) {
-  const __OBJECT = document.getElementById(ele.replace(/\\/g, "\\\\"));
+  const g_object = document.getElementById(ele.replace(/\\/g, "\\\\"));
   for(i=0;i<tabs.length;i++){
     const tab = tabs[i];
     let NEW_SELECTED_TAB;
@@ -543,10 +538,10 @@ function deleteTab(ele) {
       tabsEqualToFiles.splice(i, 1);
       tabs.splice(i, 1);
       document
-        .getElementById(__OBJECT.getAttribute("longPath") + "_editor")
+        .getElementById(g_object.getAttribute("longPath") + "_editor")
         .remove();
       editors.splice(i + 1, 1);
-      __OBJECT.remove();
+      g_object.remove();
     if (tabs.length === 0) {
         //0 tabs
         loadEditor("start");
@@ -560,16 +555,16 @@ function deleteTab(ele) {
     }
     if (NEW_SELECTED_TAB != undefined ) {
         tabs.map(tab => {
-          if (tab.classList.contains("selected")) {
-            tab.classList.remove("selected");
-          }
+            if (tab.classList.contains("selected")) {
+                tab.classList.remove("selected");
+            }
         });
         editingTab = NEW_SELECTED_TAB.id;
         NEW_SELECTED_TAB.classList.add("selected");
-        const __NEWPATH = NEW_SELECTED_TAB.getAttribute("longPath");
-        filepath = __NEWPATH;
-        loadEditor(__NEWPATH, __OBJECT.getAttribute("data"));
-        if(g_highlighting=="activated") updateCodeMode(__NEWPATH);
+        const g_newPath = NEW_SELECTED_TAB.getAttribute("longPath");
+        filepath = g_newPath;
+        loadEditor(g_newPath, g_object.getAttribute("data"));
+        if(g_highlighting=="activated") updateCodeMode(g_newPath);
         applyHighlighter(currentTheme);
       }
     }
@@ -578,9 +573,9 @@ function deleteTab(ele) {
 function loadTab(object) {
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
     tabs.map(tab => {
-      if (tab.classList.contains("selected")) {
-        tab.classList.remove("selected");
-      }
+        if (tab.classList.contains("selected")) {
+            tab.classList.remove("selected");
+        }
     });
     object.classList.add("selected");
     const __NEWPATH = object.getAttribute("longPath");
@@ -653,49 +648,48 @@ function updateCodeMode(path) {
     }
   }
 }
-function registerNewProject(dir) {
+const registerNewProject = function(dir) {
   //Add a new folder directory to the history if it is the firs time taht has been opened in the editor
   fs.readFile(logDir, "utf8", function(err, data) {
     if(err) return;
     log = JSON.parse(data);
-    let g_continue = true;
-    for (i = 0; i < log.length; i++) {
-      if (log[i].Path == dir) {
-        g_continue = false;
-        return;
+    console.log(log);
+    for (i = 0; i < log.length+1; i++) {
+      console.log("hola");
+      if (i!=log.length ){
+          if(log[i].Path == dir) {
+              return;
+          }
+      }else if(i ==log.length){
+          log.unshift({
+              Name: path.basename(dir),
+              Path: dir
+          });
+          fs.writeFile(logDir, JSON.stringify(log));
+          return;
       }
     }
-    if (g_continue) {
-      log.unshift({
-        Name: path.basename(dir),
-        Path: dir}
-      );
-      fs.writeFile(logDir, JSON.stringify(log));
-    }
+
   });
 }
-const zenMode = function() {
+const g_ZenMode = function() {
   if (editor_mode == "zen") {
     editor_mode = "normal";
-    document.getElementById("g_directories").style =
-      "visibility: visible; width:200px;";
+    document.getElementById("g_directories").style ="visibility: visible; width:200px;";
     document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
     document.getElementById("g_status_bar").style = "margin:0px 0px 0px 200px";
   }else{
     editor_mode = "zen";
-    document.getElementById("g_directories").style =
-      "visibility: hidden; width:0px;";
+    document.getElementById("g_directories").style = "visibility: hidden; width:0px;";
     document.getElementById("g_editors").style = "margin:0px";
-     document.getElementById("g_status_bar").style = "margin:0px";
+    document.getElementById("g_status_bar").style = "margin:0px";
   }
 }
-function _preview() {
+const g_preview = function() {
   const url = require("url");
   const BrowserWindow = remote.BrowserWindow;
   if (_enable_preview === false){
-    if(getFormat(graviton.getCurrentFile().path)!="html"){
-      return;
-    }
+    if(getFormat(graviton.getCurrentFile().path)!="html") return;
     _enable_preview = true;                                                                   
     _previewer = new BrowserWindow({                                                          
       width: 800,                                                                             
@@ -738,22 +732,22 @@ const HTML_template =`
 
       </body>
 </html>
-`
+`;
 const g_newProject = function(template){
   dialog.showOpenDialog({properties: ["openDirectory"]},
     selectedFiles =>{
       if (selectedFiles === undefined) {
-        return;
+          return;
       }else{
         switch(template){
           case"html":
             const g_project_dir = path.join(selectedFiles[0], ".GravitonProject "+Date.now());
-             fs.mkdirSync(g_project_dir);
-              fs.writeFile(path.join(g_project_dir,"index.html"),HTML_template, err => {
-                  if (err) {
-                    return err;
-                  }
-                  loadDirs(g_project_dir, "g_directories", true)
+            fs.mkdirSync(g_project_dir);
+            fs.writeFile(path.join(g_project_dir,"index.html"),HTML_template, err => {
+                if (err) {
+                  return err;
+                }
+                loadDirs(g_project_dir, "g_directories", true)
             });
           break;
         }
