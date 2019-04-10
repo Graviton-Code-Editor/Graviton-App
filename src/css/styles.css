@@ -93,7 +93,7 @@ body , head{
     background: var(--primaryColor);
     -webkit-user-select: none;
 }
-#g_content > #g_editors > #tabs_bar{
+#g_content > #g_editors > #g_tabs_bar{
     overflow: auto; 
     -webkit-user-select: none;
     font-size: 15px;
@@ -149,7 +149,7 @@ body , head{
 .flex >div{
     flex: 1;
 }
-#g_content > #g_editors >#tabs_bar > .tabs{
+#g_content > #g_editors >#g_tabs_bar > .tabs{
     position: relative;
     transition: 0.10s;
     color:var(--white-black);
@@ -161,19 +161,19 @@ body , head{
     background: var(--primaryColor);
     cursor: pointer;
 }
-#g_content > #g_editors >#tabs_bar > .tabs:first-child{
+#g_content > #g_editors >#g_tabs_bar > .tabs:first-child{
     border-top-left-radius: 5px;
 }
-#g_content > #g_editors >#tabs_bar > .tabs:last-child{
+#g_content > #g_editors >#g_tabs_bar > .tabs:last-child{
     border-top-right-radius: 5px;
 }
-#g_content > #g_editors >#tabs_bar > .tabs:hover{
+#g_content > #g_editors >#g_tabs_bar > .tabs:hover{
     background: var(--widget-color);
 }
-#g_content > #g_editors >#tabs_bar >.tabs.selected{
+#g_content > #g_editors >#g_tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
 }
-#g_content > #g_editors >#tabs_bar >.tabs > p{
+#g_content > #g_editors >#g_tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
     position: relative;
@@ -187,7 +187,7 @@ body , head{
     left: 0px;
     margin-left: 13px;
 }
-#g_content > #g_editors >#tabs_bar > .tabs > .close_tab{
+#g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab{
     position: relative;
     top:17%;
     display: inline-block;
@@ -201,7 +201,7 @@ body , head{
     background: transparent;
     fill: var(--white-black);
 }
-#g_content > #g_editors >#tabs_bar > .tabs > .close_tab:hover{
+#g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab:hover{
     height: 10px;
     width:10px;
     border: none;

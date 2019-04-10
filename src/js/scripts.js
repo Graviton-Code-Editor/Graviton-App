@@ -8,7 +8,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-const dateVersion = 190405; //The release date
+const dateVersion = 190410; //The release date
 const version = "0.7.3"; //Tagged num
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 
@@ -400,7 +400,7 @@ function loadDirs(dir, appendID, __FirstTime) {
           vertical-align: middle; width:${paths[i].length * 6 + 55}px;`); //BUGG
         element.setAttribute("myPadding", paddingListDir);
         element.setAttribute("longPath", _LONGPATH);
-        element.setAttribute("onClick", "createTab(this)");
+        element.setAttribute("onClick", "g_createTab(this)");
         _SUBFOLDER.appendChild(element);
         const image = document.createElement("img");
         image.setAttribute("src", `src/icons/files/${getFormat(paths[i])}.svg`);
@@ -469,67 +469,61 @@ function getFormat(text) {
       return "unknown";
   }
 }
-function createTab(object) {
-  // create tabs on the element ' tabs_bar '
+function g_createTab(object) {
   for(i=0;i<tabsEqualToFiles.length+1;i++){ 
       if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
         return;
       }else if(i==tabsEqualToFiles.length) {
           const tab = document.createElement("div");
-      tab.setAttribute("ID", object.id + "A");
-      tab.setAttribute("longPath", object.getAttribute("longpath"));
-      tab.setAttribute("class", "tabs");
-      tab.style =
-        "min-width: " +
-        (object.getAttribute("name").length * 4 + 115) +
-        "px; max-width: " +
-        (object.getAttribute("name").length * 5 + 100) +
-        "px";
-      tab.setAttribute("onclick", "loadTab(this)");
-      tab.setAttribute("file_status", "saved");
-      const tab_text = document.createElement("p");
-      tab_text.style = "float:left; text-align:center;";
-      tab_text.innerText = object.getAttribute("name");
-      const tab_x = document.createElement("button");
-      tab_x.setAttribute("onclose", "deleteTab('" + object.id + "A');");
-      tab_x.setAttribute("onclick", "deleteTab('" + object.id + "A')");
-      tab_x.setAttribute("class", "close_tab");
-      tab_x.setAttribute("hovering", "false");
-      tab_x.innerHTML = close_icon;
-      tab_x.addEventListener("mouseover", function (e) {
-          this.setAttribute("hovering",true);
-      });
-      tab_x.addEventListener("mouseout", function (e) {
-          this.setAttribute("hovering",false);
-      });
-      tab.appendChild(tab_text);
-      tab.appendChild(tab_x);
-      document.getElementById("tabs_bar").appendChild(tab);
-      tabs.push(tab);
-      tabsEqualToFiles.push(object);
-      const g_newPath = object.getAttribute("longPath");
-      filepath = g_newPath;
-      fs.readFile(g_newPath, "utf8", function(err, data) {
-          if (err) return console.log(err);
-          tab.setAttribute("data", data);
-          loadEditor(g_newPath, data);
-          if(g_highlighting=="activated") updateCodeMode(g_newPath);
-          applyHighlighter(currentTheme);
-          document.getElementById(editorID).style.height = " calc(100% - (50px))";
-          editingTab = tab.id;
-          selected = object;
-          tabs.map(tab => {
-              if (tab.classList.contains("selected")) {
-                  tab.classList.remove("selected");
-              }
+          tab.setAttribute("ID", object.id + "A");
+          tab.setAttribute("longPath", object.getAttribute("longpath"));
+          tab.setAttribute("class", "tabs");
+          tab.style =
+          `min-width: ${(object.getAttribute("name").length * 4 + 115)}px; 
+          max-width: ${(object.getAttribute("name").length * 5 + 100)}px`;
+          tab.setAttribute("onclick", "g_loadTab(this)");
+          tab.setAttribute("file_status", "saved");
+          const tab_text = document.createElement("p");
+          tab_text.style = "float:left; text-align:center;";
+          tab_text.innerText = object.getAttribute("name");
+          const tab_x = document.createElement("button");
+          tab_x.setAttribute("onclose", "g_closeTab('" + object.id + "A');");
+          tab_x.setAttribute("onclick", "g_closeTab('" + object.id + "A')");
+          tab_x.setAttribute("class", "close_tab");
+          tab_x.setAttribute("hovering", "false");
+          tab_x.innerHTML = close_icon;
+          tab_x.addEventListener("mouseover", function (e) {
+              this.setAttribute("hovering",true);
           });
-          tab.classList.add("selected");
-      });
-      return;
+          tab_x.addEventListener("mouseout", function (e) {
+              this.setAttribute("hovering",false);
+          });
+          tab.appendChild(tab_text);
+          tab.appendChild(tab_x);
+          document.getElementById("g_tabs_bar").appendChild(tab);
+          tabs.push(tab);
+          tabsEqualToFiles.push(object);
+          const g_newPath = object.getAttribute("longPath");
+          filepath = g_newPath;
+          fs.readFile(g_newPath, "utf8", function(err, data) {
+              if (err) return console.log(err);
+              tab.setAttribute("data", data);
+              loadEditor(g_newPath, data);
+              if(g_highlighting=="activated") updateCodeMode(g_newPath);
+              applyHighlighter(currentTheme);
+              document.getElementById(editorID).style.height = " calc(100% - (50px))";
+              editingTab = tab.id;
+              selected = object;
+              tabs.map(tab => {
+                  if (tab.classList.contains("selected")) tab.classList.remove("selected");
+              });
+              tab.classList.add("selected");
+          });
+          return;
       }
   }
 }
-function deleteTab(ele) {
+function g_closeTab(ele) {
   const g_object = document.getElementById(ele.replace(/\\/g, "\\\\"));
   for(i=0;i<tabs.length;i++){
     const tab = tabs[i];
@@ -570,7 +564,7 @@ function deleteTab(ele) {
     }
   }
 }
-function loadTab(object) {
+function g_loadTab(object) {
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
     tabs.map(tab => {
         if (tab.classList.contains("selected")) {
@@ -578,10 +572,10 @@ function loadTab(object) {
         }
     });
     object.classList.add("selected");
-    const __NEWPATH = object.getAttribute("longPath");
-    filepath = __NEWPATH;
-    loadEditor(__NEWPATH, object.getAttribute("data"));
-    if(g_highlighting=="activated") updateCodeMode(__NEWPATH);
+    const g_newPath = object.getAttribute("longPath");
+    filepath = g_newPath;
+    loadEditor(g_newPath, object.getAttribute("data"));
+    if(g_highlighting=="activated") updateCodeMode(g_newPath);
     editingTab = object.id;
     applyHighlighter(currentTheme);
   }
@@ -649,13 +643,11 @@ function updateCodeMode(path) {
   }
 }
 const registerNewProject = function(dir) {
-  //Add a new folder directory to the history if it is the firs time taht has been opened in the editor
+  //Add a new directory to the history if it is the first time it has been opened in the editor
   fs.readFile(logDir, "utf8", function(err, data) {
     if(err) return;
     log = JSON.parse(data);
-    console.log(log);
     for (i = 0; i < log.length+1; i++) {
-      console.log("hola");
       if (i!=log.length ){
           if(log[i].Path == dir) {
               return;

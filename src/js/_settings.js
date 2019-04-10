@@ -23,6 +23,7 @@ function openSettings(){
 	          <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${selected_language["Languages"]}</a></li>
 	          <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${selected_language["Editor"]}</a></li>
 	        	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${selected_language["Advanced"]}</a></li>
+	        	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${selected_language["About"]}</a></li>
 	        </ol>
 	    </div>`;
 	const all = document.createElement("div");
@@ -156,14 +157,25 @@ function goSPage(num){
 						<p>${selected_language["Settings-Advanced-FactoryReset"]}</p>
 						<button class="button1 red" onclick="factory_reset_dialog();">Factory Reset</button>
 				</div>
+				`;
+				document.getElementById("navB4").classList.add("active");
+		break;
+		case "5":	
+				document.getElementById("body_content").innerHTML=`
+				<h3>${selected_language["About"]}</h3>
+				<div class="section">
+						<p>Graviton is a free, open source and cross-platform code editor.</p>
+						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somwhere.</p>
+				</div>
 				<h3>`+selected_language["CurrentVersion"]+`</h3>
 				<div class="section">
 						<p>Number: ${version}</p>
 						<p>By date: ${dateVersion}</p>
 						<button class="button1" onclick="CHECK_UPDATES();">Check for updates</button>
 				</div>
+				
 				`;
-				document.getElementById("navB4").classList.add("active");
+				document.getElementById("navB5").classList.add("active");
 		break;
 	}
 }
@@ -187,7 +199,7 @@ const g_highlightingTurn = function(){
 		g_highlighting = "activated";
 	}
 }
-function g_disable_animations(){
+const g_disable_animations = ()=>{
 	if(ANIMATIONS_STATUS == "activated"){
 		if(document.getElementById("_ANIMATIONS") != null){
 			document.getElementById("_ANIMATIONS").innerText =`*{  transition: none !important;}`; 

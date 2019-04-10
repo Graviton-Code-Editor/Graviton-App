@@ -30,6 +30,7 @@ File.setList({
     "Open File": "openFile()",
     "Save As": "saveFileAs()",
     Save: "saveFile()",
+    "*line": "",
     "New Project":"g_openNewProjects(); g_NPgoPage('1')"
   }
 });
@@ -72,7 +73,8 @@ function createAboutDialog(){
       `: `+
       graviton.currentOS(),
     buttons:{
-      [selected_language['Accept']]:"closeDialog(this)",
+      [selected_language['Close']]:"closeDialog(this)",
+      [selected_language['More']]:"openSettings(); goSPage('5');"
     }
 
   })
