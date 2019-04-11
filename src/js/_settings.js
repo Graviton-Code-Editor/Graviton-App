@@ -165,7 +165,10 @@ function goSPage(num){
 				<h3>${selected_language["About"]}</h3>
 				<div class="section">
 						<p>Graviton is a free, open source and cross-platform code editor.</p>
-						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somwhere.</p>
+						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somewhere.</p>
+						<button class="button1" onclick="">Website</button>
+						<button class="button1" onclick="">Source Code</button>
+						<button class="button1" onclick="">License</button>
 				</div>
 				<h3>`+selected_language["CurrentVersion"]+`</h3>
 				<div class="section">

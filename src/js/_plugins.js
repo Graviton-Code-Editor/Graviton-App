@@ -36,24 +36,21 @@ function openPlugins(){
 	    		<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
 			</div>
 	`;
-
 	plugins_list.forEach(plugin => {
-
- 		 				var pluginDiv = document.createElement("div");
+ 		 				const pluginDiv = document.createElement("div");
 						pluginDiv.classList.add("section_hover");
 						pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
-						var author = document.createElement("p");
+						const author = document.createElement("p");
 						author.innerText = selected_language["MadeBy"] + plugin["author"];
 						author.setAttribute("style","font-size:15px")
-						var description = document.createElement("p");
+						const description = document.createElement("p");
 						description.innerText = plugin["description"];
 						description.setAttribute("style","font-size:13px; line-height:2px;");
-
 						pluginDiv.appendChild(author);
 						pluginDiv.appendChild(description);
 						content.appendChild(pluginDiv);
-		
-  	});
+
+  });
 	if(plugins_list.length ==0){
 		content.innerHTML += `<p>No plugins detected.</p>`
 	}
