@@ -28,7 +28,7 @@ function g_welcomePage(){
 		<h1 id='title_welcome'>Welcome</h1> 
 		<div id='recent_projects'><h2 class='title2'>Recent projects</h2></div> 
 		<div id='notes'><h2 class='title2'>Notes</h2>
-		<p > Current build: ${ dateVersion } </p> 
+		<p > Current build: ${ g_version.date } </p> 
 		<p > OS: ${ graviton.currentOS() } </p> 
 		<div class='welcomeButtons'>
 		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${selected_language["OpenFolder"]}</button> 
@@ -38,9 +38,7 @@ function g_welcomePage(){
 	all.appendChild(body);
 	document.body.appendChild(all);
 	fs.readFile(logDir, 'utf8', function (err,data) {
-		  if (err) {
-		    	return console.log(err);
-		  }
+		  if (err) return console.log(err);
 		  const objectLog = JSON.parse(data);
 		  for(i=0;i<objectLog.length; i++){
 					const project = document.createElement("div");
@@ -54,7 +52,7 @@ function g_welcomePage(){
 					document.getElementById("recent_projects").appendChild(project);
 			}
  	});
- setTimeout(function(){ DeleteBoot(); }, 1250); //Delay to load all the config
+ setTimeout(function(){ DeleteBoot(); }, 1100); //Delay to load all the config
 }
 function g_Setup(){
 	const all = document.createElement("div");

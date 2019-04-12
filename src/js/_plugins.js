@@ -8,7 +8,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-
+let plugins_list = [];
 let plugins_dbs= [];
 function hidePlugins(){
 	document.getElementById("window").remove();
@@ -37,19 +37,18 @@ function openPlugins(){
 			</div>
 	`;
 	plugins_list.forEach(plugin => {
- 		 				const pluginDiv = document.createElement("div");
-						pluginDiv.classList.add("section_hover");
-						pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
-						const author = document.createElement("p");
-						author.innerText = selected_language["MadeBy"] + plugin["author"];
-						author.setAttribute("style","font-size:15px")
-						const description = document.createElement("p");
-						description.innerText = plugin["description"];
-						description.setAttribute("style","font-size:13px; line-height:2px;");
-						pluginDiv.appendChild(author);
-						pluginDiv.appendChild(description);
-						content.appendChild(pluginDiv);
-
+			const pluginDiv = document.createElement("div");
+			pluginDiv.classList.add("section_hover");
+			pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
+			const author = document.createElement("p");
+			author.innerText = selected_language["MadeBy"] + plugin["author"];
+			author.setAttribute("style","font-size:15px")
+			const description = document.createElement("p");
+			description.innerText = plugin["description"];
+			description.setAttribute("style","font-size:13px; line-height:2px;");
+			pluginDiv.appendChild(author);
+			pluginDiv.appendChild(description);
+			content.appendChild(pluginDiv);
   });
 	if(plugins_list.length ==0){
 		content.innerHTML += `<p>No plugins detected.</p>`
@@ -58,117 +57,80 @@ function openPlugins(){
 	all.appendChild(background);
 	all.appendChild(body);
 	document.body.appendChild(all);
-	
 }
-
-var plugins_list = [];
-
-
-
 function detectPlugins(){
-
 	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
 	  fs.mkdirSync(plugins_db);
-
-
 	}else{   //If the plugins_db folder already exist
-
-	fs.readdir(plugins_db, (err, paths) => {
-	  	paths.forEach(dir => {
-	  		if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
-
-		  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
-
-				 		const db = {
-				 			plugin_name:path.basename(dir,".json"),
-				 			db:JSON.parse(data)
-				 		};
-				 		plugins_dbs.push(db);
-					});
-	  	}
-	  	});
-	 });
+		fs.readdir(plugins_db, (err, paths) => {
+		  	paths.forEach(dir => {
+		  		if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
+			  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
+					 		plugins_dbs.push({
+					 			plugin_name:path.basename(dir,".json"),
+					 			db:JSON.parse(data)
+					 		});
+						});
+		  		}
+		  	});
+		 });
 	 } 	
-
-
 	if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
 	  fs.mkdirSync(plugins_folder);
-
 		fs.copy(path.join(__dirname,"plugins"),plugins_folder, err=> {
-
  			fs.readdir(plugins_folder, (err, paths) => {
-
 	  		paths.forEach(dir => {
-
 		  		const direct = fs.statSync(path.join(plugins_folder,dir));
 	      	if (!direct.isFile()){
-
 			  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
-			  			var config = JSON.parse(data);
+			  				const config = JSON.parse(data);
 			 		 			if (err) throw err;
 			 		 			plugins_list.push(config);
 					 		 	const script = document.createElement("script");
 					 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
 					 		 	document.body.appendChild(script);
-
-
-					 		 	config["javascript"].forEach(file=>{
-					 		 		const script = document.createElement("script");
-					 		 		script.setAttribute("src",path.join(plugins_folder,config["folder"],file)),
-					 		 		document.body.appendChild(script);
-					 		 	});
-					 		 	config["css"].forEach(file=>{
-					 		 		const link = document.createElement("link");
-					 		 		link.setAttribute("rel","stylesheet");
-					 		 		link.setAttribute("href",path.join(plugins_folder,config["folder"],file)),
-					 		 		document.body.appendChild(link);
-					 		 	});
-					 		
+					 		 	for(i=0;i<config["javascript"].length;i++){
+					 		 			const script = document.createElement("script");
+					 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
+					 		 			document.body.appendChild(script);
+					 		 	}
+					 		 	for(i=0;i<config["css"].length;i++){
+					 		 			const link = document.createElement("link");
+					 		 			link.setAttribute("rel","stylesheet");
+					 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
+					 		 			document.body.appendChild(link);
+					 		 	}
 						});
-		  	}
-	  	});
-		});
-	  	
+			  	}
+		  	});
+			});
     });
-
 	}else{   //If the plugins folder already exist
-
 	fs.readdir(plugins_folder, (err, paths) => {
 	  	paths.forEach(dir => {
 	  		const direct = fs.statSync(path.join(plugins_folder,dir));
       	if (!direct.isFile()){
-
 		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
-		  			let config = JSON.parse(data);
+		  				const config = JSON.parse(data);
 		 		 			if (err) throw err;
 		 		 			plugins_list.push(config);
 				 		 	const script = document.createElement("script");
 				 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
 				 		 	document.body.appendChild(script);
-
-				 		 	config["javascript"].forEach(file=>{
-				 		 		const script = document.createElement("script");
-				 		 		script.setAttribute("src",path.join(plugins_folder,config["folder"],file)),
-				 		 		document.body.appendChild(script);
-				 		 	});
-				 		 	config["css"].forEach(file=>{
-				 		 		const link = document.createElement("link");
-				 		 		link.setAttribute("rel","stylesheet");
-				 		 		link.setAttribute("href",path.join(plugins_folder,config["folder"],file)),
-				 		 		document.body.appendChild(link);
-				 		 	});
-				 		
+				 		 	for(i=0;i<config["javascript"].length;i++){
+					 		 			const script = document.createElement("script");
+					 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
+					 		 			document.body.appendChild(script);
+					 		}
+					 		for(i=0;i<config["css"].length;i++){
+					 		 			const link = document.createElement("link");
+					 		 			link.setAttribute("rel","stylesheet");
+					 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
+					 		 			document.body.appendChild(link);
+					 		}
 					});
-	  	}
+	  		}
 	  	});
-	  	
 		});
-
-
 	}	
-		
-	
-
-
 }
-

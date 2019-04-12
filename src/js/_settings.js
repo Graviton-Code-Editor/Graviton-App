@@ -166,18 +166,16 @@ function goSPage(num){
 				<div class="section">
 						<p>Graviton is a free, open source and cross-platform code editor.</p>
 						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somewhere.</p>
-						<button class="button1" onclick="">Website</button>
-						<button class="button1" onclick="">Source Code</button>
-						<button class="button1" onclick="">License</button>
+						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')">Website</button>
+						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
+						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
 				</div>
 				<h3>`+selected_language["CurrentVersion"]+`</h3>
 				<div class="section">
-						<p>Number: ${version}</p>
-						<p>By date: ${dateVersion}</p>
+						<p>Number: ${g_version.version}</p>
+						<p>By date: ${g_version.date}</p>
 						<button class="button1" onclick="CHECK_UPDATES();">Check for updates</button>
-				</div>
-				
-				`;
+				</div>`;
 				document.getElementById("navB5").classList.add("active");
 		break;
 	}
@@ -281,7 +279,6 @@ class Switch extends  HTMLElement {
     }
 }
 window.customElements.define('gv-switch', Switch);
-
 function FactoryReset(){
 	fs.unlinkSync(configDir);  
 	restartApp();

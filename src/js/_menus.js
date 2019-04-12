@@ -58,27 +58,19 @@ Help.setList({
     FAQs: "",
     "Show welcome":"g_welcomePage()",
     About:"createAboutDialog()"
-      
   }
 });
 function createAboutDialog(){
   createDialog({
     id:"about",
     title:selected_language['About'],
-    content:`Marc Espin, <br> `+
-      selected_language['Version'] +
-      version +
-      `<br>` +
-      selected_language['OS']+ 
-      `: `+
-      graviton.currentOS(),
+    content:`${selected_language['Version']}: ${g_version.version} - ${g_version.state}
+      <br> ${selected_language['OS']}: ${graviton.currentOS()}`,
     buttons:{
       [selected_language['Close']]:"closeDialog(this)",
       [selected_language['More']]:"openSettings(); goSPage('5');"
     }
-
   })
-
 }
 function interact_dropmenu(id) {
   const dropdowns = document.getElementsByClassName("dropdown-content");

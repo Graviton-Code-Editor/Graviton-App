@@ -12,29 +12,24 @@ function CHECK_UPDATES(){
   const request = require('request');
   request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/new_update.json', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-
-      if(JSON.parse(body)["date"] > dateVersion){
-      	createDialog('update','Update avaiable!','Wanna update?','No','Yes','closeDialog(this)','update()');
-      }else{
-        new Notification("Graviton",'Any update has been found! ');
-      }
+          if(JSON.parse(body)[g_version.state]["date"] > g_version.date){
+            createDialog({
+              id:"update",
+              title:`<strong>${g_version.state}</strong> Update avaiable !`,
+              content:`Do you want to update to version ${JSON.parse(body)[g_version.state]["version"]}?`,
+              buttons:{
+                [selected_language['No']]:"closeDialog(this)",
+                [selected_language['Yes']]:"update()"
+              }
+            })
+          }else{
+            new Notification("Graviton",'Any update has been found! ');
+          }      
     } else {
       console.warn(error);
     }
   });
-
-  function update(){
-    shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
-  }
 }
-
-const idea = {
-  beta:{
-    date:"190401",
-    version:"0.7.3"
-  },
-  stable:{
-    date:"181127",
-    version:"0.7.0"
-  }
+function update(){
+    shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
 }

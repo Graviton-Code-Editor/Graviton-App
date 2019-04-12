@@ -285,7 +285,7 @@ body , head{
  position: fixed;
  top: 0px;
  right: 0px;
- width: 144px;
+ width: auto;
 }
 #g_control_bar > #controls button {
     padding: 3px 0px;

@@ -8,8 +8,12 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-const dateVersion = 190410; //The release date
-const version = "0.7.3"; //Tagged num
+const g_version = {
+  date:"190412",
+  version:"0.7.3",
+  state:"Alpha"
+} 
+
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 
 const { shell } = require("electron");
@@ -54,138 +58,158 @@ var highlights_folder = path.join(DataFolderDir, "highlights");
 var plugins_folder = path.join(DataFolderDir, "plugins");
 var plugins_db = path.join(DataFolderDir, "plugins_db");
 function loadEditor(dir, data) {
-  if (document.getElementById(dir + "_editor") == undefined) {
-    //Editor doesn't exist
-    const element = document.createElement("div");
-    element.classList = "code-space";
-    element.setAttribute("id", dir + "_editor");
-    document.getElementById("g_editors").appendChild(element);
-    const codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
-      value: data,
-      mode: "text/plain",
-      htmlMode: false,
-      theme: "default",
-      lineNumbers: true,
-      autoCloseTags: true
-    });
-    document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
-    const new_editor = {
-      id: dir + "_editor",
-      editor: codemirror,
-      path:dir
-    };
-    editors.push(new_editor);
-    if (document.getElementById(editorID) != undefined)
-      document.getElementById(editorID).style.display = "none";
-    editorID = new_editor.id;
-    editor = new_editor.editor;
-    document.getElementById(dir + "_editor").style.display = "block";
-  }else{
-    //Editor exists
-    for (i = 0; i < editors.length; i++) {
-      document.getElementById(editors[i].id).style.display = "none";
-      if (editors[i].id == dir + "_editor") {
-        editor = editors[i].editor;
-        //editor.setValue(data);
-        editorID = editors[i].id;
-        document.getElementById(editorID).style.display = "block";
-        document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
-      }
-    }
-
-  }
-function filterIt(arr, searchKey, cb) {
-  var list = [];
-  for (var i=0;i < arr.length; i++) {
-    var curr = arr[i];
-    Object.keys(curr).some(function(key){
-      if (typeof curr[key] === "string" && curr[key].includes(searchKey)) {
-        list.push(curr);
-      }
-    });
-  }
-  return cb(list);
-}
-editor.on("change", function() {
-    //Save data when switching between tabs
-    if(editors.length!=1){ //Prevent from saving the start message
-      document
-        .getElementById(editingTab)
-        .setAttribute("file_status", "unsaved");
-      document
-        .getElementById(editingTab)
-        .children[1].setAttribute("onclick", "save_file_warn(this)");
-      document.getElementById(
-        editingTab
-      ).children[1].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><ellipse vector-effect="non-scaling-stroke" cx="11.9999975" cy="11.9996439465" rx="6.303149298000001" ry="6.3035028515" fill="var(--accentColor)"/></svg>`;
-      document
-        .getElementById(editingTab)
-        .setAttribute("data", editor.getValue());
-    }
-  if(plang=="JavaScript"){
-      //Getting Cursor Position
-      const cursorPos = editor.cursorCoords();
-      //Getting Last Word
-      const A1 = editor.getCursor().line;
-      const A2 = editor.getCursor().ch;
-      const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-      const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-      const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
-      //Context Menu
-    filterIt(dictionary, lastWord, function(filterResult){
-        if (filterResult.length > 0 && lastWord.length >= 3) {
-          let contextOptions;
-          for (var i=0; i< filterResult.length; i++) {
-            contextOptions +="<button class='option'>"+filterResult[i]._name+"</button>"
-            contextOptions = contextOptions.replace("undefined","");
-            $("context .menuWrapper").html(contextOptions);
+    if (document.getElementById(dir + "_editor") == undefined) {
+        //Editor doesn't exist
+        const element = document.createElement("div");
+        element.classList = "code-space";
+        element.setAttribute("id", dir + "_editor");
+        document.getElementById("g_editors").appendChild(element);
+        const codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
+          value: data,
+          mode: "text/plain",
+          htmlMode: false,
+          theme: "default",
+          lineNumbers: true,
+          autoCloseTags: true
+        });
+        document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
+        const new_editor = {
+          id: dir + "_editor",
+          editor: codemirror,
+          path:dir
+        };
+        editors.push(new_editor);
+        if (document.getElementById(editorID) != undefined)
+          document.getElementById(editorID).style.display = "none";
+        editorID = new_editor.id;
+        editor = new_editor.editor;
+        document.getElementById(dir + "_editor").style.display = "block";
+    }else{
+        //Editor exists
+        for (i = 0; i < editors.length; i++) {
+          document.getElementById(editors[i].id).style.display = "none";
+          if (editors[i].id == dir + "_editor") {
+            editor = editors[i].editor;
+            //editor.setValue(data);
+            editorID = editors[i].id;
+            document.getElementById(editorID).style.display = "block";
+            document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
           }
-          $("context").fadeIn();
-          $("context").css({"top":(cursorPos.top + 30)+"px", "left":cursorPos.left+"px"});
-          $("context .menuWrapper .option").first().addClass("hover");
-        }else if (filterResult.length === 0 || lastWord.length < 3){
-          $("context").fadeOut();
-          $("context .menuWrapper").html("");
+        }
+    }
+    function filterIt(arr, searchKey, cb) {
+      var list = [];
+      for (var i=0;i < arr.length; i++) {
+        var curr = arr[i];
+        Object.keys(curr).some(function(key){
+          if (typeof curr[key] === "string" && curr[key].includes(searchKey)) {
+            list.push(curr);
+          }
+        });
+      }
+      return cb(list);
+    }
+    editor.on("change", function() {
+        //Save data when switching between tabs
+        if(editors.length!=1){ //Prevent from saving the start message
+          document
+            .getElementById(editingTab)
+            .setAttribute("file_status", "unsaved");
+          document
+            .getElementById(editingTab)
+            .children[1].setAttribute("onclick", "save_file_warn(this)");
+          document.getElementById(
+            editingTab
+          ).children[1].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><ellipse vector-effect="non-scaling-stroke" cx="11.9999975" cy="11.9996439465" rx="6.303149298000001" ry="6.3035028515" fill="var(--accentColor)"/></svg>`;
+          document
+            .getElementById(editingTab)
+            .setAttribute("data", editor.getValue());
+        }
+      if(plang=="JavaScript"){
+          //Getting Cursor Position
+          const cursorPos = editor.cursorCoords();
+          //Getting Last Word
+          const A1 = editor.getCursor().line;
+          const A2 = editor.getCursor().ch;
+          const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+          const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+          const lastWord = editor.getRange({line: A1,ch: B1}, {line: A1,ch: B2});
+          //Context Menu
+        filterIt(dictionary, lastWord, function(filterResult){
+            if (filterResult.length > 0 && lastWord.length >= 3) {
+              let contextOptions;
+              for (var i=0; i< filterResult.length; i++) {
+                contextOptions +="<button class='option'>"+filterResult[i]._name+"</button>"
+                contextOptions = contextOptions.replace("undefined","");
+                $("context .menuWrapper").html(contextOptions);
+              }
+              $("context").fadeIn();
+              $("context").css({"top":(cursorPos.top + 30)+"px", "left":cursorPos.left+"px"});
+              $("context .menuWrapper .option").first().addClass("hover");
+            }else if (filterResult.length === 0 || lastWord.length < 3){
+              $("context").fadeOut();
+              $("context .menuWrapper").html("");
+            }
+          });
         }
       });
-    }
-  });
-editor.on("keydown", function(editor, e){
-  if ($("context").css("display") != "none") {
-    //Ignore keys actions on context options displayed.
-    editor.setOption("extraKeys", {
-      "Up": function(){
-        if(true) {
-          return CodeMirror.PASS;
-        }
-      },
-      "Enter": function(){
-        if(true) {
-          return CodeMirror.PASS;
-        }
+    editor.on("keydown", function(editor, e){
+      if ($("context").css("display") != "none") {
+        //Ignore keys actions on context options displayed.
+        editor.setOption("extraKeys", {
+          "Up": function(){
+            if(true) {
+              return CodeMirror.PASS;
+            }
+          },
+          "Enter": function(){
+            if(true) {
+              return CodeMirror.PASS;
+            }
+          }
+        });
+      }else{
+        //Reset keys actions.
+        editor.setOption("extraKeys", {
+          "Up": "goLineUp"
+        });
       }
+      //Context Options keys handler
+      $("context .menuWrapper .option.hover").filter(function(){
+        if (e.keyCode === 40 && !$("context .menuWrapper .option").last().hasClass("hover") && $("context").css("display") != "none") {
+          $("context .menuWrapper .option").removeClass("hover")
+          $(this).next().addClass("hover");
+          document.getElementById("context").scrollBy(0, 30);
+          return false;
+        } else if (e.keyCode === 38 && !$("context .menuWrapper .option").first().hasClass("hover") && $("context").css("display") != "none") {
+          $("context .menuWrapper .option").removeClass("hover")
+          $(this).prev().addClass("hover");
+          document.getElementById("context").scrollBy(0, -30);
+          return false;
+        }
+        //Selection key Triggers
+        if (e.keyCode === 13) {
+          const A1 = editor.getCursor().line;
+          const A2 = editor.getCursor().ch;
+
+          const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
+          const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
+
+          const selected = $(this).text();
+          editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
+          setTimeout(function() {
+            $("context").fadeOut();
+            $("context .menuWrapper").html("");
+          },100)
+        }
+      });
     });
-  }else{
-    //Reset keys actions.
-    editor.setOption("extraKeys", {
-      "Up": "goLineUp"
+    $("context .menuWrapper").on("mouseenter", "div.option", function(){
+      $("context .menuWrapper .option").not(this).removeClass("hover");
+      $(this).addClass("hover");
     });
-  }
-  //Context Options keys handler
-  $("context .menuWrapper .option.hover").filter(function(){
-    if (e.keyCode === 40 && !$("context .menuWrapper .option").last().hasClass("hover") && $("context").css("display") != "none") {
-      $("context .menuWrapper .option").removeClass("hover")
-      $(this).next().addClass("hover");
-      document.getElementById("context").scrollBy(0, 30);
-      return false;
-    } else if (e.keyCode === 38 && !$("context .menuWrapper .option").first().hasClass("hover") && $("context").css("display") != "none") {
-      $("context .menuWrapper .option").removeClass("hover")
-      $(this).prev().addClass("hover");
-      document.getElementById("context").scrollBy(0, -30);
-      return false;
-    }
-    //Selection key Triggers
-    if (e.keyCode === 13) {
+
+    $("context .menuWrapper").on("mousedown", "div.option", function(e) {
       const A1 = editor.getCursor().line;
       const A2 = editor.getCursor().ch;
 
@@ -194,41 +218,20 @@ editor.on("keydown", function(editor, e){
 
       const selected = $(this).text();
       editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
-      setTimeout(function() {
-        $("context").fadeOut();
-        $("context .menuWrapper").html("");
-      },100)
+      $("context").fadeOut();
+      $("context .menuWrapper").html("");
+      e.preventDefault();
+    })
+
+    editor.on("change", function() {    //Preview detector
+          setTimeout(function() {
+            if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
+              saveFile();
+              _previewer.reload();
+            }
+          }, 550);
+      });
     }
-  });
-});
-$("context .menuWrapper").on("mouseenter", "div.option", function(){
-  $("context .menuWrapper .option").not(this).removeClass("hover");
-  $(this).addClass("hover");
-});
-
-$("context .menuWrapper").on("mousedown", "div.option", function(e) {
-  const A1 = editor.getCursor().line;
-  const A2 = editor.getCursor().ch;
-
-  const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
-  const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-
-  const selected = $(this).text();
-  editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
-  $("context").fadeOut();
-  $("context .menuWrapper").html("");
-  e.preventDefault();
-})
-
-editor.on("change", function() {    //Preview detector
-      setTimeout(function() {
-        if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
-          saveFile();
-          _previewer.reload();
-        }
-      }, 550);
-  });
-}
 loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 
 function restartApp() {
