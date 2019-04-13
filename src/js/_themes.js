@@ -8,17 +8,12 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-let themes =[];
-let current_theme = " ";
-let currentTheme;
 if (!fs.existsSync(highlights_folder)) { //If the themes folder doesn't exist
   fs.mkdirSync(highlights_folder)
-
-   fs.copy(path.join(__dirname,"src","Highlights"),highlights_folder, err=> {
-        if(err) return console.error(err);
-        syncThemes();
-    });
-
+	fs.copy(path.join(__dirname,"src","Highlights"),highlights_folder, err=> {
+	  if(err) return console.error(err);
+	  syncThemes();
+	});
 }else{
 	syncThemes();
 }
@@ -58,28 +53,32 @@ function syncThemes(){
 		}
 }
 detectLanguages();
-function loadTheme(ThemeNumber){
-	const colors = themes[ThemeNumber]["Colors"]; //Take the colors object inside the JSON file of the selected theme
+function loadTheme(number){
+	themeObject = themes[number];
+	const colors = themes[number]["Colors"]; //Take the colors object inside the JSON file of the selected theme
 	for(i = 0;i < Object.keys(colors).length;i++){
 		document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
 	}
-	applyHighlighter(ThemeNumber);
+	for(i=0;i<editors.length;i++){
+				editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
+	}
+	current_config.theme = themes[number];
 	saveConfig(); //Save the current configuration
-}
-function applyHighlighter(ThemeNumber){
-	editor.setOption("theme", themes[ThemeNumber]["Highlight"]); //Update highlither after applying a new theme
-	current_theme = themes[ThemeNumber];
-	currentTheme = ThemeNumber;
 }
 function setThemeByName(name){
 	for(i = 0;i < themes.length;i++){
 		if(themes[i]["Name"]== name){
-			const ThemeNumber = i;
-			const colors = themes[ThemeNumber]["Colors"]; //Take the colors object inside the json file of the selected theme
+			current_config["theme"] = themes[i];
+			themeObject = themes[i];
+			const colors = themes[i]["Colors"]; //Take the colors object inside the json file of the selected theme
 			for(i = 0;i < Object.keys(colors).length;i++){
 				document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update UI colors
+			}	
+			for(i=0;i<editors.length;i++){
+				editors[i].editor.setOption("theme", themes[i]["Highlight"]); //Update highlither after applying a new theme
 			}
-			applyHighlighter(ThemeNumber);
+			
+			return;
 		}
 	}
 }

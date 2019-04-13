@@ -18,8 +18,8 @@ function CHECK_UPDATES(){
               title:`<strong>${g_version.state}</strong> Update avaiable !`,
               content:`Do you want to update to version ${JSON.parse(body)[g_version.state]["version"]}?`,
               buttons:{
-                [selected_language['No']]:"closeDialog(this)",
-                [selected_language['Yes']]:"update()"
+                [current_config.language['No']]:"closeDialog(this)",
+                [current_config.language['Yes']]:"update()"
               }
             })
           }else{

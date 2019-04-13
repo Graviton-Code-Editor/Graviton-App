@@ -10,7 +10,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 
 let languages = [];
-let selected_language = "";
+
 function detectLanguages(){
 	fs.readdir(path.join(__dirname,"languages"), (err, paths) => {
   	paths.forEach(dir => {
@@ -27,19 +27,13 @@ function detectLanguages(){
 	});	
 }
 function loadLanguage(language){
-languages.map((item,index)=>{
-	if(item["Name"]===language){
-		selected_language = item;
-	
-	const toTranslate = document.getElementsByClassName("translate_word");
-		for(i=0;i<toTranslate.length;i++){
-				if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+	languages.map((item,index)=>{
+		if(item["Name"]===language){
+			current_config["language"] = item;
+			const toTranslate = document.getElementsByClassName("translate_word");
+			for(i=0;i<toTranslate.length;i++){
+					if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+			}
 		}
-	}
-
-	
-});
-
-
-  
+	});
 }

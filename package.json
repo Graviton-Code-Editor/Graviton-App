@@ -6,7 +6,7 @@
   "scripts": {
     "start": "electron . GravitonEditor ",
     "pack": "build --dir",
-    "dist": "build"
+    "build": "build"
   },
   "author": "Marc Espín <mespinsanz@gmail.com>",
   "license": "MIT",

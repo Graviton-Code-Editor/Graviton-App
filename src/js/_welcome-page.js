@@ -11,7 +11,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 const g_hideWelcome = ()=> document.getElementById("welcome_window").remove();
 const g_hideSetup = () => {
 	document.getElementById("setup_p2").remove();
-	_firsTime = false;
+	current_config.justInstalled = false;
 	saveConfig();
 }
 function g_welcomePage(){
@@ -31,8 +31,8 @@ function g_welcomePage(){
 		<p > Current build: ${ g_version.date } </p> 
 		<p > OS: ${ graviton.currentOS() } </p> 
 		<div class='welcomeButtons'>
-		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${selected_language["OpenFolder"]}</button> 
-		<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${selected_language["Skip"]}</button> 
+		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${current_config.language["OpenFolder"]}</button> 
+		<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${current_config.language["Skip"]}</button> 
 		</div> </div>`;
 	all.appendChild(background);
 	all.appendChild(body);
@@ -64,9 +64,9 @@ function g_Setup(){
 	body.setAttribute("class","body_window2 ");
 	body.setAttribute("id","body_firstTime_window");
 	body.innerHTML =`		
-				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${selected_language["Languages"]}</h1> 
+				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${current_config.language["Languages"]}</h1> 
 				<div id='language_list'></div> 
-				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${selected_language["Continue"]}</button> `;		
+				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${current_config.language["Continue"]}</button> `;		
 	all.appendChild(body);
 	all.appendChild(background);
 	document.body.appendChild(all);
@@ -75,7 +75,7 @@ function g_Setup(){
 			languageDiv.setAttribute("class","language_div");
 			languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["Name"]+"'); selectLang(this);");
 			languageDiv.innerText=languages[i]["Name"];
-			if(languages[i]["Name"] === selected_language["Name"]){
+			if(languages[i]["Name"] === current_config.language["Name"]){
 				selectLang(languageDiv);
 			}
 			document.getElementById("language_list").appendChild(languageDiv);
@@ -99,11 +99,11 @@ function FTGoPage(number){
 			body.setAttribute("class","body_window2");
 			body.setAttribute("id","body_firstTime_window");
 			body.innerHTML = `
-				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${selected_language["Welcome.TakeATheme"]}</h1> 
+				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language["Welcome.TakeATheme"]}</h1> 
 
 				<div id='theme_list' style="height:60%;"></div> 
-				<button onclick='FTGoPage("1"); g_Setup();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${selected_language["Back"]}</button> 
-				<button id="FROM_THEMES_CONTINUE" onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Finish">${selected_language["Finish"]}</button> 
+				<button onclick='FTGoPage("1"); g_Setup();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${current_config.language["Back"]}</button> 
+				<button id="FROM_THEMES_CONTINUE" onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
 				`;
 			all.appendChild(background);
 			all.appendChild(body);
@@ -124,7 +124,7 @@ function FTGoPage(number){
 				themeDiv.addEventListener("click", function(){
 					document.getElementById("FROM_THEMES_CONTINUE").classList.remove("disabled") ;
 				});
-				if(themes[i]["Name"] === current_theme["Name"]){
+				if(themes[i]["Name"] === current_config.theme["Name"]){
 						selectTheme("2",themeDiv);
 						console.log(themeDiv);
 				}

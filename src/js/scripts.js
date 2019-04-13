@@ -9,11 +9,10 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 #########################################
 */
 const g_version = {
-  date:"190412",
+  date:"190413",
   version:"0.7.3",
   state:"Alpha"
-} 
-
+}
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 
 const { shell } = require("electron");
@@ -44,6 +43,8 @@ let g_highlighting = "activated";
 var _previewer;
 var _enable_preview = false;
 var log = [];
+let themes =[];
+let themeObject;
 const dictionary = autocomplete.javascript;
 if (path.basename(__dirname) !== "Graviton-Editor") {
     DataFolderDir = path.join(getAppDataPath(),".graviton");
@@ -80,14 +81,16 @@ function loadEditor(dir, data) {
         };
         editors.push(new_editor);
         if (document.getElementById(editorID) != undefined)
-          document.getElementById(editorID).style.display = "none";
+        document.getElementById(editorID).style.display = "none";
         editorID = new_editor.id;
         editor = new_editor.editor;
         document.getElementById(dir + "_editor").style.display = "block";
-    }else{
+        new_editor.editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
+      }else{
         //Editor exists
         for (i = 0; i < editors.length; i++) {
-          document.getElementById(editors[i].id).style.display = "none";
+          console.log(editors[i].id);
+          if(document.getElementById(editors[i].id)!=null)document.getElementById(editors[i].id).style.display = "none";
           if (editors[i].id == dir + "_editor") {
             editor = editors[i].editor;
             //editor.setValue(data);
@@ -110,8 +113,6 @@ function loadEditor(dir, data) {
       return cb(list);
     }
     editor.on("change", function() {
-        //Save data when switching between tabs
-        if(editors.length!=1){ //Prevent from saving the start message
           document
             .getElementById(editingTab)
             .setAttribute("file_status", "unsaved");
@@ -124,8 +125,7 @@ function loadEditor(dir, data) {
           document
             .getElementById(editingTab)
             .setAttribute("data", editor.getValue());
-        }
-      if(plang=="JavaScript"){
+      if(g_autoCompletion=="activated" && plang=="JavaScript"){
           //Getting Cursor Position
           const cursorPos = editor.cursorCoords();
           //Getting Last Word
@@ -222,7 +222,10 @@ function loadEditor(dir, data) {
       $("context .menuWrapper").html("");
       e.preventDefault();
     })
-
+    editor.setOption("extraKeys", { /*TEST*/
+      Ctrl: function(editor) {  
+      },
+    });
     editor.on("change", function() {    //Preview detector
           setTimeout(function() {
             if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
@@ -231,29 +234,25 @@ function loadEditor(dir, data) {
             }
           }, 550);
       });
-    }
-loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
-
+}
+//loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 function restartApp() {
     remote.app.relaunch();
     remote.app.exit(0);
 }
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
+  console .log(current_config );
 });
 
-editor.setOption("extraKeys", { /*TEST*/
-  Ctrl: function(editor) {  
-  },
-});
 function save_file_warn(ele){
   createDialog({
     id:"saving_file_warn",
-    title:selected_language['Warn'],
-    content:selected_language["FileExit-dialog-message"],
+    title:current_config.language['Warn'],
+    content:current_config.language["FileExit-dialog-message"],
     buttons:{
-      [selected_language['FileExit-dialog-button-accept']]:`closeDialog(this); ${ele.getAttribute('onclose')}`,
-      [selected_language['FileExit-dialog-button-deny']]:'saveFile(); closeDialog(this);',
+      [current_config.language['FileExit-dialog-button-accept']]:`closeDialog(this); ${ele.getAttribute('onclose')}`,
+      [current_config.language['FileExit-dialog-button-deny']]:'saveFile(); closeDialog(this);',
     }
   })
 }
@@ -465,8 +464,11 @@ function getFormat(text) {
     case "dart":
       return "dart";
       break;
-    case "Pascal":
+    case "pascal":
       return "pascal";
+      break;
+    case "md":
+      return "md";
       break;
     default:
       return "unknown";
@@ -477,6 +479,7 @@ function g_createTab(object) {
       if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
         return;
       }else if(i==tabsEqualToFiles.length) {
+          document.getElementById("temp_dir_message").innerText = "";
           const tab = document.createElement("div");
           tab.setAttribute("ID", object.id + "A");
           tab.setAttribute("longPath", object.getAttribute("longpath"));
@@ -513,7 +516,6 @@ function g_createTab(object) {
               tab.setAttribute("data", data);
               loadEditor(g_newPath, data);
               if(g_highlighting=="activated") updateCodeMode(g_newPath);
-              applyHighlighter(currentTheme);
               document.getElementById(editorID).style.height = " calc(100% - (50px))";
               editingTab = tab.id;
               selected = object;
@@ -541,9 +543,11 @@ function g_closeTab(ele) {
       g_object.remove();
     if (tabs.length === 0) {
         //0 tabs
-        loadEditor("start");
         document.getElementById("g_editors").style = " ";
         filepath = " ";
+        plang = "";
+        document.getElementById("g_status_bar").children[0].innerText = plang;
+        document.getElementById("temp_dir_message").innerText = document.getElementById("temp_dir_message").getAttribute("text");
     } else if (i === tabs.length) {
         //Last tab
         NEW_SELECTED_TAB = tabs[Number(tabs.length) - 1];
@@ -558,11 +562,10 @@ function g_closeTab(ele) {
         });
         editingTab = NEW_SELECTED_TAB.id;
         NEW_SELECTED_TAB.classList.add("selected");
-        const g_newPath = NEW_SELECTED_TAB.getAttribute("longPath");
+        const g_newPath = NEW_SELECTED_TAB.getAttribute("longpath");
         filepath = g_newPath;
         loadEditor(g_newPath, g_object.getAttribute("data"));
         if(g_highlighting=="activated") updateCodeMode(g_newPath);
-        applyHighlighter(currentTheme);
       }
     }
   }
@@ -580,7 +583,6 @@ function g_loadTab(object) {
     loadEditor(g_newPath, object.getAttribute("data"));
     if(g_highlighting=="activated") updateCodeMode(g_newPath);
     editingTab = object.id;
-    applyHighlighter(currentTheme);
   }
 }
 function updateCodeMode(path) {
@@ -640,6 +642,11 @@ function updateCodeMode(path) {
         editor.setOption("htmlMode", false);
         editor.setOption("mode", "pascal");
         plang = "Pascal";
+        break;
+      case "md":
+        editor.setOption("htmlMode", false);
+        editor.setOption("mode", "markdown");
+        plang = "Markdown";
         break;
       default:
     }
@@ -768,9 +775,7 @@ function g_NPgoPage(num){
   switch (num){
     case "1":
         document.getElementById("body_window").innerHTML=`
-
-            <h2 class="window_title">${selected_language["Templates"]}</h2> 
-
+            <h2 class="window_title">${current_config.language["Templates"]}</h2> 
             <div onclick="g_newProject('html'); g_hideNewProjects();" class="section_hover">
                 <p>HTML</p>
             </div>

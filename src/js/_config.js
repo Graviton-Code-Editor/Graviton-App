@@ -8,61 +8,40 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-let zoom_app;
-let _firsTime;
-let FontSizeEditor = "15"; //Default
-let ANIMATIONS_STATUS; 
+let current_config = {
+	justInstalled : false, //missing
+	theme: "Light UI", 
+	fontSizeEditor : "15",
+	appZoom : "20",
+	language : "english",
+	animationsPreferences : "activated",
+	autoCompletionPreferences: "activated"
+}
 function loadConfig(){ //Loads the configuration from the config.jsons for the first time
 	if (!fs.existsSync(configDir)) {
-		/*Default Config*/
-		setThemeByName("Light UI");
-	  	FontSizeEditorr = "15";
-	 		zoom_app = "20";
-	 		_firsTime = true;
-	 		selected_language = "english"; 
-	 		ANIMATIONS_STATUS = "activated"; //Animations are ON by default
-
-	   let newConfig = {
-				FirstTime: _firsTime,
-				Theme:"Light UI",
-				FontSizeEditor: FontSizeEditorr,
-				Zoom:zoom_app,
-				Language:selected_language,
-				animations:ANIMATIONS_STATUS
-			};
-		newConfig = JSON.stringify(newConfig);
-	  fs.writeFile(configDir, newConfig, (err) => {}); //Save the config
+	 	current_config.justInstalled = true;
+	  fs.writeFile(configDir, JSON.stringify(current_config)); //Save the config
 	  updateSettings();
-		loadLanguage(selected_language);
-		if(_firsTime === false){
+		loadLanguage(current_config.language);
+		if(current_config.justInstalled === false){
 		 g_welcomePage();
 		}else{
 			g_Setup();
 		}
 		detectPlugins(); //Call the function to detect the installed plugins
-
 	}else{
-
 		fs.readFile(configDir, 'utf8', function (err,data) {
-	  	const config = JSON.parse(data);
+	  	current_config = JSON.parse(data);
 	 		//Load config from the config.json when Graviton boots
-	 		setThemeByName(config["Theme"]);
-	 		FontSizeEditor = config["FontSizeEditor"];
-	 		zoom_app = config["Zoom"];
-	 		_firsTime = config["FirstTime"];
-	 		selected_language = config["Language"];	
-	 		ANIMATIONS_STATUS = config["animations"]
-
+	 		setThemeByName(current_config["theme"]);
 	 		updateSettings();
-		
-			loadLanguage(selected_language);
-
-			if(_firsTime === false){
+			loadLanguage(current_config.language);
+			if(current_config.justInstalled === false){
 			 g_welcomePage();
 			}else{
 				g_Setup();
 			}
-			if(ANIMATIONS_STATUS=="desactivated"){
+			if(current_config.animationsPreferences=="desactivated"){
 		  	const  style = document.createElement("style");
 					style.innerText = `*{-webkit-transition: none !important;
 				  -moz-transition: none !important;
@@ -70,28 +49,26 @@ function loadConfig(){ //Loads the configuration from the config.jsons for the f
 				  transition: none !important;}`;
 				  style.id = "_ANIMATIONS";
 				  document.body.insertBefore(style,document.body.children[0]);
+		  }else{
+		  	const  style = document.createElement("style");
+				  style.id = "_ANIMATIONS";
+				  document.body.insertBefore(style,document.body.children[0]);
 		  } //Will do it if animations is equal to activated
 			detectPlugins(); //Call the function to detect the installed plugins
 	 	});
 	}
 }
-
 function saveConfig(){ //Saves the configuration to config.json
 	let newConfig = {
-		FirstTime: _firsTime,
-		Theme:current_theme["Name"],
-		FontSizeEditor: FontSizeEditor,
-		Zoom:zoom_app,
-		Language:selected_language["Name"],
-		animations: ANIMATIONS_STATUS
-	};
-	FontSizeEditor = newConfig["FontSizeEditor"];
+		justInstalled : current_config.justInstalled,
+		theme: current_config.theme["Name"],
+		fontSizeEditor : current_config.fontSizeEditor, 
+		appZoom : current_config.appZoom,
+		language : current_config["language"]["Name"],
+		animationsPreferences : current_config["animationsPreferences"],
+		autoCompletionPreferences: current_config["autoCompletionPreferences"]
+	}
 	newConfig = JSON.stringify(newConfig);
   fs.writeFile(configDir, newConfig, (err) => {});
-  editor.refresh();
-  
+  if(editor!=undefined) editor.refresh();
 }
-
-
-
-

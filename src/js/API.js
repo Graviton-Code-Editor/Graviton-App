@@ -9,11 +9,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 #########################################
 */
 
-function messager(message){
-	console.log(message)
-}
-
-
 let context_menu_list = { //Initial value
 		  "Copy" :" document.execCommand('copy');",
 		  "Paste" :" document.execCommand('paste');"
@@ -42,13 +37,12 @@ function gPlugin(obj) {
 			fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(data), function(err) { }); 
   }
   this.setData = function(key,data){
-			if(fs.existsSync(path.join(plugins_db,this.name)+".json")){
-				let obj = this.getData();
-				obj[key] = data;
-				fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(obj), function(err) {}); 
-				plugins_dbs[b].db = obj; 
-			}
-
+      if(fs.existsSync(path.join(plugins_db,this.name)+".json")){
+        let obj = this.getData();
+        obj[key] = data;
+        fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(obj), function(err) {}); 
+        plugins_dbs[b].db = obj; 
+      }
   }
   this.createData = function(data){
 			if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
@@ -196,12 +190,12 @@ function contextMenu(panel){ //Add buttons to the context menu from the plugin
 	});
 }
 function floatingWindow([xSize,ySize],content){ //Method to create flaoting windows
-	const FLOATING_WINDOW = document.createElement("div");
+	const g_floating_window = document.createElement("div");
 	FLOATING_WINDOW.style.height = ySize+"px";
 	FLOATING_WINDOW.style.width = xSize+"px";
 	FLOATING_WINDOW.classList = "floating_window";
 	FLOATING_WINDOW.innerHTML = content;
-	document.body.appendChild(FLOATING_WINDOW);
+	document.body.appendChild(g_floating_window);
 }
 document.addEventListener('mousedown', function(event){ //Create the context menu
 	if(editor_booted===true){
@@ -214,13 +208,11 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       line_space.classList = "line_space_menus";
       context_menu.setAttribute("id","context_menu");
       context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
-
       Object.keys(context_menu_list).forEach(function(key,index) {
-
         const button = document.createElement("button");
         button.classList.add("part_of_context_menu")
         if(index <2){
-        	button.innerText = selected_language[key];
+        	button.innerText = current_config.language[key];
         	context_menu.appendChild(button);
       	}else{
       		if(index==2){
@@ -288,9 +280,7 @@ function closeNotification(element) {
     }
   }
 }
-function closeDialog(me) {
-		document.getElementById(me.getAttribute("myID") + "D").remove();
-}
+const closeDialog = (me)=> document.getElementById(me.getAttribute("myID") + "D").remove();
 function createDialog(obj) {
   const all = document.createElement("div");
   all.setAttribute("id", obj.id + "D");
@@ -307,9 +297,7 @@ function createDialog(obj) {
   </p>
   <p style="font-size:15px;">
     	${obj.content}
-  </p>
-
-  `;
+  </p>`;
   Object.keys(obj.buttons).forEach(function(key,index) {
   	const button = document.createElement("button");
   	button.innerText = key;
@@ -318,7 +306,6 @@ function createDialog(obj) {
   	button.classList = "_dialog_button";
   	body_dialog.appendChild(button);
   });
-
   all.appendChild(background);
   all.appendChild(body_dialog);
   document.body.appendChild(all);

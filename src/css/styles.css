@@ -109,6 +109,14 @@ body , head{
     color:var(--white-black);
     overflow-x: auto;
 }
+#g_content > #g_editors > #temp_dir_message{
+    -webkit-user-select: none;
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    color:var(--white-black);
+}
 #g_content > #g_editors{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);

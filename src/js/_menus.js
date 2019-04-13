@@ -63,12 +63,12 @@ Help.setList({
 function createAboutDialog(){
   createDialog({
     id:"about",
-    title:selected_language['About'],
-    content:`${selected_language['Version']}: ${g_version.version} - ${g_version.state}
-      <br> ${selected_language['OS']}: ${graviton.currentOS()}`,
+    title:current_config.language['About'],
+    content:`${current_config.language['Version']}: ${g_version.version} - ${g_version.state}
+      <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
     buttons:{
-      [selected_language['Close']]:"closeDialog(this)",
-      [selected_language['More']]:"openSettings(); goSPage('5');"
+      [current_config.language['Close']]:"closeDialog(this)",
+      [current_config.language['More']]:"openSettings(); goSPage('5');"
     }
   })
 }

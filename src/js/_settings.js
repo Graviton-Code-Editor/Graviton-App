@@ -10,20 +10,21 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 const {webFrame} = require('electron');
 let nav_bar_settings ;
+let g_autoCompletion = "activated";
 function hideSettings(){
 	document.getElementById("window").remove();
 	saveConfig();
 }
 function openSettings(){
 	 nav_bar_settings =` 
-	 <h2 class="window_title translate_word"  idT="Settings">`+selected_language["Settings"]+`</h2> 
+	 <h2 class="window_title translate_word"  idT="Settings">`+current_config.language["Settings"]+`</h2> 
 			<div id="nav_bar">
 	        <ol>
-	          <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${selected_language["Customization"]}</a></li>
-	          <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${selected_language["Languages"]}</a></li>
-	          <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${selected_language["Editor"]}</a></li>
-	        	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${selected_language["Advanced"]}</a></li>
-	        	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${selected_language["About"]}</a></li>
+	          <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${current_config.language["Customization"]}</a></li>
+	          <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${current_config.language["Languages"]}</a></li>
+	          <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${current_config.language["Editor"]}</a></li>
+	        	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${current_config.language["Advanced"]}</a></li>
+	        	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${current_config.language["About"]}</a></li>
 	        </ol>
 	    </div>`;
 	const all = document.createElement("div");
@@ -44,17 +45,16 @@ function openSettings(){
 	document.body.appendChild(all);
 }
 function updateEditorFontSize() {
-		document.documentElement.style.setProperty("--editor-font-size",document.getElementById("fs-input").value +"px");//Update settings from window
-		FontSizeEditor =  document.getElementById("fs-input").value;
+		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
+		current_config.fontSizeEditor =  document.getElementById("fs-input").value;
 }
 function updateSettings(){
-	document.documentElement.style.setProperty("--editor-font-size",FontSizeEditor+"px"); //Update settings from start
-	editor.refresh(); //Refresh codemirror to prevent bugs
-	if(zoom_app==0){
+	document.documentElement.style.setProperty("--editor-font-size",`${current_config.fontSizeEditor}px`); //Update settings from start
+	if(current_config.appZoom==0){
 		webFrame.setZoomFactor(0.8); //Small size
-	}else if(zoom_app==20){
+	}else if(current_config.appZoom==20){
 		webFrame.setZoomFactor(1); 	//Default size
-	}else if(zoom_app==40){ 
+	}else if(current_config.appZoom==40){ 
 		webFrame.setZoomFactor(1.2); //Big size
 	}
 }
@@ -67,7 +67,7 @@ function updatezoom(){
 	}else if(value==40){ 
 		webFrame.setZoomFactor(1.2); //Big size
 	}
-	zoom_app = value;
+	current_config.appZoom = value;
 }
 function goSPage(num){
 	for(i = 0; i <document.getElementById("nav_bar").children[0].children.length;i++){
@@ -77,20 +77,20 @@ function goSPage(num){
 		case "1":
 				document.getElementById("body_content").innerHTML=`
 				<div id="dpi">
-						<h3>${selected_language["ZoomSize"]}</h3>
+						<h3>${current_config.language["ZoomSize"]}</h3>
 						<div class="section">
 								<p>Adjust to the size you prefer.</p>
-								<input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="`+zoom_app+`" class="slider" id="myRange">
+								<input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="${current_config.appZoom}" class="slider" id="myRange">
 						</div>
 				</div>
-				<h3>${selected_language["Themes"]}</h3> 
+				<h3>${current_config.language["Themes"]}</h3> 
 				<div class="section">
 						<div id='theme_list'></div> 
 						<span>Wanna create your own?</span>
 				</div>
-				<h3>${selected_language["ZenMode"]}</h3>
+				<h3>${current_config.language["ZenMode"]}</h3>
 				<div class="section">
-								<p>${selected_language["ZenMode.ShowDirectoryExplorer"]}</p>
+								<p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
 								<gv-switch  onclick="g_ZenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
 				</div>
 				`;
@@ -100,14 +100,14 @@ function goSPage(num){
 						themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('1',this);");
 						themeDiv.innerText=themes[i].Name; //Theme's name
 						const author = document.createElement("p");
-						author.innerText = selected_language["MadeBy"] + themes[i]["Author"]; //Theme's autor's name
+						author.innerText = current_config.language["MadeBy"] + themes[i]["Author"]; //Theme's autor's name
 						author.setAttribute("style","font-size:15px")
 						const description = document.createElement("p");
 						description.innerText = themes[i]["Description"]; //Theme's description
 						description.setAttribute("style","font-size:13px; line-height:2px;");
 						themeDiv.appendChild(author);
 						themeDiv.appendChild(description);				
-						if(themes[i]["Name"] === current_theme["Name"]){
+						if(themes[i]["Name"] === current_config.theme["Name"]){
 							selectTheme("1",themeDiv);
 						}
 						document.getElementById("theme_list").appendChild(themeDiv);
@@ -122,7 +122,7 @@ function goSPage(num){
 						languageDiv.setAttribute("class","language_div");
 						languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["Name"]+"'); selectLang(this);");
 						languageDiv.innerText=languages[i]["Name"];			
-						if(languages[i]["Name"] === selected_language["Name"]){
+						if(languages[i]["Name"] === current_config.language["Name"]){
 							selectLang(languageDiv);
 						}
 					document.getElementById("language_list").appendChild(languageDiv);
@@ -132,10 +132,15 @@ function goSPage(num){
 		case "3":	
 				document.getElementById("body_content").innerHTML=`
 				<div id="editor_fs">
-						<h3>${selected_language["FontSize"]}</h3>
+						<h3>${current_config.language["FontSize"]}</h3>
 						<div class="section">
-								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="`+FontSizeEditor+`">
-						<div>
+								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="${current_config.fontSizeEditor}">
+						</div>
+						<h3>${current_config.language["Auto-Completion"]}</h3>
+						<div class="section">
+								<p>Disable to hide predictions</p>
+								<gv-switch  onclick="g_turnAutoCompletion()" class="${current_config["autoCompletionPreferences"]}"></gv-switch>
+						</div>
 						
 				</div>
 				`;
@@ -143,18 +148,18 @@ function goSPage(num){
 		break;
 		case "4":	
 				document.getElementById("body_content").innerHTML=`
-				<h3>${selected_language["Performance"]}</h3>
+				<h3>${current_config.language["Performance"]}</h3>
 				<div class="section">
-						<p>${selected_language["Settings-Advanced-Performance-Animations"]}</p>
-						<gv-switch  onclick="g_disable_animations(this)" class="${ANIMATIONS_STATUS}"></gv-switch>
+						<p>${current_config.language["Settings-Advanced-Performance-Animations"]}</p>
+						<gv-switch  onclick="g_disable_animations()" class="${current_config.animationsPreferences}"></gv-switch>
 				</div>
 						<div class="section">
-								<p>${selected_language["Highlighting"]}</p>
-								<gv-switch  onclick="g_highlightingTurn(true)" class="${g_highlighting}"></gv-switch>
+								<p>${current_config.language["Highlighting"]}</p>
+								<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
 						</div>
-				<h3>`+selected_language["FactoryReset"]+`</h3>
+				<h3>`+current_config.language["FactoryReset"]+`</h3>
 				<div class="section">
-						<p>${selected_language["Settings-Advanced-FactoryReset"]}</p>
+						<p>${current_config.language["Settings-Advanced-FactoryReset"]}</p>
 						<button class="button1 red" onclick="factory_reset_dialog();">Factory Reset</button>
 				</div>
 				`;
@@ -162,7 +167,7 @@ function goSPage(num){
 		break;
 		case "5":	
 				document.getElementById("body_content").innerHTML=`
-				<h3>${selected_language["About"]}</h3>
+				<h3>${current_config.language["About"]}</h3>
 				<div class="section">
 						<p>Graviton is a free, open source and cross-platform code editor.</p>
 						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somewhere.</p>
@@ -170,7 +175,7 @@ function goSPage(num){
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
 				</div>
-				<h3>`+selected_language["CurrentVersion"]+`</h3>
+				<h3>`+current_config.language["CurrentVersion"]+`</h3>
 				<div class="section">
 						<p>Number: ${g_version.version}</p>
 						<p>By date: ${g_version.date}</p>
@@ -200,8 +205,17 @@ const g_highlightingTurn = function(){
 		g_highlighting = "activated";
 	}
 }
+const g_turnAutoCompletion = ()=> g_autoCompletion = g_autoCompletion=="activated"? "desactivated":"activated";
+
+function g_autoCompletiona(){
+	if(current_config["autoCompletionPreferences"] == "activated"){
+		current_config["autoCompletionPreferences"] = "desactivated";
+	}else{
+		current_config["autoCompletionPreferences"] = "activated";
+	}
+}
 const g_disable_animations = ()=>{
-	if(ANIMATIONS_STATUS == "activated"){
+	if(current_config.animationsPreferences == "activated"){
 		if(document.getElementById("_ANIMATIONS") != null){
 			document.getElementById("_ANIMATIONS").innerText =`*{  transition: none !important;}`; 
 		}else{
@@ -210,20 +224,20 @@ const g_disable_animations = ()=>{
 		  style.id = "_ANIMATIONS";
 		  document.body.insertBefore(style,document.body.children[0]);
 		}
-		ANIMATIONS_STATUS = "desactivated";
+		current_config.animationsPreferences = "desactivated";
 	}else{
 		document.getElementById("_ANIMATIONS").innerText = "";
-		ANIMATIONS_STATUS = "activated";
+		current_config.animationsPreferences = "activated";
 	}
 }
 function factory_reset_dialog(){
 	createDialog({
     id:"factory_reset",
-    title:selected_language['FactoryReset'],
-    content:selected_language['FactoryReset-dialog-message'],
+    title:current_config.language['FactoryReset'],
+    content:current_config.language['FactoryReset-dialog-message'],
     buttons:{
-      [selected_language['Decline']]:"closeDialog(this)",
-      [selected_language['Yes']+", "+selected_language['Continue']]:"closeDialog(this); FactoryReset()",
+      [current_config.language['Decline']]:"closeDialog(this)",
+      [current_config.language['Yes']+", "+current_config.language['Continue']]:"closeDialog(this); FactoryReset()",
     }
   })
 }
