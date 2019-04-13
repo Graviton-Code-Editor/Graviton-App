@@ -8,6 +8,7 @@ This file contains "important" commits, small ones will not be added.
 - New Dark theme highlighting (forked from Michael Kaminsky)
 - Enabled MarkDown for codemirror
 - Small bug fixes
+- Compressed codemirror
 
 
 ###190412 - 1 [0.7.3]
