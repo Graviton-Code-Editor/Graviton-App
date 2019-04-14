@@ -8,7 +8,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-
 let context_menu_list = { //Initial value
 		  "Copy" :" document.execCommand('copy');",
 		  "Paste" :" document.execCommand('paste');"
@@ -47,14 +46,12 @@ function gPlugin(obj) {
   this.createData = function(data){
 			if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
 				const db = {
-					 			plugin_name:this.name,
-					 			db:data
-				 			};
-				 plugins_dbs.push(db);
-				 b = plugins_dbs.length-1;
-
+			 			plugin_name:this.name,
+			 			db:data
+				};
+				plugins_dbs.push(db);
+				b = plugins_dbs.length-1;
 				fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(data), function(err) {}); 
-				
 				return "created";
 			}else{
 				return "already_exists";
@@ -107,7 +104,7 @@ function dropMenu(obj){
 					last = "custom";
 				}
 			});
-	}else{
+		}else{
 			const bar = document.getElementById("g_dropmenu_list");
 			const newTab = document.createElement("div");
 			const droplist = document.createElement("div");
@@ -145,12 +142,12 @@ function dropMenu(obj){
 			});
 			newTab.appendChild(droplist);
 			bar.appendChild(newTab);
+		}
 	}
-}
 }
 const graviton = {
  	getCurrentTheme : function(){ //Get the theme name of the applied theme
- 		return current_theme;
+ 		return current_config.theme;
  	},
  	getSelectedText: function(){ //Get te text you have selected
  		const selected_text = window.getSelection().toString();
@@ -173,6 +170,7 @@ const graviton = {
  				return editors[i];
  			}
  		}
+ 		if(editors.length==0) return "empty";
  	},
  	getCurrentDirectory:function(){
  		return FirstFolder;

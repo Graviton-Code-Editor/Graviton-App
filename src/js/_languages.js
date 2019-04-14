@@ -8,9 +8,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-
 let languages = [];
-
 function detectLanguages(){
 	fs.readdir(path.join(__dirname,"languages"), (err, paths) => {
   	paths.forEach(dir => {
@@ -23,7 +21,6 @@ function detectLanguages(){
  		 	 }
 			});
   	});
-  	
 	});	
 }
 function loadLanguage(language){

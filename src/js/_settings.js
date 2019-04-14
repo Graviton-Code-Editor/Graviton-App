@@ -10,7 +10,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 */
 const {webFrame} = require('electron');
 let nav_bar_settings ;
-let g_autoCompletion = "activated";
 function hideSettings(){
 	document.getElementById("window").remove();
 	saveConfig();
@@ -47,6 +46,7 @@ function openSettings(){
 function updateEditorFontSize() {
 		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
 		current_config.fontSizeEditor =  document.getElementById("fs-input").value;
+		editor.refresh();
 }
 function updateSettings(){
 	document.documentElement.style.setProperty("--editor-font-size",`${current_config.fontSizeEditor}px`); //Update settings from start
@@ -205,15 +205,8 @@ const g_highlightingTurn = function(){
 		g_highlighting = "activated";
 	}
 }
-const g_turnAutoCompletion = ()=> g_autoCompletion = g_autoCompletion=="activated"? "desactivated":"activated";
+const g_turnAutoCompletion = ()=> current_config["autoCompletionPreferences"] = current_config["autoCompletionPreferences"]=="activated"? "desactivated":"activated";
 
-function g_autoCompletiona(){
-	if(current_config["autoCompletionPreferences"] == "activated"){
-		current_config["autoCompletionPreferences"] = "desactivated";
-	}else{
-		current_config["autoCompletionPreferences"] = "activated";
-	}
-}
 const g_disable_animations = ()=>{
 	if(current_config.animationsPreferences == "activated"){
 		if(document.getElementById("_ANIMATIONS") != null){
@@ -237,7 +230,7 @@ function factory_reset_dialog(){
     content:current_config.language['FactoryReset-dialog-message'],
     buttons:{
       [current_config.language['Decline']]:"closeDialog(this)",
-      [current_config.language['Yes']+", "+current_config.language['Continue']]:"closeDialog(this); FactoryReset()",
+      [`${current_config.language['Yes']} , ${current_config.language['Continue']}`]:"closeDialog(this); FactoryReset()",
     }
   })
 }

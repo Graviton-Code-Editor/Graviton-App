@@ -77,7 +77,6 @@ function setThemeByName(name){
 			for(i=0;i<editors.length;i++){
 				editors[i].editor.setOption("theme", themes[i]["Highlight"]); //Update highlither after applying a new theme
 			}
-			
 			return;
 		}
 	}

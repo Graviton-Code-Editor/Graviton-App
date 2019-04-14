@@ -7,14 +7,15 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
 
 <img src="example.jpg">
-<h2>Features?</h2>
+<h2>Features:</h2>
 <p>- Themes</p>
 <p>- Plugins</p>
 <p>- Custom highlights</p>
-<p>- Directory tree view</p>
-<p>- Large language support</p>
+<p>- Zen Mode</p>
+<p>- Large language syntax highlighting support</p>
 <p>- Code </p>
-<p>- Autocomplete <p>
+<p>- Autocomplete </p>
+<p>- Amazing API </p>
 <p>More are comming soon</p>
-<h2>Can i download it?</h2>
+<h2>Available platforms</h2>
 <p>Right now there isn't any public release, it's on alpha. It will be avaiable free and open source for Windows & Linux (and hopefully MacOS) </p>

@@ -8,7 +8,6 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 
 #########################################
 */
-
 /* <-- Default NavBar >-- */
 const File = new dropMenu({
   id:"file",

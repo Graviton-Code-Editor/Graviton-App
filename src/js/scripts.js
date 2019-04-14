@@ -9,12 +9,11 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 #########################################
 */
 const g_version = {
-  date:"190413",
+  date:"190414",
   version:"0.7.3",
   state:"Alpha"
 }
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
-
 const { shell } = require("electron");
 const fs = require("fs-extra");
 const path = require("path");
@@ -25,7 +24,7 @@ const BrowserWindow = require("electron").BrowserWindow;
 const app = require("electron").remote.getCurrentWindow();
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
-var i;
+let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 var tabs = [];
 var tabsEqualToFiles = [];
@@ -85,16 +84,14 @@ function loadEditor(dir, data) {
         editorID = new_editor.id;
         editor = new_editor.editor;
         document.getElementById(dir + "_editor").style.display = "block";
-        new_editor.editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
-      }else{
-        //Editor exists
+        editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
+      }else{//Editor exists
         for (i = 0; i < editors.length; i++) {
-          console.log(editors[i].id);
           if(document.getElementById(editors[i].id)!=null)document.getElementById(editors[i].id).style.display = "none";
           if (editors[i].id == dir + "_editor") {
             editor = editors[i].editor;
-            //editor.setValue(data);
             editorID = editors[i].id;
+            editor.refresh();
             document.getElementById(editorID).style.display = "block";
             document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
           }
@@ -125,7 +122,7 @@ function loadEditor(dir, data) {
           document
             .getElementById(editingTab)
             .setAttribute("data", editor.getValue());
-      if(g_autoCompletion=="activated" && plang=="JavaScript"){
+      if(current_config["autoCompletionPreferences"]=="activated" && plang=="JavaScript"){
           //Getting Cursor Position
           const cursorPos = editor.cursorCoords();
           //Getting Last Word
@@ -168,8 +165,7 @@ function loadEditor(dir, data) {
             }
           }
         });
-      }else{
-        //Reset keys actions.
+      }else{//Reset keys actions.
         editor.setOption("extraKeys", {
           "Up": "goLineUp"
         });
@@ -191,10 +187,8 @@ function loadEditor(dir, data) {
         if (e.keyCode === 13) {
           const A1 = editor.getCursor().line;
           const A2 = editor.getCursor().ch;
-
           const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
           const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-
           const selected = $(this).text();
           editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
           setTimeout(function() {
@@ -212,10 +206,8 @@ function loadEditor(dir, data) {
     $("context .menuWrapper").on("mousedown", "div.option", function(e) {
       const A1 = editor.getCursor().line;
       const A2 = editor.getCursor().ch;
-
       const B1 = editor.findWordAt({line: A1, ch: A2}).anchor.ch;
       const B2 = editor.findWordAt({line: A1, ch: A2}).head.ch;
-
       const selected = $(this).text();
       editor.replaceRange(selected, {line: A1,ch: B1}, {line: A1,ch: B2});
       $("context").fadeOut();
@@ -242,9 +234,7 @@ function restartApp() {
 }
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
-  console .log(current_config );
 });
-
 function save_file_warn(ele){
   createDialog({
     id:"saving_file_warn",
@@ -262,9 +252,10 @@ function saveFileAs() {
     fs.writeFile(fileName, content, err => {
       if (err) {
         alert(`An error ocurred creating the file ${err.message}`);
+        return;
       }
       filepath = fileName;
-      alert(`The file has been succesfully saved in ${fileName}`);
+      new Notification("Graviton",`The file has been succesfully saved in ${fileName}`);
     });
   });
 }
@@ -285,26 +276,20 @@ function openFile() {
 function openFolder() {
   dialog.showOpenDialog({properties: ["openDirectory"]},
     selectedFiles =>{
-      if (selectedFiles === undefined) {
-      return;
-      }
-     loadDirs(selectedFiles[0], "g_directories", true)
+      if (selectedFiles === undefined)return;
+      loadDirs(selectedFiles[0], "g_directories", true)
     }
   );
 }
 function saveFile() {
-  if(editors.length!=1){ //Prevent from saving the start message
-    fs.writeFile(filepath, editor.getValue(), err => {
-      if (err) {
-        return err;
-      }
-      document.getElementById(editingTab).setAttribute("file_status", "saved");
-      document
-        .getElementById(editingTab)
-        .children[1].setAttribute("onclick", document.getElementById(editingTab).children[1].getAttribute("onclose"));
-      document.getElementById(editingTab).children[1].innerHTML = close_icon;
-    });
-  }
+  fs.writeFile(filepath, editor.getValue(), err => {
+    if (err)  return err;
+    document.getElementById(editingTab).setAttribute("file_status", "saved");
+    document
+      .getElementById(editingTab)
+      .children[1].setAttribute("onclick", document.getElementById(editingTab).children[1].getAttribute("onclose"));
+    document.getElementById(editingTab).children[1].innerHTML = close_icon;
+  });
 }
 function loadDirs(dir, appendID, __FirstTime) {
   let _SUBFOLDER;
@@ -312,7 +297,6 @@ function loadDirs(dir, appendID, __FirstTime) {
   const me = document.getElementById(appendID);
   if (me.getAttribute("opened") == "true") {
     me.setAttribute("opened", "false");
-
     const dir_length = me.children.length;
     me.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"close"));
     me.children[1].innerHTML = "";
@@ -324,9 +308,9 @@ function loadDirs(dir, appendID, __FirstTime) {
       click.children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder),"open"));
     }
   }
-  if (__FirstTime ) {
+  if (__FirstTime) {
     registerNewProject(dir); //
-     _SUBFOLDER = document.createElement("div");
+    _SUBFOLDER = document.createElement("div");
     for (i = 0; i < document.getElementById(appendID).children.length; i++) {
       document.getElementById(appendID).children[i].remove();
     }
@@ -336,7 +320,7 @@ function loadDirs(dir, appendID, __FirstTime) {
     _SUBFOLDER.setAttribute("style", "margin:10px 20px; font-size:17px; ");
     _SUBFOLDER.innerText = path.basename(dir);
     document.getElementById(appendID).appendChild(_SUBFOLDER);
-  } else {
+  }else{
      _SUBFOLDER = document.getElementById(appendID).children[1];
   }
   const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 7; //Add padding
@@ -424,7 +408,6 @@ function g_getCustomFolder(path,state){
               return "src/icons/custom_icons/git.svg"
           break;
           default:
-
               if(state=="close"){
                   return "src/icons/closed.svg";
               }else{
@@ -477,7 +460,7 @@ function getFormat(text) {
 function g_createTab(object) {
   for(i=0;i<tabsEqualToFiles.length+1;i++){ 
       if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
-        return;
+          return;
       }else if(i==tabsEqualToFiles.length) {
           document.getElementById("temp_dir_message").innerText = "";
           const tab = document.createElement("div");
@@ -671,7 +654,6 @@ const registerNewProject = function(dir) {
           return;
       }
     }
-
   });
 }
 const g_ZenMode = function() {
@@ -718,21 +700,20 @@ const HTML_template =`
 <!DOCTYPE html>
 
 <html lang="en">
-      <head>
+  <head>
 
-          <meta charset="utf-8">
+    <meta charset="utf-8">
 
-          <title>New Project</title>
+    <title>New Project</title>
 
-          <meta name="description" content="Graviton Project">
+    <meta name="description" content="Graviton Project">
 
-      </head>
+  </head>
+  <body>
 
-      <body>
+    <h1>Hello World!</h1>
 
-          <h1>Hello World!</p>
-
-      </body>
+  </body>
 </html>
 `;
 const g_newProject = function(template){

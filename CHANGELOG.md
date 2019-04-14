@@ -1,5 +1,13 @@
 # Graviton Changelog
+
 This file contains "important" commits, small ones will not be added.
+
+### 190414 - 1 [0.7.3]
+- Fixed (already added) auto-completion switch on editor page on Settings.
+- Fixed, now you can save a file when there is even only one tab opened.
+- New logo!
+- Small bug fixes
+
 
 ### 190413 - 1 [0.7.3]
 - Unified all the configurations in one object

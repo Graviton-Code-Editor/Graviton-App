@@ -14,9 +14,9 @@ function hidePlugins(){
 	document.getElementById("window").remove();
 	saveConfig();
 }
-function	OPEN_PLUGINS_FOLDER(){
-		const {shell} = require('electron') // deconstructing assignment
-		shell.openItem(plugins_folder)
+const g_open_plugins_folder = () =>{
+	const {shell} = require('electron') // deconstructing assignment
+	shell.openItem(plugins_folder)	
 }
 function openPlugins(){
 	const all = document.createElement("div");
@@ -33,7 +33,7 @@ function openPlugins(){
 	content.innerHTML = `
 	<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
 	    <div class="section">
-	    		<button class="button1" onclick="OPEN_PLUGINS_FOLDER()">Open Folder</button>
+	    		<button class="button1" onclick="g_open_plugins_folder()">${current_config.language["OpenFolder"]}</button>
 			</div>
 	`;
 	plugins_list.forEach(plugin => {
@@ -50,9 +50,7 @@ function openPlugins(){
 			pluginDiv.appendChild(description);
 			content.appendChild(pluginDiv);
   });
-	if(plugins_list.length ==0){
-		content.innerHTML += `<p>No plugins detected.</p>`
-	}
+	if(plugins_list.length ==0)content.innerHTML += `<p>No plugins detected.</p>`
 	body.appendChild(content);
 	all.appendChild(background);
 	all.appendChild(body);
@@ -63,16 +61,17 @@ function detectPlugins(){
 	  fs.mkdirSync(plugins_db);
 	}else{   //If the plugins_db folder already exist
 		fs.readdir(plugins_db, (err, paths) => {
-		  	paths.forEach(dir => {
-		  		if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
-			  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
-					 		plugins_dbs.push({
-					 			plugin_name:path.basename(dir,".json"),
-					 			db:JSON.parse(data)
-					 		});
-						});
-		  		}
-		  	});
+			for(i=0; i<paths.length;i++){
+				const dir = paths[i];
+				if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
+		  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
+				 		plugins_dbs.push({
+				 			plugin_name:path.basename(dir,".json"),
+				 			db:JSON.parse(data)
+				 		});
+					});
+		  	}
+			}
 		 });
 	 } 	
 	if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
