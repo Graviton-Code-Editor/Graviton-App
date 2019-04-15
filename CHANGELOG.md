@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190415 - 2 [0.7.3]
+- Added icon on linux
+
 ### 190415 - 1 [0.7.3]
 - Native top bar for Linux. (Windows top bar is part of the electron window)
 - Now, you can open dev tools even on production state

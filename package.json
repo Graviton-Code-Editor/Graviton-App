@@ -48,18 +48,11 @@
         "AppImage",
         "deb"
       ],
-      "icon": "build/icon.png"
+      "icon": "build/png/"
     },
     "win": {
       "target": "NSIS",
-      "icon": "build/icon.ico"
-    },
-    "fileAssociations": [
-      {
-        "ext": "grv",
-        "name": "Graviton Package File",
-        "role": "Editor"
-      }
-    ]
+      "icon": "build/ico/icon.ico"
+    }
   }
 }
