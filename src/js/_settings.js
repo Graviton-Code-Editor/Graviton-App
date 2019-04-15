@@ -120,9 +120,9 @@ function goSPage(num){
 				for(i=0;i<languages.length; i++){
 						const languageDiv = document.createElement("div");
 						languageDiv.setAttribute("class","language_div");
-						languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["Name"]+"'); selectLang(this);");
-						languageDiv.innerText=languages[i]["Name"];			
-						if(languages[i]["Name"] === current_config.language["Name"]){
+						languageDiv.setAttribute("onclick","loadLanguage('"+languages[i]["g_l"]+"'); selectLang(this);");
+						languageDiv.innerText=languages[i]["g_l"];			
+						if(languages[i]["g_l"] === current_config.language["g_l"]){
 							selectLang(languageDiv);
 						}
 					document.getElementById("language_list").appendChild(languageDiv);

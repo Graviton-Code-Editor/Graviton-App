@@ -14,9 +14,9 @@ const path = require('path');
 const fs = require('fs');
 const {app, BrowserWindow,globalShortcut} = electron;
 const Menu = electron.Menu;
-let mainWindow;
+let main; //Main window
 app.on('ready', function(){
-  mainWindow = new BrowserWindow({
+  main = new BrowserWindow({
     titleBarStyle: "customButtonsOnHover", 
     webPreferences: {
       nativeWindowOpen: true,
@@ -25,20 +25,24 @@ app.on('ready', function(){
     frame: process.platform!="win32"? true:false, 
     width: 750, 
     height: 650 ,
-    'minHeight': 250,
-    'minWidth': 250,
-    backgroundColor: "#FFF",
+    'minHeight': 300,
+    'minWidth': 300,
+    backgroundColor: "rgba(255,255,255,0)",
     title:"Graviton"
   });
-  mainWindow.loadURL(url.format({
+  main.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true,
   }));
-  //mainWindow.webContents.openDevTools() //Disable the dev tools when opening Graviton
-  //mainWindow.setMenu(null); 
+  //main.webContents.openDevTools() //Disable the dev tools when opening Graviton
+  //main.setMenubarVisibility(false) //Remove the comment when it's on production
 });
 app.on('window-all-closed', ()=>{
   app.quit();
+});
+app.on('before-quit', () => {
+    mainWindow.removeAllListeners('close');
+    mainWindow.close();
 });
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');

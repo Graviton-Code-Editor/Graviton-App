@@ -64,7 +64,7 @@ function saveConfig(){ //Saves the configuration to config.json
 		theme: current_config.theme["Name"],
 		fontSizeEditor : current_config.fontSizeEditor, 
 		appZoom : current_config.appZoom,
-		language : current_config["language"]["Name"],
+		language : current_config["language"]["g_l"],
 		animationsPreferences : current_config["animationsPreferences"],
 		autoCompletionPreferences: current_config["autoCompletionPreferences"]
 	}

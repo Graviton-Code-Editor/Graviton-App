@@ -25,7 +25,7 @@ function detectLanguages(){
 }
 function loadLanguage(language){
 	languages.map((item,index)=>{
-		if(item["Name"]===language){
+		if(item["g_l"]===language){
 			current_config["language"] = item;
 			const toTranslate = document.getElementsByClassName("translate_word");
 			for(i=0;i<toTranslate.length;i++){

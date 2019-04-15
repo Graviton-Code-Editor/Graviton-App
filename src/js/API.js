@@ -179,7 +179,7 @@ const graviton = {
  		return process.platform; 
  	},
  	openDevTools: function(){
- 		app.webContents.openDevTools();
+ 		require('electron').remote.getCurrentWindow().toggleDevTools();
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
