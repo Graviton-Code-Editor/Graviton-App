@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190415 - 3 [0.7.3]
+- Bootanimation background color is not darkgray
+- If Graviton detects an error when booting it will show up a button which will clean config and logs(As a factory reset).
+- Fixed Window's icon (icon.ico)
+
 ### 190415 - 2 [0.7.3]
 - Added icon on linux
 

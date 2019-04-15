@@ -2,13 +2,12 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Code Editor
+Copyright (c) 2019 Graviton Editor
 
-Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
 #########################################
 */
-
 /* Css that needs to be loaded fast */
 #g_bootanimation{
 		webkit-user-select: none; 
@@ -16,7 +15,7 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
 		z-index: 100;
 		height: 100%;
 		width: 100%; 
-		background: white; 
+		background: #191919; 
 }
 #g_bootanimation > img{
 	webkit-user-select: none; 
@@ -29,6 +28,16 @@ Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/
   height: 23%;
   width: 23%;
 }
+#g_bootanimation div{
+	color:white;
+	z-index: 999;
+	position: fixed; 
+	top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+	text-align: center;
+}
+
 #openFolder{
 	top: 45%;
 	left: 52%;

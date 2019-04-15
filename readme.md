@@ -7,7 +7,7 @@
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
 
 <img src="example.jpg">
-<h2>Features:</h2>
+<h2>Features</h2>
 <p>- Themes</p>
 <p>- Plugins</p>
 <p>- Custom highlights</p>

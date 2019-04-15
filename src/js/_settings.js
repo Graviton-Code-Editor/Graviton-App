@@ -2,9 +2,9 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Code Editor
+Copyright (c) 2019 Graviton Editor
 
-Full license > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
 #########################################
 */
@@ -286,7 +286,3 @@ class Switch extends  HTMLElement {
     }
 }
 window.customElements.define('gv-switch', Switch);
-function FactoryReset(){
-	fs.unlinkSync(configDir);  
-	restartApp();
-}
