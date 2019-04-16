@@ -2,6 +2,15 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190416 - 1 [0.7.3]
+- Now the top bar is higher
+- Added scale animation on pressing dropmenu's and dialog's buttons
+- Added an image viewer, when you open an image it will show it instead of showing the code
+- Added a toggle for DevTools on Settings > Advanced > Developers
+- Added the data tag number on the about dialog
+- Added OS info on Settings > About > Current Version
+- Added a button to cancel (continue editing file) on the dialog which appears when you try to close a file which is not saved.
+
 ### 190415 - 3 [0.7.3]
 - Bootanimation background color is not darkgray
 - If Graviton detects an error when booting it will show up a button which will clean config and logs(As a factory reset).

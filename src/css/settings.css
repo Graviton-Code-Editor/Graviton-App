@@ -59,8 +59,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     width: 85%;
-    height: 80%;
-    margin: 0;
+    height: 75%;
     position: fixed;
     text-align: left;
     background: var(--secondaryColor);

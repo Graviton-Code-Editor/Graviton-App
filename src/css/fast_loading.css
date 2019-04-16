@@ -10,7 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 /* Css that needs to be loaded fast */
 #g_bootanimation{
-		webkit-user-select: none; 
+		user-select: none;
 		position: fixed;
 		z-index: 100;
 		height: 100%;
@@ -37,7 +37,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   transform: translate(-50%, -50%); 
 	text-align: center;
 }
-
 #openFolder{
 	top: 45%;
 	left: 52%;
@@ -62,7 +61,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	pointer-events: none;
 	top:0; 
 	left:0;
-	padding:7px 7px;
+	padding:10px;
 	margin:0;
 	position: absolute;
 	height: 16px;

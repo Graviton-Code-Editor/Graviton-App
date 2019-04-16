@@ -20,7 +20,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     z-index: 85;
     width: 85%;
     height: 75%;
-    margin: 0;
     position: fixed;
     text-align: left;
     background: var(--secondaryColor);
@@ -32,7 +31,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 .body_window2 > #title_welcome{
 
-    left: 40%;
+    left: 45%;
     transform: translate(0%, -45%);
 	font-size: 35px;
     position: fixed;

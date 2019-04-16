@@ -157,28 +157,33 @@ function goSPage(num){
 								<p>${current_config.language["Highlighting"]}</p>
 								<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
 						</div>
-				<h3>`+current_config.language["FactoryReset"]+`</h3>
+				<h3>${current_config.language["FactoryReset"]}</h3>
 				<div class="section">
-						<p>${current_config.language["Settings-Advanced-FactoryReset"]}</p>
+						<p>${current_config.language["Settings-Advanced-FactoryReset-text"]}</p>
 						<button class="button1 red" onclick="factory_reset_dialog();">Factory Reset</button>
+				</div>
+				<h3>${current_config.language["Developers"]}</h3>
+				<div class="section">
+						<p>${current_config.language["Settings-Advanced-Developer-Tools-text"]}</p>
+						<button class="button1" onclick="graviton.openDevTools();">Toogle DevTools</button>
 				</div>
 				`;
 				document.getElementById("navB4").classList.add("active");
 		break;
 		case "5":	
 				document.getElementById("body_content").innerHTML=`
-				<h3>${current_config.language["About"]}</h3>
+				<h3>${current_config.language["About"]} </h3>
 				<div class="section">
-						<p>Graviton is a free, open source and cross-platform code editor.</p>
-						<p>It doesn't send any kind of data to some server. All you do stays on your machine, unless you manually share it somewhere.</p>
+						<p>${current_config.language["About-text1"]}</p>
+						<p>${current_config.language["About-text2"]}</p>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')">Website</button>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
 				</div>
-				<h3>`+current_config.language["CurrentVersion"]+`</h3>
+				<h3>${current_config.language["CurrentVersion"]}</h3>
 				<div class="section">
-						<p>Number: ${g_version.version}</p>
-						<p>By date: ${g_version.date}</p>
+						<p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>
+      			<p> ${current_config.language['OS']}: ${graviton.currentOS()}</p>
 						<button class="button1" onclick="CHECK_UPDATES();">Check for updates</button>
 				</div>`;
 				document.getElementById("navB5").classList.add("active");
@@ -188,8 +193,10 @@ function goSPage(num){
 const g_highlightingTurn = function(){
 	if(g_highlighting == "activated"){
 		for(i=0;i<editors.length;i++){
-			editors[i].editor.setOption("mode","text/plain");
-			editors[i].editor.refresh();
+			if(editors[i]!=undefined){
+				editors[i].editor.setOption("mode","text/plain");
+				editors[i].editor.refresh();
+			}
 		}
 		g_highlighting = "desactivated";
 	}else{

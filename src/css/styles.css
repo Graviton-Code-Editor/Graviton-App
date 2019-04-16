@@ -42,7 +42,7 @@ html{
 *{
     outline: 0;
     text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: antialiased !important;
+    -webkit-font-smoothing: subpixel-antialiased;
 }
 .CodeMirror {
     z-index: 0;
@@ -86,7 +86,7 @@ body , head{
     position: fixed;
     left:0;
     width:200px;
-    height: calc(100% - (30px));
+    height: calc(100% - (35px));
     overflow: scroll;
     font-size:12px;
     color:var(--white-black);
@@ -125,13 +125,21 @@ body , head{
     right:0px;
     top:0px;
     margin: 0px 0px 0px 200px;
-    height:  calc(100% - (59px));
+    height:  calc(100% - (64px));
     width: auto;
     color:var(--white-black);
     overflow: hidden;
 }
 #g_content >#g_editors > .code-space{
      height: calc(100% - (2px));
+}
+#g_content >#g_editors > .code-space img{
+    webkit-user-select: none; 
+    pointer-events: none;
+    position: relative; 
+    height-min:auto;
+    width:600px;
+    margin: 0 auto;
 }
 #g_content > #g_status_bar{
     height: 25px;
@@ -273,50 +281,6 @@ body , head{
     opacity: 1;
   }
 }
-#g_control_bar {
-    -webkit-user-select: none;  
-    -webkit-app-region: drag;
-    position: relative;
-    color: var(--white-black);
-    height: 30px; 
-    background-color: var(--primaryColor);
-    padding: 0;
-    margin: 0px; 
-    list-style-type: none;
-    overflow: hidden;
-    font-family: _main_font;
-    margin: 0;
-}
-
-#g_control_bar > #controls  {
- -webkit-app-region: no-drag;
- position: fixed;
- top: 0px;
- right: 0px;
- width: auto;
-}
-#g_control_bar > #controls button {
-    padding: 3px 0px;
-    height: 7px;
-    width: 45px; 
-    border: none;
-    background: var(--primaryColor);
-}
-#g_control_bar> #controls button:hover { 
-    background: var(--widget-color);
-}
-#g_control_bar > #controls > #minimize:hover >svg >rect { 
-    fill: var(--white-black);
-}
-#g_control_bar > #controls > #maximize:hover >svg >rect { 
-    stroke: var(--white-black);
-}
-#g_control_bar > #controls > #close:hover { 
-    background: red;
-}
-#g_control_bar > #controls > #close:hover>svg>rect { 
-    fill: white;
-}
 .Button1{
     font-family: _main_font;
     transition: 0.1s;
@@ -352,12 +316,14 @@ body , head{
 }
 .window_title{
     font-size:25px; 
-    font-weight:bold;
     line-height:5px; 
     text-align:center;
+    -webkit-font-smoothing: subpixel-antialiased;
+    letter-spacing: 1px;
 }
 .section{
     margin: 7px;
+    margin-bottom: 12px;
     padding: 3px;
     background: transparent;
     height: auto;

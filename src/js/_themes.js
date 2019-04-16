@@ -60,7 +60,7 @@ function loadTheme(number){
 		document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
 	}
 	for(i=0;i<editors.length;i++){
-				editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
+				if(editors[i].editor!=undefined)editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
 	}
 	current_config.theme = themes[number];
 	saveConfig(); //Save the current configuration

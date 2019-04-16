@@ -36,7 +36,9 @@ app.on('ready', function(){
     slashes: true,
   }));
   //main.webContents.openDevTools() //Disable the dev tools when opening Graviton
-  //main.setMenubarVisibility(false) //Remove the comment when it's on production
+  if (path.basename(__dirname) !== "Graviton-Editor") { //Only when it's already packaged
+    main.setMenuBarVisibility(false)
+  }
 });
 app.on('window-all-closed', ()=>{
   app.quit();

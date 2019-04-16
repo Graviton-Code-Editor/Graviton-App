@@ -8,12 +8,55 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+#g_control_bar {
+    -webkit-user-select: none;  
+    -webkit-app-region: drag;
+    position: relative;
+    color: var(--white-black);
+    height: 35px; 
+    background-color: var(--primaryColor);
+    padding: 0;
+    margin: 0px; 
+    list-style-type: none;
+    overflow: hidden;
+    font-family: _main_font;
+    margin: 0;
+}
+
+#g_control_bar > #controls  {
+ -webkit-app-region: no-drag;
+ position: fixed;
+ top: 0px;
+ right: 0px;
+ width: auto;
+}
+#g_control_bar > #controls button {
+    padding: 6px 0px;
+    width: 50px; 
+    border: none;
+    background: var(--primaryColor);
+}
+#g_control_bar> #controls button:hover { 
+    background: var(--widget-color);
+}
+#g_control_bar > #controls > #minimize:hover >svg >rect { 
+    fill: var(--white-black);
+}
+#g_control_bar > #controls > #maximize:hover >svg >rect { 
+    stroke: var(--white-black);
+}
+#g_control_bar > #controls > #close:hover { 
+    background: red;
+}
+#g_control_bar > #controls > #close:hover>svg>rect { 
+    fill: white;
+}
 #g_control_bar >  #g_dropmenu_list {
     list-style-type: none;
     padding: 0;
     overflow: hidden;
     -webkit-app-region: no-drag; 
-    margin-left: 30px;  
+    margin-left: 35px;  
     border:0;
     display: box;
     position: absolute;
@@ -23,7 +66,7 @@ button.dropbtn {
     display: inline-block;
     background-color: var(--primaryColor);
     color: var(--white-black);
-    height: 30px;
+    height: 35px;
     padding:0px 7px;
     margin: 0;
     overflow: hidden;
@@ -48,7 +91,7 @@ button.dropbtn {
     min-width: auto;
     overflow: auto;
     z-index: 80;
-    box-shadow: 1px 3px 9px 0px rgba(0,0,0,0.3);
+    box-shadow: 1px 3px 7px rgba(0,0,0,0.25);
     padding: 5px;
     margin: 0;
 }
@@ -64,10 +107,7 @@ button.dropbtn {
     border: 0;
     border-radius: 5px;
     text-align: left;
-}
-.dropdown-content > button:not( .dropbtn ) >img {
-    height: 100px;
-    display: block;
+    transform: scale(1);
 }
 .dropdown-content > button:hover:not( .dropbtn) {
     color: var(--black-white);
@@ -75,6 +115,15 @@ button.dropbtn {
     border-radius: 3px;
     cursor: pointer;
 }
+.dropdown-content > button:active:not( .dropbtn) {
+    transition: 0.05s;
+    transform: scale(0.97);
+}
+.dropdown-content > button:not( .dropbtn ) >img {
+    height: 100px;
+    display: block;
+}
+
 span.line_space_menus{
     width: auto;
     display: block;

@@ -97,7 +97,7 @@ function timeflowInfo(){
     title:current_config.language['About']+" Timeflow" ,
     content:"TimeFlow collets the time you spent on coding by saving <strong>locally</strong> the data.",
     buttons:{
-      [current_config.language['Accept']]:"closeDialog(this)",
+      [current_config.language['Close']]:"closeDialog(this)",
     }
 
   })

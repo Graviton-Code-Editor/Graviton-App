@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date:"190415",
+  date:"190416",
   version:"0.7.3",
   state:"Alpha"
 }
@@ -57,42 +57,70 @@ var themes_folder = path.join(DataFolderDir, "themes");
 var highlights_folder = path.join(DataFolderDir, "highlights");
 var plugins_folder = path.join(DataFolderDir, "plugins");
 var plugins_db = path.join(DataFolderDir, "plugins_db");
-function loadEditor(dir, data) {
+function loadEditor(dir, data,type) {
     if (document.getElementById(dir + "_editor") == undefined) {
         //Editor doesn't exist
-        const element = document.createElement("div");
-        element.classList = "code-space";
-        element.setAttribute("id", dir + "_editor");
-        document.getElementById("g_editors").appendChild(element);
-        const codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
-          value: data,
-          mode: "text/plain",
-          htmlMode: false,
-          theme: "default",
-          lineNumbers: true,
-          autoCloseTags: true
-        });
-        document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
-        const new_editor = {
-          id: dir + "_editor",
-          editor: codemirror,
-          path:dir
-        };
-        editors.push(new_editor);
-        if (document.getElementById(editorID) != undefined)
-        document.getElementById(editorID).style.display = "none";
-        editorID = new_editor.id;
-        editor = new_editor.editor;
-        document.getElementById(dir + "_editor").style.display = "block";
-        editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
+        switch(type){
+          case "text":
+            let text_container = document.createElement("div");
+            text_container.classList = "code-space";
+            text_container.setAttribute("id", dir + "_editor");
+            document.getElementById("g_editors").appendChild(text_container);
+            let codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
+              value: data,
+              mode: "text/plain",
+              htmlMode: false,
+              theme: "default",
+              lineNumbers: true,
+              autoCloseTags: true
+            });
+            document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
+            let new_editor_text = {
+              id: dir + "_editor",
+              editor: codemirror,
+              path:dir
+            };
+            editors.push(new_editor_text);
+            if (document.getElementById(editorID) != undefined)document.getElementById(editorID).style.display = "none";
+            editorID = new_editor_text.id;
+            editor = new_editor_text.editor;
+            document.getElementById(dir + "_editor").style.display = "block";
+            editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
+          break;
+          case"image":
+              const image_container = document.createElement("div");
+              image_container.classList = "code-space";
+              image_container.setAttribute("id", dir + "_editor");
+              const img = document.createElement("img");
+              img.setAttribute("src",dir);
+              image_container.appendChild(img);
+              document.getElementById("g_editors").appendChild(image_container);
+              const new_editor_image = {
+                  id: dir + "_editor",
+                  editor: undefined,
+                  path:dir
+              };
+              editors.push(new_editor_image);
+              if (document.getElementById(editorID) != undefined)document.getElementById(editorID).style.display = "none";
+              document.getElementById(dir + "_editor").style.display = "block";
+              editorID = new_editor_image.id;
+              document.getElementById("g_status_bar").children[0].innerText = path.basename(dir).split(".").pop();
+          break;
+
+        }
+        
       }else{//Editor exists
         for (i = 0; i < editors.length; i++) {
-          if(document.getElementById(editors[i].id)!=null)document.getElementById(editors[i].id).style.display = "none";
+          if(document.getElementById(editors[i].id)!=null ){
+            document.getElementById(editors[i].id).style = "display:none;";
+          }
           if (editors[i].id == dir + "_editor") {
-            editor = editors[i].editor;
+            if(editors[i].editor!=undefined){
+              editor = editors[i].editor;
+              editor.refresh();
+            } 
             editorID = editors[i].id;
-            editor.refresh();
-            document.getElementById(editorID).style.display = "block";
+            document.getElementById(editorID).style = "display:block;";
             document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
           }
         }
@@ -109,6 +137,7 @@ function loadEditor(dir, data) {
       }
       return cb(list);
     }
+    if(editor!=undefined){
     editor.on("change", function() {
           document
             .getElementById(editingTab)
@@ -226,6 +255,7 @@ function loadEditor(dir, data) {
             }
           }, 550);
       });
+  }
 }
 //loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 function restartApp() {
@@ -242,6 +272,7 @@ function save_file_warn(ele){
     content:current_config.language["FileExit-dialog-message"],
     buttons:{
       [current_config.language['FileExit-dialog-button-accept']]:`closeDialog(this); ${ele.getAttribute('onclose')}`,
+      [current_config.language['Cancel']]:`closeDialog(this);`,
       [current_config.language['FileExit-dialog-button-deny']]:'saveFile(); closeDialog(this);',
     }
   })
@@ -461,7 +492,7 @@ function g_createTab(object) {
   for(i=0;i<tabsEqualToFiles.length+1;i++){ 
       if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
           return;
-      }else if(i==tabsEqualToFiles.length) {
+      }else if(i==tabsEqualToFiles.length) { //Tab is created because it doesn't exist
           document.getElementById("temp_dir_message").innerText = "";
           const tab = document.createElement("div");
           tab.setAttribute("ID", object.id + "A");
@@ -494,19 +525,35 @@ function g_createTab(object) {
           tabsEqualToFiles.push(object);
           const g_newPath = object.getAttribute("longPath");
           filepath = g_newPath;
-          fs.readFile(g_newPath, "utf8", function(err, data) {
-              if (err) return console.log(err);
-              tab.setAttribute("data", data);
-              loadEditor(g_newPath, data);
-              if(g_highlighting=="activated") updateCodeMode(g_newPath);
-              document.getElementById(editorID).style.height = " calc(100% - (50px))";
-              editingTab = tab.id;
-              selected = object;
-              tabs.map(tab => {
-                  if (tab.classList.contains("selected")) tab.classList.remove("selected");
+          switch(filepath.split(".").pop()){
+            case"svg":
+            case"png":
+            case"ico":
+            case "jpg":
+            loadEditor(filepath, null,"image");
+            editingTab = tab.id;
+                selected = object;
+                tabs.map(tab => {
+                    if (tab.classList.contains("selected")) tab.classList.remove("selected");
+                });
+                tab.classList.add("selected");
+            break;
+            default:
+              fs.readFile(g_newPath, "utf8", function(err, data) {
+                if (err) return console.log(err);
+                tab.setAttribute("data", data);
+                loadEditor(g_newPath, data,"text");
+                if(g_highlighting=="activated") updateCodeMode(g_newPath);
+                document.getElementById(editorID).style.height = " calc(100% - (55px))";
+                editingTab = tab.id;
+                selected = object;
+                tabs.map(tab => {
+                    if (tab.classList.contains("selected")) tab.classList.remove("selected");
+                });
+                tab.classList.add("selected");
+                editor.refresh();
               });
-              tab.classList.add("selected");
-          });
+          }
           return;
       }
   }
@@ -689,7 +736,6 @@ const g_preview = function() {
     _previewer.on("closed", () => {
       _enable_preview = false;
     });
-
     _previewer.setTitle("Previewer");
   } else {
     _enable_preview = false;

@@ -63,7 +63,8 @@ function createAboutDialog(){
   createDialog({
     id:"about",
     title:current_config.language['About'],
-    content:`${current_config.language['Version']}: ${g_version.version} - ${g_version.state}
+    content:`
+      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
       <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
     buttons:{
       [current_config.language['Close']]:"closeDialog(this)",
