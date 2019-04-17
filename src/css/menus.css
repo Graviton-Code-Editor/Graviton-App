@@ -22,7 +22,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     font-family: _main_font;
     margin: 0;
 }
-
 #g_control_bar > #controls  {
  -webkit-app-region: no-drag;
  position: fixed;
@@ -123,7 +122,6 @@ button.dropbtn {
     height: 100px;
     display: block;
 }
-
 span.line_space_menus{
     width: auto;
     display: block;

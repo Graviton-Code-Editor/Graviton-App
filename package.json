@@ -3,11 +3,21 @@
   "version": "0.7.3",
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
+  "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "scripts": {
     "start": "electron . GravitonEditor ",
     "pack": "build --dir",
-    "build": "build"
+    "build": "build",
+    "build_snap": "build --linux snap",
+    "build_win":"build --win"
   },
+  "keywords": [
+    "Graviton",
+    "Editor",
+    "code",
+    "open source",
+    "simple"
+  ],
   "author": "Marc Espín <mespinsanz@gmail.com>",
   "license": "MIT",
   "dependencies": {

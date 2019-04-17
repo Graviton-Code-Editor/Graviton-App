@@ -160,12 +160,12 @@ function goSPage(num){
 				<h3>${current_config.language["FactoryReset"]}</h3>
 				<div class="section">
 						<p>${current_config.language["Settings-Advanced-FactoryReset-text"]}</p>
-						<button class="button1 red" onclick="factory_reset_dialog();">Factory Reset</button>
+						<button class="button1 red" onclick="factory_reset_dialog();">${current_config.language["FactoryReset"]}</button>
 				</div>
 				<h3>${current_config.language["Developers"]}</h3>
 				<div class="section">
 						<p>${current_config.language["Settings-Advanced-Developer-Tools-text"]}</p>
-						<button class="button1" onclick="graviton.openDevTools();">Toogle DevTools</button>
+						<button class="button1" onclick="graviton.openDevTools();">${current_config.language["DeveloperTools"]}</button>
 				</div>
 				`;
 				document.getElementById("navB4").classList.add("active");

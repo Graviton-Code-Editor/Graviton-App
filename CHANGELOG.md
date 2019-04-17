@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190417 - 1 [0.7.4]
+- Translated to spanish
+- Added a building instructions on building.md
+
+### 190416 - 1 [0.7.3]
+- New image(example.jpg) for the readme
+
 ### 190416 - 1 [0.7.3]
 - Now the top bar is higher
 - Added scale animation on pressing dropmenu's and dialog's buttons
@@ -12,7 +19,7 @@ This file contains "important" commits, small ones will not be added.
 - Added a button to cancel (continue editing file) on the dialog which appears when you try to close a file which is not saved.
 
 ### 190415 - 3 [0.7.3]
-- Bootanimation background color is not darkgray
+- Bootanimation background color is now darkgray
 - If Graviton detects an error when booting it will show up a button which will clean config and logs(As a factory reset).
 - Fixed Window's icon (icon.ico)
 
@@ -24,7 +31,6 @@ This file contains "important" commits, small ones will not be added.
 - Now, you can open dev tools even on production state
 - Now, language's name will be stored as "g_l" instead of "Name" so, "Name" would be able to be translated literally.
 - Added the logo icon to build
-
 
 ### 190414 - 1 [0.7.3]
 - Fixed (already added) auto-completion switch on editor page on Settings.
@@ -41,13 +47,11 @@ This file contains "important" commits, small ones will not be added.
 - Small bug fixes
 - Compressed codemirror
 
-
 ### 190412 - 1 [0.7.3]
 - Fixed "close" (X) button is hidding when the zoom was the smallest one.
 - Cleaned up code
 - Improved the updates detect infrastructure
 - Added links to the buttons on the About page on Settings
 - Created changelog.md
-
 
 This changelog didn't start when the project did so, don't expect all commits info to be here.

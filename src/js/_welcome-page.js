@@ -25,11 +25,11 @@ function g_welcomePage(){
 	body.setAttribute("class","body_window2 flex");
 	body.setAttribute("id","body_window_welcome");
 	body.innerHTML = `
-		<h1 id='title_welcome'>Welcome</h1> 
-		<div id='recent_projects'><h2 class='title2'>Recent projects</h2></div> 
-		<div id='notes'><h2 class='title2'>Notes</h2>
-		<p > Current build: ${ g_version.date } </p> 
-		<p > OS: ${ graviton.currentOS() } </p> 
+		<h1 id='title_welcome'>${current_config.language["Welcome"]}</h1> 
+		<div id='recent_projects'><h2 class='title2'>${current_config.language["RecentProjects"]}</h2></div> 
+		<div id='notes'><h2 class='title2'>${current_config.language["Notes"]}</h2>
+		<p> Current build: ${ g_version.date } </p> 
+		<p> OS: ${graviton.currentOS()}</p> 
 		<div class='welcomeButtons'>
 		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${current_config.language["OpenFolder"]}</button> 
 		<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${current_config.language["Skip"]}</button> 

@@ -61,7 +61,11 @@
 	"FileExit-dialog-button-accept":"Yes, close",
 	"FileExit-dialog-button-deny":"No, Save",
 	"Welcome":"Welcome",
-	"Welcome.TakeATheme":"Take a theme:"
+	"Welcome.TakeATheme":"Take a theme:",
+	"RecentProjects":"Recent Projects",
+	"Notes":"Notes",
+	"ShowWelcome":"Show welcome"
+
 	
 	
 }

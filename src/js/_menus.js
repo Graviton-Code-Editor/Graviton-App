@@ -21,7 +21,6 @@ const Help = new dropMenu({
   id:"help",
   translation: true
 });
-
 File.setList({
   button: "File",
   list: {
@@ -51,11 +50,12 @@ Help.setList({
       "shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
     "Source Code":
       "shell.openExternal('https://github.com/Graviton-Code-Editor')",
-    Discord: "()",
+    "Telegram Channel": "shell.openExternal(https://t.me/gravitoneditor')",
+    "Telegram Group": "shell.openExternal(https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ')",
     "*line": "",
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
     FAQs: "",
-    "Show welcome":"g_welcomePage()",
+    "ShowWelcome":"g_welcomePage()",
     About:"createAboutDialog()"
   }
 });
