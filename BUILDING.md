@@ -1,16 +1,26 @@
-# How to build Graviton
+# Building Graviton
 
 Commands to build Graviton from source:
 
-##Windows
+## Windows
 
-- From a Windows machine: ```npm run build```
-- From a Linux machine with Wine: ```npm run build_win```
+- From a Windows machine:
 
-##Linux
+> ** $ npm run build **
 
-- From a Linux machine: ```npm run build```
+- From a Linux machine with Wine: 
 
-##MacOS
+> ** $ npm run build_win **
 
-- From a Macintosh: ```npm run build``` 
+## Linux
+
+- From a Linux machine: 
+
+> ** $ npm run build **
+  
+         
+
+## MacOS
+
+From a Macintosh: 
+> ** $ npm run build **
