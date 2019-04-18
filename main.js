@@ -24,20 +24,17 @@ app.on('ready', function(){
     frame: process.platform!="win32"? true:false, 
     width: 750, 
     height: 650 ,
-    'minHeight': 300,
-    'minWidth': 300,
+    'minHeight': 310,
+    'minWidth': 310,
     backgroundColor: "rgba(255,255,255,0)",
-    title:"Graviton"
+    title:"Graviton Editor"
   });
   main.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true,
   }));
-  //main.webContents.openDevTools() //Disable the dev tools when opening Graviton
-  if (path.basename(__dirname) !== "Graviton-Editor") { //Only when it's already packaged
-    main.setMenuBarVisibility(false)
-  }
+    main.setMenuBarVisibility(path.basename(__dirname) !== "Graviton-Editor")//True= when it's already packaged
 });
 app.on('window-all-closed', ()=>{
   app.quit();

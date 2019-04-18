@@ -8,7 +8,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-const {webFrame} = require('electron');
 let nav_bar_settings ;
 function hideSettings(){
 	document.getElementById("window").remove();
@@ -44,9 +43,11 @@ function openSettings(){
 	document.body.appendChild(all);
 }
 function updateEditorFontSize() {
+	current_config.fontSizeEditor =  document.getElementById("fs-input").value;
+	if(editor!=undefined){
 		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
-		current_config.fontSizeEditor =  document.getElementById("fs-input").value;
 		editor.refresh();
+	}
 }
 function updateSettings(){
 	document.documentElement.style.setProperty("--editor-font-size",`${current_config.fontSizeEditor}px`); //Update settings from start

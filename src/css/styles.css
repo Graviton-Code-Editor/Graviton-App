@@ -110,6 +110,7 @@ body , head{
     overflow-x: auto;
 }
 #g_content > #g_editors > #temp_dir_message{
+    font-size: 16px;
     -webkit-user-select: none;
     position: absolute;
     left: 50%;
@@ -350,6 +351,12 @@ body , head{
  font-weight: 570;
  margin: 0;
  padding: 0;
+}
+p a{
+    text-decoration: underline;
+}
+p a:hover{
+    color:var(--accentColor);
 }
 context {
   position: absolute;

@@ -24,14 +24,19 @@ Available platforms
 ---
 It's avaiable on:
 
-- **Windows**
- * ```Executable```
-- **Linux**
- * ` Snapcraft`
- * `Appimage`
- * `Debian package `
-- **MacOS**
- * ` DMG file`
+**Windows**
+
+   * ```Executable```
+
+**Linux**
+
+   * ` Snapcraft` 
+   * `Appimage`
+   * `Debian package `
+
+**MacOS**
+
+   * ` DMG file`
 
 The current state is beta, check the releases page to download the lastest version. 
 
@@ -40,6 +45,3 @@ Building
 Wanna build Graviton from source?
 
 **Check [this](BUILDING.md)**
-
-
-

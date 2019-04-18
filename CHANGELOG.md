@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190418 - 2 [0.7.4]
+- Fixed throws error when changing font-size with any file opened
+- Added changelog dialog inside the app
+- Small improvements
+
 ### 190418 - 1 [0.7.4]
 - Added MacOS support!!
 - Translated to catalan

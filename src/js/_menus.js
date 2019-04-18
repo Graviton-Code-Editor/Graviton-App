@@ -36,6 +36,7 @@ Tools.setList({
   button: "Tools",
   list: {
     Plugins: "openPlugins()",
+    "ShowWelcome":"g_welcomePage()",
     "Zen Mode": "g_ZenMode(true)",
     "Developer Tools": "graviton.openDevTools()",
     Previewer: "g_preview()",
@@ -46,32 +47,17 @@ Tools.setList({
 Help.setList({
   button: "Help",
   list: {
-    Issues:
-      "shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
-    "Source Code":
-      "shell.openExternal('https://github.com/Graviton-Code-Editor')",
+    Issues:"shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
+    "Source Code":"shell.openExternal('https://github.com/Graviton-Code-Editor')",
     "Telegram Channel": "shell.openExternal(https://t.me/gravitoneditor')",
     "Telegram Group": "shell.openExternal(https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ')",
     "*line": "",
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
     FAQs: "",
-    "ShowWelcome":"g_welcomePage()",
-    About:"createAboutDialog()"
+    Changelog:"graviton.dialogChangelog()",
+    About:"graviton.dialogAbout()"
   }
 });
-function createAboutDialog(){
-  createDialog({
-    id:"about",
-    title:current_config.language['About'],
-    content:`
-      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
-      <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
-    buttons:{
-      [current_config.language['Close']]:"closeDialog(this)",
-      [current_config.language['More']]:"openSettings(); goSPage('5');"
-    }
-  })
-}
 function interact_dropmenu(id) {
   const dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {

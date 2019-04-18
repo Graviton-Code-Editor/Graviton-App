@@ -9,7 +9,7 @@
     "pack": "build --dir",
     "build": "build",
     "build_snap": "build --linux snap",
-    "build_win":"build --win"
+    "build_win": "build --win"
   },
   "keywords": [
     "Graviton",
@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "electron": "^4.0.5",
-    "electron-builder": "^20.39.0",
+    "electron-builder": "^20.40.2",
     "fs": "0.0.1-security"
   },
   "build": {
@@ -58,6 +58,7 @@
       "icon": "build/linux"
     },
     "win": {
+      "category": "Utility",
       "target": "NSIS",
       "icon": "build/ico/icon.ico"
     }

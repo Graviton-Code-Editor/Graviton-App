@@ -180,6 +180,36 @@ const graviton = {
  	},
  	openDevTools: function(){
  		require('electron').remote.getCurrentWindow().toggleDevTools();
+ 	},
+ 	dialogAbout: function(){
+ 		createDialog({
+	    id:"about",
+	    title:current_config.language['About'],
+	    content:`
+	      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
+	      <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
+	    buttons:{
+	      [current_config.language['Close']]:"closeDialog(this)",
+	      [current_config.language['More']]:"openSettings(); goSPage('5');"
+	    }
+  	})
+ 	},
+ 	dialogChangelog: function(){
+ 		createDialog({
+	    id:"changelog",
+	    title:current_config.language['Changelog']+" - "+g_version.version,
+	    content:` 
+	    <ul>
+	    <li>Added MacOS support</li>
+	    <li>Translated to spanish and catalan</li>
+	    <li>Deprecated ukranian</li>
+	    <li>Fixed throws error when changing font-size with any tabs openeds.</li>
+	    <li>Small improvements</li>
+	    </ul>`,
+	    buttons:{
+	      [current_config.language['Close']]:"closeDialog(this)"
+	    }
+  	})
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
@@ -247,18 +277,15 @@ function Notification(title, message) { //Method to create notifications
     ` <button   onclick="closeNotification(this)">
         ${close_icon}
       </button>
-      <h1>
-        ${title} 
-      </h1>
+      <h1>${title}</h1>
       <div>
-        <p id="notification_message${textID}">
-        </p>
+        <p id="notification_message${textID}"></p>
       </div>`;
   document.getElementById("notifications").appendChild(body);
   document.getElementById("notification_message" + textID).innerText = message;
   _notifications.push(body);
-  let seveTS = new Promise((resolve, reject) => {
-    let wait = setTimeout(() => {
+  const seveTS = new Promise((resolve, reject) => {
+    const wait = setTimeout(() => {
       clearTimeout(wait);
       for (i = 0; i < _notifications.length; i++) {
         if (_notifications[i] === body) {
@@ -268,7 +295,7 @@ function Notification(title, message) { //Method to create notifications
       }
     }, 7000); //Wait 7 seconds until the notification auto deletes it selfs
   });
-  let race = Promise.race([seveTS]);
+  const race = Promise.race([seveTS]);
 }
 function closeNotification(element) {
   for (i = 0; i < _notifications.length; i++) {

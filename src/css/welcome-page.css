@@ -8,7 +8,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-
 .body_window2{
     transition: 0.10s;
     color:var(--white-black);
@@ -17,7 +16,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     overflow-y: scroll;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
-    z-index: 85;
     width: 85%;
     height: 75%;
     position: fixed;
@@ -28,16 +26,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     transform: translate(-50%, -45%);
     opacity: 1;
 }
-
 .body_window2 > #title_welcome{
-
     left: 45%;
     transform: translate(0%, -45%);
 	font-size: 35px;
     position: fixed;
 	line-height: 0;
     font-weight: bold;
-
 }
 .body_window2 > .title2{
     padding-left: 7px;
@@ -45,28 +40,28 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     font-weight: bold;
 }
 .body_window2 > #recent_projects{
-overflow: auto;
-width: 100%;
-height: auto;
-overflow: auto;
- white-space: nowrap;
- margin-top: 55px;
+    overflow: auto;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    white-space: nowrap;
+    margin-top: 55px;
 }
 .body_window2 > #notes{
     position: relative;
     overflow: auto;
-width: 100%;
-height: 70%;
-overflow: auto;
- white-space: nowrap;
- margin-top: 55px;
- margin-left: 25px;
+    width: 100%;
+    height: 70%;
+    overflow: auto;
+    white-space: nowrap;
+    margin-top: 55px;
+    margin-left: 25px;
 }
 .body_window2 > #notes>p{
     font-size: 15px;
 }
 .body_window2 >#recent_projects> .project_div{
-    transition: 0.05s;
+    transition: 0.03s;
     border-radius: 7px;
     padding: 10px;
     margin: 6px 0px;
@@ -77,19 +72,22 @@ overflow: auto;
     overflow: auto;
     background: var(--primaryColor);
     color:var(--white-black);
+    transform: scale(1));   
 }
 .body_window2 >#recent_projects> .project_div:hover{
-    transition: 0.05s;
+    transition: 0.03s;
     background: var(--widget-color);
     cursor: pointer;
+}
+.body_window2 >#recent_projects> .project_div:active{
+    transition: 0.03s;
+    transform: scale(0.97);   
 }
 .body_window2 >#notes>.welcomeButtons{
     position: fixed;
     bottom: 15px;
     right:15px;
 }
-
-
 .theme_div_welcomePage{
     transition: 0.1s;
     transform: scale(1);
@@ -101,17 +99,12 @@ overflow: auto;
     background: var(--primaryColor);
     color:var(--white-black);
     font-size: 17px;
-
-
 }
-
 .theme_div_welcomePage:hover{
     transition: 0.12s;
     background: var(--widget-color);
     cursor: pointer;
 }
-
-
 .theme_div_welcomePage:active{
     transition: 0.12s;
     transform: scale(0.98);

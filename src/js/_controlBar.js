@@ -8,7 +8,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-
 const windows_buttons = `
      <button id="minimize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><rect x="7" y="11.5" width="10" height="0.7" transform="matrix(1,0,0,1,0,0)" fill="var(--titleBar-icons-color)"/></svg></button>
      <button id="maximize" style="z-index: 90; height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate;" viewBox="0 0 24 24" width="24" height="24"><rect x="7.5" y="7.5" width="9" height="9" transform="matrix(1,0,0,1,0,0)" fill="transparent" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg></button>
@@ -22,11 +21,9 @@ if(graviton.currentOS()=="win32"){
                document.getElementById("minimize").addEventListener("click", function (e) {
                     window.minimize(); 
                });
-
                document.getElementById("maximize").addEventListener("click", function (e) {
                     window.maximize(); 
                });
-
                document.getElementById("close").addEventListener("click", function (e) {
                      window.close();
                }); 

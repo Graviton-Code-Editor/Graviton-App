@@ -13,6 +13,7 @@ const g_version = {
   version:"0.7.4",
   state:"Alpha"
 }
+const os = require('os');
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate; " viewBox="0 0 24 24" width="24" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)"  vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" vector-effect="non-scaling-stroke" stroke-width="1"  stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="2"/></svg>`;
 const { shell } = require("electron");
 const fs = require("fs-extra");
@@ -21,9 +22,10 @@ const { dialog } = require("electron").remote;
 const mkdirp = require("mkdirp");
 const remote = require("electron").remote;
 const BrowserWindow = require("electron").BrowserWindow;
-const app = require("electron").remote.getCurrentWindow();
+const app  = require('electron').remote
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
+const {webFrame} = require('electron');
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 let tabs = [];
@@ -44,10 +46,8 @@ let _enable_preview = false;
 let log = [];
 let themes =[];
 let themeObject;
-const dictionary = autocomplete.javascript;
-if (path.basename(__dirname) !== "Graviton-Editor") {
-    DataFolderDir = path.join(getAppDataPath(),".graviton");
-}
+const dictionary = autocomplete.javascript; //Import javascript dictionary
+if (path.basename(__dirname) !== "Graviton-Editor") DataFolderDir = path.join(getAppDataPath(),".graviton");
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); //Create .graviton if it doesn't exist
 /* Set path for graviton's files and dirs */
 let logDir = path.join(DataFolderDir, "log.json"); 
@@ -786,7 +786,7 @@ const g_newProject = function(template){
 }
 function g_openNewProjects(){
   const g_all_window = document.createElement("div");
-  g_all_window.setAttribute("id","window");
+  g_all_window.setAttribute("id","templates_window");
   g_all_window.setAttribute("style","-webkit-user-select: none;");
   const g_background = document.createElement("div");
   g_background.setAttribute("class","opened_window");
@@ -811,5 +811,5 @@ function g_NPgoPage(num){
   }
 }
 function g_hideNewProjects(){
-  document.getElementById("window").remove();
+  document.getElementById("templates_window").remove();
 }

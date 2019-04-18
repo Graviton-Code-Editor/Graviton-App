@@ -30,6 +30,7 @@ function g_welcomePage(){
 		<div id='notes'><h2 class='title2'>${current_config.language["Notes"]}</h2>
 		<p> Current build: ${ g_version.date } </p> 
 		<p> OS: ${graviton.currentOS()}</p> 
+		<p onclick="graviton.dialogChangelog()"><a>Changelog</a></p>
 		<div class='welcomeButtons'>
 		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${current_config.language["OpenFolder"]}</button> 
 		<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${current_config.language["Skip"]}</button> 
@@ -100,7 +101,6 @@ function FTGoPage(number){
 			body.setAttribute("id","body_firstTime_window");
 			body.innerHTML = `
 				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language["Welcome.TakeATheme"]}</h1> 
-
 				<div id='theme_list' style="height:60%;"></div> 
 				<button onclick='FTGoPage("1"); g_Setup();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${current_config.language["Back"]}</button> 
 				<button id="FROM_THEMES_CONTINUE" onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
@@ -133,4 +133,3 @@ function FTGoPage(number){
 		break;
 	}
 }
-
