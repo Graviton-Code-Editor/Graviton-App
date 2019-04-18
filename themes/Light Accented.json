@@ -13,7 +13,7 @@
     "white-black": "black",
     "black-white": "white",
     "widget-color": "#BFBEBE",
-    "buttons-roundness":"3px",
+    "buttons-roundness":"4px",
     "dropmenu-background-color": "#ECECEC",
     "dropmenu-buttons-disabled-color":"gray",
     "titleBar-icons-color":"#595959",

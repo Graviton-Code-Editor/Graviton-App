@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190418 - 3 [0.7.4]
+- Fixed from (190418), linux and MacOS were showing the menu bar 
+- More round buttons 
+- Fixed, wrong path for the windows's icon on package.json
+- Fixed from (190418), the backround element was in front of all
+- Fixed from (190418), wrong configuration about Windows on package.json
+
 ### 190418 - 2 [0.7.4]
 - Fixed throws error when changing font-size with any file opened
 - Added changelog dialog inside the app
@@ -17,7 +24,7 @@ This file contains "important" commits, small ones will not be added.
 - Translated to spanish
 - Added a building instructions on building.md
 
-### 190416 - 1 [0.7.3]
+### 190416 - 2 [0.7.3]
 - New image(example.jpg) for the readme
 
 ### 190416 - 1 [0.7.3]

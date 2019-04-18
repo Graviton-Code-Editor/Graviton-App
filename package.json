@@ -58,9 +58,8 @@
       "icon": "build/linux"
     },
     "win": {
-      "category": "Utility",
       "target": "NSIS",
-      "icon": "build/ico/icon.ico"
+      "icon": "build/win/icon.ico"
     }
   }
 }

@@ -68,8 +68,8 @@ function g_Setup(){
 				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${current_config.language["Languages"]}</h1> 
 				<div id='language_list'></div> 
 				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${current_config.language["Continue"]}</button> `;		
-	all.appendChild(body);
 	all.appendChild(background);
+	all.appendChild(body);
 	document.body.appendChild(all);
 	for(i=0;i<languages.length; i++){
 			const languageDiv = document.createElement("div");

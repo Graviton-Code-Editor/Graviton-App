@@ -34,7 +34,7 @@ app.on('ready', function(){
     protocol: 'file:',
     slashes: true,
   }));
-    main.setMenuBarVisibility(path.basename(__dirname) !== "Graviton-Editor")//True= when it's already packaged
+    main.setMenuBarVisibility(path.basename(__dirname) === "Graviton-Editor")//True= when it's already packaged
 });
 app.on('window-all-closed', ()=>{
   app.quit();
