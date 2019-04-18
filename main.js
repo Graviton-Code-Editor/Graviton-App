@@ -17,7 +17,6 @@ const Menu = electron.Menu;
 let main; //Main window
 app.on('ready', function(){
   main = new BrowserWindow({
-    titleBarStyle: "customButtonsOnHover", 
     webPreferences: {
       nativeWindowOpen: true,
       nodeIntegrationInWorker: true,
@@ -44,7 +43,7 @@ app.on('window-all-closed', ()=>{
   app.quit();
 });
 app.on('before-quit', () => {
-    mainWindow.removeAllListeners('close');
-    mainWindow.close();
+    main.removeAllListeners('close');
+    main.close();
 });
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');

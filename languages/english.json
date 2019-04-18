@@ -55,7 +55,7 @@
 	"Performance":"Performance",
 	"Highlighting":"Highlighting",
 	"Settings-Advanced-Performance-Animations":"Turn off to disable animations. ",
-	"Settings-Advanced-FactoryReset-text":"This will restart Graviton configuraton and logs.",
+	"Settings-Advanced-FactoryReset-text":"This will restart Graviton configuraton and recent projects.",
 	"Settings-Advanced-Developer-Tools-text":"Toogle developer tools",
 	"FileExit-dialog-message":"Are you sure you wanna close this file without saving?",
 	"FileExit-dialog-button-accept":"Yes, close",

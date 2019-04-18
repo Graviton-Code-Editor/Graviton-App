@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date:"190417",
+  date:"190418",
   version:"0.7.4",
   state:"Alpha"
 }
@@ -26,22 +26,22 @@ const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
-var tabs = [];
-var tabsEqualToFiles = [];
-var FirstFolder = "not_selected";
-var editingTab;
-var ids = 0;
+let tabs = [];
+let tabsEqualToFiles = [];
+let FirstFolder = "not_selected";
+let editingTab;
+let ids = 0;
 let plang = " ";
-var _notifications = [];
-var filepath = "start";
-var editors = [];
-var editor;
-var editorID;
-var editor_mode = "normal";
+let _notifications = [];
+let filepath ;
+let editors = [];
+let editor;
+let editorID;
+let editor_mode = "normal";
 let g_highlighting = "activated";
-var _previewer;
-var _enable_preview = false;
-var log = [];
+let _previewer;
+let _enable_preview = false;
+let log = [];
 let themes =[];
 let themeObject;
 const dictionary = autocomplete.javascript;
@@ -50,13 +50,13 @@ if (path.basename(__dirname) !== "Graviton-Editor") {
 }
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); //Create .graviton if it doesn't exist
 /* Set path for graviton's files and dirs */
-var logDir = path.join(DataFolderDir, "log.json"); 
-var configDir = path.join(DataFolderDir, "config.json");
-var timeSpentDir = path.join(DataFolderDir, "_time_spent.json");
-var themes_folder = path.join(DataFolderDir, "themes");
-var highlights_folder = path.join(DataFolderDir, "highlights");
-var plugins_folder = path.join(DataFolderDir, "plugins");
-var plugins_db = path.join(DataFolderDir, "plugins_db");
+let logDir = path.join(DataFolderDir, "log.json"); 
+let configDir = path.join(DataFolderDir, "config.json");
+let timeSpentDir = path.join(DataFolderDir, "_time_spent.json");
+let themes_folder = path.join(DataFolderDir, "themes");
+let highlights_folder = path.join(DataFolderDir, "highlights");
+let plugins_folder = path.join(DataFolderDir, "plugins");
+let plugins_db = path.join(DataFolderDir, "plugins_db");
 function loadEditor(dir, data,type) {
     if (document.getElementById(dir + "_editor") == undefined) {
         //Editor doesn't exist

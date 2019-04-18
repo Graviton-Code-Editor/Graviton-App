@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190418 - 1 [0.7.4]
+- Added MacOS support!!
+- Translated to catalan
+- Deprecated ukranian (probably temporally)
+- Improved readme.md
+
 ### 190417 - 1 [0.7.4]
 - Translated to spanish
 - Added a building instructions on building.md

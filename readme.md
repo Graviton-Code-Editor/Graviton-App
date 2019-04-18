@@ -11,8 +11,8 @@ Features
 ---
 - Themes
 - Plugins
-- Custom highlights
-- Zen Mode
+- Full compatibility with CodeMirror existing themes
+- Zen Mode and other editor  configuration things...
 - Large language syntax highlighting support
 - Code 
 - Autocomplete 
@@ -20,11 +20,20 @@ Features
 
 More are comming soon
 
-
-
 Available platforms
 ---
-Right now there isn't any public release, it's on alpha. It will be avaiable free and open source for Windows & Linux (and hopefully MacOS) 
+It's avaiable on:
+
+- **Windows**
+ * ```Executable```
+- **Linux**
+ * ` Snapcraft`
+ * `Appimage`
+ * `Debian package `
+- **MacOS**
+ * ` DMG file`
+
+The current state is beta, check the releases page to download the lastest version. 
 
 Building
 ---
