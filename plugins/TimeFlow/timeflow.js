@@ -92,7 +92,7 @@ function loop(){
 loop();
 
 function timeflowInfo(){
-	 createDialog({
+	 g_dialog({
     id:"timeflow_info",
     title:current_config.language['About']+" Timeflow" ,
     content:"TimeFlow collets the time you spent on coding by saving <strong>locally</strong> the data.",

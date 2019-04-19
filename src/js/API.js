@@ -181,8 +181,14 @@ const graviton = {
  	openDevTools: function(){
  		require('electron').remote.getCurrentWindow().toggleDevTools();
  	},
+ 	zenMode:function(){
+ 		return current_config.zenMode;
+ 	},
+ 	throwError:function(){
+ 		new Notification("Error detected","An error has appeared! Check the console on developer tools for more info.");
+ 	},
  	dialogAbout: function(){
- 		createDialog({
+ 		new g_dialog({
 	    id:"about",
 	    title:current_config.language['About'],
 	    content:`
@@ -195,16 +201,16 @@ const graviton = {
   	})
  	},
  	dialogChangelog: function(){
- 		createDialog({
+ 		new g_dialog({
 	    id:"changelog",
 	    title:current_config.language['Changelog']+" - "+g_version.version,
 	    content:` 
 	    <ul>
-	    <li>Added MacOS support</li>
-	    <li>Translated to spanish and catalan</li>
-	    <li>Deprecated ukranian</li>
-	    <li>Fixed throws error when changing font-size with any tabs openeds.</li>
-	    <li>Small improvements</li>
+		    <li>Added MacOS support</li>
+		    <li>Translated to spanish and catalan</li>
+		    <li>Deprecated ukranian</li>
+		    <li>Fixed throws error when changing font-size with any tabs openeds.</li>
+		    <li>Small improvements</li>
 	    </ul>`,
 	    buttons:{
 	      [current_config.language['Close']]:"closeDialog(this)"
@@ -265,7 +271,7 @@ document.addEventListener('mousedown', function(event){ //Create the context men
   }
 });
 function Notification(title, message) { //Method to create notifications
-  if (_notifications.length >= 3) {
+  if (_notifications.length >= 3) { //Remove one notification in case there are 3
     _notifications[0].remove();
     _notifications.splice(0, 1);
   }
@@ -273,18 +279,18 @@ function Notification(title, message) { //Method to create notifications
   const body = document.createElement("div");
   body.classList.add("notificationBody");
   body.setAttribute("id", _notifications.length);
-  body.innerHTML =
-    ` <button   onclick="closeNotification(this)">
-        ${close_icon}
-      </button>
-      <h1>${title}</h1>
-      <div>
-        <p id="notification_message${textID}"></p>
-      </div>`;
+  body.innerHTML =`
+  	<button  onclick="closeNotification(this)">
+      ${close_icon}
+    </button>
+    <h1>${title}</h1>
+    <div>
+      <p id="notification_message${textID}"></p>
+    </div>`;
   document.getElementById("notifications").appendChild(body);
-  document.getElementById("notification_message" + textID).innerText = message;
+  document.getElementById(`notification_message${textID}`).innerText = message;
   _notifications.push(body);
-  const seveTS = new Promise((resolve, reject) => {
+  const g_promise = new Promise((resolve, reject) => {
     const wait = setTimeout(() => {
       clearTimeout(wait);
       for (i = 0; i < _notifications.length; i++) {
@@ -295,7 +301,7 @@ function Notification(title, message) { //Method to create notifications
       }
     }, 7000); //Wait 7 seconds until the notification auto deletes it selfs
   });
-  const race = Promise.race([seveTS]);
+  const race = Promise.race([g_promise]);
 }
 function closeNotification(element) {
   for (i = 0; i < _notifications.length; i++) {
@@ -305,33 +311,41 @@ function closeNotification(element) {
     }
   }
 }
-const closeDialog = (me)=> document.getElementById(me.getAttribute("myID") + "D").remove();
-function createDialog(obj) {
+function g_dialog(dialogObject){
+	if(typeof [...arguments]!="object") {
+		graviton.throwError("Parsed argument is not object.")
+		return;
+	}
   const all = document.createElement("div");
-  all.setAttribute("id", obj.id + "D");
+  all.setAttribute("id", dialogObject.id + "_dialog");
   all.setAttribute("style", "-webkit-user-select: none;");
   const background = document.createElement("div");
   background.setAttribute("class", "opened_window");
-  background.setAttribute("myID", obj.id);
+  background.setAttribute("myID", dialogObject.id);
   background.setAttribute("onclick", "closeDialog(this)");
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
   body_dialog.innerHTML =`
   <p style="font-size:25px; line-height:1px; white-space: nowrap; font-weight:bold;">    
-  		${obj.title} 
+  		${dialogObject.title} 
   </p>
   <p style="font-size:15px;">
-    	${obj.content}
+    	${dialogObject.content}
   </p>`;
-  Object.keys(obj.buttons).forEach(function(key,index) {
+  Object.keys(dialogObject.buttons).forEach(function(key,index) {
   	const button = document.createElement("button");
   	button.innerText = key;
-  	button.setAttribute("myID",obj.id);
-  	button.setAttribute("onclick",obj.buttons[key]);
-  	button.classList = "_dialog_button";
+  	button.setAttribute("myID",dialogObject.id);
+  	button.setAttribute("onclick",dialogObject.buttons[key]);
   	body_dialog.appendChild(button);
   });
   all.appendChild(background);
   all.appendChild(body_dialog);
   document.body.appendChild(all);
+  this.close = function(me){
+  	closeDialog(me);
+  }
+}
+const closeDialog = (me)=>{
+	document.getElementById(me.getAttribute("myID") + "_dialog").remove();
 }

@@ -15,6 +15,7 @@ const g_hideSetup = () => {
 	saveConfig();
 }
 function g_welcomePage(){
+	
 	const all = document.createElement("div");
 	all.setAttribute("id","welcome_window");
 	all.setAttribute("style","-webkit-user-select: none;");

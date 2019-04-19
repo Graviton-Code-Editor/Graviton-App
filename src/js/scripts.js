@@ -266,7 +266,7 @@ Mousetrap.bind("ctrl+s", function() {
   saveFile();
 });
 function save_file_warn(ele){
-  createDialog({
+  new g_dialog({
     id:"saving_file_warn",
     title:current_config.language['Warn'],
     content:current_config.language["FileExit-dialog-message"],
@@ -493,7 +493,7 @@ function g_createTab(object) {
       if (i!=tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
           return;
       }else if(i==tabsEqualToFiles.length) { //Tab is created because it doesn't exist
-          document.getElementById("temp_dir_message").innerText = "";
+          document.getElementById("temp_dir_message").style="visibility:hidden;"
           const tab = document.createElement("div");
           tab.setAttribute("ID", object.id + "A");
           tab.setAttribute("longPath", object.getAttribute("longpath"));
@@ -577,7 +577,7 @@ function g_closeTab(ele) {
         filepath = " ";
         plang = "";
         document.getElementById("g_status_bar").children[0].innerText = plang;
-        document.getElementById("temp_dir_message").innerText = document.getElementById("temp_dir_message").getAttribute("text");
+        document.getElementById("temp_dir_message").style="visibility:visible;"
     } else if (i === tabs.length) {
         //Last tab
         NEW_SELECTED_TAB = tabs[Number(tabs.length) - 1];

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 190419 - 1 [0.7.4]
+- Translated welcome message to spanish and catalan
+- Improved dialogs API
+
 ### 190418 - 3 [0.7.4]
 - Fixed from (190418), linux and MacOS were showing the menu bar 
 - More round buttons 

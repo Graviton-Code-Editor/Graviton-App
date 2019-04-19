@@ -60,11 +60,12 @@
 	"FileExit-dialog-message":"Estàs segur que vols tancar aquest arxiu sense desar?",
 	"FileExit-dialog-button-accept":"Si, tancar",
 	"FileExit-dialog-button-deny":"No, guarda-ho",
-	"Welcome":"Bienvenido",
+	"Welcome":"Benvingut",
 	"Welcome.TakeATheme":"Escull un tema:",
 	"RecentProjects":"Projectes recents",
 	"Notes":"Anotacions",
-	"ShowWelcome":"Mostrar benvinguda"
+	"ShowWelcome":"Mostrar benvinguda",
+	"WelcomeMessage":"Benvingut a Graviton Editor :)"
 	
 	
 }

@@ -15,7 +15,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     color:var(--white-black);
     font-size: 17px;
     padding:17px;
-    overflow-y: scroll;
+    overflow: auto;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     min-width: 275px;
@@ -29,9 +29,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     left: 50%;
     transform: translate(-50%, -45%);
     opacity: 1;
-    overflow: auto;
 } 
-._dialog_button{
+.dialog_body button{
     font-weight: bold;
     float: right;
     width: auto;
@@ -52,12 +51,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     font-size: 11px;
     transform: scale(1)
 }
-._dialog_button:hover{
+.dialog_body button:hover{
     transition: 0.1s;
     cursor: pointer;
     background: var(--primaryColor);
 }
-._dialog_button:active{
+.dialog_body button:active{
     transition: 0.06s;
     transform: scale(0.96)
 }
