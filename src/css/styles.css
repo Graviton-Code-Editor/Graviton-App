@@ -8,7 +8,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-
  /* Color pallete , themes will override this*/
 :root{   
 	--primaryColor: #222222;
@@ -82,16 +81,19 @@ body , head{
     display: none;
     background: transparent;
 }
-#g_content > #g_directories{
+#g_content > #g_explorer{
     position: fixed;
     left:0;
     width:200px;
     height: calc(100% - (35px));
-    overflow: scroll;
+    overflow:auto;
     font-size:12px;
     color:var(--white-black);
     background: var(--primaryColor);
     -webkit-user-select: none;
+}
+#g_content > #g_directories{
+    height: auto;
 }
 #g_content > #g_editors > #g_tabs_bar{
     overflow: auto; 
@@ -160,6 +162,8 @@ body , head{
     user-select: none;
 }
 .flex{
+    padding: 0px 15px;
+    margin: 0;
     display: flex;
     flex-direction: row;
 }
@@ -226,7 +230,7 @@ body , head{
     fill: var(--accentColor);
     stroke: var(--accentColor);
 }
-#g_content > #g_directories div.folder_list1{
+#g_content > #g_explorer div.folder_list1{
     animation: directory_opening linear 0.1s;
     color: var(--white-black);
     border-radius: 70px;
@@ -244,12 +248,12 @@ body , head{
     cursor: pointer;
     background: transparent;
 }
-#g_content > #g_directories div.folder_list1:hover{
+#g_content > #g_explorer div.folder_list1:hover{
     transition: 0.1s;
     border-radius: 4px;
     background: var(--widget-color);
 }
-#g_content > #g_directories div.folder_list2{
+#g_content > #g_explorer div.folder_list2{
     animation: directory_opening linear 0.1s;
     color:var(--white-black);
     border-radius: 70px;
@@ -267,7 +271,7 @@ body , head{
     cursor: pointer;
     transform: translateX(3px);
 }
-#g_content > #g_directories div.folder_list2:hover{
+#g_content > #g_explorer div.folder_list2:hover{
     transition: 0.1s;
     border-radius: 4px;
     background: var(--widget-color);
@@ -284,7 +288,7 @@ body , head{
 }
 .Button1{
     font-family: _main_font;
-    transition: 0.1s;
+    transition: 0.07s;
     border-radius: var(--buttons-roundness);
     width: auto;
     margin:2px 0px;  
@@ -295,7 +299,7 @@ body , head{
     border: 2px solid transparent;
 }
 .Button1:hover{
-    transition: 0.1s;
+    transition: 0.07s;
     cursor: pointer;
     background: var(--widget-color);    
 }
@@ -311,13 +315,14 @@ body , head{
     pointer-events: none;
 }
 .Button1:active{
-    transition: 0.1s;
+    transition: 0.07s;
     box-sizing: border-box;
-    transform: scale(0.95);
+    transform: scale(0.95); 
 }
 .window_title{
-    font-size:25px; 
-    line-height:5px; 
+    font-size:30px; 
+    line-height:25px; 
+    margin: 30px;
     text-align:center;
     -webkit-font-smoothing: subpixel-antialiased;
     letter-spacing: 1px;
@@ -330,7 +335,7 @@ body , head{
     height: auto;
 }
 .section_hover{
-    transition: 0.1s;
+    transition: 0.07s;
     margin: 7px;
     padding: 12px 15px;
     background: var(--primaryColor);
@@ -340,11 +345,11 @@ body , head{
     transform: scale(1);
 }
 .section_hover:hover{
-    transition: 0.1s;
+    transition: 0.05s;
     background: var(--widget-color);
 }
 .section_hover:active{
-    transition: 0.1s;
+    transition: 0.07s;
     transform: scale(0.98);
 }
 .body_window h3{
@@ -352,10 +357,10 @@ body , head{
  margin: 0;
  padding: 0;
 }
-p a{
+p.link{
     text-decoration: underline;
 }
-p a:hover{
+p.link:hover{
     color:var(--accentColor);
 }
 context {

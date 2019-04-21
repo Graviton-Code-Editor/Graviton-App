@@ -1,13 +1,13 @@
 {
 	"name":"Time Flow",
-	"version":"0.1.0",
+	"version":"0.1.1",
 	"author":"Marc Espín",
 	"description":"Measure the time you spent on coding.",
 	"folder":"TimeFlow",
 	"main":"timeflow.js",
 	"javascript":[
 	],
-		"css":[
+	"css":[
 		"timeflow.css"
 	]
 

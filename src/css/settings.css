@@ -59,7 +59,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
     width: 85%;
-    height: 75%;
+    height: 85%;
     position: fixed;
     text-align: left;
     background: var(--secondaryColor);
@@ -71,11 +71,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     padding: 0px 25px;
 }
 #theme_list{
-overflow: auto;
-width: 100%;
-height: auto;
-overflow: auto;
- white-space: nowrap;
+    overflow: auto;
+    width: 100%;
+    height: auto;
+    overflow: auto;
+    white-space: nowrap;
 }
 .theme_div{
     transition: 0.12s;
@@ -146,22 +146,19 @@ overflow: auto;
     cursor: text;
     background: var(--widget-color);
 }
-
 #saveSettings{
     position: fixed;
     bottom: 13;
     right: 10;
 }
-
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
- 
+
 input[type="number"] {
     -moz-appearance: textfield;
 }
-
 input[type="number"]::selection {
   background-color: var(--accentColor);
   color:var(--black-white);
@@ -237,4 +234,3 @@ input[type="number"]::selection {
     font-size: 12px;
     color: var(--white-black);
 }
-

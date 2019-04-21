@@ -1,0 +1,14 @@
+{
+	"name":"GitTest",
+	"version":"0.1.0",
+	"author":"Marc Espín",
+	"description":"Get Git info",
+	"folder":"GitTest",
+	"main":"git.js",
+	"javascript":[
+	],
+	"css":[
+
+	]
+
+}

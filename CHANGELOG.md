@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 200421 - 1 [0.7.4]
+- Unified welcome's page and setting's CSS
+- Fixed, now you can save a file whereever you want (Save as)
+- Preload images for a better UX
+- Testing Git plugin which gives you the last commit of your **local** project
+- Smalled code of control buttons
+
 ### 190419 - 1 [0.7.4]
 - Translated welcome message to spanish and catalan
 - Improved dialogs API

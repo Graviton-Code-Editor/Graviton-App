@@ -173,7 +173,8 @@ const graviton = {
  		if(editors.length==0) return "empty";
  	},
  	getCurrentDirectory:function(){
- 		return FirstFolder;
+ 		if(dir_path==undefined) return "not_selected";
+ 		return dir_path;
  	},
  	currentOS: function(){
  		return process.platform; 
@@ -184,8 +185,8 @@ const graviton = {
  	zenMode:function(){
  		return current_config.zenMode;
  	},
- 	throwError:function(){
- 		new Notification("Error detected","An error has appeared! Check the console on developer tools for more info.");
+ 	throwError:function(message){
+ 		new Notification("Error detected",message);
  	},
  	dialogAbout: function(){
  		new g_dialog({

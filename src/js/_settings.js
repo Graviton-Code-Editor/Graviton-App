@@ -15,7 +15,7 @@ function hideSettings(){
 }
 function openSettings(){
 	 nav_bar_settings =` 
-	 <h2 class="window_title translate_word"  idT="Settings">`+current_config.language["Settings"]+`</h2> 
+	 <h2 class="window_title translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
 			<div id="nav_bar">
 	        <ol>
 	          <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${current_config.language["Customization"]}</a></li>
@@ -87,7 +87,7 @@ function goSPage(num){
 				<h3>${current_config.language["Themes"]}</h3> 
 				<div class="section">
 						<div id='theme_list'></div> 
-						<span>Wanna create your own?</span>
+						<p class="link">Wanna create your own?</p>
 				</div>
 				<h3>${current_config.language["ZenMode"]}</h3>
 				<div class="section">
@@ -154,20 +154,21 @@ function goSPage(num){
 						<p>${current_config.language["Settings-Advanced-Performance-Animations"]}</p>
 						<gv-switch  onclick="g_disable_animations()" class="${current_config.animationsPreferences}"></gv-switch>
 				</div>
-						<div class="section">
-								<p>${current_config.language["Highlighting"]}</p>
-								<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
-						</div>
-				<h3>${current_config.language["FactoryReset"]}</h3>
 				<div class="section">
-						<p>${current_config.language["Settings-Advanced-FactoryReset-text"]}</p>
-						<button class="button1 red" onclick="factory_reset_dialog();">${current_config.language["FactoryReset"]}</button>
+						<p>${current_config.language["Highlighting"]}</p>
+						<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
 				</div>
 				<h3>${current_config.language["Developers"]}</h3>
 				<div class="section">
 						<p>${current_config.language["Settings-Advanced-Developer-Tools-text"]}</p>
 						<button class="button1" onclick="graviton.openDevTools();">${current_config.language["DeveloperTools"]}</button>
 				</div>
+				<h3>${current_config.language["FactoryReset"]}</h3>
+				<div class="section">
+						<p>${current_config.language["Settings-Advanced-FactoryReset-text"]}</p>
+						<button class="button1 red" onclick="factory_reset_dialog();">${current_config.language["FactoryReset"]}</button>
+				</div>
+				
 				`;
 				document.getElementById("navB4").classList.add("active");
 		break;

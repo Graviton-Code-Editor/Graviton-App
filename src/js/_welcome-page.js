@@ -15,7 +15,11 @@ const g_hideSetup = () => {
 	saveConfig();
 }
 function g_welcomePage(){
-	
+	preload([
+		"src/icons/open.svg",
+	  "src/icons/custom_icons/git.svg",
+	  "src/icons/custom_icons/node_modules.svg"
+	])
 	const all = document.createElement("div");
 	all.setAttribute("id","welcome_window");
 	all.setAttribute("style","-webkit-user-select: none;");
@@ -23,19 +27,27 @@ function g_welcomePage(){
 	background.setAttribute("class","opened_window"); 
 	background.setAttribute("onclick","g_hideWelcome()"); 
 	const body = document.createElement("div");
-	body.setAttribute("class","body_window2 flex");
+	body.setAttribute("class","body_window");
 	body.setAttribute("id","body_window_welcome");
 	body.innerHTML = `
-		<h1 id='title_welcome'>${current_config.language["Welcome"]}</h1> 
-		<div id='recent_projects'><h2 class='title2'>${current_config.language["RecentProjects"]}</h2></div> 
-		<div id='notes'><h2 class='title2'>${current_config.language["Notes"]}</h2>
-		<p> Current build: ${ g_version.date } </p> 
-		<p> OS: ${graviton.currentOS()}</p> 
-		<p onclick="graviton.dialogChangelog()"><a>Changelog</a></p>
+		<h2 class='window_title'>${current_config.language["Welcome"]}</h2> 
+		<div class="flex">
+		<div id="recent_projects" class="horizontal">
+			<h2 >${current_config.language["RecentProjects"]}</h2>
+		</div> 
+		<div id="notes" class="horizontal">
+			<h2 class='title2'>${current_config.language["Notes"]}</h2>
+			<p> Current build: ${ g_version.date } </p> 
+			<p> OS: ${graviton.currentOS()}</p> 
+			<p class="link" onclick="graviton.dialogChangelog()">${current_config.language["Changelog"]}</p>
+			
+		</div>
+
+		</div>
 		<div class='welcomeButtons'>
-		<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${current_config.language["OpenFolder"]}</button> 
-		<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${current_config.language["Skip"]}</button> 
-		</div> </div>`;
+				<button onclick='openFolder(); g_hideWelcome();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${current_config.language["OpenFolder"]}</button> 
+				<button onclick='g_hideWelcome()' id='skip_welcome' class=" button1 translate_word" idT="Skip">${current_config.language["Skip"]}</button> 
+			</div> `;
 	all.appendChild(background);
 	all.appendChild(body);
 	document.body.appendChild(all);
@@ -54,6 +66,7 @@ function g_welcomePage(){
 					document.getElementById("recent_projects").appendChild(project);
 			}
  	});
+
  setTimeout(function(){ DeleteBoot(); }, 1100); //Delay to load all the config
 }
 function g_Setup(){
@@ -63,7 +76,7 @@ function g_Setup(){
 	const background = document.createElement("div");
 	background.setAttribute("class","opened_window"); 
 	const body = document.createElement("div");
-	body.setAttribute("class","body_window2 ");
+	body.setAttribute("class","body_window ");
 	body.setAttribute("id","body_firstTime_window");
 	body.innerHTML =`		
 				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${current_config.language["Languages"]}</h1> 
@@ -98,7 +111,7 @@ function FTGoPage(number){
 			const background = document.createElement("div");
 			background.setAttribute("class","opened_window"); 
 			const body = document.createElement("div");
-			body.setAttribute("class","body_window2");
+			body.setAttribute("class","body_window");
 			body.setAttribute("id","body_firstTime_window");
 			body.innerHTML = `
 				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language["Welcome.TakeATheme"]}</h1> 

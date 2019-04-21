@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date:"190418",
+  date:"190420",
   version:"0.7.4",
   state:"Alpha"
 }
@@ -26,6 +26,7 @@ const app  = require('electron').remote
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
 const {webFrame} = require('electron');
+let dir_path;
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 let tabs = [];
@@ -278,9 +279,8 @@ function save_file_warn(ele){
   })
 }
 function saveFileAs() {
-  var content = document.getElementById("code-space").textContent;
   dialog.showSaveDialog(fileName => {
-    fs.writeFile(fileName, content, err => {
+    fs.writeFile(fileName, editor.getValue(), err => {
       if (err) {
         alert(`An error ocurred creating the file ${err.message}`);
         return;
@@ -323,6 +323,7 @@ function saveFile() {
   });
 }
 function loadDirs(dir, appendID, __FirstTime) {
+  if(appendID=="g_directories") dir_path = dir;
   let _SUBFOLDER;
   FirstFolder = dir;
   const me = document.getElementById(appendID);
@@ -340,7 +341,8 @@ function loadDirs(dir, appendID, __FirstTime) {
     }
   }
   if (__FirstTime) {
-    registerNewProject(dir); //
+    if(document.getElementById("openFolder")!=null) document.getElementById("openFolder").remove();
+    registerNewProject(dir); 
     _SUBFOLDER = document.createElement("div");
     for (i = 0; i < document.getElementById(appendID).children.length; i++) {
       document.getElementById(appendID).children[i].remove();
@@ -357,6 +359,10 @@ function loadDirs(dir, appendID, __FirstTime) {
   const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 7; //Add padding
   fs.readdir(dir, (err, paths) => {
     ids = 0;
+    if(paths==undefined) {
+      graviton.throwError("Cannot read files on the directory :" + FirstFolder + ". Check the permissions.")
+      return;
+    }
     for (i = 0; i < paths.length; i++) {
       let _LONGPATH = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
@@ -432,18 +438,18 @@ function loadDirs(dir, appendID, __FirstTime) {
 }
 function g_getCustomFolder(path,state){
     switch(path){
-          case"node_modules":
-              return "src/icons/custom_icons/node_modules.svg"
-          break;
-          case".git":
-              return "src/icons/custom_icons/git.svg"
-          break;
-          default:
-              if(state=="close"){
-                  return "src/icons/closed.svg";
-              }else{
-                  return "src/icons/open.svg";
-              }
+        case"node_modules":
+            return "src/icons/custom_icons/node_modules.svg"
+        break;
+        case".git":
+            return "src/icons/custom_icons/git.svg"
+        break;
+        default:
+            if(state=="close"){
+                return "src/icons/closed.svg";
+            }else{
+                return "src/icons/open.svg";
+            }
     }
 }
 function getFormat(text) {
@@ -812,4 +818,11 @@ function g_NPgoPage(num){
 }
 function g_hideNewProjects(){
   document.getElementById("templates_window").remove();
+}
+const preload = (array)=>{ //Preload images when booting
+  for(i=0;i<array.length;i++){
+    document.body.innerHTML+=`
+    <img id="${array[i]}"src="${array[i]}"></img>`
+    document.getElementById(array[i]).remove();
+  }
 }

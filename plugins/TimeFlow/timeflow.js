@@ -50,7 +50,6 @@ function graphic(){
 					const activities = document.getElementsByClassName("activity");
 					for(i=0;i<activities.length;i++){
 							activities[i].addEventListener("click",function(){
-
 								const floatingwin = new floatingWindow([100,50],`
 								<div style='height:100px; width:100px;'>
 									<p style="color:var(--white-black)">
@@ -68,7 +67,6 @@ function switchTimeFlow(){
 		loop();
 	}else timeflow.setData("status","desactivated");
 }
-
 function loop(){
 	let seveTS = new Promise(() => {
       let wait = setTimeout(() => {
@@ -83,14 +81,11 @@ function loop(){
 
       }, 150000) //Call the function every 2.5minutes 150000
   });
-  
   let race = Promise.race([
     seveTS
   ]);
-
 }
 loop();
-
 function timeflowInfo(){
 	 g_dialog({
     id:"timeflow_info",
@@ -99,7 +94,5 @@ function timeflowInfo(){
     buttons:{
       [current_config.language['Close']]:"closeDialog(this)",
     }
-
   })
 }
-
