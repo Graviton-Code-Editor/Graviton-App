@@ -8,6 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+console.log(window.location)
 const g_version = {
   date:"190420",
   version:"0.7.4",
@@ -107,10 +108,8 @@ function loadEditor(dir, data,type) {
               editorID = new_editor_image.id;
               document.getElementById("g_status_bar").children[0].innerText = path.basename(dir).split(".").pop();
           break;
-
         }
-        
-      }else{//Editor exists
+      }else{ //Editor exists
         for (i = 0; i < editors.length; i++) {
           if(document.getElementById(editors[i].id)!=null ){
             document.getElementById(editors[i].id).style = "display:none;";
@@ -548,6 +547,7 @@ function g_createTab(object) {
               fs.readFile(g_newPath, "utf8", function(err, data) {
                 if (err) return console.log(err);
                 tab.setAttribute("data", data);
+                console.log(data);
                 loadEditor(g_newPath, data,"text");
                 if(g_highlighting=="activated") updateCodeMode(g_newPath);
                 document.getElementById(editorID).style.height = " calc(100% - (55px))";
@@ -615,7 +615,7 @@ function g_loadTab(object) {
     });
     object.classList.add("selected");
     const g_newPath = object.getAttribute("longPath");
-    filepath = g_newPath;
+    filepath = g_newPath
     loadEditor(g_newPath, object.getAttribute("data"));
     if(g_highlighting=="activated") updateCodeMode(g_newPath);
     editingTab = object.id;

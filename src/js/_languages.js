@@ -16,7 +16,7 @@ function detectLanguages(){
  		 	if (err) throw err;
  		 	const obj = JSON.parse(data)
  		 	languages.push(obj); //Push the language
-  		 	 if(languages.length === paths.length) {
+  		 	if(languages.length === paths.length) {
  		 	 	loadConfig(); 
  		 	 }
 			});
@@ -29,7 +29,7 @@ function loadLanguage(language){
 			current_config["language"] = item;
 			const toTranslate = document.getElementsByClassName("translate_word");
 			for(i=0;i<toTranslate.length;i++){
-					if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+				if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
 			}
 		}
 	});

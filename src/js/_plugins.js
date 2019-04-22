@@ -34,8 +34,7 @@ function openPlugins(){
 	<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
 	    <div class="section">
 	    		<button class="button1" onclick="g_open_plugins_folder()">${current_config.language["OpenFolder"]}</button>
-			</div>
-	`;
+			</div>`;
 	plugins_list.forEach(plugin => {
 			const pluginDiv = document.createElement("div");
 			pluginDiv.classList.add("section_hover");

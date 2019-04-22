@@ -139,8 +139,8 @@ function FTGoPage(number){
 					document.getElementById("FROM_THEMES_CONTINUE").classList.remove("disabled") ;
 				});
 				if(themes[i]["Name"] === current_config.theme["Name"]){
-						selectTheme("2",themeDiv);
-						console.log(themeDiv);
+					selectTheme("2",themeDiv);
+					console.log(themeDiv);
 				}
 				document.getElementById("theme_list").appendChild(themeDiv);		
 			}
