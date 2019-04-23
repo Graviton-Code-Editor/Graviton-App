@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 200423 - 1 [0.7.4]
+- Now the X on tabs is only showed on selected and when hovering
+- Fixed showing welcome page from the toolbar takes a long delay
+
 ### 200422 - 1 [0.7.4]
 - Better code format
 

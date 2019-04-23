@@ -15,11 +15,6 @@ const g_hideSetup = () => {
 	saveConfig();
 }
 function g_welcomePage(){
-	preload([
-		"src/icons/open.svg",
-	  "src/icons/custom_icons/git.svg",
-	  "src/icons/custom_icons/node_modules.svg"
-	])
 	const all = document.createElement("div");
 	all.setAttribute("id","welcome_window");
 	all.setAttribute("style","-webkit-user-select: none;");

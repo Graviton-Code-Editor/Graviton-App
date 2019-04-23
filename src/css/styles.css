@@ -200,27 +200,33 @@ body , head{
     position: relative;
     font-size: 12px;
     min-width: 75px;
-    max-width: 70%;
+    max-width: 75%;
     white-space: nowrap;
     height: auto;
     line-height: 15px;
     top: 0px;
     left: 0px;
-    margin-left: 13px;
+    margin-left: 11px;
 }
 #g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab{
     position: relative;
-    top:17%;
+    top:35%;
     display: inline-block;
     right:0;
     float: right;
-    margin-right: 30px;
+    margin-right: 25px;
     vertical-align: center;
     position: relative;
     width: 5px;
     border: none;
     background: transparent;
     fill: var(--white-black);
+}
+#g_content > #g_editors >#g_tabs_bar > .tabs:not(.selected) > .close_tab{
+    opacity: 0;
+}
+#g_content > #g_editors >#g_tabs_bar > .tabs:hover > .close_tab{
+    opacity: 1;
 }
 #g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab:hover{
     height: 10px;

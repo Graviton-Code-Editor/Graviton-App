@@ -57,6 +57,11 @@ function loadConfig(){ //Loads the configuration from the config.jsons for the f
 			detectPlugins(); //Call the function to detect the installed plugins
 	 	});
 	}
+	preload([
+		"src/icons/open.svg",
+	  "src/icons/custom_icons/git.svg",
+	  "src/icons/custom_icons/node_modules.svg"
+	])
 }
 function saveConfig(){ //Saves the configuration to config.json
 	let newConfig = {
