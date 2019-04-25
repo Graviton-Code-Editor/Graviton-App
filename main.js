@@ -22,7 +22,6 @@ app.on('ready', function(){
       nodeIntegrationInWorker: true,
     }, 
     frame: process.platform!="win32"? true:false, 
-    transparent:true,
     width: 750, 
     height: 650 ,
     'minHeight': 310,

@@ -10,7 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 const g_hideWelcome = ()=> document.getElementById("welcome_window").remove();
 const g_hideSetup = () => {
-	document.getElementById("setup_p2").remove();
+	document.getElementById("setup_p3").remove();
 	current_config.justInstalled = false;
 	saveConfig();
 }
@@ -99,20 +99,20 @@ function FTGoPage(number){
 		document.getElementById("setup_p2").remove();
 		break;
 		case "2":
-			document.getElementById("setup_p1").remove();
-			const all = document.createElement("div");
+			if(document.getElementById("setup_p1")!=undefined)document.getElementById("setup_p1").remove();
+			let all = document.createElement("div");
 			all.setAttribute("id","setup_p2");
 			all.setAttribute("style","-webkit-user-select: none;");
-			const background = document.createElement("div");
+			let background = document.createElement("div");
 			background.setAttribute("class","opened_window"); 
-			const body = document.createElement("div");
+			let body = document.createElement("div");
 			body.setAttribute("class","body_window");
 			body.setAttribute("id","body_firstTime_window");
 			body.innerHTML = `
 				<h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language["Welcome.TakeATheme"]}</h1> 
 				<div id='theme_list' style="height:60%;"></div> 
 				<button onclick='FTGoPage("1"); g_Setup();' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${current_config.language["Back"]}</button> 
-				<button id="FROM_THEMES_CONTINUE" onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
+				<button id="FROM_THEMES_CONTINUE" onclick='FTGoPage("3");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Continue">${current_config.language["Continue"]}</button> 
 				`;
 			all.appendChild(background);
 			all.appendChild(body);
@@ -139,6 +139,25 @@ function FTGoPage(number){
 				}
 				document.getElementById("theme_list").appendChild(themeDiv);		
 			}
+		break;
+		case "3":
+			document.getElementById("setup_p2").remove();
+			const all2 = document.createElement("div");
+			all2.setAttribute("id","setup_p3");
+			all2.setAttribute("style","-webkit-user-select: none;");
+			const background2 = document.createElement("div");
+			background2.setAttribute("class","opened_window"); 
+			const body2 = document.createElement("div");
+			body2.setAttribute("class","body_window");
+			body2.setAttribute("id","body_firstTime_window");
+			body2.innerHTML = `
+				<h1 style="font-size:40px; margin-top:20%;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]}</h1> 
+				
+				<button onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
+				`;
+			all2.appendChild(background2);
+			all2.appendChild(body2);
+			document.body.appendChild(all2);	
 		break;
 	}
 }

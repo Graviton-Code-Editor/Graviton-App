@@ -2,6 +2,19 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 200425 - 1 [0.7.4]
+- Fixed, notifcation X button wasn't showing properly
+- Faster animation on hovering elements on the project-explorer
+- Fixed, error at clicking a column on TimeFlow
+- Fixed, the factory reset were throwing error
+- Added a final page when setuping for the firs time, it says "Thanks for installing Graviton"
+- Added changelog button on Settings
+- Translated "Check for updates" button Settings 
+- Fixed, directory-explorer on zen mode was showing a bottom scroll bar 
+- Fixed, throwing error when disabling or enabling syntax highlighting when images are opened on tabs
+- Added Coffescript, vue, rust, swift, perl, python, haskell, django syntax support
+
+
 ### 200423 - 1 [0.7.4]
 - Now the X on tabs is only showed on selected and when hovering
 - Fixed showing welcome page from the toolbar takes a long delay

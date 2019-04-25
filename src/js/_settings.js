@@ -186,7 +186,8 @@ function goSPage(num){
 				<div class="section">
 						<p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>
       			<p> ${current_config.language['OS']}: ${graviton.currentOS()}</p>
-						<button class="button1" onclick="CHECK_UPDATES();">Check for updates</button>
+      			<button class="button1" onclick="graviton.dialogChangelog();">${current_config.language["Changelog"]}</button>
+						<button class="button1" onclick="CHECK_UPDATES();">${current_config.language["CheckUpdates"]}</button>
 				</div>`;
 				document.getElementById("navB5").classList.add("active");
 		break;
@@ -195,7 +196,7 @@ function goSPage(num){
 const g_highlightingTurn = function(){
 	if(g_highlighting == "activated"){
 		for(i=0;i<editors.length;i++){
-			if(editors[i]!=undefined){
+			if(editors[i].editor!=undefined){
 				editors[i].editor.setOption("mode","text/plain");
 				editors[i].editor.refresh();
 			}
@@ -203,13 +204,15 @@ const g_highlightingTurn = function(){
 		g_highlighting = "desactivated";
 	}else{
 		for(i=0;i<editors.length;i++){
-			if(editors[i].path.split(".").pop()=="html"){
-				editors[i].editor.setOption("mode", "htmlmixed");
-        editors[i].editor.setOption("htmlMode", true);
-			}else{
-				editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
+			if(editors[i].editor!=undefined){
+		if(editors[i].path.split(".").pop()=="html"){
+			editors[i].editor.setOption("mode", "htmlmixed");
+      editors[i].editor.setOption("htmlMode", true);
+		}else{
+			editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
+		}
+		editors[i].editor.refresh();
 			}
-			editors[i].editor.refresh();
 		}
 		g_highlighting = "activated";
 	}
@@ -233,7 +236,7 @@ const g_disable_animations = ()=>{
 	}
 }
 function factory_reset_dialog(){
-	createDialog({
+	new g_dialog({
     id:"factory_reset",
     title:current_config.language['FactoryReset'],
     content:current_config.language['FactoryReset-dialog-message'],

@@ -226,10 +226,10 @@ function contextMenu(panel){ //Add buttons to the context menu from the plugin
 }
 function floatingWindow([xSize,ySize],content){ //Method to create flaoting windows
 	const g_floating_window = document.createElement("div");
-	FLOATING_WINDOW.style.height = ySize+"px";
-	FLOATING_WINDOW.style.width = xSize+"px";
-	FLOATING_WINDOW.classList = "floating_window";
-	FLOATING_WINDOW.innerHTML = content;
+	g_floating_window.style.height = ySize+"px";
+	g_floating_window.style.width = xSize+"px";
+	g_floating_window.classList = "floating_window";
+	g_floating_window.innerHTML = content;
 	document.body.appendChild(g_floating_window);
 }
 document.addEventListener('mousedown', function(event){ //Create the context menu

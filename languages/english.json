@@ -62,9 +62,11 @@
 	"FileExit-dialog-button-deny":"No, Save",
 	"Welcome":"Welcome",
 	"Welcome.TakeATheme":"Take a theme:",
+	"Welcome.ThanksForInstalling":"Thanks for installing Graviton",
 	"RecentProjects":"Recent Projects",
 	"Notes":"Notes",
 	"ShowWelcome":"Show welcome",
-	"WelcomeMessage":"Welcome to Graviton Editor :)"
+	"WelcomeMessage":"Welcome to Graviton Editor :)",
+	"CheckUpdates":"Check for updates"
 	
 }

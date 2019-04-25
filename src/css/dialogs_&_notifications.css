@@ -104,17 +104,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     border: 0;
     cursor: pointer;
 }
-.notificationBody > button>svg>rect{
+.notificationBody > button path{
      fill:var(--white-black);
     stroke: transparent;
     border: 0;
 }
-.notificationBody > button:hover>svg >rect{
+.notificationBody > button:hover path{
      stroke:var(--accentColor);
      fill: var(--accentColor);
     border: 0;
 }
-.notificationBody > button:hover>svg {
+.notificationBody > button:hover svg {
      stroke:var(--accentColor);
      fill: var(--accentColor);
     border: 0;

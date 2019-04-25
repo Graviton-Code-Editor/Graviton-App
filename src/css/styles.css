@@ -255,7 +255,7 @@ body , head{
     background: transparent;
 }
 #g_content > #g_explorer div.folder_list1:hover{
-    transition: 0.1s;
+    transition: 0.06s;
     border-radius: 4px;
     background: var(--widget-color);
 }
@@ -278,7 +278,7 @@ body , head{
     transform: translateX(3px);
 }
 #g_content > #g_explorer div.folder_list2:hover{
-    transition: 0.1s;
+    transition: 0.06s;
     border-radius: 4px;
     background: var(--widget-color);
 }
@@ -323,7 +323,7 @@ body , head{
 .Button1:active{
     transition: 0.07s;
     box-sizing: border-box;
-    transform: scale(0.95); 
+    transform: scale(0.97); 
 }
 .window_title{
     font-size:30px; 

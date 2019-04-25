@@ -8,7 +8,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-console.log(window.location)
 const g_version = {
   date:"190420",
   version:"0.7.4",
@@ -717,12 +716,12 @@ const registerNewProject = function(dir) {
 const g_ZenMode = function() {
   if (editor_mode == "zen") {
     editor_mode = "normal";
-    document.getElementById("g_directories").style ="visibility: visible; width:200px;";
+    document.getElementById("g_directories").style ="visibility: visible; width:200px; overflow:auto;";
     document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
     document.getElementById("g_status_bar").style = "margin:0px 0px 0px 200px";
   }else{
     editor_mode = "zen";
-    document.getElementById("g_directories").style = "visibility: hidden; width:0px;";
+    document.getElementById("g_directories").style = "visibility: hidden; width:0px; overflow:hidden;";
     document.getElementById("g_editors").style = "margin:0px";
     document.getElementById("g_status_bar").style = "margin:0px";
   }
