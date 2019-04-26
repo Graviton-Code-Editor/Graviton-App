@@ -25,7 +25,7 @@
     "download-file": "^0.1.5",
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
-    "jquery": "^3.3.1",
+    "jquery": "^3.4.0",
     "mkdirp": "^0.5.1",
     "npm": "^6.9.0",
     "request": "^2.88.0"
