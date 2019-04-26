@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will not be added.
 
+### 200426 - 1 [0.7.4]
+- I'm crazy
+
+### 200425 - 2 [0.7.4]
+- Fixed, scrolling down with keys while on autocompletion cause to jump line
+
 ### 200425 - 1 [0.7.4]
 - Fixed, notifcation X button wasn't showing properly
 - Faster animation on hovering elements on the project-explorer

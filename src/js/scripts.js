@@ -192,6 +192,11 @@ function loadEditor(dir, data,type) {
               return CodeMirror.PASS;
             }
           },
+          "Down": function(){
+            if(true) {
+              return CodeMirror.PASS;
+            }
+          },
           "Enter": function(){
             if(true) {
               return CodeMirror.PASS;
