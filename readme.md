@@ -20,7 +20,7 @@ Features
 
 More are coming soon
 
-**[Changelog](BUILDING.md)**
+**[Changelog](CHANGELOG.md)**
 
 Available platforms
 ---
