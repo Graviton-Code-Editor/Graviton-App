@@ -1,6 +1,12 @@
 # Graviton Changelog
 
-This file contains "important" commits, small ones will not be added.
+This file contains "important" commits, small ones will probably not be added.
+
+### 200429 - 1 [0.7.4]
+- Added animation at :active buttons of context menu
+- Fixed, unsaved icon on tabs are not showing properly
+- Updated themes
+- Improved Building instructions (BUILDING.md)
 
 ### 200426 - 1 [0.7.4]
 - I'm crazy
@@ -19,7 +25,6 @@ This file contains "important" commits, small ones will not be added.
 - Fixed, directory-explorer on zen mode was showing a bottom scroll bar 
 - Fixed, throwing error when disabling or enabling syntax highlighting when images are opened on tabs
 - Added Coffescript, vue, rust, swift, perl, python, haskell, django syntax support
-
 
 ### 200423 - 1 [0.7.4]
 - Now the X on tabs is only showed on selected and when hovering

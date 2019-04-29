@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 :root{   
 	--primaryColor: #222222;
     --secondaryColor: #171717;
-    --accentColor: #FD0054;
+    --accentColor: #FF0048;
     --white-black: white;
     --black-white:white;
     --editor-background-color: #191919;
@@ -203,7 +203,7 @@ body , head{
     max-width: 75%;
     white-space: nowrap;
     height: auto;
-    line-height: 15px;
+    line-height: 14px;
     top: 0px;
     left: 0px;
     margin-left: 11px;
@@ -222,13 +222,13 @@ body , head{
     background: transparent;
     fill: var(--white-black);
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:not(.selected) > .close_tab{
+#g_content > #g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:not(.selected)  .close_tab{
     opacity: 0;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:hover > .close_tab{
+#g_content > #g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:hover  .close_tab {
     opacity: 1;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab:hover{
+#g_content > #g_editors >#g_tabs_bar > .tabs  .close_tab:hover{
     height: 10px;
     width:10px;
     border: none;
@@ -375,7 +375,6 @@ context {
   overflow: none;
   border-radius: 3px;
   display: none;
-  z-index: 70;
   max-height: 300px;
   box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.13);
   padding: 5px;
@@ -411,10 +410,14 @@ context .menuWrapper .option {
     border: 0;
     border-radius: 5px;
     text-align: left;
+    transform: scale(1);
 }
 context  .menuWrapper .option.hover{
   background-color: var(--accentColor);
   color:var(--black-white);
+}
+context  .menuWrapper .option:active{
+  transform: scale(0.98);
 }
 context .menuWrapper .option:last-child{
   border-bottom: none;

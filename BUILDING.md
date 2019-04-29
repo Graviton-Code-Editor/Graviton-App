@@ -1,8 +1,23 @@
 # Building Graviton
 
-Commands to build Graviton from source:
+Instructions to build Graviton from the source.
 
-## Windows
+##.1 - Downloading the source
+
+Download the source from the repository:
+> $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
+
+##.2 - Installing the NodeJS modules
+
+Go inside the folder:
+> $ cd Graviton-App
+
+Install the dependencies:
+> $ npm install npm
+
+##.3 - Start building
+
+### Windows
 
 - From a Windows machine:
 
@@ -12,7 +27,7 @@ Commands to build Graviton from source:
 
 >  $ npm run build_win 
 
-## Linux
+### Linux
 
 - From a Linux machine: 
 
@@ -20,7 +35,7 @@ Commands to build Graviton from source:
   
          
 
-## MacOS
+### MacOS
 
 From a Macintosh: 
 >  $ npm run build 

@@ -12,33 +12,35 @@ Features
 - Themes
 - Plugins
 - Full compatibility with CodeMirror existing themes
-- Zen Mode and other editor  configuration things...
+- Zen Mode and other editor configuration things...
 - Large language syntax highlighting support
 - Code 
 - Autocomplete 
 - Amazing API 
 
-More are comming soon
+More are coming soon
+
+**[Changelog](BUILDING.md)**
 
 Available platforms
 ---
-It's avaiable on:
+It's available on:
 
 **Windows**
 
-   * ```Executable```
+   * `Executable (.exe)` 
 
 **Linux**
 
-   * ` Snapcraft` 
-   * `Appimage`
-   * `Debian package `
+   * `Snapcraft` 
+   * `Appimage (.appimage)`
+   * `Debian package (.deb)`
 
 **MacOS**
 
-   * ` DMG file`
+   * ` DMG file (.dmg)` 
 
-The current state is beta, check the releases page to download the lastest version. 
+The current state is beta, check the releases page to download the latest version. 
 
 Building
 ---

@@ -177,10 +177,14 @@ span.line_space_menus{
     text-align: left;
     text-decoration: none;
     display: block;
+    transform: scale(1);
 }
 #context_menu > button:hover {
     color: var(--black-white);
     background-color: var(--accentColor);
     border-radius: 3px;
     cursor: pointer;
+}
+#context_menu > button:active {
+    transform: scale(0.97);
 }

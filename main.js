@@ -6,6 +6,7 @@ Copyright (c) 2019 Graviton Editor
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
+
 #########################################
 */
 const electron = require('electron');

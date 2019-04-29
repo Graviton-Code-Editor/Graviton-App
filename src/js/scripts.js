@@ -143,15 +143,12 @@ function loadEditor(dir, data,type) {
     }
     if(editor!=undefined){
     editor.on("change", function() {
-          document
-            .getElementById(editingTab)
-            .setAttribute("file_status", "unsaved");
-          document
-            .getElementById(editingTab)
-            .children[1].setAttribute("onclick", "save_file_warn(this)");
-          document.getElementById(
-            editingTab
-          ).children[1].innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><ellipse vector-effect="non-scaling-stroke" cx="11.9999975" cy="11.9996439465" rx="6.303149298000001" ry="6.3035028515" fill="var(--accentColor)"/></svg>`;
+      const close_icon =document.getElementById(editingTab);
+      close_icon.setAttribute("file_status", "unsaved");
+      close_icon.children[1].setAttribute("onclick", "save_file_warn(this)");
+      close_icon.children[1].innerHTML = ` <svg class="ellipse" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+  <circle id="Elipse_1" data-name="Elipse 1" cx="5" cy="5" r="5"/>
+</svg> `;
           document
             .getElementById(editingTab)
             .setAttribute("data", editor.getValue());
@@ -697,8 +694,7 @@ function updateCodeMode(path) {
     }
   }
 }
-const registerNewProject = function(dir) {
-  //Add a new directory to the history if it is the first time it has been opened in the editor
+const registerNewProject = function(dir) { //Add a new directory to the history if it is the first time it has been opened in the editor
   fs.readFile(logDir, "utf8", function(err, data) {
     if(err) return;
     log = JSON.parse(data);
