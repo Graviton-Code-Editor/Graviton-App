@@ -2,14 +2,14 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Editor
+Copyright (c) 2019 Marc Espín Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
 #########################################
 */
 const g_version = {
-  date:"190420",
+  date:"300420",
   version:"0.7.4",
   state:"Alpha"
 }
@@ -122,10 +122,12 @@ function loadEditor(dir, data,type) {
             if(editors[i].editor!=undefined){
               editor = editors[i].editor;
               editor.refresh();
-            } 
+              document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
+            }else{
+              document.getElementById("g_status_bar").children[0].innerText = path.basename(dir).split(".").pop();
+            }
             editorID = editors[i].id;
             document.getElementById(editorID).style = "display:block;";
-            document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
           }
         }
     }
@@ -541,27 +543,26 @@ function g_createTab(object) {
             case"png":
             case"ico":
             case "jpg":
-            loadEditor(filepath, null,"image");
-            editingTab = tab.id;
-                selected = object;
-                tabs.map(tab => {
-                    if (tab.classList.contains("selected")) tab.classList.remove("selected");
-                });
-                tab.classList.add("selected");
-            break;
+              loadEditor(filepath, null,"image");
+              editingTab = tab.id;
+              selected = object;
+              for(i=0;i<tabs.length;i++){
+                if (tabs[i].classList.contains("selected")) tabs[i].classList.remove("selected");
+              }
+              tab.classList.add("selected");
+              break;
             default:
               fs.readFile(g_newPath, "utf8", function(err, data) {
                 if (err) return console.log(err);
                 tab.setAttribute("data", data);
-                console.log(data);
                 loadEditor(g_newPath, data,"text");
                 if(g_highlighting=="activated") updateCodeMode(g_newPath);
-                document.getElementById(editorID).style.height = " calc(100% - (55px))";
+                document.getElementById(editorID).style.height = " calc(100% - (55px))"; 
                 editingTab = tab.id;
                 selected = object;
-                tabs.map(tab => {
-                    if (tab.classList.contains("selected")) tab.classList.remove("selected");
-                });
+                for(i=0;i<tabs.length;i++){
+                  if (tabs[i].classList.contains("selected")) tabs[i].classList.remove("selected");
+                }
                 tab.classList.add("selected");
                 editor.refresh();
               });
@@ -583,30 +584,28 @@ function g_closeTab(ele) {
         .remove();
       editors.splice(i + 1, 1);
       g_object.remove();
-    if (tabs.length === 0) {
-        //0 tabs
+    if (tabs.length === 0) { //Any tab opened
         document.getElementById("g_editors").style = " ";
         filepath = " ";
         plang = "";
         document.getElementById("g_status_bar").children[0].innerText = plang;
         document.getElementById("temp_dir_message").style="visibility:visible;"
-    } else if (i === tabs.length) {
-        //Last tab
+    } else if (i === tabs.length) { //Last tab selected
         NEW_SELECTED_TAB = tabs[Number(tabs.length) - 1];
-    } else if (i >= 0) {
-        NEW_SELECTED_TAB = tabs[i];
+    } else{
+        NEW_SELECTED_TAB = tabs[i]; //All tabs except the last one
     }
     if (NEW_SELECTED_TAB != undefined ) {
-        tabs.map(tab => {
-            if (tab.classList.contains("selected")) {
-                tab.classList.remove("selected");
-            }
-        });
+        for(i=0;i<tabs.length;i++){
+          if (tabs[i].classList.contains("selected")) {
+            tabs[i].classList.remove("selected"); 
+          }
+        }
         editingTab = NEW_SELECTED_TAB.id;
         NEW_SELECTED_TAB.classList.add("selected");
         const g_newPath = NEW_SELECTED_TAB.getAttribute("longpath");
         filepath = g_newPath;
-        loadEditor(g_newPath, g_object.getAttribute("data"));
+        loadEditor(g_newPath, g_object.getAttribute("data"),"text");
         if(g_highlighting=="activated") updateCodeMode(g_newPath);
       }
     }
@@ -614,11 +613,11 @@ function g_closeTab(ele) {
 }
 function g_loadTab(object) {
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
-    tabs.map(tab => {
-        if (tab.classList.contains("selected")) {
-            tab.classList.remove("selected");
-        }
-    });
+    for(i=0;i<tabs.length;i++){
+      if (tabs[i].classList.contains("selected")) {
+        tabs[i].classList.remove("selected"); 
+      }
+    }
     object.classList.add("selected");
     const g_newPath = object.getAttribute("longPath");
     filepath = g_newPath
@@ -700,16 +699,16 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
     log = JSON.parse(data);
     for (i = 0; i < log.length+1; i++) {
       if (i!=log.length ){
-          if(log[i].Path == dir) {
-              return;
-          }
-      }else if(i ==log.length){
-          log.unshift({
-              Name: path.basename(dir),
-              Path: dir
-          });
-          fs.writeFile(logDir, JSON.stringify(log));
+        if(log[i].Path == dir) {
           return;
+        }
+      }else if(i ==log.length){
+        log.unshift({
+          Name: path.basename(dir),
+          Path: dir
+        });
+        fs.writeFile(logDir, JSON.stringify(log));
+        return;
       }
     }
   });
@@ -717,12 +716,12 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
 const g_ZenMode = function() {
   if (editor_mode == "zen") {
     editor_mode = "normal";
-    document.getElementById("g_directories").style ="visibility: visible; width:200px; overflow:auto;";
+    document.getElementById("g_explorer").style ="visibility: visible; width:200px; overflow:auto;";
     document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
     document.getElementById("g_status_bar").style = "margin:0px 0px 0px 200px";
   }else{
     editor_mode = "zen";
-    document.getElementById("g_directories").style = "visibility: hidden; width:0px; overflow:hidden;";
+    document.getElementById("g_explorer").style = "visibility: hidden; width:0px; overflow:hidden;";
     document.getElementById("g_editors").style = "margin:0px";
     document.getElementById("g_status_bar").style = "margin:0px";
   }
@@ -777,17 +776,17 @@ const g_newProject = function(template){
   dialog.showOpenDialog({properties: ["openDirectory"]},
     selectedFiles =>{
       if (selectedFiles === undefined) {
-          return;
+            
       }else{
         switch(template){
           case"html":
             const g_project_dir = path.join(selectedFiles[0], ".GravitonProject "+Date.now());
             fs.mkdirSync(g_project_dir);
             fs.writeFile(path.join(g_project_dir,"index.html"),HTML_template, err => {
-                if (err) {
-                  return err;
-                }
-                loadDirs(g_project_dir, "g_directories", true)
+              if (err) {
+                return err;
+              }
+              loadDirs(g_project_dir, "g_directories", true)
             });
           break;
         }
@@ -812,12 +811,12 @@ function g_openNewProjects(){
 function g_NPgoPage(num){
   switch (num){
     case "1":
-        document.getElementById("body_window").innerHTML=`
-            <h2 class="window_title">${current_config.language["Templates"]}</h2> 
-            <div onclick="g_newProject('html'); g_hideNewProjects();" class="section_hover">
-                <p>HTML</p>
-            </div>
-        `;
+      document.getElementById("body_window").innerHTML=`
+        <h2 class="window_title">${current_config.language["Templates"]}</h2> 
+        <div onclick="g_newProject('html'); g_hideNewProjects();" class="section_hover">
+            <p>HTML</p>
+        </div>
+      `;
     break;
   }
 }

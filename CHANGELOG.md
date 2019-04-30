@@ -2,6 +2,17 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200430 - 1 [0.7.4]
+- Updated build commands
+- Added credits to the Readme.md
+- Added a translation on Settings > Editor > Auto-Completion
+- Updated version on package.json
+- Fixed, weren't loading the image format properly on bottom bar
+- Fixed, the bottom bar content weren't showing properly with Zen mode activated (hiding the explorer panel)
+- Faster speed at switching between tabs
+- Updated license
+- Better image viewer
+
 ### 200429 - 1 [0.7.4]
 - Added animation at :active buttons of context menu
 - Fixed, unsaved icon on tabs are not showing properly

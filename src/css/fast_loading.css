@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Editor
+Copyright (c) 2019 Marc Espín Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -10,7 +10,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 /* Css that needs to be loaded fast */
 #g_bootanimation{
-		user-select: none;
+		user-select: none; 
+    pointer-events: none;
 		position: fixed;
 		z-index: 100;
 		height: 100%;

@@ -67,6 +67,7 @@
 	"Notes":"Notas",
 	"ShowWelcome":"Mostrar bienvenida",
 	"WelcomeMessage":"Bienvenido a Graviton Edtior :)",
-	"CheckUpdates":"Comprobar actualizaciones"
+	"CheckUpdates":"Comprobar actualizaciones",
+	"Settings-Editor-AutoCompletion-text":"Desactivalo para esconder las predicciones"
 	
 }

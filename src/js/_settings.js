@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Editor
+Copyright (c) 2019 Marc Espín Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -139,7 +139,7 @@ function goSPage(num){
 						</div>
 						<h3>${current_config.language["Auto-Completion"]}</h3>
 						<div class="section">
-								<p>Disable to hide predictions</p>
+								<p>${current_config.language["Settings-Editor-AutoCompletion-text"]} </p>
 								<gv-switch  onclick="g_turnAutoCompletion()" class="${current_config["autoCompletionPreferences"]}"></gv-switch>
 						</div>
 						

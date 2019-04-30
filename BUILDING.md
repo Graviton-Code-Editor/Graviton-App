@@ -25,7 +25,7 @@ Install the dependencies:
 
 - From a Linux machine with Wine: 
 
->  $ npm run build_win 
+>  $ npm run build:win 
 
 ### Linux
 

@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Graviton Editor
+Copyright (c) 2019 Marc Espín Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -137,12 +137,13 @@ body , head{
      height: calc(100% - (2px));
 }
 #g_content >#g_editors > .code-space img{
-    webkit-user-select: none; 
+    user-select: none; 
     pointer-events: none;
     position: relative; 
-    height-min:auto;
-    width:600px;
+    max-width:90%;
+    max-height:90%;
     margin: 0 auto;
+    border-style: none;
 }
 #g_content > #g_status_bar{
     height: 25px;

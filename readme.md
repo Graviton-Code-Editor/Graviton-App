@@ -47,3 +47,7 @@ Building
 Wanna build Graviton from source?
 
 **Check [this](BUILDING.md)**
+
+Credits
+---
+- [Codemirror](codemirror.net)

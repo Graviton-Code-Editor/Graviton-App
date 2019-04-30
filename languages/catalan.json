@@ -41,7 +41,7 @@
 	"CurrentVersion":"Versió actual: ",
 	"Editor":"Editor",
 	"FontSize":"Mida de la font",
-	"Auto-Completion":"Auto completadot",
+	"Auto-Completion":"Auto completat",
 	"Version":"Versió",
 	"Accept":"Acceptar",
 	"Close":"Tancar",
@@ -67,6 +67,7 @@
 	"Notes":"Anotacions",
 	"ShowWelcome":"Mostrar benvinguda",
 	"WelcomeMessage":"Benvingut a Graviton Editor :)",
-	"CheckUpdates":"Comprovar actualitzacions"
+	"CheckUpdates":"Comprovar actualitzacions",
+	"Settings-Editor-AutoCompletion-text":"Desactiva per amagar les prediccions"
 	
 }
