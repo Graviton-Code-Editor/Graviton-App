@@ -4,7 +4,7 @@ Instructions to build Graviton from the source.
 
 ## 1 - Downloading the source
 
-Download the source from the repository:
+Clone the git repository:
 > $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
 
 ## 2 - Installing the NodeJS modules
@@ -13,7 +13,7 @@ Go inside the folder:
 > $ cd Graviton-App
 
 Install the dependencies:
-> $ npm install npm
+> $ npm install
 
 ## 3 - Start building
 
