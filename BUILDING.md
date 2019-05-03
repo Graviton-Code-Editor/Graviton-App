@@ -15,7 +15,7 @@ Go inside the folder:
 Install the dependencies:
 > $ npm install
 
-## 3 - Start building
+## 3 - Building the binaries
 
 ### Windows
 
