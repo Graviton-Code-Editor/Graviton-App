@@ -151,8 +151,7 @@ function FTGoPage(number){
 			body2.setAttribute("class","body_window");
 			body2.setAttribute("id","body_firstTime_window");
 			body2.innerHTML = `
-				<h1 style="font-size:40px; margin-top:20%;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]}</h1> 
-				
+				<h1 style="font-size:40px; margin-top:20%;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]+" "+ g_version.version }</h1> 
 				<button onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
 				`;
 			all2.appendChild(background2);

@@ -324,7 +324,7 @@ body , head{
 .Button1:active{
     transition: 0.07s;
     box-sizing: border-box;
-    transform: scale(0.97); 
+    transform: scale(0.98); 
 }
 .window_title{
     font-size:30px; 

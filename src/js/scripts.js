@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date:"300420",
+  date:"1905010",
   version:"0.7.4",
   state:"Alpha"
 }
@@ -76,7 +76,7 @@ function loadEditor(dir, data,type) {
               value: data,
               mode: "text/plain",
               htmlMode: false,
-              theme: "default",
+              theme: themeObject["Highlight"],
               lineNumbers: true,
               autoCloseTags: true
             });
@@ -91,7 +91,6 @@ function loadEditor(dir, data,type) {
             editorID = new_editor_text.id;
             editor = new_editor_text.editor;
             document.getElementById(dir + "_editor").style.display = "block";
-            editor.setOption("theme", themeObject["Highlight"]); //Update highlither after applying a new theme
           break;
           case"image":
               const image_container = document.createElement("div");

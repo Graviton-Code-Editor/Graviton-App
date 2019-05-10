@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-preload([
+preload([ //Preload some images to improve the UX
 		"src/icons/open.svg",
 	  "src/icons/custom_icons/git.svg",
 	  "src/icons/custom_icons/node_modules.svg"

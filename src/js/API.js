@@ -208,10 +208,25 @@ const graviton = {
 	    content:` 
 	    <ul>
 		    <li>Added MacOS support</li>
+		    <li>Improved stability while editing files</li>
 		    <li>Translated to spanish and catalan</li>
 		    <li>Deprecated ukranian</li>
-		    <li>Fixed throws error when changing font-size with any tabs openeds.</li>
-		    <li>Small improvements</li>
+		    <li>Added an image viewer integrated</li>
+		    <li>Now supports so many languages</li>
+		    <li>Fixed throws error when changing font-size with any tab opened</li>
+		    <li>Deprecated "Mix" theme</li>
+		    <li>Pre-load for some images, to improve the UX</li>
+		    <li>Added a changelog dialog</li>
+		    <li>Improved settings layout</li>
+		    <li>Improved how tabs work</li>
+		    <li>Improved Graviton's API</li>
+		    <li>Unified window's css</li>
+		    <li>Testing a Git plugin which returns you the last commit of your local repo</li>
+		    <li>Added building (building.md) instructions</li>
+		    <li>Improved Readme.md</li>
+		    <li>Improved Setup process</li>
+		    <li>Improved auto-completion(unstable)</li>
+		    <li>Fixed light theme constrast (remove .graviton and restart to apply)</li>
 	    </ul>`,
 	    buttons:{
 	      [current_config.language['Close']]:"closeDialog(this)"
