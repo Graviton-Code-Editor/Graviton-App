@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200517 - 1 [0.7.4]
+- Some design changes
+
 ### 200430 - 1 [0.7.4]
 - Updated build commands
 - Added credits to the Readme.md

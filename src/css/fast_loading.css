@@ -39,6 +39,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	text-align: center;
 }
 #openFolder{
+	transition: 0.03s;
 	top: 45%;
 	left: 52%;
 	margin-right: -50%;
@@ -49,14 +50,18 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	height: 24px;
 	margin: 0 auto; 
 	background: url("../icons/closed.svg") no-repeat center;
-	background-size: 70px 70px;
+	background-size: 60px 60px;
 }
 #openFolder:hover{
+	transition: 0.05s;
 	cursor: pointer;
-	width: 70px;
-	height: 70px;
 	background: url("../icons/open.svg") no-repeat center;
-	background-size: 70px 70px;
+	background-size: 65px 65px;
+}
+#openFolder:active{
+	transition: 0.05s;
+	opacity: 0.6;
+	background-size: 65px 65px;
 }
 #g_control_bar img{
 	pointer-events: none;

@@ -22,7 +22,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     --dropmenu-background-color:#3B3B3B;
     --dropmenu-buttons-disabled-color: lightgray;
     --titleBar-icons-color:white;
-    --window-radius:12px;
+    --window-radius:8px;
     --notifications-background-color:#474747;
     --notifications-window-radius:5px;
 }
@@ -134,7 +134,7 @@ body , head{
     overflow: hidden;
 }
 #g_content >#g_editors > .code-space{
-     height: calc(100% - (2px));
+     height: calc(100% - (3px));
 }
 #g_content >#g_editors > .code-space img{
     user-select: none; 
