@@ -1,6 +1,7 @@
 {
 
 	"g_l":"català",
+	"g_l_a":"cat",
 	"Help":"Ajuda",
 	"File":"Arxiu",
 	"OpenFolder":"Obrir carpeta",
@@ -68,6 +69,7 @@
 	"ShowWelcome":"Mostrar benvinguda",
 	"WelcomeMessage":"Benvingut a Graviton Editor :)",
 	"CheckUpdates":"Comprovar actualitzacions",
-	"Settings-Editor-AutoCompletion-text":"Desactiva per amagar les prediccions"
-	
+	"Settings-Editor-AutoCompletion-text":"Desactiva per amagar les prediccions",
+	"Line-Wrapping":"Line-Wrapping",
+	"Themes.Text":"Utilitza el color d'accentuació del sistema"
 }

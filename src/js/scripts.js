@@ -9,8 +9,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date:"1905017",
-  version:"0.7.4",
+  date:"1905025",
+  version:"0.7.5",
   state:"Alpha"
 }
 const os = require('os');
@@ -31,6 +31,8 @@ const app  = require('electron').remote
 const getAppDataPath = require("appdata-path");
 const $ = require('jquery');
 const {webFrame} = require('electron');
+const rimraf = require("rimraf");
+const { systemPreferences } = require('electron').remote;
 let dir_path;
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
@@ -78,7 +80,10 @@ function loadEditor(dir, data,type) {
               htmlMode: false,
               theme: themeObject["Highlight"],
               lineNumbers: true,
-              autoCloseTags: true
+              autoCloseTags: true,
+              indentUnit:3,
+              styleActiveLine: true,
+              lineWrapping: current_config["lineWrappingPreferences"]=="activated"
             });
             document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
             let new_editor_text = {
@@ -95,10 +100,8 @@ function loadEditor(dir, data,type) {
           case"image":
               const image_container = document.createElement("div");
               image_container.classList = "code-space";
-              image_container.setAttribute("id", dir + "_editor");
-              const img = document.createElement("img");
-              img.setAttribute("src",dir);
-              image_container.appendChild(img);
+              image_container.setAttribute("id", `${dir}_editor`);
+              image_container.innerHTML=`<img src="${dir}">`
               document.getElementById("g_editors").appendChild(image_container);
               const new_editor_image = {
                   id: dir + "_editor",
@@ -114,7 +117,7 @@ function loadEditor(dir, data,type) {
         }
       }else{ //Editor exists
         for (i = 0; i < editors.length; i++) {
-          if(document.getElementById(editors[i].id)!=null ){
+          if(document.getElementById(editors[i].id)!=null){
             document.getElementById(editors[i].id).style = "display:none;";
           }
           if (editors[i].id == dir + "_editor") {
@@ -148,10 +151,8 @@ function loadEditor(dir, data,type) {
       close_icon.setAttribute("file_status", "unsaved");
       close_icon.children[1].setAttribute("onclick", "save_file_warn(this)");
       close_icon.children[1].innerHTML = ` <svg class="ellipse" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-  <circle id="Elipse_1" data-name="Elipse 1" cx="5" cy="5" r="5"/>
-</svg> `;
-          document
-            .getElementById(editingTab)
+      <circle id="Elipse_1" data-name="Elipse 1" cx="5" cy="5" r="5"/></svg> `;
+      document.getElementById(editingTab)
             .setAttribute("data", editor.getValue());
       if(current_config["autoCompletionPreferences"]=="activated" && plang=="JavaScript"){
           //Getting Cursor Position
@@ -265,7 +266,7 @@ function loadEditor(dir, data,type) {
   }
 }
 //loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
-function restartApp() {
+function restartApp(){
     remote.app.relaunch();
     remote.app.exit(0);
 }
@@ -507,22 +508,25 @@ function g_createTab(object) {
       }else if(i==tabsEqualToFiles.length) { //Tab is created because it doesn't exist
           document.getElementById("temp_dir_message").style="visibility:hidden;"
           const tab = document.createElement("div");
-          tab.setAttribute("ID", object.id + "A");
+          tab.setAttribute("id", object.id.replace(/\\/g, "") + "Tab");
+          tab.setAttribute("TabID",object.id+"Tab");
           tab.setAttribute("longPath", object.getAttribute("longpath"));
           tab.setAttribute("class", "tabs");
+          tab.setAttribute("IamTab","true");
           tab.style =
           `min-width: ${(object.getAttribute("name").length * 4 + 115)}px; 
           max-width: ${(object.getAttribute("name").length * 5 + 100)}px`;
           tab.setAttribute("onclick", "g_loadTab(this)");
           tab.setAttribute("file_status", "saved");
-          const tab_text = document.createElement("p");
-          tab_text.style = "float:left; text-align:center;";
-          tab_text.innerText = object.getAttribute("name");
+          tab.innerHTML += `<p id="${object.id.replace(/\\/g, "") + "TextTab"}" TabID="${object.id}Tab" IamTab="true">${object.getAttribute("name")}</p>`
           const tab_x = document.createElement("button");
-          tab_x.setAttribute("onclose", "g_closeTab('" + object.id + "A');");
-          tab_x.setAttribute("onclick", "g_closeTab('" + object.id + "A')");
+          tab_x.setAttribute("onclose", `g_closeTab("${ object.id }Tab");`);
+          tab_x.setAttribute("onclick", `g_closeTab("${ object.id }Tab");`);
           tab_x.setAttribute("class", "close_tab");
           tab_x.setAttribute("hovering", "false");
+          tab_x.setAttribute("IamTab","true");
+          tab_x.setAttribute("TabID",object.id+"Tab");
+          tab_x.setAttribute("id",object.id.replace(/\\/g, "") + "CloseButton");
           tab_x.innerHTML = close_icon;
           tab_x.addEventListener("mouseover", function (e) {
               this.setAttribute("hovering",true);
@@ -530,7 +534,6 @@ function g_createTab(object) {
           tab_x.addEventListener("mouseout", function (e) {
               this.setAttribute("hovering",false);
           });
-          tab.appendChild(tab_text);
           tab.appendChild(tab_x);
           document.getElementById("g_tabs_bar").appendChild(tab);
           tabs.push(tab);
@@ -552,7 +555,7 @@ function g_createTab(object) {
               break;
             default:
               fs.readFile(g_newPath, "utf8", function(err, data) {
-                if (err) return console.log(err);
+                if (err) return console.err(err);
                 tab.setAttribute("data", data);
                 loadEditor(g_newPath, data,"text");
                 if(g_highlighting=="activated") updateCodeMode(g_newPath);
@@ -570,8 +573,9 @@ function g_createTab(object) {
       }
   }
 }
-function g_closeTab(ele) {
-  const g_object = document.getElementById(ele.replace(/\\/g, "\\\\"));
+function g_closeTab(a) {
+  const ele = a.replace(/\\/g,"");
+  const g_object = document.getElementById(ele);
   for(i=0;i<tabs.length;i++){
     const tab = tabs[i];
     let NEW_SELECTED_TAB;
@@ -592,7 +596,7 @@ function g_closeTab(ele) {
     } else if (i === tabs.length) { //Last tab selected
         NEW_SELECTED_TAB = tabs[Number(tabs.length) - 1];
     } else{
-        NEW_SELECTED_TAB = tabs[i]; //All tabs except the last one
+        NEW_SELECTED_TAB = tabs[i]; //All tabs except the last one or the first
     }
     if (NEW_SELECTED_TAB != undefined ) {
         for(i=0;i<tabs.length;i++){
@@ -793,18 +797,13 @@ const g_newProject = function(template){
     }
   );
 }
-function g_openNewProjects(){
+const g_openNewProjects=()=>{
   const g_all_window = document.createElement("div");
   g_all_window.setAttribute("id","templates_window");
   g_all_window.setAttribute("style","-webkit-user-select: none;");
-  const g_background = document.createElement("div");
-  g_background.setAttribute("class","opened_window");
-  g_background.setAttribute("onclick","g_hideNewProjects()"); 
-  const g_body = document.createElement("div");
-  g_body.setAttribute("class","body_window");
-  g_body.setAttribute("id","body_window");
-  g_all_window.appendChild(g_background);
-  g_all_window.appendChild(g_body);
+  g_all_window.innerHTML=`
+  <div class="opened_window" onclick="g_hideNewProjects()"></div>
+  <div id="body_window" class="body_window"></div>`
   document.body.appendChild(g_all_window);
 }
 function g_NPgoPage(num){

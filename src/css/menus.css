@@ -31,8 +31,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 #g_control_bar > #controls button {
     padding: 6px 0px;
-    width: 50px; 
+    width: 48px; 
     border: none;
+    margin:0;
     background: var(--primaryColor);
 }
 #g_control_bar> #controls button:hover { 
@@ -90,7 +91,7 @@ button.dropbtn {
     min-width: auto;
     overflow: auto;
     z-index: 80;
-    box-shadow: 1px 3px 7px rgba(0,0,0,0.25);
+    box-shadow: 1px 3px 7px var(--shadows);
     padding: 5px;
     margin: 0;
 }

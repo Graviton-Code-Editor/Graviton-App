@@ -1,0 +1,14 @@
+{
+	"name":"Dreble",
+	"version":"0.0.1",
+	"author":"Marc Espín",
+	"description":"DebleJS plugin",
+	"folder":"Dreble",
+	"main":"main.js",
+	"javascript":[
+	],
+	"css":[
+
+	]
+
+}

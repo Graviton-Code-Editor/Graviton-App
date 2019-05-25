@@ -23,7 +23,7 @@ function detectLanguages(){
   	});
 	});	
 }
-function loadLanguage(language){
+const loadLanguage = language =>{
 	languages.map((item,index)=>{
 		if(item["g_l"]===language){
 			current_config["language"] = item;

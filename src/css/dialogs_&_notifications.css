@@ -17,7 +17,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     overflow: auto;
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
-    min-width: 275px;
+    min-width: 20%;
     width: auto;
     max-width: 85%;
     min-height: 110px;
@@ -68,6 +68,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     z-index: 200;
 }
 .notificationBody{
+    transition: 0.1s;
     -webkit-app-region: no-drag; 
     animation: open_up linear 0.15s;
     width: 300px;
@@ -80,7 +81,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     padding: 12px;
     margin: 10px;
     border-radius: var(--notifications-window-radius);
-    box-shadow: 1px 3px 7px rgba(0,0,0,40%);
+    box-shadow: 1px 3px 7px var(--shadows);
+    transform: scale(1);
 }
 @keyframes open_up{
   from{
@@ -91,6 +93,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     bottom:0px;
     opacity: 1  ;
   }
+}
+.notificationBody:active{
+    transition: 0.1s;
+    transform: scale(0.98);
 }
 .notificationBody > div{
     position: relative;

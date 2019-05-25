@@ -1,6 +1,7 @@
 {
 
 	"g_l":"english",
+	"g_l_a":"en",
 	"Help":"Help",
 	"File":"File",
 	"OpenFolder":"Open folder",
@@ -68,6 +69,7 @@
 	"ShowWelcome":"Show welcome",
 	"WelcomeMessage":"Welcome to Graviton Editor :)",
 	"CheckUpdates":"Check for updates",
-	"Settings-Editor-AutoCompletion-text":"Disable to hide predictions"
-	
+	"Settings-Editor-AutoCompletion-text":"Disable to hide predictions",
+	"Line-Wrapping":"Line-Wrapping",
+	"Themes.Text":"Use system's accent color"
 }

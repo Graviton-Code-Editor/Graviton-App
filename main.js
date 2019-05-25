@@ -15,6 +15,7 @@ const fs = require('fs');
 const {app, BrowserWindow,globalShortcut} = electron;
 const Menu = electron.Menu;
 let main; //Main window
+
 app.on('ready', function(){
   main = new BrowserWindow({
     webPreferences: {
@@ -34,7 +35,8 @@ app.on('ready', function(){
     protocol: 'file:',
     slashes: true,
   }));
-    main.setMenuBarVisibility(path.basename(__dirname) === "Graviton-Editor")//True= when it's already packaged
+    //main.setMenuBarVisibility(path.basename(__dirname) === "Graviton-Editor")//True= when it's already packaged
+    main.setMenuBarVisibility(true);
 });
 app.on('window-all-closed', ()=>{
   app.quit();

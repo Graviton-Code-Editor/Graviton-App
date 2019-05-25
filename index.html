@@ -1,11 +1,8 @@
 <!--
 ########################################
               MIT License
-
 Copyright (c) 2019 Graviton Editor
-
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
-
 #########################################
 -->
 <!DOCTYPE>
@@ -18,8 +15,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   let editor_booted = false;
   let error_showed = false;
   function FactoryReset(){
-      fs.unlinkSync(configDir);  
+    fs.unlink(configDir,function(){
       restartApp();
+    });  
   }
   function DeleteBoot(){
     if(document.getElementById("g_bootanimation") != null ){
@@ -33,7 +31,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
       document.getElementById("g_bootanimation").innerHTML += `
       <div>
         <p>An error has appeared when booting Graviton.</p>
-        <button class="button1" onclick="FactoryReset()">Try to fix</button>
+        <button class="Button1" onclick="FactoryReset()">Repair</button>
+        <button class="Button1" onclick="restartApp()">Reboot</button>
       </div>`
     }else if(error_showed==false){
       graviton.throwError("An error has appeared! Check the console on developer tools for more info.");

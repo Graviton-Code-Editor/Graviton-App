@@ -8,69 +8,74 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-let context_menu_list = { //Initial value
-		  "Copy" :" document.execCommand('copy');",
-		  "Paste" :" document.execCommand('paste');"
+let context_menu_list_text = { //Initial value
+  "Copy" :" document.execCommand('copy');",
+  "Paste" :" document.execCommand('paste');"
 };
-function gPlugin(obj) {
-	for(i=0; i<plugins_list.length;i++){
-			if(plugins_list[i].name==obj.name){ //List package information
-					this.name = plugins_list[i].name;
-					this.author = plugins_list[i].author; 
-					this.version = plugins_list[i].version;
-					this.description = plugins_list[i].description;
-					var a = i;
-			}
+let context_menu_list_tabs = { //Initial value
+	"Close" :`console.log(document.getElementById(this.getAttribute("target")).getAttribute("TabID")); g_closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
+};
+class plugin{
+	constructor(object){
+		for(i=0; i<plugins_list.length;i++){
+				if(plugins_list[i].name==object.name){ //List package information
+						this.name = plugins_list[i].name;
+						this.author = plugins_list[i].author; 
+						this.version = plugins_list[i].version;
+						this.description = plugins_list[i].description;
+				}
+		}
+		for(i=0; i<plugins_dbs.length;i++){
+				if(plugins_dbs[i].plugin_name==object.name){ //List package information
+					this.b = i;
+				}
+		}
+		if(this.name==undefined) {
+			console.error(` Plugin > ${object.name} < doesn't exist `);
+			 return;
+		}
 	}
-	for(i=0; i<plugins_dbs.length;i++){
-			if(plugins_dbs[i].plugin_name==obj.name){ //List package information
-				var b = i;
-			}
-	}
-	if(this.name ===undefined) {
-		console.error(` Plugin > ${obj.name} < doesn't exist `);
-		 return;
-	}
-  this.saveData = function(data){
-			plugins_dbs[b].db = data;
+  saveData(data){
+			plugins_dbs[this.b].db = data;
 			fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(data), function(err) { }); 
   }
-  this.setData = function(key,data){
+  setData(key,data){
       if(fs.existsSync(path.join(plugins_db,this.name)+".json")){
-        let obj = this.getData();
-        obj[key] = data;
-        fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(obj), function(err) {}); 
-        plugins_dbs[b].db = obj; 
+        let object = this.getData();
+        object[key] = data;
+        fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(object), function(err) {
+        	plugins_dbs[this.b].db = object; 
+        }); 
       }
   }
-  this.createData = function(data){
+ 	createData(data){
 			if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
 				const db = {
 			 			plugin_name:this.name,
 			 			db:data
 				};
 				plugins_dbs.push(db);
-				b = plugins_dbs.length-1;
+				this.b = plugins_dbs.length-1;
 				fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(data), function(err) {}); 
 				return "created";
 			}else{
 				return "already_exists";
 			}
   }
-  this.getData = function(){
-			return plugins_dbs[b].db;
+  getData(){
+			return plugins_dbs[this.b].db;
   }
-  this.deleteData = function(data){
+  deleteData(data){
 			switch(data){
 				case undefined:
 					plugins_dbs[b].db = {}; 
 					fs.writeFileSync(path.join(plugins_db,this.name)+".json", "{}", function(err) {}); 
 				break;
 				default:
-					const obj = this.getData();
-					delete obj[data];
-					fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(obj), function(err) {}); 
-					plugins_dbs[b].db = obj; 
+					const object = this.getData();
+					delete object[data];
+					fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(object), function(err) {}); 
+					plugins_dbs[b].db = object; 
 			}
 	}
 }
@@ -186,7 +191,7 @@ const graviton = {
  		return current_config.zenMode;
  	},
  	throwError:function(message){
- 		new Notification("Error detected",message);
+ 		new notification("Error detected",message);
  	},
  	dialogAbout: function(){
  		new g_dialog({
@@ -204,9 +209,14 @@ const graviton = {
  	dialogChangelog: function(){
  		new g_dialog({
 	    id:"changelog",
-	    title:current_config.language['Changelog']+" - "+g_version.version,
+	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>Load system's language if it's supported when setuping Graviton </li>
+				<li>Updated the website link! www.graviton.ml </li>
+				<li>Added scale effect on clicking directories and files in the explorer menu</li>
+				<li> Faster startup!</li>
+				<li>Faster startup!</li>
 		    <li>Added MacOS support</li>
 		    <li>Improved stability while editing files</li>
 		    <li>Translated to spanish and catalan</li>
@@ -253,29 +263,41 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       if(document.getElementById("context_menu")!==null ){
         document.getElementById("context_menu").remove();
       }
+      console.log(event.target);
       const context_menu = document.createElement("div");
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";
       context_menu.setAttribute("id","context_menu");
       context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
-      Object.keys(context_menu_list).forEach(function(key,index) {
-        const button = document.createElement("button");
-        button.classList.add("part_of_context_menu")
-        if(index <2){
-        	button.innerText = current_config.language[key];
-        	context_menu.appendChild(button);
-      	}else{
-      		if(index==2){
-        		context_menu.appendChild(line_space); 
-        	}
-        	button.innerText = key;
-        	context_menu.appendChild(button);
-      	}
-        button.setAttribute("onclick",context_menu_list[key]+" document.getElementById('context_menu').remove();");
-      });
-      document.body.appendChild(context_menu);
+    	if(event.target.getAttribute("IamTab")=="true"){
+		    Object.keys(context_menu_list_tabs).forEach(function(key,index) {
+		    	const button = document.createElement("button");
+		        button.classList.add("part_of_context_menu")
+		        button.innerText = current_config.language[key];
+		        button.setAttribute("target",event.target.id);
+	        	context_menu.appendChild(button);
+		        button.setAttribute("onclick",context_menu_list_tabs[key]+" document.getElementById('context_menu').remove();");
+	    	});
+  		}else if(event.target.id!="context_menu"){
+      	Object.keys(context_menu_list_text).forEach(function(key,index) {
+    			const button = document.createElement("button");
+	        button.classList.add("part_of_context_menu")
+	        if(index <2){
+	        	button.innerText = current_config.language[key];
+	        	context_menu.appendChild(button);
+	      	}else{
+	      		if(index==2){
+	        		context_menu.appendChild(line_space); 
+	        	}
+	        	button.innerText = key;
+	        	context_menu.appendChild(button);
+	      	}
+	        button.setAttribute("onclick",context_menu_list_text[key]+" document.getElementById('context_menu').remove();");
+		    });
+    	}
+    	document.body.appendChild(context_menu);
     }else if(event.button ===0 && !(event.target.matches('#context_menu') || event.target.matches('.part_of_context_menu'))&& document.getElementById("context_menu")!==null){
-        document.getElementById("context_menu").remove();
+      document.getElementById("context_menu").remove();
     }
     if(!event.target.matches('.floating_window')){
     	if(document.getElementsByClassName('floating_window').length !=0){
@@ -286,38 +308,40 @@ document.addEventListener('mousedown', function(event){ //Create the context men
     }
   }
 });
-function Notification(title, message) { //Method to create notifications
-  if (_notifications.length >= 3) { //Remove one notification in case there are 3
-    _notifications[0].remove();
-    _notifications.splice(0, 1);
-  }
-  const textID = Math.random();
-  const body = document.createElement("div");
-  body.classList.add("notificationBody");
-  body.setAttribute("id", _notifications.length);
-  body.innerHTML =`
-  	<button  onclick="closeNotification(this)">
-      ${close_icon}
-    </button>
-    <h1>${title}</h1>
-    <div>
-      <p id="notification_message${textID}"></p>
-    </div>`;
-  document.getElementById("notifications").appendChild(body);
-  document.getElementById(`notification_message${textID}`).innerText = message;
-  _notifications.push(body);
-  const g_promise = new Promise((resolve, reject) => {
-    const wait = setTimeout(() => {
-      clearTimeout(wait);
-      for (i = 0; i < _notifications.length; i++) {
-        if (_notifications[i] === body) {
-          _notifications.splice(i, 1);
-          body.remove();
-        }
-      }
-    }, 7000); //Wait 7 seconds until the notification auto deletes it selfs
-  });
-  const race = Promise.race([g_promise]);
+class notification{
+	constructor(title,message){
+	  if (_notifications.length >= 3) { //Remove one notification in case there are 3
+	    _notifications[0].remove();
+	    _notifications.splice(0, 1);
+	  }
+	  const textID = Math.random();
+	  const body = document.createElement("div");
+	  body.classList.add("notificationBody");
+	  body.setAttribute("id", _notifications.length);
+	  body.innerHTML =`
+	  	<button  onclick="closeNotification(this)">
+	      ${close_icon}
+	    </button>
+	    <h1>${title}</h1>
+	    <div>
+	      <p id="notification_message${textID}"></p>
+	    </div>`;
+	  document.getElementById("notifications").appendChild(body);
+	  document.getElementById(`notification_message${textID}`).innerText = message;
+	  _notifications.push(body);
+	  const g_promise = new Promise((resolve, reject) => {
+	    const wait = setTimeout(() => {
+	      clearTimeout(wait);
+	      for (i = 0; i < _notifications.length; i++) {
+	        if (_notifications[i] === body) {
+	          _notifications.splice(i, 1);
+	          body.remove();
+	        }
+	      }
+	    }, 7000); //Wait 7 seconds until the notification auto deletes it selfs
+	  });
+	  const race = Promise.race([g_promise]);
+	}	
 }
 function closeNotification(element) {
   for (i = 0; i < _notifications.length; i++) {
@@ -335,10 +359,9 @@ function g_dialog(dialogObject){
   const all = document.createElement("div");
   all.setAttribute("id", dialogObject.id + "_dialog");
   all.setAttribute("style", "-webkit-user-select: none;");
-  const background = document.createElement("div");
-  background.setAttribute("class", "opened_window");
-  background.setAttribute("myID", dialogObject.id);
-  background.setAttribute("onclick", "closeDialog(this)");
+  all.innerHTML=`
+  <div myID="${dialogObject.id}" class="opened_window" onclick="closeDialog(this)"></div>
+  <div class="dialog_body"></div>`
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
   body_dialog.innerHTML =`
@@ -355,13 +378,34 @@ function g_dialog(dialogObject){
   	button.setAttribute("onclick",dialogObject.buttons[key]);
   	body_dialog.appendChild(button);
   });
-  all.appendChild(background);
   all.appendChild(body_dialog);
   document.body.appendChild(all);
   this.close = function(me){
   	closeDialog(me);
   }
 }
-const closeDialog = (me)=>{
+const closeDialog =(me)=>{
 	document.getElementById(me.getAttribute("myID") + "_dialog").remove();
+}
+function Window(data){
+	this.id = data.id;
+	this.code = data.content;
+	const newWindow = document.createElement("div");
+	newWindow.setAttribute("id",this.id+"_window");
+	newWindow.setAttribute("style","-webkit-user-select: none;");
+	newWindow.innerHTML = `
+	<div class="opened_window" onclick="closeWindow('${this.id}')"></div>
+	<div class="body_window" id="body_window">
+		<div>${this.code}</div>
+	</div>`;
+	this.myWindow = newWindow;
+	this.launch = function(){
+		document.body.appendChild(this.myWindow);
+	}
+	this.close = function(){
+		document.getElementById(`${this.id}_window`).remove();
+	}	
+}
+const closeWindow=id=>{
+	document.getElementById(`${id}_window`).remove();
 }

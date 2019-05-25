@@ -65,6 +65,15 @@ function g_welcomePage(){
  setTimeout(function(){ DeleteBoot(); }, 1100); //Delay to load all the config
 }
 function g_Setup(){
+	console.log(navigator.language);
+	for(i=0;i<languages.length+1;i++){
+		if(i==languages.length){
+			loadLanguage(languages[0]); //Load english in case Graviton doesn't support the system's language
+		}
+		if(languages[i].g_l_a==navigator.language){
+			loadLanguage(languages[i].g_l); //Load system language
+		}
+	}
 	const all = document.createElement("div");
 	all.setAttribute("id","setup_p1");
 	all.setAttribute("style","-webkit-user-select: none;");

@@ -55,6 +55,7 @@ Help.setList({
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
     FAQs: "",
     Changelog:"graviton.dialogChangelog()",
+    Website:"shell.openExternal('https://www.graviton.ml')",
     About:"graviton.dialogAbout()"
   }
 });
@@ -75,7 +76,7 @@ function interact_dropmenu(id) {
     }
   }
 }
-// Close the dropdown if the user clicks outside of it
+// Close all dropdowns if the user clicks outside
 window.onclick = function(event) {
   if (!(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))) {
     const dropdowns = document.getElementsByClassName("dropdown-content");

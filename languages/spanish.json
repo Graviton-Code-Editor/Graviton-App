@@ -1,6 +1,7 @@
 {
 
 	"g_l":"español",
+	"g_l_a":"es",
 	"Help":"Ayuda",
 	"File":"Archivo",
 	"OpenFolder":"Abrir carpeta",
@@ -68,6 +69,8 @@
 	"ShowWelcome":"Mostrar bienvenida",
 	"WelcomeMessage":"Bienvenido a Graviton Edtior :)",
 	"CheckUpdates":"Comprobar actualizaciones",
-	"Settings-Editor-AutoCompletion-text":"Desactivalo para esconder las predicciones"
+	"Settings-Editor-AutoCompletion-text":"Desactivalo para esconder las predicciones",
+	"Line-Wrapping":"Line-Wrapping",
+	"Themes.Text":"Utilitzar el color de accento del sistema"
 	
 }

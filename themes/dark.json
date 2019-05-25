@@ -19,6 +19,7 @@
     "titleBar-icons-color":"gray",
     "window-radius":"8px",
     "notifications-background-color":"#474747",
-    "notifications-window-radius":"5px"
+    "notifications-window-radius":"5px",
+    "shadows":"rgba(0,0,0,0.3)"
   }
 }

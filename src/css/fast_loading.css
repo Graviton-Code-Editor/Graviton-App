@@ -10,8 +10,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 /* Css that needs to be loaded fast */
 #g_bootanimation{
-		user-select: none; 
-    pointer-events: none;
 		position: fixed;
 		z-index: 100;
 		height: 100%;

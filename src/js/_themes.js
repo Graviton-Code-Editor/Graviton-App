@@ -53,11 +53,15 @@ function syncThemes(){
 		}
 }
 detectLanguages();
-function loadTheme(number){
+const loadTheme = number=>{
 	themeObject = themes[number];
 	const colors = themes[number]["Colors"]; //Take the colors object inside the JSON file of the selected theme
 	for(i = 0;i < Object.keys(colors).length;i++){
+		if(current_config.accentColorPreferences=="system" && Object.keys(colors)[i]=="accentColor"){
+			document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+		}else{
 			document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
+		}
 	}
 	for(i=0;i<editors.length;i++){
 			if(editors[i].editor!=undefined)editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
@@ -72,7 +76,11 @@ function setThemeByName(name){
 			themeObject = themes[i];
 			const colors = themes[i]["Colors"]; //Take the colors object inside the json file of the selected theme
 			for(i = 0;i < Object.keys(colors).length;i++){
-				document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update UI colors
+				if(current_config.accentColorPreferences=="system" && Object.keys(colors)[i]=="accentColor"){
+					document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+				}else{				
+					document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update UI colors
+				}
 			}	
 			for(i=0;i<editors.length;i++){
 				editors[i].editor.setOption("theme", themes[i]["Highlight"]); //Update highlither after applying a new theme

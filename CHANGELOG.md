@@ -2,6 +2,19 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200525 - 1 [0.7.5]
+- Added an option to use the system's accent color if is available
+- Added a reboot button in boot error message
+- Added a  CSS color shadows variable
+- Added an option to enable line wrapping
+- Redesigned the settings page!
+- Load system's language if it's supported when setuping Graviton
+- Updated the website link! www.graviton.ml
+- Added scale effect on clicking directories and files in the explorer menu
+- Faster startup!
+- Testing a DrebleJS plugin
+- Added a Window constructor to the API.
+
 ### 200517 - 1 [0.7.4]
 - Some design changes
 

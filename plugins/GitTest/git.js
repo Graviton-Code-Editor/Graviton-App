@@ -1,6 +1,6 @@
 /* Just testing */
 
-const git = new gPlugin({
+const git = new plugin({
   name: "GitTest"
 })
 const gitdm = new dropMenu({
@@ -9,7 +9,6 @@ const gitdm = new dropMenu({
 gitdm.setList({
   "button": "GitTest",
   "list":{
-  	"*line":"",
   	"get last commit":"git_read()"
   }
 })
@@ -21,7 +20,7 @@ function git_read(){
 				console.log(err);
 			  return err;
 			}
-			new Notification("Last commit message",data);
+			new notification("Last commit message",data);
 		});
 	}
 }

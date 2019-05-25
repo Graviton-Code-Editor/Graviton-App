@@ -15,16 +15,18 @@ function hideSettings(){
 }
 function openSettings(){
 	 nav_bar_settings =` 
-	 <h2 class="window_title translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
+	 <div id="g_settings_panel">
+			<h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
 			<div id="nav_bar">
-	        <ol>
-	          <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${current_config.language["Customization"]}</a></li>
-	          <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${current_config.language["Languages"]}</a></li>
-	          <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${current_config.language["Editor"]}</a></li>
-	        	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${current_config.language["Advanced"]}</a></li>
-	        	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${current_config.language["About"]}</a></li>
-	        </ol>
-	    </div>`;
+			    <ol>
+			      <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${current_config.language["Customization"]}</a></li>
+			      <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${current_config.language["Languages"]}</a></li>
+			      <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${current_config.language["Editor"]}</a></li>
+			    	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${current_config.language["Advanced"]}</a></li>
+			    	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${current_config.language["About"]}</a></li>
+			    </ol>
+			</div>
+	  </div>`;
 	const all = document.createElement("div");
 	all.setAttribute("id","window");
 	all.setAttribute("style","-webkit-user-select: none;");
@@ -87,7 +89,8 @@ function goSPage(num){
 				<h3>${current_config.language["Themes"]}</h3> 
 				<div class="section">
 						<div id='theme_list'></div> 
-						<p class="link">Wanna create your own?</p>
+						<p>${current_config.language["Themes.Text"]}</p>
+						<gv-switch  onclick="useSystemColors()" class="${current_config.accentColorPreferences=="system"?"activated":"desactivated"}"></gv-switch>
 				</div>
 				<h3>${current_config.language["ZenMode"]}</h3>
 				<div class="section">
@@ -142,6 +145,10 @@ function goSPage(num){
 								<p>${current_config.language["Settings-Editor-AutoCompletion-text"]} </p>
 								<gv-switch  onclick="g_turnAutoCompletion()" class="${current_config["autoCompletionPreferences"]}"></gv-switch>
 						</div>
+						<h3>${current_config.language["Line-Wrapping"]}</h3>
+						<div class="section">
+								<gv-switch onclick="g_turnLineWrapping()" class="${current_config["lineWrappingPreferences"]}"></gv-switch>
+						</div>
 						
 				</div>
 				`;
@@ -178,7 +185,7 @@ function goSPage(num){
 				<div class="section">
 						<p>${current_config.language["About-text1"]}</p>
 						<p>${current_config.language["About-text2"]}</p>
-						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor')">Website</button>
+						<button class="button1" onclick="shell.openExternal('https://www.graviton.ml')">Website</button>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
 						<button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
 				</div>
@@ -193,6 +200,15 @@ function goSPage(num){
 		break;
 	}
 }
+const useSystemColors=()=>{
+	if(current_config.accentColorPreferences=="manual"){
+		current_config["accentColorPreferences"]= "system";
+		document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+	}else{
+		document.documentElement.style.setProperty("--accentColor",themeObject.Colors.accentColor); 
+		current_config["accentColorPreferences"]= "manual";
+	}
+}
 const g_highlightingTurn = function(){
 	if(g_highlighting == "activated"){
 		for(i=0;i<editors.length;i++){
@@ -205,33 +221,53 @@ const g_highlightingTurn = function(){
 	}else{
 		for(i=0;i<editors.length;i++){
 			if(editors[i].editor!=undefined){
-		if(editors[i].path.split(".").pop()=="html"){
-			editors[i].editor.setOption("mode", "htmlmixed");
-      editors[i].editor.setOption("htmlMode", true);
-		}else{
-			editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
-		}
-		editors[i].editor.refresh();
+				if(editors[i].path.split(".").pop()=="html"){
+					editors[i].editor.setOption("mode", "htmlmixed");
+		      editors[i].editor.setOption("htmlMode", true);
+				}else{
+					editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
+				}
+				editors[i].editor.refresh();
 			}
 		}
 		g_highlighting = "activated";
 	}
 }
-const g_turnAutoCompletion = ()=> current_config["autoCompletionPreferences"] = current_config["autoCompletionPreferences"]=="activated"? "desactivated":"activated";
 
+const g_turnAutoCompletion = ()=> current_config["autoCompletionPreferences"] = current_config["autoCompletionPreferences"]=="activated"? "desactivated":"activated";
+const g_turnLineWrapping = ()=>{
+	if(current_config["lineWrappingPreferences"]=="activated"){
+		for(i=0;i<editors.length;i++){
+			if(editors[i].editor!=undefined){
+				editors[i].editor.setOption("lineWrapping",false);
+				editors[i].editor.refresh();
+			}
+		}
+		current_config["lineWrappingPreferences"]="desactivated"
+	}else{
+		for(i=0;i<editors.length;i++){
+			if(editors[i].editor!=undefined){
+				console.log(editors[i].editor);
+				editors[i].editor.setOption("lineWrapping",true);
+				editors[i].editor.refresh();
+			}
+		}
+		current_config["lineWrappingPreferences"]="activated"
+		console.log(current_config);
+	}
+}
 const g_disable_animations = ()=>{
 	if(current_config.animationsPreferences == "activated"){
-		if(document.getElementById("_ANIMATIONS") != null){
-			document.getElementById("_ANIMATIONS").innerText =`*{  transition: none !important;}`; 
-		}else{
-			const  style = document.createElement("style");
-			style.innerText = `*{  transition: none !important;}`;
-		  style.id = "_ANIMATIONS";
-		  document.body.insertBefore(style,document.body.children[0]);
-		}
+		const  style = document.createElement("style");
+		style.innerText = `*{-webkit-transition: none !important;
+			  -moz-transition: none !important;
+			  -o-transition: none !important;
+			  transition: none !important;}`;
+	  style.id = "_ANIMATIONS";
+	  document.documentElement.appendChild(style);
 		current_config.animationsPreferences = "desactivated";
 	}else{
-		document.getElementById("_ANIMATIONS").innerText = "";
+		document.getElementById("_ANIMATIONS").remove();
 		current_config.animationsPreferences = "activated";
 	}
 }
