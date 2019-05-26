@@ -10,39 +10,41 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 #g_settings_panel{
     width: 20%;
-    min-width: 220px;
+    min-width: 200px;
     padding: 20px;
-    margin: 20px 0;
+    margin: 15px 0;
 }
 #nav_bar{
     height: auto;
     width: 100%;
     overflow: auto;
     position: relative;
+    padding: 15px 0;
 }
-#nav_bar > ol{ padding-inline-start:20px; }
-#nav_bar > ol>li{
-    position: relative;
-    vertical-align: middle;
-    transition: 0.05s;
-    padding: 7px;
-    height: 20px;
+#nav_bar button{
+    font-family: _main_font;
+    font-size: 15px;
+    color: var(--white-black);
+    background-color: transparent;
+    padding: 7px 10px;
+    width: 80%;
+    text-decoration: none;
     display: block;
-    margin:3px 0px;
+    border: 0;
+    margin: 2px 0px;
+    border-radius: 5px;
+    text-align: left;
     transform: scale(1);
-    border-radius: 6px;
-    color:var(--white-black);
 }
-#nav_bar > ol>li:hover:not(.active){
-    transition: 0.05s;
-    cursor:pointer;
-    color:var(--accentColor);  
+#nav_bar button:hover{
+    color:var(--accentColor);
+    cursor: pointer;
 }
-#nav_bar > ol>li:active{
+#nav_bar button:active{
     transition: 0.05s;
     transform: scale(0.98);
 }
-#nav_bar > ol>li.active{
+#nav_bar button.active{
     cursor: pointer;
     transition: 0.05s;
     background: var(--accentColor);
@@ -73,8 +75,29 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     left: 50%;
     transform: translate(-50%, -45%);
 }
-#body_window.body_window{ display: flex; }
-#body_content{
+.body_window_full{
+    color:var(--white-black);
+    font-size: 17px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    position: fixed;
+    text-align: left;
+    background: var(--secondaryColor);
+}
+.body_window_full > *{
+    padding: 30px;
+}
+.body_window span{
+    line-height: 30px;
+    font-size: 12px;
+    color: var(--white-black);
+}
+#settings_window_body{ display: flex; }
+#settings_content{
     margin: 20px 0;
     padding: 20px;
     width: 80%;
@@ -113,7 +136,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     overflow: auto;
     width: 100%;
     height: auto;
-    overflow: auto;
     white-space: nowrap;
 }
 .language_div{
@@ -157,11 +179,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     cursor: text;
     background: var(--widget-color);
 }
-#saveSettings{
-    position: fixed;
-    bottom: 13;
-    right: 10;
-}
 input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
@@ -197,7 +214,7 @@ input[type="number"]::selection {
     width: 37px;
     height: 20px;
     border-radius: 20px;
-    margin:12px;
+    margin:4px;
 }
 .switch:hover{ cursor: pointer; }
 .switch > div{
@@ -227,9 +244,4 @@ input[type="number"]::selection {
     background-color: gray;
     left:-4px;
     position: relative;
-}
-.body_window span{
-    line-height: 30px;
-    font-size: 12px;
-    color: var(--white-black);
 }

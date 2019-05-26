@@ -1,6 +1,6 @@
 /* Just testing */
 
-const git = new plugin({
+const git = new Plugin({
   name: "GitTest"
 })
 const gitdm = new dropMenu({
@@ -20,7 +20,7 @@ function git_read(){
 				console.log(err);
 			  return err;
 			}
-			new notification("Last commit message",data);
+			new Notification("Last commit message",data);
 		});
 	}
 }

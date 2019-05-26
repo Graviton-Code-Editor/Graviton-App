@@ -1,6 +1,6 @@
 /* Just testing */
 
-const dreble = new plugin({
+const dreble = new Plugin({
   name: "GitTest"
 })
 const drebledm = new dropMenu({

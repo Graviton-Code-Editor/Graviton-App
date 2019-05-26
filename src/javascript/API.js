@@ -15,7 +15,7 @@ let context_menu_list_text = { //Initial value
 let context_menu_list_tabs = { //Initial value
 	"Close" :`console.log(document.getElementById(this.getAttribute("target")).getAttribute("TabID")); g_closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
 };
-class plugin{
+class Plugin{
 	constructor(object){
 		for(i=0; i<plugins_list.length;i++){
 				if(plugins_list[i].name==object.name){ //List package information
@@ -191,7 +191,7 @@ const graviton = {
  		return current_config.zenMode;
  	},
  	throwError:function(message){
- 		new notification("Error detected",message);
+ 		new Notification("Error detected",message);
  	},
  	dialogAbout: function(){
  		new g_dialog({
@@ -246,9 +246,12 @@ const graviton = {
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
 	Object.keys(panel).forEach(function(key) {
-		context_menu_list[key] = panel[key];
+		context_menu_list_text[key] = panel[key];
 	});
 }
+/*contextMenu({
+	test:"new Notification('test','test');"
+})*/ 
 function floatingWindow([xSize,ySize],content){ //Method to create flaoting windows
 	const g_floating_window = document.createElement("div");
 	g_floating_window.style.height = ySize+"px";
@@ -269,8 +272,9 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       line_space.classList = "line_space_menus";
       context_menu.setAttribute("id","context_menu");
       context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
-    	if(event.target.getAttribute("IamTab")=="true"){
-		    Object.keys(context_menu_list_tabs).forEach(function(key,index) {
+      switch(event.target.getAttribute("elementType")){
+      	case "tab":
+      		Object.keys(context_menu_list_tabs).forEach(function(key,index) {
 		    	const button = document.createElement("button");
 		        button.classList.add("part_of_context_menu")
 		        button.innerText = current_config.language[key];
@@ -278,8 +282,9 @@ document.addEventListener('mousedown', function(event){ //Create the context men
 	        	context_menu.appendChild(button);
 		        button.setAttribute("onclick",context_menu_list_tabs[key]+" document.getElementById('context_menu').remove();");
 	    	});
-  		}else if(event.target.id!="context_menu"){
-      	Object.keys(context_menu_list_text).forEach(function(key,index) {
+      	break;
+      	default:
+      		Object.keys(context_menu_list_text).forEach(function(key,index) {
     			const button = document.createElement("button");
 	        button.classList.add("part_of_context_menu")
 	        if(index <2){
@@ -294,7 +299,8 @@ document.addEventListener('mousedown', function(event){ //Create the context men
 	      	}
 	        button.setAttribute("onclick",context_menu_list_text[key]+" document.getElementById('context_menu').remove();");
 		    });
-    	}
+
+      }
     	document.body.appendChild(context_menu);
     }else if(event.button ===0 && !(event.target.matches('#context_menu') || event.target.matches('.part_of_context_menu'))&& document.getElementById("context_menu")!==null){
       document.getElementById("context_menu").remove();
@@ -308,7 +314,7 @@ document.addEventListener('mousedown', function(event){ //Create the context men
     }
   }
 });
-class notification{
+class Notification{
 	constructor(title,message){
 	  if (_notifications.length >= 3) { //Remove one notification in case there are 3
 	    _notifications[0].remove();
@@ -387,24 +393,27 @@ function g_dialog(dialogObject){
 const closeDialog =(me)=>{
 	document.getElementById(me.getAttribute("myID") + "_dialog").remove();
 }
-function Window(data){
-	this.id = data.id;
-	this.code = data.content;
-	const newWindow = document.createElement("div");
-	newWindow.setAttribute("id",this.id+"_window");
-	newWindow.setAttribute("style","-webkit-user-select: none;");
-	newWindow.innerHTML = `
-	<div class="opened_window" onclick="closeWindow('${this.id}')"></div>
-	<div class="body_window" id="body_window">
-		<div>${this.code}</div>
-	</div>`;
-	this.myWindow = newWindow;
-	this.launch = function(){
+class Window{
+	constructor(data){
+		this.id = data.id;
+		this.code = data.content;
+		this.onClose = data.onClose==undefined?"":data.onClose;
+		const newWindow = document.createElement("div");
+		newWindow.setAttribute("id",this.id+"_window");
+		newWindow.setAttribute("style","-webkit-user-select: none;");
+		newWindow.innerHTML = `
+		<div class="opened_window" onclick="closeWindow('${this.id}'); ${this.onClose}"></div>
+		<div id="${this.id+"_body"}" class="body_window">
+			${this.code}
+		</div>`;
+		this.myWindow = newWindow;
+	}
+	launch(){
 		document.body.appendChild(this.myWindow);
 	}
-	this.close = function(){
+	close(){
 		document.getElementById(`${this.id}_window`).remove();
-	}	
+	}
 }
 const closeWindow=id=>{
 	document.getElementById(`${id}_window`).remove();

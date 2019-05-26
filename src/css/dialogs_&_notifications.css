@@ -9,14 +9,14 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 /* Dialogs */
-.dialog_body{
+.dialog_body {
     position: absolute;
-    color:var(--white-black);
+    color: var(--white-black);
     font-size: 17px;
-    padding:17px;
+    padding: 17px;
     overflow: auto;
     border-radius: var(--window-radius);
-    box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.01);
     min-width: 20%;
     width: auto;
     max-width: 85%;
@@ -29,19 +29,20 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     left: 50%;
     transform: translate(-50%, -45%);
     opacity: 1;
-} 
-.dialog_body button{
+}
+
+.dialog_body button {
     font-weight: bold;
     float: right;
     width: auto;
-    border: none; 
-    margin-top: 15px;        
-    padding:10px 16px;
+    border: none;
+    margin-top: 15px;
+    padding: 10px 16px;
     background: transparent;
     color: var(--white-black);
-     box-sizing: border-box;
+    box-sizing: border-box;
     position: relative;
-    left:0px;
+    left: 0px;
     bottom: 0px;
     display: inline-block;
     border-radius: 3px;
@@ -51,25 +52,29 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     font-size: 11px;
     transform: scale(1)
 }
-.dialog_body button:hover{
+
+.dialog_body button:hover {
     transition: 0.1s;
     cursor: pointer;
     background: var(--primaryColor);
 }
-.dialog_body button:active{
+
+.dialog_body button:active {
     transition: 0.06s;
     transform: scale(0.96)
 }
+
 /* Notifications */
-#notifications{
-    position: fixed; 
+#notifications {
+    position: fixed;
     right: 20px;
     bottom: 20px;
     z-index: 200;
 }
-.notificationBody{
+
+.notificationBody {
     transition: 0.1s;
-    -webkit-app-region: no-drag; 
+    -webkit-app-region: no-drag;
     animation: open_up linear 0.15s;
     width: 300px;
     min-height: 65px;
@@ -84,64 +89,75 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     box-shadow: 1px 3px 7px var(--shadows);
     transform: scale(1);
 }
-@keyframes open_up{
-  from{
-    opacity: 0;
-    bottom:-15px;
-  }
-  to{
-    bottom:0px;
-    opacity: 1  ;
-  }
+
+@keyframes open_up {
+    from {
+        opacity: 0;
+        bottom: -15px;
+    }
+
+    to {
+        bottom: 0px;
+        opacity: 1;
+    }
 }
-.notificationBody:active{
+
+.notificationBody:active {
     transition: 0.1s;
     transform: scale(0.98);
 }
-.notificationBody > div{
+
+.notificationBody>div {
     position: relative;
     height: auto;
     max-height: 100px;
     overflow: auto;
 }
-.notificationBody > button{
+
+.notificationBody>button {
     position: absolute;
     right: 10px;
     background: transparent;
     border: 0;
     cursor: pointer;
 }
-.notificationBody > button path{
-     fill:var(--white-black);
+
+.notificationBody>button path {
+    fill: var(--white-black);
     stroke: transparent;
     border: 0;
 }
-.notificationBody > button:hover path{
-     stroke:var(--accentColor);
-     fill: var(--accentColor);
+
+.notificationBody>button:hover path {
+    stroke: var(--accentColor);
+    fill: var(--accentColor);
     border: 0;
 }
-.notificationBody > button:hover svg {
-     stroke:var(--accentColor);
-     fill: var(--accentColor);
+
+.notificationBody>button:hover svg {
+    stroke: var(--accentColor);
+    fill: var(--accentColor);
     border: 0;
 }
-.notificationBody>h1{
+
+.notificationBody>h1 {
     font-size: 18px;
     line-height: 1px;
 }
-.notificationBody > div > p{
+
+.notificationBody>div>p {
     font-size: 12px;
 }
+
 /* Floating Windows*/
-.floating_window{
+.floating_window {
     animation: window_in linear 0.2s;
     z-index: 50;
     top: 20px;
     right: 40px;
     transform: translate(20px, 40px);
     background: red;
-    position:  fixed;
+    position: fixed;
     min-width: 50px;
     min-height: 50px;
     background: var(--notifications-background-color);
@@ -149,19 +165,22 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     padding: 10px;
     margin: 10px;
     border-radius: var(--notifications-window-radius);
-    box-shadow: 1px 3px 7px rgba(0,0,0,40%);
+    box-shadow: 1px 3px 7px rgba(0, 0, 0, 40%);
 }
-@keyframes window_in{
-  from{
-    opacity: 0;
-    transform: translate(20px, 55px);
-  }
-  to{
-    opacity: 1;
-    transform: translate(20px, 40px);
-  }
+
+@keyframes window_in {
+    from {
+        opacity: 0;
+        transform: translate(20px, 55px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(20px, 40px);
+    }
 }
-.floating_window *{
+
+.floating_window * {
     overflow: auto;
 
 }

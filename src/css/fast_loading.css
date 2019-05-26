@@ -9,64 +9,72 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 /* Css that needs to be loaded fast */
-#g_bootanimation{
-		position: fixed;
-		z-index: 100;
-		height: 100%;
-		width: 100%; 
-		background: #191919; 
+#g_bootanimation {
+  position: fixed;
+  z-index: 100;
+  height: 100%;
+  width: 100%;
+  background: #191919;
 }
-#g_bootanimation > img{
-	webkit-user-select: none; 
-	pointer-events: none;
-	z-index: 999;
-	position: fixed; 
-	top: 50%;
+
+#g_bootanimation>img {
+  webkit-user-select: none;
+  pointer-events: none;
+  -webkit-user-select: none; 
+  -webkit-app-region: drag;
+  z-index: 999;
+  position: fixed;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   height: 23%;
   width: 23%;
 }
-#g_bootanimation div{
-	color:white;
-	z-index: 999;
-	position: fixed; 
-	top: 80%;
+
+#g_bootanimation div {
+  color: white;
+  z-index: 999;
+  position: fixed;
+  top: 80%;
   left: 50%;
-  transform: translate(-50%, -50%); 
-	text-align: center;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
-#openFolder{
-	transition: 0.03s;
-	top: 45%;
-	left: 52%;
-	margin-right: -50%;
-	transform: translate(-50%, -50%);
-	position: absolute; 
-	padding: 15px;
-	width: 24px;
-	height: 24px;
-	margin: 0 auto; 
-	background: url("../icons/closed.svg") no-repeat center;
-	background-size: 60px 60px;
+
+#openFolder {
+  transition: 0.03s;
+  top: 45%;
+  left: 52%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  padding: 15px;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  background: url("../icons/closed.svg") no-repeat center;
+  background-size: 60px 60px;
 }
-#openFolder:hover{
-	transition: 0.05s;
-	cursor: pointer;
-	background: url("../icons/open.svg") no-repeat center;
-	background-size: 65px 65px;
+
+#openFolder:hover {
+  transition: 0.05s;
+  cursor: pointer;
+  background: url("../icons/open.svg") no-repeat center;
+  background-size: 65px 65px;
 }
-#openFolder:active{
-	transition: 0.05s;
-	opacity: 0.6;
-	background-size: 65px 65px;
+
+#openFolder:active {
+  transition: 0.05s;
+  opacity: 0.6;
+  background-size: 65px 65px;
 }
-#g_control_bar img{
-	pointer-events: none;
-	top:0; 
-	left:0;
-	padding:10px;
-	margin:0;
-	position: absolute;
-	height: 16px;
+
+#g_control_bar img {
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  margin: 0;
+  position: absolute;
+  height: 16px;
 }

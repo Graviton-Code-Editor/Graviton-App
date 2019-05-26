@@ -23,7 +23,7 @@ function CHECK_UPDATES(){
           }
         })
       }else{
-        new notification("Graviton",'Any update has been found! ');
+        new Notification("Graviton",'Any update has been found! ');
       }      
     }else {
       console.warn(error);

@@ -31,8 +31,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
       document.getElementById("g_bootanimation").innerHTML += `
       <div>
         <p>An error has appeared when booting Graviton.</p>
-        <button class="Button1" onclick="FactoryReset()">Repair</button>
+        <button class="Button1 red" onclick="FactoryReset()">Repair</button>
         <button class="Button1" onclick="restartApp()">Reboot</button>
+        <button class="Button1" onclick="DeleteBoot()">Ignore</button>
       </div>`
     }else if(error_showed==false){
       graviton.throwError("An error has appeared! Check the console on developer tools for more info.");
@@ -104,18 +105,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     <link rel="stylesheet" href="src/css/welcome-page.css">
     <link rel="stylesheet" href="src/css/dialogs_&_notifications.css">
 
-    <script type="text/javascript" src="src/js/mousetrap.min.js"></script>
-    <script src="src/js/dictionary.js"></script>
-    <script src="src/js/API.js"></script>
-    <script src="src/js/scripts.js"></script>
-    <script src="src/js/_languages.js"></script>
-    <script src="src/js/_menus.js"></script>
-    <script src="src/js/_plugins.js"></script>
-    <script src="src/js/_config.js"></script>
-    <script src="src/js/_welcome-page.js"></script>
-    <script src="src/js/_settings.js"></script>
-    <script src="src/js/_themes.js"></script>
-    <script src="src/js/_controlBar.js"></script>
-    <script src="src/js/_updater.js"></script>
+    <script type="text/javascript" src="src/javascript/mousetrap.min.js"></script>
+    <script src="src/javascript/dictionary.js"></script>
+    <script src="src/javascript/API.js"></script>
+    <script src="src/javascript/scripts.js"></script>
+    <script src="src/javascript/languages.js"></script>
+    <script src="src/javascript/top_bar.js"></script>
+    <script src="src/javascript/plugins.js"></script>
+    <script src="src/javascript/configuration.js"></script>
+    <script src="src/javascript/welcome.js"></script>
+    <script src="src/javascript/settings.js"></script>
+    <script src="src/javascript/customization.js"></script>
+    <script src="src/javascript/updater.js"></script>
     
 </html>

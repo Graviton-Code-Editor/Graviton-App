@@ -9,24 +9,20 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 let nav_bar_settings ;
-function hideSettings(){
-	document.getElementById("window").remove();
-	saveConfig();
-}
 function openSettings(){
 	 nav_bar_settings =` 
 	 <div id="g_settings_panel">
 			<h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
 			<div id="nav_bar">
-			    <ol>
-			      <li id="navB1" onclick="goSPage('1')"><a class="translate_word" idT="Customization">${current_config.language["Customization"]}</a></li>
-			      <li id="navB2" onclick="goSPage('2')"><a class="translate_word" idT="Languages">${current_config.language["Languages"]}</a></li>
-			      <li id="navB3" onclick="goSPage('3')"><a class="translate_word" idT="Editor">${current_config.language["Editor"]}</a></li>
-			    	<li id="navB4" onclick="goSPage('4')"><a class="translate_word" idT="Advanced">${current_config.language["Advanced"]}</a></li>
-			    	<li id="navB5" onclick="goSPage('5')"><a class="translate_word" idT="About">${current_config.language["About"]}</a></li>
-			    </ol>
+	      <button id="navB1" onclick="goSPage('1')" class="translate_word" idT="Customization">${current_config.language["Customization"]}</button>
+	      <button id="navB2" onclick="goSPage('2')" class="translate_word" idT="Languages">${current_config.language["Languages"]}</button>
+	      <button id="navB3" onclick="goSPage('3')" class="translate_word" idT="Editor">${current_config.language["Editor"]}</button>
+	    	<button id="navB4" onclick="goSPage('4')" class="translate_word" idT="Advanced">${current_config.language["Advanced"]}</button>
+	    	<button id="navB5" onclick="goSPage('5')" class="translate_word" idT="About">${current_config.language["About"]}</button>
 			</div>
-	  </div>`;
+	  </div>
+	  <div id="settings_content"></div>`;
+	  /*
 	const all = document.createElement("div");
 	all.setAttribute("id","window");
 	all.setAttribute("style","-webkit-user-select: none;");
@@ -42,48 +38,43 @@ function openSettings(){
 	body.appendChild(content);
 	all.appendChild(background);
 	all.appendChild(body);
-	document.body.appendChild(all);
+	document.body.appendChild(all);*/
+	const settings_window = new Window({
+	id:"settings_window",
+	content:nav_bar_settings,
+	onClose:"saveConfig();"
+	})
+	settings_window.launch()
 }
-function updateEditorFontSize() {
+function updateSettingsFromUI() {
 	current_config.fontSizeEditor =  document.getElementById("fs-input").value;
 	if(editor!=undefined){
 		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
 		editor.refresh();
 	}
+	
+}
+function updateCustomization(){
+	current_config.appZoom = document.getElementById("slider_zoom").value;
+	webFrame.setZoomFactor(current_config.appZoom/25); 
 }
 function updateSettings(){
 	document.documentElement.style.setProperty("--editor-font-size",`${current_config.fontSizeEditor}px`); //Update settings from start
-	if(current_config.appZoom==0){
-		webFrame.setZoomFactor(0.8); //Small size
-	}else if(current_config.appZoom==20){
-		webFrame.setZoomFactor(1); 	//Default size
-	}else if(current_config.appZoom==40){ 
-		webFrame.setZoomFactor(1.2); //Big size
-	}
+	webFrame.setZoomFactor(current_config.appZoom/25); 
 }
-function updatezoom(){
-	const value = document.getElementById("slider_zoom").value;
-	if(value==0){
-		webFrame.setZoomFactor(0.8); //Small size
-	}else if(value==20){
-		webFrame.setZoomFactor(1); //Default size
-	}else if(value==40){ 
-		webFrame.setZoomFactor(1.2); //Big size
-	}
-	current_config.appZoom = value;
-}
+
 function goSPage(num){
-	for(i = 0; i <document.getElementById("nav_bar").children[0].children.length;i++){
-		document.getElementById("nav_bar").children[0].children[i].classList = " ";
+	for(i = 0; i <document.getElementById("nav_bar").children.length;i++){
+		document.getElementById("nav_bar").children[i].classList.remove("active");
 	}
 	switch (num){
 		case "1":
-				document.getElementById("body_content").innerHTML=`
+				document.getElementById("settings_content").innerHTML=`
 				<div id="dpi">
 						<h3>${current_config.language["ZoomSize"]}</h3>
 						<div class="section">
 								<p>Adjust to the size you prefer.</p>
-								<input id="slider_zoom" onchange="updatezoom()" type="range" min="0" step="20" max="40" value="${current_config.appZoom}" class="slider" id="myRange">
+								<input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
 						</div>
 				</div>
 				<h3>${current_config.language["Themes"]}</h3> 
@@ -119,7 +110,7 @@ function goSPage(num){
 				document.getElementById("navB1").classList.add("active");
 		break;
 		case "2":	
-				document.getElementById("body_content").innerHTML=`		
+				document.getElementById("settings_content").innerHTML=`		
 				<div id='language_list'></div> `;
 				for(i=0;i<languages.length; i++){
 						const languageDiv = document.createElement("div");
@@ -134,11 +125,11 @@ function goSPage(num){
 				document.getElementById("navB2").classList.add("active");
 		break;
 		case "3":	
-				document.getElementById("body_content").innerHTML=`
+				document.getElementById("settings_content").innerHTML=`
 				<div id="editor_fs">
 						<h3>${current_config.language["FontSize"]}</h3>
 						<div class="section">
-								<input class="Input1" id="fs-input" onchange="updateEditorFontSize()" type="number" value="${current_config.fontSizeEditor}">
+								<input class="Input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${current_config.fontSizeEditor}">
 						</div>
 						<h3>${current_config.language["Auto-Completion"]}</h3>
 						<div class="section">
@@ -149,21 +140,21 @@ function goSPage(num){
 						<div class="section">
 								<gv-switch onclick="g_turnLineWrapping()" class="${current_config["lineWrappingPreferences"]}"></gv-switch>
 						</div>
+						<h3>${current_config.language["Highlighting"]}</h3>
+						<div class="section">
+						<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
+				</div>
 						
 				</div>
 				`;
 				document.getElementById("navB3").classList.add("active");
 		break;
 		case "4":	
-				document.getElementById("body_content").innerHTML=`
+				document.getElementById("settings_content").innerHTML=`
 				<h3>${current_config.language["Performance"]}</h3>
 				<div class="section">
 						<p>${current_config.language["Settings-Advanced-Performance-Animations"]}</p>
 						<gv-switch  onclick="g_disable_animations()" class="${current_config.animationsPreferences}"></gv-switch>
-				</div>
-				<div class="section">
-						<p>${current_config.language["Highlighting"]}</p>
-						<gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
 				</div>
 				<h3>${current_config.language["Developers"]}</h3>
 				<div class="section">
@@ -180,7 +171,7 @@ function goSPage(num){
 				document.getElementById("navB4").classList.add("active");
 		break;
 		case "5":	
-				document.getElementById("body_content").innerHTML=`
+				document.getElementById("settings_content").innerHTML=`
 				<h3>${current_config.language["About"]} </h3>
 				<div class="section">
 						<p>${current_config.language["About-text1"]}</p>
@@ -313,23 +304,22 @@ class Switch extends  HTMLElement {
         super(); 
     }
     connectedCallback(){
-    		this.innerHTML = "";
-        const body = document.createElement("div");
-        const dot = document.createElement("div");
-        body.setAttribute("class",this.getAttribute("class")+" switch");
-        this.appendChild(body);
-        body.appendChild(dot);
+        this.innerHTML = `
+        <div class="${this.getAttribute("class")} switch">
+        	<div>
+        	</div>
+        </div>`
         this.addEventListener('click', function(){
-                const dot = this.childNodes[0];
-                if(this.classList.contains("disabled")===false){
-                    if( getState(this)) {
-                        this.classList.replace("activated","desactivated");
-                        dot.classList.replace("activated","desactivated");
-                    }else {
-                        this.classList.replace("desactivated","activated");
-                        dot.classList.replace("desactivated","activated");
-                     }
-                }
+	        const dot = this.children[0];
+	        if(this.classList.contains("disabled")===false){
+            if( getState(this)) {
+              this.classList.replace("activated","desactivated");
+              dot.classList.replace("activated","desactivated");
+            }else {
+              this.classList.replace("desactivated","activated");
+              dot.classList.replace("desactivated","activated");
+            }
+	        }
         });
     }
 }

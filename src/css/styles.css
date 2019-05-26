@@ -93,6 +93,14 @@ body , head,#graviton_route{
     background: var(--primaryColor);
     -webkit-user-select: none;
 }
+#g_content > #g_explorer > #g_directories > #g_directory{
+    margin:5px;
+}
+#g_content > #g_explorer > #g_directories > #g_directory:nth-child(1) {
+    margin:5px 15px;
+    line-height: 10px;
+    font-size:16px; 
+}
 #g_content > #g_directories{
     height: auto;
 }
@@ -326,6 +334,7 @@ body , head,#graviton_route{
     opacity: 1;
     border:0;
     user-select: auto;
+    -webkit-app-region: auto;
 }
 .Button1:hover{
     transition: 0.05s;
@@ -359,7 +368,7 @@ body , head,#graviton_route{
 .window_title2{
     font-size:30px; 
     line-height:15px; 
-    margin: 5px 5px 15px 20px;
+    margin: 5px;
     text-align:left;
     letter-spacing: 0px;
 }

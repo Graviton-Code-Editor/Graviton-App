@@ -28,8 +28,7 @@
     "mkdirp": "^0.5.1",
     "nodejs": "0.0.0",
     "npm": "^6.9.0",
-    "request": "^2.88.0",
-    "rimraf": "^2.6.3"
+    "request": "^2.88.0"
   },
   "devDependencies": {
     "electron": "^4.0.5",

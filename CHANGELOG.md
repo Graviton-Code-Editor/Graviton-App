@@ -2,6 +2,15 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200526 - 1 [0.7.6]
+- Fixed editors height after loading a tab
+- Redesigned the setup!
+- More levels on the zoom app slider!
+- Moved the highlighting switch under Editor settings
+- Faster boot performance!
+- Improved editor's infrastructure
+- Added a "ignore" button in error boot menu
+
 ### 200525 - 1 [0.7.5]
 - Added an option to use the system's accent color if is available
 - Added a reboot button in boot error message
