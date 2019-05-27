@@ -10,50 +10,32 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 let plugins_list = [];
 let plugins_dbs= [];
-function hidePlugins(){
-	document.getElementById("window").remove();
-	saveConfig();
-}
 const g_open_plugins_folder = () =>{
 	const {shell} = require('electron') // deconstructing assignment
 	shell.openItem(plugins_folder)	
 }
 function openPlugins(){
-	const all = document.createElement("div");
-	all.setAttribute("id","window");
-	all.setAttribute("style","-webkit-user-select: none;");
-	const background = document.createElement("div");
-	background.setAttribute("class","opened_window");
-	background.setAttribute("onclick","hideSettings()"); 
-	const body = document.createElement("div");
-	body.setAttribute("class","body_window");
-	body.setAttribute("id","body_window");
-	const content = document.createElement("div");
-	content.setAttribute("id","plugins_list");
-	content.innerHTML = `
-	<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
-	    <div class="section">
-	    		<button class="button1" onclick="g_open_plugins_folder()">${current_config.language["OpenFolder"]}</button>
-			</div>`;
+	const plugins_window = new Window({
+	id:"plugins_window",
+	content:`
+		<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
+	  <div class="section">
+	  	<button class="button1" onclick="g_open_plugins_folder()">${current_config.language["OpenFolder"]}</button>
+		</div>
+		<div id="plugins_list">
+		</div>`
+	})
+	plugins_window.launch()
 	plugins_list.forEach(plugin => {
-			const pluginDiv = document.createElement("div");
-			pluginDiv.classList.add("section_hover");
-			pluginDiv.innerText = plugin["name"] + " · v"+ plugin["version"];
-			const author = document.createElement("p");
-			author.innerText = current_config.language["MadeBy"] + plugin["author"];
-			author.setAttribute("style","font-size:15px")
-			const description = document.createElement("p");
-			description.innerText = plugin["description"];
-			description.setAttribute("style","font-size:13px; line-height:2px;");
-			pluginDiv.appendChild(author);
-			pluginDiv.appendChild(description);
-			content.appendChild(pluginDiv);
+			document.getElementById("plugins_list").innerHTML+=`
+			<div class="section_hover">
+				${plugin["name"] + " · v"+ plugin["version"]}
+				<p style="font-size:15px;">${current_config.language["MadeBy"] + plugin["author"]}</p>
+				<p styl="font-size:13px; line-height:2px;">${plugin["description"]}</p>
+			</div>
+			`
   });
 	if(plugins_list.length ==0)content.innerHTML += `<p>No plugins detected.</p>`
-	body.appendChild(content);
-	all.appendChild(background);
-	all.appendChild(body);
-	document.body.appendChild(all);
 }
 function detectPlugins(){
 	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist

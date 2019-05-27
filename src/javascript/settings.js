@@ -8,10 +8,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-let nav_bar_settings ;
 function openSettings(){
-	 nav_bar_settings =` 
-	 <div id="g_settings_panel">
+	const settings_window = new Window({
+	id:"settings_window",
+	content:`<div id="g_settings_panel">
 			<h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
 			<div id="nav_bar">
 	      <button id="navB1" onclick="goSPage('1')" class="translate_word" idT="Customization">${current_config.language["Customization"]}</button>
@@ -21,27 +21,7 @@ function openSettings(){
 	    	<button id="navB5" onclick="goSPage('5')" class="translate_word" idT="About">${current_config.language["About"]}</button>
 			</div>
 	  </div>
-	  <div id="settings_content"></div>`;
-	  /*
-	const all = document.createElement("div");
-	all.setAttribute("id","window");
-	all.setAttribute("style","-webkit-user-select: none;");
-	const background = document.createElement("div");
-	background.setAttribute("class","opened_window");
-	background.setAttribute("onclick","hideSettings()"); 
-	const body = document.createElement("div");
-	body.setAttribute("class","body_window");
-	body.setAttribute("id","body_window");
-	const content = document.createElement("div");
-	content.setAttribute("id","body_content");
-	body.innerHTML =  nav_bar_settings;
-	body.appendChild(content);
-	all.appendChild(background);
-	all.appendChild(body);
-	document.body.appendChild(all);*/
-	const settings_window = new Window({
-	id:"settings_window",
-	content:nav_bar_settings,
+	  <div id="settings_content"></div>`,
 	onClose:"saveConfig();"
 	})
 	settings_window.launch()
