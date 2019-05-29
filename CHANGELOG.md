@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200529 - 2 [0.7.6]
+- New light theme
+- And other fixes
+
 ### 200529 - 1 [0.7.6]
 - Fixed, content wasn't loading after clicking on an opened tab
 

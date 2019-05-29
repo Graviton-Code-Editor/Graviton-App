@@ -162,11 +162,18 @@ function goSPage(num){
 				</div>
 				<h3>${current_config.language["CurrentVersion"]}</h3>
 				<div class="section">
+					<div id="about_section">
 						<p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>
       			<p> ${current_config.language['OS']}: ${graviton.currentOS()}</p>
-      			<button class="button1" onclick="graviton.dialogChangelog();">${current_config.language["Changelog"]}</button>
-						<button class="button1" onclick="CHECK_UPDATES();">${current_config.language["CheckUpdates"]}</button>
+      		</div>
+      		<button class="button1" onclick="graviton.dialogChangelog();">${current_config.language["Changelog"]}</button>
+					<button class="button1" onclick="CHECK_UPDATES();">${current_config.language["CheckUpdates"]}</button>
 				</div>`;
+				if(new_update!=false){
+					document.getElementById("about_section").innerHTML += `
+					<p style="color:var(--accentColor);">New update is live! - ${new_update[g_version.state]["version"]}</p>
+					`;
+				}
 				document.getElementById("navB5").classList.add("active");
 		break;
 	}

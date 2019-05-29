@@ -12,9 +12,10 @@ let context_menu_list_text = { //Initial value
   "Copy" :" document.execCommand('copy');",
   "Paste" :" document.execCommand('paste');"
 };
-let context_menu_list_tabs = { //Initial value
-	"Close" :`console.log(document.getElementById(this.getAttribute("target")).getAttribute("TabID")); g_closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
+const context_menu_list_tabs = { //Initial value
+	"Close" :`g_closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
 };
+
 class Plugin{
 	constructor(object){
 		for(i=0; i<plugins_list.length;i++){

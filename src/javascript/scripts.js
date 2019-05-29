@@ -13,6 +13,7 @@ const g_version = {
   version: "0.7.6",
   state: "Alpha"
 }
+let new_update = false;
 const os = require('os');
 const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" width="11.821" height="11.82" viewBox="0 0 11.821 11.82">
   <g id="close" transform="translate(-4.786 -4.868)">
@@ -66,7 +67,7 @@ let highlights_folder = path.join(DataFolderDir, "highlights");
 let plugins_folder = path.join(DataFolderDir, "plugins");
 let plugins_db = path.join(DataFolderDir, "plugins_db");
 
-function loadEditor(dir, data, type) {
+const loadEditor = (dir, data, type) => {
   if (document.getElementById(dir + "_editor") == undefined) {
     //Editor doesn't exist
     switch (type) {
