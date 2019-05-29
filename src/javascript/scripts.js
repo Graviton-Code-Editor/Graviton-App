@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "1905026",
+  date: "1905029",
   version: "0.7.6",
   state: "Alpha"
 }
@@ -43,7 +43,7 @@ let editingTab;
 let ids = 0;
 let plang = " ";
 let _notifications = [];
-let filepath;
+let filepath = " ";
 let editors = [];
 let editor;
 let editorID;
@@ -594,7 +594,7 @@ const g_close_tab = tab_id => {
       document
         .getElementById(g_object.getAttribute("longPath") + "_editor")
         .remove();
-      editors.splice(i + 1, 1);
+      editors.splice(i , 1);
       g_object.remove();
       if (tabs.length === 0) { //Any tab opened
         document.getElementById("g_editors").style = " ";

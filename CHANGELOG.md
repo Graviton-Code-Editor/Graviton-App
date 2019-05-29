@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200529 - 1 [0.7.6]
+- Fixed, content wasn't loading after clicking on an opened tab
+
 ### 200526 - 1 [0.7.6]
 - Fixed editors height after loading a tab
 - Redesigned the setup!

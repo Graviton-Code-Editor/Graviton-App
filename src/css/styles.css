@@ -32,7 +32,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     src: url(../fonts/Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
 }
 @font-face {
-    font-family: hack;
+    font-family: editor;
     src: url(../fonts/Hack-Regular.ttf);
 }
 html{
@@ -46,7 +46,7 @@ html{
 }
 .CodeMirror {
     z-index: 0;
-    font-family: "hack"; /*--Default font-size for the editor */
+    font-family: editor; /*--Default font-size for the editor */
     font-size: var(--editor-font-size);
     text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
 }
