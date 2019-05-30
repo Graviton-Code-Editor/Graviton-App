@@ -60,6 +60,7 @@ function loadConfig() { //Loads the configuration from the config.jsons for the 
       }
       detectPlugins(); //Call the function to detect the installed plugins
     });
+    
   }
 }
 

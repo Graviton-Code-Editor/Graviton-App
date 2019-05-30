@@ -29,7 +29,7 @@ File.setList({
     "Save As": "saveFileAs()",
     Save: "saveFile()",
     "*line": "",
-    "New Project":"g_openNewProjects(); g_NPgoPage('1')"
+    "New Project":"g_NewProjects(); "
   }
 });
 Tools.setList({

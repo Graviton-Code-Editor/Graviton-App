@@ -18,39 +18,39 @@ if (!fs.existsSync(highlights_folder)) { //If the themes folder doesn't exist
 	syncThemes();
 }
 function syncThemes(){
-		if (!fs.existsSync(themes_folder)) { //If the themes folder doesn't exist
-		  fs.mkdirSync(themes_folder)
-		  fs.copy(path.join(__dirname,"themes"),themes_folder, err=> {
-          if(err) return console.error(err);
-          fs.readdir(themes_folder, (err, paths) => {
-					  	paths.forEach(dir => {
-						  		fs.readFile(path.join(themes_folder, dir), 'utf8', function (err, data) {
-							 		 		if (err) throw err;
-							 		 		obj = JSON.parse(data);
-							 		 		themes.push(obj); //Push the theme to the array
-							 		 		const newLink = document.createElement("link");
-							 		 		newLink.setAttribute("rel","stylesheet");
-											newLink.setAttribute("href",path.join(highlights_folder,obj["Highlight"]+".css")); //Link new themes 
-											document.body.appendChild(newLink);
-									});
-					  	});	
+	if (!fs.existsSync(themes_folder)) { //If the themes folder doesn't exist
+	  fs.mkdirSync(themes_folder)
+	  fs.copy(path.join(__dirname,"themes"),themes_folder, err=> {
+      if(err) throw err;
+      fs.readdir(themes_folder, (err, paths) => {
+		  	paths.forEach(dir => {
+		  		fs.readFile(path.join(themes_folder, dir), 'utf8', function (err, data) {
+		 		 		if (err) throw err;
+		 		 		obj = JSON.parse(data);
+		 		 		themes.push(obj); //Push the theme to the array
+		 		 		const newLink = document.createElement("link");
+		 		 		newLink.setAttribute("rel","stylesheet");
+						newLink.setAttribute("href",path.join(highlights_folder,obj["Highlight"]+".css")); //Link new themes 
+						document.body.appendChild(newLink);
 					});
-		  });
-		}else{ //If the themes folder already exists
-		  	fs.readdir(themes_folder, (err, paths) => {
-				  	paths.forEach(dir => {
-					  		fs.readFile(path.join(themes_folder, dir), 'utf8', function (err, data) {
-						 		 		if (err) throw err;
-						 		 		obj = JSON.parse(data);
-						 		 		themes.push(obj); //Push the theme to the array
-						 		 		const newLink = document.createElement("link");
-						 		 		newLink.setAttribute("rel","stylesheet");
-										newLink.setAttribute("href",path.join(highlights_folder,obj["Highlight"]+".css")); //Link new themes 
-										document.body.appendChild(newLink);
-								});
-				  	});
+	  	});	
+			});
+	  });
+	}else{ //If the themes folder already exists
+  	fs.readdir(themes_folder, (err, paths) => {
+	  	paths.forEach(dir => {
+	  		fs.readFile(path.join(themes_folder, dir), 'utf8', function (err, data) {
+	 		 		if (err) throw err;
+	 		 		obj = JSON.parse(data);
+	 		 		themes.push(obj); //Push the theme to the array
+	 		 		const newLink = document.createElement("link");
+	 		 		newLink.setAttribute("rel","stylesheet");
+					newLink.setAttribute("href",path.join(highlights_folder,obj["Highlight"]+".css")); //Link new themes 
+					document.body.appendChild(newLink);
 				});
-		}
+	  	});
+		});
+	}
 }
 detectLanguages();
 const loadTheme = number=>{
@@ -58,7 +58,11 @@ const loadTheme = number=>{
 	const colors = themes[number]["Colors"]; //Take the colors object inside the JSON file of the selected theme
 	for(i = 0;i < Object.keys(colors).length;i++){
 		if(current_config.accentColorPreferences=="system" && Object.keys(colors)[i]=="accentColor"){
-			document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+			try{
+				document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+			}catch{ //Returns an error = system is not compatible, Linux-based will probably throw that error
+				new Notification("Issue","Your system is not compatible with this feature.")
+			} 
 		}else{
 			document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
 		}

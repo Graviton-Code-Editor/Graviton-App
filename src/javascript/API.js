@@ -367,7 +367,7 @@ function g_dialog(dialogObject){
   all.setAttribute("id", dialogObject.id + "_dialog");
   all.setAttribute("style", "-webkit-user-select: none;");
   all.innerHTML=`
-  <div myID="${dialogObject.id}" class="opened_window" onclick="closeDialog(this)"></div>
+  <div myID="${dialogObject.id}" class="background_window" onclick="closeDialog(this)"></div>
   <div class="dialog_body"></div>`
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
@@ -403,7 +403,7 @@ class Window{
 		newWindow.setAttribute("id",this.id+"_window");
 		newWindow.setAttribute("style","-webkit-user-select: none;");
 		newWindow.innerHTML = `
-		<div class="opened_window" onclick="closeWindow('${this.id}'); ${this.onClose}"></div>
+		<div class="background_window" onclick="closeWindow('${this.id}'); ${this.onClose}"></div>
 		<div id="${this.id+"_body"}" class="body_window">
 			${this.code}
 		</div>`;

@@ -45,12 +45,14 @@ function detectPlugins(){
 			for(i=0; i<paths.length;i++){
 				const dir = paths[i];
 				if (dir.indexOf('.') > -1 && getFormat(dir)=="json"){ 
-		  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
-				 		plugins_dbs.push({
-				 			plugin_name:path.basename(dir,".json"),
-				 			db:JSON.parse(data)
-				 		});
-					});
+					try{
+			  		fs.readFile(path.join(plugins_db, dir), 'utf8', function (err, data) {
+					 		plugins_dbs.push({
+					 			plugin_name:path.basename(dir,".json"),
+					 			db:JSON.parse(data)
+					 		});
+						});
+		  		}catch{}
 		  	}
 			}
 		 });

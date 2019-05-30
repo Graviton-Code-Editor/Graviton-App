@@ -11,7 +11,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 function openSettings(){
 	const settings_window = new Window({
 	id:"settings_window",
-	content:`<div id="g_settings_panel">
+	content:`
+		<div id="g_settings_panel">
 			<h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language["Settings"]}</h2> 
 			<div id="nav_bar">
 	      <button id="navB1" onclick="goSPage('1')" class="translate_word" idT="Customization">${current_config.language["Customization"]}</button>
@@ -48,46 +49,42 @@ function goSPage(num){
 		document.getElementById("nav_bar").children[i].classList.remove("active");
 	}
 	switch (num){
-		case "1":
-				document.getElementById("settings_content").innerHTML=`
-				<div id="dpi">
-						<h3>${current_config.language["ZoomSize"]}</h3>
-						<div class="section">
-								<p>Adjust to the size you prefer.</p>
-								<input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
-						</div>
-				</div>
-				<h3>${current_config.language["Themes"]}</h3> 
+	case "1":
+			document.getElementById("settings_content").innerHTML=`
+			<div id="dpi">
+				<h3>${current_config.language["ZoomSize"]}</h3>
 				<div class="section">
-						<div id='theme_list'></div> 
-						<p>${current_config.language["Themes.Text"]}</p>
-						<gv-switch  onclick="useSystemColors()" class="${current_config.accentColorPreferences=="system"?"activated":"desactivated"}"></gv-switch>
+					<p>Adjust to the size you prefer.</p>
+					<input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
 				</div>
-				<h3>${current_config.language["ZenMode"]}</h3>
-				<div class="section">
-								<p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
-								<gv-switch  onclick="g_ZenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
-				</div>
-				`;
-				for(i=0;i<themes.length; i++){			
-						const themeDiv = document.createElement("div");
-						themeDiv.setAttribute("class","theme_div");
-						themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('1',this);");
-						themeDiv.innerText=themes[i].Name; //Theme's name
-						const author = document.createElement("p");
-						author.innerText = current_config.language["MadeBy"] + themes[i]["Author"]; //Theme's autor's name
-						author.setAttribute("style","font-size:15px")
-						const description = document.createElement("p");
-						description.innerText = themes[i]["Description"]; //Theme's description
-						description.setAttribute("style","font-size:13px; line-height:2px;");
-						themeDiv.appendChild(author);
-						themeDiv.appendChild(description);				
-						if(themes[i]["Name"] === current_config.theme["Name"]){
-							selectTheme("1",themeDiv);
-						}
-						document.getElementById("theme_list").appendChild(themeDiv);
+			</div>
+			<h3>${current_config.language["Themes"]}</h3> 
+			<div class="section">
+				<div id='theme_list'></div> 
+				<p>${current_config.language["Themes.Text"]}</p>
+				<gv-switch  onclick="useSystemColors()" class="${current_config.accentColorPreferences=="system"?"activated":"desactivated"}"></gv-switch>
+			</div>
+			<h3>${current_config.language["ZenMode"]}</h3>
+			<div class="section">
+				<p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
+				<gv-switch  onclick="g_ZenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
+			</div>
+			`;
+			for(i=0;i<themes.length; i++){			
+				const themeDiv = document.createElement("div");
+				themeDiv.setAttribute("class","theme_div");
+				themeDiv.setAttribute("onclick","loadTheme('"+i+"'); selectTheme('1',this);"); 
+				themeDiv.innerHTML=`
+				<p style="margin:11px 0; font-size:17px; line-height:2px;">${themes[i].Name}</p>
+				<p style="font-size:15px;">${current_config.language["MadeBy"] + themes[i]["Author"]}</p>
+				<p style="font-size:13px; line-height:2px;">${themes[i]["Description"]}</p>
+				`
+				if(themes[i]["Name"] === current_config.theme["Name"]){
+					selectTheme("1",themeDiv);
 				}
-				document.getElementById("navB1").classList.add("active");
+				document.getElementById("theme_list").appendChild(themeDiv);
+			}
+			document.getElementById("navB1").classList.add("active");
 		break;
 		case "2":	
 				document.getElementById("settings_content").innerHTML=`		
@@ -181,7 +178,11 @@ function goSPage(num){
 const useSystemColors=()=>{
 	if(current_config.accentColorPreferences=="manual"){
 		current_config["accentColorPreferences"]= "system";
-		document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+		try{
+			document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+		}catch{ //Returns an error = system is not compatible, Linux-based will probably throw that error
+			new Notification("Issue","Your system is not compatible with this feature.")
+		}
 	}else{
 		document.documentElement.style.setProperty("--accentColor",themeObject.Colors.accentColor); 
 		current_config["accentColorPreferences"]= "manual";
@@ -280,11 +281,11 @@ function selectTheme(from,theme){
 	theme.style = "background: var(--accentColor); color:white;";
 }
 function getState(element){
-        if(element.classList.contains("disabled")){
-            return "disabled";
-        }else{
-            return element.classList.contains("activated");
-        }
+  if(element.classList.contains("disabled")){
+      return "disabled";
+  }else{
+      return element.classList.contains("activated");
+  }
 }
 class Switch extends  HTMLElement {
     constructor() {

@@ -727,7 +727,7 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
     }
   });
 }
-const g_ZenMode = function() {
+const g_ZenMode =()=>{
   if (editor_mode == "zen") {
     editor_mode = "normal";
     document.getElementById("g_explorer").style = "visibility: visible; width:200px; overflow:auto;";
@@ -768,30 +768,21 @@ const g_preview = function() {
 }
 const HTML_template = `
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
-
     <meta charset="utf-8">
-
     <title>New Project</title>
-
     <meta name="description" content="Graviton Project">
-
   </head>
   <body>
-
     <h1>Hello World!</h1>
-
   </body>
 </html>
 `;
 const g_newProject = function(template) {
   dialog.showOpenDialog({ properties: ["openDirectory"] },
     selectedFiles => {
-      if (selectedFiles === undefined) {
-
-      } else {
+      if (selectedFiles !== undefined) {
         switch (template) {
           case "html":
             const g_project_dir = path.join(selectedFiles[0], ".GravitonProject " + Date.now());
@@ -802,37 +793,23 @@ const g_newProject = function(template) {
               }
               loadDirs(g_project_dir, "g_directories", true)
             });
-            break;
+          break;
         }
       }
     }
   );
 }
-const g_openNewProjects = () => {
-  const g_all_window = document.createElement("div");
-  g_all_window.setAttribute("id", "templates_window");
-  g_all_window.setAttribute("style", "-webkit-user-select: none;");
-  g_all_window.innerHTML = `
-  <div class="opened_window" onclick="g_hideNewProjects()"></div>
-  <div id="body_window" class="body_window"></div>`
-  document.body.appendChild(g_all_window);
-}
-
-function g_NPgoPage(num) {
-  switch (num) {
-    case "1":
-      document.getElementById("body_window").innerHTML = `
-        <h2 class="window_title">${current_config.language["Templates"]}</h2> 
-        <div onclick="g_newProject('html'); g_hideNewProjects();" class="section_hover">
-            <p>HTML</p>
-        </div>
-      `;
-      break;
-  }
-}
-
-function g_hideNewProjects() {
-  document.getElementById("templates_window").remove();
+const g_NewProjects = () => {
+  const new_projects_window = new Window({
+  id:"new_projects_window",
+  content:`
+    <h2 class="window_title">${current_config.language["Templates"]}</h2> 
+    <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section_hover">
+      <p>HTML</p>
+    </div>
+  `
+  })
+  new_projects_window.launch()
 }
 const preload = (array) => { //Preload images when booting
   for (i = 0; i < array.length; i++) {

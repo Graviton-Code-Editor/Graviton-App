@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200530 - 1 [0.7.6]
+- Fixed, linux-based distros throwed error when turning on "Use system's accent color"
+- "New Project" window now uses the API, so the performance and stability is better
+
 ### 200529 - 2 [0.7.6]
 - New light theme
 - And other fixes

@@ -8,6 +8,143 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+/* Windows */
+.background_window{
+    transition: 0.05s;
+    background: rgba(0,0,0,0.4); /*Background element on windowss*/
+    top:0px;
+    left:0;
+    height:100%;
+    width: 100%;
+    position: fixed;
+    overflow: hidden;
+}
+.body_window{
+    color:var(--white-black);
+    font-size: 17px;
+    padding:12px;
+    overflow-y: scroll;
+    border-radius: var(--window-radius);
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
+    width: 85%;
+    height: 85%;
+    position: fixed;
+    text-align: left;
+    background: var(--secondaryColor);
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+}
+.body_window_full{
+    color:var(--white-black);
+    font-size: 17px;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+    position: fixed;
+    text-align: left;
+    background: var(--secondaryColor);
+}
+.body_window_full > *{
+    padding: 30px;
+}
+.body_window span{
+    line-height: 30px;
+    font-size: 12px;
+    color: var(--white-black);
+}
+.body_window p{
+    font-size: 15px;
+    line-height: 15px;
+    margin: 20px 1px;
+}
+
+/*Small components */
+.Input1{
+    transition: 0.1s;
+    border-radius: var(--buttons-roundness);
+    width: 35px;
+    height: 30px;
+    border: none;  
+    padding:10px 10px;
+    background: var(--primaryColor);
+    color: var(--white-black);
+    box-sizing: border-box;
+}
+.Input1:hover{
+    transition: 0.1s;
+    cursor: text;
+    background: var(--widget-color);
+}
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+input[type="number"]::selection {
+    background-color: var(--accentColor);
+    color:var(--black-white);
+}
+.slider {
+    -webkit-appearance: none;
+    width: auto;
+    height: 22px;
+    background: var(--primaryColor);
+    outline: none;
+    border-radius: 50px;
+    padding:0px 4px 0px 4px;
+    font-family: _main_font;
+}
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: var(--accentColor);
+    cursor: pointer;
+    border-radius: 50px;
+}
+.switch {
+    width: 37px;
+    height: 20px;
+    border-radius: 20px;
+    margin:4px;
+}
+.switch:hover{ cursor: pointer; }
+.switch > div{
+    height: 16px;
+    width: 16px;
+    border-radius: 50px;
+    position: relative;
+    top: 2px;
+}
+.activated.switch { background: var(--primaryColor); }
+.activated.switch > div{
+    background: var(--accentColor);
+    left:18px;
+}
+.desactivated.switch { background: lightgray; }
+.desactivated.switch > div{
+    background: gray;
+    left:3px;
+}
+.disabled.switch{
+    transition: 0.07s;
+    background: lightgray;
+    box-sizing: border-box;
+}
+.disabled.switch.desactivated > div {
+    transition: 0.07s;
+    background-color: gray;
+    left:-4px;
+    position: relative;
+}
 /* Dialogs */
 .dialog_body {
     position: absolute;
@@ -89,19 +226,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     box-shadow: 1px 3px 7px var(--shadows);
     transform: scale(1);
 }
-
 @keyframes open_up {
     from {
         opacity: 0;
         bottom: -15px;
     }
-
     to {
         bottom: 0px;
         opacity: 1;
     }
 }
-
 .notificationBody:active {
     transition: 0.1s;
     transform: scale(0.98);
