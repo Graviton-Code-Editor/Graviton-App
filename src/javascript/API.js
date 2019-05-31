@@ -213,10 +213,10 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>New files icons</li>
 	    	<li>Load system's language if it's supported when setuping Graviton </li>
 				<li>Updated the website link! www.graviton.ml </li>
 				<li>Added scale effect on clicking directories and files in the explorer menu</li>
-				<li> Faster startup!</li>
 				<li>Faster startup!</li>
 		    <li>Added MacOS support</li>
 		    <li>Improved stability while editing files</li>
