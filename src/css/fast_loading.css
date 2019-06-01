@@ -23,14 +23,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   -webkit-user-select: none; 
   -webkit-app-region: drag;
   z-index: 999;
-  position: fixed;
+  position: relative;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 23%;
-  width: 23%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  height: 17%;
+  width: 17%;
 }
-
 #g_bootanimation div {
   color: white;
   z-index: 999;
@@ -42,13 +41,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 #openFolder {
-  transition: 0.03s;
+  transition: 0.05s;
   top: 45%;
-  left: 52%;
-  margin-right: -50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
-  padding: 15px;
+  left: 40%;
+  transform: translate(-40%, -50%);
+  position: relative;
+  padding: 24px;
   width: 24px;
   height: 24px;
   margin: 0 auto;

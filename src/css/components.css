@@ -155,7 +155,6 @@ input[type="number"]::selection {
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.01);
     min-width: 20%;
-    width: auto;
     max-width: 85%;
     min-height: 110px;
     max-height: 70%;
@@ -198,7 +197,7 @@ input[type="number"]::selection {
 
 .dialog_body button:active {
     transition: 0.06s;
-    transform: scale(0.96)
+    transform: scale(var(--scalation))
 }
 
 /* Notifications */
@@ -238,7 +237,7 @@ input[type="number"]::selection {
 }
 .notificationBody:active {
     transition: 0.1s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
 
 .notificationBody>div {

@@ -14,7 +14,7 @@ preload([ //Preload some images to improve the UX
   "src/icons/custom_icons/node_modules.svg"
 ])
 let current_config = {
-  justInstalled: false, //missing
+  justInstalled: false,
   theme: "Light UI",
   fontSizeEditor: "15",
   appZoom: "25",
@@ -57,6 +57,7 @@ function loadConfig() { //Loads the configuration from the config.jsons for the 
 			  transition: none !important;}`;
         style.id = "_ANIMATIONS";
         document.documentElement.appendChild(style);
+        document.documentElement.style.setProperty("--scalation","1");
       }
       detectPlugins(); //Call the function to detect the installed plugins
     });

@@ -21,20 +21,24 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     overflow: hidden;
     font-family: _main_font;
     margin: 0;
+    display: flex;
 }
 #g_control_bar > #controls  {
- -webkit-app-region: no-drag;
- position: fixed;
- top: 0px;
- right: 0px;
- width: auto;
+    position: static;
+    flex:1;
+    display: flex;
+    -webkit-app-region: no-drag;
+    top: 0px;
+    right: 0px;
+    width: auto;
+    float:left;
 }
 #g_control_bar > #controls button {
     padding: 6px 0px;
     width: 48px; 
     border: none;
     margin:0;
-    background: var(--primaryColor);
+    background: transparent;
 }
 #g_control_bar> #controls button:hover { 
     background: var(--widget-color);
@@ -52,19 +56,20 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     fill: white;
 }
 #g_control_bar >  #g_dropmenu_list {
+    display: flex;
+    flex:8;
     list-style-type: none;
     padding: 0;
-    overflow: hidden;
-    -webkit-app-region: no-drag; 
-    margin-left: 35px;  
+    overflow: auto;
+    -webkit-app-region: drag; 
+    margin-left: 35px;
     border:0;
-    display: box;
-    position: absolute;
+    position: static;
+    float: left;
 }
-button.dropbtn {
+#g_control_bar >  #g_dropmenu_list button.dropbtn {
     position: relative;
     display: inline-block;
-    background-color: var(--primaryColor);
     color: var(--white-black);
     height: 35px;
     padding:0px 7px;
@@ -75,8 +80,12 @@ button.dropbtn {
     cursor: pointer;
     top:0;
     font-family: _main_font;
+    -webkit-app-region: no-drag;
+    white-space: nowrap;
+    min-width: auto;
+    background: var(--primaryColor)
 }
-.dropbtn:hover, .dropbtn:focus {
+#g_control_bar >  #g_dropmenu_list .dropbtn:hover, .dropbtn:focus {
     background-color:var(--widget-color);
 }
 .dropdown {
@@ -117,7 +126,7 @@ button.dropbtn {
 }
 .dropdown-content > button:active:not( .dropbtn) {
     transition: 0.05s;
-    transform: scale(0.97);
+    transform: scale(var(--scalation));
 }
 .dropdown-content > button:not( .dropbtn ) >img {
     height: 100px;
@@ -146,8 +155,8 @@ span.line_space_menus{
 }
 @keyframes context_up{
   from{
-    opacity: 0.3;
-    transform: scale(0.95);
+    opacity: 0.2;
+    transform: scale(var(--scalation));
   }
   to{
     opacity: 1;
@@ -187,5 +196,5 @@ span.line_space_menus{
     cursor: pointer;
 }
 #context_menu > button:active {
-    transform: scale(0.97);
+    transform: scale(var(--scalation));
 }

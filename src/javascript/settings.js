@@ -243,10 +243,12 @@ const g_disable_animations = ()=>{
 			  -o-transition: none !important;
 			  transition: none !important;}`;
 	  style.id = "_ANIMATIONS";
+	  document.documentElement.style.setProperty("--scalation","1");
 	  document.documentElement.appendChild(style);
 		current_config.animationsPreferences = "desactivated";
 	}else{
 		document.getElementById("_ANIMATIONS").remove();
+		document.documentElement.style.setProperty("--scalation","0.98");
 		current_config.animationsPreferences = "activated";
 	}
 }

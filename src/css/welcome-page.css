@@ -46,7 +46,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 .body_window .project_div:active{
     transition: 0.03s;
-    transform: scale(0.97);   
+    transform: scale(var(--scalation));   
 }
 .body_window .welcomeButtons{
     position: absolute;
@@ -72,5 +72,5 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 .theme_div_welcomePage:active{
     transition: 0.12s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }

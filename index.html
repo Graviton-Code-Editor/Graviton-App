@@ -28,6 +28,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   window.addEventListener("error",function(){
     if(editor_booted==false && error_showed == false){
       error_showed = true;
+      //setThemeByName("Dark");
       document.getElementById("g_bootanimation").innerHTML += `
       <div>
         <p>An error has appeared when booting Graviton.</p>
@@ -53,8 +54,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     <body>
       <div id="g_content" >
         <div id="g_explorer" opened="false" > <!--Directories tree-view -->
-          <span id="openFolder" height="24px" width="24px" onclick="openFolder()"  ></span>
-          <div id="g_directories"></div>
+          <span id="openFolder" height="24px" width="24px" onclick="openFolder()" ></span>
+         
         </div>
         <context >
             <div id="context" class="menuWrapper"></div>
@@ -62,14 +63,19 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
         <div id="g_editors" >
             <div id="g_tabs_bar" class="flex"></div>  
             <div class="translate_word" idT="WelcomeMessage" id="temp_dir_message" ></div>
-        </div>
-        <div id="g_status_bar" >
-          <span ></span>
-          <span ></span>
-        </div>
+            <div id="g_editors_editors">
+            </div>
+            <div id="g_status_bar" >
+              <span ></span>
+              <span ></span>
+            </div>
       </div> 
+        </div>
+        
+     <!-- -->
       <div id="notifications" > 
         <!-- Notifications list -->
+        
       </div>
     </body>  
     <!-- Codemirror -->

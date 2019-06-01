@@ -20,6 +20,7 @@
     "window-radius":"8px",
     "notifications-background-color":"#474747",
     "notifications-window-radius":"5px",
-    "shadows":"rgba(0,0,0,0.3)"
+    "shadows":"rgba(0,0,0,0.3)",
+    "scalation":"0.98"
   }
 }

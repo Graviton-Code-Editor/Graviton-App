@@ -2,6 +2,17 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200601 - 1 [0.7.6]
+- Now you can expand the files explorer from left to right by clicking on top right of it and moving the cursor
+- **FINALLY** removed that white square on corners of scrollbars
+- Correct the editors heights
+- If you reduces the window's size it will still show the dropmenus
+- Added an image icon for some image formats
+- Minifided code for the directories and filed indexer
+- Added a CSS variable for scalation effect
+- Fixed minimize, close and maximize buttons margin
+- Fixed, now you can open files as new tabs (previously weren't working)
+
 ### 200530 - 1 [0.7.6]
 - Fixed, linux-based distros throwed error when turning on "Use system's accent color"
 - "New Project" window now uses the API, so the performance and stability is better

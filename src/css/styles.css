@@ -26,6 +26,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     --notifications-background-color:#474747;
     --notifications-window-radius:5px;
     --shadows:rgba(0,0,0,0.25);
+    --scalation:0.98;
 }
 @font-face {
     font-family: _main_font;
@@ -75,23 +76,33 @@ body ,head{
     background: var(--widget-color);
 }
 ::-webkit-scrollbar-corner{
-    visibility: hidden;
-    opacity: 0;
-    height: 0;
-    width: 0;
-    display: none;
-    background: transparent;
+    visibility: hidden !important; 
+    opacity: 0!important;
+    height: 0!important;
+    width: 0!important;
+    display: none!important;
+    background: red !important;
+}
+::-webkit-resizer{
+    cursor: ew-resize;
+}
+#g_content {
+    display: flex;
 }
 #g_content > #g_explorer{
-    position: fixed;
+    min-width: 15%;
+    width:210px;
+    max-width: 50%;
     left:0;
-    width:200px;
     height: calc(100% - (35px));
     overflow:auto;
     font-size:12px;
     color:var(--white-black);
     background: var(--primaryColor);
     -webkit-user-select: none;
+    float:left;
+    direction: ltr;
+    resize: horizontal;
 }
 #g_content > #g_explorer > #g_directories > #g_directory{
     margin:5px;
@@ -101,53 +112,49 @@ body ,head{
     line-height: 20px;
     font-size:16px; 
 }
-#g_content > #g_directories{
-    height: auto;
-}
 #g_content > #g_editors > #g_tabs_bar{
+    min-height: 37px;
+    max-height: 37px;
+    position: relative;
+    float:left;
+    flex:37px;
     overflow: auto; 
     -webkit-user-select: none;
     font-size: 15px;
-    height:auto;
-    width: auto;
     background:var(--primaryColor);
-    position: -webkit-sticky;
-    position: sticky;
     top: 0;
     left:0;
     margin: 0;
     padding: 0;
     color:var(--white-black);
-    overflow-x: auto;
 }
 #g_content > #g_editors > #temp_dir_message{
-    font-size: 16px;
+    font-size: 15px;
     -webkit-user-select: none;
-    position: absolute;
+    position: relative;
     left: 50%;
-    top:50%;
+    top:45%;
+    text-align: center;
     transform: translate(-50%,-50%);
     color:var(--white-black);
+    width: auto;
 }
 #g_content > #g_editors{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
-    position: relative;
-    left:0px;
-    right:0px;
-    top:0px;
-    margin: 0px 0px 0px 200px;
-    height:  calc(100% - (64px));
-    width: auto;
+    flex:3;
+    float:left;
+    display: flex;
+    flex-direction: column;
+    height:  calc(100% - (35px));
+    margin:0;
     color:var(--white-black);
     overflow: hidden;
 }
-#g_content >#g_editors > .code-space{
-     height: calc(100% - (3px));
-     padding: 0;
-     margin: 0;
+#g_content >#g_editors > #g_editors_editors> .code-space{
+    position: relative;
 }
-#g_content >#g_editors > .code-space img{
+#g_content >#g_editors #g_editors_editors> .code-space img{
     user-select: none; 
     pointer-events: none;
     position: relative; 
@@ -156,16 +163,19 @@ body ,head{
     margin: 0 auto;
     border-style: none;
 }
-#g_content > #g_status_bar{
-    height: 25px;
-    margin-left: 200px;
-    background: var(--primaryColor);
-    padding: 0px 10px;
-    padding-top:4px;
-    border: none;
-    display: flex;
+#g_content >#g_editors > #g_editors_editors{
+    flex:auto;
+    overflow: auto; 
+    height: 90%;
 }
-#g_content > #g_status_bar *{
+#g_content >#g_editors> #g_status_bar{
+    flex:20px;
+    height: 20px;
+    background: var(--primaryColor);
+    padding: 5px 10px;
+    border: none;
+}
+#g_content >#g_editors> #g_status_bar *{
     padding: 0;
     margin: 0;
     color: var(--white-black);
@@ -282,7 +292,7 @@ body ,head{
 }
 #g_content > #g_explorer div.folder_list1:active{
     transition: 0.06s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
 #g_content > #g_explorer div.folder_list2{
     animation: directory_opening linear 0.1s;
@@ -309,7 +319,7 @@ body ,head{
 }
 #g_content > #g_explorer div.folder_list2:active{
     transition: 0.06s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
 @keyframes directory_opening{
   from{
@@ -317,7 +327,7 @@ body ,head{
     transform: translateX(-3px);
   }
   to{
-     transform: translateX(0px);
+    transform: translateX(0px);
     opacity: 1;
   }
 }
@@ -354,7 +364,7 @@ body ,head{
 }
 .Button1:active{
     transition: 0.03s;
-    transform: scale(0.97);
+    transform: scale(var(--scalation));
     box-sizing: border-box; 
     opacity: 0.7;
 }
@@ -395,7 +405,7 @@ body ,head{
 }
 .section_hover:active{
     transition: 0.07s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
 .body_window h3{
  font-weight: 570;
@@ -409,7 +419,7 @@ p.link:hover{
     color:var(--accentColor);
 }
 context {
-  position: absolute;
+  position: fixed;
   background-color: var(--primaryColor);
   overflow: none;
   border-radius: 3px;
@@ -456,7 +466,7 @@ context  .menuWrapper .option.hover{
   color:var(--black-white);
 }
 context  .menuWrapper .option:active{
-  transform: scale(0.98);
+  transform: scale(var(--scalation));
 }
 context .menuWrapper .option:last-child{
   border-bottom: none;

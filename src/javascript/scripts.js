@@ -9,8 +9,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "1905029",
-  version: "0.7.6",
+  date: "190601",
+  version: "0.7.7",
   state: "Alpha"
 }
 let new_update = false;
@@ -75,7 +75,7 @@ const loadEditor = (dir, data, type) => {
         let text_container = document.createElement("div");
         text_container.classList = "code-space";
         text_container.setAttribute("id", dir + "_editor");
-        document.getElementById("g_editors").appendChild(text_container);
+        document.getElementById("g_editors_editors").appendChild(text_container);
         let codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
           value: data,
           mode: "text/plain",
@@ -104,7 +104,7 @@ const loadEditor = (dir, data, type) => {
         image_container.classList = "code-space";
         image_container.setAttribute("id", `${dir}_editor`);
         image_container.innerHTML = `<img src="${dir}">`
-        document.getElementById("g_editors").appendChild(image_container);
+        document.getElementById("g_editors_editors").appendChild(image_container);
         const new_editor_image = {
           id: dir + "_editor",
           editor: undefined,
@@ -308,12 +308,11 @@ function openFile() {
     if (fileNames === undefined) {
       return;
     }
-    fs.readFile(fileNames[0], "utf8", function(err, data) {
-      if (err) {
-        return err;
-      }
-      editor.setValue(data); //Updating data in the editor
-    });
+    new tab({
+          id: Math.random()+ fileNames[0].replace(/\\/g, "\\\\") + "B",
+          longPath:fileNames[0],
+          name:fileNames[0]
+        })
   });
 }
 
@@ -337,40 +336,44 @@ function saveFile() {
   });
 }
 
-function loadDirs(dir, appendID, __FirstTime) {
-  if (appendID == "g_directories") dir_path = dir;
-  let _SUBFOLDER;
+function loadDirs(dir, app_id, first_time) {
+  const appender_id = app_id.replace(/\\/g, "");
+  if (appender_id == "g_directories"){
+    document.getElementById("g_explorer").innerHTML = `<div id="g_directories"></div>`
+    dir_path = dir;
+  } 
+  let working_folder;
   FirstFolder = dir;
-  const me = document.getElementById(appendID);
-  if (me.getAttribute("opened") == "true") {
-    me.setAttribute("opened", "false");
-    const dir_length = me.children.length;
-    me.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder), "close"));
-    me.children[1].innerHTML = "";
+  const appender = document.getElementById(appender_id);
+  if (appender.getAttribute("opened") == "true") {
+    appender.setAttribute("opened", "false");
+    const dir_length = appender.children.length;
+    appender.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder), "close"));
+    appender.children[1].innerHTML = "";
     return;
   } else {
-    document.getElementById(appendID).setAttribute("opened", "true");
-    if (__FirstTime === false) {
-      const click = document.getElementById(appendID).children[0];
+    document.getElementById(appender_id).setAttribute("opened", "true");
+    if (first_time === false) {
+      const click = document.getElementById(appender_id).children[0];
       click.children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder), "open"));
     }
   }
-  if (__FirstTime) {
+  if (first_time) {
     if (document.getElementById("openFolder") != null) document.getElementById("openFolder").remove();
     registerNewProject(dir);
-    _SUBFOLDER = document.createElement("div");
-    for (i = 0; i < document.getElementById(appendID).children.length; i++) {
-      document.getElementById(appendID).children[i].remove();
+    working_folder = document.createElement("div");
+    for (i = 0; i < document.getElementById(appender_id).children.length; i++) {
+      document.getElementById(appender_id).children[i].remove();
     }
-    document.getElementById(appendID).setAttribute("opened", "false");
-    _SUBFOLDER.setAttribute("id", "g_directory");
-    _SUBFOLDER.setAttribute("myPadding", "50");
-    _SUBFOLDER.innerHTML = `<p>${path.basename(dir)}</p>` ;
-    document.getElementById(appendID).appendChild(_SUBFOLDER);
+    document.getElementById(appender_id).setAttribute("opened", "false");
+    working_folder.setAttribute("id", "g_directory");
+    working_folder.setAttribute("myPadding", "50");
+    working_folder.innerHTML = `<p>${path.basename(dir)}</p>` ;
+    document.getElementById(appender_id).appendChild(working_folder);
   } else {
-    _SUBFOLDER = document.getElementById(appendID).children[1];
+    working_folder = document.getElementById(appender_id).children[1];
   }
-  const paddingListDir = Number(document.getElementById(appendID).getAttribute("myPadding")) + 7; //Add padding
+  const paddingListDir = Number(document.getElementById(appender_id).getAttribute("myPadding")) + 7; //Add padding
   fs.readdir(dir, (err, paths) => {
     ids = 0;
     if (paths == undefined) {
@@ -378,74 +381,47 @@ function loadDirs(dir, appendID, __FirstTime) {
       return;
     }
     for (i = 0; i < paths.length; i++) {
-      let _LONGPATH = path.join(dir, paths[i]);
+      let _long_path = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
-        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\");
+        _long_path = _long_path.replace(/\\/g, "\\\\");
       }
       ids++;
-      const stats = fs.statSync(_LONGPATH);
+      const stats = fs.statSync(_long_path);
       if (stats.isDirectory()) {
         //If is folder
-        const element = document.createElement("div");
-        element.setAttribute("opened", "false");
-        element.setAttribute("ID", ids + dir);
-        element.setAttribute("name", paths[i]);
-        element.setAttribute(
-          "style",
-          `padding-left:${paddingListDir}px; vertical-align: middle;`
-        );
-        const list = document.createElement("div");
-        element.setAttribute("myPadding", paddingListDir);
-        element.setAttribute("longPath", _LONGPATH);
-        const touch = document.createElement("div");
-        touch.setAttribute(
-          "onClick",
-          `loadDirs('${_LONGPATH}','${ids+dir.replace(/\\/g, "\\\\")}',false)`
-        );
-        touch.innerText = paths[i];
-        touch.setAttribute("class", " folder_list2 ");
-        touch.setAttribute(
-          "style",
-          ` width:${Number(paths[i].length * 6 + 55)}px;`
-        );
-        const image = document.createElement("img");
-        image.setAttribute("src", g_getCustomFolder(paths[i], "close"));
-
-        image.setAttribute("style", "float:left; margin-right:3px;");
-        element.appendChild(touch);
-        touch.appendChild(image);
-        element.appendChild(list);
-        _SUBFOLDER.appendChild(element);
+        const directory_temp = document.createElement("div");
+        directory_temp.innerHTML+=`
+        <div opened="false" ID="${ids+dir.replace(/\\/g, "")}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
+          <div style=" width:${Number(paths[i].length * 6 + 55)}px;" class="folder_list2" onclick="loadDirs('${_long_path}','${ids+dir.replace(/\\/g, "")}',false)">
+            <img style="float:left; padding-right:3px;" src="${g_getCustomFolder(paths[i], "close")}">
+            ${paths[i]}
+          </div>
+          <div myPadding="${paddingListDir}" longpath="${_long_path}"></div>
+        </div>`
+        working_folder.appendChild(directory_temp);
       }
     }
     for (i = 0; i < paths.length; i++) {
-      let _LONGPATH = path.join(dir, paths[i]);
+      let _long_path = path.join(dir, paths[i]);
       if (graviton.currentOS() == "win32") {
-        _LONGPATH = _LONGPATH.replace(/\\/g, "\\\\"); //Delete
+        _long_path = _long_path.replace(/\\/g, "\\\\"); //Delete
       }
       ids++;
-      const stats = fs.statSync(_LONGPATH);
+      const stats = fs.statSync(_long_path);
       if (stats.isFile()) {
-        //If it's file
-        const element = document.createElement("div");
-        element.setAttribute("class", "folder_list1");
-        element.setAttribute("ID", ids + dir.replace(/\\/g, "\\\\") + "B");
-        element.setAttribute("name", paths[i]);
-        element.setAttribute(
-          "style",
-          `margin-left:${paddingListDir }px; 
-          vertical-align: middle; width:${paths[i].length * 6 + 55}px;`); //BUGG
-        element.setAttribute("myPadding", paddingListDir);
-        element.setAttribute("longPath", _LONGPATH);
-        element.setAttribute("onClick", "new tab(this)");
-        _SUBFOLDER.appendChild(element);
-        const image = document.createElement("img");
-        image.setAttribute("src", `src/icons/files/${getFormat(paths[i])}.svg`);
-        image.setAttribute("style", "float:left; margin-right:3px;");
-        const p = document.createElement("p");
-        p.innerText = paths[i];
-        element.appendChild(image);
-        element.appendChild(p);
+        const file_temp = document.createElement("div");
+        file_temp.innerHTML+=`
+        <div onclick="new tab({
+          id:'${ids+ dir.replace(/\\/g, "") + "B"}',
+          longPath:'${_long_path}',
+          name:'${paths[i]}'
+        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="folder_list1" ID="${ids+ dir + "B"}" name="${paths[i]}" style="width:${paths[i].length * 6 + 55}px; margin-left:${paddingListDir}px; vertical-align:middle;">
+          <img style="float:left; padding-right:3px;" src="src/icons/files/${getFormat(paths[i])}.svg">
+          <p>
+          ${paths[i]}
+          </p>
+        </div>`
+        working_folder.appendChild(file_temp);
       }
     }
   });
@@ -504,8 +480,14 @@ function getFormat(text) {
       return "pascal";
       break;
     case "md":
-      return "md";
+      return "unknown";
       break;
+    case "jpg":
+    case "png":
+    case "ico":
+    case "svg":
+      return "image";
+    break;
     default:
       return "unknown";
   }
@@ -513,23 +495,22 @@ function getFormat(text) {
 class tab {
   constructor(object) {
     for (i = 0; i < tabsEqualToFiles.length + 1; i++) {
-      if (i != tabsEqualToFiles.length && tabsEqualToFiles[i].id === object.id) {
-        console.log(tabsEqualToFiles[i]);
+      if (i != tabsEqualToFiles.length && tabsEqualToFiles[i].longPath === object.longPath){
         return;
       } else if (i == tabsEqualToFiles.length) { //Tab is created because it doesn't exist
-        document.getElementById("temp_dir_message").style = "visibility:hidden;"
+        document.getElementById("temp_dir_message").style = "visibility:hidden; display:none;"
         const tab = document.createElement("div");
-        tab.setAttribute("id", object.id.replace(/\\/g, "") + "Tab");
+        tab.setAttribute("id", object.id + "Tab");
         tab.setAttribute("TabID", object.id + "Tab");
-        tab.setAttribute("longPath", object.getAttribute("longpath"));
+        tab.setAttribute("longPath", object.longPath);
         tab.setAttribute("class", "tabs");
         tab.setAttribute("elementType", "tab");
         tab.style =
-          `min-width: ${(object.getAttribute("name").length * 4 + 115)}px; 
-        max-width: ${(object.getAttribute("name").length * 5 + 100)}px`;
+          `min-width: ${(object.name.length * 4 + 115)}px; 
+        max-width: ${(object.name.length * 5 + 100)}px`;
         tab.setAttribute("onclick", "g_load_tab(this)");
         tab.setAttribute("file_status", "saved");
-        tab.innerHTML += `<p id="${object.id.replace(/\\/g, "") + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.getAttribute("name")}</p>`
+        tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.name}</p>`
         const tab_x = document.createElement("button");
         tab_x.setAttribute("onclose", `g_close_tab("${ object.id }Tab");`);
         tab_x.setAttribute("onclick", `g_close_tab("${ object.id }Tab");`);
@@ -537,7 +518,7 @@ class tab {
         tab_x.setAttribute("hovering", "false");
         tab_x.setAttribute("elementType", "tab");
         tab_x.setAttribute("TabID", object.id + "Tab");
-        tab_x.setAttribute("id", object.id.replace(/\\/g, "") + "CloseButton");
+        tab_x.setAttribute("id", object.id + "CloseButton");
         tab_x.innerHTML = close_icon;
         tab_x.addEventListener("mouseover", function(e) {
           this.setAttribute("hovering", true);
@@ -549,7 +530,7 @@ class tab {
         document.getElementById("g_tabs_bar").appendChild(tab);
         tabs.push(tab);
         tabsEqualToFiles.push(object);
-        const g_newPath = object.getAttribute("longPath");
+        const g_newPath = object.longPath;
         filepath = g_newPath;
         switch (filepath.split(".").pop()) {
           case "svg":
@@ -574,7 +555,6 @@ class tab {
               editingTab = tab.id;
               loadEditor(g_newPath, data, "text");
               if (g_highlighting == "activated") updateCodeMode(g_newPath);
-              document.getElementById(editorID).style.height = " calc(100% - (55px))";
               editor.refresh();
             });
         }
@@ -584,12 +564,11 @@ class tab {
   }
 }
 const g_close_tab = tab_id => {
-  const element = tab_id.replace(/\\/g, "");
-  const g_object = document.getElementById(element);
+  const g_object = document.getElementById(tab_id);
   for (i = 0; i < tabs.length; i++) {
     const tab = tabs[i];
     let new_selected_tab;
-    if (tab.id == element.replace(/\\/g, "\\\\")) {
+    if (tab.id == tab_id) {
       tabsEqualToFiles.splice(i, 1);
       tabs.splice(i, 1);
       document
@@ -602,7 +581,7 @@ const g_close_tab = tab_id => {
         filepath = " ";
         plang = "";
         document.getElementById("g_status_bar").children[0].innerText = plang;
-        document.getElementById("temp_dir_message").style = "visibility:visible;"
+        document.getElementById("temp_dir_message").style = "visibility:visible; display:block;"
       } else if (i === tabs.length) { //Last tab selected
         new_selected_tab = tabs[Number(tabs.length) - 1];
       } else {
@@ -730,14 +709,10 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
 const g_ZenMode =()=>{
   if (editor_mode == "zen") {
     editor_mode = "normal";
-    document.getElementById("g_explorer").style = "visibility: visible; width:200px; overflow:auto;";
-    document.getElementById("g_editors").style = "margin:0px 0px 0px 200px";
-    document.getElementById("g_status_bar").style = "margin:0px 0px 0px 200px";
+    document.getElementById("g_explorer").style = "visibility: visible; width:210px; display:block;";
   } else {
     editor_mode = "zen";
-    document.getElementById("g_explorer").style = "visibility: hidden; width:0px; overflow:hidden;";
-    document.getElementById("g_editors").style = "margin:0px";
-    document.getElementById("g_status_bar").style = "margin:0px";
+    document.getElementById("g_explorer").style = "visibility: hidden; width:0px; display:none;";
   }
 }
 const g_preview = function() {

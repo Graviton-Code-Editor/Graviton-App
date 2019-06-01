@@ -61,7 +61,7 @@ const loadTheme = number=>{
 			try{
 				document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
 			}catch{ //Returns an error = system is not compatible, Linux-based will probably throw that error
-				new Notification("Issue","Your system is not compatible with this feature.")
+				new Notification("Issue","Your system is not compatible with accent color matching.")
 			} 
 		}else{
 			document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
@@ -81,7 +81,9 @@ function setThemeByName(name){
 			const colors = themes[i]["Colors"]; //Take the colors object inside the json file of the selected theme
 			for(i = 0;i < Object.keys(colors).length;i++){
 				if(current_config.accentColorPreferences=="system" && Object.keys(colors)[i]=="accentColor"){
-					document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+					try{
+						document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
+					}catch{} 
 				}else{				
 					document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update UI colors
 				}

@@ -42,7 +42,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 #nav_bar button:active{
     transition: 0.05s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
 #nav_bar button.active{
     cursor: pointer;
@@ -85,7 +85,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 .theme_div:active{
     transition: 0.10s;
-    transform: scale(0.97);
+    transform: scale(var(--scalation));
 }
 #language_list{
     overflow: auto;
@@ -111,5 +111,5 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 .language_div:active{
     transition: 0.1s;
-    transform: scale(0.98);
+    transform: scale(var(--scalation));
 }
