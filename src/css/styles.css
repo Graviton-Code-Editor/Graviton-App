@@ -152,6 +152,7 @@ body ,head{
     overflow: hidden;
 }
 #g_content >#g_editors > #g_editors_editors> .code-space{
+
     position: relative;
 }
 #g_content >#g_editors #g_editors_editors> .code-space img{

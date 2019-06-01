@@ -51,6 +51,7 @@ Wanna build Graviton from source?
 Credits
 ---
 - [Codemirror](codemirror.net)
+- 2€ donation by Alex Mayol Carrión
 
 License
 ---

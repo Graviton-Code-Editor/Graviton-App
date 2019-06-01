@@ -2,7 +2,8 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200601 - 1 [0.7.6]
+
+### 200601 - 1 [0.7.7]
 - Now you can expand the files explorer from left to right by clicking on top right of it and moving the cursor
 - **FINALLY** removed that white square on corners of scrollbars
 - Correct the editors heights

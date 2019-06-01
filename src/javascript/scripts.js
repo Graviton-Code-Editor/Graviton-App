@@ -309,10 +309,10 @@ function openFile() {
       return;
     }
     new tab({
-          id: Math.random()+ fileNames[0].replace(/\\/g, "\\\\") + "B",
-          longPath:fileNames[0],
-          name:fileNames[0]
-        })
+      id: Math.random()+ fileNames[0].replace(/\\/g, "\\\\") + "B",
+      longPath:fileNames[0],
+      name:fileNames[0]
+    })
   });
 }
 

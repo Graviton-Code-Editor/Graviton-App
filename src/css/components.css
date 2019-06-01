@@ -18,14 +18,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     width: 100%;
     position: fixed;
     overflow: hidden;
-}
+}  
 .body_window{
+     animation: window_up linear 0.15s;
     color:var(--white-black);
     font-size: 17px;
     padding:12px;
     overflow-y: scroll;
     border-radius: var(--window-radius);
-    box-shadow: 0px 3px 15px rgba(0,0,0,0.01);
+    box-shadow: 0px 3px 15px var(--shadows);
     width: 85%;
     height: 85%;
     position: fixed;
@@ -147,13 +148,15 @@ input[type="number"]::selection {
 }
 /* Dialogs */
 .dialog_body {
+    animation: window_up linear 0.15s;
+    opacity: 1;
     position: absolute;
     color: var(--white-black);
     font-size: 17px;
     padding: 17px;
     overflow: auto;
     border-radius: var(--window-radius);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.01);
+    box-shadow: 0px 3px 15px var(--shadows);
     min-width: 20%;
     max-width: 85%;
     min-height: 110px;
@@ -164,15 +167,21 @@ input[type="number"]::selection {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -45%);
-    opacity: 1;
 }
-
+@keyframes window_up{
+    from{
+        transform: translate(-50%, -43%);
+    }
+    to{
+        transform: translate(-50%, -45%);
+    }
+}
 .dialog_body button {
     font-weight: bold;
     float: right;
     width: auto;
     border: none;
-    margin-top: 15px;
+    margin-top: 15px;   
     padding: 10px 16px;
     background: transparent;
     color: var(--white-black);
