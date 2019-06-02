@@ -71,5 +71,8 @@
 	"CheckUpdates":"Comprovar actualitzacions",
 	"Settings-Editor-AutoCompletion-text":"Desactiva per amagar les prediccions",
 	"Line-Wrapping":"Line-Wrapping",
-	"Themes.Text":"Utilitza el color d'accentuació del sistema"
+	"Themes.Text":"Utilitza el color d'accentuació del sistema",
+	"Author":"Autor",
+	"Remove":"Borrar",
+	"AreYouSure":"Estàs segur?"
 }

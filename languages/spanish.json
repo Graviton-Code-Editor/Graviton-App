@@ -71,6 +71,9 @@
 	"CheckUpdates":"Comprobar actualizaciones",
 	"Settings-Editor-AutoCompletion-text":"Desactivalo para esconder las predicciones",
 	"Line-Wrapping":"Line-Wrapping",
-	"Themes.Text":"Utilitzar el color de accento del sistema"
+	"Themes.Text":"Utilitzar el color de accento del sistema",
+	"Author":"Autor",
+	"Remove":"Borrar",
+	"AreYouSure":"Estás seguro?"
 	
 }

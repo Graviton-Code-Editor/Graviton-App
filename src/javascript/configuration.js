@@ -13,8 +13,8 @@ preload([ //Preload some images to improve the UX
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
 ])
-let current_config = {
-  justInstalled: false,
+let current_config = { //Default values
+  justInstalled: true,
   theme: "Light UI",
   fontSizeEditor: "15",
   appZoom: "25",
@@ -25,10 +25,9 @@ let current_config = {
   accentColorPreferences: "manual"
 }
 
-function loadConfig() { //Loads the configuration from the config.jsons for the first time
+function loadConfig() { //Loads the configuration from the config.json for the first time
 
   if (!fs.existsSync(configDir)) {
-    current_config.justInstalled = true;
     fs.writeFile(configDir, JSON.stringify(current_config)); //Save the config
     updateSettings();
     loadLanguage(current_config.language);

@@ -37,19 +37,19 @@ function g_welcomePage(){
 	})
 	welcome_window.launch()
 	fs.readFile(logDir, 'utf8', function (err,data) {
-		  if (err) return console.log(err);
-		  const objectLog = JSON.parse(data);
-		  for(i=0;i<objectLog.length; i++){
-					const project = document.createElement("div");
-					project.setAttribute("class","project_div");
-					project.setAttribute("onclick",`loadDirs('${objectLog[i].Path.replace(/\\/g, "\\\\")}','g_directories','yes'); welcome_window.close();`);
-					project.innerText=objectLog[i].Name;
-					const description = document.createElement("p");
-					description.innerText = objectLog[i].Path;
-					description.setAttribute("style","font-size:12px;")
-					project.appendChild(description);
-					document.getElementById("recent_projects").appendChild(project);
-			}
+	  if (err) return console.log(err);
+	  const objectLog = JSON.parse(data);
+	  for(i=0;i<objectLog.length; i++){
+			const project = document.createElement("div");
+			project.setAttribute("class","project_div");
+			project.setAttribute("onclick",`loadDirs('${objectLog[i].Path.replace(/\\/g, "\\\\")}','g_directories','yes'); welcome_window.close();`);
+			project.innerText=objectLog[i].Name;
+			const description = document.createElement("p");
+			description.innerText = objectLog[i].Path;
+			description.setAttribute("style","font-size:12px;")
+			project.appendChild(description);
+			document.getElementById("recent_projects").appendChild(project);
+		}
  	});
  if(error_showed == false) DeleteBoot(); //Delay to load all the config
 }
@@ -122,7 +122,7 @@ function FTGoPage(number){
 		break;
 		case "3":
 			document.getElementById("body_window_full").innerHTML= `
-				<h1 style="  font-size:30px; margin-top:200px;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]+" "+ g_version.version }</h1> 
+				<h1 style="  font-size:30px; margin-top:100px;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]+" "+ g_version.version }</h1> 
 				<button onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
 				`;
 		break;

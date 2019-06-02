@@ -66,7 +66,21 @@ let themes_folder = path.join(DataFolderDir, "themes");
 let highlights_folder = path.join(DataFolderDir, "highlights");
 let plugins_folder = path.join(DataFolderDir, "plugins");
 let plugins_db = path.join(DataFolderDir, "plugins_db");
+let mouseClicked = false;
+let touchingResizerValue = false;
+document.addEventListener('mousedown', function(event) { 
+    if ( event.which ) mouseClicked = true;
+}, true);
 
+document.addEventListener('mouseup', function(event) { 
+    if ( event.which ) mouseClicked = false;
+}, true);
+document.addEventListener('mousemove', function(event) { 
+    if(mouseClicked && touchingResizerValue){
+      const explorer = document.getElementById("g_explorer");
+      explorer.style = `width: ${event.clientX-3}px`;
+    }
+}, true);
 const loadEditor = (dir, data, type) => {
   if (document.getElementById(dir + "_editor") == undefined) {
     //Editor doesn't exist
@@ -88,7 +102,7 @@ const loadEditor = (dir, data, type) => {
           lineWrapping: current_config["lineWrappingPreferences"] == "activated"
         });
         document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
-        let new_editor_text = {
+        const new_editor_text = {
           id: dir + "_editor",
           editor: codemirror,
           path: dir
@@ -791,5 +805,14 @@ const preload = (array) => { //Preload images when booting
     document.body.innerHTML += `
     <img id="${array[i]}"src="${array[i]}"></img>`
     document.getElementById(array[i]).remove();
+  }
+}
+function touchingResizer(type){
+  if(type==false){
+    if(!mouseClicked){
+      touchingResizerValue = false;
+    }
+  }else{
+      touchingResizerValue = true;
   }
 }

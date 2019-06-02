@@ -10,32 +10,40 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 let plugins_list = [];
 let plugins_dbs= [];
-const g_open_plugins_folder = () =>{
-	const {shell} = require('electron') // deconstructing assignment
-	shell.openItem(plugins_folder)	
-}
 function openPlugins(){
 	const plugins_window = new Window({
 	id:"plugins_window",
 	content:`
 		<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
-	  <div class="section">
-	  	<button class="button1" onclick="g_open_plugins_folder()">${current_config.language["OpenFolder"]}</button>
-		</div>
 		<div id="plugins_list">
 		</div>`
 	})
 	plugins_window.launch()
 	plugins_list.forEach(plugin => {
 			document.getElementById("plugins_list").innerHTML+=`
-			<div class="section_hover">
-				${plugin["name"] + " · v"+ plugin["version"]}
-				<p style="font-size:15px;">${current_config.language["MadeBy"] + plugin["author"]}</p>
-				<p styl="font-size:13px; line-height:2px;">${plugin["description"]}</p>
+			<div id="${plugin["name"]}_div_list" class="section2">
+				<p class="title">${plugin["name"]} · v${plugin["version"]}</p>
+				<p style="font-size:15px;">${current_config.language["Author"]}: ${plugin["author"]}</p>
+				<p styl="font-size:13px; line-height:2px;">Description: ${plugin["description"]}</p>
+				<button class="button2"  onclick="shell.openItem(path.join(plugins_folder,'${plugin["folder"]}'))">Open folder</button>
 			</div>
 			`
   });
 	if(plugins_list.length ==0)content.innerHTML += `<p>No plugins detected.</p>`
+}
+function removePlugin(name){
+	for(i=0;i<plugins_list.length;i++){
+		if(plugins_list[i]["name"]==name){
+			try{
+				fs.remove(path.join(plugins_folder,name), function(){
+					document.getElementById(name+"_div_list").remove();
+				});
+			}catch{
+				new Notification("Plugin remover","Cannot remove this plugin, do it manually.")
+			}
+			 
+		}
+	}
 }
 function detectPlugins(){
 	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist

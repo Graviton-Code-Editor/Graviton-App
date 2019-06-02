@@ -88,11 +88,12 @@ body ,head{
 }
 #g_content {
     display: flex;
+    background: var(--primaryColor)
 }
 #g_content > #g_explorer{
     min-width: 15%;
     width:210px;
-    max-width: 50%;
+    max-width: 70%;
     left:0;
     height: calc(100% - (35px));
     overflow:auto;
@@ -102,7 +103,6 @@ body ,head{
     -webkit-user-select: none;
     float:left;
     direction: ltr;
-    resize: horizontal;
 }
 #g_content > #g_explorer > #g_directories > #g_directory{
     margin:5px;
@@ -130,7 +130,10 @@ body ,head{
 }
 #g_content > #g_editors > #temp_dir_message{
     font-size: 15px;
-    -webkit-user-select: none;
+    webkit-user-select: none;
+    pointer-events: none;
+    -webkit-user-select: none; 
+    -webkit-app-region: no-drag;
     position: relative;
     left: 50%;
     top:45%;
@@ -151,6 +154,18 @@ body ,head{
     color:var(--white-black);
     overflow: hidden;
 }
+#g_content >#g_spacer{
+    flex:0;
+    min-width: 6px;
+    background: var(--primaryColor);
+    cursor: ew-resize;
+    margin: 0 2px;
+}
+#g_content >#g_editors > #g_editors_editors{
+    flex:auto;
+    overflow: auto; 
+    height: 90%;
+}
 #g_content >#g_editors > #g_editors_editors> .code-space{
 
     position: relative;
@@ -164,11 +179,7 @@ body ,head{
     margin: 0 auto;
     border-style: none;
 }
-#g_content >#g_editors > #g_editors_editors{
-    flex:auto;
-    overflow: auto; 
-    height: 90%;
-}
+
 #g_content >#g_editors> #g_status_bar{
     flex:20px;
     height: 20px;
@@ -332,7 +343,7 @@ body ,head{
     opacity: 1;
   }
 }
-.Button1{
+button.button1{
     font-family: _main_font;
     transition: 0.07s;
     border-radius: var(--buttons-roundness);
@@ -347,23 +358,23 @@ body ,head{
     user-select: auto;
     -webkit-app-region: auto;
 }
-.Button1:hover{
+button.button1:hover{
     transition: 0.05s;
     cursor: pointer;
     background: var(--widget-color);    
 }
-.Button1.red{
+button.button1.red{
     background: red;
     color:white;
 }
-.Button1.red:hover{
+button.button1.red:hover{
     background: darkred;
     color: white; 
 }
-.Button1.disabled{
+button.button1.disabled{
     pointer-events: none;
 }
-.Button1:active{
+button.button1:active{
     transition: 0.03s;
     transform: scale(var(--scalation));
     box-sizing: border-box; 
@@ -390,23 +401,54 @@ body ,head{
     background: transparent;
     height: auto;
 }
-.section_hover{
+.section2{
     transition: 0.07s;
     margin: 7px;
-    padding: 12px 15px;
-    background: var(--primaryColor);
+    padding: 20px;
+    background: var(--secondaryColor);
     cursor: pointer;
     height: auto;
     border-radius: 8px;
+    box-shadow: 0px 2px 5px var(--shadows);
     transform: scale(1);
 }
-.section_hover:hover{
-    transition: 0.05s;
+.section2:hover{
+    background: var(--primaryColor);
+}
+button.button2 {
+    font-weight: bold;
+    right: 0;
+    width: auto;
+    border: none;
+    margin-top: 2.5px;   
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--white-black);
+    box-sizing: border-box;
+    position: relative;
+    left: 0px;
+    bottom: 0px;
+    border-radius: 3px;
+    font-family: _main_font;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 11px;
+    transform: scale(1)
+}
+button.button2:hover {
+    transition: 0.1s;
+    cursor: pointer;
     background: var(--widget-color);
 }
-.section_hover:active{
-    transition: 0.07s;
+button.button2:active {
+    transition: 0.06s;
     transform: scale(var(--scalation));
+    opacity:0.7;
+}
+.section2 p.title{
+    margin: 4px 0px;
+    font-size: 19px;
+    font-weight: 700;
 }
 .body_window h3{
  font-weight: 570;

@@ -84,7 +84,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     min-width: auto;
     background: var(--primaryColor)
 }
-#g_control_bar >  #g_dropmenu_list .dropbtn:hover, .dropbtn:focus {
+#g_control_bar >  #g_dropmenu_list  .dropbtn:hover {
+    background-color:var(--widget-color);
+}
+#g_control_bar >  #g_dropmenu_list  .dropbtn:focus {
     background-color:var(--widget-color);
 }
 .dropdown {
