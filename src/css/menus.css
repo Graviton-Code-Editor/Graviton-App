@@ -27,10 +27,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     flex:1;
     display: flex;
     -webkit-app-region: no-drag;
-    top: 0px;
-    right: 0px;
-    width: auto;
-    float:left;
+    max-width: 144px;
 }
 #g_control_bar > #controls button {
     padding: 6px 0px;

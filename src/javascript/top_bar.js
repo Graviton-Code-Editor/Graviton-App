@@ -21,6 +21,10 @@ const Help = new dropMenu({
   id:"help",
   translation: true
 });
+const Editor = new dropMenu({
+  id:"editor",
+  translation: false
+});
 File.setList({
   button: "File",
   list: {
@@ -57,6 +61,12 @@ Help.setList({
     Changelog:"graviton.dialogChangelog()",
     Website:"shell.openExternal('https://www.graviton.ml')",
     About:"graviton.dialogAbout()"
+  }
+});
+Editor.setList({
+  button: "Editor",
+  list: {
+    "add screen":"addScreen()"
   }
 });
 function interact_dropmenu(id) {

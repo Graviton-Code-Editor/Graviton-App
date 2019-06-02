@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190601",
+  date: "190602",
   version: "0.7.7",
   state: "Alpha"
 }
@@ -34,6 +34,7 @@ const $ = require('jquery');
 const { webFrame } = require('electron');
 const g_window = require('electron').remote.getCurrentWindow();
 const { systemPreferences } = require('electron').remote;
+let default_editor;
 let dir_path;
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
@@ -81,7 +82,7 @@ document.addEventListener('mousemove', function(event) {
       explorer.style = `width: ${event.clientX-3}px`;
     }
 }, true);
-const loadEditor = (dir, data, type) => {
+const loadEditor = (dir, data, type,screen) => {
   if (document.getElementById(dir + "_editor") == undefined) {
     //Editor doesn't exist
     switch (type) {
@@ -89,7 +90,7 @@ const loadEditor = (dir, data, type) => {
         let text_container = document.createElement("div");
         text_container.classList = "code-space";
         text_container.setAttribute("id", dir + "_editor");
-        document.getElementById("g_editors_editors").appendChild(text_container);
+        document.getElementById(default_editor.id).children[2].appendChild(text_container);
         let codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
           value: data,
           mode: "text/plain",
@@ -105,10 +106,15 @@ const loadEditor = (dir, data, type) => {
         const new_editor_text = {
           id: dir + "_editor",
           editor: codemirror,
-          path: dir
+          path: dir,
+          screen: screen
         };
         editors.push(new_editor_text);
-        if (document.getElementById(editorID) != undefined) document.getElementById(editorID).style.display = "none";
+        for (i = 0; i < editors.length; i++) {
+          if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
+            document.getElementById(editors[i].id).style.display = "none";
+          }
+        }
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
         document.getElementById(dir + "_editor").style.display = "block";
@@ -118,11 +124,12 @@ const loadEditor = (dir, data, type) => {
         image_container.classList = "code-space";
         image_container.setAttribute("id", `${dir}_editor`);
         image_container.innerHTML = `<img src="${dir}">`
-        document.getElementById("g_editors_editors").appendChild(image_container);
+        document.getElementById(default_editor.id).children[2].appendChild(image_container);
         const new_editor_image = {
           id: dir + "_editor",
           editor: undefined,
-          path: dir
+          path: dir,
+          screen: screen
         };
         editors.push(new_editor_image);
         if (document.getElementById(editorID) != undefined) document.getElementById(editorID).style.display = "none";
@@ -133,8 +140,10 @@ const loadEditor = (dir, data, type) => {
     }
   } else { //Editor exists
     for (i = 0; i < editors.length; i++) {
-      if (document.getElementById(editors[i].id) != null) {
+      console.log(editors[i].screen, screen);
+      if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
         document.getElementById(editors[i].id).style.display = "none";
+        console.log("selected");
       }
       if (editors[i].id == dir + "_editor") {
         if (editors[i].editor != undefined) {
@@ -517,6 +526,7 @@ class tab {
         tab.setAttribute("id", object.id + "Tab");
         tab.setAttribute("TabID", object.id + "Tab");
         tab.setAttribute("longPath", object.longPath);
+        tab.setAttribute("screen",default_editor.id);
         tab.setAttribute("class", "tabs");
         tab.setAttribute("elementType", "tab");
         tab.style =
@@ -541,7 +551,7 @@ class tab {
           this.setAttribute("hovering", false);
         });
         tab.appendChild(tab_x);
-        document.getElementById("g_tabs_bar").appendChild(tab);
+        document.getElementById(default_editor.id).children[0].appendChild(tab);
         tabs.push(tab);
         tabsEqualToFiles.push(object);
         const g_newPath = object.longPath;
@@ -552,22 +562,26 @@ class tab {
           case "ico":
           case "jpg":
             for (i = 0; i < tabs.length; i++) {
-              if (tabs[i].classList.contains("selected")) tabs[i].classList.remove("selected");
+              if (tabs[i].getAttribute("screen") == default_editor.id && tabs[i].classList.contains("selected")) {
+                tabs[i].classList.remove("selected");
+              }
             }
             tab.classList.add("selected");
             editingTab = tab.id;
-            loadEditor(filepath, null, "image");
+            loadEditor(filepath, null, "image",default_editor.id);
             break;
           default:
             fs.readFile(g_newPath, "utf8", function(err, data) {
               if (err) return console.err(err);
               tab.setAttribute("data", data);
               for (i = 0; i < tabs.length; i++) {
-                if (tabs[i].classList.contains("selected")) tabs[i].classList.remove("selected");
+                if (tabs[i].getAttribute("screen") == default_editor.id && tabs[i].classList.contains("selected")) {
+                  tabs[i].classList.remove("selected");
+                }
               }
               tab.classList.add("selected");
               editingTab = tab.id;
-              loadEditor(g_newPath, data, "text");
+              loadEditor(g_newPath, data, "text",default_editor.id);
               if (g_highlighting == "activated") updateCodeMode(g_newPath);
               editor.refresh();
             });
@@ -578,11 +592,12 @@ class tab {
   }
 }
 const g_close_tab = tab_id => {
+  console.log(tab_id)
   const g_object = document.getElementById(tab_id);
   for (i = 0; i < tabs.length; i++) {
     const tab = tabs[i];
     let new_selected_tab;
-    if (tab.id == tab_id) {
+    if (tab.id == tab_id && tab.getAttribute("screen") == g_object.getAttribute("screen")) {
       tabsEqualToFiles.splice(i, 1);
       tabs.splice(i, 1);
       document
@@ -591,7 +606,6 @@ const g_close_tab = tab_id => {
       editors.splice(i , 1);
       g_object.remove();
       if (tabs.length === 0) { //Any tab opened
-        document.getElementById("g_editors").style = " ";
         filepath = " ";
         plang = "";
         document.getElementById("g_status_bar").children[0].innerText = plang;
@@ -603,7 +617,7 @@ const g_close_tab = tab_id => {
       }
       if (new_selected_tab != undefined) {
         for (i = 0; i < tabs.length; i++) {
-          if (tabs[i].classList.contains("selected")) {
+          if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
             tabs[i].classList.remove("selected");
           }
         }
@@ -611,7 +625,7 @@ const g_close_tab = tab_id => {
         new_selected_tab.classList.add("selected");
         const g_newPath = new_selected_tab.getAttribute("longpath");
         filepath = g_newPath;
-        loadEditor(g_newPath, g_object.getAttribute("data"), "text");
+        loadEditor(g_newPath, g_object.getAttribute("data"), "text",default_editor.id);
         if (g_highlighting == "activated") updateCodeMode(g_newPath);
       }
     }
@@ -620,14 +634,15 @@ const g_close_tab = tab_id => {
 const g_load_tab = object => {
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
     for (i = 0; i < tabs.length; i++) {
-      if (tabs[i].classList.contains("selected")) {
+      console.log(object.getAttribute("screen"),default_editor.id);
+      if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == object.getAttribute("screen")) {
         tabs[i].classList.remove("selected");
       }
     }
     object.classList.add("selected");
     const g_newPath = object.getAttribute("longPath");
     filepath = g_newPath
-    loadEditor(g_newPath, object.getAttribute("data"));
+    loadEditor(g_newPath, object.getAttribute("data"),undefined,object.getAttribute("screen"));
     if (g_highlighting == "activated") updateCodeMode(g_newPath);
     editingTab = object.id;
   }
@@ -815,4 +830,30 @@ function touchingResizer(type){
   }else{
       touchingResizerValue = true;
   }
+}
+let editor_screens = [];
+function addScreen(){
+  const new_screen_editor = document.createElement("div");
+  new_screen_editor.classList = "g_editors"
+  new_screen_editor.id = Math.random();
+  new_screen_editor.innerHTML=`
+     <div id="g_tabs_bar" class="flex"></div>  
+      <p class="translate_word" idT="WelcomeMessage" id="temp_dir_message" ></p>
+      <div id="g_editors_editors">
+      </div>
+      <div id="g_status_bar" >
+        <span ></span>
+        <span ></span>
+      </div>
+  `
+  document.getElementById("g_content").appendChild(new_screen_editor)
+  editor_screens.push({
+    id:new_screen_editor.id
+  })
+  default_editor = editor_screens[editor_screens.length-1]
+  new_screen_editor.addEventListener('mouseover', function(event) { 
+    console.log(this.id)
+    default_editor.id = this.id
+  }, true);
+
 }

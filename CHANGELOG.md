@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200602 - 2 [0.7.7]
+- Testing with multiple tabs openeds at the same time
+
 ### 200602 - 1 [0.7.7]
 - Redesigned plugins page
 - Fixed, toolbar button weren't focusing

@@ -36,6 +36,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
     } else {
       g_Setup();
     }
+    addScreen();
     detectPlugins(); //Call the function to detect the installed plugins
   } else {
     fs.readFile(configDir, 'utf8', function(err, data) {
@@ -58,6 +59,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
         document.documentElement.appendChild(style);
         document.documentElement.style.setProperty("--scalation","1");
       }
+      addScreen();
       detectPlugins(); //Call the function to detect the installed plugins
     });
     

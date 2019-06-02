@@ -112,7 +112,7 @@ body ,head{
     line-height: 20px;
     font-size:16px; 
 }
-#g_content > #g_editors > #g_tabs_bar{
+#g_content > .g_editors > #g_tabs_bar{
     min-height: 37px;
     max-height: 37px;
     position: relative;
@@ -128,7 +128,7 @@ body ,head{
     padding: 0;
     color:var(--white-black);
 }
-#g_content > #g_editors > #temp_dir_message{
+#g_content > .g_editors > #temp_dir_message{
     font-size: 15px;
     webkit-user-select: none;
     pointer-events: none;
@@ -142,7 +142,7 @@ body ,head{
     color:var(--white-black);
     width: auto;
 }
-#g_content > #g_editors{
+#g_content > .g_editors{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
     flex:3;
@@ -161,16 +161,16 @@ body ,head{
     cursor: ew-resize;
     margin: 0 2px;
 }
-#g_content >#g_editors > #g_editors_editors{
+#g_content >.g_editors > #g_editors_editors{
     flex:auto;
     overflow: auto; 
     height: 90%;
 }
-#g_content >#g_editors > #g_editors_editors> .code-space{
+#g_content >.g_editors > #g_editors_editors> .code-space{
 
     position: relative;
 }
-#g_content >#g_editors #g_editors_editors> .code-space img{
+#g_content >.g_editors #g_editors_editors> .code-space img{
     user-select: none; 
     pointer-events: none;
     position: relative; 
@@ -180,14 +180,14 @@ body ,head{
     border-style: none;
 }
 
-#g_content >#g_editors> #g_status_bar{
+#g_content >.g_editors> #g_status_bar{
     flex:20px;
     height: 20px;
     background: var(--primaryColor);
     padding: 5px 10px;
     border: none;
 }
-#g_content >#g_editors> #g_status_bar *{
+#g_content >.g_editors> #g_status_bar *{
     padding: 0;
     margin: 0;
     color: var(--white-black);
@@ -204,7 +204,7 @@ body ,head{
 .flex >div{
     flex: 1;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs{
+#g_content > .g_editors >#g_tabs_bar > .tabs{
     position: relative;
     transition: 0.05s;
     color:var(--white-black);
@@ -217,24 +217,24 @@ body ,head{
     cursor: pointer;
     transform: scale(1);
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:first-child{
+#g_content > .g_editors >#g_tabs_bar > .tabs:first-child{
     border-top-left-radius: 5px;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:last-child{
+#g_content > .g_editors >#g_tabs_bar > .tabs:last-child{
     border-top-right-radius: 5px;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:hover{
+#g_content > .g_editors >#g_tabs_bar > .tabs:hover{
     transition: 0.05;
     background: var(--widget-color);
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs:active{
+#g_content > .g_editors >#g_tabs_bar > .tabs:active{
     transition: 0.05;
     transform: scale(0.97);
 }
-#g_content > #g_editors >#g_tabs_bar >.tabs.selected{
+#g_content > .g_editors >#g_tabs_bar >.tabs.selected{
     background: var(--secondaryColor);
 }
-#g_content > #g_editors >#g_tabs_bar >.tabs > p{
+#g_content > .g_editors >#g_tabs_bar >.tabs > p{
     overflow: hidden;
     display: inline-block;
     position: relative;
@@ -250,7 +250,7 @@ body ,head{
     float:left; 
     text-align:center;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs > .close_tab{
+#g_content > .g_editors >#g_tabs_bar > .tabs > .close_tab{
     position: relative;
     top:35%;
     display: inline-block;
@@ -264,13 +264,13 @@ body ,head{
     background: transparent;
     fill: var(--white-black);
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:not(.selected)  .close_tab{
+#g_content > .g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:not(.selected)  .close_tab{
     opacity: 0;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:hover  .close_tab {
+#g_content > .g_editors >#g_tabs_bar > .tabs[file_status~="saved"]:hover  .close_tab {
     opacity: 1;
 }
-#g_content > #g_editors >#g_tabs_bar > .tabs  .close_tab:hover{
+#g_content > .g_editors >#g_tabs_bar > .tabs  .close_tab:hover{
     height: 10px;
     width:10px;
     border: none;
