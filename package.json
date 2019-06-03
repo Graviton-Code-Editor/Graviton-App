@@ -1,65 +1,117 @@
-{
-  "name": "Graviton",
-  "version": "0.7.7",
-  "description": "Graviton is a simple code editor.",
-  "main": "main.js",
-  "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
-  "scripts": {
-    "start": "electron . GravitonEditor ",
-    "pack": "build --dir",
-    "build": "build",
-    "build:snap": "build --linux snap",
-    "build:win": "build --win"
-  },
-  "keywords": [
-    "Graviton",
-    "Editor",
-    "code",
-    "open source",
-    "simple"
-  ],
-  "author": "Marc Espín Sanz<mespinsanz@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "appdata-path": "^1.0.0",
-    "fs": "0.0.1-security",
-    "fs-extra": "^7.0.1",
-    "jquery": "^3.4.0",
-    "mkdirp": "^0.5.1",
-    "nodejs": "0.0.0",
-    "npm": "^6.9.0",
-    "request": "^2.88.0"
-  },
-  "devDependencies": {
-    "electron": "^4.0.5",
-    "electron-builder": "^20.40.2",
-    "fs": "0.0.1-security"
-  },
-  "build": {
-    "appId": "graviton-editor",
-    "asar": true,
-    "dmg": {
-      "contents": [
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ],
-      "icon": "build/mac/icon.icns"
-    },
-    "linux": {
-      "category": "Utility",
-      "target": [
-        "AppImage",
-        "deb"
-      ],
-      "icon": "build/linux"
-    },
-    "win": {
-      "target": "NSIS",
-      "icon": "build/win/icon.ico"
+<!--
+########################################
+              MIT License
+Copyright (c) 2019 Graviton Editor
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+#########################################
+-->
+<!DOCTYPE>
+<meta charset="utf-8"/>
+<link rel="stylesheet" href="src/css/fast_loading.css">
+<div id="g_bootanimation" >
+   <img src="src/icons/logo.svg">
+</div>
+<script>f
+  let editor_booted = false;
+  let error_showed = false;
+  function FactoryReset(){
+    fs.unlink(configDir,function(){
+      restartApp();
+    });  
+  }
+  function DeleteBoot(){
+    if(document.getElementById("g_bootanimation") != null ){
+      document.getElementById("g_bootanimation").remove();
+      editor_booted = true;
     }
   }
-}
+  window.addEventListener("error",function(){
+    if(editor_booted==false && error_showed == false){
+      error_showed = true;
+      //setThemeByName("Dark");
+      document.getElementById("g_bootanimation").innerHTML += `
+      <div>
+        <p>An error has appeared when booting Graviton.</p>
+        <button class="Button1 red" onclick="FactoryReset()">Repair</button>
+        <button class="Button1" onclick="restartApp()">Reboot</button>
+        <button class="Button1" onclick="DeleteBoot()">Ignore</button>
+      </div>`
+    }else if(error_showed==false){
+      graviton.throwError("An error has appeared! Check the console on developer tools for more info.");
+    }
+  });
+</script>
+<html>
+    <div id="g_control_bar">
+        <img src="src/icons/logo.svg">
+        <div id="g_dropmenu_list">
+          <!--Dropmenus list-->  
+        </div>   
+         <div id="controls" >
+          <!-- Control buttons (only for windows) -->
+        </div>
+    </div>
+    <body>
+      <div id="g_content" >
+        <div id="g_explorer" opened="false" > <!--Directories tree-view -->
+          <span id="openFolder" height="24px" width="24px" onclick="openFolder()" ></span>
+         
+        </div>
+        <div id="g_spacer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
+        <context >
+            <div id="context" class="menuWrapper"></div>
+        </context>
+      </div> 
+     <!-- -->
+      <div id="notifications" > 
+        <!-- Notifications list -->
+        
+      </div>
+    </body>  
+    <!-- Codemirror -->
+    <script src="src/lib/codemirror.js"></script>
+
+    <script src="src/mode/css/css.js"></script>
+    <script src="src/mode/xml/xml.js"></script>
+    <script src="src/mode/javascript/javascript.js"></script>
+    <script src="src/mode/htmlmixed/htmlmixed.js"></script>
+    <script src="src/mode/go/go.js"></script>
+    <script src="src/mode/dart/dart.js"></script>
+    <script src="src/mode/pascal/pascal.js"></script>
+    <script src="src/mode/php/php.js"></script>
+    <script src="src/mode/ruby/ruby.js"></script>
+    <script src="src/mode/sql/sql.js"></script>
+    <script src="src/mode/sass/sass.js"></script>
+    <script src="src/mode/coffeescript/coffeescript.js"></script>
+    <script src="src/mode/vue/vue.js"></script>
+    <script src="src/mode/swift/swift.js"></script>
+    <script src="src/mode/python/python.js"></script>
+    <script src="src/mode/perl/perl.js"></script>
+    <script src="src/mode/haskell/haskell.js"></script>
+    <script src="src/mode/django/django.js"></script>
+
+    <link rel="stylesheet" href="src/lib/codemirror.css">
+    <link rel="stylesheet" href="src/Highlights/default.css">
+
+      <!-- Graviton Editor -->
+
+    <link rel="stylesheet" href="src/css/styles.css">
+    <link rel="stylesheet" href="src/css/menus.css">
+    <link rel="stylesheet" href="src/css/settings.css">
+    <link rel="stylesheet" href="src/css/welcome-page.css">
+    <link rel="stylesheet" href="src/css/components.css">
+
+    <script type="text/javascript" src="src/javascript/mousetrap.min.js"></script>
+    <script src="src/javascript/dictionary.js"></script>
+    <script src="src/javascript/API.js"></script>
+    <script src="src/javascript/scripts.js"></script>
+    <script src="src/javascript/languages.js"></script>
+    <script src="src/javascript/top_bar.js"></script>
+    <script src="src/javascript/plugins.js"></script>
+    <script src="src/javascript/configuration.js"></script>
+    <script src="src/javascript/welcome.js"></script>
+    <script src="src/javascript/settings.js"></script>
+    <script src="src/javascript/customization.js"></script>
+    <script src="src/javascript/updater.js"></script>
+    
+</html>

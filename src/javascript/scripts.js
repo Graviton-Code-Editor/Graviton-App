@@ -25,7 +25,6 @@ const { shell } = require("electron");
 const fs = require("fs-extra");
 const path = require("path");
 const { dialog } = require("electron").remote;
-const mkdirp = require("mkdirp");
 const remote = require("electron").remote;
 const BrowserWindow = require("electron").BrowserWindow;
 const app = require('electron').remote
@@ -99,10 +98,11 @@ const loadEditor = (dir, data, type,screen) => {
           lineNumbers: true,
           autoCloseTags: true,
           indentUnit: 3,
+          id:dir,
           styleActiveLine: true,
           lineWrapping: current_config["lineWrappingPreferences"] == "activated"
         });
-        document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(dir));
+        document.getElementById(default_editor.id).children[3].children[0].innerText = getFormat(path.basename(dir));
         const new_editor_text = {
           id: dir + "_editor",
           editor: codemirror,
@@ -110,6 +110,7 @@ const loadEditor = (dir, data, type,screen) => {
           screen: screen
         };
         editors.push(new_editor_text);
+        
         for (i = 0; i < editors.length; i++) {
           if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
             document.getElementById(editors[i].id).style.display = "none";
@@ -118,24 +119,42 @@ const loadEditor = (dir, data, type,screen) => {
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
         document.getElementById(dir + "_editor").style.display = "block";
+        codemirror.on("focus",function(a){
+            for(i=0;i<editors.length;i++){
+              if(editors[i].id==a.options.id+"_editor"){
+                editor = editors[i].editor;
+                editorID = editors[i].id
+                for (let b = 0; b < tabs.length; b++) {
+                  if (tabs[b].getAttribute("screen") == editors[i].screen && tabs[b].classList.contains("selected")) {
+                    editingTab = tabs[b].id;
+                  }
+                } 
+              }
+            }
+        })
         break;
       case "image":
         const image_container = document.createElement("div");
         image_container.classList = "code-space";
         image_container.setAttribute("id", `${dir}_editor`);
         image_container.innerHTML = `<img src="${dir}">`
-        document.getElementById(default_editor.id).children[2].appendChild(image_container);
+        document.getElementById(default_editor.id).children[1].children[2].appendChild(image_container);
         const new_editor_image = {
           id: dir + "_editor",
           editor: undefined,
           path: dir,
           screen: screen
         };
-        editors.push(new_editor_image);
         if (document.getElementById(editorID) != undefined) document.getElementById(editorID).style.display = "none";
+        for (i = 0; i < editors.length; i++) {
+          if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
+            document.getElementById(editors[i].id).style.display = "none";
+          }
+        }
+        editors.push(new_editor_image);
         document.getElementById(dir + "_editor").style.display = "block";
         editorID = new_editor_image.id;
-        document.getElementById("g_status_bar").children[0].innerText = path.basename(dir).split(".").pop();
+        document.getElementById(default_editor).children[3].children[0].innerText = path.basename(dir).split(".").pop();
         break;
     }
   } else { //Editor exists
@@ -149,16 +168,15 @@ const loadEditor = (dir, data, type,screen) => {
         if (editors[i].editor != undefined) {
           editor = editors[i].editor;
           editor.refresh();
-          document.getElementById("g_status_bar").children[0].innerText = getFormat(path.basename(editors[i].path));
+          document.getElementById(default_editor).children[3].children[0].innerText = getFormat(path.basename(editors[i].path));
         } else {
-          document.getElementById("g_status_bar").children[0].innerText = path.basename(dir).split(".").pop();
+          document.getElementById(default_editor).children[3].children[0].innerText = path.basename(dir).split(".").pop();
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
       }
     }
   }
-
   function filterIt(arr, searchKey, cb) {
     var list = [];
     for (var i = 0; i < arr.length; i++) {
@@ -178,8 +196,7 @@ const loadEditor = (dir, data, type,screen) => {
       close_icon.children[1].setAttribute("onclick", "save_file_warn(this)");
       close_icon.children[1].innerHTML = ` <svg class="ellipse" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
       <circle id="Elipse_1" data-name="Elipse 1" cx="5" cy="5" r="5"/></svg> `;
-      document.getElementById(editingTab)
-        .setAttribute("data", editor.getValue());
+      document.getElementById(editingTab).setAttribute("data", editor.getValue());
       if (current_config["autoCompletionPreferences"] == "activated" && plang == "JavaScript") {
         //Getting Cursor Position
         const cursorPos = editor.cursorCoords();
@@ -265,7 +282,6 @@ const loadEditor = (dir, data, type,screen) => {
       $("context .menuWrapper .option").not(this).removeClass("hover");
       $(this).addClass("hover");
     });
-
     $("context .menuWrapper").on("mousedown", "div.option", function(e) {
       const A1 = editor.getCursor().line;
       const A2 = editor.getCursor().ch;
@@ -290,7 +306,6 @@ const loadEditor = (dir, data, type,screen) => {
     });
   }
 }
-//loadEditor("start", "/*This is Graviton Code Editor!*/"); //Create the first editor
 function restartApp() {
   remote.app.relaunch();
   remote.app.exit(0);
@@ -298,7 +313,6 @@ function restartApp() {
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
 });
-
 function save_file_warn(ele) {
   new g_dialog({
     id: "saving_file_warn",
@@ -521,7 +535,8 @@ class tab {
       if (i != tabsEqualToFiles.length && tabsEqualToFiles[i].longPath === object.longPath){
         return;
       } else if (i == tabsEqualToFiles.length) { //Tab is created because it doesn't exist
-        document.getElementById("temp_dir_message").style = "visibility:hidden; display:none;"
+        document.getElementById(default_editor.id).children[1].style = "visibility:hidden; display:none;"
+        console.log(document.getElementById(default_editor.id));
         const tab = document.createElement("div");
         tab.setAttribute("id", object.id + "Tab");
         tab.setAttribute("TabID", object.id + "Tab");
@@ -529,8 +544,8 @@ class tab {
         tab.setAttribute("screen",default_editor.id);
         tab.setAttribute("class", "tabs");
         tab.setAttribute("elementType", "tab");
-        tab.style =
-          `min-width: ${(object.name.length * 4 + 115)}px; 
+        console.log(tab);
+        tab.style =`min-width: ${(object.name.length * 4 + 115)}px; 
         max-width: ${(object.name.length * 5 + 100)}px`;
         tab.setAttribute("onclick", "g_load_tab(this)");
         tab.setAttribute("file_status", "saved");
@@ -592,7 +607,6 @@ class tab {
   }
 }
 const g_close_tab = tab_id => {
-  console.log(tab_id)
   const g_object = document.getElementById(tab_id);
   for (i = 0; i < tabs.length; i++) {
     const tab = tabs[i];
@@ -608,12 +622,22 @@ const g_close_tab = tab_id => {
       if (tabs.length === 0) { //Any tab opened
         filepath = " ";
         plang = "";
-        document.getElementById("g_status_bar").children[0].innerText = plang;
-        document.getElementById("temp_dir_message").style = "visibility:visible; display:block;"
+        document.getElementById(default_editor.id).children[2].innerText = plang;
+        document.getElementById(default_editor.id).children[1].style = "visibility:visible; display:block;"
       } else if (i === tabs.length) { //Last tab selected
-        new_selected_tab = tabs[Number(tabs.length) - 1];
+        for(i = 0; i < tabs.length; i++) {
+          if(tabs[i].getAttribute("screen") == g_object.getAttribute("screen")){
+            new_selected_tab = tabs[Number(tabs.length) - 1];
+          
+          } 
+        }
       } else {
-        new_selected_tab = tabs[i]; //All tabs except the last one or the first
+        for(i = 0; i < tabs.length; i++) {
+          if(tabs[i].getAttribute("screen") == g_object.getAttribute("screen")){
+            new_selected_tab = tabs[i];
+            
+          } 
+        }
       }
       if (new_selected_tab != undefined) {
         for (i = 0; i < tabs.length; i++) {
@@ -632,10 +656,10 @@ const g_close_tab = tab_id => {
   }
 }
 const g_load_tab = object => {
+  const object_screen = object.getAttribute("screen");
   if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
     for (i = 0; i < tabs.length; i++) {
-      console.log(object.getAttribute("screen"),default_editor.id);
-      if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == object.getAttribute("screen")) {
+       if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == object_screen) {
         tabs[i].classList.remove("selected");
       }
     }
@@ -647,7 +671,6 @@ const g_load_tab = object => {
     editingTab = object.id;
   }
 }
-
 function updateCodeMode(path) {
   if (g_highlighting == "activated") {
     switch (path.split(".").pop()) {
@@ -837,21 +860,20 @@ function addScreen(){
   new_screen_editor.classList = "g_editors"
   new_screen_editor.id = Math.random();
   new_screen_editor.innerHTML=`
-     <div id="g_tabs_bar" class="flex"></div>  
-      <p class="translate_word" idT="WelcomeMessage" id="temp_dir_message" ></p>
-      <div id="g_editors_editors">
+     <div class="g_tabs_bar flex" ></div>  
+      <p class="translate_word" idT="WelcomeMessage" class="temp_dir_message" ></p>
+      <div class="g_editors_editors">
       </div>
-      <div id="g_status_bar" >
-        <span ></span>
+      <div class="g_status_bar" >
         <span ></span>
       </div>
   `
-  document.getElementById("g_content").appendChild(new_screen_editor)
+  document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[2])
   editor_screens.push({
     id:new_screen_editor.id
   })
   default_editor = editor_screens[editor_screens.length-1]
-  new_screen_editor.addEventListener('mouseover', function(event) { 
+  new_screen_editor.addEventListener('click', function(event) { 
     console.log(this.id)
     default_editor.id = this.id
   }, true);

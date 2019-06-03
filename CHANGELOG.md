@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200603 - 1 [0.7.7]
+- Fixed, single status bar for every editor opened
+- Fixed, now when you edit a file the right tab is changed
+- Fixed the autocompletion windows wasn't showring properly
+
 ### 200602 - 2 [0.7.7]
 - Testing with multiple tabs openeds at the same time
 
