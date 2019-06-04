@@ -64,7 +64,9 @@ const loadTheme = number=>{
 				new Notification("Issue","Your system is not compatible with accent color matching.")
 			} 
 		}else{
-			document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
+			if((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i]!="scalation")||current_config.animationsPreferences == "activated" ){ //Prevent changing the scalation when the animations are off
+				document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
+			}
 		}
 	}
 	for(i=0;i<editors.length;i++){
@@ -85,7 +87,9 @@ function setThemeByName(name){
 						document.documentElement.style.setProperty("--accentColor","#"+systemPreferences.getAccentColor()); 
 					}catch{} 
 				}else{				
-					document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update UI colors
+					if((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i]!="scalation")||current_config.animationsPreferences == "activated" ){ //Prevent changing the scalation when the animations are off
+						document.documentElement.style.setProperty("--"+Object.keys(colors)[i],colors[Object.keys(colors)[i]]); //Update the CSS variables
+					}
 				}
 			}	
 			for(i=0;i<editors.length;i++){

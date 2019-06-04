@@ -23,7 +23,7 @@ const Help = new dropMenu({
 });
 const Editor = new dropMenu({
   id:"editor",
-  translation: false
+  translation: true
 });
 File.setList({
   button: "File",
@@ -66,7 +66,8 @@ Help.setList({
 Editor.setList({
   button: "Editor",
   list: {
-    "add screen":"addScreen()"
+    "AddScreen":"screens.add()",
+    "RemoveScreen":"graviton.removeScreen()"
   }
 });
 function interact_dropmenu(id) {

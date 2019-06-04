@@ -192,7 +192,7 @@ const graviton = {
  		return current_config.zenMode;
  	},
  	throwError:function(message){
- 		new Notification("Error detected",message);
+ 		new Notification("Error ",message);
  	},
  	dialogAbout: function(){
  		new g_dialog({
@@ -213,6 +213,7 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>Now you can create screens, which allows to see more than one editor at the same time. You can create as many as you want.</li>
 	    	<li>New files icons</li>
 	    	<li>Load system's language if it's supported when setuping Graviton </li>
 				<li>Updated the website link! www.graviton.ml </li>
@@ -243,6 +244,19 @@ const graviton = {
 	      [current_config.language['Close']]:"closeDialog(this)"
 	    }
   	})
+ 	},
+ 	removeScreen: function(){
+ 		new g_dialog({
+      id:"remove_screen",
+      title:current_config.language["Dialog.RemoveScreen.title"],
+      content:`
+      ${current_config.language["Dialog.RemoveScreen.content"]}
+      <input class="Input1" id="screns_input"  type="number" value="">`,
+      buttons:{
+        [current_config.language['Close']]:"closeDialog(this)",
+        [current_config.language['Accept']]:"screens.remove(document.getElementById('screns_input').value);closeDialog(this)"
+      }
+    })
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
@@ -267,7 +281,6 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       if(document.getElementById("context_menu")!==null ){
         document.getElementById("context_menu").remove();
       }
-      console.log(event.target);
       const context_menu = document.createElement("div");
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";

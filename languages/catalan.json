@@ -73,6 +73,10 @@
 	"Line-Wrapping":"Line-Wrapping",
 	"Themes.Text":"Utilitza el color d'accentuació del sistema",
 	"Author":"Autor",
-	"Remove":"Borrar",
-	"AreYouSure":"Estàs segur?"
+	"Notification.CannotRemoveMoreScreens":"No es pot borrar més pantalles.",
+	"Notification.CloseAllTabsBefore":"Tanca totes les pestanyes abans de borrar la pantalla.",
+	"Dialog.RemoveScreen.title":"Borrar una pantalla",
+	"Dialog.RemoveScreen.content":"Escriu el número de la pantalla, 1 a X (d'esquerra a dreta)",
+	"AddScreen":"Afegir pantalla",
+	"RemoveScreen":"Borrar una pantalla"
 }

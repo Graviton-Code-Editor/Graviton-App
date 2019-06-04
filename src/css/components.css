@@ -67,13 +67,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 .Input1{
     transition: 0.1s;
     border-radius: var(--buttons-roundness);
-    width: 35px;
+    max-width: 37px;
     height: 30px;
     border: none;  
-    padding:10px 10px;
+    padding:5px 7px;
     background: var(--primaryColor);
     color: var(--white-black);
     box-sizing: border-box;
+    position: relative;
+    text-align: center;
 }
 .Input1:hover{
     transition: 0.1s;
@@ -231,7 +233,7 @@ input[type="number"]::selection {
     padding: 12px;
     margin: 10px;
     border-radius: var(--notifications-window-radius);
-    box-shadow: 1px 3px 7px var(--shadows);
+    box-shadow: 1px 3px 5px var(--shadows);
     transform: scale(1);
 }
 @keyframes open_up {
@@ -325,4 +327,31 @@ input[type="number"]::selection {
 .floating_window * {
     overflow: auto;
 
+}
+
+#openFolder {
+  transition: 0.05s;
+  top: 45%;
+  left: 40%;
+  transform: translate(-40%, -45%);
+  position: relative;
+  padding: 24px;
+  width: 24px;
+  height: 24px;
+  margin: 0 auto;
+  background: url("../icons/closed.svg") no-repeat center;
+  background-size: 60px 60px;
+}
+
+#openFolder:hover {
+  transition: 0.05s;
+  cursor: pointer;
+  background: url("../icons/open.svg") no-repeat center;
+  background-size: 65px 65px;
+}
+
+#openFolder:active {
+  transition: 0.05s;
+  opacity: 0.6;
+  background-size: 65px 65px;
 }

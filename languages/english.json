@@ -73,6 +73,10 @@
 	"Line-Wrapping":"Line-Wrapping",
 	"Themes.Text":"Use system's accent color",
 	"Author":"Author",
-	"Remove":"Remove",
-	"AreYouSure":"Are you sure?"
+	"Notification.CannotRemoveMoreScreens":"Cannot remove more screens.",
+	"Notification.CloseAllTabsBefore":"Close all tabs before removing it's screen.",
+	"Dialog.RemoveScreen.title":"Remove an screen",
+	"Dialog.RemoveScreen.content":"Type the screen number, 1 to x(left to right)",
+	"AddScreen":"Add an screen",
+	"RemoveScreen":"Remove an screen"
 }

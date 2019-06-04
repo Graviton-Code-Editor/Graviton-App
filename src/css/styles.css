@@ -43,13 +43,13 @@ html{
 *{
     outline: 0;
     text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: subpixel-antialiased;
+    -webkit-font-smoothing: subpixel-antialiased !important;
 }
 .CodeMirror {
     z-index: 0;
-    font-family: editor; /*--Default font-size for the editor */
+    font-family: editor;
     font-size: var(--editor-font-size);
-    text-shadow: 1px 1px 1px rgba(0,0,0,0.005);
+    box-shadow: 0px 3px 5px var(--shadows);
 }
 body ,head{
 	margin: 0;
@@ -128,7 +128,11 @@ body ,head{
     padding: 0;
     color:var(--white-black);
 }
-
+#g_content > .g_editors > .g_tabs_bar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    opacity: 0.5;
+}
 #g_content > .g_editors > .temp_dir_message{
     font-size: 15px;
     webkit-user-select: none;
@@ -143,7 +147,7 @@ body ,head{
     color:var(--white-black);
     width: auto;
 }
-#g_content > .g_editors{
+#g_content  .g_editors{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
     flex:3;
@@ -154,6 +158,7 @@ body ,head{
     margin:0;
     color:var(--white-black);
     overflow: hidden;
+    box-shadow: -2px 2px 7px var(--shadows);
 }
 #g_content >#g_spacer{
     flex:0;
@@ -162,13 +167,12 @@ body ,head{
     cursor: ew-resize;
     margin: 0 2px;
 }
-#g_content >.g_editors  .g_editors_editors{
+#g_content >.g_editors>  .g_editors_editors{
     flex:auto;
     overflow: auto; 
     height: 90%;
 }
-#g_content >.g_editors  .g_editors_editors> .code-space{
-
+#g_content >.g_editors > .g_editors_editors> .code-space{
     position: relative;
 }
 #g_content >.g_editors .g_editors_editors> .code-space img{
@@ -302,6 +306,7 @@ body ,head{
     transition: 0.06s;
     border-radius: 4px;
     background: var(--widget-color);
+    box-shadow: 0px 1px 3px var(--shadows);
 }
 #g_content > #g_explorer div.folder_list1:active{
     transition: 0.06s;
@@ -329,6 +334,7 @@ body ,head{
     transition: 0.06s;
     border-radius: 4px;
     background: var(--widget-color);
+    box-shadow: 0px 1px 3px var(--shadows);
 }
 #g_content > #g_explorer div.folder_list2:active{
     transition: 0.06s;

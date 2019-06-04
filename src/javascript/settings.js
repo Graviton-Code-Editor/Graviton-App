@@ -33,7 +33,6 @@ function updateSettingsFromUI() {
 		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
 		editor.refresh();
 	}
-	
 }
 function updateCustomization(){
 	current_config.appZoom = document.getElementById("slider_zoom").value;
@@ -241,7 +240,8 @@ const g_disable_animations = ()=>{
 		style.innerText = `*{-webkit-transition: none !important;
 			  -moz-transition: none !important;
 			  -o-transition: none !important;
-			  transition: none !important;}`;
+			  transition: none !important;
+				animation:0;}`;
 	  style.id = "_ANIMATIONS";
 	  document.documentElement.style.setProperty("--scalation","1");
 	  document.documentElement.appendChild(style);

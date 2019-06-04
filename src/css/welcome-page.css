@@ -24,7 +24,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     margin-left: 25px;
     box-sizing: border-box;
 }
-.body_window p,span{
+.body_window p{
     font-size: 15px;
 }
 .body_window .project_div{

@@ -68,10 +68,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     display: inline-block;
     color: var(--white-black);
     height: 35px;
-    padding:0px 7px;
+    padding:0px 6px;
     margin: 0;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 12px;
     border: none;
     cursor: pointer;
     top:0;

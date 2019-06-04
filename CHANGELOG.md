@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200604 - 1 [0.7.7]
+- Fixed, now themes cannot override the scalation css variable when the animations are off
+- Improved stability
+- Fixed, resizing fonts wasn't working properly
+-	Fixed the dark highlighting theme selecting color transparency was so bad
+- Fixed, it wasn't saving properly the files
+
 ### 200603 - 1 [0.7.7]
 - Fixed, single status bar for every editor opened
 - Fixed, now when you edit a file the right tab is changed

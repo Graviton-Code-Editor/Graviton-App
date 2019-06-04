@@ -122,7 +122,12 @@ function FTGoPage(number){
 		break;
 		case "3":
 			document.getElementById("body_window_full").innerHTML= `
-				<h1 style="  font-size:30px; margin-top:100px;  text-align:center;" class="translate_word" idT="Welcome.ThanksForInstalling" >${current_config.language["Welcome.ThanksForInstalling"]+" "+ g_version.version }</h1> 
+				<h1 style=" font-size:30px;
+				 margin-top:100px;
+				  text-align:center;" 
+				  class="translate_word" 
+				  idT="Welcome.ThanksForInstalling">
+				  ${current_config.language["Welcome.ThanksForInstalling"]} ${g_version.version } - ${g_version.state}</h1> 
 				<button onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
 				`;
 		break;

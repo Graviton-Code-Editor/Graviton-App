@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190602",
+  date: "190604",
   version: "0.7.7",
   state: "Alpha"
 }
@@ -33,7 +33,7 @@ const $ = require('jquery');
 const { webFrame } = require('electron');
 const g_window = require('electron').remote.getCurrentWindow();
 const { systemPreferences } = require('electron').remote;
-let default_editor;
+let current_screen;
 let dir_path;
 let i;
 let DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
@@ -89,7 +89,7 @@ const loadEditor = (dir, data, type,screen) => {
         let text_container = document.createElement("div");
         text_container.classList = "code-space";
         text_container.setAttribute("id", dir + "_editor");
-        document.getElementById(default_editor.id).children[2].appendChild(text_container);
+        document.getElementById(current_screen.id).children[2].appendChild(text_container);
         let codemirror = CodeMirror(document.getElementById(dir + "_editor"), {
           value: data,
           mode: "text/plain",
@@ -102,7 +102,7 @@ const loadEditor = (dir, data, type,screen) => {
           styleActiveLine: true,
           lineWrapping: current_config["lineWrappingPreferences"] == "activated"
         });
-        document.getElementById(default_editor.id).children[3].children[0].innerText = getFormat(path.basename(dir));
+        document.getElementById(current_screen.id).children[3].children[0].innerText = getFormat(path.basename(dir));
         const new_editor_text = {
           id: dir + "_editor",
           editor: codemirror,
@@ -120,32 +120,32 @@ const loadEditor = (dir, data, type,screen) => {
         editor = new_editor_text.editor;
         document.getElementById(dir + "_editor").style.display = "block";
         codemirror.on("focus",function(a){
-            for(i=0;i<editors.length;i++){
-              if(editors[i].id==a.options.id+"_editor"){
-                editor = editors[i].editor;
-                editorID = editors[i].id
-                for (let b = 0; b < tabs.length; b++) {
-                  if (tabs[b].getAttribute("screen") == editors[i].screen && tabs[b].classList.contains("selected")) {
-                    editingTab = tabs[b].id;
-                  }
-                } 
-              }
+          for(i=0;i<editors.length;i++){
+            if(editors[i].id==a.options.id+"_editor"){
+              editor = editors[i].editor;
+              editorID = editors[i].id
+              for (let b = 0; b < tabs.length; b++) {
+                if (tabs[b].getAttribute("screen") == editors[i].screen && tabs[b].classList.contains("selected")) {
+                  editingTab = tabs[b].id;
+                  filepath = tabs[b].getAttribute("longpath");
+                }
+              } 
             }
+          }
         })
         break;
-      case "image":
+      case "image": 
         const image_container = document.createElement("div");
         image_container.classList = "code-space";
         image_container.setAttribute("id", `${dir}_editor`);
         image_container.innerHTML = `<img src="${dir}">`
-        document.getElementById(default_editor.id).children[1].children[2].appendChild(image_container);
+        document.getElementById(current_screen.id).children[2].appendChild(image_container);
         const new_editor_image = {
           id: dir + "_editor",
           editor: undefined,
           path: dir,
           screen: screen
         };
-        if (document.getElementById(editorID) != undefined) document.getElementById(editorID).style.display = "none";
         for (i = 0; i < editors.length; i++) {
           if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
             document.getElementById(editors[i].id).style.display = "none";
@@ -154,23 +154,21 @@ const loadEditor = (dir, data, type,screen) => {
         editors.push(new_editor_image);
         document.getElementById(dir + "_editor").style.display = "block";
         editorID = new_editor_image.id;
-        document.getElementById(default_editor).children[3].children[0].innerText = path.basename(dir).split(".").pop();
+        document.getElementById(current_screen.id).children[3].children[0].innerText = path.basename(dir).split(".").pop();
         break;
     }
   } else { //Editor exists
     for (i = 0; i < editors.length; i++) {
-      console.log(editors[i].screen, screen);
       if (editors[i].screen == screen && document.getElementById(editors[i].id) != null) {
         document.getElementById(editors[i].id).style.display = "none";
-        console.log("selected");
       }
       if (editors[i].id == dir + "_editor") {
         if (editors[i].editor != undefined) {
           editor = editors[i].editor;
           editor.refresh();
-          document.getElementById(default_editor).children[3].children[0].innerText = getFormat(path.basename(editors[i].path));
+          document.getElementById(current_screen.id).children[3].children[0].innerText = getFormat(path.basename(editors[i].path));
         } else {
-          document.getElementById(default_editor).children[3].children[0].innerText = path.basename(dir).split(".").pop();
+          document.getElementById(current_screen.id).children[3].children[0].innerText = path.basename(dir).split(".").pop();
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
@@ -535,16 +533,14 @@ class tab {
       if (i != tabsEqualToFiles.length && tabsEqualToFiles[i].longPath === object.longPath){
         return;
       } else if (i == tabsEqualToFiles.length) { //Tab is created because it doesn't exist
-        document.getElementById(default_editor.id).children[1].style = "visibility:hidden; display:none;"
-        console.log(document.getElementById(default_editor.id));
+        document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
         const tab = document.createElement("div");
         tab.setAttribute("id", object.id + "Tab");
         tab.setAttribute("TabID", object.id + "Tab");
         tab.setAttribute("longPath", object.longPath);
-        tab.setAttribute("screen",default_editor.id);
+        tab.setAttribute("screen",current_screen.id);
         tab.setAttribute("class", "tabs");
         tab.setAttribute("elementType", "tab");
-        console.log(tab);
         tab.style =`min-width: ${(object.name.length * 4 + 115)}px; 
         max-width: ${(object.name.length * 5 + 100)}px`;
         tab.setAttribute("onclick", "g_load_tab(this)");
@@ -566,7 +562,7 @@ class tab {
           this.setAttribute("hovering", false);
         });
         tab.appendChild(tab_x);
-        document.getElementById(default_editor.id).children[0].appendChild(tab);
+        document.getElementById(current_screen.id).children[0].appendChild(tab);
         tabs.push(tab);
         tabsEqualToFiles.push(object);
         const g_newPath = object.longPath;
@@ -577,26 +573,26 @@ class tab {
           case "ico":
           case "jpg":
             for (i = 0; i < tabs.length; i++) {
-              if (tabs[i].getAttribute("screen") == default_editor.id && tabs[i].classList.contains("selected")) {
+              if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
                 tabs[i].classList.remove("selected");
               }
             }
             tab.classList.add("selected");
             editingTab = tab.id;
-            loadEditor(filepath, null, "image",default_editor.id);
+            loadEditor(filepath, null, "image",current_screen.id);
             break;
           default:
             fs.readFile(g_newPath, "utf8", function(err, data) {
               if (err) return console.err(err);
               tab.setAttribute("data", data);
               for (i = 0; i < tabs.length; i++) {
-                if (tabs[i].getAttribute("screen") == default_editor.id && tabs[i].classList.contains("selected")) {
+                if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
                   tabs[i].classList.remove("selected");
                 }
               }
               tab.classList.add("selected");
               editingTab = tab.id;
-              loadEditor(g_newPath, data, "text",default_editor.id);
+              loadEditor(g_newPath, data, "text",current_screen.id);
               if (g_highlighting == "activated") updateCodeMode(g_newPath);
               editor.refresh();
             });
@@ -619,26 +615,30 @@ const g_close_tab = tab_id => {
         .remove();
       editors.splice(i , 1);
       g_object.remove();
-      if (tabs.length === 0) { //Any tab opened
-        filepath = " ";
-        plang = "";
-        document.getElementById(default_editor.id).children[2].innerText = plang;
-        document.getElementById(default_editor.id).children[1].style = "visibility:visible; display:block;"
-      } else if (i === tabs.length) { //Last tab selected
-        for(i = 0; i < tabs.length; i++) {
-          if(tabs[i].getAttribute("screen") == g_object.getAttribute("screen")){
-            new_selected_tab = tabs[Number(tabs.length) - 1];
-          
-          } 
-        }
-      } else {
-        for(i = 0; i < tabs.length; i++) {
-          if(tabs[i].getAttribute("screen") == g_object.getAttribute("screen")){
-            new_selected_tab = tabs[i];
-            
-          } 
+      let tabs2 =[];
+      for(i=0;i<tabs.length;i++){
+        if(tabs[i].getAttribute("screen")==g_object.getAttribute("screen")){
+          tabs2.push(tabs[i]);
         }
       }
+        if (tabs2.length == 0) { //Any tab opened
+          filepath = " ";
+          plang = "";
+          document.getElementById(current_screen.id).children[3].children[0].innerText = plang;
+          document.getElementById(current_screen.id).children[1].style = "visibility:visible; display:block;"
+        } else if (i === tabs2.length) { //Last tab selected
+          for(i = 0; i < tabs2.length; i++) {
+            if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+              new_selected_tab = tabs2[Number(tabs2.length) - 1];
+            } 
+          }
+        } else {
+          for(i = 0; i < tabs2.length; i++) {
+            if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+              new_selected_tab = tabs2[i]; 
+            } 
+          }
+        }
       if (new_selected_tab != undefined) {
         for (i = 0; i < tabs.length; i++) {
           if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
@@ -649,7 +649,7 @@ const g_close_tab = tab_id => {
         new_selected_tab.classList.add("selected");
         const g_newPath = new_selected_tab.getAttribute("longpath");
         filepath = g_newPath;
-        loadEditor(g_newPath, g_object.getAttribute("data"), "text",default_editor.id);
+        loadEditor(g_newPath, g_object.getAttribute("data"), "text",current_screen.id);
         if (g_highlighting == "activated") updateCodeMode(g_newPath);
       }
     }
@@ -841,7 +841,7 @@ const g_NewProjects = () => {
 const preload = (array) => { //Preload images when booting
   for (i = 0; i < array.length; i++) {
     document.body.innerHTML += `
-    <img id="${array[i]}"src="${array[i]}"></img>`
+    <img id="${array[i]}"src="${array[i]}" style="visibility:hidden;"></img>`
     document.getElementById(array[i]).remove();
   }
 }
@@ -855,27 +855,50 @@ function touchingResizer(type){
   }
 }
 let editor_screens = [];
-function addScreen(){
-  const new_screen_editor = document.createElement("div");
-  new_screen_editor.classList = "g_editors"
-  new_screen_editor.id = Math.random();
-  new_screen_editor.innerHTML=`
-     <div class="g_tabs_bar flex" ></div>  
-      <p class="translate_word" idT="WelcomeMessage" class="temp_dir_message" ></p>
-      <div class="g_editors_editors">
-      </div>
-      <div class="g_status_bar" >
-        <span ></span>
-      </div>
-  `
-  document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[2])
-  editor_screens.push({
-    id:new_screen_editor.id
-  })
-  default_editor = editor_screens[editor_screens.length-1]
-  new_screen_editor.addEventListener('click', function(event) { 
-    console.log(this.id)
-    default_editor.id = this.id
-  }, true);
-
+const screens={
+  add : function(){
+    const new_screen_editor = document.createElement("div");
+    new_screen_editor.classList = "g_editors"
+    new_screen_editor.id = Math.random();
+    new_screen_editor.innerHTML=`
+       <div class="g_tabs_bar flex" ></div>  
+        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language["WelcomeMessage"]}</p>
+        <div class="g_editors_editors" >
+        </div>
+        <div class="g_status_bar" >
+          <span ></span>
+        </div>
+    `
+    document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length-1])
+    editor_screens.push({
+      id:new_screen_editor.id
+    })
+    current_screen = editor_screens[editor_screens.length-1]
+    new_screen_editor.addEventListener('click', function(event) { 
+      current_screen.id = this.id
+    }, true);
+  },
+  remove: function(given_number){
+    const number = given_number-1; //example 1 to 0, (feels more natural for the user,js arrays start at 0)
+    if(editor_screens.length!=1){
+      for(i=0;i<editor_screens.length;i++){
+        if(i==number){
+          let tabs2 =[];
+          for(i=0;i<tabs.length;i++){
+            if(tabs[i].getAttribute("screen")==editor_screens[number].id){
+              tabs2.push(tabs[i]);
+            }
+          }
+          if(tabs2.length==0){
+            document.getElementById(editor_screens[i].id).remove();
+            editors.splice(i , 1);
+          }else{
+            graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
+          }
+        }
+      }
+    }else{
+     graviton.throwError(current_config.language["Notification.CannotRemoveMoreScreens"])
+    }
+  }
 }

@@ -16,7 +16,7 @@ preload([ //Preload some images to improve the UX
 let current_config = { //Default values
   justInstalled: true,
   theme: "Light UI",
-  fontSizeEditor: "15",
+  fontSizeEditor: "13",
   appZoom: "25",
   language: "english",
   animationsPreferences: "activated",
@@ -36,7 +36,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
     } else {
       g_Setup();
     }
-    addScreen();
+    screens.add();
     detectPlugins(); //Call the function to detect the installed plugins
   } else {
     fs.readFile(configDir, 'utf8', function(err, data) {
@@ -54,12 +54,13 @@ function loadConfig() { //Loads the configuration from the config.json for the f
         style.innerText = `*{-webkit-transition: none !important;
 			  -moz-transition: none !important;
 			  -o-transition: none !important;
-			  transition: none !important;}`;
+			  transition: none !important;
+        animation:0;}`;
         style.id = "_ANIMATIONS";
         document.documentElement.appendChild(style);
         document.documentElement.style.setProperty("--scalation","1");
       }
-      addScreen();
+      screens.add();
       detectPlugins(); //Call the function to detect the installed plugins
     });
     
