@@ -12,7 +12,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-const {app, BrowserWindow,globalShortcut} = electron;
+const {app, BrowserWindow,globalShortcut, BrowserView} = electron;
 const Menu = electron.Menu;
 let main; //Main window
 

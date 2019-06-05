@@ -13,7 +13,7 @@ let context_menu_list_text = { //Initial value
   "Paste" :" document.execCommand('paste');"
 };
 const context_menu_list_tabs = { //Initial value
-	"Close" :`g_closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
+	"Close" :`closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
 };
 
 class Plugin{
@@ -281,6 +281,7 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       if(document.getElementById("context_menu")!==null ){
         document.getElementById("context_menu").remove();
       }
+      console.log(event.target);
       const context_menu = document.createElement("div");
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";
@@ -431,4 +432,235 @@ class Window{
 }
 const closeWindow=id=>{
 	document.getElementById(`${id}_window`).remove();
+}
+
+class Tab {
+  constructor(object) {
+    this.type = object.type;
+    this.id = object.id;
+    document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
+    switch(object.type){
+      case "file":
+        for (i = 0; i < tabs.length + 1; i++) {
+          if (i != tabs.length && tabs[i].getAttribute("longPath") === object.path){
+              return;
+          } else if (i == tabs.length) { //Tab is created because it doesn't exist
+            const tab = document.createElement("div");
+            tab.setAttribute("id", object.id + "Tab");
+            tab.setAttribute("TabID", object.id + "Tab");
+            tab.setAttribute("longPath", object.path);
+            tab.setAttribute("screen",current_screen.id);
+            tab.setAttribute("class", "tabs");
+            tab.setAttribute("elementType", "tab");
+            tab.style =`min-width: ${(object.name.length * 4 + 115)}px; 
+            max-width: ${(object.name.length * 5 + 100)}px`;
+            tab.setAttribute("onclick", "loadTab(this)");
+            tab.setAttribute("file_status", "saved");
+            tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.name}</p>`
+            const tab_x = document.createElement("button");
+            tab_x.setAttribute("onclose", `closeTab("${ object.id }Tab",true);`);
+            tab_x.setAttribute("onclick", `closeTab("${ object.id }Tab",false);`);
+            tab_x.setAttribute("class", "close_tab");
+            tab_x.setAttribute("hovering", "false");
+            tab_x.setAttribute("elementType", "tab");
+            tab_x.setAttribute("TabID", object.id + "Tab");
+            tab_x.setAttribute("id", object.id + "CloseButton");
+            tab_x.innerHTML = close_icon;
+            tab_x.addEventListener("mouseover", function(e) {
+              this.setAttribute("hovering", true);
+            });
+            tab_x.addEventListener("mouseout", function(e) {
+              this.setAttribute("hovering", false);
+            });
+            tab.appendChild(tab_x);
+            document.getElementById(current_screen.id).children[0].appendChild(tab);
+            tabs.push(tab);
+            const g_newPath = object.path;
+            filepath = g_newPath;
+            switch (filepath.split(".").pop()) {
+              case "svg":
+              case "png":
+              case "ico":
+              case "jpg":
+                for (i = 0; i < tabs.length; i++) {
+                  if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
+                    tabs[i].classList.remove("selected");
+                  }
+                }
+                tab.classList.add("selected");
+                tab.setAttribute("typeEditor", "text");
+                editingTab = tab.id;
+                loadEditor({
+                  type:"image",
+                  dir:filepath,
+                  data:null,
+                  screen:current_screen.id
+                });
+                
+                break;
+              default:
+                fs.readFile(g_newPath, "utf8", function(err, data) {
+                  if (err) return console.err(err);
+                  tab.setAttribute("data", data);
+                  for (i = 0; i < tabs.length; i++) {
+                    if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
+                      tabs[i].classList.remove("selected");
+                    }
+                  }
+                  tab.classList.add("selected");
+                  tab.setAttribute("typeEditor", "text");
+                  editingTab = tab.id;
+                 loadEditor({
+                    type:"text",
+                    dir:g_newPath,
+                    data:data,
+                    screen:current_screen.id
+                  });
+                  if (g_highlighting == "activated") updateCodeMode(g_newPath);
+                  editor.refresh();
+                });
+            }
+            return;
+          }
+        }
+      
+      break;
+      case "free":
+        for (i = 0; i < tabs.length; i++) {
+          if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
+            tabs[i].classList.remove("selected");
+          }
+        }
+        const tab = document.createElement("div");
+        tab.setAttribute("data", object.data);
+        tab.setAttribute("id", object.id + "Tab");
+        tab.setAttribute("TabID", object.id + "Tab");
+        tab.setAttribute("screen",current_screen.id);
+        tab.setAttribute("class", "tabs selected");
+        tab.setAttribute("longPath", object.id);
+        tab.setAttribute("typeEditor", "free");
+        tab.setAttribute("elementType", "tab");
+        tab.style =`min-width: ${(object.name.length * 4 + 115)}px; 
+        max-width: ${(object.name.length * 5 + 100)}px`;
+        tab.setAttribute("onclick", "loadTab(this)");
+        tab.setAttribute("file_status", "saved");
+        tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.name}</p>`
+        const tab_x = document.createElement("button");
+        tab_x.setAttribute("onclick", `closeTab("${ object.id }Tab");`);
+        tab_x.setAttribute("class", "close_tab");
+        tab_x.setAttribute("hovering", "false");
+        tab_x.setAttribute("elementType", "tab");
+        tab_x.setAttribute("TabID", object.id + "Tab");
+        tab_x.setAttribute("id", object.id + "CloseButton");
+        tab_x.innerHTML = close_icon;
+        tab_x.addEventListener("mouseover", function(e) {
+          this.setAttribute("hovering", true);
+        });
+        tab_x.addEventListener("mouseout", function(e) {
+          this.setAttribute("hovering", false);
+        });
+        tab.appendChild(tab_x);
+        document.getElementById(current_screen.id).children[0].appendChild(tab);
+        tabs.push(tab);
+        loadEditor({
+          type:"free",
+          dir:object.id,
+          data:object.data,
+          screen:current_screen.id
+        });
+        filepath = undefined;
+        editingTab = object.id;
+  
+      break;
+    }
+  }
+  setData(data){
+    if(this.type=="free"){
+      document.getElementById(this.id+"_editor").innerHTML = data;
+    }
+  }
+}
+const closeTab = (tab_id,fromWarn) => {
+  const g_object = document.getElementById(tab_id);
+  if(g_object.getAttribute("file_status")=="saved" || fromWarn){
+    for (i = 0; i < tabs.length; i++) {
+      const tab = tabs[i];
+      let new_selected_tab;
+      if (tab.id == tab_id && tab.getAttribute("screen") == g_object.getAttribute("screen")) {
+        tabs.splice(i, 1);
+        document
+          .getElementById(g_object.getAttribute("longPath") + "_editor")
+          .remove();
+        editors.splice(i , 1);
+        g_object.remove();
+        let tabs2 =[];
+        for(i=0;i<tabs.length;i++){
+          if(tabs[i].getAttribute("screen")==g_object.getAttribute("screen")){
+            tabs2.push(tabs[i]);
+          }
+        }
+          if (tabs2.length == 0) { //Any tab opened
+            filepath = " ";
+            plang = "";
+            document.getElementById(current_screen.id).children[3].children[0].innerText = plang;
+            document.getElementById(current_screen.id).children[1].style = "visibility:visible; display:block;"
+          } else if (i === tabs2.length) { //Last tab selected
+            for(i = 0; i < tabs2.length; i++) {
+              if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+                new_selected_tab = tabs2[Number(tabs2.length) - 1];
+              } 
+            }
+          } else {
+            for(i = 0; i < tabs2.length; i++) {
+              if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+                new_selected_tab = tabs2[i]; 
+              } 
+            }
+          }
+        if (new_selected_tab != undefined) {
+          for (i = 0; i < tabs.length; i++) {
+            if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
+              tabs[i].classList.remove("selected");
+            }
+          }
+          editingTab = new_selected_tab.id;
+          new_selected_tab.classList.add("selected");
+          const g_newPath = new_selected_tab.getAttribute("longpath");
+          filepath = g_newPath;
+          loadEditor({
+            type:new_selected_tab.getAttribute("typeeditor"),
+            dir:g_newPath,
+            data:new_selected_tab.getAttribute("data"),
+            screen:current_screen.id
+          });
+    
+          if (g_highlighting == "activated") updateCodeMode(g_newPath);
+        }
+      }
+    }
+  }else{
+    save_file_warn(g_object.children[1]);
+    return;
+  }
+}
+const loadTab = object => {
+  const object_screen = object.getAttribute("screen");
+  if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
+    for (i = 0; i < tabs.length; i++) {
+       if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == object_screen) {
+        tabs[i].classList.remove("selected");
+      }
+    }
+    object.classList.add("selected");
+    const g_newPath = object.getAttribute("longpath");
+    filepath = g_newPath
+    loadEditor({
+      type:object.getAttribute("typeeditor"),
+      dir:g_newPath,
+      data:object.getAttribute("data"),
+      screen:object.getAttribute("screen")
+    });
+    if (g_highlighting == "activated" &&object.getAttribute("typeeditor") =="file") updateCodeMode(g_newPath);
+    editingTab = object.id;
+  }
 }

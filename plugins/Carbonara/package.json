@@ -1,9 +1,9 @@
 {
-	"name":"Dreble",
+	"name":"Carbonara",
 	"version":"0.0.1",
 	"author":"Marc Espín",
-	"description":"DebleJS plugin",
-	"folder":"Dreble",
+	"description":"Carbonara plugin",
+	"folder":"Carbonara",
 	"main":"main.js",
 	"javascript":[
 	],

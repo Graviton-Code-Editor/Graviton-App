@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200605 - 1 [0.7.7]
+- Made a CarbonaraLive transcompiler plugin (testing)
+- Improved API, now plugins can create Tabs with custom content, there is also a method which you can use to change the tab's content on live.
+- Improved the code readibility
+- Fixed, removing screens weren't working properly
+
 ### 200604 - 1 [0.7.7]
 - Fixed, now themes cannot override the scalation css variable when the animations are off
 - Improved stability
