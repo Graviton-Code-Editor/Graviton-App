@@ -317,43 +317,38 @@ input[type="number"]::selection {
         opacity: 0;
         transform: translate(20px, 55px);
     }
-
     to {
         opacity: 1;
         transform: translate(20px, 40px);
     }
 }
-
 .floating_window * {
     overflow: auto;
-
 }
-
 #openFolder {
-  transition: 0.05s;
-  top: 45%;
-  left: 40%;
-  transform: translate(-40%, -45%);
-  position: relative;
-  padding: 24px;
-  width: 24px;
-  height: 24px;
-  margin: 0 auto;
-  background: url("../icons/closed.svg") no-repeat center;
-  background-size: 60px 60px;
+    transition: 0.05s;
+    top: 45%;
+    left: 40%;
+    transform: translate(-40%, -45%);
+    position: relative;
+    padding: 24px;
+    width: 55px;
+    height: 55px;
+    margin: 0 auto;
+    background: url("../icons/closed.svg") no-repeat center;
+    background-size: 55px 55px;
 }
 
 #openFolder:hover {
   transition: 0.05s;
   cursor: pointer;
   background: url("../icons/open.svg") no-repeat center;
-  background-size: 65px 65px;
+  background-size: 55px 55px;
 }
 
 #openFolder:active {
   transition: 0.05s;
   opacity: 0.6;
-  background-size: 65px 65px;
 }
 
 /* Tabs */
@@ -370,19 +365,14 @@ input[type="number"]::selection {
     cursor: pointer;
     transform: scale(1);
 }
-.g_tabs_bar  .tabs:first-child{
-    border-top-left-radius: 5px;
-}
-.g_tabs_bar  .tabs:last-child{
-    border-top-right-radius: 5px;
-}
+
 .g_tabs_bar  .tabs:hover{
     transition: 0.05;
     background: var(--widget-color);
 }
 .g_tabs_bar  .tabs:active{
     transition: 0.05;
-    transform: scale(0.97);
+    transform: scale(var(--scalation));
 }
 .g_tabs_bar .tabs.selected{
     background: var(--secondaryColor);

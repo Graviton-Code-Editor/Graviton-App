@@ -9,6 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 #g_control_bar {
+    max-height: 35px;
     -webkit-user-select: none;  
     -webkit-app-region: drag;
     position: relative;
@@ -30,6 +31,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     max-width: 144px;
 }
 #g_control_bar > #controls button {
+    transition: 0.05s;
     padding: 6px 0px;
     width: 48px; 
     border: none;
@@ -37,6 +39,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     background: transparent;
 }
 #g_control_bar> #controls button:hover { 
+    transition: 0.05s;
     background: var(--widget-color);
 }
 #g_control_bar > #controls > #minimize:hover >svg >rect { 

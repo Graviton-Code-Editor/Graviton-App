@@ -63,7 +63,6 @@ function loadConfig() { //Loads the configuration from the config.json for the f
       screens.add();
       detectPlugins(); //Call the function to detect the installed plugins
     });
-    
   }
 }
 

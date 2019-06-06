@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190604",
+  date: "190606",
   version: "0.7.7",
   state: "Alpha"
 }
@@ -103,7 +103,7 @@ const loadEditor = (info) => {
             styleActiveLine: true,
             lineWrapping: current_config["lineWrappingPreferences"] == "activated"
           });
-          document.getElementById(current_screen.id).children[3].children[0].innerText = getFormat(path.basename(info.dir));
+          document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)));
           const new_editor_text = {
             id: info.dir + "_editor",
             editor: codemirror,
@@ -111,7 +111,7 @@ const loadEditor = (info) => {
             screen: info.screen
           };
           editors.push(new_editor_text);
-          
+          if (g_highlighting == "activated") updateCodeMode(codemirror,info.dir);
           for (i = 0; i < editors.length; i++) {
             if (editors[i].screen == info.screen && document.getElementById(editors[i].id) != null) {
               document.getElementById(editors[i].id).style.display = "none";
@@ -155,7 +155,7 @@ const loadEditor = (info) => {
           editors.push(new_editor_image);
           document.getElementById(info.dir + "_editor").style.display = "block";
           editorID = new_editor_image.id;
-          document.getElementById(current_screen.id).children[3].children[0].innerText = path.basename(info.dir).split(".").pop();
+          document.getElementById(current_screen.id).children[3].children[0].innerText = "Image"
         break;
         case "free":
           const free_id= Math.random();
@@ -188,16 +188,20 @@ const loadEditor = (info) => {
           document.getElementById(editors[i].id).style.display = "none";
         }
         if (editors[i].id == info.dir + "_editor") {
-          if (editors[i].editor != undefined) {
+          if (editors[i].editor != undefined) { //Editors
             editor = editors[i].editor;
-            editor.refresh();
-            document.getElementById(current_screen.id).children[3].children[0].innerText = getFormat(path.basename(editors[i].path));
-          } else if(info.type!="free"){
-            document.getElementById(current_screen.id).children[3].children[0].innerText = path.basename(info.dir).split(".").pop();
+            
+            document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(editors[i].path)));
+          } else if(info.type!="free"){ //Images
+            document.getElementById(current_screen.id).children[3].children[0].innerText = "Image"
+          } else{
+            document.getElementById(current_screen.id).children[3].children[0].innerText = ""
           }
           editorID = editors[i].id;
           document.getElementById(editorID).style.display = "block";
+          if(editor!=undefined) editor.refresh();
         }
+
       }
     }
     function filterIt(arr, searchKey, cb) {
@@ -553,72 +557,125 @@ function getFormat(text) {
       return "unknown";
   }
 }
-
-function updateCodeMode(path) {
-  if (g_highlighting == "activated") {
-    switch (path.split(".").pop()) {
+function getLanguageName(format){
+switch (format) {
       case "html":
-        editor.setOption("mode", "htmlmixed");
-        editor.setOption("htmlMode", true);
-        plang = "HTML";
+        return "HTML";
         break;
       case "css":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "css");
-        plang = "CSS";
+        return "CSS";
         break;
       case "js":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "javascript");
-        plang = "JavaScript";
+        return "JavaScript";
         break;
       case "json":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "javascript");
-        plang = "JSON / JavaScript";
+        return "JSON ";
         break;
       case "go":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "go");
-        plang = "Go";
+        return "Go";
         break;
       case "sql":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "sql");
-        plang = "SQL";
+        return "SQL";
         break;
       case "ruby":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "ruby");
-        plang = "Ruby";
+        return "Ruby";
         break;
       case "php":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "php");
-        plang = "PHP";
+        return "PHP";
         break;
       case "sass":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "sass");
-        plang = "Sass";
+        return "Sass";
         break;
       case "dart":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "dart");
-        plang = "Dart";
+        return "Dart";
         break;
       case "pascal":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "pascal");
-        plang = "Pascal";
+        return "Pascal";
         break;
       case "md":
-        editor.setOption("htmlMode", false);
-        editor.setOption("mode", "markdown");
-        plang = "Markdown";
+        return "Markdown";
         break;
       default:
     }
+}
+function updateCodeMode(instance,path) {
+  if (g_highlighting == "activated") {
+    switch (path.split(".").pop()) {
+      case "html":
+        instance.setOption("mode", "htmlmixed");
+        instance.setOption("htmlMode", true);
+        plang = "HTML";
+        instance.refresh();
+        break;
+      case "css":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "css");
+        plang = "CSS";
+        instance.refresh();
+        break;
+      case "js":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "javascript");
+        plang = "JavaScript";
+        instance.refresh();
+        break;
+      case "json":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "javascript");
+        plang = "JSON / JavaScript";
+        instance.refresh();
+        break;
+      case "go":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "go");
+        plang = "Go";
+        instance.refresh();
+        break;
+      case "sql":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "sql");
+        plang = "SQL";
+        instance.refresh();
+        break;
+      case "ruby":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "ruby");
+        plang = "Ruby";
+        instance.refresh();
+        break;
+      case "php":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "php");
+        plang = "PHP";
+        instance.refresh();
+        break;
+      case "sass":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "sass");
+        plang = "Sass";
+        instance.refresh();
+        break;
+      case "dart":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "dart");
+        plang = "Dart";
+        instance.refresh();
+        break;
+      case "pascal":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "pascal");
+        plang = "Pascal";
+        instance.refresh();
+        break;
+      case "md":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "markdown");
+        plang = "Markdown";
+        instance.refresh();
+        break;
+      default:
+    }
+
   }
 }
 const registerNewProject = function(dir) { //Add a new directory to the history if it is the first time it has been opened in the editor
@@ -645,9 +702,11 @@ const g_ZenMode =()=>{
   if (editor_mode == "zen") {
     editor_mode = "normal";
     document.getElementById("g_explorer").style = "visibility: visible; width:210px; display:block;";
+    document.getElementById("g_spacer").style = " display:block;";
   } else {
     editor_mode = "zen";
     document.getElementById("g_explorer").style = "visibility: hidden; width:0px; display:none;";
+    document.getElementById("g_spacer").style = " width:0; display:none;";
   }
 }
 const g_preview = function() {

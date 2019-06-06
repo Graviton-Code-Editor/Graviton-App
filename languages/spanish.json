@@ -56,7 +56,7 @@
 	"Performance":"Rendimiento",
 	"Highlighting":"Coloreado de la sintaxis",
 	"Settings-Advanced-Performance-Animations":"Apagalo para desactivar las animaciones.",
-	"Settings-Advanced-FactoryReset-text":"Esto reiniciar Graviton y borrará la configuración y lista de proyectos recientes.",
+	"Settings-Advanced-FactoryReset-text":"Esto reiniciará Graviton y borrará la configuración y la lista de proyectos recientes.",
 	"Settings-Advanced-Developer-Tools-text":"Abrir las herramientas de desarrollo",
 	"FileExit-dialog-message":"Estás seguro que quieres cerrar este archivo sin guardarlo?",
 	"FileExit-dialog-button-accept":"Si, cerrar",

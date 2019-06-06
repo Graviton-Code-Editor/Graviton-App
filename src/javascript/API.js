@@ -438,13 +438,14 @@ class Tab {
   constructor(object) {
     this.type = object.type;
     this.id = object.id;
-    document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
+    
     switch(object.type){
       case "file":
         for (i = 0; i < tabs.length + 1; i++) {
           if (i != tabs.length && tabs[i].getAttribute("longPath") === object.path){
               return;
           } else if (i == tabs.length) { //Tab is created because it doesn't exist
+          	document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
             const tab = document.createElement("div");
             tab.setAttribute("id", object.id + "Tab");
             tab.setAttribute("TabID", object.id + "Tab");
@@ -516,7 +517,7 @@ class Tab {
                     data:data,
                     screen:current_screen.id
                   });
-                  if (g_highlighting == "activated") updateCodeMode(g_newPath);
+                  
                   editor.refresh();
                 });
             }
@@ -531,6 +532,7 @@ class Tab {
             tabs[i].classList.remove("selected");
           }
         }
+        document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
         const tab = document.createElement("div");
         tab.setAttribute("data", object.data);
         tab.setAttribute("id", object.id + "Tab");
@@ -633,8 +635,6 @@ const closeTab = (tab_id,fromWarn) => {
             data:new_selected_tab.getAttribute("data"),
             screen:current_screen.id
           });
-    
-          if (g_highlighting == "activated") updateCodeMode(g_newPath);
         }
       }
     }
@@ -660,7 +660,6 @@ const loadTab = object => {
       data:object.getAttribute("data"),
       screen:object.getAttribute("screen")
     });
-    if (g_highlighting == "activated" &&object.getAttribute("typeeditor") =="file") updateCodeMode(g_newPath);
     editingTab = object.id;
   }
 }

@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200606 - 1 [0.7.7]
+- Added transparency to all scrollbars (new css variable)
+- Improved the screens design with more shadows and a rounded corner
+- Fixed zen mode
+- Now the status bar shows the language name and not the format.
+
 ### 200605 - 1 [0.7.7]
 - Made a CarbonaraLive transcompiler plugin (testing)
 - Improved API, now plugins can create Tabs with custom content, there is also a method which you can use to change the tab's content on live.

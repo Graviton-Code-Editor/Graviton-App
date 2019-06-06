@@ -29,9 +29,9 @@ function openSettings(){
 }
 function updateSettingsFromUI() {
 	current_config.fontSizeEditor =  document.getElementById("fs-input").value;
-	if(editor!=undefined){
-		document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
-		editor.refresh();
+	document.documentElement.style.setProperty("--editor-font-size",`${document.getElementById("fs-input").value}px`);//Update settings from window
+	for(i=0;i<editors.length;i++){
+		editors[i].editor.refresh();
 	}
 }
 function updateCustomization(){
@@ -202,10 +202,12 @@ const g_highlightingTurn = function(){
 				if(editors[i].path.split(".").pop()=="html"){
 					editors[i].editor.setOption("mode", "htmlmixed");
 		      editors[i].editor.setOption("htmlMode", true);
+		      editors[i].editor.refresh();
 				}else{
-					editors[i].editor.setOption("mode",editors[i].path.split(".").pop());
+					console.log(editors[i].path.split(".").pop())
+					updateCodeMode(editors[i].editor,path);
 				}
-				editors[i].editor.refresh();
+				
 			}
 		}
 		g_highlighting = "activated";

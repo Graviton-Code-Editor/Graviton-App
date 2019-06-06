@@ -1,6 +1,6 @@
 {
   "Name": "Light",
-  "Description":"Light UI theme.",
+  "Description":"Light theme.",
   "Author": "Marc Espín Sanz",
   "GitRepositoryURL": "",
   "Version": "0.1.0",
@@ -21,6 +21,8 @@
     "notifications-background-color":"#ECECEC",
     "notifications-window-radius":"5px",
     "shadows":"rgba(0,0,0,0.20)",
-    "scalation":"0.98"
+    "scalation":"0.98",
+    "scroll-color":"rgba(0,0,0,0.3)",
+    "scroll-color-hover":"rgba(0,0,0,0.6)"
   }
 }

@@ -27,6 +27,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     --notifications-window-radius:5px;
     --shadows:rgba(0,0,0,0.25);
     --scalation:0.98;
+    --scroll-color:rgba(255,255,255,0.2);
+    --scroll-color-hover:rgba(255,255,255,0.5);
 }
 @font-face {
     font-family: _main_font;
@@ -54,26 +56,26 @@ html{
 body ,head{
 	margin: 0;
     padding: 0;
-    background: var(--editor-background-color);
+    background: var(--primaryColor);
 }
 ::-webkit-scrollbar {
     transition: 0.1s;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     background: transparent;
 }
 ::-webkit-scrollbar-track {
     background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-    transition: 0.15s;
-    width: 5px !important;
-    height: 5px !important;
-    background: var(--widget-color);
+    transition: 0.1s;
+    width: 11px !important;
+    height: 11px !important;
+    background: var(--scroll-color) !important;
 }
 ::-webkit-scrollbar-thumb:hover {
-    transition: 0.15s;
-    background: var(--widget-color);
+    transition: 0.1s;
+    background: var(--scroll-color-hover);
 }
 ::-webkit-scrollbar-corner{
     visibility: hidden !important; 
@@ -81,21 +83,22 @@ body ,head{
     height: 0!important;
     width: 0!important;
     display: none!important;
-    background: red !important;
 }
 ::-webkit-resizer{
     cursor: ew-resize;
 }
 #g_content {
     display: flex;
-    background: var(--primaryColor)
+    background: var(--primaryColor);
+    height:calc(100% - (40px));
+    position: relative;
 }
 #g_content > #g_explorer{
     min-width: 15%;
     width:210px;
     max-width: 70%;
     left:0;
-    height: calc(100% - (35px));
+    height: 100%;
     overflow:auto;
     font-size:12px;
     color:var(--white-black);
@@ -127,6 +130,7 @@ body ,head{
     margin: 0;
     padding: 0;
     color:var(--white-black);
+    border-top-left-radius: inherit;
 }
 #g_content > .g_editors > .g_tabs_bar::-webkit-scrollbar {
     width: 6px;
@@ -147,18 +151,29 @@ body ,head{
     color:var(--white-black);
     width: auto;
 }
-#g_content  .g_editors{
+#g_content .g_editors{
     font-size: var(--editor-font-size);
     background: var(--editor-background-color);
     flex:3;
     float:left;
     display: flex;
     flex-direction: column;
-    height:  calc(100% - (35px));
+    height: 100%;
     margin:0;
     color:var(--white-black);
     overflow: hidden;
-    box-shadow: -2px 2px 7px var(--shadows);
+    box-shadow: -2px 0px 7px var(--shadows);
+    border-top-left-radius: 8px;
+    margin-top: 5px;
+}
+#g_content  .g_editors ~ .g_editors{
+    border-top-left-radius: 0px;
+}
+.g_tabs_bar  .tabs:first-child{
+    border-top-left-radius: 5px;
+}
+.g_editors ~ .g_editors .g_tabs_bar .tabs{
+    border-top-left-radius: 0px;
 }
 #g_content >#g_spacer{
     flex:0;
@@ -175,7 +190,7 @@ body ,head{
 #g_content >.g_editors > .g_editors_editors> .code-space{
     position: relative;
 }
-#g_content >.g_editors .g_editors_editors> .code-space img{
+#g_content >.g_editors .g_editors_editors> .code-space img{ 
     user-select: none; 
     pointer-events: none;
     position: relative; 
@@ -186,8 +201,9 @@ body ,head{
 }
 
 #g_content >.g_editors> .g_status_bar{
-    flex:20px;
-    height: 20px;
+    flex:22px;
+    min-height: 22px;
+    max-height: 22px;
     background: var(--primaryColor);
     padding: 5px 10px;
     border: none;

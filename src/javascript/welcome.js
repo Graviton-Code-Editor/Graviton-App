@@ -77,7 +77,7 @@ function FTGoPage(number){
 	switch(number){
 		case "1":
 			document.getElementById("body_window_full").innerHTML= `
-				<h1 style="font-size:50px; text-align:center; " class="translate_word" idT="Languages">${current_config.language["Languages"]}</h1> 
+				<h1 style="font-size:50px; text-align:center; position:relative; " class="translate_word" idT="Languages">${current_config.language["Languages"]}</h1> 
 				<div id='language_list'></div> 
 				<button onclick='FTGoPage("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${current_config.language["Continue"]}</button>			`;
 			for(i=0;i<languages.length; i++){

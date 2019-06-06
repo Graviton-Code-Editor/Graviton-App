@@ -33,8 +33,10 @@ function newTestTab(){
         background:red;
         height:50%;
         width:50%;
+        text-align:center;
+        vertical-align:middle;
       ">
-
+        hello world
       </div>
 
       `
