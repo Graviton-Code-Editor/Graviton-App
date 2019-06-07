@@ -69,8 +69,8 @@ body ,head{
 }
 ::-webkit-scrollbar-thumb {
     transition: 0.1s;
-    width: 11px !important;
-    height: 11px !important;
+    width: 9px !important;
+    height: 9px !important;
     background: var(--scroll-color) ;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -201,19 +201,22 @@ body ,head{
 
 #g_content >.g_editors> .g_status_bar{
     flex:22px;
-    min-height: 22px;
-    max-height: 22px;
+    min-height: 25px;
+    max-height: 25px;
     background: var(--primaryColor);
-    padding: 5px 10px;
     border: none;
+    display: flex;
 }
-#g_content >.g_editors> .g_status_bar *{
+#g_content >.g_editors> .g_status_bar p{
+    margin:3px;
     padding: 0;
-    margin: 0;
+    flex:1;
     color: var(--white-black);
-    flex: 1;
     font-size: 13px;
     user-select: none;
+    height:100%;
+    position: relative;
+    width: auto;
 }
 .flex{
     padding: 0px 15px;

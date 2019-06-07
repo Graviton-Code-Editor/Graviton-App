@@ -804,7 +804,8 @@ const screens={
         <div class="g_editors_editors" >
         </div>
         <div class="g_status_bar" >
-          <span ></span>
+          <p ></p>
+          <div><div>
         </div>
     `
     document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length-1])
