@@ -71,11 +71,11 @@ body ,head{
     transition: 0.1s;
     width: 11px !important;
     height: 11px !important;
-    background: var(--scroll-color) !important;
+    background: var(--scroll-color) ;
 }
 ::-webkit-scrollbar-thumb:hover {
     transition: 0.1s;
-    background: var(--scroll-color-hover);
+    background: var(--scroll-color-hover) ;
 }
 ::-webkit-scrollbar-corner{
     visibility: hidden !important; 
@@ -86,6 +86,10 @@ body ,head{
 }
 ::-webkit-resizer{
     cursor: ew-resize;
+}
+.smallScrollBar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
 }
 #g_content {
     display: flex;
@@ -131,11 +135,6 @@ body ,head{
     padding: 0;
     color:var(--white-black);
     border-top-left-radius: inherit;
-}
-#g_content > .g_editors > .g_tabs_bar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-    opacity: 0.5;
 }
 #g_content > .g_editors > .temp_dir_message{
     font-size: 15px;

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200607 - 1 [0.7.7]
+- If you open a file which already has an opened tha it will laod it's tab
+
 ### 200606 - 1 [0.7.7]
 - Added transparency to all scrollbars (new css variable)
 - Improved the screens design with more shadows and a rounded corner

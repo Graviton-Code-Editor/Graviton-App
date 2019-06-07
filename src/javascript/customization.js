@@ -75,7 +75,7 @@ const loadTheme = number=>{
 	current_config.theme = themes[number];
 	saveConfig(); //Save the current configuration
 }
-function setThemeByName(name){
+const setThemeByName = name=>{
 	for(i = 0;i < themes.length;i++){
 		if(themes[i]["Name"]== name){
 			current_config["theme"] = themes[i];

@@ -275,12 +275,12 @@ function selectLang(lang){
 function selectTheme(from,theme){
 	let themes_divs;
 	if(from==="1"){
-			themes_divs = document.getElementsByClassName("theme_div");
+		themes_divs = document.getElementsByClassName("theme_div");
 	}else{
-			themes_divs = document.getElementsByClassName("theme_div_welcomePage");
+		themes_divs = document.getElementsByClassName("theme_div_welcomePage");
 	}
 	for(i=0; i <themes_divs.length; i++){
-			themes_divs[i].style = "";
+		themes_divs[i].style = "";
 	}
 	theme.style = "background: var(--accentColor); color:white;";
 }
@@ -298,8 +298,7 @@ class Switch extends  HTMLElement {
     connectedCallback(){
         this.innerHTML = `
         <div class="${this.getAttribute("class")} switch">
-        	<div>
-        	</div>
+        	<div></div>
         </div>`
         this.addEventListener('click', function(){
 	        const dot = this.children[0];

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190606",
+  date: "190607",
   version: "0.7.7",
   state: "Alpha"
 }
@@ -799,7 +799,7 @@ const screens={
     new_screen_editor.classList = "g_editors"
     new_screen_editor.id = Math.random();
     new_screen_editor.innerHTML=`
-       <div class="g_tabs_bar flex"></div>  
+       <div class="g_tabs_bar flex smallScrollBar"></div>  
         <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language["WelcomeMessage"]}</p>
         <div class="g_editors_editors" >
         </div>

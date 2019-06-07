@@ -31,20 +31,6 @@ function openPlugins(){
   });
 	if(plugins_list.length ==0)content.innerHTML += `<p>No plugins detected.</p>`
 }
-function removePlugin(name){
-	for(i=0;i<plugins_list.length;i++){
-		if(plugins_list[i]["name"]==name){
-			try{
-				fs.remove(path.join(plugins_folder,name), function(){
-					document.getElementById(name+"_div_list").remove();
-				});
-			}catch{
-				new Notification("Plugin remover","Cannot remove this plugin, do it manually.")
-			}
-			 
-		}
-	}
-}
 function detectPlugins(){
 	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
 	  fs.mkdirSync(plugins_db);
@@ -73,34 +59,6 @@ function detectPlugins(){
 		  		const direct = fs.statSync(path.join(plugins_folder,dir));
 	      	if (!direct.isFile()){
 			  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
-			  				const config = JSON.parse(data);
-			 		 			if (err) throw err;
-			 		 			plugins_list.push(config);
-					 		 	const script = document.createElement("script");
-					 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
-					 		 	document.body.appendChild(script);
-					 		 	for(i=0;i<config["javascript"].length;i++){
-					 		 			const script = document.createElement("script");
-					 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
-					 		 			document.body.appendChild(script);
-					 		 	}
-					 		 	for(i=0;i<config["css"].length;i++){
-					 		 			const link = document.createElement("link");
-					 		 			link.setAttribute("rel","stylesheet");
-					 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
-					 		 			document.body.appendChild(link);
-					 		 	}
-						});
-			  	}
-		  	});
-			});
-    });
-	}else{   //If the plugins folder already exist
-	fs.readdir(plugins_folder, (err, paths) => {
-	  	paths.forEach(dir => {
-	  		const direct = fs.statSync(path.join(plugins_folder,dir));
-      	if (!direct.isFile()){
-		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
 		  				const config = JSON.parse(data);
 		 		 			if (err) throw err;
 		 		 			plugins_list.push(config);
@@ -108,16 +66,44 @@ function detectPlugins(){
 				 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
 				 		 	document.body.appendChild(script);
 				 		 	for(i=0;i<config["javascript"].length;i++){
-					 		 			const script = document.createElement("script");
-					 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
-					 		 			document.body.appendChild(script);
-					 		}
-					 		for(i=0;i<config["css"].length;i++){
-					 		 			const link = document.createElement("link");
-					 		 			link.setAttribute("rel","stylesheet");
-					 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
-					 		 			document.body.appendChild(link);
-					 		}
+			 		 			const script = document.createElement("script");
+			 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
+			 		 			document.body.appendChild(script);
+				 		 	}
+				 		 	for(i=0;i<config["css"].length;i++){
+			 		 			const link = document.createElement("link");
+			 		 			link.setAttribute("rel","stylesheet");
+			 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
+			 		 			document.body.appendChild(link);
+				 		 	}
+						});
+			  	}
+		  	});
+			});
+    });
+	}else{   //If the plugins folder already exist
+		fs.readdir(plugins_folder, (err, paths) => {
+	  	paths.forEach(dir => {
+	  		const direct = fs.statSync(path.join(plugins_folder,dir));
+	    	if (!direct.isFile()){
+		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
+	  				const config = JSON.parse(data);
+	 		 			if (err) throw err;
+	 		 			plugins_list.push(config);
+			 		 	const script = document.createElement("script");
+			 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),
+			 		 	document.body.appendChild(script);
+			 		 	for(i=0;i<config["javascript"].length;i++){
+		 		 			const script = document.createElement("script");
+		 		 			script.setAttribute("src",path.join(plugins_folder,config["folder"],config["javascript"][i])),
+		 		 			document.body.appendChild(script);
+				 		}
+				 		for(i=0;i<config["css"].length;i++){
+		 		 			const link = document.createElement("link");
+		 		 			link.setAttribute("rel","stylesheet");
+		 		 			link.setAttribute("href",path.join(plugins_folder,config["folder"],config["css"][i])),
+		 		 			document.body.appendChild(link);
+				 		}
 					});
 	  		}
 	  	});

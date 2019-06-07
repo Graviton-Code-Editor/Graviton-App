@@ -50,13 +50,13 @@ function appendCarbonara(){
 }
 function load_carbonara(){
   console.clear();
-  carbonara_appender.setData(execute ({
+  carbonara_appender.setData(`<textarea size="200px">${execute ({
     code: graviton.getCurrentEditor().editor.getValue(),
     compression: false,
     consoleOutput: false,
     execute: true,
     showErrorsOnPlayground:true
-  }))
+  })}</textarea>`)
 }
 const execute = input => {
   let data = {
@@ -151,7 +151,7 @@ const execute = input => {
                 valueType: undefined,
                 value: "`"+getKeyWord (i + 4)+"`"
               });
-              data.output += `${'   '.repeat (openBrackets)} ${getVaribleType (data.current_keyword)} ${getKeyWord (i + 1)} = ${"`"+getKeyWord (i + 4)+"`"}; ${data.compression == true ? '' : '\n'}`;
+              data.output += `${'   '.repeat (openBrackets)} ${getVaribleType (data.current_keyword)} ${getKeyWord (i + 1)} = ${"`"+getKeyWord (i + 4)+"`"}; ${data.compression === true ? '' : '\n'}`;
               i += getKeyWord (i + 4)!="<"? 2:5;
             }else{
               data.storedVariables.push ({
@@ -160,7 +160,7 @@ const execute = input => {
                 valueType: getKeyWord (i + 4)=="<"?getKeyWord (i + 5):undefined,
                 value: getKeyWord (i + 3)
               });
-              data.output += `${'   '.repeat (openBrackets)} ${getVaribleType (data.current_keyword)} ${getKeyWord (i + 1)} = ${getKeyWord (i + 3)}; ${data.compression == true ? '' : '\n'}`;
+              data.output += `${'   '.repeat (openBrackets)} ${getVaribleType (data.current_keyword)} ${getKeyWord (i + 1)} = ${getKeyWord (i + 3)}; ${data.compression === true ? '' : '\n'}`;
               i += getKeyWord (i + 4)!="<"? 2:5;
             }
           } 
@@ -182,6 +182,11 @@ const execute = input => {
           }
           
           
+          break;
+        case 'class':
+          data.output += `${'   '.repeat (openBrackets)} class ${getKeyWord (i + 1)}  { ${data.compression == true ? '' : '\n'}`;
+          i += 2;
+          openBrackets++;
           break;
         case 'def':
           const name = getKeyWord (i + 1);

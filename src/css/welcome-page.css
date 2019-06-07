@@ -9,7 +9,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 .body_window h2:not(.window_title){
-    padding-left: 7px;
 	font-size: 23px;
     font-weight: bold;
 }

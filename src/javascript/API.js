@@ -443,6 +443,7 @@ class Tab {
       case "file":
         for (i = 0; i < tabs.length + 1; i++) {
           if (i != tabs.length && tabs[i].getAttribute("longPath") === object.path){
+              loadTab(tabs[i])
               return;
           } else if (i == tabs.length) { //Tab is created because it doesn't exist
           	document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
