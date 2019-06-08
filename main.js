@@ -27,7 +27,7 @@ app.on('ready', function(){
     height: 650 ,
     'minHeight': 310,
     'minWidth': 310,
-    backgroundColor: "rgba(255,255,255,0)",
+    backgroundColor: "#222222",
     title:"Graviton Editor"
   });
   main.loadURL(url.format({

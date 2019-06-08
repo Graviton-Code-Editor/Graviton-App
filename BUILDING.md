@@ -32,8 +32,7 @@ Install the dependencies:
 - From a Linux machine: 
 
 >  $ npm run build 
-  
-         
+   
 
 ### MacOS
 

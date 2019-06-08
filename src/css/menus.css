@@ -82,7 +82,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     -webkit-app-region: no-drag;
     white-space: nowrap;
     min-width: auto;
-    background: var(--primaryColor)
+    background: var(--primaryColor);
 }
 #g_control_bar >  #g_dropmenu_list  .dropbtn:hover {
     background-color:var(--widget-color);

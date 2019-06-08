@@ -15,15 +15,14 @@ let context_menu_list_text = { //Initial value
 const context_menu_list_tabs = { //Initial value
 	"Close" :`closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
 };
-
 class Plugin{
 	constructor(object){
 		for(i=0; i<plugins_list.length;i++){
 				if(plugins_list[i].name==object.name){ //List package information
-						this.name = plugins_list[i].name;
-						this.author = plugins_list[i].author; 
-						this.version = plugins_list[i].version;
-						this.description = plugins_list[i].description;
+					this.name = plugins_list[i].name;
+					this.author = plugins_list[i].author; 
+					this.version = plugins_list[i].version;
+					this.description = plugins_list[i].description;
 				}
 		}
 		for(i=0; i<plugins_dbs.length;i++){
@@ -41,43 +40,43 @@ class Plugin{
 			fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(data), function(err) { }); 
   }
   setData(key,data){
-      if(fs.existsSync(path.join(plugins_db,this.name)+".json")){
-        let object = this.getData();
-        object[key] = data;
-        fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(object), function(err) {
-        	plugins_dbs[this.b].db = object; 
-        }); 
-      }
+    if(fs.existsSync(path.join(plugins_db,this.name)+".json")){
+      let object = this.getData();
+      object[key] = data;
+      fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(object), function(err) {
+      	plugins_dbs[this.b].db = object; 
+      }); 
+    }
   }
  	createData(data){
-			if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
-				const db = {
-			 			plugin_name:this.name,
-			 			db:data
-				};
-				plugins_dbs.push(db);
-				this.b = plugins_dbs.length-1;
-				fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(data), function(err) {}); 
-				return "created";
-			}else{
-				return "already_exists";
-			}
+		if(!fs.existsSync(path.join(plugins_db,this.name)+".json")){
+			const db = {
+		 			plugin_name:this.name,
+		 			db:data
+			};
+			plugins_dbs.push(db);
+			this.b = plugins_dbs.length-1;
+			fs.writeFileSync(path.join(plugins_db,this.name)+".json", JSON.stringify(data), function(err) {}); 
+			return "created";
+		}else{
+			return "already_exists";
+		}
   }
   getData(){
-			return plugins_dbs[this.b].db;
+		return plugins_dbs[this.b].db;
   }
   deleteData(data){
-			switch(data){
-				case undefined:
-					plugins_dbs[b].db = {}; 
-					fs.writeFileSync(path.join(plugins_db,this.name)+".json", "{}", function(err) {}); 
-				break;
-				default:
-					const object = this.getData();
-					delete object[data];
-					fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(object), function(err) {}); 
-					plugins_dbs[b].db = object; 
-			}
+		switch(data){
+			case undefined:
+				plugins_dbs[b].db = {}; 
+				fs.writeFileSync(path.join(plugins_db,this.name)+".json", "{}", function(err) {}); 
+			break;
+			default:
+				const object = this.getData();
+				delete object[data];
+				fs.writeFileSync(path.join(plugins_db,this.name)+".json",JSON.stringify(object), function(err) {}); 
+				plugins_dbs[b].db = object; 
+		}
 	}
 }
 function dropMenu(obj){
@@ -314,9 +313,8 @@ document.addEventListener('mousedown', function(event){ //Create the context men
 	      	}
 	        button.setAttribute("onclick",context_menu_list_text[key]+" document.getElementById('context_menu').remove();");
 		    });
-
-      }
-    	document.body.appendChild(context_menu);
+    	}
+		document.body.appendChild(context_menu);
     }else if(event.button ===0 && !(event.target.matches('#context_menu') || event.target.matches('.part_of_context_menu'))&& document.getElementById("context_menu")!==null){
       document.getElementById("context_menu").remove();
     }

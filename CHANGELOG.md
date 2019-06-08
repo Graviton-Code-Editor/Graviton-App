@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200608 - 2 [1.0.1]
+- Fixed, starting background color wasn't the right one.
+
 ### 200608 - 1 [1.0.0]
 - Preparing for Beta launch! (v1.0.0)
 
