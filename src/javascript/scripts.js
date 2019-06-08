@@ -9,9 +9,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190607",
-  version: "0.7.7",
-  state: "Alpha"
+  date: "190608",
+  version: "1.0.0",
+  state: "Beta"
 }
 let new_update = false;
 const os = require('os');
@@ -84,7 +84,6 @@ document.addEventListener('mousemove', function(event) {
 }, true);
 const loadEditor = (info) => {
     if ( document.getElementById(info.dir + "_editor") == undefined) {
-      //Editor doesn't exist
       switch (info.type) {
         case "text":
           let text_container = document.createElement("div");
@@ -98,7 +97,7 @@ const loadEditor = (info) => {
             theme: themeObject["Highlight"],
             lineNumbers: true,
             autoCloseTags: true,
-            indentUnit: 3,
+            indentUnit: 2,
             id:info.dir,
             styleActiveLine: true,
             lineWrapping: current_config["lineWrappingPreferences"] == "activated"

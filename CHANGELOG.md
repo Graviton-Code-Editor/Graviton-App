@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200608 - 1 [1.0.0]
+- Preparing for Beta launch! (v1.0.0)
+
 ### 200607 - 1 [0.7.7]
 - If you open a file which already has an opened tha it will laod it's tab
 

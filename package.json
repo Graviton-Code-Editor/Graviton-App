@@ -1,6 +1,6 @@
 {
   "name": "Graviton",
-  "version": "0.7.7",
+  "version": "1.0.0",
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
@@ -25,7 +25,6 @@
     "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
     "jquery": "^3.4.0",
-    "mkdirp": "^0.5.1",
     "nodejs": "0.0.0",
     "npm": "^6.9.0",
     "request": "^2.88.0"

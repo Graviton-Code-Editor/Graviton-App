@@ -200,15 +200,15 @@ body ,head{
 }
 
 #g_content >.g_editors> .g_status_bar{
-    flex:22px;
-    min-height: 25px;
-    max-height: 25px;
+    flex:30px;
+    min-height: 30px;
+    max-height: 30px;
     background: var(--primaryColor);
     border: none;
     display: flex;
 }
 #g_content >.g_editors> .g_status_bar p{
-    margin:3px;
+    margin:6px;
     padding: 0;
     flex:1;
     color: var(--white-black);

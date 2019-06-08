@@ -105,7 +105,7 @@ function goSPage(num){
 				<div id="editor_fs">
 						<h3>${current_config.language["FontSize"]}</h3>
 						<div class="section">
-								<input class="Input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${current_config.fontSizeEditor}">
+								<input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${current_config.fontSizeEditor}">
 						</div>
 						<h3>${current_config.language["Auto-Completion"]}</h3>
 						<div class="section">
@@ -160,7 +160,7 @@ function goSPage(num){
 				<div class="section">
 					<div id="about_section">
 						<p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>
-      			<p> ${current_config.language['OS']}: ${graviton.currentOS()}</p>
+      			<p>${current_config.language['OS']}: ${graviton.currentOS()}</p>
       		</div>
       		<button class="button1" onclick="graviton.dialogChangelog();">${current_config.language["Changelog"]}</button>
 					<button class="button1" onclick="CHECK_UPDATES();">${current_config.language["CheckUpdates"]}</button>

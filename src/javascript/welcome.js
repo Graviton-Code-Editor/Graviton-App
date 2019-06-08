@@ -25,7 +25,7 @@ function g_welcomePage(){
 			</div> 
 			<div id="notes" class="horizontal">
 				<h2 class='title2'>${current_config.language["Notes"]}</h2>
-				<p> Current build: ${ g_version.date } </p> 
+				<p> ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p> 
 				<p> OS: ${graviton.currentOS()}</p> 
 				<p class="link" onclick="graviton.dialogChangelog()">${current_config.language["Changelog"]}</p>
 			</div>
@@ -128,6 +128,7 @@ function FTGoPage(number){
 				  class="translate_word" 
 				  idT="Welcome.ThanksForInstalling">
 				  ${current_config.language["Welcome.ThanksForInstalling"]} ${g_version.version } - ${g_version.state}</h1> 
+				<button onclick="g_hideSetup(); shell.openExternal('https://graviton.ml')" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Website">${current_config.language["Website"]}</button> 
 				<button onclick='g_hideSetup(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language["Finish"]}</button> 
 				`;
 		break;

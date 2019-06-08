@@ -16,7 +16,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     position: relative;
     overflow: auto;
     width: 100%;
-    height: auto;
+    max-height: 70%;
     overflow: auto;
     white-space: nowrap;
     display: inline-block;
@@ -32,7 +32,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     padding: 10px;
     margin: 6px 0px;
     max-width: auto;
-    height: auto;
     overflow: auto;
     background: var(--primaryColor);
     color:var(--white-black);

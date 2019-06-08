@@ -602,24 +602,24 @@ const closeTab = (tab_id,fromWarn) => {
             tabs2.push(tabs[i]);
           }
         }
-          if (tabs2.length == 0) { //Any tab opened
-            filepath = " ";
-            plang = "";
-            document.getElementById(current_screen.id).children[3].children[0].innerText = plang;
-            document.getElementById(current_screen.id).children[1].style = "visibility:visible; display:block;"
-          } else if (i === tabs2.length) { //Last tab selected
-            for(i = 0; i < tabs2.length; i++) {
-              if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
-                new_selected_tab = tabs2[Number(tabs2.length) - 1];
-              } 
-            }
-          } else {
-            for(i = 0; i < tabs2.length; i++) {
-              if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
-                new_selected_tab = tabs2[i]; 
-              } 
-            }
+        if (tabs2.length == 0) { //Any tab opened
+          filepath = " ";
+          plang = "";
+          document.getElementById(current_screen.id).children[3].children[0].innerText = plang;
+          document.getElementById(current_screen.id).children[1].style = "visibility:visible; display:block;"
+        } else if (i === tabs2.length) { //Last tab selected
+          for(i = 0; i < tabs2.length; i++) {
+            if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+              new_selected_tab = tabs2[Number(tabs2.length) - 1];
+            } 
           }
+        } else {
+          for(i = 0; i < tabs2.length; i++) {
+            if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
+              new_selected_tab = tabs2[i]; 
+            } 
+          }
+        }
         if (new_selected_tab != undefined) {
           for (i = 0; i < tabs.length; i++) {
             if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {

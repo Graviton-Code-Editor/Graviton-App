@@ -17,14 +17,15 @@ const Tools = new dropMenu({
   if:"tools",
   translation: true
 });
-const Help = new dropMenu({
-  id:"help",
-  translation: true
-});
 const Editor = new dropMenu({
   id:"editor",
   translation: true
 });
+const Help = new dropMenu({
+  id:"help",
+  translation: true
+});
+
 File.setList({
   button: "File",
   list: {
@@ -48,6 +49,13 @@ Tools.setList({
     Settings: "openSettings(); goSPage('1');"
   }
 });
+Editor.setList({
+  button: "Editor",
+  list: {
+    "AddScreen":"screens.add()",
+    "RemoveScreen":"graviton.removeScreen()"
+  }
+});
 Help.setList({
   button: "Help",
   list: {
@@ -63,13 +71,7 @@ Help.setList({
     About:"graviton.dialogAbout()"
   }
 });
-Editor.setList({
-  button: "Editor",
-  list: {
-    "AddScreen":"screens.add()",
-    "RemoveScreen":"graviton.removeScreen()"
-  }
-});
+
 function interact_dropmenu(id) {
   const dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {
