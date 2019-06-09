@@ -75,8 +75,10 @@
 	"Author":"Autor",
 	"Notification.CannotRemoveMoreScreens":"No se puede borrar más pantallas.",
 	"Notification.CloseAllTabsBefore":"Cierra todas las pestañas antes de borrar la pantalla.",
-	"Dialog.RemoveScreen.title":"Borrar una pantalla",
+	"Dialog.RemoveScreen.title":"Borrar pantalla",
 	"Dialog.RemoveScreen.content":"Escribe el numero de la pantalla, 1 a X (de izquierda a derecha)",
-	"AddScreen":"Añadir una pantala",
-	"RemoveScreen":"Borrar una pantalla"
+	"DefaultView":"Vista por defecto",
+	"AddScreen":"Dividir pantalla",
+	"RemovdeScreen":"Eliminar pantalla",
+	"DirectoryDoesntExist":"Este directorio no existe."
 }

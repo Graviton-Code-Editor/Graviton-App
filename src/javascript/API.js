@@ -63,7 +63,9 @@ class Plugin{
 		}
   }
   getData(){
-		return plugins_dbs[this.b].db;
+  	try{
+  		return plugins_dbs[this.b].db;
+  	}catch{}
   }
   deleteData(data){
 		switch(data){
@@ -93,13 +95,49 @@ function dropMenu(obj){
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
 						Object.keys(panel["list"]).forEach(function(key) {
+							console.log(key);
 						if(key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{
-							if(toTransx !=true){
-								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
-							}else{
-								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
+							if(typeof panel["list"][key] == "string"){
+								if(toTransx !=true){
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>${icons.empty}</div>
+										<div>${key}</div>
+											
+									</button>`
+								}else{
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>${icons.empty}</div>
+										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
+											${key}
+										</div>
+									</button>`
+								}	
+							}else {
+								console.log(key);
+								if(toTransx !=true){
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>
+										${icons[panel["list"][key].icon]}
+										</div>
+										<div>${key}</div>
+									</button>`
+								}else{
+									console.log(panel["list"][key].icon);
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key].click}" >
+										<div>
+										${icons[panel["list"][key].icon]}
+										</div>
+										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
+											${key}
+										</div>
+									</button>`
+								}	
 							}			
 						}
 					});
@@ -132,11 +170,47 @@ function dropMenu(obj){
 						if(key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{
-							if(toTransx !=true){
-								droplist.innerHTML += `<button onclick="${panel["list"][key]}" >${key}</button>`
-							}else{
-								droplist.innerHTML += `<button  class=" translate_word  " idT="${key.replace(/ +/g, "")}" onclick="${panel["list"][key]}" >${key}</button>`
-							}			
+							if(typeof panel["list"][key] == "string"){
+								if(toTransx !=true){
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>${icons.empty}</div>
+										<div>${key}</div>
+											
+									</button>`
+								}else{
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>${icons.empty}</div>
+										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
+											${key}
+										</div>
+									</button>`
+								}	
+							}else {
+								console.log(key);
+								if(toTransx !=true){
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key]}" >
+										<div>
+										${icons[panel["list"][key].icon]}
+										</div>
+										<div>${key}</div>
+									</button>`
+								}else{
+									console.log(panel["list"][key].icon);
+									droplist.innerHTML += `
+									<button onclick="${panel["list"][key].click}" >
+										<div>
+										${icons[panel["list"][key].icon]}
+										</div>
+										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
+											${key}
+										</div>
+									</button>`
+								}	
+							}
+									
 						}
 					});
 				}
@@ -146,6 +220,7 @@ function dropMenu(obj){
 				}
 			});
 			newTab.appendChild(droplist);
+
 			bar.appendChild(newTab);
 		}
 	}
@@ -212,32 +287,7 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
-	    	<li>Now you can create screens, which allows to see more than one editor at the same time. You can create as many as you want.</li>
-	    	<li>New files icons</li>
-	    	<li>Load system's language if it's supported when setuping Graviton </li>
-				<li>Updated the website link! www.graviton.ml </li>
-				<li>Added scale effect on clicking directories and files in the explorer menu</li>
-				<li>Faster startup!</li>
-		    <li>Added MacOS support</li>
-		    <li>Improved stability while editing files</li>
-		    <li>Translated to spanish and catalan</li>
-		    <li>Deprecated ukranian</li>
-		    <li>Added an image viewer integrated</li>
-		    <li>Now supports so many languages</li>
-		    <li>Fixed throws error when changing font-size with any tab opened</li>
-		    <li>Deprecated "Mix" theme</li>
-		    <li>Pre-load for some images, to improve the UX</li>
-		    <li>Added a changelog dialog</li>
-		    <li>Improved settings layout</li>
-		    <li>Improved how tabs work</li>
-		    <li>Improved Graviton's API</li>
-		    <li>Unified window's css</li>
-		    <li>Testing a Git plugin which returns you the last commit of your local repo</li>
-		    <li>Added building (building.md) instructions</li>
-		    <li>Improved Readme.md</li>
-		    <li>Improved Setup process</li>
-		    <li>Improved auto-completion(unstable)</li>
-		    <li>Fixed light theme constrast (remove .graviton and restart to apply)</li>
+	    	<li>Added some icons to some dropmenus<li>
 	    </ul>`,
 	    buttons:{
 	      [current_config.language['Close']]:"closeDialog(this)"
@@ -252,8 +302,9 @@ const graviton = {
       ${current_config.language["Dialog.RemoveScreen.content"]}
       <input class="Input1" id="screns_input"  type="number" value="">`,
       buttons:{
-        [current_config.language['Close']]:"closeDialog(this)",
-        [current_config.language['Accept']]:"screens.remove(document.getElementById('screns_input').value);closeDialog(this)"
+      	 [current_config.language['Accept']]:"screens.remove(document.getElementById('screns_input').value);closeDialog(this)",
+        [current_config.language['Cancel']]:"closeDialog(this)"
+       
       }
     })
  	}

@@ -28,7 +28,8 @@ app.on('ready', function(){
     'minHeight': 310,
     'minWidth': 310,
     backgroundColor: "#222222",
-    title:"Graviton Editor"
+    title:"Graviton Editor",
+    icon: path.join(__dirname, 'build/icons/linux/64x64.png')
   });
   main.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),

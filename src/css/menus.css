@@ -111,7 +111,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     font-size: 13px;
     color: var(--white-black);
     background-color: transparent;
-    padding: 7px 10px;
+    padding: 7px 2px;
     width: 100%;
     text-decoration: none;
     display: block;
@@ -119,6 +119,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     border-radius: 5px;
     text-align: left;
     transform: scale(1);
+    padding-right: 10px;
 }
 .dropdown-content > button:hover:not( .dropbtn) {
     color: var(--black-white);
@@ -130,10 +131,44 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     transition: 0.05s;
     transform: scale(var(--scalation));
 }
-.dropdown-content > button:not( .dropbtn ) >img {
-    height: 100px;
-    display: block;
+.dropdown-content > button:not( .dropbtn ) div{
+    display: inline-block;
 }
+.dropdown-content > button:not( .dropbtn ) *:nth-child(1) {
+    margin: 0 1px;
+    position: relative;
+    top: 0.5px;
+}
+.dropdown-content > button:not( .dropbtn ) *:nth-child(2) {
+  
+}
+.dropdown-content > button:not( .dropbtn ):hover div .abo {
+   stroke: var(--accentColor);
+}
+.dropdown-content > button:not( .dropbtn ):hover div .aba{
+   fill: var(--black-white);
+}
+.dropdown-content > button:not( .dropbtn ):hover div .bbo {
+   stroke:  var(--black-white);
+}
+.dropdown-content > button:not( .dropbtn ):hover div .bba {
+   fill:  var(--accentColor);
+}
+
+
+.dropdown-content > button:not( .dropbtn ) div .abo {
+   stroke: var(--dropmenu-background-color);
+}
+.dropdown-content > button:not( .dropbtn ) div .aba{
+   fill: var(--accentColor);
+}
+.dropdown-content > button:not( .dropbtn ) div .bbo {
+   stroke:  var(--accentColor);
+}
+.dropdown-content > button:not( .dropbtn ) div .bba {
+   fill:  var(--dropmenu-background-color);
+}
+
 span.line_space_menus{
     width: auto;
     display: block;

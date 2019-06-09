@@ -2,6 +2,17 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200609 - 1 [1.0.1]
+- Fixed, the current screen wasn't changed when it was deleted
+- Added icons to the dropmenus
+- Added Default view button 
+- If something is not translated to your language it will be showed in English.
+- Fixed, now you can press "Ctrl+S" to save the current editing file
+- Will throw a notification in case you are trying to load a directory which doesn't exist.
+- Desactivated autocompletion cause it's so unstable
+- Fixed MacOS icon
+- Now Graviton will probably not throw any error after updating to a new version
+
 ### 200608 - 2 [1.0.1]
 - Fixed, starting background color wasn't the right one.
 

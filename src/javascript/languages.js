@@ -29,7 +29,15 @@ const loadLanguage = language =>{
 			current_config["language"] = item;
 			const toTranslate = document.getElementsByClassName("translate_word");
 			for(i=0;i<toTranslate.length;i++){
-				if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+				if(item[toTranslate[i].getAttribute("idT")]!=undefined){
+					toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+				}else{
+					languages.map((item,index)=>{
+						if(item["g_l"]==="english"){
+							if(item[toTranslate[i].getAttribute("idT")]!=undefined)toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
+						}
+					});
+				}
 			}
 		}
 	});

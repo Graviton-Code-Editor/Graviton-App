@@ -25,7 +25,6 @@ const Help = new dropMenu({
   id:"help",
   translation: true
 });
-
 File.setList({
   button: "File",
   list: {
@@ -52,8 +51,15 @@ Tools.setList({
 Editor.setList({
   button: "Editor",
   list: {
-    "AddScreen":"screens.add()",
-    "RemoveScreen":"graviton.removeScreen()"
+    "DefaultView":"screens.default()",
+    "SplitScreen":{
+      click:"screens.add()",
+      icon:"split_screen"
+    },
+    "RemoveScreen":{
+      click:"graviton.removeScreen()",
+      icon:"remove_screen"
+    }
   }
 });
 Help.setList({

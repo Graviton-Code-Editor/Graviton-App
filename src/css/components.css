@@ -428,7 +428,7 @@ input[type="number"]::selection {
     border-radius: 70px;
     transform: translateX(3px);
     padding-left: 3px;
-    transition: 0.10s;
+    transition: 0.05s;
     clear: both;
     white-space: nowrap;
     font-size: 12px;
@@ -442,17 +442,17 @@ input[type="number"]::selection {
     transform: scale(1);
 }
 #g_explorer div.file:hover{
-    transition: 0.06s;
+    transition: 0.05s;
     border-radius: 4px;
     background: var(--widget-color);
 }
 #g_explorer div.file:active{
-    transition: 0.06s;
+    transition: 0.05s;
     transform: scale(var(--scalation));
 }
 #g_explorer div.directory{
     animation: slide_right linear 0.1s;
-    transition:0.06s;
+    transition:0.05s;
     color:var(--white-black);
     border-radius: 70px;
     padding-left: 3px;
@@ -469,17 +469,17 @@ input[type="number"]::selection {
     transform: scale(1);
 }
 #g_explorer div.directory:hover{
-    transition: 0.06s;
+    transition: 0.05s;
     border-radius: 4px;
     background: var(--widget-color);
 }
 #g_explorer div.directory:active{
-    transition: 0.06s;
+    transition: 0.05s;
     transform: scale(var(--scalation));
 }
 @keyframes slide_right{
   from{
-    opacity: 0.5;
+    opacity: 0.6;
     transform: translateX(-3px);
   }
   to{
@@ -491,7 +491,7 @@ input[type="number"]::selection {
 /* Buttons, texts and sections*/
 button.button1{
     font-family: _main_font;
-    transition: 0.07s;
+    transition: 0.03s;
     border-radius: var(--buttons-roundness);
     width: auto;
     margin:2px 0px;  
@@ -505,7 +505,7 @@ button.button1{
     -webkit-app-region: auto;
 }
 button.button1:hover{
-    transition: 0.05s;
+    transition: 0.03s;
     cursor: pointer;
     background: var(--widget-color);    
 }
@@ -534,18 +534,23 @@ button.button1:active{
     height: auto;
 }
 .section2{
-    transition: 0.07s;
+    position: relative;
+    transition: 0.05s;
     margin: 7px;
-    padding: 20px;
-    background: var(--secondaryColor);
+    padding: 17px;
+    background: var(--primaryColor);
     cursor: pointer;
-    height: auto;
+    width:auto;
+    min-height: auto;
     border-radius: 8px;
     box-shadow: 0px 2px 5px var(--shadows);
     transform: scale(1);
 }
 .section2:hover{
-    background: var(--primaryColor);
+    background: var(--widget-color);
+}
+.section2:active{
+    transform: scale(var(--scalation));
 }
 button.button2 {
     font-weight: bold;
@@ -568,12 +573,12 @@ button.button2 {
     transform: scale(1)
 }
 button.button2:hover {
-    transition: 0.1s;
+    transition: 0.05s;
     cursor: pointer;
     background: var(--widget-color);
 }
 button.button2:active {
-    transition: 0.06s;
+    transition: 0.05s;
     transform: scale(var(--scalation));
     opacity:0.7;
 }

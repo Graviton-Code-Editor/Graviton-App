@@ -14,7 +14,7 @@ function openPlugins(){
 	const plugins_window = new Window({
 	id:"plugins_window",
 	content:`
-		<h2 class="window_title">`+current_config.language["Plugins"]+`</h2> 
+		<h2 class="window_title">${current_config.language["Plugins"]}</h2> 
 		<div id="plugins_list">
 		</div>`
 	})
@@ -24,8 +24,7 @@ function openPlugins(){
 			<div id="${plugin["name"]}_div_list" class="section2">
 				<p class="title">${plugin["name"]} · v${plugin["version"]}</p>
 				<p style="font-size:15px;">${current_config.language["Author"]}: ${plugin["author"]}</p>
-				<p styl="font-size:13px; line-height:2px;">Description: ${plugin["description"]}</p>
-				<button class="button2"  onclick="shell.openItem(path.join(plugins_folder,'${plugin["folder"]}'))">Open folder</button>
+				<p style="font-size:13px; ">Description: ${plugin["description"]}</p>
 			</div>
 			`
   });

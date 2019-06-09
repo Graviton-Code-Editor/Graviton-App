@@ -20,13 +20,12 @@ let current_config = { //Default values
   appZoom: "25",
   language: "english",
   animationsPreferences: "activated",
-  autoCompletionPreferences: "activated",
+  autoCompletionPreferences: "desctivated",
   lineWrappingPreferences: "desactivated",
   accentColorPreferences: "manual"
 }
 
 function loadConfig() { //Loads the configuration from the config.json for the first time
-
   if (!fs.existsSync(configDir)) {
     fs.writeFile(configDir, JSON.stringify(current_config)); //Save the config
     updateSettings();
@@ -37,10 +36,12 @@ function loadConfig() { //Loads the configuration from the config.json for the f
       g_Setup();
     }
     screens.add();
-    detectPlugins(); //Call the function to detect the installed plugins
+    detectPlugins(); 
   } else {
     fs.readFile(configDir, 'utf8', function(err, data) {
-      current_config = JSON.parse(data);//Load config from the config.json when Graviton boots
+      Object.keys(current_config).forEach(function(key,index) {
+        if(JSON.parse(data)[key]!=undefined)current_config[key]=JSON.parse(data)[key]; //Will only change the extisting parameters
+      });
       updateSettings();
       setThemeByName(current_config["theme"]);
       loadLanguage(current_config.language);
@@ -61,12 +62,12 @@ function loadConfig() { //Loads the configuration from the config.json for the f
         document.documentElement.style.setProperty("--scalation","1");
       }
       screens.add();
-      detectPlugins(); //Call the function to detect the installed plugins
+      detectPlugins(); 
     });
   }
 }
 
-function saveConfig() { //Saves the configuration to config.json
+function saveConfig() { //Saves the current configuration to config.json
   let newConfig = {
     justInstalled: current_config.justInstalled,
     theme: current_config.theme["Name"],

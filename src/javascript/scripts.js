@@ -9,8 +9,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190608",
-  version: "1.0.0",
+  date: "190609",
+  version: "1.0.1",
   state: "Beta"
 }
 let new_update = false;
@@ -139,6 +139,7 @@ const loadEditor = (info) => {
           image_container.classList = "code-space";
           image_container.setAttribute("id", `${info.dir}_editor`);
           image_container.innerHTML = `<img src="${info.dir}">`
+          console.log(info);
           document.getElementById(current_screen.id).children[2].appendChild(image_container);
           const new_editor_image = {
             id: info.dir + "_editor",
@@ -318,6 +319,8 @@ const loadEditor = (info) => {
         $("context .menuWrapper").html("");
         e.preventDefault();
       })
+      editor.addKeyMap({"Ctrl-S": function(cm){saveFile()}});
+
       editor.setOption("extraKeys", { /*TEST*/
         Ctrl: function(editor) {},
       });
@@ -400,6 +403,9 @@ function saveFile() {
 }
 
 function loadDirs(dir, app_id, first_time) {
+  if(!fs.existsSync(dir)){
+    graviton.throwError(current_config.language["DirectoryDoesntExist"])
+  }
   const appender_id = app_id.replace(/\\/g, "");
   if (appender_id == "g_directories"){
     document.getElementById("g_explorer").innerHTML = `<div id="g_directories"></div>`
@@ -594,6 +600,9 @@ switch (format) {
       case "md":
         return "Markdown";
         break;
+      case "py":
+        return "Python";
+        break;
       default:
     }
 }
@@ -670,6 +679,12 @@ function updateCodeMode(instance,path) {
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "markdown");
         plang = "Markdown";
+        instance.refresh();
+        break;
+      case "py":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "python");
+        plang = "Python";
         instance.refresh();
         break;
       default:
@@ -794,9 +809,10 @@ const touchingResizer = type=>{
 }
 const screens={
   add : function(){
+    const current_id = Math.random()+Math.random();
     const new_screen_editor = document.createElement("div");
     new_screen_editor.classList = "g_editors"
-    new_screen_editor.id = Math.random();
+    new_screen_editor.id = current_id;
     new_screen_editor.innerHTML=`
        <div class="g_tabs_bar flex smallScrollBar"></div>  
         <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language["WelcomeMessage"]}</p>
@@ -809,7 +825,7 @@ const screens={
     `
     document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length-1])
     editor_screens.push({
-      id:new_screen_editor.id
+      id:current_id
     })
     current_screen = editor_screens[editor_screens.length-1]
     new_screen_editor.addEventListener('click', function(event) { 
@@ -822,15 +838,17 @@ const screens={
       for(i=0;i<editor_screens.length;i++){
         if(i==number){
           let tabs2 =[];
-          for(i=0;i<tabs.length;i++){
-            if(tabs[i].getAttribute("screen")==editor_screens[number].id){
-              tabs2.push(tabs[i]);
+          for(b=0;b<tabs.length;b++){
+            if(tabs[b].getAttribute("screen")==editor_screens[number].id){
+              tabs2.push(tabs[b]);
             }
           }
           if(tabs2.length==0){
             document.getElementById(editor_screens[number].id).remove();
             editor_screens.splice(number,1)
+            console.log(number);
             editors.splice(number , 1); 
+            current_screen = editor_screens[editor_screens.length-1];
           }else{
             graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
           }
@@ -839,6 +857,28 @@ const screens={
       }
     }else{
       graviton.throwError(current_config.language["Notification.CannotRemoveMoreScreens"])
+    }
+  },
+  default: function(){
+    for(i=0;i<editor_screens.length;i++){
+      if(i!=0){
+        let tabs2 =[];
+        const number = i;
+        for(b=0;b<tabs.length;b++){
+          if(tabs[b].getAttribute("screen")==editor_screens[number].id){
+            tabs2.push(tabs[b]);
+          }
+        }
+        if(tabs2.length==0){
+          document.getElementById(editor_screens[number].id).remove();
+          editor_screens.splice(number,1)
+          editors.splice(number , 1);
+           current_screen = editor_screens[editor_screens.length-1];
+          i--;
+        }else{
+          graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
+        }
+      }
     }
   }
 }

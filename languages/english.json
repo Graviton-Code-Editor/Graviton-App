@@ -29,6 +29,7 @@
 	"About-text2":"It doesn't send any kind of data to any server. All you do stays on your machine, unless you manually share it somewhere.",
 	"Languages":"Languages",
 	"ZoomSize":"Zoom-size",
+	"Previewer":"Previewer",
 	"Themes":"Themes",
 	"MadeBy":"Made by: ",
 	"Warn":"Warn",
@@ -75,8 +76,10 @@
 	"Author":"Author",
 	"Notification.CannotRemoveMoreScreens":"Cannot remove more screens.",
 	"Notification.CloseAllTabsBefore":"Close all tabs before removing it's screen.",
-	"Dialog.RemoveScreen.title":"Remove an screen",
+	"Dialog.RemoveScreen.title":"Remove screen",
 	"Dialog.RemoveScreen.content":"Type the screen number, 1 to x(left to right)",
-	"AddScreen":"Add an screen",
-	"RemoveScreen":"Remove an screen"
+	"DefaultView":"Default view",
+	"SplitScreen":"Split screen",
+	"RemoveScreen":"Remove screen",
+	"DirectoryDoesntExist":"That directory doesn't exist"
 }

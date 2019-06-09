@@ -260,8 +260,8 @@ function factory_reset_dialog(){
     title:current_config.language['FactoryReset'],
     content:current_config.language['FactoryReset-dialog-message'],
     buttons:{
-      [current_config.language['Decline']]:"closeDialog(this)",
       [`${current_config.language['Yes']} , ${current_config.language['Continue']}`]:"closeDialog(this); FactoryReset()",
+      [current_config.language['Decline']]:"closeDialog(this)"
     }
   })
 }
