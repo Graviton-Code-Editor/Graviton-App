@@ -1,14 +1,14 @@
 {
-  "Name": "Light",
-  "Description":"Light theme.",
+  "Name": "Artic",
+  "Description":"A light theme.",
   "Author": "Marc Espín Sanz",
   "GitRepositoryURL": "",
-  "Version": "0.1.0",
+  "Version": "0.1.1",
   "Highlight" : "LightUI",
   "Colors": {
     "primaryColor": "#DFDFDF",
     "secondaryColor": "white",
-    "accentColor":"#FD0054",
+    "accentColor":"#0066FF",
     "editor-background-color": "white",
     "white-black": "black",
     "black-white": "white",

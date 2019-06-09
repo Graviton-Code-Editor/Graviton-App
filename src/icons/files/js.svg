@@ -1,1 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><g transform="translate(-2 -0.5)"><path d="M8.75,5.5h10.5A1.605,1.605,0,0,1,21,6.9V18.1a1.605,1.605,0,0,1-1.75,1.4H8.75A1.605,1.605,0,0,1,7,18.1V6.9A1.605,1.605,0,0,1,8.75,5.5Z" transform="translate(0)" fill="#fb6400"/><g transform="translate(12.2 10.24)"><text transform="translate(0 7)" fill="#fff" font-size="7" font-family="ProductSans-Regular, Product Sans"><tspan x="0" y="0">JS</tspan></text></g><rect width="24" height="24" transform="translate(2 0.5)" fill="none"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="24" height="24" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="js" clip-path="url(#clip-path)">
+    <path id="Trazado_11" data-name="Trazado 11" d="M8.75,5.5h10.5A1.605,1.605,0,0,1,21,6.9V18.1a1.605,1.605,0,0,1-1.75,1.4H8.75A1.605,1.605,0,0,1,7,18.1V6.9A1.605,1.605,0,0,1,8.75,5.5Z" transform="translate(-2 -0.5)" fill="#fb6400"/>
+    <g id="Grupo_2" data-name="Grupo 2" transform="translate(10.2 9.74)">
+      <text id="JS-2" data-name="JS" transform="translate(-1 6)" fill="#fff" font-size="7" font-family="ProductSans-Regular, Product Sans"><tspan x="0" y="0">JS</tspan></text>
+    </g>
+    <rect id="spacer" width="24" height="24" fill="none"/>
+  </g>
+</svg>

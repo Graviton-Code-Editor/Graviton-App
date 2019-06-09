@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200609 - 2 [1.0.1]
+- New removing screens dialog design
+
 ### 200609 - 1 [1.0.1]
 - Fixed, the current screen wasn't changed when it was deleted
 - Added icons to the dropmenus

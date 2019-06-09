@@ -832,31 +832,32 @@ const screens={
       current_screen.id = this.id
     }, true);
   },
-  remove: function(given_number){
-    const number = given_number-1; //example 1 to 0, (feels more natural for the user,js arrays start at 0)
+  remove: function(id){
     if(editor_screens.length!=1){
       for(i=0;i<editor_screens.length;i++){
-        if(i==number){
+        if(editor_screens[i].id==id){
           let tabs2 =[];
           for(b=0;b<tabs.length;b++){
-            if(tabs[b].getAttribute("screen")==editor_screens[number].id){
+            if(tabs[b].getAttribute("screen")==id){
               tabs2.push(tabs[b]);
             }
           }
           if(tabs2.length==0){
-            document.getElementById(editor_screens[number].id).remove();
-            editor_screens.splice(number,1)
-            console.log(number);
-            editors.splice(number , 1); 
-            current_screen = editor_screens[editor_screens.length-1];
+            document.getElementById(id).remove();
+            editor_screens.splice(i,1)
+            editors.splice(i , 1); 
+            current_screen = editor_screens[0];
+            return true;
           }else{
             graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
+            return false;
           }
           return;
         }
       }
     }else{
       graviton.throwError(current_config.language["Notification.CannotRemoveMoreScreens"])
+      return false;
     }
   },
   default: function(){
@@ -873,7 +874,7 @@ const screens={
           document.getElementById(editor_screens[number].id).remove();
           editor_screens.splice(number,1)
           editors.splice(number , 1);
-           current_screen = editor_screens[editor_screens.length-1];
+           current_screen = editor_screens[0];
           i--;
         }else{
           graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);

@@ -20,7 +20,7 @@ let current_config = { //Default values
   appZoom: "25",
   language: "english",
   animationsPreferences: "activated",
-  autoCompletionPreferences: "desctivated",
+  autoCompletionPreferences: "desactivated",
   lineWrappingPreferences: "desactivated",
   accentColorPreferences: "manual"
 }

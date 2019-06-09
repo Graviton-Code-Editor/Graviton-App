@@ -188,7 +188,6 @@ function dropMenu(obj){
 									</button>`
 								}	
 							}else {
-								console.log(key);
 								if(toTransx !=true){
 									droplist.innerHTML += `
 									<button onclick="${panel["list"][key]}" >
@@ -295,18 +294,21 @@ const graviton = {
   	})
  	},
  	removeScreen: function(){
+ 		let content_editors = "";
+ 		for(i=0;i<editor_screens.length;i++){
+ 			content_editors+=`
+ 			<div onclick="if(screens.remove(${editor_screens[i].id})){this.remove();}  " class="section3" style="width:60px; height:100px; background:var(--accentColor);"></div>
+ 			`;
+ 		}
  		new g_dialog({
       id:"remove_screen",
       title:current_config.language["Dialog.RemoveScreen.title"],
-      content:`
-      ${current_config.language["Dialog.RemoveScreen.content"]}
-      <input class="Input1" id="screns_input"  type="number" value="">`,
+      content:`<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap;" >${content_editors}</div>`,
       buttons:{
-      	 [current_config.language['Accept']]:"screens.remove(document.getElementById('screns_input').value);closeDialog(this)",
-        [current_config.language['Cancel']]:"closeDialog(this)"
-       
+      	 [current_config.language['Accept']]:"closeDialog(this)"       
       }
     })
+    
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
@@ -438,9 +440,9 @@ function g_dialog(dialogObject){
   <p style="font-size:25px; line-height:1px; white-space: nowrap; font-weight:bold;">    
   		${dialogObject.title} 
   </p>
-  <p style="font-size:15px;">
+  <div style="font-size:15px;">
     	${dialogObject.content}
-  </p>`;
+  </div>`;
   Object.keys(dialogObject.buttons).forEach(function(key,index) {
   	const button = document.createElement("button");
   	button.innerText = key;
