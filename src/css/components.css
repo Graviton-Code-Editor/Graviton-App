@@ -335,14 +335,14 @@ input[type="number"]::selection {
     width: 55px;
     height: 55px;
     margin: 0 auto;
-    background: url("../icons/closed.svg") no-repeat center;
+    background: url("../icons/folder_closed.svg") no-repeat center;
     background-size: 55px 55px;
 }
 
 #openFolder:hover {
   transition: 0.05s;
   cursor: pointer;
-  background: url("../icons/open.svg") no-repeat center;
+  background: url("../icons/folder_opened.svg") no-repeat center;
   background-size: 55px 55px;
 }
 

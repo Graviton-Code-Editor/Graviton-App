@@ -50,7 +50,7 @@ function appendCarbonara(){
 }
 function load_carbonara(){
   console.clear();
-  carbonara_appender.setData(`<textarea size="200px">${execute ({
+  carbonara_appender.setData(`<textarea style="width:100%; height:100%; color:var(--white-black); background:var(--primaryColor);">${execute ({
     code: graviton.getCurrentEditor().editor.getValue(),
     compression: false,
     consoleOutput: false,

@@ -68,7 +68,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     white-space: nowrap;
 }
 .theme_div{
-    transition: 0.10s;
+    transition: 0.05s;
     border-radius: 7px;
     padding: 13px;
     margin: 8px 4px;
@@ -79,12 +79,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     color:var(--white-black);
 }
 .theme_div:hover{
-    transition: 0.10s;
+    transition: 0.05s;
    background: var(--widget-color);
     cursor: pointer;
 }
 .theme_div:active{
-    transition: 0.10s;
+    transition: 0.05s;
     transform: scale(var(--scalation));
 }
 #language_list{
@@ -94,7 +94,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     white-space: nowrap;
 }
 .language_div{
-    transition: 0.1s;
+    transition: 0.05s;
     border-radius: 7px;
     padding: 10px;
     margin: 5px;
@@ -105,11 +105,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     transform: scale(1);
 }
 .language_div:hover{
-    transition: 0.1s;
+    transition: 0.05s;
     background: var(--widget-color);
     cursor: pointer;
 }
 .language_div:active{
-    transition: 0.1s;
+    transition: 0.05s;
     transform: scale(var(--scalation));
 }

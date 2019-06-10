@@ -139,7 +139,6 @@ const loadEditor = (info) => {
           image_container.classList = "code-space";
           image_container.setAttribute("id", `${info.dir}_editor`);
           image_container.innerHTML = `<img src="${info.dir}">`
-          console.log(info);
           document.getElementById(current_screen.id).children[2].appendChild(image_container);
           const new_editor_image = {
             id: info.dir + "_editor",
@@ -319,10 +318,10 @@ const loadEditor = (info) => {
         $("context .menuWrapper").html("");
         e.preventDefault();
       })
-      editor.addKeyMap({"Ctrl-S": function(cm){saveFile()}});
-
-      editor.setOption("extraKeys", { /*TEST*/
-        Ctrl: function(editor) {},
+      editor.addKeyMap({
+        "Ctrl-S": function(cm){saveFile();},
+        "Ctrl-N": function(cm){screens.add(); },
+        "Ctrl-L": function(cm){screens.remove(current_screen.id);}
       });
       editor.on("change", function() { //Preview detector
         setTimeout(function() {
@@ -340,6 +339,12 @@ function restartApp() {
 }
 Mousetrap.bind("ctrl+s", function() {
   saveFile();
+});
+Mousetrap.bind("ctrl+n", function() {
+  screens.add() 
+});
+Mousetrap.bind("ctrl+l", function() {
+  screens.remove(current_screen.id); 
 });
 function save_file_warn(ele) {
   new g_dialog({
@@ -497,8 +502,7 @@ function loadDirs(dir, app_id, first_time) {
     }
   });
 }
-
-function g_getCustomFolder(path, state) {
+const g_getCustomFolder =(path, state)=>{
   switch (path) {
     case "node_modules":
       return "src/icons/custom_icons/node_modules.svg"
@@ -508,9 +512,9 @@ function g_getCustomFolder(path, state) {
       break;
     default:
       if (state == "close") {
-        return "src/icons/closed.svg";
+        return "src/icons/folder_closed.svg";
       } else {
-        return "src/icons/open.svg";
+        return "src/icons/folder_opened.svg";
       }
   }
 }
@@ -824,7 +828,7 @@ const screens={
         </div>`;
     document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length-1])
     editor_screens.push(new_screen_editor);
-    current_screen = {id: editor_screens[editor_screens.length-1].id}
+    current_screen = {id: editor_screens[0].id}
     new_screen_editor.addEventListener('click', function(event) { 
       current_screen.id = this.id;
     }, false);
@@ -843,7 +847,7 @@ const screens={
             document.getElementById(id).remove();
             editor_screens.splice(i,1)
             editors.splice(i , 1); 
-            current_screen = editor_screens[0];
+            current_screen = {id: editor_screens[0].id}
             return true;
           }else{
             graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
@@ -871,7 +875,7 @@ const screens={
           document.getElementById(editor_screens[number].id).remove();
           editor_screens.splice(number,1)
           editors.splice(number , 1);
-           current_screen = editor_screens[0];
+          current_screen = {id: editor_screens[0].id}
           i--;
         }else{
           graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);

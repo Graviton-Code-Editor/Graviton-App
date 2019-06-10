@@ -74,7 +74,10 @@ Help.setList({
     FAQs: "",
     Changelog:"graviton.dialogChangelog()",
     Website:"shell.openExternal('https://www.graviton.ml')",
-    About:"graviton.dialogAbout()"
+    About:{
+      click:"graviton.dialogAbout()",
+      icon:"info"
+    }
   }
 });
 

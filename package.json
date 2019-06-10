@@ -1,6 +1,6 @@
 {
   "name": "Graviton",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",

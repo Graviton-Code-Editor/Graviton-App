@@ -118,6 +118,7 @@ body ,head{
     margin:5px 15px;
     line-height: 20px;
     font-size:16px; 
+    white-space: nowrap;
 }
 #g_content > .g_editors > .g_tabs_bar{
     min-height: 37px;

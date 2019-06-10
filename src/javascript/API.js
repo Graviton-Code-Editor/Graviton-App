@@ -95,7 +95,6 @@ function dropMenu(obj){
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
 						Object.keys(panel["list"]).forEach(function(key) {
-							console.log(key);
 						if(key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{
@@ -286,7 +285,8 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
-	    	<li>Added some icons to some dropmenus<li>
+	    	<li>Now removing screens work perfectly</li>
+	    	<li>Added some icons to some dropmenus</li>
 	    </ul>`,
 	    buttons:{
 	      [current_config.language['Close']]:"closeDialog(this)"
@@ -643,7 +643,6 @@ const closeTab = (tab_id,fromWarn) => {
           .getElementById(g_object.getAttribute("longPath") + "_editor")
           .remove();
         editors.splice(i , 1);
-        g_object.remove();
         let tabs2 =[];
         for(i=0;i<tabs.length;i++){
           if(tabs[i].getAttribute("screen")==g_object.getAttribute("screen")){
@@ -653,8 +652,8 @@ const closeTab = (tab_id,fromWarn) => {
         if (tabs2.length == 0) { //Any tab opened
           filepath = " ";
           plang = "";
-          document.getElementById(current_screen.id).children[3].children[0].innerText = plang;
-          document.getElementById(current_screen.id).children[1].style = "visibility:visible; display:block;"
+          document.getElementById(g_object.getAttribute("screen")).children[3].children[0].innerText = plang;
+          document.getElementById(g_object.getAttribute("screen")).children[1].style = "visibility:visible; display:block;"
         } else if (i === tabs2.length) { //Last tab selected
           for(i = 0; i < tabs2.length; i++) {
             if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
@@ -668,6 +667,7 @@ const closeTab = (tab_id,fromWarn) => {
             } 
           }
         }
+        g_object.remove();
         if (new_selected_tab != undefined) {
           for (i = 0; i < tabs.length; i++) {
             if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {

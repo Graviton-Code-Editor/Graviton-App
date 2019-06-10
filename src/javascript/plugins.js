@@ -86,8 +86,8 @@ function detectPlugins(){
 	  		const direct = fs.statSync(path.join(plugins_folder,dir));
 	    	if (!direct.isFile()){
 		  		fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function (err, data) {
+	  				if (err) throw err;
 	  				const config = JSON.parse(data);
-	 		 			if (err) throw err;
 	 		 			plugins_list.push(config);
 			 		 	const script = document.createElement("script");
 			 		 	script.setAttribute("src",path.join(plugins_folder,config["folder"],config["main"])),

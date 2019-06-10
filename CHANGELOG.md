@@ -3,6 +3,8 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200610 - 1 [1.0.1]
+- Added key shortcuts : CTRL+N (Add screen) & CTRL+L (remove the current screen)
+- Added an info icon on the help dropmenu in "About"
 - Removing screens is now more accurate
 
 ### 200609 - 2 [1.0.1]
@@ -15,7 +17,7 @@ This file contains "important" commits, small ones will probably not be added.
 - If something is not translated to your language it will be showed in English.
 - Fixed, now you can press "Ctrl+S" to save the current editing file
 - Will throw a notification in case you are trying to load a directory which doesn't exist.
-- Desactivated autocompletion cause it's so unstable
+- Desactivated autocompletion by default cause it's so unstable
 - Fixed MacOS icon
 - Now Graviton will probably not throw any error after updating to a new version
 

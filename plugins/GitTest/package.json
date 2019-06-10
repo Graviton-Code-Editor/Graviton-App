@@ -5,6 +5,7 @@
 	"description":"Get Git info",
 	"folder":"GitTest",
 	"main":"git.js",
+	"target":"1.0.1",
 	"javascript":[
 	],
 	"css":[

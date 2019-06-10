@@ -5,6 +5,7 @@
 	"description":"Measure the time you spent on coding.",
 	"folder":"TimeFlow",
 	"main":"timeflow.js",
+	"target":"1.0.1",
 	"javascript":[
 	],
 	"css":[

@@ -8,12 +8,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-const electron = require('electron');
+
 const url = require('url');
 const path = require('path');
 const fs = require('fs');
-const {app, BrowserWindow,globalShortcut, BrowserView} = electron;
-const Menu = electron.Menu;
+const {app, BrowserWindow,globalShortcut, BrowserView} = require("electron");
 let main; //Main window
 
 app.on('ready', function(){
@@ -28,15 +27,14 @@ app.on('ready', function(){
     'minHeight': 310,
     'minWidth': 310,
     backgroundColor: "#222222",
-    title:"Graviton Editor",
-    icon: path.join(__dirname, 'build/icons/linux/64x64.png')
+    title:"Graviton Editor"
   });
   main.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
     slashes: true,
   }));
-  main.setMenuBarVisibility(path.basename(__dirname) === "Graviton-Editor")//True= when it's already packaged
+  main.setMenuBarVisibility(path.basename(__dirname) === "Graviton-Editor")//True = when it's not on production
 });
 app.on('window-all-closed', ()=>{
   app.quit();

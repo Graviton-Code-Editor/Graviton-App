@@ -139,9 +139,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     position: relative;
     top: 0.5px;
 }
-.dropdown-content > button:not( .dropbtn ) *:nth-child(2) {
-  
-}
 .dropdown-content > button:not( .dropbtn ):hover div .abo {
    stroke: var(--accentColor);
 }
@@ -154,7 +151,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 .dropdown-content > button:not( .dropbtn ):hover div .bba {
    fill:  var(--accentColor);
 }
-
 
 .dropdown-content > button:not( .dropbtn ) div .abo {
    stroke: var(--dropmenu-background-color);

@@ -1,6 +1,6 @@
 const icons = {
 	split_screen : `
-		<svg  xmlns="http://www.w3.org/2000/svg" width="20" height="14" viewBox="0 0 14 14">
+		<svg  xmlns="http://www.w3.org/2000/svg" width="20" height="13" viewBox="0 0 14 14">
 		  <g  id="Grupo_6" data-name="Grupo 6" transform="translate(-472 -381)">
 		    <g  class="bbo" id="Rectángulo_34" data-name="Rectángulo 34" transform="translate(472 381)" fill="transparent"  stroke-width="1.5">
 		      <rect width="14" height="14" rx="2" stroke="none"/>
@@ -19,7 +19,7 @@ const icons = {
 		</svg>
 	`,
 	remove_screen:`
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="13" viewBox="0 0 14 14">
 	  <g id="remove_screen" >
 	    <g class="bbo" id="_2" data-name="2" fill="none"  stroke-width="1.5">
 	      <rect width="14" height="14" rx="2" stroke="none"/>
@@ -33,16 +33,16 @@ const icons = {
 	  </g>
 	</svg>
 	`,
-	settings:`
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
-	  <g id="Componente_16_1" data-name="Componente 16 – 1" fill="transparent" >
-	    <g class="bbo" id="Elipse_3" data-name="Elipse 3"  stroke-width="1.5">
-	      <circle  cx="7" cy="7" r="7" />
-	      <circle  cx="7" cy="7" r="6.25" />
-	    </g>
-	    <circle class="bbo" id="Elipse_4" data-name="Elipse 4" cx="3" cy="3" r="3" transform="translate(4 4)" stroke-dasharray="1 2"  stroke-linecap="round" stroke-linejoin="round" stroke-width="1" />
-	  </g>
-	</svg>
+	info:`
+		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="13" viewBox="0 0 14 14">
+		  <g fill="transparent"  >
+		    <g class="bbo" id="Elipse_2" data-name="Elipse 2" stroke-width="1.5">
+		      <circle cx="7" cy="7" r="7" stroke="none"/>
+		      <circle cx="7" cy="7" r="6.25" fill="none"/>
+		    </g>
+		    <text class="aba" id="i" transform="translate(6 10)"  font-size="8" font-family="TrebuchetMS-Bold, Trebuchet MS" font-weight="700"><tspan x="0" y="0">i</tspan></text>
+		  </g>
+		</svg>
 	`,
 	empty : `
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14">
