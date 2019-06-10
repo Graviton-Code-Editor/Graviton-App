@@ -178,9 +178,12 @@ input[type="number"]::selection {
         transform: translate(-50%, -45%);
     }
 }
-.dialog_body button {
-    font-weight: bold;
+.dialog_body .buttons{
     float: right;
+    position: relative;
+}
+.dialog_body .buttons > button {
+    font-weight: bold;
     width: auto;
     border: none;
     margin-top: 15px;   
@@ -198,15 +201,17 @@ input[type="number"]::selection {
     letter-spacing: 1px;
     font-size: 11px;
     transform: scale(1)
+    white-space:nowrap;
+    display: inline-block;
 }
 
-.dialog_body button:hover {
+.dialog_body .buttons > button:hover {
     transition: 0.1s;
     cursor: pointer;
     background: var(--primaryColor);
 }
 
-.dialog_body button:active {
+.dialog_body .buttons > button:active {
     transition: 0.06s;
     transform: scale(var(--scalation))
 }
@@ -634,4 +639,70 @@ p.link:hover{
     margin: 5px;
     text-align:left;
     letter-spacing: 0px;
+}
+
+/* Welcome and setup */
+.body_window h2:not(.window_title){
+    font-size: 23px;
+    font-weight: bold;
+}
+.body_window div.horizontal{
+    position: relative;
+    overflow: auto;
+    width: 100%;
+    max-height: 70%;
+    overflow: auto;
+    white-space: nowrap;
+    display: inline-block;
+    margin-left: 25px;
+    box-sizing: border-box;
+}
+.body_window p{
+    font-size: 15px;
+}
+.body_window .project_div{
+    transition: 0.03s;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 6px 0px;
+    max-width: auto;
+    overflow: auto;
+    background: var(--primaryColor);
+    color:var(--white-black);
+    transform: scale(1));   
+}
+.body_window .project_div:hover{
+    transition: 0.03s;
+    background: var(--widget-color);
+    cursor: pointer;
+}
+.body_window .project_div:active{
+    transition: 0.03s;
+    transform: scale(var(--scalation));   
+}
+.body_window .welcomeButtons{
+    position: absolute;
+    bottom: 15px;
+    right:15px;
+}
+.theme_div_welcomePage{
+    transition: 0.1s;
+    transform: scale(1);
+    border-radius: 7px;
+    padding: 10px;
+    margin: 5px;
+    min-width: 80px;
+    width: auto;
+    background: var(--primaryColor);
+    color:var(--white-black);
+    font-size: 17px;
+}
+.theme_div_welcomePage:hover{
+    transition: 0.12s;
+    background: var(--widget-color);
+    cursor: pointer;
+}
+.theme_div_welcomePage:active{
+    transition: 0.12s;
+    transform: scale(var(--scalation));
 }

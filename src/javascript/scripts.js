@@ -102,7 +102,7 @@ const loadEditor = (info) => {
             styleActiveLine: true,
             lineWrapping: current_config["lineWrappingPreferences"] == "activated"
           });
-          document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)));
+          document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir))!="unknown"?getFormat(path.basename(info.dir)):path.basename(info.dir).split(".").pop());
           const new_editor_text = {
             id: info.dir + "_editor",
             editor: codemirror,
@@ -190,7 +190,7 @@ const loadEditor = (info) => {
           if (editors[i].editor != undefined) { //Editors
             editor = editors[i].editor;
             
-            document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(editors[i].path)));
+            document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir))!="unknown"?getFormat(path.basename(info.dir)):path.basename(info.dir).split(".").pop());
           } else if(info.type!="free"){ //Images
             document.getElementById(current_screen.id).children[3].children[0].innerText = "Image"
           } else{
@@ -609,6 +609,7 @@ switch (format) {
         return "Python";
         break;
       default:
+        return format;
     }
 }
 function updateCodeMode(instance,path) {
@@ -790,7 +791,7 @@ const g_NewProjects = () => {
     id:"new_projects_window",
     content:`
       <h2 class="window_title">${current_config.language["Templates"]}</h2> 
-      <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section_hover">
+      <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section2">
         <p>HTML</p>
       </div>`
   })

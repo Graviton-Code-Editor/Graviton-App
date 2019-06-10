@@ -89,6 +89,13 @@ function dropMenu(obj){
 			const droplist = document.getElementById(this.id+"_dropbtn");
 			droplist.innerHTML = ""; //Remove current code and then add the updated one
 			droplist.parentElement.children[0].innerText = panel.button;
+			console.log(droplist);
+			droplist.parentElement.children[0].addEventListener("mouseover", function(){
+				if(anyDropON){
+					interact_dropmenu(`${this.getAttribute("g_id")}_dropbtn`);
+					this.focus();
+				}
+			}, false);
 			let last;
 			let toTransx = this.translation;
 				Object.keys(panel).forEach(function(attr) {
@@ -104,7 +111,6 @@ function dropMenu(obj){
 									<button onclick="${panel["list"][key]}" >
 										<div>${icons.empty}</div>
 										<div>${key}</div>
-											
 									</button>`
 								}else{
 									droplist.innerHTML += `
@@ -155,12 +161,13 @@ function dropMenu(obj){
 			newTab.classList.add("dropdown");
 			if(this.translation !=true){
 				newTab.innerHTML = `
-				<button onclick="interact_dropmenu('${this.id}_dropbtn')" class="dropbtn" >${panel["button"]}</button>`
+				<button g_id="${this.id}" onclick="interact_dropmenu('${this.id}_dropbtn')" class="dropbtn" >${panel["button"]}</button>`
 			}else{
 				newTab.innerHTML = `
-				<button class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${this.id}_dropbtn')"  >${panel["button"]}</button>`
+				<button g_id="${this.id}" class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${this.id}_dropbtn')"  >${panel["button"]}</button>`
 			}
 			let last;
+
 			let toTransx = this.translation;
 				Object.keys(panel).forEach(function(attr) {
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
@@ -196,7 +203,6 @@ function dropMenu(obj){
 										<div>${key}</div>
 									</button>`
 								}else{
-									console.log(panel["list"][key].icon);
 									droplist.innerHTML += `
 									<button onclick="${panel["list"][key].click}" >
 										<div>
@@ -218,8 +224,13 @@ function dropMenu(obj){
 				}
 			});
 			newTab.appendChild(droplist);
-
 			bar.appendChild(newTab);
+			newTab.children[0].addEventListener("mouseover", function(){
+				if(anyDropON!=null && anyDropON!=(this.getAttribute("g_id")+"_dropbtn") ){
+					interact_dropmenu(`${this.getAttribute("g_id")}_dropbtn`);
+					this.focus();
+				}
+			}, false);
 		}
 	}
 }
@@ -274,8 +285,9 @@ const graviton = {
 	      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
 	      <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
 	    buttons:{
-	      [current_config.language['Close']]:"closeDialog(this)",
-	      [current_config.language['More']]:"openSettings(); goSPage('5');"
+	    	[current_config.language['More']]:"openSettings(); goSPage('5');",
+	      [current_config.language['Close']]:"closeDialog(this)"
+	     
 	    }
   	})
  	},
@@ -285,6 +297,11 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>Building for Windows 32-bit</li>
+	    	<li>Unrecognized files formats will be displayed as well in status bar</li>
+	    	<li>Now you can show the dropmenus by hovering them in case there is one already opened (bit unstable)</li>
+	    	<li>Now you can unmaximize by clicking the middle button(Windows)</li>
+	    	<li>Added 2 key shortcuts: CTRL+N (splits screen) and CTRL+L (removes screen);
 	    	<li>Now removing screens work perfectly</li>
 	    	<li>Added some icons to some dropmenus</li>
 	    </ul>`,
@@ -439,13 +456,15 @@ function g_dialog(dialogObject){
   </p>
   <div style="font-size:15px;">
     	${dialogObject.content}
+  </div>
+  <div class="buttons"   style="display:flex;">
   </div>`;
   Object.keys(dialogObject.buttons).forEach(function(key,index) {
   	const button = document.createElement("button");
   	button.innerText = key;
   	button.setAttribute("myID",dialogObject.id);
   	button.setAttribute("onclick",dialogObject.buttons[key]);
-  	body_dialog.appendChild(button);
+  	body_dialog.children[2].appendChild(button);
   });
   all.appendChild(body_dialog);
   document.body.appendChild(all);
@@ -454,7 +473,7 @@ function g_dialog(dialogObject){
   }
 }
 const closeDialog =(me)=>{
-	document.getElementById(me.getAttribute("myID") + "_dialog").remove();
+		document.getElementById(me.getAttribute("myID") + "_dialog").remove();
 }
 class Window{
 	constructor(data){

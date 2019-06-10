@@ -9,6 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 /* <-- Default NavBar >-- */
+let anyDropON = null;
 const File = new dropMenu({
   id:"file",
   translation: true
@@ -88,12 +89,11 @@ function interact_dropmenu(id) {
       dropdowns[i].classList.replace("show", "hide"); //Close the other menus
     } else {
       if (dropdowns[i].classList.contains("show")) {
-        dropdowns[i].classList.replace("show", "hide"); //If clicked menu is opened
+        dropdowns[i].classList.replace("show", "hide"); //Hide the clicked menu
+        anyDropON = null;
       } else {
-        dropdowns[i].classList.replace("hide", "show"); //If clicked menu is closed
-        if (id == "graphic") {
-          loadGraphic();
-        }
+        dropdowns[i].classList.replace("hide", "show"); //Show the clicked menu
+        anyDropON = id;
       }
     }
   }
@@ -107,6 +107,7 @@ window.onclick = function(event) {
       const openDropdown = dropdowns[i];
       if (openDropdown.classList.contains("show")) {
         openDropdown.classList.replace("show", "hide");
+        anyDropON = null;
       }
     }
   }
@@ -123,3 +124,10 @@ if(graviton.currentOS()=="win32"){
      document.getElementById("controls").innerHTML = " ";
      document.getElementById("controls").setAttribute("os","unix_based");
 }
+
+g_window.on('maximize', (e, cmd) => {
+  document.getElementById("maximize").setAttribute("onclick","g_window.unmaximize();");
+})
+g_window.on('unmaximize', (e, cmd) => {
+  document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
+})

@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200610 - 2 [1.0.1]
+- Now, you can open the dropmenus of top bar by clicking one and hovering on the others (bit unstable)
+- Now, you can unmaximize too (Windows)
+- Now, unrecognized file formats will be showed as well on the status bar
+
 ### 200610 - 1 [1.0.1]
 - Added key shortcuts : CTRL+N (Add screen) & CTRL+L (remove the current screen)
 - Added an info icon on the help dropmenu in "About"
