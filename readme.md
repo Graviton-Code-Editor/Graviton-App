@@ -5,22 +5,35 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
 
-![example screenshoot](example.jpg)
+![example screenshoot](example.png)
 
 Features
 ---
 - Themes
 - Plugins
+- Spliting screen
 - Full compatibility with CodeMirror existing themes
-- Zen Mode and other editor configuration things...
+- Zen Mode 
 - Large language syntax highlighting support
-- Code 
-- Autocomplete 
-- Amazing API 
+- Disabling animations
+- Autocomplete (not stable)
 
 More are coming soon
 
 **[Changelog](CHANGELOG.md)**
+
+Contributing (working on)
+---
+
+Some ways to contribute to Graviton's project:
+
+- Translating to new language or improving the existing
+- Revise the commits
+- Opening issues or help on answering them
+- Request features
+- Revise documentation
+- Donating
+- Share it with your friends
 
 Available platforms
 ---
@@ -52,13 +65,11 @@ Credits
 ---
 - [Codemirror](codemirror.net)
 - 2€ donation by Alex Mayol Carrión
+- Logo by Saúl Blanco 
 
 Known problems
 ---
-- After updating Graviton with a new version,  it will probably throw an error. That is happening cause I am introducing & removing some values in the config.json in some updates, so after you install a new version it doesn't detect these values, so, it gets "undefined". 
- - Fix:
-	Remove the .graviton folder from your system and reboot Graviton.
-
+- After updating Graviton with a new version,  it will probably throw an error. That is happening cause I am introducing & removing some values in the config.json in some updates, so after you install a new version it doesn't detect these values, so, it gets "undefined". Fix: Remove the .graviton folder from your system and reboot Graviton.
 
 License
 ---
