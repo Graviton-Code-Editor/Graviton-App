@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200610 - 1 [1.0.1]
+- Removing screens is now more accurate
+
 ### 200609 - 2 [1.0.1]
 - New removing screens dialog design
 

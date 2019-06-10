@@ -297,13 +297,13 @@ const graviton = {
  		let content_editors = "";
  		for(i=0;i<editor_screens.length;i++){
  			content_editors+=`
- 			<div onclick="if(screens.remove(${editor_screens[i].id})){this.remove();}  " class="section3" style="width:60px; height:100px; background:var(--accentColor);"></div>
+ 			<div onclick="if(screens.remove('${editor_screens[i].id}')){this.remove();}  " class="section3" style="width:60px; height:100px; background:var(--accentColor);"></div>
  			`;
  		}
  		new g_dialog({
       id:"remove_screen",
       title:current_config.language["Dialog.RemoveScreen.title"],
-      content:`<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap;" >${content_editors}</div>`,
+      content:`<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap; display:flex;" >${content_editors}</div>`,
       buttons:{
       	 [current_config.language['Accept']]:"closeDialog(this)"       
       }
@@ -316,9 +316,6 @@ function contextMenu(panel){ //Add buttons to the context menu from the plugin
 		context_menu_list_text[key] = panel[key];
 	});
 }
-/*contextMenu({
-	test:"new Notification('test','test');"
-})*/ 
 function floatingWindow([xSize,ySize],content){ //Method to create flaoting windows
 	const g_floating_window = document.createElement("div");
 	g_floating_window.style.height = ySize+"px";

@@ -160,7 +160,7 @@ input[type="number"]::selection {
     border-radius: var(--window-radius);
     box-shadow: 0px 3px 15px var(--shadows);
     min-width: 20%;
-    max-width: 85%;
+    max-width: 70%;
     min-height: 110px;
     max-height: 70%;
     margin: 0;
@@ -402,10 +402,10 @@ input[type="number"]::selection {
     margin-right: 25px;
     vertical-align: center;
     position: relative;
-    min-width: 5px;
-    width: 5px;
-    min-height: 5px;
-    height: 5px;
+    min-width: 12px;
+    width: 12px;
+    min-height: 12px;
+    height: 12px;
     border: none;
     background: transparent;
     fill: var(--white-black);
@@ -564,6 +564,7 @@ button.button1:active{
     transform: scale(1);
     box-sizing: border-box;
     display: inline-block;
+    flex: 1;
 }
 .section3:hover{
     background: var(--widget-color);

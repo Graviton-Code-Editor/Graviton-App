@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190609",
+  date: "190610",
   version: "1.0.1",
   state: "Beta"
 }
@@ -405,6 +405,7 @@ function saveFile() {
 function loadDirs(dir, app_id, first_time) {
   if(!fs.existsSync(dir)){
     graviton.throwError(current_config.language["DirectoryDoesntExist"])
+    return;
   }
   const appender_id = app_id.replace(/\\/g, "");
   if (appender_id == "g_directories"){
@@ -809,7 +810,7 @@ const touchingResizer = type=>{
 }
 const screens={
   add : function(){
-    const current_id = Math.random()+Math.random();
+    const current_id =`screen_${editor_screens.length+Math.random()}`;
     const new_screen_editor = document.createElement("div");
     new_screen_editor.classList = "g_editors"
     new_screen_editor.id = current_id;
@@ -819,18 +820,14 @@ const screens={
         <div class="g_editors_editors" >
         </div>
         <div class="g_status_bar" >
-          <p ></p>
-          <div><div>
-        </div>
-    `
+          <p></p>
+        </div>`;
     document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length-1])
-    editor_screens.push({
-      id:current_id
-    })
-    current_screen = editor_screens[editor_screens.length-1]
+    editor_screens.push(new_screen_editor);
+    current_screen = {id: editor_screens[editor_screens.length-1].id}
     new_screen_editor.addEventListener('click', function(event) { 
-      current_screen.id = this.id
-    }, true);
+      current_screen.id = this.id;
+    }, false);
   },
   remove: function(id){
     if(editor_screens.length!=1){
