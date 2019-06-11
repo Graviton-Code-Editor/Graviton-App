@@ -129,7 +129,4 @@ if(graviton.currentOS()=="win32"){
 })
   g_window.on('unmaximize', (e, cmd) => {
     document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
-}) 
-  g_window.on('close', (e, cmd) => {
-    document.getElementById("close").setAttribute("onClick", "mainWindow.removeAllListeners('close');")
-  })
+})
