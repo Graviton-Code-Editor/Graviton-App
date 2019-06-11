@@ -89,7 +89,6 @@ function dropMenu(obj){
 			const droplist = document.getElementById(this.id+"_dropbtn");
 			droplist.innerHTML = ""; //Remove current code and then add the updated one
 			droplist.parentElement.children[0].innerText = panel.button;
-			console.log(droplist);
 			droplist.parentElement.children[0].addEventListener("mouseover", function(){
 				if(anyDropON){
 					interact_dropmenu(`${this.getAttribute("g_id")}_dropbtn`);
@@ -122,7 +121,6 @@ function dropMenu(obj){
 									</button>`
 								}	
 							}else {
-								console.log(key);
 								if(toTransx !=true){
 									droplist.innerHTML += `
 									<button onclick="${panel["list"][key]}" >
@@ -132,7 +130,6 @@ function dropMenu(obj){
 										<div>${key}</div>
 									</button>`
 								}else{
-									console.log(panel["list"][key].icon);
 									droplist.innerHTML += `
 									<button onclick="${panel["list"][key].click}" >
 										<div>
@@ -213,8 +210,7 @@ function dropMenu(obj){
 										</div>
 									</button>`
 								}	
-							}
-									
+							}	
 						}
 					});
 				}
