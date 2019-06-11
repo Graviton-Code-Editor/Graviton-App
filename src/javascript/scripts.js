@@ -189,12 +189,12 @@ const loadEditor = (info) => {
         if (editors[i].id == info.dir + "_editor") {
           if (editors[i].editor != undefined) { //Editors
             editor = editors[i].editor;
-            
-            document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir))!="unknown"?getFormat(path.basename(info.dir)):path.basename(info.dir).split(".").pop());
+            console.log(info.dir);
+            document.getElementById(info.screen).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir))!="unknown"?getFormat(path.basename(info.dir)):path.basename(info.dir).split(".").pop());
           } else if(info.type!="free"){ //Images
-            document.getElementById(current_screen.id).children[3].children[0].innerText = "Image"
+            document.getElementById(info.screen).children[3].children[0].innerText = "Image"
           } else{
-            document.getElementById(current_screen.id).children[3].children[0].innerText = ""
+            document.getElementById(info.screen).children[3].children[0].innerText = ""
           }
           editorID = editors[i].id;
           document.getElementById(editorID).style.display = "block";
@@ -848,7 +848,7 @@ const screens={
             document.getElementById(id).remove();
             editor_screens.splice(i,1)
             editors.splice(i , 1); 
-            current_screen = {id: editor_screens[0].id}
+            current_screen = {id: editor_screens[editor_screens.length-1].id}
             return true;
           }else{
             graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);
@@ -876,7 +876,7 @@ const screens={
           document.getElementById(editor_screens[number].id).remove();
           editor_screens.splice(number,1)
           editors.splice(number , 1);
-          current_screen = {id: editor_screens[0].id}
+          current_screen = {id: editor_screens[editor_screens.length-1].id}
           i--;
         }else{
           graviton.throwError(current_config.language["Notification.CloseAllTabsBefore"]);

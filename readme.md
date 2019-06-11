@@ -33,7 +33,6 @@ Some ways to contribute to Graviton's project:
 - Request features
 - Revise documentation
 - Donating
-- Share it with your friends
 
 Available platforms
 ---

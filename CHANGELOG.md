@@ -3,6 +3,9 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200610 - 2 [1.0.1]
+- Fixed, closing an  opened but not activated from another screen wasn't working properly.
+
+### 200610 - 2 [1.0.1]
 - Now, you can open the dropmenus of top bar by clicking one and hovering on the others (bit unstable)
 - Now, you can unmaximize too (Windows)
 - Now, unrecognized file formats will be showed as well on the status bar

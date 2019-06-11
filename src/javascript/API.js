@@ -668,6 +668,7 @@ const closeTab = (tab_id,fromWarn) => {
             tabs2.push(tabs[i]);
           }
         }
+        console.log(tabs2);
         if (tabs2.length == 0) { //Any tab opened
           filepath = " ";
           plang = "";
@@ -686,7 +687,6 @@ const closeTab = (tab_id,fromWarn) => {
             } 
           }
         }
-        g_object.remove();
         if (new_selected_tab != undefined) {
           for (i = 0; i < tabs.length; i++) {
             if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
@@ -701,9 +701,10 @@ const closeTab = (tab_id,fromWarn) => {
             type:new_selected_tab.getAttribute("typeeditor"),
             dir:g_newPath,
             data:new_selected_tab.getAttribute("data"),
-            screen:current_screen.id
+            screen:new_selected_tab.getAttribute("screen")
           });
         }
+        g_object.remove();
       }
     }
   }else{
