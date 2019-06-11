@@ -297,6 +297,8 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>Added Italian support</li>
+	    	<li>Fixed some tabs issues</li>
 	    	<li>Building for Windows 32-bit</li>
 	    	<li>Unrecognized files formats will be displayed as well in status bar</li>
 	    	<li>Now you can show the dropmenus by hovering them in case there is one already opened (bit unstable)</li>
@@ -668,7 +670,6 @@ const closeTab = (tab_id,fromWarn) => {
             tabs2.push(tabs[i]);
           }
         }
-        console.log(tabs2);
         if (tabs2.length == 0) { //Any tab opened
           filepath = " ";
           plang = "";
