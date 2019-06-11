@@ -119,15 +119,15 @@ const windows_buttons = `
      <button onclick="g_window.close();" id="close" style=" height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="20" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" /><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" /></svg></button>
      `;
 if(graviton.currentOS()=="win32"){
-     document.getElementById("controls").innerHTML = windows_buttons;
+    document.getElementById("controls").innerHTML = windows_buttons;
+    g_window.on('maximize', (e, cmd) => {
+        document.getElementById("maximize").setAttribute("onclick","g_window.unmaximize();");
+    })
+    g_window.on('unmaximize', (e, cmd) => {
+        document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
+    });
 }else{
-     document.getElementById("controls").innerHTML = " ";
-     document.getElementById("controls").setAttribute("os","unix_based");
+    document.getElementById("controls").innerHTML = " ";
+    document.getElementById("controls").setAttribute("os","unix_based");
 }
 
-  g_window.on('maximize', (e, cmd) => {
-    document.getElementById("maximize").setAttribute("onclick","g_window.unmaximize();");
-})
-  g_window.on('unmaximize', (e, cmd) => {
-    document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
-});
