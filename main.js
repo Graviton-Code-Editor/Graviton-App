@@ -40,7 +40,7 @@ app.on('window-all-closed', ()=>{
   app.quit();
 });
 app.on('before-quit', () => {
-    main.removeAllListeners('close');
-    main.close();
+    app.removeAllListeners('close');
+    app.close();
 });
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true');
