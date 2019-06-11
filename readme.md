@@ -5,13 +5,13 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
 
-![example screenshoot](example.png)
+![example screenshot](example.png)
 
 Features
 ---
 - Themes
 - Plugins
-- Spliting screen
+- Splitting screen
 - Full compatibility with CodeMirror existing themes
 - Zen Mode 
 - Large language syntax highlighting support
