@@ -204,7 +204,6 @@ const g_highlightingTurn = function(){
 		      editors[i].editor.setOption("htmlMode", true);
 		      editors[i].editor.refresh();
 				}else{
-					console.log(editors[i].path.split(".").pop())
 					updateCodeMode(editors[i].editor,path);
 				}
 				
@@ -260,8 +259,9 @@ function factory_reset_dialog(){
     title:current_config.language['FactoryReset'],
     content:current_config.language['FactoryReset-dialog-message'],
     buttons:{
-      [`${current_config.language['Yes']} , ${current_config.language['Continue']}`]:"closeDialog(this); FactoryReset()",
-      [current_config.language['Decline']]:"closeDialog(this)"
+    	[current_config.language['Decline']]:"closeDialog(this)",
+      [`${current_config.language['Yes']} , ${current_config.language['Continue']}`]:"closeDialog(this); FactoryReset()"
+      
     }
   })
 }
