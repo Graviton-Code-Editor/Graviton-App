@@ -123,3 +123,13 @@ if(graviton.currentOS()=="win32"){
      document.getElementById("controls").innerHTML = " ";
      document.getElementById("controls").setAttribute("os","unix_based");
 }
+
+  g_window.on('maximize', (e, cmd) => {
+    document.getElementById("maximize").setAttribute("onclick","g_window.unmaximize();");
+})
+  g_window.on('unmaximize', (e, cmd) => {
+    document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
+}) 
+  g_window.on('close', (e, cmd) => {
+    document.getElementById("close").setAttribute("onClick", "mainWindow.removeAllListeners('close');")
+  })
