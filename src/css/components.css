@@ -366,7 +366,7 @@ input[type="number"]::selection {
     height: 37px;
     white-space: nowrap;
     display: inline-block;
-    background: var(--primaryColor);
+    background: transparent;
     cursor: pointer;
     transform: scale(1);
 }
@@ -381,6 +381,7 @@ input[type="number"]::selection {
 }
 .g_tabs_bar .tabs.selected{
     background: var(--secondaryColor);
+    box-shadow: 0px 0px 7px var(--shadows)
 }
 .g_tabs_bar .tabs > p{
     overflow: hidden;

@@ -15,7 +15,13 @@ Go inside the folder:
 Install the dependencies:
 > $ npm install
 
-## 3 - Building the binaries
+## 3 - Building 
+
+### Testing
+
+In case you just wanna test it, run:
+
+> $ npm start
 
 ### Windows
 

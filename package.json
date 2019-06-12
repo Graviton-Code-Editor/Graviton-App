@@ -1,6 +1,6 @@
 {
   "name": "Graviton",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
@@ -37,6 +37,7 @@
   },
   "build": {
     "appId": "graviton-editor",
+    "artifactName": "${name}-${version}-${arch}.${ext}",
     "icon": "build/mac/icon.png",
     "asar": true,
     "dmg": {
@@ -53,7 +54,7 @@
       "category": "Utility",
       "target": [
         "AppImage",
-        "deb"
+        "deb",
         "rpm"
       ],
       "icon": "build/linux"

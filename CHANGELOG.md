@@ -3,6 +3,10 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200612 - 1 [1.0.1]
+- Added a shadow in tabs
+- Updated codemirror
+
+### 200612 - 1 [1.0.1]
 - Fixed, some icons weren't broken
 
 ### 200611 - 1 [1.0.1]
