@@ -2,7 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200612 - 1 [1.0.1]
+### 200612 - 3 [1.0.1]
+- Fixed, having 0 plugins installeds threw an error
+
+### 200612 - 2 [1.0.1]
 - Added a shadow in tabs
 - Updated codemirror
 

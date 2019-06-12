@@ -345,7 +345,6 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       if(document.getElementById("context_menu")!==null ){
         document.getElementById("context_menu").remove();
       }
-      console.log(event.target);
       const context_menu = document.createElement("div");
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";

@@ -28,7 +28,7 @@ function openPlugins(){
 			</div>
 			`
   });
-	if(plugins_list.length ==0)content.innerHTML += `<p>No plugins detected.</p>`
+	if(plugins_list.length ==0)document.getElementById("plugins_list").innerHTML += `<p>No plugins detected.</p>`
 }
 function detectPlugins(){
 	if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
