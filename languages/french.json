@@ -75,7 +75,7 @@
 	"Themes.Text":"Utiliser la couleur d'accent du système",
 	"Author":"Auteur",
 	"Notification.CannotRemoveMoreScreens":"Impossible de supprimer d'autres écrans.",
-	"Notification.CloseAllTabsBefore":""Fermez tous les onglets avant de supprimer son écran.",
+	"Notification.CloseAllTabsBefore":"Fermez tous les onglets avant de supprimer son écran.",
 	"Dialog.RemoveScreen.title":"Supprimer l'écran",
 	"Dialog.RemoveScreen.content":"Tapez le numéro d'écran de 1 à x (de gauche à droite)",
 	"DefaultView":"Vue par défaut",
