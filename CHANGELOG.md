@@ -2,7 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200610 - 2 [1.0.1]
+### 200612 - 1 [1.0.1]
+- Fixed, some icons weren't broken
+
+### 200611 - 1 [1.0.1]
 - Fixed, closing an  opened but not activated from another screen wasn't working properly.
 
 ### 200610 - 2 [1.0.1]

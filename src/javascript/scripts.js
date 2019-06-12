@@ -9,8 +9,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190611",
-  version: "1.0.1",
+  date: "190612",
+  version: "1.0.2",
   state: "Beta"
 }
 let new_update = false;
@@ -533,27 +533,6 @@ function getFormat(text) {
     case "json":
       return "json";
       break;
-    case "go":
-      return "go";
-      break;
-    case "sql":
-      return "sql";
-      break;
-    case "ruby":
-      return "ruby";
-      break;
-    case "php":
-      return "php";
-      break;
-    case "sass":
-      return "sass";
-      break;
-    case "dart":
-      return "dart";
-      break;
-    case "pascal":
-      return "pascal";
-      break;
     case "md":
       return "unknown";
       break;
@@ -607,6 +586,9 @@ switch (format) {
         break;
       case "py":
         return "Python";
+        break;
+      case "sh":
+        return "Shell";
         break;
       default:
         return format;
@@ -691,6 +673,12 @@ function updateCodeMode(instance,path) {
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "python");
         plang = "Python";
+        instance.refresh();
+        break;
+      case "sh":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "shell");
+        plang = "Shell";
         instance.refresh();
         break;
       default:

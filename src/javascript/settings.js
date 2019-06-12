@@ -53,7 +53,6 @@ function goSPage(num){
 			<div id="dpi">
 				<h3>${current_config.language["ZoomSize"]}</h3>
 				<div class="section">
-					<p>Adjust to the size you prefer.</p>
 					<input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
 				</div>
 			</div>
