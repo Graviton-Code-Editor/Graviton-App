@@ -54,6 +54,7 @@
       "target": [
         "AppImage",
         "deb"
+        "rpm"
       ],
       "icon": "build/linux"
     },
