@@ -7,7 +7,7 @@
 
 */
 .cm-s-default.CodeMirror, .cm-s-default .CodeMirror-gutters {
-  background-color: var(--editorBackgroundColor); !important;
+  background-color: var(--editorBackgroundColor) !important;
   color: #f8f8f2 !important;
   border: none;
 }
