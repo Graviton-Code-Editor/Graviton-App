@@ -370,7 +370,6 @@ input[type="number"]::selection {
     cursor: pointer;
     transform: scale(1);
 }
-
 .g_tabs_bar  .tabs:hover{
     transform: scale(1);
     transition: 0.05;
