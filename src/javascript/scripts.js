@@ -199,7 +199,6 @@ const loadEditor = (info) => {
           document.getElementById(editorID).style.display = "block";
           if(editor!=undefined) editor.refresh();
         }
-
       }
     }
     function filterIt(arr, searchKey, cb) {
@@ -456,7 +455,7 @@ function loadDirs(dir, app_id, first_time) {
     }
     for (i = 0; i < paths.length; i++) {
       let _long_path = path.join(dir, paths[i]);
-      if (graviton.currentOS() == "win32") {
+      if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\");
       }
       ids++;
@@ -477,7 +476,7 @@ function loadDirs(dir, app_id, first_time) {
     }
     for (i = 0; i < paths.length; i++) {
       let _long_path = path.join(dir, paths[i]);
-      if (graviton.currentOS() == "win32") {
+      if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\"); //Delete
       }
       ids++;

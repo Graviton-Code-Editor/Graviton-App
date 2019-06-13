@@ -585,7 +585,7 @@ class Tab {
                 break;
               default:
                 fs.readFile(g_newPath, "utf8", function(err, data) {
-                  if (err) return console.err(err);
+                  if (err) return console.error(err);
                   tab.setAttribute("data", data);
                   for (i = 0; i < tabs.length; i++) {
                     if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
