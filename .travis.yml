@@ -18,7 +18,7 @@ os:
   - linux
   - osx
   - windows
-  
+
 env:
   global:
     - ELECTRON_CACHE=$HOME/.cache/electron
@@ -36,22 +36,11 @@ before_cache:
 # These commands are executed before the scripts are executed
 install:
   # On OS X we first need to install Yarn via Homebrew
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yarn; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install npm; fi
   # Install all dependencies listed in your package.json file
-  - yarn
+  - npm
 
 script:
-  - echo "Unit Tests"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test; else yarn test; fi
-
-  - echo "E2E Tests"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test:electron; else yarn test:electron; fi
-
-  - echo "Deploy linux version to GitHub"
-  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn release:linux; fi
-
-  - echo "Deploy windows version to GitHub"
-  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn release:win; fi
-
-  - echo "Deploy mac version to GitHub"
-  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn release:mac; fi
+  - echo "BUILDING"
+  - npm run build
+  - ls dist
