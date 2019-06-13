@@ -1,0 +1,43 @@
+osx_image: xcode8.4 # define OS X image which will be mounted
+
+dist: trusty # use Ubuntu Trusty for Linux operation system
+
+# Note: if you switch to sudo: false, you'll need to launch chrome with --no-sandbox.
+# See https://github.com/travis-ci/travis-ci/issues/8836
+sudo: required
+
+# Define Node.js as the programming language as we have a web application
+language: node_js
+node_js: '8'
+
+addons:
+  chrome: stable # Install chrome stable on operating systems
+
+# A list of operating systems which are used for tests
+os:
+  - linux
+  - osx
+  - windows
+
+# These commands are executed before the scripts are executed
+install:
+  # On OS X we first need to install Yarn via Homebrew
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install yarn; fi
+  # Install all dependencies listed in your package.json file
+  - yarn
+
+script:
+  - echo "Unit Tests"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test; else yarn test; fi
+
+  - echo "E2E Tests"
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then xvfb-run yarn test:electron; else yarn test:electron; fi
+
+  - echo "Deploy linux version to GitHub"
+  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "linux" ]]; then yarn release:linux; fi
+
+  - echo "Deploy windows version to GitHub"
+  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn release:win; fi
+
+  - echo "Deploy mac version to GitHub"
+  - if [[ "$TRAVIS_BRANCH" == "master" ]] && [[ "$TRAVIS_OS_NAME" == "osx" ]]; then yarn release:mac; fi
