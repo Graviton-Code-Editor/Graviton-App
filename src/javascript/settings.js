@@ -159,7 +159,7 @@ function goSPage(num){
 				<div class="section">
 					<div id="about_section">
 						<p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>
-      			<p>${current_config.language['OS']}: ${graviton.currentOS()}</p>
+      			<p>${current_config.language['OS']}: ${graviton.currentOS().name}</p>
       		</div>
       		<button class="button1" onclick="graviton.dialogChangelog();">${current_config.language["Changelog"]}</button>
 					<button class="button1" onclick="CHECK_UPDATES();">${current_config.language["CheckUpdates"]}</button>

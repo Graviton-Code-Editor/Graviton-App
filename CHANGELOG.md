@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200613 - 1 [1.0.1]
+- Fiendlier OS name
+
 ### 200612 - 3 [1.0.1]
 - Fixed, having 0 plugins installeds threw an error
 

@@ -26,7 +26,7 @@ function g_welcomePage(){
 			<div id="notes" class="horizontal">
 				<h2 class='title2'>${current_config.language["Notes"]}</h2>
 				<p> ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p> 
-				<p> OS: ${graviton.currentOS()}</p> 
+				<p> OS: ${graviton.currentOS().name}</p> 
 				<p class="link" onclick="graviton.dialogChangelog()">${current_config.language["Changelog"]}</p>
 			</div>
 		</div>

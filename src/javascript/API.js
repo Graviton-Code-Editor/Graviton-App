@@ -262,7 +262,32 @@ const graviton = {
  		return dir_path;
  	},
  	currentOS: function(){
- 		return process.platform; 
+ 		switch(process.platform){
+ 			case "win32":
+ 				return{
+ 					codename: process.platform,
+ 					name: "Windows"
+ 				}
+ 			break;
+ 			case "darwin":
+ 				return{
+ 					codename: process.platform,
+ 					name: "MacOS"
+ 				}
+ 			break;
+ 			case "linux":
+ 				return{
+ 					codename: process.platform,
+ 					name: "Linux"
+ 				}
+ 			break;
+ 			default:
+ 				return{
+ 					codename: process.platform,
+ 					name: process.platform
+ 				}
+ 		}
+ 		return ; 
  	},
  	openDevTools: function(){
  		require('electron').remote.getCurrentWindow().toggleDevTools();
@@ -279,7 +304,7 @@ const graviton = {
 	    title:current_config.language['About'],
 	    content:`
 	      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
-	      <br> ${current_config.language['OS']}: ${graviton.currentOS()}`,
+	      <br> ${current_config.language['OS']}: ${graviton.currentOS().name}`,
 	    buttons:{
 	    	[current_config.language['More']]:"openSettings(); goSPage('5');",
 	      [current_config.language['Close']]:"closeDialog(this)"
@@ -293,15 +318,9 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
-	    	<li>Added Italian support</li>
-	    	<li>Fixed some tabs issues</li>
-	    	<li>Building for Windows 32-bit</li>
-	    	<li>Unrecognized files formats will be displayed as well in status bar</li>
-	    	<li>Now you can show the dropmenus by hovering them in case there is one already opened (bit unstable)</li>
-	    	<li>Now you can unmaximize by clicking the middle button(Windows)</li>
-	    	<li>Added 2 key shortcuts: CTRL+N (splits screen) and CTRL+L (removes screen);
-	    	<li>Now removing screens work perfectly</li>
-	    	<li>Added some icons to some dropmenus</li>
+	    	<li>Fixed a PHP error</li>
+	    	<li>Changed how OS names are displayed</li>
+	    	<li>Added French support</li>
 	    </ul>`,
 	    buttons:{
 	      [current_config.language['Close']]:"closeDialog(this)"
