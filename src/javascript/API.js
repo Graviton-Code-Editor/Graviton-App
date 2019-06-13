@@ -580,8 +580,7 @@ class Tab {
                   dir:filepath,
                   data:null,
                   screen:current_screen.id
-                });
-                
+                });   
                 break;
               default:
                 fs.readFile(g_newPath, "utf8", function(err, data) {

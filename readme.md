@@ -25,6 +25,8 @@ More are coming soon
 Contributing (working on)
 ---
 
+**[Code of conduct](CODE_OF_CONDUCT.md)**
+
 Some ways to contribute to Graviton's project:
 
 - Translating to new language or improving the existing
@@ -46,7 +48,8 @@ It's available on:
 
    * `Snapcraft` 
    * `Appimage (.appimage)`
-   * `Debian package (.deb)`
+   * `Debian  (.deb)`
+   * `CentOS (.rpm)`
 
 **MacOS**
 
