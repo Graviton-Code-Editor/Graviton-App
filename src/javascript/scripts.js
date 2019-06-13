@@ -465,9 +465,11 @@ function loadDirs(dir, app_id, first_time) {
         const directory_temp = document.createElement("div");
         directory_temp.innerHTML+=`
         <div opened="false" ID="${ids+dir.replace(/\\/g, "")}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
-          <div style=" width:${Number(paths[i].length * 6 + 55)}px;" class="directory" onclick="loadDirs('${_long_path}','${ids+dir.replace(/\\/g, "")}',false)">
-            <img style="float:left; padding-right:3px;" src="${g_getCustomFolder(paths[i], "close")}">
-            ${paths[i]}
+          <div  class="directory" onclick="loadDirs('${_long_path}','${ids+dir.replace(/\\/g, "")}',false)">
+            <img style="float:left; padding-right:3px; height:24px; width:24px; " src="${g_getCustomFolder(paths[i], "close")}">
+           <p >
+          ${paths[i]}
+          </p> 
           </div>
           <div myPadding="${paddingListDir}" longpath="${_long_path}"></div>
         </div>`
@@ -489,7 +491,7 @@ function loadDirs(dir, app_id, first_time) {
           path:'${_long_path}',
           name:'${paths[i]}',
           type:'file'
-        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="file" ID="${ids+ dir + "_div"}" name="${paths[i]}" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
+        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="directory" ID="${ids+ dir + "_div"}" name="${paths[i]}" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
           <img parent_ID="${ids+ dir + "_div"}" ID="${ids+ dir + "_img"}" longPath="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(paths[i])}.svg">
           <p parent_ID="${ids+ dir + "_div"}" ID="${ids+ dir + "_p"}" longPath="${_long_path}" elementType="directorie">
           ${paths[i]}

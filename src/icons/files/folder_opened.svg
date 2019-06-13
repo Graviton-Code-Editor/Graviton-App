@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="folder_opened" transform="translate(-0.5 0.389)">
+    <path id="Trazado_50" data-name="Trazado 50" d="M3.5,7.315H18.725A1.776,1.776,0,0,1,20.5,9.091v8.523a1.776,1.776,0,0,1-1.775,1.775H5.275A1.776,1.776,0,0,1,3.5,17.614Z" fill="#f7dd8a"/>
+    <path id="Trazado_51" data-name="Trazado 51" d="M4.847,4.611h5.805a4.263,4.263,0,0,1,2.375.871L16,8H3.5V5.958A1.348,1.348,0,0,1,4.847,4.611Z" fill="#f7dd8a"/>
+    <path id="Trazado_52" data-name="Trazado 52" d="M22.641,10.249,20.5,17.7a1.693,1.693,0,0,1-1.692,1.693H5.193A1.693,1.693,0,0,1,3.5,17.7l2.141-7.447A1.828,1.828,0,0,1,7.3,9H21.7A.926.926,0,0,1,22.641,10.249Z" fill="#ffc300"/>
+    <rect id="spacer" width="24" height="24" transform="translate(0.5 -0.389)" fill="none"/>
+  </g>
+</svg>

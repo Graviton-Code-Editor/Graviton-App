@@ -428,7 +428,7 @@ input[type="number"]::selection {
     stroke: var(--accentColor);
 }
 /* Explorer elements */
-#g_explorer div.file{
+#g_explorer div.directory{
     animation: slide_right linear 0.1s;
     color: var(--white-black);
     border-radius: 70px;
@@ -452,33 +452,6 @@ input[type="number"]::selection {
     white-space: nowrap;
     display: flex;
 }
-#g_explorer div.file:hover{
-    transition: 0.05s;
-    border-radius: 4px;
-    background: var(--widget-color);
-}
-#g_explorer div.file:active{
-    transition: 0.05s;
-    transform: scale(var(--scalation));
-}
-#g_explorer div.directory{
-    animation: slide_right linear 0.1s;
-    transition:0.05s;
-    color:var(--white-black);
-    border-radius: 70px;
-    padding-left: 3px;
-    transition: 0.10s;
-    clear: both;
-    white-space: nowrap;
-    font-size: 12px;
-    padding-top: 1px;
-    padding-bottom: 4px;
-    background: transparent;
-    line-height: 25px;
-    height: 20px;
-    cursor: pointer;
-    transform: scale(1);
-}
 #g_explorer div.directory:hover{
     transition: 0.05s;
     border-radius: 4px;
@@ -488,6 +461,7 @@ input[type="number"]::selection {
     transition: 0.05s;
     transform: scale(var(--scalation));
 }
+
 @keyframes slide_right{
   from{
     opacity: 0.6;
