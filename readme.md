@@ -7,6 +7,8 @@
 
 ![example screenshot](example.png)
 
+DISCORD server: https://discord.gg/gg6CTYA
+
 Features
 ---
 - Themes

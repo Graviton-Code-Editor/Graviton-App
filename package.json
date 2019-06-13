@@ -28,7 +28,8 @@
     "jquery": "^3.4.0",
     "nodejs": "0.0.0",
     "npm": "^6.9.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "rpm": "0.0.0"
   },
   "devDependencies": {
     "electron": "^4.2.4",

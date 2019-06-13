@@ -484,14 +484,14 @@ function loadDirs(dir, app_id, first_time) {
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
         file_temp.innerHTML+=`
-        <div onclick="new Tab({
+        <div elementType="directorie" onclick="new Tab({
           id:'${ids+ dir.replace(/\\/g, "") + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',
           type:'file'
-        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="file" ID="${ids+ dir + "B"}" name="${paths[i]}" style="width:${paths[i].length * 6 + 55}px; margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img style="float:left; padding-right:3px;" src="src/icons/files/${getFormat(paths[i])}.svg">
-          <p>
+        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="file" ID="${ids+ dir + "_div"}" name="${paths[i]}" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
+          <img parent_ID="${ids+ dir + "_div"}" ID="${ids+ dir + "_img"}" longPath="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(paths[i])}.svg">
+          <p parent_ID="${ids+ dir + "_div"}" ID="${ids+ dir + "_p"}" longPath="${_long_path}" elementType="directorie">
           ${paths[i]}
           </p>
         </div>`
@@ -499,6 +499,13 @@ function loadDirs(dir, app_id, first_time) {
       }
     }
   });
+}
+
+const removeDirectorie = object =>{
+   fs.unlink(object.getAttribute("longpath"), function(err){
+      if(err) console.error(err);
+   })
+   object.remove();
 }
 const g_getCustomFolder =(path, state)=>{
   switch (path) {

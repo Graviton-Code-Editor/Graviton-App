@@ -81,5 +81,6 @@
 	"DefaultView":"Default view",
 	"SplitScreen":"Split screen",
 	"RemoveScreen":"Remove screen",
-	"DirectoryDoesntExist":"That directory doesn't exist"
+	"DirectoryDoesntExist":"That directory doesn't exist",
+	"Remove":"Remove"
 }

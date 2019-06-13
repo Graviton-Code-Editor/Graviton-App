@@ -8,12 +8,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
 let context_menu_list_text = { //Initial value
   "Copy" :" document.execCommand('copy');",
   "Paste" :" document.execCommand('paste');"
 };
-const context_menu_list_tabs = { //Initial value
+const context_menu_list_tabs = { 
 	"Close" :`closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
+};
+const context_menu_list_directories = { 
+	"Remove" :`removeDirectorie(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent_id')));`
 };
 class Plugin{
 	constructor(object){
@@ -318,6 +322,7 @@ const graviton = {
 	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
 	    content:` 
 	    <ul>
+	    	<li>Improved Italian</li>
 	    	<li>Fixed a PHP error</li>
 	    	<li>Changed how OS names are displayed</li>
 	    	<li>Added French support</li>
@@ -370,6 +375,16 @@ document.addEventListener('mousedown', function(event){ //Create the context men
       context_menu.setAttribute("id","context_menu");
       context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
       switch(event.target.getAttribute("elementType")){
+      	case "directorie":
+      		Object.keys(context_menu_list_directories).forEach(function(key,index) {
+		    	const button = document.createElement("button");
+		        button.classList.add("part_of_context_menu")
+		        button.innerText = current_config.language[key];
+		        button.setAttribute("target",event.target.id);
+	        	context_menu.appendChild(button);
+		        button.setAttribute("onclick",context_menu_list_directories[key]+" document.getElementById('context_menu').remove();");
+	    	});
+      	break;
       	case "tab":
       		Object.keys(context_menu_list_tabs).forEach(function(key,index) {
 		    	const button = document.createElement("button");
@@ -468,13 +483,12 @@ function g_dialog(dialogObject){
   body_dialog.setAttribute("class", "dialog_body");
   body_dialog.innerHTML =`
   <p style="font-size:25px; line-height:1px; white-space: nowrap; font-weight:bold;">    
-  		${dialogObject.title} 
+  	${dialogObject.title} 
   </p>
   <div style="font-size:15px;">
-    	${dialogObject.content}
+    ${dialogObject.content}
   </div>
-  <div class="buttons"   style="display:flex;">
-  </div>`;
+  <div class="buttons"   style="display:flex;"></div>`;
   Object.keys(dialogObject.buttons).forEach(function(key,index) {
   	const button = document.createElement("button");
   	button.innerText = key;
@@ -516,19 +530,17 @@ class Window{
 const closeWindow=id=>{
 	document.getElementById(`${id}_window`).remove();
 }
-
 class Tab {
   constructor(object) {
     this.type = object.type;
     this.id = object.id;
-    
     switch(object.type){
       case "file":
         for (i = 0; i < tabs.length + 1; i++) {
           if (i != tabs.length && tabs[i].getAttribute("longPath") === object.path){
-              loadTab(tabs[i])
-              return;
-          } else if (i == tabs.length) { //Tab is created because it doesn't exist
+            loadTab(tabs[i])
+            return;
+          }else if (i == tabs.length) { //Tab is created because it doesn't exist
           	document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";   
             const tab = document.createElement("div");
             tab.setAttribute("id", object.id + "Tab");
@@ -607,7 +619,6 @@ class Tab {
             return;
           }
         }
-      
       break;
       case "free":
         for (i = 0; i < tabs.length; i++) {
@@ -655,7 +666,6 @@ class Tab {
         });
         filepath = undefined;
         editingTab = object.id;
-  
       break;
     }
   }
@@ -688,13 +698,13 @@ const closeTab = (tab_id,fromWarn) => {
           plang = "";
           document.getElementById(g_object.getAttribute("screen")).children[3].children[0].innerText = plang;
           document.getElementById(g_object.getAttribute("screen")).children[1].style = "visibility:visible; display:block;"
-        } else if (i === tabs2.length) { //Last tab selected
+        }else if (i === tabs2.length) { //Last tab selected
           for(i = 0; i < tabs2.length; i++) {
             if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
               new_selected_tab = tabs2[Number(tabs2.length) - 1];
             } 
           }
-        } else {
+        }else {
           for(i = 0; i < tabs2.length; i++) {
             if(tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")){
               new_selected_tab = tabs2[i]; 

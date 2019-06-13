@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200613 - 2 [1.0.2]
+- Now you can remove files by right clicking them and clicking on remove
+
 ### 200613 - 1 [1.0.2]
 - Fixed, cannot close a file if it has been opened by the "Open File" button on the dropmenu "File".
 
