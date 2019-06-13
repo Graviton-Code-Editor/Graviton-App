@@ -38,7 +38,7 @@ install:
   # On OS X we first need to install Yarn via Homebrew
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install npm; fi
   # Install all dependencies listed in your package.json file
-  - npm
+  - npm install
 
 script:
   - echo "BUILDING"
