@@ -189,7 +189,6 @@ const loadEditor = (info) => {
         if (editors[i].id == info.dir + "_editor") {
           if (editors[i].editor != undefined) { //Editors
             editor = editors[i].editor;
-            console.log(info.dir);
             document.getElementById(info.screen).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir))!="unknown"?getFormat(path.basename(info.dir)):path.basename(info.dir).split(".").pop());
           } else if(info.type!="free"){ //Images
             document.getElementById(info.screen).children[3].children[0].innerText = "Image"
@@ -379,7 +378,7 @@ function openFile() {
       return;
     }
     new Tab({
-      id: Math.random()+ fileNames[0].replace(/\\/g, "\\\\") + "B",
+      id: Math.random()+ fileNames[0].replace(/\\/g, "") + "B",
       path:fileNames[0],
       name:fileNames[0],
       type:"file"
@@ -682,6 +681,7 @@ function updateCodeMode(instance,path) {
         instance.refresh();
         break;
       default:
+        instance.refresh();
     }
 
   }

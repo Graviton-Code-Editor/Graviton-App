@@ -2,7 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200613 - 1 [1.0.1]
+### 200613 - 1 [1.0.2]
+- Fixed, cannot close a file if it has been opened by the "Open File" button on the dropmenu "File".
+
+### 200613 - 1 [1.0.2]
 - Fiendlier OS name
 
 ### 200612 - 3 [1.0.1]
