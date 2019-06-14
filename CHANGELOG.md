@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200615 - 1 [1.0.2]
+- Updated API
+- Updated how the changelog works
+
+
 ### 200614 - 1 [1.0.2]
 - New method to create whatever you want under the status bar.(Will be in docs)
 

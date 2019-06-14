@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190614",
+  date: "190615",
   version: "1.0.2",
   state: "Beta"
 }
@@ -34,6 +34,7 @@ const { webFrame } = require('electron');
 const g_window = require('electron').remote.getCurrentWindow();
 const { systemPreferences } = require('electron').remote;
 const url = require("url");
+const marked = require("marked");
 let current_screen;
 let dir_path;
 let i;

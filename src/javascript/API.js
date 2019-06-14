@@ -296,8 +296,8 @@ const graviton = {
  	openDevTools: function(){
  		require('electron').remote.getCurrentWindow().toggleDevTools();
  	},
- 	zenMode:function(){
- 		return current_config.zenMode;
+ 	editorMode:function(){
+ 		return editor_mode;
  	},
  	throwError:function(message){
  		new Notification("Error ",message);
@@ -317,20 +317,17 @@ const graviton = {
   	})
  	},
  	dialogChangelog: function(){
- 		new g_dialog({
-	    id:"changelog",
-	    title:`${current_config.language['Changelog']} - ${g_version.version}`,
-	    content:` 
-	    <ul>
-	    	<li>Improved Italian</li>
-	    	<li>Fixed a PHP error</li>
-	    	<li>Changed how OS names are displayed</li>
-	    	<li>Added French support</li>
-	    </ul>`,
-	    buttons:{
-	      [current_config.language['Close']]:"closeDialog(this)"
-	    }
-  	})
+ 		fs.readFile(path.join(__dirname,"RELEASE_CHANGELOG.md"), "utf8", function(err, data) {
+	 		new g_dialog({
+		    id:"changelog",
+		    title:`${current_config.language['Changelog']} - ${g_version.version}`,
+		    content: `<div style="padding:2px;">${marked(data)}</div>`,
+		    buttons:{
+		      [current_config.language['Close']]:"closeDialog(this)"
+		    }
+	  	});
+ 		});
+
  	},
  	removeScreen: function(){
  		let content_editors = "";
@@ -347,13 +344,14 @@ const graviton = {
       	 [current_config.language['Accept']]:"closeDialog(this)"       
       }
     })  
- 	}
+ 	},
+ 	addContextMenu: function(panel){
+		Object.keys(panel).forEach(function(key) {
+			context_menu_list_text[key] = panel[key];
+		});
+	}
 }
-function contextMenu(panel){ //Add buttons to the context menu from the plugin
-	Object.keys(panel).forEach(function(key) {
-		context_menu_list_text[key] = panel[key];
-	});
-}
+
 function floatingWindow([xSize,ySize],content){ //Method to create flaoting windows
 	const g_floating_window = document.createElement("div");
 	g_floating_window.style.height = ySize+"px";
