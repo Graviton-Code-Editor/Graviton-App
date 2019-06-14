@@ -38,6 +38,11 @@ Some ways to contribute to Graviton's project:
 - Revise documentation
 - Donating
 
+For people who translates to a new language:
+Please consider revising and updating your languages in case they are missing some new strings.
+
+Thank you all!
+
 Available platforms
 ---
 It's available on:
