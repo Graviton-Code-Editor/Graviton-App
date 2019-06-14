@@ -229,7 +229,6 @@ body ,head{
     flex: 1;
 }
 
-
 context {
   position: fixed;
   background-color: var(--primaryColor);

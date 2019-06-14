@@ -17,7 +17,7 @@ const context_menu_list_tabs = {
 	"Close" :`closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
 };
 const context_menu_list_directories = { 
-	"Remove" :`removeDirectorie(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent_id')));`
+	"Remove" :`directories.removeDialog(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent_id')));`
 };
 class Plugin{
 	constructor(object){
@@ -346,8 +346,7 @@ const graviton = {
       buttons:{
       	 [current_config.language['Accept']]:"closeDialog(this)"       
       }
-    })
-    
+    })  
  	}
 }
 function contextMenu(panel){ //Add buttons to the context menu from the plugin
@@ -755,4 +754,35 @@ const loadTab = object => {
     });
     editingTab = object.id;
   }
+}
+class commander {
+	constructor(object){
+		this.id=object.id+"_commander";
+		this.content=object.content;
+		const commanderObj = document.createElement("div");
+		commanderObj.id = this.id;
+		commanderObj.innerHTML=object.content;
+		document.getElementById(current_screen.id).appendChild(commanderObj)
+	}
+	close(){
+		document.getElementById(this.id+"_commander").remove();
+	}
+}
+const commanders = {
+	ask: function(object){
+		new commander({
+      id:"commander_ask",
+      content:`
+      <div class="section-b">
+	      <div style="display:flex; ">
+	      	<p style="flex:70%;">${object.message}</p>
+	      	<button class="button2"  onclick="commanders.close('commander_ask');">Close</button>
+	      </div>
+	      <input style="margin-top:4px;" class="input1 auto"></input>
+      </div>`
+    }) 
+	},
+	close: function(id){
+		document.getElementById(id+"_commander").remove();
+	}
 }

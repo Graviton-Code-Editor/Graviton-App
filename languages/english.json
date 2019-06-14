@@ -82,5 +82,6 @@
 	"SplitScreen":"Split screen",
 	"RemoveScreen":"Remove screen",
 	"DirectoryDoesntExist":"That directory doesn't exist",
-	"Remove":"Remove"
+	"Remove":"Remove",
+	"Dialog.AreYouSure":"Are you sure?"
 }

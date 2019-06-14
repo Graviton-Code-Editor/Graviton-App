@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200614 - 1 [1.0.2]
+- New method to create whatever you want under the status bar.(Will be in docs)
+
 ### 200613 - 2 [1.0.2]
 - Now you can remove files by right clicking them and clicking on remove
 

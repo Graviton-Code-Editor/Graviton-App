@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190613",
+  date: "190614",
   version: "1.0.2",
   state: "Beta"
 }
@@ -502,12 +502,26 @@ function loadDirs(dir, app_id, first_time) {
     }
   });
 }
-
-const removeDirectorie = object =>{
-   fs.unlink(object.getAttribute("longpath"), function(err){
+const directories = {
+  removeDialog:function(object){
+     new g_dialog({
+      id:"remove_directorie",
+      title:current_config.language["Dialog.AreYouSure"],
+      content:"",
+      buttons:{
+         [current_config.language['Cancel']]:`closeDialog(this); `,   
+         [current_config.language['Accept']]:`closeDialog(this); directories.remove('${object.id.replace(/\\/g, "\\\\")}'); `     
+      }
+    })
+  },
+  remove:function(id){
+    const object = document.getElementById(id);
+    fs.unlink(object.getAttribute('longpath'), function(err) { 
       if(err) console.error(err);
-   })
-   object.remove();
+       object.remove();
+    }); 
+   
+  }
 }
 const g_getCustomFolder =(path, state)=>{
   switch (path) {
@@ -827,7 +841,7 @@ const screens={
     editor_screens.push(new_screen_editor);
     current_screen = {id: editor_screens[0].id}
     new_screen_editor.addEventListener('click', function(event) { 
-      current_screen.id = this.id;
+    current_screen.id = this.id;
     }, false);
   },
   remove: function(id){
@@ -881,3 +895,4 @@ const screens={
     }
   }
 }
+

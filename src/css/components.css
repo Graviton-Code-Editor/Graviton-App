@@ -64,6 +64,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 /*Small components */
+
 .input1{
     transition: 0.1s;
     border-radius: var(--buttons-roundness);
@@ -76,6 +77,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
     box-sizing: border-box;
     position: relative;
     text-align: center;
+}
+.input1.auto{
+    min-width: 100% !important;
+    max-width: 100% !important;
+    text-align: left;
 }
 .input1:hover{
     transition: 0.1s;
@@ -517,6 +523,21 @@ button.button1:active{
     padding: 7px;
     background: transparent;
     height: auto;
+}
+.section-b{
+    max-height: 40%;
+     position: relative;
+    margin: 3px;
+    padding: 5px;
+    background: transparent;
+    width:auto;
+    min-height: auto;
+    overflow: auto;
+}
+.section-b *{
+    white-space: nowrap;
+    user-select: auto !important;
+
 }
 .section2{
     position: relative;
