@@ -548,69 +548,89 @@ function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
       return "html";
-      break;
     case "js":
       return "js";
-      break;
     case "css":
       return "css";
-      break;
     case "json":
       return "json";
-      break;
     case "md":
       return "unknown";
-      break;
     case "jpg":
     case "png":
     case "ico":
     case "svg":
       return "image";
-    break;
     default:
       return "unknown";
   }
 }
 function getLanguageName(format){
-switch (format) {
-      case "html":
-        return "HTML";
-      case "css":
-        return "CSS";
-      case "js":
-        return "JavaScript";
-      case "json":
-        return "JSON ";
-      case "go":
-        return "Go";
-      case "sql":
-        return "SQL";
-      case "ruby":
-        return "Ruby";
-      case "php":
-        return "PHP";
-      case "sass":
-        return "Sass";
-      case "dart":
-        return "Dart";
-      case "pascal":
-        return "Pascal";
-      case "md":
-        return "Markdown";
-      case "py":
-        return "Python";
-      case "sh":
-        return "Shell";
-      case "c":
-        return "C";
-      case "cpp":
-        return "C++"
-      case "cs":
-        return "C#";
-      case "java":
-        return "Java";
-      default:
-        return format;
+  switch (format) {
+    case "html":
+      return "HTML";
+    case "css":
+      return "CSS";
+    case "js":
+      return "JavaScript";
+    case "json":
+      return "JSON ";
+    case "go":
+      return "Go";
+    case "sql":
+      return "SQL";
+    case "ruby":
+      return "Ruby";
+    case "php":
+      return "PHP";
+    case "sass":
+      return "Sass";
+    case "dart":
+      return "Dart";
+    case "pascal":
+      return "Pascal";
+    case "md":
+      return "Markdown";
+    case "py":
+      return "Python";
+    case "sh":
+      return "Shell";
+    case "c":
+      return "C";
+    case "ino":
+      return "C";
+    case "h":
+      return "C";
+    case "cpp":
+      return "C++"
+    case "c++":
+      return "C++";
+    case "cc":
+      return "C++";
+    case "cxx":
+      return "C++";
+    case "hpp":
+      return "C++";
+    case "h++":
+      return "C++";
+    case "hh":
+      return "C++";
+    case "hxx":
+      return "C++";
+    case "csharp":
+      return "C#";
+    case "cs":
+      return "C#";
+    case "java":
+      return "Java";
+    case "m":
+      return "Objective-C";
+    case "mm":
+      return "Objective-C";
+    case "kt":
+      return "Kotlin";
+    default:
+      return format;
     }
 }
 function updateCodeMode(instance,path) {
@@ -705,21 +725,37 @@ function updateCodeMode(instance,path) {
         instance.setOption("mode", "text/x-csrc");
         plang = "C";
         instance.refresh();
+        break;
       case "cpp":
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "text/x-c++src");
         plang = "C++";
         instance.refresh();
+        break;
       case "cs":
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "text/x-csharp");
         plang = "C#";
         instance.refresh();
+        break;
       case "java":
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "text/x-java");
         plang = "Java";
         instance.refresh();
+        break;
+      case "h":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-objectivec");
+        plang = "Objective-C";
+        instance.refresh();
+        break;
+      case "kt":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-kotlin");
+        plang = "Kotlin";
+        instance.refresh();
+        break;
       default:
         instance.refresh();
     }
