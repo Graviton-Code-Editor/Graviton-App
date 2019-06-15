@@ -10,14 +10,10 @@ sudo: required
 language: node_js
 node_js: '8'
 
-addons:
-  chrome: stable # Install chrome stable on operating systems
-
-# A list of operating systems which are used for tests
+# Supported OSs
 os:
   - linux
   - osx
-  - windows
 
 env:
   global:
@@ -36,12 +32,13 @@ before_cache:
 # These commands are executed before the scripts are executed
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install rpm; fi
-  # On OS X we first need to install Yarn via Homebrew
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install wine; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install npm; fi
-  # Install all dependencies listed in your package.json file
   - npm install
 
 script:
   - echo "BUILDING"
   - npm run build
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo npm run build:win:linux; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo npm run build; fi
   - ls dist
