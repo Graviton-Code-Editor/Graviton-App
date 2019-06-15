@@ -575,46 +575,40 @@ function getLanguageName(format){
 switch (format) {
       case "html":
         return "HTML";
-        break;
       case "css":
         return "CSS";
-        break;
       case "js":
         return "JavaScript";
-        break;
       case "json":
         return "JSON ";
-        break;
       case "go":
         return "Go";
-        break;
       case "sql":
         return "SQL";
-        break;
       case "ruby":
         return "Ruby";
-        break;
       case "php":
         return "PHP";
-        break;
       case "sass":
         return "Sass";
-        break;
       case "dart":
         return "Dart";
-        break;
       case "pascal":
         return "Pascal";
-        break;
       case "md":
         return "Markdown";
-        break;
       case "py":
         return "Python";
-        break;
       case "sh":
         return "Shell";
-        break;
+      case "c":
+        return "C";
+      case "cpp":
+        return "C++"
+      case "cs":
+        return "C#";
+      case "java":
+        return "Java";
       default:
         return format;
     }
@@ -706,6 +700,26 @@ function updateCodeMode(instance,path) {
         plang = "Shell";
         instance.refresh();
         break;
+      case "c":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-csrc");
+        plang = "C";
+        instance.refresh();
+      case "cpp":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-c++src");
+        plang = "C++";
+        instance.refresh();
+      case "cs":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-csharp");
+        plang = "C#";
+        instance.refresh();
+      case "java":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "text/x-java");
+        plang = "Java";
+        instance.refresh();
       default:
         instance.refresh();
     }
