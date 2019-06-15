@@ -1,4 +1,7 @@
 
+- Added a Exit button in the file dropmenu
+- Java, C, C++, C# support
+- Portuguess support
 - Changed how the Changelog inside the app renders
 - French support
 - Polish support

@@ -9,6 +9,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
+
+
+
 let context_menu_list_text = { //Initial value
   "Copy" :" document.execCommand('copy');",
   "Paste" :" document.execCommand('paste');"
@@ -174,7 +177,6 @@ function dropMenu(obj){
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
 						Object.keys(panel["list"]).forEach(function(key) {
-														console.log(key);
 						if(panel["list"][key]=="*line" || key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{

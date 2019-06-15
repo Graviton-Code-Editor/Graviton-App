@@ -8,28 +8,33 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+const github = require('octonode');
+const client = github.client();
+const ghrepo  = client.repo('Graviton-Code-Editor/Graviton-App');
+
 function CHECK_UPDATES(){
-  const request = require('request');
-  request('https://raw.githubusercontent.com/Graviton-Code-Editor/updates/master/new_update.json', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      if(JSON.parse(body)[g_version.state]["date"] > g_version.date){ //New update detected
-        new_update = JSON.parse(body);
-        new g_dialog({
-          id:"update",
-          title:`<strong>${g_version.state}</strong> Update avaiable !`,
-          content:`Do you want to update to version ${JSON.parse(body)[g_version.state]["version"]}?`,
-          buttons:{
-            [current_config.language['No']]:"closeDialog(this)",
-            [current_config.language['Yes']]:"update()"
+  ghrepo.releases(function(err,res,body){
+    if (!err) {
+      for(i=0;i<res.length+1;i++){
+        if( i<res.length+1){
+          if(res[i].tag_name< g_version.version ){ //New update detected
+            new g_dialog({
+              id:"update",
+              title:`<strong>${g_version.state}</strong> Update avaiable !`,
+              content:`Do you want to update to version ${res[i].tag_name}?`,
+              buttons:{
+                [current_config.language['No']]:"closeDialog(this)",
+                [current_config.language['Yes']]:"update()"
+              }
+            })
+            return;
           }
-        })
-      }else{
+        } 
         new Notification("Graviton",'Any update has been found.');
-      }      
-    }else {
-      console.warn(error);
+        return;     
+      }
     }
-  });
+  });       
 }
 function update(){
   shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
