@@ -83,5 +83,6 @@
 	"RemoveScreen":"Supprimer l’écran",
 	"DirectoryDoesntExist":"Ce répertoire n’existe pas",
 	"Remove":"Supprimer",
-	"Dialog.AreYouSure":"Êtes-vous sûr ?"
+	"Dialog.AreYouSure":"Êtes-vous sûr ?",
+	"Exit":"Quitter"
 }
