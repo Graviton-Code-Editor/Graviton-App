@@ -1,4 +1,5 @@
 
+- Better new update detection
 - Added a Exit button in the file dropmenu
 - Java, C, C++, C# support
 - Portuguess support

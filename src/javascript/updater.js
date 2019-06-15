@@ -17,7 +17,7 @@ function CHECK_UPDATES(){
     if (!err) {
       for(i=0;i<res.length+1;i++){
         if( i<res.length+1){
-          if(res[i].tag_name< g_version.version ){ //New update detected
+          if(res[i].tag_name> g_version.version ){ //New update detected
             new g_dialog({
               id:"update",
               title:`<strong>${g_version.state}</strong> Update avaiable !`,

@@ -89,7 +89,6 @@ Wanna build Graviton from source?
 
 **Check [this](BUILDING.md)**
 
-
 Known problems
 ---
 - After updating Graviton with a new version,  it will probably throw an error. That is happening cause I am introducing & removing some values in the config.json in some updates, so after you install a new version it doesn't detect these values, so, it gets "undefined". Fix: Remove the .graviton folder from your system and reboot Graviton.
@@ -117,5 +116,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
-	
