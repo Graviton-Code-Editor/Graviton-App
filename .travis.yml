@@ -38,6 +38,6 @@ install:
 
 script:
   - echo "BUILDING"
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo npm run build:win:linux; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo npm run build; fi
+  - npm run build
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo npm run build --win; fi
   - ls dist
