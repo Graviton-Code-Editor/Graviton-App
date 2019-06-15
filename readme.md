@@ -59,7 +59,7 @@ Thank you for the donations!
 Credits
 ---
 - [Codemirror](codemirror.net)
-- 2€ donation by Alex Mayol Carrión
+- Help in autocompletation , Miguel Rangel
 - Logo by Saúl Blanco 
 
 Available platforms
