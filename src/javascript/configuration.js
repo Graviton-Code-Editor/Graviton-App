@@ -37,6 +37,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
     }
     screens.add();
     detectPlugins(); 
+    appendBinds();
   } else {
     fs.readFile(configDir, 'utf8', function(err, data) {
       Object.keys(current_config).forEach(function(key,index) {
@@ -63,6 +64,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
       }
       screens.add();
       detectPlugins(); 
+      appendBinds();
     });
   }
 }

@@ -83,5 +83,6 @@
 	"RemoveScreen":"Remove screen",
 	"DirectoryDoesntExist":"That directory doesn't exist",
 	"Remove":"Remove",
-	"Dialog.AreYouSure":"Are you sure?"
+	"Dialog.AreYouSure":"Are you sure?",
+	"Exit":"Exit"
 }

@@ -317,11 +317,6 @@ const loadEditor = (info) => {
         $("context .menuWrapper").html("");
         e.preventDefault();
       })
-      editor.addKeyMap({
-        "Ctrl-S": function(cm){saveFile();},
-        "Ctrl-N": function(cm){screens.add(); },
-        "Ctrl-L": function(cm){screens.remove(current_screen.id);}
-      });
       editor.on("change", function() { //Preview detector
         setTimeout(function() {
           if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
@@ -330,21 +325,29 @@ const loadEditor = (info) => {
           }
         }, 550);
       });
+      editor.addKeyMap({
+        "Ctrl-S": function(cm){saveFile();},
+        "Ctrl-N": function(cm){screens.add(); },
+        "Ctrl-L": function(cm){screens.remove(current_screen.id);}
+      });
     }  
+}
+const appendBinds =()=>{
+  Mousetrap.bind("ctrl+s", function() {
+    saveFile();
+  });
+  Mousetrap.bind("ctrl+n", function() {
+    screens.add() 
+  });
+  Mousetrap.bind("ctrl+l", function() {
+    screens.remove(current_screen.id); 
+  });
 }
 function restartApp() {
   remote.app.relaunch();
   remote.app.exit(0);
 }
-Mousetrap.bind("ctrl+s", function() {
-  saveFile();
-});
-Mousetrap.bind("ctrl+n", function() {
-  screens.add() 
-});
-Mousetrap.bind("ctrl+l", function() {
-  screens.remove(current_screen.id); 
-});
+
 function save_file_warn(ele) {
   new g_dialog({
     id: "saving_file_warn",

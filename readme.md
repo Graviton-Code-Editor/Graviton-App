@@ -43,6 +43,25 @@ Please consider revising and updating your languages in case they are missing so
 
 Thank you all!
 
+Donating
+---
+
+- BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
+- Paypal: https://www.paypal.me/mkenzo8
+
+Donators
+---
+- 2€ donation by Alex Mayol Carrión
+- 100€ donation by [Machou](http://GitHub.com/Machou)
+
+Thank you for the donations!
+
+Credits
+---
+- [Codemirror](codemirror.net)
+- 2€ donation by Alex Mayol Carrión
+- Logo by Saúl Blanco 
+
 Available platforms
 ---
 It's available on:
@@ -70,11 +89,6 @@ Wanna build Graviton from source?
 
 **Check [this](BUILDING.md)**
 
-Credits
----
-- [Codemirror](codemirror.net)
-- 2€ donation by Alex Mayol Carrión
-- Logo by Saúl Blanco 
 
 Known problems
 ---

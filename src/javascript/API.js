@@ -174,7 +174,8 @@ function dropMenu(obj){
 					if(panel[attr]==panel["list"] && panel["list"]!=undefined && last !="list"){ //List
 						last = "list";
 						Object.keys(panel["list"]).forEach(function(key) {
-						if(key=="*line"){
+														console.log(key);
+						if(panel["list"][key]=="*line" || key=="*line"){
 								droplist.innerHTML += `<span class="line_space_menus"></span>`;
 						}else{
 							if(typeof panel["list"][key] == "string"){

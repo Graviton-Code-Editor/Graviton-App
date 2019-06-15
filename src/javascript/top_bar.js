@@ -34,7 +34,9 @@ File.setList({
     "Save As": "saveFileAs()",
     Save: "saveFile()",
     "*line": "",
-    "New Project":"g_NewProjects(); "
+    "New Project":"g_NewProjects(); ",
+    "space1": "*line",
+    Exit:"remote.app.exit(0);"
   }
 });
 Tools.setList({
