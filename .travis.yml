@@ -34,10 +34,10 @@ before_cache:
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install rpm; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install wine; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install npm; fi
   - npm install
 
 script:
   - echo "BUILDING"
   - npm run build
+  - npx electron-builder -p never
   - ls dist
