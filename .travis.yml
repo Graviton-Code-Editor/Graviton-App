@@ -14,6 +14,7 @@ node_js: '8'
 os:
   - linux
   - osx
+  - windows
 
 env:
   global:
@@ -39,5 +40,4 @@ install:
 script:
   - echo "BUILDING"
   - npm run build
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo npm run build --win; fi
   - ls dist
