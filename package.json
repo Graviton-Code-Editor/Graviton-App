@@ -40,22 +40,23 @@
     "fs": "0.0.1-security"
   },
   "build": {
-    "publish":"onTagOrDraft",
     "appId": "graviton-editor",
     "artifactName": "${name}-${version}-${arch}.${ext}",
     "icon": "build/mac/icon.png",
     "asar": true,
     "dmg": {
+      "publish":"onTagOrDraft",
       "contents": [
         {
           "x": 240,
           "y": 150,
-          "type": "link",
+          "type": "link", 
           "path": "/Applications"
         }
       ]
     },
     "linux": {
+      "publish":"onTagOrDraft",
       "category": "Utility",
       "target": [
         "AppImage",
@@ -65,6 +66,7 @@
       "icon": "build/linux"
     },
     "win": {
+      "publish":"onTagOrDraft",
       "target": "NSIS",
       "icon": "build/win/icon.ico"
     }
