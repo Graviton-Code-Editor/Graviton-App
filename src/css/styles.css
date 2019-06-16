@@ -8,225 +8,256 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
- /* Color pallete , themes will override this*/
-:root{   
-	--primaryColor: #222222;
-    --secondaryColor: #171717;
-    --accentColor: #FF0048;
-    --white-black: white;
-    --black-white:white;
-    --editor-background-color: #191919;
-    --editor-font-size: 13px;
-    --widget-color: #757474;
-    --buttons-roundness:5px;
-    --dropmenu-background-color:#3B3B3B;
-    --dropmenu-buttons-disabled-color: lightgray;
-    --titleBar-icons-color:white;
-    --window-radius:8px;
-    --notifications-background-color:#474747;
-    --notifications-window-radius:5px;
-    --shadows:rgba(0,0,0,0.25);
-    --scalation:0.98;
-    --scroll-color:rgba(255,255,255,0.2);
-    --scroll-color-hover:rgba(255,255,255,0.5);
-}
-@font-face {
-    font-family: _main_font;
-    src: url(../fonts/Inter-Regular.woff2),url(../Inter-SemiBold.woff2);
-}
-@font-face {
-    font-family: editor;
-    src: url(../fonts/Hack-Regular.ttf);
-}
-html{
-    font-family: _main_font;
-    font-weight: 550;
-}
-*{
-    outline: 0;
-    text-rendering: optimizeLegibility !important;
-    -webkit-font-smoothing: subpixel-antialiased !important;
-}
-.CodeMirror {
-    z-index: 0;
-    font-family: editor;
-    font-size: var(--editor-font-size);
-    box-shadow: 0px 3px 5px var(--shadows);
-}
-body ,head{
-	margin: 0;
-    padding: 0;
-    background: var(--primaryColor);
-}
-::-webkit-scrollbar {
-    transition: 0.1s;
-    width: 12px;
-    height: 12px;
-    background: transparent;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    transition: 0.1s;
-    width: 9px !important;
-    height: 9px !important;
-    background: var(--scroll-color) ;
-}
-::-webkit-scrollbar-thumb:hover {
-    transition: 0.1s;
-    background: var(--scroll-color-hover) ;
-}
-::-webkit-scrollbar-corner{
-    visibility: hidden !important; 
-    opacity: 0!important;
-    height: 0!important;
-    width: 0!important;
-    display: none!important;
-}
-::-webkit-resizer{
-    cursor: ew-resize;
-}
-.smallScrollBar::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-#g_content {
-    display: flex;
-    background: var(--primaryColor);
-    height:calc(100% - (40px));
-    position: relative;
-}
-#g_content > #g_explorer{
-    min-width: 15%;
-    width:210px;
-    max-width: 70%;
-    left:0;
-    height: 100%;
-    overflow:auto;
-    font-size:12px;
-    color:var(--white-black);
-    background: var(--primaryColor);
-    -webkit-user-select: none;
-    float:left;
-    direction: ltr;
-}
-#g_content > #g_explorer > #g_directories > #g_directory{
-    margin:5px;
-}
-#g_content > #g_explorer > #g_directories > #g_directory:nth-child(1) {
-    margin:5px 15px;
-    line-height: 20px;
-    font-size:16px; 
-    white-space: nowrap;
-}
-#g_content > .g_editors > .g_tabs_bar{
-    min-height: 37px;
-    max-height: 37px;
-    position: relative;
-    float:left;
-    flex:37px;
-    overflow: auto; 
-    -webkit-user-select: none;
-    font-size: 15px;
-    background:var(--primaryColor);
-    top: 0;
-    left:0;
-    margin: 0;
-    padding: 0;
-    color:var(--white-black);
-    border-top-left-radius: inherit;
-}
-#g_content > .g_editors > .temp_dir_message{
-    font-size: 15px;
-    webkit-user-select: none;
-    pointer-events: none;
-    -webkit-user-select: none; 
-    -webkit-app-region: no-drag;
-    position: relative;
-    left: 50%;
-    top:45%;
-    text-align: center;
-    transform: translate(-50%,-50%);
-    color:var(--white-black);
-    width: auto;
-}
-#g_content .g_editors{
-    font-size: var(--editor-font-size);
-    background: var(--editor-background-color);
-    flex:3;
-    float:left;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin:0;
-    color:var(--white-black);
-    overflow: hidden;
-    box-shadow: -2px 0px 7px var(--shadows);
-    border-top-left-radius: 8px;
-    margin-top: 5px;
-}
-#g_content  .g_editors ~ .g_editors{
-    border-top-left-radius: 0px;
-}
-.g_tabs_bar  .tabs:first-child{
-    border-top-left-radius: 5px;
-}
-.g_editors ~ .g_editors .g_tabs_bar .tabs{
-    border-top-left-radius: 0px;
-}
-#g_content >#g_spacer{
-    flex:0;
-    min-width: 6px;
-    background: var(--primaryColor);
-    cursor: ew-resize;
-    margin: 0 2px;
-}
-#g_content >.g_editors>  .g_editors_editors{
-    flex:auto;
-    overflow: auto; 
-    height: 90%;
-}
-#g_content >.g_editors > .g_editors_editors> .code-space{
-    position: relative;
-}
-#g_content >.g_editors .g_editors_editors> .code-space img{ 
-    user-select: none; 
-    pointer-events: none;
-    position: relative; 
-    max-width:90%;
-    max-height:90%;
-    margin: 0 auto;
-    border-style: none;
+/* Color pallete , themes will override this*/
+:root {
+  --primaryColor: #222222;
+  --secondaryColor: #171717;
+  --accentColor: #FF0048;
+  --white-black: white;
+  --black-white: white;
+  --editor-background-color: #191919;
+  --editor-font-size: 13px;
+  --widget-color: #757474;
+  --buttons-roundness: 5px;
+  --dropmenu-background-color: #3B3B3B;
+  --dropmenu-buttons-disabled-color: lightgray;
+  --titleBar-icons-color: white;
+  --window-radius: 8px;
+  --notifications-background-color: #474747;
+  --notifications-window-radius: 5px;
+  --shadows: rgba(0, 0, 0, 0.25);
+  --scalation: 0.98;
+  --scroll-color: rgba(255, 255, 255, 0.2);
+  --scroll-color-hover: rgba(255, 255, 255, 0.5);
 }
 
-#g_content >.g_editors> .g_status_bar{
-    flex:30px;
-    min-height: 30px;
-    max-height: 30px;
-    background: var(--primaryColor);
-    border: none;
-    display: flex;
+@font-face {
+  font-family: _main_font;
+  src: url(../fonts/Inter-Regular.woff2), url(../Inter-SemiBold.woff2);
 }
-#g_content >.g_editors> .g_status_bar p{
-    margin:6px;
-    padding: 0;
-    flex:1;
-    color: var(--white-black);
-    font-size: 13px;
-    user-select: none;
-    height:100%;
-    position: relative;
-    width: auto;
+
+@font-face {
+  font-family: editor;
+  src: url(../fonts/Hack-Regular.ttf);
 }
-.flex{
-    padding: 0px 15px;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
+
+html {
+  font-family: _main_font;
+  font-weight: 550;
 }
-.flex >div{
-    flex: 1;
+
+* {
+  outline: 0;
+  text-rendering: optimizeLegibility !important;
+  -webkit-font-smoothing: subpixel-antialiased !important;
+}
+
+.CodeMirror {
+  z-index: 0;
+  font-family: editor;
+  font-size: var(--editor-font-size);
+  box-shadow: 0px 3px 5px var(--shadows);
+}
+
+body,
+head {
+  margin: 0;
+  padding: 0;
+  background: var(--primaryColor);
+}
+
+::-webkit-scrollbar {
+  transition: 0.1s;
+  width: 12px;
+  height: 12px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  transition: 0.1s;
+  width: 9px !important;
+  height: 9px !important;
+  background: var(--scroll-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  transition: 0.1s;
+  background: var(--scroll-color-hover);
+}
+
+::-webkit-scrollbar-corner {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  display: none !important;
+}
+
+::-webkit-resizer {
+  cursor: ew-resize;
+}
+
+.smallScrollBar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+#g_content {
+  display: flex;
+  background: var(--primaryColor);
+  height: calc(100% - (40px));
+  position: relative;
+}
+
+#g_content>#g_explorer {
+  min-width: 15%;
+  width: 210px;
+  max-width: 70%;
+  left: 0;
+  height: 100%;
+  overflow: auto;
+  font-size: 12px;
+  color: var(--white-black);
+  background: var(--primaryColor);
+  -webkit-user-select: none;
+  float: left;
+  direction: ltr;
+}
+
+#g_content>#g_explorer>#g_directories>#g_directory {
+  margin: 5px;
+}
+
+#g_content>#g_explorer>#g_directories>#g_directory:nth-child(1) {
+  margin: 5px 15px;
+  line-height: 20px;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+#g_content>.g_editors>.g_tabs_bar {
+  min-height: 37px;
+  max-height: 37px;
+  position: relative;
+  float: left;
+  flex: 37px;
+  overflow: auto;
+  -webkit-user-select: none;
+  font-size: 15px;
+  background: var(--primaryColor);
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  color: var(--white-black);
+  border-top-left-radius: inherit;
+}
+
+#g_content>.g_editors>.temp_dir_message {
+  font-size: 15px;
+  webkit-user-select: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  -webkit-app-region: no-drag;
+  position: relative;
+  left: 50%;
+  top: 45%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  color: var(--white-black);
+  width: auto;
+}
+
+#g_content .g_editors {
+  font-size: var(--editor-font-size);
+  background: var(--editor-background-color);
+  flex: 3;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  color: var(--white-black);
+  overflow: hidden;
+  box-shadow: -2px 0px 7px var(--shadows);
+  border-top-left-radius: 8px;
+  margin-top: 5px;
+}
+
+#g_content .g_editors~.g_editors {
+  border-top-left-radius: 0px;
+}
+
+.g_tabs_bar .tabs:first-child {
+  border-top-left-radius: 5px;
+}
+
+.g_editors~.g_editors .g_tabs_bar .tabs {
+  border-top-left-radius: 0px;
+}
+
+#g_content>#g_spacer {
+  flex: 0;
+  min-width: 6px;
+  background: var(--primaryColor);
+  cursor: ew-resize;
+  margin: 0 2px;
+}
+
+#g_content>.g_editors>.g_editors_editors {
+  flex: auto;
+  overflow: auto;
+  height: 90%;
+}
+
+#g_content>.g_editors>.g_editors_editors>.code-space {
+  position: relative;
+}
+
+#g_content>.g_editors .g_editors_editors>.code-space img {
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  margin: 0 auto;
+  border-style: none;
+}
+
+#g_content>.g_editors>.g_status_bar {
+  flex: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  background: var(--primaryColor);
+  border: none;
+  display: flex;
+}
+
+#g_content>.g_editors>.g_status_bar p {
+  margin: 6px;
+  padding: 0;
+  flex: 1;
+  color: var(--white-black);
+  font-size: 13px;
+  user-select: none;
+  height: 100%;
+  position: relative;
+  width: auto;
+}
+
+.flex {
+  padding: 0px 15px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.flex>div {
+  flex: 1;
 }
 
 context {
@@ -236,13 +267,15 @@ context {
   border-radius: 3px;
   display: none;
   max-height: 300px;
-  box-shadow: 0px 0px 12px 1px rgba(0,0,0,0.13);
+  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.13);
   padding: 5px;
 }
+
 context .menuWrapper {
   overflow: auto;
   max-height: 300px;
 }
+
 context .menuWrapper::-webkit-scrollbar {
   width: 10px;
   height: 100%;
@@ -250,6 +283,7 @@ context .menuWrapper::-webkit-scrollbar {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
 context .menuWrapper::-webkit-scrollbar-thumb {
   background: var(--secondaryColor);
   border-radius: 3px;
@@ -257,35 +291,40 @@ context .menuWrapper::-webkit-scrollbar-thumb {
   background-clip: content-box;
   padding: 5px;
 }
+
 context .menuWrapper .option {
-    height: 30px;
-    font-size: 13px;
-    z-index: 80;
-    color: var(--white-black);
-    background-color: transparent;
-    padding: 5px 10px;
-    width: 100%;
-    text-decoration: none;
-    display: block;
-    border: 0;
-    border-radius: 5px;
-    text-align: left;
-    transform: scale(1);
+  height: 30px;
+  font-size: 13px;
+  z-index: 80;
+  color: var(--white-black);
+  background-color: transparent;
+  padding: 5px 10px;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+  border: 0;
+  border-radius: 5px;
+  text-align: left;
+  transform: scale(1);
 }
-context  .menuWrapper .option.hover{
+
+context .menuWrapper .option.hover {
   background-color: var(--accentColor);
-  color:var(--black-white);
+  color: var(--black-white);
 }
-context  .menuWrapper .option:active{
+
+context .menuWrapper .option:active {
   transform: scale(var(--scalation));
 }
-context .menuWrapper .option:last-child{
+
+context .menuWrapper .option:last-child {
   border-bottom: none;
 }
-#plugins_list{
-    overflow: auto;
-    width: 100%;
-    height: auto;
-    overflow: auto;
-    white-space: nowrap;
+
+#plugins_list {
+  overflow: auto;
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  white-space: nowrap;
 }

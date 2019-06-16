@@ -12,7 +12,7 @@
     "build:win": "build --win",
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win && build --win --ia32",
-    "build:release":"build --publish onTagOrDraft"
+    "build:release": "build --publish onTagOrDraft"
   },
   "keywords": [
     "Graviton",
@@ -25,7 +25,6 @@
   "license": "MIT",
   "dependencies": {
     "appdata-path": "^1.0.0",
-    "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
     "jquery": "^3.4.0",
     "marked": "^0.6.2",
@@ -36,8 +35,7 @@
   },
   "devDependencies": {
     "electron": "^4.2.4",
-    "electron-builder": "^20.43.0",
-    "fs": "0.0.1-security"
+    "electron-builder": "^20.43.0"
   },
   "build": {
     "appId": "graviton-editor",
@@ -45,18 +43,16 @@
     "icon": "build/mac/icon.png",
     "asar": true,
     "dmg": {
-      "publish":"onTagOrDraft",
       "contents": [
         {
           "x": 240,
           "y": 150,
-          "type": "link", 
+          "type": "link",
           "path": "/Applications"
         }
       ]
     },
     "linux": {
-      "publish":"onTagOrDraft",
       "category": "Utility",
       "target": [
         "AppImage",
@@ -66,7 +62,6 @@
       "icon": "build/linux"
     },
     "win": {
-      "publish":"onTagOrDraft",
       "target": "NSIS",
       "icon": "build/win/icon.ico"
     }
