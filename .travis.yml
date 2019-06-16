@@ -39,5 +39,5 @@ install:
 script:
   - echo "BUILDING"
   - npm run build
-  - npx electron-builder -p never
+  - npx electron-builder -p onTagOrDraft
   - ls dist
