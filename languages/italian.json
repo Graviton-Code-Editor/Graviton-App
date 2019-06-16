@@ -81,5 +81,8 @@
 	"DefaultView":"Vista di default",
 	"SplitScreen":"Schermo diviso",
 	"RemoveScreen":"Rimuovi schermata",
-	"DirectoryDoesntExist":"Quella cartella non esiste."
+	"DirectoryDoesntExist":"Quella cartella non esiste.",
+	"Remove":"Rimuovi",
+	"Dialog.AreYouSure":"Sei sicuro?",
+	"Exit":"Esci"
 }
