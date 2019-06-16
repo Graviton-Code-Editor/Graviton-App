@@ -11,9 +11,9 @@
     "build:snap": "build --linux snap",
     "build:win": "build --win",
     "build:win32": "build --win --ia32",
-    "build:win:linux": "build --linux && build --win && build --win --ia32"
+    "build:win:linux": "build --linux && build --win && build --win --ia32",
+    "build:release":"build --publish onTagOrDraft"
   },
-  "publish":"onTagOrDraft",
   "keywords": [
     "Graviton",
     "Editor",
@@ -40,6 +40,7 @@
     "fs": "0.0.1-security"
   },
   "build": {
+    "publish":"onTagOrDraft",
     "appId": "graviton-editor",
     "artifactName": "${name}-${version}-${arch}.${ext}",
     "icon": "build/mac/icon.png",
