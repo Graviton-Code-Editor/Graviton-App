@@ -13,6 +13,7 @@
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win && build --win --ia32"
   },
+  "publish":"onTagOrDraft",
   "keywords": [
     "Graviton",
     "Editor",
@@ -31,7 +32,6 @@
     "nodejs": "0.0.0",
     "npm": "^6.9.0",
     "octonode": "^0.9.5",
-    "request": "^2.88.0",
     "rpm": "0.0.0"
   },
   "devDependencies": {

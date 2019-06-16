@@ -9,9 +9,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-
-
-
 let context_menu_list_text = { //Initial value
   "Copy" :" document.execCommand('copy');",
   "Paste" :" document.execCommand('paste');"
@@ -352,6 +349,9 @@ const graviton = {
 		Object.keys(panel).forEach(function(key) {
 			context_menu_list_text[key] = panel[key];
 		});
+	},
+	toggleFullScreen: function(status){
+		g_window.setFullScreen(status);
 	}
 }
 

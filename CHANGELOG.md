@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200616 - 1 [1.0.2]
+- Enabled node integration by default
+
 ### 200615 - 2 [1.0.2]
 - Added an exit file in the File dropmenu
 - Improved the dropmenus API

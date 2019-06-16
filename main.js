@@ -20,6 +20,7 @@ app.on('ready', function(){
     webPreferences: {
       nativeWindowOpen: true,
       nodeIntegrationInWorker: true,
+      nodeIntegration:true
     }, 
     frame: process.platform!="win32"? true:false, 
     width: 750, 
