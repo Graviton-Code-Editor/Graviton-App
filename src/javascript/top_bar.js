@@ -44,16 +44,16 @@ Tools.setList({
   list: {
     Plugins: "openPlugins()",
     "ShowWelcome": "g_welcomePage()",
-    "Zen Mode": "g_ZenMode(true)",
     "Developer Tools": "graviton.openDevTools()",
     Previewer: "g_preview()",
     "*line": "",
-    Settings: "openSettings(); goSPage('1');"
+    Settings: "Settings.open(); Settings.navigate('1')"
   }
 });
 Editor.setList({
   button: "Editor",
   list: {
+    "Zen Mode":"graviton.toggleZenMode()",
     "DefaultView": "screens.default()",
     "SplitScreen": {
       click: "screens.add()",

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190616",
+  date: "190617",
   version: "1.0.2",
   state: "Beta"
 }
@@ -427,14 +427,14 @@ function loadDirs(dir, app_id, first_time) {
   if (appender.getAttribute("opened") == "true") {
     appender.setAttribute("opened", "false");
     const dir_length = appender.children.length;
-    appender.children[0].children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder), "close"));
+    appender.children[0].children[0].setAttribute("src", directories.getCustomIcon(path.basename(FirstFolder), "close"));
     appender.children[1].innerHTML = "";
     return;
   } else {
     document.getElementById(appender_id).setAttribute("opened", "true");
     if (first_time === false) {
       const click = document.getElementById(appender_id).children[0];
-      click.children[0].setAttribute("src", g_getCustomFolder(path.basename(FirstFolder), "open"));
+      click.children[0].setAttribute("src", directories.getCustomIcon(path.basename(FirstFolder), "open"));
     }
   }
   if (first_time) {
@@ -472,7 +472,7 @@ function loadDirs(dir, app_id, first_time) {
         directory_temp.innerHTML += `
         <div opened="false" ID="${ids+dir.replace(/\\/g, "")}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
           <div  class="directory" onclick="loadDirs('${_long_path}','${ids+dir.replace(/\\/g, "")}',false)">
-            <img style="float:left; padding-right:3px; height:24px; width:24px; " src="${g_getCustomFolder(paths[i], "close")}">
+            <img style="float:left; padding-right:3px; height:24px; width:24px; " src="${directories.getCustomIcon(paths[i], "close")}">
            <p >
           ${paths[i]}
           </p> 
@@ -492,7 +492,7 @@ function loadDirs(dir, app_id, first_time) {
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
         file_temp.innerHTML += `
-        <div elementType="directorie" onclick="new Tab({
+        <div parent_ID="${ids+ dir + "_div"}" elementType="directorie" onclick="new Tab({
           id:'${ids+ dir.replace(/\\/g, "") + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',
@@ -527,22 +527,22 @@ const directories = {
       object.remove();
     });
 
-  }
-}
-const g_getCustomFolder = (path, state) => {
-  switch (path) {
-    case "node_modules":
-      return "src/icons/custom_icons/node_modules.svg"
-      break;
-    case ".git":
-      return "src/icons/custom_icons/git.svg"
-      break;
-    default:
-      if (state == "close") {
-        return "src/icons/folder_closed.svg";
-      } else {
-        return "src/icons/folder_opened.svg";
-      }
+  },
+  getCustomIcon: function(path,state) {
+    switch (path) {
+      case "node_modules":
+        return "src/icons/custom_icons/node_modules.svg"
+        break;
+      case ".git":
+        return "src/icons/custom_icons/git.svg"
+        break;
+      default:
+        if (state == "close") {
+          return "src/icons/folder_closed.svg";
+        } else {
+          return "src/icons/folder_opened.svg";
+        }
+    }
   }
 }
 
@@ -763,9 +763,9 @@ function updateCodeMode(instance, path) {
       default:
         instance.refresh();
     }
-
   }
 }
+
 const registerNewProject = function(dir) { //Add a new directory to the history if it is the first time it has been opened in the editor
   fs.readFile(logDir, "utf8", function(err, data) {
     if (err) return;
@@ -786,17 +786,7 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
     }
   });
 }
-const g_ZenMode = () => {
-  if (editor_mode == "zen") {
-    editor_mode = "normal";
-    document.getElementById("g_explorer").style = "visibility: visible; width:210px; display:block;";
-    document.getElementById("g_spacer").style = " display:block;";
-  } else {
-    editor_mode = "zen";
-    document.getElementById("g_explorer").style = "visibility: hidden; width:0px; display:none;";
-    document.getElementById("g_spacer").style = " width:0; display:none;";
-  }
-}
+
 const g_preview = function() {
   if (_enable_preview === false) {
     if (getFormat(graviton.getCurrentFile().path) != "html") return;

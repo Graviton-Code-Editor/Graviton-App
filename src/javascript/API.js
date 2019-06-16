@@ -69,7 +69,9 @@ class Plugin {
   getData() {
     try {
       return plugins_dbs[this.b].db;
-    } catch {}
+    } catch {
+      return null;
+    }
   }
   deleteData(data) {
     switch (data) {
@@ -311,7 +313,7 @@ const graviton = {
 	      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
 	      <br> ${current_config.language['OS']}: ${graviton.currentOS().name}`,
       buttons: {
-        [current_config.language['More']]: "openSettings(); goSPage('5');",
+        [current_config.language['More']]: "Settings.open(); Settings.navigate('5');",
         [current_config.language['Close']]: "closeDialog(this)"
 
       }
@@ -353,6 +355,17 @@ const graviton = {
   },
   toggleFullScreen: function(status) {
     g_window.setFullScreen(status);
+  },
+  toggleZenMode: function() {
+    if (editor_mode == "zen") {
+      editor_mode = "normal";
+      document.getElementById("g_explorer").style = "visibility: visible; width:210px; display:block;";
+      document.getElementById("g_spacer").style = " display:block;";
+    } else {
+      editor_mode = "zen";
+      document.getElementById("g_explorer").style = "visibility: hidden; width:0px; display:none;";
+      document.getElementById("g_spacer").style = " width:0; display:none;";
+    }
   }
 }
 
@@ -505,8 +518,8 @@ function g_dialog(dialogObject) {
     closeDialog(me);
   }
 }
-const closeDialog = (me) => {
-  document.getElementById(me.getAttribute("myID") + "_dialog").remove();
+const closeDialog = id => {
+  document.getElementById(id.getAttribute("myID") + "_dialog").remove();
 }
 class Window {
   constructor(data) {

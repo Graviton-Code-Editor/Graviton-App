@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200617 - 1 [1.0.2]
+- Fixed, the context menu which appears by right clicking a file now works perfect.
+- Unified methods
+
 ### 200616 - 1 [1.0.2]
 - Indexed code
 - Remove fs as dependecie 
