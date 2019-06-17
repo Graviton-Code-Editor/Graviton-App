@@ -45,7 +45,7 @@ const Settings ={
         <div class="section">
           <div id='theme_list'></div> 
           <p>${current_config.language["Themes.Text"]}</p>
-          <gv-switch  onclick="useSystemColors()" class="${current_config.accentColorPreferences=="system"?"activated":"desactivated"}"></gv-switch>
+          <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences=="system"?"activated":"desactivated"}"></gv-switch>
         </div>
         <h3>${current_config.language["ZenMode"]}</h3>
         <div class="section">
@@ -94,15 +94,15 @@ const Settings ={
               <h3>${current_config.language["Auto-Completion"]}</h3>
               <div class="section">
                   <p>${current_config.language["Settings-Editor-AutoCompletion-text"]} </p>
-                  <gv-switch  onclick="g_turnAutoCompletion()" class="${current_config["autoCompletionPreferences"]}"></gv-switch>
+                  <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${current_config["autoCompletionPreferences"]}"></gv-switch>
               </div>
               <h3>${current_config.language["Line-Wrapping"]}</h3>
               <div class="section">
-                  <gv-switch onclick="g_turnLineWrapping()" class="${current_config["lineWrappingPreferences"]}"></gv-switch>
+                  <gv-switch onclick="graviton.toggleLineWrapping()" class="${current_config["lineWrappingPreferences"]}"></gv-switch>
               </div>
               <h3>${current_config.language["Highlighting"]}</h3>
               <div class="section">
-              <gv-switch  onclick="g_highlightingTurn()" class="${g_highlighting}"></gv-switch>
+              <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
           </div>
               
           </div>
@@ -114,7 +114,7 @@ const Settings ={
           <h3>${current_config.language["Performance"]}</h3>
           <div class="section">
               <p>${current_config.language["Settings-Advanced-Performance-Animations"]}</p>
-              <gv-switch  onclick="g_disable_animations()" class="${current_config.animationsPreferences}"></gv-switch>
+              <gv-switch  onclick="graviton.disableAnimations()" class="${current_config.animationsPreferences}"></gv-switch>
           </div>
           <h3>${current_config.language["Developers"]}</h3>
           <div class="section">
@@ -176,86 +176,6 @@ function updateCustomization() {
 function updateSettings() {
   document.documentElement.style.setProperty("--editor-font-size", `${current_config.fontSizeEditor}px`); //Update settings from start
   webFrame.setZoomFactor(current_config.appZoom / 25);
-}
-
-const useSystemColors = () => {
-  if (current_config.accentColorPreferences == "manual") {
-    current_config["accentColorPreferences"] = "system";
-    try {
-      document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
-    } catch { //Returns an error = system is not compatible, Linux-based will probably throw that error
-      new Notification("Issue", "Your system is not compatible with this feature.")
-    }
-  } else {
-    document.documentElement.style.setProperty("--accentColor", themeObject.Colors.accentColor);
-    current_config["accentColorPreferences"] = "manual";
-  }
-}
-const g_highlightingTurn = function() {
-  if (g_highlighting == "activated") {
-    for (i = 0; i < editors.length; i++) {
-      if (editors[i].editor != undefined) {
-        editors[i].editor.setOption("mode", "text/plain");
-        editors[i].editor.refresh();
-      }
-    }
-    g_highlighting = "desactivated";
-  } else {
-    for (i = 0; i < editors.length; i++) {
-      if (editors[i].editor != undefined) {
-        if (editors[i].path.split(".").pop() == "html") {
-          editors[i].editor.setOption("mode", "htmlmixed");
-          editors[i].editor.setOption("htmlMode", true);
-          editors[i].editor.refresh();
-        } else {
-          updateCodeMode(editors[i].editor, path);
-        }
-
-      }
-    }
-    g_highlighting = "activated";
-  }
-}
-
-const g_turnAutoCompletion = () => current_config["autoCompletionPreferences"] = current_config["autoCompletionPreferences"] == "activated" ? "desactivated" : "activated";
-const g_turnLineWrapping = () => {
-  if (current_config["lineWrappingPreferences"] == "activated") {
-    for (i = 0; i < editors.length; i++) {
-      if (editors[i].editor != undefined) {
-        editors[i].editor.setOption("lineWrapping", false);
-        editors[i].editor.refresh();
-      }
-    }
-    current_config["lineWrappingPreferences"] = "desactivated"
-  } else {
-    for (i = 0; i < editors.length; i++) {
-      if (editors[i].editor != undefined) {
-        console.log(editors[i].editor);
-        editors[i].editor.setOption("lineWrapping", true);
-        editors[i].editor.refresh();
-      }
-    }
-    current_config["lineWrappingPreferences"] = "activated"
-    console.log(current_config);
-  }
-}
-const g_disable_animations = () => {
-  if (current_config.animationsPreferences == "activated") {
-    const style = document.createElement("style");
-    style.innerText = `*{-webkit-transition: none !important;
-			  -moz-transition: none !important;
-			  -o-transition: none !important;
-			  transition: none !important;
-				animation:0;}`;
-    style.id = "_ANIMATIONS";
-    document.documentElement.style.setProperty("--scalation", "1");
-    document.documentElement.appendChild(style);
-    current_config.animationsPreferences = "desactivated";
-  } else {
-    document.getElementById("_ANIMATIONS").remove();
-    document.documentElement.style.setProperty("--scalation", "0.98");
-    current_config.animationsPreferences = "activated";
-  }
 }
 
 function factory_reset_dialog() {

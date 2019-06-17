@@ -252,7 +252,8 @@ input[type="number"]::selection {
 
 .dialog_body .buttons>button:active {
   transition: 0.06s;
-  transform: scale(var(--scalation))
+  transform: scale(var(--scalation));
+  opacity: 0.9;
 }
 
 /* Notifications */

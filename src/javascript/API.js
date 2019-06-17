@@ -369,6 +369,79 @@ const graviton = {
   },
   deleteLog: function(){
     fs.writeFile(logDir, "[]", (err) => {}); 
+  },
+  toggleAutoCompletation:function(){ 
+    current_config["autoCompletionPreferences"] = current_config["autoCompletionPreferences"] == "activated" ? "desactivated" : "activated";
+  },
+  toggleLineWrapping: function() {
+    if (current_config["lineWrappingPreferences"] == "activated") {
+      for (i = 0; i < editors.length; i++) {
+        if (editors[i].editor != undefined) {
+          editors[i].editor.setOption("lineWrapping", false);
+          editors[i].editor.refresh();
+        }
+      }
+      current_config["lineWrappingPreferences"] = "desactivated"
+    } else {
+      for (i = 0; i < editors.length; i++) {
+        if (editors[i].editor != undefined) {
+          console.log(editors[i].editor);
+          editors[i].editor.setOption("lineWrapping", true);
+          editors[i].editor.refresh();
+        }
+      }
+      current_config["lineWrappingPreferences"] = "activated"
+      console.log(current_config);
+    }
+  },
+  toggleHighlighting: function() {
+    if (g_highlighting == "activated") {
+      for (i = 0; i < editors.length; i++) {
+        if (editors[i].editor != undefined) {
+          editors[i].editor.setOption("mode", "text/plain");
+          editors[i].editor.refresh();
+        }
+      }
+      g_highlighting = "desactivated";
+    } else {
+      for (i = 0; i < editors.length; i++) {
+        if (editors[i].editor != undefined) {
+          updateCodeMode(editors[i].editor, path);
+        }
+      }
+      g_highlighting = "activated";
+    }
+  },
+  useSystemAccent: function() {
+    if (current_config.accentColorPreferences == "manual") {
+      current_config["accentColorPreferences"] = "system";
+      try {
+        document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
+      } catch { //Returns an error = system is not compatible, Linux-based will probably throw that error
+        new Notification("Issue", "Your system is not compatible with this feature.")
+      }
+    } else {
+      document.documentElement.style.setProperty("--accentColor", themeObject.Colors.accentColor);
+      current_config["accentColorPreferences"] = "manual";
+    }
+  },
+  disableAnimations() {
+    if (current_config.animationsPreferences == "activated") {
+      const style = document.createElement("style");
+      style.innerText = `*{-webkit-transition: none !important;
+          -moz-transition: none !important;
+          -o-transition: none !important;
+          transition: none !important;
+          animation:0;}`;
+      style.id = "_ANIMATIONS";
+      document.documentElement.style.setProperty("--scalation", "1");
+      document.documentElement.appendChild(style);
+      current_config.animationsPreferences = "desactivated";
+    } else {
+      document.getElementById("_ANIMATIONS").remove();
+      document.documentElement.style.setProperty("--scalation", "0.98");
+      current_config.animationsPreferences = "activated";
+    }
   }
 }
 
