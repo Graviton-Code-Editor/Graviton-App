@@ -3,6 +3,9 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200617 - 1 [1.0.2]
+- New key shortcut, CTRL+E toggles the ZenMode
+
+### 200617 - 1 [1.0.2]
 - Fixed, the context menu which appears by right clicking a file now works perfect.
 - Unified methods
 

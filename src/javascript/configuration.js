@@ -33,7 +33,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
     if (current_config.justInstalled === false) {
       g_welcomePage();
     } else {
-      g_Setup();
+      Setup.open();
     }
     screens.add();
     detectPlugins();
@@ -49,7 +49,7 @@ function loadConfig() { //Loads the configuration from the config.json for the f
       if (current_config.justInstalled === false) {
         g_welcomePage();
       } else {
-        g_Setup();
+        Setup.open();
       }
       if (current_config.animationsPreferences == "desactivated") {
         const style = document.createElement("style");

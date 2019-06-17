@@ -366,6 +366,9 @@ const graviton = {
       document.getElementById("g_explorer").style = "visibility: hidden; width:0px; display:none;";
       document.getElementById("g_spacer").style = " width:0; display:none;";
     }
+  },
+  deleteLog: function(){
+    fs.writeFile(logDir, "[]", (err) => {}); 
   }
 }
 

@@ -50,7 +50,7 @@ const Settings ={
         <h3>${current_config.language["ZenMode"]}</h3>
         <div class="section">
           <p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
-          <gv-switch  onclick="g_ZenMode(true)" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
+          <gv-switch  onclick="graviton.toggleZenMode()" class="${editor_mode!="zen"?"activated":"desactivated"}"></gv-switch>
         </div>
         `;
         for (i = 0; i < themes.length; i++) {

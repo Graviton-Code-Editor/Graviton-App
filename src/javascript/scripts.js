@@ -329,7 +329,8 @@ const loadEditor = (info) => {
     editor.addKeyMap({
       "Ctrl-S": function(cm) { saveFile(); },
       "Ctrl-N": function(cm) { screens.add(); },
-      "Ctrl-L": function(cm) { screens.remove(current_screen.id); }
+      "Ctrl-L": function(cm) { screens.remove(current_screen.id); },
+      "Ctrl-E": function(cm) { graviton.toggleZenMode();}
     });
   }
 }
@@ -342,6 +343,9 @@ const appendBinds = () => {
   });
   Mousetrap.bind("ctrl+l", function() {
     screens.remove(current_screen.id);
+  });
+  Mousetrap.bind("ctrl+e", function() {
+    graviton.toggleZenMode();
   });
 }
 
