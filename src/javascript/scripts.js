@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190617",
+  date: "190618",
   version: "1.0.2",
   state: "Beta"
 }

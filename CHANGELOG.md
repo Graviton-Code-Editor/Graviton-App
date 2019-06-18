@@ -3,6 +3,9 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200617 - 3 [1.0.2]
+- Improved Codemirror dialogs design
+
+### 200617 - 3 [1.0.2]
 - Unified code
 
 ### 200617 - 2 [1.0.2]

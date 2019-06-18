@@ -1,4 +1,5 @@
 
+- Replace & find shortcuts
 - CTRL+E now toggles the ZenMode
 - Better new update detection
 - Added a Exit button in the file dropmenu

@@ -39,9 +39,10 @@ class Plugin {
       return;
     }
   }
-  saveData(data) {
+  saveData(data,callback) {
     plugins_dbs[this.b].db = data;
     fs.writeFileSync(path.join(plugins_db, this.name) + ".json", JSON.stringify(data), function(err) {});
+    if(!callback==undefined) return callback;
   }
   setData(key, data) {
     if (fs.existsSync(path.join(plugins_db, this.name) + ".json")) {
@@ -257,7 +258,7 @@ const graviton = {
     return _file;
   },
   getCurrentEditor: function() {
-    for (i = 0; i < editors.length; i++) { //returns the current selected editor 
+    for (i = 0; i < editors.length; i++) { //Returns the current selected editor 
       if (editorID == editors[i].id) {
         return editors[i];
       }

@@ -2,20 +2,22 @@
   position: absolute;
   left: 0; right: 0;
   background: inherit;
-  background-color: rgb(37, 35, 35);
+  background-color: var(--secondaryColor);
+  box-shadow: 0px 3px 5px var(--shadows);
   z-index: 15;
-  padding: .1em .8em;
+  padding: .4em .8em;
   overflow: hidden;
-  color: inherit;
+  color: var(--white-black);
+  font-family: _main_font;
 }
 
 .CodeMirror-dialog-top {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid transparent;
   top: 0;
 }
 
 .CodeMirror-dialog-bottom {
-  border-top: 1px solid #eee;
+  border-top: 1px solid transparent;
   bottom: 0;
 }
 
@@ -23,10 +25,9 @@
   border: none;
   outline: none;
   background: transparent;
-  background-color: rgb(37, 35, 35);
+  background-color: var(--secondaryColor);
   width: 20em;
-  color: inherit;
-  font-family: monospace;
+  color: var(--white-black);
 }
 
 .CodeMirror-dialog button {
