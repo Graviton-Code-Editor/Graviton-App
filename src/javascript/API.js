@@ -35,7 +35,7 @@ class Plugin {
       }
     }
     if (this.name == undefined) {
-      console.error(` Plugin > ${object.name} < doesn't exist `);
+      console.warn(` Plugin > ${object.name} < doesn't exist `);
       return;
     }
   }
@@ -112,42 +112,27 @@ function dropMenu(obj) {
             if (key == "*line") {
               droplist.innerHTML += `<span class="line_space_menus"></span>`;
             } else {
-              if (typeof panel["list"][key] == "string") {
-                if (toTransx != true) {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>${icons.empty}</div>
-										<div>${key}</div>
-									</button>`
-                } else {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>${icons.empty}</div>
-										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
-											${key}
-										</div>
-									</button>`
-                }
+              const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
+              const click = typeof panel["list"][key] == "string"? panel["list"][key]:panel["list"][key].click
+              const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint
+              if (toTransx != true) {
+                droplist.innerHTML += `
+								<button title="${hint}" onclick="${click}" >
+									<div>
+									${icon}
+									</div>
+									<div>${key}</div>
+								</button>`
               } else {
-                if (toTransx != true) {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>
-										${icons[panel["list"][key].icon]}
-										</div>
-										<div>${key}</div>
-									</button>`
-                } else {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key].click}" >
-										<div>
-										${icons[panel["list"][key].icon]}
-										</div>
-										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
-											${key}
-										</div>
-									</button>`
-                }
+                droplist.innerHTML += `
+								<button title="${hint}" onclick="${click}" >
+									<div>
+									${icon}
+									</div>
+									<div class="translate_word" idT="${key.replace(/ +/g, "")}">
+										${key}
+									</div>
+								</button>`;
               }
             }
           });
@@ -172,7 +157,6 @@ function dropMenu(obj) {
 				<button g_id="${this.id}" class=" translate_word dropbtn " idT="${panel["button"].replace(/ +/g, "")}" onclick="interact_dropmenu('${this.id}_dropbtn')"  >${panel["button"]}</button>`
       }
       let last;
-
       let toTransx = this.translation;
       Object.keys(panel).forEach(function(attr) {
         if (panel[attr] == panel["list"] && panel["list"] != undefined && last != "list") { //List
@@ -181,43 +165,27 @@ function dropMenu(obj) {
             if (panel["list"][key] == "*line" || key == "*line") {
               droplist.innerHTML += `<span class="line_space_menus"></span>`;
             } else {
-              if (typeof panel["list"][key] == "string") {
-                if (toTransx != true) {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>${icons.empty}</div>
-										<div>${key}</div>
-											
-									</button>`
-                } else {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>${icons.empty}</div>
-										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
-											${key}
-										</div>
-									</button>`
-                }
+              const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
+              const click = typeof panel["list"][key] == "string"? panel["list"][key]:panel["list"][key].click
+              const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint
+              if (toTransx != true) {
+                droplist.innerHTML += `
+                <button title="${hint}" onclick="${click}" >
+                  <div>
+                  ${icon}
+                  </div>
+                  <div>${key}</div>
+                </button>`
               } else {
-                if (toTransx != true) {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key]}" >
-										<div>
-										${icons[panel["list"][key].icon]}
-										</div>
-										<div>${key}</div>
-									</button>`
-                } else {
-                  droplist.innerHTML += `
-									<button onclick="${panel["list"][key].click}" >
-										<div>
-										${icons[panel["list"][key].icon]}
-										</div>
-										<div class="translate_word" idT="${key.replace(/ +/g, "")}">
-											${key}
-										</div>
-									</button>`
-                }
+                droplist.innerHTML += `
+                <button title="${hint}" onclick="${click}" >
+                  <div>
+                  ${icon}
+                  </div>
+                  <div class="translate_word" idT="${key.replace(/ +/g, "")}">
+                    ${key}
+                  </div>
+                </button>`;
               }
             }
           });

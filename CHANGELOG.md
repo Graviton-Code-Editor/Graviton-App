@@ -2,7 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200617 - 3 [1.0.2]
+### 200618 - 2 [1.0.2]
+- Added small animation to the Codemirror dialogs
+- Added a propertie to the Dropmenus object constructor, hint, so it will show the text you pass when you hover the button (Will be in docs).
+
+### 200618 - 1 [1.0.2]
 - Improved Codemirror dialogs design
 
 ### 200617 - 3 [1.0.2]

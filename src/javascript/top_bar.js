@@ -32,7 +32,10 @@ File.setList({
     "Open Folder": "openFolder()",
     "Open File": "openFile()",
     "Save As": "saveFileAs()",
-    Save: "saveFile()",
+    "Save": {
+      click: "saveFile()",
+      hint: "Ctrl+S"
+    },
     "*line": "",
     "New Project": "g_NewProjects(); ",
     "space1": "*line",
@@ -53,15 +56,20 @@ Tools.setList({
 Editor.setList({
   button: "Editor",
   list: {
-    "Zen Mode":"graviton.toggleZenMode()",
+    "Zen Mode":{
+      click:"graviton.toggleZenMode()",
+      hint:"Ctrl+E"
+    },
     "DefaultView": "screens.default()",
     "SplitScreen": {
       click: "screens.add()",
-      icon: "split_screen"
+      icon: "split_screen",
+      hint: "Ctrl+N"
     },
     "RemoveScreen": {
       click: "graviton.removeScreen()",
-      icon: "remove_screen"
+      icon: "remove_screen",
+      hint: "Ctrl+L"
     }
   }
 });
@@ -79,7 +87,8 @@ Help.setList({
     Website: "shell.openExternal('https://www.graviton.ml')",
     About: {
       click: "graviton.dialogAbout()",
-      icon: "info"
+      icon: "info",
+      hint:"Hello World!"
     }
   }
 });
