@@ -66,30 +66,30 @@ head {
   background: var(--primaryColor);
 }
 
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
   transition: 0.1s;
   width: 12px;
   height: 12px;
   background: transparent;
 }
 
-::-webkit-scrollbar-track {
+*::-webkit-scrollbar-track {
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   transition: 0.1s;
   width: 9px !important;
   height: 9px !important;
   background: var(--scroll-color);
 }
 
-::-webkit-scrollbar-thumb:hover {
+*::-webkit-scrollbar-thumb:hover {
   transition: 0.1s;
   background: var(--scroll-color-hover);
 }
 
-::-webkit-scrollbar-corner {
+*::-webkit-scrollbar-corner {
   visibility: hidden !important;
   opacity: 0 !important;
   height: 0 !important;
@@ -97,7 +97,7 @@ head {
   display: none !important;
 }
 
-::-webkit-resizer {
+*::-webkit-resizer {
   cursor: ew-resize;
 }
 

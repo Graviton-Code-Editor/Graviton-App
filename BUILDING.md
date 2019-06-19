@@ -15,6 +15,10 @@ Go inside the folder:
 Install the dependencies:
 > $ npm install
 
+Install some tools (only Windows):
+> $ npm install windows-build-tools
+> $ npm run rebuild
+
 ## 3 - Building 
 
 ### Testing

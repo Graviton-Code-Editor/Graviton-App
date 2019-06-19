@@ -791,3 +791,12 @@ p.link:hover {
   transition: 0.12s;
   transform: scale(var(--scalation));
 }
+.commander{
+  position: relative;
+  width: auto;
+  overflow: visible;
+}
+.xterm *{
+  overflow: auto;
+  z-index: auto !important;
+}

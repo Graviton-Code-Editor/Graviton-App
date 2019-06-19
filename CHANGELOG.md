@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200619 - 1 [1.0.2]
+- Integrated Xterm.js, up to 1 for every editor opened. Open it from the menu "Editor" > "New terminal" (Still on testing, it's a little buggy).
+
 ### 200618 - 2 [1.0.2]
 - Added small animation to the Codemirror dialogs
 - Added a propertie to the Dropmenus object constructor, hint, so it will show the text you pass when you hover the button (Will be in docs).

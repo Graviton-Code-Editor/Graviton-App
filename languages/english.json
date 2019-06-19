@@ -84,5 +84,6 @@
 	"DirectoryDoesntExist":"That directory doesn't exist",
 	"Remove":"Remove",
 	"Dialog.AreYouSure":"Are you sure?",
-	"Exit":"Exit"
+	"Exit":"Exit",
+	"newTerminal":"New terminal"
 }

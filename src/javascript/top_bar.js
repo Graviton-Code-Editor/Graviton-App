@@ -70,7 +70,8 @@ Editor.setList({
       click: "graviton.removeScreen()",
       icon: "remove_screen",
       hint: "Ctrl+L"
-    }
+    },
+    "newTerminal":"commanders.terminal()"
   }
 });
 Help.setList({
@@ -87,8 +88,7 @@ Help.setList({
     Website: "shell.openExternal('https://www.graviton.ml')",
     About: {
       click: "graviton.dialogAbout()",
-      icon: "info",
-      hint:"Hello World!"
+      icon: "info"
     }
   }
 });

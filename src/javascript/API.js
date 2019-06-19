@@ -8,7 +8,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-
+const _os = require('os');
+const pty = require('node-pty');
 let context_menu_list_text = { //Initial value
   "Copy": " document.execCommand('copy');",
   "Paste": " document.execCommand('paste');"
@@ -818,13 +819,18 @@ const loadTab = object => {
   }
 }
 class commander {
-  constructor(object) {
+  constructor(object,callback) {
+    if(document.getElementById(current_screen.id).children[4]!=undefined) {
+      return callback(true)
+    }
     this.id = object.id + "_commander";
     this.content = object.content;
     const commanderObj = document.createElement("div");
     commanderObj.id = this.id;
+    commanderObj.classList = "commander";
     commanderObj.innerHTML = object.content;
-    document.getElementById(current_screen.id).appendChild(commanderObj)
+    document.getElementById(current_screen.id).appendChild(commanderObj);
+    return callback(false);
   }
   close() {
     document.getElementById(this.id + "_commander").remove();
@@ -843,6 +849,34 @@ const commanders = {
 	      <input style="margin-top:4px;" class="input1 auto"></input>
       </div>`
     })
+  },
+  terminal: function(object) {
+    const randomID= Math.random();
+    new commander({
+      id:"xterm"+randomID,
+      content:""
+    },function(err){
+        if(!err){
+          const shell = process.env[_os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
+          const ptyProcess = pty.spawn(shell, [], {
+            cwd: process.cwd(),
+            env: process.env,
+          });
+          const xterm = new Terminal({
+            rows:"10",
+            theme:{
+              background:"#222222"
+            }
+          });
+          xterm.open(document.getElementById("xterm"+randomID+"_commander"));
+          xterm.on('data', (data) => {
+            ptyProcess.write(data);
+          });
+          ptyProcess.on('data', function (data) {
+            xterm.write(data);
+          });
+        }
+     }) 
   },
   close: function(id) {
     document.getElementById(id + "_commander").remove();
