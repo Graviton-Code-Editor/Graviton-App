@@ -72,8 +72,14 @@ Editor.setList({
       hint: "Ctrl+L"
     },
     "a2":"*line",
-    "newTerminal":"commanders.terminal()",
-    "closeTerminal":"commanders.closeTerminal()"
+    "newTerminal":{
+      click:"commanders.terminal()",
+      icon:"new_terminal"
+    },
+    "closeTerminal":{
+      click:"commanders.closeTerminal()",
+      icon:"close_terminal"
+    }
   }
 });
 Help.setList({

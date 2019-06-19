@@ -44,6 +44,41 @@ const icons = {
 		  </g>
 		</svg>
 	`,
+	new_terminal:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+	  <g id="new_terminal" clip-path="url(#clip-path)">
+	    <g class="aba" id="_2" data-name="2"  stroke-width="1.5">
+	      <rect width="14" height="14" rx="2" stroke="none"/>
+	      <rect x="0.75" y="0.75" width="12.5" height="12.5" rx="1.25" fill="none"/>
+	    </g>
+	    <g class="bba" id="_0" data-name="0" transform="translate(10.5 6.5) rotate(90)"  stroke-width="1">
+	      <rect width="1" height="4" stroke="none"/>
+	      <rect x="0.5" y="0.5" height="3" fill="none"/>
+	    </g>
+	    <g class="bba" id="_0-2" data-name="0" transform="translate(8 5)" fill="#fff" stroke="#fff" stroke-width="1">
+	      <rect width="1" height="4" stroke="none"/>
+	      <rect x="0.5" y="0.5" height="3" fill="none"/>
+	    </g>
+	    <text class="bba" id="_" data-name="/" transform="translate(3 10)" font-size="10" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="0" y="0">/</tspan></text>
+	  </g>
+	</svg>
+	`,
+	close_terminal:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+  <g id="close_terminal" clip-path="url(#clip-path)">
+    <g class="aba" id="_2" data-name="2"  stroke-width="1.5">
+      <rect width="14" height="14" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="12.5" height="12.5" rx="1.25" fill="none"/>
+    </g>
+    <g class="bba" id="_0" data-name="0" transform="translate(10.5 6.5) rotate(90)"  stroke-width="1">
+      <rect width="1" height="4" stroke="none"/>
+      <rect x="0.5" y="0.5" height="3" fill="none"/>
+    </g>
+    <text class="bba" id="_" data-name="/" transform="translate(3 10)"  font-size="10" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="0" y="0">/</tspan></text>
+  </g>
+</svg>
+
+	`,
   empty: `
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14">
 		  

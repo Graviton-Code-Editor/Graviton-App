@@ -168,7 +168,7 @@ function dropMenu(obj) {
             } else {
               const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
               const click = typeof panel["list"][key] == "string"? panel["list"][key]:panel["list"][key].click
-              const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint
+              const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint==undefined?"":panel["list"][key].hint;
               if (toTransx != true) {
                 droplist.innerHTML += `
                 <button title="${hint}" onclick="${click}" >
