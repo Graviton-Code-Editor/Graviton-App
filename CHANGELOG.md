@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200619 - 2 [1.0.2]
+- Improved terminal looking
+- Fixed the welcome message wasn't centralized when a terminal was opened
+
 ### 200619 - 1 [1.0.2]
 - Integrated Xterm.js, up to 1 for every editor opened. Open it from the menu "Editor" > "New terminal" (Still on testing, it's a little buggy).
 

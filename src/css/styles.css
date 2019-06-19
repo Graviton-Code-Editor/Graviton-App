@@ -157,7 +157,7 @@ head {
   border-top-left-radius: inherit;
 }
 
-#g_content>.g_editors>.temp_dir_message {
+.temp_dir_message {
   font-size: 15px;
   webkit-user-select: none;
   pointer-events: none;
@@ -235,6 +235,7 @@ head {
   background: var(--primaryColor);
   border: none;
   display: flex;
+  box-shadow: 0px 3px 5px var(--shadows);
 }
 
 #g_content>.g_editors>.g_status_bar p {

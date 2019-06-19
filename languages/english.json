@@ -85,5 +85,6 @@
 	"Remove":"Remove",
 	"Dialog.AreYouSure":"Are you sure?",
 	"Exit":"Exit",
-	"newTerminal":"New terminal"
+	"newTerminal":"New terminal",
+	"closeTerminal":"Close terminal"
 }

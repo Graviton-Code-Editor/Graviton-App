@@ -48,7 +48,6 @@ Tools.setList({
     Plugins: "openPlugins()",
     "ShowWelcome": "g_welcomePage()",
     "Developer Tools": "graviton.openDevTools()",
-    Previewer: "g_preview()",
     "*line": "",
     Settings: "Settings.open(); Settings.navigate('1')"
   }
@@ -60,6 +59,7 @@ Editor.setList({
       click:"graviton.toggleZenMode()",
       hint:"Ctrl+E"
     },
+    "a1":"*line",
     "DefaultView": "screens.default()",
     "SplitScreen": {
       click: "screens.add()",
@@ -71,7 +71,9 @@ Editor.setList({
       icon: "remove_screen",
       hint: "Ctrl+L"
     },
-    "newTerminal":"commanders.terminal()"
+    "a2":"*line",
+    "newTerminal":"commanders.terminal()",
+    "closeTerminal":"commanders.closeTerminal()"
   }
 });
 Help.setList({

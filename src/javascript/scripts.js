@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190618",
+  date: "190619",
   version: "1.0.2",
   state: "Beta"
 }
@@ -52,7 +52,6 @@ let editorID;
 let editor_mode = "normal";
 let g_highlighting = "activated";
 let _previewer;
-let _enable_preview = false;
 let log = [];
 let themes = [];
 let themeObject;
@@ -90,7 +89,7 @@ const loadEditor = (info) => {
         let text_container = document.createElement("div");
         text_container.classList = "code-space";
         text_container.setAttribute("id", info.dir + "_editor");
-        document.getElementById(current_screen.id).children[2].appendChild(text_container);
+        document.getElementById(current_screen.id).children[1].appendChild(text_container);
         let codemirror = CodeMirror(document.getElementById(info.dir + "_editor"), {
           value: info.data,
           mode: "text/plain",
@@ -103,7 +102,7 @@ const loadEditor = (info) => {
           styleActiveLine: true,
           lineWrapping: current_config["lineWrappingPreferences"] == "activated"
         });
-        document.getElementById(current_screen.id).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != "unknown" ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split(".").pop());
+        document.getElementById(current_screen.id).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != "unknown" ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split(".").pop());
         const new_editor_text = {
           id: info.dir + "_editor",
           editor: codemirror,
@@ -140,7 +139,7 @@ const loadEditor = (info) => {
         image_container.classList = "code-space";
         image_container.setAttribute("id", `${info.dir}_editor`);
         image_container.innerHTML = `<img src="${info.dir}">`
-        document.getElementById(current_screen.id).children[2].appendChild(image_container);
+        document.getElementById(current_screen.id).children[1].appendChild(image_container);
         const new_editor_image = {
           id: info.dir + "_editor",
           editor: undefined,
@@ -155,7 +154,7 @@ const loadEditor = (info) => {
         editors.push(new_editor_image);
         document.getElementById(info.dir + "_editor").style.display = "block";
         editorID = new_editor_image.id;
-        document.getElementById(current_screen.id).children[3].children[0].innerText = "Image"
+        document.getElementById(current_screen.id).children[2].children[0].innerText = "Image"
         break;
       case "free":
         const free_id = Math.random();
@@ -163,7 +162,7 @@ const loadEditor = (info) => {
         free_container.classList = "code-space";
         free_container.setAttribute("id", `${info.dir}_editor`);
         free_container.innerHTML = info.data;
-        document.getElementById(current_screen.id).children[2].appendChild(free_container);
+        document.getElementById(current_screen.id).children[1].appendChild(free_container);
         const new_editor_free = {
           id: info.dir + "_editor",
           editor: undefined,
@@ -179,7 +178,7 @@ const loadEditor = (info) => {
         editors.push(new_editor_free);
         document.getElementById(info.dir + "_editor").style.display = "block";
         editorID = new_editor_free.id;
-        document.getElementById(current_screen.id).children[3].children[0].innerText = " "
+        document.getElementById(current_screen.id).children[2].children[0].innerText = " "
         break;
     }
   } else { //Editor exists
@@ -190,11 +189,11 @@ const loadEditor = (info) => {
       if (editors[i].id == info.dir + "_editor") {
         if (editors[i].editor != undefined) { //Editors
           editor = editors[i].editor;
-          document.getElementById(info.screen).children[3].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != "unknown" ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split(".").pop());
+          document.getElementById(info.screen).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != "unknown" ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split(".").pop());
         } else if (info.type != "free") { //Images
-          document.getElementById(info.screen).children[3].children[0].innerText = "Image"
+          document.getElementById(info.screen).children[2].children[0].innerText = "Image"
         } else {
-          document.getElementById(info.screen).children[3].children[0].innerText = ""
+          document.getElementById(info.screen).children[2].children[0].innerText = ""
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
@@ -318,14 +317,6 @@ const loadEditor = (info) => {
       $("context .menuWrapper").html("");
       e.preventDefault();
     })
-    editor.on("change", function() { //Preview detector
-      setTimeout(function() {
-        if (graviton.getCurrentFile() != undefined && _enable_preview === true) {
-          saveFile();
-          _previewer.reload();
-        }
-      }, 550);
-    });
     editor.addKeyMap({
       "Ctrl-S": function(cm) { saveFile(); },
       "Ctrl-N": function(cm) { screens.add(); },
@@ -791,30 +782,6 @@ const registerNewProject = function(dir) { //Add a new directory to the history 
   });
 }
 
-const g_preview = function() {
-  if (_enable_preview === false) {
-    if (getFormat(graviton.getCurrentFile().path) != "html") return;
-    _enable_preview = true;
-    _previewer = new BrowserWindow({
-      width: 800,
-      height: 600
-    });
-    _previewer.loadURL(
-      url.format({
-        pathname: graviton.getCurrentFile().path,
-        protocol: "file:",
-        slashes: true
-      })
-    );
-    _previewer.on("closed", () => {
-      _enable_preview = false;
-    });
-    _previewer.setTitle("Previewer");
-  } else {
-    _enable_preview = false;
-    _previewer.close();
-  }
-}
 const HTML_template = `
 <!DOCTYPE html>
 <html lang="en">
@@ -883,15 +850,16 @@ const screens = {
     new_screen_editor.id = current_id;
     new_screen_editor.innerHTML = `
        <div class="g_tabs_bar flex smallScrollBar"></div>  
-        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language["WelcomeMessage"]}</p>
+        
         <div class="g_editors_editors" >
+        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language["WelcomeMessage"]}</p>
         </div>
         <div class="g_status_bar" >
           <p></p>
         </div>`;
     document.getElementById("g_content").insertBefore(new_screen_editor, document.getElementById("g_content").children[document.getElementById("g_content").children.length - 1])
     editor_screens.push(new_screen_editor);
-    current_screen = { id: editor_screens[0].id }
+    current_screen = { id: editor_screens[0].id , terminal:undefined}
     new_screen_editor.addEventListener('click', function(event) {
       current_screen.id = this.id;
     }, false);
@@ -907,6 +875,10 @@ const screens = {
             }
           }
           if (tabs2.length == 0) {
+            if(editor_screens[i].terminal!=undefined){
+              editor_screens[i].terminal.xterm.destroy();
+              commander.close(editor_screens[i].termina.id);
+            }
             document.getElementById(id).remove();
             editor_screens.splice(i, 1)
             editors.splice(i, 1);
@@ -935,6 +907,10 @@ const screens = {
           }
         }
         if (tabs2.length == 0) {
+          if(editor_screens[number].terminal!=undefined){
+            editor_screens[number].terminal.xterm.destroy();
+            commander.close(editor_screens[number].termina.id);
+          }
           document.getElementById(editor_screens[number].id).remove();
           editor_screens.splice(number, 1)
           editors.splice(number, 1);

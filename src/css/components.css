@@ -203,16 +203,17 @@ input[type="number"]::selection {
   background: var(--secondaryColor);
   top: 45%;
   left: 50%;
-  transform: translate(-50%, -45%);
+  -webkit-transform: translate(-50%, -45%) ;
 }
 
 @keyframes window_up {
   from {
-    transform: translate(-50%, -43%);
+    transform: translate3d(0,0,0) translate(-50%, -43%);
+
   }
 
   to {
-    transform: translate(-50%, -45%);
+    transform: translate3d(0,0,0) translate(-50%, -45%) ;
   }
 }
 
@@ -792,9 +793,14 @@ p.link:hover {
   transform: scale(var(--scalation));
 }
 .commander{
+  margin-top: 10px;
   position: relative;
   width: auto;
   overflow: visible;
+  background: var(--editor-background-color);
+  padding: 10px;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .xterm *{
   overflow: auto;

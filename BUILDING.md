@@ -25,6 +25,8 @@ Rebuild node-pty:
 
 ### Others
 
+You must have Python 2.7 installed.
+
 Install the dependencies:
 > $ npm install
 
@@ -41,6 +43,10 @@ In case you just wanna test it, run:
 - From a Windows machine:
 
 > $ npm run build 
+
+- From a Windows or Linux machine for 32-bits Windows:
+
+> $ npm run build:win32
 
 - From a Linux machine with Wine: 
 

@@ -603,7 +603,7 @@ class Tab {
             loadTab(tabs[i])
             return;
           } else if (i == tabs.length) { //Tab is created because it doesn't exist
-            document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";
+            document.getElementById(current_screen.id).children[1].children[0].style = "visibility:hidden; display:none;";
             const tab = document.createElement("div");
             tab.setAttribute("id", object.id + "Tab");
             tab.setAttribute("TabID", object.id + "Tab");
@@ -688,7 +688,7 @@ class Tab {
             tabs[i].classList.remove("selected");
           }
         }
-        document.getElementById(current_screen.id).children[1].style = "visibility:hidden; display:none;";
+        document.getElementById(current_screen.id).children[1].children[0].style = "visibility:hidden; display:none;";
         const tab = document.createElement("div");
         tab.setAttribute("data", object.data);
         tab.setAttribute("id", object.id + "Tab");
@@ -758,8 +758,8 @@ const closeTab = (tab_id, fromWarn) => {
         if (tabs2.length == 0) { //Any tab opened
           filepath = " ";
           plang = "";
-          document.getElementById(g_object.getAttribute("screen")).children[3].children[0].innerText = plang;
-          document.getElementById(g_object.getAttribute("screen")).children[1].style = "visibility:visible; display:block;"
+          document.getElementById(g_object.getAttribute("screen")).children[2].children[0].innerText = plang;
+          document.getElementById(g_object.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;"
         } else if (i === tabs2.length) { //Last tab selected
           for (i = 0; i < tabs2.length; i++) {
             if (tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")) {
@@ -820,7 +820,7 @@ const loadTab = object => {
 }
 class commander {
   constructor(object,callback) {
-    if(document.getElementById(current_screen.id).children[4]!=undefined) {
+    if(document.getElementById(current_screen.id).children[3]!=undefined) {
       return callback(true)
     }
     this.id = object.id + "_commander";
@@ -865,20 +865,26 @@ const commanders = {
           const xterm = new Terminal({
             rows:"10",
             theme:{
-              background:"#222222"
+              background:graviton.getCurrentTheme().Colors["editor-background-color"],
+              foreground:graviton.getCurrentTheme().Colors["white-black"]
             }
           });
-          xterm.open(document.getElementById("xterm"+randomID+"_commander"));
+          xterm.open(document.getElementById("xterm"+randomID+"_commander"));  
           xterm.on('data', (data) => {
             ptyProcess.write(data);
           });
           ptyProcess.on('data', function (data) {
             xterm.write(data);
           });
+          current_screen.terminal = {id:"xterm"+randomID,xterm:xterm};
         }
      }) 
   },
   close: function(id) {
     document.getElementById(id + "_commander").remove();
+  },
+  closeTerminal: function(){
+    current_screen.terminal.xterm.destroy();
+    commanders.close(current_screen.terminal.id);
   }
 }
