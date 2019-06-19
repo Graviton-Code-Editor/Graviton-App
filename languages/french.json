@@ -84,5 +84,6 @@
 	"DirectoryDoesntExist":"Ce répertoire n’existe pas",
 	"Remove":"Supprimer",
 	"Dialog.AreYouSure":"Êtes-vous sûr ?",
-	"Exit":"Quitter"
+	"Exit":"Quitter",
+	"newTerminal":"Nouveau terminal"
 }
