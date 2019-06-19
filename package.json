@@ -11,33 +11,35 @@
     "build:snap": "build --linux snap",
     "build:win": "build --win",
     "build:win32": "build --win --ia32",
-    "build:win:linux": "build --linux && build --win && build --win --ia32"
+    "build:win:linux": "build --linux && build --win && build --win --ia32",
+    "build:release": "build --publish onTagOrDraft",
+    "rebuild": "electron-rebuild -f -w node-pty"
   },
   "keywords": [
     "Graviton",
     "Editor",
     "code",
     "open source",
-    "simple"
+    "modern"
   ],
   "author": "Marc Espín Sanz<mespinsanz@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "appdata-path": "^1.0.0",
-    "fs": "0.0.1-security",
     "fs-extra": "^7.0.1",
     "jquery": "^3.4.0",
     "marked": "^0.6.2",
+    "node-pty": "^0.8.1",
     "nodejs": "0.0.0",
     "npm": "^6.9.0",
     "octonode": "^0.9.5",
-    "request": "^2.88.0",
-    "rpm": "0.0.0"
+    "rpm": "0.0.0",
+    "xterm": "^3.14.2"
   },
   "devDependencies": {
     "electron": "^4.2.4",
     "electron-builder": "^20.43.0",
-    "fs": "0.0.1-security"
+    "electron-rebuild": "^1.8.5"
   },
   "build": {
     "appId": "graviton-editor",

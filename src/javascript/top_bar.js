@@ -11,19 +11,19 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 /* <-- Default NavBar >-- */
 let anyDropON = null;
 const File = new dropMenu({
-  id:"file",
+  id: "file",
   translation: true
 });
 const Tools = new dropMenu({
-  if:"tools",
+  if: "tools",
   translation: true
 });
 const Editor = new dropMenu({
-  id:"editor",
+  id: "editor",
   translation: true
 });
 const Help = new dropMenu({
-  id:"help",
+  id: "help",
   translation: true
 });
 File.setList({
@@ -32,54 +32,63 @@ File.setList({
     "Open Folder": "openFolder()",
     "Open File": "openFile()",
     "Save As": "saveFileAs()",
-    Save: "saveFile()",
+    "Save": {
+      click: "saveFile()",
+      hint: "Ctrl+S"
+    },
     "*line": "",
-    "New Project":"g_NewProjects(); ",
+    "New Project": "g_NewProjects(); ",
     "space1": "*line",
-    Exit:"remote.app.exit(0);"
+    Exit: "remote.app.exit(0);"
   }
 });
 Tools.setList({
   button: "Tools",
   list: {
     Plugins: "openPlugins()",
-    "ShowWelcome":"g_welcomePage()",
-    "Zen Mode": "g_ZenMode(true)",
+    "ShowWelcome": "g_welcomePage()",
     "Developer Tools": "graviton.openDevTools()",
     Previewer: "g_preview()",
     "*line": "",
-    Settings: "openSettings(); goSPage('1');"
+    Settings: "Settings.open(); Settings.navigate('1')"
   }
 });
 Editor.setList({
   button: "Editor",
   list: {
-    "DefaultView":"screens.default()",
-    "SplitScreen":{
-      click:"screens.add()",
-      icon:"split_screen"
+    "Zen Mode":{
+      click:"graviton.toggleZenMode()",
+      hint:"Ctrl+E"
     },
-    "RemoveScreen":{
-      click:"graviton.removeScreen()",
-      icon:"remove_screen"
-    }
+    "DefaultView": "screens.default()",
+    "SplitScreen": {
+      click: "screens.add()",
+      icon: "split_screen",
+      hint: "Ctrl+N"
+    },
+    "RemoveScreen": {
+      click: "graviton.removeScreen()",
+      icon: "remove_screen",
+      hint: "Ctrl+L"
+    },
+    "newTerminal":"commanders.terminal()"
   }
 });
 Help.setList({
   button: "Help",
   list: {
-    Issues:"shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
-    "Source Code":"shell.openExternal('https://github.com/Graviton-Code-Editor')",
+    Issues: "shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
+    "Source Code": "shell.openExternal('https://github.com/Graviton-Code-Editor')",
     "Telegram Channel": "shell.openExternal('https://t.me/gravitoneditor')",
     "Telegram Group": "shell.openExternal('https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ')",
     "*line": "",
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
     FAQs: "",
-    Changelog:"graviton.dialogChangelog()",
-    Website:"shell.openExternal('https://www.graviton.ml')",
-    About:{
-      click:"graviton.dialogAbout()",
-      icon:"info"
+    Changelog: "graviton.dialogChangelog()",
+    Website: "shell.openExternal('https://www.graviton.ml')",
+    About: {
+      click: "graviton.dialogAbout()",
+      icon: "info"
     }
   }
 });
@@ -120,16 +129,15 @@ const windows_buttons = `
      <button onclick="g_window.maximize(); " id="maximize" style=" height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate;" viewBox="0 0 24 24" width="24" height="24"><rect x="7.5" y="7.5" width="9" height="9" transform="matrix(1,0,0,1,0,0)" fill="transparent" vector-effect="non-scaling-stroke" stroke-width="1" stroke="var(--titleBar-icons-color)" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="1"/></svg></button>
      <button onclick="g_window.close();" id="close" style=" height: auto;"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="20" height="24"><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,0.707107,-0.707107,-0.707107,28.970563,12)" fill="var(--titleBar-icons-color)" /><rect x="3.68" y="11.406" width="16.64" height="1.189" transform="matrix(-0.707107,-0.707107,0.707107,-0.707107,12,28.970563)" fill="var(--titleBar-icons-color)" /></svg></button>
      `;
-if(graviton.currentOS().codename=="win32"){
-    document.getElementById("controls").innerHTML = windows_buttons;
-    g_window.on('maximize', (e, cmd) => {
-        document.getElementById("maximize").setAttribute("onclick","g_window.unmaximize();");
-    })
-    g_window.on('unmaximize', (e, cmd) => {
-        document.getElementById("maximize").setAttribute("onclick","g_window.maximize();");
-    });
-}else{
-    document.getElementById("controls").innerHTML = " ";
-    document.getElementById("controls").setAttribute("os","not_windows");
+if (graviton.currentOS().codename == "win32") {
+  document.getElementById("controls").innerHTML = windows_buttons;
+  g_window.on('maximize', (e, cmd) => {
+    document.getElementById("maximize").setAttribute("onclick", "g_window.unmaximize();");
+  })
+  g_window.on('unmaximize', (e, cmd) => {
+    document.getElementById("maximize").setAttribute("onclick", "g_window.maximize();");
+  });
+} else {
+  document.getElementById("controls").innerHTML = " ";
+  document.getElementById("controls").setAttribute("os", "not_windows");
 }
-

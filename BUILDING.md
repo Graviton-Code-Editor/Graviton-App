@@ -12,6 +12,19 @@ Clone the git repository:
 Go inside the folder:
 > $ cd Graviton-App
 
+### Windows
+
+Run as admin:
+> $ npm --global --production install windows-build-tools
+
+Install the dependencies:
+> $ npm install
+
+Rebuild node-pty:
+> $ npm run rebuild
+
+### Others
+
 Install the dependencies:
 > $ npm install
 

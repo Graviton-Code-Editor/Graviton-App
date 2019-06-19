@@ -33,15 +33,15 @@ function loadConfig() { //Loads the configuration from the config.json for the f
     if (current_config.justInstalled === false) {
       g_welcomePage();
     } else {
-      g_Setup();
+      Setup.open();
     }
     screens.add();
-    detectPlugins(); 
+    detectPlugins();
     appendBinds();
   } else {
     fs.readFile(configDir, 'utf8', function(err, data) {
-      Object.keys(current_config).forEach(function(key,index) {
-        if(JSON.parse(data)[key]!=undefined)current_config[key]=JSON.parse(data)[key]; //Will only change the extisting parameters
+      Object.keys(current_config).forEach(function(key, index) {
+        if (JSON.parse(data)[key] != undefined) current_config[key] = JSON.parse(data)[key]; //Will only change the extisting parameters
       });
       updateSettings();
       setThemeByName(current_config["theme"]);
@@ -49,21 +49,21 @@ function loadConfig() { //Loads the configuration from the config.json for the f
       if (current_config.justInstalled === false) {
         g_welcomePage();
       } else {
-        g_Setup();
+        Setup.open();
       }
       if (current_config.animationsPreferences == "desactivated") {
         const style = document.createElement("style");
         style.innerText = `*{-webkit-transition: none !important;
-			  -moz-transition: none !important;
-			  -o-transition: none !important;
-			  transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
         animation:0;}`;
         style.id = "_ANIMATIONS";
         document.documentElement.appendChild(style);
-        document.documentElement.style.setProperty("--scalation","1");
+        document.documentElement.style.setProperty("--scalation", "1");
       }
       screens.add();
-      detectPlugins(); 
+      detectPlugins();
       appendBinds();
     });
   }

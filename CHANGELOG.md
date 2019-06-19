@@ -2,6 +2,33 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200619 - 1 [1.0.2]
+- Integrated Xterm.js, up to 1 for every editor opened. Open it from the menu "Editor" > "New terminal" (Still on testing, it's a little buggy).
+
+### 200618 - 2 [1.0.2]
+- Added small animation to the Codemirror dialogs
+- Added a propertie to the Dropmenus object constructor, hint, so it will show the text you pass when you hover the button (Will be in docs).
+
+### 200618 - 1 [1.0.2]
+- Improved Codemirror dialogs design
+
+### 200617 - 3 [1.0.2]
+- Unified code
+
+### 200617 - 2 [1.0.2]
+- New key shortcut, CTRL+E toggles the ZenMode
+
+### 200617 - 1 [1.0.2]
+- Fixed, the context menu which appears by right clicking a file now works perfect.
+- Unified methods
+
+### 200616 - 1 [1.0.2]
+- Indexed code
+- Remove fs as dependecie 
+
+### 200616 - 1 [1.0.2]
+- Enabled node integration by default
+
 ### 200615 - 2 [1.0.2]
 - Added an exit file in the File dropmenu
 - Improved the dropmenus API

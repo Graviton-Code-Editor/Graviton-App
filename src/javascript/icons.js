@@ -1,5 +1,5 @@
 const icons = {
-	split_screen : `
+  split_screen: `
 		<svg  xmlns="http://www.w3.org/2000/svg" width="20" height="13" viewBox="0 0 14 14">
 		  <g  id="Grupo_6" data-name="Grupo 6" transform="translate(-472 -381)">
 		    <g  class="bbo" id="Rectángulo_34" data-name="Rectángulo 34" transform="translate(472 381)" fill="transparent"  stroke-width="1.5">
@@ -18,7 +18,7 @@ const icons = {
 		  </g>
 		</svg>
 	`,
-	remove_screen:`
+  remove_screen: `
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="13" viewBox="0 0 14 14">
 	  <g id="remove_screen" >
 	    <g class="bbo" id="_2" data-name="2" fill="none"  stroke-width="1.5">
@@ -33,7 +33,7 @@ const icons = {
 	  </g>
 	</svg>
 	`,
-	info:`
+  info: `
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="13" viewBox="0 0 14 14">
 		  <g fill="transparent"  >
 		    <g class="bbo" id="Elipse_2" data-name="Elipse 2" stroke-width="1.5">
@@ -44,7 +44,7 @@ const icons = {
 		  </g>
 		</svg>
 	`,
-	empty : `
+  empty: `
 		<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14">
 		  
 		</svg>

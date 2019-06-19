@@ -6,29 +6,31 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 -->
 <!DOCTYPE>
-<meta charset="utf-8"/>
+<meta charset="utf-8" />
 <link rel="stylesheet" href="src/css/fast_loading.css">
-<div id="g_bootanimation" >
-   <img src="src/icons/logo.svg">
+<div id="g_bootanimation">
+  <img src="src/icons/logo.svg">
 </div>
 <script>
-  let editor_booted = false;
-  let error_showed = false;
-  function FactoryReset(){
-    fs.unlink(configDir,function(){
-      restartApp();
-    });  
+let editor_booted = false;
+let error_showed = false;
+
+function FactoryReset() {
+  fs.unlink(configDir, function() {
+    restartApp();
+  });
+}
+
+function DeleteBoot() {
+  if (document.getElementById("g_bootanimation") != null) {
+    document.getElementById("g_bootanimation").remove();
+    editor_booted = true;
   }
-  function DeleteBoot(){
-    if(document.getElementById("g_bootanimation") != null ){
-      document.getElementById("g_bootanimation").remove();
-      editor_booted = true;
-    }
-  }
-  window.addEventListener("error",function(){
-    if(editor_booted==false && error_showed == false){
-      error_showed = true;
-      document.getElementById("g_bootanimation").innerHTML += `
+}
+window.addEventListener("error", function() {
+  if (editor_booted == false && error_showed == false) {
+    error_showed = true;
+    document.getElementById("g_bootanimation").innerHTML += `
       <div>
         <p>An error has appeared when booting Graviton.</p>
         <button class="Button1 red" onclick="FactoryReset()">Repair</button>
@@ -36,79 +38,89 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
         <button class="Button1" onclick="DeleteBoot()">Ignore</button>
          <p class="link" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App#known-problems')">See this after updating?</p>
       </div>`
-    }else if(editor_booted==true){
-      graviton.throwError("An error has appeared! Check the console on developer tools for more info.");
-    }
-  });
+  } else if (editor_booted == true) {
+    graviton.throwError("An error has appeared! Check the console on developer tools for more info.");
+  }
+});
 </script>
 <html>
-    <div id="g_control_bar" >
-        <img src="src/icons/logo.svg">
-        <div id="g_dropmenu_list"class="smallScrollBar">
-          <!--Dropmenus list-->  
-        </div>   
-         <div id="controls" >
-          <!-- Control buttons (only for windows) -->
-        </div>
+<div id="g_control_bar">
+  <img src="src/icons/logo.svg">
+  <div id="g_dropmenu_list" class="smallScrollBar">
+    <!--Dropmenus list-->
+  </div>
+  <div id="controls">
+    <!-- Control buttons (only for windows) -->
+  </div>
+</div>
+
+<body>
+  <div id="g_content">
+    <div id="g_explorer" opened="false">
+      <!--Directories tree-view -->
+      <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
     </div>
-    <body>
-      <div id="g_content" >
-        <div id="g_explorer" opened="false" > <!--Directories tree-view -->
-          <span id="openFolder" height="24px" width="24px" onclick="openFolder()" ></span>
-         
-        </div>
-        <div id="g_spacer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
-        <context >
-            <div id="context" class="menuWrapper"></div>
-        </context>
-      </div> 
-     <!-- -->
-      <div id="notifications" > 
-        <!-- Notifications list -->
-      </div>
-    </body>  
+    <div id="g_spacer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
+    <context>
+      <div id="context" class="menuWrapper"></div>
+    </context>
+  </div>
+  <!-- -->
+  <div id="notifications">
+    <!-- Notifications list -->
+  </div>
+</body>
+<!-- Codemirror -->
+<script src="src/lib/codemirror.js"></script>
+<script src="src/mode/clike/clike.js"></script>
+<script src="src/mode/css/css.js"></script>
+<script src="src/mode/xml/xml.js"></script>
+<script src="src/mode/javascript/javascript.js"></script>
+<script src="src/mode/htmlmixed/htmlmixed.js"></script>
+<script src="src/mode/go/go.js"></script>
+<script src="src/mode/dart/dart.js"></script>
+<script src="src/mode/pascal/pascal.js"></script>
+<script src="src/mode/php/php.js"></script>
+<script src="src/mode/ruby/ruby.js"></script>
+<script src="src/mode/sql/sql.js"></script>
+<script src="src/mode/sass/sass.js"></script>
+<script src="src/mode/python/python.js"></script>
+<script src="src/mode/shell/shell.js"></script>
+<script src="src/addons/dialog/dialog.js"></script>
+<script src="src/addons/search/jump-to-line.js"></script>
+<script src="src/addons/search/match-highlighter.js"></script>
+<script src="src/addons/search/matchesonscrollbar.js"></script>
+<script src="src/addons/search/search.js"></script>
+<script src="src/addons/search/searchcursor.js"></script>
+<script src="src/addons/scroll/annotatescrollbar.js"></script>
+<script src="src/addons/scroll/scrollpastend.js"></script>
+<script src="src/addons/scroll/simplescrollbars.js"></script>
+<link rel="stylesheet" href="src/lib/codemirror.css">
+<link rel="stylesheet" href="src/Highlights/default.css">
+<link rel="stylesheet" href="src/addons/dialog/dialog.css">
+<link rel="stylesheet" href="src/addons/scroll/simplescrollbars.css">
+<link rel="stylesheet" href="src/addons/search/matchesonscrollbar.css">
 
+<!-- Graviton Editor -->
+<link rel="stylesheet" href="src/css/styles.css">
+<link rel="stylesheet" href="src/css/menus.css">
+<link rel="stylesheet" href="src/css/settings.css">
+<link rel="stylesheet" href="src/css/components.css">
+<script src="src/javascript/icons.js"></script>
+<script type="text/javascript" src="src/javascript/mousetrap.min.js"></script>
+<script src="src/javascript/dictionary.js"></script>
+<script src="src/javascript/API.js"></script>
+<script src="src/javascript/scripts.js"></script>
+<script src="src/javascript/languages.js"></script>
+<script src="src/javascript/plugins.js"></script>
+<script src="src/javascript/configuration.js"></script>
+<script src="src/javascript/welcome.js"></script>
+<script src="src/javascript/settings.js"></script>
+<script src="src/javascript/customization.js"></script>
+<script src="src/javascript/updater.js"></script>
+<script src="src/javascript/top_bar.js"></script>
 
-    <!-- Codemirror -->
-    <script src="src/lib/codemirror.js"></script>
-
-    <script src="src/mode/clike/clike.js"></script>
-    <script src="src/mode/css/css.js"></script>
-    <script src="src/mode/xml/xml.js"></script>
-    <script src="src/mode/javascript/javascript.js"></script>
-    <script src="src/mode/htmlmixed/htmlmixed.js"></script>
-    <script src="src/mode/go/go.js"></script>
-    <script src="src/mode/dart/dart.js"></script>
-    <script src="src/mode/pascal/pascal.js"></script>
-    <script src="src/mode/php/php.js"></script>
-    <script src="src/mode/ruby/ruby.js"></script>
-    <script src="src/mode/sql/sql.js"></script>
-    <script src="src/mode/sass/sass.js"></script>
-    <script src="src/mode/python/python.js"></script>
-    <script src="src/mode/shell/shell.js"></script>
-
-    <link rel="stylesheet" href="src/lib/codemirror.css">
-    <link rel="stylesheet" href="src/Highlights/default.css">
-
-      <!-- Graviton Editor -->
-
-    <link rel="stylesheet" href="src/css/styles.css">
-    <link rel="stylesheet" href="src/css/menus.css">
-    <link rel="stylesheet" href="src/css/settings.css">
-    <link rel="stylesheet" href="src/css/components.css">
-
-    <script src="src/javascript/icons.js"></script>
-    <script type="text/javascript" src="src/javascript/mousetrap.min.js"></script>
-    <script src="src/javascript/dictionary.js"></script>
-    <script src="src/javascript/API.js"></script>
-    <script src="src/javascript/scripts.js"></script>
-    <script src="src/javascript/languages.js"></script>
-    <script src="src/javascript/plugins.js"></script>
-    <script src="src/javascript/configuration.js"></script>
-    <script src="src/javascript/welcome.js"></script>
-    <script src="src/javascript/settings.js"></script>
-    <script src="src/javascript/customization.js"></script>
-    <script src="src/javascript/updater.js"></script>
-    <script src="src/javascript/top_bar.js"></script>
+<link rel="stylesheet" href="node_modules/xterm/dist/xterm.css" />
+<script src="node_modules/xterm/dist/xterm.js"></script>
 
 </html>

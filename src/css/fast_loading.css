@@ -20,16 +20,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #g_bootanimation>img {
   webkit-user-select: none;
   pointer-events: none;
-  -webkit-user-select: none; 
+  -webkit-user-select: none;
   -webkit-app-region: drag;
   z-index: 999;
   position: relative;
   top: 50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
   height: 17%;
   width: 17%;
 }
+
 #g_bootanimation div {
   color: white;
   z-index: 999;
@@ -39,7 +40,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   transform: translate(-50%, -50%);
   text-align: center;
 }
-#g_control_bar > img {
+
+#g_control_bar>img {
   pointer-events: none;
   top: 0;
   left: 0;
