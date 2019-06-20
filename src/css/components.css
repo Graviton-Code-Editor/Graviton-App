@@ -138,6 +138,7 @@ input[type="number"]::selection {
   height: 20px;
   border-radius: 20px;
   margin: 4px;
+  transform: scale(1);
 }
 
 .switch:hover {
@@ -151,7 +152,9 @@ input[type="number"]::selection {
   position: relative;
   top: 2px;
 }
-
+.switch:active{
+  transform: scale(var(--scalation));
+}
 .activated.switch {
   background: var(--primaryColor);
 }

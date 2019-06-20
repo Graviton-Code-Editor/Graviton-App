@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200620 - 2 [1.0.2]
+- Fixed terminal starting directory
+
 ### 200620 - 1 [1.0.2]
 - New icons for opening and closing a terminal
 - Fixed some dropmenus were showinh "undefined" as it's hint

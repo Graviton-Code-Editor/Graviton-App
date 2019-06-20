@@ -859,7 +859,7 @@ const commanders = {
         if(!err){
           const shell = process.env[_os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
           const ptyProcess = pty.spawn(shell, [], {
-            cwd: process.cwd(),
+            cwd: graviton.getCurrentDirectory(),
             env: process.env,
           });
           const xterm = new Terminal({
@@ -884,7 +884,9 @@ const commanders = {
     document.getElementById(id + "_commander").remove();
   },
   closeTerminal: function(){
-    current_screen.terminal.xterm.destroy();
-    commanders.close(current_screen.terminal.id);
+    if(current_screen.terminal!=undefined){
+      current_screen.terminal.xterm.destroy();
+      commanders.close(current_screen.terminal.id);
+    }
   }
 }
