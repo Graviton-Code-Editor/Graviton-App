@@ -83,5 +83,8 @@
 	"RemoveScreen":"Remover tela",
 	"DirectoryDoesntExist":"Esse diretório não existe",
 	"Remove":"Remover",
-	"Dialog.AreYouSure":"Tem certeza?"
+	"Dialog.AreYouSure":"Tem certeza?",
+	"Exit":"Sair",
+	"newTerminal":"Novo terminal",
+	"closeTerminal":"Fechar terminal"
 }
