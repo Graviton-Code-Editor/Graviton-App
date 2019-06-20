@@ -457,6 +457,9 @@ function loadDirs(dir, app_id, first_time) {
       graviton.throwError("Cannot read files on the directory :" + FirstFolder + ". Check the permissions.")
       return;
     }
+    fs.watch(FirstFolder, event => {
+      if(event === "rename") loadDirs(FirstFolder, "g_directories", true);
+    });
     for (i = 0; i < paths.length; i++) {
       let _long_path = path.join(dir, paths[i]);
       if (graviton.currentOS().codename == "win32") {
