@@ -84,5 +84,4 @@ const icons = {
 		  
 		</svg>
 	`
-
 }
