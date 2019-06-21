@@ -5,12 +5,13 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
 [![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)](https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
+[![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 
 ![example screenshot](example.png)
 
 DISCORD server: https://discord.gg/gg6CTYA
 
-Features
+Features 🚀
 ---
 - Themes
 - Plugins
@@ -20,12 +21,13 @@ Features
 - Large language syntax highlighting support
 - Disabling animations
 - Autocomplete (not stable)
+- Built-in Terminals
 
 More are coming soon
 
 **[Changelog](CHANGELOG.md)**
 
-Contributing (working on)
+Contributing (working on) ⚙
 ---
 
 **[Code of conduct](CODE_OF_CONDUCT.md)**
@@ -44,27 +46,27 @@ Please consider revising and updating your languages in case they are missing so
 
 Thank you all!
 
-Donating
+Donating 🎁
 ---
 
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
 - Paypal: https://www.paypal.me/mkenzo8
 
-Donators
+Donators 😎
 ---
 - 2€ donation by Alex Mayol
 - BTCs donation by [Machou](http://GitHub.com/Machou)
 
 Thank you for the donations!
 
-Credits
+Credits ✨
 ---
 - [Codemirror](codemirror.net)
 - Help in autocompletation , Miguel Rangel
 - Logo by Saúl Blanco 
 - All contributors
 
-Available platforms
+Available platforms 💻🖥
 ---
 It's available on:
 
@@ -85,7 +87,7 @@ It's available on:
 
 The current state is beta, check the releases page to download the latest version. 
 
-Building
+Building ⚙
 ---
 Wanna build Graviton from source?
 
@@ -95,7 +97,7 @@ Known problems
 ---
 - After updating Graviton with a new version,  it will probably throw an error. That is happening cause I am introducing & removing some values in the config.json in some updates, so after you install a new version it doesn't detect these values, so, it gets "undefined". Fix: Remove the .graviton folder from your system and reboot Graviton.
 
-License
+License 🧾
 ---
 MIT License
 
