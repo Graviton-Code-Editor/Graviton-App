@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200621 - 1 [1.0.2]
+- Testing standardJS
+- Converted updater.js in to a module
+- Fixed building instructions
+
+
 ### 200620 - 2 [1.0.2]
 - Fixed terminal starting directory
 

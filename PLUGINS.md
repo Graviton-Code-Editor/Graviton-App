@@ -10,4 +10,3 @@ Let's navigate to our .graviton folder:
 | MacOS     | /users/username/library/applications support/.graviton |
 
 And there we have to copy the Plugin's folder.
-

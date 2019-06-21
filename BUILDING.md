@@ -30,6 +30,9 @@ You must have Python 2.7 installed.
 Install the dependencies:
 > $ npm install
 
+Rebuild node-pty:
+> $ npm run rebuild
+
 ## 3 - Building 
 
 ### Testing

@@ -13,7 +13,21 @@
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win && build --win --ia32",
     "build:release": "build --publish onTagOrDraft",
-    "rebuild": "electron-rebuild -f -w node-pty"
+    "rebuild": "electron-rebuild -f -w node-pty",
+    "standard":"standard --fix"
+  },
+  "standard":{
+    "ignore":[
+      "/node_modules",
+      "/build",
+      "/dist",
+      "/languages",
+      "/plugins",
+      "/themes",
+      "/src/lib",
+      "/src/mode",
+      "/src/addons"
+    ]
   },
   "keywords": [
     "Graviton",
@@ -34,6 +48,7 @@
     "npm": "^6.9.0",
     "octonode": "^0.9.5",
     "rpm": "0.0.0",
+    "standard": "^12.0.1",
     "xterm": "^3.14.2"
   },
   "devDependencies": {

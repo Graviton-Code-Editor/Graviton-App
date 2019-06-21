@@ -44,7 +44,7 @@ const icons = {
 		  </g>
 		</svg>
 	`,
-	new_terminal:`
+  new_terminal: `
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
 	  <g id="new_terminal" clip-path="url(#clip-path)">
 	    <g class="aba" id="_2" data-name="2"  stroke-width="1.5">
@@ -63,7 +63,7 @@ const icons = {
 	  </g>
 	</svg>
 	`,
-	close_terminal:`
+  close_terminal: `
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
   <g id="close_terminal" clip-path="url(#clip-path)">
     <g class="aba" id="_2" data-name="2"  stroke-width="1.5">

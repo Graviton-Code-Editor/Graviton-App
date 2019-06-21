@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md)
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
+[![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)](https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
 
 ![example screenshot](example.png)
 
@@ -51,8 +52,8 @@ Donating
 
 Donators
 ---
-- 2€ donation by Alex Mayol Carrión
-- 100€ donation by [Machou](http://GitHub.com/Machou)
+- 2€ donation by Alex Mayol
+- BTCs donation by [Machou](http://GitHub.com/Machou)
 
 Thank you for the donations!
 
