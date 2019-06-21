@@ -571,6 +571,8 @@ function getLanguageName(format) {
       return "CSS";
     case "js":
       return "JavaScript";
+    case "jsx":
+      return "React JavaScript"
     case "json":
       return "JSON ";
     case "go":
@@ -651,6 +653,12 @@ function updateCodeMode(instance, path) {
         instance.setOption("htmlMode", false);
         instance.setOption("mode", "javascript");
         plang = "JavaScript";
+        instance.refresh();
+        break;
+      case "jsx":
+        instance.setOption("htmlMode", false);
+        instance.setOption("mode", "jsx");
+        plang = "React JavaScript";
         instance.refresh();
         break;
       case "json":
