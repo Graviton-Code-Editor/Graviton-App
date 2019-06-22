@@ -84,6 +84,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   margin: 8px 4px;
   display: inline-block;
   min-width: 80px;
+  max-width: 250px;
+  overflow: auto;
   width: auto;
   background: var(--primaryColor);
   color: var(--white-black);
@@ -98,6 +100,24 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 .theme_div:active {
   transition: 0.05s;
   transform: scale(var(--scalation));
+}
+
+.theme_div.active{
+  background: var(--accentColor);
+  color: white;
+}
+
+.theme_div .accent{
+  transition: 0.05s;
+  height: 14px !important;
+  width: 14px !important;
+  border: 2px solid var(--primaryColor);
+  border-radius: 50px;
+}
+
+.theme_div:hover:not(.active) .accent{
+  transition: 0.05s;
+  border: 2px solid var(--widget-color);
 }
 
 #language_list {

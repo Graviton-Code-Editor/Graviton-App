@@ -92,6 +92,7 @@ const loadEditor = (info) => {
         let text_container = document.createElement('div')
         text_container.classList = 'code-space'
         text_container.setAttribute('id', info.dir + '_editor')
+        text_container.setAttribute('path', info.dir)
         document.getElementById(current_screen.id).children[1].appendChild(text_container)
         let codemirror = CodeMirror(document.getElementById(info.dir + '_editor'), {
           value: info.data,
@@ -107,6 +108,7 @@ const loadEditor = (info) => {
         })
         document.getElementById(current_screen.id).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != 'unknown' ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split('.').pop())
         const new_editor_text = {
+          object:text_container,
           id: info.dir + '_editor',
           editor: codemirror,
           path: info.dir,
@@ -407,14 +409,22 @@ function openFolder () {
 }
 
 function saveFile () {
-  fs.writeFile(filepath, editor.getValue(), err => {
-    if (err) return err
-    document.getElementById(editingTab).setAttribute('file_status', 'saved')
-    document
-      .getElementById(editingTab)
-      .children[1].setAttribute('onclick', document.getElementById(editingTab).children[1].getAttribute('onclose'))
-    document.getElementById(editingTab).children[1].innerHTML = close_icon
-  })
+  if(graviton.getCurrentEditor()!=undefined){
+    fs.writeFile(filepath, editor.getValue(), err => {
+      if (err) return err
+      document.getElementById(editingTab).setAttribute('file_status', 'saved')
+      document
+        .getElementById(editingTab)
+        .children[1].setAttribute('onclick', document.getElementById(editingTab).children[1].getAttribute('onclose'))
+      document.getElementById(editingTab).children[1].innerHTML = close_icon
+      const file_saved_event = new CustomEvent("file_saved",{
+        detail:{
+          object : graviton.getCurrentEditor().object
+        }
+      })
+      document.dispatchEvent(file_saved_event);
+    })
+  }
 }
 
 
@@ -859,86 +869,5 @@ const touchingResizer = type => {
     }
   } else {
     touchingResizerValue = true
-  }
-}
-const screens = {
-  add: function () {
-    const current_id = `screen_${editor_screens.length + Math.random()}`
-    const new_screen_editor = document.createElement('div')
-    new_screen_editor.classList = 'g_editors'
-    new_screen_editor.id = current_id
-    new_screen_editor.innerHTML = `
-       <div class="g_tabs_bar flex smallScrollBar"></div>  
-        
-        <div class="g_editors_editors" >
-        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language['WelcomeMessage']}</p>
-        </div>
-        <div class="g_status_bar" >
-          <p></p>
-        </div>`
-    document.getElementById('g_content').insertBefore(new_screen_editor, document.getElementById('g_content').children[document.getElementById('g_content').children.length - 1])
-    editor_screens.push(new_screen_editor)
-    current_screen = { id: editor_screens[0].id, terminal: undefined }
-    new_screen_editor.addEventListener('click', function (event) {
-      current_screen.id = this.id
-    }, false)
-  },
-  remove: function (id) {
-    if (editor_screens.length != 1) {
-      for (i = 0; i < editor_screens.length; i++) {
-        if (editor_screens[i].id == id) {
-          let tabs2 = []
-          for (b = 0; b < tabs.length; b++) {
-            if (tabs[b].getAttribute('screen') == id) {
-              tabs2.push(tabs[b])
-            }
-          }
-          if (tabs2.length == 0) {
-            if (editor_screens[i].terminal != undefined) {
-              editor_screens[i].terminal.xterm.destroy()
-              commander.close(editor_screens[i].termina.id)
-            }
-            document.getElementById(id).remove()
-            editor_screens.splice(i, 1)
-            editors.splice(i, 1)
-            current_screen = { id: editor_screens[editor_screens.length - 1].id }
-            return true
-          } else {
-            graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])
-            return false
-          }
-          return
-        }
-      }
-    } else {
-      graviton.throwError(current_config.language['Notification.CannotRemoveMoreScreens'])
-      return false
-    }
-  },
-  default: function () {
-    for (i = 0; i < editor_screens.length; i++) {
-      if (i != 0) {
-        let tabs2 = []
-        const number = i
-        for (b = 0; b < tabs.length; b++) {
-          if (tabs[b].getAttribute('screen') == editor_screens[number].id) {
-            tabs2.push(tabs[b])
-          }
-        }
-        if (tabs2.length == 0) {
-          if (editor_screens[number].terminal != undefined) {
-            editor_screens[number].terminal.xterm.destroy()
-            commander.close(editor_screens[number].termina.id)
-          }
-          document.getElementById(editor_screens[number].id).remove()
-          editor_screens.splice(number, 1)
-          editors.splice(number, 1)
-          current_screen = { id: editor_screens[editor_screens.length - 1].id }
-          i--
-        } else {
-          graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])
-        }
-      }
-    }
   }
 }

@@ -60,11 +60,13 @@ const Settings = {
           themeDiv.setAttribute('onclick', "loadTheme('" + i + "'); selectTheme('1',this);")
           themeDiv.innerHTML = `
           <p style="margin:11px 0; font-size:17px; line-height:2px;">${themes[i].Name}</p>
-          <p style="font-size:15px;">${current_config.language['MadeBy'] + themes[i]['Author']}</p>
+          <p style="font-size:14px;">${current_config.language['MadeBy'] + themes[i]['Author']}</p>
           <p style="font-size:13px; line-height:2px;">${themes[i]['Description']}</p>
+          <div class="accent" style="background:${themes[i].Colors["accentColor"]};"></div>
           `
           if (themes[i]['Name'] === current_config.theme['Name']) {
             selectTheme('1', themeDiv)
+  
           }
           document.getElementById('theme_list').appendChild(themeDiv)
         }
@@ -208,9 +210,9 @@ function selectTheme (from, theme) {
     themes_divs = document.getElementsByClassName('theme_div_welcomePage')
   }
   for (i = 0; i < themes_divs.length; i++) {
-    themes_divs[i].style = ''
+    themes_divs[i].classList.remove("active")
   }
-  theme.style = 'background: var(--accentColor); color:white;'
+  theme.classList.add("active");
 }
 
 function getState (element) {

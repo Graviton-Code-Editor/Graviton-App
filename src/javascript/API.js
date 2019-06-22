@@ -636,6 +636,12 @@ class Tab {
             tabs.push(tab);
             const g_newPath = object.path;
             filepath = g_newPath;
+            const tab_created_event = new CustomEvent("tab_created",{
+              detail:{
+                tab : tab
+              }
+            })
+            document.dispatchEvent(tab_created_event);
             switch (filepath.split(".").pop()) {
               case "svg":
               case "png":
@@ -720,6 +726,12 @@ class Tab {
         tab.appendChild(tab_x);
         document.getElementById(current_screen.id).children[0].appendChild(tab);
         tabs.push(tab);
+        const tab_created_event = new CustomEvent("tab_created",{
+          detail:{
+            tab : tab
+          }
+        })
+        document.dispatchEvent(tab_created_event);
         loadEditor({
           type: "free",
           dir: object.id,
@@ -749,6 +761,12 @@ const closeTab = (tab_id, fromWarn) => {
           .getElementById(g_object.getAttribute("longPath") + "_editor")
           .remove();
         editors.splice(i, 1);
+        const tab_closed_event = new CustomEvent("tab_closed",{
+            detail:{
+              tab: g_object
+            }
+          })
+        document.dispatchEvent(tab_closed_event);
         let tabs2 = [];
         for (i = 0; i < tabs.length; i++) {
           if (tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
@@ -789,6 +807,7 @@ const closeTab = (tab_id, fromWarn) => {
             data: new_selected_tab.getAttribute("data"),
             screen: new_selected_tab.getAttribute("screen")
           });
+          
         }
         g_object.remove();
       }
@@ -887,6 +906,100 @@ const commanders = {
     if(current_screen.terminal!=undefined){
       current_screen.terminal.xterm.destroy();
       commanders.close(current_screen.terminal.id);
+    }
+  }
+}
+const screens = {
+  add: function () {
+    const current_id = `screen_${editor_screens.length + Math.random()}`
+    const new_screen_editor = document.createElement('div')
+    new_screen_editor.classList = 'g_editors'
+    new_screen_editor.id = current_id
+    new_screen_editor.innerHTML = `
+       <div class="g_tabs_bar flex smallScrollBar"></div>  
+        
+        <div class="g_editors_editors" >
+        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language['WelcomeMessage']}</p>
+        </div>
+        <div class="g_status_bar" >
+          <p></p>
+        </div>`
+    document.getElementById('g_content').insertBefore(new_screen_editor, document.getElementById('g_content').children[document.getElementById('g_content').children.length - 1])
+    editor_screens.push(new_screen_editor)
+    current_screen = { id: editor_screens[0].id, terminal: undefined }
+    new_screen_editor.addEventListener('click', function (event) {
+      current_screen.id = this.id
+    }, false)
+    const split_screen_event = new CustomEvent("split_screen",{
+      detail:{
+        screen : current_screen
+      }
+    })
+    document.dispatchEvent(split_screen_event);
+  },
+  remove: function (id) {
+    if (editor_screens.length != 1) {
+      for (i = 0; i < editor_screens.length; i++) {
+        if (editor_screens[i].id == id) {
+          let tabs2 = []
+          for (b = 0; b < tabs.length; b++) {
+            if (tabs[b].getAttribute('screen') == id) {
+              tabs2.push(tabs[b])
+            }
+          }
+          if (tabs2.length == 0) {
+            if (editor_screens[i].terminal != undefined) {
+              editor_screens[i].terminal.xterm.destroy()
+              commander.close(editor_screens[i].termina.id)
+            }
+            const closed_screen_event = new CustomEvent("closed_screen",{
+              detail:{
+                screen : editor_screens[i]
+              }
+            })
+            document.dispatchEvent(closed_screen_event);
+            document.getElementById(id).remove()
+            editor_screens.splice(i, 1)
+            editors.splice(i, 1)
+            current_screen.id = editor_screens[editor_screens.length - 1].id
+
+            return true
+          } else {
+            graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])
+            return false
+          }
+          return
+        }
+      }
+    } else {
+      graviton.throwError(current_config.language['Notification.CannotRemoveMoreScreens'])
+      return false
+    }
+  },
+  default: function () {
+    for (i = 0; i < editor_screens.length; i++) {
+      if (i != 0) {
+        let tabs2 = []
+        const number = i
+        for (b = 0; b < tabs.length; b++) {
+          if (tabs[b].getAttribute('screen') == editor_screens[number].id) {
+            tabs2.push(tabs[b])
+          }
+        }
+        if (tabs2.length == 0) {
+          if (editor_screens[number].terminal != undefined) {
+            editor_screens[number].terminal.xterm.destroy()
+            commander.close(editor_screens[number].termina.id)
+          }
+          document.getElementById(editor_screens[number].id).remove()
+          editor_screens.splice(number, 1)
+          editors.splice(number, 1)
+          current_screen.id = editor_screens[editor_screens.length - 1].id
+          i--
+        } else {
+          graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])
+        }
+      }
     }
   }
 }

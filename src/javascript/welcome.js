@@ -138,3 +138,25 @@ const Setup = {
     }
   }
 }
+/*
+document.addEventListener("file_saved",function(e){
+  console.log("File saved in "+e.detail.object.getAttribute("path"));
+})
+
+document.addEventListener("tab_created",function(e){
+  console.log("New tab by id:"+e.detail.tab.id)
+})
+
+document.addEventListener("tab_closed",function(e){
+  console.log("Close tab by id:"+e.detail.tab.id);
+})
+
+document.addEventListener("split_screen",function(e){
+  console.log("Splitted screen by id:"+e.detail.screen.id)
+})
+
+document.addEventListener("closed_screen",function(e){
+  console.log("Closed screen by id:"+e.detail.screen.id)
+})
+*/
+
