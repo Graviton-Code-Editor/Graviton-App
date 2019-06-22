@@ -1,0 +1,28 @@
+{
+  "Name": "Green Dark",
+  "Description":"Green Dark Theme.",
+  "Author": "Nico Greffin",
+  "GitRepositoryURL": "",
+  "Version": "0.1.0",
+  "Highlight" : "default",
+  "Colors": {
+    "primaryColor": "#282c30",
+    "secondaryColor": "#222428",
+    "accentColor": "#00BE00",
+    "editor-background-color": "#27292d",
+    "white-black": "white",
+    "black-white": "white",
+    "widget-color": "#282c30",
+    "buttons-roundness": "4px",
+    "dropmenu-background-color": "#222428",
+    "dropmenu-buttons-disabled-color": "gray",
+    "titleBar-icons-color": "gray",
+    "window-radius": "8px",
+    "notifications-background-color": "#DC3545",
+    "notifications-window-radius": "5px",
+    "shadows": "rgba(0,0,0,0.30)",
+    "scalation": "0.98",
+    "scroll-color": "rgba(0,137,0, 0.8)",
+    "scroll-color-hover": "rgba(0,168,0, 0.8)"
+  }
+}
