@@ -395,7 +395,7 @@ const graviton = {
       current_config["accentColorPreferences"] = "manual";
     }
   },
-  disableAnimations() {
+  toggleAnimations() {
     if (current_config.animationsPreferences == "activated") {
       const style = document.createElement("style");
       style.innerText = `*{-webkit-transition: none !important;

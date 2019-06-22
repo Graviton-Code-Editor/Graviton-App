@@ -1,4 +1,6 @@
 
+- Dark Green theme by Nico Greffin
+- German support
 - New built-in terminal
 - Replace & find shortcuts
 - CTRL+E now toggles the ZenMode

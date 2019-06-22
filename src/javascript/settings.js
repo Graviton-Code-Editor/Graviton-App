@@ -115,7 +115,7 @@ const Settings = {
           <h3>${current_config.language['Performance']}</h3>
           <div class="section">
               <p>${current_config.language['Settings-Advanced-Performance-Animations']}</p>
-              <gv-switch  onclick="graviton.disableAnimations()" class="${current_config.animationsPreferences}"></gv-switch>
+              <gv-switch  onclick="graviton.toggleAnimations()" class="${current_config.animationsPreferences}"></gv-switch>
           </div>
           <h3>${current_config.language['Developers']}</h3>
           <div class="section">

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190621',
+  date: '190622',
   version: '1.0.2',
   state: 'Beta'
 }
@@ -70,7 +70,7 @@ let mouseClicked = false
 let touchingResizerValue = false
 let editor_screens = []
 const updater = require("./src/javascript/updater");
-
+const file_s = new Event("file_saved");
 document.addEventListener('mousedown', function (event) {
   if (event.which) mouseClicked = true
 }, true)
@@ -84,6 +84,7 @@ document.addEventListener('mousemove', function (event) {
     explorer.style = `width: ${event.clientX - 3}px`
   }
 }, true)
+
 const loadEditor = (info) => {
   if (document.getElementById(info.dir + '_editor') == undefined) {
     switch (info.type) {
@@ -415,6 +416,7 @@ function saveFile () {
     document.getElementById(editingTab).children[1].innerHTML = close_icon
   })
 }
+
 
 function loadDirs (dir, app_id, first_time) {
   if (!fs.existsSync(dir)) {
