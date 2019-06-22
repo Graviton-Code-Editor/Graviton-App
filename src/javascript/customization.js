@@ -8,36 +8,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
 if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exist
   fs.mkdirSync(highlights_folder)
   fs.copy(path.join(__dirname, "src", "Highlights"), highlights_folder, err => {
     if (err) return console.error(err);
-    syncThemes();
   });
-} else {
-  syncThemes();
 }
-
-function syncThemes() {
-  if (!fs.existsSync(themes_folder)) { //If the themes folder doesn't exist
-    fs.mkdirSync(themes_folder)
-    fs.copy(path.join(__dirname, "themes"), themes_folder, err => {
-      if (err) throw err;
-      fs.readdir(themes_folder, (err, paths) => {
-        paths.forEach(dir => {
-          fs.readFile(path.join(themes_folder, dir), 'utf8', function(err, data) {
-            if (err) throw err;
-            obj = JSON.parse(data);
-            themes.push(obj); //Push the theme to the array
-            const newLink = document.createElement("link");
-            newLink.setAttribute("rel", "stylesheet");
-            newLink.setAttribute("href", path.join(highlights_folder, obj["Highlight"] + ".css")); //Link new themes 
-            document.body.appendChild(newLink);
-          });
-        });
-      });
-    });
-  } else { //If the themes folder already exists
+if (!fs.existsSync(themes_folder)) { //If the themes folder doesn't exist
+  fs.mkdirSync(themes_folder)
+  fs.copy(path.join(__dirname, "themes"), themes_folder, err => {
+    if (err) throw err;
     fs.readdir(themes_folder, (err, paths) => {
       paths.forEach(dir => {
         fs.readFile(path.join(themes_folder, dir), 'utf8', function(err, data) {
@@ -51,8 +32,23 @@ function syncThemes() {
         });
       });
     });
-  }
+  });
+} else { //If the themes folder already exists
+  fs.readdir(themes_folder, (err, paths) => {
+    paths.forEach(dir => {
+      fs.readFile(path.join(themes_folder, dir), 'utf8', function(err, data) {
+        if (err) throw err;
+        obj = JSON.parse(data);
+        themes.push(obj); //Push the theme to the array
+        const newLink = document.createElement("link");
+        newLink.setAttribute("rel", "stylesheet");
+        newLink.setAttribute("href", path.join(highlights_folder, obj["Highlight"] + ".css")); //Link new themes 
+        document.body.appendChild(newLink);
+      });
+    });
+  });
 }
+
 detectLanguages();
 const loadTheme = number => {
   themeObject = themes[number];
@@ -73,11 +69,11 @@ const loadTheme = number => {
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
   }
-  if(current_screen!=undefined){
-    if(current_screen.terminal!=undefined){
-      current_screen.terminal.xterm.setOption('theme', { 
-        background:themeObject.Colors["editor-background-color"],
-        foreground:themeObject.Colors["white-black"]
+  if (current_screen != undefined) {
+    if (current_screen.terminal != undefined) {
+      current_screen.terminal.xterm.setOption('theme', {
+        background: themeObject.Colors["editor-background-color"],
+        foreground: themeObject.Colors["white-black"]
       });
     }
   }
@@ -104,14 +100,12 @@ const setThemeByName = name => {
       for (i = 0; i < editors.length; i++) {
         editors[i].editor.setOption("theme", themes[i]["Highlight"]); //Update highlither after applying a new theme
       }
-      if(current_screen!=undefined){
-        if(current_screen.terminal!=undefined){
-          current_screen.terminal.xterm.setOption("theme",
-            {
-              background:themeObject.Colors["editor-background-color"],
-              foreground:themeObject.Colors["white-black"]
-            }
-          )
+      if (current_screen != undefined) {
+        if (current_screen.terminal != undefined) {
+          current_screen.terminal.xterm.setOption("theme", {
+            background: themeObject.Colors["editor-background-color"],
+            foreground: themeObject.Colors["white-black"]
+          })
         }
       }
       return;

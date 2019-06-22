@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="23" height="23" viewBox="0 0 23 23">
+  <defs>
+    <linearGradient id="linear-gradient" y1="-0.093" x2="1.042" y2="1.133" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#ff005e"/>
+      <stop offset="1" stop-color="#f9e001"/>
+    </linearGradient>
+    <filter id="Rectángulo_44" x="0" y="0" width="23" height="23" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="0.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Grupo_3" data-name="Grupo 3" transform="translate(-205.5 -186.5)">
+    <g transform="matrix(1, 0, 0, 1, 205.5, 186.5)" filter="url(#Rectángulo_44)">
+      <rect id="Rectángulo_44-2" data-name="Rectángulo 44" width="20" height="20" rx="2" transform="translate(1.5 0.5)" fill="url(#linear-gradient)"/>
+    </g>
+    <path id="Trazado_74" data-name="Trazado 74" d="M3.223.656A2.97,2.97,0,0,1,1.55.248,1.874,1.874,0,0,1,.76-.731l1.184-.287a1.443,1.443,0,0,0,.414.454,1.448,1.448,0,0,0,.886.225,1.524,1.524,0,0,0,.928-.269,1.006,1.006,0,0,0,.365-.868V-2.533H4.473a1.894,1.894,0,0,1-.3.418,1.549,1.549,0,0,1-.512.36,1.919,1.919,0,0,1-.8.145,2.272,2.272,0,0,1-1.164-.3,2.131,2.131,0,0,1-.828-.91A3.338,3.338,0,0,1,.568-4.339,3.543,3.543,0,0,1,.875-5.892a2.269,2.269,0,0,1,.83-.963,2.147,2.147,0,0,1,1.166-.329,1.754,1.754,0,0,1,.812.165,1.571,1.571,0,0,1,.5.4,2.266,2.266,0,0,1,.285.434h.073v-.923h1.3V-1.44A1.926,1.926,0,0,1,5.5-.272a2.044,2.044,0,0,1-.932.7A3.677,3.677,0,0,1,3.223.656Zm.011-3.3a1.144,1.144,0,0,0,.97-.452,2.035,2.035,0,0,0,.341-1.251,2.182,2.182,0,0,0-.338-1.275A1.115,1.115,0,0,0,3.234-6.1a1.115,1.115,0,0,0-.992.5,2.217,2.217,0,0,0-.334,1.259,2.064,2.064,0,0,0,.338,1.237A1.143,1.143,0,0,0,3.234-2.642Zm8.944-4.468-1.987,5.58H8.738L6.751-7.111h1.4L9.435-2.966h.058L10.78-7.111Z" transform="translate(211 200.568)" fill="#fff"/>
+  </g>
+</svg>

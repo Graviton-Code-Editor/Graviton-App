@@ -27,8 +27,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 17%;
-  width: 17%;
+  height: 23%;
+  width: 23%;
 }
 
 #g_bootanimation div {
@@ -45,8 +45,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   pointer-events: none;
   top: 0;
   left: 0;
-  padding: 10px;
+  padding: 8px;
   margin: 0;
   position: absolute;
-  height: 16px;
+  height: 19px;
 }

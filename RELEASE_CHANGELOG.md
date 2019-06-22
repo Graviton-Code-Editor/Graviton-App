@@ -1,9 +1,10 @@
 
+- New built-in terminal
 - Replace & find shortcuts
 - CTRL+E now toggles the ZenMode
 - Better new update detection
 - Added a Exit button in the file dropmenu
-- Java, C, C++, C#, Kotlin support
+- Java, C, C++, C#, JSX, Kotlin support
 - Portuguess support
 - Changed how the Changelog inside the app renders
 - French support

@@ -52,7 +52,7 @@ Donating 🎁
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
 - Paypal: https://www.paypal.me/mkenzo8
 
-Donators 😎
+Donators 🐱‍🏍
 ---
 - 2€ donation by Alex Mayol
 - BTCs donation by [Machou](http://GitHub.com/Machou)
@@ -63,7 +63,7 @@ Credits ✨
 ---
 - [Codemirror](codemirror.net)
 - Help in autocompletation , Miguel Rangel
-- Logo by Saúl Blanco 
+- Old logo by Saúl Blanco 
 - All contributors
 
 Available platforms 💻🖥
@@ -87,13 +87,13 @@ It's available on:
 
 The current state is beta, check the releases page to download the latest version. 
 
-Building ⚙
+Building 🧱
 ---
 Wanna build Graviton from source?
 
 **Check [this](BUILDING.md)**
 
-Known problems
+Known problems 😓
 ---
 - After updating Graviton with a new version,  it will probably throw an error. That is happening cause I am introducing & removing some values in the config.json in some updates, so after you install a new version it doesn't detect these values, so, it gets "undefined". Fix: Remove the .graviton folder from your system and reboot Graviton.
 
