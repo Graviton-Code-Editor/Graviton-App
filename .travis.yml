@@ -21,6 +21,13 @@ env:
     - ELECTRON_CACHE=$HOME/.cache/electron
     - ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
+deploy:
+  provider: releases
+  file: 
+    - Graviton-1.0.2.*
+  skip_cleanup: true
+  draft: true
+
 cache:
   yarn: true
   directories:
@@ -38,6 +45,5 @@ install:
 
 script:
   - echo "BUILDING"
-  - npm run build
-  - npx electron-builder -p onTagOrDraft
+  - npm run build:release
   - ls dist
