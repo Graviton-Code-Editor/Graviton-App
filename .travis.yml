@@ -1,16 +1,11 @@
-osx_image: xcode8.4 # define OS X image which will be mounted
+osx_image: xcode8.4 # 
 
-dist: trusty # use Ubuntu Trusty for Linux operation system
-
-# Note: if you switch to sudo: false, you'll need to launch chrome with --no-sandbox.
-# See https://github.com/travis-ci/travis-ci/issues/8836
+dist: trusty # 
 sudo: required
 
-# Define Node.js as the programming language as we have a web application
 language: node_js
 node_js: '8'
 
-# Supported OSs
 os:
   - linux
   - osx
@@ -23,6 +18,7 @@ env:
 
 deploy:
   provider: releases
+  api_key: Travis
   file: 
     - Graviton-1.0.2.*
   skip_cleanup: true
