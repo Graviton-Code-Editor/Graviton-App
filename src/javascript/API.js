@@ -825,6 +825,12 @@ const loadTab = object => {
         tabs[i].classList.remove("selected");
       }
     }
+    const tab_loaded_event = new CustomEvent("tab_loaded",{
+        detail:{
+          tab: object
+        }
+      })
+    document.dispatchEvent(tab_loaded_event);
     object.classList.add("selected");
     const g_newPath = object.getAttribute("longpath");
     filepath = g_newPath

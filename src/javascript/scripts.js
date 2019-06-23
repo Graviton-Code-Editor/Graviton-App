@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190622',
+  date: '190623',
   version: '1.0.2',
   state: 'Beta'
 }
@@ -418,7 +418,7 @@ function saveFile () {
         .children[1].setAttribute('onclick', document.getElementById(editingTab).children[1].getAttribute('onclose'))
       document.getElementById(editingTab).children[1].innerHTML = close_icon
       const file_saved_event = new CustomEvent("file_saved",{
-        detail:{
+        data:{
           object : graviton.getCurrentEditor().object
         }
       })

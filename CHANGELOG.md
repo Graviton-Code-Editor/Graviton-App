@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200623 - 1 [1.0.2]
+- Added more events
+
 ### 200622 - 2 [1.0.2]
 - Added a circle in every theme which shows it's accent color (Settings page)
 - Added some events
