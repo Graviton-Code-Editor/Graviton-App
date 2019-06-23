@@ -18,7 +18,7 @@ env:
 
 deploy:
   provider: releases
-  api_key: Travis
+  api_key: $API_KEY
   file: 
     - Graviton-1.0.2.*
   skip_cleanup: true
