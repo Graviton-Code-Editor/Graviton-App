@@ -19,10 +19,6 @@ env:
 deploy:
   provider: releases
   api_key: $GH_TOKEN
-  file: 
-    - Graviton-1.0.2.exe
-    - Graviton-1.0.2.dmg
-    - Graviton-1.0.2-amd64.deb
   skip_cleanup: true
   draft: true
 
