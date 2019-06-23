@@ -10,10 +10,6 @@ os:
   - linux
   - osx
   - windows
-  
-branches:
-    except:
-      - master
 
 env:
   global:
