@@ -89,9 +89,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   width: auto;
   background: var(--primaryColor);
   color: var(--white-black);
+  cursor: pointer;
 }
 
-.theme_div:hover {
+.theme_div:not(.active):hover {
   transition: 0.05s;
   background: var(--widget-color);
   cursor: pointer;
@@ -101,8 +102,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   transition: 0.05s;
   transform: scale(var(--scalation));
 }
-
-.theme_div.active{
+div.active{
   background: var(--accentColor);
   color: white;
 }
@@ -137,12 +137,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--primaryColor);
   color: var(--white-black);
   transform: scale(1);
+  cursor: pointer;
 }
 
-.language_div:hover {
+.language_div:not(.active):hover {
   transition: 0.05s;
   background: var(--widget-color);
-  cursor: pointer;
 }
 
 .language_div:active {

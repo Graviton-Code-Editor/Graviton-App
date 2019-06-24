@@ -202,7 +202,7 @@ span.line_space_menus {
 
 .show {
   transition: 0.05s;
-  transform: translateY(0px);
+  transform: translateY(0px) ;
   opacity: 1;
   display: block;
   visibility: visible;

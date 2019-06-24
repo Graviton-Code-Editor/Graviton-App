@@ -9,18 +9,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190623',
+  date: '190624',
   version: '1.0.2',
   state: 'Beta'
 }
 let new_update = false
 const os = require('os')
-const close_icon = `<svg xmlns="http://www.w3.org/2000/svg" width="11.821" height="11.82" viewBox="0 0 11.821 11.82">
-  <g id="close" transform="translate(-4.786 -4.868)">
-    <path id="Trazado_1" data-name="Trazado 1" d="M.7,1.5l12.336-.081a.467.467,0,0,1,.472.472.482.482,0,0,1-.478.478L.69,2.452a.467.467,0,0,1-.472-.472A.482.482,0,0,1,.7,1.5Z" transform="translate(16.917 7.296) rotate(135)" stroke-linecap="square" stroke-width="1.2"/>
-    <path id="Trazado_2" data-name="Trazado 2" d="M.428-.043,12.764.038a.482.482,0,0,1,.478.478.467.467,0,0,1-.472.472L.434.906A.482.482,0,0,1-.043.428.467.467,0,0,1,.428-.043Z" transform="translate(15.029 15.778) rotate(-135)" stroke-linecap="square" stroke-width="1.2"/>
-  </g>
-</svg>`
 const { shell } = require('electron')
 const fs = require('fs-extra')
 const path = require('path')
@@ -223,8 +217,7 @@ const loadEditor = (info) => {
     editor.on('change', function () {
       const close_icon = document.getElementById(editingTab)
       close_icon.setAttribute('file_status', 'unsaved')
-      close_icon.children[1].innerHTML = ` <svg class="ellipse" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-        <circle id="Elipse_1" data-name="Elipse 1" cx="5" cy="5" r="5"/></svg> `
+      close_icon.children[1].innerHTML = icons["unsaved"]
       document.getElementById(editingTab).setAttribute('data', editor.getValue())
       if (current_config['autoCompletionPreferences'] == 'activated' && plang == 'JavaScript') {
         // Getting Cursor Position
@@ -409,14 +402,14 @@ function openFolder () {
 }
 
 function saveFile () {
-  if(graviton.getCurrentEditor()!=undefined){
+  if(graviton.getCurrentEditor().editor!=undefined){
     fs.writeFile(filepath, editor.getValue(), err => {
       if (err) return err
       document.getElementById(editingTab).setAttribute('file_status', 'saved')
       document
         .getElementById(editingTab)
         .children[1].setAttribute('onclick', document.getElementById(editingTab).children[1].getAttribute('onclose'))
-      document.getElementById(editingTab).children[1].innerHTML = close_icon
+      document.getElementById(editingTab).children[1].innerHTML = icons["close"]
       const file_saved_event = new CustomEvent("file_saved",{
         data:{
           object : graviton.getCurrentEditor().object

@@ -36,33 +36,32 @@ const Settings = {
     switch (num) {
       case '1':
         document.getElementById('settings_content').innerHTML = `
-        <div id="dpi">
-          <h3>${current_config.language['ZoomSize']}</h3>
-          <div class="section">
-            <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
+          <div id="dpi">
+            <h3>${current_config.language['ZoomSize']}</h3>
+            <div class="section">
+              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
+            </div>
           </div>
-        </div>
-        <h3>${current_config.language['Themes']}</h3> 
-        <div class="section">
-          <div id='theme_list'></div> 
-          <p>${current_config.language['Themes.Text']}</p>
-          <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences == 'system' ? 'activated' : 'desactivated'}"></gv-switch>
-        </div>
-        <h3>${current_config.language['ZenMode']}</h3>
-        <div class="section">
-          <p>${current_config.language['ZenMode.ShowDirectoryExplorer']}</p>
-          <gv-switch  onclick="graviton.toggleZenMode()" class="${editor_mode != 'zen' ? 'activated' : 'desactivated'}"></gv-switch>
-        </div>
-        `
+          <h3>${current_config.language['Themes']}</h3> 
+          <div class="section">
+            <div id='theme_list'></div> 
+            <p>${current_config.language['Themes.Text']}</p>
+            <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences == 'system' ? 'activated' : 'desactivated'}"></gv-switch>
+          </div>
+          <h3>${current_config.language['ZenMode']}</h3>
+          <div class="section">
+            <p>${current_config.language['ZenMode.ShowDirectoryExplorer']}</p>
+            <gv-switch  onclick="graviton.toggleZenMode()" class="${editor_mode != 'zen' ? 'activated' : 'desactivated'}"></gv-switch>
+          </div>`;
         for (i = 0; i < themes.length; i++) {
           const themeDiv = document.createElement('div')
           themeDiv.setAttribute('class', 'theme_div')
-          themeDiv.setAttribute('onclick', "loadTheme('" + i + "'); selectTheme('1',this);")
+          themeDiv.setAttribute('onclick', `loadTheme('${i}'); selectTheme('1',this);`)
           themeDiv.innerHTML = `
-          <p style="margin:11px 0; font-size:17px; line-height:2px;">${themes[i].Name}</p>
-          <p style="font-size:14px;">${current_config.language['MadeBy'] + themes[i]['Author']}</p>
-          <p style="font-size:13px; line-height:2px;">${themes[i]['Description']}</p>
-          <div class="accent" style="background:${themes[i].Colors["accentColor"]};"></div>
+            <p style="margin:11px 0; font-size:17px; line-height:2px;">${themes[i].Name}</p>
+            <p style="font-size:14px;">${current_config.language['MadeBy'] + themes[i]['Author']}</p>
+            <p style="font-size:13px; line-height:2px;">${themes[i]['Description']}</p>
+            <div class="accent" style="background:${themes[i].Colors["accentColor"]};"></div>
           `
           if (themes[i]['Name'] === current_config.theme['Name']) {
             selectTheme('1', themeDiv)
@@ -197,9 +196,9 @@ function factory_reset_dialog () {
 function selectLang (lang) {
   const languages_divs = document.getElementsByClassName('language_div')
   for (i = 0; i < languages_divs.length; i++) {
-    languages_divs[i].style = ''
+    languages_divs[i].classList.remove("active")
   }
-  lang.style = 'background: var(--accentColor); color:white;'
+  lang.classList.add("active");
 }
 
 function selectTheme (from, theme) {

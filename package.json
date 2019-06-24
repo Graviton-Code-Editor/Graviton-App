@@ -12,7 +12,6 @@
     "build:win": "build --win",
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win && build --win --ia32",
-    "build:release": "build --publish onTagOrDraft",
     "rebuild": "electron-rebuild -f -w node-pty",
     "standard":"standard --fix"
   },
@@ -58,7 +57,7 @@
   },
   "build": {
     "appId": "graviton-editor",
-    "artifactName": "${name}-${version}-${arch}.${ext}",
+    "artifactName": "${name}-${version}-${arch}-${platform}.${ext}",
     "icon": "build/mac/icon.png",
     "asar": true,
     "dmg": {

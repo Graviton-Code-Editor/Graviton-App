@@ -52,6 +52,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   text-align: left;
   background: var(--secondaryColor);
 }
+@keyframes window_up {
+  from {
+    transform: translate3d(0,0,0) translate(-50%, -43%);
+
+  }
+  to {
+    transform: translate3d(0,0,0) translate(-50%, -45%) ;
+  }
+}
 
 .body_window_full>* {
   padding: 30px;
@@ -405,6 +414,7 @@ input[type="number"]::selection {
   transition: 0.05s;
   opacity: 0.6;
 }
+
 
 /* Tabs */
 .g_tabs_bar .tabs {

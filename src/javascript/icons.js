@@ -1,4 +1,26 @@
 const icons = {
+	exit:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 13 14">
+	  <g>
+	    <rect class="aba"  width="7" height="14" rx="2" />
+	    <rect class="bba bbo" width="8" height="4" rx="2" transform="translate(4 5)" stroke-width="1" />
+	    <path class="aba" d="M3.88.12a.17.17,0,0,1,.24,0L7.71,3.71A.17.17,0,0,1,7.59,4H.41a.17.17,0,0,1-.12-.29Z" transform="translate(14 3) rotate(90)" />
+	  </g>
+	</svg>
+	`,
+	unsaved:`
+	<svg  xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+  	<circle  data-name="Elipse 1" cx="5" cy="5" r="5"/>
+  </svg> 
+	`,
+	close:`
+	<svg xmlns="http://www.w3.org/2000/svg" width="11.821" height="11.82" viewBox="0 0 11.821 11.82">
+	  <g id="close" transform="translate(-4.786 -4.868)">
+	    <path id="Trazado_1" data-name="Trazado 1" d="M.7,1.5l12.336-.081a.467.467,0,0,1,.472.472.482.482,0,0,1-.478.478L.69,2.452a.467.467,0,0,1-.472-.472A.482.482,0,0,1,.7,1.5Z" transform="translate(16.917 7.296) rotate(135)" stroke-linecap="square" stroke-width="1.2"/>
+	    <path id="Trazado_2" data-name="Trazado 2" d="M.428-.043,12.764.038a.482.482,0,0,1,.478.478.467.467,0,0,1-.472.472L.434.906A.482.482,0,0,1-.043.428.467.467,0,0,1,.428-.043Z" transform="translate(15.029 15.778) rotate(-135)" stroke-linecap="square" stroke-width="1.2"/>
+	  </g>
+	</svg>
+	`,
   split_screen: `
 		<svg  xmlns="http://www.w3.org/2000/svg" width="20" height="13" viewBox="0 0 14 14">
 		  <g  id="Grupo_6" data-name="Grupo 6" transform="translate(-472 -381)">

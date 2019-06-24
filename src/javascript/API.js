@@ -497,7 +497,7 @@ class Notification {
     body.setAttribute("id", _notifications.length);
     body.innerHTML = `
 	  	<button  onclick="closeNotification(this)">
-	      ${close_icon}
+	      ${icons["close"]}
 	    </button>
 	    <h1>${title}</h1>
 	    <div>
@@ -624,7 +624,7 @@ class Tab {
             tab_x.setAttribute("elementType", "tab");
             tab_x.setAttribute("TabID", object.id + "Tab");
             tab_x.setAttribute("id", object.id + "CloseButton");
-            tab_x.innerHTML = close_icon;
+            tab_x.innerHTML = icons["close"];
             tab_x.addEventListener("mouseover", function(e) {
               this.setAttribute("hovering", true);
             });
@@ -716,7 +716,7 @@ class Tab {
         tab_x.setAttribute("elementType", "tab");
         tab_x.setAttribute("TabID", object.id + "Tab");
         tab_x.setAttribute("id", object.id + "CloseButton");
-        tab_x.innerHTML = close_icon;
+        tab_x.innerHTML = icons["close¨_icon"];
         tab_x.addEventListener("mouseover", function(e) {
           this.setAttribute("hovering", true);
         });

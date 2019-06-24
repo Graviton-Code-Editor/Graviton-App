@@ -3,6 +3,12 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200623 - 1 [1.0.2]
+- Added an exit icon
+
+### 200623 - 2 [1.0.2]
+- Finally got Travis CI working
+
+### 200623 - 1 [1.0.2]
 - Added more events
 
 ### 200622 - 2 [1.0.2]

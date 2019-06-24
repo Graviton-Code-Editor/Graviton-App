@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 module.exports = {
-    check_updates : function () {
+  check_updates : function () {
     const github = require('octonode')
     const client = github.client()
     const ghrepo = client.repo('Graviton-Code-Editor/Graviton-App')
