@@ -166,7 +166,7 @@ function updateSettingsFromUI () {
   current_config.fontSizeEditor = document.getElementById('fs-input').value
   document.documentElement.style.setProperty('--editor-font-size', `${document.getElementById('fs-input').value}px`) // Update settings from window
   for (i = 0; i < editors.length; i++) {
-    editors[i].editor.refresh()
+    if(editors[i].editor!=undefined) editors[i].editor.refresh()
   }
 }
 

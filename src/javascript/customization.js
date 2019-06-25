@@ -69,12 +69,14 @@ const loadTheme = number => {
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.setOption("theme", themes[number]["Highlight"]); //Update highlither after applying a new theme
   }
-  if (current_screen != undefined) {
-    if (current_screen.terminal != undefined) {
-      current_screen.terminal.xterm.setOption('theme', {
-        background: themeObject.Colors["editor-background-color"],
-        foreground: themeObject.Colors["white-black"]
-      });
+  for(i=0;i<editor_screens.length;i++){
+    if (editor_screens[i] != undefined) {
+      if (editor_screens[i].terminal != undefined) {
+        editor_screens[i].terminal.xterm.setOption("theme", {
+          background: themeObject.Colors["editor-background-color"],
+          foreground: themeObject.Colors["white-black"]
+        })
+      }
     }
   }
   current_config.theme = themes[number];
@@ -100,12 +102,14 @@ const setThemeByName = name => {
       for (i = 0; i < editors.length; i++) {
         editors[i].editor.setOption("theme", themes[i]["Highlight"]); //Update highlither after applying a new theme
       }
-      if (current_screen != undefined) {
-        if (current_screen.terminal != undefined) {
-          current_screen.terminal.xterm.setOption("theme", {
-            background: themeObject.Colors["editor-background-color"],
-            foreground: themeObject.Colors["white-black"]
-          })
+      for(i=0;i<editor_screens.length;i++){
+        if (editor_screens[i] != undefined) {
+          if (editor_screens[i].terminal != undefined) {
+            editor_screens[i].terminal.xterm.setOption("theme", {
+              background: themeObject.Colors["editor-background-color"],
+              foreground: themeObject.Colors["white-black"]
+            })
+          }
         }
       }
       return;

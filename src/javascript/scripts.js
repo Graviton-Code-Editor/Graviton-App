@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190624',
+  date: '190625',
   version: '1.0.2',
   state: 'Beta'
 }
@@ -80,15 +80,15 @@ document.addEventListener('mousemove', function (event) {
 }, true)
 
 const loadEditor = (info) => {
-  if (document.getElementById(info.dir + '_editor') == undefined) {
+  if (document.getElementById(info.dir.replace(/\\/g, "") + '_editor') == undefined) {
     switch (info.type) {
       case 'text':
         let text_container = document.createElement('div')
         text_container.classList = 'code-space'
-        text_container.setAttribute('id', info.dir + '_editor')
+        text_container.setAttribute('id', info.dir.replace(/\\/g, "") + '_editor')
         text_container.setAttribute('path', info.dir)
         document.getElementById(current_screen.id).children[1].appendChild(text_container)
-        let codemirror = CodeMirror(document.getElementById(info.dir + '_editor'), {
+        let codemirror = CodeMirror(document.getElementById(text_container.id), {
           value: info.data,
           mode: 'text/plain',
           htmlMode: false,
@@ -103,7 +103,7 @@ const loadEditor = (info) => {
         document.getElementById(current_screen.id).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != 'unknown' ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split('.').pop())
         const new_editor_text = {
           object:text_container,
-          id: info.dir + '_editor',
+          id: text_container.id,
           editor: codemirror,
           path: info.dir,
           screen: info.screen
@@ -117,7 +117,7 @@ const loadEditor = (info) => {
         }
         editorID = new_editor_text.id
         editor = new_editor_text.editor
-        document.getElementById(info.dir + '_editor').style.display = 'block'
+        document.getElementById(new_editor_text.id).style.display = 'block'
         codemirror.on('focus', function (a) {
           for (i = 0; i < editors.length; i++) {
             if (editors[i].id == a.options.id + '_editor') {
@@ -185,7 +185,7 @@ const loadEditor = (info) => {
       if (editors[i].screen == info.screen && document.getElementById(editors[i].id) != null) {
         document.getElementById(editors[i].id).style.display = 'none'
       }
-      if (editors[i].id == info.dir + '_editor') {
+      if (editors[i].id == info.dir.replace(/\\/g, "") + '_editor') {
         if (editors[i].editor != undefined) { // Editors
           editor = editors[i].editor
           document.getElementById(info.screen).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != 'unknown' ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split('.').pop())
@@ -567,6 +567,8 @@ function getFormat (text) {
       return 'json'
     case 'md':
       return 'unknown'
+    case 'ts':
+      return 'ts'
     case 'jpg':
     case 'png':
     case 'ico':
@@ -643,6 +645,8 @@ function getLanguageName (format) {
       return 'Objective-C'
     case 'kt':
       return 'Kotlin'
+    case 'ts':
+      return 'TypeScript'
     default:
       return format
   }
@@ -677,7 +681,7 @@ function updateCodeMode (instance, path) {
         break
       case 'json':
         instance.setOption('htmlMode', false)
-        instance.setOption('mode', 'javascript')
+        instance.setOption('mode', 'application/json')
         plang = 'JSON / JavaScript'
         instance.refresh()
         break
@@ -725,7 +729,7 @@ function updateCodeMode (instance, path) {
         break
       case 'md':
         instance.setOption('htmlMode', false)
-        instance.setOption('mode', 'markdown')
+        instance.setOption('mode', 'text/x-markdown')
         plang = 'Markdown'
         instance.refresh()
         break
@@ -775,6 +779,12 @@ function updateCodeMode (instance, path) {
         instance.setOption('htmlMode', false)
         instance.setOption('mode', 'text/x-kotlin')
         plang = 'Kotlin'
+        instance.refresh()
+        break
+      case 'ts':
+        instance.setOption('htmlMode', false)
+        instance.setOption('mode', 'application/typescript')
+        plang = 'TypeScript'
         instance.refresh()
         break
       default:

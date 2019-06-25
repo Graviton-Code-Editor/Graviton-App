@@ -758,7 +758,7 @@ const closeTab = (tab_id, fromWarn) => {
       if (tab.id == tab_id && tab.getAttribute("screen") == g_object.getAttribute("screen")) {
         tabs.splice(i, 1);
         document
-          .getElementById(g_object.getAttribute("longPath") + "_editor")
+          .getElementById(g_object.getAttribute("longPath").replace(/\\/g, "") + "_editor")
           .remove();
         editors.splice(i, 1);
         const tab_closed_event = new CustomEvent("tab_closed",{
@@ -901,7 +901,13 @@ const commanders = {
           ptyProcess.on('data', function (data) {
             xterm.write(data);
           });
-          current_screen.terminal = {id:"xterm"+randomID,xterm:xterm};
+          for(i=0;i<editor_screens.length;i++){
+            if(editor_screens[i].id==current_screen.id){
+              editor_screens[i].terminal = {id:"xterm"+randomID,xterm:xterm};
+              current_screen.terminal = editor_screens[i].terminal;
+              return;
+            }
+          }   
         }
      }) 
   },
@@ -909,10 +915,14 @@ const commanders = {
     document.getElementById(id + "_commander").remove();
   },
   closeTerminal: function(){
-    if(current_screen.terminal!=undefined){
-      current_screen.terminal.xterm.destroy();
-      commanders.close(current_screen.terminal.id);
-    }
+    for(i=0;i<editor_screens.length;i++){
+      if(editor_screens[i].id==current_screen.id){
+        editor_screens[i].terminal.xterm.destroy();
+        editor_screens[i].terminal = undefined;
+        commanders.close(current_screen.terminal.id);
+        current_screen.terminal = undefined;
+      }
+    } 
   }
 }
 const screens = {
@@ -931,10 +941,20 @@ const screens = {
           <p></p>
         </div>`
     document.getElementById('g_content').insertBefore(new_screen_editor, document.getElementById('g_content').children[document.getElementById('g_content').children.length - 1])
-    editor_screens.push(new_screen_editor)
-    current_screen = { id: editor_screens[0].id, terminal: undefined }
+    current_screen = { id: current_id, terminal: undefined }
+    const screen = {
+      id:current_screen.id,
+      terminal:undefined
+    }
+    editor_screens.push(screen);
     new_screen_editor.addEventListener('click', function (event) {
-      current_screen.id = this.id
+      for(i=0;i<editor_screens.length;i++){
+        if(editor_screens[i].id==this.id){
+          current_screen.id = this.id;
+          current_screen.terminal = editor_screens[i].terminal;
+        }
+      }   
+      
     }, false)
     const split_screen_event = new CustomEvent("split_screen",{
       detail:{
@@ -957,6 +977,7 @@ const screens = {
             if (editor_screens[i].terminal != undefined) {
               editor_screens[i].terminal.xterm.destroy()
               commander.close(editor_screens[i].termina.id)
+              editor_screens[i].terminal = undefined;
             }
             const closed_screen_event = new CustomEvent("closed_screen",{
               detail:{
@@ -967,8 +988,7 @@ const screens = {
             document.getElementById(id).remove()
             editor_screens.splice(i, 1)
             editors.splice(i, 1)
-            current_screen.id = editor_screens[editor_screens.length - 1].id
-
+            current_screen = {id:editor_screens[editor_screens.length - 1].id , terminal:editor_screens[editor_screens.length - 1].terminal};
             return true
           } else {
             graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])
@@ -995,12 +1015,13 @@ const screens = {
         if (tabs2.length == 0) {
           if (editor_screens[number].terminal != undefined) {
             editor_screens[number].terminal.xterm.destroy()
-            commander.close(editor_screens[number].termina.id)
+            commanders.close(editor_screens[number].terminal.id)
+            editor_screens[i].terminal = undefined;
           }
           document.getElementById(editor_screens[number].id).remove()
           editor_screens.splice(number, 1)
           editors.splice(number, 1)
-          current_screen.id = editor_screens[editor_screens.length - 1].id
+          current_screen = {id:editor_screens[editor_screens.length - 1].id , terminal:editor_screens[editor_screens.length - 1].terminal};
           i--
         } else {
           graviton.throwError(current_config.language['Notification.CloseAllTabsBefore'])

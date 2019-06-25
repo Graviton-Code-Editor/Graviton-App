@@ -72,7 +72,7 @@ It's available on:
 
 **Windows**
 
-   * `Executable (.exe)` 
+   * `Executable (.exe, 64 & 32bits` 
 
 **Linux**
 

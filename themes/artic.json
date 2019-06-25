@@ -16,7 +16,7 @@
     "buttons-roundness":"4px",
     "dropmenu-background-color": "#ECECEC",
     "dropmenu-buttons-disabled-color":"gray",
-    "titleBar-icons-color":"#595959",
+    "titleBar-icons-color":"black",
     "window-radius":"8px",
     "notifications-background-color":"#ECECEC",
     "notifications-window-radius":"5px",

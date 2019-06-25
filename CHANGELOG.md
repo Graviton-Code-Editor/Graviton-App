@@ -2,7 +2,18 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200623 - 1 [1.0.2]
+### 200625 - 1 [1.0.2]
+- Fixed, closing terminals in some cases threw error
+- Fixed, loading a tab after creating and closing screens might be bugged.
+- Fixed, applying theme just affected to the focused terminal.
+- Improved Dark theme (remove .graviton/themes to apply changes)
+- Fixed, now JSON syntax is well highlighted
+- Added a TypeScript icon
+
+### 200624 - 2 [1.0.2]
+- Fixed, error throwed when updating the font size with an image opened as tab
+
+### 200624 - 1 [1.0.2]
 - Added an exit icon
 
 ### 200623 - 2 [1.0.2]

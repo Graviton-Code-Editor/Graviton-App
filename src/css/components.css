@@ -793,9 +793,10 @@ p.link:hover {
   background: var(--primaryColor);
   color: var(--white-black);
   font-size: 17px;
+  cursor: pointer;
 }
 
-.theme_div_welcomePage:hover {
+.theme_div_welcomePage:not(.active):hover {
   transition: 0.12s;
   background: var(--widget-color);
   cursor: pointer;
