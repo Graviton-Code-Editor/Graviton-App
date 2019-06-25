@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200625 - 2 [1.0.2]
+- Fixed, custom tabs weren't creating properly
+- Added some translation to catalan and spanish
+
 ### 200625 - 1 [1.0.2]
 - Fixed, closing terminals in some cases threw error
 - Fixed, loading a tab after creating and closing screens might be bugged.

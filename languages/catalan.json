@@ -80,5 +80,10 @@
 	"DefaultView":"Vista per defecte",
 	"AddScreen":"Dividir pantalla",
 	"RemoveScreen":"Eliminar screen",
-	"DirectoryDoesntExist":"Aquest directory no existeix."
+	"DirectoryDoesntExist":"Aquest directory no existeix.",
+	"Remove":"Borrar",
+	"Dialog.AreYouSure":"Estàs segur?",
+	"Exit":"Sortir",
+	"newTerminal":"Nou terminal",
+	"closeTerminal":"Tancar terminal"
 }

@@ -136,11 +136,11 @@ const loadEditor = (info) => {
       case 'image':
         const image_container = document.createElement('div')
         image_container.classList = 'code-space'
-        image_container.setAttribute('id', `${info.dir}_editor`)
+        image_container.setAttribute('id', `${info.dir.replace(/\\/g, "")}_editor`)
         image_container.innerHTML = `<img src="${info.dir}">`
         document.getElementById(current_screen.id).children[1].appendChild(image_container)
         const new_editor_image = {
-          id: info.dir + '_editor',
+          id: info.dir.replace(/\\/g, "") + '_editor',
           editor: undefined,
           path: info.dir,
           screen: info.screen
@@ -151,7 +151,8 @@ const loadEditor = (info) => {
           }
         }
         editors.push(new_editor_image)
-        document.getElementById(info.dir + '_editor').style.display = 'block'
+        console.log(info.dir);
+        document.getElementById(info.dir.replace(/\\/g, "") + '_editor').style.display = 'block'
         editorID = new_editor_image.id
         document.getElementById(current_screen.id).children[2].children[0].innerText = 'Image'
         break
@@ -159,11 +160,11 @@ const loadEditor = (info) => {
         const free_id = Math.random()
         const free_container = document.createElement('div')
         free_container.classList = 'code-space'
-        free_container.setAttribute('id', `${info.dir}_editor`)
-        free_container.innerHTML = info.data
+        free_container.setAttribute('id', `${info.dir.replace(/\\/g, "")}_editor`)
+        free_container.innerHTML = info.data!=undefined?info.data:"";
         document.getElementById(current_screen.id).children[1].appendChild(free_container)
         const new_editor_free = {
-          id: info.dir + '_editor',
+          id: info.dir.replace(/\\/g, "") + '_editor',
           editor: undefined,
           path: undefined,
           screen: info.screen,
@@ -175,7 +176,7 @@ const loadEditor = (info) => {
           }
         }
         editors.push(new_editor_free)
-        document.getElementById(info.dir + '_editor').style.display = 'block'
+        document.getElementById(info.dir.replace(/\\/g, "") + '_editor').style.display = 'block'
         editorID = new_editor_free.id
         document.getElementById(current_screen.id).children[2].children[0].innerText = ' '
         break
