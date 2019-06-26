@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200626 - 1 [1.0.2]
+- Added search, replace and jump to line in the dropmenu "Tools"
+- Cleaned some code
+- Now you can increase, decrease and set by default the zoom from the new dropmenu "Window"
+
 ### 200625 - 2 [1.0.2]
 - Fixed, custom tabs weren't creating properly
 - Added some translation to catalan and spanish

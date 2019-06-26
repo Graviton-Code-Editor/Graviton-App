@@ -86,5 +86,10 @@
 	"Dialog.AreYouSure":"Are you sure?",
 	"Exit":"Exit",
 	"newTerminal":"New terminal",
-	"closeTerminal":"Close terminal"
+	"closeTerminal":"Close terminal",
+	"IncreaseZoom":"Increase zoom",
+	"DicreaseZoom":"Dicrease zoom",
+	"DefaultZoom":"Default zoom",
+	"Search":"Search",
+	"JumpToLine":"Jump to line"
 }

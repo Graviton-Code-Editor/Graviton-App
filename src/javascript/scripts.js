@@ -9,62 +9,65 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190625',
+  date: '190626',
   version: '1.0.2',
   state: 'Beta'
 }
-let new_update = false
-const os = require('os')
-const { shell } = require('electron')
-const fs = require('fs-extra')
-const path = require('path')
-const { dialog } = require('electron').remote
-const remote = require('electron').remote
-const BrowserWindow = require('electron').BrowserWindow
-const app = require('electron').remote
-const getAppDataPath = require('appdata-path')
-const $ = require('jquery')
-const { webFrame } = require('electron')
-const g_window = require('electron').remote.getCurrentWindow()
-const { systemPreferences } = require('electron').remote
-const url = require('url')
-const marked = require('marked')
-let current_screen
-let dir_path
-let i
-let DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton')
-let tabs = []
-let FirstFolder = 'not_selected'
-let editingTab
-let ids = 0
-let plang = ' '
-let _notifications = []
-let filepath = ' '
-let editors = []
-let editor
-let editorID
-let editor_mode = 'normal'
-let g_highlighting = 'activated'
-let _previewer
-let log = []
-let themes = []
-let themeObject
-const dictionary = autocomplete.javascript // Import javascript dictionary
+const os = require('os'),
+      { shell } = require('electron'),
+      fs = require('fs-extra'),
+      path = require('path'),
+      { dialog } = require('electron').remote,
+      remote = require('electron').remote,
+      BrowserWindow = require('electron').BrowserWindow,
+      app = require('electron').remote,
+      getAppDataPath = require('appdata-path'),
+      $ = require('jquery'),
+      { webFrame } = require('electron'),
+      g_window = require('electron').remote.getCurrentWindow(),
+      { systemPreferences } = require('electron').remote,
+      url = require('url'),
+      marked = require('marked'),
+      updater = require("./src/javascript/updater"); /*Import the update module*/
+
+let current_screen,
+    dir_path,
+    i,
+    DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton'),   
+    tabs = [],
+    FirstFolder = 'not_selected',
+    editingTab,
+    ids = 0,
+    plang = ' ',
+    _notifications = [],
+    filepath = ' ',
+    editors = [],
+    editor,
+    editorID,
+    editor_mode = 'normal',
+    g_highlighting = 'activated',
+    _previewer,
+    log = [],
+    themes = [],
+    themeObject,
+    new_update = false,
+    mouseClicked = false,
+    touchingResizerValue = false,
+    editor_screens = [],
+    dictionary = autocomplete.javascript
+
 if (path.basename(__dirname) !== 'Graviton-Editor') DataFolderDir = path.join(getAppDataPath(), '.graviton')
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir) // Create .graviton if it doesn't exist
+
 /* Set path for graviton's files and dirs */
-let logDir = path.join(DataFolderDir, 'log.json')
-let configDir = path.join(DataFolderDir, 'config.json')
-let timeSpentDir = path.join(DataFolderDir, '_time_spent.json')
-let themes_folder = path.join(DataFolderDir, 'themes')
-let highlights_folder = path.join(DataFolderDir, 'highlights')
-let plugins_folder = path.join(DataFolderDir, 'plugins')
-let plugins_db = path.join(DataFolderDir, 'plugins_db')
-let mouseClicked = false
-let touchingResizerValue = false
-let editor_screens = []
-const updater = require("./src/javascript/updater");
-const file_s = new Event("file_saved");
+let logDir = path.join(DataFolderDir, 'log.json'),
+    configDir = path.join(DataFolderDir, 'config.json'),
+    timeSpentDir = path.join(DataFolderDir, '_time_spent.json'),
+    themes_folder = path.join(DataFolderDir, 'themes'),
+    highlights_folder = path.join(DataFolderDir, 'highlights'),
+    plugins_folder = path.join(DataFolderDir, 'plugins'),
+    plugins_db = path.join(DataFolderDir, 'plugins_db')
+
 document.addEventListener('mousedown', function (event) {
   if (event.which) mouseClicked = true
 }, true)
@@ -327,22 +330,22 @@ const loadEditor = (info) => {
   }
 }
 const appendBinds = () => {
-  Mousetrap.bind('ctrl+s', function () {
+  Mousetrap.bind('mod+s', function () {
     saveFile()
   })
-  Mousetrap.bind('ctrl+n', function () {
+  Mousetrap.bind('mod+n', function () {
     screens.add()
   })
-  Mousetrap.bind('ctrl+l', function () {
+  Mousetrap.bind('mod+l', function () {
     screens.remove(current_screen.id)
   })
-  Mousetrap.bind('ctrl+e', function () {
+  Mousetrap.bind('mod+e', function () {
     graviton.toggleZenMode()
   })
-  Mousetrap.bind('ctrl+t', function () {
+  Mousetrap.bind('mod+t', function () {
     commanders.terminal()
   })
-  Mousetrap.bind('ctrl+y', function () {
+  Mousetrap.bind('mod+y', function () {
     commanders.closeTerminal()
   })
 }

@@ -214,13 +214,7 @@ function selectTheme (from, theme) {
   theme.classList.add("active");
 }
 
-function getState (element) {
-  if (element.classList.contains('disabled')) {
-    return 'disabled'
-  } else {
-    return element.classList.contains('activated')
-  }
-}
+
 class Switch extends HTMLElement {
   constructor () {
     super()
@@ -233,7 +227,7 @@ class Switch extends HTMLElement {
     this.addEventListener('click', function () {
       const dot = this.children[0]
       if (this.classList.contains('disabled') === false) {
-        if (getState(this)) {
+        if (this.getState(this)) {
           this.classList.replace('activated', 'desactivated')
           dot.classList.replace('activated', 'desactivated')
         } else {
@@ -242,6 +236,13 @@ class Switch extends HTMLElement {
         }
       }
     })
+  }
+  getState (element) {
+    if (element.classList.contains('disabled')) {
+      return 'disabled'
+    } else {
+      return element.classList.contains('activated')
+    }
   }
 }
 window.customElements.define('gv-switch', Switch)

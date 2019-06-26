@@ -412,6 +412,28 @@ const graviton = {
       document.documentElement.style.setProperty("--scalation", "0.98");
       current_config.animationsPreferences = "activated";
     }
+  },
+  setZoom(_value){
+    if(_value >= 0 && _value <= 50){
+      current_config.appZoom = _value;
+      webFrame.setZoomFactor(current_config.appZoom / 25)
+      saveConfig();
+    }
+  },
+  editorSearch(){
+    if(editor!=undefined){
+      CodeMirror.commands.find(editor)
+    }
+  },
+  editorReplace(){
+    if(editor!=undefined){
+      CodeMirror.commands.replace(editor)
+    }
+  },
+  editorJumpToLine(){
+    if(editor!=undefined){
+      CodeMirror.commands.jumpToLine(editor)
+    }
   }
 }
 
@@ -749,6 +771,7 @@ class Tab {
     }
   }
 }
+
 const closeTab = (tab_id, fromWarn) => {
   const g_object = document.getElementById(tab_id);
   if (g_object.getAttribute("file_status") == "saved" || fromWarn) {

@@ -22,6 +22,10 @@ const Editor = new dropMenu({
   id: 'editor',
   translation: true
 })
+const WindowDM = new dropMenu({
+  id: 'window',
+  translation: true
+})
 const Help = new dropMenu({
   id: 'help',
   translation: true
@@ -50,8 +54,20 @@ Tools.setList({
   list: {
     Plugins: 'openPlugins()',
     'ShowWelcome': 'g_welcomePage()',
-    'Developer Tools': 'graviton.openDevTools()',
-    '*line': '',
+    "1a":"*line",
+    "Search":{
+      click:"graviton.editorSearch();",
+      hint:"Ctrl+F"
+    },
+    "Replace":{
+      click:"graviton.editorReplace();",
+      hint:"Ctrl+Shit+R"
+    },
+    "JumpToLine":{
+      click:"graviton.editorJumpToLine();",
+      hint:"Alt+G"
+    },
+    '2a': '*line',
     Settings: "Settings.open(); Settings.navigate('1')"
   }
 })
@@ -87,6 +103,23 @@ Editor.setList({
     }
   }
 })
+WindowDM.setList({
+  button: 'Window',
+  list: {
+    'Developer Tools': 'graviton.openDevTools()',
+    "1a":"*line",
+    "IncreaseZoom": {
+      click:"graviton.setZoom(parseInt(current_config.appZoom)+5)",
+      hint:"Ctrl+shift+plus"
+    },
+    "DicreaseZoom":  {
+      click:"graviton.setZoom(parseInt(current_config.appZoom)+-5)",
+      hint:"Ctrl+minus"
+    },
+    "DefaultZoom": 'graviton.setZoom(25);'
+  }
+})
+
 Help.setList({
   button: 'Help',
   list: {
