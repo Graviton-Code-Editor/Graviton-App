@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14" viewBox="0 0 14 14">
+  <defs>
+    <clipPath id="clip-path">
+      <rect width="14" height="14" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="plus_zoom" clip-path="url(#clip-path)">
+    <rect id="_0" data-name="0" width="2" height="7" transform="translate(11 6) rotate(90)" fill="#414141"/>
+    <rect id="_0-2" data-name="0" width="2" height="7" transform="translate(6.5 3.5)" fill="#414141"/>
+  </g>
+</svg>

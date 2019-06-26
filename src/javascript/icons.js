@@ -1,4 +1,27 @@
 const icons = {
+	default_zoom:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+	    <g class="bbo bba" transform="translate(3 3)"  stroke-width="2">
+	      <circle cx="4" cy="4" r="4" stroke="none"/>
+	      <circle cx="4" cy="4" r="3.5" fill="none"/>
+	    </g>
+	</svg>
+	`,
+	minus_zoom:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+	  <g>
+	    <rect class="aba" width="2" height="7" transform="translate(11 6) rotate(90)" fill="#414141"/>
+	  </g>
+	</svg>
+	`,
+	plus_zoom:`
+	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
+	  <g>
+	    <rect class="aba" data-name="0" width="2" height="7" transform="translate(11 6) rotate(90)" fill="#414141"/>
+    	<rect class="aba" data-name="0" width="2" height="7" transform="translate(6.5 3.5)" fill="#414141"/>
+	  </g>
+	</svg>
+	`,
 	exit:`
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 13 14">
 	  <g>
