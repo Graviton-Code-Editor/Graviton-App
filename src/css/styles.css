@@ -17,10 +17,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   --black-white: white;
   --editor-background-color: #191919;
   --editor-font-size: 13px;
-  --widget-color: #757474;
+  --widget-color: #3B3B3B;
   --buttons-roundness: 5px;
-  --dropmenu-background-color: #3B3B3B;
+  --dropmenu-background-color: #2E2E2E;
   --dropmenu-buttons-disabled-color: lightgray;
+  --dropmenu-span-color: 818181;
   --titleBar-icons-color: white;
   --window-radius: 8px;
   --notifications-background-color: #474747;
