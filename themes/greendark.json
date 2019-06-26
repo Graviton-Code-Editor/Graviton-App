@@ -15,6 +15,7 @@
     "widget-color": "#282c30",
     "buttons-roundness": "4px",
     "dropmenu-background-color": "#222428",
+    "dropmenu-span-color": "#282c30",
     "dropmenu-buttons-disabled-color": "gray",
     "titleBar-icons-color": "gray",
     "window-radius": "8px",

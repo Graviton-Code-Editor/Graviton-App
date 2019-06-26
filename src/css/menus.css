@@ -156,7 +156,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 .dropdown-content>button:not(.dropbtn) *:nth-child(1) {
   margin: 0 1px;
   position: relative;
-  top: 0.5px;
+  top: 0.7px;
 }
 
 .dropdown-content>button:not(.dropbtn):hover div .abo {
@@ -197,7 +197,7 @@ span.line_space_menus {
   height: 2px;
   margin: 5px;
   border-radius: 50px;
-  background: var(--widget-color);
+  background: var(--dropmenu-span-color);
 }
 
 .show {

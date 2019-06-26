@@ -17,8 +17,8 @@ const icons = {
 	plus_zoom:`
 	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
 	  <g>
-	    <rect class="aba" data-name="0" width="2" height="7" transform="translate(11 6) rotate(90)" fill="#414141"/>
-    	<rect class="aba" data-name="0" width="2" height="7" transform="translate(6.5 3.5)" fill="#414141"/>
+	    <rect class="aba" data-name="0" width="2" height="7" transform="translate(11 6) rotate(90)"/>
+    	<rect class="aba" data-name="0" width="2" height="7" transform="translate(6.5 3.5)"/>
 	  </g>
 	</svg>
 	`,

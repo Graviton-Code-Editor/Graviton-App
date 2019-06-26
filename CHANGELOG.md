@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200627 - 1 [1.0.2]
+- Fixed dark theme dropmenus
+- Other improvements
+
 ### 200626 - 1 [1.0.2]
 - Added search, replace and jump to line in the dropmenu "Tools"
 - Cleaned some code

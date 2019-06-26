@@ -8,8 +8,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-let plugins_list = [];
-let plugins_dbs = [];
+let plugins_list = [],
+    plugins_dbs = [];
 
 function openPlugins() {
   const plugins_window = new Window({
