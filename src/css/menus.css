@@ -111,6 +111,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 .dropdown-content {
   border-radius: 3px;
+  border-top-left-radius: 0px;
   position: fixed;
   background-color: var(--dropmenu-background-color);
   min-width: auto;

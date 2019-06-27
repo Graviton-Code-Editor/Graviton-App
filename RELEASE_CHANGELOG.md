@@ -1,4 +1,7 @@
 
+- Improved Dark Theme
+- Now you can change the zoom from the new menu "Window"
+- Added Seach, replace and jump to line to "tools"
 - Dark Green theme by Nico Greffin
 - German support
 - New built-in terminal

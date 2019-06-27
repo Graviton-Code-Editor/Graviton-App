@@ -434,6 +434,10 @@ const graviton = {
     if(editor!=undefined){
       CodeMirror.commands.jumpToLine(editor)
     }
+  },
+  restartApp(){
+    remote.app.relaunch()
+    remote.app.exit(0)
   }
 }
 
@@ -561,12 +565,11 @@ function g_dialog(dialogObject) {
   all.setAttribute("id", dialogObject.id + "_dialog");
   all.setAttribute("style", "-webkit-user-select: none;");
   all.innerHTML = `
-  <div myID="${dialogObject.id}" class="background_window" onclick="closeDialog(this)"></div>
-  <div class="dialog_body"></div>`
+  <div myID="${dialogObject.id}" class="background_window" onclick="closeDialog(this)"></div>`
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
   body_dialog.innerHTML = `
-  <p style="font-size:25px; line-height:1px; white-space: nowrap; font-weight:bold;">    
+  <p style="font-size:21px; line-height:1px; white-space: nowrap; font-weight:bold;">    
   	${dialogObject.title} 
   </p>
   <div style="font-size:15px;">
@@ -577,7 +580,13 @@ function g_dialog(dialogObject) {
     const button = document.createElement("button");
     button.innerText = key;
     button.setAttribute("myID", dialogObject.id);
-    button.setAttribute("onclick", dialogObject.buttons[key]);
+    if(typeof dialogObject.buttons[key] == "string"){
+      button.setAttribute("onclick", dialogObject.buttons[key]);
+    }else{
+       button.setAttribute("onclick", dialogObject.buttons[key].click);
+       button.setAttribute("class", dialogObject.buttons[key].important==true?"important":"");
+    }
+    
     body_dialog.children[2].appendChild(button);
   });
   all.appendChild(body_dialog);

@@ -24,7 +24,10 @@ module.exports = {
                 content: `Do you want to update to version ${res[i].tag_name}?`,
                 buttons: {
                   [current_config.language['No']]: 'closeDialog(this)',
-                  [current_config.language['Yes']]: 'updater.update()'
+                  [current_config.language['Yes']]: {
+                    click:'updater.update()',
+                    important:true
+                  }
                 }
               })
               return
@@ -40,5 +43,3 @@ module.exports = {
     shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
   }
 }
-
-

@@ -6,7 +6,7 @@
   "Version": "0.1.1",
   "Highlight" : "LightUI",
   "Colors": {
-    "primaryColor": "#DFDFDF",
+    "primaryColor": "#CCCCCC",
     "secondaryColor": "white",
     "accentColor":"#0066FF",
     "editor-background-color": "white",

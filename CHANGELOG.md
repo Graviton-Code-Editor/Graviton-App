@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200627 - 2 [1.0.2]
+- Improved dialogs design
+
 ### 200627 - 1 [1.0.2]
 - Fixed dark theme dropmenus
 - Other improvements

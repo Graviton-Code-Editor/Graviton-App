@@ -154,13 +154,12 @@ const loadEditor = (info) => {
           }
         }
         editors.push(new_editor_image)
-        console.log(info.dir);
         document.getElementById(info.dir.replace(/\\/g, "") + '_editor').style.display = 'block'
         editorID = new_editor_image.id
         document.getElementById(current_screen.id).children[2].children[0].innerText = 'Image'
         break
       case 'free':
-        const free_id = Math.random()
+        const free_id = "free_tab"+Math.random()
         const free_container = document.createElement('div')
         free_container.classList = 'code-space'
         free_container.setAttribute('id', `${info.dir.replace(/\\/g, "")}_editor`)
@@ -348,11 +347,6 @@ const appendBinds = () => {
   Mousetrap.bind('mod+y', function () {
     commanders.closeTerminal()
   })
-}
-
-function restartApp () {
-  remote.app.relaunch()
-  remote.app.exit(0)
 }
 
 function save_file_warn (ele) {

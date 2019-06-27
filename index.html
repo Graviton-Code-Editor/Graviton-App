@@ -12,12 +12,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   <img src="src/icons/logo.svg">
 </div>
 <script>
-let editor_booted = false;
-let error_showed = false;
+let editor_booted = false,
+    error_showed = false;
 
 function FactoryReset() {
   fs.unlink(configDir, function() {
-    restartApp();
+    graviton.restartApp();
   });
 }
 

@@ -206,7 +206,7 @@ input[type="number"]::selection {
   overflow: auto;
   border-radius: var(--window-radius);
   box-shadow: 0px 3px 15px var(--shadows);
-  min-width: 20%;
+  min-width: 25%;
   max-width: 70%;
   min-height: 110px;
   max-height: 70%;
@@ -216,6 +216,7 @@ input[type="number"]::selection {
   top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -45%) ;
+  border: 1px solid var(--primaryColor);
 }
 
 @keyframes window_up {
@@ -232,35 +233,42 @@ input[type="number"]::selection {
 .dialog_body .buttons {
   float: right;
   position: relative;
+  margin-top: 17px;
 }
 
 .dialog_body .buttons>button {
-  font-weight: bold;
   width: auto;
-  border: none;
-  margin-top: 15px;
-  padding: 10px 16px;
-  background: transparent;
+  margin-left: 8px;
+  padding: 7px 27px;
+  background: var(--primaryColor);
   color: var(--white-black);
   box-sizing: border-box;
   position: relative;
   left: 0px;
   bottom: 0px;
   display: inline-block;
-  border-radius: 3px;
+  border-radius: 4.5px;
   font-family: _main_font;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 11px;
+  font-size: 12px;
   transform: scale(1);
   white-space: nowrap;
   display: inline-block;
+  border: 0;
 }
 
 .dialog_body .buttons>button:hover {
   transition: 0.1s;
   cursor: pointer;
-  background: var(--primaryColor);
+  background: var(--widget-color);
+}
+
+.dialog_body .buttons >button.important {
+  background: var(--accentColor);
+  color:var(--black-white);
+}
+
+.dialog_body .buttons >button.important:hover {
+  background: var(--accentColor);
 }
 
 .dialog_body .buttons>button:active {
