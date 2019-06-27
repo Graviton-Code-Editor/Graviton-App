@@ -7,7 +7,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)](https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 
-![example screenshot](example.jpg)
+![example screenshot](example.png)
 
 DISCORD server: https://discord.gg/gg6CTYA
 
