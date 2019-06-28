@@ -120,7 +120,7 @@ const loadEditor = (info) => {
         }
         editorID = new_editor_text.id
         editor = new_editor_text.editor
-        dtext_container.style.display = 'block'
+        text_container.style.display = 'block'
         codemirror.on('focus', function (a) {
           for (i = 0; i < editors.length; i++) {
             if (editors[i].id == a.options.id + '_editor') {
