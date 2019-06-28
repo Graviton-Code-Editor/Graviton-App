@@ -438,6 +438,13 @@ const graviton = {
   restartApp(){
     remote.app.relaunch()
     remote.app.exit(0)
+  },
+  isProduction(){
+    if(path.basename(__dirname) == 'Graviton-Editor' || path.basename(__dirname) == 'Graviton-App'){
+      return false
+    }else{
+      return true
+    }
   }
 }
 

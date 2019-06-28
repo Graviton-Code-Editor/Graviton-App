@@ -20,8 +20,9 @@ Features 🚀
 - Zen Mode 
 - Large language syntax highlighting support
 - Disabling animations
-- Autocomplete (not stable)
-- Built-in Terminals
+- Autocomplete (Only JavaScript & not stable)
+- Built-in terminal
+- Cross-platform (Linux,MacOS,Windows)
 
 More are coming soon
 

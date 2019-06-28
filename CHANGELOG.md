@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200628 - 1 [1.0.2]
+- Added shortcuts for Full Screen (F11)
+
 ### 200627 - 2 [1.0.2]
 - Improved dialogs design
 

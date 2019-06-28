@@ -324,7 +324,14 @@ const loadEditor = (info) => {
       'Ctrl-L': function (cm) { screens.remove(current_screen.id) },
       'Ctrl-E': function (cm) { graviton.toggleZenMode() },
       'Ctrl-T': function (cm) { commanders.terminal() },
-      'Ctrl-Y': function (cm) { commanders.closeTerminal() }
+      'Ctrl-Y': function (cm) { commanders.closeTerminal() },
+      'F11': function (cm) { 
+        if(g_window.isFullScreen()==false){
+          g_window.setFullScreen(true);
+        }else{
+          g_window.setFullScreen(false);
+        }
+      }
     })
   }
 }
@@ -346,6 +353,15 @@ const appendBinds = () => {
   })
   Mousetrap.bind('mod+y', function () {
     commanders.closeTerminal()
+  })
+  Mousetrap.bind('f11', function () {
+    if(graviton.isProduction()){
+      if(g_window.isFullScreen()==false){
+        g_window.setFullScreen(true);
+      }else{
+        g_window.setFullScreen(false);
+      }
+    }
   })
 }
 
