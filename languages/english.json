@@ -24,7 +24,7 @@
 	"SourceCode":"Source Code",
 	"Advanced":"Advanced",
 	"FactoryReset":"Factory Reset",
-	"FactoryReset-dialog-message":"Do you want to Restart Graviton Code Editor?",
+	"FactoryReset-dialog-message":"Do you want to restart Graviton Code Editor?",
 	"About-text1":"Graviton is a free, open source and cross-platform code editor.",
 	"About-text2":"It doesn't send any kind of data to any server. All you do stays on your machine, unless you manually share it somewhere.",
 	"Languages":"Languages",

@@ -10,7 +10,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 let welcome_window
-
 function g_welcomePage () {
   welcome_window = new Window({
     id: 'welcome_window',

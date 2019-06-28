@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190627',
+  date: '190628',
   version: '1.0.2',
   state: 'Beta'
 }
@@ -86,7 +86,7 @@ const loadEditor = (info) => {
   if (document.getElementById(info.dir.replace(/\\/g, "") + '_editor') == undefined) {
     switch (info.type) {
       case 'text':
-        let text_container = document.createElement('div')
+        const text_container = document.createElement('div')
         text_container.classList = 'code-space'
         text_container.setAttribute('id', info.dir.replace(/\\/g, "") + '_editor')
         text_container.setAttribute('path', info.dir)
@@ -120,7 +120,7 @@ const loadEditor = (info) => {
         }
         editorID = new_editor_text.id
         editor = new_editor_text.editor
-        document.getElementById(new_editor_text.id).style.display = 'block'
+        dtext_container.style.display = 'block'
         codemirror.on('focus', function (a) {
           for (i = 0; i < editors.length; i++) {
             if (editors[i].id == a.options.id + '_editor') {

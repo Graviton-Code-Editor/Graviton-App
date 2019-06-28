@@ -1,4 +1,5 @@
 
+- Improved dialogs design
 - Improved Dark Theme
 - Now you can change the zoom from the new menu "Window"
 - Added Seach, replace and jump to line to "tools"
