@@ -86,5 +86,10 @@
 	"Dialog.AreYouSure":"Sei sicuro?",
 	"Exit":"Esci",
 	"newTerminal":"Nuovo terminale",
-	"closeTerminal":"Chiudi terminale"
+	"closeTerminal":"Chiudi terminale",
+	"IncreaseZoom":"Aumenta lo zoom",
+	"DicreaseZoom":"Diminuisci lo zoom",
+	"DefaultZoom":"Zoom predefinito",
+	"Search":"Cerca",
+	"JumpToLine":"Salta alla linea"
 }
