@@ -9,73 +9,73 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190619',
+  date: '190629',
   version: '1.0.2',
   state: 'Beta'
 }
 const os = require('os'),
-      { shell } = require('electron'),
-      fs = require('fs-extra'),
-      path = require('path'),
-      { dialog } = require('electron').remote,
-      remote = require('electron').remote,
-      BrowserWindow = require('electron').BrowserWindow,
-      app = require('electron').remote,
-      getAppDataPath = require('appdata-path'),
-      $ = require('jquery'),
-      { webFrame } = require('electron'),
-      g_window = require('electron').remote.getCurrentWindow(),
-      { systemPreferences } = require('electron').remote,
-      url = require('url'),
-      marked = require('marked'),
-      updater = require("./src/javascript/updater"); /*Import the update module*/
+  { shell } = require('electron'),
+  fs = require('fs-extra'),
+  path = require('path'),
+  { dialog } = require('electron').remote,
+  remote = require('electron').remote,
+  BrowserWindow = require('electron').BrowserWindow,
+  app = require('electron').remote,
+  getAppDataPath = require('appdata-path'),
+  $ = require('jquery'),
+  { webFrame } = require('electron'),
+  g_window = require('electron').remote.getCurrentWindow(),
+  { systemPreferences } = require('electron').remote,
+  url = require('url'),
+  marked = require('marked'),
+  updater = require("./src/javascript/updater"); /*Import the update module*/
 
 let current_screen,
-    dir_path,
-    i,
-    DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton'),   
-    tabs = [],
-    FirstFolder = 'not_selected',
-    editingTab,
-    ids = 0,
-    plang = ' ',
-    _notifications = [],
-    filepath = ' ',
-    editors = [],
-    editor,
-    editorID,
-    editor_mode = 'normal',
-    g_highlighting = 'activated',
-    _previewer,
-    log = [],
-    themes = [],
-    themeObject,
-    new_update = false,
-    mouseClicked = false,
-    touchingResizerValue = false,
-    editor_screens = [],
-    dictionary = autocomplete.javascript
+  dir_path,
+  i,
+  DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton'),
+  tabs = [],
+  FirstFolder = 'not_selected',
+  editingTab,
+  ids = 0,
+  plang = ' ',
+  _notifications = [],
+  filepath = ' ',
+  editors = [],
+  editor,
+  editorID,
+  editor_mode = 'normal',
+  g_highlighting = 'activated',
+  _previewer,
+  log = [],
+  themes = [],
+  themeObject,
+  new_update = false,
+  mouseClicked = false,
+  touchingResizerValue = false,
+  editor_screens = [],
+  dictionary = autocomplete.javascript
 
 if (path.basename(__dirname) !== 'Graviton-Editor') DataFolderDir = path.join(getAppDataPath(), '.graviton')
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir) // Create .graviton if it doesn't exist
 
 /* Set path for graviton's files and dirs */
 let logDir = path.join(DataFolderDir, 'log.json'),
-    configDir = path.join(DataFolderDir, 'config.json'),
-    timeSpentDir = path.join(DataFolderDir, '_time_spent.json'),
-    themes_folder = path.join(DataFolderDir, 'themes'),
-    highlights_folder = path.join(DataFolderDir, 'highlights'),
-    plugins_folder = path.join(DataFolderDir, 'plugins'),
-    plugins_db = path.join(DataFolderDir, 'plugins_db')
+  configDir = path.join(DataFolderDir, 'config.json'),
+  timeSpentDir = path.join(DataFolderDir, '_time_spent.json'),
+  themes_folder = path.join(DataFolderDir, 'themes'),
+  highlights_folder = path.join(DataFolderDir, 'highlights'),
+  plugins_folder = path.join(DataFolderDir, 'plugins'),
+  plugins_db = path.join(DataFolderDir, 'plugins_db')
 
-document.addEventListener('mousedown', function (event) {
+document.addEventListener('mousedown', function(event) {
   if (event.which) mouseClicked = true
 }, true)
 
-document.addEventListener('mouseup', function (event) {
+document.addEventListener('mouseup', function(event) {
   if (event.which) mouseClicked = false
 }, true)
-document.addEventListener('mousemove', function (event) {
+document.addEventListener('mousemove', function(event) {
   if (mouseClicked && touchingResizerValue) {
     const explorer = document.getElementById('g_explorer')
     explorer.style = `width: ${event.clientX - 3}px`
@@ -105,7 +105,7 @@ const loadEditor = (info) => {
         })
         document.getElementById(current_screen.id).children[2].children[0].innerText = getLanguageName(getFormat(path.basename(info.dir)) != 'unknown' ? getFormat(path.basename(info.dir)) : path.basename(info.dir).split('.').pop())
         const new_editor_text = {
-          object:text_container,
+          object: text_container,
           id: text_container.id,
           editor: codemirror,
           path: info.dir,
@@ -121,7 +121,7 @@ const loadEditor = (info) => {
         editorID = new_editor_text.id
         editor = new_editor_text.editor
         text_container.style.display = 'block'
-        codemirror.on('focus', function (a) {
+        codemirror.on('focus', function(a) {
           for (i = 0; i < editors.length; i++) {
             if (editors[i].id == a.options.id + '_editor') {
               editor = editors[i].editor
@@ -159,11 +159,11 @@ const loadEditor = (info) => {
         document.getElementById(current_screen.id).children[2].children[0].innerText = 'Image'
         break
       case 'free':
-        const free_id = "free_tab"+Math.random()
+        const free_id = "free_tab" + Math.random()
         const free_container = document.createElement('div')
         free_container.classList = 'code-space'
         free_container.setAttribute('id', `${info.dir.replace(/\\/g, "")}_editor`)
-        free_container.innerHTML = info.data!=undefined?info.data:"";
+        free_container.innerHTML = info.data != undefined ? info.data : "";
         document.getElementById(current_screen.id).children[1].appendChild(free_container)
         const new_editor_free = {
           id: info.dir.replace(/\\/g, "") + '_editor',
@@ -204,11 +204,11 @@ const loadEditor = (info) => {
     }
   }
 
-  function filterIt (arr, searchKey, cb) {
+  function filterIt(arr, searchKey, cb) {
     var list = []
     for (var i = 0; i < arr.length; i++) {
       var curr = arr[i]
-      Object.keys(curr).some(function (key) {
+      Object.keys(curr).some(function(key) {
         if (typeof curr[key] === 'string' && curr[key].includes(searchKey)) {
           list.push(curr)
         }
@@ -217,7 +217,7 @@ const loadEditor = (info) => {
     return cb(list)
   }
   if (editor != undefined) {
-    editor.on('change', function () {
+    editor.on('change', function() {
       const close_icon = document.getElementById(editingTab)
       close_icon.setAttribute('file_status', 'unsaved')
       close_icon.children[1].innerHTML = icons["unsaved"]
@@ -232,7 +232,7 @@ const loadEditor = (info) => {
         const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
         const lastWord = editor.getRange({ line: A1, ch: B1 }, { line: A1, ch: B2 })
         // Context Menu
-        filterIt(dictionary, lastWord, function (filterResult) {
+        filterIt(dictionary, lastWord, function(filterResult) {
           if (filterResult.length > 0 && lastWord.length >= 3) {
             let contextOptions
             for (var i = 0; i < filterResult.length; i++) {
@@ -250,21 +250,21 @@ const loadEditor = (info) => {
         })
       }
     })
-    editor.on('keydown', function (editor, e) {
+    editor.on('keydown', function(editor, e) {
       if ($('context').css('display') != 'none') {
         // Ignore keys actions on context options displayed.
         editor.setOption('extraKeys', {
-          'Up': function () {
+          'Up': function() {
             if (true) {
               return CodeMirror.PASS
             }
           },
-          'Down': function () {
+          'Down': function() {
             if (true) {
               return CodeMirror.PASS
             }
           },
-          'Enter': function () {
+          'Enter': function() {
             if (true) {
               return CodeMirror.PASS
             }
@@ -276,7 +276,7 @@ const loadEditor = (info) => {
         })
       }
       // Context Options keys handler
-      $('context .menuWrapper .option.hover').filter(function () {
+      $('context .menuWrapper .option.hover').filter(function() {
         if (e.keyCode === 40 && !$('context .menuWrapper .option').last().hasClass('hover') && $('context').css('display') != 'none') {
           $('context .menuWrapper .option').removeClass('hover')
           $(this).next().addClass('hover')
@@ -296,18 +296,18 @@ const loadEditor = (info) => {
           const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
           const selected = $(this).text()
           editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
-          setTimeout(function () {
+          setTimeout(function() {
             $('context').fadeOut()
             $('context .menuWrapper').html('')
           }, 100)
         }
       })
     })
-    $('context .menuWrapper').on('mouseenter', 'div.option', function () {
+    $('context .menuWrapper').on('mouseenter', 'div.option', function() {
       $('context .menuWrapper .option').not(this).removeClass('hover')
       $(this).addClass('hover')
     })
-    $('context .menuWrapper').on('mousedown', 'div.option', function (e) {
+    $('context .menuWrapper').on('mousedown', 'div.option', function(e) {
       const A1 = editor.getCursor().line
       const A2 = editor.getCursor().ch
       const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
@@ -319,16 +319,16 @@ const loadEditor = (info) => {
       e.preventDefault()
     })
     editor.addKeyMap({
-      'Ctrl-S': function (cm) { saveFile() },
-      'Ctrl-N': function (cm) { screens.add() },
-      'Ctrl-L': function (cm) { screens.remove(current_screen.id) },
-      'Ctrl-E': function (cm) { graviton.toggleZenMode() },
-      'Ctrl-T': function (cm) { commanders.terminal() },
-      'Ctrl-Y': function (cm) { commanders.closeTerminal() },
-      'F11': function (cm) { 
-        if(g_window.isFullScreen()==false){
+      'Ctrl-S': function(cm) { saveFile() },
+      'Ctrl-N': function(cm) { screens.add() },
+      'Ctrl-L': function(cm) { screens.remove(current_screen.id) },
+      'Ctrl-E': function(cm) { graviton.toggleZenMode() },
+      'Ctrl-T': function(cm) { commanders.terminal() },
+      'Ctrl-Y': function(cm) { commanders.closeTerminal() },
+      'F11': function(cm) {
+        if (g_window.isFullScreen() == false) {
           g_window.setFullScreen(true);
-        }else{
+        } else {
           g_window.setFullScreen(false);
         }
       }
@@ -336,36 +336,36 @@ const loadEditor = (info) => {
   }
 }
 const appendBinds = () => {
-  Mousetrap.bind('mod+s', function () {
+  Mousetrap.bind('mod+s', function() {
     saveFile()
   })
-  Mousetrap.bind('mod+n', function () {
+  Mousetrap.bind('mod+n', function() {
     screens.add()
   })
-  Mousetrap.bind('mod+l', function () {
+  Mousetrap.bind('mod+l', function() {
     screens.remove(current_screen.id)
   })
-  Mousetrap.bind('mod+e', function () {
+  Mousetrap.bind('mod+e', function() {
     graviton.toggleZenMode()
   })
-  Mousetrap.bind('mod+t', function () {
+  Mousetrap.bind('mod+t', function() {
     commanders.terminal()
   })
-  Mousetrap.bind('mod+y', function () {
+  Mousetrap.bind('mod+y', function() {
     commanders.closeTerminal()
   })
-  Mousetrap.bind('f11', function () {
-    if(graviton.isProduction()){
-      if(g_window.isFullScreen()==false){
+  Mousetrap.bind('f11', function() {
+    if (graviton.isProduction()) {
+      if (g_window.isFullScreen() == false) {
         g_window.setFullScreen(true);
-      }else{
+      } else {
         g_window.setFullScreen(false);
       }
     }
   })
 }
 
-function save_file_warn (ele) {
+function save_file_warn(ele) {
   new g_dialog({
     id: 'saving_file_warn',
     title: current_config.language['Warn'],
@@ -378,7 +378,7 @@ function save_file_warn (ele) {
   })
 }
 
-function saveFileAs () {
+function saveFileAs() {
   dialog.showSaveDialog(fileName => {
     fs.writeFile(fileName, editor.getValue(), err => {
       if (err) {
@@ -391,7 +391,7 @@ function saveFileAs () {
   })
 }
 
-function openFile () {
+function openFile() {
   dialog.showOpenDialog(fileNames => {
     // fileNames is an array that contains all the selected files
     if (fileNames === undefined) {
@@ -406,7 +406,7 @@ function openFile () {
   })
 }
 
-function openFolder () {
+function openFolder() {
   dialog.showOpenDialog({ properties: ['openDirectory'] },
     selectedFiles => {
       if (selectedFiles === undefined) return
@@ -415,8 +415,8 @@ function openFolder () {
   )
 }
 
-function saveFile () {
-  if(graviton.getCurrentEditor().editor!=undefined){
+function saveFile() {
+  if (graviton.getCurrentEditor().editor != undefined) {
     fs.writeFile(filepath, editor.getValue(), err => {
       if (err) return err
       document.getElementById(editingTab).setAttribute('file_status', 'saved')
@@ -424,9 +424,9 @@ function saveFile () {
         .getElementById(editingTab)
         .children[1].setAttribute('onclick', document.getElementById(editingTab).children[1].getAttribute('onclose'))
       document.getElementById(editingTab).children[1].innerHTML = icons["close"]
-      const file_saved_event = new CustomEvent("file_saved",{
-        data:{
-          object : graviton.getCurrentEditor().object
+      const file_saved_event = new CustomEvent("file_saved", {
+        data: {
+          object: graviton.getCurrentEditor().object
         }
       })
       document.dispatchEvent(file_saved_event);
@@ -435,7 +435,7 @@ function saveFile () {
 }
 
 
-function loadDirs (dir, app_id, first_time) {
+function loadDirs(dir, app_id, first_time) {
   if (!fs.existsSync(dir)) {
     graviton.throwError(current_config.language['DirectoryDoesntExist'])
     return
@@ -533,7 +533,7 @@ function loadDirs (dir, app_id, first_time) {
   })
 }
 const directories = {
-  removeDialog: function (object) {
+  removeDialog: function(object) {
     new g_dialog({
       id: 'remove_directorie',
       title: current_config.language['Dialog.AreYouSure'],
@@ -544,14 +544,14 @@ const directories = {
       }
     })
   },
-  remove: function (id) {
+  remove: function(id) {
     const object = document.getElementById(id)
-    fs.unlink(object.getAttribute('longpath'), function (err) {
+    fs.unlink(object.getAttribute('longpath'), function(err) {
       if (err) console.error(err)
       object.remove()
     })
   },
-  getCustomIcon: function (path, state) {
+  getCustomIcon: function(path, state) {
     switch (path) {
       case 'node_modules':
         return 'src/icons/custom_icons/node_modules.svg'
@@ -569,7 +569,7 @@ const directories = {
   }
 }
 
-function getFormat (text) {
+function getFormat(text) {
   switch (text.split('.').pop()) {
     case 'html':
       return 'html'
@@ -593,7 +593,7 @@ function getFormat (text) {
   }
 }
 
-function getLanguageName (format) {
+function getLanguageName(format) {
   switch (format) {
     case 'html':
       return 'HTML'
@@ -666,7 +666,7 @@ function getLanguageName (format) {
   }
 }
 
-function updateCodeMode (instance, path) {
+function updateCodeMode(instance, path) {
   if (g_highlighting == 'activated') {
     switch (path.split('.').pop()) {
       case 'html':
@@ -807,8 +807,8 @@ function updateCodeMode (instance, path) {
   }
 }
 
-const registerNewProject = function (dir) { // Add a new directory to the history if it is the first time it has been opened in the editor
-  fs.readFile(logDir, 'utf8', function (err, data) {
+const registerNewProject = function(dir) { // Add a new directory to the history if it is the first time it has been opened in the editor
+  fs.readFile(logDir, 'utf8', function(err, data) {
     if (err) return
     log = JSON.parse(data)
     for (i = 0; i < log.length + 1; i++) {
@@ -841,7 +841,7 @@ const HTML_template = `
   </body>
 </html>
 `
-const g_newProject = function (template) {
+const g_newProject = function(template) {
   dialog.showOpenDialog({ properties: ['openDirectory'] },
     selectedFiles => {
       if (selectedFiles !== undefined) {
