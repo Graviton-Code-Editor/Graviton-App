@@ -217,16 +217,15 @@ function selectTheme (from, theme) {
   theme.classList.add("active");
 }
 
-
 class Switch extends HTMLElement {
   constructor () {
     super()
   }
   connectedCallback () {
     this.innerHTML = `
-        <div class="${this.getAttribute('class')} switch">
-        	<div></div>
-        </div>`
+      <div class="${this.getAttribute('class')} switch">
+      	<div></div>
+      </div>`
     this.addEventListener('click', function () {
       const dot = this.children[0]
       if (this.classList.contains('disabled') === false) {

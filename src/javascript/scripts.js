@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190628',
+  date: '190619',
   version: '1.0.2',
   state: 'Beta'
 }
@@ -496,7 +496,7 @@ function loadDirs (dir, app_id, first_time) {
         directory_temp.innerHTML += `
         <div opened="false" ID="${ids + dir.replace(/\\/g, '')}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
           <div  class="directory" onclick="loadDirs('${_long_path}','${ids + dir.replace(/\\/g, '')}',false)">
-            <img style="float:left; padding-right:3px; height:24px; width:24px; " src="${directories.getCustomIcon(paths[i], 'close')}">
+            <img style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(paths[i], 'close')}">
            <p >
           ${paths[i]}
           </p> 

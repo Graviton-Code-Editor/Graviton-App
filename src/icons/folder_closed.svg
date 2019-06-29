@@ -1,1 +1,7 @@
-<?xml version="1.0" standalone="no"?><!-- Generator: Gravit.io --><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24"><path d=" M 4.847416 4.610795 L 10.652584 4.610795 C 11.396243 4.610795 12.460639 5.001095 13.028017 5.481835 L 16 8 L 3.5 8 L 3.5 5.958211 C 3.5 5.214552 4.103757 4.610795 4.847416 4.610795 Z " fill="rgb(255,233,160)"/><path d=" M 4.847416 4.610795 L 10.652584 4.610795 C 11.396243 4.610795 12.460639 5.001095 13.028017 5.481835 L 16 8 L 3.5 8 L 3.5 5.958211 C 3.5 5.214552 4.103757 4.610795 4.847416 4.610795 Z " fill="rgb(247,221,138)"/><path d=" M 3.5 7.315341 L 18.578634 7.315341 C 19.639065 7.315341 20.5 8.176276 20.5 9.236707 L 20.5 17.467838 C 20.5 18.528269 19.639065 19.389205 18.578634 19.389205 L 5.421366 19.389205 C 4.360935 19.389205 3.5 18.528269 3.5 17.467838 L 3.5 7.315341 Z " fill="rgb(255,195,0)"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <g id="folder_closed" transform="translate(-0.5 -0.611)">
+    <path id="Trazado_48" data-name="Trazado 48" d="M4.9,4.611h6.01a4.509,4.509,0,0,1,2.459.871L16.442,8H3.5V5.959A1.373,1.373,0,0,1,4.9,4.611Z" transform="translate(-0.333 0.986)" fill="#fbee96"/>
+    <path id="Trazado_49" data-name="Trazado 49" d="M3.5,7.315H19.761a1.991,1.991,0,0,1,2.072,1.9v8.122a1.991,1.991,0,0,1-2.072,1.9H5.572a1.991,1.991,0,0,1-2.072-1.9Z" transform="translate(-0.333 0.711)" fill="#fc0"/>
+    <rect id="spacer" width="24" height="24" transform="translate(0.5 0.611)" fill="none"/>
+  </g>
+</svg>
