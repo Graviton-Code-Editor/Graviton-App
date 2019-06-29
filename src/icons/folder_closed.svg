@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
   <g id="folder_closed" transform="translate(-0.5 -0.611)">
-    <path id="Trazado_48" data-name="Trazado 48" d="M4.9,4.611h6.01a4.509,4.509,0,0,1,2.459.871L16.442,8H3.5V5.959A1.373,1.373,0,0,1,4.9,4.611Z" transform="translate(-0.333 0.986)" fill="#fbee96"/>
-    <path id="Trazado_49" data-name="Trazado 49" d="M3.5,7.315H19.761a1.991,1.991,0,0,1,2.072,1.9v8.122a1.991,1.991,0,0,1-2.072,1.9H5.572a1.991,1.991,0,0,1-2.072-1.9Z" transform="translate(-0.333 0.711)" fill="#fc0"/>
+    <path id="Trazado_48" data-name="Trazado 48" d="M4.9,4.611h6.01a4.509,4.509,0,0,1,2.459.871L16.442,8H3.5V5.959A1.373,1.373,0,0,1,4.9,4.611Z" transform="translate(-0.333 0.986)" fill="#ffe681"/>
+    <path id="Trazado_49" data-name="Trazado 49" d="M3.5,7.315H19.761a1.991,1.991,0,0,1,2.072,1.9v8.122a1.991,1.991,0,0,1-2.072,1.9H5.572a1.991,1.991,0,0,1-2.072-1.9Z" transform="translate(-0.333 0.711)" fill="#ffc300"/>
     <rect id="spacer" width="24" height="24" transform="translate(0.5 0.611)" fill="none"/>
   </g>
 </svg>
