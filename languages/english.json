@@ -92,5 +92,6 @@
 	"DefaultZoom":"Default zoom",
 	"Search":"Search",
 	"Replace":"Replace",
-	"JumpToLine":"Jump to line"
+	"JumpToLine":"Jump to line",
+	"CannotRunTerminalCauseDirectory":"Open a directory before starting the terminal."
 }

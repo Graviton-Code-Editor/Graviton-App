@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200629 - 1 [1.0.2]
+- Fixed, now when you try to open a terminal without any directory opened it will throw a well-explained notification error.
+
 ### 200628 - 1 [1.0.2]
 - Added shortcuts for Full Screen (F11)
 

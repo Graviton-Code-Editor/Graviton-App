@@ -915,6 +915,10 @@ const commanders = {
     })
   },
   terminal: function(object) {
+    if(graviton.getCurrentDirectory()=="not_selected") {
+      new Notification("Error",current_config.language["CannotRunTerminalCauseDirectory"]);
+      return;
+    }
     const randomID= Math.random();
     new commander({
       id:"xterm"+randomID,
