@@ -63,19 +63,11 @@ function detectPlugins() {
               const config = JSON.parse(data);
               if (err) throw err;
               plugins_list.push(config);
-              const script = document.createElement("script");
-              script.setAttribute("src", path.join(plugins_folder, config["folder"], config["main"])),
-                document.body.appendChild(script);
+              const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
               for (i = 0; i < config["javascript"].length; i++) {
                 const script = document.createElement("script");
                 script.setAttribute("src", path.join(plugins_folder, config["folder"], config["javascript"][i])),
                   document.body.appendChild(script);
-              }
-              for (i = 0; i < config["css"].length; i++) {
-                const link = document.createElement("link");
-                link.setAttribute("rel", "stylesheet");
-                link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][i])),
-                  document.body.appendChild(link);
               }
             });
           }
@@ -91,14 +83,7 @@ function detectPlugins() {
             if (err) throw err;
             const config = JSON.parse(data);
             plugins_list.push(config);
-            const script = document.createElement("script");
-            script.setAttribute("src", path.join(plugins_folder, config["folder"], config["main"])),
-              document.body.appendChild(script);
-            for (i = 0; i < config["javascript"].length; i++) {
-              const script = document.createElement("script");
-              script.setAttribute("src", path.join(plugins_folder, config["folder"], config["javascript"][i])),
-                document.body.appendChild(script);
-            }
+            const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
             for (i = 0; i < config["css"].length; i++) {
               const link = document.createElement("link");
               link.setAttribute("rel", "stylesheet");

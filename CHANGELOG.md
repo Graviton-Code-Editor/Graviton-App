@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200630 - 1 [1.0.2]
+- Better javascript plugins file import
+- New events, new_terminal & closed_terminal
+
 ### 200629 - 1 [1.0.2]
 - Fixed, now when you try to open a terminal without any directory opened it will throw a well-explained notification error.
 

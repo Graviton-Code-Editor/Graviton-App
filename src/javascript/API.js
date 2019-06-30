@@ -948,9 +948,16 @@ const commanders = {
             if(editor_screens[i].id==current_screen.id){
               editor_screens[i].terminal = {id:"xterm"+randomID,xterm:xterm};
               current_screen.terminal = editor_screens[i].terminal;
+              const new_terminal_event = new CustomEvent("new_terminal",{
+                detail:{
+                  terminal: current_screen.terminal
+                }
+              })
+              document.dispatchEvent(new_terminal_event); 
               return;
             }
-          }   
+          }  
+          
         }
      }) 
   },
@@ -960,12 +967,19 @@ const commanders = {
   closeTerminal: function(){
     for(i=0;i<editor_screens.length;i++){
       if(editor_screens[i].id==current_screen.id){
+        const closed_terminal_event = new CustomEvent("closed_terminal",{
+          detail:{
+            terminal:  editor_screens[i].terminal
+          }
+        })
+        document.dispatchEvent(closed_terminal_event);
         editor_screens[i].terminal.xterm.destroy();
         editor_screens[i].terminal = undefined;
         commanders.close(current_screen.terminal.id);
         current_screen.terminal = undefined;
       }
     } 
+
   }
 }
 const screens = {
