@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200701 - 1 [1.0.2]
+- Aligned the closed folder icon
+
 ### 200630 - 1 [1.0.2]
 - Better javascript plugins file import
 - New events, new_terminal & closed_terminal

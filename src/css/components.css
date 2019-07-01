@@ -413,10 +413,13 @@ input[type="number"]::selection {
 }
 
 #openFolder:hover {
-  transition: 0.05s;
-  cursor: pointer;
   background: url("../icons/folder_opened.svg") no-repeat center;
   background-size: 55px 55px;
+  position: relative;
+  padding: 24px;
+  width: 55px;
+  height: 55px;
+  cursor: pointer;
 }
 
 #openFolder:active {
