@@ -37,18 +37,18 @@ const Settings = {
       case '1':
         document.getElementById('settings_content').innerHTML = `
           <div id="dpi">
-            <h3>${current_config.language['ZoomSize']}</h3>
+            <h>${current_config.language['ZoomSize']}</h4>
             <div class="section">
               <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
             </div>
           </div>
-          <h3>${current_config.language['Themes']}</h3> 
+          <h4>${current_config.language['Themes']}</h4> 
           <div class="section">
             <div id='theme_list'></div> 
             <p>${current_config.language['Themes.Text']}</p>
             <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences == 'system' ? 'activated' : 'desactivated'}"></gv-switch>
           </div>
-          <h3>${current_config.language['ZenMode']}</h3>
+          <h4>${current_config.language['ZenMode']}</h4>
           <div class="section">
             <p>${current_config.language['ZenMode.ShowDirectoryExplorer']}</p>
             <gv-switch  onclick="graviton.toggleZenMode()" class="${editor_mode != 'zen' ? 'activated' : 'desactivated'}"></gv-switch>
@@ -89,20 +89,20 @@ const Settings = {
       case '3':
         document.getElementById('settings_content').innerHTML = `
           <div id="editor_fs">
-              <h3>${current_config.language['FontSize']}</h3>
+              <h4>${current_config.language['FontSize']}</h4>
               <div class="section">
                   <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${current_config.fontSizeEditor}">
               </div>
-              <h3>${current_config.language['Auto-Completion']}</h3>
+              <h4>${current_config.language['Auto-Completion']}</h4>
               <div class="section">
                   <p>${current_config.language['Settings-Editor-AutoCompletion-text']} </p>
                   <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${current_config['autoCompletionPreferences']}"></gv-switch>
               </div>
-              <h3>${current_config.language['Line-Wrapping']}</h3>
+              <h4>${current_config.language['Line-Wrapping']}</h4>
               <div class="section">
                   <gv-switch onclick="graviton.toggleLineWrapping()" class="${current_config['lineWrappingPreferences']}"></gv-switch>
               </div>
-              <h3>${current_config.language['Highlighting']}</h3>
+              <h4>${current_config.language['Highlighting']}</h4>
               <div class="section">
               <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
           </div>
@@ -113,17 +113,17 @@ const Settings = {
         break
       case '4':
         document.getElementById('settings_content').innerHTML = `
-          <h3>${current_config.language['Performance']}</h3>
+          <h4>${current_config.language['Performance']}</h4>
           <div class="section">
               <p>${current_config.language['Settings-Advanced-Performance-Animations']}</p>
               <gv-switch  onclick="graviton.toggleAnimations()" class="${current_config.animationsPreferences}"></gv-switch>
           </div>
-          <h3>${current_config.language['Developers']}</h3>
+          <h4>${current_config.language['Developers']}</h4>
           <div class="section">
               <p>${current_config.language['Settings-Advanced-Developer-Tools-text']}</p>
               <button class="button1" onclick="graviton.openDevTools();">${current_config.language['DeveloperTools']}</button>
           </div>
-          <h3>${current_config.language['FactoryReset']}</h3>
+          <h4>${current_config.language['FactoryReset']}</h4>
           <div class="section">
               <p>${current_config.language['Settings-Advanced-FactoryReset-text']}</p>
               <button class="button1 red" onclick="factory_reset_dialog();">${current_config.language['FactoryReset']}</button>
@@ -134,7 +134,7 @@ const Settings = {
         break
       case '5':
         document.getElementById('settings_content').innerHTML = `
-          <h3>${current_config.language['About']} </h3>
+          <h4>${current_config.language['About']} </h4>
           <div class="section">
               <p>${current_config.language['About-text1']}</p>
               <p>${current_config.language['About-text2']}</p>
@@ -142,7 +142,7 @@ const Settings = {
               <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
               <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
           </div>
-          <h3>${current_config.language['CurrentVersion']}</h3>
+          <h4>${current_config.language['CurrentVersion']}</h4>
           <div class="section">
             <div id="about_section">
               <p>${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p>

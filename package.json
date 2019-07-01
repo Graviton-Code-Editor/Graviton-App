@@ -13,10 +13,10 @@
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win && build --win --ia32",
     "rebuild": "electron-rebuild -f -w node-pty",
-    "standard":"standard --fix"
+    "standard": "standard --fix"
   },
-  "standard":{
-    "ignore":[
+  "standard": {
+    "ignore": [
       "/node_modules",
       "/build",
       "/dist",

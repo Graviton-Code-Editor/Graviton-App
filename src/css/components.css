@@ -602,9 +602,10 @@ button.button1:active {
 }
 
 .section {
-  margin: 7px;
+  margin: 3px;
   margin-bottom: 12px;
   padding: 7px;
+  padding-top: 2px;
   background: transparent;
   height: auto;
 }
@@ -713,7 +714,7 @@ button.button2:active {
   font-weight: 700;
 }
 
-.body_window h3 {
+.body_window h4 {
   font-weight: 570;
   margin: 0;
   padding: 0;

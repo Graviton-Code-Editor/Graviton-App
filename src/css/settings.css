@@ -126,7 +126,15 @@ div.active{
   height: auto;
   white-space: nowrap;
 }
-
+h4{
+  font-weight: normal;
+  margin:4px;
+}
+#settings_content p{
+  font-size: 14px;
+  line-height: 20px;
+  margin: 16px 0px
+}
 .language_div {
   transition: 0.05s;
   border-radius: 7px;
@@ -138,6 +146,7 @@ div.active{
   color: var(--white-black);
   transform: scale(1);
   cursor: pointer;
+  font-size: 14px;
 }
 
 .language_div:not(.active):hover {

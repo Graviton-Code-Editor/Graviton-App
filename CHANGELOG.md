@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200701 - 2 [1.0.2]
+- Reduced some elements in teh settings page
+- Improved the logo showed in the boot animation
+
 ### 200701 - 1 [1.0.2]
 - Aligned the closed folder icon
 
