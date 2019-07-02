@@ -41,5 +41,4 @@ install:
 script:
   - echo "BUILDING"
   - npm run build
-  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then npm run build:win32; fi
   - ls dist
