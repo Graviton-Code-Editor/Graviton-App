@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200702 - 1 [1.0.3]
+- v1.0.3
+- Fixed, you cannot close an opened terminal
+- Added a new donation in the readme(2€ by Cristian Piva)
+
+
 ### 200701 - 2 [1.0.2]
 - Reduced some elements in teh settings page
 - Improved the logo showed in the boot animation

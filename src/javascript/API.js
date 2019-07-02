@@ -1033,7 +1033,7 @@ const screens = {
           if (tabs2.length == 0) {
             if (editor_screens[i].terminal != undefined) {
               editor_screens[i].terminal.xterm.destroy()
-              commander.close(editor_screens[i].termina.id)
+              commander.close(editor_screens[i].terminal.id)
               editor_screens[i].terminal = undefined;
             }
             const closed_screen_event = new CustomEvent("closed_screen",{

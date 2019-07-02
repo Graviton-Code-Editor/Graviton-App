@@ -7,6 +7,8 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)](https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 
+[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/graviton)
+
 ![example screenshot](example.png)
 
 DISCORD server: https://discord.gg/gg6CTYA
@@ -57,6 +59,7 @@ Donators 🐱‍🏍
 ---
 - 2€ donation by Alex Mayol
 - BTCs donation by [Machou](http://GitHub.com/Machou)
+- 2€ donation by Cristina Piva
 
 Thank you for the donations!
 
