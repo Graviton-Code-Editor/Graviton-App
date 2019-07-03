@@ -67,7 +67,7 @@
 	"Welcome.ThanksForInstalling":"شكرا لك على تثبيت ڨرافيتون",
 	"RecentProjects":"مشاريع حديثة",
 	"Notes":"ملاحظات",
-	"ShowWelcome":"Afficher l’accueil",
+	"ShowWelcome":"عرض لوحة الترحيب",
 	"WelcomeMessage":"مرحبًا بك في Graviton Editor :)",
 	"CheckUpdates":"تحقق من وجود تحديثات",
 	"Settings-Editor-AutoCompletion-text":"تعطيل لإخفاء التوقعات",
@@ -86,5 +86,12 @@
 	"Dialog.AreYouSure":"هل انت متأكد ؟",
 	"Exit":"خروج",
 	"newTerminal":"محطة جديدة",
-	"closeTerminal":"إغلاق المحطة"
+	"closeTerminal":"إغلاق المحطة",
+	"IncreaseZoom":"زيادة الحجم",
+	"DicreaseZoom":"تقليل الحجم",
+	"DefaultZoom":"الحجم الافتراضي",
+	"Search":"بحث",
+	"Replace":"استبدل",
+	"JumpToLine":"القفز الى الخط",
+	"CannotRunTerminalCauseDirectory":"افتح الدليل قبل تشغيل المحطة."
 }
