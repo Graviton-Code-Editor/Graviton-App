@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190702',
+  date: '190703',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -29,7 +29,7 @@ const os = require('os'),
   url = require('url'),
   marked = require('marked'),
   updater = require("./src/javascript/updater"); /*Import the update module*/
-
+  const fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
 let current_screen,
   dir_path,
   i,

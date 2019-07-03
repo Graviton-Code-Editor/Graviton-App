@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200703 - 1 [1.0.3]
+- Terminals now resize if you resize the window(Still working on)
+
 ### 200702 - 1 [1.0.3]
 - v1.0.3
 - Fixed, you cannot close an opened terminal

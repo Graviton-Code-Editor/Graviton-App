@@ -9,4 +9,4 @@ Let's navigate to our .graviton folder:
 | Linux 		| /home/username/.config/.graviton |
 | MacOS     | /users/username/library/applications support/.graviton |
 
-And there we have to copy the Plugin's folder.
+And there we have to copy the Plugin's folder(you can also run a "git clone").

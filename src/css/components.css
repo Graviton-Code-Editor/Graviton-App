@@ -820,7 +820,6 @@ p.link:hover {
   transform: scale(var(--scalation));
 }
 .commander{
-  margin-top: 10px;
   position: relative;
   width: auto;
   overflow: visible;
@@ -828,6 +827,8 @@ p.link:hover {
   padding: 10px;
   box-sizing: border-box;
   max-width: 100%;
+  max-height: 40%;
+  min-height: 40%;
 }
 .xterm *{
   overflow: auto;

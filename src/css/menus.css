@@ -257,7 +257,7 @@ span.line_space_menus {
 }
 
 #context_menu>button:hover {
-  color: var(--black-white);
+  color: var(--white-black);
   background-color: var(--accentColor);
   border-radius: 3px;
   cursor: pointer;
