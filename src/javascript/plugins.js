@@ -63,7 +63,9 @@ function detectPlugins() {
               const config = JSON.parse(data);
               if (err) throw err;
               plugins_list.push(config);
-              const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+              if(config["main"]!=undefined) {
+                const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+              }
               for (i = 0; i < config["javascript"].length; i++) {
                 const script = document.createElement("script");
                 script.setAttribute("src", path.join(plugins_folder, config["folder"], config["javascript"][i])),
@@ -83,7 +85,9 @@ function detectPlugins() {
             if (err) throw err;
             const config = JSON.parse(data);
             plugins_list.push(config);
-            const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+            if(config["main"]!=undefined){
+               const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+            }
             for (i = 0; i < config["css"].length; i++) {
               const link = document.createElement("link");
               link.setAttribute("rel", "stylesheet");

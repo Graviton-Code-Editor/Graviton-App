@@ -109,12 +109,12 @@ WindowDM.setList({
     'Developer Tools': 'graviton.openDevTools()',
     "1a":"*line",
     "IncreaseZoom": {
-      click:"graviton.setZoom(parseInt(current_config.appZoom)+5)",
+      click:"graviton.setZoom(parseInt(current_config.appZoom)+3)",
       hint:"Ctrl+shift+plus",
       icon:"plus_zoom"
     },
     "DicreaseZoom":  {
-      click:"graviton.setZoom(parseInt(current_config.appZoom)+-5)",
+      click:"graviton.setZoom(parseInt(current_config.appZoom)+-3)",
       hint:"Ctrl+minus",
       icon:"minus_zoom"
     },
@@ -134,7 +134,7 @@ Help.setList({
     'Telegram Group': "shell.openExternal('https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ')",
     '*line': '',
     Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
-    FAQs: '',
+    FAQs: "shell.openExternal('https://www.graviton.ml/faqs')",
     Changelog: 'graviton.dialogChangelog()',
     Website: "shell.openExternal('https://www.graviton.ml')",
     About: {

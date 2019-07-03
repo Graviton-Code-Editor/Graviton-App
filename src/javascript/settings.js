@@ -39,7 +39,7 @@ const Settings = {
           <div id="dpi">
             <h>${current_config.language['ZoomSize']}</h4>
             <div class="section">
-              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
+              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="3" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
             </div>
           </div>
           <h4>${current_config.language['Themes']}</h4> 
