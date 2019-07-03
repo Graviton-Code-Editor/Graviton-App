@@ -942,17 +942,9 @@ const commanders = {
             theme:{
               background:graviton.getCurrentTheme().Colors["editor-background-color"],
               foreground:graviton.getCurrentTheme().Colors["white-black"]
-            },
-            onResize: function(){
-              console.log("pro");
             }
           });
           //
-          console.log(randomID);
-          document.getElementById("xterm"+randomID+"_commander").addEventListener("resize",function(e){
-            fit.fit(current_screen.terminal.xterm)
-            console.log("you are pro!");
-          })
           xterm.open(document.getElementById("xterm"+randomID+"_commander"));  
           xterm.on('data', (data) => {
             ptyProcess.write(data);
@@ -1104,4 +1096,4 @@ const screens = {
     }
   }
 }
-window.onresize = function(){console.log("pro"); graviton.resizeTerminals();}
+window.onresize = function(){ graviton.resizeTerminals();}
