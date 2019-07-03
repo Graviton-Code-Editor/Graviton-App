@@ -86,5 +86,13 @@
   "Dialog.AreYouSure": "Sind Sie sich sicher?",
   "Exit": "Exit",
   "newTerminal": "Neuer Terminal",
-  "closeTerminal": "Terminal schließen"
+  "closeTerminal": "Terminal schließen",
+  "IncreaseZoom":"Vergrößern",
+	"DicreaseZoom":"Verkleinern",
+	"DefaultZoom":"Standart Größe",
+	"Search":"Suchen",
+	"Replace":"Ersetzen",
+	"JumpToLine":"Spring zu Zeile",
+	"CannotRunTerminalCauseDirectory":"Öffnen Sie einen Ordner bevor Sie den Terminal starten.",
+  "Window":"Fenster"
 }
