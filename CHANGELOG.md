@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200704 - 2 [1.0.3]
+- Better terminals resizing
+
 ### 200704 - 1 [1.0.3]
 - Terminals now resize if you resize the window(Still working on)
 

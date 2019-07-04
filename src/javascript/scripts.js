@@ -28,8 +28,8 @@ const os = require('os'),
   { systemPreferences } = require('electron').remote,
   url = require('url'),
   marked = require('marked'),
-  updater = require("./src/javascript/updater"); /*Import the update module*/
-  const fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
+  updater = require("./src/javascript/updater"), /*Import the update module*/
+  fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
 let current_screen,
   dir_path,
   i,
@@ -79,6 +79,7 @@ document.addEventListener('mousemove', function(event) {
   if (mouseClicked && touchingResizerValue) {
     const explorer = document.getElementById('g_explorer')
     explorer.style = `width: ${event.clientX - 3}px`
+    graviton.resizeTerminals();
   }
 }, true)
 
@@ -324,7 +325,7 @@ const loadEditor = (info) => {
       'Ctrl-L': function(cm) { screens.remove(current_screen.id) },
       'Ctrl-E': function(cm) { graviton.toggleZenMode() },
       'Ctrl-T': function(cm) { commanders.terminal() },
-      'Ctrl-Y': function(cm) { commanders.closeTerminal() },
+      'Ctrl-U': function(cm) { commanders.closeTerminal() },
       'F11': function(cm) {
         if (g_window.isFullScreen() == false) {
           g_window.setFullScreen(true);
@@ -351,7 +352,7 @@ const appendBinds = () => {
   Mousetrap.bind('mod+t', function() {
     commanders.terminal()
   })
-  Mousetrap.bind('mod+y', function() {
+  Mousetrap.bind('mod+u', function() {
     commanders.closeTerminal()
   })
   Mousetrap.bind('f11', function() {

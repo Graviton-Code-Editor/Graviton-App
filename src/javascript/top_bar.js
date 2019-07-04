@@ -99,7 +99,7 @@ Editor.setList({
     'closeTerminal': {
       click: 'commanders.closeTerminal()',
       icon: 'close_terminal',
-      hint:"Ctrl+Y"
+      hint:"Ctrl+U"
     }
   }
 })

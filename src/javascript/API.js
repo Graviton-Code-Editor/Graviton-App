@@ -952,7 +952,7 @@ const commanders = {
           ptyProcess.on('data', function (data) {
             xterm.write(data);
           });
-          xterm
+          graviton.resizeTerminals();
           for(i=0;i<editor_screens.length;i++){
             if(editor_screens[i].id==current_screen.id){
               editor_screens[i].terminal = {id:"xterm"+randomID,xterm:xterm};
@@ -986,6 +986,7 @@ const commanders = {
         editor_screens[i].terminal = undefined;
         commanders.close(current_screen.terminal.id);
         current_screen.terminal = undefined;
+        graviton.resizeTerminals();
       }
     } 
 
@@ -1042,7 +1043,7 @@ const screens = {
           if (tabs2.length == 0) {
             if (editor_screens[i].terminal != undefined) {
               editor_screens[i].terminal.xterm.destroy()
-              commander.close(editor_screens[i].terminal.id)
+              commanders.close(editor_screens[i].terminal.id)
               editor_screens[i].terminal = undefined;
             }
             const closed_screen_event = new CustomEvent("closed_screen",{
