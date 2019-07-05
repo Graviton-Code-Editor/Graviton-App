@@ -34,7 +34,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 @font-face {
   font-family: _main_font;
-  src: url(../fonts/Inter-Regular.woff2), url(../Inter-SemiBold.woff2);
+  src: url(../fonts/Inter-Regular.woff2);
 }
 
 @font-face {

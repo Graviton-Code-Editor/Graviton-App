@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190704',
+  date: '190705',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -82,7 +82,14 @@ document.addEventListener('mousemove', function(event) {
     graviton.resizeTerminals();
   }
 }, true)
-
+function updateTitle(text){
+  if(graviton.currentOS().codename == "win32"){
+    document.getElementById("title_directory").children[0].innerText = text;
+  }else{
+    g_window.setTitle(text+"· Graviton");
+  }
+}
+updateTitle(`Graviton v${g_version.version}`)
 const loadEditor = (info) => {
   if (document.getElementById(info.dir.replace(/\\/g, "") + '_editor') == undefined) {
     switch (info.type) {
@@ -332,6 +339,9 @@ const loadEditor = (info) => {
         } else {
           g_window.setFullScreen(false);
         }
+      },
+      'Ctrl-P': function(cm) {
+        graviton.toggleMenus();
       }
     })
   }
@@ -356,13 +366,10 @@ const appendBinds = () => {
     commanders.closeTerminal()
   })
   Mousetrap.bind('f11', function() {
-    if (graviton.isProduction()) {
-      if (g_window.isFullScreen() == false) {
-        g_window.setFullScreen(true);
-      } else {
-        g_window.setFullScreen(false);
-      }
-    }
+    graviton.toggleFullScreen();
+  })
+  Mousetrap.bind('mod+p', function() {
+    graviton.toggleMenus();
   })
 }
 
@@ -439,7 +446,7 @@ function saveFile() {
 function loadDirs(dir, app_id, first_time) {
   if (!fs.existsSync(dir)) {
     graviton.throwError(current_config.language['DirectoryDoesntExist'])
-    return
+    return;
   }
   const appender_id = app_id.replace(/\\/g, '')
   if (appender_id == 'g_directories') {
@@ -448,6 +455,7 @@ function loadDirs(dir, app_id, first_time) {
   }
   let working_folder
   FirstFolder = dir
+  updateTitle(FirstFolder)
   const appender = document.getElementById(appender_id)
   if (appender.getAttribute('opened') == 'true') {
     appender.setAttribute('opened', 'false')

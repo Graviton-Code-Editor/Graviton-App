@@ -29,7 +29,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   flex: 1;
   display: flex;
   -webkit-app-region: no-drag;
-  min-width: 144px;
+  min-width: auto;
   max-width: 144px;
 }
 
@@ -62,18 +62,35 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #g_control_bar>#controls>#close:hover>svg>rect {
   fill: white;
 }
-
+#g_control_bar > #title_directory{
+  flex:1;
+  text-align: center;
+  min-width: 0px;
+  overflow: hidden;
+  
+}
+#g_control_bar > #title_directory p{
+  font-size: 12px;
+  color:var(--titleBar-icons-color);
+  top:28%;
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  width: 100%;
+  margin: 0px 10px;
+}
 #g_control_bar>#g_dropmenu_list {
   display: flex;
-  flex: 8;
   list-style-type: none;
   padding: 0;
   overflow: auto;
   -webkit-app-region: drag;
   margin-left: 35px;
   border: 0;
-  position: static;
+  position: relative;
   float: left;
+  min-width: auto;
+  max-width: auto;
 }
 
 #g_control_bar>#g_dropmenu_list button.dropbtn {

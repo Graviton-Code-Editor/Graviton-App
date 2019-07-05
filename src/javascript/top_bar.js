@@ -108,6 +108,11 @@ WindowDM.setList({
   list: {
     'Developer Tools': 'graviton.openDevTools()',
     "1a":"*line",
+    "HideMenus": {
+      click:"graviton.toggleMenus(); new Notification(getTranslation('Tip'),getTranslation('ToggleMenuTipMessage'))",
+      hint:"Ctrl+P"
+    },
+    "2a":"*line",
     "IncreaseZoom": {
       click:"graviton.setZoom(parseInt(current_config.appZoom)+3)",
       hint:"Ctrl+shift+plus",
@@ -121,7 +126,11 @@ WindowDM.setList({
     "DefaultZoom": {
       click:'graviton.setZoom(25);',
       icon:"default_zoom"
-    }
+    },
+    'Fullscreen':{
+      click:'graviton.toggleFullScreen()',
+      hint:"F11"
+    } 
   }
 })
 

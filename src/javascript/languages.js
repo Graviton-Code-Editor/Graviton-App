@@ -43,3 +43,15 @@ const loadLanguage = language => {
     }
   })
 }
+const getTranslation = text =>{
+  if(current_config.language[text]==undefined){
+    for(i=0;i<languages.length;i++){
+      if (languages[i]['g_l'] === "english") {
+        return languages[i][text];
+      }
+    };
+  }else{
+    console.log("00")
+    return current_config.language[text];
+  }
+}

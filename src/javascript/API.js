@@ -10,6 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 const _os = require('os');
 const pty = require('node-pty');
+let menus_showing = true;
 let context_menu_list_text = { //Initial value
   "Copy": " document.execCommand('copy');",
   "Paste": " document.execCommand('paste');"
@@ -451,6 +452,24 @@ const graviton = {
       if(editor_screens[i].terminal !=undefined){
         fit.fit(editor_screens[i].terminal.xterm);
       }
+    }
+  },
+  toggleFullScreen(){
+    if (graviton.isProduction()) {
+      if (g_window.isFullScreen() == false) {
+        g_window.setFullScreen(true);
+      } else {
+        g_window.setFullScreen(false);
+      }
+    }
+  },
+  toggleMenus(){
+    if (menus_showing==true) {
+      document.getElementById("g_dropmenu_list").style="visibility:hidden; width:0;"
+      menus_showing=false;
+    }else{
+      document.getElementById("g_dropmenu_list").style="";
+      menus_showing=true;
     }
   }
 }
@@ -962,10 +981,12 @@ const commanders = {
                   terminal: current_screen.terminal
                 }
               })
-              document.dispatchEvent(new_terminal_event); 
+              document.dispatchEvent(new_terminal_event);
+              graviton.resizeTerminals(); 
               return;
             }
           }  
+         
           
         }
      }) 

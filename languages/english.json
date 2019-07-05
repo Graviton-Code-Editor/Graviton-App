@@ -94,5 +94,9 @@
 	"Replace":"Replace",
 	"JumpToLine":"Jump to line",
 	"CannotRunTerminalCauseDirectory":"Open a directory before starting the terminal.",
-	"Window":"Window"
+	"Window":"Window",
+	"Fullscreen":"Fullscreen",
+	"HideMenus":"Hide menus",
+	"Tip":"Tip",
+	"ToggleMenuTipMessage":"Press Ctrl+P to toggle the menus visibility."
 }
