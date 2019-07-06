@@ -82,5 +82,21 @@
 	"SplitScreen":"Podziel ekran",
 	"RemoveScreen":"Usuń ekran",
 	"DirectoryDoesntExist":"Podany folder nie istnieje",
-	"Remove":"Usuń"
+	"Remove":"Usuń",
+	"Dialog.AreYouSure":"Czy jesteś pewien/a?",
+	"Exit":"Wyjdź",
+	"newTerminal":"Nowy Terminal",
+	"closeTerminal":"Zamknij Terminal",
+	"IncreaseZoom":"Przybliż",
+	"DicreaseZoom":"Oddal",
+	"DefaultZoom":"Domyślne przybliżenie",
+	"Search":"Szukaj",
+	"Replace":"Zamień",
+	"JumpToLine":"Skocz do linii",
+	"CannotRunTerminalCauseDirectory":"Otwórz folder przed otworzeniem terminala.",
+	"Window":"Okno",
+	"Fullscreen":"Pełny ekran",
+	"HideMenus":"Ukryj menu",
+	"Tip":"Podpowiedź",
+	"ToggleMenuTipMessage":"Wciśnij Ctrl+P by zmienić widoczność menu."
 }
