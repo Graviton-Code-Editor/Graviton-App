@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200706 - 1 [1.0.3]
+ - Changed Ctrl+P to Ctrl+Q (toggling menus visibility)
+
 ### 200705 - 1 [1.0.3]
 - Added a button to hide the top menus in "Window" , you can also press Ctrl+P to toggle it
 - Now the working directory is showed on top

@@ -110,7 +110,7 @@ WindowDM.setList({
     "1a":"*line",
     "HideMenus": {
       click:"graviton.toggleMenus(); new Notification(getTranslation('Tip'),getTranslation('ToggleMenuTipMessage'))",
-      hint:"Ctrl+P"
+      hint:"Ctrl+Q"
     },
     "2a":"*line",
     "IncreaseZoom": {

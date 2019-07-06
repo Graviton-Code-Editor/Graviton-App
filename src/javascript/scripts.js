@@ -84,12 +84,12 @@ document.addEventListener('mousemove', function(event) {
 }, true)
 function updateTitle(text){
   if(graviton.currentOS().codename == "win32"){
-    document.getElementById("title_directory").children[0].innerText = text;
+    document.getElementById("title_directory").children[0].innerText = text+" · Graviton";
   }else{
-    g_window.setTitle(text+"· Graviton");
+    g_window.setTitle(text+" · Graviton");
   }
 }
-updateTitle(`Graviton v${g_version.version}`)
+updateTitle(`v${g_version.version}`)
 const loadEditor = (info) => {
   if (document.getElementById(info.dir.replace(/\\/g, "") + '_editor') == undefined) {
     switch (info.type) {
@@ -340,7 +340,7 @@ const loadEditor = (info) => {
           g_window.setFullScreen(false);
         }
       },
-      'Ctrl-P': function(cm) {
+      'Ctrl-Q': function(cm) {
         graviton.toggleMenus();
       }
     })
@@ -368,7 +368,7 @@ const appendBinds = () => {
   Mousetrap.bind('f11', function() {
     graviton.toggleFullScreen();
   })
-  Mousetrap.bind('mod+p', function() {
+  Mousetrap.bind('mod+q', function() {
     graviton.toggleMenus();
   })
 }
@@ -455,7 +455,6 @@ function loadDirs(dir, app_id, first_time) {
   }
   let working_folder
   FirstFolder = dir
-  updateTitle(FirstFolder)
   const appender = document.getElementById(appender_id)
   if (appender.getAttribute('opened') == 'true') {
     appender.setAttribute('opened', 'false')
@@ -471,6 +470,7 @@ function loadDirs(dir, app_id, first_time) {
     }
   }
   if (first_time) {
+    updateTitle(FirstFolder)
     if (document.getElementById('openFolder') != null) document.getElementById('openFolder').remove()
     registerNewProject(dir)
     working_folder = document.createElement('div')

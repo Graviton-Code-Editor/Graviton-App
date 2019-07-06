@@ -1003,9 +1003,11 @@ const commanders = {
           }
         })
         document.dispatchEvent(closed_terminal_event);
-        editor_screens[i].terminal.xterm.destroy();
-        editor_screens[i].terminal = undefined;
-        commanders.close(current_screen.terminal.id);
+        if(editor_screens[i].terminal!=undefined) {
+          editor_screens[i].terminal.xterm.destroy();
+          commanders.close(current_screen.terminal.id);
+        }
+        editor_screens[i].terminal = undefined; 
         current_screen.terminal = undefined;
         graviton.resizeTerminals();
       }
@@ -1050,6 +1052,7 @@ const screens = {
       }
     })
     document.dispatchEvent(split_screen_event);
+    graviton.resizeTerminals();
   },
   remove: function (id) {
     if (editor_screens.length != 1) {
@@ -1085,6 +1088,7 @@ const screens = {
           return
         }
       }
+      graviton.resizeTerminals();
     } else {
       graviton.throwError(current_config.language['Notification.CannotRemoveMoreScreens'])
       return false
