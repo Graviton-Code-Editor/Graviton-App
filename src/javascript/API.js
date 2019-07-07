@@ -986,8 +986,6 @@ const commanders = {
               return;
             }
           }  
-         
-          
         }
      }) 
   },
@@ -1012,7 +1010,6 @@ const commanders = {
         graviton.resizeTerminals();
       }
     } 
-
   }
 }
 const screens = {

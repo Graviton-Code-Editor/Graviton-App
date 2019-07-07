@@ -30,6 +30,7 @@ const Help = new dropMenu({
   id: 'help',
   translation: true
 })
+
 File.setList({
   button: 'File',
   list: {
@@ -52,6 +53,7 @@ File.setList({
 Tools.setList({
   button: 'Tools',
   list: {
+    Market:'extensions.openStore();',
     Plugins: 'openPlugins()',
     'ShowWelcome': 'g_welcomePage()',
     "1a":"*line",
@@ -133,7 +135,6 @@ WindowDM.setList({
     } 
   }
 })
-
 Help.setList({
   button: 'Help',
   list: {
@@ -201,3 +202,87 @@ if (graviton.currentOS().codename == 'win32') {
   document.getElementById('controls').innerHTML = ' '
   document.getElementById('controls').setAttribute('os', 'not_windows')
 }
+
+
+const extensions ={
+  openStore : function(){
+    const github = require('octonode')
+    const client = github.client()   
+
+    let extensions = [
+        'Graviton-Code-Editor/plugin_FluentDesign'
+    ];
+    const market_window = new Window({
+        id: 'market_window',
+        content: `
+          <h2 class=window_title>Market</h2> 
+          <div id=ext_list>Loading extensions...</div>
+        `
+    })
+    market_window.launch();
+    for(i=0;i<extensions.length;i++){
+      client.repo(extensions[i]).info(function(err,data){
+        if(err){
+          document.getElementById('ext_list').innerHTML +=`
+          <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
+          `  
+          console.log(err);
+          return;
+        }
+        document.getElementById("ext_list").innerText="";
+        const sec_ID = 'sec'+Math.random().toString();
+        document.getElementById('ext_list').innerHTML +=`
+        <div onclick=extensions.openSubExtensions(this) class=section2 id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
+          <h2>${data.name}</h2>
+        </div>
+        ` 
+      })
+    };
+  },
+  openSubExtensions: function(data){
+    const ext_win = new Window({
+      id: 'sec'+data.name,
+      content:`
+      <div id=${data.getAttribute('name')+'_div'} >
+          <h2>${data.getAttribute('name')}</h2>
+          <p>${data.getAttribute('description')}</p>
+          <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Install</button> 
+          <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Uninstall</button> 
+      </div>`
+
+      });
+      ext_win.launch();
+  },
+  installExtension: function(id){
+    const data = document.getElementById(id);
+    const { exec } = require('child_process');
+    const fs = require('fs');
+    if (fs.existsSync(path.join(plugins_folder,data.getAttribute("name")))) {
+      new Notification('Market',data.getAttribute("name")+ current_config.language["ExtAlreadyInstalled"]);
+      return;
+    }
+    exec(`cd ${plugins_folder.replace(/\\/g, '\\\\') } && git clone ${data.getAttribute("git")}`, (err, stdout, stderr) => {
+      if (err) {
+        console.log(err);
+        return;
+      }       
+      new Notification('Market',data.getAttribute("name")+ current_config.language["ExtInstalled"])
+    }); 
+  },
+  uninstallExtension: function(id){
+    const data = document.getElementById(id);
+    const rimraf = require('rimraf');
+      const fs = require('fs');
+      if (!fs.existsSync(path.join(plugins_folder,data.getAttribute("name")))) {
+          new Notification('Market',data.getAttribute("name")+ current_config.language["ExtNotInstalled"]);
+          return;
+      }
+      rimraf(path.join(plugins_folder,data.getAttribute("name")), function (err) { 
+          console.log(err);   
+          new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
+      });
+  }
+}
+
+
+

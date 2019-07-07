@@ -563,7 +563,7 @@ button.button1 {
   transition: 0.03s;
   border-radius: var(--buttons-roundness);
   width: auto;
-  margin: 2px 0px;
+  margin: 2px 3px;
   padding: 10px 30px;
   background: var(--primaryColor);
   color: var(--white-black);

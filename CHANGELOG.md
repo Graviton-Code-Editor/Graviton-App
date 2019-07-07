@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200707 - 1 [1.0.3]
+- A extensions market! (currently testing)
+
 ### 200706 - 1 [1.0.3]
  - Changed Ctrl+P to Ctrl+Q (toggling menus visibility)
 

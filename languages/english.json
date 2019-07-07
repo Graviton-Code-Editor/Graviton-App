@@ -98,5 +98,9 @@
 	"Fullscreen":"Fullscreen",
 	"HideMenus":"Hide menus",
 	"Tip":"Tip",
-	"ToggleMenuTipMessage":"Press Ctrl+P to toggle the menus visibility."
+	"ToggleMenuTipMessage":"Press Ctrl+P to toggle the menus visibility.",
+	"ExtInstalled":" has been installed. Restart the editor to see effects.",
+	"ExtAlreadyInstalled":" is already installed.",
+	"ExtNotInstalled":" is not installed.",
+	"ExtUninstalled":" has been uninstalled. Restart the editor to see effects."
 }
