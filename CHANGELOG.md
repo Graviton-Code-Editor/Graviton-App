@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200707 - 2 [1.0.3]
+- Using nodegit instead of git directly, so the host doesn't have to install git to install extensions
+- Small improvements
+
 ### 200707 - 1 [1.0.3]
 - A extensions market! (currently testing)
 

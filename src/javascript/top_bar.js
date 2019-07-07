@@ -233,7 +233,7 @@ const extensions ={
         const sec_ID = 'sec'+Math.random().toString();
         document.getElementById('ext_list').innerHTML +=`
         <div onclick=extensions.openSubExtensions(this) class=section2 id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
-          <h2>${data.name}</h2>
+          <h2>${data.name} ${graviton.isInstalled(data.name)?"(installed)":""} </h2>
         </div>
         ` 
       })
@@ -244,6 +244,7 @@ const extensions ={
       id: 'sec'+data.name,
       content:`
       <div id=${data.getAttribute('name')+'_div'} >
+          <button class=button1 onclick=closeWindow('sec${data.name}') >${current_config.language["GoBack"]}</button>
           <h2>${data.getAttribute('name')}</h2>
           <p>${data.getAttribute('description')}</p>
           <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Install</button> 
@@ -255,19 +256,15 @@ const extensions ={
   },
   installExtension: function(id){
     const data = document.getElementById(id);
-    const { exec } = require('child_process');
-    const fs = require('fs');
     if (fs.existsSync(path.join(plugins_folder,data.getAttribute("name")))) {
       new Notification('Market',data.getAttribute("name")+ current_config.language["ExtAlreadyInstalled"]);
       return;
     }
-    exec(`cd ${plugins_folder.replace(/\\/g, '\\\\') } && git clone ${data.getAttribute("git")}`, (err, stdout, stderr) => {
-      if (err) {
-        console.log(err);
-        return;
-      }       
-      new Notification('Market',data.getAttribute("name")+ current_config.language["ExtInstalled"])
-    }); 
+    const nodegit = require("nodegit");
+    nodegit.Clone(data.getAttribute("git"), path.join(plugins_folder.replace(/\\/g, '\\\\'),data.getAttribute("name"))).then(function(repository) {
+      new Notification('Market',data.getAttribute("name")+ current_config.language["ExtInstalled"]);
+    });
+    
   },
   uninstallExtension: function(id){
     const data = document.getElementById(id);
@@ -278,11 +275,8 @@ const extensions ={
           return;
       }
       rimraf(path.join(plugins_folder,data.getAttribute("name")), function (err) { 
-          console.log(err);   
+          if(err)console.log(err);   
           new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
       });
   }
 }
-
-
-
