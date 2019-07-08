@@ -103,5 +103,10 @@
 	"ExtAlreadyInstalled":" is already installed.",
 	"ExtNotInstalled":" is not installed.",
 	"ExtUninstalled":" has been uninstalled. Restart the editor to see effects.",
-	"GoBack":"Go back"
+	"GoBack":"Go back",
+	"Market":"Market",
+	"Store":"Store",
+	"Installed":"Installed",
+	"Install":"Install",
+	"Uninstall":"Uninstall"
 }

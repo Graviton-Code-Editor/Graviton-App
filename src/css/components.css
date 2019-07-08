@@ -674,7 +674,16 @@ button.button1:active {
   opacity: 0.7;
   box-shadow: 0px 5px 7px var(--shadows);
 }
-
+.section4{
+  position: relative;
+  padding: 0px 18px;
+  background: transparent;
+  width: auto;
+  min-width: auto;
+  height: auto;
+  min-height: auto;
+  overflow: auto;
+}
 button.button2 {
   font-weight: bold;
   right: 0;
@@ -835,9 +844,6 @@ p.link:hover {
   z-index: auto !important;
 }
 
-#ext_list{
-  display: contents;
-}
 .extension_div{
   transition: 0.05s;
   background: transparent;
@@ -850,8 +856,12 @@ p.link:hover {
   padding:15px;
   border-radius:8px;
   margin:15px;
-  transform: scale(1)
-}.extension_div h3{
+  transform: scale(1);
+  min-height:100px;
+  height: auto;
+  max-height:140px;
+}
+.extension_div h3{
   margin: 2px 0px;
 }
 .extension_div:hover{

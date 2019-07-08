@@ -54,7 +54,6 @@ Tools.setList({
   button: 'Tools',
   list: {
     Market:'extensions.openStore();',
-    Plugins: 'openPlugins()',
     'ShowWelcome': 'g_welcomePage()',
     "1a":"*line",
     "Search":{
@@ -208,16 +207,20 @@ const extensions ={
   openStore : function(){
     const github = require('octonode')
     const client = github.client()   
-
     let extensions = [
         'Graviton-Code-Editor/FluentMod'
     ];
     const market_window = new Window({
         id: 'market_window',
         content: `
+        
           <h2 class=window_title>Market</h2> 
-          <div id=ext_list>
+          <div class=section4 id=ext_list>
+            <h2>${current_config.language["Store"]}</h2>
             <p id=loading_exts>Loading extensions...</p>
+          </div>
+          <div class=section4 id=ext_list_installed>
+            <h2>${current_config.language["Installed"]}</h2>
           </div>
         `
     })
@@ -237,10 +240,20 @@ const extensions ={
         <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
           <h3>${data.name}  </h3>
           <p>${data.description} </p>
-          ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> Installed · v${graviton.getPlugin(data.name).version}</p>`:""}
+          ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
         </div>
         ` 
       })
+    };
+    for(i=0;i<plugins_list.length;i++){
+        const data = plugins_list[i]
+        const sec_ID = 'sec'+Math.random().toString();
+        document.getElementById('ext_list_installed').innerHTML +=`
+        <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
+          <h3>${data.name}  </h3>
+          <p>${data.description} </p>
+        </div>
+        ` 
     };
   },
   openSubExtensions: function(data){
@@ -251,10 +264,10 @@ const extensions ={
           <button class=button1 onclick=closeWindow('sec${data.name}') >${current_config.language["GoBack"]}</button>
           <h2>${data.getAttribute('name')}</h2>
           <p>${data.getAttribute('description')}</p>
-          <p>Author: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).author:"Unknown"}</p>
-          <p>Version: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
-          <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Install</button> 
-          <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Uninstall</button> 
+          <p>${current_config.language["MadeBy"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).author:"Unknown"}</p>
+          <p>${current_config.language["Version"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
+          <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
+          <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
       </div>`
 
       });

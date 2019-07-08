@@ -11,27 +11,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 let plugins_list = [],
     plugins_dbs = [];
 
-function openPlugins() {
-  const plugins_window = new Window({
-    id: "plugins_window",
-    content: `
-		<h2 class="window_title">${current_config.language["Plugins"]}</h2> 
-		<div id="plugins_list">
-		</div>`
-  })
-  plugins_window.launch()
-  plugins_list.forEach(plugin => {
-    document.getElementById("plugins_list").innerHTML += `
-			<div id="${plugin["name"]}_div_list" class="section2">
-				<p class="title">${plugin["name"]} · v${plugin["version"]}</p>
-				<p style="font-size:15px;">${current_config.language["Author"]}: ${plugin["author"]}</p>
-				<p style="font-size:13px; ">Description: ${plugin["description"]}</p>
-			</div>
-			`
-  });
-  if (plugins_list.length == 0) document.getElementById("plugins_list").innerHTML += `<p>No plugins detected.</p>`
-}
-
 function detectPlugins() {
   if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
     fs.mkdirSync(plugins_db);

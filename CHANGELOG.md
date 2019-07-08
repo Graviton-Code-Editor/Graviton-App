@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200708 - 2 [1.0.3]
+- Added an installed plugins section
+- Other improvements
+
 ### 200708 - 1 [1.0.3]
 - Improved the market
 
