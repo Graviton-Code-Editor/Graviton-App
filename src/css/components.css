@@ -468,8 +468,8 @@ input[type="number"]::selection {
   max-width: 75%;
   white-space: nowrap;
   height: auto;
-  line-height: 14px;
-  top: 0px;
+  line-height: 20px;
+  bottom: 4.5px;
   left: 0px;
   margin-left: 11px;
   float: left;
@@ -833,4 +833,42 @@ p.link:hover {
 .xterm *{
   overflow: auto;
   z-index: auto !important;
+}
+
+#ext_list{
+  display: contents;
+}
+.extension_div{
+  transition: 0.05s;
+  background: transparent;
+  border: 2px solid var(--primaryColor);
+  max-width:265px;
+  min-width: 100px;
+  overflow:auto;
+  position: relative;
+  float: left;
+  padding:15px;
+  border-radius:8px;
+  margin:15px;
+  transform: scale(1)
+}.extension_div h3{
+  margin: 2px 0px;
+}
+.extension_div:hover{
+  cursor: pointer;
+  transition: 0.05s;
+  box-shadow: 0px 3px 6px var(--shadows);
+}
+.extension_div:active{
+  transition: 0.05s;
+  transform: scale(var(--scalation))
+}
+.extension_div .installed{
+  border-top: 2px solid var(--primaryColor);
+  padding: 12px 0px 4px 4px;
+  margin: 2px;
+  color:var(--white-black);
+}
+.sub_extension_div{
+  padding: 20px;
 }

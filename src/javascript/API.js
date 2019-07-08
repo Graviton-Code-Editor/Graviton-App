@@ -472,10 +472,10 @@ const graviton = {
       menus_showing=true;
     }
   },
-  isInstalled: function(folder_name){
+  getPlugin: function(folder_name){
     for(i=0;i<plugins_list.length;i++){
       if(plugins_list[i].folder == folder_name){
-        return true;
+        return plugins_list[i];
       }
     }
   }

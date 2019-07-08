@@ -210,13 +210,15 @@ const extensions ={
     const client = github.client()   
 
     let extensions = [
-        'Graviton-Code-Editor/plugin_FluentDesign'
+        'Graviton-Code-Editor/FluentMod'
     ];
     const market_window = new Window({
         id: 'market_window',
         content: `
           <h2 class=window_title>Market</h2> 
-          <div id=ext_list>Loading extensions...</div>
+          <div id=ext_list>
+            <p id=loading_exts>Loading extensions...</p>
+          </div>
         `
     })
     market_window.launch();
@@ -229,11 +231,13 @@ const extensions ={
           console.log(err);
           return;
         }
-        document.getElementById("ext_list").innerText="";
+        if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
         const sec_ID = 'sec'+Math.random().toString();
         document.getElementById('ext_list').innerHTML +=`
-        <div onclick=extensions.openSubExtensions(this) class=section2 id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
-          <h2>${data.name} ${graviton.isInstalled(data.name)?"(installed)":""} </h2>
+        <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
+          <h3>${data.name}  </h3>
+          <p>${data.description} </p>
+          ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> Installed · v${graviton.getPlugin(data.name).version}</p>`:""}
         </div>
         ` 
       })
@@ -243,10 +247,12 @@ const extensions ={
     const ext_win = new Window({
       id: 'sec'+data.name,
       content:`
-      <div id=${data.getAttribute('name')+'_div'} >
+      <div class=sub_extension_div id=${data.getAttribute('name')+'_div'} >
           <button class=button1 onclick=closeWindow('sec${data.name}') >${current_config.language["GoBack"]}</button>
           <h2>${data.getAttribute('name')}</h2>
           <p>${data.getAttribute('description')}</p>
+          <p>Author: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).author:"Unknown"}</p>
+          <p>Version: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
           <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Install</button> 
           <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'install'} class=button1 >Uninstall</button> 
       </div>`
