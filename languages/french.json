@@ -93,5 +93,20 @@
 	"Search":"Recherche",
 	"Replace":"Remplacer",
 	"JumpToLine":"Aller à la ligne",
-	"CannotRunTerminalCauseDirectory":"Ouvrez un répertoire avant de lancer le terminal."
+	"CannotRunTerminalCauseDirectory":"Ouvrez un répertoire avant de lancer le terminal.",
+	"Window":"Fenêtre",
+	"Fullscreen":"Plein écran",
+	"HideMenus":"Cacher les menus",
+	"Tip":"Astuce",
+	"ToggleMenuTipMessage":"Appuyez sur Ctrl+P pour afficher ou cacher les menus.",
+	"ExtInstalled":" a été installé. Redemarrez l'éditeur pour voir les changements.",
+	"ExtAlreadyInstalled":" est déjà installé.",
+	"ExtNotInstalled":" n'est pas installé.",
+	"ExtUninstalled":" a été désinstallé. Redemarrez l'éditeur pour voir les changements.",
+	"GoBack":"Retour",
+	"Market":"Market",
+	"Store":"Store",
+	"Installed":"Installé",
+	"Install":"Installer",
+	"Uninstall":"Désinstaller"
 }
