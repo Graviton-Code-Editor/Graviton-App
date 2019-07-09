@@ -51,7 +51,6 @@ const getTranslation = text =>{
       }
     };
   }else{
-    console.log("00")
     return current_config.language[text];
   }
 }

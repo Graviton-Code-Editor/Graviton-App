@@ -164,31 +164,38 @@ function dropMenu(obj) {
         if (panel[attr] == panel["list"] && panel["list"] != undefined && last != "list") { //List
           last = "list";
           Object.keys(panel["list"]).forEach(function(key) {
-            if (panel["list"][key] == "*line" || key == "*line") {
-              droplist.innerHTML += `<span class="line_space_menus"></span>`;
-            } else {
-              const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
-              const click = typeof panel["list"][key] == "string"? panel["list"][key]:panel["list"][key].click
-              const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint==undefined?"":panel["list"][key].hint;
-              if (toTransx != true) {
-                droplist.innerHTML += `
-                <button title="${hint}" onclick="${click}" >
-                  <div>
-                  ${icon}
-                  </div>
-                  <div>${key}</div>
-                </button>`
+              if (panel["list"][key] == "*line" || key == "*line") {
+                droplist.innerHTML += `<span class="line_space_menus"></span>`;
               } else {
-                droplist.innerHTML += `
-                <button title="${hint}" onclick="${click}" >
-                  <div>
-                  ${icon}
-                  </div>
-                  <div class="translate_word" idT="${key.replace(/ +/g, "")}">
-                    ${key}
-                  </div>
-                </button>`;
-              }
+                const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
+                const click = typeof panel["list"][key] == "function"? panel["list"][key]:panel["list"][key].click
+                const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint==undefined?"":panel["list"][key].hint;
+                var button =document.createElement("button");
+                button.setAttribute("title",hint);
+                button.id = Math.random();
+                sleeping(1).then(() => {
+                  document.getElementById(button.id).onclick = click
+                });
+                if (toTransx != true) {
+                  button.innerHTML += `
+                    <div>
+                    ${icon}
+                    </div>
+                    <div>${key}</div>
+                  `
+                } else {
+                  button.innerHTML += `
+                  
+                    <div>
+                    ${icon}
+                    </div>
+                    <div class="translate_word" idT="${key.replace(/ +/g, "")}">
+                      ${key}
+                    </div>
+                  `;
+                }
+                droplist.appendChild(button);
+ 
             }
           });
         }
@@ -208,6 +215,13 @@ function dropMenu(obj) {
     }
   }
 }
+
+function sleeping (ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  });
+}
+
 const graviton = {
   getCurrentTheme: function() { //Get the theme name of the applied theme
     return current_config.theme;

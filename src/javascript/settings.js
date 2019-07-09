@@ -14,7 +14,7 @@ const Settings = {
     const settings_window = new Window({
       id: 'settings_window',
       content: `
-      <div id="g_settings_panel">
+      <div class="g_lateral_panel">
         <h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language['Settings']}</h2> 
         <div id="nav_bar">
           <button id="navB1" onclick="Settings.navigate('1')" class="translate_word" idT="Customization">${current_config.language['Customization']}</button>
@@ -24,7 +24,7 @@ const Settings = {
           <button id="navB5" onclick="Settings.navigate('5')" class="translate_word" idT="About">${current_config.language['About']}</button>
         </div>
       </div>
-      <div id="settings_content"></div>`,
+      <div id="_content1"></div>`,
       onClose: 'saveConfig();'
     })
     settings_window.launch()
@@ -35,7 +35,7 @@ const Settings = {
     }
     switch (num) {
       case '1':
-        document.getElementById('settings_content').innerHTML = `
+        document.getElementById('_content1').innerHTML = `
           <div id="dpi">
             <h>${current_config.language['ZoomSize']}</h4>
             <div class="section">
@@ -72,7 +72,7 @@ const Settings = {
         document.getElementById('navB1').classList.add('active')
         break
       case '2':
-        document.getElementById('settings_content').innerHTML = `   
+        document.getElementById('_content1').innerHTML = `   
           <div id='language_list'></div> `
         for (i = 0; i < languages.length; i++) {
           const languageDiv = document.createElement('div')
@@ -87,7 +87,7 @@ const Settings = {
         document.getElementById('navB2').classList.add('active')
         break
       case '3':
-        document.getElementById('settings_content').innerHTML = `
+        document.getElementById('_content1').innerHTML = `
           <div id="editor_fs">
               <h4>${current_config.language['FontSize']}</h4>
               <div class="section">
@@ -112,7 +112,7 @@ const Settings = {
         document.getElementById('navB3').classList.add('active')
         break
       case '4':
-        document.getElementById('settings_content').innerHTML = `
+        document.getElementById('_content1').innerHTML = `
           <h4>${current_config.language['Performance']}</h4>
           <div class="section">
               <p>${current_config.language['Settings-Advanced-Performance-Animations']}</p>
@@ -133,7 +133,7 @@ const Settings = {
         document.getElementById('navB4').classList.add('active')
         break
       case '5':
-        document.getElementById('settings_content').innerHTML = `
+        document.getElementById('_content1').innerHTML = `
           <h4>${current_config.language['About']} </h4>
           <div class="section">
               <p>${current_config.language['About-text1']}</p>

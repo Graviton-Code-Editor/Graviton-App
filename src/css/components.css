@@ -600,7 +600,9 @@ button.button1:active {
   box-sizing: border-box;
   opacity: 0.7;
 }
-
+.button1 svg *{
+  fill: var(--white-black);
+}
 .section {
   margin: 3px;
   margin-bottom: 12px;
@@ -879,6 +881,54 @@ p.link:hover {
   margin: 2px;
   color:var(--white-black);
 }
-.sub_extension_div{
-  padding: 20px;
+.sub_extension_div {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.sub_extension_div .top{
+  display: flex;
+  padding: 15px;
+}
+.sub_extension_div .top h1{
+  margin-top: 5px;
+}
+.sub_extension_div .top > div{
+  flex:1;
+}
+.sub_extension_div .top div:nth-child(2) {
+  max-width: 25%;
+  justify-content: center;
+  padding: 7px;
+}
+.sub_extension_div .top div:nth-child(2) > div {
+  position: relative;
+  top: 45%;
+  transform: translateY(-50%)
+}
+.sub_extension_div .top div:nth-child(2) button{
+  min-width: 120px;
+  display: block;
+  white-space: pre-wrap;
+  margin: 7px auto;
+}
+
+
+.page_hidden{
+  display: none;
+}
+.page_showed{
+  display: block;
+}
+.ext_content{
+  padding: 15px;
+  border-top: 2px solid var(--primaryColor);
+  overflow: auto;
+  position: relative;
+  max-height: auto;
+}
+
+.close_exts{
+  margin-left: 15px !important;
 }

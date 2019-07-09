@@ -34,18 +34,18 @@ const Help = new dropMenu({
 File.setList({
   button: 'File',
   list: {
-    'Open Folder': 'openFolder()',
-    'Open File': 'openFile()',
-    'Save As': 'saveFileAs()',
+    'Open Folder':()=> openFolder(),
+    'Open File': ()=>openFile(),
+    'Save As': ()=>saveFileAs(),
     'Save': {
-      click: 'saveFile()',
+      click: ()=>saveFile(),
       hint: 'Ctrl+S'
     },
     '*line': '',
-    'New Project': 'g_NewProjects(); ',
+    'New Project': ()=>g_NewProjects(),
     'space1': '*line',
     Exit: {
-      click:'remote.app.exit(0);',
+      click:()=>remote.app.exit(0),
       icon:'exit'
     }
   }
@@ -53,52 +53,58 @@ File.setList({
 Tools.setList({
   button: 'Tools',
   list: {
-    Market:'extensions.openStore();',
-    'ShowWelcome': 'g_welcomePage()',
+    Market:()=>{
+      extensions.openStore();
+      extensions.navigate("all")
+    },
+    'ShowWelcome': ()=>g_welcomePage(),
     "1a":"*line",
     "Search":{
-      click:"graviton.editorSearch();",
+      click:()=>graviton.editorSearch(),
       hint:"Ctrl+F"
     },
     "Replace":{
-      click:"graviton.editorReplace();",
+      click:()=>graviton.editorReplace(),
       hint:"Ctrl+Shit+R"
     },
     "JumpToLine":{
-      click:"graviton.editorJumpToLine();",
+      click:()=>raviton.editorJumpToLine(),
       hint:"Alt+G"
     },
     '2a': '*line',
-    Settings: "Settings.open(); Settings.navigate('1')"
+    Settings: ()=>{
+      Settings.open(); 
+      Settings.navigate('1')
+    }
   }
 })
 Editor.setList({
   button: 'Editor',
   list: {
     'Zen Mode': {
-      click: 'graviton.toggleZenMode()',
+      click: ()=>graviton.toggleZenMode(),
       hint: 'Ctrl+E'
     },
     'a1': '*line',
-    'DefaultView': 'screens.default()',
+    'DefaultView': ()=>screens.default(),
     'SplitScreen': {
-      click: 'screens.add()',
+      click:()=>screens.add(),
       icon: 'split_screen',
       hint: 'Ctrl+N'
     },
     'RemoveScreen': {
-      click: 'graviton.removeScreen()',
+      click: ()=>graviton.removeScreen(),
       icon: 'remove_screen',
       hint: 'Ctrl+L'
     },
     'a2': '*line',
     'newTerminal': {
-      click: 'commanders.terminal()',
+      click: ()=>commanders.terminal(),
       icon: 'new_terminal',
       hint:"Ctrl+T"
     },
     'closeTerminal': {
-      click: 'commanders.closeTerminal()',
+      click: ()=>commanders.closeTerminal(),
       icon: 'close_terminal',
       hint:"Ctrl+U"
     }
@@ -107,29 +113,32 @@ Editor.setList({
 WindowDM.setList({
   button: 'Window',
   list: {
-    'Developer Tools': 'graviton.openDevTools()',
+    'Developer Tools': ()=>graviton.openDevTools(),
     "1a":"*line",
     "HideMenus": {
-      click:"graviton.toggleMenus(); new Notification(getTranslation('Tip'),getTranslation('ToggleMenuTipMessage'))",
+      click:()=>{
+        graviton.toggleMenus(); 
+        new Notification(getTranslation('Tip'),getTranslation('ToggleMenuTipMessage'))
+      },
       hint:"Ctrl+Q"
     },
     "2a":"*line",
     "IncreaseZoom": {
-      click:"graviton.setZoom(parseInt(current_config.appZoom)+3)",
+      click:()=>graviton.setZoom(parseInt(current_config.appZoom)+3),
       hint:"Ctrl+shift+plus",
       icon:"plus_zoom"
     },
     "DicreaseZoom":  {
-      click:"graviton.setZoom(parseInt(current_config.appZoom)+-3)",
+      click:()=>graviton.setZoom(parseInt(current_config.appZoom)+-3),
       hint:"Ctrl+minus",
       icon:"minus_zoom"
     },
     "DefaultZoom": {
-      click:'graviton.setZoom(25);',
+      click:()=>graviton.setZoom(25),
       icon:"default_zoom"
     },
     'Fullscreen':{
-      click:'graviton.toggleFullScreen()',
+      click:()=>graviton.toggleFullScreen(),
       hint:"F11"
     } 
   }
@@ -137,17 +146,17 @@ WindowDM.setList({
 Help.setList({
   button: 'Help',
   list: {
-    Issues: "shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')",
-    'Source Code': "shell.openExternal('https://github.com/Graviton-Code-Editor')",
-    'Telegram Channel': "shell.openExternal('https://t.me/gravitoneditor')",
-    'Telegram Group': "shell.openExternal('https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ')",
+    Issues: ()=> shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues'),
+    'Source Code': ()=>shell.openExternal('https://github.com/Graviton-Code-Editor'),
+    'Telegram Channel': ()=>shell.openExternal('https://t.me/gravitoneditor'),
+    'Telegram Group': ()=>shell.openExternal('https://t.me/joinchat/FgdqbBRNJjpSHPHuDRMzfQ'),
     '*line': '',
-    Donate: "shell.openExternal('https://www.paypal.me/mkenzo8')",
-    FAQs: "shell.openExternal('https://www.graviton.ml/faqs')",
-    Changelog: 'graviton.dialogChangelog()',
-    Website: "shell.openExternal('https://www.graviton.ml')",
+    Donate: ()=>shell.openExternal('https://www.paypal.me/mkenzo8'),
+    FAQs: ()=>shell.openExternal('https://www.graviton.ml/faqs'),
+    Changelog: ()=>graviton.dialogChangelog(),
+    Website: ()=>shell.openExternal('https://www.graviton.ml'),
     About: {
-      click: 'graviton.dialogAbout()',
+      click: ()=>graviton.dialogAbout(),
       icon: 'info'
     }
   }
@@ -204,74 +213,119 @@ if (graviton.currentOS().codename == 'win32') {
 
 
 const extensions ={
-  openStore : function(){
-    const github = require('octonode')
-    const client = github.client()   
-    let extensions = [
-        'Graviton-Code-Editor/FluentMod'
-    ];
-    const market_window = new Window({
-        id: 'market_window',
-        content: `
-        
-          <h2 class=window_title>Market</h2> 
-          <div class=section4 id=ext_list>
-            <h2>${current_config.language["Store"]}</h2>
+  navigate: function (num) {
+    for (i = 0; i < document.getElementById('nav_bar').children.length; i++) {
+      document.getElementById('nav_bar').children[i].classList.remove('active')
+    }
+    switch (num) {
+      case 'all':
+          for(i=0;i<document.getElementById("_content1").children.length;i++){
+            document.getElementById("_content1").children[i].classList = "page_hidden";
+          }
+          document.getElementById("sec_all").classList = "page_showed"
+          if(document.getElementById('sec_all').innerHTML == ""){
+            const github = require('octonode')
+            const client = github.client()   
+            let extensions = [
+                'Graviton-Code-Editor/FluentMod'
+            ];
+            document.getElementById("sec_all").innerHTML = `
             <p id=loading_exts>Loading extensions...</p>
-          </div>
-          <div class=section4 id=ext_list_installed>
-            <h2>${current_config.language["Installed"]}</h2>
-          </div>
-        `
-    })
-    market_window.launch();
-    for(i=0;i<extensions.length;i++){
-      client.repo(extensions[i]).info(function(err,data){
-        if(err){
-          document.getElementById('ext_list').innerHTML +=`
-          <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
-          `  
-          console.log(err);
-          return;
-        }
-        if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
-        const sec_ID = 'sec'+Math.random().toString();
-        document.getElementById('ext_list').innerHTML +=`
-        <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
-          <h3>${data.name}  </h3>
-          <p>${data.description} </p>
-          ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
-        </div>
-        ` 
-      })
-    };
-    for(i=0;i<plugins_list.length;i++){
-        const data = plugins_list[i]
-        const sec_ID = 'sec'+Math.random().toString();
-        document.getElementById('ext_list_installed').innerHTML +=`
-        <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}'>
-          <h3>${data.name}  </h3>
-          <p>${data.description} </p>
-        </div>
-        ` 
-    };
+            `
+            for(i=0;i<extensions.length;i++){
+              client.repo(extensions[i]).info(function(err,data){
+                if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
+                if(err){
+                  document.getElementById('sec_all').innerHTML +=`
+                  <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
+                  `  
+                  console.log(err);
+                  return;
+                }
+                const sec_ID = 'sec'+Math.random().toString();
+                document.getElementById('sec_all').innerHTML +=`
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}'>
+                  <h3>${data.name}  </h3>
+                  <p>${data.description} </p>
+                  ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
+                </div>
+                ` 
+              })
+            };
+          }
+          document.getElementById('navB1').classList.add('active')
+        return
+      case 'installed':
+          for(i=0;i<document.getElementById("_content1").children.length;i++){
+            document.getElementById("_content1").children[i].classList = "page_hidden";
+          }
+          document.getElementById("sec_installed").classList = "page_showed"
+          if(document.getElementById('sec_installed').innerHTML == ""){
+            for(i=0;i<plugins_list.length;i++){
+              const data = plugins_list[i]
+              const sec_ID = 'sec'+Math.random().toString();
+              document.getElementById('sec_installed').innerHTML +=`
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}'>
+                <h3>${data.name}  </h3>
+                <p>${data.description} </p>
+                ${graviton.getPlugin(data.name)!=undefined?`<p class=installed>v${graviton.getPlugin(data.name).version}</p>`:""}
+              </div>
+              ` 
+            };
+          }
+          document.getElementById('navB2').classList.add('active')
+        return
+    }
+  },
+  openStore : function(){
+    const market_window = new Window({
+      id: 'market_window',
+      content: `
+      <div class="g_lateral_panel">
+      <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(current_config.language['Market'])}</h2> 
+      <div id="nav_bar">
+        <button id="navB1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
+        <button id="navB2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
+      </div>
+    </div>
+    <div id="_content1">
+      <div id="sec_all"></div>
+      <div id="sec_installed"></div>
+    </div>
+      `
+  })
+  market_window.launch();
   },
   openSubExtensions: function(data){
     const ext_win = new Window({
       id: 'sec'+data.name,
       content:`
+      <button class="button1 close_exts" onclick=closeWindow('sec${data.name}') >${icons.close}</button>
       <div class=sub_extension_div id=${data.getAttribute('name')+'_div'} >
-          <button class=button1 onclick=closeWindow('sec${data.name}') >${current_config.language["GoBack"]}</button>
-          <h2>${data.getAttribute('name')}</h2>
-          <p>${data.getAttribute('description')}</p>
-          <p>${current_config.language["MadeBy"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).author:"Unknown"}</p>
-          <p>${current_config.language["Version"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
-          <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
-          <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
-      </div>`
-
+          <div class="top">
+            <div>
+              <h1>${data.getAttribute('name')}</h1>
+              <p>${data.getAttribute('description')}</p>
+              <p>${current_config.language["MadeBy"]} ${data.getAttribute('name')!=undefined?data.getAttribute('author'):"Unknown"}</p>
+              <p>${current_config.language["Version"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
+            </div> 
+            <div>
+              <div>
+                <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
+                <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
+              </div>
+            </div> 
+          </div>
+        </div>
+      </div>
+      `
       });
       ext_win.launch();
+      if(graviton.getPlugin(data.getAttribute('name'))!=undefined){
+        fs.readFile(path.join(plugins_folder, data.getAttribute("name"),"readme.md"), "utf8", function(err, readme) {
+          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):"No readme found."}</div>`
+        });
+      }
   },
   installExtension: function(id){
     const data = document.getElementById(id);

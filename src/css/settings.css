@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-#g_settings_panel {
+.g_lateral_panel {
   width: 20%;
   min-width: 200px;
   padding: 20px;
@@ -56,11 +56,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   color: var(--black-white);
 }
 
-#settings_window_body {
+#settings_window_body , #market_window_body {
   display: flex;
 }
 
-#settings_content {
+#_content1 {
   margin: 20px 0;
   padding: 20px;
   width: 80%;
