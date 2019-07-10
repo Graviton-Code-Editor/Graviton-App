@@ -30,14 +30,11 @@ You must have Python 2.7 installed.
 Install the dependencies:
 > $ npm install
 
-Rebuild node-pty:
-(You might need to run it a few times until it says "Rebuild completed")
+Rebuild node-pty and nodegit:
 > $ npm run rebuild
-
 
 Install RPM dependencies:
 > $ sudo apt-get install rpm
-
 
 ### MacOS
 
