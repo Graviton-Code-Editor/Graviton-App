@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200710 - 1 [1.0.3]
+- Now the plugins list is allocated in a repository (https://github.com/Graviton-Code-Editor/plugins_list)
+
 ### 200709 - 1 [1.0.3]
 - Improved the Market
 

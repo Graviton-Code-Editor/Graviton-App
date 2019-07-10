@@ -847,7 +847,7 @@ p.link:hover {
 }
 
 .extension_div{
-  transition: 0.05s;
+  transition: 0.2s;
   background: transparent;
   border: 2px solid var(--primaryColor);
   max-width:265px;
@@ -868,7 +868,7 @@ p.link:hover {
 }
 .extension_div:hover{
   cursor: pointer;
-  transition: 0.05s;
+  transition: 0.2s;
   box-shadow: 0px 3px 6px var(--shadows);
 }
 .extension_div:active{
@@ -927,6 +927,11 @@ p.link:hover {
   overflow: auto;
   position: relative;
   max-height: auto;
+}
+
+.ext_content a{
+  color: var(--white-black);
+  font-style: oblique;
 }
 
 .close_exts{

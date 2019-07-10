@@ -226,12 +226,21 @@ const extensions ={
           if(document.getElementById('sec_all').innerHTML == ""){
             const github = require('octonode')
             const client = github.client()   
-            let extensions = [
-                'Graviton-Code-Editor/FluentMod'
-            ];
+            const request = require("request");
+            let extensions = []; 
             document.getElementById("sec_all").innerHTML = `
             <p id=loading_exts>Loading extensions...</p>
             `
+            request('https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json', function (error, response, body) {
+              if (!error && response.statusCode == 200) {
+                extensions = JSON.parse(body);
+              }else {
+                document.getElementById('sec_all').innerHTML +=`
+                <p>An error occurred while getting the extensions list.</p>
+                `  
+                console.log(err);
+                return;
+              }
             for(i=0;i<extensions.length;i++){
               client.repo(extensions[i]).info(function(err,data){
                 if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
@@ -252,6 +261,7 @@ const extensions ={
                 ` 
               })
             };
+          });
           }
           document.getElementById('navB1').classList.add('active')
         return
