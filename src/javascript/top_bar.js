@@ -68,7 +68,7 @@ Tools.setList({
       hint:"Ctrl+Shit+R"
     },
     "JumpToLine":{
-      click:()=>raviton.editorJumpToLine(),
+      click:()=>graviton.editorJumpToLine(),
       hint:"Alt+G"
     },
     '2a': '*line',
@@ -283,6 +283,27 @@ const extensions ={
           }
           document.getElementById('navB2').classList.add('active')
         return
+      case 'themes':
+        for(i=0;i<document.getElementById("_content1").children.length;i++){
+          document.getElementById("_content1").children[i].classList = "page_hidden";
+        }
+        document.getElementById("sec_themes").classList = "page_showed"
+        if(document.getElementById('sec_themes').innerHTML == ""){
+          for(const data of plugins_list ){
+            if(data.colors!=undefined){
+              const sec_ID = 'sec'+Math.random().toString();
+              document.getElementById('sec_themes').innerHTML +=`
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' version='${data.version}'>
+                <h3>${data.name}  </h3>
+                <p>${data.description} </p>
+                ${graviton.getPlugin(data.name)!=undefined?`<p class=installed>v${graviton.getPlugin(data.name).version}</p>`:""}
+              </div>
+              ` 
+            }
+          };
+        }
+        document.getElementById('navB3').classList.add('active')
+      return
     }
   },
   openStore : function(){
@@ -294,11 +315,13 @@ const extensions ={
       <div id="nav_bar">
         <button id="navB1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
         <button id="navB2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
+        <button id="navB3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
       </div>
     </div>
     <div id="_content1">
       <div id="sec_all"></div>
       <div id="sec_installed"></div>
+      <div id="sec_themes"></div>
     </div>
       `
   })
@@ -361,3 +384,4 @@ const extensions ={
       });
   }
 }
+

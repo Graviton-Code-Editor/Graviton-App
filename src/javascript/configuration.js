@@ -29,6 +29,7 @@ let current_config = { // Default values
 function loadConfig () { // Loads the configuration from the config.json for the first time
   if (!fs.existsSync(configDir)) {
     fs.writeFile(configDir, JSON.stringify(current_config)) // Save the config
+    detectPlugins()
     updateSettings()
     loadLanguage(current_config.language)
     if (current_config.justInstalled === false) {

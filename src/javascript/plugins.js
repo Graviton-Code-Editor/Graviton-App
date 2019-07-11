@@ -12,6 +12,7 @@ let plugins_list = [],
     plugins_dbs = [];
 
 function detectPlugins(call) {
+  
   if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
     fs.mkdirSync(plugins_db);
   } else { //If the plugins_db folder already exist
@@ -33,37 +34,22 @@ function detectPlugins(call) {
   }
   if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
     fs.mkdirSync(plugins_folder);
-    fs.copy(path.join(__dirname, "plugins"), plugins_folder, err => {
+    fs.copy(path.join(__dirname, "themes"), plugins_folder, err => {
+      if (err) throw err;
       fs.readdir(plugins_folder, (err, paths) => {
         paths.forEach(dir => {
-          const direct = fs.statSync(path.join(plugins_folder, dir));
-          if (!direct.isFile()) {
-            fs.readFile(path.join(plugins_folder, dir, "package.json"), 'utf8', function(err, data) {
-              const config = JSON.parse(data);
-              if(config.colors==undefined){
-                if (err) throw err;
-                plugins_list.push(config);
-                if(config["main"]!=undefined) {
-                  const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
-                }
-                for (i = 0; i < config["javascript"].length; i++) {
-                  const script = document.createElement("script");
-                  script.setAttribute("src", path.join(plugins_folder, config["folder"], config["javascript"][i])),
-                    document.body.appendChild(script);
-                }
-              }else{
-                  obj = JSON.parse(data);
-                  themes.push(obj); //Push the theme to the array
-                  plugins_list.push(config);
-                  console.log("wow");
-                  const newLink = document.createElement("link");
-                  newLink.setAttribute("rel", "stylesheet");
-                  newLink.setAttribute("href", path.join(highlights_folder, obj["highlight"] + ".css")); //Link new themes 
-                  document.body.appendChild(newLink);
-              }  
-              return call!=undefined?call():"";
-            });
-          }
+          fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function(err, data) {
+            if (err) throw err;
+            const config = JSON.parse(data);
+            if(config.colors!=undefined){
+              themes.push(config); //Push the theme to the array
+              plugins_list.push(config);
+              const newLink = document.createElement("link");
+              newLink.setAttribute("rel", "stylesheet");
+              newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
+              document.body.appendChild(newLink);
+            }
+          });
         });
       });
     });

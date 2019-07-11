@@ -63,7 +63,7 @@ const Settings = {
             <p style="font-size:13px; line-height:2px;">${themes[i]['description']}</p>
             <div class="accent" style="background:${themes[i].colors["accentColor"]};"></div>
           `
-          if (themes[i]['Name'] === current_config.theme['Name']) {
+          if (themes[i]['name'] === current_config.theme['name']) {
             selectTheme('1', themeDiv)
           }
           document.getElementById('theme_list').appendChild(themeDiv)

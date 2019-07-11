@@ -40,20 +40,20 @@
   "dependencies": {
     "appdata-path": "^1.0.0",
     "fs-extra": "^7.0.1",
-    "jquery": "^3.4.0",
-    "marked": "^0.6.2",
+    "jquery": "^3.4.1",
+    "marked": "^0.6.3",
     "node-pty": "^0.8.1",
     "nodegit": "^0.24.3",
-    "npm": "^6.9.0",
+    "npm": "^6.10.0",
     "octonode": "^0.9.5",
     "request": "^2.88.0",
     "rimraf": "^2.6.3",
     "standard": "^12.0.1",
-    "xterm": "^3.14.2"
+    "xterm": "^3.14.5"
   },
   "devDependencies": {
     "electron": "^4.2.4",
-    "electron-builder": "^20.43.0",
+    "electron-builder": "^20.44.4",
     "electron-rebuild": "^1.8.5"
   },
   "build": {

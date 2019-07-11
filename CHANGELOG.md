@@ -2,7 +2,8 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200710 - 1 [1.0.3]
+### 200710 - 2 [1.0.3]
+- Added themes to the market
 - (Breaking update)
 - Unified themes are plugins, now are the same
 

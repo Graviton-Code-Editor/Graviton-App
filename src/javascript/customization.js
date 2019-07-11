@@ -9,6 +9,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
+if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exist
+  fs.mkdirSync(highlights_folder)
+  fs.copy(path.join(__dirname, "src", "Highlights"), highlights_folder, err => {
+    if (err) return console.error(err);
+  });
+}
+
 detectLanguages();
 const loadTheme = number => {
   themeObject = themes[number];

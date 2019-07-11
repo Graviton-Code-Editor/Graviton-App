@@ -116,7 +116,7 @@ const Setup = {
           themeDiv.addEventListener('click', function () {
             document.getElementById('FROM_THEMES_CONTINUE').classList.remove('disabled')
           })
-          if (themes[i]['Name'] === current_config.theme['Name']) {
+          if (themes[i]['name'] === current_config.theme['name']) {
             selectTheme('2', themeDiv)
           }
           document.getElementById('theme_list').appendChild(themeDiv)
