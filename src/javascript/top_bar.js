@@ -9,6 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 /* <-- Default NavBar >-- */
+let full_plugins = [];
 let anyDropON = null
 const File = new dropMenu({
   id: 'file',
@@ -54,8 +55,10 @@ Tools.setList({
   button: 'Tools',
   list: {
     Market:()=>{
-      extensions.openStore();
-      extensions.navigate("all")
+      extensions.openStore(function(err){
+        extensions.navigate("all",err)
+      });
+      
     },
     'ShowWelcome': ()=>g_welcomePage(),
     "1a":"*line",
@@ -213,7 +216,8 @@ if (graviton.currentOS().codename == 'win32') {
 
 
 const extensions ={
-  navigate: function (num) {
+  navigate: function (num,err) {
+    
     for (i = 0; i < document.getElementById('nav_bar').children.length; i++) {
       document.getElementById('nav_bar').children[i].classList.remove('active')
     }
@@ -223,57 +227,64 @@ const extensions ={
             document.getElementById("_content1").children[i].classList = "page_hidden";
           }
           document.getElementById("sec_all").classList = "page_showed"
-          if(document.getElementById('sec_all').innerHTML == ""){
-            const github = require('octonode')
-            const client = github.client()   
-            const request = require("request");
-            let extensions = []; 
-            document.getElementById("sec_all").innerHTML = `
-            <p id=loading_exts>Loading extensions...</p>
-            `
-            request('https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json', function (error, response, body) {
-              if (!error && response.statusCode == 200) {
-                extensions = JSON.parse(body);
-              }else {
-                document.getElementById('sec_all').innerHTML =`
-                <p>An error occurred while getting the extensions list.</p>
-                `  
-                return;
-              }
-              for(i=0;i<extensions.length;i++){
-                client.repo(extensions[i]).info(function(err,data){
-                  if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
-                  if(err){
-                    document.getElementById('sec_all').innerHTML +=`
-                    <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
-                    `  
-                    console.log(err);
-                    return;
-                  }
-                  const sec_ID = 'sec'+Math.random().toString();
-                  document.getElementById('sec_all').innerHTML +=`
-                  <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}'>
-                    <h3>${data.name}  </h3>
-                    <p>${data.description} </p>
-                    ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
-                  </div>
-                  ` 
-                })
-              };
-            });
-          }
           document.getElementById('navB1').classList.add('active')
+          if(err==1){
+            document.getElementById("sec_all").innerHTML=`
+             Cannot read the plugins list.
+            `
+            return;
+          }
+          if(err==2){
+            document.getElementById("sec_all").innerHTML=`
+             Cannot read more times the plugin's repo.
+            `
+            return;
+          }
+          if(err==3){
+            document.getElementById("sec_all").innerHTML=`
+            Cannot read the package.json of the plugin's repo properly.
+            `
+            return;
+          }
+          if(document.getElementById('sec_all').innerHTML == ""){
+            document.getElementById("sec_all").innerHTML=`
+              <div id=loading_exts>Loading extensions...</div>
+            `
+            const request = require("request");
+            for(const plugin of full_plugins){
+              const data = plugin.git;
+              request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
+                const package = JSON.parse(body2);
+                if(document.getElementById("loading_exts")!=undefined){
+                  document.getElementById("loading_exts").remove();
+                }
+                const sec_ID = 'sec'+Math.random().toString();
+                document.getElementById('sec_all').innerHTML +=`
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch='${data.default_branch}'>
+                  <h3>${data.name}  </h3>
+                  <p>${data.description} </p>
+                  ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
+                </div>
+                ` 
+              });
+            }
+          }
+          
         return
       case 'installed':
           for(i=0;i<document.getElementById("_content1").children.length;i++){
             document.getElementById("_content1").children[i].classList = "page_hidden";
           }
           document.getElementById("sec_installed").classList = "page_showed"
+          document.getElementById('navB2').classList.add('active')
           if(document.getElementById('sec_installed').innerHTML == ""){
+            document.getElementById("sec_all").innerHTML=`
+              <div id=loading_exts>Loading extensions...</div>
+            `
             for(const data of plugins_list ){
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_installed').innerHTML +=`
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}'>
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' branch='${data.default_branch}'>
                 <h3>${data.name}  </h3>
                 <p>${data.description} </p>
                 ${graviton.getPlugin(data.name)!=undefined?`<p class=installed>v${graviton.getPlugin(data.name).version}</p>`:""}
@@ -281,51 +292,92 @@ const extensions ={
               ` 
             };
           }
-          document.getElementById('navB2').classList.add('active')
+          
         return
       case 'themes':
         for(i=0;i<document.getElementById("_content1").children.length;i++){
           document.getElementById("_content1").children[i].classList = "page_hidden";
         }
         document.getElementById("sec_themes").classList = "page_showed"
+        document.getElementById('navB3').classList.add('active')
         if(document.getElementById('sec_themes').innerHTML == ""){
-          for(const data of plugins_list ){
-            if(data.colors!=undefined){
+          const request = require("request");
+          for(const plugin of full_plugins){
+            const data = plugin.git;
+            request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
+              const package = JSON.parse(body2);
+              if(package.colors==undefined) return;
+              if(document.getElementById("loading_exts2")!=undefined){
+                document.getElementById("loading_exts2").remove();
+              }
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_themes').innerHTML +=`
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' version='${data.version}'>
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch=${data.default_branch}>
                 <h3>${data.name}  </h3>
                 <p>${data.description} </p>
-                ${graviton.getPlugin(data.name)!=undefined?`<p class=installed>v${graviton.getPlugin(data.name).version}</p>`:""}
+                ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
               </div>
               ` 
-            }
-          };
+            });
+          }
         }
-        document.getElementById('navB3').classList.add('active')
+        
       return
     }
   },
-  openStore : function(){
+  openStore : function(callback){
     const market_window = new Window({
       id: 'market_window',
       content: `
-      <div class="g_lateral_panel">
-      <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(current_config.language['Market'])}</h2> 
-      <div id="nav_bar">
-        <button id="navB1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
-        <button id="navB2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
-        <button id="navB3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
+      <div class=center>
+      <div class="spinner"></div>
       </div>
-    </div>
-    <div id="_content1">
-      <div id="sec_all"></div>
-      <div id="sec_installed"></div>
-      <div id="sec_themes"></div>
-    </div>
-      `
-  })
-  market_window.launch();
+        `
+    })
+    market_window.launch();
+    if(full_plugins.length!=0) {
+      store.loadMenus();
+      return callback();
+    }
+    const github = require('octonode')
+    const client = github.client()   
+    const request = require("request");
+    let extensions = []; 
+    request('https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json', function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        extensions = JSON.parse(body);
+      }else {
+        store.loadMenus();
+        return callback(1);
+      }
+      for(i=0;i<extensions.length;i++){
+        client.repo(extensions[i]).info(function(err,data){
+          if(err) {
+            store.loadMenus();
+            return callback(2);
+          }
+          request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
+            const package = JSON.parse(body2);
+            full_plugins.push({
+              git:data,
+              package:package
+            })
+            if(err){
+              store.loadMenus();
+              return callback(3);
+            }
+            if(i==extensions.length && full_plugins.length == i){
+              store.loadMenus();
+              if(callback!=undefined) callback();
+              
+            }
+          });
+          
+        })
+        
+      };
+    });
+    
   },
   openSubExtensions: function(data){
     const ext_win = new Window({
@@ -356,6 +408,12 @@ const extensions ={
         fs.readFile(path.join(plugins_folder, data.getAttribute("name"),"readme.md"), "utf8", function(err, readme) {
           document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):"No readme found."}</div>`
         });
+      }else{
+        const request = require("request");
+        console.log(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`)
+        request(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`, function (error, response, body3) {
+          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error?marked(body3):"No readme found."}</div>`
+        })
       }
   },
   installExtension: function(id){
@@ -382,6 +440,26 @@ const extensions ={
           if(err)console.log(err);   
           new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
       });
+  }
+}
+
+const store = {
+  loadMenus:function(){
+    graviton.windowContent("market_window",`
+      <div class="g_lateral_panel">
+        <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(current_config.language['Market'])}</h2> 
+        <div id="nav_bar">
+          <button id="navB1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
+          <button id="navB2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
+          <button id="navB3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
+        </div>
+      </div>
+      <div id="_content1">
+        <div id="sec_all"></div>
+        <div id="sec_installed"></div>
+        <div id="sec_themes"></div>
+      </div>  
+      `);
   }
 }
 

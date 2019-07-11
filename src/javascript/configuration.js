@@ -47,7 +47,7 @@ function loadConfig () { // Loads the configuration from the config.json for the
       })
       updateSettings()
       detectPlugins(function(){
-        setThemeByName(current_config['theme'])
+        if(current_config['theme']!=undefined) setThemeByName(current_config['theme'])
       })
       loadLanguage(current_config.language)
       if (current_config.justInstalled === false) {

@@ -488,11 +488,13 @@ const graviton = {
   },
   getPlugin: function(folder_name){
     for(i=0;i<plugins_list.length;i++){
-      console.log(plugins_list[i].folder)
       if(plugins_list[i].folder == folder_name){
         return plugins_list[i];
       }
     }
+  },
+  windowContent(id,content){
+    document.getElementById(`${id}_body`).innerHTML = content;
   }
 }
 

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200710 - 3 [1.0.3]
+- Added an spinner animation
+- Added Dark theme to the market
+
 ### 200710 - 2 [1.0.3]
 - Added themes to the market
 - (Breaking update)
