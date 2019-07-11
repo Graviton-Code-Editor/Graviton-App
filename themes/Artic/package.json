@@ -1,11 +1,12 @@
 {
-  "Name": "Artic",
-  "Description":"A light theme.",
-  "Author": "Marc Espín Sanz",
-  "GitRepositoryURL": "",
-  "Version": "0.1.1",
-  "Highlight" : "LightUI",
-  "Colors": {
+  "name": "Artic",
+  "description":"A light theme.",
+  "author": "Marc Espín Sanz",
+  "gitRepositoryURL": "",
+  "version": "0.1.1",
+  "highlight" : "LightUI",
+  "folder":"artic",
+  "colors": {
     "primaryColor": "#CCCCCC",
     "secondaryColor": "white",
     "accentColor":"#0066FF",

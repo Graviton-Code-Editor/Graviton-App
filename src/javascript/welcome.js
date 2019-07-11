@@ -104,12 +104,12 @@ const Setup = {
           const themeDiv = document.createElement('div')
           themeDiv.setAttribute('class', '  theme_div_welcomePage ')
           themeDiv.setAttribute('onclick', `loadTheme('${i}'); selectTheme('2',this);`)
-          themeDiv.innerText = themes[i].Name
+          themeDiv.innerText = themes[i].name
           const author = document.createElement('p')
-          author.innerText = `Made by: ${themes[i]['Author']}`
+          author.innerText = `Made by: ${themes[i]['author']}`
           author.setAttribute('style', 'font-size:15px')
           const description = document.createElement('p')
-          description.innerText = themes[i]['Description']
+          description.innerText = themes[i]['description']
           description.setAttribute('style', 'font-size:13px; line-height:2px;')
           themeDiv.appendChild(author)
           themeDiv.appendChild(description)

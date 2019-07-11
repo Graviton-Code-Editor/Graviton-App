@@ -235,33 +235,32 @@ const extensions ={
               if (!error && response.statusCode == 200) {
                 extensions = JSON.parse(body);
               }else {
-                document.getElementById('sec_all').innerHTML +=`
+                document.getElementById('sec_all').innerHTML =`
                 <p>An error occurred while getting the extensions list.</p>
                 `  
-                console.log(err);
                 return;
               }
-            for(i=0;i<extensions.length;i++){
-              client.repo(extensions[i]).info(function(err,data){
-                if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
-                if(err){
+              for(i=0;i<extensions.length;i++){
+                client.repo(extensions[i]).info(function(err,data){
+                  if(document.getElementById("loading_exts")!=undefined)document.getElementById("loading_exts").remove();
+                  if(err){
+                    document.getElementById('sec_all').innerHTML +=`
+                    <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
+                    `  
+                    console.log(err);
+                    return;
+                  }
+                  const sec_ID = 'sec'+Math.random().toString();
                   document.getElementById('sec_all').innerHTML +=`
-                  <p>Cannot load this extension, you have probably exceeded the maxium opening times.</p>
-                  `  
-                  console.log(err);
-                  return;
-                }
-                const sec_ID = 'sec'+Math.random().toString();
-                document.getElementById('sec_all').innerHTML +=`
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}'>
-                  <h3>${data.name}  </h3>
-                  <p>${data.description} </p>
-                  ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
-                </div>
-                ` 
-              })
-            };
-          });
+                  <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}'>
+                    <h3>${data.name}  </h3>
+                    <p>${data.description} </p>
+                    ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
+                  </div>
+                  ` 
+                })
+              };
+            });
           }
           document.getElementById('navB1').classList.add('active')
         return
@@ -271,8 +270,7 @@ const extensions ={
           }
           document.getElementById("sec_installed").classList = "page_showed"
           if(document.getElementById('sec_installed').innerHTML == ""){
-            for(i=0;i<plugins_list.length;i++){
-              const data = plugins_list[i]
+            for(const data of plugins_list ){
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_installed').innerHTML +=`
               <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}'>

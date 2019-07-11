@@ -1,11 +1,12 @@
 {
-  "Name": "Dark",
-  "Description":"Dark Theme.",
-  "Author": "Marc Espín Sanz",
-  "GitRepositoryURL": "",
-  "Version": "0.1.0",
-  "Highlight" : "default",
-  "Colors": {
+  "name": "Dark",
+  "description":"Dark Theme.",
+  "author": "Marc Espín Sanz",
+  "gitRepositoryURL": "",
+  "version": "0.1.0",
+  "highlight" : "default",
+  "folder":"dark",
+  "colors": {
     "primaryColor": "#222222",
     "secondaryColor": "#171717",
     "accentColor":"#FF0048",

@@ -850,21 +850,26 @@ p.link:hover {
   transition: 0.2s;
   background: transparent;
   border: 2px solid var(--primaryColor);
-  max-width:265px;
-  min-width: 100px;
+  max-width:210px;
+  min-width: 210px;
   overflow:auto;
-  position: relative;
   float: left;
+  position: relative;
   padding:15px;
   border-radius:8px;
   margin:15px;
   transform: scale(1);
-  min-height:100px;
+  min-height:110px;
   height: auto;
-  max-height:140px;
+  max-height:110px;
 }
 .extension_div h3{
   margin: 2px 0px;
+  line-height: 12px;
+  font-size: 15px;
+}
+.extension_div p{
+  font-size: 13px;
 }
 .extension_div:hover{
   cursor: pointer;

@@ -15,14 +15,15 @@ preload([ // Preload some images to improve the UX
 ])
 let current_config = { // Default values
   justInstalled: true,
-  theme: 'Light UI',
+  theme: 'dark',
   fontSizeEditor: '13',
   appZoom: '25',
   language: 'english',
   animationsPreferences: 'activated',
   autoCompletionPreferences: 'desactivated',
   lineWrappingPreferences: 'desactivated',
-  accentColorPreferences: 'manual'
+  accentColorPreferences: 'manual',
+  version: undefined
 }
 
 function loadConfig () { // Loads the configuration from the config.json for the first time
@@ -44,7 +45,9 @@ function loadConfig () { // Loads the configuration from the config.json for the
         if (JSON.parse(data)[key] != undefined) current_config[key] = JSON.parse(data)[key] // Will only change the extisting parameters
       })
       updateSettings()
-      setThemeByName(current_config['theme'])
+      detectPlugins(function(){
+        setThemeByName(current_config['theme'])
+      })
       loadLanguage(current_config.language)
       if (current_config.justInstalled === false) {
         g_welcomePage()
@@ -63,7 +66,6 @@ function loadConfig () { // Loads the configuration from the config.json for the
         document.documentElement.style.setProperty('--scalation', '1')
       }
       screens.add()
-      detectPlugins()
       appendBinds()
     })
   }
@@ -72,14 +74,15 @@ function loadConfig () { // Loads the configuration from the config.json for the
 function saveConfig () { // Saves the current configuration to config.json
   let newConfig = {
     justInstalled: current_config.justInstalled,
-    theme: current_config.theme['Name'],
+    theme: current_config.theme['name'],
     fontSizeEditor: current_config.fontSizeEditor,
     appZoom: current_config.appZoom,
     language: current_config['language']['g_l'],
     animationsPreferences: current_config['animationsPreferences'],
     autoCompletionPreferences: current_config['autoCompletionPreferences'],
     lineWrappingPreferences: current_config['lineWrappingPreferences'],
-    accentColorPreferences: current_config['accentColorPreferences']
+    accentColorPreferences: current_config['accentColorPreferences'],
+    version:g_version.date
   }
   newConfig = JSON.stringify(newConfig)
   fs.writeFile(configDir, newConfig, (err) => {})

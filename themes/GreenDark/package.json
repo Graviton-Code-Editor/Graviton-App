@@ -1,11 +1,12 @@
 {
-  "Name": "Green Dark",
-  "Description":"Green Dark Theme.",
-  "Author": "Nico Greffin",
-  "GitRepositoryURL": "",
-  "Version": "0.1.0",
-  "Highlight" : "default",
-  "Colors": {
+  "name": "GreenDark",
+  "description":"Green Dark Theme.",
+  "author": "Nico Greffin",
+  "gitRepositoryURL": "",
+  "version": "0.1.0",
+  "highlight" : "default",
+  "folder":"greendark",
+  "colors": {
     "primaryColor": "#282c30",
     "secondaryColor": "#222428",
     "accentColor": "#00BE00",

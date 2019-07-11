@@ -18,12 +18,13 @@ Features 🚀
 - Themes
 - Plugins
 - Splitting screen
-- Full compatibility with CodeMirror existing themes
+- Plugins Market
 - Zen Mode 
+- Built-in terminal
 - Large language syntax highlighting support
+- Full compatibility with CodeMirror existing themes
 - Disabling animations
 - Autocomplete (Only JavaScript & not stable)
-- Built-in terminal
 - Cross-platform (Linux,MacOS,Windows)
 
 More are coming soon

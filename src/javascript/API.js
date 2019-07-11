@@ -406,7 +406,7 @@ const graviton = {
         new Notification("Issue", "Your system is not compatible with this feature.")
       }
     } else {
-      document.documentElement.style.setProperty("--accentColor", themeObject.Colors.accentColor);
+      document.documentElement.style.setProperty("--accentColor", themeObject.colors.accentColor);
       current_config["accentColorPreferences"] = "manual";
     }
   },
