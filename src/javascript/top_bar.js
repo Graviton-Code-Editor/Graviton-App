@@ -414,12 +414,12 @@ const extensions ={
       ext_win.launch();
       if(graviton.getPlugin(data.getAttribute('name'))!=undefined){
         fs.readFile(path.join(plugins_folder, data.getAttribute("name"),"readme.md"), "utf8", function(err, readme) {
-          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):"No readme found."}</div>`
+          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):getTranslation("NoReadme")}</div>`
         });
       }else{
         const request = require("request");
         request(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`, function (error, response, body3) {
-          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error?marked(body3):"No readme found."}</div>`
+          document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error?marked(body3):getTranslation("NoReadme")}</div>`
         })
       }
   },

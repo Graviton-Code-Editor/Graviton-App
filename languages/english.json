@@ -109,5 +109,6 @@
 	"Installed":"Installed",
 	"Install":"Install",
 	"Uninstall":"Uninstall",
-	"All":"All"
+	"All":"All",
+	"NoReadme":"No readme found."
 }
