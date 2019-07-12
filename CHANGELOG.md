@@ -3,6 +3,13 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200710 - 3 [1.0.3]
+- Installing a plugin will automatically load it's css files
+- Uninstalling a plugin will automatically remove it's css links from the editor
+- Better loading animation on Market
+- Bug fixes
+- Added installed and uninstalled extensions events
+
+### 200710 - 3 [1.0.3]
 - Added an spinner animation
 - Added Dark theme to the market
 

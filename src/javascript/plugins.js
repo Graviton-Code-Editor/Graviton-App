@@ -62,27 +62,7 @@ function detectPlugins(call) {
           fs.readFile(path.join(plugins_folder, dir, "package.json"), 'utf8', function(err, data) {
             if (err) throw err;
             const config = JSON.parse(data);
-            if(config.colors==undefined){
-              plugins_list.push(config);
-              if(config["main"]!=undefined){
-                const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
-              }
-              if(config["css"] !=undefined) {
-                for (i = 0; i < config["css"].length; i++) {
-                  const link = document.createElement("link");
-                  link.setAttribute("rel", "stylesheet");
-                  link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][i])),
-                  document.body.appendChild(link);
-                }
-              }
-            }else{
-              themes.push(config); //Push the theme to the array
-              plugins_list.push(config);
-              const newLink = document.createElement("link");
-              newLink.setAttribute("rel", "stylesheet");
-              newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
-              document.body.appendChild(newLink);
-            }
+            plugins.install(config)
             return call!=undefined?call():"";
           });
         }

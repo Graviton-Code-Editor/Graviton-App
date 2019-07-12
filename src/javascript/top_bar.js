@@ -278,10 +278,13 @@ const extensions ={
           document.getElementById("sec_installed").classList = "page_showed"
           document.getElementById('navB2').classList.add('active')
           if(document.getElementById('sec_installed').innerHTML == ""){
-            document.getElementById("sec_all").innerHTML=`
-              <div id=loading_exts>Loading extensions...</div>
+            document.getElementById("sec_installed").innerHTML=`
+              <div id=loading_exts2>Loading extensions...</div>
             `
             for(const data of plugins_list ){
+              if(document.getElementById("loading_exts2")!=undefined){
+                document.getElementById("loading_exts2").remove();
+              }
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_installed').innerHTML +=`
               <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' branch='${data.default_branch}'>
@@ -301,14 +304,17 @@ const extensions ={
         document.getElementById("sec_themes").classList = "page_showed"
         document.getElementById('navB3').classList.add('active')
         if(document.getElementById('sec_themes').innerHTML == ""){
+          document.getElementById("sec_themes").innerHTML=`
+              <div id=loading_exts3>Loading extensions...</div>
+            `
           const request = require("request");
           for(const plugin of full_plugins){
             const data = plugin.git;
             request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
               const package = JSON.parse(body2);
               if(package.colors==undefined) return;
-              if(document.getElementById("loading_exts2")!=undefined){
-                document.getElementById("loading_exts2").remove();
+              if(document.getElementById("loading_exts3")!=undefined){
+                document.getElementById("loading_exts3").remove();
               }
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_themes').innerHTML +=`
@@ -330,7 +336,9 @@ const extensions ={
       id: 'market_window',
       content: `
       <div class=center>
-      <div class="spinner"></div>
+      <div class="spinner">
+       <div></div> 
+      </div>
       </div>
         `
     })
@@ -410,7 +418,6 @@ const extensions ={
         });
       }else{
         const request = require("request");
-        console.log(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`)
         request(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`, function (error, response, body3) {
           document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error?marked(body3):"No readme found."}</div>`
         })
@@ -424,7 +431,19 @@ const extensions ={
     }
     const nodegit = require("nodegit");
     nodegit.Clone(data.getAttribute("git"), path.join(plugins_folder.replace(/\\/g, '\\\\'),data.getAttribute("name"))).then(function(repository) {
+      const installed_ext_event = new CustomEvent("extension_installed",{
+        detail:{
+          name : data.getAttribute("name")
+        }
+      })
+      document.dispatchEvent(installed_ext_event);
       new Notification('Market',data.getAttribute("name")+ current_config.language["ExtInstalled"]);
+      for(i=0;i<full_plugins.length;i++){
+        if(full_plugins[i].package.name==data.getAttribute("name")){
+          plugins.install(full_plugins[i].package)
+        }
+      }
+      
     });
     
   },
@@ -439,6 +458,23 @@ const extensions ={
       rimraf(path.join(plugins_folder,data.getAttribute("name")), function (err) { 
           if(err)console.log(err);   
           new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
+          const csss = document.getElementsByClassName(data.getAttribute("name")+"_css");
+          for(i=0;i<csss.length;i++){
+            csss[i].remove();
+            i--;
+          }
+          for(i=0;i<plugins_list.length;i++){
+            if(plugins_list[i].name==data.getAttribute("name")){
+              plugins_list.splice(i,1);
+              return;
+            }
+          }
+          const uninstalled_ext_event = new CustomEvent("extension_uninstalled",{
+            detail:{
+              name : data.getAttribute("name")
+            }
+          })
+          document.dispatchEvent(uninstalled_ext_event);
       });
   }
 }
@@ -460,6 +496,32 @@ const store = {
         <div id="sec_themes"></div>
       </div>  
       `);
+  }
+}
+const plugins = {
+  install: function(config){
+    if(config.colors==undefined){
+      plugins_list.push(config);
+      if(config["main"]!=undefined){
+        const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+      }
+      if(config["css"] !=undefined) {
+        for (i = 0; i < config["css"].length; i++) {
+          const link = document.createElement("link");
+          link.setAttribute("rel", "stylesheet");
+          link.classList = config["name"]+"_css";
+          link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][i])),
+          document.body.appendChild(link);
+        }
+      }
+    }else{
+      themes.push(config); //Push the theme to the array
+      plugins_list.push(config);
+      const newLink = document.createElement("link");
+      newLink.setAttribute("rel", "stylesheet");
+      newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
+      document.body.appendChild(newLink);
+    }
   }
 }
 
