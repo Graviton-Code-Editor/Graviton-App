@@ -2,18 +2,23 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200710 - 3 [1.0.3]
+### 200712 - 2 [1.0.3]
+- Fixed, cannot load files cause of codemirror cannot load the highlighting theme
+- Fixed changelog.md dates
+- Fixed the loading animation background
+
+### 200712 - 1 [1.0.3]
 - Installing a plugin will automatically load it's css files
 - Uninstalling a plugin will automatically remove it's css links from the editor
 - Better loading animation on Market
 - Bug fixes
 - Added installed and uninstalled extensions events
 
-### 200710 - 3 [1.0.3]
+### 200711 - 2 [1.0.3]
 - Added an spinner animation
 - Added Dark theme to the market
 
-### 200710 - 2 [1.0.3]
+### 200711 - 1 [1.0.3]
 - Added themes to the market
 - (Breaking update)
 - Unified themes are plugins, now are the same

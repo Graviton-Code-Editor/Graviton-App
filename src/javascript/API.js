@@ -762,6 +762,7 @@ class Tab {
                   tab.classList.add("selected");
                   tab.setAttribute("typeEditor", "text");
                   editingTab = tab.id;
+                  console.log(data);
                   loadEditor({
                     type: "text",
                     dir: g_newPath,

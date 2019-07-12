@@ -336,7 +336,7 @@ context .menuWrapper .option:last-child {
   width: 40px;
   height: 40px;
   margin: 3px;
-  background: white;
+  background: var(--white-black);
   float: left;
   animation: up_down 0.6s linear infinite;
 }
