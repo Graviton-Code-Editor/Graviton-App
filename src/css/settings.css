@@ -15,7 +15,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   margin: 15px 0;
 }
 
-#nav_bar {
+.navbar {
   height: auto;
   width: 100%;
   overflow: auto;
@@ -23,7 +23,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   padding: 15px 0;
 }
 
-#nav_bar button {
+.navbar button {
   font-family: _main_font;
   font-size: 15px;
   color: var(--white-black);
@@ -39,17 +39,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   transform: scale(1);
 }
 
-#nav_bar button:hover {
+.navbar button:hover {
   color: var(--accentColor);
   cursor: pointer;
 }
 
-#nav_bar button:active {
+.navbar button:active {
   transition: 0.05s;
   transform: scale(var(--scalation));
 }
 
-#nav_bar button.active {
+.navbar button.active {
   cursor: pointer;
   transition: 0.05s;
   background: var(--accentColor);
@@ -60,7 +60,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   display: flex;
 }
 
-#_content1 {
+.window_content {
   margin: 20px 0;
   padding: 20px;
   width: 80%;
@@ -83,10 +83,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   padding: 13px;
   margin: 8px 4px;
   display: inline-block;
-  min-width: 80px;
+  min-width: 120px;
   max-width: 250px;
   overflow: auto;
   width: auto;
+  min-height: 110px;
+  max-height: 110px;
   background: var(--primaryColor);
   color: var(--white-black);
   cursor: pointer;

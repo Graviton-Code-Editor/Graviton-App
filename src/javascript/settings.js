@@ -16,7 +16,7 @@ const Settings = {
       content: `
       <div class="g_lateral_panel">
         <h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language['Settings']}</h2> 
-        <div id="nav_bar">
+        <div id="navbar1" class="navbar">
           <button id="navB1" onclick="Settings.navigate('1')" class="translate_word" idT="Customization">${current_config.language['Customization']}</button>
           <button id="navB2" onclick="Settings.navigate('2')" class="translate_word" idT="Languages">${current_config.language['Languages']}</button>
           <button id="navB3" onclick="Settings.navigate('3')" class="translate_word" idT="Editor">${current_config.language['Editor']}</button>
@@ -24,14 +24,14 @@ const Settings = {
           <button id="navB5" onclick="Settings.navigate('5')" class="translate_word" idT="About">${current_config.language['About']}</button>
         </div>
       </div>
-      <div id="_content1"></div>`,
+      <div id="_content1" class="window_content"></div>`,
       onClose: 'saveConfig();'
     })
     settings_window.launch()
   },
   navigate: function (num) {
-    for (i = 0; i < document.getElementById('nav_bar').children.length; i++) {
-      document.getElementById('nav_bar').children[i].classList.remove('active')
+    for (i = 0; i < document.getElementById("navbar1").children.length; i++) {
+      document.getElementById("navbar1").children[i].classList.remove('active')
     }
     switch (num) {
       case '1':
@@ -45,6 +45,7 @@ const Settings = {
           <h4>${current_config.language['Themes']}</h4> 
           <div class="section">
             <div id='theme_list'></div> 
+            <p class="link" onclick="extensions.openStore(function(){extensions.navigate('all')})">${getTranslation("Market")}</p>   
             <p>${current_config.language['Themes.Text']}</p>
             <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences == 'system' ? 'activated' : 'desactivated'}"></gv-switch>
           </div>

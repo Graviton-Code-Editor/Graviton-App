@@ -2,8 +2,8 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200712 - 3 [1.0.3]
-- Updated lodash dependency to 4.17.13 (Secutiry alert)
+### 200713 - 1 [1.0.3]
+- Added a market shortcut in settings (under themes)
 
 ### 200712 - 2 [1.0.3]
 - Fixed, cannot load files cause of codemirror cannot load the highlighting theme

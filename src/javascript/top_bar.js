@@ -217,17 +217,16 @@ if (graviton.currentOS().codename == 'win32') {
 
 const extensions ={
   navigate: function (num,err) {
-    
-    for (i = 0; i < document.getElementById('nav_bar').children.length; i++) {
-      document.getElementById('nav_bar').children[i].classList.remove('active')
+    for (i = 0; i < document.getElementById("navbar2").children.length; i++) {
+      document.getElementById("navbar2").children[i].classList.remove('active')
     }
     switch (num) {
       case 'all':
-          for(i=0;i<document.getElementById("_content1").children.length;i++){
-            document.getElementById("_content1").children[i].classList = "page_hidden";
+          for(i=0;i<document.getElementById("_content2").children.length;i++){
+            document.getElementById("_content2").children[i].classList = "page_hidden";
           }
           document.getElementById("sec_all").classList = "page_showed"
-          document.getElementById('navB1').classList.add('active')
+          document.getElementById('navC1').classList.add('active')
           if(err==1){
             document.getElementById("sec_all").innerHTML=`
              Cannot read the plugins list.
@@ -272,11 +271,11 @@ const extensions ={
           
         return
       case 'installed':
-          for(i=0;i<document.getElementById("_content1").children.length;i++){
-            document.getElementById("_content1").children[i].classList = "page_hidden";
+          for(i=0;i<document.getElementById("_content2").children.length;i++){
+            document.getElementById("_content2").children[i].classList = "page_hidden";
           }
           document.getElementById("sec_installed").classList = "page_showed"
-          document.getElementById('navB2').classList.add('active')
+          document.getElementById('navC2').classList.add('active')
           if(document.getElementById('sec_installed').innerHTML == ""){
             document.getElementById("sec_installed").innerHTML=`
               <div id=loading_exts2>Loading extensions...</div>
@@ -298,11 +297,11 @@ const extensions ={
           
         return
       case 'themes':
-        for(i=0;i<document.getElementById("_content1").children.length;i++){
-          document.getElementById("_content1").children[i].classList = "page_hidden";
+        for(i=0;i<document.getElementById("_content2").children.length;i++){
+          document.getElementById("_content2").children[i].classList = "page_hidden";
         }
         document.getElementById("sec_themes").classList = "page_showed"
-        document.getElementById('navB3').classList.add('active')
+        document.getElementById('navC3').classList.add('active')
         if(document.getElementById('sec_themes').innerHTML == ""){
           document.getElementById("sec_themes").innerHTML=`
               <div id=loading_exts3>Loading extensions...</div>
@@ -484,13 +483,13 @@ const store = {
     graviton.windowContent("market_window",`
       <div class="g_lateral_panel">
         <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(current_config.language['Market'])}</h2> 
-        <div id="nav_bar">
-          <button id="navB1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
-          <button id="navB2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
-          <button id="navB3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
+        <div id="navbar2" class="navbar">
+          <button id="navC1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
+          <button id="navC2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
+          <button id="navC3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
         </div>
       </div>
-      <div id="_content1">
+      <div id="_content2" class="window_content">
         <div id="sec_all"></div>
         <div id="sec_installed"></div>
         <div id="sec_themes"></div>
