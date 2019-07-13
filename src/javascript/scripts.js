@@ -99,7 +99,6 @@ const loadEditor = (info) => {
         text_container.setAttribute('id', info.dir.replace(/\\/g, "") + '_editor')
         text_container.setAttribute('path', info.dir)
         document.getElementById(current_screen.id).children[1].appendChild(text_container)
-        console.log(info.data); 
         let codemirror = CodeMirror(document.getElementById(text_container.id), {
           value: info.data,
           mode: 'text/plain',

@@ -35,7 +35,7 @@
     "open source",
     "modern"
   ],
-  "author": "Marc Espín Sanz<mespinsanz@gmail.com>",
+  "author": "Marc Espín Sanz <mespinsanz@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "appdata-path": "^1.0.0",

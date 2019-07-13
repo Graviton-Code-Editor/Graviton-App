@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200713 - 2 [1.0.3]
+- Fixed, now you can open new terminals
+
 ### 200713 - 1 [1.0.3]
 - Added a market shortcut in settings (under themes)
 

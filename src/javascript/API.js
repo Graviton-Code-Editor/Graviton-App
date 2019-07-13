@@ -762,7 +762,6 @@ class Tab {
                   tab.classList.add("selected");
                   tab.setAttribute("typeEditor", "text");
                   editingTab = tab.id;
-                  console.log(data);
                   loadEditor({
                     type: "text",
                     dir: g_newPath,
@@ -984,8 +983,8 @@ const commanders = {
           const xterm = new Terminal({
             rows:"10",
             theme:{
-              background:graviton.getCurrentTheme().Colors["editor-background-color"],
-              foreground:graviton.getCurrentTheme().Colors["white-black"]
+              background:graviton.getCurrentTheme().colors["editor-background-color"],
+              foreground:graviton.getCurrentTheme().colors["white-black"]
             }
           });
           //
