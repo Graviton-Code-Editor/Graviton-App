@@ -228,21 +228,18 @@ const extensions ={
           document.getElementById("sec_all").classList = "page_showed"
           document.getElementById('navC1').classList.add('active')
           if(err==1){
-            document.getElementById("sec_all").innerHTML=`
-             Cannot read the plugins list.
-            `
+            document.getElementById("sec_all").innerHTML=getTranslation("MarketError1")
+            document.getElementById("sec_themes").innerHTML=getTranslation("MarketError1")
             return;
           }
           if(err==2){
-            document.getElementById("sec_all").innerHTML=`
-             Cannot read more times the plugin's repo.
-            `
+            document.getElementById("sec_all").innerHTML=getTranslation("MarketError2")
+            document.getElementById("sec_themes").innerHTML=getTranslation("MarketError2")
             return;
           }
           if(err==3){
-            document.getElementById("sec_all").innerHTML=`
-            Cannot read the package.json of the plugin's repo properly.
-            `
+            document.getElementById("sec_all").innerHTML=getTranslation("MarketError3")
+            document.getElementById("sec_themes").innerHTML=getTranslation("MarketError3")
             return;
           }
           if(document.getElementById('sec_all').innerHTML == ""){
@@ -259,10 +256,10 @@ const extensions ={
                 }
                 const sec_ID = 'sec'+Math.random().toString();
                 document.getElementById('sec_all').innerHTML +=`
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch='${data.default_branch}'>
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch='${data.default_branch}' stars=${data.stargazers_count}>
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
+                  <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
                 </div>
                 ` 
               });
@@ -286,7 +283,7 @@ const extensions ={
               }
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_installed').innerHTML +=`
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' branch='${data.default_branch}'>
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' branch='${data.default_branch}' stars=${data.stargazers_count}>
                 <h3>${data.name}  </h3>
                 <p>${data.description} </p>
                 ${graviton.getPlugin(data.name)!=undefined?`<p class=installed>v${graviton.getPlugin(data.name).version}</p>`:""}
@@ -317,10 +314,10 @@ const extensions ={
               }
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_themes').innerHTML +=`
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch=${data.default_branch}>
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch=${data.default_branch} stars=${data.stargazers_count}>
                 <h3>${data.name}  </h3>
                 <p>${data.description} </p>
-                ${graviton.getPlugin(data.name)!=undefined?`<p class=installed> ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version}</p>`:""}
+                <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
               </div>
               ` 
             });
@@ -398,6 +395,7 @@ const extensions ={
               <p>${data.getAttribute('description')}</p>
               <p>${current_config.language["MadeBy"]} ${data.getAttribute('name')!=undefined?data.getAttribute('author'):"Unknown"}</p>
               <p>${current_config.language["Version"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
+              <p>${current_config.language["Stars"]}: ${data.getAttribute('stars')!=undefined?data.getAttribute('stars'):"Unknown"}</p>
             </div> 
             <div>
               <div>

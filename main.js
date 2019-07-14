@@ -25,8 +25,8 @@ app.on('ready', function () {
     frame: process.platform != 'win32',
     width: 750,
     height: 650,
-    'minHeight': 310,
-    'minWidth': 310,
+    minHeight: 310,
+    minWidth: 310,
     backgroundColor: '#222222',
     title: 'Graviton Editor'
   })
@@ -35,7 +35,7 @@ app.on('ready', function () {
     protocol: 'file:',
     slashes: true
   }))
-  main.setMenuBarVisibility(path.basename(__dirname) === 'Graviton-Editor') // True = when it's not on production
+  main.setMenuBarVisibility(path.basename(__dirname) === ('Graviton-Editor'|| 'Graviton-App')) // True = when it's not on production
 })
 app.on('window-all-closed', () => {
   app.quit()

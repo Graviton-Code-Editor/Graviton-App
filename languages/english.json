@@ -110,5 +110,9 @@
 	"Install":"Install",
 	"Uninstall":"Uninstall",
 	"All":"All",
-	"NoReadme":"No readme found."
+	"NoReadme":"No readme found.",
+	"Stars":"Stars",
+	"MarketError1":"Cannot read the plugins list.",
+	"MarketError2":"Cannot read more times the plugin's repo.",
+	"MarketError3":"Cannot read the package.json of the plugin's repo properly."
 }

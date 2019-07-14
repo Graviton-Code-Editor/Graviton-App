@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200714 - 1 [1.0.3]
+- Added an stars counter, which refers to the plugin's repository stars
+- Added market error strings to English
+- Fixed themes section error wasn't displaying 
+- Fixed context menu while hovering lights color buttons
+
 ### 200713 - 2 [1.0.3]
 - Fixed, now you can open new terminals
 

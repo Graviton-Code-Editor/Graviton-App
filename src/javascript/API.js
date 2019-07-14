@@ -626,7 +626,7 @@ function g_dialog(dialogObject) {
   const body_dialog = document.createElement("div");
   body_dialog.setAttribute("class", "dialog_body");
   body_dialog.innerHTML = `
-  <p style="font-size:21px; line-height:1px; white-space: nowrap; font-weight:bold;">    
+  <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">    
   	${dialogObject.title} 
   </p>
   <div style="font-size:15px;">
