@@ -317,7 +317,7 @@ const extensions ={
               <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch=${data.default_branch} stars=${data.stargazers_count}>
                 <h3>${data.name}  </h3>
                 <p>${data.description} </p>
-                <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
+                <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${getTranslation("Installed")} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
               </div>
               ` 
             });
@@ -393,9 +393,9 @@ const extensions ={
             <div>
               <h1>${data.getAttribute('name')}</h1>
               <p>${data.getAttribute('description')}</p>
-              <p>${current_config.language["MadeBy"]} ${data.getAttribute('name')!=undefined?data.getAttribute('author'):"Unknown"}</p>
-              <p>${current_config.language["Version"]}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
-              <p>${current_config.language["Stars"]}: ${data.getAttribute('stars')!=undefined?data.getAttribute('stars'):"Unknown"}</p>
+              <p>${getTranslation("MadeBy")} ${data.getAttribute('name')!=undefined?data.getAttribute('author'):"Unknown"}</p>
+              <p>${getTranslation("Version")}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
+              <p>${getTranslation("Stars")}: ${data.getAttribute('stars')!=undefined?data.getAttribute('stars'):"Unknown"}</p>
             </div> 
             <div>
               <div>
@@ -452,8 +452,8 @@ const extensions ={
           new Notification('Market',data.getAttribute("name")+ current_config.language["ExtNotInstalled"]);
           return;
       }
-      rimraf(path.join(plugins_folder,data.getAttribute("name")), function (err) { 
-          if(err)console.log(err);   
+      rimraf.sync(path.join(plugins_folder,data.getAttribute("name")));
+
           new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
           const csss = document.getElementsByClassName(data.getAttribute("name")+"_css");
           for(i=0;i<csss.length;i++){
@@ -472,7 +472,7 @@ const extensions ={
             }
           })
           document.dispatchEvent(uninstalled_ext_event);
-      });
+     
   }
 }
 
@@ -480,11 +480,11 @@ const store = {
   loadMenus:function(){
     graviton.windowContent("market_window",`
       <div class="g_lateral_panel">
-        <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(current_config.language['Market'])}</h2> 
+        <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation('Market')}</h2> 
         <div id="navbar2" class="navbar">
-          <button id="navC1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation(current_config.language['All'])}</button>
-          <button id="navC2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(current_config.language['Installed'])}</button>
-          <button id="navC3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(current_config.language['Themes'])}</button>
+          <button id="navC1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation("All")}</button>
+          <button id="navC2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation('Installed')}</button>
+          <button id="navC3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation('Themes')}</button>
         </div>
       </div>
       <div id="_content2" class="window_content">

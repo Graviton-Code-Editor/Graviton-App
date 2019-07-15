@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190714',
+  date: '190715',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -40,7 +40,7 @@ let current_screen,
   ids = 0,
   plang = ' ',
   _notifications = [],
-  filepath = ' ',
+  filepath = null,
   editors = [],
   editor,
   editorID,
@@ -117,7 +117,8 @@ const loadEditor = (info) => {
           id: text_container.id,
           editor: codemirror,
           path: info.dir,
-          screen: info.screen
+          screen: info.screen,
+          type:info.type
         }
         editors.push(new_editor_text)
         if (g_highlighting == 'activated') updateCodeMode(codemirror, info.dir)
@@ -175,8 +176,8 @@ const loadEditor = (info) => {
         document.getElementById(current_screen.id).children[1].appendChild(free_container)
         const new_editor_free = {
           id: info.dir.replace(/\\/g, "") + '_editor',
-          editor: undefined,
-          path: undefined,
+          editor: null,
+          path: null,
           screen: info.screen,
           type: 'free'
         }

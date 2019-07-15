@@ -247,7 +247,7 @@ const graviton = {
         return editors[i];
       }
     }
-    if (editors.length == 0) return "empty";
+    if (editors.length == 0) return null;
   },
   getCurrentDirectory: function() {
     if (dir_path == undefined) return "not_selected";
@@ -826,7 +826,7 @@ class Tab {
           data: object.data,
           screen: current_screen.id
         });
-        filepath = undefined;
+        filepath = null;
         editingTab = object.id;
         break;
     }
@@ -863,7 +863,7 @@ const closeTab = (tab_id, fromWarn) => {
           }
         }
         if (tabs2.length == 0) { //Any tab opened
-          filepath = " ";
+          filepath = null;
           plang = "";
           document.getElementById(g_object.getAttribute("screen")).children[2].children[0].innerText = plang;
           document.getElementById(g_object.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;"

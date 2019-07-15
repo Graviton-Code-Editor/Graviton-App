@@ -3,6 +3,11 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200714 - 1 [1.0.3]
+- Better factory reset
+- Better plugin uninstalling
+- Other improvements
+
+### 200714 - 1 [1.0.3]
 - Added an stars counter, which refers to the plugin's repository stars
 - Added market error strings to English
 - Fixed themes section error wasn't displaying 
