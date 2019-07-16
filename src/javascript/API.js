@@ -10,6 +10,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 const _os = require('os');
 const pty = require('node-pty');
+const path = require("path");
+const {Dialog,closeDialog} = require(path.join(__dirname,"src","javascript","controls","dialogs.js")),
+      {Window, closeWindow} = require(path.join(__dirname,"src","javascript","controls","windows.js")),
+      {Notification, closeNotification} = require(path.join(__dirname,"src","javascript","controls","notifications.js")),
+      {icons} = require(path.join(__dirname,"src","javascript","controls","icons.js"))
+
 let menus_showing = true;
 let context_menu_list_text = { //Initial value
   "Copy": " document.execCommand('copy');",
@@ -291,7 +297,7 @@ const graviton = {
     new Notification("Error ", message);
   },
   dialogAbout: function() {
-    new g_dialog({
+    new Dialog({
       id: "about",
       title: current_config.language['About'],
       content: `
@@ -306,7 +312,7 @@ const graviton = {
   },
   dialogChangelog: function() {
     fs.readFile(path.join(__dirname, "RELEASE_CHANGELOG.md"), "utf8", function(err, data) {
-      new g_dialog({
+      new Dialog({
         id: "changelog",
         title: `${current_config.language['Changelog']} - ${g_version.version}`,
         content: `<div style="padding:2px;">${marked(data)}</div>`,
@@ -324,7 +330,7 @@ const graviton = {
  			<div onclick="if(screens.remove('${editor_screens[i].id}')){this.remove();}  " class="section3" style="width:60px; height:100px; background:var(--accentColor);"></div>
  			`;
     }
-    new g_dialog({
+    new Dialog({
       id: "remove_screen",
       title: current_config.language["Dialog.RemoveScreen.title"],
       content: `<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap; display:flex;" >${content_editors}</div>`,
@@ -506,7 +512,7 @@ function floatingWindow([xSize, ySize], content) { //Method to create flaoting w
   g_floating_window.innerHTML = content;
   document.body.appendChild(g_floating_window);
 }
-document.addEventListener('mousedown', function(event) { //Create the context menu
+document.addEventListener('mousedown', function(event) { 
   if (editor_booted === true) {
     if (event.button === 2) {
       if (document.getElementById("context_menu") !== null) {
@@ -568,118 +574,7 @@ document.addEventListener('mousedown', function(event) { //Create the context me
     }
   }
 });
-class Notification {
-  constructor(title, message) {
-    if (_notifications.length >= 3) { //Remove one notification in case there are 3
-      _notifications[0].remove();
-      _notifications.splice(0, 1);
-    }
-    const textID = Math.random();
-    const body = document.createElement("div");
-    body.classList.add("notificationBody");
-    body.setAttribute("id", _notifications.length);
-    body.innerHTML = `
-	  	<button  onclick="closeNotification(this)">
-	      ${icons["close"]}
-	    </button>
-	    <h1>${title}</h1>
-	    <div>
-	      <p id="notification_message${textID}"></p>
-	    </div>`;
-    document.getElementById("notifications").appendChild(body);
-    document.getElementById(`notification_message${textID}`).innerText = message;
-    _notifications.push(body);
-    const g_promise = new Promise((resolve, reject) => {
-      const wait = setTimeout(() => {
-        clearTimeout(wait);
-        for (i = 0; i < _notifications.length; i++) {
-          if (_notifications[i] === body) {
-            _notifications.splice(i, 1);
-            body.remove();
-          }
-        }
-      }, 7000); //Wait 7 seconds until the notification auto deletes it selfs
-    });
-    const race = Promise.race([g_promise]);
-  }
-}
 
-function closeNotification(element) {
-  for (i = 0; i < _notifications.length; i++) {
-    if (_notifications[i] === element.parentElement) {
-      _notifications.splice(i, 1);
-      element.parentElement.remove();
-    }
-  }
-}
-
-function g_dialog(dialogObject) {
-  if (typeof [...arguments] != "object") {
-    graviton.throwError("Parsed argument is not object.")
-    return;
-  }
-  const all = document.createElement("div");
-  all.setAttribute("id", dialogObject.id + "_dialog");
-  all.setAttribute("style", "-webkit-user-select: none;");
-  all.innerHTML = `
-  <div myID="${dialogObject.id}" class="background_window" onclick="closeDialog(this)"></div>`
-  const body_dialog = document.createElement("div");
-  body_dialog.setAttribute("class", "dialog_body");
-  body_dialog.innerHTML = `
-  <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">    
-  	${dialogObject.title} 
-  </p>
-  <div style="font-size:15px;">
-    ${dialogObject.content}
-  </div>
-  <div class="buttons"   style="display:flex;"></div>`;
-  Object.keys(dialogObject.buttons).forEach(function(key, index) {
-    const button = document.createElement("button");
-    button.innerText = key;
-    button.setAttribute("myID", dialogObject.id);
-    if(typeof dialogObject.buttons[key] == "string"){
-      button.setAttribute("onclick", dialogObject.buttons[key]);
-    }else{
-       button.setAttribute("onclick", dialogObject.buttons[key].click);
-       button.setAttribute("class", dialogObject.buttons[key].important==true?"important":"");
-    }
-    
-    body_dialog.children[2].appendChild(button);
-  });
-  all.appendChild(body_dialog);
-  document.body.appendChild(all);
-  this.close = function(me) {
-    closeDialog(me);
-  }
-}
-const closeDialog = id => {
-  document.getElementById(id.getAttribute("myID") + "_dialog").remove();
-}
-class Window {
-  constructor(data) {
-    this.id = data.id;
-    this.code = data.content;
-    this.onClose = data.onClose == undefined ? "" : data.onClose;
-    const newWindow = document.createElement("div");
-    newWindow.setAttribute("id", this.id + "_window");
-    newWindow.setAttribute("style", "-webkit-user-select: none;");
-    newWindow.innerHTML = `
-		<div class="background_window" onclick="closeWindow('${this.id}'); ${this.onClose}"></div>
-		<div id="${this.id+"_body"}" class="body_window">
-			${this.code}
-		</div>`;
-    this.myWindow = newWindow;
-  }
-  launch() {
-    document.body.appendChild(this.myWindow);
-  }
-  close() {
-    document.getElementById(`${this.id}_window`).remove();
-  }
-}
-const closeWindow = id => {
-  document.getElementById(`${id}_window`).remove();
-}
 class Tab {
   constructor(object) {
     this.type = object.type;

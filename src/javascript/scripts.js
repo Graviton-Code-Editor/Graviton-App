@@ -9,14 +9,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190715',
+  date: '190716',
   version: '1.0.3',
   state: 'Beta'
 }
 const os = require('os'),
   { shell } = require('electron'),
   fs = require('fs-extra'),
-  path = require('path'),
   { dialog } = require('electron').remote,
   remote = require('electron').remote,
   BrowserWindow = require('electron').BrowserWindow,
@@ -77,9 +76,9 @@ document.addEventListener('mouseup', function(event) {
 }, true)
 document.addEventListener('mousemove', function(event) {
   if (mouseClicked && touchingResizerValue) {
-    const explorer = document.getElementById('g_explorer')
-    explorer.style = `width: ${event.clientX - 3}px`
-    graviton.resizeTerminals();
+      const explorer = document.getElementById('g_explorer')
+      explorer.style = `width: ${event.clientX - 3}px`
+      graviton.resizeTerminals();
   }
 }, true)
 function updateTitle(text){
@@ -89,7 +88,7 @@ function updateTitle(text){
     g_window.setTitle(text+" · Graviton");
   }
 }
-updateTitle(`v${g_version.version}`)
+updateTitle(`v${g_version.version}`) //Initial title
 const loadEditor = (info) => {
   if (document.getElementById(info.dir.replace(/\\/g, "") + '_editor') == undefined) {
     switch (info.type) {

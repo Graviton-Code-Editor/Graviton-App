@@ -102,7 +102,7 @@
 	"ExtInstalled":" has been installed. Restart the editor to see effects.",
 	"ExtAlreadyInstalled":" is already installed.",
 	"ExtNotInstalled":" is not installed.",
-	"ExtUninstalled":" has been uninstalled. Restart the editor to see effects.",
+	"ExtUninstalled":" has been uninstalled. Restart the editor to avoid issues.",
 	"GoBack":"Go back",
 	"Market":"Market",
 	"Store":"Store",

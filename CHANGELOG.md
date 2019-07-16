@@ -2,7 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200714 - 1 [1.0.3]
+### 200716 - 1 [1.0.3]
+- Themes section on Market now loads faster
+- Installed plugins now also show it's stars count
+- Better source organization
+- Installed plugins showed undefined on stars count
+
+### 200715 - 1 [1.0.3]
 - Better factory reset
 - Better plugin uninstalling
 - Other improvements
