@@ -109,5 +109,10 @@
 	"Installed":"Installato",
 	"Install":"Installa",
 	"Uninstall":"Disinstalla",
-	"All":"Tutti"
+	"All":"Tutti",
+	"NoReadme":"Nessun file readme trovato.",
+	"Stars":"Stelle",
+	"MarketError1":"Impossibile leggere la lista dei plugins.",
+	"MarketError2":"Impossibile leggere la repository del plugin. (Troppi tentativi)",
+	"MarketError3":"Impossibile leggere correttamente il package.json della repository del plugin."
 }
