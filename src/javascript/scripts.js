@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190716',
+  date: '190717',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -443,7 +443,8 @@ function saveFile() {
 }
 
 
-function loadDirs(dir, app_id, first_time) {
+function loadDirs(dir, app_id, f_t) {
+  const first_time = f_t==(true || "true") ?true:f_t=="reload"?false:f_t;
   if (!fs.existsSync(dir)) {
     graviton.throwError(current_config.language['DirectoryDoesntExist'])
     return;
@@ -456,20 +457,27 @@ function loadDirs(dir, app_id, first_time) {
   let working_folder
   FirstFolder = dir
   const appender = document.getElementById(appender_id)
-  if (appender.getAttribute('opened') == 'true') {
-    appender.setAttribute('opened', 'false')
-    const dir_length = appender.children.length
+  if(f_t=='reload'){
+    appender.setAttribute('opened', 'true')
     appender.children[0].children[0].setAttribute('src', directories.getCustomIcon(path.basename(FirstFolder), 'close'))
-    appender.children[1].innerHTML = ''
-    return
+      appender.children[1].innerHTML = ''
+    const click = document.getElementById(appender_id).children[0]
+    click.children[0].setAttribute('src', directories.getCustomIcon(path.basename(FirstFolder), 'open'))
   } else {
-    document.getElementById(appender_id).setAttribute('opened', 'true')
-    if (first_time === false) {
-      const click = document.getElementById(appender_id).children[0]
-      click.children[0].setAttribute('src', directories.getCustomIcon(path.basename(FirstFolder), 'open'))
+    if (appender.getAttribute('opened') == 'true') {
+      appender.setAttribute('opened', 'false')
+      appender.children[0].children[0].setAttribute('src', directories.getCustomIcon(path.basename(FirstFolder), 'close'))
+      appender.children[1].innerHTML = ''
+      return
+    } else {
+      document.getElementById(appender_id).setAttribute('opened', 'true')
+      if (first_time == false) {
+        const click = document.getElementById(appender_id).children[0]
+        click.children[0].setAttribute('src', directories.getCustomIcon(path.basename(FirstFolder), 'open'))
+      }
     }
   }
-  if (first_time) {
+  if (first_time ) {
     updateTitle(FirstFolder)
     if (document.getElementById('openFolder') != null) document.getElementById('openFolder').remove()
     registerNewProject(dir)
@@ -480,7 +488,10 @@ function loadDirs(dir, app_id, first_time) {
     document.getElementById(appender_id).setAttribute('opened', 'false')
     working_folder.setAttribute('id', 'g_directory')
     working_folder.setAttribute('myPadding', '50')
-    working_folder.innerHTML = `<p>${path.basename(dir)}</p>`
+    working_folder.innerHTML = `
+      <div>
+        <p global=true id=directory_${path.basename(dir)} parent=g_directories elementType=directory dir=${FirstFolder}>${path.basename(dir)}</p>
+      </div>`
     document.getElementById(appender_id).appendChild(working_folder)
   } else {
     working_folder = document.getElementById(appender_id).children[1]
@@ -503,12 +514,12 @@ function loadDirs(dir, app_id, first_time) {
         // If is folder
         const directory_temp = document.createElement('div')
         directory_temp.innerHTML += `
-        <div opened="false" ID="${ids + dir.replace(/\\/g, '')}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
-          <div  class="directory" onclick="loadDirs('${_long_path}','${ids + dir.replace(/\\/g, '')}',false)">
-            <img style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(paths[i], 'close')}">
-           <p >
-          ${paths[i]}
-          </p> 
+        <div  opened="false" ID="${ids + dir.replace(/\\/g, '')}" name="${paths[i]}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
+          <div parent=${ids + dir.replace(/\\/g, '')}  ID="${ids + dir.replace(/\\/g, '')+"_div"}" elementType=directory global=reload dir=${_long_path}  class="directory" onclick="loadDirs('${_long_path}','${ids + dir.replace(/\\/g, '')}',false)">
+            <img parent=${ids + dir.replace(/\\/g, '')} ID="${ids + dir.replace(/\\/g, '')+"_img"}" elementType=directory global=reload dir=${_long_path} style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(paths[i], 'close')}">
+            <p parent=${ids + dir.replace(/\\/g, '')} ID="${ids + dir.replace(/\\/g, '')+"_p"}" elementType=directory global=reload dir=${_long_path}>
+            ${paths[i]}
+            </p> 
           </div>
           <div myPadding="${paddingListDir}" longpath="${_long_path}"></div>
         </div>`
@@ -518,7 +529,7 @@ function loadDirs(dir, app_id, first_time) {
     for (i = 0; i < paths.length; i++) {
       let _long_path = path.join(dir, paths[i])
       if (graviton.currentOS().codename == 'win32') {
-        _long_path = _long_path.replace(/\\/g, '\\\\') // Delete
+        _long_path = _long_path.replace(/\\/g, '\\\\') 
       }
       ids++
       const stats = fs.statSync(_long_path)
@@ -543,7 +554,7 @@ function loadDirs(dir, app_id, first_time) {
 }
 const directories = {
   removeDialog: function(object) {
-    new g_dialog({
+    new Dialog({
       id: 'remove_directorie',
       title: current_config.language['Dialog.AreYouSure'],
       content: '',

@@ -7,13 +7,13 @@ module.exports={
 					<circle cx="4" cy="4" r="3.5" fill="none"/>
 				</g>
 			</svg>`,
-		minus_zoom:`
+		minus:`
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
 				<g>
 					<rect class="aba" width="2" height="7" transform="translate(11 6) rotate(90)" fill="#414141"/>
 				</g>
 			</svg>`,
-		plus_zoom:`
+		plus:`
 			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="14" viewBox="0 0 14 14">
 				<g>
 					<rect class="aba" data-name="0" width="2" height="7" transform="translate(11 6) rotate(90)"/>

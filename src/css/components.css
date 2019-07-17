@@ -603,6 +603,11 @@ button.button1:active {
 .button1 svg *{
   fill: var(--white-black);
 }
+.icon{
+  background:transparent;
+  border: 0px;
+  color:var(--white-black)
+}
 .section {
   margin: 3px;
   margin-bottom: 12px;

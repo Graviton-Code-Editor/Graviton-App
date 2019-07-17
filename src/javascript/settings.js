@@ -17,11 +17,11 @@ const Settings = {
       <div class="g_lateral_panel">
         <h2 class="window_title window_title2 translate_word"  idT="Settings">${current_config.language['Settings']}</h2> 
         <div id="navbar1" class="navbar">
-          <button id="navB1" onclick="Settings.navigate('1')" class="translate_word" idT="Customization">${current_config.language['Customization']}</button>
-          <button id="navB2" onclick="Settings.navigate('2')" class="translate_word" idT="Languages">${current_config.language['Languages']}</button>
-          <button id="navB3" onclick="Settings.navigate('3')" class="translate_word" idT="Editor">${current_config.language['Editor']}</button>
-          <button id="navB4" onclick="Settings.navigate('4')" class="translate_word" idT="Advanced">${current_config.language['Advanced']}</button>
-          <button id="navB5" onclick="Settings.navigate('5')" class="translate_word" idT="About">${current_config.language['About']}</button>
+          <button id="navB1" onclick="Settings.navigate('1')" class="translate_word" idT="Customization">${getTranslation('Customization')}</button>
+          <button id="navB2" onclick="Settings.navigate('2')" class="translate_word" idT="Languages">${getTranslation('Languages')}</button>
+          <button id="navB3" onclick="Settings.navigate('3')" class="translate_word" idT="Editor">${getTranslation('Editor')}</button>
+          <button id="navB4" onclick="Settings.navigate('4')" class="translate_word" idT="Advanced">${getTranslation('Advanced')}</button>
+          <button id="navB5" onclick="Settings.navigate('5')" class="translate_word" idT="About">${getTranslation('About')}</button>
         </div>
       </div>
       <div id="_content1" class="window_content"></div>`,

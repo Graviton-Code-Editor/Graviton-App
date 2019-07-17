@@ -40,8 +40,8 @@ const loadTheme = number => {
     if (editor_screens[i] != undefined) {
       if (editor_screens[i].terminal != undefined) {
         editor_screens[i].terminal.xterm.setOption("theme", {
-          background: themeObject.Colors["editor-background-color"],
-          foreground: themeObject.Colors["white-black"]
+          background: themeObject.colors["editor-background-color"],
+          foreground: themeObject.colors["white-black"]
         })
       }
     }
@@ -73,8 +73,8 @@ const setThemeByName = name => {
         if (editor_screens[i] != undefined) {
           if (editor_screens[i].terminal != undefined) {
             editor_screens[i].terminal.xterm.setOption("theme", {
-              background: themeObject.Colors["editor-background-color"],
-              foreground: themeObject.Colors["white-black"]
+              background: themeObject.colors["editor-background-color"],
+              foreground: themeObject.colors["white-black"]
             })
           }
         }

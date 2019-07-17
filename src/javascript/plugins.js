@@ -12,7 +12,6 @@ let plugins_list = [],
     plugins_dbs = [];
 
 function detectPlugins(call) {
-  
   if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
     fs.mkdirSync(plugins_db);
   } else { //If the plugins_db folder already exist

@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200717 - 1 [1.0.3]
+- Now you can right click to reload a folder in the explorer (also works for the global directory)
+- Fixed global directory title
+- Fixed, now you can apply a different theme while having a terminal opened
+
 ### 200716 - 1 [1.0.3]
 - Themes section on Market now loads faster
 - Installed plugins now also show it's stars count

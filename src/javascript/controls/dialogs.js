@@ -43,7 +43,7 @@ module.exports = {
             <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">    
                 ${dialogObject.title} 
             </p>
-            <div style="font-size:15px;">
+            <div style="font-size:15px; min-height:15px;">
                 ${dialogObject.content}
             </div>
             <div class="buttons" style="display:flex;"></div>`;

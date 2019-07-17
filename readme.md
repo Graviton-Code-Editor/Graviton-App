@@ -11,7 +11,8 @@
 
 ![example screenshot](example.png)
 
-DISCORD server: https://discord.gg/gg6CTYA
+Telegram channel: https://t.me/gravitoneditor
+Discord server: https://discord.gg/gg6CTYA
 
 Features 🚀
 ---

@@ -129,12 +129,12 @@ WindowDM.setList({
     "IncreaseZoom": {
       click:()=>graviton.setZoom(parseInt(current_config.appZoom)+3),
       hint:"Ctrl+shift+plus",
-      icon:"plus_zoom"
+      icon:"plus"
     },
     "DicreaseZoom":  {
       click:()=>graviton.setZoom(parseInt(current_config.appZoom)+-3),
       hint:"Ctrl+minus",
-      icon:"minus_zoom"
+      icon:"minus"
     },
     "DefaultZoom": {
       click:()=>graviton.setZoom(25),

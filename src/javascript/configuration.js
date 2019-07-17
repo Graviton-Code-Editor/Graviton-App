@@ -15,7 +15,7 @@ preload([ // Preload some images to improve the UX
 ])
 let current_config = { // Default values
   justInstalled: true,
-  theme: 'dark',
+  theme: 'Dark',
   fontSizeEditor: '13',
   appZoom: '25',
   language: 'english',

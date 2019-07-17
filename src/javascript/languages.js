@@ -47,7 +47,7 @@ const getTranslation = text =>{
   if(current_config.language[text]==undefined){
     for(i=0;i<languages.length;i++){
       if (languages[i]['g_l'] === "english") {
-        return languages[i][text];
+        return languages[i][text]!=undefined?languages[i][text]:text;
       }
     };
   }else{

@@ -209,6 +209,35 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   fill: var(--dropmenu-background-color);
 }
 
+.icon .abo{
+  stroke: var(--dropmenu-background-color);
+}
+.icon .aba{
+  fill: var(--white-black);
+}
+.icon .bbo{
+  stroke: var(--white-black);
+}
+.icon .bba{
+  fill: var(--dropmenu-background-color);
+}
+.icon{
+  cursor: pointer;
+}
+
+.icon:hover .abo{
+  stroke: var(--dropmenu-background-color);
+}
+.icon:hover .aba{
+  fill: var(--accentColor);
+}
+.icon:hover .bbo{
+  stroke: var(--accentColor);
+}
+.icon:hover .bba{
+  fill: var(--dropmenu-background-color);
+}
+
 span.line_space_menus {
   width: auto;
   display: block;

@@ -18,7 +18,7 @@ module.exports = {
         for (i = 0; i < res.length + 1; i++) {
           if (i < res.length + 1) {
             if (res[i].tag_name > g_version.version) { // New update detected
-              new g_dialog({
+              new Dialog({
                 id: 'update',
                 title: `<strong>${g_version.state}</strong> Update avaiable !`,
                 content: `Do you want to update to version ${res[i].tag_name}?`,

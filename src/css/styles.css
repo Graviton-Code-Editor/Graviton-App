@@ -130,15 +130,19 @@ head {
 }
 
 #g_content>#g_explorer>#g_directories>#g_directory {
-  margin: 5px;
+  margin: 15px;
 }
 
-#g_content>#g_explorer>#g_directories>#g_directory:nth-child(1) {
-  margin: 5px 15px;
-  line-height: 20px;
+#g_content>#g_explorer>#g_directories>#g_directory > div:nth-child(1) {
+  margin: 0px 15px;
   font-size: 16px;
   white-space: nowrap;
+  display: flex;
 }
+#g_content>#g_explorer>#g_directories>#g_directory > div:nth-child(1) > p {
+  margin:10px 0px;
+}
+
 
 #g_content>.g_editors>.g_tabs_bar {
   min-height: 37px;

@@ -1,3 +1,4 @@
+- Now, you can reload a directory by right clicking, this also works for the global one
 - Added an extensions market
 - Toggle the menus visibility by pressing Ctrl + Q
 - Added a directory title on top

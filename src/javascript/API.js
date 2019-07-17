@@ -14,7 +14,8 @@ const path = require("path");
 const {Dialog,closeDialog} = require(path.join(__dirname,"src","javascript","controls","dialogs.js")),
       {Window, closeWindow} = require(path.join(__dirname,"src","javascript","controls","windows.js")),
       {Notification, closeNotification} = require(path.join(__dirname,"src","javascript","controls","notifications.js")),
-      {icons} = require(path.join(__dirname,"src","javascript","controls","icons.js"))
+      {icons} = require(path.join(__dirname,"src","javascript","controls","icons.js")),
+      {Tab,closeTab,loadTab} = require(path.join(__dirname,"src","javascript","controls","tabs.js"))
 
 let menus_showing = true;
 let context_menu_list_text = { //Initial value
@@ -26,6 +27,19 @@ const context_menu_list_tabs = {
 };
 const context_menu_list_directories = {
   "Remove": `directories.removeDialog(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent_id')));`
+};
+const context_menu_directory_options = {
+  "Reload": `loadDirs(
+    document.getElementById(
+      this.getAttribute('target')
+    ).getAttribute('dir'),
+    document.getElementById(
+      this.getAttribute('target')
+    ).getAttribute('parent'),
+    document.getElementById(
+      this.getAttribute('target')
+    ).getAttribute('global')); 
+    `
 };
 class Plugin {
   constructor(object) {
@@ -522,7 +536,7 @@ document.addEventListener('mousedown', function(event) {
       const line_space = document.createElement("span");
       line_space.classList = "line_space_menus";
       context_menu.setAttribute("id", "context_menu");
-      context_menu.style = `left:${event.pageX}px; top:${event.pageY}px`;
+      context_menu.style = `left:${event.pageX+1}px; top:${event.pageY+1}px`;
       switch (event.target.getAttribute("elementType")) {
         case "directorie":
           Object.keys(context_menu_list_directories).forEach(function(key, index) {
@@ -542,6 +556,16 @@ document.addEventListener('mousedown', function(event) {
             button.setAttribute("target", event.target.id);
             context_menu.appendChild(button);
             button.setAttribute("onclick", context_menu_list_tabs[key] + " document.getElementById('context_menu').remove();");
+          });
+          break;
+        case "directory":
+          Object.keys(context_menu_directory_options).forEach(function(key, index) {
+            const button = document.createElement("button");
+            button.classList.add("part_of_context_menu")
+            button.innerText = getTranslation(key);
+            button.setAttribute("target", event.target.id);
+            context_menu.appendChild(button);
+            button.setAttribute("onclick", context_menu_directory_options[key] + " document.getElementById('context_menu').remove();");
           });
           break;
         default:
@@ -575,258 +599,7 @@ document.addEventListener('mousedown', function(event) {
   }
 });
 
-class Tab {
-  constructor(object) {
-    this.type = object.type;
-    this.id = object.id;
-    switch (object.type) {
-      case "file":
-        for (i = 0; i < tabs.length + 1; i++) {
-          if (i != tabs.length && tabs[i].getAttribute("longPath") === object.path) {
-            loadTab(tabs[i])
-            return;
-          } else if (i == tabs.length) { //Tab is created because it doesn't exist
-            document.getElementById(current_screen.id).children[1].children[0].style = "visibility:hidden; display:none;";
-            const tab = document.createElement("div");
-            tab.setAttribute("id", object.id + "Tab");
-            tab.setAttribute("TabID", object.id + "Tab");
-            tab.setAttribute("longPath", object.path);
-            tab.setAttribute("screen", current_screen.id);
-            tab.setAttribute("class", "tabs");
-            tab.setAttribute("elementType", "tab");
-            tab.style = `min-width: ${(object.name.length * 4 + 115)}px; 
-            max-width: ${(object.name.length * 5 + 100)}px`;
-            tab.setAttribute("onclick", "loadTab(this)");
-            tab.setAttribute("file_status", "saved");
-            tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.name}</p>`
-            const tab_x = document.createElement("button");
-            tab_x.setAttribute("onclose", `closeTab("${ object.id }Tab",true);`);
-            tab_x.setAttribute("onclick", `closeTab("${ object.id }Tab",false);`);
-            tab_x.setAttribute("class", "close_tab");
-            tab_x.setAttribute("hovering", "false");
-            tab_x.setAttribute("elementType", "tab");
-            tab_x.setAttribute("TabID", object.id + "Tab");
-            tab_x.setAttribute("id", object.id + "CloseButton");
-            tab_x.innerHTML = icons["close"];
-            tab_x.addEventListener("mouseover", function(e) {
-              this.setAttribute("hovering", true);
-            });
-            tab_x.addEventListener("mouseout", function(e) {
-              this.setAttribute("hovering", false);
-            });
-            tab.appendChild(tab_x);
-            document.getElementById(current_screen.id).children[0].appendChild(tab);
-            tabs.push(tab);
-            const g_newPath = object.path;
-            filepath = g_newPath;
-            const tab_created_event = new CustomEvent("tab_created",{
-              detail:{
-                tab : tab
-              }
-            })
-            document.dispatchEvent(tab_created_event);
-            switch (filepath.split(".").pop()) {
-              case "svg":
-              case "png":
-              case "ico":
-              case "jpg":
-                for (i = 0; i < tabs.length; i++) {
-                  if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
-                    tabs[i].classList.remove("selected");
-                  }
-                }
-                tab.classList.add("selected");
-                tab.setAttribute("typeEditor", "text");
-                editingTab = tab.id;
-                loadEditor({
-                  type: "image",
-                  dir: filepath,
-                  data: null,
-                  screen: current_screen.id
-                });
-                break;
-              default:
-                fs.readFile(g_newPath, "utf8", function(err, data) {
-                  if (err) return console.error(err);
-                  tab.setAttribute("data", data);
-                  for (i = 0; i < tabs.length; i++) {
-                    if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
-                      tabs[i].classList.remove("selected");
-                    }
-                  }
-                  tab.classList.add("selected");
-                  tab.setAttribute("typeEditor", "text");
-                  editingTab = tab.id;
-                  loadEditor({
-                    type: "text",
-                    dir: g_newPath,
-                    data: data,
-                    screen: current_screen.id
-                  });
 
-                  editor.refresh();
-                });
-            }
-            return;
-          }
-        }
-        break;
-      case "free":
-        for (i = 0; i < tabs.length; i++) {
-          if (tabs[i].getAttribute("screen") == current_screen.id && tabs[i].classList.contains("selected")) {
-            tabs[i].classList.remove("selected");
-          }
-        }
-        document.getElementById(current_screen.id).children[1].children[0].style = "visibility:hidden; display:none;";
-        const tab = document.createElement("div");
-        tab.setAttribute("data", object.data);
-        tab.setAttribute("id", object.id + "Tab");
-        tab.setAttribute("TabID", object.id + "Tab");
-        tab.setAttribute("screen", current_screen.id);
-        tab.setAttribute("class", "tabs selected");
-        tab.setAttribute("longPath", object.id);
-        tab.setAttribute("typeEditor", "free");
-        tab.setAttribute("elementType", "tab");
-        tab.style = `min-width: ${(object.name.length * 4 + 115)}px; 
-        max-width: ${(object.name.length * 5 + 100)}px`;
-        tab.setAttribute("onclick", "loadTab(this)");
-        tab.setAttribute("file_status", "saved");
-        tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${object.id}Tab" elementType="tab">${object.name}</p>`
-        const tab_x = document.createElement("button");
-        tab_x.setAttribute("onclick", `closeTab("${ object.id }Tab");`);
-        tab_x.setAttribute("class", "close_tab");
-        tab_x.setAttribute("hovering", "false");
-        tab_x.setAttribute("elementType", "tab");
-        tab_x.setAttribute("TabID", object.id + "Tab");
-        tab_x.setAttribute("id", object.id + "CloseButton");
-        tab_x.innerHTML = icons["close"];
-        tab_x.addEventListener("mouseover", function(e) {
-          this.setAttribute("hovering", true);
-        });
-        tab_x.addEventListener("mouseout", function(e) {
-          this.setAttribute("hovering", false);
-        });
-        tab.appendChild(tab_x);
-        document.getElementById(current_screen.id).children[0].appendChild(tab);
-        tabs.push(tab);
-        const tab_created_event = new CustomEvent("tab_created",{
-          detail:{
-            tab : tab
-          }
-        })
-        document.dispatchEvent(tab_created_event);
-        loadEditor({
-          type: "free",
-          dir: object.id,
-          data: object.data,
-          screen: current_screen.id
-        });
-        filepath = null;
-        editingTab = object.id;
-        break;
-    }
-  }
-  setData(data) {
-    if (this.type == "free") {
-      document.getElementById(this.id + "_editor").innerHTML = data;
-    }
-  }
-}
-
-const closeTab = (tab_id, fromWarn) => {
-  const g_object = document.getElementById(tab_id);
-  if (g_object.getAttribute("file_status") == "saved" || fromWarn) {
-    for (i = 0; i < tabs.length; i++) {
-      const tab = tabs[i];
-      let new_selected_tab;
-      if (tab.id == tab_id && tab.getAttribute("screen") == g_object.getAttribute("screen")) {
-        tabs.splice(i, 1);
-        document
-          .getElementById(g_object.getAttribute("longPath").replace(/\\/g, "") + "_editor")
-          .remove();
-        editors.splice(i, 1);
-        const tab_closed_event = new CustomEvent("tab_closed",{
-            detail:{
-              tab: g_object
-            }
-          })
-        document.dispatchEvent(tab_closed_event);
-        let tabs2 = [];
-        for (i = 0; i < tabs.length; i++) {
-          if (tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
-            tabs2.push(tabs[i]);
-          }
-        }
-        if (tabs2.length == 0) { //Any tab opened
-          filepath = null;
-          plang = "";
-          document.getElementById(g_object.getAttribute("screen")).children[2].children[0].innerText = plang;
-          document.getElementById(g_object.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;"
-        } else if (i === tabs2.length) { //Last tab selected
-          for (i = 0; i < tabs2.length; i++) {
-            if (tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")) {
-              new_selected_tab = tabs2[Number(tabs2.length) - 1];
-            }
-          }
-        } else {
-          for (i = 0; i < tabs2.length; i++) {
-            if (tabs2[i].getAttribute("screen") == g_object.getAttribute("screen")) {
-              new_selected_tab = tabs2[i];
-            }
-          }
-        }
-        if (new_selected_tab != undefined) {
-          for (i = 0; i < tabs.length; i++) {
-            if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == g_object.getAttribute("screen")) {
-              tabs[i].classList.remove("selected");
-            }
-          }
-          editingTab = new_selected_tab.id;
-          new_selected_tab.classList.add("selected");
-          const g_newPath = new_selected_tab.getAttribute("longpath");
-          filepath = g_newPath;
-          loadEditor({
-            type: new_selected_tab.getAttribute("typeeditor"),
-            dir: g_newPath,
-            data: new_selected_tab.getAttribute("data"),
-            screen: new_selected_tab.getAttribute("screen")
-          });
-          
-        }
-        g_object.remove();
-      }
-    }
-  } else {
-    save_file_warn(g_object.children[1]);
-    return;
-  }
-}
-const loadTab = object => {
-  const object_screen = object.getAttribute("screen");
-  if (object.id != editingTab && object.children[1].getAttribute("hovering") == "false") {
-    for (i = 0; i < tabs.length; i++) {
-      if (tabs[i].classList.contains("selected") && tabs[i].getAttribute("screen") == object_screen) {
-        tabs[i].classList.remove("selected");
-      }
-    }
-    const tab_loaded_event = new CustomEvent("tab_loaded",{
-        detail:{
-          tab: object
-        }
-      })
-    document.dispatchEvent(tab_loaded_event);
-    object.classList.add("selected");
-    const g_newPath = object.getAttribute("longpath");
-    filepath = g_newPath
-    loadEditor({
-      type: object.getAttribute("typeeditor"),
-      dir: g_newPath,
-      data: object.getAttribute("data"),
-      screen: object.getAttribute("screen")
-    });
-    editingTab = object.id;
-  }
-}
 class commander {
   constructor(object,callback) {
     if(document.getElementById(current_screen.id).children[3]!=undefined) {
@@ -938,14 +711,13 @@ const screens = {
     new_screen_editor.classList = 'g_editors'
     new_screen_editor.id = current_id
     new_screen_editor.innerHTML = `
-       <div class="g_tabs_bar flex smallScrollBar"></div>  
-        
-        <div class="g_editors_editors" >
+      <div class="g_tabs_bar flex smallScrollBar"></div>  
+      <div class="g_editors_editors" >
         <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language['WelcomeMessage']}</p>
-        </div>
-        <div class="g_status_bar" >
-          <p></p>
-        </div>`
+      </div>
+      <div class="g_status_bar" >
+        <p></p>
+      </div>`
     document.getElementById('g_content').insertBefore(new_screen_editor, document.getElementById('g_content').children[document.getElementById('g_content').children.length - 1])
     current_screen = { id: current_id, terminal: undefined }
     const screen = {
