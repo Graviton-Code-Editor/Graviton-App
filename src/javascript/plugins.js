@@ -11,6 +11,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 let plugins_list = [],
     plugins_dbs = [];
 
+const default_plugins = [
+  "Graviton-Code-Editor/Dark"
+]
+
 function detectPlugins(call) {
   if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
     fs.mkdirSync(plugins_db);
@@ -32,28 +36,33 @@ function detectPlugins(call) {
     });
   }
   if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
+    document.getElementById("g_bootanimation").innerHTML += `
+    <div>
+      <p>Installing themes...</p>
+    </div>`
     fs.mkdirSync(plugins_folder);
-    fs.copy(path.join(__dirname, "themes"), plugins_folder, err => {
-      if (err) throw err;
-      fs.readdir(plugins_folder, (err, paths) => {
-        paths.forEach(dir => {
-          fs.readFile(path.join(plugins_folder, dir,"package.json"), 'utf8', function(err, data) {
-            if (err) throw err;
-            const config = JSON.parse(data);
-            if(config.colors!=undefined){
-              themes.push(config); //Push the theme to the array
-              plugins_list.push(config);
-              const newLink = document.createElement("link");
-              newLink.setAttribute("rel", "stylesheet");
-              newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
-              document.body.appendChild(newLink);
+    const github = require('octonode')
+    const client = github.client()   
+    const request = require("request");
+    for(i=0;i<default_plugins.length;i++){
+      client.repo(default_plugins[i]).info(function(err,data){
+        if(err){
+          new Notification('Graviton',getTranslation("SetupError1"));
+          return call!=undefined?call():"";
+        }
+        const nodegit = require("nodegit");
+        request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
+          const config = JSON.parse(body2);
+          nodegit.Clone(data.clone_url, path.join(plugins_folder.replace(/\\/g, '\\\\'),config.name)).then(function(repository) {       
+            plugins.install(config)
+            if(i==default_plugins.length){
+              return call!=undefined?call():"";
             }
           });
         });
-      });
-    });
-
-  } else { //If the plugins folder already exist
+      }); 
+    }
+  } else { //If the plugins folder already exist  
     fs.readdir(plugins_folder, (err, paths) => {
       paths.forEach(dir => {
         const direct = fs.statSync(path.join(plugins_folder, dir));

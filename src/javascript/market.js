@@ -40,22 +40,23 @@ const extensions ={
                 <div id=loading_exts>Loading extensions...</div>
               `
               const request = require("request");
-              for(const plugin of full_plugins){
-                const data = plugin.git;
-                request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
-                  const package = JSON.parse(body2);
-                  if(document.getElementById("loading_exts")!=undefined){
-                    document.getElementById("loading_exts").remove();
-                  }
-                  const sec_ID = 'sec'+Math.random().toString();
-                  document.getElementById('sec_all').innerHTML +=`
-                  <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch='${data.default_branch}' stars=${data.stargazers_count}>
-                    <h3>${data.name}  </h3>
-                    <p>${data.description} </p>
-                    <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${current_config.language["Installed"]} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
-                  </div>
-                  ` 
-                });
+              for(const _plugin of full_plugins){
+                const plugin = graviton.getPlugin(_plugin.package.name);
+                const data = plugin.repo.git;
+                const package = plugin.repo.package
+                if(document.getElementById("loading_exts")!=undefined){
+                  document.getElementById("loading_exts").remove();
+                }
+                const sec_ID = 'sec'+Math.random().toString();
+                const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(graviton.getPlugin(package.name).local.version):false;
+                document.getElementById('sec_all').innerHTML +=`
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${package.name} update=${new_update}>
+                  ${new_update?icons["update"]:""}
+                  <h3>${data.name}  </h3>
+                  <p>${data.description} </p>
+                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ⭐ </p>
+                </div>
+                ` 
               }
             }
             
@@ -70,32 +71,23 @@ const extensions ={
               document.getElementById("sec_installed").innerHTML=`
                 <div id=loading_exts2>Loading extensions...</div>
               `
-              for(const data of plugins_list ){
+              for(const _data of plugins_list ){
                 if(document.getElementById("loading_exts2")!=undefined){
                   document.getElementById("loading_exts2").remove();
                 }
-                const git = (function(){
-                    for(const plugin of full_plugins){
-                        if(plugin.package.folder== data.name){
-                            return plugin.git;
-                        }
-                    }
-                    return {
-                        git:undefined,
-                        default_branch:undefined
-                    }
-                })()
+                const plugin = graviton.getPlugin(_data.name)
+                const new_update = plugin.repo!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
                 const sec_ID = 'sec'+Math.random().toString();
                 document.getElementById('sec_installed').innerHTML +=`
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.author}' branch='${git.default_branch}' stars='${git.stargazers_count}'>
-                  <h3>${data.name}  </h3>
-                  <p>${data.description} </p>
-                  <p class=installed>${graviton.getPlugin(data.name)!=undefined?`v${graviton.getPlugin(data.name).version}`:""} ${git.stargazers_count!=undefined?`· ${git.stargazers_count} ⭐`:""} </p>
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${plugin.local.name} update=${new_update}>
+                   ${new_update?icons["update"]:""}
+                  <h3>${plugin.local.name}  </h3>
+                  <p>${plugin.local.description} </p>
+                  <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `${plugin.repo.git.stargazers_count} · ⭐`:""}`:""} </p>
                 </div>
                 ` 
               };
             }
-            
           return
         case 'themes':
           for(i=0;i<document.getElementById("_content2").children.length;i++){
@@ -105,23 +97,26 @@ const extensions ={
           document.getElementById('navC3').classList.add('active')
           if(document.getElementById('sec_themes').innerHTML == ""){
             document.getElementById("sec_themes").innerHTML=`
-                <div id=loading_exts3>Loading extensions...</div>`
-            for(const plugin of full_plugins){
-                const data = plugin.git;
-                const package = plugin.package;
-                if(package.colors!=undefined){
-                  if(document.getElementById("loading_exts3")!=undefined){
-                    document.getElementById("loading_exts3").remove();
-                }
-                const sec_ID = 'sec'+Math.random().toString();
-                document.getElementById('sec_themes').innerHTML +=`
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${data.name} git=${data.clone_url} description='${data.description}' author='${data.owner.login}' branch=${data.default_branch} stars=${data.stargazers_count}>
-                    <h3>${data.name}  </h3>
-                    <p>${data.description} </p>
-                    <p class=installed>${graviton.getPlugin(data.name)!=undefined?` ${getTranslation("Installed")} · v${graviton.getPlugin(data.name).version} ·`:""}  ${data.stargazers_count} ⭐ </p>
-                </div>
-                ` 
-                }
+              <div id=loading_exts3>Loading extensions...</div>`
+            for(const _data of full_plugins){
+              const plugin = graviton.getPlugin(_data.package.name)
+              const data = plugin.repo.git;
+              const package = plugin.repo.package;
+              if(package.colors!=undefined){
+                if(document.getElementById("loading_exts3")!=undefined){
+                  document.getElementById("loading_exts3").remove();
+              }
+              const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(plugin.local.version):false;
+              const sec_ID = 'sec'+Math.random().toString();
+              document.getElementById('sec_themes').innerHTML +=`
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${package.name}  update=${new_update}>
+                    ${new_update?icons["update"]:""}
+                  <h3>${data.name}  </h3>
+                  <p>${data.description} </p>
+                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ⭐ </p>
+              </div>
+              ` 
+              }
             }
             if(document.getElementById("loading_exts3")!=undefined){
               document.getElementById("loading_exts3").remove();
@@ -157,9 +152,11 @@ const extensions ={
           store.loadMenus();
           return callback(1);
         }
+        let plugins_to_update = false;
         for(i=0;i<extensions.length;i++){
           client.repo(extensions[i]).info(function(err,data){
             if(err) {
+              console.log(err);
               store.loadMenus();
               return callback(2);
             }
@@ -169,41 +166,51 @@ const extensions ={
                 git:data,
                 package:package
               })
+              const plugin = graviton.getPlugin(package.name);
+              const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(plugin.local.version):false;
+              if(new_update){
+                plugins_to_update = true;
+              }
               if(err){
                 store.loadMenus();
                 return callback(3);
               }
-              if(i==extensions.length && full_plugins.length == i){
+              console.log(extensions[i])
+              console.log(extensions.length-1,i)
+              if(i==extensions.length-1 ){
                 store.loadMenus();
+                console.log(plugins_to_update)
+                if(plugins_to_update){
+                  new Notification(getTranslation('Market'),getTranslation('ExtUpdateNotification'))
+                }
                 if(callback!=undefined) callback();
-                
               }
             });
             
           })
-          
         };
       });
-      
     },
     openSubExtensions: function(data){
+      const plugin  = graviton.getPlugin(data.getAttribute("name"));
       const ext_win = new Window({
-        id: 'sec'+data.name,
+        id: 'sec'+data.getAttribute("name"),
         content:`
-        <button class="button1 close_exts" onclick=closeWindow('sec${data.name}') >${icons.close}</button>
-        <div class=sub_extension_div id=${data.getAttribute('name')+'_div'} >
+        <button class="button1 close_exts" onclick=closeWindow('sec${data.getAttribute("name")}') >${icons.close}</button>
+        <div class=sub_extension_div id=${data.getAttribute("name")+'_div'} >
             <div class="top">
               <div>
-                <h1>${data.getAttribute('name')}</h1>
-                <p>${data.getAttribute('description')}</p>
-                <p>${getTranslation("MadeBy")} ${data.getAttribute('name')!='undefined'?data.getAttribute('author'):"Unknown"}</p>
-                <p>${getTranslation("Version")}: ${graviton.getPlugin(data.getAttribute('name'))!=undefined?graviton.getPlugin(data.getAttribute('name')).version:"Unknown"}</p>
-                <p>${getTranslation("Stars")}: ${data.getAttribute('stars')!='undefined'?data.getAttribute('stars'):"Unknown"}</p>
+                <h1>${data.getAttribute("name")}</h1>
+                <p>${plugin.repo!=undefined?plugin.repo.package.description:plugin.local.description}</p>
+                <p>${getTranslation("MadeBy")} ${plugin.repo!=undefined?plugin.repo.package.author:plugin.local.author}</p>
+                <p>${getTranslation("Version")}: ${plugin.repo!=undefined?data.getAttribute('update')=='false'?plugin.repo.package.version:plugin.local.version+" ( 🎉 update: "+plugin.repo.package.version+" )":plugin.local.version}</p>
+                <p>${getTranslation("Stars")}: ${plugin.repo!=undefined?plugin.repo.git.stargazers_count:"Unknown"}</p>
               </div> 
               <div>
                 <div>
-                  <button onclick=extensions.installExtension('${data.id}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
-                  <button onclick=extensions.uninstallExtension('${data.id}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
+                  <button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
+                  <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
+                  <button onclick=extensions.updateExtension('${data.getAttribute("name")}') id=${Math.random()+'update'} class=button1 >${getTranslation("Update")}</button> 
                 </div>
               </div> 
             </div>
@@ -222,65 +229,85 @@ const extensions ={
           })
         }
     },
-    installExtension: function(id){
-      const data = document.getElementById(id);
-      if (fs.existsSync(path.join(plugins_folder,data.getAttribute("name")))) {
-        new Notification('Market',data.getAttribute("name")+ current_config.language["ExtAlreadyInstalled"]);
+    installExtension: function(name){
+      const plugin = graviton.getPlugin(name)
+      if (fs.existsSync(path.join(plugins_folder,name))) {
+        new Notification('Market',name + current_config.language["ExtAlreadyInstalled"]);
         return;
       }
       const nodegit = require("nodegit");
-      nodegit.Clone(data.getAttribute("git"), path.join(plugins_folder.replace(/\\/g, '\\\\'),data.getAttribute("name"))).then(function(repository) {
+      nodegit.Clone(plugin.repo.git.clone_url, path.join(plugins_folder.replace(/\\/g, '\\\\'),name)).then(function(repository) {
         const installed_ext_event = new CustomEvent("extension_installed",{
           detail:{
-            name : data.getAttribute("name")
+            name : name
           }
         })
         document.dispatchEvent(installed_ext_event);
-        new Notification('Market',data.getAttribute("name")+ current_config.language["ExtInstalled"]);
-        for(i=0;i<full_plugins.length;i++){
-          if(full_plugins[i].package.name==data.getAttribute("name")){
-            const config = full_plugins[i].package;
-            if(config["dependencies"]!=undefined){
-              plugins.installDependencies(config);
-            }else{
-              plugins.install(full_plugins[i].package)
-            }
-            
-          }
+        new Notification('Market',name+ current_config.language["ExtInstalled"]);
+        console.log(plugin);
+        if(plugin.repo.package["dependencies"]!=undefined){
+          plugins.installDependencies(plugin.repo.package);
+        }else{
+          plugins.install(plugin.repo.package)
         }
-  
+      });
+    },
+    updateExtension: function(name){
+      const plugin = graviton.getPlugin(name)
+      const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.git.version)>getVersionSum(plugin.local.version):false;
+      if (!fs.existsSync(path.join(plugins_folder,name))) {
+        new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
+        return;
+      }
+      if(!new_update){
+        new Notification('Market',`${getTranslation("ExtNoUpdate")+name}.`);
+        return;
+      } 
+      const rimraf = require("rimraf")
+      rimraf.sync(path.join(plugins_folder,name));
+      const nodegit = require("nodegit");
+      nodegit.Clone(plugin.repo.git.clone_url, path.join(plugins_folder.replace(/\\/g, '\\\\'),name)).then(function(repository) {
+        const updated_ext_event = new CustomEvent("updated_installed",{
+          detail:{
+            name : name
+          }
+        })
+        document.dispatchEvent(updated_ext_event);
+        new Notification('Market',name+ current_config.language["ExtUpdated"]);
+        console.log(plugin);
+        if(plugin.repo.package["dependencies"]!=undefined){
+          plugins.installDependencies(plugin.repo.package);
+        }else{
+          plugins.install(plugin.repo.package)
+        }
       });
       
     },
-    uninstallExtension: function(id){
-      const data = document.getElementById(id);
+    uninstallExtension: function(name){
       const rimraf = require('rimraf');
-        const fs = require('fs');
-        if (!fs.existsSync(path.join(plugins_folder,data.getAttribute("name")))) {
-            new Notification('Market',data.getAttribute("name")+ current_config.language["ExtNotInstalled"]);
-            return;
+      if (!fs.existsSync(path.join(plugins_folder,name))) {
+        new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
+        return;
+      }
+      rimraf.sync(path.join(plugins_folder,name));
+      new Notification('Market',name + current_config.language["ExtUninstalled"])
+      const csss = document.getElementsByClassName(name+"_css");
+      for(i=0;i<csss.length;i++){
+        csss[i].remove();
+        i--;
+      }
+      for(i=0;i<plugins_list.length;i++){
+        if(plugins_list[i].name==name){
+          plugins_list.splice(i,1);
+          return;
         }
-        rimraf.sync(path.join(plugins_folder,data.getAttribute("name")));
-  
-            new Notification('Market',data.getAttribute("name") + current_config.language["ExtUninstalled"])
-            const csss = document.getElementsByClassName(data.getAttribute("name")+"_css");
-            for(i=0;i<csss.length;i++){
-              csss[i].remove();
-              i--;
-            }
-            for(i=0;i<plugins_list.length;i++){
-              if(plugins_list[i].name==data.getAttribute("name")){
-                plugins_list.splice(i,1);
-                return;
-              }
-            }
-            const uninstalled_ext_event = new CustomEvent("extension_uninstalled",{
-              detail:{
-                name : data.getAttribute("name")
-              }
-            })
-            document.dispatchEvent(uninstalled_ext_event);
-       
+      }
+      const uninstalled_ext_event = new CustomEvent("extension_uninstalled",{
+        detail:{
+          name : name
+        }
+      })
+      document.dispatchEvent(uninstalled_ext_event);
     }
   }
   
@@ -343,4 +370,14 @@ const extensions ={
       })
     }
   }
-  
+
+ const getVersionSum = (input) =>{
+   return (function(){
+     const _input = input.match( /\d+/g);
+     let result = "";
+      for(const num of _input){
+        result += num
+      }
+      return parseInt(result,10);
+   })(input)
+ }

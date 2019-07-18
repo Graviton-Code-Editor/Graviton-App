@@ -8,6 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+const tinycolor = require("tinycolor2");
 
 if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exist
   fs.mkdirSync(highlights_folder)
@@ -24,12 +25,15 @@ const loadTheme = number => {
     if (current_config.accentColorPreferences == "system" && Object.keys(colors)[i] == "accentColor") {
       try {
         document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
+        document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
+        document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
+        i+=2;
       } catch { //Returns an error = system is not compatible, Linux-based will probably throw that error
         new Notification("Issue", "Your system is not compatible with accent color matching.")
       }
     } else {
       if ((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i] != "scalation") || current_config.animationsPreferences == "activated") { //Prevent changing the scalation when the animations are off
-        document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables
+        document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables   
       }
     }
   }
@@ -59,6 +63,9 @@ const setThemeByName = name => {
         if (current_config.accentColorPreferences == "system" && Object.keys(colors)[i] == "accentColor") {
           try {
             document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
+            document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
+            document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
+            i+=2;
           } catch {}
         } else {
           if ((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i] != "scalation") || current_config.animationsPreferences == "activated") { //Prevent changing the scalation when the animations are off

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190717',
+  date: '190718',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -48,7 +48,13 @@ let current_screen,
   _previewer,
   log = [],
   themes = [],
-  themeObject,
+  themeObject= {
+    colors:{
+      'accentColor':getComputedStyle(document.documentElement).getPropertyValue('--accentColor'),
+      'accentLightColor':getComputedStyle(document.documentElement).getPropertyValue('--accentLightColor'),
+      'accentDarkColor':getComputedStyle(document.documentElement).getPropertyValue('--accentDarkColor')
+    }
+  },
   new_update = false,
   mouseClicked = false,
   touchingResizerValue = false,
@@ -374,14 +380,17 @@ const appendBinds = () => {
 }
 
 function save_file_warn(ele) {
-  new g_dialog({
+  new Dialog({
     id: 'saving_file_warn',
     title: current_config.language['Warn'],
     content: current_config.language['FileExit-dialog-message'],
     buttons: {
       [current_config.language['FileExit-dialog-button-accept']]: `closeDialog(this); ${ele.getAttribute('onclose')}`,
       [current_config.language['Cancel']]: `closeDialog(this);`,
-      [current_config.language['FileExit-dialog-button-deny']]: 'saveFile(); closeDialog(this);'
+      [current_config.language['FileExit-dialog-button-deny']]: {
+        click:'saveFile(); closeDialog(this);',
+        important:true
+      }
     }
   })
 }

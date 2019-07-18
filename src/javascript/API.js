@@ -270,7 +270,7 @@ const graviton = {
     if (editors.length == 0) return null;
   },
   getCurrentDirectory: function() {
-    if (dir_path == undefined) return "not_selected";
+    if (dir_path == undefined) return null;
     return dir_path;
   },
   currentOS: function() {
@@ -318,7 +318,10 @@ const graviton = {
 	      ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}
 	      <br> ${current_config.language['OS']}: ${graviton.currentOS().name}`,
       buttons: {
-        [current_config.language['More']]: "Settings.open(); Settings.navigate('5');",
+        [current_config.language['More']]: {
+          click:"Settings.open(); Settings.navigate('5');",
+          important:true
+      },
         [current_config.language['Close']]: "closeDialog(this)"
 
       }
@@ -422,11 +425,15 @@ const graviton = {
       current_config["accentColorPreferences"] = "system";
       try {
         document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
+        document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
+      document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
       } catch { //Returns an error = system is not compatible, Linux-based will probably throw that error
         new Notification("Issue", "Your system is not compatible with this feature.")
       }
     } else {
       document.documentElement.style.setProperty("--accentColor", themeObject.colors.accentColor);
+      document.documentElement.style.setProperty("--accentDarkColor",  themeObject.colors.accentDarkColor);
+      document.documentElement.style.setProperty("--accentLightColor",  themeObject.colors.accentLightColor);
       current_config["accentColorPreferences"] = "manual";
     }
   },
@@ -507,9 +514,27 @@ const graviton = {
     }
   },
   getPlugin: function(folder_name){
-    for(i=0;i<plugins_list.length;i++){
-      if(plugins_list[i].folder == folder_name){
-        return plugins_list[i];
+    for(i=0;i<full_plugins.length;i++){
+      if(full_plugins[i].package.folder == folder_name){
+        return {
+          repo:full_plugins[i],
+          local:(function(){
+            for(let a = 0;a<plugins_list.length;a++){
+              if(plugins_list[a].folder==folder_name){
+                return plugins_list[a];
+              }
+            }
+            return undefined
+          })()
+        };
+      }
+    }
+    for(let a = 0;a<plugins_list.length;a++){
+      if(plugins_list[a].folder==folder_name){
+        return {
+          local:plugins_list[a],
+          repo:undefined
+        }
       }
     }
   },

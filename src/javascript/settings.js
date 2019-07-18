@@ -181,7 +181,7 @@ function updateSettings () {
 }
 
 function factory_reset_dialog () {
-  new g_dialog({
+  new Dialog({
     id: 'factory_reset',
     title: current_config.language['FactoryReset'],
     content: current_config.language['FactoryReset-dialog-message'],

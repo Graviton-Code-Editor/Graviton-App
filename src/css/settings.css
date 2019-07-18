@@ -55,7 +55,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--accentColor);
   color: var(--black-white);
 }
-
+.navbar button.active:hover {
+  background: var(--accentDarkColor);
+}
 #settings_window_body , #market_window_body {
   display: flex;
 }
@@ -99,7 +101,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--widget-color);
   cursor: pointer;
 }
-
+.theme_div.active:hover {
+  transition: 0.05s;
+  background: var(--accentDarkColor);
+  cursor: pointer;
+}
 .theme_div:active {
   transition: 0.05s;
   transform: scale(var(--scalation));

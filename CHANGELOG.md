@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200718 - 1 [1.0.3]
+- Market throws a notification if you have any plugin which has a new update
+- You can now update your plugins by clicking on the Update button
+- Market now shows you what plugins need to be updated
+- Fixed some dialogs were unable to open
+- Added 3 more CSS variables
+
 ### 200717 - 1 [1.0.3]
 - Now you can right click to reload a folder in the explorer (also works for the global directory)
 - Fixed global directory title

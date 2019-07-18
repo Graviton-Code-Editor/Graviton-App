@@ -117,6 +117,19 @@ module.exports={
 					<text class="bba" id="_" data-name="/" transform="translate(3 10)"  font-size="10" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="0" y="0">/</tspan></text>
 				</g>
 			</svg>`,
+		update:`
+			<svg class=icon xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 89.138 89.138">
+				<g class=bbo  fill="none"  stroke-width="10">
+					<circle cx="44.569" cy="44.569" r="44.569" stroke="none"/>
+					<circle cx="44.569" cy="44.569" r="39.569" fill="none"/>
+				</g>
+				<g  transform="translate(28.554 74.404) rotate(-90)">
+					<path class=aba d="M8.5,0H25.488a8.5,8.5,0,0,1,0,16.992H8.5A8.5,8.5,0,0,1,8.5,0Z" transform="translate(7.952 7.873)"  stroke-linecap="round" stroke-width="1"/>
+					<path class=aba d="M18.293.707a1,1,0,0,1,1.414,0L36.293,17.293A1,1,0,0,1,35.586,19H2.414a1,1,0,0,1-.707-1.707Z" transform="translate(52.936 -3) rotate(90)" />
+				</g>
+				</g>
+			</svg>
+		`,
 		empty: `
 			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14"></svg>`
 		}

@@ -60,8 +60,8 @@
 	"Settings-Advanced-FactoryReset-text":"This will restart Graviton configuraton and recent projects.",
 	"Settings-Advanced-Developer-Tools-text":"Toogle developer tools",
 	"FileExit-dialog-message":"Are you sure you want to close this file without saving?",
-	"FileExit-dialog-button-accept":"Yes, close",
-	"FileExit-dialog-button-deny":"No, Save",
+	"FileExit-dialog-button-accept":"Close it",
+	"FileExit-dialog-button-deny":"Save it",
 	"Welcome":"Welcome",
 	"Welcome.TakeATheme":"Take a theme:",
 	"Welcome.ThanksForInstalling":"Thanks for installing Graviton",
@@ -103,6 +103,9 @@
 	"ExtAlreadyInstalled":" is already installed.",
 	"ExtNotInstalled":" is not installed.",
 	"ExtUninstalled":" has been uninstalled. Restart the editor to avoid issues.",
+	"ExtUpdated":" has been updated. Restart the editor to avoid issues.",
+	"ExtNoUpdate":"There aren't any updates for ",
+	"ExtUpdateNotification":"There are new updates for your plugins.",
 	"GoBack":"Go back",
 	"Market":"Market",
 	"Store":"Store",
@@ -114,5 +117,6 @@
 	"Stars":"Stars",
 	"MarketError1":"Cannot read the plugins list.",
 	"MarketError2":"Cannot read more times the plugin's repo.",
-	"MarketError3":"Cannot read the package.json of the plugin's repo properly."
+	"MarketError3":"Cannot read the package.json of the plugin's repo properly.",
+	"SetupError1":"Cannot install the default themes , you can install them from Market later."
 }

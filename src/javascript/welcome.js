@@ -81,7 +81,7 @@ const Setup = {
         document.getElementById('body_window_full').innerHTML = `
           <h1 style="font-size:50px; text-align:center; position:relative; " class="translate_word" idT="Languages">${current_config.language['Languages']}</h1> 
           <div id='language_list'></div> 
-          <button onclick='Setup.navigate("2"); ' style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${current_config.language['Continue']}</button>      `
+          <button onclick=${themes.length!=0?"Setup.navigate('2');":"Setup.navigate('3');"}  style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${current_config.language['Continue']}</button>      `
         for (i = 0; i < languages.length; i++) {
           const languageDiv = document.createElement('div')
           languageDiv.setAttribute('class', 'language_div')

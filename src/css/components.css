@@ -37,7 +37,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   top: 45%;
   left: 50%;
   transform: translate(-50%, -45%);
-  border: 1px solid var(--primaryColor);
+  border: 1px solid var(--window-border-color);
 }
 
 .body_window_full {
@@ -217,7 +217,7 @@ input[type="number"]::selection {
   top: 45%;
   left: 50%;
   -webkit-transform: translate(-50%, -45%) ;
-  border: 1px solid var(--primaryColor);
+  border: 1px solid var(--window-border-color);
 }
 
 @keyframes window_up {
@@ -269,7 +269,7 @@ input[type="number"]::selection {
 }
 
 .dialog_body .buttons >button.important:hover {
-  background: var(--accentColor);
+  background: var(--accentDarkColor);
 }
 
 .dialog_body .buttons>button:active {
@@ -867,6 +867,14 @@ p.link:hover {
   min-height:110px;
   height: auto;
   max-height:110px;
+}
+.extension_div > svg{
+  position: absolute;
+  right: 0;
+  height: 20px;
+  widows: 20px;
+  margin: 10px;
+  top:0;
 }
 .extension_div h3{
   margin: 2px 0px;

@@ -13,6 +13,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   --primaryColor: #222222;
   --secondaryColor: #171717;
   --accentColor: #FF0048;
+  --accentLightColor:#FE3D78;
+  --accentDarkColor:#C8002F;
   --white-black: white;
   --black-white: white;
   --editor-background-color: #191919;
@@ -30,6 +32,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   --scalation: 0.98;
   --scroll-color: rgba(255, 255, 255, 0.2);
   --scroll-color-hover: rgba(255, 255, 255, 0.5);
+  --window-border-color:#2E2E2E;
 }
 
 @font-face {
