@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200719 - 1 [1.0.3]
+- Fixed, Installing the default themes before the setup couldn't finish sometimes
+- Improved Market (better plugin loading)
+- Fixed Hoek and Cryptiles securities alerts
+
 ### 200718 - 1 [1.0.3]
 - Market throws a notification if you have any plugin which has a new update
 - You can now update your plugins by clicking on the Update button

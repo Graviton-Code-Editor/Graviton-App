@@ -55,7 +55,7 @@ function detectPlugins(call) {
           const config = JSON.parse(body2);
           nodegit.Clone(data.clone_url, path.join(plugins_folder.replace(/\\/g, '\\\\'),config.name)).then(function(repository) {       
             plugins.install(config)
-            if(i==default_plugins.length){
+            if(i==default_plugins.length-1){
               return call!=undefined?call():"";
             }
           });

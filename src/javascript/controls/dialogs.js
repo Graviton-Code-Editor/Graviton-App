@@ -34,7 +34,7 @@ module.exports = {
         }
         const all = document.createElement("div");
         all.setAttribute("id", dialogObject.id + "_dialog");
-        all.setAttribute("style", "-webkit-user-select: none;");
+        all.setAttribute("style", "-webkit-user-select: none; ");
         all.innerHTML = `
             <div myID="${dialogObject.id}" class="background_window" onclick="closeDialog(this)"></div>`
         const body_dialog = document.createElement("div");

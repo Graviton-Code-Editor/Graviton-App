@@ -14,8 +14,8 @@ const path = require("path");
 const {Dialog,closeDialog} = require(path.join(__dirname,"src","javascript","controls","dialogs.js")),
       {Window, closeWindow} = require(path.join(__dirname,"src","javascript","controls","windows.js")),
       {Notification, closeNotification} = require(path.join(__dirname,"src","javascript","controls","notifications.js")),
-      {icons} = require(path.join(__dirname,"src","javascript","controls","icons.js")),
       {Tab,closeTab,loadTab} = require(path.join(__dirname,"src","javascript","controls","tabs.js"))
+let  {icons} = require(path.join(__dirname,"src","javascript","controls","icons.js"))
 
 let menus_showing = true;
 let context_menu_list_text = { //Initial value

@@ -221,6 +221,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 .icon .bba{
   fill: var(--dropmenu-background-color);
 }
+.icon .cbo{
+  stroke: var(--accentColor);
+}
+.icon .cba{
+  fill: var(--accentColor);
+}
 .icon{
   cursor: pointer;
 }

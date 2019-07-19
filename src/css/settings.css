@@ -131,7 +131,8 @@ div.active{
 #language_list {
   overflow: auto;
   width: 100%;
-  height: auto;
+  max-height: 100%;
+  position: relative;
   white-space: nowrap;
 }
 h4{

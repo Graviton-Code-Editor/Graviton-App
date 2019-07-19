@@ -54,7 +54,7 @@ const extensions ={
                   ${new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ⭐ </p>
+                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
                 </div>
                 ` 
               }
@@ -83,7 +83,7 @@ const extensions ={
                    ${new_update?icons["update"]:""}
                   <h3>${plugin.local.name}  </h3>
                   <p>${plugin.local.description} </p>
-                  <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `${plugin.repo.git.stargazers_count} · ⭐`:""}`:""} </p>
+                  <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `· ${plugin.repo.git.stargazers_count} ${icons.star}`:""}`:""} </p>
                 </div>
                 ` 
               };
@@ -113,7 +113,7 @@ const extensions ={
                     ${new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ⭐ </p>
+                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
               </div>
               ` 
               }
@@ -156,8 +156,7 @@ const extensions ={
         for(i=0;i<extensions.length;i++){
           client.repo(extensions[i]).info(function(err,data){
             if(err) {
-              console.log(err);
-              store.loadMenus();
+              store.loadMenus(); //Maxium calls error, 60calls/hour/ip
               return callback(2);
             }
             request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
@@ -175,11 +174,8 @@ const extensions ={
                 store.loadMenus();
                 return callback(3);
               }
-              console.log(extensions[i])
-              console.log(extensions.length-1,i)
               if(i==extensions.length-1 ){
                 store.loadMenus();
-                console.log(plugins_to_update)
                 if(plugins_to_update){
                   new Notification(getTranslation('Market'),getTranslation('ExtUpdateNotification'))
                 }
@@ -193,6 +189,10 @@ const extensions ={
     },
     openSubExtensions: function(data){
       const plugin  = graviton.getPlugin(data.getAttribute("name"));
+      if(plugin==undefined){
+        new Notification(getTranslation('Market'),getTranslation('ExtCannotLoad'))
+        return;
+      }
       const ext_win = new Window({
         id: 'sec'+data.getAttribute("name"),
         content:`
@@ -254,7 +254,8 @@ const extensions ={
     },
     updateExtension: function(name){
       const plugin = graviton.getPlugin(name)
-      const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.git.version)>getVersionSum(plugin.local.version):false;
+      console.log(plugin);
+      const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
       if (!fs.existsSync(path.join(plugins_folder,name))) {
         new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
         return;

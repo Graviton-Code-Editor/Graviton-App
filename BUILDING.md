@@ -25,6 +25,8 @@ Rebuild node-pty:
 
 ### Linux
 
+(Tested on ubuntu)
+
 You must have Python 2.7 installed.
 
 Install the dependencies:
@@ -33,7 +35,7 @@ Install the dependencies:
 Rebuild node-pty and nodegit:
 > $ npm run rebuild
 
-Install RPM dependencies:
+Install RPM package:
 > $ sudo apt-get install rpm
 
 ### MacOS
