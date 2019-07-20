@@ -14,16 +14,16 @@ function g_welcomePage () {
   welcome_window = new Window({
     id: 'welcome_window',
     content: `
-		<h2 class='window_title'>${current_config.language['Welcome']}</h2> 
+		<h2  idT="Welcome" class='translate_word window_title'>${current_config.language['Welcome']}</h2> 
 		<div class="flex">
 			<div id="recent_projects" class="horizontal">
-				<h2 >${current_config.language['RecentProjects']}</h2>
+				<h2  idT="RecentProjects" class="translate_word">${current_config.language['RecentProjects']}</h2>
 			</div> 
 			<div id="notes" class="horizontal">
-				<h2 class='title2'>${current_config.language['Notes']}</h2>
+				<h2  idT="Notes" class='translate_word title2'>${current_config.language['Notes']}</h2>
 				<p> ${current_config.language['Version']}: ${g_version.version} (${g_version.date}) - ${g_version.state}</p> 
-				<p> OS: ${graviton.currentOS().name}</p> 
-				<p class="link" onclick="graviton.dialogChangelog()">${current_config.language['Changelog']}</p>
+				<p  > OS: ${graviton.currentOS().name}</p> 
+				<p idT="Changelog" class="translate_word link" onclick="graviton.dialogChangelog()">${current_config.language['Changelog']}</p>
 			</div>
 		</div>
 		<div class='welcomeButtons'>
@@ -130,7 +130,7 @@ const Setup = {
             class="translate_word" 
             idT="Welcome.ThanksForInstalling">
             ${current_config.language['Welcome.ThanksForInstalling']} ${g_version.version} - ${g_version.state}</h1> 
-          <button onclick="Setup.close(); shell.openExternal('https://graviton.ml')" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Website">${current_config.language['Website']}</button> 
+          <button onclick="Setup.close(); extensions.openStore(function(){extensions.navigate('all')});" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Market">${current_config.language['Market']}</button> 
           <button onclick='Setup.close(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language['Finish']}</button> 
           `
         break

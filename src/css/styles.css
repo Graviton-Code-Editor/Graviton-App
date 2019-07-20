@@ -47,8 +47,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 html {
-  font-family: _main_font;
-  font-weight: 550;
+  font-family: _main_font !important;
+  font-weight: 550 ;
 }
 
 * {
@@ -168,9 +168,8 @@ head {
 
 .temp_dir_message {
   font-size: 15px;
-  webkit-user-select: none;
+  user-select: none;
   pointer-events: none;
-  -webkit-user-select: none;
   -webkit-app-region: no-drag;
   position: relative;
   left: 50%;

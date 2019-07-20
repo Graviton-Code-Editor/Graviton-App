@@ -31,8 +31,6 @@ function loadConfig () { // Loads the configuration from the config.json for the
     fs.writeFile(configDir, JSON.stringify(current_config)) // Save the config
     updateSettings()
     loadLanguage(current_config.language)
-    
-    
     detectPlugins(function(){
       if (current_config.justInstalled === false) {
         g_welcomePage()
@@ -51,26 +49,27 @@ function loadConfig () { // Loads the configuration from the config.json for the
       updateSettings()
       detectPlugins(function(){
         if(current_config['theme']!=undefined) setThemeByName(current_config['theme'])
+        loadLanguage(current_config.language)
+        if (current_config.justInstalled === false) {
+          g_welcomePage()
+        } else {
+          Setup.open()
+        }
+        if (current_config.animationsPreferences == 'desactivated') {
+          const style = document.createElement('style')
+          style.innerText = `*{-webkit-transition: none !important;
+          -moz-transition: none !important;
+          -o-transition: none !important;
+          transition: none !important;
+          animation:0;}`
+          style.id = '_ANIMATIONS'
+          document.documentElement.appendChild(style)
+          document.documentElement.style.setProperty('--scalation', '1')
+        }
+        screens.add()
+        appendBinds()
       })
-      loadLanguage(current_config.language)
-      if (current_config.justInstalled === false) {
-        g_welcomePage()
-      } else {
-        Setup.open()
-      }
-      if (current_config.animationsPreferences == 'desactivated') {
-        const style = document.createElement('style')
-        style.innerText = `*{-webkit-transition: none !important;
-        -moz-transition: none !important;
-        -o-transition: none !important;
-        transition: none !important;
-        animation:0;}`
-        style.id = '_ANIMATIONS'
-        document.documentElement.appendChild(style)
-        document.documentElement.style.setProperty('--scalation', '1')
-      }
-      screens.add()
-      appendBinds()
+     
     })
   }
 }

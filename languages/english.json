@@ -106,7 +106,7 @@
 	"ExtUpdated":" has been updated. Restart the editor to avoid issues.",
 	"ExtNoUpdate":"There aren't any updates for ",
 	"ExtUpdateNotification":"There are new updates for your plugins.",
-	"ExtCannotLoad":"Cannot load this extension. Please report it.",
+	"ExtCannotLoad":"Cannot load this extension. Please, report it.",
 	"GoBack":"Go back",
 	"Market":"Market",
 	"Store":"Store",

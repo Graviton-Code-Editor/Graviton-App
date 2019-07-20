@@ -45,6 +45,7 @@ function detectPlugins(call) {
     const client = github.client()   
     const request = require("request");
     for(i=0;i<default_plugins.length;i++){
+      const i_t = i;
       client.repo(default_plugins[i]).info(function(err,data){
         if(err){
           new Notification('Graviton',getTranslation("SetupError1"));
@@ -55,7 +56,7 @@ function detectPlugins(call) {
           const config = JSON.parse(body2);
           nodegit.Clone(data.clone_url, path.join(plugins_folder.replace(/\\/g, '\\\\'),config.name)).then(function(repository) {       
             plugins.install(config)
-            if(i==default_plugins.length-1){
+            if(i_t==default_plugins.length-1){
               return call!=undefined?call():"";
             }
           });
@@ -64,18 +65,21 @@ function detectPlugins(call) {
     }
   } else { //If the plugins folder already exist  
     fs.readdir(plugins_folder, (err, paths) => {
-      paths.forEach(dir => {
-        const direct = fs.statSync(path.join(plugins_folder, dir));
+      for(i=0;i<paths.length;i++){
+        const direct = fs.statSync(path.join(plugins_folder, paths[i]));
         if (!direct.isFile()) {
-          fs.readFile(path.join(plugins_folder, dir, "package.json"), 'utf8', function(err, data) {
+          const i_t = i;
+          fs.readFile(path.join(plugins_folder, paths[i], "package.json"), 'utf8', function(err, data) {
             if (err) throw err;
             const config = JSON.parse(data);
-            plugins.install(config)
-            return call!=undefined?call():"";
+            plugins.install(config,function(){
+              if(i_t==paths.length-1){
+                return call!=undefined?call():"";
+              }
+            })
           });
         }
-      });
+      }
     });
   }
-  
 }

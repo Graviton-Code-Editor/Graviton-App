@@ -38,6 +38,9 @@ Rebuild node-pty and nodegit:
 Install RPM package:
 > $ sudo apt-get install rpm
 
+In case you get a curl-config error, try:
+> $ sudo apt-get install libcurl4-gnutls-dev
+
 ### MacOS
 
 You must have Python 2.7 installed.

@@ -54,3 +54,14 @@ const getTranslation = text =>{
     return current_config.language[text];
   }
 }
+
+/*
+
+languages.push(random_language);
+
+if(current_config.language=="random"){
+    loadLanguage("random");
+}
+
+
+*/

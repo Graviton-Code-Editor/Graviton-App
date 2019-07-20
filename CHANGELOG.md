@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200720 - 1 [1.0.3]
+- Fixed some bugs when starting Graviton
+- New CSS icon
+
 ### 200719 - 1 [1.0.3]
 - Fixed, Installing the default themes before the setup couldn't finish sometimes
 - Improved Market (better plugin loading)

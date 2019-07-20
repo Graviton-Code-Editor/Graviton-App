@@ -244,7 +244,6 @@ const extensions ={
         })
         document.dispatchEvent(installed_ext_event);
         new Notification('Market',name+ current_config.language["ExtInstalled"]);
-        console.log(plugin);
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
         }else{
@@ -254,7 +253,6 @@ const extensions ={
     },
     updateExtension: function(name){
       const plugin = graviton.getPlugin(name)
-      console.log(plugin);
       const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
       if (!fs.existsSync(path.join(plugins_folder,name))) {
         new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
@@ -332,7 +330,7 @@ const extensions ={
     }
   }
   const plugins = {
-    install: function(config){
+    install: function(config,call){
       if(config.colors==undefined){
         plugins_list.push(config);
         if(config["main"]!=undefined){
@@ -345,6 +343,9 @@ const extensions ={
             link.classList = config["name"]+"_css";
             link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][i])),
             document.body.appendChild(link);
+            if(i==config.css.length-1){
+              return call!=undefined?call():"";
+            }
           }
         }      
       }else{
@@ -354,6 +355,7 @@ const extensions ={
         newLink.setAttribute("rel", "stylesheet");
         newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
         document.body.appendChild(newLink);
+        return call!=undefined?call():"";
       }
     },
     installDependencies: function(config){

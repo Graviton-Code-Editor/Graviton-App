@@ -216,7 +216,7 @@ input[type="number"]::selection {
   background: var(--secondaryColor);
   top: 45%;
   left: 50%;
-  -webkit-transform: translate(-50%, -45%) ;
+  transform: translate(-50%, -45%) ;
   border: 1px solid var(--window-border-color);
 }
 
@@ -461,7 +461,6 @@ input[type="number"]::selection {
 
 .g_tabs_bar .tabs>p {
   overflow: hidden;
-  display: inline-block;
   position: relative;
   font-size: 12px;
   min-width: 75px;
@@ -478,8 +477,7 @@ input[type="number"]::selection {
 
 .g_tabs_bar .tabs .close_tab {
   position: relative;
-  top: 35%;
-  display: inline-block;
+  top: 32%;
   right: 0;
   float: right;
   margin-right: 25px;
