@@ -76,6 +76,7 @@ function detectPlugins(call) {
           fs.readFile(path.join(plugins_folder, paths[i], "package.json"), 'utf8', function(err, data) {
             if (err) throw err;
             const config = JSON.parse(data);
+            console.log(config);
             plugins.install(config,function(){
             loaded++;
             if(loaded==paths.length){

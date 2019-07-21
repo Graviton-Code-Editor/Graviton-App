@@ -334,7 +334,12 @@ const extensions ={
       if(config.colors==undefined){
         plugins_list.push(config);
         if(config["main"]!=undefined){
+          
           const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
+          console.log(path.join(plugins_folder, config["folder"], config["main"]));
+          if(config["css"]==undefined){
+            return call!=undefined?call():"";
+          }
         }
         if(config["css"] !=undefined) {
           for (i = 0; i < config["css"].length; i++) {
@@ -347,6 +352,7 @@ const extensions ={
               return call!=undefined?call():"";
             }
           }
+          return call!=undefined?call():"";
         }      
       }else{
         themes.push(config); //Push the theme to the array
