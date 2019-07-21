@@ -35,6 +35,8 @@ More are coming soon
 Contributing (working on) ⚙
 ---
 
+**[Documentatiom](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)**
+
 **[Code of conduct](CODE_OF_CONDUCT.md)**
 
 Some ways to contribute to Graviton's project:
