@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200721 - 1 [1.0.3]
+- You can now pass a path when opening a terminal
+- Rewrote the autocompletator almost in Js (less bugs, faster)
+- Fixed, now Ruby files with .rb format are also highlighted
+- Fixed, sometimes Graviton wasn't selecting the saved theme at booting
+- Removed the year from the license
+
 ### 200720 - 1 [1.0.3]
 - Fixed some bugs when starting Graviton
 - New CSS icon

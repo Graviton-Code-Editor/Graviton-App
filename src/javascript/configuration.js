@@ -40,7 +40,6 @@ function loadConfig () { // Loads the configuration from the config.json for the
       screens.add()
       appendBinds()
     })
-    
   } else {
     fs.readFile(configDir, 'utf8', function (err, data) {
       Object.keys(current_config).forEach(function (key, index) {
@@ -68,12 +67,10 @@ function loadConfig () { // Loads the configuration from the config.json for the
         }
         screens.add()
         appendBinds()
-      })
-     
+      }) 
     })
   }
 }
-
 function saveConfig () { // Saves the current configuration to config.json
   let newConfig = {
     justInstalled: current_config.justInstalled,

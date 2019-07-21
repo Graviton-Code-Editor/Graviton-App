@@ -355,7 +355,7 @@ const extensions ={
         newLink.setAttribute("rel", "stylesheet");
         newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
         document.body.appendChild(newLink);
-        return call!=undefined?call():"";
+       return call!=undefined?call():"";
       }
     },
     installDependencies: function(config){

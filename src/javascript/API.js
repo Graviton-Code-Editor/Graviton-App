@@ -658,7 +658,7 @@ const commanders = {
     })
   },
   terminal: function(object) {
-    if(graviton.getCurrentDirectory()=="not_selected") {
+    if(graviton.getCurrentDirectory()==null) {
       new Notification("Error",current_config.language["CannotRunTerminalCauseDirectory"]);
       return;
     }
@@ -670,7 +670,7 @@ const commanders = {
         if(!err){
           const shell = process.env[_os.platform() === 'win32' ? 'COMSPEC' : 'SHELL'];
           const ptyProcess = pty.spawn(shell, [], {
-            cwd: graviton.getCurrentDirectory(),
+            cwd: object==undefined?graviton.getCurrentDirectory():object.path,
             env: process.env,
           });
           const xterm = new Terminal({

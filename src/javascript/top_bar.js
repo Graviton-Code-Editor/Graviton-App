@@ -185,7 +185,6 @@ function interact_dropmenu (id) {
 window.onclick = function (event) {
   if (!(event.target.matches('.dropbtn') || event.target.matches('.icon_border'))) {
     const dropdowns = document.getElementsByClassName('dropdown-content')
-    time_spent_graphic_counter = false
     for (i = 0; i < dropdowns.length; i++) {
       const openDropdown = dropdowns[i]
       if (openDropdown.classList.contains('show')) {
@@ -193,6 +192,9 @@ window.onclick = function (event) {
         anyDropON = null
       }
     }
+  }
+  if(!event.target.matches('.option')){
+    document.getElementById("context").parentElement.style = "display:none";
   }
 }
 

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190719',
+  date: '190721',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -59,7 +59,7 @@ let current_screen,
   mouseClicked = false,
   touchingResizerValue = false,
   editor_screens = [],
-  dictionary = autocomplete.javascript
+  dictionary = autocomplete
 
 if (path.basename(__dirname) !== 'Graviton-Editor') DataFolderDir = path.join(getAppDataPath(), '.graviton')
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir) // Create .graviton if it doesn't exist
@@ -236,7 +236,7 @@ const loadEditor = (info) => {
       close_icon.setAttribute('file_status', 'unsaved')
       close_icon.children[1].innerHTML = icons["unsaved"]
       document.getElementById(editingTab).setAttribute('data', editor.getValue())
-      if (current_config['autoCompletionPreferences'] == 'activated' && plang == 'JavaScript') {
+      if (current_config['autoCompletionPreferences'] == 'activated') {
         // Getting Cursor Position
         const cursorPos = editor.cursorCoords()
         // Getting Last Word
@@ -245,27 +245,51 @@ const loadEditor = (info) => {
         const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
         const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
         const lastWord = editor.getRange({ line: A1, ch: B1 }, { line: A1, ch: B2 })
+
+        const context = document.getElementById("context");
         // Context Menu
-        filterIt(dictionary, lastWord, function(filterResult) {
+        if(context.style.display=="block") return;
+        const selectedLangNum = (function(){
+          for(i=0;i<dictionary.length;i++){
+            if(dictionary[i].name == path.basename(graviton.getCurrentFile().path).split('.').pop()){
+              return i
+            }
+          }
+        })()
+        filterIt(dictionary[selectedLangNum].list, lastWord, function(filterResult) {
           if (filterResult.length > 0 && lastWord.length >= 3) {
             let contextOptions
             for (var i = 0; i < filterResult.length; i++) {
-              contextOptions += "<button class='option'>" + filterResult[i]._name + '</button>'
+              const id = Math.random();
+              contextOptions += `<button id=${id} class='option' >` + filterResult[i]._name + '</button>'
               contextOptions = contextOptions.replace('undefined', '')
-              $('context .menuWrapper').html(contextOptions)
+              context.innerHTML = contextOptions
+              sleeping(1).then(() => {
+                if(document.getElementById(id)==null) return;
+                document.getElementById(id).onclick=function(){
+                  const A1 = editor.getCursor().line 
+                  const A2 = editor.getCursor().ch
+                  const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
+                  const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
+                  const selected = this.innerText
+                  editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
+                  $('context').fadeOut()
+                  $('context .menuWrapper').html('')
+                }
+              });
             }
-            $('context').fadeIn()
-            $('context').css({ 'top': (cursorPos.top + 30) + 'px', 'left': cursorPos.left + 'px' })
-            $('context .menuWrapper .option').first().addClass('hover')
+            context.parentElement.style = `top:${cursorPos.top+30}px; left:${cursorPos.left}px; display:block;`
+            if(cursorPos.top<window.innerHeight/2){}//Cursor is above the mid height
+            context.children[0].classList.add("hover")
           } else if (filterResult.length === 0 || lastWord.length < 3) {
-            $('context').fadeOut()
-            $('context .menuWrapper').html('')
+            context.parentElement.style.display = "none";
+            context.innerHTML = ""
           }
         })
       }
     })
     editor.on('keydown', function(editor, e) {
-      if ($('context').css('display') != 'none') {
+      if (document.getElementById("context").parentElement.style.display != 'none') {
         // Ignore keys actions on context options displayed.
         editor.setOption('extraKeys', {
           'Up': function() {
@@ -282,6 +306,11 @@ const loadEditor = (info) => {
             if (true) {
               return CodeMirror.PASS
             }
+          },
+          'Tab': function() {
+            if (true) {
+              return CodeMirror.PASS
+            }
           }
         })
       } else { // Reset keys actions.
@@ -290,47 +319,44 @@ const loadEditor = (info) => {
         })
       }
       // Context Options keys handler
-      $('context .menuWrapper .option.hover').filter(function() {
-        if (e.keyCode === 40 && !$('context .menuWrapper .option').last().hasClass('hover') && $('context').css('display') != 'none') {
-          $('context .menuWrapper .option').removeClass('hover')
-          $(this).next().addClass('hover')
-          document.getElementById('context').scrollBy(0, 30)
-          return false
-        } else if (e.keyCode === 38 && !$('context .menuWrapper .option').first().hasClass('hover') && $('context').css('display') != 'none') {
-          $('context .menuWrapper .option').removeClass('hover')
-          $(this).prev().addClass('hover')
-          document.getElementById('context').scrollBy(0, -30)
-          return false
+      const context = document.getElementById("context");
+      const childs = context.querySelectorAll('.option');
+      for(i=0;i<childs.length;i++){
+        if(childs[i].classList.contains("hover")){
+          if (e.keyCode === 40 && i!= childs.length-1 && context.style.display != 'none') { //DOWN
+            childs[i].classList.remove("hover")
+            childs[i+1].classList.add("hover")
+            context.scrollBy(0, 30)
+            return false
+          } else if (e.keyCode === 38 && i!= 0 && context.style.display != 'none') {//UP
+            childs[i].classList.remove("hover")
+            childs[i-1].classList.add("hover")
+            context.scrollBy(0, -30)
+            return false
+          }
+          if (e.keyCode === 9 || e.keyCode === 13) { //9 = Tab & 13 = Enter
+            const A1 = editor.getCursor().line
+            const A2 = editor.getCursor().ch
+            const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
+            const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
+            const selected = (function(){
+              for(i=0;i<childs.length;i++){
+                if(childs[i].classList.contains("hover")){
+                  return childs[i].innerText;
+                }
+              }
+            })();
+            editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
+            context.innerHTML = "";
+            setTimeout(function() {
+              $('context').fadeOut()
+              $('context .menuWrapper').html('')
+            }, 100)
+          }
+
         }
-        // Selection key Triggers
-        if (e.keyCode === 13) {
-          const A1 = editor.getCursor().line
-          const A2 = editor.getCursor().ch
-          const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
-          const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
-          const selected = $(this).text()
-          editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
-          setTimeout(function() {
-            $('context').fadeOut()
-            $('context .menuWrapper').html('')
-          }, 100)
-        }
-      })
-    })
-    $('context .menuWrapper').on('mouseenter', 'div.option', function() {
-      $('context .menuWrapper .option').not(this).removeClass('hover')
-      $(this).addClass('hover')
-    })
-    $('context .menuWrapper').on('mousedown', 'div.option', function(e) {
-      const A1 = editor.getCursor().line
-      const A2 = editor.getCursor().ch
-      const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
-      const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
-      const selected = $(this).text()
-      editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
-      $('context').fadeOut()
-      $('context .menuWrapper').html('')
-      e.preventDefault()
+        
+      }
     })
     editor.addKeyMap({
       'Ctrl-S': function(cm) { saveFile() },
@@ -638,6 +664,7 @@ function getLanguageName(format) {
       return 'Go'
     case 'sql':
       return 'SQL'
+    case 'rb':
     case 'ruby':
       return 'Ruby'
     case 'php':
@@ -740,6 +767,7 @@ function updateCodeMode(instance, path) {
         plang = 'SQL'
         instance.refresh()
         break
+      case 'rb':
       case 'ruby':
         instance.setOption('htmlMode', false)
         instance.setOption('mode', 'ruby')
