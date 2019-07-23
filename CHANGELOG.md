@@ -2,6 +2,14 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200723 - 1 [1.0.3] 
+- New theme selector in the setup proecss
+- Added a blur slider
+- You can now open a terminal in a custom path even if there is no folder opened
+- You can now hide the terminal (Ctrl+H) or from the menu "Editor"
+- Dividede the CSS source
+- Added the function "installFromLocal()" to install plugins from local source
+
 ### 200721 - 1 [1.0.3]
 - You can now pass a path when opening a terminal
 - Rewrote the autocompletator almost in Js (less bugs, faster)

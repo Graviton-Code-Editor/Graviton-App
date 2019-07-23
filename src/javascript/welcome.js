@@ -95,12 +95,15 @@ const Setup = {
         break
       case '2':
         document.getElementById('body_window_full').innerHTML = `
-          <h1 style="font-size:50px;  text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language['Welcome.TakeATheme']}</h1> 
-          <div id='theme_list' style="height:60%;"></div> 
+          <h1 style=" text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language['Welcome.TakeATheme']}</h1> 
+          <div class=theme_divs>
+            <img draggable=false onclick="setThemeByName('Dark'); selectTheme('3',this);" class='theme_div2 active' src=src/icons/dark.svg>
+            <img draggable=false onclick="setThemeByName('Arctic'); selectTheme('3',this);" class=theme_div2 src=src/icons/light.svg>
+          </div> 
           <button onclick='Setup.navigate("1"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${current_config.language['Back']}</button> 
-          <button id="FROM_THEMES_CONTINUE" onclick='Setup.navigate("3");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 disabled translate_word" idT="Continue">${current_config.language['Continue']}</button> 
+          <button  onclick='Setup.navigate("3");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${current_config.language['Continue']}</button> 
         `
-        for (i = 0; i < themes.length; i++) {
+        /*for (i = 0; i < themes.length; i++) {
           const themeDiv = document.createElement('div')
           themeDiv.setAttribute('class', '  theme_div_welcomePage ')
           themeDiv.setAttribute('onclick', `loadTheme('${i}'); selectTheme('2',this);`)
@@ -120,7 +123,7 @@ const Setup = {
             selectTheme('2', themeDiv)
           }
           document.getElementById('theme_list').appendChild(themeDiv)
-        }
+        }*/
         break
       case '3':
         document.getElementById('body_window_full').innerHTML = `

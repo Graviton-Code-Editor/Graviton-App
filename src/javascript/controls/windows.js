@@ -14,7 +14,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 /*
 
 const my_window = new Window({
-    id:'my:window1',
+    id:'my_window1',
     content:'This is a very big window! '
 })
 
@@ -22,7 +22,7 @@ my_window.launch(); //Open the window
 
 my_window.close(); //Close the window
 
-closeWindow('my_windo1'); //Close the window by passing the id
+closeWindow('my_window1'); //Close the window by passing the id
 
 */
 
@@ -41,13 +41,16 @@ module.exports = {
             </div>`;
         this.myWindow = newWindow;
         this.launch = function(){
+            document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))+1);
             document.body.appendChild(this.myWindow);
         }
         this.close = function(){
+            document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))-1);
             document.getElementById(`${this.id}_window`).remove();
         }
     },
     closeWindow: (id) => {
+        document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))-1);
         document.getElementById(`${id}_window`).remove();
     }
 }

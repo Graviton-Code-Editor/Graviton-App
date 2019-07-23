@@ -19,27 +19,43 @@ let  {icons} = require(path.join(__dirname,"src","javascript","controls","icons.
 
 let menus_showing = true;
 let context_menu_list_text = { //Initial value
-  "Copy": " document.execCommand('copy');",
-  "Paste": " document.execCommand('paste');"
+  "Copy": ()=>{
+     document.execCommand('copy');
+  },
+  "Paste": ()=>{
+    document.execCommand('paste');
+  } 
+
 };
 const context_menu_list_tabs = {
-  "Close": `closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));`
+  'Close': function(){
+    closeTab(document.getElementById(this.getAttribute("target")).getAttribute("TabID"));
+  }
 };
 const context_menu_list_directories = {
-  "Remove": `directories.removeDialog(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent_id')));`
+  'Remove': function(){
+    directories.removeDialog(
+      document.getElementById(
+        document.getElementById(
+          this.getAttribute('target')
+        ).getAttribute('parent_id')
+      )
+    );
+  } 
 };
 const context_menu_directory_options = {
-  "Reload": `loadDirs(
-    document.getElementById(
-      this.getAttribute('target')
-    ).getAttribute('dir'),
-    document.getElementById(
-      this.getAttribute('target')
-    ).getAttribute('parent'),
-    document.getElementById(
-      this.getAttribute('target')
-    ).getAttribute('global')); 
-    `
+  'Reload':function(){
+    loadDirs(
+      document.getElementById(
+        this.getAttribute('target')
+      ).getAttribute('dir'),
+      document.getElementById(
+        this.getAttribute('target')
+      ).getAttribute('parent'),
+      document.getElementById(
+        this.getAttribute('target')
+      ).getAttribute('global')); 
+  }
 };
 class Plugin {
   constructor(object) {
@@ -137,25 +153,28 @@ function dropMenu(obj) {
               const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
               const click = typeof panel["list"][key] == "string"? panel["list"][key]:panel["list"][key].click
               const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint
+              const button =document.createElement("button");
+                button.setAttribute("title",hint);
+                button.id = Math.random();
+                sleeping(1).then(() => {
+                  document.getElementById(button.id).onclick = click
+                });
               if (toTransx != true) {
-                droplist.innerHTML += `
-								<button title="${hint}" onclick="${click}" >
+                button.innerHTML += `
 									<div>
 									${icon}
 									</div>
-									<div>${key}</div>
-								</button>`
+									<div>${key}</div>`
               } else {
-                droplist.innerHTML += `
-								<button title="${hint}" onclick="${click}" >
+                button.innerHTML += `
 									<div>
 									${icon}
 									</div>
 									<div class="translate_word" idT="${key.replace(/ +/g, "")}">
 										${key}
-									</div>
-								</button>`;
+									</div>`;
               }
+              droplist.appendChild(button);
             }
           });
         }
@@ -190,7 +209,7 @@ function dropMenu(obj) {
                 const icon = typeof panel["list"][key] == "string"? icons.empty:panel["list"][key].icon!=undefined?icons[panel["list"][key].icon]:icons.empty;
                 const click = typeof panel["list"][key] == "function"? panel["list"][key]:panel["list"][key].click
                 const hint = typeof panel["list"][key] == "string"? "":panel["list"][key].hint==undefined?"":panel["list"][key].hint;
-                var button =document.createElement("button");
+                const button =document.createElement("button");
                 button.setAttribute("title",hint);
                 button.id = Math.random();
                 sleeping(1).then(() => {
@@ -205,7 +224,6 @@ function dropMenu(obj) {
                   `
                 } else {
                   button.innerHTML += `
-                  
                     <div>
                     ${icon}
                     </div>
@@ -215,7 +233,6 @@ function dropMenu(obj) {
                   `;
                 }
                 droplist.appendChild(button);
- 
             }
           });
         }
@@ -570,7 +587,9 @@ document.addEventListener('mousedown', function(event) {
             button.innerText = current_config.language[key];
             button.setAttribute("target", event.target.id);
             context_menu.appendChild(button);
-            button.setAttribute("onclick", context_menu_list_directories[key] + " document.getElementById('context_menu').remove();");
+            sleeping(1).then(() => {
+              button.onclick =  context_menu_list_directories[key]
+            });
           });
           break;
         case "tab":
@@ -580,7 +599,9 @@ document.addEventListener('mousedown', function(event) {
             button.innerText = current_config.language[key];
             button.setAttribute("target", event.target.id);
             context_menu.appendChild(button);
-            button.setAttribute("onclick", context_menu_list_tabs[key] + " document.getElementById('context_menu').remove();");
+            sleeping(1).then(() => {
+              button.onclick =  context_menu_list_tabs[key]
+            });
           });
           break;
         case "directory":
@@ -590,7 +611,10 @@ document.addEventListener('mousedown', function(event) {
             button.innerText = getTranslation(key);
             button.setAttribute("target", event.target.id);
             context_menu.appendChild(button);
-            button.setAttribute("onclick", context_menu_directory_options[key] + " document.getElementById('context_menu').remove();");
+            sleeping(1).then(() => {
+              button.onclick =  context_menu_directory_options[key]
+            });
+            
           });
           break;
         default:
@@ -607,7 +631,10 @@ document.addEventListener('mousedown', function(event) {
               button.innerText = key;
               context_menu.appendChild(button);
             }
-            button.setAttribute("onclick", context_menu_list_text[key] + " document.getElementById('context_menu').remove();");
+            sleeping(1).then(() => {
+              button.onclick =  context_menu_list_text[key]
+            });
+            
           });
       }
       document.body.appendChild(context_menu);
@@ -640,25 +667,18 @@ class commander {
     return callback(false);
   }
   close() {
-    document.getElementById(this.id + "_commander").remove();
+    document.getElementById(this.id).remove();
+  }
+  hide() {
+    document.getElementById(this.id).style.display = "none";
+  }
+  show() {
+    document.getElementById(this.id).style = "";
   }
 }
 const commanders = {
-  ask: function(object) {
-    new commander({
-      id: "commander_ask",
-      content: `
-      <div class="section-b">
-	      <div style="display:flex; ">
-	      	<p style="flex:70%;">${object.message}</p>
-	      	<button class="button2"  onclick="commanders.close('commander_ask');">Close</button>
-	      </div>
-	      <input style="margin-top:4px;" class="input1 auto"></input>
-      </div>`
-    })
-  },
   terminal: function(object) {
-    if(graviton.getCurrentDirectory()==null) {
+    if(graviton.getCurrentDirectory()==null && object==undefined) {
       new Notification("Error",current_config.language["CannotRunTerminalCauseDirectory"]);
       return;
     }
@@ -705,6 +725,12 @@ const commanders = {
           }  
         }
      }) 
+  },
+  hide: function(id){
+    document.getElementById(id + "_commander").style.display = "none";
+  },
+  show: function(id){
+    document.getElementById(id + "_commander").style = "";
   },
   close: function(id) {
     document.getElementById(id + "_commander").remove();

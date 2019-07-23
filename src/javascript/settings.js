@@ -44,9 +44,13 @@ const Settings = {
           <h4>${current_config.language['Themes']}</h4> 
           <div class="section">
             <div id='theme_list'></div> 
-            <p class="link" onclick="extensions.openStore(function(){extensions.navigate('all')})">${getTranslation("Market")}</p>   
+            <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation("Market")}</p>   
             <p>${current_config.language['Themes.Text']}</p>
             <gv-switch  onclick="graviton.useSystemAccent()" class="${current_config.accentColorPreferences == 'system' ? 'activated' : 'desactivated'}"></gv-switch>
+          </div>
+          <h>${getTranslation("Blur")}</h4>
+          <div class="section">
+            <input id="slider_blur" onchange="updateCustomization()" type="range" min="0" step="0.2" max="50" value="${current_config.blurPreferences}" class="slider" id="myRange">
           </div>
           <h4>${current_config.language['ZenMode']}</h4>
           <div class="section">
@@ -172,11 +176,23 @@ function updateSettingsFromUI () {
 function updateCustomization () {
   current_config.appZoom = document.getElementById('slider_zoom').value
   webFrame.setZoomFactor(current_config.appZoom / 25)
+  current_config.blurPreferences = document.getElementById('slider_blur').value
+  if(current_config.blurPreferences!=0){
+    document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
+  }else{
+    document.documentElement.style.setProperty('--blur', `none`)
+  }
+  
 }
 
 function updateSettings () {
   document.documentElement.style.setProperty('--editor-font-size', `${current_config.fontSizeEditor}px`) // Update settings from start
   webFrame.setZoomFactor(current_config.appZoom / 25)
+  if(current_config.blurPreferences!=0){
+    document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
+  }else{
+    document.documentElement.style.setProperty('--blur', `none`)
+  }
 }
 
 function factory_reset_dialog () {
@@ -205,10 +221,16 @@ function selectLang (lang) {
 
 function selectTheme (from, theme) {
   let themes_divs
-  if (from === '1') {
-    themes_divs = document.getElementsByClassName('theme_div')
-  } else {
-    themes_divs = document.getElementsByClassName('theme_div_welcomePage')
+  switch(from){
+    case"1":
+      themes_divs = document.getElementsByClassName('theme_div')
+      break;
+    case"2":
+      themes_divs = document.getElementsByClassName('theme_div_welcomePage')
+      break;
+    case"3":
+      themes_divs = document.getElementsByClassName('theme_div2')
+      break;
   }
   for (i = 0; i < themes_divs.length; i++) {
     themes_divs[i].classList.remove("active")

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190721',
+  date: '190723',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -21,7 +21,6 @@ const os = require('os'),
   BrowserWindow = require('electron').BrowserWindow,
   app = require('electron').remote,
   getAppDataPath = require('appdata-path'),
-  $ = require('jquery'),
   { webFrame } = require('electron'),
   g_window = require('electron').remote.getCurrentWindow(),
   { systemPreferences } = require('electron').remote,
@@ -34,7 +33,7 @@ let current_screen,
   i,
   DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton'),
   tabs = [],
-  FirstFolder = 'not_selected',
+  FirstFolder = null,
   editingTab,
   ids = 0,
   plang = ' ',
@@ -237,9 +236,7 @@ const loadEditor = (info) => {
       close_icon.children[1].innerHTML = icons["unsaved"]
       document.getElementById(editingTab).setAttribute('data', editor.getValue())
       if (current_config['autoCompletionPreferences'] == 'activated') {
-        // Getting Cursor Position
         const cursorPos = editor.cursorCoords()
-        // Getting Last Word
         const A1 = editor.getCursor().line
         const A2 = editor.getCursor().ch
         const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch
@@ -247,7 +244,6 @@ const loadEditor = (info) => {
         const lastWord = editor.getRange({ line: A1, ch: B1 }, { line: A1, ch: B2 })
 
         const context = document.getElementById("context");
-        // Context Menu
         if(context.style.display=="block") return;
         const selectedLangNum = (function(){
           for(i=0;i<dictionary.length;i++){
@@ -273,8 +269,8 @@ const loadEditor = (info) => {
                   const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch
                   const selected = this.innerText
                   editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
-                  $('context').fadeOut()
-                  $('context .menuWrapper').html('')
+                  context.parentElement.style.display = "none";
+                  context.innerHTML = "";
                 }
               });
             }
@@ -349,9 +345,9 @@ const loadEditor = (info) => {
             editor.replaceRange(selected, { line: A1, ch: B1 }, { line: A1, ch: B2 })
             context.innerHTML = "";
             setTimeout(function() {
-              $('context').fadeOut()
-              $('context .menuWrapper').html('')
-            }, 100)
+              context.parentElement.style.display = "none";
+              context.innerHTML = "";
+            }, 1)
           }
 
         }
@@ -363,8 +359,20 @@ const loadEditor = (info) => {
       'Ctrl-N': function(cm) { screens.add() },
       'Ctrl-L': function(cm) { screens.remove(current_screen.id) },
       'Ctrl-E': function(cm) { graviton.toggleZenMode() },
-      'Ctrl-T': function(cm) { commanders.terminal() },
+      'Ctrl-T': function(cm) { 
+        if(current_screen.terminal!=undefined){
+          commanders.show(current_screen.terminal.id)
+          return;
+        }
+        commanders.terminal()
+      },
       'Ctrl-U': function(cm) { commanders.closeTerminal() },
+      'Ctrl-H': function(cm) { 
+        if(current_screen.terminal!=undefined){
+          commanders.hide(current_screen.terminal.id)
+        }
+        commanders.terminal();
+       },
       'F11': function(cm) {
         if (g_window.isFullScreen() == false) {
           g_window.setFullScreen(true);
@@ -392,10 +400,19 @@ const appendBinds = () => {
     graviton.toggleZenMode()
   })
   Mousetrap.bind('mod+t', function() {
-    commanders.terminal()
+    if(current_screen.terminal!=undefined){
+      commanders.show(current_screen.terminal.id)
+      return;
+    }
+    commanders.terminal();
   })
   Mousetrap.bind('mod+u', function() {
     commanders.closeTerminal()
+  })
+  Mousetrap.bind('mod+h', function() {
+    if(current_screen.terminal!=undefined){
+      commanders.hide(current_screen.terminal.id)
+    }
   })
   Mousetrap.bind('f11', function() {
     graviton.toggleFullScreen();

@@ -23,6 +23,7 @@ let current_config = { // Default values
   autoCompletionPreferences: 'desactivated',
   lineWrappingPreferences: 'desactivated',
   accentColorPreferences: 'manual',
+  blurPreferences:"3",
   version: undefined
 }
 
@@ -82,6 +83,7 @@ function saveConfig () { // Saves the current configuration to config.json
     autoCompletionPreferences: current_config['autoCompletionPreferences'],
     lineWrappingPreferences: current_config['lineWrappingPreferences'],
     accentColorPreferences: current_config['accentColorPreferences'],
+    blurPreferences: current_config.blurPreferences,
     version:g_version.date
   }
   newConfig = JSON.stringify(newConfig)

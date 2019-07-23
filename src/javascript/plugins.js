@@ -75,17 +75,32 @@ function detectPlugins(call) {
         if (!direct.isFile()) {
           fs.readFile(path.join(plugins_folder, paths[i], "package.json"), 'utf8', function(err, data) {
             if (err) throw err;
-            const config = JSON.parse(data);
-            console.log(config);
+            const config = JSON.parse(data);  
             plugins.install(config,function(){
             loaded++;
-            if(loaded==paths.length){
-              return call!=undefined?call():"";
-            }
+              if(loaded==paths.length){
+                return call!=undefined?call():"";
+              }
             })
           });
         }
       }
     });
   }
+}
+
+const installFromLocal = function(){
+  dialog.showOpenDialog({ properties: ['openDirectory'] },
+    selectedFiles => {
+      if (selectedFiles === undefined) return
+      const folder_name = path.basename(selectedFiles[0]).split('.').pop()
+      fs.copy(selectedFiles[0], path.join(plugins_folder,folder_name), function (err) {
+        if (err){
+            graviton.throwError('An error occured while copying the folder.')
+            return console.error(err)
+        }
+        console.log('Installed on'+path.join(plugins_folder,folder_name))
+    }); 
+    }
+  )
 }

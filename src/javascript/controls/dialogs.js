@@ -61,12 +61,14 @@ module.exports = {
             body_dialog.children[2].appendChild(button);
         });
         all.appendChild(body_dialog);
+        document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))+1);
         document.body.appendChild(all);
         this.close = function(me) {
             closeDialog(me);
         }
     },
     closeDialog: (id) => {
+        document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))-1);
         document.getElementById(id.getAttribute("myID") + "_dialog").remove();
     }
 }

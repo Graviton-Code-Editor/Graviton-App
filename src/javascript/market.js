@@ -10,6 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 const extensions ={
     navigate: function (num,err) {
+      if(document.getElementById("market_window_window")==undefined) return;
       for (i = 0; i < document.getElementById("navbar2").children.length; i++) {
         document.getElementById("navbar2").children[i].classList.remove('active')
       }
@@ -312,6 +313,7 @@ const extensions ={
   
   const store = {
     loadMenus:function(){
+      if(document.getElementById("market_window_window")==undefined) return;
       graviton.windowContent("market_window",`
         <div class="g_lateral_panel">
           <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation('Market')}</h2> 
@@ -334,9 +336,7 @@ const extensions ={
       if(config.colors==undefined){
         plugins_list.push(config);
         if(config["main"]!=undefined){
-          
-          const plugin = require(path.join(plugins_folder, config["folder"], config["main"]));
-          console.log(path.join(plugins_folder, config["folder"], config["main"]));
+          require(path.join(plugins_folder, config["folder"], config["main"]));
           if(config["css"]==undefined){
             return call!=undefined?call():"";
           }

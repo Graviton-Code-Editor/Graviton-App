@@ -135,10 +135,7 @@ div.active{
   position: relative;
   white-space: nowrap;
 }
-h4{
-  font-weight: normal;
-  margin:4px;
-}
+
 #settings_content p{
   font-size: 14px;
   line-height: 20px;

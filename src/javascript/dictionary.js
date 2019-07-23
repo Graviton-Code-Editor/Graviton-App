@@ -813,6 +813,19 @@ const autocomplete = [
         {
             _name: "translate"
         }
+        ,
+        {
+            _name: "scale"
+        }
+        ,
+        {
+            _name: "opacity"
+        }
+        ,
+        {
+            _name: "transition"
+        }
+
 
     ]
   }

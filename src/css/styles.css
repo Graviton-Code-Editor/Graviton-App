@@ -8,7 +8,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-/* Color pallete , themes will override this*/
+
+@import "controls/windows.css";
+@import "controls/dialogs.css";
+@import "controls/context.css";
+
 :root {
   --primaryColor: #222222;
   --secondaryColor: #171717;
@@ -33,6 +37,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   --scroll-color: rgba(255, 255, 255, 0.2);
   --scroll-color-hover: rgba(255, 255, 255, 0.5);
   --window-border-color:#2E2E2E;
+  --blur:0px;
 }
 
 @font-face {
@@ -46,9 +51,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   src: url(../fonts/Hack-Regular.ttf);
 }
 
-html {
+html,body,head {
   font-family: _main_font !important;
   font-weight: 550 ;
+  margin: 0;
+  padding: 0;
+  background: var(--primaryColor);
 }
 
 * {
@@ -62,13 +70,6 @@ html {
   font-family: editor;
   font-size: var(--editor-font-size);
   box-shadow: 0px 3px 5px var(--shadows);
-}
-
-body,
-head {
-  margin: 0;
-  padding: 0;
-  background: var(--primaryColor);
 }
 
 *::-webkit-scrollbar {
@@ -110,7 +111,14 @@ head {
   width: 6px;
   height: 6px;
 }
-
+#body1{
+  filter: blur(var(--blur));
+  transition: 0.08s;
+}
+#body1[windows="0"] {
+  filter:none !important;
+  transition: 0.03s;
+}
 #g_content {
   display: flex;
   background: var(--primaryColor);
@@ -269,68 +277,6 @@ head {
   flex: 1;
 }
 
-context {
-  position: fixed;
-  background-color: var(--primaryColor);
-  overflow: none;
-  border-radius: 3px;
-  max-height: 300px;
-  box-shadow: 0px 0px 12px 1px rgba(0, 0, 0, 0.13);
-  padding: 5px;
-}
-
-context .menuWrapper {
-  overflow: auto;
-  max-height: 300px;
-}
-
-context .menuWrapper::-webkit-scrollbar {
-  width: 10px;
-  height: 100%;
-  background-color: var(--secondaryColor);
-  border-radius: 5px;
-  margin-left: 3px;
-}
-
-context .menuWrapper::-webkit-scrollbar-thumb {
-  background: var(--scroll-color);
-  border-radius: 3px;
-  border: 3px solid transparent;
-  padding: 8px;
-}
-context .menuWrapper::-webkit-scrollbar-thumb:hover {
-  background: var(--scroll-color-hover);
-}
-
-context .menuWrapper .option {
-  height: 30px;
-  font-size: 13px;
-  z-index: 80;
-  color: var(--white-black);
-  background-color: transparent;
-  padding: 5px 10px;
-  width: 100%;
-  text-decoration: none;
-  display: block;
-  border: 0;
-  border-radius: 5px;
-  text-align: left;
-  transform: scale(1);
-}
-
-context .menuWrapper .option.hover {
-  background-color: var(--accentColor);
-  color: var(--black-white);
-}
-
-context .menuWrapper .option:active {
-  transform: scale(var(--scalation));
-}
-
-context .menuWrapper .option:last-child {
-  border-bottom: none;
-}
-
 #plugins_list {
   overflow: auto;
   width: 100%;
@@ -359,3 +305,8 @@ context .menuWrapper .option:last-child {
     opacity: 0;
   }
 }
+h4{
+  font-weight: normal;
+  margin:4px;
+}
+

@@ -101,10 +101,18 @@ Editor.setList({
       hint: 'Ctrl+L'
     },
     'a2': '*line',
-    'newTerminal': {
+    'openTerminal': {
       click: ()=>commanders.terminal(),
       icon: 'new_terminal',
       hint:"Ctrl+T"
+    },
+    'hideTerminal': {
+      click: ()=>{
+        if(current_screen.terminal!=undefined){
+          commanders.hide(current_screen.terminal.id)
+        }
+      },
+      hint:"Ctrl+H"
     },
     'closeTerminal': {
       click: ()=>commanders.closeTerminal(),
@@ -128,12 +136,10 @@ WindowDM.setList({
     "2a":"*line",
     "IncreaseZoom": {
       click:()=>graviton.setZoom(parseInt(current_config.appZoom)+3),
-      hint:"Ctrl+shift+plus",
       icon:"plus"
     },
     "DicreaseZoom":  {
       click:()=>graviton.setZoom(parseInt(current_config.appZoom)+-3),
-      hint:"Ctrl+minus",
       icon:"minus"
     },
     "DefaultZoom": {
@@ -195,6 +201,9 @@ window.onclick = function (event) {
   }
   if(!event.target.matches('.option')){
     document.getElementById("context").parentElement.style = "display:none";
+  }
+  if(!event.target.matches('#context_menu')){
+    if(document.getElementById('context_menu')!=undefined) document.getElementById('context_menu').remove();
   }
 }
 
