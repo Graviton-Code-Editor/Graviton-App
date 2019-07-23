@@ -17,7 +17,7 @@ let current_config = { // Default values
   justInstalled: true,
   theme: 'Dark',
   fontSizeEditor: '13',
-  appZoom: '25',
+  appZoom: '24',
   language: 'english',
   animationsPreferences: 'activated',
   autoCompletionPreferences: 'desactivated',
@@ -34,7 +34,7 @@ function loadConfig () { // Loads the configuration from the config.json for the
     loadLanguage(current_config.language)
     detectPlugins(function(){
       if (current_config.justInstalled === false) {
-        g_welcomePage()
+        openWelcome()
       } else {
         Setup.open()
       }
@@ -51,7 +51,7 @@ function loadConfig () { // Loads the configuration from the config.json for the
         if(current_config['theme']!=undefined) setThemeByName(current_config['theme'])
         loadLanguage(current_config.language)
         if (current_config.justInstalled === false) {
-          g_welcomePage()
+          openWelcome()
         } else {
           Setup.open()
         }

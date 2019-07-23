@@ -700,8 +700,8 @@ p.link:hover {
   transition: 0.1s;
 }
 .theme_div2.active:active{
+  transition: .2s ease-in-out;
   transform: translateY(0px)scale(0.95);
-  transition: 0.1s;
 }
 .commander{
   position: relative;
@@ -829,4 +829,10 @@ p.link:hover {
   top:50%;
   left: 50%;
   transform: translate(-55%,-50%);
+}
+textarea{
+  border-radius: 5px;
+  border:0;
+  background: var(--primaryColor);
+  color:var(--white-black)
 }

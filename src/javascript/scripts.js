@@ -816,8 +816,8 @@ function updateCodeMode(instance, path) {
         instance.refresh()
         break
       case 'md':
-        instance.setOption('htmlMode', false)
-        instance.setOption('mode', 'text/x-markdown')
+        instance.setOption('htmlMode', true)
+        instance.setOption('mode', 'markdown')
         plang = 'Markdown'
         instance.refresh()
         break

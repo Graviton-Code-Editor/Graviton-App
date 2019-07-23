@@ -111,11 +111,11 @@ html,body,head {
   width: 6px;
   height: 6px;
 }
-#body1{
+#body{
   filter: blur(var(--blur));
   transition: 0.08s;
 }
-#body1[windows="0"] {
+#body[windows="0"] {
   filter:none !important;
   transition: 0.03s;
 }

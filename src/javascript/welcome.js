@@ -10,7 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 let welcome_window
-function g_welcomePage () {
+function openWelcome () {
   welcome_window = new Window({
     id: 'welcome_window',
     content: `
@@ -97,33 +97,12 @@ const Setup = {
         document.getElementById('body_window_full').innerHTML = `
           <h1 style=" text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${current_config.language['Welcome.TakeATheme']}</h1> 
           <div class=theme_divs>
-            <img draggable=false onclick="setThemeByName('Dark'); selectTheme('3',this);" class='theme_div2 active' src=src/icons/dark.svg>
-            <img draggable=false onclick="setThemeByName('Arctic'); selectTheme('3',this);" class=theme_div2 src=src/icons/light.svg>
+            <img draggable=false onclick="setThemeByName('Dark'); selectTheme('2',this);" class='theme_div2 active' src=src/icons/dark.svg>
+            <img draggable=false onclick="setThemeByName('Arctic'); selectTheme('2',this);" class=theme_div2 src=src/icons/light.svg>
           </div> 
           <button onclick='Setup.navigate("1"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${current_config.language['Back']}</button> 
           <button  onclick='Setup.navigate("3");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${current_config.language['Continue']}</button> 
         `
-        /*for (i = 0; i < themes.length; i++) {
-          const themeDiv = document.createElement('div')
-          themeDiv.setAttribute('class', '  theme_div_welcomePage ')
-          themeDiv.setAttribute('onclick', `loadTheme('${i}'); selectTheme('2',this);`)
-          themeDiv.innerText = themes[i].name
-          const author = document.createElement('p')
-          author.innerText = `Made by: ${themes[i]['author']}`
-          author.setAttribute('style', 'font-size:15px')
-          const description = document.createElement('p')
-          description.innerText = themes[i]['description']
-          description.setAttribute('style', 'font-size:13px; line-height:2px;')
-          themeDiv.appendChild(author)
-          themeDiv.appendChild(description)
-          themeDiv.addEventListener('click', function () {
-            document.getElementById('FROM_THEMES_CONTINUE').classList.remove('disabled')
-          })
-          if (themes[i]['name'] === current_config.theme['name']) {
-            selectTheme('2', themeDiv)
-          }
-          document.getElementById('theme_list').appendChild(themeDiv)
-        }*/
         break
       case '3':
         document.getElementById('body_window_full').innerHTML = `
@@ -134,7 +113,7 @@ const Setup = {
             idT="Welcome.ThanksForInstalling">
             ${current_config.language['Welcome.ThanksForInstalling']} ${g_version.version} - ${g_version.state}</h1> 
           <button onclick="Setup.close(); extensions.openStore(function(){extensions.navigate('all')});" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Market">${current_config.language['Market']}</button> 
-          <button onclick='Setup.close(); g_welcomePage();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language['Finish']}</button> 
+          <button onclick='Setup.close(); openWelcome();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${current_config.language['Finish']}</button> 
           `
         break
     }

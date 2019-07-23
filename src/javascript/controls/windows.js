@@ -41,16 +41,16 @@ module.exports = {
             </div>`;
         this.myWindow = newWindow;
         this.launch = function(){
-            document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))+1);
+            document.getElementById("body").setAttribute("windows",Number(document.getElementById("body").getAttribute("windows"))+1);
             document.body.appendChild(this.myWindow);
         }
         this.close = function(){
-            document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))-1);
+            document.getElementById("body").setAttribute("windows",Number(document.getElementById("body").getAttribute("windows"))-1);
             document.getElementById(`${this.id}_window`).remove();
         }
     },
     closeWindow: (id) => {
-        document.getElementById("body1").setAttribute("windows",Number(document.getElementById("body1").getAttribute("windows"))-1);
+        document.getElementById("body").setAttribute("windows",Number(document.getElementById("body").getAttribute("windows"))-1);
         document.getElementById(`${id}_window`).remove();
     }
 }

@@ -60,7 +60,7 @@ Tools.setList({
       });
       
     },
-    'ShowWelcome': ()=>g_welcomePage(),
+    'ShowWelcome': ()=>openWelcome(),
     "1a":"*line",
     "Search":{
       click:()=>graviton.editorSearch(),

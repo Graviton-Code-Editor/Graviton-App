@@ -3,6 +3,9 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200723 - 1 [1.0.3] 
+- Fixed Markdown highlighter
+
+### 200723 - 1 [1.0.3] 
 - New theme selector in the setup proecss
 - Added a blur slider
 - You can now open a terminal in a custom path even if there is no folder opened

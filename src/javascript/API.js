@@ -764,7 +764,7 @@ const screens = {
     new_screen_editor.innerHTML = `
       <div class="g_tabs_bar flex smallScrollBar"></div>  
       <div class="g_editors_editors" >
-        <p class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language['WelcomeMessage']}</p>
+        <p dragable=false class="translate_word temp_dir_message" idT="WelcomeMessage" >${current_config.language['WelcomeMessage']}</p>
       </div>
       <div class="g_status_bar" >
         <p></p>

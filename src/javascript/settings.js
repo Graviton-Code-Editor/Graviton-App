@@ -175,7 +175,7 @@ function updateSettingsFromUI () {
 
 function updateCustomization () {
   current_config.appZoom = document.getElementById('slider_zoom').value
-  webFrame.setZoomFactor(current_config.appZoom / 25)
+  webFrame.setZoomFactor(current_config.appZoom / 24)
   current_config.blurPreferences = document.getElementById('slider_blur').value
   if(current_config.blurPreferences!=0){
     document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
@@ -187,7 +187,7 @@ function updateCustomization () {
 
 function updateSettings () {
   document.documentElement.style.setProperty('--editor-font-size', `${current_config.fontSizeEditor}px`) // Update settings from start
-  webFrame.setZoomFactor(current_config.appZoom / 25)
+  webFrame.setZoomFactor(current_config.appZoom / 24)
   if(current_config.blurPreferences!=0){
     document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
   }else{
@@ -226,9 +226,6 @@ function selectTheme (from, theme) {
       themes_divs = document.getElementsByClassName('theme_div')
       break;
     case"2":
-      themes_divs = document.getElementsByClassName('theme_div_welcomePage')
-      break;
-    case"3":
       themes_divs = document.getElementsByClassName('theme_div2')
       break;
   }
