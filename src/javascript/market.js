@@ -219,13 +219,13 @@ const extensions ={
         </div>`
         });
         ext_win.launch();
-        if(graviton.getPlugin(data.getAttribute('name'))!=undefined){
+        if(plugin.local!=undefined){
           fs.readFile(path.join(plugins_folder, data.getAttribute("name"),"readme.md"), "utf8", function(err, readme) {
             document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):getTranslation("NoReadme")}</div>`
           });
         }else{
           const request = require("request");
-          request(`https://raw.githubusercontent.com/${data.getAttribute('author')}/${data.getAttribute('name')}/${data.getAttribute('branch')}/readme.md`, function (error, response, body3) {
+          request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
             document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error?marked(body3):getTranslation("NoReadme")}</div>`
           })
         }
@@ -333,7 +333,7 @@ const extensions ={
   }
   const plugins = {
     install: function(config,call){
-      if(config.colors==undefined){
+      if(config.colors==undefined ){
         plugins_list.push(config);
         if(config["main"]!=undefined){
           require(path.join(plugins_folder, config["folder"], config["main"]));
@@ -342,6 +342,11 @@ const extensions ={
           }
         }
         if(config["css"] !=undefined) {
+          if(config.type=="custom_theme"){
+            console.log(config.type);
+            themes.push(config);
+            if(current_config.theme!=config.name)  return call!=undefined?call():"";
+          }
           for (i = 0; i < config["css"].length; i++) {
             const link = document.createElement("link");
             link.setAttribute("rel", "stylesheet");
@@ -377,6 +382,22 @@ const extensions ={
           })
         }
       })
+    },
+    disableCSS: function(config){
+      const csss = document.getElementsByClassName(config.name+"_css");
+      for(b=0;b<csss.length;b++){
+        csss[b].remove();
+        b--;
+      }   
+    },
+    enableCSS: function(config){
+      for (b = 0; b < config.css.length; b++) {
+        const link = document.createElement("link");
+        link.setAttribute("rel", "stylesheet");
+        link.classList = config["name"]+"_css";
+        link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][b])),
+        document.body.appendChild(link);
+      }
     }
   }
 

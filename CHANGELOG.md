@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200725 - 1 [1.0.3] 
+- Custom themes! You can now make use of CSS code
+- Fixed, now you can see not-download plugin's readmes
+
 ### 200723 - 1 [1.0.3] 
 - Fixed Markdown highlighter
 

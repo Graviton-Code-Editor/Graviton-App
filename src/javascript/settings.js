@@ -38,7 +38,7 @@ const Settings = {
           <div id="dpi">
             <h>${current_config.language['ZoomSize']}</h4>
             <div class="section">
-              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="3" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
+              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${current_config.appZoom}" class="slider" id="myRange">
             </div>
           </div>
           <h4>${current_config.language['Themes']}</h4> 
@@ -65,7 +65,7 @@ const Settings = {
             <p style="margin:11px 0; font-size:17px; line-height:2px;">${themes[i].name}</p>
             <p style="font-size:14px;">${current_config.language['MadeBy'] + themes[i]['author']}</p>
             <p style="font-size:13px; line-height:2px;">${themes[i]['description']}</p>
-            <div class="accent" style="background:${themes[i].colors["accentColor"]};"></div>
+            <div class="accent" style="background:${themes[i].type!="custom_theme"?themes[i].colors["accentColor"]:"transparent"};"></div>
           `
           if (themes[i]['name'] === current_config.theme['name']) {
             selectTheme('1', themeDiv)
@@ -175,7 +175,7 @@ function updateSettingsFromUI () {
 
 function updateCustomization () {
   current_config.appZoom = document.getElementById('slider_zoom').value
-  webFrame.setZoomFactor(current_config.appZoom / 24)
+  webFrame.setZoomFactor(current_config.appZoom / 25)
   current_config.blurPreferences = document.getElementById('slider_blur').value
   if(current_config.blurPreferences!=0){
     document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
@@ -187,7 +187,7 @@ function updateCustomization () {
 
 function updateSettings () {
   document.documentElement.style.setProperty('--editor-font-size', `${current_config.fontSizeEditor}px`) // Update settings from start
-  webFrame.setZoomFactor(current_config.appZoom / 24)
+  webFrame.setZoomFactor(current_config.appZoom / 25)
   if(current_config.blurPreferences!=0){
     document.documentElement.style.setProperty('--blur', `${current_config.blurPreferences}px`)
   }else{

@@ -132,13 +132,15 @@ div.active{
   overflow: auto;
   width: 100%;
   height: auto;
-  max-height:55%;
   position: relative;
   top:0;
   left: 0;
-  margin: -20px 0px;
+  
 }
-
+#language_list.welcome{
+  margin: -20px 0px;
+  max-height:55%;
+}
 #settings_content p{
   font-size: 14px;
   line-height: 20px;

@@ -19,8 +19,17 @@ if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exis
 
 detectLanguages();
 const loadTheme = number => {
-  themeObject = themes[number];
-  const colors = themes[number]["colors"]; //Take the colors object inside the JSON file of the selected theme
+  i= number;
+  if(themeObject.type=="custom_theme"){ 
+    plugins.disableCSS(themeObject)       
+  }
+  if(themes[i].type=="custom_theme"){
+    plugins.enableCSS(themes[i])
+    themeObject = themes[i]
+    document.documentElement.removeAttribute("style");
+  }
+  themeObject = themes[i];
+  const colors = themes[i]["colors"]; //Take the colors object inside the json file of the selected theme
   for (i = 0; i < Object.keys(colors).length; i++) {
     if (current_config.accentColorPreferences == "system" && Object.keys(colors)[i] == "accentColor") {
       try {
@@ -28,25 +37,25 @@ const loadTheme = number => {
         document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
         document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
         i+=2;
-      } catch { //Returns an error = system is not compatible, Linux-based will probably throw that error
-        new Notification("Issue", "Your system is not compatible with accent color matching.")
-      }
+      } catch {}
     } else {
       if ((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i] != "scalation") || current_config.animationsPreferences == "activated") { //Prevent changing the scalation when the animations are off
-        document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables   
+        document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables
       }
     }
   }
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.setOption("theme", themes[number]["highlight"]); //Update highlither after applying a new theme
   }
-  for(i=0;i<editor_screens.length;i++){
-    if (editor_screens[i] != undefined) {
-      if (editor_screens[i].terminal != undefined) {
-        editor_screens[i].terminal.xterm.setOption("theme", {
-          background: themeObject.colors["editor-background-color"],
-          foreground: themeObject.colors["white-black"]
-        })
+  if(themes[i].type=="custom_theme"){
+    for(i=0;i<editor_screens.length;i++){
+      if (editor_screens[i] != undefined) {
+        if (editor_screens[i].terminal != undefined) {
+          editor_screens[i].terminal.xterm.setOption("theme", {
+            background: themeObject.colors["editor-background-color"],
+            foreground: themeObject.colors["white-black"]
+          })
+        }
       }
     }
   }
@@ -56,7 +65,16 @@ const loadTheme = number => {
 const setThemeByName = name => {
   for (i = 0; i < themes.length; i++) {
     if (themes[i]["name"] == name) {
+      if(themeObject.type=="custom_theme"){ 
+        plugins.disableCSS(themeObject)       
+      }
       current_config["theme"] = themes[i];
+      
+      if(themes[i].type=="custom_theme"){
+        plugins.enableCSS(themes[i])
+        themes[i].colors
+        themeObject = themes[i]
+      }
       themeObject = themes[i];
       const colors = themes[i]["colors"]; //Take the colors object inside the json file of the selected theme
       for (i = 0; i < Object.keys(colors).length; i++) {

@@ -1,3 +1,6 @@
+- A CLI!
+- Custom themes ! Now you can make themes with CSS code without worrying if another one will overide it's values
+- Fixed Markdown highlighing
 - Now the only theme by default is Dark, but you can install the old and new ones from the Market
 - Now, you can reload a directory by right clicking, this also works for the global one
 - Added an extensions market, you can install, uninstall & update plugins

@@ -153,6 +153,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   text-align: left;
   transform: scale(1);
   padding-right: 10px;
+  white-space: nowrap;
+  overflow: auto;
+  position: relative;
 }
 
 .dropdown-content>button:hover:not(.dropbtn) {

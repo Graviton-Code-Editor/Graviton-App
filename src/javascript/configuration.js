@@ -17,7 +17,7 @@ let current_config = { // Default values
   justInstalled: true,
   theme: 'Dark',
   fontSizeEditor: '13',
-  appZoom: '24',
+  appZoom: '25',
   language: 'english',
   animationsPreferences: 'activated',
   autoCompletionPreferences: 'desactivated',
@@ -84,7 +84,8 @@ function saveConfig () { // Saves the current configuration to config.json
     lineWrappingPreferences: current_config['lineWrappingPreferences'],
     accentColorPreferences: current_config['accentColorPreferences'],
     blurPreferences: current_config.blurPreferences,
-    version:g_version.date
+    version:g_version.version,
+    build:g_version.date,
   }
   newConfig = JSON.stringify(newConfig)
   fs.writeFile(configDir, newConfig, (err) => {})
