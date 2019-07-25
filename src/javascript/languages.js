@@ -8,52 +8,57 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-let languages = []
+let languages = [];
 
-function detectLanguages () {
-  fs.readdir(path.join(__dirname, 'languages'), (err, paths) => {
+function detectLanguages() {
+  fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
     paths.forEach(dir => {
-      fs.readFile(path.join(__dirname, 'languages', dir), 'utf8', function (err, data) {
-        if (err) throw err
-        const obj = JSON.parse(data)
-        languages.push(obj) // Push the language
+      fs.readFile(path.join(__dirname, "languages", dir), "utf8", function(
+        err,
+        data
+      ) {
+        if (err) throw err;
+        const obj = JSON.parse(data);
+        languages.push(obj); // Push the language
         if (languages.length === paths.length) {
-          loadConfig()
+          loadConfig();
         }
-      })
-    })
-  })
+      });
+    });
+  });
 }
 const loadLanguage = language => {
   languages.map((item, index) => {
-    if (item['g_l'] === language) {
-      current_config['language'] = item
-      const toTranslate = document.getElementsByClassName('translate_word')
+    if (item["g_l"] === language) {
+      current_config["language"] = item;
+      const toTranslate = document.getElementsByClassName("translate_word");
       for (i = 0; i < toTranslate.length; i++) {
-        if (item[toTranslate[i].getAttribute('idT')] != undefined) {
-          toTranslate[i].innerText = item[toTranslate[i].getAttribute('idT')]
+        if (item[toTranslate[i].getAttribute("idT")] != undefined) {
+          toTranslate[i].innerText = item[toTranslate[i].getAttribute("idT")];
         } else {
           languages.map((item, index) => {
-            if (item['g_l'] === 'english') {
-              if (item[toTranslate[i].getAttribute('idT')] != undefined) toTranslate[i].innerText = item[toTranslate[i].getAttribute('idT')]
+            if (item["g_l"] === "english") {
+              if (item[toTranslate[i].getAttribute("idT")] != undefined)
+                toTranslate[i].innerText =
+                  item[toTranslate[i].getAttribute("idT")];
             }
-          })
+          });
         }
       }
     }
-  })
-}
-const getTranslation = text =>{
-  if(current_config.language[text]==undefined){
-    for(i=0;i<languages.length;i++){
-      if (languages[i]['g_l'] === "english") {
-        return languages[i][text]!=undefined?languages[i][text]:text;
+  });
+};
+const getTranslation = text => {
+  if (current_config.language[text] == undefined) {
+    for (i = 0; i < languages.length; i++) {
+      if (languages[i]["g_l"] === "english") {
+        return languages[i][text] != undefined ? languages[i][text] : text;
       }
-    };
-  }else{
+    }
+  } else {
     return current_config.language[text];
   }
-}
+};
 
 /*
 

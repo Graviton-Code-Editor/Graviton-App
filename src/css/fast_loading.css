@@ -17,7 +17,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: #191919;
 }
 
-#g_bootanimation>img {
+#g_bootanimation > img {
   webkit-user-select: none;
   pointer-events: none;
   -webkit-user-select: none;
@@ -43,7 +43,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   text-align: center;
 }
 
-#g_control_bar>img {
+#g_control_bar > img {
   pointer-events: none;
   top: 0;
   left: 0;
@@ -52,4 +52,3 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   position: absolute;
   height: 19px;
 }
-

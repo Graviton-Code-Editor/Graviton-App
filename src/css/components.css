@@ -9,7 +9,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-
 /*Small components */
 
 .input1 {
@@ -86,21 +85,21 @@ input[type="number"]::selection {
   cursor: pointer;
 }
 
-.switch>div {
+.switch > div {
   height: 16px;
   width: 16px;
   border-radius: 50px;
   position: relative;
   top: 2px;
 }
-.switch:active{
+.switch:active {
   transform: scale(var(--scalation));
 }
 .activated.switch {
   background: var(--primaryColor);
 }
 
-.activated.switch>div {
+.activated.switch > div {
   background: var(--accentColor);
   left: 18px;
 }
@@ -109,7 +108,7 @@ input[type="number"]::selection {
   background: lightgray;
 }
 
-.desactivated.switch>div {
+.desactivated.switch > div {
   background: gray;
   left: 3px;
 }
@@ -120,7 +119,7 @@ input[type="number"]::selection {
   box-sizing: border-box;
 }
 
-.disabled.switch.desactivated>div {
+.disabled.switch.desactivated > div {
   transition: 0.07s;
   background-color: gray;
   left: -4px;
@@ -170,14 +169,14 @@ input[type="number"]::selection {
   transform: scale(var(--scalation));
 }
 
-.notificationBody>div {
+.notificationBody > div {
   position: relative;
   height: auto;
   max-height: 100px;
   overflow: auto;
 }
 
-.notificationBody>button {
+.notificationBody > button {
   position: absolute;
   right: 10px;
   background: transparent;
@@ -185,30 +184,30 @@ input[type="number"]::selection {
   cursor: pointer;
 }
 
-.notificationBody>button path {
+.notificationBody > button path {
   fill: var(--white-black);
   stroke: transparent;
   border: 0;
 }
 
-.notificationBody>button:hover path {
+.notificationBody > button:hover path {
   stroke: var(--accentColor);
   fill: var(--accentColor);
   border: 0;
 }
 
-.notificationBody>button:hover svg {
+.notificationBody > button:hover svg {
   stroke: var(--accentColor);
   fill: var(--accentColor);
   border: 0;
 }
 
-.notificationBody>h1 {
+.notificationBody > h1 {
   font-size: 18px;
   line-height: 1px;
 }
 
-.notificationBody>div>p {
+.notificationBody > div > p {
   font-size: 12px;
 }
 
@@ -276,7 +275,6 @@ input[type="number"]::selection {
   opacity: 0.6;
 }
 
-
 /* Tabs */
 .g_tabs_bar .tabs {
   position: relative;
@@ -306,10 +304,10 @@ input[type="number"]::selection {
 
 .g_tabs_bar .tabs.selected {
   background: var(--secondaryColor);
-  box-shadow: 0px 0px 7px var(--shadows)
+  box-shadow: 0px 0px 7px var(--shadows);
 }
 
-.g_tabs_bar .tabs>p {
+.g_tabs_bar .tabs > p {
   overflow: hidden;
   position: relative;
   font-size: 12px;
@@ -448,30 +446,30 @@ button.button1:active {
   box-sizing: border-box;
   opacity: 0.7;
 }
-button.button1 svg *{
+button.button1 svg * {
   fill: var(--white-black);
 }
-.button1-round{
+.button1-round {
   position: absolute;
   border-radius: 50px;
   background: var(--primaryColor);
   bottom: 50px;
-  right:30px;
-  border:0px;
+  right: 30px;
+  border: 0px;
   width: 50px;
   height: 50px;
 }
-.button1-round:hover{
+.button1-round:hover {
   background: var(--widget-color);
   cursor: pointer;
 }
-button.button1-round svg *{
+button.button1-round svg * {
   fill: var(--white-black);
 }
-.icon{
-  background:transparent;
+.icon {
+  background: transparent;
   border: 0px;
-  color:var(--white-black)
+  color: var(--white-black);
 }
 .section {
   margin: 3px;
@@ -496,7 +494,6 @@ button.button1-round svg *{
 .section-b * {
   white-space: nowrap;
   user-select: auto !important;
-
 }
 
 .section2 {
@@ -546,7 +543,7 @@ button.button1-round svg *{
   opacity: 0.7;
   box-shadow: 0px 5px 7px var(--shadows);
 }
-.section4{
+.section4 {
   position: relative;
   padding: 0px 18px;
   background: transparent;
@@ -574,7 +571,7 @@ button.button2 {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 11px;
-  transform: scale(1)
+  transform: scale(1);
 }
 
 button.button2:hover {
@@ -676,34 +673,34 @@ p.link:hover {
   right: 15px;
 }
 
-.theme_divs{
+.theme_divs {
   display: flex;
   max-height: 60%;
   min-width: 0px;
   max-width: auto;
 }
-.theme_div2{
+.theme_div2 {
   height: 100%;
   width: 100%;
   margin: 10px;
   cursor: pointer;
-  flex:1;
+  flex: 1;
   min-width: 10px;
   transform: translateY(20px);
   transition: 0.1s;
 }
-.theme_div2:active{
+.theme_div2:active {
   transform: translateY(20px) scale(0.95);
 }
-.theme_div2.active{
+.theme_div2.active {
   transform: translateY(0px);
   transition: 0.1s;
 }
-.theme_div2.active:active{
-  transition: .2s ease-in-out;
-  transform: translateY(0px)scale(0.95);
+.theme_div2.active:active {
+  transition: 0.2s ease-in-out;
+  transform: translateY(0px) scale(0.95);
 }
-.commander{
+.commander {
   position: relative;
   width: auto;
   overflow: visible;
@@ -714,58 +711,58 @@ p.link:hover {
   max-height: 40%;
   min-height: 40%;
 }
-.xterm *{
+.xterm * {
   overflow: auto;
   z-index: auto !important;
 }
 
-.extension_div{
+.extension_div {
   transition: 0.2s;
   background: transparent;
   border: 2px solid var(--primaryColor);
-  max-width:210px;
+  max-width: 210px;
   min-width: 210px;
-  overflow:auto;
+  overflow: auto;
   float: left;
   position: relative;
-  padding:15px;
-  border-radius:8px;
-  margin:15px;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px;
   transform: scale(1);
-  min-height:110px;
+  min-height: 110px;
   height: auto;
-  max-height:110px;
+  max-height: 110px;
 }
-.extension_div > svg{
+.extension_div > svg {
   position: absolute;
   right: 0;
   height: 20px;
   widows: 20px;
   margin: 10px;
-  top:0;
+  top: 0;
 }
-.extension_div h3{
+.extension_div h3 {
   margin: 2px 0px;
   line-height: 12px;
   font-size: 15px;
 }
-.extension_div p{
+.extension_div p {
   font-size: 13px;
 }
-.extension_div:hover{
+.extension_div:hover {
   cursor: pointer;
   transition: 0.2s;
   box-shadow: 0px 3px 6px var(--shadows);
 }
-.extension_div:active{
+.extension_div:active {
   transition: 0.05s;
-  transform: scale(var(--scalation))
+  transform: scale(var(--scalation));
 }
-.extension_div .installed{
+.extension_div .installed {
   border-top: 2px solid var(--primaryColor);
   padding: 12px 0px 4px 4px;
   margin: 2px;
-  color:var(--white-black);
+  color: var(--white-black);
 }
 .sub_extension_div {
   display: flex;
@@ -773,15 +770,15 @@ p.link:hover {
   overflow: auto;
 }
 
-.sub_extension_div .top{
+.sub_extension_div .top {
   display: flex;
   padding: 15px;
 }
-.sub_extension_div .top h1{
+.sub_extension_div .top h1 {
   margin-top: 5px;
 }
-.sub_extension_div .top > div{
-  flex:1;
+.sub_extension_div .top > div {
+  flex: 1;
 }
 .sub_extension_div .top div:nth-child(2) {
   max-width: 25%;
@@ -791,23 +788,22 @@ p.link:hover {
 .sub_extension_div .top div:nth-child(2) > div {
   position: relative;
   top: 45%;
-  transform: translateY(-50%)
+  transform: translateY(-50%);
 }
-.sub_extension_div .top div:nth-child(2) button{
+.sub_extension_div .top div:nth-child(2) button {
   min-width: 120px;
   display: block;
   white-space: pre-wrap;
   margin: 7px auto;
 }
 
-
-.page_hidden{
+.page_hidden {
   display: none;
 }
-.page_showed{
+.page_showed {
   display: block;
 }
-.ext_content{
+.ext_content {
   padding: 15px;
   border-top: 2px solid var(--primaryColor);
   overflow: auto;
@@ -815,24 +811,24 @@ p.link:hover {
   max-height: auto;
 }
 
-.ext_content a{
+.ext_content a {
   color: var(--white-black);
   font-style: oblique;
 }
 
-.close_exts{
+.close_exts {
   margin-left: 15px !important;
 }
 
-.center{
+.center {
   position: absolute;
-  top:50%;
+  top: 50%;
   left: 50%;
-  transform: translate(-55%,-50%);
+  transform: translate(-55%, -50%);
 }
-textarea{
+textarea {
   border-radius: 5px;
-  border:0;
+  border: 0;
   background: var(--primaryColor);
-  color:var(--white-black)
+  color: var(--white-black);
 }

@@ -1,113 +1,113 @@
 context {
-    position: fixed;
-    background-color: var(--dropmenu-background-color);
-    overflow: none;
-    border-radius: 3px;
-    max-height: 300px;
-    box-shadow: 1px 3px 9px 0px rgba(0, 0, 0, 0.3);
-    padding: 5px;
-    display: none;
-  }
-  
-  context .menuWrapper {
-    overflow: auto;
-    max-height: 300px;
-  }
-  
-  context .menuWrapper::-webkit-scrollbar {
-    width: 10px;
-    height: 100%;
-    background-color: var(--secondaryColor);
-    border-radius: 5px;
-    margin-left: 3px;
-  }
-  
-  context .menuWrapper::-webkit-scrollbar-thumb {
-    background: var(--scroll-color);
-    border-radius: 3px;
-    border: 3px solid transparent;
-    padding: 8px;
-  }
-  context .menuWrapper::-webkit-scrollbar-thumb:hover {
-    background: var(--scroll-color-hover);
-  }
-  
-  context .menuWrapper .option {
-    height: 30px;
-    font-size: 13px;
-    z-index: 80;
-    color: var(--white-black);
-    background-color: transparent;
-    padding: 5px 10px;
-    width: 100%;
-    text-decoration: none;
-    display: block;
-    border: 0;
-    border-radius: 5px;
-    text-align: left;
-    transform: scale(1);
-  }
-  
-  context .menuWrapper .option.hover {
-    background-color: var(--accentColor);
-    color: var(--black-white);
-  }
-  
-  context .menuWrapper .option:active {
+  position: fixed;
+  background-color: var(--dropmenu-background-color);
+  overflow: none;
+  border-radius: 3px;
+  max-height: 300px;
+  box-shadow: 1px 3px 9px 0px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+  display: none;
+}
+
+context .menuWrapper {
+  overflow: auto;
+  max-height: 300px;
+}
+
+context .menuWrapper::-webkit-scrollbar {
+  width: 10px;
+  height: 100%;
+  background-color: var(--secondaryColor);
+  border-radius: 5px;
+  margin-left: 3px;
+}
+
+context .menuWrapper::-webkit-scrollbar-thumb {
+  background: var(--scroll-color);
+  border-radius: 3px;
+  border: 3px solid transparent;
+  padding: 8px;
+}
+context .menuWrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--scroll-color-hover);
+}
+
+context .menuWrapper .option {
+  height: 30px;
+  font-size: 13px;
+  z-index: 80;
+  color: var(--white-black);
+  background-color: transparent;
+  padding: 5px 10px;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+  border: 0;
+  border-radius: 5px;
+  text-align: left;
+  transform: scale(1);
+}
+
+context .menuWrapper .option.hover {
+  background-color: var(--accentColor);
+  color: var(--black-white);
+}
+
+context .menuWrapper .option:active {
+  transform: scale(var(--scalation));
+}
+
+context .menuWrapper .option:last-child {
+  border-bottom: none;
+}
+
+@keyframes context_up {
+  from {
+    opacity: 0.2;
     transform: scale(var(--scalation));
-  }
-  
-  context .menuWrapper .option:last-child {
-    border-bottom: none;
   }
 
-  @keyframes context_up {
-    from {
-      opacity: 0.2;
-      transform: scale(var(--scalation));
-    }
-  
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
-  #context_menu {
-    animation: context_up linear 0.10s;
-    border-radius: 3px;
-    position: fixed;
-    background-color: var(--dropmenu-background-color);
-    min-width: 100px;
-    width: auto;
-    overflow: auto;
-    z-index: 100;
-    box-shadow: 1px 3px 9px 0px rgba(0, 0, 0, 0.3);
-    padding: 5px;
-  }
-  
-  #context_menu>button {
-    border-radius: 3px;
-    border: 0;
-    font-size: 13px;
-    z-index: 80;
-    color: var(--white-black);
-    background-color: var(--dropmenu-background-color);
-    padding: 7px 10px;
-    width: 100%;
-    text-align: left;
-    text-decoration: none;
-    display: block;
+  to {
+    opacity: 1;
     transform: scale(1);
   }
-  
-  #context_menu>button:hover {
-    color: var(--black-white);
-    background-color: var(--accentColor);
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  #context_menu>button:active {
-    transform: scale(var(--scalation));
-  }
+}
+
+#context_menu {
+  animation: context_up linear 0.1s;
+  border-radius: 3px;
+  position: fixed;
+  background-color: var(--dropmenu-background-color);
+  min-width: 100px;
+  width: auto;
+  overflow: auto;
+  z-index: 100;
+  box-shadow: 1px 3px 9px 0px rgba(0, 0, 0, 0.3);
+  padding: 5px;
+}
+
+#context_menu > button {
+  border-radius: 3px;
+  border: 0;
+  font-size: 13px;
+  z-index: 80;
+  color: var(--white-black);
+  background-color: var(--dropmenu-background-color);
+  padding: 7px 10px;
+  width: 100%;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  transform: scale(1);
+}
+
+#context_menu > button:hover {
+  color: var(--black-white);
+  background-color: var(--accentColor);
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+#context_menu > button:active {
+  transform: scale(var(--scalation));
+}

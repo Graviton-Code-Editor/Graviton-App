@@ -25,7 +25,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   display: flex;
 }
 
-#g_control_bar>#controls {
+#g_control_bar > #controls {
   flex: 1;
   display: flex;
   -webkit-app-region: no-drag;
@@ -33,7 +33,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   max-width: 144px;
 }
 
-#g_control_bar>#controls button {
+#g_control_bar > #controls button {
   transition: 0.05s;
   padding: 6px 0px;
   width: 48px;
@@ -42,44 +42,43 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: transparent;
 }
 
-#g_control_bar>#controls button:hover {
+#g_control_bar > #controls button:hover {
   transition: 0.05s;
   background: var(--widget-color);
 }
 
-#g_control_bar>#controls>#minimize:hover>svg>rect {
+#g_control_bar > #controls > #minimize:hover > svg > rect {
   fill: var(--white-black);
 }
 
-#g_control_bar>#controls>#maximize:hover>svg>rect {
+#g_control_bar > #controls > #maximize:hover > svg > rect {
   stroke: var(--white-black);
 }
 
-#g_control_bar>#controls>#close:hover {
+#g_control_bar > #controls > #close:hover {
   background: red;
 }
 
-#g_control_bar>#controls>#close:hover>svg>rect {
+#g_control_bar > #controls > #close:hover > svg > rect {
   fill: white;
 }
-#g_control_bar > #title_directory{
-  flex:1;
+#g_control_bar > #title_directory {
+  flex: 1;
   text-align: center;
   min-width: 0px;
   overflow: hidden;
-  
 }
-#g_control_bar > #title_directory p{
+#g_control_bar > #title_directory p {
   font-size: 12px;
-  color:var(--titleBar-icons-color);
-  top:28%;
+  color: var(--titleBar-icons-color);
+  top: 28%;
   position: relative;
   margin: 0;
   white-space: nowrap;
   width: 100%;
   margin: 0px 10px;
 }
-#g_control_bar>#g_dropmenu_list {
+#g_control_bar > #g_dropmenu_list {
   display: flex;
   list-style-type: none;
   padding: 0;
@@ -93,7 +92,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   max-width: auto;
 }
 
-#g_control_bar>#g_dropmenu_list button.dropbtn {
+#g_control_bar > #g_dropmenu_list button.dropbtn {
   position: relative;
   display: inline-block;
   color: var(--white-black);
@@ -112,11 +111,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--primaryColor);
 }
 
-#g_control_bar>#g_dropmenu_list .dropbtn:hover {
+#g_control_bar > #g_dropmenu_list .dropbtn:hover {
   background-color: var(--widget-color);
 }
 
-#g_control_bar>#g_dropmenu_list .dropbtn:focus {
+#g_control_bar > #g_dropmenu_list .dropbtn:focus {
   background-color: var(--widget-color);
 }
 
@@ -139,7 +138,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   margin: 0;
 }
 
-.dropdown-content>button:not(.dropbtn) {
+.dropdown-content > button:not(.dropbtn) {
   font-family: _main_font;
   font-size: 13px;
   color: var(--white-black);
@@ -158,92 +157,92 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   position: relative;
 }
 
-.dropdown-content>button:hover:not(.dropbtn) {
+.dropdown-content > button:hover:not(.dropbtn) {
   color: var(--black-white);
   background-color: var(--accentColor);
   border-radius: 3px;
   cursor: pointer;
 }
 
-.dropdown-content>button:active:not(.dropbtn) {
+.dropdown-content > button:active:not(.dropbtn) {
   transition: 0.05s;
   transform: scale(var(--scalation));
 }
 
-.dropdown-content>button:not(.dropbtn) div {
+.dropdown-content > button:not(.dropbtn) div {
   display: inline-block;
 }
 
-.dropdown-content>button:not(.dropbtn) *:nth-child(1) {
+.dropdown-content > button:not(.dropbtn) *:nth-child(1) {
   margin: 0 1px;
   position: relative;
   top: 0.7px;
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .abo {
+.dropdown-content > button:not(.dropbtn):hover div .abo {
   stroke: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .aba {
+.dropdown-content > button:not(.dropbtn):hover div .aba {
   fill: var(--black-white);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .bbo {
+.dropdown-content > button:not(.dropbtn):hover div .bbo {
   stroke: var(--black-white);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .bba {
+.dropdown-content > button:not(.dropbtn):hover div .bba {
   fill: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .abo {
+.dropdown-content > button:not(.dropbtn) div .abo {
   stroke: var(--dropmenu-background-color);
 }
 
-.dropdown-content>button:not(.dropbtn) div .aba {
+.dropdown-content > button:not(.dropbtn) div .aba {
   fill: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .bbo {
+.dropdown-content > button:not(.dropbtn) div .bbo {
   stroke: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .bba {
+.dropdown-content > button:not(.dropbtn) div .bba {
   fill: var(--dropmenu-background-color);
 }
 
-.icon .abo{
+.icon .abo {
   stroke: var(--dropmenu-background-color);
 }
-.icon .aba{
+.icon .aba {
   fill: var(--white-black);
 }
-.icon .bbo{
+.icon .bbo {
   stroke: var(--white-black);
 }
-.icon .bba{
+.icon .bba {
   fill: var(--dropmenu-background-color);
 }
-.icon .cbo{
+.icon .cbo {
   stroke: var(--accentColor);
 }
-.icon .cba{
+.icon .cba {
   fill: var(--accentColor);
 }
-.icon{
+.icon {
   cursor: pointer;
 }
 
-.icon:hover .abo{
+.icon:hover .abo {
   stroke: var(--dropmenu-background-color);
 }
-.icon:hover .aba{
+.icon:hover .aba {
   fill: var(--accentColor);
 }
-.icon:hover .bbo{
+.icon:hover .bbo {
   stroke: var(--accentColor);
 }
-.icon:hover .bba{
+.icon:hover .bba {
   fill: var(--dropmenu-background-color);
 }
 
@@ -258,7 +257,7 @@ span.line_space_menus {
 
 .show {
   transition: 0.05s;
-  transform: translateY(0px) ;
+  transform: translateY(0px);
   opacity: 1;
   display: block;
   visibility: visible;
@@ -270,4 +269,3 @@ span.line_space_menus {
   transform: translateY(-4px);
   visibility: hidden;
 }
-

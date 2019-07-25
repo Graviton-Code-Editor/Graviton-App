@@ -16,16 +16,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 :root {
   --primaryColor: #222222;
   --secondaryColor: #171717;
-  --accentColor: #FF0048;
-  --accentLightColor:#FE3D78;
-  --accentDarkColor:#C8002F;
+  --accentColor: #ff0048;
+  --accentLightColor: #fe3d78;
+  --accentDarkColor: #c8002f;
   --white-black: white;
   --black-white: white;
   --editor-background-color: #191919;
   --editor-font-size: 13px;
-  --widget-color: #3B3B3B;
+  --widget-color: #3b3b3b;
   --buttons-roundness: 5px;
-  --dropmenu-background-color: #2E2E2E;
+  --dropmenu-background-color: #2e2e2e;
   --dropmenu-buttons-disabled-color: lightgray;
   --dropmenu-span-color: #818181;
   --titleBar-icons-color: white;
@@ -36,14 +36,14 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   --scalation: 0.98;
   --scroll-color: rgba(255, 255, 255, 0.2);
   --scroll-color-hover: rgba(255, 255, 255, 0.5);
-  --window-border-color:#2E2E2E;
-  --blur:0px;
+  --window-border-color: #2e2e2e;
+  --blur: 0px;
 }
 
 @font-face {
   font-family: _main_font;
-  src: url(../fonts/Inter-Regular.ttf) format('truetype'),
-        url(../fonts/Inter-Bold.ttf) format('truetype');
+  src: url(../fonts/Inter-Regular.ttf) format("truetype"),
+    url(../fonts/Inter-Bold.ttf) format("truetype");
 }
 
 @font-face {
@@ -51,9 +51,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   src: url(../fonts/Hack-Regular.ttf);
 }
 
-html,body,head {
+html,
+body,
+head {
   font-family: _main_font !important;
-  font-weight: 550 ;
+  font-weight: 550;
   margin: 0;
   padding: 0;
   background: var(--primaryColor);
@@ -111,12 +113,12 @@ html,body,head {
   width: 6px;
   height: 6px;
 }
-#body{
+#body {
   filter: blur(var(--blur));
   transition: 0.08s;
 }
 #body[windows="0"] {
-  filter:none !important;
+  filter: none !important;
   transition: 0.03s;
 }
 #g_content {
@@ -126,7 +128,7 @@ html,body,head {
   position: relative;
 }
 
-#g_content>#g_explorer {
+#g_content > #g_explorer {
   min-width: 15%;
   width: 210px;
   max-width: 70%;
@@ -141,22 +143,26 @@ html,body,head {
   direction: ltr;
 }
 
-#g_content>#g_explorer>#g_directories>#g_directory {
+#g_content > #g_explorer > #g_directories > #g_directory {
   margin: 15px;
 }
 
-#g_content>#g_explorer>#g_directories>#g_directory > div:nth-child(1) {
+#g_content > #g_explorer > #g_directories > #g_directory > div:nth-child(1) {
   margin: 0px 15px;
   font-size: 16px;
   white-space: nowrap;
   display: flex;
 }
-#g_content>#g_explorer>#g_directories>#g_directory > div:nth-child(1) > p {
-  margin:10px 0px;
+#g_content
+  > #g_explorer
+  > #g_directories
+  > #g_directory
+  > div:nth-child(1)
+  > p {
+  margin: 10px 0px;
 }
 
-
-#g_content>.g_editors>.g_tabs_bar {
+#g_content > .g_editors > .g_tabs_bar {
   min-height: 37px;
   max-height: 37px;
   position: relative;
@@ -204,7 +210,7 @@ html,body,head {
   margin-top: 5px;
 }
 
-#g_content .g_editors~.g_editors {
+#g_content .g_editors ~ .g_editors {
   border-top-left-radius: 0px;
 }
 
@@ -212,11 +218,11 @@ html,body,head {
   border-top-left-radius: 5px;
 }
 
-.g_editors~.g_editors .g_tabs_bar .tabs {
+.g_editors ~ .g_editors .g_tabs_bar .tabs {
   border-top-left-radius: 0px;
 }
 
-#g_content>#g_spacer {
+#g_content > #g_spacer {
   flex: 0;
   min-width: 6px;
   background: var(--primaryColor);
@@ -224,17 +230,17 @@ html,body,head {
   margin: 0 2px;
 }
 
-#g_content>.g_editors>.g_editors_editors {
+#g_content > .g_editors > .g_editors_editors {
   flex: auto;
   overflow: auto;
   height: 90%;
 }
 
-#g_content>.g_editors>.g_editors_editors>.code-space {
+#g_content > .g_editors > .g_editors_editors > .code-space {
   position: relative;
 }
 
-#g_content>.g_editors .g_editors_editors>.code-space img {
+#g_content > .g_editors .g_editors_editors > .code-space img {
   user-select: none;
   pointer-events: none;
   position: relative;
@@ -244,7 +250,7 @@ html,body,head {
   border-style: none;
 }
 
-#g_content>.g_editors>.g_status_bar {
+#g_content > .g_editors > .g_status_bar {
   flex: 30px;
   min-height: 30px;
   max-height: 30px;
@@ -254,7 +260,7 @@ html,body,head {
   box-shadow: 0px 3px 5px var(--shadows);
 }
 
-#g_content>.g_editors>.g_status_bar p {
+#g_content > .g_editors > .g_status_bar p {
   margin: 6px;
   padding: 0;
   flex: 1;
@@ -273,7 +279,7 @@ html,body,head {
   flex-direction: row;
 }
 
-.flex>div {
+.flex > div {
   flex: 1;
 }
 
@@ -285,7 +291,7 @@ html,body,head {
   white-space: nowrap;
 }
 
-.spinner >div{
+.spinner > div {
   border-radius: 50px;
   width: 40px;
   height: 40px;
@@ -295,18 +301,17 @@ html,body,head {
   animation: up_down 0.6s linear infinite;
 }
 
-@keyframes up_down{
-  from{
+@keyframes up_down {
+  from {
     transform: scale(0);
     opacity: 0.8;
   }
-  to{
+  to {
     transform: scale(1);
     opacity: 0;
   }
 }
-h4{
+h4 {
   font-weight: normal;
-  margin:4px;
+  margin: 4px;
 }
-

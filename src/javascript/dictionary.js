@@ -10,9 +10,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 const autocomplete = [
-    {
-      name:'js',
-      list: [
+  {
+    name: "js",
+    list: [
       { _name: "above" },
       { _name: "abs" },
       { _name: "acos" },
@@ -742,174 +742,152 @@ const autocomplete = [
       { _name: "y" },
       { _name: "zIndex" },
       { _name: "_content" }
-  ]},
+    ]
+  },
   {
-    name:'css',
+    name: "css",
     list: [
-        {
-            _name: "display"
-        },
-        {
-            _name: "color"
-        }
-        ,
-        {
-            _name: "background"
-        }
-        ,
-        {
-            _name: "font-size"
-        }
-        ,
-        {
-            _name: "position"
-        }
-        ,
-        {
-            _name: "block"
-        }
-        ,
-        {
-            _name: "none"
-        }
-        ,
-        {
-            _name: "border"
-        }
-        ,
-        {
-            _name: "outline"
-        }
-        ,
-        {
-            _name: "fixed"
-        }
-        ,
-        {
-            _name: "static"
-        }
-        ,
-        {
-            _name: "relative"
-        },
-        {
-            _name: "absolute"
-        },
-        {
-            _name: "padding"
-        },
-        {
-            _name: "margin"
-        },
-        {
-            _name: "height"
-        },
-        {
-            _name: "width"
-        },
-        {
-            _name: "overflow"
-        },
-        {
-            _name: "translate"
-        }
-        ,
-        {
-            _name: "scale"
-        }
-        ,
-        {
-            _name: "opacity"
-        }
-        ,
-        {
-            _name: "transition"
-        }
-        ,
-        {
-            _name: "transform"
-        },
-        {
-            _name: "border"
-        },
-        {
-            _name: "border-radius"
-        },
-        {
-            _name: "padding-left"
-        },
-        {
-            _name: "padding-right"
-        },
-        {
-            _name: "padding-top"
-        },
-        {
-            _name: "padding-bottom"
-        },
-        {
-            _name: "margin-left"
-        },
-        {
-            _name: "margin-right"
-        }
-        ,
-        {
-            _name: "margin-top"
-        }
-        ,
-        {
-            _name: "margin-bottom"
-        }
-        ,
-        {
-            _name: "z-index"
-        },
-        {
-            _name: "background-color"
-        },
-        {
-            _name: "background-image"
-        },
-        {
-            _name: "min-width"
-        },
-        {
-            _name: "min-height"
-        },
-        {
-            _name: "inline"
-        },
-        {
-            _name: "inline-block"
-        },
-        {
-            _name: "box-shadow"
-        },
-        {
-            _name: "cursor"
-        }
-        ,
-        {
-            _name: "pointer"
-        }
-        ,
-        {
-            _name: ":hover"
-        }
-        ,
-        {
-            _name: ":active"
-        }
-        ,
-        {
-            _name: "::after"
-        },
-        {
-            _name: "::before"
-        }
-
-
+      {
+        _name: "display"
+      },
+      {
+        _name: "color"
+      },
+      {
+        _name: "background"
+      },
+      {
+        _name: "font-size"
+      },
+      {
+        _name: "position"
+      },
+      {
+        _name: "block"
+      },
+      {
+        _name: "none"
+      },
+      {
+        _name: "border"
+      },
+      {
+        _name: "outline"
+      },
+      {
+        _name: "fixed"
+      },
+      {
+        _name: "static"
+      },
+      {
+        _name: "relative"
+      },
+      {
+        _name: "absolute"
+      },
+      {
+        _name: "padding"
+      },
+      {
+        _name: "margin"
+      },
+      {
+        _name: "height"
+      },
+      {
+        _name: "width"
+      },
+      {
+        _name: "overflow"
+      },
+      {
+        _name: "translate"
+      },
+      {
+        _name: "scale"
+      },
+      {
+        _name: "opacity"
+      },
+      {
+        _name: "transition"
+      },
+      {
+        _name: "transform"
+      },
+      {
+        _name: "border"
+      },
+      {
+        _name: "border-radius"
+      },
+      {
+        _name: "padding-left"
+      },
+      {
+        _name: "padding-right"
+      },
+      {
+        _name: "padding-top"
+      },
+      {
+        _name: "padding-bottom"
+      },
+      {
+        _name: "margin-left"
+      },
+      {
+        _name: "margin-right"
+      },
+      {
+        _name: "margin-top"
+      },
+      {
+        _name: "margin-bottom"
+      },
+      {
+        _name: "z-index"
+      },
+      {
+        _name: "background-color"
+      },
+      {
+        _name: "background-image"
+      },
+      {
+        _name: "min-width"
+      },
+      {
+        _name: "min-height"
+      },
+      {
+        _name: "inline"
+      },
+      {
+        _name: "inline-block"
+      },
+      {
+        _name: "box-shadow"
+      },
+      {
+        _name: "cursor"
+      },
+      {
+        _name: "pointer"
+      },
+      {
+        _name: ":hover"
+      },
+      {
+        _name: ":active"
+      },
+      {
+        _name: "::after"
+      },
+      {
+        _name: "::before"
+      }
     ]
   }
-]
+];

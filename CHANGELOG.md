@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200725 - 3 [1.0.3]
+- Rolling back to the old updating system
+
 ### 200725 - 2 [1.0.3]
 - Added Rust support
 - Fixed, custom themes were removing the selected blur ammount

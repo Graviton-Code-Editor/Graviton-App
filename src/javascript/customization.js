@@ -10,8 +10,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 const tinycolor = require("tinycolor2");
 
-if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exist
-  fs.mkdirSync(highlights_folder)
+if (!fs.existsSync(highlights_folder)) {
+  //If the highlights folder doesn't exist
+  fs.mkdirSync(highlights_folder);
   fs.copy(path.join(__dirname, "src", "Highlights"), highlights_folder, err => {
     if (err) return console.error(err);
   });
@@ -19,89 +20,140 @@ if (!fs.existsSync(highlights_folder)) { //If the highlights folder doesn't exis
 
 detectLanguages();
 const loadTheme = number => {
-  i= number;
-  if(themeObject.type=="custom_theme"){ 
-    plugins.disableCSS(themeObject)       
+  i = number;
+  if (themeObject.type == "custom_theme") {
+    plugins.disableCSS(themeObject);
   }
-  if(themes[i].type=="custom_theme"){
-    plugins.enableCSS(themes[i])
-    themeObject = themes[i]
+  if (themes[i].type == "custom_theme") {
+    plugins.enableCSS(themes[i]);
+    themeObject = themes[i];
   }
   themeObject = themes[i];
   const colors = themes[i]["colors"]; //Take the colors object inside the json file of the selected theme
   for (i = 0; i < Object.keys(colors).length; i++) {
-    if (current_config.accentColorPreferences == "system" && Object.keys(colors)[i] == "accentColor") {
+    if (
+      current_config.accentColorPreferences == "system" &&
+      Object.keys(colors)[i] == "accentColor"
+    ) {
       try {
-        document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
-        document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
-        document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
-        i+=2;
+        document.documentElement.style.setProperty(
+          "--accentColor",
+          "#" + systemPreferences.getAccentColor()
+        );
+        document.documentElement.style.setProperty(
+          "--accentDarkColor",
+          tinycolor(systemPreferences.getAccentColor())
+            .darken()
+            .toString()
+        );
+        document.documentElement.style.setProperty(
+          "--accentLightColor",
+          tinycolor(systemPreferences.getAccentColor())
+            .brighten()
+            .toString()
+        );
+        i += 2;
       } catch {}
     } else {
-      if ((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i] != "scalation") ||  current_config.animationsPreferences == "activated" || Object.keys(colors)[i] != "blur" ) { //Prevent changing the scalation when the animations are off
-        document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables
+      if (
+        (current_config.animationsPreferences == "desactivated" &&
+          Object.keys(colors)[i] != "scalation") ||
+        current_config.animationsPreferences == "activated" ||
+        Object.keys(colors)[i] != "blur"
+      ) {
+        //Prevent changing the scalation when the animations are off
+        document.documentElement.style.setProperty(
+          "--" + Object.keys(colors)[i],
+          colors[Object.keys(colors)[i]]
+        ); //Update the CSS variables
       }
     }
   }
   for (i = 0; i < editors.length; i++) {
-    if (editors[i].editor != undefined) editors[i].editor.setOption("theme", themes[number]["highlight"]); //Update highlither after applying a new theme
+    if (editors[i].editor != undefined)
+      editors[i].editor.setOption("theme", themes[number]["highlight"]); //Update highlither after applying a new theme
   }
-    for(i=0;i<editor_screens.length;i++){
-      if (editor_screens[i] != undefined) {
-        if (editor_screens[i].terminal != undefined) {
-          editor_screens[i].terminal.xterm.setOption("theme", {
-            background: themeObject.colors["editor-background-color"],
-            foreground: themeObject.colors["white-black"]
-          })
-        }
+  for (i = 0; i < editor_screens.length; i++) {
+    if (editor_screens[i] != undefined) {
+      if (editor_screens[i].terminal != undefined) {
+        editor_screens[i].terminal.xterm.setOption("theme", {
+          background: themeObject.colors["editor-background-color"],
+          foreground: themeObject.colors["white-black"]
+        });
       }
+    }
   }
   current_config.theme = themes[number];
   saveConfig(); //Save the current configuration
-}
+};
 const setThemeByName = name => {
   for (i = 0; i < themes.length; i++) {
     if (themes[i]["name"] == name) {
-      if(themeObject.type=="custom_theme"){ 
-        plugins.disableCSS(themeObject)       
+      if (themeObject.type == "custom_theme") {
+        plugins.disableCSS(themeObject);
       }
       current_config["theme"] = themes[i];
-      
-      if(themes[i].type=="custom_theme"){
-        plugins.enableCSS(themes[i])
-        themes[i].colors
-        themeObject = themes[i]
+
+      if (themes[i].type == "custom_theme") {
+        plugins.enableCSS(themes[i]);
+        themes[i].colors;
+        themeObject = themes[i];
       }
       themeObject = themes[i];
       const colors = themes[i]["colors"]; //Take the colors object inside the json file of the selected theme
       for (i = 0; i < Object.keys(colors).length; i++) {
-        if (current_config.accentColorPreferences == "system" && Object.keys(colors)[i] == "accentColor") {
+        if (
+          current_config.accentColorPreferences == "system" &&
+          Object.keys(colors)[i] == "accentColor"
+        ) {
           try {
-            document.documentElement.style.setProperty("--accentColor", "#" + systemPreferences.getAccentColor());
-            document.documentElement.style.setProperty("--accentDarkColor", tinycolor(systemPreferences.getAccentColor()).darken().toString());
-            document.documentElement.style.setProperty("--accentLightColor", tinycolor(systemPreferences.getAccentColor()).brighten().toString());
-            i+=2;
+            document.documentElement.style.setProperty(
+              "--accentColor",
+              "#" + systemPreferences.getAccentColor()
+            );
+            document.documentElement.style.setProperty(
+              "--accentDarkColor",
+              tinycolor(systemPreferences.getAccentColor())
+                .darken()
+                .toString()
+            );
+            document.documentElement.style.setProperty(
+              "--accentLightColor",
+              tinycolor(systemPreferences.getAccentColor())
+                .brighten()
+                .toString()
+            );
+            i += 2;
           } catch {}
         } else {
-          if ((current_config.animationsPreferences == "desactivated" && Object.keys(colors)[i] != "scalation") || current_config.animationsPreferences == "activated" || Object.keys(colors)[i] != "blur" ) { //Prevent changing the scalation when the animations are off
-            document.documentElement.style.setProperty("--" + Object.keys(colors)[i], colors[Object.keys(colors)[i]]); //Update the CSS variables
+          if (
+            (current_config.animationsPreferences == "desactivated" &&
+              Object.keys(colors)[i] != "scalation") ||
+            current_config.animationsPreferences == "activated" ||
+            Object.keys(colors)[i] != "blur"
+          ) {
+            //Prevent changing the scalation when the animations are off
+            document.documentElement.style.setProperty(
+              "--" + Object.keys(colors)[i],
+              colors[Object.keys(colors)[i]]
+            ); //Update the CSS variables
           }
         }
       }
       for (i = 0; i < editors.length; i++) {
         editors[i].editor.setOption("theme", themes[i]["highlight"]); //Update highlither after applying a new theme
       }
-      for(i=0;i<editor_screens.length;i++){
+      for (i = 0; i < editor_screens.length; i++) {
         if (editor_screens[i] != undefined) {
           if (editor_screens[i].terminal != undefined) {
             editor_screens[i].terminal.xterm.setOption("theme", {
               background: themeObject.colors["editor-background-color"],
               foreground: themeObject.colors["white-black"]
-            })
+            });
           }
         }
       }
       return;
     }
   }
-}
+};

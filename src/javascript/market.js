@@ -256,8 +256,6 @@ const extensions ={
     },
     updateExtension: function(name){
       const plugin = graviton.getPlugin(name)
-      const nodegit = require("nodegit");
-      /*
       const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
       if (!fs.existsSync(path.join(plugins_folder,name))) {
         new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
@@ -284,24 +282,7 @@ const extensions ={
         }else{
           plugins.install(plugin.repo.package)
         }
-      });*/
-      const repositoryPath = path.join(plugins_folder.replace(/\\/g, '\\\\'),plugin.local.name);
-      const remoteName = 'origin';
-      const branch = 'master';
-      pull(repositoryPath,remoteName,branch,function(a,b){
-        if(a!=null)return;
-        console.log(a,b);
-        const updated_ext_event = new CustomEvent("updated_installed",{
-          detail:{
-            name : name
-          }
-        })
-        document.dispatchEvent(updated_ext_event);
-        new Notification('Market',name+ current_config.language["ExtUpdated"]);
-        if(plugin.repo.package["dependencies"]!=undefined){
-          plugins.installDependencies(plugin.repo.package);
-        }
-      }) 
+      });      
     },
     uninstallExtension: function(name){
       const rimraf = require('rimraf');
@@ -446,21 +427,3 @@ const installCli = function(){
     })
   })
 }
-
-function pull(path, remote, branch, call) {
-    const Git = require('nodegit');
-    const open = Git.Repository.open;   
-    let repository;
-    const remoteBranch = remote + '/' + branch;
-    open(path)
-      .then(function (_repository) {
-          repository = _repository;
-          return repository.fetch(remote);
-      }, call)
-      .then(function () {
-          return repository.mergeBranches(branch, remoteBranch);
-      }, call)
-      .then(function (oid) {
-        call(null, oid);
-      }, call);
-};
