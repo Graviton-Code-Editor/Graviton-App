@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200725 - 2 [1.0.3]
+- Added Rust support
+- Fixed, custom themes were removing the selected blur ammount
+
 ### 200725 - 1 [1.0.3] 
 - Custom themes! You can now make use of CSS code
 - Fixed, now you can see not-download plugin's readmes

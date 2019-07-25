@@ -30,6 +30,9 @@ app.on("ready", function() {
     backgroundColor: "#222222",
     title: "Graviton Editor"
   })
+  main.custom = {
+    'whatever': 'youwant'
+  };
   main.loadURL(
     url.format({
       pathname: path.join(__dirname, "index.html"),
@@ -49,3 +52,10 @@ app.on("before-quit", () => {
   app.close()
 })
 app.commandLine.appendSwitch("disable-smooth-scrolling", "true")
+
+const { ipcMain } = require('electron')
+
+
+ipcMain.on('get_env', (event, arg) => {
+  event.returnValue = process.argv
+})

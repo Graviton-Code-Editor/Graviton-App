@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: '190724',
+  date: '190725',
   version: '1.0.3',
   state: 'Beta'
 }
@@ -106,7 +106,7 @@ const loadEditor = (info) => {
           value: info.data,
           mode: 'text/plain',
           htmlMode: false,
-          theme: themeObject['highlight'],
+          theme: themeObject['highlight']!=undefined?themeObject['highlight']:'default',
           lineNumbers: true,
           autoCloseTags: true,
           indentUnit: 2,
@@ -733,6 +733,9 @@ function getLanguageName(format) {
       return 'Kotlin'
     case 'ts':
       return 'TypeScript'
+    case 'toml':
+    case 'rs':
+      return 'Rust'
     default:
       return format
   }
@@ -872,6 +875,13 @@ function updateCodeMode(instance, path) {
         instance.setOption('htmlMode', false)
         instance.setOption('mode', 'application/typescript')
         plang = 'TypeScript'
+        instance.refresh()
+        break
+      case 'toml':
+      case 'rs':
+        instance.setOption('htmlMode', false)
+        instance.setOption('mode', 'rust')
+        plang = 'Rust'
         instance.refresh()
         break
       default:

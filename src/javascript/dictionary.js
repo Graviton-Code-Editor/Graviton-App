@@ -825,6 +825,89 @@ const autocomplete = [
         {
             _name: "transition"
         }
+        ,
+        {
+            _name: "transform"
+        },
+        {
+            _name: "border"
+        },
+        {
+            _name: "border-radius"
+        },
+        {
+            _name: "padding-left"
+        },
+        {
+            _name: "padding-right"
+        },
+        {
+            _name: "padding-top"
+        },
+        {
+            _name: "padding-bottom"
+        },
+        {
+            _name: "margin-left"
+        },
+        {
+            _name: "margin-right"
+        }
+        ,
+        {
+            _name: "margin-top"
+        }
+        ,
+        {
+            _name: "margin-bottom"
+        }
+        ,
+        {
+            _name: "z-index"
+        },
+        {
+            _name: "background-color"
+        },
+        {
+            _name: "background-image"
+        },
+        {
+            _name: "min-width"
+        },
+        {
+            _name: "min-height"
+        },
+        {
+            _name: "inline"
+        },
+        {
+            _name: "inline-block"
+        },
+        {
+            _name: "box-shadow"
+        },
+        {
+            _name: "cursor"
+        }
+        ,
+        {
+            _name: "pointer"
+        }
+        ,
+        {
+            _name: ":hover"
+        }
+        ,
+        {
+            _name: ":active"
+        }
+        ,
+        {
+            _name: "::after"
+        },
+        {
+            _name: "::before"
+        }
 
 
     ]
