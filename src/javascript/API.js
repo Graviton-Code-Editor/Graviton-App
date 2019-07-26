@@ -717,6 +717,14 @@ const graviton = {
               }
             }
             return undefined;
+          })(),
+          database:(function(){
+            for (let a = 0; a < plugins_dbs.length; a++) {
+              if (plugins_dbs[a].plugin_name == folder_name) {
+                return plugins_dbs[a].db;
+              }
+            }
+            return undefined;
           })()
         };
       }

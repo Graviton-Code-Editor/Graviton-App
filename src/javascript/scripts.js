@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190726",
+  date: "190727",
   version: "1.0.3",
   state: "Beta"
 };
@@ -364,7 +364,6 @@ const loadEditor = info => {
           ).filter(Boolean)
         )
         dic = dic.concat(vars)
-        console.log(dic.length)
         filterIt(dic, lastWord, function(
           filterResult
         ) {
@@ -373,9 +372,9 @@ const loadEditor = info => {
             for (var i = 0; i < filterResult.length; i++) {
               const id = Math.random();
               contextOptions +=
-                `<button id=${id} class='option' >` +
-                filterResult[i]._name +
-                "</button>";
+                `<button id=${id} class=option > 
+                ${filterResult[i]._name}
+                </button>`;
               contextOptions = contextOptions.replace("undefined", "");
               context.innerHTML = contextOptions;
               sleeping(1).then(() => {
@@ -413,36 +412,26 @@ const loadEditor = info => {
       if (
         document.getElementById("context").parentElement.style.display != "none"
       ) {
-        // Ignore keys actions on context options displayed.
         editor.setOption("extraKeys", {
           Up: function() {
-            if (true) {
-              return CodeMirror.PASS;
-            }
+            return CodeMirror.PASS;
           },
           Down: function() {
-            if (true) {
-              return CodeMirror.PASS;
-            }
+            return CodeMirror.PASS;
           },
           Enter: function() {
-            if (true) {
-              return CodeMirror.PASS;
-            }
+            return CodeMirror.PASS;
           },
           Tab: function() {
-            if (true) {
-              return CodeMirror.PASS;
-            }
-          }
+            return CodeMirror.PASS;
+          },
         });
       } else {
-        // Reset keys actions.
         editor.setOption("extraKeys", {
-          Up: "goLineUp"
+          Up: "goLineUp",
+          Down:"goLineDown"
         });
       }
-      // Context Options keys handler
       const context = document.getElementById("context");
       const childs = context.querySelectorAll(".option");
       for (i = 0; i < childs.length; i++) {
@@ -524,7 +513,7 @@ const loadEditor = info => {
         }
         commanders.terminal();
       },
-      F11: function(cm) {
+      'F11': function(cm) {
         if (g_window.isFullScreen() == false) {
           g_window.setFullScreen(true);
         } else {
