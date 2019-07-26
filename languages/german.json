@@ -118,5 +118,11 @@
   "MarketError1":"Dir Pluginliste konnte nicht gelesen werden.",
   "MarketError2":"Die Repo des Plugins konnte nicht gelesen werden.",
   "MarketError3":"Das package.json des Plugin's konnte nicht gelesen werden",
-  "SetupError1":"Die Standardthemen konnten nicht installiert werden. Sie können diese später vom Market installieren."
+  "SetupError1":"Die Standardthemen konnten nicht installiert werden. Sie können diese später vom Market installieren.",
+  "Dialog.RenameTo":"Umbenennen zu",
+  "NewFolder":"Neuer Ordner",
+  "NewFile":"Neue Datei",
+  "Report":"Melden",
+  "ExplorerError1":"Diese Datei existiert bereits",
+  "ExplorerError2":"Dieser Ordner existiert bereits"
 }
