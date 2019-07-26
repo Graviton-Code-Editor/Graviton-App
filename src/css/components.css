@@ -638,6 +638,7 @@ p.link:hover {
   display: inline-block;
   margin-left: 25px;
   box-sizing: border-box;
+  padding:5px;
 }
 
 .body_window p {

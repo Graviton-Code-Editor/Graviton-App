@@ -206,6 +206,7 @@ const extensions ={
                 <p>${getTranslation("MadeBy")} ${plugin.repo!=undefined?plugin.repo.package.author:plugin.local.author}</p>
                 <p>${getTranslation("Version")}: ${plugin.repo!=undefined?data.getAttribute('update')=='false'?plugin.repo.package.version:plugin.local.version+" ( 🎉 update: "+plugin.repo.package.version+" )":plugin.local.version}</p>
                 <p>${getTranslation("Stars")}: ${plugin.repo!=undefined?plugin.repo.git.stargazers_count:"Unknown"}</p>
+                ${plugin.repo!=undefined?`<p class=link onclick=shell.openExternal("https://github.com/Graviton-Code-Editor/plugins_list/issues")>${getTranslation("Report")}</p>`:""}
               </div> 
               <div>
                 <div>
@@ -226,8 +227,6 @@ const extensions ={
         }else{
           const request = require("request");
           request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
-            console.log(error);
-            console.log(response);
             document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
           })
         }
@@ -365,7 +364,11 @@ const extensions ={
         plugins_list.push(config);
         const newLink = document.createElement("link");
         newLink.setAttribute("rel", "stylesheet");
-        newLink.setAttribute("href", path.join(highlights_folder, config["highlight"] + ".css")); //Link new themes 
+        if(config.type!="custom_theme"){
+          newLink.setAttribute("href", path.join("src","Highlights", config["highlight"] + ".css")); //Link new themes 
+        }else{
+          newLink.setAttribute("href", path.join(plugins_folder,config["folder"], config["highlight"] + ".css")); //Link new themes 
+        }
         document.body.appendChild(newLink);
        return call!=undefined?call():"";
       }

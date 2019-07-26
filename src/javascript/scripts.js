@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190725",
+  date: "190726",
   version: "1.0.3",
   state: "Beta"
 };
@@ -65,7 +65,7 @@ let current_screen,
   editor_screens = [],
   dictionary = autocomplete;
 
-if (path.basename(__dirname) !== "Graviton-Editor")
+if (path.basename(__dirname) !== ("Graviton-Editor"|| "Graviton-App"))
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
@@ -339,7 +339,6 @@ const loadEditor = info => {
           { line: A1, ch: B1 },
           { line: A1, ch: B2 }
         );
-
         const context = document.getElementById("context");
         if (context.style.display == "block") return;
         const selectedLangNum = (function() {
@@ -355,7 +354,18 @@ const loadEditor = info => {
             }
           }
         })();
-        filterIt(dictionary[selectedLangNum].list, lastWord, function(
+        if(selectedLangNum==undefined) return;
+        let dic = dictionary[selectedLangNum].list;
+        const vars = look(
+          editor.getValue()
+          .replace (/(\r\n|\n|\r)/gm, ' ')
+          .split (
+            /\s|(\()([\w\s!?="`[<>,\/*':&.;_-{}]+)(\))|\s|(\<)([\w\s!?="`[,\/*()':&.;_-{}]+)(\>)|\s|(\()([\w\s!?="<>`[,'+:&.;_-{}]+)(\))\s|(\B\$)(\w+)|\s(\/\*)([\w\s!?()="<>`[':.;_-{}]+)(\*\/)|("[\w\s!?():=`.;_-{}]+")\s|(%%)([\w\s!?()="+<>`[\/'*,.;_-{}]+)(%%)|("[\w\s!?()='.`;_-{}]+")/g
+          ).filter(Boolean)
+        )
+        dic = dic.concat(vars)
+        console.log(dic.length)
+        filterIt(dic, lastWord, function(
           filterResult
         ) {
           if (filterResult.length > 0 && lastWord.length >= 3) {
@@ -644,7 +654,7 @@ function saveFile() {
   }
 }
 
-function loadDirs(dir, app_id, f_t) {
+function loadDirs(dir, app_id, f_t,callback) {
   const first_time =
     f_t == (true || "true") ? true : f_t == "reload" ? false : f_t;
   if (!fs.existsSync(dir)) {
@@ -655,7 +665,7 @@ function loadDirs(dir, app_id, f_t) {
   if (appender_id == "g_directories") {
     document.getElementById(
       "g_explorer"
-    ).innerHTML = `<div id="g_directories"></div>`;
+    ).innerHTML = `<div global=true dir=${dir} id="g_directories"></div>`;
     dir_path = dir;
   }
   let working_folder;
@@ -739,27 +749,21 @@ function loadDirs(dir, app_id, f_t) {
       if (stats.isDirectory()) {
         // If is folder
         const directory_temp = document.createElement("div");
+        const parent_id =  _long_path.replace(/[\\\s]/g, "")
         directory_temp.innerHTML += `
-        <div  opened="false" ID="${ids + dir.replace(/\\/g, "")}" name="${
+        <div global=reload dir="${_long_path}"   opened="false" ID="${parent_id}" name="${
           paths[i]
         }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
-          <div parent=${ids + dir.replace(/\\/g, "")}  ID="${ids +
-          dir.replace(/\\/g, "") +
-          "_div"}" elementType=directory global=reload dir=${_long_path}  class="directory" onclick="loadDirs('${_long_path}','${ids +
-          dir.replace(/\\/g, "")}',false)">
-            <img parent=${ids + dir.replace(/\\/g, "")} ID="${ids +
-          dir.replace(/\\/g, "") +
-          "_img"}" elementType=directory global=reload dir=${_long_path} style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
+          <div parent=${parent_id}  ID="${parent_id +"_div"}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="loadDirs('${_long_path}','${parent_id}',false)">
+            <img parent=${parent_id} ID="${parent_id+ "_img"}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
           paths[i],
           "close"
         )}">
-            <p parent=${ids + dir.replace(/\\/g, "")} ID="${ids +
-          dir.replace(/\\/g, "") +
-          "_p"}" elementType=directory global=reload dir=${_long_path}>
+            <p parent=${parent_id} ID="${parent_id+ "_p"}" elementType=directory global=reload dir="${_long_path}">
             ${paths[i]}
             </p> 
           </div>
-          <div myPadding="${paddingListDir}" longpath="${_long_path}"></div>
+          <div myPadding="${paddingListDir}" dir="${_long_path}"></div>
         </div>`;
         working_folder.appendChild(directory_temp);
       }
@@ -768,63 +772,144 @@ function loadDirs(dir, app_id, f_t) {
       let _long_path = path.join(dir, paths[i]);
       if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\");
-      }
+      } 
       ids++;
       const stats = fs.statSync(_long_path);
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
+        const parent_id =  _long_path.replace(/[\\\s]/g, "")
         file_temp.innerHTML += `
-        <div parent_ID="${ids +
-          dir +
-          "_div"}" elementType="directorie" onclick="new Tab({
-          id:'${ids + dir.replace(/\\/g, "") + "B"}',
+        <div parent_ID="${parent_id}" elementType="directorie" onclick="new Tab({
+          id:'${parent_id + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',
           type:'file'
-        })" myPadding="${paddingListDir}" longPath="${_long_path}" class="directory" ID="${ids +
-          dir +
-          "_div"}" name="${
+        })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id+"_div"}" name="${
           paths[i]
         }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img parent_ID="${ids + dir + "_div"}" ID="${ids +
+          <img parent="${parent_id+"_div"}" ID="${ids +
           dir +
-          "_img"}" longPath="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(
+          "_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(
           paths[i]
         )}.svg">
-          <p parent_ID="${ids + dir + "_div"}" ID="${ids +
-          dir +
-          "_p"}" longPath="${_long_path}" elementType="directorie">
+          <p parent="${parent_id+"_div"}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="directorie">
           ${paths[i]}
           </p>
         </div>`;
         working_folder.appendChild(file_temp);
       }
     }
+    callback!=undefined?callback():"";
   });
 }
+const create ={
+  folder: function(id,value){
+    const element =  document.getElementById(id)
+    const dir = path.join(element.getAttribute('dir'),value)
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+        loadDirs(
+          element.getAttribute('dir'),
+          element.id,
+          element.getAttribute("global")
+        ,function(){
+          //Created the new folder
+        });
+    }else{
+      new Notification("Graviton",getTranslation("ExplorerError2"))
+    }
+  },
+  file: function(id,value){
+    const element =  document.getElementById(id)
+    const dir = path.join(element.getAttribute('dir'),value)
+    if (!fs.existsSync(dir)){
+        fs.writeFile(dir,"",function(){
+          loadDirs(
+            element.getAttribute('dir'),
+            element.id,
+            element.getAttribute("global")
+          ,function(){
+            //Created the new folder
+          });
+        })
+    }else{
+      new Notification("Graviton",getTranslation("ExplorerError1"))
+    }
+  }
+  }
+
 const directories = {
-  removeDialog: function(object) {
+  newFolder: function(object){
     new Dialog({
-      id: "remove_directorie",
+      id: "new_folder",
+      title: current_config.language["Dialog.RenameTo"],
+      content: "<div id='rename_dialog' class='section' contentEditable> New Folder </div>",
+      buttons: {
+        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language[
+          "Accept"
+        ]]: `create.folder('${object}',document.getElementById('rename_dialog').innerText); closeDialog(this);`
+      }
+    });
+  },
+  newFile: function(object){
+    new Dialog({
+      id: "new_file",
+      title: current_config.language["Dialog.RenameTo"],
+      content: "<div id='rename_dialog' class='section' contentEditable> New File.txt </div>",
+      buttons: {
+        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language[
+          "Accept"
+        ]]: `create.file('${object}',document.getElementById('rename_dialog').innerText); closeDialog(this);`
+      }
+    });
+  },
+  removeFileDialog: function(object) {
+    new Dialog({
+      id: "remove_file",
       title: current_config.language["Dialog.AreYouSure"],
       content: "",
       buttons: {
         [current_config.language["Cancel"]]: `closeDialog(this); `,
         [current_config.language[
           "Accept"
-        ]]: `closeDialog(this); directories.remove('${object.id.replace(
+        ]]: `closeDialog(this); directories.removeFile('${object.id.replace(
           /\\/g,
           "\\\\"
         )}'); `
       }
     });
   },
-  remove: function(id) {
+  removeFolderDialog: function(object) {
+    new Dialog({
+      id: "remove_folder",
+      title: current_config.language["Dialog.AreYouSure"],
+      content: "",
+      buttons: {
+        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language[
+          "Accept"
+        ]]: `closeDialog(this); directories.removeFolder('${object.id.replace(
+          /\\/g,
+          "\\\\"
+        )}'); `
+      }
+    });
+  },
+  removeFile: function(id) {
     const object = document.getElementById(id);
-    fs.unlink(object.getAttribute("longpath"), function(err) {
+    fs.unlink(object.getAttribute("dir"), function(err) {
       if (err) console.error(err);
       object.remove();
     });
+  },
+  removeFolder: function(id) {
+    const rimraf = require("rimraf");
+    const object = document.getElementById(id);
+    console.log(object);
+    rimraf.sync(object.getAttribute("dir"))
+    object.remove();
   },
   getCustomIcon: function(path, state) {
     switch (path) {
@@ -1182,3 +1267,21 @@ const touchingResizer = type => {
     touchingResizerValue = true;
   }
 };
+
+function look(text){
+  let _variables =[];
+  for(i=0;i<text.length;i++){
+    switch (text[i]){
+      case "let":
+      case "var":
+      case "const":
+          _variables.push({
+            _name: text[i+1]
+          });
+      break;
+  
+    }
+  }
+  return _variables;
+  console.log(_variables)
+}

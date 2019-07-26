@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200726 - 1 [1.0.3]
+- You can now link codemirror themes and use it in your theme
+- You can now create & and remove folders and also create files!
+- Added Hungarian support
+- Added a report button in the market
+
 ### 200725 - 3 [1.0.3]
 - Rolling back to the old updating system
 

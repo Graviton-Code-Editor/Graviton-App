@@ -66,11 +66,11 @@ const context_menu_list_tabs = {
 };
 const context_menu_list_directories = {
   Remove: function() {
-    directories.removeDialog(
+    directories.removeFileDialog(
       document.getElementById(
         document
           .getElementById(this.getAttribute("target"))
-          .getAttribute("parent_id")
+          .getAttribute("parent")
       )
     );
   }
@@ -85,6 +85,21 @@ const context_menu_directory_options = {
       document
         .getElementById(this.getAttribute("target"))
         .getAttribute("global")
+    );
+  },
+  NewFolder:function(){
+    directories.newFolder(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
+  },
+  NewFile:function(){
+    directories.newFile(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
+  },
+  Remove: function() {
+    directories.removeFolderDialog(
+      document.getElementById(
+        document
+          .getElementById(this.getAttribute("target"))
+          .getAttribute("parent")
+      )
     );
   }
 };

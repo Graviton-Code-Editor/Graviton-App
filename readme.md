@@ -81,7 +81,7 @@ It's available on:
 
 **Windows**
 
-   * `Executable (.exe, 64 & 32bits` 
+   * `Executable (.exe, 64 & 32bits)` 
 
 **Linux**
 

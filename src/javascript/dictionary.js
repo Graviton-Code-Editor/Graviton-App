@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-const autocomplete = [
+let autocomplete = [
   {
     name: "js",
     list: [

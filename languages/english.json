@@ -120,5 +120,11 @@
 	"MarketError1":"Cannot read the plugins list.",
 	"MarketError2":"Cannot read more times the plugin's repo.",
 	"MarketError3":"Cannot read the package.json of the plugin's repo properly.",
-	"SetupError1":"Cannot install the default themes , you can install them from Market later."
+	"SetupError1":"Cannot install the default themes , you can install them from Market later.",
+	"Dialog.RenameTo":"Rename to",
+	"NewFolder":"New folder",
+	"NewFile":"New file",
+	"Report":"Report",
+	"ExplorerError1":"That file already exists",
+	"ExplorerError2":"That folder already exists"
 }
