@@ -47,11 +47,12 @@ module.exports = {
             ).children[1].children[0].style =
               "visibility:hidden; display:none;";
             const tab = document.createElement("div");
+            tab.setAttribute("draggable","true");
             tab.setAttribute("id", object.id + "Tab");
             tab.setAttribute("TabID", object.id + "Tab");
             tab.setAttribute("longPath", object.path);
             tab.setAttribute("screen", current_screen.id);
-            tab.setAttribute("class", "tabs");
+            tab.setAttribute("class", "tabs tab_part");
             tab.setAttribute("elementType", "tab");
             tab.style = `min-width: ${object.name.length * 4 + 115}px; 
               max-width: ${object.name.length * 5 + 100}px`;
@@ -59,11 +60,11 @@ module.exports = {
             tab.setAttribute("file_status", "saved");
             tab.innerHTML += `<p id="${object.id + "TextTab"}" TabID="${
               object.id
-            }Tab" elementType="tab">${object.name}</p>`;
+            }Tab" class="tab_part" elementType="tab">${object.name}</p>`;
             const tab_x = document.createElement("button");
             tab_x.setAttribute("onclose", `closeTab("${object.id}Tab",true);`);
             tab_x.setAttribute("onclick", `closeTab("${object.id}Tab",false);`);
-            tab_x.setAttribute("class", "close_tab");
+            tab_x.setAttribute("class", "close_tab tab_part");
             tab_x.setAttribute("hovering", "false");
             tab_x.setAttribute("elementType", "tab");
             tab_x.setAttribute("TabID", object.id + "Tab");
@@ -75,6 +76,9 @@ module.exports = {
             tab_x.addEventListener("mouseout", function(e) {
               this.setAttribute("hovering", false);
             });
+            tab.ondragstart = function(event) {
+              event.dataTransfer.setData("id", tab.id);
+            };
             tab.appendChild(tab_x);
             document
               .getElementById(current_screen.id)
@@ -331,3 +335,53 @@ module.exports = {
     }
   }
 };
+
+
+
+document.ondrop = function(event) {
+  event.preventDefault();
+  if ( event.target.classList.contains( "tab_part") ) {
+    const id = event.dataTransfer.getData("id");
+    const todrag = document.getElementById(event.target.getAttribute("TabID"))
+    const dragging = document.getElementById(id)
+    if(todrag.getAttribute("screen")!=dragging.getAttribute("screen")){
+      return;
+    }
+
+    const from = (function(){
+      for(i=0;i<todrag.parentElement.children.length;i++){
+        if(todrag.parentElement.children[i].id == dragging.id){
+          return i
+        }
+      }
+    })()
+
+    const to = (function(){
+      for(i=0;i<todrag.parentElement.children.length;i++){
+        if(todrag.parentElement.children[i].id == todrag.id){
+          return i
+        }
+      }
+    })()
+    if(from > to){
+      document.getElementById(event.target.getAttribute("TabID")).parentElement.insertBefore(document.getElementById(id),document.getElementById(event.target.getAttribute("TabID")));
+    }else{
+      if(to+1==dragging.parentElement.children.length){
+        dragging.parentElement.appendChild(document.getElementById(id));
+      }else{
+        dragging.parentElement.insertBefore(document.getElementById(id),dragging.parentElement.children[to+1]);
+      }
+    }
+    const tab_reorganized_event = new CustomEvent("tab_reorganized", {
+      data: {
+        screen: todrag.getAttribute("screen"),
+        from_tab: dragging,
+        to_tab: todrag
+      }
+    });
+    document.dispatchEvent(tab_reorganized_event);
+  }
+};
+document.ondragover = function(event) {
+  event.preventDefault();
+};  

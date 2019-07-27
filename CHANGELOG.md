@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200727 - 2 [1.0.3]
+- You can now reorganize tabs of the same screen by drag & drop!
+- Better Dialog building
+
 ### 200727 - 1 [1.0.3]
 - graviton.getPlugin(<name>) now also returns it's database object in case it exists
 

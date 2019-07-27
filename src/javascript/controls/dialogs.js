@@ -53,16 +53,14 @@ module.exports = {
       const button = document.createElement("button");
       button.innerText = key;
       button.setAttribute("myID", dialogObject.id);
-      if (typeof dialogObject.buttons[key] == "string") {
-        button.setAttribute("onclick", dialogObject.buttons[key]);
-      } else {
-        button.setAttribute("onclick", dialogObject.buttons[key].click);
-        button.setAttribute(
-          "class",
-          dialogObject.buttons[key].important == true ? "important" : ""
-        );
-      }
-
+      sleeping(1).then(() => {
+        button.addEventListener("click",dialogObject.buttons[key].click) 
+        button.setAttribute("onclick", "closeDialog(this)")
+      });
+      button.setAttribute(
+        "class",
+        dialogObject.buttons[key].important == true ? "important" : ""
+      );
       body_dialog.children[2].appendChild(button);
     });
     all.appendChild(body_dialog);
@@ -77,13 +75,14 @@ module.exports = {
       closeDialog(me);
     };
   },
-  closeDialog: id => {
+  closeDialog: ele => {
+    console.log(ele);
     document
       .getElementById("body")
       .setAttribute(
         "windows",
         Number(document.getElementById("body").getAttribute("windows")) - 1
       );
-    document.getElementById(id.getAttribute("myID") + "_dialog").remove();
+    document.getElementById(ele.getAttribute("myID") + "_dialog").remove();
   }
 };

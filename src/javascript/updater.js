@@ -24,7 +24,7 @@ module.exports = {
                 title: `<strong>${g_version.state}</strong> Update avaiable !`,
                 content: `Do you want to update to version ${res[i].tag_name}?`,
                 buttons: {
-                  [current_config.language["No"]]: "closeDialog(this)",
+                  [current_config.language["No"]]: {},
                   [current_config.language["Yes"]]: {
                     click: "updater.update()",
                     important: true

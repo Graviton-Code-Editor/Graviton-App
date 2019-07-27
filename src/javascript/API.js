@@ -473,10 +473,12 @@ const graviton = {
 	      <br> ${current_config.language["OS"]}: ${graviton.currentOS().name}`,
       buttons: {
         [current_config.language["More"]]: {
-          click: "Settings.open(); Settings.navigate('5');",
+          click: ()=>{
+            Settings.open(); Settings.navigate('5')
+          },
           important: true
         },
-        [current_config.language["Close"]]: "closeDialog(this)"
+        [current_config.language["Close"]]: {}
       }
     });
   },
@@ -490,7 +492,7 @@ const graviton = {
         title: `${current_config.language["Changelog"]} - ${g_version.version}`,
         content: `<div style="padding:2px;">${marked(data)}</div>`,
         buttons: {
-          [current_config.language["Close"]]: "closeDialog(this)"
+          [current_config.language["Close"]]: {}
         }
       });
     });
@@ -509,7 +511,7 @@ const graviton = {
       title: current_config.language["Dialog.RemoveScreen.title"],
       content: `<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap; display:flex;" >${content_editors}</div>`,
       buttons: {
-        [current_config.language["Accept"]]: "closeDialog(this)"
+        [current_config.language["Accept"]]: {}
       }
     });
   },

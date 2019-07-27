@@ -1,6 +1,7 @@
 ## Important
 
-- Added a Plugins market!!!
+- Added a Plugins market!
+- You can now reorganize the tabs by dragging and dropping
 - Created a CLI (optional)
 - You can now create folders and files & remove them from the editor
 

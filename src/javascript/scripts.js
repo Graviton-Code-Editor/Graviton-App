@@ -35,7 +35,6 @@ let current_screen,
   tabs = [],
   FirstFolder = null,
   editingTab,
-  ids = 0,
   plang = " ",
   _notifications = [],
   filepath = null,
@@ -104,6 +103,8 @@ document.addEventListener(
   },
   true
 );
+
+
 function updateTitle(text) {
   if (graviton.currentOS().codename == "win32") {
     document.getElementById("title_directory").children[0].innerText =
@@ -570,10 +571,15 @@ function save_file_warn(ele) {
     buttons: {
       [current_config.language[
         "FileExit-dialog-button-accept"
-      ]]: `closeDialog(this); ${ele.getAttribute("onclose")}`,
-      [current_config.language["Cancel"]]: `closeDialog(this);`,
+      ]]: {
+        click:( )=>{
+          console.log(ele);
+          closeTab(ele.getAttribute("tabid"),true);
+        }
+      },
+      [current_config.language["Cancel"]]: {},
       [current_config.language["FileExit-dialog-button-deny"]]: {
-        click: "saveFile(); closeDialog(this);",
+        click: ()=>{saveFile()},
         important: true
       }
     }
@@ -719,7 +725,6 @@ function loadDirs(dir, app_id, f_t,callback) {
   const paddingListDir =
     Number(document.getElementById(appender_id).getAttribute("myPadding")) + 7; // Add padding
   fs.readdir(dir, (err, paths) => {
-    ids = 0;
     if (paths == undefined) {
       graviton.throwError(
         "Cannot read files on the directory :" +
@@ -733,12 +738,11 @@ function loadDirs(dir, app_id, f_t,callback) {
       if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\");
       }
-      ids++;
       const stats = fs.statSync(_long_path);
       if (stats.isDirectory()) {
         // If is folder
         const directory_temp = document.createElement("div");
-        const parent_id =  _long_path.replace(/[\\\s]/g, "")
+        const parent_id =  _long_path.replace(/[\\\s]/g, "") + "_div";
         directory_temp.innerHTML += `
         <div global=reload dir="${_long_path}"   opened="false" ID="${parent_id}" name="${
           paths[i]
@@ -762,26 +766,23 @@ function loadDirs(dir, app_id, f_t,callback) {
       if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\");
       } 
-      ids++;
       const stats = fs.statSync(_long_path);
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
-        const parent_id =  _long_path.replace(/[\\\s]/g, "")
+        const parent_id =  _long_path.replace(/[\\\s]/g, "") +"_div";
         file_temp.innerHTML += `
-        <div parent_ID="${parent_id}" elementType="directorie" onclick="new Tab({
+        <div parent="${parent_id}" elementType="directorie" onclick="new Tab({
           id:'${parent_id + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',
           type:'file'
-        })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id+"_div"}" name="${
+        })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
           paths[i]
         }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img parent="${parent_id+"_div"}" ID="${ids +
-          dir +
-          "_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(
+          <img parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(
           paths[i]
         )}.svg">
-          <p parent="${parent_id+"_div"}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="directorie">
+          <p parent="${parent_id}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="directorie">
           ${paths[i]}
           </p>
         </div>`;
@@ -825,7 +826,7 @@ const create ={
       new Notification("Graviton",getTranslation("ExplorerError1"))
     }
   }
-  }
+}
 
 const directories = {
   newFolder: function(object){
@@ -834,10 +835,15 @@ const directories = {
       title: current_config.language["Dialog.RenameTo"],
       content: "<div id='rename_dialog' class='section' contentEditable> New Folder </div>",
       buttons: {
-        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language["Cancel"]]:{},
         [current_config.language[
           "Accept"
-        ]]: `create.folder('${object}',document.getElementById('rename_dialog').innerText); closeDialog(this);`
+        ]]: {
+          click:()=>{
+            create.folder(object,document.getElementById('rename_dialog').innerText)
+          },
+          important:true
+        }
       }
     });
   },
@@ -847,10 +853,15 @@ const directories = {
       title: current_config.language["Dialog.RenameTo"],
       content: "<div id='rename_dialog' class='section' contentEditable> New File.txt </div>",
       buttons: {
-        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language["Cancel"]]: {},
         [current_config.language[
           "Accept"
-        ]]: `create.file('${object}',document.getElementById('rename_dialog').innerText); closeDialog(this);`
+        ]]: {
+          click: ()=>{
+            create.file(object,document.getElementById('rename_dialog').innerText); 
+          },
+          important:true
+        }
       }
     });
   },
@@ -860,13 +871,14 @@ const directories = {
       title: current_config.language["Dialog.AreYouSure"],
       content: "",
       buttons: {
-        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language["Cancel"]]: {},
         [current_config.language[
           "Accept"
-        ]]: `closeDialog(this); directories.removeFile('${object.id.replace(
-          /\\/g,
-          "\\\\"
-        )}'); `
+        ]]:{
+          click:()=>{
+            directories.removeFile(object.id);
+          }
+        }
       }
     });
   },
@@ -876,13 +888,14 @@ const directories = {
       title: current_config.language["Dialog.AreYouSure"],
       content: "",
       buttons: {
-        [current_config.language["Cancel"]]: `closeDialog(this); `,
+        [current_config.language["Cancel"]]: {},
         [current_config.language[
           "Accept"
-        ]]: `closeDialog(this); directories.removeFolder('${object.id.replace(
-          /\\/g,
-          "\\\\"
-        )}'); `
+        ]]: {
+          click:()=>{
+            directories.removeFolder(object.id);
+          }
+        }
       }
     });
   },
@@ -929,7 +942,7 @@ function getFormat(text) {
     case "json":
       return "json";
     case "md":
-      return "unknown";
+      return "md";
     case "ts":
       return "ts";
     case "jpg":
@@ -1260,17 +1273,32 @@ const touchingResizer = type => {
 function look(text){
   let _variables =[];
   for(i=0;i<text.length;i++){
-    switch (text[i]){
-      case "let":
-      case "var":
-      case "const":
-          _variables.push({
-            _name: text[i+1]
-          });
+    switch(editor.getMode().name){
+      case "javascript":
+          switch (text[i]){
+            case "let":
+            case "var":
+            case "const":
+                _variables.push({
+                  _name: text[i+1]
+                });
+            break;        
+          }
       break;
-  
+      case "java":
+          switch (text[i]){
+            case "int":
+            case "char":
+            case "float":
+                _variables.push({
+                  _name: text[i+1]
+                });
+            break;        
+          }
+      break;
     }
+    
   }
   return _variables;
-  console.log(_variables)
+  
 }
