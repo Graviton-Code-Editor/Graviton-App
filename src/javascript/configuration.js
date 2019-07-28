@@ -17,15 +17,16 @@ preload([
 let current_config = {
   // Default values
   justInstalled: true,
-  theme: "Dark",
-  fontSizeEditor: "13",
-  appZoom: "25",
-  language: "english",
-  animationsPreferences: "activated",
-  autoCompletionPreferences: "desactivated",
-  lineWrappingPreferences: "desactivated",
-  accentColorPreferences: "manual",
-  blurPreferences: "3",
+  theme: 'Dark',
+  fontSizeEditor: '13',
+  appZoom: '25',
+  language: 'english',
+  animationsPreferences: 'activated',
+  autoCompletionPreferences: 'desactivated',
+  lineWrappingPreferences: 'desactivated',
+  accentColorPreferences: 'manual',
+  blurPreferences: '3',
+  bouncePreferences:'activated',
   version: undefined
 };
 
@@ -90,6 +91,7 @@ function saveConfig() {
     lineWrappingPreferences: current_config["lineWrappingPreferences"],
     accentColorPreferences: current_config["accentColorPreferences"],
     blurPreferences: current_config.blurPreferences,
+    bouncePreferences: current_config.bouncePreferences,
     version: g_version.version,
     build: g_version.date
   };

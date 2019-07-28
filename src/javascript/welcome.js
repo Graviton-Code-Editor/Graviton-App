@@ -88,7 +88,7 @@ const Setup = {
   		</div>
   	</div>`;
     document.body.appendChild(all);
-    Setup.navigate("1");
+    Setup.navigate("languages");
     graviton.deleteLog();
     if (error_showed == false) DeleteBoot();
   },
@@ -99,14 +99,16 @@ const Setup = {
   },
   navigate: function(number) {
     switch (number) {
-      case "1":
+      case "languages":
         document.getElementById("body_window_full").innerHTML = `
           <h1 style="font-size:50px; text-align:center; position:relative; " class="translate_word" idT="Languages">${
             current_config.language["Languages"]
           }</h1> 
-          <div id='language_list' class=welcome></div> 
+          
+          <div id='language_list' class=welcome><elastic-container related=parent></elastic-container></div> 
+          
           <button onclick=${
-            themes.length != 0 ? "Setup.navigate('2');" : "Setup.navigate('3');"
+            themes.length != 0 ? "Setup.navigate('themes');" : "Setup.navigate('3');"
           }  style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${
           current_config.language["Continue"]
         }</button>      `;
@@ -124,7 +126,7 @@ const Setup = {
           document.getElementById("language_list").appendChild(languageDiv);
         }
         break;
-      case "2":
+      case "themes":
         document.getElementById("body_window_full").innerHTML = `
           <h1 style=" text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
             current_config.language["Welcome.TakeATheme"]
@@ -133,15 +135,15 @@ const Setup = {
             <img draggable=false onclick="setThemeByName('Dark'); selectTheme('2',this);" class='theme_div2 active' src=src/icons/dark.svg>
             <img draggable=false onclick="setThemeByName('Arctic'); selectTheme('2',this);" class=theme_div2 src=src/icons/light.svg>
           </div> 
-          <button onclick='Setup.navigate("1"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
+          <button onclick='Setup.navigate("languages"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
             current_config.language["Back"]
           }</button> 
-          <button  onclick='Setup.navigate("3");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
+          <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
             current_config.language["Continue"]
           }</button> 
         `;
         break;
-      case "3":
+      case "welcome":
         document.getElementById("body_window_full").innerHTML = `
           <h1 style=" font-size:30px;
            margin-top:100px;

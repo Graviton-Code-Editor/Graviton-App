@@ -47,13 +47,13 @@ const Settings = {
     switch (num) {
       case "1":
         document.getElementById("_content1").innerHTML = `
-        <elastic-container>
+        <elastic-container related=self>
           <div id="dpi">
             <h>${current_config.language["ZoomSize"]}</h4>
             <div class="section-1">
-              <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${
+              <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
                 current_config.appZoom
-              }" class="slider" id="myRange">
+              }" class="slider" >
             </div>
           </div>
           <h4>${current_config.language["Themes"]}</h4> 
@@ -63,7 +63,7 @@ const Settings = {
               "Market"
             )}</p>   
             <p>${current_config.language["Themes.Text"]}</p>
-            <gv-switch  onclick="graviton.useSystemAccent()" class="${
+            <gv-switch  onclick="graviton.useSystemAccent(); saveConfig();" class="${
               current_config.accentColorPreferences == "system"
                 ? "activated"
                 : "desactivated"
@@ -71,9 +71,15 @@ const Settings = {
           </div>
           <h>${getTranslation("Blur")}</h4>
           <div class="section-1">
-            <input id="slider_blur" onchange="updateCustomization()" type="range" min="0" step="0.2" max="50" value="${
+            <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
               current_config.blurPreferences
-            }" class="slider" id="myRange">
+            }" class="slider" >
+          </div>
+          <h>${getTranslation("Bounce")}</h4>
+          <div class="section-1">
+          <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
+            current_config.bouncePreferences
+          }"></gv-switch>
           </div>
           <h4>${current_config.language["ZenMode"]}</h4>
           <div class="section-1">
@@ -288,11 +294,13 @@ function factory_reset_dialog() {
     title: current_config.language["FactoryReset"],
     content: current_config.language["FactoryReset-dialog-message"],
     buttons: {
-      [current_config.language["Decline"]]: "closeDialog(this)",
+      [current_config.language["Decline"]]: {},
       [`${current_config.language["Yes"]} , ${
         current_config.language["Continue"]
       }`]: {
-        click: "closeDialog(this); FactoryReset()",
+        click: ()=>{
+          FactoryReset()
+        },
         important: true
       }
     }

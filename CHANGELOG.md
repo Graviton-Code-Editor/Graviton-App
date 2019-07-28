@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200729 - 1 [1.0.3]
+- Fixed, after creating a new tab you were unable to focus another editor by just clicking on it.
+- You don't have to close settings to save current changed preference
+- Added a toggle for the bounce effect
+
 ### 200728 - 1 [1.0.3]
 - Testing a bouncing effect in some lists
 - Better maximize button (Windows)
@@ -11,7 +16,7 @@ This file contains "important" commits, small ones will probably not be added.
 - Better Dialog building
 
 ### 200727 - 1 [1.0.3]
-- graviton.getPlugin(<name>) now also returns it's database object in case it exists
+- graviton.getPlugin('name') now also returns it's database object in case it exists
 
 ### 200726 - 1 [1.0.3]
 - You can now link codemirror themes and use it in your theme
@@ -527,4 +532,4 @@ This file contains "important" commits, small ones will probably not be added.
 - Added links to the buttons on the About page on Settings
 - Created changelog.md
 
-This changelog didn't start when the project did so, don't expect all commits info to be here.
+This changelog didn't start when the project did ,so don't expect all commits to be here.

@@ -7,6 +7,7 @@
 
 ## New
 
+- Added a bounce effect to some part of the app (can be disabled)
 - You can hide the terminal by pressing Ctrl+H
 - Custom themes, you can create themes with CSS code 
 - Rust support (.rs & .toml files)

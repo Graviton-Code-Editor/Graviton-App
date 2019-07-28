@@ -48,6 +48,7 @@ const extensions ={
                 if(document.getElementById("loading_exts")!=undefined){
                   document.getElementById("loading_exts").remove();
                 }
+               
                 const sec_ID = 'sec'+Math.random().toString();
                 const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(graviton.getPlugin(package.name).local.version):false;
                 document.getElementById('sec_all').innerHTML +=`
@@ -59,6 +60,7 @@ const extensions ={
                 </div>
                 ` 
               }
+              
             }
             
           return

@@ -742,6 +742,13 @@ const graviton = {
   },
   windowContent(id, content) {
     document.getElementById(`${id}_body`).innerHTML = content;
+  },
+  toggleBounceEffect(){
+    if(current_config.bouncePreferences == "activated"){
+      current_config.bouncePreferences = "desactivated"
+    }else{
+      current_config.bouncePreferences = "activated"
+    }
   }
 };
 
