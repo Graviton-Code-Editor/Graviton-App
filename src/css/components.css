@@ -63,6 +63,7 @@ input[type="number"]::selection {
   font-family: _main_font;
 }
 
+
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -307,6 +308,8 @@ input[type="number"]::selection {
   box-shadow: 0px 0px 7px var(--shadows);
 }
 
+
+
 .g_tabs_bar .tabs > p {
   overflow: hidden;
   position: relative;
@@ -471,32 +474,16 @@ button.button1-round svg * {
   border: 0px;
   color: var(--white-black);
 }
-.section {
+.section-1 {
   margin: 3px;
   margin-bottom: 12px;
-  padding: 7px;
-  padding-top: 2px;
+  padding: 10px;
+  padding-top: 7px;
   background: transparent;
   height: auto;
 }
 
-.section-b {
-  max-height: 40%;
-  position: relative;
-  margin: 3px;
-  padding: 5px;
-  background: transparent;
-  width: auto;
-  min-height: auto;
-  overflow: auto;
-}
-
-.section-b * {
-  white-space: nowrap;
-  user-select: auto !important;
-}
-
-.section2 {
+.section-2 {
   position: relative;
   transition: 0.05s;
   margin: 7px;
@@ -509,50 +496,14 @@ button.button1-round svg * {
   transform: scale(1);
 }
 
-.section2:hover {
+.section-2:hover {
   background: var(--widget-color);
 }
 
-.section2:active {
+.section-2:active {
   transform: scale(var(--scalation));
 }
 
-.section3 {
-  position: relative;
-  transition: 0.05s;
-  margin: 7px;
-  padding: 17px;
-  background: var(--primaryColor);
-  cursor: pointer;
-  width: auto;
-  min-height: auto;
-  border-radius: 8px;
-  transform: scale(1);
-  box-sizing: border-box;
-  display: inline-block;
-  flex: 1;
-}
-
-.section3:hover {
-  background: var(--widget-color);
-  box-shadow: 0px 5px 7px var(--shadows);
-  transform: translateY(-5px);
-}
-
-.section3:active {
-  opacity: 0.7;
-  box-shadow: 0px 5px 7px var(--shadows);
-}
-.section4 {
-  position: relative;
-  padding: 0px 18px;
-  background: transparent;
-  width: auto;
-  min-width: auto;
-  height: auto;
-  min-height: auto;
-  overflow: auto;
-}
 button.button2 {
   font-weight: bold;
   right: 0;
@@ -586,7 +537,7 @@ button.button2:active {
   opacity: 0.7;
 }
 
-.section2 p.title {
+.section-2 p.title {
   margin: 4px 0px;
   font-size: 19px;
   font-weight: 700;

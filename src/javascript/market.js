@@ -227,6 +227,7 @@ const extensions ={
         }else{
           const request = require("request");
           request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
+            if(document.getElementById(data.getAttribute('name')+'_div')==undefined) return;  
             document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
           })
         }

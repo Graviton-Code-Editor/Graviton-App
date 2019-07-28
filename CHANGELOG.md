@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200728 - 1 [1.0.3]
+- Testing a bouncing effect in some lists
+- Better maximize button (Windows)
+
 ### 200727 - 2 [1.0.3]
 - You can now reorganize tabs of the same screen by drag & drop!
 - Better Dialog building

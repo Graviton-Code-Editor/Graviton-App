@@ -49,14 +49,14 @@ const Settings = {
         document.getElementById("_content1").innerHTML = `
           <div id="dpi">
             <h>${current_config.language["ZoomSize"]}</h4>
-            <div class="section">
+            <div class="section-1">
               <input id="slider_zoom" onchange="updateCustomization()" type="range" min="0" step="5" max="50" value="${
                 current_config.appZoom
               }" class="slider" id="myRange">
             </div>
           </div>
           <h4>${current_config.language["Themes"]}</h4> 
-          <div class="section">
+          <div class="section-1">
             <div id='theme_list'></div> 
             <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation(
               "Market"
@@ -69,13 +69,13 @@ const Settings = {
             }"></gv-switch>
           </div>
           <h>${getTranslation("Blur")}</h4>
-          <div class="section">
+          <div class="section-1">
             <input id="slider_blur" onchange="updateCustomization()" type="range" min="0" step="0.2" max="50" value="${
               current_config.blurPreferences
             }" class="slider" id="myRange">
           </div>
           <h4>${current_config.language["ZenMode"]}</h4>
-          <div class="section">
+          <div class="section-1">
             <p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
             <gv-switch  onclick="graviton.toggleZenMode()" class="${
               editor_mode != "zen" ? "activated" : "desactivated"
@@ -132,13 +132,13 @@ const Settings = {
         document.getElementById("_content1").innerHTML = `
           <div id="editor_fs">
               <h4>${current_config.language["FontSize"]}</h4>
-              <div class="section">
+              <div class="section-1">
                   <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
                     current_config.fontSizeEditor
                   }">
               </div>
               <h4>${current_config.language["Auto-Completion"]}</h4>
-              <div class="section">
+              <div class="section-1">
                   <p>${
                     current_config.language[
                       "Settings-Editor-AutoCompletion-text"
@@ -149,13 +149,13 @@ const Settings = {
                   }"></gv-switch>
               </div>
               <h4>${current_config.language["Line-Wrapping"]}</h4>
-              <div class="section">
+              <div class="section-1">
                   <gv-switch onclick="graviton.toggleLineWrapping()" class="${
                     current_config["lineWrappingPreferences"]
                   }"></gv-switch>
               </div>
               <h4>${current_config.language["Highlighting"]}</h4>
-              <div class="section">
+              <div class="section-1">
               <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
           </div>
               
@@ -166,7 +166,7 @@ const Settings = {
       case "4":
         document.getElementById("_content1").innerHTML = `
           <h4>${current_config.language["Performance"]}</h4>
-          <div class="section">
+          <div class="section-1">
               <p>${
                 current_config.language[
                   "Settings-Advanced-Performance-Animations"
@@ -177,7 +177,7 @@ const Settings = {
               }"></gv-switch>
           </div>
           <h4>${current_config.language["Developers"]}</h4>
-          <div class="section">
+          <div class="section-1">
               <p>${
                 current_config.language[
                   "Settings-Advanced-Developer-Tools-text"
@@ -188,7 +188,7 @@ const Settings = {
               }</button>
           </div>
           <h4>${current_config.language["FactoryReset"]}</h4>
-          <div class="section">
+          <div class="section-1">
               <p>${
                 current_config.language["Settings-Advanced-FactoryReset-text"]
               }</p>
@@ -203,7 +203,7 @@ const Settings = {
       case "5":
         document.getElementById("_content1").innerHTML = `
           <h4>${current_config.language["About"]} </h4>
-          <div class="section">
+          <div class="section-1">
               <p>${current_config.language["About-text1"]}</p>
               <p>${current_config.language["About-text2"]}</p>
               <button class="button1" onclick="shell.openExternal('https://www.graviton.ml')">Website</button>
@@ -211,7 +211,7 @@ const Settings = {
               <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
           </div>
           <h4>${current_config.language["CurrentVersion"]}</h4>
-          <div class="section">
+          <div class="section-1">
             <div id="about_section">
               <p>${current_config.language["Version"]}: ${g_version.version} (${
           g_version.date

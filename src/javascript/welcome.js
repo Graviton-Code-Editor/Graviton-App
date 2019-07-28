@@ -18,10 +18,12 @@ function openWelcome() {
       current_config.language["Welcome"]
     }</h2> 
 		<div class="flex">
-			<div id="recent_projects" class="horizontal">
+      <div id="recent_projects" class="horizontal">
+      <elastic-container>
 				<h2  idT="RecentProjects" class="translate_word">${
           current_config.language["RecentProjects"]
         }</h2>
+        </elastic-container>
 			</div> 
 			<div id="notes" class="horizontal">
 				<h2  idT="Notes" class='translate_word title2'>${

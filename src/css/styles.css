@@ -315,3 +315,23 @@ h4 {
   font-weight: normal;
   margin: 4px;
 }
+
+.expand{
+  animation:bounce 0.35s;
+}
+
+@keyframes bounce{
+  20%{
+    height:10px
+  }
+  40%{
+    height:15px
+  }
+  60%{
+    height:7px
+  }
+  100%{
+    height:0px
+  }
+  
+}

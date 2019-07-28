@@ -336,10 +336,13 @@ module.exports = {
   }
 };
 
-
+document.ondrag = function(event) {
+  event.preventDefault();
+}
 
 document.ondrop = function(event) {
   event.preventDefault();
+  mouseClicked = false;
   if ( event.target.classList.contains( "tab_part") ) {
     const id = event.dataTransfer.getData("id");
     const todrag = document.getElementById(event.target.getAttribute("TabID"))
@@ -347,7 +350,6 @@ document.ondrop = function(event) {
     if(todrag.getAttribute("screen")!=dragging.getAttribute("screen")){
       return;
     }
-
     const from = (function(){
       for(i=0;i<todrag.parentElement.children.length;i++){
         if(todrag.parentElement.children[i].id == dragging.id){
@@ -355,7 +357,6 @@ document.ondrop = function(event) {
         }
       }
     })()
-
     const to = (function(){
       for(i=0;i<todrag.parentElement.children.length;i++){
         if(todrag.parentElement.children[i].id == todrag.id){

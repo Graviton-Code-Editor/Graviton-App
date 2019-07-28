@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190727",
+  date: "190728",
   version: "1.0.3",
   state: "Beta"
 };
@@ -833,7 +833,7 @@ const directories = {
     new Dialog({
       id: "new_folder",
       title: current_config.language["Dialog.RenameTo"],
-      content: "<div id='rename_dialog' class='section' contentEditable> New Folder </div>",
+      content: "<div id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
       buttons: {
         [current_config.language["Cancel"]]:{},
         [current_config.language[
@@ -851,7 +851,7 @@ const directories = {
     new Dialog({
       id: "new_file",
       title: current_config.language["Dialog.RenameTo"],
-      content: "<div id='rename_dialog' class='section' contentEditable> New File.txt </div>",
+      content: "<div id='rename_dialog' class='section-1' contentEditable> New File.txt </div>",
       buttons: {
         [current_config.language["Cancel"]]: {},
         [current_config.language[
@@ -1246,7 +1246,7 @@ const g_NewProjects = () => {
     id: "new_projects_window",
     content: `
       <h2 class="window_title">${current_config.language["Templates"]}</h2> 
-      <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section2">
+      <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section-2">
         <p>HTML</p>
       </div>`
   });
@@ -1275,30 +1275,49 @@ function look(text){
   for(i=0;i<text.length;i++){
     switch(editor.getMode().name){
       case "javascript":
-          switch (text[i]){
-            case "let":
-            case "var":
-            case "const":
-                _variables.push({
-                  _name: text[i+1]
-                });
-            break;        
-          }
+        switch (text[i]){
+          case "let":
+          case "var":
+          case "const":
+            _variables.push({
+              _name: text[i+1]
+            });
+          break;        
+        }
       break;
       case "java":
-          switch (text[i]){
-            case "int":
-            case "char":
-            case "float":
-                _variables.push({
-                  _name: text[i+1]
-                });
-            break;        
-          }
+        switch (text[i]){
+          case "int":
+          case "char":
+          case "float":
+            _variables.push({
+              _name: text[i+1]
+            });
+          break;        
+        }
       break;
     }
-    
   }
   return _variables;
-  
 }
+
+class elasticContainer extends HTMLElement {
+  constructor() {
+    super();
+  }
+  connectedCallback() {
+    console.log("test");
+    const el = this.parentElement;
+    el.onscroll = function() {
+    if (el.scrollTop == 0) {
+      const spacer = document.createElement("div")
+      spacer.classList.add("expand")
+      this.insertBefore(spacer, this.children[0])
+      setTimeout(function() {
+        spacer.remove()
+      }, 360)      
+    }
+  }
+  }
+}
+window.customElements.define("elastic-container", elasticContainer);

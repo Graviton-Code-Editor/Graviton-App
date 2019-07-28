@@ -503,7 +503,7 @@ const graviton = {
       content_editors += `
  			<div onclick="if(screens.remove('${
         editor_screens[i].id
-      }')){this.remove();}  " class="section3" style="width:60px; height:100px; background:var(--accentColor);"></div>
+      }')){this.remove();}  " class="section-4" style="width:60px; height:100px; background:var(--accentColor);"></div>
  			`;
     }
     new Dialog({

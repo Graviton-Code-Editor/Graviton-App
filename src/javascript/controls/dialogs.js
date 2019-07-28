@@ -76,7 +76,6 @@ module.exports = {
     };
   },
   closeDialog: ele => {
-    console.log(ele);
     document
       .getElementById("body")
       .setAttribute(
