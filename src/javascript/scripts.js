@@ -64,7 +64,7 @@ let current_screen,
   editor_screens = [],
   dictionary = autocomplete;
 
-if (path.basename(__dirname) !== ("Graviton-Editor"|| "Graviton-App"))
+if (path.basename(__dirname) !== ("Graviton-Editor" && "Graviton-App"))
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
