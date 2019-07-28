@@ -98,6 +98,9 @@ document.addEventListener(
     if (mouseClicked && touchingResizerValue) {
       const explorer = document.getElementById("g_explorer");
       explorer.style = `width: ${event.clientX - 3}px`;
+      for(i=0;i<editors.length;i++){
+        editors[i].object.blur()
+      }
       graviton.resizeTerminals();
     }
   },
@@ -168,6 +171,8 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
+        console.log(text_container.children[0].children[5])
+        elasticContainer.append(text_container.children[0].children[5])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
         for (i = 0; i < editors.length; i++) {
@@ -1301,23 +1306,76 @@ function look(text){
   return _variables;
 }
 
-class elasticContainer extends HTMLElement {
+class elasticContainerComponent extends HTMLElement {
   constructor() {
     super();
   }
   connectedCallback() {
-    console.log("test");
+
+    const container = this;
+    container.id = "elastic"+Math.random()
+    
+    const related = (function(){
+      if(container.getAttribute("related")=="parent" || container.getAttribute("related") == undefined ){
+        return container.parentElement;
+      }
+      if(container.getAttribute("related")=="child"){
+        return  container.children[0];
+      }
+    })()
+
     const el = this.parentElement;
+   
     el.onscroll = function() {
-    if (el.scrollTop == 0) {
-      const spacer = document.createElement("div")
-      spacer.classList.add("expand")
-      this.insertBefore(spacer, this.children[0])
-      setTimeout(function() {
-        spacer.remove()
-      }, 360)      
-    }
-  }
+      if(related == null) return;
+      if (el.scrollTop == 0) {
+        const spacer = document.createElement("div")
+        spacer.classList.add("bounce_top")
+        spacer.classList.add("elastic_container")
+        this.insertBefore(spacer, this.children[0])
+        setTimeout(function() {
+          spacer.remove()
+        }, 360)      
+      }
+      console.log(related);
+      if (el.scrollHeight >= el.scrollTop+el.clientHeight) {
+        if(document.getElementsByClassName("elastic_container").length!=0 || related == null) return;
+        const spacer = document.createElement("div")
+        spacer.classList.add("bounce_bottom")
+        spacer.classList.add("elastic_container")
+        this.appendChild(spacer)
+        setTimeout(function() {
+          spacer.remove()
+        }, 500)      
+      }
+    } 
   }
 }
-window.customElements.define("elastic-container", elasticContainer);
+window.customElements.define("elastic-container", elasticContainerComponent);
+
+const elasticContainer ={
+  append: function(el){
+    el.onscroll = function() {
+      if (el.scrollTop == 0) {
+        const spacer = document.createElement("div")
+        spacer.classList.add("bounce_top")
+        spacer.classList.add("elastic_container")
+        this.insertBefore(spacer, this.children[0])
+        setTimeout(function() {
+          spacer.remove()
+        }, 360)      
+      }
+      if (el.scrollHeight-25 < el.scrollTop+el.clientHeight) {
+        if(document.getElementsByClassName("bounce_bottom").length!=0) return;
+        const spacer = document.createElement("div")
+        spacer.classList.add("bounce_bottom")
+        spacer.classList.add("elastic_container")
+        this.appendChild(spacer)
+        setTimeout(function() {
+          spacer.remove()
+        }, 500)      
+      }
+    } 
+  }
+}
+

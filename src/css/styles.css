@@ -316,22 +316,42 @@ h4 {
   margin: 4px;
 }
 
-.expand{
-  animation:bounce 0.35s;
+.bounce_top{
+  animation:bounce_top 0.35s;
 }
-
-@keyframes bounce{
+.bounce_bottom{
+  position: relative;
+  bottom:0;
+  animation:bounce_bottom 0.35s;
+}
+@keyframes bounce_top{
   20%{
-    height:10px
+    height:7px
   }
   40%{
-    height:15px
+    height:18px
   }
   60%{
-    height:7px
+    height:9px
   }
   100%{
     height:0px
   }
-  
+}
+@keyframes bounce_bottom{
+  20%{
+    height:15
+  }
+  40%{
+    height:27
+  }
+  60%{
+    height:15PX
+  }
+  80%{
+    height:7PX
+  }
+  100%{
+    height:0px
+  }
 }

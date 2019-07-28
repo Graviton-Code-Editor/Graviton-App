@@ -47,6 +47,7 @@ const Settings = {
     switch (num) {
       case "1":
         document.getElementById("_content1").innerHTML = `
+        <elastic-container>
           <div id="dpi">
             <h>${current_config.language["ZoomSize"]}</h4>
             <div class="section-1">
@@ -80,7 +81,9 @@ const Settings = {
             <gv-switch  onclick="graviton.toggleZenMode()" class="${
               editor_mode != "zen" ? "activated" : "desactivated"
             }"></gv-switch>
-          </div>`;
+            
+          </div>
+          </elastic-container>`;
         for (i = 0; i < themes.length; i++) {
           const themeDiv = document.createElement("div");
           themeDiv.setAttribute("class", "theme_div");
@@ -131,34 +134,32 @@ const Settings = {
       case "3":
         document.getElementById("_content1").innerHTML = `
           <div id="editor_fs">
-              <h4>${current_config.language["FontSize"]}</h4>
-              <div class="section-1">
-                  <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
-                    current_config.fontSizeEditor
-                  }">
-              </div>
-              <h4>${current_config.language["Auto-Completion"]}</h4>
-              <div class="section-1">
-                  <p>${
-                    current_config.language[
-                      "Settings-Editor-AutoCompletion-text"
-                    ]
-                  } </p>
-                  <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${
-                    current_config["autoCompletionPreferences"]
-                  }"></gv-switch>
-              </div>
-              <h4>${current_config.language["Line-Wrapping"]}</h4>
-              <div class="section-1">
-                  <gv-switch onclick="graviton.toggleLineWrapping()" class="${
-                    current_config["lineWrappingPreferences"]
-                  }"></gv-switch>
-              </div>
-              <h4>${current_config.language["Highlighting"]}</h4>
-              <div class="section-1">
-              <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
-          </div>
-              
+            <h4>${current_config.language["FontSize"]}</h4>
+            <div class="section-1">
+              <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
+                current_config.fontSizeEditor
+              }">
+            </div>
+            <h4>${current_config.language["Auto-Completion"]}</h4>
+            <div class="section-1">
+              <p>${
+                current_config.language[
+                  "Settings-Editor-AutoCompletion-text"
+                ]
+              } </p>
+              <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${
+                current_config["autoCompletionPreferences"]
+              }"></gv-switch>
+            </div>
+            <h4>${current_config.language["Line-Wrapping"]}</h4>
+            <div class="section-1">
+              <gv-switch onclick="graviton.toggleLineWrapping()" class="${
+                current_config["lineWrappingPreferences"]
+              }"></gv-switch>
+            </div>
+            <h4>${current_config.language["Highlighting"]}</h4>
+            <div class="section-1">
+            <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
           </div>
           `;
         document.getElementById("navB3").classList.add("active");
