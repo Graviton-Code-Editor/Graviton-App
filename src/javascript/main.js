@@ -1326,6 +1326,8 @@ class elasticContainerComponent extends HTMLElement {
     })()
     const el = this.parentElement;
     el.onscroll = function() {
+      if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
+      el.setAttribute("toleft",el.scrollLeft)
       if(current_config.bouncePreferences == "desactivated") return;
       if( related == null) {
         return;
@@ -1360,6 +1362,8 @@ window.customElements.define("elastic-container", elasticContainerComponent);
 const elasticContainer ={
   append: function(el){
     el.onscroll = function() {
+      if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
+      el.setAttribute("toleft",el.scrollLeft)
       if(current_config.bouncePreferences == "desactivated") return;
       if (el.scrollTop >= 0 && el.scrollTop < 10) {
         const spacer = document.createElement("div")

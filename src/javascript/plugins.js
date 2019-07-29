@@ -8,6 +8,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+
 let plugins_list = [],
   plugins_dbs = [];
 
@@ -31,10 +33,15 @@ function detectPlugins(call) {
               err,
               data
             ) {
-              plugins_dbs.push({
+              const object = {
                 plugin_name: path.basename(dir, ".json"),
                 db: JSON.parse(data)
+              }
+              plugins_dbs.push(object);
+              const db_loaded = new CustomEvent("db_loaded", {
+                detail: object
               });
+              document.dispatchEvent(db_loaded);
             });
           } catch {}
         }
@@ -94,8 +101,8 @@ function detectPlugins(call) {
     //If the plugins folder already exist
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
-      for (i = 0; i < paths.length+1; i++) {
-        if(i==paths.length) return call != undefined ? call() : "";
+      if(paths.length == 0) return call != undefined ? call() : "";
+      for (i = 0; i < paths.length; i++)   {
         const direct = fs.statSync(path.join(plugins_folder, paths[i]));
         if (!direct.isFile()) {
           fs.readFile(

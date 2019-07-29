@@ -245,6 +245,7 @@ function dropMenu(obj) {
               button.setAttribute("title", hint);
               button.id = Math.random();
               sleeping(1).then(() => {
+                if(document.getElementById(button.id)==null) return;
                 document.getElementById(button.id).onclick = click;
               });
               if (toTransx != true) {
@@ -503,7 +504,7 @@ const graviton = {
       content_editors += `
  			<div onclick="if(screens.remove('${
         editor_screens[i].id
-      }')){this.remove();}  " class="section-4" style="width:60px; height:100px; background:var(--accentColor);"></div>
+      }')){this.remove();}  " class="section-3" style="width:60px; height:100px; background:var(--accentColor);"></div>
  			`;
     }
     new Dialog({

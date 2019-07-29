@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200729 - 3 [1.0.3]
+- Added a background to the editor numbers
+- Added a missing class
+- Fixed, vertical scroll bounce animation was throwed always while scrolling horizontally
+
 ### 200729 - 2 [1.0.3]
 - Removed unnecessary code
 - Addded a new section in the setup process

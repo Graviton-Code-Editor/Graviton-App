@@ -505,7 +505,32 @@ button.button1-round svg * {
 .section-2:active {
   transform: scale(var(--scalation));
 }
+.section-3 {
+  position: relative;
+  transition: 0.05s;
+  margin: 7px;
+  padding: 17px;
+  background: var(--primaryColor);
+  cursor: pointer;
+  width: auto;
+  min-height: auto;
+  border-radius: 8px;
+  transform: scale(1);
+  box-sizing: border-box;
+  display: inline-block;
+  flex: 1;
+}
 
+.section-3:hover {
+  background: var(--widget-color);
+  box-shadow: 0px 5px 7px var(--shadows);
+  transform: translateY(-5px);
+}
+
+.section-3:active {
+  opacity: 0.7;
+  box-shadow: 0px 5px 7px var(--shadows);
+}
 button.button2 {
   font-weight: bold;
   right: 0;
