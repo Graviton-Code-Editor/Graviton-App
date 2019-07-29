@@ -18,6 +18,11 @@ function detectLanguages() {
         data
       ) {
         if (err) throw err;
+        try{
+           JSON.parse(data);
+        }catch{ 
+          return;
+        }
         const obj = JSON.parse(data);
         languages.push(obj); // Push the language
         if (languages.length === paths.length) {

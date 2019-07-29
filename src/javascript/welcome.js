@@ -108,7 +108,7 @@ const Setup = {
           <div id='language_list' class=welcome><elastic-container related=parent></elastic-container></div> 
           
           <button onclick=${
-            themes.length != 0 ? "Setup.navigate('themes');" : "Setup.navigate('3');"
+            themes.length != 0 ? "Setup.navigate('themes');" : "Setup.navigate('additional_settings');"
           }  style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${
           current_config.language["Continue"]
         }</button>      `;

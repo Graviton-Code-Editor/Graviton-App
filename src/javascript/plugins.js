@@ -52,11 +52,14 @@ function detectPlugins(call) {
     const client = github.client();
     const request = require("request");
     let loaded = 0;
+    let  _old_error = false;
     for (i = 0; i < default_plugins.length; i++) {
       const i_t = i;
       client.repo(default_plugins[i]).info(function(err, data) {
+        if(_old_error) return;
         if (err) {
           new Notification("Graviton", getTranslation("SetupError1"));
+          _old_error = true;
           return call != undefined ? call() : "";
         }
         const nodegit = require("nodegit");
@@ -65,6 +68,10 @@ function detectPlugins(call) {
             data.default_branch
           }/package.json`,
           function(error, response, body2) {
+            if (err) {
+              new Notification("Graviton", getTranslation("SetupError1"));
+              return call != undefined ? call() : "";
+            }
             const config = JSON.parse(body2);
             nodegit
               .Clone(
@@ -87,7 +94,8 @@ function detectPlugins(call) {
     //If the plugins folder already exist
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
-      for (i = 0; i < paths.length; i++) {
+      for (i = 0; i < paths.length+1; i++) {
+        if(i==paths.length) return call != undefined ? call() : "";
         const direct = fs.statSync(path.join(plugins_folder, paths[i]));
         if (!direct.isFile()) {
           fs.readFile(
