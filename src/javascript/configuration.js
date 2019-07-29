@@ -42,8 +42,8 @@ function loadConfig() {
       } else {
         Setup.open();
       }
-      screens.add();
-      appendBinds();
+      screens.add(); //Creates the first screen
+      appendBinds(); //Creates the general key binds
     });
   } else {
     fs.readFile(configDir, "utf8", function(err, data) {
@@ -72,8 +72,8 @@ function loadConfig() {
           document.documentElement.appendChild(style);
           document.documentElement.style.setProperty("--scalation", "1");
         }
-        screens.add();
-        appendBinds();
+        screens.add(); //Creates the first screen
+        appendBinds(); //Creates the general key binds
       });
     });
   }

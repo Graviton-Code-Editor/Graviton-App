@@ -114,12 +114,6 @@ class Plugin {
         this.description = plugins_list[i].description;
       }
     }
-    for (i = 0; i < plugins_dbs.length; i++) {
-      if (plugins_dbs[i].plugin_name == object.name) {
-        //List package information
-        this.b = i;
-      }
-    }
     if (this.name == undefined) {
       console.warn(` Plugin > ${object.name} < doesn't exist `);
       return;
@@ -135,16 +129,19 @@ class Plugin {
     if (!callback == undefined) return callback;
   }
   setData(key, data) {
-    if (fs.existsSync(path.join(plugins_db, this.name) + ".json")) {
-      let object = this.getData();
-      object[key] = data;
-      fs.writeFileSync(
-        path.join(plugins_db, this.name) + ".json",
-        JSON.stringify(object),
-        function(err) {
-          plugins_dbs[this.b].db = object;
-        }
-      );
+    const name = this.name;
+    if (fs.existsSync(path.join(plugins_db, name) + ".json")) {
+      this.getData(function(object){
+        object[key] = data;
+        fs.writeFileSync(
+          path.join(plugins_db, name) + ".json",
+          JSON.stringify(object),
+          function(err) {
+            plugins_dbs[this.b].db = object;
+          }
+        );
+      })
+     
     }
   }
   createData(data) {
@@ -165,11 +162,29 @@ class Plugin {
       return "already_exists";
     }
   }
-  getData() {
-    try {
-      return plugins_dbs[this.b].db;
-    } catch {
-      return null;
+  getData(callback) {
+    const me = this;
+    if(plugins_dbs[this.b]==undefined){
+      const name = this.name
+      fs.readFile(path.join(plugins_db,name+".json"), "utf8", function(
+        err,
+        data
+      ) {
+        const object = {
+          plugin_name: path.basename(name, ".json"),
+          db: JSON.parse(data)
+        }
+        plugins_dbs.push(object);
+        for (i = 0; i < plugins_dbs.length; i++) {
+          if (plugins_dbs[i].plugin_name == name) {
+            //List package information
+            me.b = i;
+          }
+        }
+        callback!=undefined?callback(JSON.parse(data)):"";
+      });
+    }else{
+      return callback!=undefined?callback(plugins_dbs[this.b].db):plugins_dbs[this.b].db; 
     }
   }
   deleteData(data) {
@@ -206,7 +221,9 @@ function dropMenu(obj) {
       droplist.parentElement.children[0].addEventListener(
         "mouseover",
         function() {
-          if (anyDropON) {
+          if ( anyDropON != null &&
+            anyDropON != this.getAttribute("g_id") + "_dropbtn") {
+            console.log(`${this.getAttribute("g_id")}_dropbtn`)
             interact_dropmenu(`${this.getAttribute("g_id")}_dropbtn`);
             this.focus();
           }
@@ -373,6 +390,7 @@ function dropMenu(obj) {
             anyDropON != null &&
             anyDropON != this.getAttribute("g_id") + "_dropbtn"
           ) {
+            
             interact_dropmenu(`${this.getAttribute("g_id")}_dropbtn`);
             this.focus();
           }

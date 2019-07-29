@@ -35,12 +35,12 @@ module.exports = {
     newWindow.setAttribute("id", this.id + "_window");
     newWindow.setAttribute("style", "-webkit-user-select: none;");
     newWindow.innerHTML = `
-            <div class="background_window" onclick="closeWindow('${
-              this.id
-            }'); ${this.onClose}"></div>
-            <div id="${this.id + "_body"}" class="body_window">
-                ${this.code}
-            </div>`;
+      <div class="background_window" onclick="closeWindow('${
+        this.id
+      }'); ${this.onClose}"></div>
+      <div id="${this.id + "_body"}" class="body_window">
+          ${this.code}
+      </div>`;
     this.myWindow = newWindow;
     this.launch = function() {
       document
@@ -48,7 +48,7 @@ module.exports = {
         .setAttribute(
           "windows",
           Number(document.getElementById("body").getAttribute("windows")) + 1
-        );
+        ); //Plus an opened screen
       document.body.appendChild(this.myWindow);
     };
     this.close = function() {
@@ -57,7 +57,7 @@ module.exports = {
         .setAttribute(
           "windows",
           Number(document.getElementById("body").getAttribute("windows")) - 1
-        );
+        ); //Substract an opened screen
       document.getElementById(`${this.id}_window`).remove();
     };
   },

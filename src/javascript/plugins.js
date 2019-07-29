@@ -11,43 +11,14 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 
 let plugins_list = [],
-  plugins_dbs = [];
+    plugins_dbs = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
   "Graviton-Code-Editor/Arctic"
-];
+]; //Plugins which are installed in the setup process
 
 function detectPlugins(call) {
-  if (!fs.existsSync(plugins_db)) {
-    //If the plugins_db folder doesn't exist
-    fs.mkdirSync(plugins_db);
-  } else {
-    //If the plugins_db folder already exist
-    fs.readdir(plugins_db, (err, paths) => {
-      for (i = 0; i < paths.length; i++) {
-        const dir = paths[i];
-        if (dir.indexOf(".") > -1 && getFormat(dir) == "json") {
-          try {
-            fs.readFile(path.join(plugins_db, dir), "utf8", function(
-              err,
-              data
-            ) {
-              const object = {
-                plugin_name: path.basename(dir, ".json"),
-                db: JSON.parse(data)
-              }
-              plugins_dbs.push(object);
-              const db_loaded = new CustomEvent("db_loaded", {
-                detail: object
-              });
-              document.dispatchEvent(db_loaded);
-            });
-          } catch {}
-        }
-      }
-    });
-  }
   if (!fs.existsSync(plugins_folder)) {
     //If the plugins folder doesn't exist
     document.getElementById("g_bootanimation").innerHTML += `
@@ -125,6 +96,11 @@ function detectPlugins(call) {
   }
 }
 
+/*
+
+installing a plugin from a local source:
+
+*/
 const installFromLocal = function() {
   dialog.showOpenDialog({ properties: ["openDirectory"] }, selectedFiles => {
     if (selectedFiles === undefined) return;
