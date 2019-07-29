@@ -54,8 +54,8 @@ function loadConfig() {
       updateSettings();
       detectPlugins(function() {
         if (current_config["theme"] != undefined)
-          setThemeByName(current_config["theme"]);
-        loadLanguage(current_config.language);
+          graviton.setTheme(current_config["theme"]);
+          loadLanguage(current_config.language);
         if (current_config.justInstalled === false) {
           openWelcome();
         } else {
@@ -82,7 +82,7 @@ function saveConfig() {
   // Saves the current configuration to config.json
   let newConfig = {
     justInstalled: current_config.justInstalled,
-    theme: current_config.theme["name"],
+    theme: current_config.theme,
     fontSizeEditor: current_config.fontSizeEditor,
     appZoom: current_config.appZoom,
     language: current_config["language"]["g_l"],

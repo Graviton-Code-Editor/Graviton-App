@@ -172,7 +172,6 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
-        console.log(text_container.children[0].children[5])
         elasticContainer.append(text_container.children[0].children[5])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
@@ -1362,7 +1361,7 @@ const elasticContainer ={
   append: function(el){
     el.onscroll = function() {
       if(current_config.bouncePreferences == "desactivated") return;
-      if (el.scrollTop == 0) {
+      if (el.scrollTop >= 0 && el.scrollTop < 10) {
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_top")
         this.insertBefore(spacer, this.children[0])

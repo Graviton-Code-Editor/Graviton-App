@@ -49,3 +49,7 @@ app.on("before-quit", () => {
   app.close()
 })
 app.commandLine.appendSwitch("disable-smooth-scrolling", "true")
+
+let myNotification = new Notification('Title', {
+  body: 'Lorem Ipsum Dolor Sit Amet'
+})

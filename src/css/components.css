@@ -55,7 +55,7 @@ input[type="number"]::selection {
 .slider {
   -webkit-appearance: none;
   width: auto;
-  height: 22px;
+  height: 20px;
   background: var(--primaryColor);
   outline: none;
   border-radius: 50px;
@@ -67,12 +67,14 @@ input[type="number"]::selection {
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 15px;
-  height: 15px;
+  width: 13px;
+  height: 13px;
   background: var(--accentColor);
   cursor: pointer;
   border-radius: 50px;
+  outline: 0;
 }
+
 
 .switch {
   width: 37px;

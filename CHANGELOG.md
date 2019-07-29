@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200729 - 2 [1.0.3]
+- Removed unnecessary code
+- Addded a new section in the setup process
+- Added Turkish language
+
 ### 200729 - 1 [1.0.3]
 - Fixed, after creating a new tab you were unable to focus another editor by just clicking on it.
 - You don't have to close settings to save current changed preference

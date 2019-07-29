@@ -63,7 +63,7 @@
 	"FileExit-dialog-button-accept":"Close it",
 	"FileExit-dialog-button-deny":"Save it",
 	"Welcome":"Welcome",
-	"Welcome.TakeATheme":"Take a theme:",
+	"Welcome.TakeATheme":"Choose a theme",
 	"Welcome.ThanksForInstalling":"Thanks for installing Graviton",
 	"RecentProjects":"Recent Projects",
 	"Notes":"Notes",
@@ -126,5 +126,6 @@
 	"NewFile":"New file",
 	"Report":"Report",
 	"ExplorerError1":"That file already exists",
-	"ExplorerError2":"That folder already exists"
+	"ExplorerError2":"That folder already exists",
+	"Welcome.AdditionalSettings":"Additional settings"
 }

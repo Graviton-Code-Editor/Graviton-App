@@ -101,7 +101,7 @@ const Setup = {
     switch (number) {
       case "languages":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:50px; text-align:center; position:relative; " class="translate_word" idT="Languages">${
+          <h1 style="font-size:40px; text-align:center; position:relative; " class="translate_word" idT="Languages">${
             current_config.language["Languages"]
           }</h1> 
           
@@ -128,25 +128,61 @@ const Setup = {
         break;
       case "themes":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style=" text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
+          <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
             current_config.language["Welcome.TakeATheme"]
           }</h1> 
           <div class=theme_divs>
-            <img draggable=false onclick="setThemeByName('Dark'); selectTheme('2',this);" class='theme_div2 active' src=src/icons/dark.svg>
-            <img draggable=false onclick="setThemeByName('Arctic'); selectTheme('2',this);" class=theme_div2 src=src/icons/light.svg>
+            <img draggable=false onclick="graviton.setTheme('Dark'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Dark"?"active":""}' src=src/icons/dark.svg>
+            <img draggable=false onclick="graviton.setTheme('Arctic'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Arctic"?"active":""}' src=src/icons/light.svg>
           </div> 
           <button onclick='Setup.navigate("languages"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
+            current_config.language["Back"]
+          }</button> 
+          <button  onclick='Setup.navigate("additional_settings");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
+            current_config.language["Continue"]
+          }</button> 
+        `;
+        break;
+      case "additional_settings":
+          document.getElementById("body_window_full").innerHTML = `
+            <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
+              getTranslation("Welcome.AdditionalSettings")
+            }</h1> 
+            <div class=section-1>
+              <div class=section-3>
+                <p>${getTranslation("ZoomSize")}</p>
+                <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
+                current_config.appZoom
+              }" class="slider" >
+              </div> 
+              <div class=section-3>
+                <p>${getTranslation("Blur")}</p>
+                <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
+                  current_config.blurPreferences
+                }" class="slider" >
+              </div> 
+              <div class=section-3>
+                <p>${getTranslation("Bounce")}</p>
+                <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
+                  current_config.bouncePreferences
+                }"></gv-switch>
+              </div> 
+            </div> 
+          <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
             current_config.language["Back"]
           }</button> 
           <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
             current_config.language["Continue"]
           }</button> 
         `;
-        break;
+          break;
       case "welcome":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style=" font-size:30px;
-           margin-top:100px;
+          <h1 style=" font-size:40px;
+          transform:translate(-50%,-50%);
+          position:absolute;
+          top:45%;
+          left:50%;
             text-align:center;" 
             class="translate_word" 
             idT="Welcome.ThanksForInstalling">

@@ -52,6 +52,7 @@
 
 .body_window_full > * {
   padding: 30px;
+  user-select: none;
 }
 
 .body_window span {

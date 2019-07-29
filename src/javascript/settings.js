@@ -69,13 +69,13 @@ const Settings = {
                 : "desactivated"
             }"></gv-switch>
           </div>
-          <h>${getTranslation("Blur")}</h4>
+          <h4>${getTranslation("Blur")}</h4>
           <div class="section-1">
             <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
               current_config.blurPreferences
             }" class="slider" >
           </div>
-          <h>${getTranslation("Bounce")}</h4>
+          <h4>${getTranslation("Bounce")}</h4>
           <div class="section-1">
           <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
             current_config.bouncePreferences
@@ -95,7 +95,7 @@ const Settings = {
           themeDiv.setAttribute("class", "theme_div");
           themeDiv.setAttribute(
             "onclick",
-            `loadTheme('${i}'); selectTheme('1',this);`
+            `graviton.setTheme('${themes[i].name}'); selectTheme('1',this); saveConfig();`
           );
           themeDiv.innerHTML = `
             <p style="margin:11px 0; font-size:17px; line-height:2px;">${
@@ -112,7 +112,7 @@ const Settings = {
                 : "transparent"
             };"></div>
           `;
-          if (themes[i]["name"] === current_config.theme["name"]) {
+          if (themes[i]["name"] === current_config.theme) {
             selectTheme("1", themeDiv);
           }
           document.getElementById("theme_list").appendChild(themeDiv);
@@ -270,6 +270,7 @@ function updateCustomization() {
   } else {
     document.documentElement.style.setProperty("--blur", `none`);
   }
+  saveConfig();
 }
 
 function updateSettings() {
