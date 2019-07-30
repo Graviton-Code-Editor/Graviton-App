@@ -124,5 +124,6 @@
   "NewFile":"Neue Datei",
   "Report":"Melden",
   "ExplorerError1":"Diese Datei existiert bereits",
-  "ExplorerError2":"Dieser Ordner existiert bereits"
+  "ExplorerError2":"Dieser Ordner existiert bereits",
+  "Welcome.AdditionalSettings":"Zusätzliche Einstellungen"
 }
