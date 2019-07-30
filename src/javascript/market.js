@@ -344,7 +344,7 @@ const extensions ={
       if(config.colors==undefined ){
         plugins_list.push(config);
         if(config["main"]!=undefined){
-          require(path.join(plugins_folder, config["folder"], config["main"]));
+          require(path.join(plugins_folder, config["name"], config["main"]));
           if(config["css"]==undefined){
             return call!=undefined?call():"";
           }
@@ -358,7 +358,7 @@ const extensions ={
             const link = document.createElement("link");
             link.setAttribute("rel", "stylesheet");
             link.classList = config["name"]+"_css";
-            link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][i])),
+            link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][i])),
             document.body.appendChild(link);
             if(i==config.css.length-1){
               return call!=undefined?call():"";
@@ -374,7 +374,7 @@ const extensions ={
         if(config.type!="custom_theme"){
           newLink.setAttribute("href", path.join("src","Highlights", config["highlight"] + ".css")); //Link new themes 
         }else{
-          newLink.setAttribute("href", path.join(plugins_folder,config["folder"], config["highlight"] + ".css")); //Link new themes 
+          newLink.setAttribute("href", path.join(plugins_folder,config["name"], config["highlight"] + ".css")); //Link new themes 
         }
         document.body.appendChild(newLink);
        return call!=undefined?call():"";
@@ -383,7 +383,7 @@ const extensions ={
     installDependencies: function(config){
       const npm = require('npm')
       npm.load({
-        prefix:path.join(plugins_folder,config["folder"])
+        prefix:path.join(plugins_folder,config["name"])
       },function (er) {
         if (er) return er;
         for(const depen in config["dependencies"]){
@@ -408,7 +408,7 @@ const extensions ={
         const link = document.createElement("link");
         link.setAttribute("rel", "stylesheet");
         link.classList = config["name"]+"_css";
-        link.setAttribute("href", path.join(plugins_folder, config["folder"], config["css"][b])),
+        link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][b])),
         document.body.appendChild(link);
       }
     }

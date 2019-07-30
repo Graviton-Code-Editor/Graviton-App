@@ -726,14 +726,14 @@ const graviton = {
       menus_showing = true;
     }
   },
-  getPlugin: function(folder_name) {
+  getPlugin: function(plugin_name) {
     for (i = 0; i < full_plugins.length; i++) {
-      if (full_plugins[i].package.folder == folder_name) {
+      if (full_plugins[i].package.name == plugin_name) {
         return {
           repo: full_plugins[i],
           local: (function() {
             for (let a = 0; a < plugins_list.length; a++) {
-              if (plugins_list[a].folder == folder_name) {
+              if (plugins_list[a].name == plugin_name) {
                 return plugins_list[a];
               }
             }
@@ -741,7 +741,7 @@ const graviton = {
           })(),
           database:(function(){
             for (let a = 0; a < plugins_dbs.length; a++) {
-              if (plugins_dbs[a].plugin_name == folder_name) {
+              if (plugins_dbs[a].plugin_name == plugin_name) {
                 return plugins_dbs[a].db;
               }
             }
@@ -751,7 +751,7 @@ const graviton = {
       }
     }
     for (let a = 0; a < plugins_list.length; a++) {
-      if (plugins_list[a].folder == folder_name) {
+      if (plugins_list[a].name == plugin_name) {
         return {
           local: plugins_list[a],
           repo: undefined
