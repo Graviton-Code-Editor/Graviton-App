@@ -346,7 +346,6 @@ const extensions ={
         }
         if(config["css"] !=undefined) {
           if(config.type=="custom_theme"){
-            console.log(config.type);
             themes.push(config);
             if(current_config.theme!=config.name)  return call!=undefined?call():"";
           }

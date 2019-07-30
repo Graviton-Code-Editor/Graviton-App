@@ -115,7 +115,7 @@ class Plugin {
       }
     }
     if (this.name == undefined) {
-      console.warn(` Plugin > ${object.name} < doesn't exist `);
+      console.warn(` Plugin by name > ${object.name} < doesn't exist `);
       return;
     }
   }
@@ -181,10 +181,10 @@ class Plugin {
             me.b = i;
           }
         }
-        callback!=undefined?callback(JSON.parse(data)):"";
+        return typeof callback == "function"?callback(plugins_dbs[me.b].db):plugins_dbs[me.b].db
       });
     }else{
-      return callback!=undefined?callback(plugins_dbs[this.b].db):plugins_dbs[this.b].db; 
+      return typeof callback == "function"?callback(plugins_dbs[me.b].db):plugins_dbs[this.b].db
     }
   }
   deleteData(data) {

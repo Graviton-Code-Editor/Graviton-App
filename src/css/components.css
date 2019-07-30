@@ -179,7 +179,7 @@ input[type="number"]::selection {
   overflow: auto;
 }
 
-.notificationBody > button {
+.notificationBody > button.close {
   position: absolute;
   right: 10px;
   background: transparent;
@@ -187,19 +187,19 @@ input[type="number"]::selection {
   cursor: pointer;
 }
 
-.notificationBody > button path {
+.notificationBody > button.close path {
   fill: var(--white-black);
   stroke: transparent;
   border: 0;
 }
 
-.notificationBody > button:hover path {
+.notificationBody > button.close:hover path {
   stroke: var(--accentColor);
   fill: var(--accentColor);
   border: 0;
 }
 
-.notificationBody > button:hover svg {
+.notificationBody > button.close:hover svg {
   stroke: var(--accentColor);
   fill: var(--accentColor);
   border: 0;
@@ -212,6 +212,21 @@ input[type="number"]::selection {
 
 .notificationBody > div > p {
   font-size: 12px;
+}
+
+.notificationBody button:not(.close){
+  background: var(--notifications-background-color);
+  border:none;
+  outline:none;
+  color:white;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: _main_font;
+  user-select: auto !important;
+}
+.notificationBody button:not(.close):hover{
+  background: var(--widget-color)
 }
 
 /* Floating Windows*/

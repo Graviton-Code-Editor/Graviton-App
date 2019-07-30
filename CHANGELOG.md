@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200730 - 1 [1.0.3]
+- Added an optional parameter to the notification builder, a buttons object.
+
 ### 200729 - 3 [1.0.3]
 - Added a background to the editor numbers
 - Added a missing class
