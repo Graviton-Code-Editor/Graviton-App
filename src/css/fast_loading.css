@@ -43,7 +43,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   text-align: center;
 }
 
-#g_control_bar > img {
+#top_bar_app > img {
   pointer-events: none;
   top: 0;
   left: 0;

@@ -75,12 +75,30 @@ function detectPlugins(call) {
       if(paths.length == 0) return call != undefined ? call() : "";
       for (i = 0; i < paths.length; i++)   {
         const direct = fs.statSync(path.join(plugins_folder, paths[i]));
+        if (!fs.existsSync(path.join(plugins_folder, paths[i], "package.json"))) {
+          loaded++;
+        }
         if (!direct.isFile()) {
           fs.readFile(
             path.join(plugins_folder, paths[i], "package.json"),
             "utf8",
             function(err, data) {
-              if (err) throw err;
+              if (err) {
+                console.warn("An error occurred while loading a plugin.")
+                if (loaded == paths.length) {
+                  return call != undefined ? call() : "";
+                }
+
+              };
+              try{
+                JSON.parse(data)
+              }catch{
+                if (loaded == paths.length) {
+                  return call != undefined ? call() : "";
+                }else{
+                  return;
+                }
+              }
               const config = JSON.parse(data);
               plugins.install(config, function() {
                 loaded++;

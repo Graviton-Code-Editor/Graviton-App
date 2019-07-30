@@ -74,6 +74,11 @@ const extensions ={
               document.getElementById("sec_installed").innerHTML=`
                 <div id=loading_exts2>Loading extensions...</div>
               `
+              if(plugins_list.length==0){
+                document.getElementById("sec_installed").innerHTML=`
+                Empty
+              `
+              }
               for(const _data of plugins_list ){
                 if(document.getElementById("loading_exts2")!=undefined){
                   document.getElementById("loading_exts2").remove();

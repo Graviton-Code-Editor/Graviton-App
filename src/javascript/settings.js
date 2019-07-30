@@ -47,7 +47,7 @@ const Settings = {
     switch (num) {
       case "1":
         document.getElementById("_content1").innerHTML = `
-        <elastic-container related=self>
+        <elastic-container related=child>
           <div id="dpi">
             <h>${current_config.language["ZoomSize"]}</h4>
             <div class="section-1">
@@ -121,7 +121,7 @@ const Settings = {
         break;
       case "2":
         document.getElementById("_content1").innerHTML = `   
-          <div id='language_list'></div> `;
+        <elastic-container related=child><div id='language_list'></div></elastic-container> `;
         for (i = 0; i < languages.length; i++) {
           const languageDiv = document.createElement("div");
           languageDiv.setAttribute("class", "language_div");

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200730 - 2 [1.0.3]
+- Graviton will throw a warn message in the console while getting error while parsing the plugins's package.json
+- Added an empty message in case there aren't any plugin installed in the market section
+
 ### 200730 - 1 [1.0.3]
 - Added an optional parameter to the notification builder, a buttons object.
 

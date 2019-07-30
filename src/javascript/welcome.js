@@ -149,19 +149,19 @@ const Setup = {
               getTranslation("Welcome.AdditionalSettings")
             }</h1> 
             <div class=section-1>
-              <div class=section-3>
+              <div class=section-1>
                 <p>${getTranslation("ZoomSize")}</p>
                 <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
                 current_config.appZoom
               }" class="slider" >
               </div> 
-              <div class=section-3>
+              <div class=section-1>
                 <p>${getTranslation("Blur")}</p>
                 <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
                   current_config.blurPreferences
                 }" class="slider" >
               </div> 
-              <div class=section-3>
+              <div class=section-1>
                 <p>${getTranslation("Bounce")}</p>
                 <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
                   current_config.bouncePreferences

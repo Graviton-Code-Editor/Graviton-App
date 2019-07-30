@@ -123,14 +123,14 @@ head {
   filter: none !important;
   transition: 0.03s;
 }
-#g_content {
+#content_app {
   display: flex;
   background: var(--primaryColor);
   height: calc(100% - (40px));
   position: relative;
 }
 
-#g_content > #g_explorer {
+#content_app > #explorer_app {
   min-width: 15%;
   width: 210px;
   max-width: 70%;
@@ -145,18 +145,18 @@ head {
   direction: ltr;
 }
 
-#g_content > #g_explorer > #g_directories > #g_directory {
+#content_app > #explorer_app > #g_directories > #g_directory {
   margin: 15px;
 }
 
-#g_content > #g_explorer > #g_directories > #g_directory > div:nth-child(1) {
+#content_app > #explorer_app > #g_directories > #g_directory > div:nth-child(1) {
   margin: 0px 15px;
   font-size: 16px;
   white-space: nowrap;
   display: flex;
 }
-#g_content
-  > #g_explorer
+#content_app
+  > #explorer_app
   > #g_directories
   > #g_directory
   > div:nth-child(1)
@@ -164,7 +164,7 @@ head {
   margin: 10px 0px;
 }
 
-#g_content > .g_editors > .g_tabs_bar {
+#content_app > .g_editors > .g_tabs_bar {
   min-height: 37px;
   max-height: 37px;
   position: relative;
@@ -196,7 +196,7 @@ head {
   width: auto;
 }
 
-#g_content .g_editors {
+#content_app .g_editors {
   font-size: var(--editor-font-size);
   background: var(--editor-background-color);
   flex: 3;
@@ -212,7 +212,7 @@ head {
   margin-top: 5px;
 }
 
-#g_content .g_editors ~ .g_editors {
+#content_app .g_editors ~ .g_editors {
   border-top-left-radius: 0px;
 }
 
@@ -224,7 +224,7 @@ head {
   border-top-left-radius: 0px;
 }
 
-#g_content > #g_spacer {
+#content_app > #editor_resizer {
   flex: 0;
   min-width: 6px;
   background: var(--primaryColor);
@@ -232,17 +232,17 @@ head {
   margin: 0 2px;
 }
 
-#g_content > .g_editors > .g_editors_editors {
+#content_app > .g_editors > .g_editors_editors {
   flex: auto;
   overflow: auto;
   height: 90%;
 }
 
-#g_content > .g_editors > .g_editors_editors > .code-space {
+#content_app > .g_editors > .g_editors_editors > .code-space {
   position: relative;
 }
 
-#g_content > .g_editors .g_editors_editors > .code-space img {
+#content_app > .g_editors .g_editors_editors > .code-space img {
   user-select: none;
   pointer-events: none;
   position: relative;
@@ -252,7 +252,7 @@ head {
   border-style: none;
 }
 
-#g_content > .g_editors > .g_status_bar {
+#content_app > .g_editors > .g_status_bar {
   flex: 30px;
   min-height: 30px;
   max-height: 30px;
@@ -262,7 +262,7 @@ head {
   box-shadow: 0px 3px 5px var(--shadows);
 }
 
-#g_content > .g_editors > .g_status_bar p {
+#content_app > .g_editors > .g_status_bar p {
   margin: 6px;
   padding: 0;
   flex: 1;

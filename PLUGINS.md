@@ -1,11 +1,7 @@
 # Installing plugins
 
-Let's navigate to our .graviton folder:
+* You can use the [CLI](https://github.com/Graviton-Code-Editor/graviton-cli/blob/master/readme.md)
 
-| OS      | Path                                                   |
-| ------- | ------------------------------------------------------ |
-| Windows | C:\\Users\\username\\AppData\\Roaming\\\.graviton      |
-| Linux   | /home/username/.config/.graviton                       |
-| MacOS   | /users/username/library/applications support/.graviton |
+* From the market
 
-And there we have to copy the Plugin's folder(you can also run a "git clone").
+* Copying the plugin directly to the plugins subfolder in .graviton 

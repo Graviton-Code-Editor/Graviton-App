@@ -97,7 +97,7 @@ document.addEventListener(
   "mousemove",
   function(event) {
     if (mouseClicked && touchingResizerValue) {
-      const explorer = document.getElementById("g_explorer");
+      const explorer = document.getElementById("explorer_app");
       explorer.style = `width: ${event.clientX - 3}px`;
       for(i=0;i<editors.length;i++){
         editors[i].object.blur()
@@ -664,7 +664,7 @@ function loadDirs(dir, app_id, f_t,callback) {
   const appender_id = app_id.replace(/\\/g, "");
   if (appender_id == "g_directories") {
     document.getElementById(
-      "g_explorer"
+      "explorer_app"
     ).innerHTML = `<div global=true dir=${dir} id="g_directories"></div>`;
     dir_path = dir;
   }

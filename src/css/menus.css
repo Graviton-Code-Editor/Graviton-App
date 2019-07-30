@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-#g_control_bar {
+#top_bar_app {
   max-height: 35px;
   -webkit-user-select: none;
   -webkit-app-region: drag;
@@ -25,7 +25,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   display: flex;
 }
 
-#g_control_bar > #controls {
+#top_bar_app > #controls {
   flex: 1;
   display: flex;
   -webkit-app-region: no-drag;
@@ -33,7 +33,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   max-width: 144px;
 }
 
-#g_control_bar > #controls button {
+#top_bar_app > #controls button {
   transition: 0.05s;
   padding: 6px 0px;
   width: 48px;
@@ -42,33 +42,33 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: transparent;
 }
 
-#g_control_bar > #controls button:hover {
+#top_bar_app > #controls button:hover {
   transition: 0.05s;
   background: var(--widget-color);
 }
 
-#g_control_bar > #controls > #minimize:hover > svg > rect {
+#top_bar_app > #controls > #minimize:hover > svg > rect {
   fill: var(--white-black);
 }
 
-#g_control_bar > #controls > #maximize:hover > svg > rect {
+#top_bar_app > #controls > #maximize:hover > svg > rect {
   stroke: var(--white-black);
 }
 
-#g_control_bar > #controls > #close:hover {
+#top_bar_app > #controls > #close:hover {
   background: red;
 }
 
-#g_control_bar > #controls > #close:hover > svg > rect {
+#top_bar_app > #controls > #close:hover > svg > rect {
   fill: white;
 }
-#g_control_bar > #title_directory {
+#top_bar_app > #title_directory {
   flex: 1;
   text-align: center;
   min-width: 0px;
   overflow: hidden;
 }
-#g_control_bar > #title_directory p {
+#top_bar_app > #title_directory p {
   font-size: 12px;
   color: var(--titleBar-icons-color);
   top: 28%;
@@ -78,7 +78,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   width: 100%;
   margin: 0px 10px;
 }
-#g_control_bar > #g_dropmenu_list {
+#top_bar_app > #dropmenus_app {
   display: flex;
   list-style-type: none;
   padding: 0;
@@ -92,7 +92,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   max-width: auto;
 }
 
-#g_control_bar > #g_dropmenu_list button.dropbtn {
+#top_bar_app > #dropmenus_app button.dropbtn {
   position: relative;
   display: inline-block;
   color: var(--white-black);
@@ -111,11 +111,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--primaryColor);
 }
 
-#g_control_bar > #g_dropmenu_list .dropbtn:hover {
+#top_bar_app > #dropmenus_app .dropbtn:hover {
   background-color: var(--widget-color);
 }
 
-#g_control_bar > #g_dropmenu_list .dropbtn:focus {
+#top_bar > #dropmenus_app .dropbtn:focus {
   background-color: var(--widget-color);
 }
 

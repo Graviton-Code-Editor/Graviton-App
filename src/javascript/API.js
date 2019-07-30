@@ -295,7 +295,7 @@ function dropMenu(obj) {
         }
       });
     } else {
-      const bar = document.getElementById("g_dropmenu_list");
+      const bar = document.getElementById("dropmenus_app");
       const newTab = document.createElement("div");
       const droplist = document.createElement("div");
       droplist.classList = "dropdown-content hide";
@@ -545,14 +545,14 @@ const graviton = {
   toggleZenMode: function() {
     if (editor_mode == "zen") {
       editor_mode = "normal";
-      document.getElementById("g_explorer").style =
+      document.getElementById("explorer_app").style =
         "visibility: visible; width:210px; display:block;";
-      document.getElementById("g_spacer").style = " display:block;";
+      document.getElementById("editor_resizer").style = " display:block;";
     } else {
       editor_mode = "zen";
-      document.getElementById("g_explorer").style =
+      document.getElementById("explorer_app").style =
         "visibility: hidden; width:0px; display:none;";
-      document.getElementById("g_spacer").style = " width:0; display:none;";
+      document.getElementById("editor_resizer").style = " width:0; display:none;";
     }
   },
   deleteLog: function() {
@@ -718,11 +718,11 @@ const graviton = {
   },
   toggleMenus() {
     if (menus_showing == true) {
-      document.getElementById("g_dropmenu_list").style =
+      document.getElementById("dropmenus_app").style =
         "visibility:hidden; width:0;";
       menus_showing = false;
     } else {
-      document.getElementById("g_dropmenu_list").style = "";
+      document.getElementById("dropmenus_app").style = "";
       menus_showing = true;
     }
   },
@@ -1016,11 +1016,11 @@ const screens = {
         <p></p>
       </div>`;
     document
-      .getElementById("g_content")
+      .getElementById("content_app")
       .insertBefore(
         new_screen_editor,
-        document.getElementById("g_content").children[
-          document.getElementById("g_content").children.length - 1
+        document.getElementById("content_app").children[
+          document.getElementById("content_app").children.length - 1
         ]
       );
     current_screen = { id: current_id, terminal: undefined };
