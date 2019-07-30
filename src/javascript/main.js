@@ -150,6 +150,8 @@ const loadEditor = info => {
             indentUnit: 2,
             id: info.dir,
             styleActiveLine: true,
+            foldGutter: true,
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
             lineWrapping:
               current_config["lineWrappingPreferences"] == "activated"
           }
@@ -665,7 +667,7 @@ function loadDirs(dir, app_id, f_t,callback) {
   if (appender_id == "g_directories") {
     document.getElementById(
       "explorer_app"
-    ).innerHTML = `<div global=true dir=${dir} id="g_directories"></div>`;
+    ).innerHTML = `<div global=true dir="${dir}" id="g_directories"></div>`;
     dir_path = dir;
   }
   let working_folder;
@@ -730,7 +732,7 @@ function loadDirs(dir, app_id, f_t,callback) {
   const paddingListDir =
     Number(document.getElementById(appender_id).getAttribute("myPadding")) + 7; // Add padding
   fs.readdir(dir, (err, paths) => {
-    if (paths == undefined) {
+    if (paths == undefined || err) {
       graviton.throwError(
         "Cannot read files on the directory :" +
           FirstFolder +
@@ -745,7 +747,6 @@ function loadDirs(dir, app_id, f_t,callback) {
       }
       const stats = fs.statSync(_long_path);
       if (stats.isDirectory()) {
-        // If is folder
         const directory_temp = document.createElement("div");
         const parent_id =  _long_path.replace(/[\\\s]/g, "") + "_div";
         directory_temp.innerHTML += `
@@ -824,7 +825,7 @@ const create ={
             element.id,
             element.getAttribute("global")
           ,function(){
-            //Created the new folder
+            //callback
           });
         })
     }else{
@@ -935,6 +936,11 @@ const directories = {
     }
   }
 };
+
+/*
+  * Used for loading it's icon in the explorer menu
+  * Not recognized formats will have the unknown icon as default
+*/
 
 function getFormat(text) {
   switch (text.split(".").pop()) {

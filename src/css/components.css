@@ -546,6 +546,15 @@ button.button1-round svg * {
   opacity: 0.7;
   box-shadow: 0px 5px 7px var(--shadows);
 }
+.section-4{
+  position: relative;
+  padding: 10px;
+  padding-bottom: 5px;
+  background: transparent;
+  width: auto;
+  min-height: auto;
+  transform: scale(1);
+}
 button.button2 {
   font-weight: bold;
   right: 0;

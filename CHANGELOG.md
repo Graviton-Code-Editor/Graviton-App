@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200731 - 4 [1.0.3]
+- Added a "Open in explorer" option in the context menu for directories on the explorer menu
+
 ### 200730 - 3 [1.0.3]
 - Deprecated the property "folder"
 

@@ -87,6 +87,9 @@ const context_menu_directory_options = {
         .getAttribute("global")
     );
   },
+  OpenInExplorer:function(){
+    shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
+  },
   NewFolder:function(){
     directories.newFolder(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },

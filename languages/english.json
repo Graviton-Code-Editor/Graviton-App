@@ -127,5 +127,6 @@
 	"Report":"Report",
 	"ExplorerError1":"That file already exists",
 	"ExplorerError2":"That folder already exists",
-	"Welcome.AdditionalSettings":"Additional settings"
+	"Welcome.AdditionalSettings":"Additional settings",
+	"OpenInExplorer":"Open in explorer"
 }
