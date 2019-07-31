@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190730",
+  date: "190731",
   version: "1.0.3",
   state: "Beta"
 };
@@ -66,6 +66,8 @@ let current_screen,
 if(!path.basename(__dirname)==("Graviton-Editor" || "Graviton-App")){
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
 }
+
+
 
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
@@ -338,6 +340,7 @@ const loadEditor = info => {
         .getElementById(editingTab)
         .setAttribute("data", editor.getValue());
       if (current_config["autoCompletionPreferences"] == "activated") {
+        elasticContainer.append(document.getElementById('context'))
         const cursorPos = editor.cursorCoords();
         const A1 = editor.getCursor().line;
         const A2 = editor.getCursor().ch;
@@ -519,7 +522,6 @@ const loadEditor = info => {
         if (current_screen.terminal != undefined) {
           commanders.hide(current_screen.terminal.id);
         }
-        commanders.terminal();
       },
       'F11': function(cm) {
         if (g_window.isFullScreen() == false) {
@@ -1371,7 +1373,7 @@ const elasticContainer ={
       if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
       el.setAttribute("toleft",el.scrollLeft)
       if(current_config.bouncePreferences == "desactivated") return;
-      if (el.scrollTop >= 0 && el.scrollTop < 10) {
+      if (el.scrollTop >= 0 && el.scrollTop < 1) {
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_top")
         this.insertBefore(spacer, this.children[0])
@@ -1391,4 +1393,3 @@ const elasticContainer ={
     } 
   }
 }
-

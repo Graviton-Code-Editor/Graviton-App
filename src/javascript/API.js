@@ -915,6 +915,12 @@ const commanders = {
       );
       return;
     }
+    if (current_screen.terminal != undefined) {
+      if(document.getElementById(current_screen.terminal.id+'_commander').style.display=="none"){
+        commanders.show(current_screen.terminal.id);
+      }
+      return;
+    }
     const randomID = Math.random();
     new commander(
       {
@@ -935,10 +941,10 @@ const commanders = {
           const xterm = new Terminal({
             rows: "10",
             theme: {
-              background: graviton.getCurrentTheme().colors[
+              background: themeObject.colors[
                 "editor-background-color"
               ],
-              foreground: graviton.getCurrentTheme().colors["white-black"]
+              foreground: themeObject.colors["white-black"]
             }
           });
           //
@@ -977,6 +983,7 @@ const commanders = {
     document.getElementById(id + "_commander").style.display = "none";
   },
   show: function(id) {
+    console.log(id)
     document.getElementById(id + "_commander").style = "";
   },
   close: function(id) {

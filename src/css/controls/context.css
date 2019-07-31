@@ -48,9 +48,14 @@ context .menuWrapper .option {
   transform: scale(1);
 }
 
-context .menuWrapper .option.hover {
+context .menuWrapper .option.hover  {
   background-color: var(--accentColor);
   color: var(--black-white);
+}
+
+context .menuWrapper .option:hover {
+  background-color: var(--widget-color);
+  color: var(--white-black);
 }
 
 context .menuWrapper .option:active {

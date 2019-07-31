@@ -19,6 +19,9 @@ const default_plugins = [
 ]; //Plugins which are installed in the setup process
 
 function detectPlugins(call) {
+  if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
+    fs.mkdirSync(plugins_db);
+  }
   if (!fs.existsSync(plugins_folder)) {
     //If the plugins folder doesn't exist
     document.getElementById("g_bootanimation").innerHTML += `

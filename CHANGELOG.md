@@ -2,7 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200731 - 4 [1.0.3]
+### 200731 - 2 [1.0.3]
+- Added the bounce effect to the autocompletion context
+- Fixed, you weren't able to show the terminal once was hidden from the top menu "Editor"
+- Fixed, the plugins databases folder wasn't creating
+
+### 200731 - 1 [1.0.3]
 - Added a "Open in explorer" option in the context menu for directories on the explorer menu
 
 ### 200730 - 3 [1.0.3]
