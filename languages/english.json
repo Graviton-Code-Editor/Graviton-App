@@ -128,5 +128,7 @@
 	"ExplorerError1":"That file already exists",
 	"ExplorerError2":"That folder already exists",
 	"Welcome.AdditionalSettings":"Additional settings",
-	"OpenInExplorer":"Open in explorer"
+	"OpenInExplorer":"Open in explorer",
+	"Cache":"Cache",
+	"Clear":"Clear"
 }

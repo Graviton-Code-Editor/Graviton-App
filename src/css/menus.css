@@ -111,11 +111,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background: var(--primaryColor);
 }
 
-#top_bar_app > #dropmenus_app .dropbtn:hover {
+#top_bar_app > #dropmenus_app .dropbtn:hover  {
   background-color: var(--widget-color);
 }
 
-#top_bar > #dropmenus_app .dropbtn:focus {
+#top_bar_app > #dropmenus_app .dropbtn:focus {
   background-color: var(--widget-color);
 }
 

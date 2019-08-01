@@ -46,6 +46,7 @@ context .menuWrapper .option {
   border-radius: 5px;
   text-align: left;
   transform: scale(1);
+  font-family: _main_font;
 }
 
 context .menuWrapper .option.hover  {
@@ -105,6 +106,7 @@ context .menuWrapper .option:last-child {
   text-decoration: none;
   display: block;
   transform: scale(1);
+  font-family: _main_font;
 }
 
 #context_menu > button:hover {

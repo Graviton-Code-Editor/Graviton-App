@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200801 - 1 [1.0.3]
+- Added the font tipography to the context menu
+- Implemented a cache system for the market
+
 ### 200731 - 2 [1.0.3]
 - Added the bounce effect to the autocompletion context
 - Fixed, you weren't able to show the terminal once was hidden from the top menu "Editor"

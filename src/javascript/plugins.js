@@ -72,6 +72,20 @@ function detectPlugins(call) {
       });
     }
   } else {
+    let date = new Date
+    date = Number(date.getFullYear()+""+date.getMonth()+""+date.getDay())
+    if(fs.existsSync(market_file)){
+      fs.readFile(market_file, "utf8", (err, data) => {
+        const market = JSON.parse(data);
+        if(date > market.date){
+          const rimraf = require('rimraf')
+          rimraf.sync(market_file);
+        }else{
+          full_plugins = market.cache 
+        }
+        if(!err) return;
+      })
+    }    
     //If the plugins folder already exist
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
@@ -91,7 +105,6 @@ function detectPlugins(call) {
                 if (loaded == paths.length) {
                   return call != undefined ? call() : "";
                 }
-
               };
               try{
                 JSON.parse(data)

@@ -131,6 +131,20 @@ const extensions ={
             }
           }
         return
+        case 'settings':
+          for(i=0;i<document.getElementById("_content2").children.length;i++){
+            document.getElementById("_content2").children[i].classList = "page_hidden";
+          }
+          document.getElementById("sec_settings").classList = "page_showed"
+          document.getElementById('navC4').classList.add('active')
+          document.getElementById("sec_settings").innerHTML = `
+          <h4>${getTranslation("Cache")}</h4>
+          <div class="section-1">
+          
+            <button class=button1 onclick=store.clearCache()>${getTranslation("Clear")}</button>
+          </div>
+          `
+        return
       }
     },
     openStore : function(callback){
@@ -183,6 +197,17 @@ const extensions ={
                 return callback(3);
               }
               if(i==extensions.length-1 ){
+                let date = new Date
+                date = Number(date.getFullYear()+""+date.getMonth()+""+date.getDay())
+                const new_cache = {
+                  "date":date,
+                  "cache":full_plugins
+                }
+                fs.writeFile(market_file,JSON.stringify(new_cache), function(err) {
+                  if(err) {
+                      return err;
+                  }
+                });
                 store.loadMenus();
                 if(plugins_to_update){
                   new Notification(getTranslation('Market'),getTranslation('ExtUpdateNotification'))
@@ -329,14 +354,22 @@ const extensions ={
             <button id="navC1" onclick="extensions.navigate('all')" class="translate_word" idT="All">${getTranslation("All")}</button>
             <button id="navC2" onclick="extensions.navigate('installed')" class="translate_word" idT="Installed">${getTranslation('Installed')}</button>
             <button id="navC3" onclick="extensions.navigate('themes')" class="translate_word" idT="Themes">${getTranslation('Themes')}</button>
+            <button id="navC4" onclick="extensions.navigate('settings')" class="translate_word" idT="Settings">${getTranslation('Settings')}</button>
           </div>
         </div>
         <div id="_content2" class="window_content">
           <div id="sec_all"></div>
           <div id="sec_installed"></div>
           <div id="sec_themes"></div>
+          <div id="sec_settings"></div>
         </div>  
         `);
+    },
+    clearCache: function(){
+      const rimraf = require('rimraf')
+      rimraf.sync(market_file)
+      full_plugins = []
+      closeWindow('market_window')
     }
   }
   const plugins = {

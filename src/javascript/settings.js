@@ -81,9 +81,9 @@ const Settings = {
             current_config.bouncePreferences
           }"></gv-switch>
           </div>
-          <h4>${current_config.language["ZenMode"]}</h4>
+          <h4>${getTranslation("ZenMode")}</h4>
           <div class="section-1">
-            <p>${current_config.language["ZenMode.ShowDirectoryExplorer"]}</p>
+            <p>${getTranslation("ZenMode.ShowDirectoryExplorer")}</p>
             <gv-switch  onclick="graviton.toggleZenMode()" class="${
               editor_mode != "zen" ? "activated" : "desactivated"
             }"></gv-switch>

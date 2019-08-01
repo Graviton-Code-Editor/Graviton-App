@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190731",
+  date: "190801",
   version: "1.0.3",
   state: "Beta"
 };
@@ -74,11 +74,9 @@ if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .gravi
 /* Set path for graviton's files and dirs */
 let logDir = path.join(DataFolderDir, "log.json"),
   configDir = path.join(DataFolderDir, "config.json"),
-  timeSpentDir = path.join(DataFolderDir, "_time_spent.json"),
-  themes_folder = path.join(DataFolderDir, "themes"),
-  highlights_folder = path.join(DataFolderDir, "highlights"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
-  plugins_db = path.join(DataFolderDir, "plugins_db");
+  plugins_db = path.join(DataFolderDir, "plugins_db"),
+  market_file = path.join(DataFolderDir, "market.json");
 
 document.addEventListener(
   "mousedown",
