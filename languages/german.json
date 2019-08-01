@@ -125,5 +125,6 @@
   "Report":"Melden",
   "ExplorerError1":"Diese Datei existiert bereits",
   "ExplorerError2":"Dieser Ordner existiert bereits",
-  "Welcome.AdditionalSettings":"Zusätzliche Einstellungen"
+  "Welcome.AdditionalSettings":"Zusätzliche Einstellungen",
+  "OpenInExplorer":"In Explorer Öffnen"
 }
