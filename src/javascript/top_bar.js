@@ -128,10 +128,10 @@ WindowDM.setList({
     HideMenus: {
       click: () => {
         graviton.toggleMenus();
-        new Notification(
-          getTranslation("Tip"),
-          getTranslation("ToggleMenuTipMessage")
-        );
+        new Notification({
+          title:getTranslation("Tip"),
+          content:getTranslation("ToggleMenuTipMessage")
+        });
       },
       hint: "Ctrl+Q"
     },

@@ -18,7 +18,7 @@ const my_dialog = new Dialog({
     title:'A title',
     content:'This is an example button.',
     buttons: {
-        'Accept':'closeDialog(this)'
+        'Accept':{}
     }
 })
 

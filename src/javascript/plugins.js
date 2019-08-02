@@ -39,7 +39,10 @@ function detectPlugins(call) {
       client.repo(default_plugins[i]).info(function(err, data) {
         if(_old_error) return;
         if (err) {
-          new Notification("Graviton", getTranslation("SetupError1"));
+          new Notification({
+            title:"Graviton",
+            content: getTranslation("SetupError1")
+          });
           _old_error = true;
           return call != undefined ? call() : "";
         }
@@ -50,7 +53,10 @@ function detectPlugins(call) {
           }/package.json`,
           function(error, response, body2) {
             if (err) {
-              new Notification("Graviton", getTranslation("SetupError1"));
+              new Notification({
+                title:"Graviton",
+                content: getTranslation("SetupError1")
+              });
               return call != undefined ? call() : "";
             }
             const config = JSON.parse(body2);

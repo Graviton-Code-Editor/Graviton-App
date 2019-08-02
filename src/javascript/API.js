@@ -301,7 +301,10 @@ const graviton = {
     return editor_mode;
   },
   throwError: function(message) {
-    new Notification("Error ", message);
+    new Notification({
+      title:"Error ",
+      content: message
+    });
   },
   dialogAbout: function() {
     new Dialog({
@@ -447,10 +450,10 @@ const graviton = {
         );
       } catch {
         //Returns an error = system is not compatible, Linux-based will probably throw that error
-        new Notification(
-          "Issue",
-          "Your system is not compatible with this feature."
-        );
+        new Notification({
+          title:"Issue",
+          content:"Your system is not compatible with this feature."
+        });
       }
     } else {
       document.documentElement.style.setProperty(
@@ -728,8 +731,7 @@ class commander {
 const commanders = {
   terminal: function(object) {
     if (graviton.getCurrentDirectory() == null && object == undefined) {
-      new Notification(
-        "Error",
+      graviton.throwError(
         current_config.language["CannotRunTerminalCauseDirectory"]
       );
       return;

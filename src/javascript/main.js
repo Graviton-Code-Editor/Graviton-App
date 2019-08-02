@@ -601,10 +601,10 @@ function saveFileAs() {
         return;
       }
       filepath = fileName;
-      new Notification(
-        "Graviton",
-        `The file has been succesfully saved in ${fileName}`
-      );
+      new Notification({
+        title:"Graviton",
+        content:`The file has been succesfully saved in ${fileName}`
+      });
     });
   });
 }
@@ -812,7 +812,10 @@ const create ={
           //Created the new folder
         });
     }else{
-      new Notification("Graviton",getTranslation("ExplorerError2"))
+      new Notification({
+        title:"Graviton",
+        content:getTranslation("ExplorerError2")
+      })
     }
   },
   file: function(id,value){
@@ -829,7 +832,10 @@ const create ={
           });
         })
     }else{
-      new Notification("Graviton",getTranslation("ExplorerError1"))
+      new Notification({
+        title:"Graviton",
+        content:getTranslation("ExplorerError1")
+      })
     }
   }
 }

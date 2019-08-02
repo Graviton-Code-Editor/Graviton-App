@@ -34,7 +34,10 @@ module.exports = {
               return;
             }
           }
-          new Notification("Graviton", "Any update has been found.");
+          new Notification({
+            title:'Graviton',
+            content:'Any update has been found.'
+          });
           return;
         }
       }

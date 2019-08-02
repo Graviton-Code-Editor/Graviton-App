@@ -210,7 +210,10 @@ const extensions ={
                 });
                 store.loadMenus();
                 if(plugins_to_update){
-                  new Notification(getTranslation('Market'),getTranslation('ExtUpdateNotification'))
+                  new Notification({
+                    title:getTranslation('Market'),content:
+                    getTranslation('ExtUpdateNotification')
+                  })
                 }
                 if(callback!=undefined) callback();
               }
@@ -223,7 +226,10 @@ const extensions ={
     openSubExtensions: function(data){
       const plugin  = graviton.getPlugin(data.getAttribute("name"));
       if(plugin==undefined){
-        new Notification(getTranslation('Market'),getTranslation('ExtCannotLoad'))
+        new Notification({
+          title:getTranslation('Market'),
+          content:getTranslation('ExtCannotLoad')
+        })
         return;
       }
       const ext_win = new Window({
@@ -267,7 +273,10 @@ const extensions ={
     installExtension: function(name){
       const plugin = graviton.getPlugin(name)
       if (fs.existsSync(path.join(plugins_folder,name))) {
-        new Notification('Market',name + current_config.language["ExtAlreadyInstalled"]);
+        new Notification({
+          title:'Market',
+          content:name + current_config.language["ExtAlreadyInstalled"]
+        });
         return;
       }
       const nodegit = require("nodegit");
@@ -278,7 +287,10 @@ const extensions ={
           }
         })
         document.dispatchEvent(installed_ext_event);
-        new Notification('Market',name+ current_config.language["ExtInstalled"]);
+        new Notification({
+          title:'Market',
+          content:name+ current_config.language["ExtInstalled"]
+        });
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
         }else{
@@ -290,11 +302,17 @@ const extensions ={
       const plugin = graviton.getPlugin(name)
       const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
       if (!fs.existsSync(path.join(plugins_folder,name))) {
-        new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
+        new Notification({
+          title:'Market',
+          content:name+ current_config.language["ExtNotInstalled"]
+        });
         return;
       }
       if(!new_update){
-        new Notification('Market',`${getTranslation("ExtNoUpdate")+name}.`);
+        new Notification({
+          title:'Market',
+          content:`${getTranslation("ExtNoUpdate")+name}.`
+        });
         return;
       } 
       const rimraf = require("rimraf")
@@ -307,7 +325,10 @@ const extensions ={
           }
         })
         document.dispatchEvent(updated_ext_event);
-        new Notification('Market',name+ current_config.language["ExtUpdated"]);
+        new Notification({
+          title:'Market',
+          content:name+ current_config.language["ExtUpdated"]
+        });
         console.log(plugin);
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
@@ -319,11 +340,17 @@ const extensions ={
     uninstallExtension: function(name){
       const rimraf = require('rimraf');
       if (!fs.existsSync(path.join(plugins_folder,name))) {
-        new Notification('Market',name+ current_config.language["ExtNotInstalled"]);
+        new Notification({
+          title:'Market',
+          content:name+ current_config.language["ExtNotInstalled"]
+        });
         return;
       }
       rimraf.sync(path.join(plugins_folder,name));
-      new Notification('Market',name + current_config.language["ExtUninstalled"])
+      new Notification({
+        title:'Market',
+        content: name + current_config.language["ExtUninstalled"]
+      })
       const csss = document.getElementsByClassName(name+"_css");
       for(i=0;i<csss.length;i++){
         csss[i].remove();

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200802 - 1 [1.0.3]
+- Added an optional parameter to the notification constructor which allows you to set a default delay, you can also close it
+
 ### 200801 - 1 [1.0.3]
 - Added the font tipography to the context menu
 - Implemented a cache system for the market

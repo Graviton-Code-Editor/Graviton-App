@@ -13,27 +13,23 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 /*
 
-SIMPLE:
-
-new Notification('Title','This is a content')
-
-
-WITH BUTTONS:
-
-new Notification("Notification","This notification has buttons",
-  {
-    "Install":function(){
-      console.log("Installing?")
+const my_noti = new Notification({
+  title:"Test",
+  content:"This is the content!",
+  buttons:{
+    "Click":function(){
+      console.log("Do something")
     },
-    "Cancel":function(){
-      closeNotification(this.parentElement)
-    }
-  }
-)
+    "Close":{}
+  },
+  delay:3000
+})
+
+my_noti.close() //Close
 
 */
 module.exports = {
-  Notification: function(title, message,buttons) {
+  Notification: function(object) {
     if (_notifications.length >= 3) {//Remove one notification in case there are 3
       _notifications[0].remove();
       _notifications.splice(0, 1);
@@ -45,15 +41,16 @@ module.exports = {
       <button class=close onclick="closeNotification(this)">
           ${icons["close"]}
       </button>
-      <h1>${title}</h1>
+      <h1>${object.title}</h1>
       <div>
-          <p >${message}</p>
+          <p >${object.content}</p>
       </div>
-      ${buttons!=undefined?"<span class=line_space_menus></span>":""}
+      ${object.buttons!=undefined?"<span class=line_space_menus></span>":""}
       <div>
           
       </div> `;
-      if(buttons!=undefined){
+      if(object.buttons!=undefined){
+        const buttons = object.buttons
         Object.keys(buttons).map(function(key){
           const id = Math.random();
           const button = document.createElement("button");
@@ -66,7 +63,9 @@ module.exports = {
         })
       }
     document.getElementById("notifications").appendChild(body);
+    this.body = body;
     _notifications.push(body);
+    const delay = object.delay ==undefined? 7000 : object.delay
     const wait = setTimeout(() => {
       for (i = 0; i < _notifications.length; i++) {
         if (_notifications[i] === body) {
@@ -74,7 +73,15 @@ module.exports = {
           body.remove();
         }
       }
-    }, 50000); //Wait 7 seconds until the notification automatically deletes it self
+    }, delay); //Wait 7 seconds until the notification automatically deletes it self
+    this.close = function(){
+      for (i = 0; i < _notifications.length; i++) {
+        if (_notifications[i] === this.body) {
+          _notifications.splice(i, 1);
+          this.body.remove();
+        }
+      }
+    }
   },
   closeNotification: function(element) {
     for (i = 0; i < _notifications.length; i++) {
@@ -85,5 +92,4 @@ module.exports = {
     }
   }
 };
-
 
