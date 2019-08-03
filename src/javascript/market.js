@@ -56,7 +56,7 @@ const extensions ={
                   ${new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
+                  <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
                 </div>
                 ` 
               }
@@ -121,7 +121,7 @@ const extensions ={
                     ${new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${current_config.language["Installed"]} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
+                  <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
               </div>
               ` 
               }
@@ -248,8 +248,8 @@ const extensions ={
               </div> 
               <div>
                 <div>
-                  <button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${current_config.language["Install"]}</button> 
-                  <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${current_config.language["Uninstall"]}</button> 
+                  <button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${getTranslation("Install")}</button> 
+                  <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${getTranslation("Uninstall")}</button> 
                   <button onclick=extensions.updateExtension('${data.getAttribute("name")}') id=${Math.random()+'update'} class=button1 >${getTranslation("Update")}</button> 
                 </div>
               </div> 

@@ -169,8 +169,8 @@ Help.setList({
     "*line": "",
     Donate: () => shell.openExternal("https://www.paypal.me/mkenzo8"),
     FAQs: () => shell.openExternal("https://www.graviton.ml/faqs"),
-    Changelog: () => graviton.dialogChangelog(),
     Website: () => shell.openExternal("https://www.graviton.ml"),
+    Changelog: () => graviton.dialogChangelog(),
     About: {
       click: () => graviton.dialogAbout(),
       icon: "info"

@@ -77,7 +77,6 @@
 	"Notification.CannotRemoveMoreScreens":"لا يمكن حذف شاشات أخرى.",
 	"Notification.CloseAllTabsBefore":"أغلق جميع علامات التبويب قبل حذف هذه الشاشة.",
 	"Dialog.RemoveScreen.title":"حذف الشاشة",
-	"Dialog.RemoveScreen.content":"أدخل رقم الشاشة من 1 إلى x (من اليسار إلى اليمين)",
 	"DefaultView":"العرض الافتراضي",
 	"SplitScreen":"شاشات منفصلة",
 	"RemoveScreen":"حذف الشاشة",

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200804 - 1 [1.0.3]
+- Resizing free C(custom) / image editors was throwing error
+
 ### 200803 - 1 [1.0.3]
 - Now you can pass a directory to open as argument when starting graviton from the terminal 
 - Fixed, production build couldn't boot

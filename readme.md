@@ -1,5 +1,5 @@
-# Graviton Editor
-[![Build Status](https://travis-ci.org/Graviton-Code-Editor/Graviton-App.svg?branch=master)](https://travis-ci.org/Graviton-Code-Editor/Graviton-App)
+<h1 style="text-align:center"> Graviton Editor </h1>
+<div style="text-align:center"> [![Build Status](https://travis-ci.org/Graviton-Code-Editor/Graviton-App.svg?branch=master)](https://travis-ci.org/Graviton-Code-Editor/Graviton-App)
 [![HitCount](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App.svg)](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md)
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
@@ -8,9 +8,13 @@
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 
 [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/graviton)
+</div>
+
 
 ![example screenshot](example.png)
 
+Community:
+-
 Telegram channel: https://t.me/gravitoneditor
 
 Discord server: https://discord.gg/gg6CTYA

@@ -77,7 +77,6 @@
 	"Notification.CannotRemoveMoreScreens":"Não é possível remover mais telas.",
 	"Notification.CloseAllTabsBefore":"Fechar todas as abas antes de  remover a tela",
 	"Dialog.RemoveScreen.title":"Remover tela",
-	"Dialog.RemoveScreen.content":"Digite o número da tela, de 1 a X(da esquerda para a direita)",
 	"DefaultView":"Visão padrão",
 	"SplitScreen":"Dividir tela",
 	"RemoveScreen":"Remover tela",

@@ -37,6 +37,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   border-radius: 5px;
   text-align: left;
   transform: scale(1);
+  position: relative;
 }
 
 .navbar button:hover {

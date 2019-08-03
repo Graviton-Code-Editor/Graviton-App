@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190803",
+  date: "190804",
   version: "1.0.3",
   state: "Beta"
 };
@@ -215,6 +215,7 @@ const loadEditor = info => {
           .getElementById(current_screen.id)
           .children[1].appendChild(image_container);
         const new_editor_image = {
+          object:image_container,
           id: info.dir.replace(/\\/g, "") + "_editor",
           editor: undefined,
           path: info.dir,
@@ -248,6 +249,7 @@ const loadEditor = info => {
           .getElementById(current_screen.id)
           .children[1].appendChild(free_container);
         const new_editor_free = {
+          object: free_container,
           id: info.dir.replace(/\\/g, "") + "_editor",
           editor: null,
           path: null,
@@ -516,7 +518,7 @@ const loadEditor = info => {
           g_window.setFullScreen(false);
         }
       },
-      "Ctrl-Q": function(cm) {
+      "Ctrl-Tab": function(cm) {
         graviton.toggleMenus();
       }
     });
@@ -553,7 +555,7 @@ const appendBinds = () => {
   Mousetrap.bind("f11", function() {
     graviton.toggleFullScreen();
   });
-  Mousetrap.bind("mod+q", function() {
+  Mousetrap.bind("mod+tab", function() {
     graviton.toggleMenus();
   });
 };

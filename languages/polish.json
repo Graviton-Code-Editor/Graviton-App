@@ -77,7 +77,6 @@
 	"Notification.CannotRemoveMoreScreens":"Nie można usunąć aktualnego ekranu.",
 	"Notification.CloseAllTabsBefore":"Zamknij wszystkie zakładki przed usunięciem ekranu.",
 	"Dialog.RemoveScreen.title":"Usuń ekran",
-	"Dialog.RemoveScreen.content":"Wpisz numer ekranu, Od 1 do x(od lewej do prawej)",
 	"DefaultView":"Domyślny widok",
 	"SplitScreen":"Podziel ekran",
 	"RemoveScreen":"Usuń ekran",
@@ -98,5 +97,5 @@
 	"Fullscreen":"Pełny ekran",
 	"HideMenus":"Ukryj menu",
 	"Tip":"Podpowiedź",
-	"ToggleMenuTipMessage":"Wciśnij Ctrl+Q by zmienić widoczność menu."
+	"ToggleMenuTipMessage":"Wciśnij Ctrl+Tab by zmienić widoczność menu."
 }
