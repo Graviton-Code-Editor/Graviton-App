@@ -98,12 +98,14 @@ const context_menu_directory_options = {
   OpenInExplorer:function(){
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
   },
+  "a1":"*line",
   NewFolder:function(){
     directories.newFolder(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },
   NewFile:function(){
     directories.newFile(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },
+  "a2":"*line",
   Remove: function() {
     directories.removeFolderDialog(
       document.getElementById(
@@ -593,6 +595,17 @@ const graviton = {
     }else{
       current_config.bouncePreferences = "activated"
     }
+  },
+  changeLanguageStatusBar(lang){
+    const lang_ele =  document.getElementById(current_screen.id).children[2].children[0];
+    if( lang_ele.innerText==""){
+      lang_ele.style = "";
+    }
+    if(lang == ""){
+      lang_ele.style = "padding:0px;";
+    }
+    lang_ele.setAttribute("title",`Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
+    lang_ele.innerText = lang;
   }
 };
 
@@ -623,26 +636,38 @@ document.addEventListener("mousedown", function(event) {
             key,
             index
           ) {
-            const button = document.createElement("button");
-            button.classList.add("part_of_context_menu");
-            button.innerText = current_config.language[key];
-            button.setAttribute("target", event.target.id);
-            context_menu.appendChild(button);
-            sleeping(1).then(() => {
-              button.onclick = context_menu_list_directories[key];
-            });
+            if(context_menu_list_directories[key]!="*line"){
+              const button = document.createElement("button");
+              button.classList.add("part_of_context_menu");
+              button.innerText = current_config.language[key];
+              button.setAttribute("target", event.target.id);
+              context_menu.appendChild(button);
+              sleeping(1).then(() => {
+                button.onclick = context_menu_list_directories[key];
+              });
+            }else{
+              context_menu.innerHTML += `
+              <span class="line_space_menus"></span>
+              `
+            }
           });
           break;
         case "tab":
           Object.keys(context_menu_list_tabs).forEach(function(key, index) {
-            const button = document.createElement("button");
-            button.classList.add("part_of_context_menu");
-            button.innerText = current_config.language[key];
-            button.setAttribute("target", event.target.id);
-            context_menu.appendChild(button);
-            sleeping(1).then(() => {
-              button.onclick = context_menu_list_tabs[key];
-            });
+            if(context_menu_list_tabs[key]!="*line"){
+              const button = document.createElement("button");
+              button.classList.add("part_of_context_menu");
+              button.innerText = current_config.language[key];
+              button.setAttribute("target", event.target.id);
+              context_menu.appendChild(button);
+              sleeping(1).then(() => {
+                button.onclick = context_menu_list_tabs[key];
+              });
+            }else{
+              context_menu.innerHTML += `
+              <span class="line_space_menus"></span>
+              `
+            }
           });
           break;
         case "directory":
@@ -650,33 +675,45 @@ document.addEventListener("mousedown", function(event) {
             key,
             index
           ) {
-            const button = document.createElement("button");
-            button.classList.add("part_of_context_menu");
-            button.innerText = getTranslation(key);
-            button.setAttribute("target", event.target.id);
-            context_menu.appendChild(button);
-            sleeping(1).then(() => {
-              button.onclick = context_menu_directory_options[key];
-            });
+            if(context_menu_directory_options[key]!="*line"){
+              const button = document.createElement("button");
+              button.classList.add("part_of_context_menu");
+              button.innerText = getTranslation(key);
+              button.setAttribute("target", event.target.id);
+              context_menu.appendChild(button);
+              sleeping(1).then(() => {
+                button.onclick = context_menu_directory_options[key];
+              });
+            }else{
+              context_menu.innerHTML += `
+              <span class="line_space_menus"></span>
+              `
+            }
           });
           break;
         default:
           Object.keys(context_menu_list_text).forEach(function(key, index) {
-            const button = document.createElement("button");
-            button.classList.add("part_of_context_menu");
-            if (index < 2) {
-              button.innerText = current_config.language[key];
-              context_menu.appendChild(button);
-            } else {
-              if (index == 2) {
-                context_menu.appendChild(line_space);
+            if(context_menu_list_text[key]!="*line"){
+              const button = document.createElement("button");
+              button.classList.add("part_of_context_menu");
+              if (index < 2) {
+                button.innerText = current_config.language[key];
+                context_menu.appendChild(button);
+              } else {
+                if (index == 2) {
+                  context_menu.appendChild(line_space);
+                }
+                button.innerText = key;
+                context_menu.appendChild(button);
               }
-              button.innerText = key;
-              context_menu.appendChild(button);
+              sleeping(1).then(() => {
+                button.onclick = context_menu_list_text[key];
+              });
+            }else{
+              context_menu.innerHTML += `
+              <span class="line_space_menus"></span>
+              `
             }
-            sleeping(1).then(() => {
-              button.onclick = context_menu_list_text[key];
-            });
           });
       }
       document.body.appendChild(context_menu);
@@ -768,7 +805,6 @@ const commanders = {
               foreground: themeObject.colors["white-black"]
             }
           });
-          //
           xterm.open(
             document.getElementById("xterm" + randomID + "_commander")
           );
@@ -963,3 +999,4 @@ const screens = {
 window.onresize = function() {
   graviton.resizeTerminals();
 };
+

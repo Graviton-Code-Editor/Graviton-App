@@ -11,6 +11,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 let welcome_window;
 function openWelcome() {
+  if(graviton.isProduction()==true){
+    if(remote.process.argv[1] !=undefined){
+      const dir = path.resolve(remote.process.argv[1])
+      console.log(dir)
+      loadDirs(dir, "g_directories", true);
+      if (error_showed == false) DeleteBoot(); 
+      return;
+    }
+  }
   welcome_window = new Window({
     id: "welcome_window",
     content: `
@@ -69,7 +78,7 @@ function openWelcome() {
       document.getElementById("recent_projects").appendChild(project);
     }
   });
-  if (error_showed == false) DeleteBoot(); // Delay to load all the config
+  if (error_showed == false) DeleteBoot(); 
 }
 const Setup = {
   open: function() {

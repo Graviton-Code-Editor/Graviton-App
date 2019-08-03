@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200803 - 1 [1.0.3]
+- Now you can pass a directory to open as argument when starting graviton from the terminal 
+- Fixed, production build couldn't boot
+- You can now put spacers on the context menus
+- Added a method which makes easier to update the current focused editor status bar language
+
 ### 200802 - 1 [1.0.3]
 - Added an optional parameter to the notification constructor which allows you to set a default delay, you can also close it
 

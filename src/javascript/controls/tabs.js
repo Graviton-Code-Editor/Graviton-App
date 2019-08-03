@@ -246,9 +246,7 @@ module.exports = {
             //Any tab opened
             filepath = null;
             plang = "";
-            document.getElementById(
-              g_object.getAttribute("screen")
-            ).children[2].children[0].innerText = plang;
+            graviton.changeLanguageStatusBar(plang)
             document.getElementById(
               g_object.getAttribute("screen")
             ).children[1].children[0].style =

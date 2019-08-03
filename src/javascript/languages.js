@@ -70,8 +70,7 @@ const getTranslation = text => {
 languages.push(random_language);
 
 if(current_config.language=="random"){
-    loadLanguage("random");
+  loadLanguage("random");
 }
-
 
 */

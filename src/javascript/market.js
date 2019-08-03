@@ -412,7 +412,9 @@ const extensions ={
         if(config["css"] !=undefined) {
           if(config.type=="custom_theme"){
             themes.push(config);
+            console.log("ah")
             if(current_config.theme!=config.name)  return call!=undefined?call():"";
+            console.log("worked")
           }
           for (i = 0; i < config["css"].length; i++) {
             const link = document.createElement("link");
@@ -431,7 +433,7 @@ const extensions ={
         plugins_list.push(config);
         const newLink = document.createElement("link");
         newLink.setAttribute("rel", "stylesheet");
-        if(config.type!="custom_theme"){
+        if(config.type!="custom_theme" || config.highlight ==("default" || "LightUI")){
           newLink.setAttribute("href", path.join("src","Highlights", config["highlight"] + ".css")); //Link new themes 
         }else{
           newLink.setAttribute("href", path.join(plugins_folder,config["name"], config["highlight"] + ".css")); //Link new themes 

@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190801",
+  date: "190803",
   version: "1.0.3",
   state: "Beta"
 };
@@ -63,11 +63,10 @@ let current_screen,
   touchingResizerValue = false,
   editor_screens = [],
   dictionary = autocomplete;
-if(!path.basename(__dirname)==("Graviton-Editor" || "Graviton-App")){
+
+if(graviton.isProduction()){
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
 }
-
-
 
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
@@ -156,16 +155,6 @@ const loadEditor = info => {
               current_config["lineWrappingPreferences"] == "activated"
           }
         );
-        document.getElementById(
-          current_screen.id
-        ).children[2].children[0].innerText = getLanguageName(
-          getFormat(path.basename(info.dir)) != "unknown"
-            ? getFormat(path.basename(info.dir))
-            : path
-                .basename(info.dir)
-                .split(".")
-                .pop()
-        );
         const new_editor_text = {
           object: text_container,
           id: text_container.id,
@@ -177,6 +166,14 @@ const loadEditor = info => {
         elasticContainer.append(text_container.children[0].children[5])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
+        graviton.changeLanguageStatusBar(getLanguageName(
+          getFormat(path.basename(info.dir)) != "unknown"
+            ? getFormat(path.basename(info.dir))
+            : path
+                .basename(info.dir)
+                .split(".")
+                .pop()
+        ));
         for (i = 0; i < editors.length; i++) {
           if (
             editors[i].screen == info.screen &&
@@ -236,9 +233,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_image.id;
-        document.getElementById(
-          current_screen.id
-        ).children[2].children[0].innerText = "Image";
+        graviton.changeLanguageStatusBar("Image")
         break;
       case "free":
         const free_id = "free_tab" + Math.random();
@@ -272,9 +267,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_free.id;
-        document.getElementById(
-          current_screen.id
-        ).children[2].children[0].innerText = " ";
+        graviton.changeLanguageStatusBar("");
         break;
     }
   } else {
@@ -290,25 +283,20 @@ const loadEditor = info => {
         if (editors[i].editor != undefined) {
           // Editors
           editor = editors[i].editor;
-          document.getElementById(
-            info.screen
-          ).children[2].children[0].innerText = getLanguageName(
+          graviton.changeLanguageStatusBar(getLanguageName(
             getFormat(path.basename(info.dir)) != "unknown"
               ? getFormat(path.basename(info.dir))
               : path
                   .basename(info.dir)
                   .split(".")
                   .pop()
-          );
+          ));
         } else if (info.type != "free") {
           // Images
-          document.getElementById(
-            info.screen
-          ).children[2].children[0].innerText = "Image";
+          graviton.changeLanguageStatusBar("Image");
         } else {
-          document.getElementById(
-            info.screen
-          ).children[2].children[0].innerText = "";
+          //Free tabs (custom)
+          graviton.changeLanguageStatusBar("");
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
@@ -1193,6 +1181,7 @@ function updateCodeMode(instance, path) {
         instance.refresh();
         break;
       default:
+        plang = "Unknown";
         instance.refresh();
     }
   }
@@ -1341,7 +1330,7 @@ class elasticContainerComponent extends HTMLElement {
       if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
       el.setAttribute("toleft",el.scrollLeft)
       if(current_config.bouncePreferences == "desactivated") return;
-      if( related == null) {
+      if( related == null || related == undefined) {
         return;
       }
       if(related.id!=undefined){
@@ -1357,7 +1346,7 @@ class elasticContainerComponent extends HTMLElement {
           spacer.remove()
         }, 360)      
       }
-      if (el.scrollHeight-2 <= el.scrollTop+el.clientHeight) {
+      if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
         if(document.getElementsByClassName("bounce_bottom").length!=0 || related == null) return;
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_bottom")
@@ -1385,7 +1374,7 @@ const elasticContainer ={
           spacer.remove()
         }, 360)      
       }
-      if (el.scrollHeight-2 <= el.scrollTop+el.clientHeight) {
+      if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
         if(document.getElementsByClassName("bounce_bottom").length!=0) return;
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_bottom")
@@ -1397,3 +1386,8 @@ const elasticContainer ={
     } 
   }
 }
+/*
+  * Open as directory the second argument passed (Only if it's in production)
+*/
+
+
