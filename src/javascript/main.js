@@ -1388,8 +1388,3 @@ const elasticContainer ={
     } 
   }
 }
-/*
-  * Open as directory the second argument passed (Only if it's in production)
-*/
-
-

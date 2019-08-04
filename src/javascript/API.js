@@ -948,7 +948,7 @@ const screens = {
             return true;
           } else {
             graviton.throwError(
-              current_config.language["Notification.CloseAllTabsBefore"]
+              getTranslation("Notification.CloseAllTabsBefore")
             );
             return false;
           }
@@ -958,7 +958,7 @@ const screens = {
       graviton.resizeTerminals();
     } else {
       graviton.throwError(
-        current_config.language["Notification.CannotRemoveMoreScreens"]
+        getTranslation("Notification.CannotRemoveMoreScreens")
       );
       return false;
     }

@@ -329,7 +329,6 @@ const extensions ={
           title:'Market',
           content:name+ current_config.language["ExtUpdated"]
         });
-        console.log(plugin);
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
         }else{

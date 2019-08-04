@@ -49,20 +49,20 @@ const Settings = {
         document.getElementById("_content1").innerHTML = `
         <elastic-container related=child>
           <div id="dpi">
-            <h>${current_config.language["ZoomSize"]}</h4>
+            <h>${getTranslation("ZoomSize")}</h4>
             <div class="section-1">
               <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
                 current_config.appZoom
               }" class="slider" >
             </div>
           </div>
-          <h4>${current_config.language["Themes"]}</h4> 
+          <h4>${getTranslation("Themes")}</h4> 
           <div class="section-1">
             <div id='theme_list'></div> 
             <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation(
               "Market"
             )}</p>   
-            <p>${current_config.language["Themes.Text"]}</p>
+            <p>${getTranslation("Themes.Text")}</p>
             <gv-switch  onclick="graviton.useSystemAccent(); saveConfig();" class="${
               current_config.accentColorPreferences == "system"
                 ? "activated"
@@ -130,7 +130,7 @@ const Settings = {
             "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this);"
           );
           languageDiv.innerText = languages[i]["g_l"];
-          if (languages[i]["g_l"] === current_config.language["g_l"]) {
+          if (languages[i]["g_l"] === getTranslation("g_l") ){
             selectLang(languageDiv);
           }
           document.getElementById("language_list").appendChild(languageDiv);
@@ -140,30 +140,30 @@ const Settings = {
       case "3":
         document.getElementById("_content1").innerHTML = `
           <div id="editor_fs">
-            <h4>${current_config.language["FontSize"]}</h4>
+            <h4>${getTranslation("FontSize")}</h4>
             <div class="section-1">
               <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
                 current_config.fontSizeEditor
               }">
             </div>
-            <h4>${current_config.language["Auto-Completion"]}</h4>
+            <h4>${getTranslation("Auto-Completion")}</h4>
             <div class="section-1">
               <p>${
-                current_config.language[
+                getTranslation(
                   "Settings-Editor-AutoCompletion-text"
-                ]
+                )
               } </p>
               <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${
                 current_config["autoCompletionPreferences"]
               }"></gv-switch>
             </div>
-            <h4>${current_config.language["Line-Wrapping"]}</h4>
+            <h4>${getTranslation("Line-Wrapping")}</h4>
             <div class="section-1">
               <gv-switch onclick="graviton.toggleLineWrapping()" class="${
                 current_config["lineWrappingPreferences"]
               }"></gv-switch>
             </div>
-            <h4>${current_config.language["Highlighting"]}</h4>
+            <h4>${getTranslation("Highlighting")}</h4>
             <div class="section-1">
             <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
           </div>
@@ -172,35 +172,35 @@ const Settings = {
         break;
       case "4":
         document.getElementById("_content1").innerHTML = `
-          <h4>${current_config.language["Performance"]}</h4>
+          <h4>${getTranslation("Performance")}</h4>
           <div class="section-1">
               <p>${
-                current_config.language[
+                getTranslation(
                   "Settings-Advanced-Performance-Animations"
-                ]
+                )
               }</p>
               <gv-switch  onclick="graviton.toggleAnimations()" class="${
                 current_config.animationsPreferences
               }"></gv-switch>
           </div>
-          <h4>${current_config.language["Developers"]}</h4>
+          <h4>${getTranslation("Developers")}</h4>
           <div class="section-1">
               <p>${
-                current_config.language[
+                getTranslation(
                   "Settings-Advanced-Developer-Tools-text"
-                ]
+                )
               }</p>
               <button class="button1" onclick="graviton.openDevTools();">${
-                current_config.language["DeveloperTools"]
+                getTranslation("DeveloperTools")
               }</button>
           </div>
-          <h4>${current_config.language["FactoryReset"]}</h4>
+          <h4>${getTranslation("FactoryReset")}</h4>
           <div class="section-1">
               <p>${
-                current_config.language["Settings-Advanced-FactoryReset-text"]
+                getTranslation("Settings-Advanced-FactoryReset-text")
               }</p>
               <button class="button1 red" onclick="factory_reset_dialog();">${
-                current_config.language["FactoryReset"]
+                getTranslation("FactoryReset")
               }</button>
           </div>
           
@@ -209,29 +209,29 @@ const Settings = {
         break;
       case "5":
         document.getElementById("_content1").innerHTML = `
-          <h4>${current_config.language["About"]} </h4>
+          <h4>${getTranslation("About")} </h4>
           <div class="section-1">
-              <p>${current_config.language["About-text1"]}</p>
-              <p>${current_config.language["About-text2"]}</p>
+              <p>${getTranslation("About-text1")}</p>
+              <p>${getTranslation("About-text2")}</p>
               <button class="button1" onclick="shell.openExternal('https://www.graviton.ml')">Website</button>
               <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
               <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
           </div>
-          <h4>${current_config.language["CurrentVersion"]}</h4>
+          <h4>${getTranslation("CurrentVersion")}</h4>
           <div class="section-1">
             <div id="about_section">
-              <p>${current_config.language["Version"]}: ${g_version.version} (${
+              <p>${getTranslation("Version")}: ${g_version.version} (${
           g_version.date
         }) - ${g_version.state}</p>
-              <p>${current_config.language["OS"]}: ${
+              <p>${getTranslation("OS")}: ${
           graviton.currentOS().name
         }</p>
             </div>
             <button class="button1" onclick="graviton.dialogChangelog();">${
-              current_config.language["Changelog"]
+              getTranslation("Changelog")
             }</button>
             <button class="button1" onclick="updater.check_updates();">${
-              current_config.language["CheckUpdates"]
+              getTranslation("CheckUpdates")
             }</button>
           </div>`;
         if (new_update != false) {

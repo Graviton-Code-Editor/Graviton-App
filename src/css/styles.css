@@ -202,6 +202,7 @@ head {
   width: auto;
 }
 
+
 #content_app .g_editors {
   font-size: var(--editor-font-size);
   background: var(--editor-background-color);

@@ -62,6 +62,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #top_bar_app > #controls > #close:hover > svg > rect {
   fill: white;
 }
+#top_bar_app > #controls > #close:active {
+  background: rgb(241,112,122);
+}
+
+#top_bar_app > #controls > #close:active > svg > rect {
+  fill: black;
+}
 #top_bar_app > #title_directory {
   flex: 1;
   text-align: center;
