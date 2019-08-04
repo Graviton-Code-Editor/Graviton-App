@@ -36,13 +36,14 @@ function loadConfig() {
     fs.writeFile(configDir, JSON.stringify(current_config)); // Save the config
     updateSettings();
     loadLanguage(current_config.language);
+    screens.add(); //Creates the first screen
     detectPlugins(function() {
       if (current_config.justInstalled === false) {
         openWelcome();
       } else {
         Setup.open();
       }
-      screens.add(); //Creates the first screen
+      
       appendBinds(); //Creates the general key binds
     });
   } else {
@@ -52,6 +53,7 @@ function loadConfig() {
           current_config[key] = JSON.parse(data)[key]; // Will only change the extisting parameters
       });
       updateSettings();
+      screens.add(); //Creates the first screen
       detectPlugins(function() {
         if (current_config["theme"] != undefined)
           graviton.setTheme(current_config["theme"]);
@@ -72,7 +74,6 @@ function loadConfig() {
           document.documentElement.appendChild(style);
           document.documentElement.style.setProperty("--scalation", "1");
         }
-        screens.add(); //Creates the first screen
         appendBinds(); //Creates the general key binds
       });
     });

@@ -67,7 +67,7 @@ graviton.setTheme = function(name){
         }
       }
       for (i = 0; i < editors.length; i++) {
-        editors[i].editor.setOption("theme", themeObject["highlight"]); //Update highlither after applying a new theme
+        if(editors[i].editor!=undefined)editors[i].editor.setOption("theme", themeObject["highlight"]); //Update highlither after applying a new theme
       }
       for (i = 0; i < editor_screens.length; i++) {
         if (editor_screens[i] != undefined) {
