@@ -113,5 +113,15 @@
 	"Stars":"Stelle",
 	"MarketError1":"Impossibile leggere la lista dei plugins.",
 	"MarketError2":"Impossibile leggere la repository del plugin. (Troppi tentativi)",
-	"MarketError3":"Impossibile leggere correttamente il package.json della repository del plugin."
+	"MarketError3":"Impossibile leggere correttamente il package.json della repository del plugin.",
+	"Dialog.RenameTo":"Rinomina in",
+	"NewFolder":"Nuova cartella",
+	"NewFile":"Nuovo file",
+	"Report":"Report",
+	"ExplorerError1":"Questo file esiste già",
+	"ExplorerError2":"Questo cartella esiste già",
+	"Welcome.AdditionalSettings":"Impostazioni aggiuntive",
+	"OpenInExplorer":"Mostra in explorer",
+	"Cache":"Cache",
+	"Clear":"Pulisci"
 }
