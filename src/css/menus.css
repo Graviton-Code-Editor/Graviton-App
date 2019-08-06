@@ -58,17 +58,22 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #top_bar_app > #controls > #close:hover {
   background: red;
 }
-
+#top_bar_app > #controls > #close > svg > rect {
+  stroke: transparent !important;
+}
 #top_bar_app > #controls > #close:hover > svg > rect {
-  fill: white;
+  stroke: white;
+  fill:white;
 }
 #top_bar_app > #controls > #close:active {
   background: rgb(241,112,122);
 }
 
 #top_bar_app > #controls > #close:active > svg > rect {
-  fill: black;
+  stroke: transparent;
+  fill:black;
 }
+
 #top_bar_app > #title_directory {
   flex: 1;
   text-align: center;
@@ -90,6 +95,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   list-style-type: none;
   padding: 0;
   overflow: auto;
+  overflow-y:hidden;
   -webkit-app-region: drag;
   margin-left: 35px;
   border: 0;
@@ -139,7 +145,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   background-color: var(--dropmenu-background-color);
   min-width: auto;
   overflow: auto;
-  z-index: 80;
+  z-index: 1;
   box-shadow: 1px 3px 7px var(--shadows);
   padding: 5px;
   margin: 0;

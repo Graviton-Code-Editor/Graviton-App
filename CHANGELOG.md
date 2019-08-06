@@ -2,6 +2,14 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200806 - 1 [1.0.3]
+- Modified the notification constructor, check the docs
+- Added a MiniMap (optional)
+
+### 200805 - 1 [1.0.3]
+- Updated Electron to  v5.0.0
+- A plugin with errors on it's javascript will throw a warn in Graviton console and will not block it's start-up.
+
 ### 200804 - 1 [1.0.3]
 - Resizing free C(custom) / image editors was throwing error
 

@@ -17,8 +17,10 @@ const my_noti = new Notification({
   title:"Test",
   content:"This is the content!",
   buttons:{
-    "Click":function(){
-      console.log("Do something")
+    "Click":{
+      click:function(){
+        console.log("Do something")
+      }
     },
     "Close":{}
   },
@@ -56,7 +58,7 @@ module.exports = {
           const button = document.createElement("button");
           button.innerText = key;
           sleeping(1).then(() => {
-            button.addEventListener("click",buttons[key]) 
+            button.addEventListener("click",buttons[key].click) 
             button.setAttribute("onClick","closeNotification(this.parentElement)")            
           });
           body.children[4].appendChild(button)

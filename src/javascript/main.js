@@ -9,7 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 const g_version = {
-  date: "190804",
+  date: "190806",
   version: "1.0.3",
   state: "Beta"
 };
@@ -155,6 +155,8 @@ const loadEditor = info => {
               current_config["lineWrappingPreferences"] == "activated"
           }
         );
+        codemirror.focus()
+        codemirror.setOption("miniMap",current_config.miniMapPreferences=="activated"?true:false)
         const new_editor_text = {
           object: text_container,
           id: text_container.id,
@@ -163,7 +165,7 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
-        elasticContainer.append(text_container.children[0].children[5])
+        elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length-1)])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
         graviton.changeLanguageStatusBar(getLanguageName(
@@ -569,8 +571,7 @@ function save_file_warn(ele) {
       [current_config.language[
         "FileExit-dialog-button-accept"
       ]]: {
-        click:( )=>{
-          console.log(ele);
+        click:()=>{
           closeTab(ele.getAttribute("tabid"),true);
         }
       },
@@ -911,7 +912,6 @@ const directories = {
   removeFolder: function(id) {
     const rimraf = require("rimraf");
     const object = document.getElementById(id);
-    console.log(object);
     rimraf.sync(object.getAttribute("dir"))
     object.remove();
   },
@@ -1275,6 +1275,15 @@ const touchingResizer = type => {
     }
   } else {
     touchingResizerValue = true;
+  }
+};
+const touchingMiniMap = type => {
+  if (type == false) {
+    if (!mouseClicked) {
+      touchingMiniMapScroller = false;
+    }
+  } else {
+    touchingMiniMapScroller = true;
   }
 };
 

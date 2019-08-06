@@ -129,5 +129,7 @@
 	"Welcome.AdditionalSettings":"Additional settings",
 	"OpenInExplorer":"Open in explorer",
 	"Cache":"Cache",
-	"Clear":"Clear"
+	"Clear":"Clear",
+	"MiniMap":"MiniMap",
+	"MiniMapDisabled":"Restart Graviton to apply changes"
 }

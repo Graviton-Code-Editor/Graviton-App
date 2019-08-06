@@ -403,7 +403,12 @@ const extensions ={
       if(config.colors==undefined ){
         plugins_list.push(config);
         if(config["main"]!=undefined){
-          require(path.join(plugins_folder, config["name"], config["main"]));
+          try{
+            require(path.join(plugins_folder, config["name"], config["main"]));
+          }catch{
+            console.warn(`An error ocurred while loading the plugin >${config.name}<. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues`) //Throw warn in case a plugin has an error
+            return call!=undefined?call():"";
+          }
           if(config["css"]==undefined){
             return call!=undefined?call():"";
           }
@@ -411,9 +416,7 @@ const extensions ={
         if(config["css"] !=undefined) {
           if(config.type=="custom_theme"){
             themes.push(config);
-            console.log("ah")
             if(current_config.theme!=config.name)  return call!=undefined?call():"";
-            console.log("worked")
           }
           for (i = 0; i < config["css"].length; i++) {
             const link = document.createElement("link");

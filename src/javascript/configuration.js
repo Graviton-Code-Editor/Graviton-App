@@ -27,6 +27,7 @@ let current_config = {
   accentColorPreferences: 'manual',
   blurPreferences: '3',
   bouncePreferences:'activated',
+  miniMapPreferences:'activated',
   version: undefined
 };
 
@@ -43,7 +44,6 @@ function loadConfig() {
       } else {
         Setup.open();
       }
-      
       appendBinds(); //Creates the general key binds
     });
   } else {
@@ -93,6 +93,7 @@ function saveConfig() {
     accentColorPreferences: current_config.accentColorPreferences,
     blurPreferences: current_config.blurPreferences,
     bouncePreferences: current_config.bouncePreferences,
+    miniMapPreferences:current_config.miniMapPreferences,
     version: g_version.version,
     build: g_version.date
   };

@@ -606,6 +606,29 @@ const graviton = {
     }
     lang_ele.setAttribute("title",`Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
     lang_ele.innerText = lang;
+  },
+  toggleMiniMap(){
+    if(current_config.miniMapPreferences=='activated'){
+      current_config.miniMapPreferences='desactivated'
+      new Notification({
+        title:getTranslation('MiniMap'),
+        content:getTranslation('MiniMapDisabled'),
+        buttons:{
+          [getTranslation('Later')]:{
+            click:{}
+          },
+          [getTranslation('Restart')]:{
+            click:function(){
+              graviton.restartApp()
+            }
+          }
+        }
+
+      })
+    }else{
+      current_config.miniMapPreferences='activated'
+      editors.forEach((_editor)=>_editor.editor!=undefined?_editor.editor.setOption("miniMap",true):null)
+    }
   }
 };
 
@@ -880,7 +903,7 @@ const screens = {
         }</p>
       </div>
       <div class="g_status_bar" >
-        <p></p>
+        <span></span>
       </div>`;
     document
       .getElementById("content_app")

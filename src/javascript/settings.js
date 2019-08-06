@@ -139,7 +139,7 @@ const Settings = {
         break;
       case "3":
         document.getElementById("_content1").innerHTML = `
-          <div id="editor_fs">
+         
             <h4>${getTranslation("FontSize")}</h4>
             <div class="section-1">
               <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
@@ -165,8 +165,12 @@ const Settings = {
             </div>
             <h4>${getTranslation("Highlighting")}</h4>
             <div class="section-1">
-            <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
-          </div>
+              <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
+            </div>
+            <h4>${getTranslation("MiniMap")}</h4>
+            <div class="section-1">
+              <gv-switch  onclick="graviton.toggleMiniMap()" class="${current_config.miniMapPreferences}"></gv-switch>
+            </div>
           `;
         document.getElementById("navB3").classList.add("active");
         break;

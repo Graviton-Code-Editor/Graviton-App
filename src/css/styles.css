@@ -42,8 +42,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 @font-face {
   font-family: _main_font;
-  src: url(../fonts/Inter-Regular.ttf) format("truetype"),
-    url(../fonts/Inter-Bold.ttf) format("truetype");
+  src: url(../fonts/Inter-Regular.woff2) format("woff"),
+    url(../fonts/Inter-Bold.woff2) format("woff");
 }
 
 @font-face {
@@ -74,7 +74,9 @@ head {
   box-shadow: 0px 3px 5px var(--shadows);
 }
 
-.CodeMirror-linenumber { background: var(--editor-background-color) }
+.CodeMirror-linenumber {
+   background: var(--editor-background-color);
+   }
 
 *::-webkit-scrollbar {
   transition: 0.1s;
@@ -124,6 +126,9 @@ head {
 #body {
   filter: blur(var(--blur));
   transition: 0.08s;
+  overflow: hidden;
+  position: relative;
+  min-height: 100%;
 }
 #body[windows="0"] {
   filter: none !important;
@@ -177,6 +182,7 @@ head {
   float: left;
   flex: 37px;
   overflow: auto;
+  overflow-y:hidden;
   -webkit-user-select: none;
   font-size: 15px;
   background: var(--primaryColor);
@@ -247,8 +253,15 @@ head {
 
 #content_app > .g_editors > .g_editors_editors > .code-space {
   position: relative;
+  display: flex;
+  
 }
 
+#content_app > .g_editors > .g_editors_editors > .code-space > div {
+  min-width: 100%;
+  margin: 0;
+  max-width: 100%;
+}
 #content_app > .g_editors .g_editors_editors > .code-space img {
   user-select: none;
   pointer-events: none;
@@ -268,9 +281,10 @@ head {
   display: flex;
   box-shadow: 0px 3px 5px var(--shadows);
   display: block;
+  border:0px !important;
 }
 
-#content_app > .g_editors > .g_status_bar p {
+#content_app > .g_editors > .g_status_bar span {
   top:0;
   margin:0;
   padding: 6px;
@@ -289,7 +303,7 @@ head {
   display: inline-block;
 }
 
-#content_app > .g_editors > .g_status_bar p:hover {
+#content_app > .g_editors > .g_status_bar span:hover {
   background: var(--widget-color)
 }
 

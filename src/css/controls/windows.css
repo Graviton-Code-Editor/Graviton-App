@@ -19,7 +19,7 @@
   box-shadow: 0px 3px 15px var(--shadows);
   width: 85%;
   height: 85%;
-  position: fixed;
+  position: absolute;
   text-align: left;
   background: var(--secondaryColor);
   top: 50%;
