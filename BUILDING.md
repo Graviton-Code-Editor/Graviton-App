@@ -1,5 +1,10 @@
 # Building Graviton
 
+Prerequisites:
+- NodeJS v10 installed
+- Git installed
+
+
 Instructions to build Graviton from the source:
 
 ## 1 - Downloading the source
