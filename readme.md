@@ -11,27 +11,28 @@
 
 ![example screenshot](example.png)
 
+
+Graviton is a cross-platform editor with a minimalist looking. Somethings about it:
+
+- Themes
+- Plugins
+- Splitted screens
+- Built-in terminal
+- Tons of supported programming languages
+- Zen mode
+- An integrated plugins & themes market
+
+**[Changelog](CHANGELOG.md)**
+
+Social media:
+---
+
 Telegram channel: https://t.me/gravitoneditor
 
 Discord server: https://discord.gg/gg6CTYA
 
-Features 🚀
----
-- Themes
-- Plugins
-- Splitting screen
-- Plugins Market
-- Zen Mode 
-- Built-in terminal
-- Large language syntax highlighting support
-- Full compatibility with CodeMirror existing themes
-- Disabling animations
-- Autocomplete (Only JavaScript & not stable)
-- Cross-platform (Linux,MacOS,Windows)
+Twitter: https://twitter.com/gravitoneditor
 
-More are coming soon
-
-**[Changelog](CHANGELOG.md)**
 
 Contributing (working on) ⚙
 ---
@@ -74,6 +75,8 @@ Credits ✨
 - Help in autocompletation , Miguel Rangel
 - Old logo by Saúl Blanco 
 - All contributors
+- [MiniMap Original source](https://github.com/alterfan/minimap)
+- [OpenEmoji](https://openmoji.org/)
 
 Available platforms 💻🖥
 ---

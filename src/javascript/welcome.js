@@ -9,6 +9,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
+"use strict"
+
 let welcome_window;
 function openWelcome() {
   if(graviton.isProduction()==true){
@@ -62,7 +64,7 @@ function openWelcome() {
     const objectLog = JSON.parse(data);
     for (i = 0; i < objectLog.length; i++) {
       const project = document.createElement("div");
-      project.setAttribute("class", "project_div");
+      project.setAttribute("class", "section-2");
       project.setAttribute(
         "onclick",
         `loadDirs('${objectLog[i].Path.replace(
@@ -75,6 +77,7 @@ function openWelcome() {
       description.innerText = objectLog[i].Path;
       description.setAttribute("style", "font-size:12px;");
       project.appendChild(description);
+      if(  document.getElementById("recent_projects")==undefined) return;
       document.getElementById("recent_projects").appendChild(project);
     }
   });
@@ -154,9 +157,11 @@ const Setup = {
         break;
       case "additional_settings":
           document.getElementById("body_window_full").innerHTML = `
-            <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
-              getTranslation("Welcome.AdditionalSettings")
-            }</h1> 
+          <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
+            getTranslation("Welcome.AdditionalSettings")
+          }</h1> 
+          <div style="overflow:auto; position:relative;max-height:60%">
+            
             <div class=section-1>
               <div class=section-4>
                 <p>${getTranslation("ZoomSize")}</p>
@@ -176,13 +181,21 @@ const Setup = {
                   current_config.bouncePreferences
                 }"></gv-switch>
               </div> 
+              <div class=section-4>
+                <p>${getTranslation("MiniMap")}</p>
+                <gv-switch  onclick="graviton.toggleMiniMap(); saveConfig();" class="${
+                  current_config.miniMapPreferences
+                }"></gv-switch>
+              </div> 
             </div> 
-          <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
-            current_config.language["Back"]
-          }</button> 
-          <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
-            current_config.language["Continue"]
-          }</button> 
+            </div>
+            <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
+              current_config.language["Back"]
+            }</button> 
+            <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
+              current_config.language["Continue"]
+            }</button> 
+            
         `;
           break;
       case "welcome":
@@ -197,7 +210,7 @@ const Setup = {
             idT="Welcome.ThanksForInstalling">
             ${current_config.language["Welcome.ThanksForInstalling"]} ${
           g_version.version
-        } - ${g_version.state}</h1> 
+        } - ${g_version.state} <img draggable="false" class="emoji-title" src="src/openemoji/1F973.svg"> </h1> 
           <button onclick="Setup.close(); extensions.openStore(function(){extensions.navigate('all')});" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Market">${
             current_config.language["Market"]
           }</button> 

@@ -8,8 +8,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+"use strict"
+
 const g_version = {
-  date: "190806",
+  date: "190807",
   version: "1.0.3",
   state: "Beta"
 };
@@ -31,6 +34,7 @@ const os = require("os"),
 let current_screen,
   dir_path,
   i,
+  b,
   DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton"),
   tabs = [],
   FirstFolder = null,
@@ -741,7 +745,7 @@ function loadDirs(dir, app_id, f_t,callback) {
         const directory_temp = document.createElement("div");
         const parent_id =  _long_path.replace(/[\\\s]/g, "") + "_div";
         directory_temp.innerHTML += `
-        <div global=reload dir="${_long_path}"   opened="false" ID="${parent_id}" name="${
+        <div title=${path.join(dir, paths[i])} global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
           paths[i]
         }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
           <div parent=${parent_id}  ID="${parent_id +"_div"}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="loadDirs('${_long_path}','${parent_id}',false)">
@@ -768,7 +772,7 @@ function loadDirs(dir, app_id, f_t,callback) {
         const file_temp = document.createElement("div");
         const parent_id =  _long_path.replace(/[\\\s]/g, "") +"_div";
         file_temp.innerHTML += `
-        <div parent="${parent_id}" elementType="directorie" onclick="new Tab({
+        <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="directorie" onclick="new Tab({
           id:'${parent_id + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',

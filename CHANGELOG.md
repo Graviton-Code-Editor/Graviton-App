@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200807 - 1 [1.0.3]
+- Added some emojies to the UI
+- Refreshed the customization section in settings
+- Fixed, the context menus button onclicks weren't binding
+- Now, all JavaScript files are using the strict mode 
+
 ### 200806 - 1 [1.0.3]
 - Modified the notification constructor, check the docs
 - Added a MiniMap (optional)

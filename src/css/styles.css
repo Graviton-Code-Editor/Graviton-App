@@ -207,7 +207,9 @@ head {
   color: var(--white-black);
   width: auto;
 }
-
+.temp_dir_message *{
+  display: inline-block;
+}
 
 #content_app .g_editors {
   font-size: var(--editor-font-size);
@@ -261,6 +263,9 @@ head {
   min-width: 100%;
   margin: 0;
   max-width: 100%;
+}
+#content_app > .g_editors > .g_editors_editors > .code-space .map > div {
+  min-width: 100% !important;
 }
 #content_app > .g_editors .g_editors_editors > .code-space img {
   user-select: none;
@@ -389,4 +394,16 @@ h4 {
   100%{
     height:0px
   }
+}
+.emoji-normal{
+  height: 35px;
+  top:10px;
+  position: relative;
+  user-select: none;
+}
+.emoji-title{
+  height: 50px;
+  top:10px;
+  position: relative;
+  user-select: none;
 }

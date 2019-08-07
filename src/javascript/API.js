@@ -8,6 +8,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+"use strict"
+
 const _os = require("os");
 const pty = require("node-pty");
 const path = require("path");
@@ -96,6 +98,7 @@ const context_menu_directory_options = {
     );
   },
   OpenInExplorer:function(){
+    console.log("hi")
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
   },
   "a1":"*line",
@@ -303,6 +306,7 @@ const graviton = {
     return editor_mode;
   },
   throwError: function(message) {
+    console.log('%c Graviton ERROR :: ', ' color: red',message);
     new Notification({
       title:"Error ",
       content: message
@@ -409,7 +413,6 @@ const graviton = {
         }
       }
       current_config["lineWrappingPreferences"] = "activated";
-      console.log(current_config);
     }
   },
   toggleHighlighting: function() {
@@ -610,6 +613,7 @@ const graviton = {
   toggleMiniMap(){
     if(current_config.miniMapPreferences=='activated'){
       current_config.miniMapPreferences='desactivated'
+      if(tabs.length==0) return; //Doesn't need to throw the warn notification since there is any tab opened
       new Notification({
         title:getTranslation('MiniMap'),
         content:getTranslation('MiniMapDisabled'),
@@ -669,9 +673,9 @@ document.addEventListener("mousedown", function(event) {
                 button.onclick = context_menu_list_directories[key];
               });
             }else{
-              context_menu.innerHTML += `
-              <span class="line_space_menus"></span>
-              `
+              const span = document.createElement("span");
+              span.classList = 'line_space_menus';
+              context_menu.appendChild(span)
             }
           });
           break;
@@ -687,9 +691,9 @@ document.addEventListener("mousedown", function(event) {
                 button.onclick = context_menu_list_tabs[key];
               });
             }else{
-              context_menu.innerHTML += `
-              <span class="line_space_menus"></span>
-              `
+              const span = document.createElement("span");
+              span.classList = 'line_space_menus';
+              context_menu.appendChild(span)
             }
           });
           break;
@@ -703,14 +707,15 @@ document.addEventListener("mousedown", function(event) {
               button.classList.add("part_of_context_menu");
               button.innerText = getTranslation(key);
               button.setAttribute("target", event.target.id);
-              context_menu.appendChild(button);
+              
               sleeping(1).then(() => {
-                button.onclick = context_menu_directory_options[key];
+                button.addEventListener("click",context_menu_directory_options[key]) 
               });
+              context_menu.appendChild(button);
             }else{
-              context_menu.innerHTML += `
-              <span class="line_space_menus"></span>
-              `
+              const span = document.createElement("span");
+              span.classList = 'line_space_menus';
+              context_menu.appendChild(span)
             }
           });
           break;
@@ -733,9 +738,9 @@ document.addEventListener("mousedown", function(event) {
                 button.onclick = context_menu_list_text[key];
               });
             }else{
-              context_menu.innerHTML += `
-              <span class="line_space_menus"></span>
-              `
+              const span = document.createElement("span");
+              span.classList = 'line_space_menus';
+              context_menu.appendChild(span)
             }
           });
       }
@@ -898,9 +903,12 @@ const screens = {
     new_screen_editor.innerHTML = `
       <div class="g_tabs_bar flex smallScrollBar"></div>  
       <div class="g_editors_editors" >
-        <p dragable=false class="translate_word temp_dir_message" idT="WelcomeMessage" >${
+     <div class=temp_dir_message> 
+        <p dragable=false class="translate_word " idT="WelcomeMessage" >${
           current_config.language["WelcomeMessage"]
         }</p>
+        <img draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
+      </div>
       </div>
       <div class="g_status_bar" >
         <span></span>
@@ -1022,4 +1030,3 @@ const screens = {
 window.onresize = function() {
   graviton.resizeTerminals();
 };
-

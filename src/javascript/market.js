@@ -8,6 +8,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+"use strict"
+
 const extensions ={
     navigate: function (num,err) {
       if(document.getElementById("market_window_window")==undefined) return;
@@ -44,16 +47,16 @@ const extensions ={
               for(const _plugin of full_plugins){
                 const plugin = graviton.getPlugin(_plugin.package.name);
                 const data = plugin.repo.git;
-                const package = plugin.repo.package
+                const _package = plugin.repo.package
                 if(document.getElementById("loading_exts")!=undefined){
                   document.getElementById("loading_exts").remove();
                 }
                
                 const sec_ID = 'sec'+Math.random().toString();
-                const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(graviton.getPlugin(package.name).local.version):false;
+                const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(graviton.getPlugin(_package.name).local.version):false;
                 document.getElementById('sec_all').innerHTML +=`
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${package.name} update=${new_update}>
-                  ${new_update?icons["update"]:""}
+                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${_package.name} update=${_new_update}>
+                  ${_new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
                   <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
@@ -109,16 +112,16 @@ const extensions ={
             for(const _data of full_plugins){
               const plugin = graviton.getPlugin(_data.package.name)
               const data = plugin.repo.git;
-              const package = plugin.repo.package;
-              if(package.colors!=undefined){
+              const _package = plugin.repo.package;
+              if(_package.colors!=undefined){
                 if(document.getElementById("loading_exts3")!=undefined){
                   document.getElementById("loading_exts3").remove();
               }
-              const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(plugin.local.version):false;
+              const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(plugin.local.version):false;
               const sec_ID = 'sec'+Math.random().toString();
               document.getElementById('sec_themes').innerHTML +=`
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${package.name}  update=${new_update}>
-                    ${new_update?icons["update"]:""}
+              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${_package.name}  update=${new_update}>
+                    ${_new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
                   <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
@@ -182,14 +185,14 @@ const extensions ={
               return callback(2);
             }
             request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
-              const package = JSON.parse(body2);
+              const _package = JSON.parse(body2);
               full_plugins.push({
                 git:data,
-                package:package
+                package:_package
               })
-              const plugin = graviton.getPlugin(package.name);
-              const new_update = plugin.local!=undefined?getVersionSum(package.version)>getVersionSum(plugin.local.version):false;
-              if(new_update){
+              const plugin = graviton.getPlugin(_package.name);
+              const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(plugin.local.version):false;
+              if(_new_update){
                 plugins_to_update = true;
               }
               if(err){

@@ -8,6 +8,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+"use strict"
+
 /* <-- Default NavBar >-- */
 let full_plugins = [];
 let anyDropON = null;

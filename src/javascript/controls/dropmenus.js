@@ -1,3 +1,6 @@
+
+"use strict"
+
 module.exports = {
      Dropmenu : function(obj) {
         this.id = obj.id;

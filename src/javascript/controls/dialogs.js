@@ -26,6 +26,8 @@ closeDialog('my_dialog1'); //Close the dialog by passing the id
 
 */
 
+"use strict"
+
 module.exports = {
   Dialog: function(dialogObject) {
     if (typeof [...arguments] != "object") {

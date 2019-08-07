@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-
+'use strict'
 
 let plugins_list = [],
     plugins_dbs = [];

@@ -8,9 +8,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-const tinycolor = require("tinycolor2");
+"use strict"
 
-detectLanguages();
+const tinycolor = require("tinycolor2");
 
 graviton.setTheme = function(name){
   for (i = 0; i < themes.length; i++) {

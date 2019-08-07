@@ -27,6 +27,9 @@ closeTab('my_tab1_freeTab') //Closing the tab by passing it's ID + '_freeTab'
 loadTab(document.getElementById('my_tab1_freeTab')) //Load the tab by passing it's HTML element
 
 */
+
+"use strict"
+
 module.exports = {
   Tab: function(object) {
     this.type = object.type;

@@ -30,6 +30,9 @@ const my_noti = new Notification({
 my_noti.close() //Close
 
 */
+
+"use strict"
+
 module.exports = {
   Notification: function(object) {
     if (_notifications.length >= 3) {//Remove one notification in case there are 3

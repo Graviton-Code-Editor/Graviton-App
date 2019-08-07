@@ -61,6 +61,7 @@ input[type="number"]::selection {
   border-radius: 50px;
   padding: 0px 4px 0px 4px;
   font-family: _main_font;
+  margin: 5px 2px;
 }
 
 
@@ -208,6 +209,7 @@ input[type="number"]::selection {
 .notificationBody > h1 {
   font-size: 18px;
   line-height: 1px;
+  user-select: none;
 }
 
 .notificationBody > div > p {
@@ -223,7 +225,7 @@ input[type="number"]::selection {
   border-radius: 5px;
   cursor: pointer;
   font-family: _main_font;
-  user-select: auto !important;
+  user-select: none !important;
 }
 .notificationBody button:not(.close):hover{
   background: var(--widget-color)
@@ -503,7 +505,7 @@ button.button1-round svg * {
 .section-2 {
   position: relative;
   transition: 0.05s;
-  margin: 7px;
+  margin: 7px 0;
   padding: 17px;
   background: var(--primaryColor);
   cursor: pointer;
@@ -511,6 +513,7 @@ button.button1-round svg * {
   min-height: auto;
   border-radius: 8px;
   transform: scale(1);
+  overflow: auto;
 }
 
 .section-2:hover {
@@ -645,29 +648,6 @@ p.link:hover {
 
 .body_window p {
   font-size: 15px;
-}
-
-.body_window .project_div {
-  transition: 0.03s;
-  border-radius: 7px;
-  padding: 10px;
-  margin: 6px 0px;
-  max-width: auto;
-  overflow: auto;
-  background: var(--primaryColor);
-  color: var(--white-black);
-  transform: scale(1);
-}
-
-.body_window .project_div:hover {
-  transition: 0.03s;
-  background: var(--widget-color);
-  cursor: pointer;
-}
-
-.body_window .project_div:active {
-  transition: 0.03s;
-  transform: scale(var(--scalation));
 }
 
 .body_window .welcomeButtons {

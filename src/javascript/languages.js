@@ -8,9 +8,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-let languages = [];
+"use strict"
 
-function detectLanguages() {
+let languages = [];
+/*
+  * 
+  * Load the languages JSON files and push it to an array
+  *
+*/
+(() =>{
   fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
     paths.forEach(dir => {
       fs.readFile(path.join(__dirname, "languages", dir), "utf8", function(
@@ -31,7 +37,8 @@ function detectLanguages() {
       });
     });
   });
-}
+})()
+  
 const loadLanguage = language => {
   languages.map((item, index) => {
     if (item["g_l"] === language) {
@@ -64,13 +71,3 @@ const getTranslation = text => {
     return current_config.language[text];
   }
 };
-
-/*
-
-languages.push(random_language);
-
-if(current_config.language=="random"){
-  loadLanguage("random");
-}
-
-*/

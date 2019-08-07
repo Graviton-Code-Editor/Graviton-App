@@ -8,6 +8,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+"use strict"
+
 const Settings = {
   open: function() {
     const settings_window = new Window({
@@ -47,15 +49,7 @@ const Settings = {
     switch (num) {
       case "1":
         document.getElementById("_content1").innerHTML = `
-        <elastic-container related=child>
-          <div id="dpi">
-            <h>${getTranslation("ZoomSize")}</h4>
-            <div class="section-1">
-              <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
-                current_config.appZoom
-              }" class="slider" >
-            </div>
-          </div>
+        <elastic-container related=self>
           <h4>${getTranslation("Themes")}</h4> 
           <div class="section-1">
             <div id='theme_list'></div> 
@@ -69,6 +63,14 @@ const Settings = {
                 : "desactivated"
             }"></gv-switch>
           </div>
+          <h>${getTranslation("ZoomSize")}</h4>
+            <div class="section-1">
+              <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
+                current_config.appZoom
+              }" class="slider" >
+              <br>
+              <button class="Button1" onClick="graviton.setZoom(25); document.getElementById('slider_zoom').value=25;">${getTranslation('DefaultZoom')}</button>
+            </div>
           <h4>${getTranslation("Blur")}</h4>
           <div class="section-1">
             <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
@@ -107,9 +109,7 @@ const Settings = {
               themes[i]["description"]
             }</p>
             <div class="accent" style="background:${
-              themes[i].type != "custom_theme"
-                ? themes[i].colors["accentColor"]
-                : "transparent"
+              themes[i].colors["accentColor"]
             };"></div>
           `;
           if (themes[i]["name"] === current_config.theme) {
@@ -153,23 +153,23 @@ const Settings = {
                   "Settings-Editor-AutoCompletion-text"
                 )
               } </p>
-              <gv-switch  onclick="graviton.toggleAutoCompletation()" class="${
+              <gv-switch  onclick="graviton.toggleAutoCompletation();  saveConfig();" class="${
                 current_config["autoCompletionPreferences"]
               }"></gv-switch>
             </div>
             <h4>${getTranslation("Line-Wrapping")}</h4>
             <div class="section-1">
-              <gv-switch onclick="graviton.toggleLineWrapping()" class="${
+              <gv-switch onclick="graviton.toggleLineWrapping(); saveConfig();" class="${
                 current_config["lineWrappingPreferences"]
               }"></gv-switch>
             </div>
             <h4>${getTranslation("Highlighting")}</h4>
             <div class="section-1">
-              <gv-switch  onclick="graviton.toggleHighlighting()" class="${g_highlighting}"></gv-switch>
+              <gv-switch  onclick="graviton.toggleHighlighting(); saveConfig();" class="${g_highlighting}"></gv-switch>
             </div>
             <h4>${getTranslation("MiniMap")}</h4>
             <div class="section-1">
-              <gv-switch  onclick="graviton.toggleMiniMap()" class="${current_config.miniMapPreferences}"></gv-switch>
+              <gv-switch  onclick="graviton.toggleMiniMap();  saveConfig();" class="${current_config.miniMapPreferences}"></gv-switch>
             </div>
           `;
         document.getElementById("navB3").classList.add("active");

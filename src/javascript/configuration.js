@@ -8,14 +8,27 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+"use strict"
+
+/*
+
+  * Preload some images so they are stored in the cache, this is made to improve the UX.
+
+*/
 preload([
-  // Preload some images to improve the UX
+  
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
 ]);
+
+/*
+
+  * Default (initial) config object
+
+*/
 let current_config = {
-  // Default values
   justInstalled: true,
   theme: 'Dark',
   fontSizeEditor: '13',

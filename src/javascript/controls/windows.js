@@ -26,6 +26,8 @@ closeWindow('my_window1'); //Close the window by passing the id
 
 */
 
+"use strict"
+
 module.exports = {
   Window: function(data) {
     this.id = data.id;
