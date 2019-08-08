@@ -566,28 +566,6 @@ const appendBinds = () => {
   });
 };
 
-function save_file_warn(ele) {
-  new Dialog({
-    id: "saving_file_warn",
-    title: current_config.language["Warn"],
-    content: current_config.language["FileExit-dialog-message"],
-    buttons: {
-      [current_config.language[
-        "FileExit-dialog-button-accept"
-      ]]: {
-        click:()=>{
-          closeTab(ele.getAttribute("tabid"),true);
-        }
-      },
-      [current_config.language["Cancel"]]: {},
-      [current_config.language["FileExit-dialog-button-deny"]]: {
-        click: ()=>{saveFile()},
-        important: true
-      }
-    }
-  });
-}
-
 function saveFileAs() {
   dialog.showSaveDialog(fileName => {
     fs.writeFile(fileName, editor.getValue(), err => {

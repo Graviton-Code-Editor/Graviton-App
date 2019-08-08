@@ -40,7 +40,7 @@ let current_config = {
   accentColorPreferences: 'manual',
   blurPreferences: '3',
   bouncePreferences:'activated',
-  miniMapPreferences:'activated',
+  miniMapPreferences:'desactivated',
   version: undefined
 };
 

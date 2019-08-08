@@ -48,7 +48,9 @@ module.exports = {
           ${dialogObject.title} 
       </p>
       <div style="font-size:15px; min-height:15px;">
+        <elastic-container related=self> 
           ${dialogObject.content}
+          </elastic-container> 
       </div>
       <div class="buttons" style="display:flex;"></div>`;
     Object.keys(dialogObject.buttons).forEach(function(key, index) {
@@ -66,7 +68,7 @@ module.exports = {
       body_dialog.children[2].appendChild(button);
     });
     all.appendChild(body_dialog);
-    elasticContainer.append(body_dialog)
+    //elasticContainer.append(body_dialog)
     document
       .getElementById("body")
       .setAttribute(

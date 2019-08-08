@@ -215,71 +215,52 @@ module.exports = {
     };
   },
   closeTab: function(tab_id, fromWarn) {
-    const g_object = document.getElementById(tab_id);
-    if (g_object.getAttribute("file_status") == "saved" || fromWarn) {
+    const working_tab = document.getElementById(tab_id);
+    if (working_tab.getAttribute("file_status") == "saved" || fromWarn) {
       for (i = 0; i < tabs.length; i++) {
         const tab = tabs[i];
         let new_selected_tab;
         if (
           tab.id == tab_id &&
-          tab.getAttribute("screen") == g_object.getAttribute("screen")
+          tab.getAttribute("screen") == working_tab.getAttribute("screen")
         ) {
           tabs.splice(i, 1);
           document
             .getElementById(
-              g_object.getAttribute("longPath").replace(/\\/g, "") + "_editor"
+              working_tab.getAttribute("longPath").replace(/\\/g, "") + "_editor"
             )
             .remove();
           editors.splice(i, 1);
           const tab_closed_event = new CustomEvent("tab_closed", {
             detail: {
-              tab: g_object
+              tab: working_tab
             }
           });
           document.dispatchEvent(tab_closed_event);
-          let tabs2 = [];
-          for (i = 0; i < tabs.length; i++) {
-            if (
-              tabs[i].getAttribute("screen") == g_object.getAttribute("screen")
-            ) {
-              tabs2.push(tabs[i]);
-            }
-          }
-          if (tabs2.length == 0) {
+          let filtered_tabs = tabs.filter((tab)=>{
+            return tab.getAttribute("screen") == working_tab.getAttribute("screen")
+          }) 
+          if (filtered_tabs.length == 0) {
             //Any tab opened
             filepath = null;
             plang = "";
             graviton.changeLanguageStatusBar(plang)
-            document.getElementById(
-              g_object.getAttribute("screen")
-            ).children[1].children[0].style =
-              "visibility:visible; display:block;";
-          } else if (i === tabs2.length) {
-            //Last tab selected
-            for (i = 0; i < tabs2.length; i++) {
-              if (
-                tabs2[i].getAttribute("screen") ==
-                g_object.getAttribute("screen")
-              ) {
-                new_selected_tab = tabs2[Number(tabs2.length) - 1];
+            document.getElementById( working_tab.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;";
+          } else if (i === filtered_tabs.length) {
+              if(filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute("screen") == working_tab.getAttribute("screen")){
+                new_selected_tab = filtered_tabs[Number(filtered_tabs.length) - 1];
               }
-            }
           } else {
-            for (i = 0; i < tabs2.length; i++) {
-              if (
-                tabs2[i].getAttribute("screen") ==
-                g_object.getAttribute("screen")
-              ) {
-                new_selected_tab = tabs2[i];
-              }
-            }
+              new_selected_tab = filtered_tabs.filter(function(tab){
+                return tab.getAttribute("screen") == working_tab.getAttribute("screen")
+              })[Number(filtered_tabs.length) - 1]
           }
           if (new_selected_tab != undefined) {
             for (i = 0; i < tabs.length; i++) {
               if (
                 tabs[i].classList.contains("selected") &&
                 tabs[i].getAttribute("screen") ==
-                  g_object.getAttribute("screen")
+                working_tab.getAttribute("screen")
               ) {
                 tabs[i].classList.remove("selected");
               }
@@ -295,11 +276,11 @@ module.exports = {
               screen: new_selected_tab.getAttribute("screen")
             });
           }
-          g_object.remove();
+          working_tab.remove();
         }
       }
     } else {
-      save_file_warn(g_object.children[1]);
+      graviton.closingFileWarn(working_tab.children[1]);
       return;
     }
   },

@@ -19,6 +19,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid var(--window-border-color);
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes window_up {
@@ -30,11 +32,17 @@
     transform: translate3d(0, 0, 0) translate(-50%, -50%);
   }
 }
-
+.dialog_body > div:not(.buttons){
+  max-height: 10%;
+  position: relative;
+  overflow: auto;
+}
 .dialog_body .buttons {
+  display: flex;
   float: right;
   position: relative;
   margin-top: 17px;
+  justify-content: flex-end
 }
 
 .dialog_body .buttons > button {

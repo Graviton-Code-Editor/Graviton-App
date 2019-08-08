@@ -334,7 +334,7 @@ input[type="number"]::selection {
   position: relative;
   font-size: 12px;
   min-width: 50px;
-  max-width: 75%;
+  max-width: 65%;
   white-space: nowrap;
   height: auto;
   line-height: 20px;
@@ -351,6 +351,7 @@ input[type="number"]::selection {
   right: 0;
   float: right;
   margin-right: 25px;
+  margin-left: 5px;
   vertical-align: center;
   position: relative;
   min-width: 12px;
@@ -807,7 +808,7 @@ p.link:hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-55%, -50%);
+  transform: translate(-55%, -45%);
 }
 textarea {
   border-radius: 5px;

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200808 - 1 [1.0.3]
+- Dialogs content now have a maxium height
+
 ### 200807 - 1 [1.0.3]
 - Added some emojies to the UI
 - Refreshed the customization section in settings
