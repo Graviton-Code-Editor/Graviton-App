@@ -407,3 +407,13 @@ h4 {
   position: relative;
   user-select: none;
 }
+
+.flex-2{
+  display:flex;
+  justify-content: flex-start;
+  padding: 0;
+  margin: 0;
+}
+.flex-2 > *{
+
+}

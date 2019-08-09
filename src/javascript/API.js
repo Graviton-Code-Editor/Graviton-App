@@ -98,7 +98,6 @@ const context_menu_directory_options = {
     );
   },
   OpenInExplorer:function(){
-    console.log("hi")
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
   },
   "a1":"*line",

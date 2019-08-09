@@ -3,6 +3,10 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200808 - 1 [1.0.3]
+- Added a settings icon
+- Added a button to clear recents projects in the welcome screen
+
+### 200808 - 1 [1.0.3]
 - Dialogs content now have a maxium height
 
 ### 200807 - 1 [1.0.3]

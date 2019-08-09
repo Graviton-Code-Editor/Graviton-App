@@ -31,10 +31,15 @@ function openWelcome() {
 		<div class="flex">
       <div id="recent_projects" class="horizontal">
       <elastic-container>
-				<h2  idT="RecentProjects" class="translate_word">${
-          current_config.language["RecentProjects"]
-        }</h2>
-        </elastic-container>
+        <div class="flex-2">
+          <h2  idT="RecentProjects" class="translate_word">${
+            current_config.language["RecentProjects"]
+          }</h2>
+          <div style="float:right; right:0; position:absolute; top:20px; margin:4px;">
+            <button style=display:none id=clear_log onclick="graviton.deleteLog(); closeWindow('welcome_window')" class=button3>Clear</button>
+          </div>
+        </div>
+      </elastic-container>
 			</div> 
 			<div id="notes" class="horizontal">
 				<h2  idT="Notes" class='translate_word title2'>${
@@ -59,28 +64,26 @@ function openWelcome() {
 		</div>`
   });
   welcome_window.launch();
-  fs.readFile(logDir, "utf8", function(err, data) {
-    if (err) return console.log(err);
-    const objectLog = JSON.parse(data);
-    for (i = 0; i < objectLog.length; i++) {
-      const project = document.createElement("div");
-      project.setAttribute("class", "section-2");
-      project.setAttribute(
-        "onclick",
-        `loadDirs('${objectLog[i].Path.replace(
-          /\\/g,
-          "\\\\"
-        )}','g_directories','yes'); welcome_window.close();`
-      );
-      project.innerText = objectLog[i].Name;
-      const description = document.createElement("p");
-      description.innerText = objectLog[i].Path;
-      description.setAttribute("style", "font-size:12px;");
-      project.appendChild(description);
-      if(  document.getElementById("recent_projects")==undefined) return;
-      document.getElementById("recent_projects").appendChild(project);
-    }
-  });
+  const objectLog = require(logDir)
+  for (i = 0; i < objectLog.length; i++) {
+    const project = document.createElement("div");
+    project.setAttribute("class", "section-2");
+    project.setAttribute(
+      "onclick",
+      `loadDirs('${objectLog[i].Path.replace(
+        /\\/g,
+        "\\\\"
+      )}','g_directories','yes'); welcome_window.close();`
+    );
+    project.innerText = objectLog[i].Name;
+    const description = document.createElement("p");
+    description.innerText = objectLog[i].Path;
+    description.setAttribute("style", "font-size:12px;");
+    project.appendChild(description);
+    if(  document.getElementById("recent_projects")==undefined) return;
+    document.getElementById("recent_projects").appendChild(project);
+    document.getElementById("clear_log").style="";
+  }
   if (error_showed == false) DeleteBoot(); 
 }
 const Setup = {

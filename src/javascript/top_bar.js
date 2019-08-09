@@ -77,10 +77,14 @@ Tools.setList({
       hint: "Alt+G"
     },
     "2a": "*line",
-    Settings: () => {
-      Settings.open();
-      Settings.navigate("1");
+    Settings: {
+      click:() => {
+        Settings.open();
+        Settings.navigate("1");
+      },
+      icon:'settings'
     }
+      
   }
 });
 Editor.setList({
