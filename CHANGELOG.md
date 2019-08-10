@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200809 - 1 [1.0.3]
+- Better way of requiring plugin's package.json
+- Fixed, when closing tabs from different screen it's language reference in status bar wasn't been updated
+
 ### 200808 - 1 [1.0.3]
 - Added a settings icon
 - Added a button to clear recents projects in the welcome screen

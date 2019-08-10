@@ -244,7 +244,7 @@ module.exports = {
             //Any tab opened
             filepath = null;
             plang = "";
-            graviton.changeLanguageStatusBar(plang)
+            graviton.changeLanguageStatusBar(plang, working_tab.getAttribute("screen"))
             document.getElementById( working_tab.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;";
           } else if (i === filtered_tabs.length) {
               if(filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute("screen") == working_tab.getAttribute("screen")){

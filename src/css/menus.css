@@ -78,7 +78,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   flex: 1;
   text-align: center;
   min-width: 0px;
-  overflow: hidden;
+  overflow:hidden;
+  text-overflow: ellipsis;
 }
 #top_bar_app > #title_directory p {
   font-size: 12px;

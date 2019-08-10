@@ -131,5 +131,6 @@
 	"Cache":"Cache",
 	"Clear":"Clear",
 	"MiniMap":"MiniMap",
-	"MiniMapDisabled":"Restart Graviton to apply changes"
+	"MiniMapDisabled":"Restart Graviton to apply changes",
+	"CopyPath":"Copy path"
 }

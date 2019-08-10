@@ -220,7 +220,7 @@ input[type="number"]::selection {
   background: var(--notifications-background-color);
   border:none;
   outline:none;
-  color:white;
+  color:var(--white-black);
   padding: 7px 12px;
   border-radius: 5px;
   cursor: pointer;

@@ -83,7 +83,12 @@ const context_menu_list_directories = {
           .getAttribute("parent")
       )
     );
-  }
+  },
+  "a1":"*line",
+  CopyPath:function(){
+    copyText(document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"))
+  },
+  
 };
 const context_menu_directory_options = {
   Reload: function() {
@@ -108,6 +113,10 @@ const context_menu_directory_options = {
     directories.newFile(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },
   "a2":"*line",
+  CopyPath:function(){
+    copyText(document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"))
+  },
+  "a3":"*line",
   Remove: function() {
     directories.removeFolderDialog(
       document.getElementById(
@@ -620,8 +629,8 @@ const graviton = {
       current_config.bouncePreferences = "activated"
     }
   },
-  changeLanguageStatusBar(lang){
-    const lang_ele =  document.getElementById(current_screen.id).children[2].children[0];
+  changeLanguageStatusBar(lang,screen){
+    const lang_ele =  document.getElementById(screen).children[2].children[0];
     if( lang_ele.innerText==""){
       lang_ele.style = "";
     }
@@ -687,7 +696,7 @@ document.addEventListener("mousedown", function(event) {
             if(context_menu_list_directories[key]!="*line"){
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
-              button.innerText = current_config.language[key];
+              button.innerText = getTranslation(key);
               button.setAttribute("target", event.target.id);
               context_menu.appendChild(button);
               sleeping(1).then(() => {
@@ -705,7 +714,7 @@ document.addEventListener("mousedown", function(event) {
             if(context_menu_list_tabs[key]!="*line"){
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
-              button.innerText = current_config.language[key];
+              button.innerText = getTranslation(key);
               button.setAttribute("target", event.target.id);
               context_menu.appendChild(button);
               sleeping(1).then(() => {
@@ -746,7 +755,7 @@ document.addEventListener("mousedown", function(event) {
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               if (index < 2) {
-                button.innerText = current_config.language[key];
+                button.innerText = getTranslation(key);
                 context_menu.appendChild(button);
               } else {
                 if (index == 2) {
@@ -1051,3 +1060,16 @@ const screens = {
 window.onresize = function() {
   graviton.resizeTerminals();
 };
+
+
+
+function copyText(content){
+  const text = document.createElement("textarea");
+  text.style="height:0.1px; width:0.1px; opacitiy:0; padding:0; border:0; margin:0; outline:0;";
+  text.innerText = content;
+  document.body.appendChild(text);
+  text.focus();
+  text.select();
+  document.execCommand('copy');
+  text.remove();
+}

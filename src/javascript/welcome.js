@@ -35,7 +35,7 @@ function openWelcome() {
           <h2  idT="RecentProjects" class="translate_word">${
             current_config.language["RecentProjects"]
           }</h2>
-          <div style="float:right; right:0; position:absolute; top:20px; margin:4px;">
+          <div style="float:right; right:0; position:relative; top:16px; margin:4px; margin-left:auto; margin-right:0;">
             <button style=display:none id=clear_log onclick="graviton.deleteLog(); closeWindow('welcome_window')" class=button3>Clear</button>
           </div>
         </div>

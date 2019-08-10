@@ -60,35 +60,34 @@ function loadConfig() {
       appendBinds(); //Creates the general key binds
     });
   } else {
-    fs.readFile(configDir, "utf8", function(err, data) {
-      Object.keys(current_config).forEach(function(key, index) {
-        if (JSON.parse(data)[key] != undefined)
-          current_config[key] = JSON.parse(data)[key]; // Will only change the extisting parameters
-      });
-      updateSettings();
-      screens.add(); //Creates the first screen
-      detectPlugins(function() {
-        if (current_config["theme"] != undefined)
-          graviton.setTheme(current_config["theme"]);
-          loadLanguage(current_config.language);
-        if (current_config.justInstalled === false) {
-          openWelcome();
-        } else {
-          Setup.open();
-        }
-        if (current_config.animationsPreferences == "desactivated") {
-          const style = document.createElement("style");
-          style.innerText = `*{-webkit-transition: none !important;
-          -moz-transition: none !important;
-          -o-transition: none !important;
-          transition: none !important;
-          animation:0;}`;
-          style.id = "_ANIMATIONS";
-          document.documentElement.appendChild(style);
-          document.documentElement.style.setProperty("--scalation", "1");
-        }
-        appendBinds(); //Creates the general key binds
-      });
+    const local_config = require(configDir);
+    Object.keys(current_config).forEach(function(key, index) {
+      if (local_config[key] != undefined)
+        current_config[key] = local_config[key]; // Will only change the extisting parameters
+    });
+    updateSettings();
+    screens.add(); //Creates the first screen
+    detectPlugins(function() {
+      if (current_config["theme"] != undefined)
+        graviton.setTheme(current_config["theme"]);
+        loadLanguage(current_config.language);
+      if (current_config.justInstalled === false) {
+        openWelcome();
+      } else {
+        Setup.open();
+      }
+      if (current_config.animationsPreferences == "desactivated") {
+        const style = document.createElement("style");
+        style.innerText = `*{-webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+        animation:0;}`;
+        style.id = "_ANIMATIONS";
+        document.documentElement.appendChild(style);
+        document.documentElement.style.setProperty("--scalation", "1");
+      }
+      appendBinds(); //Creates the general key binds
     });
   }
 }

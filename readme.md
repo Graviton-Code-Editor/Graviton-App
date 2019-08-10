@@ -74,9 +74,10 @@ Credits ✨
 - [Codemirror](codemirror.net)
 - Help in autocompletation , Miguel Rangel
 - Old logo by Saúl Blanco 
-- All contributors
 - [MiniMap Original source](https://github.com/alterfan/minimap)
 - [OpenEmoji](https://openmoji.org/)
+
+ And all people who helped me :)
 
 Available platforms 💻🖥
 ---

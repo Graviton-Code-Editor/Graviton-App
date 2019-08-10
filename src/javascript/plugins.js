@@ -92,7 +92,6 @@ function detectPlugins(call) {
         if(!err) return;
       })
     }    
-    //If the plugins folder already exist
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
       if(paths.length == 0) return call != undefined ? call() : "";
@@ -102,34 +101,20 @@ function detectPlugins(call) {
           loaded++;
         }
         if (!direct.isFile()) {
-          fs.readFile(
-            path.join(plugins_folder, paths[i], "package.json"),
-            "utf8",
-            function(err, data) {
-              if (err) {
-                console.warn("An error occurred while loading a plugin.")
-                if (loaded == paths.length) {
-                  return call != undefined ? call() : "";
-                }
-              };
-              try{
-                JSON.parse(data)
-              }catch{
-                if (loaded == paths.length) {
-                  return call != undefined ? call() : "";
-                }else{
-                  return;
-                }
-              }
-              const config = JSON.parse(data);
-              plugins.install(config, function() {
-                loaded++;
-                if (loaded == paths.length) {
-                  return call != undefined ? call() : "";
-                }
-              });
+          try{
+             require(path.join(plugins_folder, paths[i], "package.json"))
+          }catch{
+            if (loaded == paths.length) {
+              return call != undefined ? call() : "";
             }
-          );
+          }
+          const config = require(path.join(plugins_folder, paths[i], "package.json"))
+          plugins.install(config, function() {
+            loaded++;
+            if (loaded == paths.length) {
+              return call != undefined ? call() : "";
+            }
+          });
         }
       }
     });

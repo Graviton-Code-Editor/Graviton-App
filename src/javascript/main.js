@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190808",
+  date: "190809",
   version: "1.0.3",
   state: "Beta"
 };
@@ -179,7 +179,7 @@ const loadEditor = info => {
                 .basename(info.dir)
                 .split(".")
                 .pop()
-        ));
+        ),info.screen);
         for (i = 0; i < editors.length; i++) {
           if (
             editors[i].screen == info.screen &&
@@ -240,7 +240,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_image.id;
-        graviton.changeLanguageStatusBar("Image")
+        graviton.changeLanguageStatusBar("Image",info.screen)
         break;
       case "free":
         const free_id = "free_tab" + Math.random();
@@ -275,7 +275,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_free.id;
-        graviton.changeLanguageStatusBar("");
+        graviton.changeLanguageStatusBar("",info.screen);
         break;
     }
   } else {
@@ -298,13 +298,13 @@ const loadEditor = info => {
                   .basename(info.dir)
                   .split(".")
                   .pop()
-          ));
+          ),info.screen);
         } else if (info.type != "free") {
           // Images
-          graviton.changeLanguageStatusBar("Image");
+          graviton.changeLanguageStatusBar("Image",info.screen);
         } else {
           //Free tabs (custom)
-          graviton.changeLanguageStatusBar("");
+          graviton.changeLanguageStatusBar("",info.screen);
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
