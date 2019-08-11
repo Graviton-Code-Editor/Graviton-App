@@ -127,5 +127,10 @@
 	"MarketError3": "Impossible de lire le fichier \"package.json\" de la source du plugin.",
 	"SetupError1": "Impossible d'installer les thèmes par défaut, vous pourrez les installer plus tard dans le Marché.",
 	"Welcome.AdditionalSettings": "Paramètres additionnels",
-	"OpenInExplorer": "Ouvrir dans l'explorateur"
+	"OpenInExplorer": "Ouvrir dans l'explorateur",
+	"Cache": "Cache",
+	"Clear": "Vider le cache",
+	"MiniMap": "MiniMap",
+	"MiniMapDisabled": "Redémarrez Graviton pour prendre en compte les nouveaux paramètres",
+	"CopyPath": "Copier le chemin"
 }
