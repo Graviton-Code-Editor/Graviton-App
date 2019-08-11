@@ -85,5 +85,6 @@ In case you just wanna test it, run:
 
 ### MacOS
 
-From a Macintosh: 
+- From a Macintosh: 
+
 >  $ npm run build 

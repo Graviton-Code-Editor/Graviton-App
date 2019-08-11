@@ -105,6 +105,13 @@ const context_menu_directory_options = {
   OpenInExplorer:function(){
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
   },
+  OpenAsGlobal:function(){
+    loadDirs(
+      document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"),
+      "g_directories",
+      true
+    );
+  },
   "a1":"*line",
   NewFolder:function(){
     directories.newFolder(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
@@ -323,20 +330,20 @@ const graviton = {
   dialogAbout: function() {
     new Dialog({
       id: "about",
-      title: current_config.language["About"],
+      title: getTranslation("About"),
       content: `
-	      ${current_config.language["Version"]}: ${g_version.version} (${
+	      ${getTranslation("Version")}: ${g_version.version} (${
         g_version.date
       }) - ${g_version.state}
-	      <br> ${current_config.language["OS"]}: ${graviton.currentOS().name}`,
+	      <br> ${getTranslation("OS")}: ${graviton.currentOS().name}`,
       buttons: {
-        [current_config.language["More"]]: {
+        [getTranslation("More")]: {
           click: ()=>{
             Settings.open(); Settings.navigate('5')
           },
           important: true
         },
-        [current_config.language["Close"]]: {}
+        [getTranslation("Close")]: {}
       }
     });
   },
@@ -347,10 +354,10 @@ const graviton = {
     ) {
       new Dialog({
         id: "changelog",
-        title: `${current_config.language["Changelog"]} - ${g_version.version}`,
+        title: `${getTranslation("Changelog")} - ${g_version.version}`,
         content: `<div style="padding:2px;">${marked(data)}</div>`,
         buttons: {
-          [current_config.language["Close"]]: {}
+          [getTranslation("Close")]: {}
         }
       });
     });
@@ -366,28 +373,28 @@ const graviton = {
     }
     new Dialog({
       id: "remove_screen",
-      title: current_config.language["Dialog.RemoveScreen.title"],
+      title: getTranslation("Dialog.RemoveScreen.title"),
       content: `<div style="overflow: auto;min-width: 100%;height: auto;overflow: auto;white-space: nowrap; display:flex;" >${content_editors}</div>`,
       buttons: {
-        [current_config.language["Accept"]]: {}
+        [getTranslation("Accept")]: {}
       }
     });
   },
   closingFileWarn : function(){
     new Dialog({
       id: "saving_file_warn",
-      title: current_config.language["Warn"],
-      content: current_config.language["FileExit-dialog-message"],
+      title: getTranslation("Warn"),
+      content: getTranslation("FileExit-dialog-message"),
       buttons: {
-        [current_config.language[
+        [getTranslation(
           "FileExit-dialog-button-accept"
-        ]]: {
+        )]: {
           click:()=>{
             closeTab(ele.getAttribute("tabid"),true);
           }
         },
-        [current_config.language["Cancel"]]: {},
-        [current_config.language["FileExit-dialog-button-deny"]]: {
+        [getTranslation("Cancel")]: {},
+        [getTranslation("FileExit-dialog-button-deny")]: {
           click: ()=>{saveFile()},
           important: true
         }
@@ -663,6 +670,16 @@ const graviton = {
       current_config.miniMapPreferences='activated'
       editors.forEach((_editor)=>_editor.editor!=undefined?_editor.editor.setOption("miniMap",true):null)
     }
+  },
+  refreshStatusBarLinesAndChars(screen){
+    if(editor==undefined){
+      document.getElementById(screen).children[2].children[1].innerText = ""
+    document.getElementById(screen).children[2].children[1].removeAttribute("title");
+    }else{
+      document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line +"/"+ editor.getCursor().ch
+    document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line} , Char: ${editor.getCursor().ch}`
+    }
+    
   }
 };
 
@@ -678,6 +695,7 @@ function floatingWindow([xSize, ySize], content) {
 document.addEventListener("mousedown", function(event) {
   if (editor_booted === true) {
     if (event.button === 2) {
+      graviton.closeDropmenus(); //Close opened dropmenu
       if (document.getElementById("context_menu") !== null) {
         document.getElementById("context_menu").remove();
       }
@@ -827,7 +845,7 @@ const commanders = {
   terminal: function(object) {
     if (graviton.getCurrentDirectory() == null && object == undefined) {
       graviton.throwError(
-        current_config.language["CannotRunTerminalCauseDirectory"]
+        getTranslation("CannotRunTerminalCauseDirectory")
       );
       return;
     }
@@ -935,12 +953,13 @@ const screens = {
       <div class="g_editors_editors" >
      <div class=temp_dir_message> 
         <p dragable=false class="translate_word " idT="WelcomeMessage" >${
-          current_config.language["WelcomeMessage"]
+         getTranslation("WelcomeMessage")
         }</p>
         <img draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
       </div>
       </div>
       <div class="g_status_bar" >
+        <span></span>
         <span></span>
       </div>`;
     document
@@ -1050,7 +1069,7 @@ const screens = {
           i--;
         } else {
           graviton.throwError(
-            current_config.language["Notification.CloseAllTabsBefore"]
+            getTranslation("Notification.CloseAllTabsBefore")
           );
         }
       }

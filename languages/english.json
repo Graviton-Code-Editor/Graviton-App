@@ -132,5 +132,9 @@
 	"Clear":"Clear",
 	"MiniMap":"MiniMap",
 	"MiniMapDisabled":"Restart Graviton to apply changes",
-	"CopyPath":"Copy path"
+	"CopyPath":"Copy path",
+	"NoUpdateFound":"Any update has been found.",
+	"ExtNotListed":"is not listed on the market.",
+	"OpenAsGlobal":"Open as global",
+	"DetectedUpdateMessage":"Do you want to update to version"
 }

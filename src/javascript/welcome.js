@@ -26,14 +26,14 @@ function openWelcome() {
     id: "welcome_window",
     content: `
 		<h2  idT="Welcome" class='translate_word window_title'>${
-      current_config.language["Welcome"]
+      getTranslation("Welcome")
     }</h2> 
 		<div class="flex">
       <div id="recent_projects" class="horizontal">
       <elastic-container>
         <div class="flex-2">
           <h2  idT="RecentProjects" class="translate_word">${
-            current_config.language["RecentProjects"]
+            getTranslation("RecentProjects")
           }</h2>
           <div style="float:right; right:0; position:relative; top:16px; margin:4px; margin-left:auto; margin-right:0;">
             <button style=display:none id=clear_log onclick="graviton.deleteLog(); closeWindow('welcome_window')" class=button3>Clear</button>
@@ -43,23 +43,23 @@ function openWelcome() {
 			</div> 
 			<div id="notes" class="horizontal">
 				<h2  idT="Notes" class='translate_word title2'>${
-          current_config.language["Notes"]
+          getTranslation("Notes")
         }</h2>
-				<p> ${current_config.language["Version"]}: ${g_version.version} (${
+				<p> ${getTranslation("Version")}: ${g_version.version} (${
       g_version.date
     }) - ${g_version.state}</p> 
 				<p  > OS: ${graviton.currentOS().name}</p> 
 				<p idT="Changelog" class="translate_word link" onclick="graviton.dialogChangelog()">${
-          current_config.language["Changelog"]
+          getTranslation("Changelog")
         }</p>
 			</div>
 		</div>
 		<div class='welcomeButtons'>
 			<button onclick='openFolder(); welcome_window.close();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${
-        current_config.language["OpenFolder"]
+        getTranslation("OpenFolder")
       }</button> 
 			<button onclick='welcome_window.close();' id='skip_welcome' class=" button1 translate_word" idT="Skip">${
-        current_config.language["Skip"]
+        getTranslation("Skip")
       }</button> 
 		</div>`
   });
@@ -96,7 +96,7 @@ const Setup = {
       }
     }
     const all = document.createElement("div");
-    all.setAttribute("id", "g_setup");
+    all.id = "graviton_setup"
     all.innerHTML = `
   	<div class="body_window_full">
   		<div id="body_window_full">
@@ -108,7 +108,7 @@ const Setup = {
     if (error_showed == false) DeleteBoot();
   },
   close: function() {
-    document.getElementById("g_setup").remove();
+    document.getElementById("graviton_setup").remove();
     current_config.justInstalled = false;
     saveConfig();
   },
@@ -117,7 +117,7 @@ const Setup = {
       case "languages":
         document.getElementById("body_window_full").innerHTML = `
           <h1 style="font-size:40px; text-align:center; position:relative; " class="translate_word" idT="Languages">${
-            current_config.language["Languages"]
+            getTranslation("Languages")
           }</h1> 
           
           <div id='language_list' class=welcome><elastic-container related=parent></elastic-container></div> 
@@ -125,7 +125,7 @@ const Setup = {
           <button onclick=${
             themes.length != 0 ? "Setup.navigate('themes');" : "Setup.navigate('additional_settings');"
           }  style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${
-          current_config.language["Continue"]
+            getTranslation("Continue")
         }</button>      `;
         for (i = 0; i < languages.length; i++) {
           const languageDiv = document.createElement("div");
@@ -144,17 +144,17 @@ const Setup = {
       case "themes":
         document.getElementById("body_window_full").innerHTML = `
           <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
-            current_config.language["Welcome.TakeATheme"]
+            getTranslation("Welcome.TakeATheme")
           }</h1> 
           <div class=theme_divs>
             <img draggable=false onclick="graviton.setTheme('Dark'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Dark"?"active":""}' src=src/icons/dark.svg>
             <img draggable=false onclick="graviton.setTheme('Arctic'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Arctic"?"active":""}' src=src/icons/light.svg>
           </div> 
           <button onclick='Setup.navigate("languages"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
-            current_config.language["Back"]
+            getTranslation("Back")
           }</button> 
           <button  onclick='Setup.navigate("additional_settings");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
-            current_config.language["Continue"]
+            getTranslation("Continue")
           }</button> 
         `;
         break;
@@ -193,10 +193,10 @@ const Setup = {
             </div> 
             </div>
             <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
-              current_config.language["Back"]
+              getTranslation("Back")
             }</button> 
             <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
-              current_config.language["Continue"]
+              getTranslation("Continue")
             }</button> 
             
         `;
@@ -211,14 +211,14 @@ const Setup = {
             text-align:center;" 
             class="translate_word" 
             idT="Welcome.ThanksForInstalling">
-            ${current_config.language["Welcome.ThanksForInstalling"]} ${
+            ${cgetTranslation("Welcome.ThanksForInstalling")} ${
           g_version.version
         } - ${g_version.state} <img draggable="false" class="emoji-title" src="src/openemoji/1F973.svg"> </h1> 
           <button onclick="Setup.close(); extensions.openStore(function(){extensions.navigate('all')});" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Market">${
-            current_config.language["Market"]
+            getTranslation("Market")
           }</button> 
           <button onclick='Setup.close(); openWelcome();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${
-            current_config.language["Finish"]
+            getTranslation("Finish")
           }</button> 
           `;
         break;

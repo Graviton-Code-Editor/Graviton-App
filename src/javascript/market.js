@@ -278,7 +278,7 @@ const extensions ={
       if (fs.existsSync(path.join(plugins_folder,name))) {
         new Notification({
           title:'Market',
-          content:name + current_config.language["ExtAlreadyInstalled"]
+          content:name + getTranslation("ExtAlreadyInstalled")
         });
         return;
       }
@@ -292,7 +292,7 @@ const extensions ={
         document.dispatchEvent(installed_ext_event);
         new Notification({
           title:'Market',
-          content:name+ current_config.language["ExtInstalled"]
+          content:name+ getTranslation("ExtInstalled")
         });
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
@@ -303,11 +303,18 @@ const extensions ={
     },
     updateExtension: function(name){
       const plugin = graviton.getPlugin(name)
-      const new_update = plugin.local!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
+      const new_update = plugin.local!=undefined && plugin.repo!=undefined?getVersionSum(plugin.repo.package.version)>getVersionSum(plugin.local.version):false;
+      if(plugin.repo ==undefined){
+        new Notification({
+          title:'Market',
+          content:name+ getTranslation("ExtNotListed")
+        });
+        return;
+      }
       if (!fs.existsSync(path.join(plugins_folder,name))) {
         new Notification({
           title:'Market',
-          content:name+ current_config.language["ExtNotInstalled"]
+          content:name+ getTranslation("ExtNotInstalled")
         });
         return;
       }
@@ -330,7 +337,7 @@ const extensions ={
         document.dispatchEvent(updated_ext_event);
         new Notification({
           title:'Market',
-          content:name+ current_config.language["ExtUpdated"]
+          content:name+ cgetTranslation("ExtUpdated")
         });
         if(plugin.repo.package["dependencies"]!=undefined){
           plugins.installDependencies(plugin.repo.package);
@@ -344,14 +351,14 @@ const extensions ={
       if (!fs.existsSync(path.join(plugins_folder,name))) {
         new Notification({
           title:'Market',
-          content:name+ current_config.language["ExtNotInstalled"]
+          content:name+ getTranslation("ExtNotInstalled")
         });
         return;
       }
       rimraf.sync(path.join(plugins_folder,name));
       new Notification({
         title:'Market',
-        content: name + current_config.language["ExtUninstalled"]
+        content: name + getTranslation("ExtUninstalled")
       })
       const csss = document.getElementsByClassName(name+"_css");
       for(i=0;i<csss.length;i++){

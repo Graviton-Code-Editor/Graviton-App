@@ -35,8 +35,7 @@ module.exports = {
       return;
     }
     const all = document.createElement("div");
-    all.setAttribute("id", dialogObject.id + "_dialog");
-    all.setAttribute("style", "-webkit-user-select: none; ");
+    all.id =  dialogObject.id + "_dialog";
     all.innerHTML = `
       <div myID="${
         dialogObject.id
@@ -44,13 +43,13 @@ module.exports = {
     const body_dialog = document.createElement("div");
     body_dialog.setAttribute("class", "dialog_body");
     body_dialog.innerHTML = `
-      <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">    
-          ${dialogObject.title} 
+      <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">
+          ${dialogObject.title}
       </p>
       <div style="font-size:15px; min-height:15px;">
-        <elastic-container related=self> 
+        <elastic-container related=self>
           ${dialogObject.content}
-          </elastic-container> 
+          </elastic-container>
       </div>
       <div class="buttons" style="display:flex;"></div>`;
     Object.keys(dialogObject.buttons).forEach(function(key, index) {
@@ -58,7 +57,7 @@ module.exports = {
       button.innerText = key;
       button.setAttribute("myID", dialogObject.id);
       sleeping(1).then(() => {
-        button.addEventListener("click",dialogObject.buttons[key].click) 
+        button.addEventListener("click",dialogObject.buttons[key].click)
         button.setAttribute("onclick", "closeDialog(this)")
       });
       button.setAttribute(
@@ -68,7 +67,6 @@ module.exports = {
       body_dialog.children[2].appendChild(button);
     });
     all.appendChild(body_dialog);
-    //elasticContainer.append(body_dialog)
     document
       .getElementById("body")
       .setAttribute(

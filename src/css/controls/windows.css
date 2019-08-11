@@ -26,6 +26,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   border: 1px solid var(--window-border-color);
+  -webkit-user-select: none;
 }
 
 .body_window_full {
@@ -40,6 +41,7 @@
   position: fixed;
   text-align: left;
   background: var(--secondaryColor);
+  -webkit-user-select: none;
 }
 @keyframes window_up {
   from {

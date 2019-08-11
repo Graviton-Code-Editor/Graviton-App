@@ -17,7 +17,7 @@ const Settings = {
       content: `
       <div class="g_lateral_panel">
         <h2 class="window_title window_title2 translate_word"  idT="Settings">${
-          current_config.language["Settings"]
+          getTranslation("Settings")
         }</h2> 
         <div id="navbar1" class="navbar">
           <button id="navB1" onclick="Settings.navigate('1')" class="translate_word" idT="Customization">${getTranslation(
@@ -103,7 +103,7 @@ const Settings = {
             <p style="margin:11px 0; font-size:17px; line-height:2px;">${
               themes[i].name
             }</p>
-            <p style="font-size:14px;">${current_config.language["MadeBy"] +
+            <p style="font-size:14px;">${getTranslation("MadeBy") +
               themes[i]["author"]}</p>
             <p style="font-size:13px; line-height:2px;">${
               themes[i]["description"]
@@ -127,7 +127,7 @@ const Settings = {
           languageDiv.setAttribute("class", "language_div");
           languageDiv.setAttribute(
             "onclick",
-            "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this);"
+            "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this); saveConfig();"
           );
           languageDiv.innerText = languages[i]["g_l"];
           if (languages[i]["g_l"] === getTranslation("g_l") ){
@@ -142,7 +142,7 @@ const Settings = {
          
             <h4>${getTranslation("FontSize")}</h4>
             <div class="section-1">
-              <input class="input1" id="fs-input" onchange="updateSettingsFromUI()" type="number" value="${
+              <input class="input1" id="fs-input" onchange="graviton.setEditorFontSize(this.value)" type="number" value="${
                 current_config.fontSizeEditor
               }">
             </div>
@@ -176,13 +176,13 @@ const Settings = {
         break;
       case "4":
         document.getElementById("_content1").innerHTML = `
-          <h4>${getTranslation("Performance")}</h4>
+          <h4>${getTranslation("Performance")} <img draggable="false" class="emoji-medium" src="src/openemoji/26A1.svg"></h4>
           <div class="section-1">
               <p>${
                 getTranslation(
                   "Settings-Advanced-Performance-Animations"
                 )
-              }</p>
+              }  </p>
               <gv-switch  onclick="graviton.toggleAnimations()" class="${
                 current_config.animationsPreferences
               }"></gv-switch>
@@ -251,16 +251,6 @@ const Settings = {
   }
 };
 
-function updateSettingsFromUI() {
-  current_config.fontSizeEditor = document.getElementById("fs-input").value;
-  document.documentElement.style.setProperty(
-    "--editor-font-size",
-    `${document.getElementById("fs-input").value}px`
-  ); // Update settings from window
-  for (i = 0; i < editors.length; i++) {
-    if (editors[i].editor != undefined) editors[i].editor.refresh();
-  }
-}
 
 function updateCustomization() {
   current_config.appZoom = document.getElementById("slider_zoom").value;
@@ -296,12 +286,12 @@ function updateSettings() {
 function factory_reset_dialog() {
   new Dialog({
     id: "factory_reset",
-    title: current_config.language["FactoryReset"],
-    content: current_config.language["FactoryReset-dialog-message"],
+    title: getTranslation("FactoryReset"),
+    content: getTranslation("FactoryReset-dialog-message"),
     buttons: {
-      [current_config.language["Decline"]]: {},
-      [`${current_config.language["Yes"]} , ${
-        current_config.language["Continue"]
+      [getTranslation("Decline")]: {},
+      [`${getTranslation("Yes")} , ${
+        getTranslation("Continue")
       }`]: {
         click: ()=>{
           FactoryReset()

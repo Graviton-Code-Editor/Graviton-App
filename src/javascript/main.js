@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190809",
+  date: "190810",
   version: "1.0.3",
   state: "Beta"
 };
@@ -155,8 +155,8 @@ const loadEditor = info => {
             styleActiveLine: true,
             foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-            lineWrapping:
-              current_config["lineWrappingPreferences"] == "activated"
+            lineWrapping: current_config["lineWrappingPreferences"] == "activated"
+
           }
         );
         codemirror.focus()
@@ -169,6 +169,11 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
+        codemirror.on("cursorActivity", function() {
+          graviton.refreshStatusBarLinesAndChars(current_screen.id)
+        });
+        text_container.focus();
+        
         elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length-1)])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
@@ -188,6 +193,20 @@ const loadEditor = info => {
             document.getElementById(editors[i].id).style.display = "none";
           }
         }
+        addWheelListener(text_container, function( e ) {
+          console.log(e)
+          if(e.ctrlKey){
+            console.log(e.deltaY)
+            if( e.deltaY <0){
+              console.log("up")
+              graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 1}`);
+            }else if(e.deltaY >0){
+              graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) - 1}`);
+              console.log("down")
+            }
+          }
+        });
+        
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
         text_container.style.display = "block";
@@ -208,6 +227,7 @@ const loadEditor = info => {
             }
           }
         });
+        graviton.refreshStatusBarLinesAndChars(info.screen)
         break;
       case "image":
         const image_container = document.createElement("div");
@@ -299,6 +319,7 @@ const loadEditor = info => {
                   .split(".")
                   .pop()
           ),info.screen);
+          graviton.refreshStatusBarLinesAndChars(info.screen)
         } else if (info.type != "free") {
           // Images
           graviton.changeLanguageStatusBar("Image",info.screen);
@@ -377,7 +398,7 @@ const loadEditor = info => {
             for (var i = 0; i < filterResult.length; i++) {
               const id = Math.random();
               contextOptions +=
-                `<button id=${id} class=option > 
+                `<button id=${id} class=option >
                 ${filterResult[i]._name}
                 </button>`;
               contextOptions = contextOptions.replace("undefined", "");
@@ -526,6 +547,12 @@ const loadEditor = info => {
       },
       "Ctrl-Tab": function(cm) {
         graviton.toggleMenus();
+      },
+      "Ctrl-Up": function(cm) {
+        graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 2}`);
+      },
+      "Ctrl-Down": function(cm) {
+        graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) - 2}`);
       }
     });
   }
@@ -633,7 +660,7 @@ function loadDirs(dir, app_id, f_t,callback) {
   const first_time =
     f_t == (true || "true") ? true : f_t == "reload" ? false : f_t;
   if (!fs.existsSync(dir)) {
-    graviton.throwError(current_config.language["DirectoryDoesntExist"]);
+    graviton.throwError(getTranslation("DirectoryDoesntExist"));
     return;
   }
   const appender_id = app_id.replace(/\\/g, "");
@@ -733,7 +760,7 @@ function loadDirs(dir, app_id, f_t,callback) {
         )}">
             <p parent=${parent_id} ID="${parent_id+ "_p"}" elementType=directory global=reload dir="${_long_path}">
             ${paths[i]}
-            </p> 
+            </p>
           </div>
           <div myPadding="${paddingListDir}" dir="${_long_path}"></div>
         </div>`;
@@ -744,7 +771,7 @@ function loadDirs(dir, app_id, f_t,callback) {
       let _long_path = path.join(dir, paths[i]);
       if (graviton.currentOS().codename == "win32") {
         _long_path = _long_path.replace(/\\/g, "\\\\");
-      } 
+      }
       const stats = fs.statSync(_long_path);
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
@@ -817,13 +844,13 @@ const directories = {
   newFolder: function(object){
     new Dialog({
       id: "new_folder",
-      title: current_config.language["Dialog.RenameTo"],
+      title: getTranslation("Dialog.RenameTo"),
       content: "<div id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
       buttons: {
-        [current_config.language["Cancel"]]:{},
-        [current_config.language[
+        [getTranslation("Cancel")]:{},
+        [getTranslation(
           "Accept"
-        ]]: {
+        )]: {
           click:()=>{
             create.folder(object,document.getElementById('rename_dialog').innerText)
           },
@@ -835,15 +862,15 @@ const directories = {
   newFile: function(object){
     new Dialog({
       id: "new_file",
-      title: current_config.language["Dialog.RenameTo"],
+      title: getTranslation("Dialog.RenameTo"),
       content: "<div id='rename_dialog' class='section-1' contentEditable> New File.txt </div>",
       buttons: {
-        [current_config.language["Cancel"]]: {},
-        [current_config.language[
+        [getTranslation("Cancel")]: {},
+        [getTranslation(
           "Accept"
-        ]]: {
+        )]: {
           click: ()=>{
-            create.file(object,document.getElementById('rename_dialog').innerText); 
+            create.file(object,document.getElementById('rename_dialog').innerText);
           },
           important:true
         }
@@ -853,13 +880,13 @@ const directories = {
   removeFileDialog: function(object) {
     new Dialog({
       id: "remove_file",
-      title: current_config.language["Dialog.AreYouSure"],
+      title: getTranslation("Dialog.AreYouSure"),
       content: "",
       buttons: {
-        [current_config.language["Cancel"]]: {},
-        [current_config.language[
+        [getTranslation("Cancel")]: {},
+        [getTranslation(
           "Accept"
-        ]]:{
+        )]:{
           click:()=>{
             directories.removeFile(object.id);
           }
@@ -870,13 +897,13 @@ const directories = {
   removeFolderDialog: function(object) {
     new Dialog({
       id: "remove_folder",
-      title: current_config.language["Dialog.AreYouSure"],
+      title: getTranslation("Dialog.AreYouSure"),
       content: "",
       buttons: {
-        [current_config.language["Cancel"]]: {},
-        [current_config.language[
+        [getTranslation("Cancel")]: {},
+        [getTranslation(
           "Accept"
-        ]]: {
+        )]: {
           click:()=>{
             directories.removeFolder(object.id);
           }
@@ -1235,7 +1262,7 @@ const g_NewProjects = () => {
   const new_projects_window = new Window({
     id: "new_projects_window",
     content: `
-      <h2 class="window_title">${current_config.language["Templates"]}</h2> 
+      <h2 class="window_title">${getTranslation("Templates")}</h2>
       <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section-2">
         <p>HTML</p>
       </div>`
@@ -1281,7 +1308,7 @@ function look(text){
             _variables.push({
               _name: text[i+1]
             });
-          break;        
+          break;
         }
       break;
       case "java":
@@ -1292,7 +1319,7 @@ function look(text){
             _variables.push({
               _name: text[i+1]
             });
-          break;        
+          break;
         }
       break;
     }
@@ -1330,14 +1357,14 @@ class elasticContainerComponent extends HTMLElement {
         if(document.getElementById(related.id)==undefined){
           return;
         }
-      }  
+      }
       if (el.scrollTop == 0) {
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_top")
         this.insertBefore(spacer, this.children[0])
         setTimeout(function() {
           spacer.remove()
-        }, 360)      
+        }, 360)
       }
       if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
         if(document.getElementsByClassName("bounce_bottom").length!=0 || related == null) return;
@@ -1346,9 +1373,9 @@ class elasticContainerComponent extends HTMLElement {
         this.appendChild(spacer)
         setTimeout(function() {
           spacer.remove()
-        }, 360)      
+        }, 360)
       }
-    } 
+    }
   }
 }
 window.customElements.define("elastic-container", elasticContainerComponent);
@@ -1365,7 +1392,7 @@ const elasticContainer ={
         this.insertBefore(spacer, this.children[0])
         setTimeout(function() {
           spacer.remove()
-        }, 360)      
+        }, 360)
       }
       if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
         if(document.getElementsByClassName("bounce_bottom").length!=0) return;
@@ -1374,8 +1401,8 @@ const elasticContainer ={
         this.appendChild(spacer)
         setTimeout(function() {
           spacer.remove()
-        }, 360)      
+        }, 360)
       }
-    } 
+    }
   }
 }

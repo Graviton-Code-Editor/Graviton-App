@@ -35,7 +35,6 @@ module.exports = {
     this.onClose = data.onClose == undefined ? "" : data.onClose;
     const newWindow = document.createElement("div");
     newWindow.setAttribute("id", this.id + "_window");
-    newWindow.setAttribute("style", "-webkit-user-select: none;");
     newWindow.innerHTML = `
       <div class="background_window" onclick="closeWindow('${
         this.id

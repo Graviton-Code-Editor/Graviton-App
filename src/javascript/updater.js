@@ -24,10 +24,10 @@ module.exports = {
               new Dialog({
                 id: "update",
                 title: `<strong>${g_version.state}</strong> Update avaiable !`,
-                content: `Do you want to update to version ${res[i].tag_name}?`,
+                content: getTranslation("DetectedUpdateMessage") +" "+ res[i].tag_name + "?",
                 buttons: {
-                  [current_config.language["No"]]: {},
-                  [current_config.language["Yes"]]: {
+                  [getTranslation("No")]: {},
+                  [getTranslation("Yes")]: {
                     click: "updater.update()",
                     important: true
                   }
@@ -38,7 +38,7 @@ module.exports = {
           }
           new Notification({
             title:'Graviton',
-            content:'Any update has been found.'
+            content:getTranslation("NoUpdateFound")
           });
           return;
         }

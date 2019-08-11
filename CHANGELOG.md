@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200810 - 1 [1.0.3]
+- Now, you can use Ctrl+Wheel or Ctrl+Up/Down to change the editor font size
+- Increased the space between lines in the editor
+- Added a line and char indicator in the status bar of the editors
+- Now using getTranslation() method around all the app, which prevents from getting undefined in the texts
+- A notification will be thrown when trying to update a plugin which is not listed in the official market
+
 ### 200809 - 1 [1.0.3]
 - Better way of requiring plugin's package.json
 - Fixed, when closing tabs from different screen it's language reference in status bar wasn't been updated

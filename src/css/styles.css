@@ -284,6 +284,7 @@ head {
   background: var(--primaryColor);
   border: none;
   display: flex;
+  justify-content: left;
   box-shadow: 0px 3px 5px var(--shadows);
   display: block;
   border:0px !important;
@@ -293,19 +294,19 @@ head {
   top:0;
   margin:0;
   padding: 6px;
-  text-align: center;
+  text-align: left;
   flex: 1;
   color: var(--white-black);
   font-size: 13px;
   user-select: none;
-  height: 100%;
+  min-height: 100%;
   position: relative;
   width: auto;
   background:transparent;
   max-width: auto;
-  position: relative;
   white-space: pre-wrap;
-  display: inline-block;
+  float:left;
+  bottom:0;
 }
 
 #content_app > .g_editors > .g_status_bar span:hover {
@@ -395,6 +396,12 @@ h4 {
     height:0px
   }
 }
+.emoji-medium{
+  height: 30px;
+  top:8px;
+  position: relative;
+  user-select: none;
+}
 .emoji-normal{
   height: 35px;
   top:10px;
@@ -413,4 +420,9 @@ h4 {
   justify-content: flex-start;
   padding: 0;
   margin: 0;
+}
+
+.CodeMirror-line > span > span
+{
+  line-height:1.5em;
 }

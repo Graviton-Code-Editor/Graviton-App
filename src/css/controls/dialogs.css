@@ -21,6 +21,7 @@
   border: 1px solid var(--window-border-color);
   display: flex;
   flex-direction: column;
+  -webkit-user-select: none;
 }
 
 @keyframes window_up {

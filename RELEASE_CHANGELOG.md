@@ -8,6 +8,8 @@
 
 ## New
 
+- Added a blur effect which can be ajusted or disabled from settings
+- Added a clear recent projects in the welcome page
 - Added a bounce effect to some part of the app (can be disabled)
 - Auto completator also detects the defined variables and it shows you them (JavaScript)
 - You can hide the terminal by pressing Ctrl+H
@@ -22,6 +24,7 @@
 
 ## Bug fixes
 
+- No more undefined texts
 - Ruby highlighter wasn't working
 - Cannot close any terminal
 - Markdown highlighter wasn't working
