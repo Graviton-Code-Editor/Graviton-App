@@ -20,15 +20,16 @@
 .cm-s-lightui .cm-number { color:  #ca7841; }
 .cm-s-lightui .cm-def { color: #8DA6CE; }
 .cm-s-lightui span.cm-variable-2, .cm-s-lightui span.cm-tag { color: #690; }
-.cm-s-lightui span.cm-variable-3, .cm-s-lightui span.cm-def, .cm-s-lightui span.cm-type { color: #07a; }
+.cm-s-lightui span.cm-variable-3, .cm-s-lightui span.cm-def, .cm-s-lightui span.cm-type {color:rgb(0, 75, 145); }
 
-.cm-s-lightui .cm-variable { color: #07a; }
-.cm-s-lightui .cm-property { color: #905; }
+.cm-s-lightui .cm-variable { color:rgb(0, 75, 145); }
+
 .cm-s-lightui .cm-qualifier { color: #690; }
 
 .cm-s-lightui .cm-operator { color: #cda869; }
 .cm-s-lightui .cm-comment { color:#777; font-weight:normal; }
-.cm-s-lightui .cm-string { color:#07a; font-style:italic; }
+.cm-s-lightui .cm-string { color:rgb(0, 75, 145);  }
+.cm-s-lightui .cm-property { color: rgb(228, 0, 87); } 
 .cm-s-lightui .cm-string-2 { color:#bd6b18; } /*?*/
 .cm-s-lightui .cm-meta { color: #000; } /*?*/
 .cm-s-lightui .cm-builtin { color: #9B7536; } /*?*/

@@ -88,6 +88,8 @@ function detectPlugins(call) {
           rimraf.sync(market_file);
         }else{
           full_plugins = market.cache 
+          plugins_market = market.list
+          current_plugins = 5
         }
         if(!err) return;
       })

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190810",
+  date: "190812",
   version: "1.0.3",
   state: "Beta"
 };
@@ -178,8 +178,8 @@ const loadEditor = info => {
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
         graviton.changeLanguageStatusBar(getLanguageName(
-          getFormat(path.basename(info.dir)) != "unknown"
-            ? getFormat(path.basename(info.dir))
+          getFormat(path.basename(info.dir)).lang != "unknown"
+            ? getFormat(path.basename(info.dir)).lang
             : path
                 .basename(info.dir)
                 .split(".")
@@ -194,19 +194,14 @@ const loadEditor = info => {
           }
         }
         addWheelListener(text_container, function( e ) {
-          console.log(e)
           if(e.ctrlKey){
-            console.log(e.deltaY)
             if( e.deltaY <0){
-              console.log("up")
               graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 1}`);
             }else if(e.deltaY >0){
               graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) - 1}`);
-              console.log("down")
             }
           }
         });
-        
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
         text_container.style.display = "block";
@@ -312,8 +307,8 @@ const loadEditor = info => {
           // Editors
           editor = editors[i].editor;
           graviton.changeLanguageStatusBar(getLanguageName(
-            getFormat(path.basename(info.dir)) != "unknown"
-              ? getFormat(path.basename(info.dir))
+            getFormat(path.basename(info.dir)).lang != "unknown"
+              ? getFormat(path.basename(info.dir)).lang
               : path
                   .basename(info.dir)
                   .split(".")
@@ -785,9 +780,27 @@ function loadDirs(dir, app_id, f_t,callback) {
         })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
           paths[i]
         }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="src/icons/files/${getFormat(
-          paths[i]
-        )}.svg">
+          <img parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="${
+            (function(){
+              if(themeObject.icons == undefined  ||(themeObject.icons[getFormat(paths[i]).lang]==undefined  && getFormat(paths[i]).trust==true ) ){
+                return `src/icons/files/${getFormat(
+                  paths[i]
+                ).lang}.svg`
+              }else{
+                if(themeObject.icons[getFormat(paths[i]).lang] == undefined  && themeObject.icons[getFormat(paths[i]).format] == undefined){
+                  return `src/icons/files/${getFormat(
+                    paths[i]
+                  ).lang}.svg`
+                }
+                if(getFormat(paths[i]).trust==true){
+                  return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(paths[i]).lang])
+                }else{
+                  return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(paths[i]).format])
+                }
+                
+              }
+            })()
+          }">
           <p parent="${parent_id}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="directorie">
           ${paths[i]}
           </p>
@@ -845,7 +858,7 @@ const directories = {
     new Dialog({
       id: "new_folder",
       title: getTranslation("Dialog.RenameTo"),
-      content: "<div id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
+      content: "<div  id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
       buttons: {
         [getTranslation("Cancel")]:{},
         [getTranslation(
@@ -858,6 +871,7 @@ const directories = {
         }
       }
     });
+    document.getElementById("rename_dialog").focus()
   },
   newFile: function(object){
     new Dialog({
@@ -876,6 +890,7 @@ const directories = {
         }
       }
     });
+    document.getElementById("rename_dialog").focus()
   },
   removeFileDialog: function(object) {
     new Dialog({
@@ -914,7 +929,7 @@ const directories = {
   removeFile: function(id) {
     const object = document.getElementById(id);
     fs.unlink(object.getAttribute("dir"), function(err) {
-      if (err) console.error(err);
+      if (err) graviton.throwError(err);
       object.remove();
     });
   },
@@ -924,21 +939,39 @@ const directories = {
     rimraf.sync(object.getAttribute("dir"))
     object.remove();
   },
-  getCustomIcon: function(path, state) {
-    switch (path) {
-      case "node_modules":
-        return "src/icons/custom_icons/node_modules.svg";
-        break;
-      case ".git":
-        return "src/icons/custom_icons/git.svg";
-        break;
-      default:
-        if (state == "close") {
-          return "src/icons/folder_closed.svg";
-        } else {
-          return "src/icons/folder_opened.svg";
-        }
+  getCustomIcon: function(dir, state) {
+    if(themeObject.icons == undefined ||  dir == "node_modules" ||  dir == ".git"   || (themeObject.icons["folder_closed"] == undefined && state == "close") || (themeObject.icons["folder_opened"] == undefined && state == "open")){
+      switch (dir) {
+        case "node_modules":
+          return "src/icons/custom_icons/node_modules.svg";
+          break;
+        case ".git":
+          return "src/icons/custom_icons/git.svg";
+          break;
+        default:
+          if (state == "close") {
+            return "src/icons/folder_closed.svg";
+          } else {
+            return "src/icons/folder_opened.svg";
+          }
+      }
+    }else{
+      switch (dir) {
+        case "node_modules":
+          return path.join(themeObject.name,themeObject.icons["node_modules"])
+          break;
+        case ".git":
+          return path.join(themeObject.name,themeObject.icons["git"])
+          break;
+        default:
+          if (state == "close") {
+            return path.join(themeObject.name,themeObject.icons["folder_closed"])
+          } else {
+            return path.join(themeObject.name,themeObject.icons["folder_opened"])
+          }
+      }
     }
+    
   }
 };
 
@@ -950,24 +983,56 @@ const directories = {
 function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
-      return "html";
+      return {
+        lang:"html",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "js":
-      return "js";
+      return   {
+        lang:"js",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "css":
-      return "css";
+      return   {
+        lang:"css",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "json":
-      return "json";
+      return   {
+        lang:"json",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "md":
-      return "md";
+      return   {
+        lang:"md",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "ts":
-      return "ts";
+      return   {
+        lang:"ts",
+        format:text.split(".").pop(),
+        trust:true
+      }
     case "jpg":
     case "png":
     case "ico":
     case "svg":
-      return "image";
+      return {
+        lang:"image",
+        format:text.split(".").pop(),
+        trust:true
+      }
     default:
-      return "unknown";
+      return {
+        lang:"unknown",
+        format: text.split(".").pop(),
+        trust:false
+      }
   }
 }
 

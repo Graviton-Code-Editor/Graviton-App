@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200812 - 1 [1.0.3]
+- Now themes can use custom icons
+- New file & folder input now are focused by default
+- Added a "Load more" plugins button in the market
+
 ### 200810 - 1 [1.0.3]
 - Now, you can use Ctrl+Wheel or Ctrl+Up/Down to change the editor font size
 - Increased the space between lines in the editor
@@ -24,7 +29,7 @@ This file contains "important" commits, small ones will probably not be added.
 - Added some emojies to the UI
 - Refreshed the customization section in settings
 - Fixed, the context menus button onclicks weren't binding
-- Now, all JavaScript files are using the strict mode 
+- Now, all JavaScript files are using the strict mode
 
 ### 200806 - 1 [1.0.3]
 - Modified the notification constructor, check the docs
@@ -38,7 +43,7 @@ This file contains "important" commits, small ones will probably not be added.
 - Resizing free C(custom) / image editors was throwing error
 
 ### 200803 - 1 [1.0.3]
-- Now you can pass a directory to open as argument when starting graviton from the terminal 
+- Now you can pass a directory to open as argument when starting graviton from the terminal
 - Fixed, production build couldn't boot
 - You can now put spacers on the context menus
 - Added a method which makes easier to update the current focused editor status bar language
@@ -107,14 +112,14 @@ This file contains "important" commits, small ones will probably not be added.
 - Added Rust support
 - Fixed, custom themes were removing the selected blur ammount
 
-### 200725 - 1 [1.0.3] 
+### 200725 - 1 [1.0.3]
 - Custom themes! You can now make use of CSS code
 - Fixed, now you can see not-download plugin's readmes
 
-### 200723 - 1 [1.0.3] 
+### 200723 - 1 [1.0.3]
 - Fixed Markdown highlighter
 
-### 200723 - 1 [1.0.3] 
+### 200723 - 1 [1.0.3]
 - New theme selector in the setup proecss
 - Added a blur slider
 - You can now open a terminal in a custom path even if there is no folder opened
@@ -164,7 +169,7 @@ This file contains "important" commits, small ones will probably not be added.
 ### 200714 - 1 [1.0.3]
 - Added an stars counter, which refers to the plugin's repository stars
 - Added market error strings to English
-- Fixed themes section error wasn't displaying 
+- Fixed themes section error wasn't displaying
 - Fixed context menu while hovering lights color buttons
 
 ### 200713 - 2 [1.0.3]
@@ -334,7 +339,7 @@ This file contains "important" commits, small ones will probably not be added.
 
 ### 200616 - 1 [1.0.2]
 - Indexed code
-- Remove fs as dependecie 
+- Remove fs as dependecie
 
 ### 200616 - 1 [1.0.2]
 - Enabled node integration by default
@@ -389,7 +394,7 @@ This file contains "important" commits, small ones will probably not be added.
 ### 200609 - 1 [1.0.1]
 - Fixed, the current screen wasn't changed when it was deleted
 - Added icons to the dropmenus
-- Added Default view button 
+- Added Default view button
 - If something is not translated to your language it will be showed in English.
 - Fixed, now you can press "Ctrl+S" to save the current editing file
 - Will throw a notification in case you are trying to load a directory which doesn't exist.
@@ -515,8 +520,8 @@ This file contains "important" commits, small ones will probably not be added.
 - Fixed, the factory reset were throwing error
 - Added a final page when setuping for the firs time, it says "Thanks for installing Graviton"
 - Added changelog button on Settings
-- Translated "Check for updates" button Settings 
-- Fixed, directory-explorer on zen mode was showing a bottom scroll bar 
+- Translated "Check for updates" button Settings
+- Fixed, directory-explorer on zen mode was showing a bottom scroll bar
 - Fixed, throwing error when disabling or enabling syntax highlighting when images are opened on tabs
 - Added Coffescript, vue, rust, swift, perl, python, haskell, django syntax support
 
@@ -539,8 +544,8 @@ This file contains "important" commits, small ones will probably not be added.
 - Improved dialogs API
 
 ### 190418 - 3 [0.7.4]
-- Fixed from (190418), linux and MacOS were showing the menu bar 
-- More round buttons 
+- Fixed from (190418), linux and MacOS were showing the menu bar
+- More round buttons
 - Fixed, wrong path for the windows's icon on package.json
 - Fixed from (190418), the backround element was in front of all
 - Fixed from (190418), wrong configuration about Windows on package.json

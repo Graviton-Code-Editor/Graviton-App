@@ -1080,8 +1080,6 @@ window.onresize = function() {
   graviton.resizeTerminals();
 };
 
-
-
 function copyText(content){
   const text = document.createElement("textarea");
   text.style="height:0.1px; width:0.1px; opacitiy:0; padding:0; border:0; margin:0; outline:0;";

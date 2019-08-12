@@ -463,12 +463,13 @@ button.button1.disabled {
   pointer-events: none;
 }
 
-button.button1:active {
+button.button1:not(.fixed-scale):active {
   transition: 0.03s;
   transform: scale(var(--scalation));
   box-sizing: border-box;
   opacity: 0.7;
 }
+
 button.button1 svg * {
   fill: var(--white-black);
 }
@@ -721,7 +722,12 @@ p.link:hover {
   overflow: auto;
   z-index: auto !important;
 }
-
+.load_more_div {
+  border:0 !important;
+  box-shadow:none !important;
+  cursor:auto !important;
+  transform: scale(1) !important;
+}
 .extension_div {
   transition: 0.2s;
   background: transparent;
@@ -827,10 +833,11 @@ p.link:hover {
 }
 
 .center {
+  display: flex;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-55%, -45%);
+  transform: translate(-50%, -50%);
 }
 textarea {
   border-radius: 5px;

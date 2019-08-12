@@ -10,7 +10,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 "use strict"
-
+let plugins_market = [];
+let current_plugins = 0;
 const extensions ={
     navigate: function (num,err) {
       if(document.getElementById("market_window_window")==undefined) return;
@@ -63,9 +64,14 @@ const extensions ={
                 </div>
                 ` 
               }
+              if(plugins_market.length != full_plugins.length){
+                document.getElementById('sec_all').innerHTML +=`
+                <div  id=load_more_plugins  class="extension_div load_more_div" >
+                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; console.log('hola'); extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
+                </div>`
+              }
               
             }
-            
           return
         case 'installed':
             for(i=0;i<document.getElementById("_content2").children.length;i++){
@@ -166,65 +172,80 @@ const extensions ={
         store.loadMenus();
         return callback();
       }
-      const github = require('octonode')
-      const client = github.client()   
       const request = require("request");
-      let extensions = []; 
+      this.extensions = []; 
+      const me = this;
       request('https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-          extensions = JSON.parse(body);
+          me.extensions = JSON.parse(body);
         }else {
           store.loadMenus();
           return callback(1);
         }
-        let plugins_to_update = false;
-        for(i=0;i<extensions.length;i++){
-          client.repo(extensions[i]).info(function(err,data){
-            if(err) {
-              store.loadMenus(); //Maxium calls error, 60calls/hour/ip
-              return callback(2);
-            }
-            request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
-              const _package = JSON.parse(body2);
-              full_plugins.push({
-                git:data,
-                package:_package
-              })
-              const plugin = graviton.getPlugin(_package.name);
-              const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(plugin.local.version):false;
-              if(_new_update){
-                plugins_to_update = true;
-              }
-              if(err){
-                store.loadMenus();
-                return callback(3);
-              }
-              if(i==extensions.length-1 ){
-                let date = new Date
-                date = Number(date.getFullYear()+""+date.getMonth()+""+date.getDay())
-                const new_cache = {
-                  "date":date,
-                  "cache":full_plugins
-                }
-                fs.writeFile(market_file,JSON.stringify(new_cache), function(err) {
-                  if(err) {
-                      return err;
-                  }
-                });
-                store.loadMenus();
-                if(plugins_to_update){
-                  new Notification({
-                    title:getTranslation('Market'),content:
-                    getTranslation('ExtUpdateNotification')
-                  })
-                }
-                if(callback!=undefined) callback();
-              }
-            });
-            
-          })
-        };
+        plugins_market = me.extensions;
+        current_plugins = 5;
+        me.loadMoreExtensions(0,callback)
       });
+    },
+    loadMoreExtensions(start,callback){
+      let plugins_to_update = false;
+      const github = require('octonode')
+      const client = github.client()  
+      const request = require("request");
+      const me = this;
+      if( plugins_market[start]==undefined ){
+        if(document.getElementById("load_more_plugins")!=undefined) document.getElementById("load_more_plugins").remove();
+        return;
+      }
+      me.extensions = plugins_market.slice(start,start+5)
+      current_plugins = start + me.extensions.length
+      for(i=0;i< me.extensions.length;i++){
+        const this_i = i;
+        client.repo(me.extensions[this_i]).info(function(err,data){
+          if(err) {
+            store.loadMenus(); //Maxium calls error, 60calls/hour/ip
+            return callback(2);
+          }
+          request(`https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`, function (error, response, body2) {
+            const _package = JSON.parse(body2);
+            full_plugins.push({
+              git:data,
+              package:_package
+            })
+            const plugin = graviton.getPlugin(_package.name);
+            const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(plugin.local.version):false;
+            if(_new_update){
+              plugins_to_update = true;
+            }
+            if(err){
+              store.loadMenus();
+              return callback(3);
+            }
+            if(this_i==me.extensions.length-1 ){
+              let date = new Date
+              date = Number(date.getFullYear()+""+date.getMonth()+""+date.getDay())
+              const new_cache = {
+                "date":date,
+                "list":plugins_market,
+                "cache":full_plugins
+              }
+              fs.writeFile(market_file,JSON.stringify(new_cache), function(err) {
+                if(err) {
+                  return err;
+                }
+              });
+              store.loadMenus();
+              if(plugins_to_update){
+                new Notification({
+                  title:getTranslation('Market'),content:
+                  getTranslation('ExtUpdateNotification')
+                })
+              }
+              if(callback!=undefined) callback();
+            }
+          });
+        })
+      };
     },
     openSubExtensions: function(data){
       const plugin  = graviton.getPlugin(data.getAttribute("name"));
@@ -405,6 +426,9 @@ const extensions ={
       const rimraf = require('rimraf')
       rimraf.sync(market_file)
       full_plugins = []
+      current_plugins = 0
+      plugins_market = []
+      extensions.extensions = []
       closeWindow('market_window')
     }
   }
@@ -511,3 +535,5 @@ const installCli = function(){
     })
   })
 }
+
+
