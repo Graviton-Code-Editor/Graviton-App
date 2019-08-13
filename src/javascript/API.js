@@ -647,30 +647,6 @@ const graviton = {
     lang_ele.setAttribute("title",`Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
     lang_ele.innerText = lang;
   },
-  toggleMiniMap(){
-    if(current_config.miniMapPreferences=='activated'){
-      current_config.miniMapPreferences='desactivated'
-      if(tabs.length==0) return; //Doesn't need to throw the warn notification since there is any tab opened
-      new Notification({
-        title:getTranslation('MiniMap'),
-        content:getTranslation('MiniMapDisabled'),
-        buttons:{
-          [getTranslation('Later')]:{
-            click:{}
-          },
-          [getTranslation('Restart')]:{
-            click:function(){
-              graviton.restartApp()
-            }
-          }
-        }
-
-      })
-    }else{
-      current_config.miniMapPreferences='activated'
-      editors.forEach((_editor)=>_editor.editor!=undefined?_editor.editor.setOption("miniMap",true):null)
-    }
-  },
   refreshStatusBarLinesAndChars(screen){
     if(editor==undefined){
       document.getElementById(screen).children[2].children[1].innerText = ""

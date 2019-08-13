@@ -167,10 +167,6 @@ const Settings = {
             <div class="section-1">
               <gv-switch  onclick="graviton.toggleHighlighting(); saveConfig();" class="${g_highlighting}"></gv-switch>
             </div>
-            <h4>${getTranslation("MiniMap")}</h4>
-            <div class="section-1">
-              <gv-switch  onclick="graviton.toggleMiniMap();  saveConfig();" class="${current_config.miniMapPreferences}"></gv-switch>
-            </div>
           `;
         document.getElementById("navB3").classList.add("active");
         break;

@@ -183,12 +183,6 @@ const Setup = {
                   current_config.bouncePreferences
                 }"></gv-switch>
               </div> 
-              <div class=section-4>
-                <p>${getTranslation("MiniMap")}</p>
-                <gv-switch  onclick="graviton.toggleMiniMap(); saveConfig();" class="${
-                  current_config.miniMapPreferences
-                }"></gv-switch>
-              </div> 
             </div> 
             </div>
             <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${

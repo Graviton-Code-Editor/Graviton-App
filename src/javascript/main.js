@@ -152,15 +152,14 @@ const loadEditor = info => {
             autoCloseTags: true,
             indentUnit: 2,
             id: info.dir,
+            screen: info.screen,
             styleActiveLine: true,
-            foldGutter: true,
             gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
             lineWrapping: current_config["lineWrappingPreferences"] == "activated"
 
           }
         );
         codemirror.focus()
-        codemirror.setOption("miniMap",current_config.miniMapPreferences=="activated"?true:false)
         const new_editor_text = {
           object: text_container,
           id: text_container.id,
@@ -169,8 +168,14 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
-        codemirror.on("cursorActivity", function() {
-          graviton.refreshStatusBarLinesAndChars(current_screen.id)
+        codemirror.on("cursorActivity", function(a) {
+          for (i = 0; i < editor_screens.length; i++) {
+            if (editor_screens[i].id == a.options.screen) {
+              current_screen.id = a.options.screen;
+              current_screen.terminal = editor_screens[i].terminal;
+              graviton.refreshStatusBarLinesAndChars(current_screen.id)
+            }
+          }  
         });
         text_container.focus();
         elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length-1)])
@@ -192,7 +197,7 @@ const loadEditor = info => {
             document.getElementById(editors[i].id).style.display = "none";
           }
         }
-        addWheelListener(text_container, function( e ) {
+        text_container.addEventListener("wheel", function( e ) {
           if(e.ctrlKey){
             if( e.deltaY <0){
               graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 1}`);

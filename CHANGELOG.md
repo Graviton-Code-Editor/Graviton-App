@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200813 - 2 [1.0.3]
+- Fixed, selecting text from another editor while having another one focused won't bug the line and char counter
+- Removed the minimap option due it was too unestable
+
 ### 200813 - 1 [1.0.3]
 - FluentMod caused to appear two Dark themes 
 - Added 2 tabs in the plugin opened page, Readme and permissions

@@ -40,10 +40,11 @@ let current_config = {
   accentColorPreferences: 'manual',
   blurPreferences: '3',
   bouncePreferences:'activated',
-  miniMapPreferences:'desactivated',
   version: undefined
 };
-
+if(!fs.existsSync(logDir)){
+  fs.writeFile(logDir, "[]");
+}
 function loadConfig() {
   // Loads the configuration from the config.json for the first time
   if (!fs.existsSync(configDir)) {
@@ -62,8 +63,9 @@ function loadConfig() {
   } else {
     const local_config = require(configDir);
     Object.keys(current_config).forEach(function(key, index) {
-      if (local_config[key] != undefined)
+      if (local_config[key] != undefined && current_config[key] !=undefined )
         current_config[key] = local_config[key]; // Will only change the extisting parameters
+      
     });
     updateSettings();
     screens.add(); //Creates the first screen
@@ -105,7 +107,6 @@ function saveConfig() {
     accentColorPreferences: current_config.accentColorPreferences,
     blurPreferences: current_config.blurPreferences,
     bouncePreferences: current_config.bouncePreferences,
-    miniMapPreferences:current_config.miniMapPreferences,
     version: g_version.version,
     build: g_version.date
   };

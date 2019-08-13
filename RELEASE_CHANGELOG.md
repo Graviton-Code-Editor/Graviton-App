@@ -4,7 +4,7 @@
 - You can now reorganize the tabs by dragging and dropping
 - Created a CLI (optional)
 - You can now create folders and files & remove them from the editor
-- Added a MiniMap (optional)
+- Refreshed default themes
 
 ## New
 
