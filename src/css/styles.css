@@ -426,3 +426,25 @@ h4 {
 {
   line-height:1.5em;
 }
+navbar a{
+  transition: 0.1s;
+  font-style: normal !important;
+  background: var(--secondaryColor);
+  border-radius: 5px;
+  padding:8px;
+  margin: 3px;
+  cursor: pointer;
+}
+navbar a:hover{
+  transition: 0.1s;
+  color:var(--accentColor)
+}
+navbar a.active{
+  transition: 0.1s;
+  background: var(--accentColor);
+  color:var(--black-white);
+}
+navbar a.active:hover{
+  transition: 0.1s;
+  background: var(--accentDarkColor);
+}

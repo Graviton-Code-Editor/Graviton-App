@@ -10,7 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 "use strict"
-
+log = require(logDir)
 let welcome_window;
 function openWelcome() {
   if(graviton.isProduction()==true){
@@ -64,20 +64,19 @@ function openWelcome() {
 		</div>`
   });
   welcome_window.launch();
-  const objectLog = require(logDir)
-  for (i = 0; i < objectLog.length; i++) {
+  for (i = 0; i < log.length; i++) {
     const project = document.createElement("div");
     project.setAttribute("class", "section-2");
     project.setAttribute(
       "onclick",
-      `loadDirs('${objectLog[i].Path.replace(
+      `loadDirs('${log[i].Path.replace(
         /\\/g,
         "\\\\"
       )}','g_directories','yes'); welcome_window.close();`
     );
-    project.innerText = objectLog[i].Name;
+    project.innerText = log[i].Name;
     const description = document.createElement("p");
-    description.innerText = objectLog[i].Path;
+    description.innerText = log[i].Path;
     description.setAttribute("style", "font-size:12px;");
     project.appendChild(description);
     if(  document.getElementById("recent_projects")==undefined) return;

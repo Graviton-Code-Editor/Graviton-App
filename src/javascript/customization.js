@@ -66,6 +66,33 @@ graviton.setTheme = function(name){
           }
         }
       }
+      const explorer_icons = document.getElementsByClassName("explorer_file_icon");
+      for(i=0;i<explorer_icons.length;i++){
+        explorer_icons[i].src= (function(){
+          if( explorer_icons[i].getAttribute("elementType")=="directory"){
+            return directories.getCustomIcon(explorer_icons[i].getAttribute("file"),explorer_icons[i].parentElement.parentElement.getAttribute("opened")=="false"?"close":"open")
+          }else{
+            if(themeObject.icons == undefined  ||(themeObject.icons[getFormat(explorer_icons[i].getAttribute("file")).lang]==undefined  && getFormat(explorer_icons[i].getAttribute("file")).trust==true ) ){
+              return `src/icons/files/${getFormat(
+                explorer_icons[i].getAttribute("file")
+              ).lang}.svg`
+            }else{
+              if(themeObject.icons[getFormat(explorer_icons[i].getAttribute("file")).lang] == undefined  && themeObject.icons[getFormat(explorer_icons[i].getAttribute("file")).format] == undefined){
+                return `src/icons/files/${getFormat(
+                  explorer_icons[i].getAttribute("file")
+                ).lang}.svg`
+              }
+              if(getFormat(explorer_icons[i].getAttribute("file")).trust==true){
+                return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(explorer_icons[i].getAttribute("file")).lang])
+              }else{
+                return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(explorer_icons[i].getAttribute("file")).format])
+              }
+            }
+          }
+          
+          
+        })()
+      }
       for (i = 0; i < editors.length; i++) {
         if(editors[i].editor!=undefined)editors[i].editor.setOption("theme", themeObject["highlight"]); //Update highlither after applying a new theme
       }

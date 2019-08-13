@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190812",
+  date: "190813",
   version: "1.0.3",
   state: "Beta"
 };
@@ -173,7 +173,6 @@ const loadEditor = info => {
           graviton.refreshStatusBarLinesAndChars(current_screen.id)
         });
         text_container.focus();
-        
         elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length-1)])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
@@ -181,9 +180,9 @@ const loadEditor = info => {
           getFormat(path.basename(info.dir)).lang != "unknown"
             ? getFormat(path.basename(info.dir)).lang
             : path
-                .basename(info.dir)
-                .split(".")
-                .pop()
+              .basename(info.dir)
+              .split(".")
+              .pop()
         ),info.screen);
         for (i = 0; i < editors.length; i++) {
           if (
@@ -749,10 +748,10 @@ function loadDirs(dir, app_id, f_t,callback) {
           paths[i]
         }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
           <div parent=${parent_id}  ID="${parent_id +"_div"}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="loadDirs('${_long_path}','${parent_id}',false)">
-            <img parent=${parent_id} ID="${parent_id+ "_img"}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
-          paths[i],
-          "close"
-        )}">
+            <img file=${paths[i]} class="explorer_file_icon" parent=${parent_id} ID="${parent_id+ "_img"}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
+              paths[i],
+              "close"
+            )}">
             <p parent=${parent_id} ID="${parent_id+ "_p"}" elementType=directory global=reload dir="${_long_path}">
             ${paths[i]}
             </p>
@@ -772,7 +771,7 @@ function loadDirs(dir, app_id, f_t,callback) {
         const file_temp = document.createElement("div");
         const parent_id =  _long_path.replace(/[\\\s]/g, "") +"_div";
         file_temp.innerHTML += `
-        <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="directorie" onclick="new Tab({
+        <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="file" onclick="new Tab({
           id:'${parent_id + "B"}',
           path:'${_long_path}',
           name:'${paths[i]}',
@@ -780,7 +779,7 @@ function loadDirs(dir, app_id, f_t,callback) {
         })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
           paths[i]
         }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="directorie" style="float:left; padding-right:3px; height:24px; width:24px;" src="${
+          <img file=${paths[i]} class="explorer_file_icon" parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="file" style="float:left; padding-right:3px; height:24px; width:24px;" src="${
             (function(){
               if(themeObject.icons == undefined  ||(themeObject.icons[getFormat(paths[i]).lang]==undefined  && getFormat(paths[i]).trust==true ) ){
                 return `src/icons/files/${getFormat(
@@ -797,11 +796,10 @@ function loadDirs(dir, app_id, f_t,callback) {
                 }else{
                   return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(paths[i]).format])
                 }
-                
               }
             })()
           }">
-          <p parent="${parent_id}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="directorie">
+          <p parent="${parent_id}" ID="${parent_id+"_p"}" dir="${_long_path}" elementType="file">
           ${paths[i]}
           </p>
         </div>`;
@@ -955,6 +953,7 @@ const directories = {
             return "src/icons/folder_opened.svg";
           }
       }
+      
     }else{
       switch (dir) {
         case "node_modules":

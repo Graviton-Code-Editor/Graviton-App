@@ -52,7 +52,6 @@ const extensions ={
                 if(document.getElementById("loading_exts")!=undefined){
                   document.getElementById("loading_exts").remove();
                 }
-               
                 const sec_ID = 'sec'+Math.random().toString();
                 const _new_update = plugin.local!=undefined?getVersionSum(_package.version)>getVersionSum(graviton.getPlugin(_package.name).local.version):false;
                 document.getElementById('sec_all').innerHTML +=`
@@ -70,7 +69,6 @@ const extensions ={
                   <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; console.log('hola'); extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
                 </div>`
               }
-              
             }
           return
         case 'installed':
@@ -279,18 +277,54 @@ const extensions ={
               </div> 
             </div>
           </div>
+          <div class=ext_content >
+            <navbar style="display:flex; justify-content:center; align-items:center">
+              <a class="active" onclick="this.parentElement.children[1].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='block';this.parentElement.parentElement.children[1].children[0].style.display='none';">${getTranslation("Readme")}</a>
+              <a onclick="this.parentElement.children[0].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='none';this.parentElement.parentElement.children[1].children[0].style.display='block';">${getTranslation("Permissions")}</a>
+            </navbar>
+            <div>
+              <div style="display:none;">
+                <ul>
+
+                  ${
+                    (function(){
+                      let html = "";
+                      if(plugin.repo!=undefined?plugin.repo.package.icons:plugin.local.icons == undefined){
+                        html += `<li>${getTranslation("PermissionCustomIcons")}</li>`
+                      }
+                      if(plugin.repo!=undefined?plugin.repo.package.css:plugin.local.css == undefined){
+                        html += `<li>${getTranslation("PermissionCustomStyling")}</li>`
+                      }
+                      if(plugin.repo!=undefined?plugin.repo.package.colors:plugin.local.colors == undefined){
+                        html += `<li>${getTranslation("PermissionCustomColors")}</li>`
+                      }
+                      if(plugin.repo!=undefined?plugin.repo.package.main:plugin.local.main == undefined){
+                        html += `<li>${getTranslation("PermissionExecuteJavaScript")}</li>`
+                      }
+                      return html;
+                    })()
+                  }
+                  
+                <ul>
+
+              </div>
+              <div id=${data.getAttribute("name")+'_div2'}>
+                  <p>Loading...</p>
+              </div>
+            </div>
+          </div>
         </div>`
         });
         ext_win.launch();
         if(plugin.local!=undefined){
           fs.readFile(path.join(plugins_folder, data.getAttribute("name"),"readme.md"), "utf8", function(err, readme) {
-            document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!err?marked(readme):getTranslation("NoReadme")}</div>`
+            document.getElementById(data.getAttribute('name')+'_div2').innerHTML = `<div style="flex:1;" >${!err?marked(readme):getTranslation("NoReadme")}</div>`
           });
         }else{
           const request = require("request");
           request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
             if(document.getElementById(data.getAttribute('name')+'_div')==undefined) return;  
-            document.getElementById(data.getAttribute('name')+'_div').innerHTML += `<div class=ext_content>${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
+            document.getElementById(data.getAttribute('name')+'_div2').innerHTML = `<div style="flex:1;" >${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
           })
         }
     },
@@ -459,6 +493,7 @@ const extensions ={
             link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][i])),
             document.body.appendChild(link);
             if(i==config.css.length-1){
+              
               return call!=undefined?call():"";
             }
           }

@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200813 - 1 [1.0.3]
+- FluentMod caused to appear two Dark themes 
+- Added 2 tabs in the plugin opened page, Readme and permissions
+- When closing files the line and char counter wasn't been hiding
+- When changing themes it also loads it's custom icons
+
 ### 200812 - 1 [1.0.3]
 - Now themes can use custom icons
 - New file & folder input now are focused by default

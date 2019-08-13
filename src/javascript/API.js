@@ -74,7 +74,7 @@ const context_menu_list_tabs = {
     );
   }
 };
-const context_menu_list_directories = {
+const context_menu_list_file = {
   Remove: function() {
     directories.removeFileDialog(
       document.getElementById(
@@ -330,7 +330,7 @@ const graviton = {
   dialogAbout: function() {
     new Dialog({
       id: "about",
-      title: getTranslation("About"),
+      title: getTranslation("About") + " Graviton",
       content: `
 	      ${getTranslation("Version")}: ${g_version.version} (${
         g_version.date
@@ -354,7 +354,7 @@ const graviton = {
     ) {
       new Dialog({
         id: "changelog",
-        title: `${getTranslation("Changelog")} - ${g_version.version}`,
+        title: `${getTranslation("Changelog")} - v${g_version.version}`,
         content: `<div style="padding:2px;">${marked(data)}</div>`,
         buttons: {
           [getTranslation("Close")]: {}
@@ -674,12 +674,11 @@ const graviton = {
   refreshStatusBarLinesAndChars(screen){
     if(editor==undefined){
       document.getElementById(screen).children[2].children[1].innerText = ""
-    document.getElementById(screen).children[2].children[1].removeAttribute("title");
+      document.getElementById(screen).children[2].children[1].removeAttribute("title");
     }else{
       document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line +"/"+ editor.getCursor().ch
-    document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line} , Char: ${editor.getCursor().ch}`
+      document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line} , Char: ${editor.getCursor().ch}`
     }
-    
   }
 };
 
@@ -706,19 +705,19 @@ document.addEventListener("mousedown", function(event) {
       context_menu.style = `left:${event.pageX + 1}px; top:${event.pageY +
         1}px`;
       switch (event.target.getAttribute("elementType")) {
-        case "directorie":
-          Object.keys(context_menu_list_directories).forEach(function(
+        case "file":
+          Object.keys(context_menu_list_file).forEach(function(
             key,
             index
           ) {
-            if(context_menu_list_directories[key]!="*line"){
+            if(context_menu_list_file[key]!="*line"){
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               button.innerText = getTranslation(key);
               button.setAttribute("target", event.target.id);
               context_menu.appendChild(button);
               sleeping(1).then(() => {
-                button.onclick = context_menu_list_directories[key];
+                button.onclick = context_menu_list_file[key];
               });
             }else{
               const span = document.createElement("span");

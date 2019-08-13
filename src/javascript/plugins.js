@@ -97,22 +97,23 @@ function detectPlugins(call) {
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
       if(paths.length == 0) return call != undefined ? call() : "";
-      for (i = 0; i < paths.length; i++)   {
-        const direct = fs.statSync(path.join(plugins_folder, paths[i]));
-        if (!fs.existsSync(path.join(plugins_folder, paths[i], "package.json"))) {
+      for (i = 0; loaded < paths.length; i++) {
+        const direct = fs.statSync(path.join(plugins_folder, paths[loaded]));
+        if (!fs.existsSync(path.join(plugins_folder, paths[loaded], "package.json"))) {
           loaded++;
         }
         if (!direct.isFile()) {
           try{
-             require(path.join(plugins_folder, paths[i], "package.json"))
+             require(path.join(plugins_folder, paths[loaded], "package.json"))
           }catch{
             if (loaded == paths.length) {
               return call != undefined ? call() : "";
             }
           }
-          const config = require(path.join(plugins_folder, paths[i], "package.json"))
+          const config = require(path.join(plugins_folder, paths[loaded], "package.json"))
           plugins.install(config, function() {
             loaded++;
+            
             if (loaded == paths.length) {
               return call != undefined ? call() : "";
             }
