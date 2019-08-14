@@ -339,3 +339,50 @@ div.CodeMirror-dragcursors {
 
 /* Help users use markselection to safely style text background */
 span.CodeMirror-selectedtext { background: none; }
+
+.CodeMirror-dialog {
+  animation: show_down linear 0.1s;
+  position: absolute;
+  left: 0; right: 0;
+  background: inherit;
+  background-color: var(--secondaryColor);
+  box-shadow: 0px 3px 5px var(--shadows);
+  z-index: 15;
+  padding: .3em .8em;
+  overflow: hidden;
+  color: var(--white-black);
+  font-family: _main_font;
+}
+@keyframes show_down{
+  from{
+    transform: translateY(-10px);
+    opacity: 0.7;
+  }
+  to{
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+.CodeMirror-dialog-top {
+  border-bottom: 1px solid transparent;
+  top: 0;
+}
+
+.CodeMirror-dialog-bottom {
+  border-top: 1px solid transparent;
+  bottom: 0;
+}
+
+.CodeMirror-dialog input {
+  border: none;
+  outline: none;
+  background: transparent;
+  background-color: var(--secondaryColor);
+  width: 2em;
+  color: var(--white-black);
+  font-size: 70%;
+}
+
+.CodeMirror-dialog button {
+  font-size: 70%;
+}

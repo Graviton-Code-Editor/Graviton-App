@@ -7,7 +7,7 @@
   The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 */
 .cm-s-lightui.CodeMirror { color: #999; background-color: var(--editorBackgroundColor); }
-.cm-s-lightui div.CodeMirror-selected { background: #cfc; }
+.cm-s-lightui div.CodeMirror-selected { background: rgba(78, 153, 252, 0.281); }
 .cm-s-lightui .CodeMirror-line::selection, .cm-s-lightui .CodeMirror-line > span::selection, .cm-s-lightui .CodeMirror-line > span > span::selection { background: #cfc; }
 .cm-s-lightui .CodeMirror-line::-moz-selection, .cm-s-lightui .CodeMirror-line > span::-moz-selection, .cm-s-lightui .CodeMirror-line > span > span::-moz-selection { background: #cfc; }
 

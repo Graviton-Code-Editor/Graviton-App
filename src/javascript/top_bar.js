@@ -19,7 +19,11 @@ const File = new dropMenu({
   translation: true
 });
 const Tools = new dropMenu({
-  if: "tools",
+  id: "tools",
+  translation: true
+});
+const Edit = new dropMenu({
+  id: "edit",
   translation: true
 });
 const Editor = new dropMenu({
@@ -54,15 +58,21 @@ File.setList({
     }
   }
 });
-Tools.setList({
-  button: "Tools",
-  list: {
-    Market: () => {
-      extensions.openStore(function (err) {
-        extensions.navigate("all", err);
-      });
+Edit.setList({
+  button:"Edit",
+  list:{
+    Undo:{
+      click:()=>{
+        editor.execCommand("undo");
+      },
+      hint:"Ctrl+Z"
     },
-    ShowWelcome: () => openWelcome(),
+    Redo:{
+      click:()=>{
+        editor.execCommand("redo");
+      },
+      hint:"Ctrl+Y"
+    },
     "1a": "*line",
     Search: {
       click: () => graviton.editorSearch(),
@@ -76,6 +86,21 @@ Tools.setList({
       click: () => graviton.editorJumpToLine(),
       hint: "Alt+G"
     },
+  }
+})
+Tools.setList({
+  button: "Tools",
+  list: {
+    Market: () => {
+      extensions.openStore(function (err) {
+        extensions.navigate("all", err);
+      });
+    },
+    ShowWelcome: () => openWelcome(),
+    "Zen Mode": {
+      click: () => graviton.toggleZenMode(),
+      hint: "Ctrl+E"
+    },    
     "2a": "*line",
     Settings: {
       click: () => {
@@ -87,14 +112,10 @@ Tools.setList({
 
   }
 });
+
 Editor.setList({
   button: "Editor",
   list: {
-    "Zen Mode": {
-      click: () => graviton.toggleZenMode(),
-      hint: "Ctrl+E"
-    },
-    a1: "*line",
     DefaultView: () => screens.default(),
     SplitScreen: {
       click: () => screens.add(),

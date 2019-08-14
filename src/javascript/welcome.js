@@ -13,21 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 let welcome_window;
 
-if (!graviton.isProduction()) {
-  new Notification({
-    title: "Graviton",
-    content: "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
-    delay: '10000',
-    buttons: {
-      'Dev tools': {
-        click: function () {
-          graviton.openDevTools()
-        }
-      },
-      'Close':{}
-    }
-  })
-}
+
 
 function openWelcome() {
   if (graviton.isProduction() == true) {
@@ -210,6 +196,21 @@ const Setup = {
         `;
         break;
       case "welcome":
+          if (!graviton.isProduction()) {
+            new Notification({
+              title: "Graviton",
+              content: "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
+              delay: '10000',
+              buttons: {
+                'Dev tools': {
+                  click: function () {
+                    graviton.openDevTools()
+                  }
+                },
+                'Close':{}
+              }
+            })
+          }
         document.getElementById("body_window_full").innerHTML = `
           <h1 style=" font-size:5vh;
           transform:translate(-50%,-50%);

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200814 - 3 [1.0.3]
+- Fixed from previous commits, codemirror dialogs were the default.
+- Added a new menu, Edit, and re structured the menus.
+
 ### 200814 - 2 [1.0.3]
 - Fixed, cannot read the reame of plugins in the market
 

@@ -142,5 +142,8 @@
 	"PermissionCustomIcons":"Customize the files icons",
 	"PermissionCustomStyling":"Customize the app styling",
 	"PermissionCustomColors":"Customize the app colors",
-	"PermissionExecuteJavaScript":"Execute JavaScript code"
+	"PermissionExecuteJavaScript":"Execute JavaScript code",
+	"Edit":"Edit",
+	"Undo":"Undo",
+	"Redo":"Redo"
 }
