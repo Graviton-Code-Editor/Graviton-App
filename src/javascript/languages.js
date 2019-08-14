@@ -12,21 +12,21 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 let languages = [];
 /*
-  * 
-  * Load the languages JSON files and push it to an array
-  *
-*/
-(() =>{
+ * 
+ * Load the languages JSON files and push it to an array
+ *
+ */
+(() => {
   fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
     paths.forEach(dir => {
-      fs.readFile(path.join(__dirname, "languages", dir), "utf8", function(
+      fs.readFile(path.join(__dirname, "languages", dir), "utf8", function (
         err,
         data
       ) {
         if (err) throw err;
-        try{
-           JSON.parse(data);
-        }catch{ 
+        try {
+          JSON.parse(data);
+        } catch {
           return;
         }
         const obj = JSON.parse(data);
@@ -38,7 +38,7 @@ let languages = [];
     });
   });
 })()
-  
+
 const loadLanguage = language => {
   languages.map((item, index) => {
     if (item["g_l"] === language) {
@@ -52,7 +52,7 @@ const loadLanguage = language => {
             if (item["g_l"] === "english") {
               if (item[toTranslate[i].getAttribute("idT")] != undefined)
                 toTranslate[i].innerText =
-                  item[toTranslate[i].getAttribute("idT")];
+                item[toTranslate[i].getAttribute("idT")];
             }
           });
         }

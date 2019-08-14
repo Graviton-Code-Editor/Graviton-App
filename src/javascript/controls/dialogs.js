@@ -29,13 +29,13 @@ closeDialog('my_dialog1'); //Close the dialog by passing the id
 "use strict"
 
 module.exports = {
-  Dialog: function(dialogObject) {
+  Dialog: function (dialogObject) {
     if (typeof [...arguments] != "object") {
       graviton.throwError("Parsed argument is not object.");
       return;
     }
     const all = document.createElement("div");
-    all.id =  dialogObject.id + "_dialog";
+    all.id = dialogObject.id + "_dialog";
     all.innerHTML = `
       <div myID="${
         dialogObject.id
@@ -52,12 +52,12 @@ module.exports = {
           </elastic-container>
       </div>
       <div class="buttons" style="display:flex;"></div>`;
-    Object.keys(dialogObject.buttons).forEach(function(key, index) {
+    Object.keys(dialogObject.buttons).forEach(function (key, index) {
       const button = document.createElement("button");
       button.innerText = key;
       button.setAttribute("myID", dialogObject.id);
       sleeping(1).then(() => {
-        button.addEventListener("click",dialogObject.buttons[key].click)
+        button.addEventListener("click", dialogObject.buttons[key].click)
         button.setAttribute("onclick", "closeDialog(this)")
       });
       button.setAttribute(
@@ -74,7 +74,7 @@ module.exports = {
         Number(document.getElementById("body").getAttribute("windows")) + 1
       );
     document.body.appendChild(all);
-    this.close = function(me) {
+    this.close = function (me) {
       closeDialog(me);
     };
   },

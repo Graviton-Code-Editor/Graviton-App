@@ -12,25 +12,36 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190813",
+  date: "190814",
   version: "1.0.3",
   state: "Beta"
 };
 const os = require("os"),
-  { shell } = require("electron"),
+  {
+    shell
+  } = require("electron"),
   fs = require("fs-extra"),
-  { dialog } = require("electron").remote,
+  {
+    dialog
+  } = require("electron").remote,
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,
   app = require("electron").remote,
   getAppDataPath = require("appdata-path"),
-  { webFrame } = require("electron"),
+  {
+    webFrame
+  } = require("electron"),
   g_window = require("electron").remote.getCurrentWindow(),
-  { systemPreferences } = require("electron").remote,
+  {
+    systemPreferences
+  } = require("electron").remote,
   url = require("url"),
   marked = require("marked"),
-  updater = require("./src/javascript/updater") /*Import the update module*/,
+  updater = require("./src/javascript/updater") /*Import the update module*/ ,
   fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
+
+const CodeMirror = require("codemirror")
+
 let current_screen,
   dir_path,
   i,
@@ -68,7 +79,10 @@ let current_screen,
   editor_screens = [],
   dictionary = autocomplete;
 
-if(graviton.isProduction()){
+require(path.join(__dirname, 'src', 'javascript', 'controls', 'modes.js')).langs()
+
+
+if (graviton.isProduction()) {
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
 }
 
@@ -83,7 +97,7 @@ let logDir = path.join(DataFolderDir, "log.json"),
 
 document.addEventListener(
   "mousedown",
-  function(event) {
+  function (event) {
     if (event.which) mouseClicked = true;
   },
   true
@@ -91,18 +105,18 @@ document.addEventListener(
 
 document.addEventListener(
   "mouseup",
-  function(event) {
+  function (event) {
     if (event.which) mouseClicked = false;
   },
   true
 );
 document.addEventListener(
   "mousemove",
-  function(event) {
+  function (event) {
     if (mouseClicked && touchingResizerValue) {
       const explorer = document.getElementById("explorer_app");
       explorer.style = `width: ${event.clientX - 3}px`;
-      for(i=0;i<editors.length;i++){
+      for (i = 0; i < editors.length; i++) {
         editors[i].object.blur()
       }
       graviton.resizeTerminals();
@@ -139,15 +153,13 @@ const loadEditor = info => {
           .getElementById(current_screen.id)
           .children[1].appendChild(text_container);
         let codemirror = CodeMirror(
-          document.getElementById(text_container.id),
-          {
+          document.getElementById(text_container.id), {
             value: info.data,
             mode: "text/plain",
             htmlMode: false,
-            theme:
-              themeObject["highlight"] != undefined
-                ? themeObject["highlight"]
-                : "default",
+            theme: themeObject["highlight"] != undefined ?
+              themeObject["highlight"] :
+              "default",
             lineNumbers: true,
             autoCloseTags: true,
             indentUnit: 2,
@@ -168,27 +180,27 @@ const loadEditor = info => {
           screen: info.screen,
           type: info.type
         };
-        codemirror.on("cursorActivity", function(a) {
+        codemirror.on("cursorActivity", function (a) {
           for (i = 0; i < editor_screens.length; i++) {
             if (editor_screens[i].id == a.options.screen) {
               current_screen.id = a.options.screen;
               current_screen.terminal = editor_screens[i].terminal;
               graviton.refreshStatusBarLinesAndChars(current_screen.id)
             }
-          }  
+          }
         });
         text_container.focus();
-        elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length-1)])
+        elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length - 1)])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
         graviton.changeLanguageStatusBar(getLanguageName(
-          getFormat(path.basename(info.dir)).lang != "unknown"
-            ? getFormat(path.basename(info.dir)).lang
-            : path
-              .basename(info.dir)
-              .split(".")
-              .pop()
-        ),info.screen);
+          getFormat(path.basename(info.dir)).lang != "unknown" ?
+          getFormat(path.basename(info.dir)).lang :
+          path
+          .basename(info.dir)
+          .split(".")
+          .pop()
+        ), info.screen);
         for (i = 0; i < editors.length; i++) {
           if (
             editors[i].screen == info.screen &&
@@ -197,11 +209,11 @@ const loadEditor = info => {
             document.getElementById(editors[i].id).style.display = "none";
           }
         }
-        text_container.addEventListener("wheel", function( e ) {
-          if(e.ctrlKey){
-            if( e.deltaY <0){
+        text_container.addEventListener("wheel", function (e) {
+          if (e.ctrlKey) {
+            if (e.deltaY < 0) {
               graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 1}`);
-            }else if(e.deltaY >0){
+            } else if (e.deltaY > 0) {
               graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) - 1}`);
             }
           }
@@ -209,7 +221,7 @@ const loadEditor = info => {
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
         text_container.style.display = "block";
-        codemirror.on("focus", function(a) {
+        codemirror.on("focus", function (a) {
           for (i = 0; i < editors.length; i++) {
             if (editors[i].id == a.options.id.replace(/[\\\s]/g, "") + "_editor") {
               editor = editors[i].editor;
@@ -240,7 +252,7 @@ const loadEditor = info => {
           .getElementById(current_screen.id)
           .children[1].appendChild(image_container);
         const new_editor_image = {
-          object:image_container,
+          object: image_container,
           id: info.dir.replace(/\\/g, "") + "_editor",
           editor: undefined,
           path: info.dir,
@@ -259,7 +271,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_image.id;
-        graviton.changeLanguageStatusBar("Image",info.screen)
+        graviton.changeLanguageStatusBar("Image", info.screen)
         break;
       case "free":
         const free_id = "free_tab" + Math.random();
@@ -294,7 +306,7 @@ const loadEditor = info => {
           info.dir.replace(/\\/g, "") + "_editor"
         ).style.display = "block";
         editorID = new_editor_free.id;
-        graviton.changeLanguageStatusBar("",info.screen);
+        graviton.changeLanguageStatusBar("", info.screen);
         break;
     }
   } else {
@@ -311,20 +323,20 @@ const loadEditor = info => {
           // Editors
           editor = editors[i].editor;
           graviton.changeLanguageStatusBar(getLanguageName(
-            getFormat(path.basename(info.dir)).lang != "unknown"
-              ? getFormat(path.basename(info.dir)).lang
-              : path
-                  .basename(info.dir)
-                  .split(".")
-                  .pop()
-          ),info.screen);
+            getFormat(path.basename(info.dir)).lang != "unknown" ?
+            getFormat(path.basename(info.dir)).lang :
+            path
+            .basename(info.dir)
+            .split(".")
+            .pop()
+          ), info.screen);
           graviton.refreshStatusBarLinesAndChars(info.screen)
         } else if (info.type != "free") {
           // Images
-          graviton.changeLanguageStatusBar("Image",info.screen);
+          graviton.changeLanguageStatusBar("Image", info.screen);
         } else {
           //Free tabs (custom)
-          graviton.changeLanguageStatusBar("",info.screen);
+          graviton.changeLanguageStatusBar("", info.screen);
         }
         editorID = editors[i].id;
         document.getElementById(editorID).style.display = "block";
@@ -337,7 +349,7 @@ const loadEditor = info => {
     var list = [];
     for (var i = 0; i < arr.length; i++) {
       var curr = arr[i];
-      Object.keys(curr).some(function(key) {
+      Object.keys(curr).some(function (key) {
         if (typeof curr[key] === "string" && curr[key].includes(searchKey)) {
           list.push(curr);
         }
@@ -346,7 +358,7 @@ const loadEditor = info => {
     return cb(list);
   }
   if (editor != undefined) {
-    editor.on("change", function() {
+    editor.on("change", function () {
       const close_icon = document.getElementById(editingTab);
       close_icon.setAttribute("file_status", "unsaved");
       close_icon.children[1].innerHTML = icons["unsaved"];
@@ -358,38 +370,47 @@ const loadEditor = info => {
         const cursorPos = editor.cursorCoords();
         const A1 = editor.getCursor().line;
         const A2 = editor.getCursor().ch;
-        const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch;
-        const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch;
-        const lastWord = editor.getRange(
-          { line: A1, ch: B1 },
-          { line: A1, ch: B2 }
-        );
+        const B1 = editor.findWordAt({
+          line: A1,
+          ch: A2
+        }).anchor.ch;
+        const B2 = editor.findWordAt({
+          line: A1,
+          ch: A2
+        }).head.ch;
+        const lastWord = editor.getRange({
+          line: A1,
+          ch: B1
+        }, {
+          line: A1,
+          ch: B2
+        });
         const context = document.getElementById("context");
         if (context.style.display == "block") return;
-        const selectedLangNum = (function() {
+        const selectedLangNum = (function () {
           for (i = 0; i < dictionary.length; i++) {
             if (
               dictionary[i].name ==
               path
-                .basename(graviton.getCurrentFile().path)
-                .split(".")
-                .pop()
+              .basename(graviton.getCurrentFile().path)
+              .split(".")
+              .pop()
             ) {
               return i;
             }
           }
         })();
-        if(selectedLangNum==undefined) return;
+        if (selectedLangNum == undefined) return;
         let dic = dictionary[selectedLangNum].list;
         const vars = look(
           editor.getValue()
-          .replace (/(\r\n|\n|\r)/gm, ' ')
-          .split (
+          .replace(/(\r\n|\n|\r)/gm, ' ')
+          .split(
             /\s|(\()([\w\s!?="`[<>,\/*':&.;_-{}]+)(\))|\s|(\<)([\w\s!?="`[,\/*()':&.;_-{}]+)(\>)|\s|(\()([\w\s!?="<>`[,'+:&.;_-{}]+)(\))\s|(\B\$)(\w+)|\s(\/\*)([\w\s!?()="<>`[':.;_-{}]+)(\*\/)|("[\w\s!?():=`.;_-{}]+")\s|(%%)([\w\s!?()="+<>`[\/'*,.;_-{}]+)(%%)|("[\w\s!?()='.`;_-{}]+")/g
           ).filter(Boolean)
         )
         dic = dic.concat(vars)
-        filterIt(dic, lastWord, function(
+        filterIt(dic, lastWord, function (
           filterResult
         ) {
           if (filterResult.length > 0 && lastWord.length >= 3) {
@@ -404,16 +425,26 @@ const loadEditor = info => {
               context.innerHTML = contextOptions;
               sleeping(1).then(() => {
                 if (document.getElementById(id) == null) return;
-                document.getElementById(id).onclick = function() {
+                document.getElementById(id).onclick = function () {
                   const A1 = editor.getCursor().line;
                   const A2 = editor.getCursor().ch;
-                  const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch;
-                  const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch;
+                  const B1 = editor.findWordAt({
+                    line: A1,
+                    ch: A2
+                  }).anchor.ch;
+                  const B2 = editor.findWordAt({
+                    line: A1,
+                    ch: A2
+                  }).head.ch;
                   const selected = this.innerText;
                   editor.replaceRange(
-                    selected,
-                    { line: A1, ch: B1 },
-                    { line: A1, ch: B2 }
+                    selected, {
+                      line: A1,
+                      ch: B1
+                    }, {
+                      line: A1,
+                      ch: B2
+                    }
                   );
                   context.parentElement.style.display = "none";
                   context.innerHTML = "";
@@ -423,8 +454,7 @@ const loadEditor = info => {
             context.parentElement.style = `top:${cursorPos.top + 30}px; left:${
               cursorPos.left
             }px; display:block;`;
-            if (cursorPos.top < window.innerHeight / 2) {
-            } //Cursor is above the mid height
+            if (cursorPos.top < window.innerHeight / 2) {} //Cursor is above the mid height
             context.children[0].classList.add("hover");
           } else if (filterResult.length === 0 || lastWord.length < 3) {
             context.parentElement.style.display = "none";
@@ -433,28 +463,28 @@ const loadEditor = info => {
         });
       }
     });
-    editor.on("keydown", function(editor, e) {
+    editor.on("keydown", function (editor, e) {
       if (
         document.getElementById("context").parentElement.style.display != "none"
       ) {
         editor.setOption("extraKeys", {
-          Up: function() {
+          Up: function () {
             return CodeMirror.PASS;
           },
-          Down: function() {
+          Down: function () {
             return CodeMirror.PASS;
           },
-          Enter: function() {
+          Enter: function () {
             return CodeMirror.PASS;
           },
-          Tab: function() {
+          Tab: function () {
             return CodeMirror.PASS;
           },
         });
       } else {
         editor.setOption("extraKeys", {
           Up: "goLineUp",
-          Down:"goLineDown"
+          Down: "goLineDown"
         });
       }
       const context = document.getElementById("context");
@@ -486,9 +516,15 @@ const loadEditor = info => {
             //9 = Tab & 13 = Enter
             const A1 = editor.getCursor().line;
             const A2 = editor.getCursor().ch;
-            const B1 = editor.findWordAt({ line: A1, ch: A2 }).anchor.ch;
-            const B2 = editor.findWordAt({ line: A1, ch: A2 }).head.ch;
-            const selected = (function() {
+            const B1 = editor.findWordAt({
+              line: A1,
+              ch: A2
+            }).anchor.ch;
+            const B2 = editor.findWordAt({
+              line: A1,
+              ch: A2
+            }).head.ch;
+            const selected = (function () {
               for (i = 0; i < childs.length; i++) {
                 if (childs[i].classList.contains("hover")) {
                   return childs[i].innerText;
@@ -496,12 +532,16 @@ const loadEditor = info => {
               }
             })();
             editor.replaceRange(
-              selected,
-              { line: A1, ch: B1 },
-              { line: A1, ch: B2 }
+              selected, {
+                line: A1,
+                ch: B1
+              }, {
+                line: A1,
+                ch: B2
+              }
             );
             context.innerHTML = "";
-            setTimeout(function() {
+            setTimeout(function () {
               context.parentElement.style.display = "none";
               context.innerHTML = "";
             }, 1);
@@ -510,84 +550,84 @@ const loadEditor = info => {
       }
     });
     editor.addKeyMap({
-      "Ctrl-S": function(cm) {
+      "Ctrl-S": function (cm) {
         saveFile();
       },
-      "Ctrl-N": function(cm) {
+      "Ctrl-N": function (cm) {
         screens.add();
       },
-      "Ctrl-L": function(cm) {
+      "Ctrl-L": function (cm) {
         screens.remove(current_screen.id);
       },
-      "Ctrl-E": function(cm) {
+      "Ctrl-E": function (cm) {
         graviton.toggleZenMode();
       },
-      "Ctrl-T": function(cm) {
+      "Ctrl-T": function (cm) {
         if (current_screen.terminal != undefined) {
           commanders.show(current_screen.terminal.id);
           return;
         }
         commanders.terminal();
       },
-      "Ctrl-U": function(cm) {
+      "Ctrl-U": function (cm) {
         commanders.closeTerminal();
       },
-      "Ctrl-H": function(cm) {
+      "Ctrl-H": function (cm) {
         if (current_screen.terminal != undefined) {
           commanders.hide(current_screen.terminal.id);
         }
       },
-      'F11': function(cm) {
+      'F11': function (cm) {
         if (g_window.isFullScreen() == false) {
           g_window.setFullScreen(true);
         } else {
           g_window.setFullScreen(false);
         }
       },
-      "Ctrl-Tab": function(cm) {
+      "Ctrl-Tab": function (cm) {
         graviton.toggleMenus();
       },
-      "Ctrl-Up": function(cm) {
+      "Ctrl-Up": function (cm) {
         graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) + 2}`);
       },
-      "Ctrl-Down": function(cm) {
+      "Ctrl-Down": function (cm) {
         graviton.setEditorFontSize(`${Number(current_config.fontSizeEditor) - 2}`);
       }
     });
   }
 };
 const appendBinds = () => {
-  Mousetrap.bind("mod+s", function() {
+  Mousetrap.bind("mod+s", function () {
     saveFile();
   });
-  Mousetrap.bind("mod+n", function() {
+  Mousetrap.bind("mod+n", function () {
     screens.add();
   });
-  Mousetrap.bind("mod+l", function() {
+  Mousetrap.bind("mod+l", function () {
     screens.remove(current_screen.id);
   });
-  Mousetrap.bind("mod+e", function() {
+  Mousetrap.bind("mod+e", function () {
     graviton.toggleZenMode();
   });
-  Mousetrap.bind("mod+t", function() {
+  Mousetrap.bind("mod+t", function () {
     if (current_screen.terminal != undefined) {
       commanders.show(current_screen.terminal.id);
       return;
     }
     commanders.terminal();
   });
-  Mousetrap.bind("mod+u", function() {
+  Mousetrap.bind("mod+u", function () {
     commanders.closeTerminal();
   });
-  Mousetrap.bind("mod+h", function() {
+  Mousetrap.bind("mod+h", function () {
     if (current_screen.terminal != undefined) {
       commanders.hide(current_screen.terminal.id);
     }
   });
-  Mousetrap.bind("f11", function() {
+  Mousetrap.bind("f11", function () {
     graviton.toggleFullScreen();
   });
-  Mousetrap.bind("mod+tab", function() {
+  Mousetrap.bind("mod+tab", function () {
     graviton.toggleMenus();
   });
 };
@@ -601,8 +641,8 @@ function saveFileAs() {
       }
       filepath = fileName;
       new Notification({
-        title:"Graviton",
-        content:`The file has been succesfully saved in ${fileName}`
+        title: "Graviton",
+        content: `The file has been succesfully saved in ${fileName}`
       });
     });
   });
@@ -624,7 +664,9 @@ function openFile() {
 }
 
 function openFolder() {
-  dialog.showOpenDialog({ properties: ["openDirectory"] }, selectedFiles => {
+  dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  }, selectedFiles => {
     if (selectedFiles === undefined) return;
     loadDirs(selectedFiles[0], "g_directories", true);
   });
@@ -640,8 +682,8 @@ function saveFile() {
         .children[1].setAttribute(
           "onclick",
           document
-            .getElementById(editingTab)
-            .children[1].getAttribute("onclose")
+          .getElementById(editingTab)
+          .children[1].getAttribute("onclose")
         );
       document.getElementById(editingTab).children[1].innerHTML =
         icons["close"];
@@ -655,7 +697,7 @@ function saveFile() {
   }
 }
 
-function loadDirs(dir, app_id, f_t,callback) {
+function loadDirs(dir, app_id, f_t, callback) {
   const first_time =
     f_t == (true || "true") ? true : f_t == "reload" ? false : f_t;
   if (!fs.existsSync(dir)) {
@@ -734,8 +776,8 @@ function loadDirs(dir, app_id, f_t,callback) {
     if (paths == undefined || err) {
       graviton.throwError(
         "Cannot read files on the directory :" +
-          FirstFolder +
-          ". Check the permissions."
+        FirstFolder +
+        ". Check the permissions."
       );
       return;
     }
@@ -747,7 +789,7 @@ function loadDirs(dir, app_id, f_t,callback) {
       const stats = fs.statSync(_long_path);
       if (stats.isDirectory()) {
         const directory_temp = document.createElement("div");
-        const parent_id =  _long_path.replace(/[\\\s]/g, "") + "_div";
+        const parent_id = _long_path.replace(/[\\\s]/g, "") + "_div";
         directory_temp.innerHTML += `
         <div title=${path.join(dir, paths[i])} global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
           paths[i]
@@ -774,7 +816,7 @@ function loadDirs(dir, app_id, f_t,callback) {
       const stats = fs.statSync(_long_path);
       if (stats.isFile()) {
         const file_temp = document.createElement("div");
-        const parent_id =  _long_path.replace(/[\\\s]/g, "") +"_div";
+        const parent_id = _long_path.replace(/[\\\s]/g, "") + "_div";
         file_temp.innerHTML += `
         <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="file" onclick="new Tab({
           id:'${parent_id + "B"}',
@@ -792,9 +834,12 @@ function loadDirs(dir, app_id, f_t,callback) {
                 ).lang}.svg`
               }else{
                 if(themeObject.icons[getFormat(paths[i]).lang] == undefined  && themeObject.icons[getFormat(paths[i]).format] == undefined){
-                  return `src/icons/files/${getFormat(
-                    paths[i]
-                  ).lang}.svg`
+                  return `
+        src / icons / files / $ {
+          getFormat(
+            paths[i]
+          ).lang
+        }.svg `
                 }
                 if(getFormat(paths[i]).trust==true){
                   return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(paths[i]).lang])
@@ -811,72 +856,72 @@ function loadDirs(dir, app_id, f_t,callback) {
         working_folder.appendChild(file_temp);
       }
     }
-    callback!=undefined?callback():"";
+    callback != undefined ? callback() : "";
   });
 }
-const create ={
-  folder: function(id,value){
-    const element =  document.getElementById(id)
-    const dir = path.join(element.getAttribute('dir'),value)
-    if (!fs.existsSync(dir)){
-        fs.mkdirSync(dir);
-        loadDirs(
-          element.getAttribute('dir'),
-          element.id,
-          element.getAttribute("global")
-        ,function(){
+const create = {
+  folder: function (id, value) {
+    const element = document.getElementById(id)
+    const dir = path.join(element.getAttribute('dir'), value)
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+      loadDirs(
+        element.getAttribute('dir'),
+        element.id,
+        element.getAttribute("global"),
+        function () {
           //Created the new folder
         });
-    }else{
+    } else {
       new Notification({
-        title:"Graviton",
-        content:getTranslation("ExplorerError2")
+        title: "Graviton",
+        content: getTranslation("ExplorerError2")
       })
     }
   },
-  file: function(id,value){
-    const element =  document.getElementById(id)
-    const dir = path.join(element.getAttribute('dir'),value)
-    if (!fs.existsSync(dir)){
-        fs.writeFile(dir,"",function(){
-          loadDirs(
-            element.getAttribute('dir'),
-            element.id,
-            element.getAttribute("global")
-          ,function(){
+  file: function (id, value) {
+    const element = document.getElementById(id)
+    const dir = path.join(element.getAttribute('dir'), value)
+    if (!fs.existsSync(dir)) {
+      fs.writeFile(dir, "", function () {
+        loadDirs(
+          element.getAttribute('dir'),
+          element.id,
+          element.getAttribute("global"),
+          function () {
             //callback
           });
-        })
-    }else{
+      })
+    } else {
       new Notification({
-        title:"Graviton",
-        content:getTranslation("ExplorerError1")
+        title: "Graviton",
+        content: getTranslation("ExplorerError1")
       })
     }
   }
 }
 
 const directories = {
-  newFolder: function(object){
+  newFolder: function (object) {
     new Dialog({
       id: "new_folder",
       title: getTranslation("Dialog.RenameTo"),
       content: "<div  id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
       buttons: {
-        [getTranslation("Cancel")]:{},
+        [getTranslation("Cancel")]: {},
         [getTranslation(
           "Accept"
         )]: {
-          click:()=>{
-            create.folder(object,document.getElementById('rename_dialog').innerText)
+          click: () => {
+            create.folder(object, document.getElementById('rename_dialog').innerText)
           },
-          important:true
+          important: true
         }
       }
     });
     document.getElementById("rename_dialog").focus()
   },
-  newFile: function(object){
+  newFile: function (object) {
     new Dialog({
       id: "new_file",
       title: getTranslation("Dialog.RenameTo"),
@@ -886,16 +931,16 @@ const directories = {
         [getTranslation(
           "Accept"
         )]: {
-          click: ()=>{
-            create.file(object,document.getElementById('rename_dialog').innerText);
+          click: () => {
+            create.file(object, document.getElementById('rename_dialog').innerText);
           },
-          important:true
+          important: true
         }
       }
     });
     document.getElementById("rename_dialog").focus()
   },
-  removeFileDialog: function(object) {
+  removeFileDialog: function (object) {
     new Dialog({
       id: "remove_file",
       title: getTranslation("Dialog.AreYouSure"),
@@ -904,15 +949,15 @@ const directories = {
         [getTranslation("Cancel")]: {},
         [getTranslation(
           "Accept"
-        )]:{
-          click:()=>{
+        )]: {
+          click: () => {
             directories.removeFile(object.id);
           }
         }
       }
     });
   },
-  removeFolderDialog: function(object) {
+  removeFolderDialog: function (object) {
     new Dialog({
       id: "remove_folder",
       title: getTranslation("Dialog.AreYouSure"),
@@ -922,28 +967,28 @@ const directories = {
         [getTranslation(
           "Accept"
         )]: {
-          click:()=>{
+          click: () => {
             directories.removeFolder(object.id);
           }
         }
       }
     });
   },
-  removeFile: function(id) {
+  removeFile: function (id) {
     const object = document.getElementById(id);
-    fs.unlink(object.getAttribute("dir"), function(err) {
+    fs.unlink(object.getAttribute("dir"), function (err) {
       if (err) graviton.throwError(err);
       object.remove();
     });
   },
-  removeFolder: function(id) {
+  removeFolder: function (id) {
     const rimraf = require("rimraf");
     const object = document.getElementById(id);
     rimraf.sync(object.getAttribute("dir"))
     object.remove();
   },
-  getCustomIcon: function(dir, state) {
-    if(themeObject.icons == undefined ||  dir == "node_modules" ||  dir == ".git"   || (themeObject.icons["folder_closed"] == undefined && state == "close") || (themeObject.icons["folder_opened"] == undefined && state == "open")){
+  getCustomIcon: function (dir, state) {
+    if (themeObject.icons == undefined || dir == "node_modules" || dir == ".git" || (themeObject.icons["folder_closed"] == undefined && state == "close") || (themeObject.icons["folder_opened"] == undefined && state == "open")) {
       switch (dir) {
         case "node_modules":
           return "src/icons/custom_icons/node_modules.svg";
@@ -958,85 +1003,85 @@ const directories = {
             return "src/icons/folder_opened.svg";
           }
       }
-      
-    }else{
+
+    } else {
       switch (dir) {
         case "node_modules":
-          return path.join(themeObject.name,themeObject.icons["node_modules"])
+          return path.join(themeObject.name, themeObject.icons["node_modules"])
           break;
         case ".git":
-          return path.join(themeObject.name,themeObject.icons["git"])
+          return path.join(themeObject.name, themeObject.icons["git"])
           break;
         default:
           if (state == "close") {
-            return path.join(themeObject.name,themeObject.icons["folder_closed"])
+            return path.join(themeObject.name, themeObject.icons["folder_closed"])
           } else {
-            return path.join(themeObject.name,themeObject.icons["folder_opened"])
+            return path.join(themeObject.name, themeObject.icons["folder_opened"])
           }
       }
     }
-    
+
   }
 };
 
 /*
-  * Used for loading it's icon in the explorer menu
-  * Not recognized formats will have the unknown icon as default
-*/
+ * Used for loading it's icon in the explorer menu
+ * Not recognized formats will have the unknown icon as default
+ */
 
 function getFormat(text) {
   switch (text.split(".").pop()) {
     case "html":
       return {
-        lang:"html",
-        format:text.split(".").pop(),
-        trust:true
+        lang: "html",
+          format: text.split(".").pop(),
+          trust: true
       }
-    case "js":
-      return   {
-        lang:"js",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    case "css":
-      return   {
-        lang:"css",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    case "json":
-      return   {
-        lang:"json",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    case "md":
-      return   {
-        lang:"md",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    case "ts":
-      return   {
-        lang:"ts",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    case "jpg":
-    case "png":
-    case "ico":
-    case "svg":
-      return {
-        lang:"image",
-        format:text.split(".").pop(),
-        trust:true
-      }
-    default:
-      return {
-        lang:"unknown",
-        format: text.split(".").pop(),
-        trust:false
-      }
+      case "js":
+        return {
+          lang: "js",
+            format: text.split(".").pop(),
+            trust: true
+        }
+        case "css":
+          return {
+            lang: "css",
+              format: text.split(".").pop(),
+              trust: true
+          }
+          case "json":
+            return {
+              lang: "json",
+                format: text.split(".").pop(),
+                trust: true
+            }
+            case "md":
+              return {
+                lang: "md",
+                  format: text.split(".").pop(),
+                  trust: true
+              }
+              case "ts":
+                return {
+                  lang: "ts",
+                    format: text.split(".").pop(),
+                    trust: true
+                }
+                case "jpg":
+                case "png":
+                case "ico":
+                case "svg":
+                  return {
+                    lang: "image",
+                      format: text.split(".").pop(),
+                      trust: true
+                  }
+                  default:
+                    return {
+                      lang: "unknown",
+                        format: text.split(".").pop(),
+                        trust: false
+                    }
   }
 }
 
@@ -1267,26 +1312,26 @@ function updateCodeMode(instance, path) {
   }
 }
 
-const registerNewProject = function(dir) {
+if(!fs.existsSync(logDir)){
+
+}
+
+const registerNewProject = function (dir) {
   // Add a new directory to the history if it is the first time it has been opened in the editor
-  fs.readFile(logDir, "utf8", function(err, data) {
-    if (err) return;
-    log = JSON.parse(data);
-    for (i = 0; i < log.length + 1; i++) {
-      if (i != log.length) {
-        if (log[i].Path == dir) {
-          return;
-        }
-      } else if (i == log.length) {
-        log.unshift({
-          Name: path.basename(dir),
-          Path: dir
-        });
-        fs.writeFile(logDir, JSON.stringify(log));
+  for (i = 0; i < log.length + 1; i++) {
+    if (i != log.length) {
+      if (log[i].Path == dir) {
         return;
       }
+    } else if (i == log.length) {
+      log.unshift({
+        Name: path.basename(dir),
+        Path: dir
+      });
+      fs.writeFile(logDir, JSON.stringify(log));
+      return;
     }
-  });
+  }
 };
 
 const HTML_template = `
@@ -1302,8 +1347,10 @@ const HTML_template = `
   </body>
 </html>
 `;
-const g_newProject = function(template) {
-  dialog.showOpenDialog({ properties: ["openDirectory"] }, selectedFiles => {
+const g_newProject = function (template) {
+  dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  }, selectedFiles => {
     if (selectedFiles !== undefined) {
       switch (template) {
         case "html":
@@ -1365,32 +1412,32 @@ const touchingMiniMap = type => {
   }
 };
 
-function look(text){
-  let _variables =[];
-  for(i=0;i<text.length;i++){
-    switch(editor.getMode().name){
+function look(text) {
+  let _variables = [];
+  for (i = 0; i < text.length; i++) {
+    switch (editor.getMode().name) {
       case "javascript":
-        switch (text[i]){
+        switch (text[i]) {
           case "let":
           case "var":
           case "const":
             _variables.push({
-              _name: text[i+1]
+              _name: text[i + 1]
             });
-          break;
+            break;
         }
-      break;
+        break;
       case "java":
-        switch (text[i]){
+        switch (text[i]) {
           case "int":
           case "char":
           case "float":
             _variables.push({
-              _name: text[i+1]
+              _name: text[i + 1]
             });
-          break;
+            break;
         }
-      break;
+        break;
     }
   }
   return _variables;
@@ -1402,28 +1449,28 @@ class elasticContainerComponent extends HTMLElement {
   }
   connectedCallback() {
     const container = this;
-    container.id = "elastic"+Math.random()
-    const related = (function(){
-      if(container.getAttribute("related")=="parent" || container.getAttribute("related") == undefined ){
+    container.id = "elastic" + Math.random()
+    const related = (function () {
+      if (container.getAttribute("related") == "parent" || container.getAttribute("related") == undefined) {
         return container.parentElement;
       }
-      if(container.getAttribute("related")=="child"){
-        return  container.children[0];
+      if (container.getAttribute("related") == "child") {
+        return container.children[0];
       }
-      if(container.getAttribute("related")=="self"){
-        return  container;
+      if (container.getAttribute("related") == "self") {
+        return container;
       }
     })()
     const el = this.parentElement;
-    el.onscroll = function() {
-      if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
-      el.setAttribute("toleft",el.scrollLeft)
-      if(current_config.bouncePreferences == "desactivated") return;
-      if( related == null || related == undefined) {
+    el.onscroll = function () {
+      if (Number(el.getAttribute("toleft")) != el.scrollLeft) return;
+      el.setAttribute("toleft", el.scrollLeft)
+      if (current_config.bouncePreferences == "desactivated") return;
+      if (related == null || related == undefined) {
         return;
       }
-      if(related.id!=undefined){
-        if(document.getElementById(related.id)==undefined){
+      if (related.id != undefined) {
+        if (document.getElementById(related.id) == undefined) {
           return;
         }
       }
@@ -1431,16 +1478,16 @@ class elasticContainerComponent extends HTMLElement {
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_top")
         this.insertBefore(spacer, this.children[0])
-        setTimeout(function() {
+        setTimeout(function () {
           spacer.remove()
         }, 360)
       }
-      if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
-        if(document.getElementsByClassName("bounce_bottom").length!=0 || related == null) return;
+      if (el.scrollHeight - 1 <= el.scrollTop + el.clientHeight) {
+        if (document.getElementsByClassName("bounce_bottom").length != 0 || related == null) return;
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_bottom")
         this.appendChild(spacer)
-        setTimeout(function() {
+        setTimeout(function () {
           spacer.remove()
         }, 360)
       }
@@ -1449,26 +1496,26 @@ class elasticContainerComponent extends HTMLElement {
 }
 window.customElements.define("elastic-container", elasticContainerComponent);
 
-const elasticContainer ={
-  append: function(el){
-    el.onscroll = function() {
-      if(Number(el.getAttribute("toleft"))!=el.scrollLeft) return;
-      el.setAttribute("toleft",el.scrollLeft)
-      if(current_config.bouncePreferences == "desactivated") return;
+const elasticContainer = {
+  append: function (el) {
+    el.onscroll = function () {
+      if (Number(el.getAttribute("toleft")) != el.scrollLeft) return;
+      el.setAttribute("toleft", el.scrollLeft)
+      if (current_config.bouncePreferences == "desactivated") return;
       if (el.scrollTop >= 0 && el.scrollTop < 1) {
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_top")
         this.insertBefore(spacer, this.children[0])
-        setTimeout(function() {
+        setTimeout(function () {
           spacer.remove()
         }, 360)
       }
-      if (el.scrollHeight-1 <= el.scrollTop+el.clientHeight) {
-        if(document.getElementsByClassName("bounce_bottom").length!=0) return;
+      if (el.scrollHeight - 1 <= el.scrollTop + el.clientHeight) {
+        if (document.getElementsByClassName("bounce_bottom").length != 0) return;
         const spacer = document.createElement("div")
         spacer.classList.add("bounce_bottom")
         this.appendChild(spacer)
-        setTimeout(function() {
+        setTimeout(function () {
           spacer.remove()
         }, 360)
       }

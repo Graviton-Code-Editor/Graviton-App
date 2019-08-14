@@ -1,3 +1,15 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espín Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+
 module.exports = {
   icons: {
     default_zoom: `

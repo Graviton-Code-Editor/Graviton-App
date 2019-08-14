@@ -11,8 +11,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 const url = require("url")
 const path = require("path")
-const fs = require("fs")
-const { app, BrowserWindow, globalShortcut, BrowserView } = require("electron")
+const { app, BrowserWindow} = require("electron")
 let main // Main window
 
 app.on("ready", function() {

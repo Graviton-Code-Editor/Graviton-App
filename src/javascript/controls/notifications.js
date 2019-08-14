@@ -34,8 +34,8 @@ my_noti.close() //Close
 "use strict"
 
 module.exports = {
-  Notification: function(object) {
-    if (_notifications.length >= 3) {//Remove one notification in case there are 3
+  Notification: function (object) {
+    if (_notifications.length >= 3) { //Remove one notification in case there are 3
       _notifications[0].remove();
       _notifications.splice(0, 1);
     }
@@ -54,23 +54,23 @@ module.exports = {
       <div>
           
       </div> `;
-      if(object.buttons!=undefined){
-        const buttons = object.buttons
-        Object.keys(buttons).map(function(key){
-          const id = Math.random();
-          const button = document.createElement("button");
-          button.innerText = key;
-          sleeping(1).then(() => {
-            button.addEventListener("click",buttons[key].click) 
-            button.setAttribute("onClick","closeNotification(this.parentElement)")            
-          });
-          body.children[4].appendChild(button)
-        })
-      }
+    if (object.buttons != undefined) {
+      const buttons = object.buttons
+      Object.keys(buttons).map(function (key) {
+        const id = Math.random();
+        const button = document.createElement("button");
+        button.innerText = key;
+        sleeping(1).then(() => {
+          button.addEventListener("click", buttons[key].click)
+          button.setAttribute("onClick", "closeNotification(this.parentElement)")
+        });
+        body.children[4].appendChild(button)
+      })
+    }
     document.getElementById("notifications").appendChild(body);
     this.body = body;
     _notifications.push(body);
-    const delay = object.delay ==undefined? 7000 : object.delay
+    const delay = object.delay == undefined ? 7000 : object.delay
     const wait = setTimeout(() => {
       for (i = 0; i < _notifications.length; i++) {
         if (_notifications[i] === body) {
@@ -79,7 +79,7 @@ module.exports = {
         }
       }
     }, delay); //Wait 7 seconds until the notification automatically deletes it self
-    this.close = function(){
+    this.close = function () {
       for (i = 0; i < _notifications.length; i++) {
         if (_notifications[i] === this.body) {
           _notifications.splice(i, 1);
@@ -88,7 +88,7 @@ module.exports = {
       }
     }
   },
-  closeNotification: function(element) {
+  closeNotification: function (element) {
     for (i = 0; i < _notifications.length; i++) {
       if (_notifications[i] === element.parentElement) {
         _notifications.splice(i, 1);
@@ -97,4 +97,3 @@ module.exports = {
     }
   }
 };
-

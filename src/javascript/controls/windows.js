@@ -29,7 +29,7 @@ closeWindow('my_window1'); //Close the window by passing the id
 "use strict"
 
 module.exports = {
-  Window: function(data) {
+  Window: function (data) {
     this.id = data.id;
     this.code = data.content;
     this.onClose = data.onClose == undefined ? "" : data.onClose;
@@ -43,7 +43,7 @@ module.exports = {
           ${this.code}
       </div>`;
     this.myWindow = newWindow;
-    this.launch = function() {
+    this.launch = function () {
       document
         .getElementById("body")
         .setAttribute(
@@ -52,7 +52,7 @@ module.exports = {
         ); //Plus an opened screen
       document.body.appendChild(this.myWindow);
     };
-    this.close = function() {
+    this.close = function () {
       document
         .getElementById("body")
         .setAttribute(

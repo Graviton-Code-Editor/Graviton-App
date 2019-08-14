@@ -31,7 +31,7 @@ loadTab(document.getElementById('my_tab1_freeTab')) //Load the tab by passing it
 "use strict"
 
 module.exports = {
-  Tab: function(object) {
+  Tab: function (object) {
     this.type = object.type;
     this.id = object.id;
     switch (object.type) {
@@ -46,11 +46,11 @@ module.exports = {
           } else if (i == tabs.length) {
             //Tab is created because it doesn't exist
             document.getElementById(
-              current_screen.id
-            ).children[1].children[0].style =
+                current_screen.id
+              ).children[1].children[0].style =
               "visibility:hidden; display:none;";
             const tab = document.createElement("div");
-            tab.setAttribute("draggable","true");
+            tab.setAttribute("draggable", "true");
             tab.setAttribute("id", object.id + "Tab");
             tab.setAttribute("TabID", object.id + "Tab");
             tab.setAttribute("longPath", object.path);
@@ -73,13 +73,13 @@ module.exports = {
             tab_x.setAttribute("TabID", object.id + "Tab");
             tab_x.setAttribute("id", object.id + "CloseButton");
             tab_x.innerHTML = icons["close"];
-            tab_x.addEventListener("mouseover", function(e) {
+            tab_x.addEventListener("mouseover", function (e) {
               this.setAttribute("hovering", true);
             });
-            tab_x.addEventListener("mouseout", function(e) {
+            tab_x.addEventListener("mouseout", function (e) {
               this.setAttribute("hovering", false);
             });
-            tab.ondragstart = function(event) {
+            tab.ondragstart = function (event) {
               event.dataTransfer.setData("id", tab.id);
             };
             tab.appendChild(tab_x);
@@ -119,7 +119,7 @@ module.exports = {
                 });
                 break;
               default:
-                fs.readFile(g_newPath, "utf8", function(err, data) {
+                fs.readFile(g_newPath, "utf8", function (err, data) {
                   if (err) return console.error(err);
                   tab.setAttribute("data", data);
                   for (i = 0; i < tabs.length; i++) {
@@ -183,10 +183,10 @@ module.exports = {
         tab_x.setAttribute("TabID", object.id + "_freeTab");
         tab_x.setAttribute("id", object.id + "CloseButton");
         tab_x.innerHTML = icons["close"];
-        tab_x.addEventListener("mouseover", function(e) {
+        tab_x.addEventListener("mouseover", function (e) {
           this.setAttribute("hovering", true);
         });
-        tab_x.addEventListener("mouseout", function(e) {
+        tab_x.addEventListener("mouseout", function (e) {
           this.setAttribute("hovering", false);
         });
         tab.appendChild(tab_x);
@@ -208,13 +208,13 @@ module.exports = {
         editingTab = object.id;
         break;
     }
-    this.setData = function(data) {
+    this.setData = function (data) {
       if (this.type == "free") {
         document.getElementById(this.id + "_editor").innerHTML = data;
       }
     };
   },
-  closeTab: function(tab_id, fromWarn) {
+  closeTab: function (tab_id, fromWarn) {
     const working_tab = document.getElementById(tab_id);
     if (working_tab.getAttribute("file_status") == "saved" || fromWarn) {
       for (i = 0; i < tabs.length; i++) {
@@ -237,25 +237,25 @@ module.exports = {
             }
           });
           document.dispatchEvent(tab_closed_event);
-          let filtered_tabs = tabs.filter((tab)=>{
+          let filtered_tabs = tabs.filter((tab) => {
             return tab.getAttribute("screen") == working_tab.getAttribute("screen")
-          }) 
+          })
           if (filtered_tabs.length == 0) {
             //Any tab opened
             filepath = null;
             plang = "";
             editor = null;
-            graviton.refreshStatusBarLinesAndChars( working_tab.getAttribute("screen"))
+            graviton.refreshStatusBarLinesAndChars(working_tab.getAttribute("screen"))
             graviton.changeLanguageStatusBar(plang, working_tab.getAttribute("screen"))
-            document.getElementById( working_tab.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;";
+            document.getElementById(working_tab.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;";
           } else if (i === filtered_tabs.length) {
-              if(filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute("screen") == working_tab.getAttribute("screen")){
-                new_selected_tab = filtered_tabs[Number(filtered_tabs.length) - 1];
-              }
+            if (filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute("screen") == working_tab.getAttribute("screen")) {
+              new_selected_tab = filtered_tabs[Number(filtered_tabs.length) - 1];
+            }
           } else {
-              new_selected_tab = filtered_tabs.filter(function(tab){
-                return tab.getAttribute("screen") == working_tab.getAttribute("screen")
-              })[Number(filtered_tabs.length) - 1]
+            new_selected_tab = filtered_tabs.filter(function (tab) {
+              return tab.getAttribute("screen") == working_tab.getAttribute("screen")
+            })[Number(filtered_tabs.length) - 1]
           }
           if (new_selected_tab != undefined) {
             for (i = 0; i < tabs.length; i++) {
@@ -286,7 +286,7 @@ module.exports = {
       return;
     }
   },
-  loadTab: function(object) {
+  loadTab: function (object) {
     const object_screen = object.getAttribute("screen");
     if (
       object.id != editingTab &&
@@ -320,41 +320,41 @@ module.exports = {
   }
 };
 
-document.ondrag = function(event) {
+document.ondrag = function (event) {
   event.preventDefault();
 }
 
-document.ondrop = function(event) {
+document.ondrop = function (event) {
   event.preventDefault();
   mouseClicked = false;
-  if ( event.target.classList.contains( "tab_part") ) {
+  if (event.target.classList.contains("tab_part")) {
     const id = event.dataTransfer.getData("id");
     const todrag = document.getElementById(event.target.getAttribute("TabID"))
     const dragging = document.getElementById(id)
-    if(todrag.getAttribute("screen")!=dragging.getAttribute("screen")){
+    if (todrag.getAttribute("screen") != dragging.getAttribute("screen")) {
       return;
     }
-    const from = (function(){
-      for(i=0;i<todrag.parentElement.children.length;i++){
-        if(todrag.parentElement.children[i].id == dragging.id){
+    const from = (function () {
+      for (i = 0; i < todrag.parentElement.children.length; i++) {
+        if (todrag.parentElement.children[i].id == dragging.id) {
           return i
         }
       }
     })()
-    const to = (function(){
-      for(i=0;i<todrag.parentElement.children.length;i++){
-        if(todrag.parentElement.children[i].id == todrag.id){
+    const to = (function () {
+      for (i = 0; i < todrag.parentElement.children.length; i++) {
+        if (todrag.parentElement.children[i].id == todrag.id) {
           return i
         }
       }
     })()
-    if(from > to){
-      document.getElementById(event.target.getAttribute("TabID")).parentElement.insertBefore(document.getElementById(id),document.getElementById(event.target.getAttribute("TabID")));
-    }else{
-      if(to+1==dragging.parentElement.children.length){
+    if (from > to) {
+      document.getElementById(event.target.getAttribute("TabID")).parentElement.insertBefore(document.getElementById(id), document.getElementById(event.target.getAttribute("TabID")));
+    } else {
+      if (to + 1 == dragging.parentElement.children.length) {
         dragging.parentElement.appendChild(document.getElementById(id));
-      }else{
-        dragging.parentElement.insertBefore(document.getElementById(id),dragging.parentElement.children[to+1]);
+      } else {
+        dragging.parentElement.insertBefore(document.getElementById(id), dragging.parentElement.children[to + 1]);
       }
     }
     const tab_reorganized_event = new CustomEvent("tab_reorganized", {
@@ -367,6 +367,6 @@ document.ondrop = function(event) {
     document.dispatchEvent(tab_reorganized_event);
   }
 };
-document.ondragover = function(event) {
+document.ondragover = function (event) {
   event.preventDefault();
-};  
+};

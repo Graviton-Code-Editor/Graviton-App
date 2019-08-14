@@ -13,34 +13,44 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const _os = require("os");
 const pty = require("node-pty");
 const path = require("path");
-const { Dialog, closeDialog } = require(path.join(
-    __dirname,
-    "src",
-    "javascript",
-    "controls",
-    "dialogs.js"
-  )),
-  { Window, closeWindow } = require(path.join(
-    __dirname,
-    "src",
-    "javascript",
-    "controls",
-    "windows.js"
-  )),
-  { Notification, closeNotification } = require(path.join(
-    __dirname,
-    "src",
-    "javascript",
-    "controls",
-    "notifications.js"
-  )),
-  { Tab, closeTab, loadTab } = require(path.join(
-    __dirname,
-    "src",
-    "javascript",
-    "controls",
-    "tabs.js"
-  ));
+const {
+  Dialog,
+  closeDialog
+} = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "controls",
+  "dialogs.js"
+)), {
+  Window,
+  closeWindow
+} = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "controls",
+  "windows.js"
+)), {
+  Notification,
+  closeNotification
+} = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "controls",
+  "notifications.js"
+)), {
+  Tab,
+  closeTab,
+  loadTab
+} = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "controls",
+  "tabs.js"
+));
 
 const dropMenu = require(path.join(
   __dirname,
@@ -49,7 +59,9 @@ const dropMenu = require(path.join(
   "controls",
   "dropmenus.js"
 )).Dropmenu;
-let { icons } = require(path.join(
+let {
+  icons
+} = require(path.join(
   __dirname,
   "src",
   "javascript",
@@ -68,68 +80,68 @@ let context_menu_list_text = {
   }
 };
 const context_menu_list_tabs = {
-  Close: function() {
+  Close: function () {
     closeTab(
       document.getElementById(this.getAttribute("target")).getAttribute("TabID")
     );
   }
 };
 const context_menu_list_file = {
-  Remove: function() {
+  Remove: function () {
     directories.removeFileDialog(
       document.getElementById(
         document
-          .getElementById(this.getAttribute("target"))
-          .getAttribute("parent")
+        .getElementById(this.getAttribute("target"))
+        .getAttribute("parent")
       )
     );
   },
-  "a1":"*line",
-  CopyPath:function(){
+  "a1": "*line",
+  CopyPath: function () {
     copyText(document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"))
   },
-  
+
 };
 const context_menu_directory_options = {
-  Reload: function() {
+  Reload: function () {
     loadDirs(
       document.getElementById(this.getAttribute("target")).getAttribute("dir"),
       document
-        .getElementById(this.getAttribute("target"))
-        .getAttribute("parent"),
+      .getElementById(this.getAttribute("target"))
+      .getAttribute("parent"),
       document
-        .getElementById(this.getAttribute("target"))
-        .getAttribute("global")
+      .getElementById(this.getAttribute("target"))
+      .getAttribute("global")
     );
   },
-  OpenInExplorer:function(){
+  OpenInExplorer: function () {
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute("target")).getAttribute("parent")).getAttribute('dir'))
   },
-  OpenAsGlobal:function(){
+  OpenAsGlobal: function () {
     loadDirs(
       document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"),
       "g_directories",
       true
     );
   },
-  "a1":"*line",
-  NewFolder:function(){
+  "a1": "*line",
+  NewFolder: function () {
     directories.newFolder(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },
-  NewFile:function(){
+  NewFile: function () {
     directories.newFile(document.getElementById(this.getAttribute("target")).getAttribute("parent"));
   },
-  "a2":"*line",
-  CopyPath:function(){
+  "a2": "*line",
+  CopyPath: function () {
     copyText(document.getElementById(this.getAttribute("target")).getAttribute("dir").replace(/\\\\/g, "\\"))
   },
-  "a3":"*line",
-  Remove: function() {
+  "a3": "*line",
+  Remove: function () {
     directories.removeFolderDialog(
       document.getElementById(
         document
-          .getElementById(this.getAttribute("target"))
-          .getAttribute("parent")
+        .getElementById(this.getAttribute("target"))
+        .getAttribute("parent")
       )
     );
   }
@@ -155,24 +167,24 @@ class Plugin {
     fs.writeFileSync(
       path.join(plugins_db, this.name) + ".json",
       JSON.stringify(data),
-      function(err) {}
+      function (err) {}
     );
     if (!callback == undefined) return callback;
   }
   setData(key, data) {
     const name = this.name;
     if (fs.existsSync(path.join(plugins_db, name) + ".json")) {
-      this.getData(function(object){
+      this.getData(function (object) {
         object[key] = data;
         fs.writeFileSync(
           path.join(plugins_db, name) + ".json",
           JSON.stringify(object),
-          function(err) {
+          function (err) {
             plugins_dbs[this.b].db = object;
           }
         );
       })
-     
+
     }
   }
   createData(data) {
@@ -186,7 +198,7 @@ class Plugin {
       fs.writeFileSync(
         path.join(plugins_db, this.name) + ".json",
         JSON.stringify(data),
-        function(err) {}
+        function (err) {}
       );
       return "created";
     } else {
@@ -195,9 +207,9 @@ class Plugin {
   }
   getData(callback) {
     const me = this;
-    if(plugins_dbs[this.b]==undefined){
+    if (plugins_dbs[this.b] == undefined) {
       const name = this.name
-      fs.readFile(path.join(plugins_db,name+".json"), "utf8", function(
+      fs.readFile(path.join(plugins_db, name + ".json"), "utf8", function (
         err,
         data
       ) {
@@ -212,10 +224,10 @@ class Plugin {
             me.b = i;
           }
         }
-        return typeof callback == "function"?callback(plugins_dbs[me.b].db):plugins_dbs[me.b].db
+        return typeof callback == "function" ? callback(plugins_dbs[me.b].db) : plugins_dbs[me.b].db
       });
-    }else{
-      return typeof callback == "function"?callback(plugins_dbs[me.b].db):plugins_dbs[this.b].db
+    } else {
+      return typeof callback == "function" ? callback(plugins_dbs[me.b].db) : plugins_dbs[this.b].db
     }
   }
   deleteData(data) {
@@ -225,7 +237,7 @@ class Plugin {
         fs.writeFileSync(
           path.join(plugins_db, this.name) + ".json",
           "{}",
-          function(err) {}
+          function (err) {}
         );
         break;
       default:
@@ -234,7 +246,7 @@ class Plugin {
         fs.writeFileSync(
           path.join(plugins_db, this.name) + ".json",
           JSON.stringify(object),
-          function(err) {}
+          function (err) {}
         );
         plugins_dbs[b].db = object;
     }
@@ -250,28 +262,28 @@ function sleeping(ms) {
 }
 
 const graviton = {
-  getCurrentTheme: function() {
+  getCurrentTheme: function () {
     //Get the theme name of the applied theme
     return current_config.theme;
   },
-  getSelectedText: function() {
+  getSelectedText: function () {
     //Get te text you have selected
     const selected_text = window.getSelection().toString();
     if (selected_text !== "") {
       return selected_text;
     } else return null; //Returns null if there is not text selected
   },
-  setThemeByName: function(name) {
+  setThemeByName: function (name) {
     //Set a theme by it's name
     return setThemeByName(name);
   },
-  getCurrentFile: function() {
+  getCurrentFile: function () {
     const _file = {
       path: filepath
     };
     return _file;
   },
-  getCurrentEditor: function() {
+  getCurrentEditor: function () {
     for (i = 0; i < editors.length; i++) {
       //Returns the current selected editor
       if (editorID == editors[i].id) {
@@ -280,54 +292,54 @@ const graviton = {
     }
     if (editors.length == 0) return null;
   },
-  getCurrentDirectory: function() {
+  getCurrentDirectory: function () {
     if (dir_path == undefined) return null;
     return dir_path;
   },
-  currentOS: function() {
+  currentOS: function () {
     switch (process.platform) {
       case "win32":
         return {
           codename: process.platform,
-          name: "Windows"
+            name: "Windows"
         };
         break;
       case "darwin":
         return {
           codename: process.platform,
-          name: "MacOS"
+            name: "MacOS"
         };
         break;
       case "linux":
         return {
           codename: process.platform,
-          name: "Linux"
+            name: "Linux"
         };
         break;
       default:
         return {
           codename: process.platform,
-          name: process.platform
+            name: process.platform
         };
     }
     return;
   },
-  openDevTools: function() {
+  openDevTools: function () {
     require("electron")
       .remote.getCurrentWindow()
       .toggleDevTools();
   },
-  editorMode: function() {
+  editorMode: function () {
     return editor_mode;
   },
-  throwError: function(message) {
-    console.log('%c Graviton ERROR :: ', ' color: red',message);
+  throwError: function (message) {
+    console.log('%c Graviton ERROR :: ', ' color: red', message);
     new Notification({
-      title:"Error ",
+      title: "Error ",
       content: message
     });
   },
-  dialogAbout: function() {
+  dialogAbout: function () {
     new Dialog({
       id: "about",
       title: getTranslation("About") + " Graviton",
@@ -338,8 +350,9 @@ const graviton = {
 	      <br> ${getTranslation("OS")}: ${graviton.currentOS().name}`,
       buttons: {
         [getTranslation("More")]: {
-          click: ()=>{
-            Settings.open(); Settings.navigate('5')
+          click: () => {
+            Settings.open();
+            Settings.navigate('5')
           },
           important: true
         },
@@ -347,8 +360,8 @@ const graviton = {
       }
     });
   },
-  dialogChangelog: function() {
-    fs.readFile(path.join(__dirname, "RELEASE_CHANGELOG.md"), "utf8", function(
+  dialogChangelog: function () {
+    fs.readFile(path.join(__dirname, "RELEASE_CHANGELOG.md"), "utf8", function (
       err,
       data
     ) {
@@ -362,7 +375,7 @@ const graviton = {
       });
     });
   },
-  removeScreen: function() {
+  removeScreen: function () {
     let content_editors = "";
     for (i = 0; i < editor_screens.length; i++) {
       content_editors += `
@@ -380,7 +393,7 @@ const graviton = {
       }
     });
   },
-  closingFileWarn : function(){
+  closingFileWarn: function () {
     new Dialog({
       id: "saving_file_warn",
       title: getTranslation("Warn"),
@@ -389,28 +402,29 @@ const graviton = {
         [getTranslation(
           "FileExit-dialog-button-accept"
         )]: {
-          click:()=>{
-            closeTab(ele.getAttribute("tabid"),true);
+          click: () => {
+            closeTab(ele.getAttribute("tabid"), true);
           }
         },
         [getTranslation("Cancel")]: {},
         [getTranslation("FileExit-dialog-button-deny")]: {
-          click: ()=>{saveFile()},
+          click: () => {
+            saveFile()
+          },
           important: true
         }
       }
     });
-  }
-  ,
-  addContextMenu: function(panel) {
-    Object.keys(panel).forEach(function(key) {
+  },
+  addContextMenu: function (panel) {
+    Object.keys(panel).forEach(function (key) {
       context_menu_list_text[key] = panel[key];
     });
   },
-  toggleFullScreen: function(status) {
+  toggleFullScreen: function (status) {
     g_window.setFullScreen(status);
   },
-  toggleZenMode: function() {
+  toggleZenMode: function () {
     if (editor_mode == "zen") {
       editor_mode = "normal";
       document.getElementById("explorer_app").style =
@@ -423,16 +437,16 @@ const graviton = {
       document.getElementById("editor_resizer").style = " width:0; display:none;";
     }
   },
-  deleteLog: function() {
+  deleteLog: function () {
     fs.writeFile(logDir, "[]", err => {});
   },
-  toggleAutoCompletation: function() {
+  toggleAutoCompletation: function () {
     current_config["autoCompletionPreferences"] =
-      current_config["autoCompletionPreferences"] == "activated"
-        ? "desactivated"
-        : "activated";
+      current_config["autoCompletionPreferences"] == "activated" ?
+      "desactivated" :
+      "activated";
   },
-  toggleLineWrapping: function() {
+  toggleLineWrapping: function () {
     if (current_config["lineWrappingPreferences"] == "activated") {
       for (i = 0; i < editors.length; i++) {
         if (editors[i].editor != undefined) {
@@ -452,7 +466,7 @@ const graviton = {
       current_config["lineWrappingPreferences"] = "activated";
     }
   },
-  toggleHighlighting: function() {
+  toggleHighlighting: function () {
     if (g_highlighting == "activated") {
       for (i = 0; i < editors.length; i++) {
         if (editors[i].editor != undefined) {
@@ -470,7 +484,7 @@ const graviton = {
       g_highlighting = "activated";
     }
   },
-  useSystemAccent: function() {
+  useSystemAccent: function () {
     if (current_config.accentColorPreferences == "manual") {
       current_config["accentColorPreferences"] = "system";
       try {
@@ -481,20 +495,20 @@ const graviton = {
         document.documentElement.style.setProperty(
           "--accentDarkColor",
           tinycolor(systemPreferences.getAccentColor())
-            .darken()
-            .toString()
+          .darken()
+          .toString()
         );
         document.documentElement.style.setProperty(
           "--accentLightColor",
           tinycolor(systemPreferences.getAccentColor())
-            .brighten()
-            .toString()
+          .brighten()
+          .toString()
         );
       } catch {
         //Returns an error = system is not compatible, Linux-based will probably throw that error
         new Notification({
-          title:"Issue",
-          content:"Your system is not compatible with this feature."
+          title: "Issue",
+          content: "Your system is not compatible with this feature."
         });
       }
     } else {
@@ -593,12 +607,12 @@ const graviton = {
       menus_showing = true;
     }
   },
-  getPlugin: function(plugin_name) {
+  getPlugin: function (plugin_name) {
     for (i = 0; i < full_plugins.length; i++) {
       if (full_plugins[i].package.name == plugin_name) {
         return {
           repo: full_plugins[i],
-          local: (function() {
+          local: (function () {
             for (let a = 0; a < plugins_list.length; a++) {
               if (plugins_list[a].name == plugin_name) {
                 return plugins_list[a];
@@ -606,7 +620,7 @@ const graviton = {
             }
             return undefined;
           })(),
-          database:(function(){
+          database: (function () {
             for (let a = 0; a < plugins_dbs.length; a++) {
               if (plugins_dbs[a].plugin_name == plugin_name) {
                 return plugins_dbs[a].db;
@@ -629,31 +643,31 @@ const graviton = {
   windowContent(id, content) {
     document.getElementById(`${id}_body`).innerHTML = content;
   },
-  toggleBounceEffect(){
-    if(current_config.bouncePreferences == "activated"){
+  toggleBounceEffect() {
+    if (current_config.bouncePreferences == "activated") {
       current_config.bouncePreferences = "desactivated"
-    }else{
+    } else {
       current_config.bouncePreferences = "activated"
     }
   },
-  changeLanguageStatusBar(lang,screen){
-    const lang_ele =  document.getElementById(screen).children[2].children[0];
-    if( lang_ele.innerText==""){
+  changeLanguageStatusBar(lang, screen) {
+    const lang_ele = document.getElementById(screen).children[2].children[0];
+    if (lang_ele.innerText == "") {
       lang_ele.style = "";
     }
-    if(lang == ""){
+    if (lang == "") {
       lang_ele.style = "padding:0px;";
     }
-    lang_ele.setAttribute("title",`Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
+    lang_ele.setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
     lang_ele.innerText = lang;
   },
-  refreshStatusBarLinesAndChars(screen){
-    if(editor==undefined){
+  refreshStatusBarLinesAndChars(screen) {
+    if (editor == undefined) {
       document.getElementById(screen).children[2].children[1].innerText = ""
       document.getElementById(screen).children[2].children[1].removeAttribute("title");
-    }else{
-      document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line +"/"+ editor.getCursor().ch
-      document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line} , Char: ${editor.getCursor().ch}`
+    } else {
+      document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line+1 + "/" + editor.getCursor().ch+1
+      document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line+1} , Char: ${editor.getCursor().ch+1}`
     }
   }
 };
@@ -667,7 +681,7 @@ function floatingWindow([xSize, ySize], content) {
   g_floating_window.innerHTML = content;
   document.body.appendChild(g_floating_window);
 }
-document.addEventListener("mousedown", function(event) {
+document.addEventListener("mousedown", function (event) {
   if (editor_booted === true) {
     if (event.button === 2) {
       graviton.closeDropmenus(); //Close opened dropmenu
@@ -682,11 +696,11 @@ document.addEventListener("mousedown", function(event) {
         1}px`;
       switch (event.target.getAttribute("elementType")) {
         case "file":
-          Object.keys(context_menu_list_file).forEach(function(
+          Object.keys(context_menu_list_file).forEach(function (
             key,
             index
           ) {
-            if(context_menu_list_file[key]!="*line"){
+            if (context_menu_list_file[key] != "*line") {
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               button.innerText = getTranslation(key);
@@ -695,7 +709,7 @@ document.addEventListener("mousedown", function(event) {
               sleeping(1).then(() => {
                 button.onclick = context_menu_list_file[key];
               });
-            }else{
+            } else {
               const span = document.createElement("span");
               span.classList = 'line_space_menus';
               context_menu.appendChild(span)
@@ -703,8 +717,8 @@ document.addEventListener("mousedown", function(event) {
           });
           break;
         case "tab":
-          Object.keys(context_menu_list_tabs).forEach(function(key, index) {
-            if(context_menu_list_tabs[key]!="*line"){
+          Object.keys(context_menu_list_tabs).forEach(function (key, index) {
+            if (context_menu_list_tabs[key] != "*line") {
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               button.innerText = getTranslation(key);
@@ -713,7 +727,7 @@ document.addEventListener("mousedown", function(event) {
               sleeping(1).then(() => {
                 button.onclick = context_menu_list_tabs[key];
               });
-            }else{
+            } else {
               const span = document.createElement("span");
               span.classList = 'line_space_menus';
               context_menu.appendChild(span)
@@ -721,21 +735,21 @@ document.addEventListener("mousedown", function(event) {
           });
           break;
         case "directory":
-          Object.keys(context_menu_directory_options).forEach(function(
+          Object.keys(context_menu_directory_options).forEach(function (
             key,
             index
           ) {
-            if(context_menu_directory_options[key]!="*line"){
+            if (context_menu_directory_options[key] != "*line") {
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               button.innerText = getTranslation(key);
               button.setAttribute("target", event.target.id);
-              
+
               sleeping(1).then(() => {
-                button.addEventListener("click",context_menu_directory_options[key]) 
+                button.addEventListener("click", context_menu_directory_options[key])
               });
               context_menu.appendChild(button);
-            }else{
+            } else {
               const span = document.createElement("span");
               span.classList = 'line_space_menus';
               context_menu.appendChild(span)
@@ -743,8 +757,8 @@ document.addEventListener("mousedown", function(event) {
           });
           break;
         default:
-          Object.keys(context_menu_list_text).forEach(function(key, index) {
-            if(context_menu_list_text[key]!="*line"){
+          Object.keys(context_menu_list_text).forEach(function (key, index) {
+            if (context_menu_list_text[key] != "*line") {
               const button = document.createElement("button");
               button.classList.add("part_of_context_menu");
               if (index < 2) {
@@ -760,7 +774,7 @@ document.addEventListener("mousedown", function(event) {
               sleeping(1).then(() => {
                 button.onclick = context_menu_list_text[key];
               });
-            }else{
+            } else {
               const span = document.createElement("span");
               span.classList = 'line_space_menus';
               context_menu.appendChild(span)
@@ -781,9 +795,7 @@ document.addEventListener("mousedown", function(event) {
     if (!event.target.matches(".floating_window")) {
       if (document.getElementsByClassName("floating_window").length != 0) {
         for (
-          i = 0;
-          i < document.getElementsByClassName("floating_window").length;
-          i++
+          i = 0; i < document.getElementsByClassName("floating_window").length; i++
         ) {
           document.getElementsByClassName("floating_window")[i].remove();
         }
@@ -817,7 +829,7 @@ class commander {
   }
 }
 const commanders = {
-  terminal: function(object) {
+  terminal: function (object) {
     if (graviton.getCurrentDirectory() == null && object == undefined) {
       graviton.throwError(
         getTranslation("CannotRunTerminalCauseDirectory")
@@ -825,26 +837,24 @@ const commanders = {
       return;
     }
     if (current_screen.terminal != undefined) {
-      if(document.getElementById(current_screen.terminal.id+'_commander').style.display=="none"){
+      if (document.getElementById(current_screen.terminal.id + '_commander').style.display == "none") {
         commanders.show(current_screen.terminal.id);
       }
       return;
     }
     const randomID = Math.random();
-    new commander(
-      {
+    new commander({
         id: "xterm" + randomID,
         content: ""
       },
-      function(err) {
+      function (err) {
         if (!err) {
           const shell =
             process.env[_os.platform() === "win32" ? "COMSPEC" : "SHELL"];
           const ptyProcess = pty.spawn(shell, [], {
-            cwd:
-              object == undefined
-                ? graviton.getCurrentDirectory()
-                : object.path,
+            cwd: object == undefined ?
+              graviton.getCurrentDirectory() :
+              object.path,
             env: process.env
           });
           const xterm = new Terminal({
@@ -862,7 +872,7 @@ const commanders = {
           xterm.on("data", data => {
             ptyProcess.write(data);
           });
-          ptyProcess.on("data", function(data) {
+          ptyProcess.on("data", function (data) {
             xterm.write(data);
           });
           graviton.resizeTerminals();
@@ -887,17 +897,17 @@ const commanders = {
       }
     );
   },
-  hide: function(id) {
+  hide: function (id) {
     document.getElementById(id + "_commander").style.display = "none";
   },
-  show: function(id) {
+  show: function (id) {
     console.log(id)
     document.getElementById(id + "_commander").style = "";
   },
-  close: function(id) {
+  close: function (id) {
     document.getElementById(id + "_commander").remove();
   },
-  closeTerminal: function() {
+  closeTerminal: function () {
     for (i = 0; i < editor_screens.length; i++) {
       if (editor_screens[i].id == current_screen.id) {
         const closed_terminal_event = new CustomEvent("closed_terminal", {
@@ -918,7 +928,7 @@ const commanders = {
   }
 };
 const screens = {
-  add: function() {
+  add: function () {
     const current_id = `screen_${editor_screens.length + Math.random()}`;
     const new_screen_editor = document.createElement("div");
     new_screen_editor.classList = "g_editors";
@@ -945,7 +955,10 @@ const screens = {
           document.getElementById("content_app").children.length - 1
         ]
       );
-    current_screen = { id: current_id, terminal: undefined };
+    current_screen = {
+      id: current_id,
+      terminal: undefined
+    };
     const screen = {
       id: current_screen.id,
       terminal: undefined
@@ -953,7 +966,7 @@ const screens = {
     editor_screens.push(screen);
     new_screen_editor.addEventListener(
       "click",
-      function(event) {
+      function (event) {
         for (i = 0; i < editor_screens.length; i++) {
           if (editor_screens[i].id == this.id) {
             current_screen.id = this.id;
@@ -971,7 +984,7 @@ const screens = {
     document.dispatchEvent(split_screen_event);
     graviton.resizeTerminals();
   },
-  remove: function(id) {
+  remove: function (id) {
     if (editor_screens.length != 1) {
       for (i = 0; i < editor_screens.length; i++) {
         if (editor_screens[i].id == id) {
@@ -1018,7 +1031,7 @@ const screens = {
       return false;
     }
   },
-  default: function() {
+  default: function () {
     for (i = 0; i < editor_screens.length; i++) {
       if (i != 0) {
         let tabs2 = [];
@@ -1051,13 +1064,13 @@ const screens = {
     }
   }
 };
-window.onresize = function() {
+window.onresize = function () {
   graviton.resizeTerminals();
 };
 
-function copyText(content){
+function copyText(content) {
   const text = document.createElement("textarea");
-  text.style="height:0.1px; width:0.1px; opacitiy:0; padding:0; border:0; margin:0; outline:0;";
+  text.style = "height:0.1px; width:0.1px; opacitiy:0; padding:0; border:0; margin:0; outline:0;";
   text.innerText = content;
   document.body.appendChild(text);
   text.focus();

@@ -1,16 +1,16 @@
 # Graviton Editor
-[![Build Status](https://travis-ci.org/Graviton-Code-Editor/Graviton-App.svg?branch=master)](https://travis-ci.org/Graviton-Code-Editor/Graviton-App)
-[![HitCount](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App.svg)](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md)
+![Build Status](https://travis-ci.org/Graviton-Code-Editor/Graviton-App.svg?branch=master)(https://travis-ci.org/Graviton-Code-Editor/Graviton-App)
+![HitCount](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App.svg)(http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App)
+![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)(https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md)
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
+![Commits](https://img.shields.io/github/commit-activity/m/Graviton-Code-Editor/Graviton-App)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/Graviton-Code-Editor/Graviton-App.svg)
-[![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)](https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
-[![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
-[![Discord Server](https://discordapp.com/api/guilds/536130219057086514/widget.png)](https://discord.gg/gg6CTYA)
-[![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/graviton)
+![GitHub contributors](https://img.shields.io/github/contributors/Graviton-Code-Editor/Graviton-App.svg)(https://GitHub.com/Graviton-Code-Editor/Graviton-App/graphs/contributors/)
+![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)(https://github.com/Graviton-Code-Editor/Graviton-App/)
+![Discord Server](https://discordapp.com/api/guilds/536130219057086514/widget.png)(https://discord.gg/gg6CTYA)
+![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)(https://snapcraft.io/graviton)
 
 ![example screenshot](example.png)
-
 
 Graviton is a cross-platform editor with a minimalist looking. Somethings about it:
 
@@ -71,17 +71,17 @@ Thank you for the donations!
 
 Credits ✨
 ---
+- Advices from [Leon Alvarez](https://github.com/LeonAlvarez)
 - [Codemirror](codemirror.net)
 - Help in autocompletation , Miguel Rangel
 - Old logo by Saúl Blanco 
 - [MiniMap Original source](https://github.com/alterfan/minimap)
 - [OpenEmoji](https://openmoji.org/)
 
- And all people who helped me :)
+And all people who helped me :)
 
 Available platforms 💻🖥
 ---
-It's available on:
 
 **Windows**
 
@@ -108,7 +108,7 @@ Wanna build Graviton from source?
 
 Known problems 😓
 ---
-- Updating to a new Graviton might throw error because I have added breaking changes. Clicking on the "Repair" button should fix it.
+- Empty themes after updating to v1.0.3 (Solution: install them from the market or doing a factory reset)
 
 License 🧾
 ---

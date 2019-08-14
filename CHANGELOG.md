@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200814 - 1 [1.0.3]
+- Created a basic test
+- Removed Codemirror from source and turned in to a dependency
+- Created a basic test script
+- Bug fixes on market
+
 ### 200813 - 2 [1.0.3]
 - Fixed, selecting text from another editor while having another one focused won't bug the line and char counter
 - Removed the minimap option due it was too unestable

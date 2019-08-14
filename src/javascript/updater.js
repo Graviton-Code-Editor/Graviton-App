@@ -11,11 +11,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 module.exports = {
-  check_updates: function() {
+  check_updates: function () {
     const github = require("octonode");
     const client = github.client();
     const ghrepo = client.repo("Graviton-Code-Editor/Graviton-App");
-    ghrepo.releases(function(err, res, body) {
+    ghrepo.releases(function (err, res, body) {
       if (!err) {
         for (i = 0; i < res.length + 1; i++) {
           if (i < res.length + 1) {
@@ -24,7 +24,7 @@ module.exports = {
               new Dialog({
                 id: "update",
                 title: `<strong>${g_version.state}</strong> Update avaiable !`,
-                content: getTranslation("DetectedUpdateMessage") +" "+ res[i].tag_name + "?",
+                content: getTranslation("DetectedUpdateMessage") + " " + res[i].tag_name + "?",
                 buttons: {
                   [getTranslation("No")]: {},
                   [getTranslation("Yes")]: {
@@ -37,15 +37,15 @@ module.exports = {
             }
           }
           new Notification({
-            title:'Graviton',
-            content:getTranslation("NoUpdateFound")
+            title: 'Graviton',
+            content: getTranslation("NoUpdateFound")
           });
           return;
         }
       }
     });
   },
-  update: function() {
+  update: function () {
     shell.openExternal(
       "https://github.com/Graviton-Code-Editor/Graviton-App/releases"
     );

@@ -17,7 +17,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 */
 preload([
-  
+
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
@@ -39,12 +39,16 @@ let current_config = {
   lineWrappingPreferences: 'desactivated',
   accentColorPreferences: 'manual',
   blurPreferences: '3',
-  bouncePreferences:'activated',
+  bouncePreferences: 'activated',
   version: undefined
 };
-if(!fs.existsSync(logDir)){
+if (!fs.existsSync(logDir)) {
   fs.writeFile(logDir, "[]");
+  log = []
+}else{
+  log = require(logDir);
 }
+
 function loadConfig() {
   // Loads the configuration from the config.json for the first time
   if (!fs.existsSync(configDir)) {
@@ -52,7 +56,7 @@ function loadConfig() {
     updateSettings();
     loadLanguage(current_config.language);
     screens.add(); //Creates the first screen
-    detectPlugins(function() {
+    detectPlugins(function () {
       if (current_config.justInstalled === false) {
         openWelcome();
       } else {
@@ -62,17 +66,17 @@ function loadConfig() {
     });
   } else {
     const local_config = require(configDir);
-    Object.keys(current_config).forEach(function(key, index) {
-      if (local_config[key] != undefined && current_config[key] !=undefined )
+    Object.keys(current_config).forEach(function (key, index) {
+      if (local_config[key] != undefined && current_config[key] != undefined)
         current_config[key] = local_config[key]; // Will only change the extisting parameters
-      
+
     });
     updateSettings();
     screens.add(); //Creates the first screen
-    detectPlugins(function() {
+    detectPlugins(function () {
       if (current_config["theme"] != undefined)
         graviton.setTheme(current_config["theme"]);
-        loadLanguage(current_config.language);
+      loadLanguage(current_config.language);
       if (current_config.justInstalled === false) {
         openWelcome();
       } else {
@@ -93,6 +97,7 @@ function loadConfig() {
     });
   }
 }
+
 function saveConfig() {
   // Saves the current configuration to config.json
   let newConfig = {

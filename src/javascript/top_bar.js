@@ -58,7 +58,7 @@ Tools.setList({
   button: "Tools",
   list: {
     Market: () => {
-      extensions.openStore(function(err) {
+      extensions.openStore(function (err) {
         extensions.navigate("all", err);
       });
     },
@@ -78,13 +78,13 @@ Tools.setList({
     },
     "2a": "*line",
     Settings: {
-      click:() => {
+      click: () => {
         Settings.open();
         Settings.navigate("1");
       },
-      icon:'settings'
+      icon: 'settings'
     }
-      
+
   }
 });
 Editor.setList({
@@ -136,8 +136,8 @@ WindowDM.setList({
       click: () => {
         graviton.toggleMenus();
         new Notification({
-          title:getTranslation("Tip"),
-          content:getTranslation("ToggleMenuTipMessage")
+          title: getTranslation("Tip"),
+          content: getTranslation("ToggleMenuTipMessage")
         });
       },
       hint: "Ctrl+Tab"
@@ -173,7 +173,7 @@ Help.setList({
     "Telegram Channel": () => shell.openExternal("https://t.me/gravitoneditor"),
     "a1": "*line",
     Donate: () => shell.openExternal("https://www.paypal.me/mkenzo8"),
-    Twitter:() => shell.openExternal('https://twitter.com/gravitoneditor'),
+    Twitter: () => shell.openExternal('https://twitter.com/gravitoneditor'),
     FAQs: () => shell.openExternal("https://www.graviton.ml/faqs"),
     Website: () => shell.openExternal("https://www.graviton.ml"),
     "a2": "*line",
@@ -203,7 +203,7 @@ function interact_dropmenu(id) {
 }
 // Close all dropdowns if the user clicks outside
 
-graviton.closeDropmenus = function(){
+graviton.closeDropmenus = function () {
   const dropdowns = document.getElementsByClassName("dropdown-content");
   for (i = 0; i < dropdowns.length; i++) {
     const openDropdown = dropdowns[i];
@@ -213,7 +213,7 @@ graviton.closeDropmenus = function(){
     }
   }
 }
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (
     !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
   ) {
@@ -227,9 +227,9 @@ window.onclick = function(event) {
       document.getElementById("context_menu").remove();
   }
 };
-graviton.setEditorFontSize =function(new_size){
-  current_config.fontSizeEditor =  `${new_size}`;
-  if(Number( current_config.fontSizeEditor)<5){
+graviton.setEditorFontSize = function (new_size) {
+  current_config.fontSizeEditor = `${new_size}`;
+  if (Number(current_config.fontSizeEditor) < 5) {
     current_config.fontSizeEditor = "5"
   }
   document.documentElement.style.setProperty(

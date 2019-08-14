@@ -11,7 +11,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const Settings = {
-  open: function() {
+  open: function () {
     const settings_window = new Window({
       id: "settings_window",
       content: `
@@ -42,7 +42,7 @@ const Settings = {
     });
     settings_window.launch();
   },
-  navigate: function(num) {
+  navigate: function (num) {
     for (i = 0; i < document.getElementById("navbar1").children.length; i++) {
       document.getElementById("navbar1").children[i].classList.remove("active");
     }
@@ -130,7 +130,7 @@ const Settings = {
             "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this); saveConfig();"
           );
           languageDiv.innerText = languages[i]["g_l"];
-          if (languages[i]["g_l"] === getTranslation("g_l") ){
+          if (languages[i]["g_l"] === getTranslation("g_l")) {
             selectLang(languageDiv);
           }
           document.getElementById("language_list").appendChild(languageDiv);
@@ -289,7 +289,7 @@ function factory_reset_dialog() {
       [`${getTranslation("Yes")} , ${
         getTranslation("Continue")
       }`]: {
-        click: ()=>{
+        click: () => {
           FactoryReset()
         },
         important: true
@@ -331,7 +331,7 @@ class Switch extends HTMLElement {
       <div class="${this.getAttribute("class")} switch">
       	<div></div>
       </div>`;
-    this.addEventListener("click", function() {
+    this.addEventListener("click", function () {
       const dot = this.children[0];
       if (this.classList.contains("disabled") === false) {
         if (this.getState(this)) {

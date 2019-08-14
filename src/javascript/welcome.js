@@ -10,15 +10,32 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 "use strict"
-log = require(logDir)
+
 let welcome_window;
+
+if (!graviton.isProduction()) {
+  new Notification({
+    title: "Graviton",
+    content: "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
+    delay: '10000',
+    buttons: {
+      'Dev tools': {
+        click: function () {
+          graviton.openDevTools()
+        }
+      },
+      'Close':{}
+    }
+  })
+}
+
 function openWelcome() {
-  if(graviton.isProduction()==true){
-    if(remote.process.argv[1] !=undefined){
+  if (graviton.isProduction() == true) {
+    if (remote.process.argv[1] != undefined) {
       const dir = path.resolve(remote.process.argv[1])
       console.log(dir)
       loadDirs(dir, "g_directories", true);
-      if (error_showed == false) DeleteBoot(); 
+      if (error_showed == false) DeleteBoot();
       return;
     }
   }
@@ -79,14 +96,14 @@ function openWelcome() {
     description.innerText = log[i].Path;
     description.setAttribute("style", "font-size:12px;");
     project.appendChild(description);
-    if(  document.getElementById("recent_projects")==undefined) return;
+    if (document.getElementById("recent_projects") == undefined) return;
     document.getElementById("recent_projects").appendChild(project);
-    document.getElementById("clear_log").style="";
+    document.getElementById("clear_log").style = "";
   }
-  if (error_showed == false) DeleteBoot(); 
+  if (error_showed == false) DeleteBoot();
 }
 const Setup = {
-  open: function() {
+  open: function () {
     for (i = 0; i < languages.length + 1; i++) {
       if (i == languages.length) {
         loadLanguage(languages[0]); // Load english in case Graviton doesn't support the system's language
@@ -106,16 +123,16 @@ const Setup = {
     graviton.deleteLog();
     if (error_showed == false) DeleteBoot();
   },
-  close: function() {
+  close: function () {
     document.getElementById("graviton_setup").remove();
     current_config.justInstalled = false;
     saveConfig();
   },
-  navigate: function(number) {
+  navigate: function (number) {
     switch (number) {
       case "languages":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:40px; text-align:center; position:relative; " class="translate_word" idT="Languages">${
+          <h1 style="font-size:5vh; line-height:3em; text-align:center; position:relative; " class="translate_word" idT="Languages">${
             getTranslation("Languages")
           }</h1> 
           
@@ -142,7 +159,7 @@ const Setup = {
         break;
       case "themes":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
+          <h1 style="font-size:5vh; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
             getTranslation("Welcome.TakeATheme")
           }</h1> 
           <div class=theme_divs>
@@ -158,8 +175,8 @@ const Setup = {
         `;
         break;
       case "additional_settings":
-          document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:40px; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
+        document.getElementById("body_window_full").innerHTML = `
+          <h1 style="font-size:5vh; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
             getTranslation("Welcome.AdditionalSettings")
           }</h1> 
           <div style="overflow:auto; position:relative;max-height:60%">
@@ -193,10 +210,10 @@ const Setup = {
             }</button> 
             
         `;
-          break;
+        break;
       case "welcome":
         document.getElementById("body_window_full").innerHTML = `
-          <h1 style=" font-size:40px;
+          <h1 style=" font-size:5vh;
           transform:translate(-50%,-50%);
           position:absolute;
           top:45%;

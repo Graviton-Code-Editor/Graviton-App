@@ -11,7 +11,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 'use strict'
 
 let plugins_list = [],
-    plugins_dbs = [];
+  plugins_dbs = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
@@ -33,14 +33,14 @@ function detectPlugins(call) {
     const client = github.client();
     const request = require("request");
     let loaded = 0;
-    let  _old_error = false;
+    let _old_error = false;
     for (i = 0; i < default_plugins.length; i++) {
       const i_t = i;
-      client.repo(default_plugins[i]).info(function(err, data) {
-        if(_old_error) return;
+      client.repo(default_plugins[i]).info(function (err, data) {
+        if (_old_error) return;
         if (err) {
           new Notification({
-            title:"Graviton",
+            title: "Graviton",
             content: getTranslation("SetupError1")
           });
           _old_error = true;
@@ -51,10 +51,10 @@ function detectPlugins(call) {
           `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${
             data.default_branch
           }/package.json`,
-          function(error, response, body2) {
+          function (error, response, body2) {
             if (err) {
               new Notification({
-                title:"Graviton",
+                title: "Graviton",
                 content: getTranslation("SetupError1")
               });
               return call != undefined ? call() : "";
@@ -65,8 +65,8 @@ function detectPlugins(call) {
                 data.clone_url,
                 path.join(plugins_folder.replace(/\\/g, "\\\\"), config.name)
               )
-              .then(function(repository) {
-                plugins.install(config, function() {
+              .then(function (repository) {
+                plugins.install(config, function () {
                   loaded++;
                   if (loaded == default_plugins.length) {
                     return call != undefined ? call() : "";
@@ -79,41 +79,41 @@ function detectPlugins(call) {
     }
   } else {
     let date = new Date
-    date = Number(date.getFullYear()+""+date.getMonth()+""+date.getDay())
-    if(fs.existsSync(market_file)){
+    date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDay())
+    if (fs.existsSync(market_file)) {
       fs.readFile(market_file, "utf8", (err, data) => {
         const market = JSON.parse(data);
-        if(date > market.date){
+        if (date > market.date) {
           const rimraf = require('rimraf')
           rimraf.sync(market_file);
-        }else{
-          full_plugins = market.cache 
+        } else {
+          full_plugins = market.cache
           plugins_market = market.list
-          current_plugins = 5
         }
-        if(!err) return;
+        current_plugins = 5
+        if (!err) return;
       })
-    }    
+    }
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
-      if(paths.length == 0) return call != undefined ? call() : "";
+      if (paths.length == 0) return call != undefined ? call() : "";
       for (i = 0; loaded < paths.length; i++) {
         const direct = fs.statSync(path.join(plugins_folder, paths[loaded]));
         if (!fs.existsSync(path.join(plugins_folder, paths[loaded], "package.json"))) {
           loaded++;
         }
         if (!direct.isFile()) {
-          try{
-             require(path.join(plugins_folder, paths[loaded], "package.json"))
-          }catch{
+          try {
+            require(path.join(plugins_folder, paths[loaded], "package.json"))
+          } catch {
             if (loaded == paths.length) {
               return call != undefined ? call() : "";
             }
           }
           const config = require(path.join(plugins_folder, paths[loaded], "package.json"))
-          plugins.install(config, function() {
+          plugins.install(config, function () {
             loaded++;
-            
+
             if (loaded == paths.length) {
               return call != undefined ? call() : "";
             }
@@ -129,14 +129,16 @@ function detectPlugins(call) {
 installing a plugin from a local source:
 
 */
-const installFromLocal = function() {
-  dialog.showOpenDialog({ properties: ["openDirectory"] }, selectedFiles => {
+const installFromLocal = function () {
+  dialog.showOpenDialog({
+    properties: ["openDirectory"]
+  }, selectedFiles => {
     if (selectedFiles === undefined) return;
     const folder_name = path
       .basename(selectedFiles[0])
       .split(".")
       .pop();
-    fs.copy(selectedFiles[0], path.join(plugins_folder, folder_name), function(
+    fs.copy(selectedFiles[0], path.join(plugins_folder, folder_name), function (
       err
     ) {
       if (err) {
