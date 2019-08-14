@@ -44,12 +44,12 @@ module.exports = {
     body_dialog.setAttribute("class", "dialog_body");
     body_dialog.innerHTML = `
       <p style="font-size:22px; line-height:5px; margin-top:13px; white-space: nowrap; font-weight:bold;">
-          ${dialogObject.title}
+        ${dialogObject.title}
       </p>
       <div style="font-size:15px; min-height:15px;">
         <elastic-container related=self>
-          ${dialogObject.content}
-          </elastic-container>
+        ${dialogObject.content}
+        </elastic-container>
       </div>
       <div class="buttons" style="display:flex;"></div>`;
     Object.keys(dialogObject.buttons).forEach(function (key, index) {

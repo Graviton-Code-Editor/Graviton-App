@@ -15,14 +15,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 <script>
   let editor_booted = false,
       error_showed = false
-
   function FactoryReset() {
     const rimraf = require("rimraf")
     rimraf.sync(DataFolderDir);
     graviton.restartApp()
   }
-
-
   function DeleteBoot() {
     if (document.getElementById("g_bootanimation") != null) {
       document.getElementById("g_bootanimation").remove()
@@ -61,7 +58,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
       <!-- Control buttons (only for windows) -->
     </div>
   </div>
-
   <body>
     <div id="content_app">
       <div id="explorer_app" style="width:240px" opened="false">

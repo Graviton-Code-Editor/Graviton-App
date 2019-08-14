@@ -27,7 +27,6 @@
   transform: translate(-50%, -50%);
   border: 1px solid var(--window-border-color);
   -webkit-user-select: none;
-  z-index: 1;
 }
 
 .body_window_full {

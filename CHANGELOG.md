@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200814 - 2 [1.0.3]
+- Fixed, cannot read the reame of plugins in the market
+
 ### 200814 - 1 [1.0.3]
 - Created a basic test
 - Removed Codemirror from source and turned in to a dependency

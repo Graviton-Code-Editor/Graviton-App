@@ -285,7 +285,6 @@ const extensions = {
             <div>
               <div style="display:none;">
                 <ul>
-
                   ${
                     (function(){
                       let html = "";
@@ -293,34 +292,29 @@ const extensions = {
                         html += `<li>${getTranslation("PermissionCustomIcons")}</li>`
                       }
                       if(plugin.repo!=undefined?plugin.repo.package.css:plugin.local.css == undefined){
-                        html += ` < li > $ {
-            getTranslation("PermissionCustomStyling")
-          } < /li>`
-        }
-        if (plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors == undefined) {
-          html += `<li>${getTranslation("PermissionCustomColors")}</li>`
-        }
-        if (plugin.repo != undefined ? plugin.repo.package.main : plugin.local.main == undefined) {
-          html += `<li>${getTranslation("PermissionExecuteJavaScript")}</li>`
-        }
-        return html;
-      })()
-  }
-
-  <
-  ul >
-
-  <
-  /div> <
-  div id = $ {
-    data.getAttribute("name") + '_div2'
-  } >
-  <
-  p > Loading... < /p> <
-  /div> <
-  /div> <
-  /div> <
-  /div>`
+                        html += ` <li> ${
+                      getTranslation("PermissionCustomStyling")
+                        } </li>`
+                      }
+                      if (plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors == undefined) {
+                        html += `<li>${getTranslation("PermissionCustomColors")}</li>`
+                      }
+                      if (plugin.repo != undefined ? plugin.repo.package.main : plugin.local.main == undefined) {
+                        html += `<li>${getTranslation("PermissionExecuteJavaScript")}</li>`
+                      }
+                      return html;
+                    })()
+                  }
+                  </ul>
+                  </div> 
+                  <div id = ${
+                    data.getAttribute("name") + '_div2'
+                  }>
+                  <p> Loading... </p> 
+              </div> 
+          </div> 
+      </div> 
+  </div>`
 });
 ext_win.launch();
 if (plugin.local != undefined) {
