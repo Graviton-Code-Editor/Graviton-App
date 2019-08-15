@@ -34,10 +34,10 @@ before_cache:
 # These commands are executed before the scripts are executed
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-    sudo apt-get install rpm;
-    sudo add-apt-repository ppa:ubuntu-wine/ppa
-    sudo apt-get update
-    sudo apt-get install wine1.8 winetricks
+      sudo apt-get install rpm;
+      sudo add-apt-repository ppa:ubuntu-wine/ppa;
+      sudo apt-get update;
+      sudo apt-get install wine1.8 winetricks;
     fi
   - npm install
 
@@ -45,7 +45,7 @@ script:
   - echo "BUILDING"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-    npm run build; 
-    npm run build:win;
+      npm run build; 
+      npm run build:win;
     fi
   - ls dist
