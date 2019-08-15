@@ -35,7 +35,7 @@ before_cache:
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
       sudo apt-get install rpm;
-      sudo apt-get install wine
+      sudo apt-get install wine;
     fi
   - npm install
 
