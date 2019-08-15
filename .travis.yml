@@ -41,4 +41,4 @@ script:
   - echo "BUILDING"
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build:win:linux; fi
-  - ls .
+  - ls dist

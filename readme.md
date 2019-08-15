@@ -75,7 +75,6 @@ Credits ✨
 - [Codemirror](codemirror.net)
 - Help in autocompletation , Miguel Rangel
 - Old logo by Saúl Blanco 
-- [MiniMap Original source](https://github.com/alterfan/minimap)
 - [OpenEmoji](https://openmoji.org/)
 
 And all people who helped me :)
@@ -102,7 +101,7 @@ The current state is beta, check the releases page to download the latest versio
 
 Building 🧱
 ---
-Wanna build Graviton from source?
+Do you want to build Graviton from source?
 
 **Check [this](BUILDING.md)**
 
