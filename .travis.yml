@@ -9,8 +9,7 @@ node_js: '8'
 os:
   - linux
   - osx
-  - windows
-
+  
 env:
   global:
     - ELECTRON_CACHE=$HOME/.cache/electron
@@ -40,5 +39,6 @@ install:
 
 script:
   - echo "BUILDING"
-  - npm run build
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then npm run build:win:linux; fi
   - ls dist

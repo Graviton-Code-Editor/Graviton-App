@@ -63,13 +63,13 @@ Edit.setList({
   list:{
     Undo:{
       click:()=>{
-        editor.execCommand("undo");
+        if(editor!=undefined)editor.execCommand("undo");
       },
       hint:"Ctrl+Z"
     },
     Redo:{
       click:()=>{
-        editor.execCommand("redo");
+        if(editor!=undefined)editor.execCommand("redo");
       },
       hint:"Ctrl+Y"
     },
