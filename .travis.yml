@@ -32,10 +32,15 @@ cache:
 before_cache:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm -rf $HOME/.cache/electron-builder/wine; fi
 # These commands are executed before the scripts are executed
+
+before_install:
+  - sudo add-apt-repository ppa:ubuntu-wine/ppa
+  - sudo apt-get update
+  - sudo apt-get install wine1.8 winetricks
+
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
       sudo apt-get install rpm;
-      sudo apt-get install wine;
     fi
   - npm install
 
