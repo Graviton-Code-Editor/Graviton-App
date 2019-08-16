@@ -34,6 +34,12 @@ my_noti.close() //Close
 "use strict"
 
 module.exports = {
+  /*
+   * Notification constructor
+   * @param {string} object.title     Notification's title
+   * @param {string} object.content   Notification's content
+   * @param {object} object.buttons   Notification's buttons list
+   */
   Notification: function (object) {
     if (_notifications.length >= 3) { //Remove one notification in case there are 3
       _notifications[0].remove();
@@ -88,6 +94,10 @@ module.exports = {
       }
     }
   },
+  /*
+   * Close a notification
+   * @param {HTML element} element   DOM element
+   */
   closeNotification: function (element) {
     for (i = 0; i < _notifications.length; i++) {
       if (_notifications[i] === element.parentElement) {

@@ -31,6 +31,13 @@ loadTab(document.getElementById('my_tab1_freeTab')) //Load the tab by passing it
 "use strict"
 
 module.exports = {
+  /*
+   * Tab constructor
+   * @param {object} object.id    unique ID for the tab
+   * @param {string} object.type  type of the tab (free,image,file)
+   * @param {string} object.name  the tab's title
+   * @param {string} object.data  the tab's content
+   */
   Tab: function (object) {
     this.type = object.type;
     this.id = object.id;

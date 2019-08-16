@@ -29,6 +29,12 @@ closeDialog('my_dialog1'); //Close the dialog by passing the id
 "use strict"
 
 module.exports = {
+  /*
+   * Dialog constructor
+   * @param {string} dialogObject.title    Dialog's title
+   * @param {string} dialogObject.content  Dialog's content
+   * @param {object} dialogObject.buttons  Dialog's buttons
+   */
   Dialog: function (dialogObject) {
     if (typeof [...arguments] != "object") {
       graviton.throwError("Parsed argument is not object.");
@@ -78,6 +84,10 @@ module.exports = {
       closeDialog(me);
     };
   },
+  /*
+   * Close a dialog
+   * @param {HTML element} ele   DOM element
+   */
   closeDialog: ele => {
     document
       .getElementById("body")

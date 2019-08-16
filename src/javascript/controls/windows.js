@@ -30,6 +30,12 @@ closeWindow('my_window1'); //Close the window by passing the id
 
 module.exports = {
   Window: function (data) {
+    /*
+     * Window constructor
+     * @param {object} data.id                 Unique ID for the window
+     * @param {string} data.code               Window's content
+     * @param {function} data.onClose (optional) When the window is closed the passed function will be executed 
+     */
     this.id = data.id;
     this.code = data.content;
     this.onClose = data.onClose == undefined ? "" : data.onClose;
@@ -62,6 +68,10 @@ module.exports = {
       document.getElementById(`${this.id}_window`).remove();
     };
   },
+  /*
+   * Close a window by it's id
+   * @param {string} id  Window's unique window
+   */
   closeWindow: id => {
     document
       .getElementById("body")
