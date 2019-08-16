@@ -9,6 +9,7 @@ node_js: '8'
 os:
   - linux
   - osx
+  - windows
 
 env:
   global:
@@ -31,14 +32,6 @@ cache:
 
 before_cache:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm -rf $HOME/.cache/electron-builder/wine; fi
-# These commands are executed before the scripts are executed
-
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-      sudo apt-add-repository 'https://dl.winehq.org/wine-builds/ubuntu/';
-      sudo apt-get update;
-      sudo apt-get install wine1.8 winetricks;
-    fi
 
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
@@ -48,9 +41,5 @@ install:
 
 script:
   - echo "BUILDING"
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then npm run build; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then 
-      npm run build:win;
-      npm run build; 
-    fi
+  - npm run build
   - ls dist

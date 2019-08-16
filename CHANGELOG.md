@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200816 - 1 [1.0.3]
+- Added Esperanto (not finished)
+- Removed mousetrap from source, now it's a dependency
+- If there are not themes intalled it will show a message it is supposed to appear the themes list
+- Mistakes on plugin's package.json won't cause boot blocks, but it will throw a warn message
+
 ### 200814 - 3 [1.0.3]
 - Fixed from previous commits, codemirror dialogs were the default.
 - Added a new menu, Edit, and re structured the menus.

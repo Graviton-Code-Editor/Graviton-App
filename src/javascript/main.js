@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanz
+Copyright (c) 2019 Marc Espin Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190815",
+  date: "190816",
   version: "1.0.3",
   state: "Beta"
 };
@@ -77,7 +77,8 @@ let current_screen,
   mouseClicked = false,
   touchingResizerValue = false,
   editor_screens = [],
-  dictionary = autocomplete;
+  dictionary = autocomplete,
+  Mousetrap = require('mousetrap');
 
 require(path.join(__dirname, 'src', 'javascript', 'controls', 'modes.js')).langs()
 

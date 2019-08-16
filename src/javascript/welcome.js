@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanztor
+Copyright (c) 2019 Marc Espin Sanztor
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 

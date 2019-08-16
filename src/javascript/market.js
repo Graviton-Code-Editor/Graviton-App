@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanz
+Copyright (c) 2019 Marc Espin Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -65,7 +65,7 @@ const extensions = {
             }
             if (plugins_market.length != full_plugins.length) {
               document.getElementById('sec_all').innerHTML += `
-                <div  id=load_more_plugins  class="extension_div load_more_div" >
+                <div  id=load_more_plugins  class="extension_div static" >
                   <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; console.log('hola'); extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
                 </div>`
             }
@@ -475,7 +475,7 @@ const plugins = {
         try {
           require(path.join(plugins_folder, config["name"], config["main"]));
         } catch {
-          console.warn(`An error ocurred while loading the plugin >${config.name}<. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues`) //Throw warn in case a plugin has an error
+          console.warn("Cannot install succesfully the plugin >"+`%c ${config.name}`+" %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues","color:red; font-weight:bold;","color:normal; font-weight:normal;") //Throw warn in case a plugin has an error
           return call != undefined ? call() : "";
         }
         if (config["css"] == undefined) {

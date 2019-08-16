@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanz
+Copyright (c) 2019 Marc Espin Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -53,9 +53,19 @@ const Settings = {
           <h4>${getTranslation("Themes")}</h4> 
           <div class="section-1">
             <div id='theme_list'></div> 
-            <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation(
-              "Market"
-            )}</p>   
+            ${
+              (function(){
+                if(themes.length!=0){
+                  return `
+                  <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation(
+                    "Market"
+                  )}</p>  
+                  `
+                }else{
+                  return "";
+                }
+              })()
+            }
             <p>${getTranslation("Themes.Text")}</p>
             <gv-switch  onclick="graviton.useSystemAccent(); saveConfig();" class="${
               current_config.accentColorPreferences == "system"
@@ -116,6 +126,11 @@ const Settings = {
             selectTheme("1", themeDiv);
           }
           document.getElementById("theme_list").appendChild(themeDiv);
+        }
+        if(themes.length == 0){
+          document.getElementById("theme_list").innerHTML= `
+          <span>No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
+          `
         }
         document.getElementById("navB1").classList.add("active");
         break;

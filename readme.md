@@ -107,13 +107,13 @@ Do you want to build Graviton from source?
 
 Known problems 😓
 ---
-- Empty themes after updating to v1.0.3 (Solution: install them from the market or doing a factory reset)
+- Terminal might not work very well (Windows)
 
 License 🧾
 ---
 MIT License
 
-Copyright (c) Marc Espín Sanz
+Copyright (c) Marc Espin Sanz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

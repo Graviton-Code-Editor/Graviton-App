@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanz
+Copyright (c) 2019 Marc Espin Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -106,6 +106,15 @@ function detectPlugins(call) {
           try {
             require(path.join(plugins_folder, paths[loaded], "package.json"))
           } catch {
+            if (loaded == paths.length) {
+              return call != undefined ? call() : "";
+            }
+          }
+          try{
+            require(path.join(plugins_folder, paths[loaded], "package.json"))
+          }catch{
+            console.warn("Cannot parse the package of >"+`%c ${paths[loaded]}`+" %c < plugin. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues","color:red; font-weight:bold;","color:normal; font-weight:normal;") //Throw warn in case a plugin has an error
+            loaded++;
             if (loaded == paths.length) {
               return call != undefined ? call() : "";
             }

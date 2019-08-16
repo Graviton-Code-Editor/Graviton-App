@@ -1,8 +1,12 @@
+/*
+ * Basic testing
+ */
+
 const Application = require('spectron').Application
 const assert = require('assert')
 const electronPath = require('electron') // Require Electron from the binaries included in node_modules.
 const path = require('path')
-const fs = require ('fs')
+const fs = require('fs')
 
 const DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
 
@@ -20,7 +24,7 @@ describe('Graviton opening', function () {
       assert.equal(count, 1)
     })
   })
-  it('.graviton created', function () {
+  it('.graviton is created', function () {
     return fs.existsSync(DataFolderDir)
   })
   afterEach(function () {
@@ -29,4 +33,3 @@ describe('Graviton opening', function () {
     }
   })
 })
-

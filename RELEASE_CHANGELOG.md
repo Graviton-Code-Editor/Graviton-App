@@ -5,9 +5,13 @@
 - Created a CLI (optional)
 - You can now create folders and files & remove them from the editor
 - Refreshed default themes
+- You can change the editors font-size by pressing Ctrl and scrolling or pressing Up/Down
 
 ## New
 
+- Restructured the menus on the top bar
+- Added some emojies 
+- Added Esperanto language
 - Added a blur effect which can be ajusted or disabled from settings
 - Added a clear recent projects in the welcome page
 - Added a bounce effect to some part of the app (can be disabled)
@@ -21,12 +25,13 @@
 - Added "Fullscreen" button in the menu Window
 - Added a current directory title on top
 - Toggle the menus visibility by pressing Ctrl + Tab
+- And other minor changes
 
 ## Bug fixes
 
 - No more undefined texts
 - Ruby highlighter wasn't working
-- Cannot close any terminal
+- Couldn't close any terminal
 - Markdown highlighter wasn't working
 
 

@@ -15,7 +15,7 @@
     "rebuild": "electron-rebuild -f -w node-pty && electron-rebuild -f -w nodegit",
     "standard": "standard --fix",
     "postinstall": "electron-builder install-app-deps",
-    "test": "mocha src/test"
+    "test": "mocha test"
   },
   "standard": {
     "ignore": [
@@ -45,6 +45,7 @@
     "fs-extra": "^7.0.1",
     "marked": "^0.7.0",
     "mocha": "^6.2.0",
+    "mousetrap": "^1.6.3",
     "node-pty": "^0.9.0-beta21",
     "nodegit": "^0.24.3",
     "npm": "^6.10.1",

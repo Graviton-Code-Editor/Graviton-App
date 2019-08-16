@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espín Sanz
+Copyright (c) 2019 Marc Espin Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -627,11 +627,11 @@ button.button3:active{
   padding: 0;
 }
 
-p.link {
+.link {
   text-decoration: underline;
 }
 
-p.link:hover {
+.link:hover {
   color: var(--accentColor);
 }
 
@@ -722,7 +722,7 @@ p.link:hover {
   overflow: auto;
   z-index: auto !important;
 }
-.load_more_div {
+.static {
   border:0 !important;
   box-shadow:none !important;
   cursor:auto !important;
