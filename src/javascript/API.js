@@ -264,7 +264,7 @@ function sleeping(ms) {
 const graviton = {
   getCurrentTheme: function () {
     //Get the theme name of the applied theme
-    return current_config.theme;
+    return themeObject.name;
   },
   getSelectedText: function () {
     //Get te text you have selected

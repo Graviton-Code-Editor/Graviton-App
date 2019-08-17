@@ -90,7 +90,7 @@ function detectPlugins(call) {
           full_plugins = market.cache
           plugins_market = market.list
         }
-        current_plugins = 5
+        current_plugins = full_plugins.length;
         if (!err) return;
       })
     }

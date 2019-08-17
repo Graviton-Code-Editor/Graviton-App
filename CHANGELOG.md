@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200817 - 1 [1.0.3]
+- Now using Semver to parse plugin versions
+- Better dark highlighting
+- Prevent from overloading a theme
+
 ### 200816 - 1 [1.0.3]
 - Added Esperanto (not finished)
 - Removed mousetrap from source, now it's a dependency

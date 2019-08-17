@@ -53,7 +53,7 @@ const extensions = {
                 document.getElementById("loading_exts").remove();
               }
               const sec_ID = 'sec' + Math.random().toString();
-              const _new_update = plugin.local != undefined ? getVersionSum(_package.version) > getVersionSum(graviton.getPlugin(_package.name).local.version) : false;
+              const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version,semver.parse(plugin.local.version).version) : false;
               document.getElementById('sec_all').innerHTML += `
                 <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${_package.name} update=${_new_update}>
                   ${_new_update?icons["update"]:""}
@@ -66,7 +66,7 @@ const extensions = {
             if (plugins_market.length != full_plugins.length) {
               document.getElementById('sec_all').innerHTML += `
                 <div  id=load_more_plugins  class="extension_div static" >
-                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; console.log('hola'); extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
+                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
                 </div>`
             }
           }
@@ -91,7 +91,8 @@ const extensions = {
                 document.getElementById("loading_exts2").remove();
               }
               const plugin = graviton.getPlugin(_data.name)
-              const new_update = plugin.repo != undefined ? getVersionSum(plugin.repo.package.version) > getVersionSum(plugin.local.version) : false;
+              console.log(plugin)
+              const new_update = plugin.repo != undefined ? semver.gt(semver.parse(plugin.repo.package.version).version,semver.parse(plugin.local.version).version) : false;
               const sec_ID = 'sec' + Math.random().toString();
               document.getElementById('sec_installed').innerHTML += `
                 <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${plugin.local.name} update=${new_update}>
@@ -121,7 +122,7 @@ const extensions = {
                 if (document.getElementById("loading_exts3") != undefined) {
                   document.getElementById("loading_exts3").remove();
                 }
-                const _new_update = plugin.local != undefined ? getVersionSum(_package.version) > getVersionSum(plugin.local.version) : false;
+                const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version,semver.parse(plugin.local.version).version) : false;
                 const sec_ID = 'sec' + Math.random().toString();
                 document.getElementById('sec_themes').innerHTML += `
               <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${_package.name}  update=${new_update}>
@@ -136,6 +137,12 @@ const extensions = {
             if (document.getElementById("loading_exts3") != undefined) {
               document.getElementById("loading_exts3").remove();
             }
+          }
+          if (plugins_market.length != full_plugins.length) {
+            document.getElementById('sec_themes').innerHTML += `
+              <div  id=load_more_plugins  class="extension_div static" >
+                <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; extensions.navigate('themes')}); " class=" center button1 fixed-scale" > Load more</button>
+              </div>`
           }
           return
         case 'settings':
@@ -195,7 +202,7 @@ const extensions = {
         if (document.getElementById("load_more_plugins") != undefined) document.getElementById("load_more_plugins").remove();
         return;
       }
-      me.extensions = plugins_market.slice(start, start + 5)
+      me.extensions = plugins_market.slice(start, start + 5);
       current_plugins = start + me.extensions.length
       for (i = 0; i < me.extensions.length; i++) {
         const this_i = i;
@@ -211,7 +218,7 @@ const extensions = {
               package: _package
             })
             const plugin = graviton.getPlugin(_package.name);
-            const _new_update = plugin.local != undefined ? getVersionSum(_package.version) > getVersionSum(plugin.local.version) : false;
+            const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version,semver.parse(plugin.local.version).version) : false;
             if (_new_update) {
               plugins_to_update = true;
             }
@@ -311,25 +318,29 @@ const extensions = {
                     data.getAttribute("name") + '_div2'
                   }>
                   <p> Loading... </p> 
-              </div> 
-          </div> 
-      </div> 
-  </div>`
-});
-ext_win.launch();
-if (plugin.local != undefined) {
-  fs.readFile(path.join(plugins_folder, data.getAttribute("name"), "readme.md"), "utf8", function (err, readme) {
-    document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!err?marked(readme):getTranslation("NoReadme")}</div>`
-  });
-} else {
-  const request = require("request");
-  request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
-    if (document.getElementById(data.getAttribute('name') + '_div') == undefined) return;
-    document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
-  })
-}
+                </div> 
+            </div> 
+        </div> 
+    </div>`
+    });
+    ext_win.launch();
+    if (plugin.local != undefined) {
+      fs.readFile(path.join(plugins_folder, data.getAttribute("name"), "readme.md"), "utf8", function (err, readme) {
+        document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!err?marked(readme):getTranslation("NoReadme")}</div>`
+      });
+    } else {
+      const request = require("request");
+      request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
+        if (document.getElementById(data.getAttribute('name') + '_div') == undefined) return;
+        document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
+      })
+    }
 },
 installExtension: function (name) {
+    /*
+      * @desc Install a plugin from the market
+      * @param {string} name - Name of the plugin
+    */
     const plugin = graviton.getPlugin(name)
     if (fs.existsSync(path.join(plugins_folder, name))) {
       new Notification({
@@ -358,8 +369,12 @@ installExtension: function (name) {
     });
   },
   updateExtension: function (name) {
+    /*
+      * @desc Update a plugin from the market
+      * @param {string} name - Name of the plugin
+    */
     const plugin = graviton.getPlugin(name)
-    const new_update = plugin.local != undefined && plugin.repo != undefined ? getVersionSum(plugin.repo.package.version) > getVersionSum(plugin.local.version) : false;
+    const new_update = plugin.local != undefined && plugin.repo != undefined ? semver.gt(semver.parse(plugin.repo.package.version).version,semver.parse(plugin.local.version).version)  : false;
     if (plugin.repo == undefined) {
       new Notification({
         title: 'Market',
@@ -403,6 +418,10 @@ installExtension: function (name) {
     });
   },
   uninstallExtension: function (name) {
+    /*
+      * @desc Load a pluign
+      * @param {string} name - Name of the plugin
+    */
     const rimraf = require('rimraf');
     if (!fs.existsSync(path.join(plugins_folder, name))) {
       new Notification({
@@ -438,6 +457,9 @@ installExtension: function (name) {
 
 const store = {
   loadMenus: function () {
+    /*
+      * @desc Load the Market page structure
+    */
     if (document.getElementById("market_window_window") == undefined) return;
     graviton.windowContent("market_window", `
         <div class="g_lateral_panel">
@@ -458,6 +480,9 @@ const store = {
         `);
   },
   clearCache: function () {
+    /*
+      * @desc Clear the market cache 
+    */
     const rimraf = require('rimraf')
     rimraf.sync(market_file)
     full_plugins = []
@@ -469,6 +494,12 @@ const store = {
 }
 const plugins = {
   install: function (config, call) {
+    /*
+      * @desc Load a pluign
+      * @param {object} config - package.json of the plugin
+      * @param {function} call - Function's callback
+      * @return call - Function's callback
+    */
     if (config.colors == undefined) {
       plugins_list.push(config);
       if (config["main"] != undefined) {
@@ -494,7 +525,6 @@ const plugins = {
           link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][i])),
             document.body.appendChild(link);
           if (i == config.css.length - 1) {
-
             return call != undefined ? call() : "";
           }
         }
@@ -505,7 +535,7 @@ const plugins = {
       plugins_list.push(config);
       const newLink = document.createElement("link");
       newLink.setAttribute("rel", "stylesheet");
-      if (config.type != "custom_theme" || config.highlight == ("default" || "LightUI")) {
+      if (config.type != "custom_theme" || config.highlight == "default" || config.highlight == "LightUI") {
         newLink.setAttribute("href", path.join("src", "Highlights", config["highlight"] + ".css")); //Link new themes 
       } else {
         newLink.setAttribute("href", path.join(plugins_folder, config["name"], config["highlight"] + ".css")); //Link new themes 
@@ -515,6 +545,10 @@ const plugins = {
     }
   },
   installDependencies: function (config) {
+    /*
+      * @desc Install NodeJS dependencies of the plugin
+      * @param {object} config - Dependencies object of the plugin
+    */
     const npm = require('npm')
     npm.load({
       prefix: path.join(plugins_folder, config["name"])
@@ -523,12 +557,16 @@ const plugins = {
       for (const depen in config["dependencies"]) {
         npm.commands.install([depen], function (er, data) {
           if (er) return er;
-          plugins.install(config) //Dependencies of the plugin  has been installed successfully
+          plugins.install(config) 
         })
       }
     })
   },
   disableCSS: function (config) {
+    /*
+      * @desc Disable plugin's CSS
+      * @param {object} config - Package.json's of the plugin
+    */
     if (config.css == undefined || config.css.length == 0) return;
     const csss = document.getElementsByClassName(config.name + "_css");
     for (b = 0; b < csss.length; b++) {
@@ -537,6 +575,10 @@ const plugins = {
     }
   },
   enableCSS: function (config) {
+    /*
+      * @desc Enable plugin's CSS
+      * @param {object} config - Package.json's of the plugin
+    */
     if (config.css == undefined || config.css.length == 0) return;
     for (b = 0; b < config.css.length; b++) {
       const link = document.createElement("link");
@@ -548,17 +590,6 @@ const plugins = {
   }
 }
 
-const getVersionSum = (input) => {
-  return (function () {
-    const _input = input.match(/\d+/g);
-    let result = "";
-    for (const num of _input) {
-      result += num
-    }
-    return parseInt(result, 10);
-  })(input)
-}
-
 const installCli = function () {
   const npm = require('npm')
   npm.load({
@@ -567,7 +598,7 @@ const installCli = function () {
     if (er) return er;
     npm.commands.install(['graviton-cli'], function (er, data) {
       if (er) return er;
-      console.log("cli installed!")
+      console.log("Graviton CLI has been installed!")
     })
   })
 }

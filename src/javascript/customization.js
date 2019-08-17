@@ -13,6 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const tinycolor = require("tinycolor2");
 
 graviton.setTheme = function (name) {
+  if(graviton.getCurrentTheme()==name) return;
   for (i = 0; i < themes.length; i++) {
     if (themes[i]["name"] == name) {
       if (themeObject.type == "custom_theme") {

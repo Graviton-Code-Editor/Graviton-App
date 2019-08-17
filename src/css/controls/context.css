@@ -35,7 +35,6 @@ context .menuWrapper::-webkit-scrollbar-thumb:hover {
 context .menuWrapper .option {
   height: 30px;
   font-size: 13px;
-  z-index: 80;
   color: var(--white-black);
   background-color: transparent;
   padding: 5px 10px;
@@ -87,7 +86,6 @@ context .menuWrapper .option:last-child {
   min-width: 100px;
   width: auto;
   overflow: auto;
-  z-index: 100;
   box-shadow: 1px 3px 9px 0px rgba(0, 0, 0, 0.3);
   padding: 5px;
   font-family: _main_font !important;
@@ -97,7 +95,6 @@ context .menuWrapper .option:last-child {
   border-radius: 3px;
   border: 0;
   font-size: 13px;
-  z-index: 80;
   color: var(--white-black);
   background-color: var(--dropmenu-background-color);
   padding: 7px 10px;

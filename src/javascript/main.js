@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190816",
+  date: "190817",
   version: "1.0.3",
   state: "Beta"
 };
@@ -41,6 +41,7 @@ const os = require("os"),
   fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
 
 const CodeMirror = require("codemirror")
+const semver = require("semver");
 
 let current_screen,
   dir_path,

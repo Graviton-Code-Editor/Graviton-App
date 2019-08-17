@@ -11,11 +11,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 "use strict"
 
-/*
-
-  * Preload some images so they are stored in the cache, this is made to improve the UX.
-
-*/
 preload([
 
   "src/icons/folder_opened.svg",
@@ -25,7 +20,7 @@ preload([
 
 /*
 
-  * Default (initial) config object
+  *@desc Default (initial) config object
 
 */
 let current_config = {
@@ -69,7 +64,6 @@ function loadConfig() {
     Object.keys(current_config).forEach(function (key, index) {
       if (local_config[key] != undefined && current_config[key] != undefined)
         current_config[key] = local_config[key]; // Will only change the extisting parameters
-
     });
     updateSettings();
     screens.add(); //Creates the first screen
@@ -97,7 +91,6 @@ function loadConfig() {
     });
   }
 }
-
 function saveConfig() {
   // Saves the current configuration to config.json
   let newConfig = {

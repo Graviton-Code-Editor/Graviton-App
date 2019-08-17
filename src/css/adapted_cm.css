@@ -4,6 +4,7 @@
   /* Set height, width, borders, and global font properties here */
   color: black;
   direction: ltr;
+
 }
 
 /* PADDING */
@@ -23,7 +24,7 @@
   background-color: #f7f7f7;
   white-space: nowrap;
 }
-.CodeMirror-linenumbers {}
+
 .CodeMirror-linenumber {
   padding: 0 3px 0 5px;
   min-width: 20px;
@@ -85,7 +86,7 @@
 }
 
 /* Can style cursor different in overwrite (non-insert) mode */
-.CodeMirror-overwrite .CodeMirror-cursor {}
+
 
 .cm-tab { display: inline-block; text-decoration: inherit; }
 
@@ -115,10 +116,6 @@
 .cm-s-default .cm-atom {color: #219;}
 .cm-s-default .cm-number {color: #164;}
 .cm-s-default .cm-def {color: #00f;}
-.cm-s-default .cm-variable,
-.cm-s-default .cm-punctuation,
-.cm-s-default .cm-property,
-.cm-s-default .cm-operator {}
 .cm-s-default .cm-variable-2 {color: #05a;}
 .cm-s-default .cm-variable-3, .cm-s-default .cm-type {color: #085;}
 .cm-s-default .cm-comment {color: #a50;}
@@ -267,8 +264,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #a22;}
   z-index: 2;
   padding: 0.1px; /* Force widget margins to stay inside of the container */
 }
-
-.CodeMirror-widget {}
 
 .CodeMirror-rtl pre { direction: rtl; }
 
