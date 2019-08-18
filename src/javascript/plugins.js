@@ -79,7 +79,7 @@ function detectPlugins(call) {
     }
   } else {
     let date = new Date
-    date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDay())
+    date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDate())
     if (fs.existsSync(market_file)) {
       fs.readFile(market_file, "utf8", (err, data) => {
         const market = JSON.parse(data);

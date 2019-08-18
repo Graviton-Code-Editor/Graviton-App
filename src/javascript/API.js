@@ -651,23 +651,36 @@ const graviton = {
     }
   },
   changeLanguageStatusBar(lang, screen) {
-    const lang_ele = document.getElementById(screen).children[2].children[0];
-    if (lang_ele.innerText == "") {
-      lang_ele.style = "";
+    if (editor == undefined) {
+      if(document.getElementById(screen).children[2].children[0]!=undefined){
+      document.getElementById(screen).children[2].children[0].remove();
+
+      }
+    }else{
+      if(document.getElementById(screen).children[2].children[0]==undefined){
+        const span = document.createElement("span");
+        span.innerText = lang;
+        span.setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
+        document.getElementById(screen).children[2].appendChild(span)
+      }else{ 
+        document.getElementById(screen).children[2].children[0].innerText = lang;
+        document.getElementById(screen).children[2].children[0].setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
+      }
     }
-    if (lang == "") {
-      lang_ele.style = "padding:0px;";
-    }
-    lang_ele.setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
-    lang_ele.innerText = lang;
   },
   refreshStatusBarLinesAndChars(screen) {
     if (editor == undefined) {
-      document.getElementById(screen).children[2].children[1].innerText = ""
-      document.getElementById(screen).children[2].children[1].removeAttribute("title");
+      document.getElementById(screen).children[2].children[1].remove();
     } else {
-      document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line+1 + "/" + editor.getCursor().ch+1
-      document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line+1} , Char: ${editor.getCursor().ch+1}`
+      if(document.getElementById(screen).children[2].children[1]==undefined){
+        const span = document.createElement("span");
+        span.innerText = editor.getCursor().line+1 + "/" + Number(editor.getCursor().ch+1);
+        span.title = `Line: ${editor.getCursor().line+1} , Char: ${Number(editor.getCursor().ch+1)}`
+        document.getElementById(screen).children[2].appendChild(span)
+      }else{
+        document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line+1 + "/" + Number(editor.getCursor().ch+1);
+        document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line+1} , Char: ${Number(editor.getCursor().ch+1)}`
+      }
     }
   }
 };
@@ -930,31 +943,7 @@ const commanders = {
 const screens = {
   add: function () {
     const current_id = `screen_${editor_screens.length + Math.random()}`;
-    const new_screen_editor = document.createElement("div");
-    new_screen_editor.classList = "g_editors";
-    new_screen_editor.id = current_id;
-    new_screen_editor.innerHTML = `
-      <div class="g_tabs_bar flex smallScrollBar"></div>  
-      <div class="g_editors_editors" >
-     <div class=temp_dir_message> 
-        <p dragable=false class="translate_word " idT="WelcomeMessage" >${
-         getTranslation("WelcomeMessage")
-        }</p>
-        <img draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
-      </div>
-      </div>
-      <div class="g_status_bar" >
-        <span></span>
-        <span></span>
-      </div>`;
-    document
-      .getElementById("content_app")
-      .insertBefore(
-        new_screen_editor,
-        document.getElementById("content_app").children[
-          document.getElementById("content_app").children.length - 1
-        ]
-      );
+   
     current_screen = {
       id: current_id,
       terminal: undefined
@@ -964,6 +953,44 @@ const screens = {
       terminal: undefined
     };
     editor_screens.push(screen);
+    const new_screen_editor = document.createElement("div");
+    new_screen_editor.classList = "g_editors";
+    new_screen_editor.id = current_id;
+    new_screen_editor.innerHTML = `
+    <div class="g_tabs_bar flex smallScrollBar"></div>  
+    <div class="g_editors_editors" >
+     <div class=temp_dir_message> 
+      <div>
+        <p style="display:inline-block;"dragable=false class="translate_word " idT="WelcomeMessage" >${
+         getTranslation("WelcomeMessage")
+        }</p>
+        <img style="display:inline-block;" draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
+      </div>
+      ${
+        (function(){
+          if(editor_screens.length >1){
+            return `<span aa=${current_id} class=link onclick="screens.remove('${current_id}')">Remove screen</span> `
+          }else{
+            return "";
+          }
+        })()
+      }
+      </div>
+     </div>
+    <div class="g_status_bar" ></div>`;
+    document
+      .getElementById("content_app")
+      .insertBefore(
+        new_screen_editor,
+        document.getElementById("content_app").children[
+          document.getElementById("content_app").children.length - 1
+        ]
+      );
+    for(i=0;i<editor_screens.length && editor_screens.length != 1 ;i++){
+        if(document.getElementById(editor_screens[i].id).children[1].children[0].children[1]==undefined) {
+          document.getElementById(editor_screens[i].id).children[1].children[0].innerHTML += `<span aa=${editor_screens[i].id} class=link onclick="screens.remove('${editor_screens[i].id}')">Remove screen</span>`
+        }
+    }
     new_screen_editor.addEventListener(
       "click",
       function (event) {
@@ -985,6 +1012,7 @@ const screens = {
     graviton.resizeTerminals();
   },
   remove: function (id) {
+    
     if (editor_screens.length != 1) {
       for (i = 0; i < editor_screens.length; i++) {
         if (editor_screens[i].id == id) {
@@ -1013,6 +1041,9 @@ const screens = {
               id: editor_screens[editor_screens.length - 1].id,
               terminal: editor_screens[editor_screens.length - 1].terminal
             };
+            if(editor_screens.length  == 1){
+              if(document.getElementById(editor_screens[0].id).children[1].children[0].children[1]!=undefined) document.getElementById(editor_screens[0].id).children[1].children[0].children[1].remove()
+            }
             return true;
           } else {
             graviton.throwError(

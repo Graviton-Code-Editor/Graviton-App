@@ -197,6 +197,10 @@ head {
   border-top-left-radius: inherit;
 }
 
+#content_app > .g_editors > .g_tabs_bar:empty {
+  background: var(--editor-background-colors)
+}
+
 .temp_dir_message {
   font-size: 15px;
   user-select: none;
@@ -210,9 +214,7 @@ head {
   color: var(--white-black);
   width: auto;
 }
-.temp_dir_message *{
-  display: inline-block;
-}
+
 
 #content_app .g_editors {
   font-size: var(--editor-font-size);
@@ -291,6 +293,10 @@ head {
   box-shadow: 0px 3px 5px var(--shadows);
   display: block;
   border:0px !important;
+}
+
+#content_app > .g_editors > .g_status_bar:empty {
+  background:var(--editor-background-color);
 }
 
 #content_app > .g_editors > .g_status_bar span {

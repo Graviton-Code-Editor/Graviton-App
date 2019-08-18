@@ -91,7 +91,6 @@ const extensions = {
                 document.getElementById("loading_exts2").remove();
               }
               const plugin = graviton.getPlugin(_data.name)
-              console.log(plugin)
               const new_update = plugin.repo != undefined ? semver.gt(semver.parse(plugin.repo.package.version).version,semver.parse(plugin.local.version).version) : false;
               const sec_ID = 'sec' + Math.random().toString();
               document.getElementById('sec_installed').innerHTML += `
@@ -228,7 +227,7 @@ const extensions = {
             }
             if (this_i == me.extensions.length - 1) {
               let date = new Date
-              date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDay())
+              date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDate())
               const new_cache = {
                 "date": date,
                 "list": plugins_market,
@@ -295,18 +294,18 @@ const extensions = {
                   ${
                     (function(){
                       let html = "";
-                      if(plugin.repo!=undefined?plugin.repo.package.icons:plugin.local.icons == undefined){
+                      if((plugin.repo!=undefined?plugin.repo.package.icons:plugin.local.icons) != undefined){
                         html += `<li>${getTranslation("PermissionCustomIcons")}</li>`
                       }
-                      if(plugin.repo!=undefined?plugin.repo.package.css:plugin.local.css == undefined){
+                      if((plugin.repo!=undefined?plugin.repo.package.css : plugin.local.css) != undefined){
                         html += ` <li> ${
-                      getTranslation("PermissionCustomStyling")
+                          getTranslation("PermissionCustomStyling")
                         } </li>`
                       }
-                      if (plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors == undefined) {
+                      if ((plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors) != undefined) {
                         html += `<li>${getTranslation("PermissionCustomColors")}</li>`
                       }
-                      if (plugin.repo != undefined ? plugin.repo.package.main : plugin.local.main == undefined) {
+                      if ((plugin.repo != undefined ? plugin.repo.package.main: plugin.local.main) != undefined) {
                         html += `<li>${getTranslation("PermissionExecuteJavaScript")}</li>`
                       }
                       return html;
@@ -536,7 +535,7 @@ const plugins = {
       const newLink = document.createElement("link");
       newLink.setAttribute("rel", "stylesheet");
       if (config.type != "custom_theme" || config.highlight == "default" || config.highlight == "LightUI") {
-        newLink.setAttribute("href", path.join("src", "Highlights", config["highlight"] + ".css")); //Link new themes 
+        newLink.setAttribute("href", path.join("src", "highlightings", config["highlight"] + ".css")); //Link new themes 
       } else {
         newLink.setAttribute("href", path.join(plugins_folder, config["name"], config["highlight"] + ".css")); //Link new themes 
       }

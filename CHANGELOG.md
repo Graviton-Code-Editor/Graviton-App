@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200818 - 1 [1.0.3]
+- Fixed char counter
+- Improved design of the screens
+- Added a remove screen button when it's empty
+
 ### 200817 - 1 [1.0.3]
 - Now using Semver to parse plugin versions
 - Better dark highlighting

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190817",
+  date: "190818",
   version: "1.0.3",
   state: "Beta"
 };
@@ -38,10 +38,11 @@ const os = require("os"),
   url = require("url"),
   marked = require("marked"),
   updater = require("./src/javascript/updater") /*Import the update module*/ ,
-  fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
+  fit = require("./node_modules/xterm/lib/addons/fit/fit.js"),
+  CodeMirror = require("codemirror"),
+  semver = require("semver");
 
-const CodeMirror = require("codemirror")
-const semver = require("semver");
+require(path.join(__dirname, 'src', 'javascript', 'controls', 'modes.js')).langs()
 
 let current_screen,
   dir_path,
@@ -51,7 +52,7 @@ let current_screen,
   tabs = [],
   FirstFolder = null,
   editingTab,
-  plang = " ",
+  plang = "",
   _notifications = [],
   filepath = null,
   editors = [],
@@ -80,9 +81,6 @@ let current_screen,
   editor_screens = [],
   dictionary = autocomplete,
   Mousetrap = require('mousetrap');
-
-require(path.join(__dirname, 'src', 'javascript', 'controls', 'modes.js')).langs()
-
 
 if (graviton.isProduction()) {
   DataFolderDir = path.join(getAppDataPath(), ".graviton");
@@ -195,14 +193,6 @@ const loadEditor = info => {
         elasticContainer.append(text_container.children[0].children[Number(text_container.children[0].children.length - 1)])
         editors.push(new_editor_text);
         if (g_highlighting == "activated") updateCodeMode(codemirror, info.dir);
-        graviton.changeLanguageStatusBar(getLanguageName(
-          getFormat(path.basename(info.dir)).lang != "unknown" ?
-          getFormat(path.basename(info.dir)).lang :
-          path
-          .basename(info.dir)
-          .split(".")
-          .pop()
-        ), info.screen);
         for (i = 0; i < editors.length; i++) {
           if (
             editors[i].screen == info.screen &&
@@ -222,6 +212,14 @@ const loadEditor = info => {
         });
         editorID = new_editor_text.id;
         editor = new_editor_text.editor;
+        graviton.changeLanguageStatusBar(getLanguageName(
+          getFormat(path.basename(info.dir)).lang != "unknown" ?
+          getFormat(path.basename(info.dir)).lang :
+          path
+          .basename(info.dir)
+          .split(".")
+          .pop()
+        ), info.screen);
         text_container.style.display = "block";
         codemirror.on("focus", function (a) {
           for (i = 0; i < editors.length; i++) {

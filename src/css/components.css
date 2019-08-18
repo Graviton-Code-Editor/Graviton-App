@@ -629,6 +629,7 @@ button.button3:active{
 
 .link {
   text-decoration: underline;
+  pointer-events: auto !important;
 }
 
 .link:hover {
