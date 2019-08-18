@@ -65,12 +65,11 @@ function loadConfig() {
       if (local_config[key] != undefined && current_config[key] != undefined)
         current_config[key] = local_config[key]; // Will only change the extisting parameters
     });
+    loadLanguage(current_config.language);
     updateSettings();
     screens.add(); //Creates the first screen
     detectPlugins(function () {
-      if (current_config["theme"] != undefined)
-        graviton.setTheme(current_config["theme"]);
-      loadLanguage(current_config.language);
+      if (current_config["theme"] != undefined) graviton.setTheme(current_config["theme"]);
       if (current_config.justInstalled === false) {
         openWelcome();
       } else {

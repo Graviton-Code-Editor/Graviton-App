@@ -163,7 +163,7 @@ class Plugin {
     }
   }
   saveData(data, callback) {
-    plugins_dbs[this.b].db = data;
+    plugins_dbs[this.index].db = data;
     fs.writeFileSync(
       path.join(plugins_db, this.name) + ".json",
       JSON.stringify(data),
@@ -180,7 +180,7 @@ class Plugin {
           path.join(plugins_db, name) + ".json",
           JSON.stringify(object),
           function (err) {
-            plugins_dbs[this.b].db = object;
+            plugins_dbs[this.index].db = object;
           }
         );
       })
@@ -194,7 +194,7 @@ class Plugin {
         db: data
       };
       plugins_dbs.push(db);
-      this.b = plugins_dbs.length - 1;
+      this.index = plugins_dbs.length - 1;
       fs.writeFileSync(
         path.join(plugins_db, this.name) + ".json",
         JSON.stringify(data),
@@ -207,7 +207,7 @@ class Plugin {
   }
   getData(callback) {
     const me = this;
-    if (plugins_dbs[this.b] == undefined) {
+    if (plugins_dbs[this.index] == undefined) {
       const name = this.name
       fs.readFile(path.join(plugins_db, name + ".json"), "utf8", function (
         err,
@@ -221,43 +221,39 @@ class Plugin {
         for (i = 0; i < plugins_dbs.length; i++) {
           if (plugins_dbs[i].plugin_name == name) {
             //List package information
-            me.b = i;
+            me.index = i;
           }
         }
-        return typeof callback == "function" ? callback(plugins_dbs[me.b].db) : plugins_dbs[me.b].db
+        return typeof callback == "function" ? callback(plugins_dbs[me.index].db) : plugins_dbs[me.index].db
       });
     } else {
-      return typeof callback == "function" ? callback(plugins_dbs[me.b].db) : plugins_dbs[this.b].db
+      return typeof callback == "function" ? callback(plugins_dbs[me.index].db) : plugins_dbs[this.index].db
     }
   }
   deleteData(data) {
-    switch (data) {
-      case undefined:
-        plugins_dbs[b].db = {};
+    if(data==undefined){
+      plugins_dbs[this.index].db = {};
         fs.writeFileSync(
           path.join(plugins_db, this.name) + ".json",
           "{}",
           function (err) {}
         );
-        break;
-      default:
-        const object = this.getData();
+    }else{
+      const object = this.getData();
         delete object[data];
         fs.writeFileSync(
           path.join(plugins_db, this.name) + ".json",
           JSON.stringify(object),
           function (err) {}
         );
-        plugins_dbs[b].db = object;
+        plugins_dbs[this.index].db = object;
     }
   }
 }
 
-
-
-function sleeping(ms) {
+function sleeping(milliseconds) {
   return new Promise(resolve => {
-    setTimeout(resolve, ms);
+    setTimeout(resolve, milliseconds);
   });
 }
 
@@ -273,24 +269,14 @@ const graviton = {
       return selected_text;
     } else return null; //Returns null if there is not text selected
   },
-  setThemeByName: function (name) {
-    //Set a theme by it's name
-    return setThemeByName(name);
-  },
   getCurrentFile: function () {
-    const _file = {
-      path: filepath
+    return {
+      path:filepath
     };
-    return _file;
   },
   getCurrentEditor: function () {
-    for (i = 0; i < editors.length; i++) {
-      //Returns the current selected editor
-      if (editorID == editors[i].id) {
-        return editors[i];
-      }
-    }
     if (editors.length == 0) return null;
+    return editors.find((item)=> item.id === editorID);
   },
   getCurrentDirectory: function () {
     if (dir_path == undefined) return null;
@@ -322,12 +308,9 @@ const graviton = {
             name: process.platform
         };
     }
-    return;
   },
   openDevTools: function () {
-    require("electron")
-      .remote.getCurrentWindow()
-      .toggleDevTools();
+    remote.getCurrentWindow().toggleDevTools();
   },
   editorMode: function () {
     return editor_mode;
@@ -578,14 +561,7 @@ const graviton = {
     remote.app.exit(0);
   },
   isProduction() {
-    if (
-      path.basename(__dirname) == "Graviton-Editor" ||
-      path.basename(__dirname) == "Graviton-App"
-    ) {
-      return false;
-    } else {
-      return true;
-    }
+    return  (!path.basename(__dirname) == "Graviton-Editor" || path.basename(__dirname) == "Graviton-App")
   },
   resizeTerminals() {
     for (i = 0; i < editor_screens.length; i++) {
@@ -605,8 +581,7 @@ const graviton = {
   },
   toggleMenus() {
     if (menus_showing == true) {
-      document.getElementById("dropmenus_app").style =
-        "visibility:hidden; width:0;";
+      document.getElementById("dropmenus_app").style ="visibility:hidden; width:0;";
       menus_showing = false;
     } else {
       document.getElementById("dropmenus_app").style = "";
@@ -659,8 +634,7 @@ const graviton = {
   changeLanguageStatusBar(lang, screen) {
     if (editor == undefined) {
       if(document.getElementById(screen).children[2].children[0]!=undefined){
-      document.getElementById(screen).children[2].children[0].remove();
-
+        document.getElementById(screen).children[2].children[0].remove();
       }
     }else{
       if(document.getElementById(screen).children[2].children[0]==undefined){
@@ -693,12 +667,12 @@ const graviton = {
 
 function floatingWindow([xSize, ySize], content) {
   //Method to create flaoting windows
-  const g_floating_window = document.createElement("div");
-  g_floating_window.style.height = ySize + "px";
-  g_floating_window.style.width = xSize + "px";
-  g_floating_window.classList = "floating_window";
-  g_floating_window.innerHTML = content;
-  document.body.appendChild(g_floating_window);
+  const floating_window = document.createElement("div");
+  floating_window.style.height = ySize + "px";
+  floating_window.style.width = xSize + "px";
+  floating_window.classList = "floating_window";
+  floating_window.innerHTML = content;
+  document.body.appendChild(floating_window);
 }
 document.addEventListener("mousedown", function (event) {
   if (editor_booted === true) {

@@ -142,10 +142,10 @@ const Settings = {
           languageDiv.setAttribute("class", "language_div");
           languageDiv.setAttribute(
             "onclick",
-            "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this); saveConfig();"
+            "loadLanguage('" + languages[i]["name"] + "'); selectLang(this); saveConfig();"
           );
-          languageDiv.innerText = languages[i]["g_l"];
-          if (languages[i]["g_l"] === getTranslation("g_l")) {
+          languageDiv.innerText = languages[i]["name"];
+          if (languages[i]["name"] === current_config.language.name) {
             selectLang(languageDiv);
           }
           document.getElementById("language_list").appendChild(languageDiv);
@@ -154,7 +154,6 @@ const Settings = {
         break;
       case "3":
         document.getElementById("_content1").innerHTML = `
-         
             <h4>${getTranslation("FontSize")}</h4>
             <div class="section-1">
               <input class="input1" id="fs-input" onchange="graviton.setEditorFontSize(this.value)" type="number" value="${

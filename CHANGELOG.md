@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200819 - 1 [1.0.3]
+- Better language management
+
 ### 200818 - 2 [1.0.3]
 - Updated plugin notification wasn't throwing
 - Improvements
