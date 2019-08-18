@@ -507,9 +507,15 @@ const graviton = {
       } catch {
         //Returns an error = system is not compatible, Linux-based will probably throw that error
         new Notification({
-          title: "Issue",
-          content: "Your system is not compatible with this feature."
-        });
+          title: "Warn",
+          content: getTranslation("SystemAccentColor.Error1")
+        });return;
+      }
+      if(themeObject.type=="custom_theme"){
+        new Notification({
+          title: "Warn",
+          content: getTranslation("SystemAccentColor.Error2")
+        });return;
       }
     } else {
       document.documentElement.style.setProperty(

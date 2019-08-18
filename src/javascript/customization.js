@@ -20,7 +20,6 @@ graviton.setTheme = function (name) {
         plugins.disableCSS(themeObject);
       }
       current_config["theme"] = themes[i].name;
-
       if (themes[i].type == "custom_theme") {
         plugins.enableCSS(themes[i]);
         themes[i].colors;

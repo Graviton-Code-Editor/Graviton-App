@@ -358,7 +358,14 @@ installExtension: function (name) {
       document.dispatchEvent(installed_ext_event);
       new Notification({
         title: 'Market',
-        content: name + getTranslation("ExtInstalled")
+        content: name + getTranslation("ExtInstalled"),
+        buttons:{
+          [getTranslation("Select")]:{
+            click:function(){
+              graviton.setTheme(name)
+            }
+          }
+        }
       });
       if (plugin.repo.package["dependencies"] != undefined) {
         plugins.installDependencies(plugin.repo.package);
@@ -407,7 +414,7 @@ installExtension: function (name) {
       document.dispatchEvent(updated_ext_event);
       new Notification({
         title: 'Market',
-        content: name + cgetTranslation("ExtUpdated")
+        content: name + getTranslation("ExtUpdated")
       });
       if (plugin.repo.package["dependencies"] != undefined) {
         plugins.installDependencies(plugin.repo.package);
@@ -502,11 +509,15 @@ const plugins = {
     if (config.colors == undefined) {
       plugins_list.push(config);
       if (config["main"] != undefined) {
-        try {
+        if(graviton.isProduction()){
+          try {
+            require(path.join(plugins_folder, config["name"], config["main"]));
+          } catch {
+            console.warn("Cannot install succesfully the plugin >"+`%c ${config.name}`+" %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues","color:red; font-weight:bold;","color:normal; font-weight:normal;") //Throw warn in case a plugin has an error
+            return call != undefined ? call() : "";
+          }
+        }else{
           require(path.join(plugins_folder, config["name"], config["main"]));
-        } catch {
-          console.warn("Cannot install succesfully the plugin >"+`%c ${config.name}`+" %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues","color:red; font-weight:bold;","color:normal; font-weight:normal;") //Throw warn in case a plugin has an error
-          return call != undefined ? call() : "";
         }
         if (config["css"] == undefined) {
           return call != undefined ? call() : "";

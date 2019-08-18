@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200818 - 2 [1.0.3]
+- Updated plugin notification wasn't throwing
+- Improvements
+
 ### 200818 - 1 [1.0.3]
 - Fixed char counter
 - Improved design of the screens

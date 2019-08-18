@@ -16,6 +16,7 @@ let languages = [];
  * Load the languages JSON files and push it to an array
  *
  */
+
 (() => {
   fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
     paths.forEach(dir => {
