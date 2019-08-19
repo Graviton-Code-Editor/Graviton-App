@@ -11,7 +11,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 'use strict'
 
 let plugins_list = [],
-  plugins_dbs = [];
+    plugins_dbs = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",

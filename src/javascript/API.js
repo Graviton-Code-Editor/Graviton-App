@@ -13,6 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const _os = require("os");
 const pty = require("node-pty");
 const path = require("path");
+let graviton = {};
 const {
   Dialog,
   closeDialog
@@ -20,7 +21,7 @@ const {
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "dialogs.js"
 )), {
   Window,
@@ -29,7 +30,7 @@ const {
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "windows.js"
 )), {
   Notification,
@@ -38,7 +39,7 @@ const {
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "notifications.js"
 )), {
   Tab,
@@ -48,15 +49,16 @@ const {
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "tabs.js"
 ));
+
 
 const dropMenu = require(path.join(
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "dropmenus.js"
 )).Dropmenu;
 let {
@@ -65,7 +67,7 @@ let {
   __dirname,
   "src",
   "javascript",
-  "controls",
+  "api",
   "icons.js"
 ));
 
@@ -257,7 +259,7 @@ function sleeping(milliseconds) {
   });
 }
 
-const graviton = {
+graviton = {
   getCurrentTheme: function () {
     //Get the theme name of the applied theme
     return themeObject.name;
@@ -441,7 +443,6 @@ const graviton = {
     } else {
       for (i = 0; i < editors.length; i++) {
         if (editors[i].editor != undefined) {
-          console.log(editors[i].editor);
           editors[i].editor.setOption("lineWrapping", true);
           editors[i].editor.refresh();
         }
@@ -894,7 +895,6 @@ const commanders = {
     document.getElementById(id + "_commander").style.display = "none";
   },
   show: function (id) {
-    console.log(id)
     document.getElementById(id + "_commander").style = "";
   },
   close: function (id) {
@@ -1044,7 +1044,7 @@ const screens = {
   },
   default: function () {
     for (i = 0; i < editor_screens.length; i++) {
-      if (i != 0) {
+      if (i > 0) {
         let tabs2 = [];
         const number = i;
         for (b = 0; b < tabs.length; b++) {
@@ -1066,11 +1066,15 @@ const screens = {
             terminal: editor_screens[editor_screens.length - 1].terminal
           };
           i--;
+          if(editor_screens.length  == 1){
+            if(document.getElementById(editor_screens[0].id).children[1].children[0].children[1]!=undefined) document.getElementById(editor_screens[0].id).children[1].children[0].children[1].remove()
+          }
         } else {
           graviton.throwError(
             getTranslation("Notification.CloseAllTabsBefore")
           );
         }
+        
       }
     }
   }

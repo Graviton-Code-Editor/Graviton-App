@@ -217,7 +217,10 @@ const extensions = {
               package: _package
             })
             const plugin = graviton.getPlugin(_package.name);
-            const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version,semver.parse(plugin.local.version).version) : false;
+            const _new_update = plugin.local != undefined ? semver.gt(
+              semver.parse(_package.version).version,
+              semver.parse(plugin.local.version).version) 
+              : false;
             if (_new_update) {
               plugins_to_update = true;
             }

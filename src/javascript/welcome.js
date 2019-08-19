@@ -13,8 +13,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 let welcome_window;
 
-
-
 function openWelcome() {
   if (graviton.isProduction() == true) {
     if (remote.process.argv[1] != undefined) {

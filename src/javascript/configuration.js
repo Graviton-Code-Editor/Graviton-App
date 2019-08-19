@@ -78,8 +78,6 @@ function loadConfig() {
       if (current_config.animationsPreferences == "desactivated") {
         const style = document.createElement("style");
         style.innerText = `*{-webkit-transition: none !important;
-        -moz-transition: none !important;
-        -o-transition: none !important;
         transition: none !important;
         animation:0;}`;
         style.id = "_ANIMATIONS";

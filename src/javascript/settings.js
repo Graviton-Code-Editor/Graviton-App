@@ -101,32 +101,32 @@ const Settings = {
             }"></gv-switch>
             
           </div>
-          </elastic-container>`;
-        for (i = 0; i < themes.length; i++) {
+        </elastic-container>`;
+        themes.forEach((theme)=>{
           const themeDiv = document.createElement("div");
           themeDiv.setAttribute("class", "theme_div");
           themeDiv.setAttribute(
             "onclick",
-            `graviton.setTheme('${themes[i].name}'); selectTheme('1',this); saveConfig();`
+            `graviton.setTheme('${theme.name}'); selectTheme('1',this); saveConfig();`
           );
           themeDiv.innerHTML = `
             <p style="margin:11px 0; font-size:17px; line-height:2px;">${
-              themes[i].name
+              theme.name
             }</p>
             <p style="font-size:14px;">${getTranslation("MadeBy") +
-              themes[i]["author"]}</p>
+            theme.author}</p>
             <p style="font-size:13px; line-height:2px;">${
-              themes[i]["description"]
+              theme.description
             }</p>
             <div class="accent" style="background:${
-              themes[i].colors["accentColor"]
+              theme.colors["accentColor"]
             };"></div>
           `;
-          if (themes[i]["name"] === current_config.theme) {
+          if (theme.name === current_config.theme) {
             selectTheme("1", themeDiv);
           }
           document.getElementById("theme_list").appendChild(themeDiv);
-        }
+        })
         if(themes.length == 0){
           document.getElementById("theme_list").innerHTML= `
           <span>No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
@@ -137,19 +137,19 @@ const Settings = {
       case "2":
         document.getElementById("_content1").innerHTML = `   
         <elastic-container related=child><div id='language_list'></div></elastic-container> `;
-        for (i = 0; i < languages.length; i++) {
+        languages.forEach((lang)=>{
           const languageDiv = document.createElement("div");
           languageDiv.setAttribute("class", "language_div");
           languageDiv.setAttribute(
             "onclick",
-            "loadLanguage('" + languages[i]["name"] + "'); selectLang(this); saveConfig();"
+            `loadLanguage('${ lang.name }'); selectLang(this); saveConfig();`
           );
-          languageDiv.innerText = languages[i]["name"];
-          if (languages[i]["name"] === current_config.language.name) {
+          languageDiv.innerText = lang.name;
+          if (lang.name === current_config.language.name) {
             selectLang(languageDiv);
           }
           document.getElementById("language_list").appendChild(languageDiv);
-        }
+        })
         document.getElementById("navB2").classList.add("active");
         break;
       case "3":

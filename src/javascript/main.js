@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190818",
+  date: "190819",
   version: "1.0.3",
   state: "Beta"
 };
@@ -42,7 +42,10 @@ const os = require("os"),
   CodeMirror = require("codemirror"),
   semver = require("semver");
 
-require(path.join(__dirname, 'src', 'javascript', 'controls', 'modes.js')).langs()
+require(path.join(__dirname, 'src', 'javascript', 'api', 'modes.js')).langs() //Load CodeMirror files
+
+graviton.setTheme = require(path.join(__dirname,"src","javascript","api","theming.js")).setTheme;
+
 
 let current_screen,
   dir_path,
@@ -402,7 +405,7 @@ const loadEditor = info => {
         })();
         if (selectedLangNum == undefined) return;
         let dic = dictionary[selectedLangNum].list;
-        const vars = look(
+        const vars = checkVariables(
           editor.getValue()
           .replace(/(\r\n|\n|\r)/gm, ' ')
           .split(
@@ -578,11 +581,7 @@ const loadEditor = info => {
         }
       },
       'F11': function (cm) {
-        if (g_window.isFullScreen() == false) {
-          g_window.setFullScreen(true);
-        } else {
-          g_window.setFullScreen(false);
-        }
+        !g_window.isFullScreen() ? g_window.setFullScreen(true) : g_window.setFullScreen(false);
       },
       "Ctrl-Tab": function (cm) {
         graviton.toggleMenus();
@@ -1119,35 +1118,24 @@ function getLanguageName(format) {
     case "sh":
       return "Shell";
     case "c":
-      return "C";
     case "ino":
-      return "C";
     case "h":
       return "C";
     case "cpp":
-      return "C++";
     case "c++":
-      return "C++";
     case "cc":
-      return "C++";
     case "cxx":
-      return "C++";
     case "hpp":
-      return "C++";
     case "h++":
-      return "C++";
     case "hh":
-      return "C++";
     case "hxx":
       return "C++";
     case "csharp":
-      return "C#";
     case "cs":
       return "C#";
     case "java":
       return "Java";
     case "m":
-      return "Objective-C";
     case "mm":
       return "Objective-C";
     case "kt":
@@ -1374,7 +1362,7 @@ const g_newProject = function (template) {
     }
   });
 };
-const g_NewProjects = () => {
+const NewProject = () => {
   const new_projects_window = new Window({
     id: "new_projects_window",
     content: `
@@ -1402,17 +1390,8 @@ const touchingResizer = type => {
     touchingResizerValue = true;
   }
 };
-const touchingMiniMap = type => {
-  if (type == false) {
-    if (!mouseClicked) {
-      touchingMiniMapScroller = false;
-    }
-  } else {
-    touchingMiniMapScroller = true;
-  }
-};
 
-function look(text) {
+function checkVariables(text) {
   let _variables = [];
   for (i = 0; i < text.length; i++) {
     switch (editor.getMode().name) {

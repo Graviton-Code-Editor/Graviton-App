@@ -50,7 +50,7 @@ File.setList({
       hint: "Ctrl+S"
     },
     "*line": "",
-    "New Project": () => g_NewProjects(),
+    "New Project": () => NewProject(),
     space1: "*line",
     Exit: {
       click: () => remote.app.exit(0),
