@@ -91,7 +91,7 @@ const Setup = {
     for (i = 0; i < languages.length + 1; i++) {
       if (i == languages.length) {
         loadLanguage(languages[0]); // Load english in case Graviton doesn't support the system's language
-      } else if (languages[i].g_l_a == navigator.language) {
+      } else if (navigator.language.contains(languages[i].locale)) {
         loadLanguage(languages[i].g_l); // Load system language
       }
     }

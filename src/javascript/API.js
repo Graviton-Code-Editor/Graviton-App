@@ -992,17 +992,13 @@ const screens = {
     graviton.resizeTerminals();
   },
   remove: function (id) {
-    
     if (editor_screens.length != 1) {
       for (i = 0; i < editor_screens.length; i++) {
         if (editor_screens[i].id == id) {
-          let tabs2 = [];
-          for (b = 0; b < tabs.length; b++) {
-            if (tabs[b].getAttribute("screen") == id) {
-              tabs2.push(tabs[b]);
-            }
-          }
-          if (tabs2.length == 0) {
+          let screen_tabs = tabs.filter((tab)=>{
+            return tab.getAttribute("screen") == id;
+          })
+          if (screen_tabs.length == 0) {
             if (editor_screens[i].terminal != undefined) {
               editor_screens[i].terminal.xterm.destroy();
               commanders.close(editor_screens[i].terminal.id);
