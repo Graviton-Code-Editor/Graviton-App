@@ -561,7 +561,7 @@ const graviton = {
     remote.app.exit(0);
   },
   isProduction() {
-    return  (!path.basename(__dirname) == "Graviton-Editor" || path.basename(__dirname) == "Graviton-App")
+    return  (!path.basename(__dirname) == "Graviton-Editor" || !path.basename(__dirname) == "Graviton-App")
   },
   resizeTerminals() {
     for (i = 0; i < editor_screens.length; i++) {
