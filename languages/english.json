@@ -147,7 +147,8 @@
 		"Undo":"Undo",
 		"Redo":"Redo",
 		"SystemAccentColor.Error1":"Your system is not compatible with this feature.",
-		"SystemAccentColor.Error2":"Using the system accent color might not work well in the current theme."
+		"SystemAccentColor.Error2":"Using the system accent color might not work well in the current theme.",
+		"TelegramChannel":"Telegram Channel"
 	}
 	
 }

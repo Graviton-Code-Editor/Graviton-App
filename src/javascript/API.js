@@ -22,6 +22,7 @@ const {
   "src",
   "javascript",
   "api",
+  "components",
   "dialogs.js"
 )), {
   Window,
@@ -31,6 +32,7 @@ const {
   "src",
   "javascript",
   "api",
+  "components",
   "windows.js"
 )), {
   Notification,
@@ -40,6 +42,7 @@ const {
   "src",
   "javascript",
   "api",
+  "components",
   "notifications.js"
 )), {
   Tab,
@@ -50,6 +53,7 @@ const {
   "src",
   "javascript",
   "api",
+  "components",
   "tabs.js"
 ));
 
@@ -59,6 +63,7 @@ const dropMenu = require(path.join(
   "src",
   "javascript",
   "api",
+  "components",
   "dropmenus.js"
 )).Dropmenu;
 let {
@@ -68,7 +73,17 @@ let {
   "src",
   "javascript",
   "api",
+  "components",
   "icons.js"
+));
+
+const {commander , commanders} = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "api",
+  "components",
+  "commanders.js"
 ));
 
 let menus_showing = true;
@@ -469,6 +484,7 @@ graviton = {
     }
   },
   useSystemAccent: function () {
+    const tinycolor = require("tinycolor2");
     if (current_config.accentColorPreferences == "manual") {
       current_config["accentColorPreferences"] = "system";
       try {
@@ -488,7 +504,8 @@ graviton = {
           .brighten()
           .toString()
         );
-      } catch {
+      } catch(err) {
+        console.log(err)
         //Returns an error = system is not compatible, Linux-based will probably throw that error
         new Notification({
           title: "Warn",
@@ -663,6 +680,14 @@ graviton = {
         document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line+1} , Char: ${Number(editor.getCursor().ch+1)}`
       }
     }
+  },
+  setTitle(title){
+    if (graviton.currentOS().codename == "win32") {
+      document.getElementById("title_directory").children[0].innerText =
+      title + " · Graviton";
+    } else {
+      g_window.setTitle(title + " · Graviton");
+    }
   }
 };
 
@@ -798,283 +823,8 @@ document.addEventListener("mousedown", function (event) {
   }
 });
 
-class commander {
-  constructor(object, callback) {
-    if (document.getElementById(current_screen.id).children[3] != undefined) {
-      return callback(true);
-    }
-    this.id = object.id + "_commander";
-    this.content = object.content;
-    const commanderObj = document.createElement("div");
-    commanderObj.id = this.id;
-    commanderObj.classList = "commander";
-    commanderObj.innerHTML = object.content;
-    document.getElementById(current_screen.id).appendChild(commanderObj);
-    return callback(false);
-  }
-  close() {
-    document.getElementById(this.id).remove();
-  }
-  hide() {
-    document.getElementById(this.id).style.display = "none";
-  }
-  show() {
-    document.getElementById(this.id).style = "";
-  }
-}
-const commanders = {
-  terminal: function (object) {
-    if (graviton.getCurrentDirectory() == null && object == undefined) {
-      graviton.throwError(
-        getTranslation("CannotRunTerminalCauseDirectory")
-      );
-      return;
-    }
-    if (current_screen.terminal != undefined) {
-      if (document.getElementById(current_screen.terminal.id + '_commander').style.display == "none") {
-        commanders.show(current_screen.terminal.id);
-      }
-      return;
-    }
-    const randomID = Math.random();
-    new commander({
-        id: "xterm" + randomID,
-        content: ""
-      },
-      function (err) {
-        if (!err) {
-          const shell =
-            process.env[_os.platform() === "win32" ? "COMSPEC" : "SHELL"];
-          const ptyProcess = pty.spawn(shell, [], {
-            cwd: object == undefined ?
-              graviton.getCurrentDirectory() :
-              object.path,
-            env: process.env
-          });
-          const xterm = new Terminal({
-            rows: "10",
-            theme: {
-              background: themeObject.colors[
-                "editor-background-color"
-              ],
-              foreground: themeObject.colors["white-black"]
-            }
-          });
-          xterm.open(
-            document.getElementById("xterm" + randomID + "_commander")
-          );
-          xterm.on("data", data => {
-            ptyProcess.write(data);
-          });
-          ptyProcess.on("data", function (data) {
-            xterm.write(data);
-          });
-          graviton.resizeTerminals();
-          for (i = 0; i < editor_screens.length; i++) {
-            if (editor_screens[i].id == current_screen.id) {
-              editor_screens[i].terminal = {
-                id: "xterm" + randomID,
-                xterm: xterm
-              };
-              current_screen.terminal = editor_screens[i].terminal;
-              const new_terminal_event = new CustomEvent("new_terminal", {
-                detail: {
-                  terminal: current_screen.terminal
-                }
-              });
-              document.dispatchEvent(new_terminal_event);
-              graviton.resizeTerminals();
-              return;
-            }
-          }
-        }
-      }
-    );
-  },
-  hide: function (id) {
-    document.getElementById(id + "_commander").style.display = "none";
-  },
-  show: function (id) {
-    document.getElementById(id + "_commander").style = "";
-  },
-  close: function (id) {
-    document.getElementById(id + "_commander").remove();
-  },
-  closeTerminal: function () {
-    for (i = 0; i < editor_screens.length; i++) {
-      if (editor_screens[i].id == current_screen.id) {
-        const closed_terminal_event = new CustomEvent("closed_terminal", {
-          detail: {
-            terminal: editor_screens[i].terminal
-          }
-        });
-        document.dispatchEvent(closed_terminal_event);
-        if (editor_screens[i].terminal != undefined) {
-          editor_screens[i].terminal.xterm.destroy();
-          commanders.close(current_screen.terminal.id);
-        }
-        editor_screens[i].terminal = undefined;
-        current_screen.terminal = undefined;
-        graviton.resizeTerminals();
-      }
-    }
-  }
-};
-const screens = {
-  add: function () {
-    const current_id = `screen_${editor_screens.length + Math.random()}`;
-   
-    current_screen = {
-      id: current_id,
-      terminal: undefined
-    };
-    const screen = {
-      id: current_screen.id,
-      terminal: undefined
-    };
-    editor_screens.push(screen);
-    const new_screen_editor = document.createElement("div");
-    new_screen_editor.classList = "g_editors";
-    new_screen_editor.id = current_id;
-    new_screen_editor.innerHTML = `
-    <div class="g_tabs_bar flex smallScrollBar"></div>  
-    <div class="g_editors_editors" >
-     <div class=temp_dir_message> 
-      <div>
-        <p style="display:inline-block;"dragable=false class="translate_word " idT="WelcomeMessage" >${
-         getTranslation("WelcomeMessage")
-        }</p>
-        <img style="display:inline-block;" draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
-      </div>
-      ${
-        (function(){
-          if(editor_screens.length >1){
-            return `<span aa=${current_id} class=link onclick="screens.remove('${current_id}')">Remove screen</span> `
-          }else{
-            return "";
-          }
-        })()
-      }
-      </div>
-     </div>
-    <div class="g_status_bar" ></div>`;
-    document
-      .getElementById("content_app")
-      .insertBefore(
-        new_screen_editor,
-        document.getElementById("content_app").children[
-          document.getElementById("content_app").children.length - 1
-        ]
-      );
-    for(i=0;i<editor_screens.length && editor_screens.length != 1 ;i++){
-        if(document.getElementById(editor_screens[i].id).children[1].children[0].children[1]==undefined) {
-          document.getElementById(editor_screens[i].id).children[1].children[0].innerHTML += `<span aa=${editor_screens[i].id} class=link onclick="screens.remove('${editor_screens[i].id}')">Remove screen</span>`
-        }
-    }
-    new_screen_editor.addEventListener(
-      "click",
-      function (event) {
-        for (i = 0; i < editor_screens.length; i++) {
-          if (editor_screens[i].id == this.id) {
-            current_screen.id = this.id;
-            current_screen.terminal = editor_screens[i].terminal;
-          }
-        }
-      },
-      false
-    );
-    const split_screen_event = new CustomEvent("split_screen", {
-      detail: {
-        screen: current_screen
-      }
-    });
-    document.dispatchEvent(split_screen_event);
-    graviton.resizeTerminals();
-  },
-  remove: function (id) {
-    if (editor_screens.length != 1) {
-      for (i = 0; i < editor_screens.length; i++) {
-        if (editor_screens[i].id == id) {
-          let screen_tabs = tabs.filter((tab)=>{
-            return tab.getAttribute("screen") == id;
-          })
-          if (screen_tabs.length == 0) {
-            if (editor_screens[i].terminal != undefined) {
-              editor_screens[i].terminal.xterm.destroy();
-              commanders.close(editor_screens[i].terminal.id);
-              editor_screens[i].terminal = undefined;
-            }
-            const closed_screen_event = new CustomEvent("closed_screen", {
-              detail: {
-                screen: editor_screens[i]
-              }
-            });
-            document.dispatchEvent(closed_screen_event);
-            document.getElementById(id).remove();
-            editor_screens.splice(i, 1);
-            editors.splice(i, 1);
-            current_screen = {
-              id: editor_screens[editor_screens.length - 1].id,
-              terminal: editor_screens[editor_screens.length - 1].terminal
-            };
-            if(editor_screens.length  == 1){
-              if(document.getElementById(editor_screens[0].id).children[1].children[0].children[1]!=undefined) document.getElementById(editor_screens[0].id).children[1].children[0].children[1].remove()
-            }
-            return true;
-          } else {
-            graviton.throwError(
-              getTranslation("Notification.CloseAllTabsBefore")
-            );
-            return false;
-          }
-          return;
-        }
-      }
-      graviton.resizeTerminals();
-    } else {
-      graviton.throwError(
-        getTranslation("Notification.CannotRemoveMoreScreens")
-      );
-      return false;
-    }
-  },
-  default: function () {
-    for (i = 0; i < editor_screens.length; i++) {
-      if (i > 0) {
-        let tabs2 = [];
-        const number = i;
-        for (b = 0; b < tabs.length; b++) {
-          if (tabs[b].getAttribute("screen") == editor_screens[number].id) {
-            tabs2.push(tabs[b]);
-          }
-        }
-        if (tabs2.length == 0) {
-          if (editor_screens[number].terminal != undefined) {
-            editor_screens[number].terminal.xterm.destroy();
-            commanders.close(editor_screens[number].terminal.id);
-            editor_screens[i].terminal = undefined;
-          }
-          document.getElementById(editor_screens[number].id).remove();
-          editor_screens.splice(number, 1);
-          editors.splice(number, 1);
-          current_screen = {
-            id: editor_screens[editor_screens.length - 1].id,
-            terminal: editor_screens[editor_screens.length - 1].terminal
-          };
-          i--;
-          if(editor_screens.length  == 1){
-            if(document.getElementById(editor_screens[0].id).children[1].children[0].children[1]!=undefined) document.getElementById(editor_screens[0].id).children[1].children[0].children[1].remove()
-          }
-        } else {
-          graviton.throwError(
-            getTranslation("Notification.CloseAllTabsBefore")
-          );
-        }
-        
-      }
-    }
-  }
-};
+
+
 window.onresize = function () {
   graviton.resizeTerminals();
 };

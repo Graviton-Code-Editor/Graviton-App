@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200820 - 1 [1.0.3]
+- Better source code management
+- Applying accent color was throwing not supported error
+
 ### 200819 - 1 [1.0.3]
 - Better language management
 

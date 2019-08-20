@@ -110,7 +110,7 @@ module.exports = {
         newTab.classList.add("dropdown");
         if (this.translation != true) {
           newTab.innerHTML = `
-                  <button g_id="${this.id}" onclick="interact_dropmenu('${
+              <button g_id="${this.id}" onclick="interact_dropmenu('${
             this.id
           }_dropbtn')" class="dropbtn" >${panel["button"]}</button>`;
         } else {

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-  date: "190819",
+  date: "190820",
   version: "1.0.3",
   state: "Beta"
 };
@@ -37,15 +37,16 @@ const os = require("os"),
   } = require("electron").remote,
   url = require("url"),
   marked = require("marked"),
-  updater = require("./src/javascript/updater") /*Import the update module*/ ,
   fit = require("./node_modules/xterm/lib/addons/fit/fit.js"),
   CodeMirror = require("codemirror"),
   semver = require("semver");
 
-require(path.join(__dirname, 'src', 'javascript', 'api', 'modes.js')).langs() //Load CodeMirror files
-
+require(path.join(__dirname, 'src', 'javascript', 'api', 'codemirror-langs.js')).langs() //Load CodeMirror files
+const { loadLanguage , getTranslation } = require(path.join(__dirname, 'src', 'javascript', 'api', 'languages.js'));
+const { getFormat ,  getLanguageName ,updateCodeMode  } = require(path.join(__dirname, 'src', 'javascript', 'api', 'format.js'));
+const screens = require(path.join(__dirname, 'src', 'javascript', 'api', 'screens.js'));
+const updater = require(path.join(__dirname, 'src', 'javascript', 'api', 'updater.js'));
 graviton.setTheme = require(path.join(__dirname,"src","javascript","api","theming.js")).setTheme;
-
 
 let current_screen,
   dir_path,
@@ -82,6 +83,7 @@ let current_screen,
   mouseClicked = false,
   touchingResizerValue = false,
   editor_screens = [],
+  languages = [],
   dictionary = autocomplete,
   Mousetrap = require('mousetrap');
 
@@ -128,16 +130,29 @@ document.addEventListener(
   true
 );
 
-
-function updateTitle(text) {
-  if (graviton.currentOS().codename == "win32") {
-    document.getElementById("title_directory").children[0].innerText =
-      text + " · Graviton";
-  } else {
-    g_window.setTitle(text + " · Graviton");
-  }
+window.onload = function(){
+  fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
+    paths.forEach(dir => {
+      fs.readFile(path.join(__dirname, "languages", dir), "utf8", function (
+        err,
+        data
+      ) {
+        if (err) throw err;
+        try {
+          JSON.parse(data);
+        } catch {
+          return;
+        }
+        languages.push(JSON.parse(data)); // Push the language
+        if (languages.length === paths.length) {
+          loadConfig(); 
+        }
+      });
+    });
+  });
 }
-updateTitle(`v${g_version.version}`); //Initial title
+
+graviton.setTitle(`v${g_version.version}`); //Initial title
 const loadEditor = info => {
   if (
     document.getElementById(info.dir.replace(/\\/g, "") + "_editor") ==
@@ -746,7 +761,7 @@ function loadDirs(dir, app_id, f_t, callback) {
     }
   }
   if (first_time) {
-    updateTitle(FirstFolder);
+    graviton.setTitle(FirstFolder);
     if (document.getElementById("openFolder") != null)
       document.getElementById("openFolder").remove();
     registerNewProject(dir);
@@ -1028,281 +1043,6 @@ const directories = {
  * Not recognized formats will have the unknown icon as default
  */
 
-function getFormat(text) {
-  switch (text.split(".").pop()) {
-    case "html":
-      return {
-        lang: "html",
-          format: text.split(".").pop(),
-          trust: true
-      }
-      case "js":
-        return {
-          lang: "js",
-            format: text.split(".").pop(),
-            trust: true
-        }
-        case "css":
-          return {
-            lang: "css",
-              format: text.split(".").pop(),
-              trust: true
-          }
-          case "json":
-            return {
-              lang: "json",
-                format: text.split(".").pop(),
-                trust: true
-            }
-            case "md":
-              return {
-                lang: "md",
-                  format: text.split(".").pop(),
-                  trust: true
-              }
-              case "ts":
-                return {
-                  lang: "ts",
-                    format: text.split(".").pop(),
-                    trust: true
-                }
-                case "jpg":
-                case "png":
-                case "ico":
-                case "svg":
-                  return {
-                    lang: "image",
-                      format: text.split(".").pop(),
-                      trust: true
-                  }
-                  default:
-                    return {
-                      lang: "unknown",
-                        format: text.split(".").pop(),
-                        trust: false
-                    }
-  }
-}
-
-function getLanguageName(format) {
-  switch (format) {
-    case "html":
-      return "HTML";
-    case "css":
-      return "CSS";
-    case "js":
-      return "JavaScript";
-    case "jsx":
-      return "React JavaScript";
-    case "json":
-      return "JSON ";
-    case "go":
-      return "Go";
-    case "sql":
-      return "SQL";
-    case "rb":
-    case "ruby":
-      return "Ruby";
-    case "php":
-      return "PHP";
-    case "sass":
-      return "Sass";
-    case "dart":
-      return "Dart";
-    case "pascal":
-      return "Pascal";
-    case "md":
-      return "Markdown";
-    case "py":
-      return "Python";
-    case "sh":
-      return "Shell";
-    case "c":
-    case "ino":
-    case "h":
-      return "C";
-    case "cpp":
-    case "c++":
-    case "cc":
-    case "cxx":
-    case "hpp":
-    case "h++":
-    case "hh":
-    case "hxx":
-      return "C++";
-    case "csharp":
-    case "cs":
-      return "C#";
-    case "java":
-      return "Java";
-    case "m":
-    case "mm":
-      return "Objective-C";
-    case "kt":
-      return "Kotlin";
-    case "ts":
-      return "TypeScript";
-    case "toml":
-    case "rs":
-      return "Rust";
-    default:
-      return format;
-  }
-}
-
-function updateCodeMode(instance, path) {
-  if (g_highlighting == "activated") {
-    switch (path.split(".").pop()) {
-      case "html":
-        instance.setOption("mode", "htmlmixed");
-        instance.setOption("htmlMode", true);
-        plang = "HTML";
-        instance.refresh();
-        break;
-      case "css":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "css");
-        plang = "CSS";
-        instance.refresh();
-        break;
-      case "js":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "javascript");
-        plang = "JavaScript";
-        instance.refresh();
-        break;
-      case "jsx":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "jsx");
-        plang = "React JavaScript";
-        instance.refresh();
-        break;
-      case "json":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "application/json");
-        plang = "JSON / JavaScript";
-        instance.refresh();
-        break;
-      case "go":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "go");
-        plang = "Go";
-        instance.refresh();
-        break;
-      case "sql":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "sql");
-        plang = "SQL";
-        instance.refresh();
-        break;
-      case "rb":
-      case "ruby":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "ruby");
-        plang = "Ruby";
-        instance.refresh();
-        break;
-      case "php":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "php");
-        plang = "PHP";
-        instance.refresh();
-        break;
-      case "sass":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "sass");
-        plang = "Sass";
-        instance.refresh();
-        break;
-      case "dart":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "dart");
-        plang = "Dart";
-        instance.refresh();
-        break;
-      case "pascal":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "pascal");
-        plang = "Pascal";
-        instance.refresh();
-        break;
-      case "md":
-        instance.setOption("htmlMode", true);
-        instance.setOption("mode", "markdown");
-        plang = "Markdown";
-        instance.refresh();
-        break;
-      case "py":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "python");
-        plang = "Python";
-        instance.refresh();
-        break;
-      case "sh":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "shell");
-        plang = "Shell";
-        instance.refresh();
-        break;
-      case "c":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-csrc");
-        plang = "C";
-        instance.refresh();
-        break;
-      case "cpp":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-c++src");
-        plang = "C++";
-        instance.refresh();
-        break;
-      case "cs":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-csharp");
-        plang = "C#";
-        instance.refresh();
-        break;
-      case "java":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-java");
-        plang = "Java";
-        instance.refresh();
-        break;
-      case "h":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-objectivec");
-        plang = "Objective-C";
-        instance.refresh();
-        break;
-      case "kt":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "text/x-kotlin");
-        plang = "Kotlin";
-        instance.refresh();
-        break;
-      case "ts":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "application/typescript");
-        plang = "TypeScript";
-        instance.refresh();
-        break;
-      case "toml":
-      case "rs":
-        instance.setOption("htmlMode", false);
-        instance.setOption("mode", "rust");
-        plang = "Rust";
-        instance.refresh();
-        break;
-      default:
-        plang = "Unknown";
-        instance.refresh();
-    }
-  }
-}
-
-if(!fs.existsSync(logDir)){
-
-}
 
 const registerNewProject = function (dir) {
   // Add a new directory to the history if it is the first time it has been opened in the editor
@@ -1335,7 +1075,7 @@ const HTML_template = `
   </body>
 </html>
 `;
-const g_newProject = function (template) {
+const createNewProject = function (template) {
   dialog.showOpenDialog({
     properties: ["openDirectory"]
   }, selectedFiles => {
@@ -1367,7 +1107,7 @@ const NewProject = () => {
     id: "new_projects_window",
     content: `
       <h2 class="window_title">${getTranslation("Templates")}</h2>
-      <div onclick="g_newProject('html'); closeWindow('new_projects_window');" class="section-2">
+      <div onclick="createNewProject('html'); closeWindow('new_projects_window');" class="section-2">
         <p>HTML</p>
       </div>`
   });

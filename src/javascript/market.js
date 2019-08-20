@@ -279,9 +279,18 @@ const extensions = {
               </div> 
               <div>
                 <div>
-                  <button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${getTranslation("Install")}</button> 
-                  <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${getTranslation("Uninstall")}</button> 
-                  <button onclick=extensions.updateExtension('${data.getAttribute("name")}') id=${Math.random()+'update'} class=button1 >${getTranslation("Update")}</button> 
+                  
+                  ${(function(){
+                    if(plugin.local!=undefined){
+                      return `
+                      <button class=button1 onclick=graviton.setTheme('${data.getAttribute("name")}')>Select</button>
+                      <button onclick=extensions.updateExtension('${data.getAttribute("name")}') id=${Math.random()+'update'} class=button1 >${getTranslation("Update")}</button> 
+                      <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${getTranslation("Uninstall")}</button> 
+                      `
+                    }else{  
+                      return `<button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${getTranslation("Install")}</button> `;
+                    }
+                  })()}
                 </div>
               </div> 
             </div>
@@ -291,7 +300,7 @@ const extensions = {
               <a class="active" onclick="this.parentElement.children[1].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='block';this.parentElement.parentElement.children[1].children[0].style.display='none';">${getTranslation("Readme")}</a>
               <a onclick="this.parentElement.children[0].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='none';this.parentElement.parentElement.children[1].children[0].style.display='block';">${getTranslation("Permissions")}</a>
             </navbar>
-            <div>
+            <div >
               <div style="display:none;">
                 <ul>
                   ${
@@ -315,8 +324,8 @@ const extensions = {
                     })()
                   }
                   </ul>
-                  </div> 
-                  <div id = ${
+                </div> 
+                <div  id = ${
                     data.getAttribute("name") + '_div2'
                   }>
                   <p> Loading... </p> 
