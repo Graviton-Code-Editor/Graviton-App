@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200821 - 1 [1.0.3]
+- You can now drag and drop a file in to an empty screen
+- Fixed Market, it was showing the select button even for no-theme plugins
+
 ### 200820 - 1 [1.0.3]
 - Better source code management
 - Applying accent color was throwing not supported error

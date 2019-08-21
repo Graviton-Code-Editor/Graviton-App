@@ -258,6 +258,8 @@ head {
   height: 90%;
 }
 
+
+
 #content_app > .g_editors > .g_editors_editors > .code-space {
   position: relative;
   display: flex;
@@ -295,9 +297,26 @@ head {
   border:0px !important;
 }
 
+
 #content_app > .g_editors > .g_status_bar:empty {
   background:var(--editor-background-color);
 }
+
+#content_app > .g_editors.dragging {
+  transition:0.1s;
+  background:var(--primaryColor)
+}
+
+#content_app > .g_editors.dragging > .g_status_bar {
+  transition:0.1s;
+  background:var(--primaryColor)
+}
+
+#content_app > .g_editors.dragging > .g_tabs_bar {
+  transition:0.1s;
+  background:var(--primaryColor)
+}
+
 
 #content_app > .g_editors > .g_status_bar span {
   top:0;
