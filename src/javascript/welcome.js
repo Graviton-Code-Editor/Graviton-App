@@ -25,64 +25,29 @@ function openWelcome() {
   }
   welcome_window = new Window({
     id: "welcome_window",
-    content: `
-		<h2  idT="Welcome" class='translate_word window_title'>${
-      getTranslation("Welcome")
-    }</h2> 
-		<div class="flex">
-      <div id="recent_projects" class="horizontal">
-      <elastic-container>
-        <div class="flex-2">
-          <h2  idT="RecentProjects" class="translate_word">${
-            getTranslation("RecentProjects")
-          }</h2>
-          <div style="float:right; right:0; position:relative; top:16px; margin:4px; margin-left:auto; margin-right:0;">
-            <button style=display:none id=clear_log onclick="graviton.deleteLog(); closeWindow('welcome_window')" class=button3>Clear</button>
-          </div>
-        </div>
-      </elastic-container>
-			</div> 
-			<div id="notes" class="horizontal">
-				<h2  idT="Notes" class='translate_word title2'>${
-          getTranslation("Notes")
-        }</h2>
-				<p> ${getTranslation("Version")}: ${g_version.version} (${
-      g_version.date
-    }) - ${g_version.state}</p> 
-				<p  > OS: ${graviton.currentOS().name}</p> 
-				<p idT="Changelog" class="translate_word link" onclick="graviton.dialogChangelog()">${
-          getTranslation("Changelog")
-        }</p>
-			</div>
-		</div>
-		<div class='welcomeButtons'>
-			<button onclick='openFolder(); welcome_window.close();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${
-        getTranslation("OpenFolder")
-      }</button> 
-			<button onclick='welcome_window.close();' id='skip_welcome' class=" button1 translate_word" idT="Skip">${
-        getTranslation("Skip")
-      }</button> 
-		</div>`
+    content: graviton.getTemplate("welcome")
   });
   welcome_window.launch();
-  for (i = 0; i < log.length; i++) {
-    const project = document.createElement("div");
-    project.setAttribute("class", "section-2");
-    project.setAttribute(
-      "onclick",
-      `loadDirs('${log[i].Path.replace(
-        /\\/g,
-        "\\\\"
-      )}','g_directories','yes'); welcome_window.close();`
-    );
-    project.innerText = log[i].Name;
-    const description = document.createElement("p");
-    description.innerText = log[i].Path;
-    description.setAttribute("style", "font-size:12px;");
-    project.appendChild(description);
-    if (document.getElementById("recent_projects") == undefined) return;
-    document.getElementById("recent_projects").appendChild(project);
-    document.getElementById("clear_log").style = "";
+  if(document.getElementById("recent_projects")!=null){
+    for (i = 0; i < log.length; i++) {
+      const project = document.createElement("div");
+      project.setAttribute("class", "section-2");
+      project.setAttribute(
+        "onclick",
+        `loadDirs('${log[i].Path.replace(
+          /\\/g,
+          "\\\\"
+        )}','g_directories','yes'); welcome_window.close();`
+      );
+      project.innerText = log[i].Name;
+      const description = document.createElement("p");
+      description.innerText = log[i].Path;
+      description.setAttribute("style", "font-size:12px;");
+      project.appendChild(description);
+      if (document.getElementById("recent_projects") == undefined) return;
+      document.getElementById("recent_projects").appendChild(project);
+      document.getElementById("clear_log").style = "";
+    }
   }
   if (error_showed == false) DeleteBoot();
 }

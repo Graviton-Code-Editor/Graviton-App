@@ -12,7 +12,6 @@ module.exports = {
     editor_screens.push(screen);
     const new_screen_editor = document.createElement("div");
     new_screen_editor.ondragover  = (event) => {
-      console.log(event.target)
       if(event.target.children[1]!=undefined || !event.target.classList.contains("g_editors_editors")) return;
       editor_screens.forEach(current => {
         if (current.id == screen.id) {
@@ -51,7 +50,7 @@ module.exports = {
       }
       return false;
     };
-    new_screen_editor.classList = "g_editors";
+    new_screen_editor.classList = "editor_screen";
     new_screen_editor.id = current_id;
     new_screen_editor.innerHTML = `
       <div class="g_tabs_bar flex smallScrollBar"></div>  

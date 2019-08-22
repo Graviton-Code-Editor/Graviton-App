@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200822 - 1 [1.0.3]
+- Some parts of the UI are becoming modificable templates
+- Renamed CSS class g_editors to editor_screen
+- Wasn't saving the language properly
+
 ### 200821 - 1 [1.0.3]
 - You can now drag and drop a file in to an empty screen
 - Fixed Market, it was showing the select button even for no-theme plugins

@@ -48,212 +48,79 @@ const Settings = {
     }
     switch (num) {
       case "1":
-        document.getElementById("_content1").innerHTML = `
-        <elastic-container related=self>
-          <h4>${getTranslation("Themes")}</h4> 
-          <div class="section-1">
-            <div id='theme_list'></div> 
-            ${
-              (function(){
-                if(themes.length!=0){
-                  return `
-                  <p class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})">${getTranslation(
-                    "Market"
-                  )}</p>  
-                  `
-                }else{
-                  return "";
-                }
-              })()
+        document.getElementById("_content1").innerHTML = graviton.getTemplate("settings_customization")
+        if(document.getElementById("theme_list")!= null){
+          themes.forEach((theme)=>{
+            const themeDiv = document.createElement("div");
+            themeDiv.setAttribute("class", "theme_div");
+            themeDiv.setAttribute(
+              "onclick",
+              `graviton.setTheme('${theme.name}'); selectTheme('1',this); saveConfig();`
+            );
+            themeDiv.innerHTML = `
+              <p style="margin:11px 0; font-size:17px; line-height:2px;">${
+                theme.name
+              }</p>
+              <p style="font-size:14px;">${getTranslation("MadeBy") +
+              theme.author}</p>
+              <p style="font-size:13px; line-height:2px;">${
+                theme.description
+              }</p>
+              <div class="accent" style="background:${
+                theme.colors["accentColor"]
+              };"></div>
+            `;
+            if (theme.name === current_config.theme) {
+              selectTheme("1", themeDiv);
             }
-            <p>${getTranslation("Themes.Text")}</p>
-            <gv-switch  onclick="graviton.useSystemAccent(); saveConfig();" class="${
-              current_config.accentColorPreferences == "system"
-                ? "activated"
-                : "desactivated"
-            }"></gv-switch>
-          </div>
-          <h>${getTranslation("ZoomSize")}</h4>
-            <div class="section-1">
-              <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
-                current_config.appZoom
-              }" class="slider" >
-              <br>
-              <button class="Button1" onClick="graviton.setZoom(25); document.getElementById('slider_zoom').value=25;">${getTranslation('DefaultZoom')}</button>
-            </div>
-          <h4>${getTranslation("Blur")}</h4>
-          <div class="section-1">
-            <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
-              current_config.blurPreferences
-            }" class="slider" >
-          </div>
-          <h4>${getTranslation("Bounce")}</h4>
-          <div class="section-1">
-          <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
-            current_config.bouncePreferences
-          }"></gv-switch>
-          </div>
-          <h4>${getTranslation("ZenMode")}</h4>
-          <div class="section-1">
-            <p>${getTranslation("ZenMode.ShowDirectoryExplorer")}</p>
-            <gv-switch  onclick="graviton.toggleZenMode()" class="${
-              editor_mode != "zen" ? "activated" : "desactivated"
-            }"></gv-switch>
-            
-          </div>
-        </elastic-container>`;
-        themes.forEach((theme)=>{
-          const themeDiv = document.createElement("div");
-          themeDiv.setAttribute("class", "theme_div");
-          themeDiv.setAttribute(
-            "onclick",
-            `graviton.setTheme('${theme.name}'); selectTheme('1',this); saveConfig();`
-          );
-          themeDiv.innerHTML = `
-            <p style="margin:11px 0; font-size:17px; line-height:2px;">${
-              theme.name
-            }</p>
-            <p style="font-size:14px;">${getTranslation("MadeBy") +
-            theme.author}</p>
-            <p style="font-size:13px; line-height:2px;">${
-              theme.description
-            }</p>
-            <div class="accent" style="background:${
-              theme.colors["accentColor"]
-            };"></div>
-          `;
-          if (theme.name === current_config.theme) {
-            selectTheme("1", themeDiv);
+            document.getElementById("theme_list").appendChild(themeDiv);
+          })
+          if(themes.length == 0){
+            document.getElementById("theme_list").innerHTML= `
+            <span>No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
+            `
           }
-          document.getElementById("theme_list").appendChild(themeDiv);
-        })
-        if(themes.length == 0){
-          document.getElementById("theme_list").innerHTML= `
-          <span>No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');extensions.openStore(function(){extensions.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
-          `
         }
+        
         document.getElementById("navB1").classList.add("active");
         break;
       case "2":
-        document.getElementById("_content1").innerHTML = `   
-        <elastic-container related=child><div id='language_list'></div></elastic-container> `;
-        languages.forEach((lang)=>{
-          const languageDiv = document.createElement("div");
-          languageDiv.setAttribute("class", "language_div");
-          languageDiv.setAttribute(
-            "onclick",
-            `loadLanguage('${ lang.name }'); selectLang(this); saveConfig();`
-          );
-          languageDiv.innerText = lang.name;
-          if (lang.name === current_config.language.name) {
-            selectLang(languageDiv);
-          }
-          document.getElementById("language_list").appendChild(languageDiv);
-        })
+        document.getElementById("_content1").innerHTML = graviton.getTemplate("settings_languages");
+        if(document.getElementById("language_list")!= null){
+          languages.forEach((lang)=>{
+            const languageDiv = document.createElement("div");
+            languageDiv.setAttribute("class", "language_div");
+            languageDiv.setAttribute(
+              "onclick",
+              `loadLanguage('${ lang.name }'); selectLang(this); saveConfig();`
+            );
+            languageDiv.innerText = lang.name;
+            if (lang.name === current_config.language.name) {
+              selectLang(languageDiv);
+            }
+            document.getElementById("language_list").appendChild(languageDiv);
+          })
+        }
         document.getElementById("navB2").classList.add("active");
         break;
       case "3":
-        document.getElementById("_content1").innerHTML = `
-            <h4>${getTranslation("FontSize")}</h4>
-            <div class="section-1">
-              <input class="input1" id="fs-input" onchange="graviton.setEditorFontSize(this.value)" type="number" value="${
-                current_config.fontSizeEditor
-              }">
-            </div>
-            <h4>${getTranslation("Auto-Completion")}</h4>
-            <div class="section-1">
-              <p>${
-                getTranslation(
-                  "Settings-Editor-AutoCompletion-text"
-                )
-              } </p>
-              <gv-switch  onclick="graviton.toggleAutoCompletation();  saveConfig();" class="${
-                current_config["autoCompletionPreferences"]
-              }"></gv-switch>
-            </div>
-            <h4>${getTranslation("Line-Wrapping")}</h4>
-            <div class="section-1">
-              <gv-switch onclick="graviton.toggleLineWrapping(); saveConfig();" class="${
-                current_config["lineWrappingPreferences"]
-              }"></gv-switch>
-            </div>
-            <h4>${getTranslation("Highlighting")}</h4>
-            <div class="section-1">
-              <gv-switch  onclick="graviton.toggleHighlighting(); saveConfig();" class="${g_highlighting}"></gv-switch>
-            </div>
-          `;
+        document.getElementById("_content1").innerHTML = graviton.getTemplate("settings_editor"); 
         document.getElementById("navB3").classList.add("active");
         break;
       case "4":
-        document.getElementById("_content1").innerHTML = `
-          <h4>${getTranslation("Performance")} <img draggable="false" class="emoji-medium" src="src/openemoji/26A1.svg"></h4>
-          <div class="section-1">
-              <p>${
-                getTranslation(
-                  "Settings-Advanced-Performance-Animations"
-                )
-              }  </p>
-              <gv-switch  onclick="graviton.toggleAnimations()" class="${
-                current_config.animationsPreferences
-              }"></gv-switch>
-          </div>
-          <h4>${getTranslation("Developers")}</h4>
-          <div class="section-1">
-              <p>${
-                getTranslation(
-                  "Settings-Advanced-Developer-Tools-text"
-                )
-              }</p>
-              <button class="button1" onclick="graviton.openDevTools();">${
-                getTranslation("DeveloperTools")
-              }</button>
-          </div>
-          <h4>${getTranslation("FactoryReset")}</h4>
-          <div class="section-1">
-              <p>${
-                getTranslation("Settings-Advanced-FactoryReset-text")
-              }</p>
-              <button class="button1 red" onclick="factory_reset_dialog();">${
-                getTranslation("FactoryReset")
-              }</button>
-          </div>
-          
-          `;
+        document.getElementById("_content1").innerHTML = graviton.getTemplate("settings_advanced"); 
         document.getElementById("navB4").classList.add("active");
         break;
       case "5":
-        document.getElementById("_content1").innerHTML = `
-          <h4>${getTranslation("About")} </h4>
-          <div class="section-1">
-              <p>${getTranslation("About-text1")}</p>
-              <p>${getTranslation("About-text2")}</p>
-              <button class="button1" onclick="shell.openExternal('https://www.graviton.ml')">Website</button>
-              <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/')">Source Code</button>
-              <button class="button1" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md')">License</button>
-          </div>
-          <h4>${getTranslation("CurrentVersion")}</h4>
-          <div class="section-1">
-            <div id="about_section">
-              <p>${getTranslation("Version")}: ${g_version.version} (${
-          g_version.date
-        }) - ${g_version.state}</p>
-              <p>${getTranslation("OS")}: ${
-          graviton.currentOS().name
-        }</p>
-            </div>
-            <button class="button1" onclick="graviton.dialogChangelog();">${
-              getTranslation("Changelog")
-            }</button>
-            <button class="button1" onclick="updater.check_updates();">${
-              getTranslation("CheckUpdates")
-            }</button>
-          </div>`;
+        document.getElementById("_content1").innerHTML = graviton.getTemplate("settings_about");
         if (new_update != false) {
-          document.getElementById("about_section").innerHTML += `
+          if(document.getElementById("about_section")!=null){
+            document.getElementById("about_section").innerHTML += `
             <p style="color:var(--accentColor);">New update is live! - ${
               new_update[g_version.state]["version"]
             }</p>
             `;
+          } 
         }
         document.getElementById("navB5").classList.add("active");
         break;

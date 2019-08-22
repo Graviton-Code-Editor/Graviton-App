@@ -20,7 +20,7 @@ preload([
 
 /*
 
-  *@desc Default (initial) config object
+  *@desc Default (initial) configuration object
 
 */
 let current_config = {
@@ -95,7 +95,7 @@ function saveConfig() {
     theme: current_config.theme,
     fontSizeEditor: current_config.fontSizeEditor,
     appZoom: current_config.appZoom,
-    language: current_config["language"]["g_l"],
+    language: current_config.language.name,
     animationsPreferences: current_config.animationsPreferences,
     autoCompletionPreferences: current_config.autoCompletionPreferences,
     lineWrappingPreferences: current_config.lineWrappingPreferences,

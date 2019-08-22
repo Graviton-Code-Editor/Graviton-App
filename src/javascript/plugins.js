@@ -124,6 +124,7 @@ function detectPlugins(call) {
             loaded++;
 
             if (loaded == paths.length) {
+              graviton.consoleInfo("All plugins has been loaded.")
               return call != undefined ? call() : "";
             }
           });

@@ -1,0 +1,24 @@
+`
+<h4>${getTranslation("Performance")} <img draggable="false" class="emoji-medium" src="src/openemoji/26A1.svg"></h4>
+<div class="section-1">
+    <p>${ getTranslation( "Settings-Advanced-Performance-Animations" ) } </p>
+    <gv-switch onclick="graviton.toggleAnimations()" class="${
+      current_config.animationsPreferences
+    }"></gv-switch>
+</div>
+<h4>${getTranslation("Developers")}</h4>
+<div class="section-1">
+    <p>${ getTranslation( "Settings-Advanced-Developer-Tools-text" ) }
+    </p>
+    <button class="button1" onclick="graviton.openDevTools();">${
+      getTranslation("DeveloperTools")
+    }</button>
+</div>
+<h4>${getTranslation("FactoryReset")}</h4>
+<div class="section-1">
+    <p>${ getTranslation("Settings-Advanced-FactoryReset-text") }
+    </p>
+    <button class="button1 red" onclick="factory_reset_dialog();">${
+      getTranslation("FactoryReset")
+    }</button>
+</div>`

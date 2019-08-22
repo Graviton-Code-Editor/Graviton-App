@@ -45,7 +45,9 @@ const extensions = {
                 <div id=loading_exts>Loading extensions...</div>
               `
             const request = require("request");
-            for (const _plugin of full_plugins) {
+            console.log(full_plugins)
+            full_plugins.forEach((_plugin)=>{
+              console.log(_plugin)
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
               const _package = plugin.repo.package
@@ -62,7 +64,8 @@ const extensions = {
                   <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
                 </div>
                 `
-            }
+              console.log("test")
+            })
             if (plugins_market.length != full_plugins.length) {
               document.getElementById('sec_all').innerHTML += `
                 <div  id=load_more_plugins  class="extension_div static" >
@@ -228,7 +231,7 @@ const extensions = {
               store.loadMenus();
               return callback(3);
             }
-            if (this_i == me.extensions.length - 1) {
+            if (i == me.extensions.length - 1) {
               let date = new Date
               date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDate())
               const new_cache = {
@@ -265,93 +268,28 @@ const extensions = {
       }
       const ext_win = new Window({
           id: 'sec' + data.getAttribute("name"),
-          content: `
-          <button class="button1 close_exts" onclick=closeWindow('sec${data.getAttribute("name")}') >${icons.close}</button>
-          <div class=sub_extension_div id=${data.getAttribute("name")+'_div'} >
-              <div class="top">
-                <div>
-                  <h1>${data.getAttribute("name")}</h1>
-                  <p>${plugin.repo!=undefined?plugin.repo.package.description:plugin.local.description}</p>
-                  <p>${getTranslation("MadeBy")} ${plugin.repo!=undefined?plugin.repo.package.author:plugin.local.author}</p>
-                  <p>${getTranslation("Version")}: ${plugin.repo!=undefined?data.getAttribute('update')=='false'?plugin.repo.package.version:plugin.local.version+" ( 🎉 update: "+plugin.repo.package.version+" )":plugin.local.version}</p>
-                  <p>${getTranslation("Stars")}: ${plugin.repo!=undefined?plugin.repo.git.stargazers_count:"Unknown"}</p>
-                  ${plugin.repo!=undefined?`<p class=link onclick=shell.openExternal("https://github.com/Graviton-Code-Editor/plugins_list/issues")>${getTranslation("Report")}</p>`:""}
-                </div> 
-                <div>
-                  <div>
-                    
-                    ${(function(){
-                      if(plugin.local!=undefined){
-                        return `
-                      ${(function(){
-                        if(plugin.repo.package.colors!=undefined){
-                          return ` <button class=button1 onclick=graviton.setTheme('${data.getAttribute("name")}')>Select</button>`
-                        }else{
-                          return ""
-                        }
-                        })()}
-                        <button onclick=extensions.updateExtension('${data.getAttribute("name")}') id=${Math.random()+'update'} class=button1 >${getTranslation("Update")}</button> 
-                        <button onclick=extensions.uninstallExtension('${data.getAttribute("name")}') id=${Math.random()+'uninstall'} class=button1 >${getTranslation("Uninstall")}</button> 
-                        `
-                      }else{  
-                        return `<button onclick=extensions.installExtension('${data.getAttribute("name")}') id=${Math.random()+'install'} class=button1 >${getTranslation("Install")}</button> `;
-                      }
-                    })()}
-                  </div>
-                </div> 
-              </div>
-            </div>
-            <div class=ext_content >
-              <navbar style="display:flex; justify-content:center; align-items:center">
-                <a class="active" onclick="this.parentElement.children[1].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='block';this.parentElement.parentElement.children[1].children[0].style.display='none';">${getTranslation("Readme")}</a>
-                <a onclick="this.parentElement.children[0].classList.remove('active'); this.classList.add('active'); this.parentElement.parentElement.children[1].children[1].style.display='none';this.parentElement.parentElement.children[1].children[0].style.display='block';">${getTranslation("Permissions")}</a>
-              </navbar>
-              <div >
-                <div style="display:none;">
-                  <ul>
-                    ${
-                      (function(){
-                        let html = "";
-                        if((plugin.repo!=undefined?plugin.repo.package.icons:plugin.local.icons) != undefined){
-                          html += `<li>${getTranslation("PermissionCustomIcons")}</li>`
-                        }
-                        if((plugin.repo!=undefined?plugin.repo.package.css : plugin.local.css) != undefined){
-                          html += ` <li> ${
-                            getTranslation("PermissionCustomStyling")
-                          } </li>`
-                        }
-                        if ((plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors) != undefined) {
-                          html += `<li>${getTranslation("PermissionCustomColors")}</li>`
-                        }
-                        if ((plugin.repo != undefined ? plugin.repo.package.main: plugin.local.main) != undefined) {
-                          html += `<li>${getTranslation("PermissionExecuteJavaScript")}</li>`
-                        }
-                        return html;
-                      })()
-                    }
-                    </ul>
-                  </div> 
-                  <div  id = ${
-                      data.getAttribute("name") + '_div2'
-                    }>
-                    <p> Loading... </p> 
-                  </div> 
-              </div> 
-          </div> 
-      </div>`
+          content: graviton.getTemplate("market_plugin",`
+          
+          const data = document.getElementById("${data.id}");
+
+          const plugin = ${JSON.stringify(plugin)};
+          `)
     });
     ext_win.launch();
-    if (plugin.local != undefined) {
-      fs.readFile(path.join(plugins_folder, data.getAttribute("name"), "readme.md"), "utf8", function (err, readme) {
-        document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!err?marked(readme):getTranslation("NoReadme")}</div>`
-      });
-    } else {
-      const request = require("request");
-      request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
-        if (document.getElementById(data.getAttribute('name') + '_div') == undefined) return;
-        document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
-      })
-    }
+    const bottom_section = document.getElementById(data.getAttribute('name') + '_div2');
+    if(bottom_section!=null){
+      if (plugin.local != undefined) {
+        fs.readFile(path.join(plugins_folder, data.getAttribute("name"), "readme.md"), "utf8", function (err, readme) {
+          document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!err?marked(readme):getTranslation("NoReadme")}</div>`
+        });
+      } else {
+        const request = require("request");
+        request(`https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`, function (error, response, body3) {
+          if (document.getElementById(data.getAttribute('name') + '_div') == undefined) return;
+          document.getElementById(data.getAttribute('name') + '_div2').innerHTML = `<div style="flex:1;" >${!error && response.statusCode ==200?marked(body3):getTranslation("NoReadme")}</div>`
+        })
+      }
+    } 
 },
 installExtension: function (name) {
     /*

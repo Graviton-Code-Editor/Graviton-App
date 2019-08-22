@@ -375,7 +375,7 @@ span.CodeMirror-selectedtext { background: none; }
   background-color: var(--secondaryColor);
   width: 2em;
   color: var(--white-black);
-  font-size: 70%;
+  font-size: 100%;
 }
 
 .CodeMirror-dialog button {

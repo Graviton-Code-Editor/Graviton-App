@@ -16,7 +16,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const my_dialog = new Dialog({
     id:'my_dialog1',
     title:'A title',
-    content:'This is an example button.',
+    content:'This is an example Dialog.',
     buttons: {
         'Accept':{}
     }
