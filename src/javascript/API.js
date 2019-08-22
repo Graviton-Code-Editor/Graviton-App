@@ -670,7 +670,8 @@ graviton = {
     },
     refreshStatusBarLinesAndChars(screen) {
         if (editor == undefined) {
-            document.getElementById(screen).children[2].children[1].remove();
+            if(document.getElementById(screen).children[2].children[1]!=undefined)
+                document.getElementById(screen).children[2].children[1].remove();
         } else {
             if (document.getElementById(screen).children[2].children[1] == undefined) {
                 const span = document.createElement("span");

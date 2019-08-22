@@ -45,9 +45,7 @@ const extensions = {
                 <div id=loading_exts>Loading extensions...</div>
               `
             const request = require("request");
-            console.log(full_plugins)
             full_plugins.forEach((_plugin)=>{
-              console.log(_plugin)
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
               const _package = plugin.repo.package
@@ -64,12 +62,11 @@ const extensions = {
                   <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
                 </div>
                 `
-              console.log("test")
             })
             if (plugins_market.length != full_plugins.length) {
               document.getElementById('sec_all').innerHTML += `
                 <div  id=load_more_plugins  class="extension_div static" >
-                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
+                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){console.log('done'); document.getElementById('sec_all').innerHTML = ''; extensions.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
                 </div>`
             }
           }
@@ -200,11 +197,13 @@ const extensions = {
       const client = github.client()
       const request = require("request");
       const me = this;
+      
       if (plugins_market[start] == undefined) {
         if (document.getElementById("load_more_plugins") != undefined) document.getElementById("load_more_plugins").remove();
         return;
       }
       me.extensions = plugins_market.slice(start, start + 5);
+      console.log(me.extensions)
       current_plugins = start + me.extensions.length
       for (i = 0; i < me.extensions.length; i++) {
         const this_i = i;
@@ -231,7 +230,7 @@ const extensions = {
               store.loadMenus();
               return callback(3);
             }
-            if (i == me.extensions.length - 1) {
+            if (i == current_plugins - 1) {
               let date = new Date
               date = Number(date.getFullYear() + "" + date.getMonth() + "" + date.getDate())
               const new_cache = {
@@ -269,10 +268,9 @@ const extensions = {
       const ext_win = new Window({
           id: 'sec' + data.getAttribute("name"),
           content: graviton.getTemplate("market_plugin",`
-          
-          const data = document.getElementById("${data.id}");
-
-          const plugin = ${JSON.stringify(plugin)};
+            const name = '${data.getAttribute("name")}'
+            const update = '${data.getAttribute("update")}'
+            const plugin = ${JSON.stringify(plugin)};
           `)
     });
     ext_win.launch();

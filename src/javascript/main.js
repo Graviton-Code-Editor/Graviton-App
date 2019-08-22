@@ -133,10 +133,10 @@ document.addEventListener(
 );
 
 window.onload = function() {
-    fs.readdir(path.join(__dirname, "src", "javascript", "templates"), (err, paths) => {
+    fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
         let temporal_count = 0;
         paths.forEach((dir,index) => {
-            fs.readFile(path.join(__dirname, "src", "javascript", "templates", dir), "utf8", function(
+            fs.readFile(path.join(__dirname, "src", "templates", dir), "utf8", function(
                 err,
                 data
             ) {
