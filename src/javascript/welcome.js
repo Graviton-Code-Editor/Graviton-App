@@ -14,186 +14,110 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 let welcome_window;
 
 function openWelcome() {
-  if (graviton.isProduction() == true) {
-    if (remote.process.argv[1] != undefined) {
-      const dir = path.resolve(remote.process.argv[1])
-      console.log(dir)
-      loadDirs(dir, "g_directories", true);
-      if (error_showed == false) DeleteBoot();
-      return;
-    }
-  }
-  welcome_window = new Window({
-    id: "welcome_window",
-    content: graviton.getTemplate("welcome")
-  });
-  welcome_window.launch();
-  if(document.getElementById("recent_projects")!=null){
-    for (i = 0; i < log.length; i++) {
-      const project = document.createElement("div");
-      project.setAttribute("class", "section-2");
-      project.setAttribute(
-        "onclick",
-        `loadDirs('${log[i].Path.replace(
+   if (graviton.isProduction() == true) {
+      if (remote.process.argv[1] != undefined) {
+         const dir = path.resolve(remote.process.argv[1])
+         loadDirs(dir, "g_directories", true);
+         if (error_showed == false) DeleteBoot();
+         return;
+      }
+   }
+   welcome_window = new Window({
+      id: "welcome_window",
+      content: graviton.getTemplate("welcome")
+   });
+   welcome_window.launch();
+   if (document.getElementById("recent_projects") != null) {
+      for (i = 0; i < log.length; i++) {
+         const project = document.createElement("div");
+         project.setAttribute("class", "section-2");
+         project.setAttribute(
+            "onclick",
+            `loadDirs('${log[i].Path.replace(
           /\\/g,
           "\\\\"
         )}','g_directories','yes'); welcome_window.close();`
-      );
-      project.innerText = log[i].Name;
-      const description = document.createElement("p");
-      description.innerText = log[i].Path;
-      description.setAttribute("style", "font-size:12px;");
-      project.appendChild(description);
-      if (document.getElementById("recent_projects") == undefined) return;
-      document.getElementById("recent_projects").appendChild(project);
-      document.getElementById("clear_log").style = "";
-    }
-  }
-  if (error_showed == false) DeleteBoot();
+         );
+         project.innerText = log[i].Name;
+         const description = document.createElement("p");
+         description.innerText = log[i].Path;
+         description.setAttribute("style", "font-size:12px;");
+         project.appendChild(description);
+         if (document.getElementById("recent_projects") == undefined) return;
+         document.getElementById("recent_projects").appendChild(project);
+         document.getElementById("clear_log").style = "";
+      }
+   }
+   if (error_showed == false) DeleteBoot();
 }
 const Setup = {
-  open: function () {
-    for (i = 0; i < languages.length + 1; i++) {
-      if (i == languages.length) {
-        loadLanguage(languages[0]); // Load english in case Graviton doesn't support the system's language
-      } else if (navigator.language.contains(languages[i].locale)) {
-        loadLanguage(languages[i].g_l); // Load system language
+   open: function() {
+      for (i = 0; i < languages.length + 1; i++) {
+         if (i == languages.length) {
+            loadLanguage(languages[0]); // Load english in case Graviton doesn't support the system's language
+         } else if (navigator.language.includes(languages[i].locale)) {
+            loadLanguage(languages[i].g_l); // Load system language
+         }
       }
-    }
-    const all = document.createElement("div");
-    all.id = "graviton_setup"
-    all.innerHTML = `
+      const all = document.createElement("div");
+      all.id = "graviton_setup"
+      all.innerHTML = `
   	<div class="body_window_full">
   		<div id="body_window_full">
   		</div>
   	</div>`;
-    document.body.appendChild(all);
-    Setup.navigate("languages");
-    graviton.deleteLog();
-    if (error_showed == false) DeleteBoot();
-  },
-  close: function () {
-    document.getElementById("graviton_setup").remove();
-    current_config.justInstalled = false;
-    saveConfig();
-  },
-  navigate: function (number) {
-    switch (number) {
-      case "languages":
-        document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:5vh; line-height:3em; text-align:center; position:relative; " class="translate_word" idT="Languages">${
-            getTranslation("Languages")
-          }</h1> 
-          <div id='language_list' class=welcome><elastic-container related=parent></elastic-container></div> 
-          <button onclick=${
-            themes.length != 0 ? "Setup.navigate('themes');" : "Setup.navigate('additional_settings');"
-          }  style=" position:fixed; right:5%; bottom: 5%;" class="button1 translate_word" idT="Continue">${
-            getTranslation("Continue")
-        }</button>      `;
-        for (i = 0; i < languages.length; i++) {
-          const languageDiv = document.createElement("div");
-          languageDiv.setAttribute("class", "language_div");
-          languageDiv.setAttribute(
-            "onclick",
-            "loadLanguage('" + languages[i]["g_l"] + "'); selectLang(this);"
-          );
-          languageDiv.innerText = languages[i]["g_l"];
-          if (languages[i]["g_l"] === current_config.language["g_l"]) {
-            selectLang(languageDiv);
-          }
-          document.getElementById("language_list").appendChild(languageDiv);
-        }
-        break;
-      case "themes":
-        document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:5vh; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
-            getTranslation("Welcome.TakeATheme")
-          }</h1> 
-          <div class=theme_divs>
-            <img draggable=false onclick="graviton.setTheme('Dark'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Dark"?"active":""}' src=src/icons/dark.svg>
-            <img draggable=false onclick="graviton.setTheme('Arctic'); selectTheme('2',this);" class='theme_div2 ${current_config.theme=="Arctic"?"active":""}' src=src/icons/light.svg>
-          </div> 
-          <button onclick='Setup.navigate("languages"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
-            getTranslation("Back")
-          }</button> 
-          <button  onclick='Setup.navigate("additional_settings");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
-            getTranslation("Continue")
-          }</button> 
-        `;
-        break;
-      case "additional_settings":
-        document.getElementById("body_window_full").innerHTML = `
-          <h1 style="font-size:5vh; text-align:center;" class="translate_word" idT="Welcome.TakeATheme" >${
-            getTranslation("Welcome.AdditionalSettings")
-          }</h1> 
-          <div style="overflow:auto; position:relative;max-height:60%">
-            
-            <div class=section-1>
-              <div class=section-4>
-                <p>${getTranslation("ZoomSize")}</p>
-                <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
-                current_config.appZoom
-              }" class="slider" >
-              </div> 
-              <div class=section-4>
-                <p>${getTranslation("Blur")}</p>
-                <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
-                  current_config.blurPreferences
-                }" class="slider" >
-              </div> 
-              <div class=section-4>
-                <p>${getTranslation("Bounce")}</p>
-                <gv-switch  onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
-                  current_config.bouncePreferences
-                }"></gv-switch>
-              </div> 
-            </div> 
-            </div>
-            <button onclick='Setup.navigate("themes"); ' style=" position:fixed; left:5%; bottom: 5%;  " class='button1 translate_word' idT="Back">${
-              getTranslation("Back")
-            }</button> 
-            <button  onclick='Setup.navigate("welcome");' style=" position:fixed; right:5%; bottom: 5%;"  class="button1 translate_word" idT="Continue">${
-              getTranslation("Continue")
-            }</button> 
-            
-        `;
-        break;
-      case "welcome":
-          if (!graviton.isProduction()) {
-            new Notification({
-              title: "Graviton",
-              content: "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
-              delay: '10000',
-              buttons: {
-                'Dev tools': {
-                  click: function () {
-                    graviton.openDevTools()
+      document.body.appendChild(all);
+      Setup.navigate("languages");
+      graviton.deleteLog();
+      if (error_showed == false) DeleteBoot();
+   },
+   close: function() {
+      document.getElementById("graviton_setup").remove();
+      current_config.justInstalled = false;
+      saveConfig();
+   },
+   navigate: function(number) {
+      switch (number) {
+         case "languages":
+            document.getElementById("body_window_full").innerHTML = graviton.getTemplate("setup_languages")
+            for (i = 0; i < languages.length; i++) {
+               const languageDiv = document.createElement("div");
+               languageDiv.setAttribute("class", "language_div");
+               languageDiv.setAttribute(
+                  "onclick",
+                  "loadLanguage('" + languages[i].name + "'); selectLang(this);"
+               );
+               languageDiv.innerText = languages[i].name;
+               if (languages[i].name === current_config.language.name) {
+                  selectLang(languageDiv);
+               }
+               document.getElementById("language_list").appendChild(languageDiv);
+            }
+            break;
+         case "themes":
+            document.getElementById("body_window_full").innerHTML = graviton.getTemplate("setup_themes")
+            break;
+         case "additional_settings":
+            document.getElementById("body_window_full").innerHTML = graviton.getTemplate("setup_additional_settings");
+            break;
+         case "welcome":
+            if (!graviton.isProduction()) {
+               new Notification({
+                  title: "Graviton",
+                  content: "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
+                  delay: '10000',
+                  buttons: {
+                     'Dev tools': {
+                        click: function() {
+                           graviton.openDevTools()
+                        }
+                     },
+                     'Close': {}
                   }
-                },
-                'Close':{}
-              }
-            })
-          }
-        document.getElementById("body_window_full").innerHTML = `
-          <h1 style=" font-size:5vh;
-          transform:translate(-50%,-50%);
-          position:absolute;
-          top:45%;
-          left:50%;
-            text-align:center;" 
-            class="translate_word" 
-            idT="Welcome.ThanksForInstalling">
-            ${getTranslation("Welcome.ThanksForInstalling")} ${
-          g_version.version
-        } - ${g_version.state} <img draggable="false" class="emoji-title" src="src/openemoji/1F973.svg"> </h1> 
-          <button onclick="Setup.close(); extensions.openStore(function(){extensions.navigate('all')});" style=" position:fixed;  left:5%; bottom: 5%;"  class="button1 translate_word" idT="Market">${
-            getTranslation("Market")
-          }</button> 
-          <button onclick='Setup.close(); openWelcome();' style=" position:fixed;  right:5%; bottom: 5%;"  class="button1 translate_word" idT="Finish">${
-            getTranslation("Finish")
-          }</button> 
-          `;
-        break;
-    }
-  }
+               })
+            }
+            document.getElementById("body_window_full").innerHTML = graviton.getTemplate("setup_welcome")
+            break;
+      }
+   }
 };

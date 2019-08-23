@@ -23,6 +23,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   padding: 15px 0;
 }
 
+#_content2 > div{
+  overflow: auto;
+}
+
 .navbar button {
   font-family: _main_font;
   font-size: 15px;

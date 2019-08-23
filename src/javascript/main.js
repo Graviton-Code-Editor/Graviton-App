@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-    date: "190822",
+    date: "190823",
     version: "1.1.0",
     state: "Beta"
 };
@@ -131,6 +131,13 @@ document.addEventListener(
     },
     true
 );
+
+preload([
+
+  "src/icons/folder_opened.svg",
+  "src/icons/custom_icons/git.svg",
+  "src/icons/custom_icons/node_modules.svg"
+]);
 
 window.onload = function() {
     fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
@@ -1131,14 +1138,7 @@ const NewProject = () => {
   });
   new_projects_window.launch();
 };
-const preload = array => {
-  // Preload images when booting
-  for (i = 0; i < array.length; i++) {
-    document.body.innerHTML += `
-    <img id="${array[i]}"src="${array[i]}" style="visibility:hidden;"></img>`;
-    document.getElementById(array[i]).remove();
-  }
-};
+
 const touchingResizer = type => {
   if (type == false) {
     if (!mouseClicked) {

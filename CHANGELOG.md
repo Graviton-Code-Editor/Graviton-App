@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200823 - 1 [1.0.3]
+- Added bouncing effect to the market
+- Created an Issues template
+- Converted Setup pages into templates
+- Added a button in Settings > Advanced > Developer Tools to open a directory folder
+- Fixed, market_plugin template's select button wasn't applyng the theme
+
 ### 200822 - 1 [1.0.3]
 - Some parts of the UI are becoming modificable templates
 - Renamed CSS class g_editors to editor_screen

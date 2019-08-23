@@ -650,6 +650,7 @@ button.button3:active{
   margin: 5px;
   text-align: left;
   letter-spacing: 0px;
+  text-overflow: ellipsis; padding:2px;
 }
 
 /* Welcome and setup */
