@@ -133,6 +133,23 @@
 		"Clear": "Vider le cache",
 		"MiniMap": "MiniMap",
 		"MiniMapDisabled": "Redémarrez Graviton pour prendre en compte les nouveaux paramètres",
-		"CopyPath": "Copier le chemin"
+		"CopyPath": "Copier le chemin",
+		"NoUpdateFound": "Aucune mise-à-jour disponible",
+		"ExtNotListed": "n'existe pas dans le marché.",
+		"OpenAsGlobal": "Utiliser comme dossier racine.",
+		"DetectedUpdateMessage": "Voulez-vous mettre à jour votre version",
+		"Readme": "Readme",
+		"Permissions": "Permissions",
+		"PermissionCustomIcons": "Personnalizer les icônes des fichiers",
+		"PermissionCustomStyling": "Personnaliser le style de l'interface",
+		"PermissionCustomColors": "Personnaliser les couleurs de l'interface",
+		"PermissionExecuteJavaScript": "Exécuter du code JavaScript",
+		"Edit": "Editer",
+		"Undo": "Annuler",
+		"Redo": "Refaire",
+		"SystemAccentColor.Error1": "Votre système n'est pas compatible avec cette fonctionnalité.",
+		"SystemAccentColor.Error2": "L'utilisation des couleurs d'accent du système pourrait ne pas fonctionner correctement avec le thème actuel.",
+		"TelegramChannel": "Cannal Telegram",
+		"Settings-Advanced-Developer-Tools-text2": "Ouvrir le dossier de configuration"
 	}
 }
