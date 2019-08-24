@@ -9,8 +9,9 @@
 
 ## New
 
+- You can now load files by dragging and dropping to empty screens 
 - Restructured the menus on the top bar
-- Added some emojies 
+- Added some emojies across the app
 - Added Esperanto language
 - Added a blur effect which can be ajusted or disabled from settings
 - Added a clear recent projects in the welcome page

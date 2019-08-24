@@ -652,33 +652,44 @@ graviton = {
       }
    },
    changeLanguageStatusBar(lang, screen) {
-      if (editor == undefined) {
-         if (document.getElementById(screen).children[2].children[0] != undefined) {
-            document.getElementById(screen).children[2].children[0].remove();
-         }
-      } else {
          if (document.getElementById(screen).children[2].children[0] == undefined) {
             const span = document.createElement("span");
             span.innerText = lang;
             span.setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
+            if(lang=="") span.style="display:none;"
             document.getElementById(screen).children[2].appendChild(span)
          } else {
+            if(lang=="") {
+               document.getElementById(screen).children[2].children[0].style="display:none;"
+            }else{
+               document.getElementById(screen).children[2].children[0].style ="";
+            }
             document.getElementById(screen).children[2].children[0].innerText = lang;
             document.getElementById(screen).children[2].children[0].setAttribute("title", `Current: ${lang} ${plang=="Unknown"?'(Unkown)':''}`)
          }
-      }
    },
    refreshStatusBarLinesAndChars(screen) {
       if (editor == undefined) {
-         if (document.getElementById(screen).children[2].children[1] != undefined)
-            document.getElementById(screen).children[2].children[1].remove();
+         if (document.getElementById(screen).children[2].children[1] == undefined) {
+            const span = document.createElement("span");
+            span.style = ""
+            span.innerText = ""
+            span.title = ""
+            document.getElementById(screen).children[2].appendChild(span)
+         } else {
+            document.getElementById(screen).children[2].children[1].innerText="";
+            document.getElementById(screen).children[2].children[1].title="";
+            document.getElementById(screen).children[2].children[1].style = "display:none;"
+         }
       } else {
          if (document.getElementById(screen).children[2].children[1] == undefined) {
             const span = document.createElement("span");
+            span.style = ""
             span.innerText = editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1);
             span.title = `Line: ${editor.getCursor().line+1} , Char: ${Number(editor.getCursor().ch+1)}`
             document.getElementById(screen).children[2].appendChild(span)
          } else {
+            document.getElementById(screen).children[2].children[1].style ="";
             document.getElementById(screen).children[2].children[1].innerText = editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1);
             document.getElementById(screen).children[2].children[1].title = `Line: ${editor.getCursor().line+1} , Char: ${Number(editor.getCursor().ch+1)}`
          }
@@ -704,6 +715,18 @@ graviton = {
          return "";
       }
       return eval(result);
+   },
+   focusScreen(screen_id){
+      for (i = 0; i < editor_screens.length; i++) {
+         if (editor_screens[i].id == screen_id) {
+           current_screen.id = screen_id;
+           current_screen.terminal = editor_screens[i].terminal;
+           graviton.refreshStatusBarLinesAndChars(screen_id)
+         }
+       }
+       return;
+      
+       
    }
 };
 

@@ -13,6 +13,12 @@ module.exports = {
           format: text.split(".").pop(),
           trust: true
         };
+      case "ttf":
+        return {
+          lang: "unknown",
+          format: text.split(".").pop(),
+          trust: false
+        };
       case "css":
         return {
           lang: "css",
@@ -91,6 +97,9 @@ module.exports = {
       case "ino":
       case "h":
         return "C";
+      case"woff2":
+      case"ttf":
+        return "Font";
       case "cpp":
       case "c++":
       case "cc":

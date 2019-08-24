@@ -480,3 +480,13 @@ navbar a.active:hover{
   background: var(--accentDarkColor);
 }
 
+
+.image-container {
+  position: relative;
+  overflow: auto;
+}
+
+.image-container > *{
+  position: relative;
+  padding:0px 20px;
+}

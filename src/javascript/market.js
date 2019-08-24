@@ -59,7 +59,7 @@ const extensions = {
                   ${_new_update?icons["update"]:""}
                   <h3>${data.name}  </h3>
                   <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
+                  <p class=installed>${plugin.local!=undefined? ` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
                 </div>
                 `
           })
@@ -136,13 +136,14 @@ const extensions = {
           if (document.getElementById("loading_exts3") != undefined) {
             document.getElementById("loading_exts3").remove();
           }
+          if (plugins_market.length != full_plugins.length) {
+            document.getElementById('sec_themes').innerHTML += `
+                <div  id=load_more_plugins  class="extension_div static" >
+                  <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; extensions.navigate('themes')}); " class=" center button1 fixed-scale" > Load more</button>
+                </div>`
+          }
         }
-        if (plugins_market.length != full_plugins.length) {
-          document.getElementById('sec_themes').innerHTML += `
-              <div  id=load_more_plugins  class="extension_div static" >
-                <button onclick=" extensions.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; extensions.navigate('themes')}); " class=" center button1 fixed-scale" > Load more</button>
-              </div>`
-        }
+        
         return
       case 'settings':
         for (i = 0; i < document.getElementById("_content2").children.length; i++) {

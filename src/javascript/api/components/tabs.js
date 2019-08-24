@@ -103,6 +103,26 @@ module.exports = {
             });
             document.dispatchEvent(tab_created_event);
             switch (filepath.split(".").pop()) {
+              case "woff2":
+              case "ttf":
+                  for (i = 0; i < tabs.length; i++) {
+                    if (
+                      tabs[i].getAttribute("screen") == current_screen.id &&
+                      tabs[i].classList.contains("selected")
+                    ) {
+                      tabs[i].classList.remove("selected");
+                    }
+                  }
+                  tab.classList.add("selected");
+                  tab.setAttribute("typeEditor", "font");
+                  editingTab = tab.id;
+                  loadEditor({
+                    type: "font",
+                    dir: filepath,
+                    data: null,
+                    screen: current_screen.id
+                  });
+                  break;
               case "svg":
               case "png":
               case "ico":
@@ -116,8 +136,8 @@ module.exports = {
                   }
                 }
                 tab.classList.add("selected");
-                tab.setAttribute("typeEditor", "text");
                 editingTab = tab.id;
+                tab.setAttribute("typeEditor", "image");
                 loadEditor({
                   type: "image",
                   dir: filepath,
@@ -138,8 +158,8 @@ module.exports = {
                     }
                   }
                   tab.classList.add("selected");
-                  tab.setAttribute("typeEditor", "text");
                   editingTab = tab.id;
+                  tab.setAttribute("typeEditor", "text");
                   loadEditor({
                     type: "text",
                     dir: g_newPath,
@@ -154,6 +174,7 @@ module.exports = {
           }
         }
         break;
+      
       case "free":
         for (i = 0; i < tabs.length; i++) {
           if (
@@ -173,7 +194,6 @@ module.exports = {
         tab.setAttribute("screen", current_screen.id);
         tab.setAttribute("class", "tabs selected");
         tab.setAttribute("longPath", object.id);
-        tab.setAttribute("typeEditor", "free");
         tab.setAttribute("elementType", "tab");
         tab.style = `min-width: ${object.name.length * 4 + 115}px; 
           max-width: ${object.name.length * 5 + 100}px`;
@@ -189,6 +209,7 @@ module.exports = {
         tab_x.setAttribute("elementType", "tab");
         tab_x.setAttribute("TabID", object.id + "_freeTab");
         tab_x.setAttribute("id", object.id + "CloseButton");
+        tab.setAttribute("typeEditor", "free");
         tab_x.innerHTML = icons["close"];
         tab_x.addEventListener("mouseover", function (e) {
           this.setAttribute("hovering", true);

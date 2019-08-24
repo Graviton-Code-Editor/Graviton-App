@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200824 - 1 [1.0.3]
+- Added a font previewer
+- Themes section in Market wasn't duplicating the load more buttons when it couldn't read the plugin list repository
+- Couldn't unninstall plugins in Graviton when it couldn't read the plugin list repository
+
 ### 200823 - 1 [1.0.3]
 - Added bouncing effect to the market
 - Created an Issues template
