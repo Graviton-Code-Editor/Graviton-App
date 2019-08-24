@@ -1,5 +1,5 @@
 # Graviton Editor
-[![Build Status](https://travis-ci.org/Graviton-Code-Editor/Graviton-App.svg?branch=master)](https://travis-ci.org/Graviton-Code-Editor/Graviton-App)
+
 [![HitCount](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App.svg)](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md)
 ![GitHub All Releases](https://img.shields.io/github/downloads/Graviton-Code-Editor/Graviton-App/total.svg?style=plastic)
