@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200825 - 1 [1.0.3]
+- Unique terminal instead of one terminal for screen
+
 ### 200824 - 1 [1.0.3]
 - Added a font previewer
 - Themes section in Market wasn't duplicating the load more buttons when it couldn't read the plugin list repository

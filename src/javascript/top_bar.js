@@ -134,11 +134,7 @@ Editor.setList({
       hint: "Ctrl+T"
     },
     hideTerminal: {
-      click: () => {
-        if (current_screen.terminal != undefined) {
-          commanders.hide(current_screen.terminal.id);
-        }
-      },
+      click: () => commanders.hide(terminal.id),
       hint: "Ctrl+H"
     },
     closeTerminal: {

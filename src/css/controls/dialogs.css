@@ -1,87 +1,88 @@
 .dialog_body {
-  animation: window_up linear 0.1s;
-  opacity: 1;
-  position: absolute;
-  color: var(--white-black);
-  font-size: 17px;
-  padding: 17px;
-  overflow: auto;
-  border-radius: var(--window-radius);
-  box-shadow: 0px 3px 15px var(--shadows);
-  min-width: 25%;
-  max-width: 70%;
-  min-height: 110px;
-  max-height: 70%;
-  margin: 0;
-  text-align: left;
-  background: var(--secondaryColor);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 1px solid var(--window-border-color);
-  display: flex;
-  flex-direction: column;
-  -webkit-user-select: none;
+   animation: window_up linear 0.1s;
+   opacity: 1;
+   position: absolute;
+   color: var(--white-black);
+   font-size: 17px;
+   padding: 17px;
+   overflow: auto;
+   border-radius: var(--window-radius);
+   box-shadow: 0px 3px 15px var(--shadows);
+   min-width: 25%;
+   max-width: 70%;
+   min-height: 110px;
+   max-height: 70%;
+   margin: 0;
+   text-align: left;
+   background: var(--secondaryColor);
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   border: 1px solid var(--window-border-color);
+   display: flex;
+   flex-direction: column;
+   -webkit-user-select: none;
 }
 
 @keyframes window_up {
-  from {
-    transform: translate3d(0, 0, 0) translate(-50%, -48%);
-  }
+   from {
+      transform: translate3d(0, 0, 0) translate(-50%, -48%);
+   }
+   to {
+      transform: translate3d(0, 0, 0) translate(-50%, -50%);
+   }
+}
 
-  to {
-    transform: translate3d(0, 0, 0) translate(-50%, -50%);
-  }
+.dialog_body>div:not(.buttons) {
+   max-height: 10%;
+   position: relative;
+   overflow: auto;
 }
-.dialog_body > div:not(.buttons){
-  max-height: 10%;
-  position: relative;
-  overflow: auto;
-}
+
 .dialog_body .buttons {
-  display: flex;
-  float: right;
-  position: relative;
-  margin-top: 17px;
-  justify-content: flex-end
+   display: flex;
+   float: right;
+   position: relative;
+   margin-top: 17px;
+   justify-content: flex-end
 }
 
-.dialog_body .buttons > button {
-  width: auto;
-  margin-left: 8px;
-  padding: 7px 27px;
-  background: var(--primaryColor);
-  color: var(--white-black);
-  box-sizing: border-box;
-  position: relative;
-  left: 0px;
-  bottom: 0px;
-  display: inline-block;
-  border-radius: 4.5px;
-  font-family: _main_font;
-  font-size: 12px;
-  transform: scale(1);
-  white-space: nowrap;
-  display: inline-block;
-  border: 0;
+.dialog_body .buttons>button {
+   width: auto;
+   margin-left: 8px;
+   padding: 7px 27px;
+   background: var(--primaryColor);
+   color: var(--white-black);
+   box-sizing: border-box;
+   position: relative;
+   left: 0px;
+   bottom: 0px;
+   display: inline-block;
+   border-radius: 4.5px;
+   font-family: _main_font;
+   font-size: 12px;
+   transform: scale(1);
+   white-space: nowrap;
+   display: inline-block;
+   border: 0;
 }
 
-.dialog_body .buttons > button:hover {
-  transition: 0.1s;
-  cursor: pointer;
-  background: var(--widget-color);
+.dialog_body .buttons>button:hover {
+   transition: 0.1s;
+   cursor: pointer;
+   background: var(--widget-color);
 }
 
-.dialog_body .buttons > button.important {
-  background: var(--accentColor);
-  color: var(--black-white);
+.dialog_body .buttons>button.important {
+   background: var(--accentColor);
+   color: var(--black-white);
 }
 
-.dialog_body .buttons > button.important:hover {
-  background: var(--accentDarkColor);
+.dialog_body .buttons>button.important:hover {
+   background: var(--accentDarkColor);
 }
 
-.dialog_body .buttons > button:active {
-  transition: 0.06s;
-  transform: scale(0.98);
+.dialog_body .buttons>button:active {
+   transition: 0.06s;
+   transform: scale(0.98);
 }

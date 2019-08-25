@@ -7,33 +7,35 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 -->
 <!DOCTYPE>
+
 <head>
-    <meta charset="utf-8" />
+   <meta charset="utf-8" />
 </head>
 <link rel="stylesheet" href="src/css/fast_loading.css" />
 <div id="g_bootanimation">
-    <img src="src/icons/logo.svg" />
+   <img src="src/icons/logo.svg" />
 </div>
 <script>
-    let editor_booted = false,
-        error_showed = false
+   let editor_booted = false,
+      error_showed = false
 
-    function FactoryReset() {
-        const rimraf = require("rimraf")
-        rimraf.sync(DataFolderDir);
-        graviton.restartApp()
-    }
-    function DeleteBoot() {
-        if (document.getElementById("g_bootanimation") != null) {
-            document.getElementById("g_bootanimation").remove()
-            editor_booted = true
-            graviton.consoleInfo("Booted Graviton without errors.")
-        }
-    }
-    window.addEventListener("error", function() {
-        if (editor_booted == false && error_showed == false) {
-            error_showed = true
-            document.getElementById("g_bootanimation").innerHTML += `
+   function FactoryReset() {
+      const rimraf = require("rimraf")
+      rimraf.sync(DataFolderDir);
+      graviton.restartApp()
+   }
+
+   function DeleteBoot() {
+      if (document.getElementById("g_bootanimation") != null) {
+         document.getElementById("g_bootanimation").remove()
+         editor_booted = true
+         graviton.consoleInfo("Booted Graviton without errors.")
+      }
+   }
+   window.addEventListener("error", function() {
+      if (editor_booted == false && error_showed == false) {
+         error_showed = true
+         document.getElementById("g_bootanimation").innerHTML += `
       <div>
         <p>An error has appeared when booting Graviton.</p>
         <button class="Button1 red" onclick="FactoryReset()">Factory Reset</button>
@@ -41,44 +43,47 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
         <button class="Button1" onclick="DeleteBoot()">Ignore</button>
          <p class="link" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">See this after updating?</p>
       </div>`
-        } else if (editor_booted == true) {
-            graviton.throwError(
-                "An error has appeared! Check the console on developer tools for more info."
-            )
-        }
-    })
+      } else if (editor_booted == true) {
+         graviton.throwError(
+            "An error has appeared! Check the console on developer tools for more info."
+         )
+      }
+   })
 </script>
 <html>
 <div id="body" windows="0">
-    <div id="top_bar_app">
-        <img src="src/icons/logo2.svg" />
-        <div id="dropmenus_app" class="smallScrollBar">
-            <!--Dropmenus list-->
-        </div>
-        <div id="title_directory" class="smallScrollBar">
-            <p></p>
-        </div>
-        <div id="controls">
-            <!-- Control buttons (only for windows) -->
-        </div>
-    </div>
+   <div id="top_bar_app">
+      <img src="src/icons/logo2.svg" />
+      <div id="dropmenus_app" class="smallScrollBar">
+         <!--Dropmenus list-->
+      </div>
+      <div id="title_directory" class="smallScrollBar">
+         <p></p>
+      </div>
+      <div id="controls">
+         <!-- Control buttons (only for windows) -->
+      </div>
+   </div>
 
-    <body>
-        <div id="content_app">
-            <div id="explorer_app" style="width:240px" opened="false">
-                <elastic-container>
-                    <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
-                </elastic-container>
-            </div>
-            <div id="editor_resizer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
-            <context>
-                <div id="context" class="menuWrapper"></div>
-            </context>
-        </div>
+   <body>
+      <div id="content_app">
+         <div id="explorer_app" style="width:240px" opened="false">
+            <elastic-container>
+               <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
+            </elastic-container>
+         </div>
+         <div id="editor_resizer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
+         <div id="editors">
+            <div id="screens"></div>
+         </div>
+         <context>
+            <div id="context" class="menuWrapper"></div>
+         </context>
+      </div>
 </div>
 <!-- -->
 <div id="notifications">
-    <!-- Notifications list -->
+   <!-- Notifications list -->
 </div>
 </body>
 

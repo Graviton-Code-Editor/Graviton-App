@@ -39,6 +39,10 @@ module.exports = {
    * @param {string} object.data  the tab's content
    */
   Tab: function (object) {
+    if (typeof [...arguments] != "object") {
+      graviton.throwError("Parsed argument is not object.");
+      return;
+    }
     this.type = object.type;
     this.id = object.id;
     switch (object.type) {
@@ -116,7 +120,7 @@ module.exports = {
                   tab.classList.add("selected");
                   tab.setAttribute("typeEditor", "font");
                   editingTab = tab.id;
-                  loadEditor({
+                  graviton.loadEditor({
                     type: "font",
                     dir: filepath,
                     data: null,
@@ -138,7 +142,7 @@ module.exports = {
                 tab.classList.add("selected");
                 editingTab = tab.id;
                 tab.setAttribute("typeEditor", "image");
-                loadEditor({
+                graviton.loadEditor({
                   type: "image",
                   dir: filepath,
                   data: null,
@@ -160,7 +164,7 @@ module.exports = {
                   tab.classList.add("selected");
                   editingTab = tab.id;
                   tab.setAttribute("typeEditor", "text");
-                  loadEditor({
+                  graviton.loadEditor({
                     type: "text",
                     dir: g_newPath,
                     data: data,
@@ -226,7 +230,7 @@ module.exports = {
           }
         });
         document.dispatchEvent(tab_created_event);
-        loadEditor({
+        graviton.loadEditor({
           type: "free",
           dir: object.id,
           data: object.data,
@@ -276,6 +280,9 @@ module.exports = {
             graviton.refreshStatusBarLinesAndChars(working_tab.getAttribute("screen"))
             graviton.changeLanguageStatusBar(plang, working_tab.getAttribute("screen"))
             document.getElementById(working_tab.getAttribute("screen")).children[1].children[0].style = "visibility:visible; display:block;";
+            document
+            .getElementById(working_tab.getAttribute("screen"))
+            .children[2].innerHTML = "";
           } else if (i === filtered_tabs.length) {
             if (filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute("screen") == working_tab.getAttribute("screen")) {
               new_selected_tab = filtered_tabs[Number(filtered_tabs.length) - 1];
@@ -299,7 +306,7 @@ module.exports = {
             new_selected_tab.classList.add("selected");
             const g_newPath = new_selected_tab.getAttribute("longpath");
             filepath = g_newPath;
-            loadEditor({
+            graviton.loadEditor({
               type: new_selected_tab.getAttribute("typeeditor"),
               dir: g_newPath,
               data: new_selected_tab.getAttribute("data"),
@@ -337,7 +344,7 @@ module.exports = {
       object.classList.add("selected");
       const g_newPath = object.getAttribute("longpath");
       filepath = g_newPath;
-      loadEditor({
+      graviton.loadEditor({
         type: object.getAttribute("typeeditor"),
         dir: g_newPath,
         data: object.getAttribute("data"),

@@ -584,11 +584,7 @@ graviton = {
       return (!path.basename(__dirname) == "Graviton-Editor" || !path.basename(__dirname) == "Graviton-App")
    },
    resizeTerminals() {
-      for (i = 0; i < editor_screens.length; i++) {
-         if (editor_screens[i].terminal != undefined) {
-            fit.fit(editor_screens[i].terminal.xterm);
-         }
-      }
+      if(terminal!=null)fit.fit(terminal.xterm);
    },
    toggleFullScreen() {
       if (graviton.isProduction()) {
@@ -720,7 +716,6 @@ graviton = {
       for (i = 0; i < editor_screens.length; i++) {
          if (editor_screens[i].id == screen_id) {
            current_screen.id = screen_id;
-           current_screen.terminal = editor_screens[i].terminal;
            graviton.refreshStatusBarLinesAndChars(screen_id)
          }
        }

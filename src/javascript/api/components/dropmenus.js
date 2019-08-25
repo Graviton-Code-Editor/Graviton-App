@@ -18,6 +18,10 @@ module.exports = {
    * @param {string} obj.custom  (optional) Dropmenu's HTML content
    */
   Dropmenu: function (obj) {
+    if (typeof [...arguments] != "object") {
+      graviton.throwError("Parsed argument is not object.");
+      return;
+    }
     this.id = obj.id;
     if (obj != null && obj != undefined) this.translation = obj.translation; //Detect if translation is enabled on the plugin's dropmenu
     this.setList = function (panel) {

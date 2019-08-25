@@ -154,8 +154,7 @@ const extensions = {
         document.getElementById("sec_settings").innerHTML = `
           <h4>${getTranslation("Cache")}</h4>
           <div class="section-1">
-          
-            <button class=button1 onclick=store.clearCache()>${getTranslation("Clear")}</button>
+            <button class=button1 onclick='store.clearCache()'>${getTranslation("Clear")}</button>
           </div>
           `
         return
@@ -166,9 +165,9 @@ const extensions = {
       id: 'market_window',
       content: `
         <div class=center>
-        <div class="spinner">
-         <div></div> 
-        </div>
+          <div class="spinner">
+            <div></div> 
+          </div>
         </div>
           `
     })

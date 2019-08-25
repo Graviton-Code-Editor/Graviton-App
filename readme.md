@@ -53,7 +53,26 @@ Some ways to contribute to Graviton's project:
 For people who translates to a new language:
 Please consider revising and updating your languages in case they are missing some new strings.
 
-Thank you all!
+Authors 👽
+---
+
+### Main Developer:
+* Marc Espín [Github](https://github.com/marc2332)
+
+### Main Contributors:
+* MaxTruc1 [Github](https://github.com/Max1Truc)
+* David Niederweis [Github](https://github.com/DJN1)
+
+### Credits:
+* Miguel Ranger for first autocompletation version
+* Old logo by Saúl Blanco
+* Advices from León Alvarez
+
+
+Useful libraries 🤩
+---
+* [CodeMirror](https://codemirror.net/)
+* [OpenEmoji](https://openmoji.org)
 
 Donating 🎁
 ---
@@ -61,21 +80,15 @@ Donating 🎁
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
 - Paypal: https://www.paypal.me/mkenzo8
 
-Donators 🐱‍🏍
----
+### Cool people:
 - 2€ donation by Alex Mayol
 - BTCs donation by [Machou](http://GitHub.com/Machou)
 - 2€ donation by Cristina Piva
 
+
 Thank you for the donations!
 
-Credits ✨
----
-- Advices from [Leon Alvarez](https://github.com/LeonAlvarez)
-- [Codemirror](codemirror.net)
-- Help in autocompletation , Miguel Rangel
-- Old logo by Saúl Blanco 
-- [OpenEmoji](https://openmoji.org/)
+
 
 And all people who helped me :)
 

@@ -72,14 +72,7 @@ module.exports = {
         </div>
        </div>
       <div class="g_status_bar" ></div>`;
-    document
-      .getElementById("content_app")
-      .insertBefore(
-        new_screen_editor,
-        document.getElementById("content_app").children[
-          document.getElementById("content_app").children.length - 1
-        ]
-      );
+      document.getElementById("screens").appendChild(new_screen_editor)
     for (i = 0; i < editor_screens.length && editor_screens.length != 1; i++) {
       if (
         document.getElementById(editor_screens[i].id).children[1].children[0]
@@ -122,11 +115,6 @@ module.exports = {
             return tab.getAttribute("screen") == id;
           });
           if (screen_tabs.length == 0) {
-            if (editor_screens[i].terminal != undefined) {
-              editor_screens[i].terminal.xterm.destroy();
-              commanders.close(editor_screens[i].terminal.id);
-              editor_screens[i].terminal = undefined;
-            }
             const closed_screen_event = new CustomEvent("closed_screen", {
               detail: {
                 screen: editor_screens[i]
@@ -137,8 +125,7 @@ module.exports = {
             editor_screens.splice(i, 1);
             editors.splice(i, 1);
             current_screen = {
-              id: editor_screens[editor_screens.length - 1].id,
-              terminal: editor_screens[editor_screens.length - 1].terminal
+              id: editor_screens[editor_screens.length - 1].id
             };
             if (editor_screens.length == 1) {
               if (
@@ -148,6 +135,9 @@ module.exports = {
                 document
                   .getElementById(editor_screens[0].id)
                   .children[1].children[0].children[1].remove();
+                  console.log( document
+                    .getElementById(editor_screens[0].id)
+                    .children[2])
             }
             return true;
           } else {
@@ -170,25 +160,16 @@ module.exports = {
   default: function() {
     for (i = 0; i < editor_screens.length; i++) {
       if (i > 0) {
-        let tabs2 = [];
         const number = i;
-        for (b = 0; b < tabs.length; b++) {
-          if (tabs[b].getAttribute("screen") == editor_screens[number].id) {
-            tabs2.push(tabs[b]);
-          }
-        }
-        if (tabs2.length == 0) {
-          if (editor_screens[number].terminal != undefined) {
-            editor_screens[number].terminal.xterm.destroy();
-            commanders.close(editor_screens[number].terminal.id);
-            editor_screens[i].terminal = undefined;
-          }
+        let screen_tabs = tabs.filter(tab => {
+          return tab.getAttribute("screen") == id;
+        });
+        if (screen_tabs.length == 0) {
           document.getElementById(editor_screens[number].id).remove();
           editor_screens.splice(number, 1);
           editors.splice(number, 1);
           current_screen = {
-            id: editor_screens[editor_screens.length - 1].id,
-            terminal: editor_screens[editor_screens.length - 1].terminal
+            id: editor_screens[editor_screens.length - 1].id
           };
           i--;
           if (editor_screens.length == 1) {

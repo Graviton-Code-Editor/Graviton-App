@@ -36,6 +36,10 @@ module.exports = {
      * @param {string} data.code               Window's content
      * @param {function} data.onClose (optional) When the window is closed the passed function will be executed 
      */
+    if (typeof [...arguments] != "object") {
+      graviton.throwError("Parsed argument is not object.");
+      return;
+    }
     this.id = data.id;
     this.code = data.content;
     this.onClose = data.onClose == undefined ? "" : data.onClose;
