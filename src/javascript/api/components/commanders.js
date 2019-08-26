@@ -40,7 +40,12 @@ module.exports = {
          const randomID = Math.random();
          new commander({
                id: "xterm" + randomID,
-               content: ""
+               content: `
+               <navbar class=navbar>
+                  <span class="icon unselectable" onclick=commanders.closeTerminal()>${icons.close}</span>
+               </navbar>
+               <br><br>  
+               `
             },
             function(err) {
                if (!err) {
@@ -57,7 +62,8 @@ module.exports = {
                         background: themeObject.colors[
                            "editor-background-color"
                         ],
-                        foreground: themeObject.colors["white-black"]
+                        foreground: themeObject.colors["white-black"],
+                        selection: themeObject.colors["scroll-color"]
                         
                      },
                      fontFamily:"Consolas"

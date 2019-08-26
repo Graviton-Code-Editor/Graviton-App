@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const g_version = {
-   date: "190825",
+   date: "190826",
    version: "1.1.0",
    state: "Beta"
 };
@@ -42,6 +42,9 @@ const os = require("os"),
    semver = require("semver");
 
 require(path.join(__dirname, 'src', 'javascript', 'api', 'codemirror-langs.js')).langs() //Load CodeMirror files
+const { elasticContainerComponent , elasticContainer } = require(path.join(__dirname, 'src', 'javascript', 'api', 'elastic_container.js'))
+window.customElements.define("elastic-container", elasticContainerComponent);
+
 const {
    loadLanguage,
    getTranslation
@@ -130,7 +133,12 @@ document.addEventListener(
    function(event) {
       if (mouseClicked && touchingResizerValue) {
          const explorer = document.getElementById("explorer_app");
-         explorer.style = `width: ${event.clientX - 3}px`;
+         const content_app = document.getElementById("content_app");
+         if(current_config.explorerPosition==='left'){
+            explorer.style = `width: ${event.clientX - 3}px`;
+         }else{
+            explorer.style = `width: ${   content_app.clientWidth - event.clientX }px`;
+         }
          for (i = 0; i < editors.length; i++) {
             editors[i].object.blur()
          }
@@ -159,19 +167,25 @@ window.onload = function() {
             temporal_count++;
             if (temporal_count == paths.length) {
                fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
+                  let path_count = paths.length;
                   paths.forEach(dir => {
                      fs.readFile(path.join(__dirname, "languages", dir), "utf8", function(
                         err,
                         data
                      ) {
                         if (err) throw err;
+                        let _err_parsing = false;
                         try {
                            JSON.parse(data);
                         } catch {
-                           return;
+                           path_count--;
+                            graviton.consoleWarn("Couldn't parse the language: "+dir)
+                           _err_parsing = true;  
                         }
-                        languages.push(JSON.parse(data)); // Push the language
-                        if (languages.length === paths.length) {
+                        if(!_err_parsing){
+                           languages.push(JSON.parse(data)); // Push the language
+                        }
+                        if (languages.length === path_count) {
                            graviton.loadControlButtons();
                            loadConfig();
                            graviton.consoleInfo("Templates has been loaded.")
@@ -912,28 +926,28 @@ function loadDirs(dir, app_id, f_t, callback) {
                   const file_temp = document.createElement("div");
                   const parent_id = _long_path.replace(/[\\\s]/g, "") + "_div";
                   file_temp.innerHTML += `
-        <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="file" onclick="new Tab({
-          id:'${parent_id + "B"}',
-          path:'${_long_path}',
-          name:'${paths[i]}',
-          type:'file'
-        })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
-          paths[i]
-        }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
-          <img file=${paths[i]} class="explorer_file_icon" parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="file" style="float:left; padding-right:3px; height:24px; width:24px;" src="${
-            (function(){
-              if(themeObject.icons == undefined  ||(themeObject.icons[getFormat(paths[i]).lang]==undefined  && getFormat(paths[i]).trust==true ) ){
-                return `src/icons/files/${getFormat(
-                  paths[i]
-                ).lang}.svg`
-              }else{
-                if(themeObject.icons[getFormat(paths[i]).lang] == undefined  && themeObject.icons[getFormat(paths[i]).format] == undefined){
-                  return `
-        src / icons / files / $ {
-          getFormat(
-            paths[i]
-          ).lang
-        }.svg `
+                     <div title=${path.join(dir, paths[i])} parent="${parent_id}" elementType="file" onclick="new Tab({
+                        id:'${parent_id + "B"}',
+                        path:'${_long_path}',
+                        name:'${paths[i]}',
+                        type:'file'
+                     })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
+                        paths[i]
+                     }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
+                        <img draggable=false file=${paths[i]} class="explorer_file_icon" parent="${parent_id}" ID="${parent_id +"_img"}" dir="${_long_path}" elementType="file" style="float:left; padding-right:3px; height:24px; width:24px;" src="${
+                           (function(){
+                           if(themeObject.icons == undefined  ||(themeObject.icons[getFormat(paths[i]).lang]==undefined  && getFormat(paths[i]).trust==true ) ){
+                              return `src/icons/files/${getFormat(
+                                 paths[i]
+                              ).lang}.svg`
+                           }else{
+                              if(themeObject.icons[getFormat(paths[i]).lang] == undefined  && themeObject.icons[getFormat(paths[i]).format] == undefined){
+                                 return `
+                     src / icons / files / $ {
+                        getFormat(
+                           paths[i]
+                        ).lang
+                     }.svg `
                 }
                 if(getFormat(paths[i]).trust==true){
                   return path.join(plugins_folder,themeObject.name,themeObject.icons[getFormat(paths[i]).lang])
@@ -1235,82 +1249,3 @@ function checkVariables(text) {
   return _variables;
 }
 
-class elasticContainerComponent extends HTMLElement {
-  constructor() {
-    super();
-  }
-  connectedCallback() {
-    const container = this;
-    container.id = "elastic" + Math.random()
-    const related = (function () {
-      if (container.getAttribute("related") == "parent" || container.getAttribute("related") == undefined) {
-        return container.parentElement;
-      }
-      if (container.getAttribute("related") == "child") {
-        return container.children[0];
-      }
-      if (container.getAttribute("related") == "self") {
-        return container;
-      }
-    })()
-    const el = this.parentElement;
-    el.onscroll = function () {
-      if (Number(el.getAttribute("toleft")) != el.scrollLeft) return;
-      el.setAttribute("toleft", el.scrollLeft)
-      if (current_config.bouncePreferences == "desactivated") return;
-      if (related == null || related == undefined) {
-        return;
-      }
-      if (related.id != undefined) {
-        if (document.getElementById(related.id) == undefined) {
-          return;
-        }
-      }
-      if (el.scrollTop == 0) {
-        const spacer = document.createElement("div")
-        spacer.classList.add("bounce_top")
-        this.insertBefore(spacer, this.children[0])
-        setTimeout(function () {
-          spacer.remove()
-        }, 360)
-      }
-      if (el.scrollHeight - 1 <= el.scrollTop + el.clientHeight) {
-        if (document.getElementsByClassName("bounce_bottom").length != 0 || related == null) return;
-        const spacer = document.createElement("div")
-        spacer.classList.add("bounce_bottom")
-        this.appendChild(spacer)
-        setTimeout(function () {
-          spacer.remove()
-        }, 360)
-      }
-    }
-  }
-}
-window.customElements.define("elastic-container", elasticContainerComponent);
-
-const elasticContainer = {
-  append: function (el) {
-    el.onscroll = function () {
-      if (Number(el.getAttribute("toleft")) != el.scrollLeft) return;
-      el.setAttribute("toleft", el.scrollLeft)
-      if (current_config.bouncePreferences == "desactivated") return;
-      if (el.scrollTop >= 0 && el.scrollTop < 1) {
-        const spacer = document.createElement("div")
-        spacer.classList.add("bounce_top")
-        this.insertBefore(spacer, this.children[0])
-        setTimeout(function () {
-          spacer.remove()
-        }, 360)
-      }
-      if (el.scrollHeight - 1 <= el.scrollTop + el.clientHeight) {
-        if (document.getElementsByClassName("bounce_bottom").length != 0) return;
-        const spacer = document.createElement("div")
-        spacer.classList.add("bounce_bottom")
-        this.appendChild(spacer)
-        setTimeout(function () {
-          spacer.remove()
-        }, 360)
-      }
-    }
-  }
-}

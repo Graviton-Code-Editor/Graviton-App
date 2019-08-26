@@ -144,7 +144,7 @@ head {
    padding:0;
    position: relative;
 }
-#editors{
+#content_app > #editors{
    width:auto;
    min-width: auto;
    flex:1;
@@ -159,6 +159,13 @@ head {
    margin-top: 2px;
 }
 
+#content_app[explorerPosition="right"] > #editors{
+   box-shadow: 2px 0px 7px var(--shadows);
+   border-top-left-radius: 0px;
+   border-top-right-radius: 8px;
+}
+
+
 #screens{
    width:auto;
    min-width: auto;
@@ -166,7 +173,6 @@ head {
    position: relative;
    overflow: auto;
    padding:0;
-   padding-left: 0px;
    margin:0;
    display: flex;
 }

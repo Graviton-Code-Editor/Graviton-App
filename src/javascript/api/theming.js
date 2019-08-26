@@ -91,16 +91,14 @@ module.exports = {
         for (i = 0; i < editors.length; i++) {
           if (editors[i].editor != undefined) editors[i].editor.setOption("theme", themeObject["highlight"]); //Update highlither after applying a new theme
         }
-        for (i = 0; i < editor_screens.length; i++) {
-          if (editor_screens[i] != undefined) {
-            if (editor_screens[i].terminal != undefined) {
-              editor_screens[i].terminal.xterm.setOption("theme", {
-                background: themeObject.colors["editor-background-color"],
-                foreground: themeObject.colors["white-black"]
-              });
-            }
-          }
+        if(terminal!=null){
+          terminal.xterm.setOption("theme", {
+            background: themeObject.colors["editor-background-color"],
+            foreground: themeObject.colors["white-black"],
+            selection: themeObject.colors["scroll-color"]
+          });
         }
+        
         return;
       }
     }

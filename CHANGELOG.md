@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200826 - 1 [1.0.3]
+- The english fallback on the getTranslation method wasn't working
+- Terminal improvements
+- Added an option to move the explorer panel to the right side
+
 ### 200825 - 1 [1.0.3]
 - Unique terminal instead of one terminal for screen
 

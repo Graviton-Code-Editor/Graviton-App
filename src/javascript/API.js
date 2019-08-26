@@ -505,7 +505,6 @@ graviton = {
                .toString()
             );
          } catch (err) {
-            console.log(err)
                //Returns an error = system is not compatible, Linux-based will probably throw that error
             new Notification({
                title: "Warn",
@@ -702,6 +701,9 @@ graviton = {
    consoleInfo(message) {
       console.log('%c INFO::', 'color:#0066FF;', message)
    },
+   consoleWarn(message) {
+      console.log('%c WARN::', 'color:#F6B149;', message)
+   },
    getTemplate(name, code) {
       const result = `${code!=undefined?code:""} ${templates[name]}`;
       try {
@@ -880,3 +882,18 @@ const preload = array => {
      document.getElementById(array[i]).remove();
    }
  };
+
+
+ graviton.changeExplorerPosition = (position) => {
+    const content_app =  document.getElementById("content_app");
+   if(position==='right'){
+      content_app.setAttribute("explorerPosition","right");
+      content_app.insertBefore(document.getElementById("editors"),content_app.children[0])
+      content_app.insertBefore(document.getElementById("explorer_app"),content_app.children[3])
+   }else{
+      content_app.setAttribute("explorerPosition","left");
+      content_app.insertBefore(document.getElementById("explorer_app"),content_app.children[0])
+      content_app.insertBefore(document.getElementById("editors"),content_app.children[3])
+   }
+   current_config.explorerPosition= position;
+ }

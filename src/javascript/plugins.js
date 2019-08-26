@@ -96,7 +96,10 @@ function detectPlugins(call) {
     }
     fs.readdir(plugins_folder, (err, paths) => {
       let loaded = 0;
-      if (paths.length == 0) return call != undefined ? call() : "";
+      if (paths.length == 0) {
+        graviton.consoleWarn("No plugins has been detected.")
+        return call != undefined ? call() : "";
+      }
       for (i = 0; loaded < paths.length; i++) {
         const direct = fs.statSync(path.join(plugins_folder, paths[loaded]));
         if (!fs.existsSync(path.join(plugins_folder, paths[loaded], "package.json"))) {

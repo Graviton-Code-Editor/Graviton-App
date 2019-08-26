@@ -7,6 +7,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 -->
 <!DOCTYPE>
+<html>
 
 <head>
    <meta charset="utf-8" />
@@ -32,17 +33,17 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
          graviton.consoleInfo("Booted Graviton without errors.")
       }
    }
-   window.addEventListener("error", function() {
+   window.addEventListener("error", function () {
       if (editor_booted == false && error_showed == false) {
          error_showed = true
          document.getElementById("g_bootanimation").innerHTML += `
-      <div>
-        <p>An error has appeared when booting Graviton.</p>
-        <button class="Button1 red" onclick="FactoryReset()">Factory Reset</button>
-        <button class="Button1" onclick="restartApp()">Reboot</button>
-        <button class="Button1" onclick="DeleteBoot()">Ignore</button>
-         <p class="link" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">See this after updating?</p>
-      </div>`
+         <div>
+         <p>An error has appeared when booting Graviton.</p>
+         <button class="Button1 red" onclick="FactoryReset()">Factory Reset</button>
+         <button class="Button1" onclick="restartApp()">Reboot</button>
+         <button class="Button1" onclick="DeleteBoot()">Ignore</button>
+            <p class="link" onclick="shell.openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/issues')">See this after updating?</p>
+         </div>`
       } else if (editor_booted == true) {
          graviton.throwError(
             "An error has appeared! Check the console on developer tools for more info."
@@ -50,7 +51,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
       }
    })
 </script>
-<html>
+
 <div id="body" windows="0">
    <div id="top_bar_app">
       <img src="src/icons/logo2.svg" />
@@ -74,7 +75,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
          </div>
          <div id="editor_resizer" onmouseout="touchingResizer(false)" onmouseover=" touchingResizer(true)"></div>
          <div id="editors">
-            <div id="screens"></div>
+            <div id="screens">
+               <!-- Screens -->
+            </div>
          </div>
          <context>
             <div id="context" class="menuWrapper"></div>
@@ -90,7 +93,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 <link rel="stylesheet" href="src/css/adapted_cm.css" />
 <link rel="stylesheet" href="src/highlightings/default.css" />
 
-<!-- Graviton Editor -->
+<!-- Graviton Files -->
 <link rel="stylesheet" href="src/css/styles.css" />
 <link rel="stylesheet" href="src/css/menus.css" />
 <link rel="stylesheet" href="src/css/settings.css" />
@@ -105,8 +108,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 <script src="src/javascript/welcome.js"></script>
 <script src="src/javascript/top_bar.js"></script>
 
+<!-- XtermJS -->
 
-<!-- Xterm -->
 <link rel="stylesheet" href="node_modules/xterm/dist/xterm.css" />
 <script src="node_modules/xterm/dist/xterm.js"></script>
 

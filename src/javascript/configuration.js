@@ -30,7 +30,8 @@ let current_config = {
    accentColorPreferences: 'manual',
    blurPreferences: '3',
    bouncePreferences: 'activated',
-   version: undefined
+   version: undefined,
+   explorerPosition: 'left'
 };
 if (!fs.existsSync(logDir)) {
    fs.writeFile(logDir, "[]");
@@ -62,6 +63,7 @@ function loadConfig() {
       });
       loadLanguage(current_config.language);
       updateSettings();
+      graviton.changeExplorerPosition(current_config.explorerPosition)
       screens.add(); //Creates the first screen
       detectPlugins(function() {
          if (current_config["theme"] != undefined) 
@@ -99,6 +101,7 @@ function saveConfig() {
       accentColorPreferences: current_config.accentColorPreferences,
       blurPreferences: current_config.blurPreferences,
       bouncePreferences: current_config.bouncePreferences,
+      explorerPosition:current_config.explorerPosition,
       version: g_version.version,
       build: g_version.date
    };

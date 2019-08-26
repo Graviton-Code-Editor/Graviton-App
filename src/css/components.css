@@ -892,3 +892,52 @@ textarea {
    background: var(--primaryColor);
    color: var(--white-black);
 }
+
+
+.radio {
+   display: block;
+   position: relative;
+   padding-left: 35px;
+   margin-bottom: 12px;
+   cursor: pointer;
+   -webkit-user-select: none;
+   user-select: none;
+ }
+
+ .radio input {
+   position: absolute;
+   opacity: 0;
+   cursor: pointer;
+ }
+ 
+ .radio_dot {
+   position: absolute;
+   top: 0;
+   left: 0;
+   height: 15px;
+   width: 15px;
+   background: var(--widget-color);
+   border-radius: 50px;
+   border:2px solid transparent;
+ }
+ 
+ .radio:hover input {
+   background-color: var(--widget-color);
+ }
+ 
+ .radio input:checked ~ .radio_dot{
+   border:2px solid var(--accentColor);
+ }
+ .radio input:checked  {
+   display: block;
+ }
+ .radio .radio_dot:after {
+    display: none;
+ }
+
+
+ .navbar{
+    padding:5px;
+    user-select: none;
+    -webkit-user-drag: none;
+ }

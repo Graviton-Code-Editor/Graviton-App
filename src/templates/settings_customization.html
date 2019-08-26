@@ -41,4 +41,19 @@
         editor_mode != " zen " ? "activated " : "desactivated "
       }"></gv-switch>
       </div>
+      <h4>${getTranslation("ExplorerPosition")}</h4>
+      <div class="section-1">
+         <br>
+         <label class="radio" onclick="graviton.changeExplorerPosition('left'); saveConfig();"  value="Left" ${current_config.explorerPosition==='left'?"checked":""} >
+            Left
+            <input type="radio" name="explorer_position"  ${current_config.explorerPosition==='left'?"checked":""}>
+            <span class="radio_dot"></span>
+          </label>
+          <label class="radio" onclick="graviton.changeExplorerPosition('right'); saveConfig();"  value="Right">
+            Right
+            <input type="radio" name="explorer_position"  ${current_config.explorerPosition==='right'?"checked":""}>
+            <span class="radio_dot"></span>
+          </label>
+      </div>
+      
 </elastic-container> `

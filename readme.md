@@ -81,6 +81,7 @@ Donating 🎁
 - Paypal: https://www.paypal.me/mkenzo8
 
 ### Cool people:
+- 5€ donation by Rôdeuse 
 - 2€ donation by Alex Mayol
 - BTCs donation by [Machou](http://GitHub.com/Machou)
 - 2€ donation by Cristina Piva

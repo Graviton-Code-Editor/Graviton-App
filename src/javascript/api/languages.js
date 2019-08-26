@@ -35,7 +35,7 @@ module.exports = {
           output = lang.strings[text] != undefined ? lang.strings[text] : text;
         }
       })
-      return text;
+      return output;
     } else {
       return current_config.language.strings[text];
     }
