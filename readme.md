@@ -60,7 +60,7 @@ Authors 👽
 * Marc Espín [Github](https://github.com/marc2332)
 
 ### Main Contributors:
-* MaxTruc1 [Github](https://github.com/Max1Truc)
+* Max1Truc [Github](https://github.com/Max1Truc)
 * David Niederweis [Github](https://github.com/DJN1)
 
 ### Credits:

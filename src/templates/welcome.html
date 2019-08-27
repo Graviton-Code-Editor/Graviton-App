@@ -1,5 +1,5 @@
 `
- <h2 idT="Welcome" class='translate_word window_title'>${ getTranslation("Welcome") }
+<h2 idT="Welcome" class='translate_word window_title'>${ getTranslation("Welcome") }
 </h2>
 <div class="flex">
    <div id="recent_projects" class="horizontal">
@@ -16,7 +16,7 @@
    <div id="notes" class="horizontal">
       <h2 idT="Notes" class='translate_word title2'>${ getTranslation("Notes") }
       </h2>
-      <p> ${getTranslation("Version")}: ${g_version.version} (${ g_version.date }) - ${g_version.state}</p>
+      <p> ${getTranslation("Version")}: ${GravitonInfo.version} (${ GravitonInfo.date }) - ${GravitonInfo.state}</p>
       <p> OS: ${graviton.currentOS().name}</p>
       <p idT="Changelog" class="translate_word link" onclick="graviton.dialogChangelog()">${ getTranslation("Changelog") }
       </p>

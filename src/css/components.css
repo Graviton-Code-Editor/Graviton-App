@@ -384,7 +384,7 @@ input[type="number"]::selection {
 
 /* Explorer elements */
 
-#explorer_app div.directory {
+.explorer div.directory {
    animation: slide_right linear 0.1s;
    color: var(--white-black);
    border-radius: 70px;
@@ -409,13 +409,19 @@ input[type="number"]::selection {
    display: flex;
 }
 
-#explorer_app div.directory:hover {
+.explorer div.directory p {
+   line-height: 3px;
+   margin:auto;
+   font-size: 12px;
+}
+
+.explorer div.directory:hover {
    transition: 0.05s;
    border-radius: 4px;
    background: var(--widget-color);
 }
 
-#explorer_app div.directory:active {
+.explorer div.directory:active {
    transition: 0.05s;
    transform: scale(var(--scalation));
 }
@@ -669,6 +675,7 @@ button.button3:active {
    letter-spacing: 0px;
    text-overflow: ellipsis;
    padding: 2px;
+   margin-bottom: 20px;
 }
 
 

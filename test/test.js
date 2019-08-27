@@ -8,7 +8,7 @@ const electronPath = require('electron') // Require Electron from the binaries i
 const path = require('path')
 const fs = require('fs')
 
-const DataFolderDir = path.join(path.join(__dirname, ".."), ".graviton");
+const DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton')
 
 describe('Graviton opening', function () {
   this.timeout(25000)

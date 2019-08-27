@@ -46,14 +46,15 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 @font-face {
    font-family: editor;
-   src: url(../fonts/Hack-Regular.ttf);
+   src: url(../fonts/FiraCode-Regular.woff2);
 }
 
 html,
 body,
 head {
    font-family: _main_font !important;
-   font-weight: 550;
+   font-weight: 400;
+   font-style: normal;
    margin: 0;
    padding: 0;
    background: var(--primaryColor);
@@ -157,6 +158,8 @@ head {
    background:transparent;
    border-top-left-radius: 8px;
    margin-top: 2px;
+   user-select: none;
+   -webkit-app-region: no-drag;
 }
 
 #content_app[explorerPosition="right"] > #editors{
@@ -177,7 +180,7 @@ head {
    display: flex;
 }
 
-#content_app>#explorer_app {
+.explorer {
    min-width: 15%;
    width: 210px;
    max-width: 70%;
@@ -192,18 +195,18 @@ head {
    direction: ltr;
 }
 
-#content_app>#explorer_app>#g_directories>#g_directory {
+#g_directory {
    margin: 15px;
 }
 
-#content_app>#explorer_app>#g_directories>#g_directory>div:nth-child(1) {
+#g_directory>div:nth-child(1) {
    margin: 0px 15px;
    font-size: 16px;
    white-space: nowrap;
    display: flex;
 }
 
-#content_app>#explorer_app>#g_directories>#g_directory>div:nth-child(1)>p {
+#g_directory>div:nth-child(1)>p {
    margin: 10px 0px;
 }
 
@@ -281,6 +284,8 @@ head {
    background: var(--primaryColor);
    cursor: ew-resize;
    margin: 0 0px;
+   user-select: none;
+   -webkit-app-region: no-drag;
 }
 
 #editors .editor_screen>.g_editors_editors {
@@ -488,7 +493,7 @@ h4 {
 }
 
 .CodeMirror-line>span>span {
-   line-height: 1.5em;
+   line-height: 1.3em;
 }
 
 navbar a {
@@ -525,4 +530,8 @@ navbar a.active:hover {
 .image-container>* {
    position: relative;
    padding: 0px 20px;
+}
+
+.list li{
+   padding:5px;
 }

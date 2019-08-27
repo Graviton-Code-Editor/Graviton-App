@@ -138,10 +138,10 @@ function detectPlugins(call) {
 }
 
 /*
-
-installing a plugin from a local source:
-
-*/
+ *
+ * @desc nstalling a plugin from a local source:
+ *
+ */
 const installFromLocal = function () {
   dialog.showOpenDialog({
     properties: ["openDirectory"]

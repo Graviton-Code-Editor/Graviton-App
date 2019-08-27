@@ -54,14 +54,16 @@ const extensions = {
             }
             const sec_ID = 'sec' + Math.random().toString();
             const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version, semver.parse(plugin.local.version).version) : false;
-            document.getElementById('sec_all').innerHTML += `
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID} name=${_package.name} update=${_new_update}>
-                  ${_new_update?icons["update"]:""}
-                  <h3>${data.name}  </h3>
-                  <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined? ` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
-                </div>
-                `
+            document.getElementById('sec_all').innerHTML += graviton.getTemplate("market_plugin_card",`
+
+              const sec_ID = "${sec_ID}";
+              const _package = ${JSON.stringify(_package)};
+              const _new_update = ${new_update};
+              const plugin = ${JSON.stringify(plugin)};
+              const data = ${JSON.stringify(data)} ;
+
+              `)
+                
           })
           if (plugins_market.length != full_plugins.length) {
             document.getElementById('sec_all').innerHTML += `
@@ -93,14 +95,13 @@ const extensions = {
             const plugin = graviton.getPlugin(_data.name)
             const new_update = plugin.repo != undefined ? semver.gt(semver.parse(plugin.repo.package.version).version, semver.parse(plugin.local.version).version) : false;
             const sec_ID = 'sec' + Math.random().toString();
-            document.getElementById('sec_installed').innerHTML += `
-                <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${plugin.local.name} update=${new_update}>
-                   ${new_update?icons["update"]:""}
-                  <h3>${plugin.local.name}  </h3>
-                  <p>${plugin.local.description} </p>
-                  <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `· ${plugin.repo.git.stargazers_count} ${icons.star}`:""}`:""} </p>
-                </div>
-                `
+            document.getElementById('sec_installed').innerHTML += graviton.getTemplate("market_plugin_card_installed",`
+
+            const sec_ID = "${sec_ID}";
+            const _new_update = ${new_update};
+            const plugin = ${JSON.stringify(plugin)};
+
+            `)
           };
         }
         return
@@ -123,14 +124,17 @@ const extensions = {
               }
               const _new_update = plugin.local != undefined ? semver.gt(semver.parse(_package.version).version, semver.parse(plugin.local.version).version) : false;
               const sec_ID = 'sec' + Math.random().toString();
-              document.getElementById('sec_themes').innerHTML += `
-              <div onclick=extensions.openSubExtensions(this) class=extension_div id=${sec_ID}  name=${_package.name}  update=${new_update}>
-                    ${_new_update?icons["update"]:""}
-                  <h3>${data.name}  </h3>
-                  <p>${data.description} </p>
-                  <p class=installed>${plugin.local!=undefined?` ${getTranslation("Installed")} · v${plugin.local.version} ·`:""}  ${data.stargazers_count} ${icons.star} </p>
-              </div>
-              `
+              document.getElementById('sec_themes').innerHTML += graviton.getTemplate("market_plugin_card",`
+
+              const sec_ID = "${sec_ID}";
+              const _package = ${JSON.stringify(_package)};
+              const _new_update = ${new_update};
+              const plugin = ${JSON.stringify(plugin)};
+              const data = ${JSON.stringify(data)} ;
+
+              `)
+              
+              
             }
           }
           if (document.getElementById("loading_exts3") != undefined) {
@@ -328,7 +332,6 @@ const extensions = {
           content: name + getTranslation("ExtInstalled"),
         });
       }
-
       if (plugin.repo.package["dependencies"] != undefined) {
         plugins.installDependencies(plugin.repo.package);
       } else {

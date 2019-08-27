@@ -6,6 +6,7 @@
 - You can now create folders and files & remove them from the editor
 - Refreshed default themes
 - You can change the editors font-size by pressing Ctrl and scrolling or pressing Up/Down
+- You can now move the Project explorer to the right side
 
 ## New
 

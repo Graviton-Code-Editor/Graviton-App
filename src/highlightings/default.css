@@ -44,9 +44,8 @@
 .cm-s-default .cm-builtin {color: rgb(19, 193, 247);}
 .cm-s-default .cm-link {color: rgb(19, 193, 247);}
 .cm-s-default span.cm-variable-3, .cm-s-default span.cm-type { color: #ffb86c; }
-
 .cm-s-default .CodeMirror-activeline-background { background: rgba(255,255,255,0.1); }
-.cm-s-default .CodeMirror-matchingbracket { text-decoration: underline; color: white !important; }
+.cm-s-default .CodeMirror-matchingbracket { outline:1px solid rgb(241, 187, 37) !important; color: inherit !important; }
 
 .highlight {
   color: orange;
