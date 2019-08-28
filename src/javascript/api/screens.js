@@ -26,7 +26,7 @@ module.exports = {
     }
     new_screen_editor.ondrop = event => {
       document.getElementById(screen.id).classList.remove('dragging')
-      if (event.target.classList !== 'g_editors_editors') return
+      if (!event.target.classList.contains('g_editors_editors')) return
       event.preventDefault()
       const files = event.dataTransfer.files
       for (let file of files) {
