@@ -42,7 +42,7 @@ const os = require("os"),
    semver = require("semver");
 
 require(path.join(__dirname, 'src', 'javascript', 'api', 'codemirror-langs.js')).langs() //Load CodeMirror files
-const { elasticContainerComponent , elasticContainer } = require(path.join(__dirname, 'src', 'javascript', 'api', 'elastic_container.js'))
+const { elasticContainerComponent, elasticContainer } = require(path.join(__dirname, 'src', 'javascript', 'api', 'elastic_container.js'))
 graviton.loadEditor = require(path.join(__dirname, 'src', 'javascript', 'api', 'editors.js')).loadEditor
 window.customElements.define("elastic-container", elasticContainerComponent);
 
@@ -135,9 +135,9 @@ document.addEventListener(
       if (mouseClicked && touchingResizerValue) {
          const explorer = document.getElementById("explorer_app");
          const content_app = document.getElementById("content_app");
-         if(current_config.explorerPosition==='left'){
+         if (current_config.explorerPosition === 'left') {
             explorer.style = `width: ${event.clientX - 3}px`;
-         }else{
+         } else {
             explorer.style = `width: ${   content_app.clientWidth - event.clientX }px`;
          }
          for (i = 0; i < editors.length; i++) {
@@ -180,10 +180,10 @@ window.onload = function() {
                            JSON.parse(data);
                         } catch {
                            path_count--;
-                            graviton.consoleWarn("Couldn't parse the language: "+dir)
-                           _err_parsing = true;  
+                           graviton.consoleWarn("Couldn't parse the language: " + dir)
+                           _err_parsing = true;
                         }
-                        if(!_err_parsing){
+                        if (!_err_parsing) {
                            languages.push(JSON.parse(data)); // Push the language
                         }
                         if (languages.length === path_count) {
@@ -204,7 +204,7 @@ graviton.setTitle(`v${GravitonInfo.version}`); //Initial title
 
 
 
-   
+
 const appendBinds = () => {
    Mousetrap.bind("mod+s", function() {
       saveFile();
@@ -219,7 +219,7 @@ const appendBinds = () => {
       graviton.toggleZenMode();
    });
    Mousetrap.bind("mod+t", function() {
-      if (terminal!= null) {
+      if (terminal != null) {
          commanders.show(terminal.id);
          return;
       }
@@ -404,7 +404,7 @@ function loadDirs(dir, app_id, f_t, callback) {
           paths[i]
         }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
           <div parent=${parent_id}  ID="${parent_id +"_div"}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="loadDirs('${_long_path}','${parent_id}',false)">
-            <img file=${paths[i]} class="explorer_file_icon" parent=${parent_id} ID="${parent_id+ "_img"}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
+            <img draggable=false file=${paths[i]} class="explorer_file_icon" parent=${parent_id} ID="${parent_id+ "_img"}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
               paths[i],
               "close"
             )}">
@@ -744,4 +744,3 @@ function checkVariables(text) {
   }
   return _variables;
 }
-

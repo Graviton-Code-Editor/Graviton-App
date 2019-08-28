@@ -10,6 +10,7 @@
 
 ## New
 
+- Icon pack in themes
 - You can now load files by dragging and dropping to empty screens 
 - Restructured the menus on the top bar
 - Added some emojies across the app

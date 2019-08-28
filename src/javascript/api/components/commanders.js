@@ -41,16 +41,15 @@ module.exports = {
       new commander({
         id: 'xterm' + randomID,
         content: `
-               <navbar class=navbar>
+               <navbar class='terminal_navbar' >
                   <span class="icon unselectable" onclick=commanders.closeTerminal()>${icons.close}</span>
                </navbar>
-               <br><br>  
+               <div class="terminal_container" id='container${randomID}'></div>
                `
       },
       function (err) {
         if (!err) {
-          const shell =
-                     process.env[_os.platform() === 'win32' ? 'COMSPEC' : 'SHELL']
+          const shell = process.env[_os.platform() === 'win32' ? 'COMSPEC' : 'SHELL']
           const ptyProcess = pty.spawn(shell, [], {
             cwd: object == undefined
               ? graviton.getCurrentDirectory() : object.path,
@@ -69,7 +68,7 @@ module.exports = {
             fontFamily: 'Consolas'
           })
           xterm.open(
-            document.getElementById('xterm' + randomID + '_commander')
+            document.getElementById(`container${randomID}`)
           )
           xterm.on('data', data => {
             ptyProcess.write(data)

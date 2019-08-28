@@ -247,7 +247,8 @@ module.exports = {
     }
   },
   closeTab: function (tab_id, fromWarn) {
-    const working_tab = document.getElementById(tab_id)
+    const working_tab = document.getElementById(tab_id);
+    const tab_screen = working_tab.getAttribute("screen");
     if (working_tab.getAttribute('file_status') == 'saved' || fromWarn) {
       for (i = 0; i < tabs.length; i++) {
         const tab = tabs[i]
@@ -283,6 +284,19 @@ module.exports = {
             document
               .getElementById(working_tab.getAttribute('screen'))
               .children[2].innerHTML = ''
+              const opened_tabs = Array.prototype.slice.call(document.getElementsByClassName("selected")).filter((tab) => tab.getAttribute("elementType")=="tab")
+              const screen_index = editor_screens.filter((screen)=>{
+                screen.id == tab_screen;
+              })[0]
+              if(screen_index==editor_screens.length){
+                new_selected_tab = opened_tabs.filter((tab)=>{
+                  tab.getAttribute("screen")== editor_screens[screen_index-1]
+                })
+              }else if(editor_screens.length < screen_index){
+                new_selected_tab = opened_tabs.filter((tab)=>{
+                  tab.getAttribute("screen")== editor_screens[screen_index+1]
+                })
+              }
           } else if (i === filtered_tabs.length) {
             if (filtered_tabs.filter((tab) => filtered_tabs[Number(filtered_tabs.length) - 1])[0].getAttribute('screen') == working_tab.getAttribute('screen')) {
               new_selected_tab = filtered_tabs[Number(filtered_tabs.length) - 1]

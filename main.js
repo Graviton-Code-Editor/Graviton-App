@@ -48,6 +48,5 @@ app.on('window-all-closed', () => {
 })
 app.on('before-quit', () => {
   app.removeAllListeners('close')
-  app.close()
 })
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true')

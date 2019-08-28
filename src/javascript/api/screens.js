@@ -14,7 +14,6 @@ module.exports = {
       editor_screens.forEach(current => {
         if (current.id === screen.id) {
           current_screen = screen
-          console.log(event)
           document.getElementById(screen.id).classList.add('dragging')
         }
       })
@@ -29,9 +28,7 @@ module.exports = {
       document.getElementById(screen.id).classList.remove('dragging')
       if (event.target.classList !== 'g_editors_editors') return
       event.preventDefault()
-      console.log(event.target)
       const files = event.dataTransfer.files
-      console.log(event)
       for (let file of files) {
         current_screen.id = screen.id
         editor_screens.forEach(current => {
@@ -133,9 +130,9 @@ module.exports = {
                   .getElementById(editor_screens[0].id)
                   .children[1].children[0].children[1].remove()
               }
-              console.log(document
-                .getElementById(editor_screens[0].id)
-                .children[2])
+                if(tabs.length==0){
+                  editingTab = null;
+                }        
             }
             return true
           } else {

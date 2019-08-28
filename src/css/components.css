@@ -751,13 +751,33 @@ button.button3:active {
    box-sizing: border-box;
    max-width: 100%;
    max-height: 40%;
-   min-height: 40%;
+   margin:0;
+   flex:1;
+   display: flex;
+   flex-direction: column;
+}
+.commander > div{
    flex:1;
 }
+.terminal_navbar{
+   height:20px;
+   padding:8px;
+   display: flex;
+}
 
-.xterm * {
+.terminal_container{
    overflow: auto;
-   z-index: auto !important;
+   position: relative;
+   width: auto;
+   background: var(--editor-background-color);
+   box-sizing: border-box;
+   max-width: 100%;
+   padding:0;
+   min-height: auto;
+   margin:0;
+}
+.xterm  *{
+   overflow: auto !important;
 }
 
 .static {
