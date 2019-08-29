@@ -127,7 +127,7 @@ function detectPlugins(call) {
             loaded++;
 
             if (loaded == paths.length) {
-              graviton.consoleInfo("All plugins has been loaded.")
+              graviton.consoleInfo("All plugins have been loaded.")
               return call != undefined ? call() : "";
             }
           });
@@ -162,3 +162,105 @@ const installFromLocal = function () {
     });
   });
 };
+
+const plugins = {
+  install: function (config, call) {
+    /*
+     * @desc Load a pluign
+     * @param {object} config - package.json of the plugin
+     * @param {function} call - Function's callback
+     * @return call - Function's callback
+     */
+    if (config.colors == undefined) {
+      plugins_list.push(config);
+      if (config["main"] != undefined) {
+        if (graviton.isProduction()) {
+          try {
+            require(path.join(plugins_folder, config["name"], config["main"]));
+          } catch {
+            console.warn("Cannot install succesfully the plugin >" + `%c ${config.name}` + " %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues", "color:red; font-weight:bold;", "color:normal; font-weight:normal;") //Throw warn in case a plugin has an error
+            return call != undefined ? call() : "";
+          }
+        } else {
+          require(path.join(plugins_folder, config["name"], config["main"]));
+        }
+        if (config["css"] == undefined) {
+          return call != undefined ? call() : "";
+        }
+      }
+      if (config["css"] != undefined) {
+        if (config.type == "custom_theme") {
+          themes.push(config);
+          if (current_config.theme != config.name) return call != undefined ? call() : "";
+        }
+        for (i = 0; i < config["css"].length; i++) {
+          const link = document.createElement("link");
+          link.setAttribute("rel", "stylesheet");
+          link.classList = config["name"] + "_css";
+          link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][i])),
+            document.body.appendChild(link);
+          if (i == config.css.length - 1) {
+            return call != undefined ? call() : "";
+          }
+        }
+        return call != undefined ? call() : "";
+      }
+    } else {
+      themes.push(config); //Push the theme to the array
+      plugins_list.push(config);
+      const newLink = document.createElement("link");
+      newLink.setAttribute("rel", "stylesheet");
+      if (config.type != "custom_theme" || config.highlight == "default" || config.highlight == "LightUI") {
+        newLink.setAttribute("href", path.join("src", "highlightings", config["highlight"] + ".css")); //Link new themes 
+      } else {
+        newLink.setAttribute("href", path.join(plugins_folder, config["name"], config["highlight"] + ".css")); //Link new themes 
+      }
+      document.body.appendChild(newLink);
+      return call != undefined ? call() : "";
+    }
+  },
+  installDependencies: function (config) {
+    /*
+     * @desc Install NodeJS dependencies of the plugin
+     * @param {object} config - Dependencies object of the plugin
+     */
+    const npm = require('npm')
+    npm.load({
+      prefix: path.join(plugins_folder, config["name"])
+    }, function (er) {
+      if (er) return er;
+      for (const depen in config["dependencies"]) {
+        npm.commands.install([depen], function (er, data) {
+          if (er) return er;
+          plugins.install(config)
+        })
+      }
+    })
+  },
+  disableCSS: function (config) {
+    /*
+     * @desc Disable plugin's CSS
+     * @param {object} config - Package.json's of the plugin
+     */
+    if (config.css == undefined || config.css.length == 0) return;
+    const csss = document.getElementsByClassName(config.name + "_css");
+    for (b = 0; b < csss.length; b++) {
+      csss[b].remove();
+      b--;
+    }
+  },
+  enableCSS: function (config) {
+    /*
+     * @desc Enable plugin's CSS
+     * @param {object} config - Package.json's of the plugin
+     */
+    if (config.css == undefined || config.css.length == 0) return;
+    for (b = 0; b < config.css.length; b++) {
+      const link = document.createElement("link");
+      link.setAttribute("rel", "stylesheet");
+      link.classList = config["name"] + "_css";
+      link.setAttribute("href", path.join(plugins_folder, config["name"], config["css"][b])),
+        document.body.appendChild(link);
+    }
+  }
+}

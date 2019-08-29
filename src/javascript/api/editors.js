@@ -95,6 +95,7 @@ module.exports = {
                           }
                        }
                     }
+                    graviton.closeDropmenus()
                     graviton.focusScreen(a.options.screen)
                  });
                  graviton.refreshStatusBarLinesAndChars(screen)

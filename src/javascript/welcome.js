@@ -121,6 +121,3 @@ const Setup = {
     }
   }
 }
-
-
-const jaja = ( [ boolean , string ] ) => boolean ? string : "well tried";

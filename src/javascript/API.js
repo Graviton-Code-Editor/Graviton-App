@@ -892,3 +892,46 @@ graviton.changeExplorerPosition = (position) => {
   }
   current_config.explorerPosition = position
 }
+
+graviton.setEditorFontSize = function (new_size) {
+  current_config.fontSizeEditor = `${new_size}`
+  if (Number(current_config.fontSizeEditor) < 5) {
+    current_config.fontSizeEditor = '5'
+  }
+  document.documentElement.style.setProperty(
+    '--editor-font-size',
+    `${current_config.fontSizeEditor}px`
+  ) // Update settings from window
+  for (i = 0; i < editors.length; i++) {
+    if (editors[i].editor != undefined) editors[i].editor.refresh()
+  }
+  saveConfig()
+}
+
+graviton.loadControlButtons = () => {
+  if (graviton.currentOS().codename == 'win32') {
+    document.getElementById('controls').innerHTML = graviton.getTemplate('control_buttons')
+    g_window.on('maximize', (e, cmd) => {
+      const button = document.getElementById('maximize')
+      button.setAttribute('onclick', 'g_window.unmaximize();')
+    })
+    g_window.on('unmaximize', (e, cmd) => {
+      const button = document.getElementById('maximize')
+      button.setAttribute('onclick', 'g_window.maximize();')
+    })
+  } else {
+    document.getElementById('controls').innerHTML = ' '
+    document.getElementById('controls').setAttribute('os', 'not_windows')
+  }
+}
+
+graviton.closeDropmenus = function () {
+  const dropdowns = document.getElementsByClassName('dropdown-content')
+  for (i = 0; i < dropdowns.length; i++) {
+    const openDropdown = dropdowns[i]
+    if (openDropdown.classList.contains('show')) {
+      openDropdown.classList.replace('show', 'hide')
+      anyDropON = null
+    }
+  }
+}

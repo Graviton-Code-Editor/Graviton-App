@@ -446,12 +446,12 @@ button.button1 {
    border-radius: var(--buttons-roundness);
    width: auto;
    margin: 2px 3px;
-   padding: 10px 30px;
+   padding: 7px 20px;
    background: var(--primaryColor);
    color: var(--white-black);
    box-sizing: border-box;
    opacity: 1;
-   border: 0;
+   border: 2px solid transparent;
    user-select: auto;
    -webkit-app-region: auto;
 }
@@ -477,10 +477,9 @@ button.button1.disabled {
 }
 
 button.button1:not(.fixed-scale):active {
-   transition: 0.03s;
-   transform: scale(var(--scalation));
+   transition: 0.1s;
+   border:2px solid var(--accentColor);
    box-sizing: border-box;
-   opacity: 0.7;
 }
 
 button.button1 svg * {
@@ -517,7 +516,7 @@ button.button1-round svg * {
    margin: 3px;
    margin-bottom: 12px;
    padding: 10px;
-   padding-top: 7px;
+   padding-top: 5px;
    background: transparent;
    height: auto;
 }
@@ -532,8 +531,8 @@ button.button1-round svg * {
    width: auto;
    min-height: auto;
    border-radius: 8px;
-   transform: scale(1);
    overflow: auto;
+   border:2px solid transparent;
 }
 
 .section-2:hover {
@@ -541,7 +540,7 @@ button.button1-round svg * {
 }
 
 .section-2:active {
-   transform: scale(var(--scalation));
+   border:2px solid var(--accentColor);
 }
 
 .section-3 {
@@ -699,10 +698,6 @@ button.button3:active {
    padding: 5px;
 }
 
-.body_window p {
-   font-size: 15px;
-}
-
 .body_window .welcomeButtons {
    position: absolute;
    bottom: 15px;
@@ -776,8 +771,9 @@ button.button3:active {
    min-height: auto;
    margin:0;
 }
-.xterm  *{
+.xterm >  *{
    overflow: auto !important;
+   z-index: 0 !important;
 }
 
 .static {
@@ -788,7 +784,6 @@ button.button3:active {
 }
 
 .extension_div {
-   transition: 0.2s;
    background: transparent;
    border: 2px solid var(--primaryColor);
    max-width: 210px;
@@ -826,12 +821,11 @@ button.button3:active {
 
 .extension_div:hover {
    cursor: pointer;
-   transition: 0.2s;
+
    box-shadow: 0px 3px 6px var(--shadows);
 }
 
 .extension_div:active {
-   transition: 0.05s;
    transform: scale(var(--scalation));
 }
 

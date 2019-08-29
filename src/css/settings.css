@@ -50,11 +50,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    cursor: pointer;
 }
 
-.navbar button:active {
-   transition: 0.05s;
-   transform: scale(var(--scalation));
-}
-
 .navbar button.active {
    cursor: pointer;
    transition: 0.05s;
@@ -89,7 +84,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 .theme_div {
-   transition: 0.05s;
    border-radius: 7px;
    padding: 13px;
    margin: 8px 4px;
@@ -106,19 +100,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 .theme_div:not(.active):hover {
-   transition: 0.05s;
    background: var(--widget-color);
    cursor: pointer;
 }
 
 .theme_div.active:hover {
-   transition: 0.05s;
    background: var(--accentDarkColor);
    cursor: pointer;
 }
 
 .theme_div:active {
-   transition: 0.05s;
    transform: scale(var(--scalation));
 }
 

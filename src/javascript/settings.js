@@ -81,7 +81,6 @@ const Settings = {
             `
           }
         }
-
         document.getElementById('navB1').classList.add('active')
         break
       case 'languages':

@@ -66,13 +66,14 @@
    transform: scale(1);
    white-space: nowrap;
    display: inline-block;
-   border: 0;
+   border: none;
 }
 
 .dialog_body .buttons>button:hover {
    transition: 0.1s;
    cursor: pointer;
    background: var(--widget-color);
+   
 }
 
 .dialog_body .buttons>button.important {
@@ -82,9 +83,4 @@
 
 .dialog_body .buttons>button.important:hover {
    background: var(--accentDarkColor);
-}
-
-.dialog_body .buttons>button:active {
-   transition: 0.06s;
-   transform: scale(0.98);
 }

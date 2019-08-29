@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190829 - 1 [1.0.3]
+- Some improvements
+
 ### 190828 - 1 [1.0.3]
 - Improved terminal
 - Fixed some bugs when closing screens

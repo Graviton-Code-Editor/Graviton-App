@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-   date: "190827",
+   date: "190829",
    version: "1.1.0",
    state: "Beta"
 };
@@ -97,7 +97,8 @@ let current_screen,
    languages = [],
    dictionary = autocomplete,
    Mousetrap = require('mousetrap'),
-   terminal = null;
+   terminal = null,
+   workspaces = [];
 
 let templates = {};
 
@@ -189,7 +190,7 @@ window.onload = function() {
                         if (languages.length === path_count) {
                            graviton.loadControlButtons();
                            loadConfig();
-                           graviton.consoleInfo("Templates has been loaded.")
+                           graviton.consoleInfo("All templates have been loaded.")
                         }
                      });
                   });
@@ -356,6 +357,7 @@ function loadDirs(dir, app_id, f_t, callback) {
       }
    }
    if (first_time) {
+      workspaces[0] = FirstFolder;
       graviton.setTitle(FirstFolder);
       if (document.getElementById("openFolder") != null)
          document.getElementById("openFolder").remove();
@@ -380,7 +382,7 @@ function loadDirs(dir, app_id, f_t, callback) {
       working_folder = document.getElementById(appender_id).children[1];
    }
    const paddingListDir =
-      Number(document.getElementById(appender_id).getAttribute("myPadding")) + 7; // Add padding
+      Number(document.getElementById(appender_id).getAttribute("myPadding")) + 10; // Add padding
    fs.readdir(dir, (err, paths) => {
             if (paths == undefined || err) {
                graviton.throwError(
