@@ -95,6 +95,7 @@ let context_menu_list_text = {
     document.execCommand('paste')
   }
 }
+
 const context_menu_list_tabs = {
   Close: function () {
     closeTab(

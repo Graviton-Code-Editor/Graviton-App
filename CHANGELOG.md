@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190830 - 1 [1.0.3]
+- Accent color switch was always off
+
 ### 190829 - 1 [1.0.3]
 - Some improvements
 

@@ -41,7 +41,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 @font-face {
    font-family: _main_font;
-   src: url(../fonts/Inter-Regular.woff2) format("woff"), url(../fonts/Inter-Bold.woff2) format("woff");
+   src: url(../fonts/Inter-Regular.woff2) format("woff2"),url(../fonts/Inter-Bold.woff2) format("woff2");
 }
 
 @font-face {
@@ -492,7 +492,7 @@ h4 {
    margin: 0;
 }
 
-.CodeMirror-line>span>span {
+.editor_screen .CodeMirror-line>span>span {
    line-height: 1.3em;
 }
 

@@ -9,9 +9,9 @@
       ` }else{ return ""; } })() }
       <p>${getTranslation("Themes.Text")}</p>
       <gv-switch onclick="graviton.useSystemAccent(); saveConfig();" class="${
-        current_config.accentColorPreferences == " system "
-          ? "activated "
-          : "desactivated "
+        current_config.accentColorPreferences == 'system'
+          ? 'activated'
+          : 'desactivated'
       }"></gv-switch>
    </div>
    <h>${getTranslation("ZoomSize")}</h4>

@@ -272,11 +272,11 @@ const extensions = {
     const ext_win = new Window({
       id: 'sec' + data.getAttribute("name"),
       content: graviton.getTemplate("market_plugin", `
-            const name = '${data.getAttribute("name")}';
-            const update = '${data.getAttribute("update")}';
-            const plugin = ${JSON.stringify(plugin)};
-          `)
-    });
+        const name = '${data.getAttribute("name")}';
+        const update = '${data.getAttribute("update")}';
+        const plugin = ${JSON.stringify(plugin)};
+      `)
+});
     ext_win.launch();
     const bottom_section = document.getElementById(data.getAttribute('name') + '_div2');
     if (bottom_section != null) {

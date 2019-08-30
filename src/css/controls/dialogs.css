@@ -32,9 +32,11 @@
       transform: translate3d(0, 0, 0) translate(-50%, -50%);
    }
 }
-.dialog_body > h3 {
-   margin: 5px 0px 10px 0px ;
+
+.dialog_body>h3 {
+   margin: 5px 0px 10px 0px;
 }
+
 .dialog_body>div:not(.buttons) {
    max-height: 10%;
    position: relative;
@@ -73,7 +75,6 @@
    transition: 0.1s;
    cursor: pointer;
    background: var(--widget-color);
-   
 }
 
 .dialog_body .buttons>button.important {
