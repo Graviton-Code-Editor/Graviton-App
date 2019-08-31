@@ -34,7 +34,6 @@ module.exports = {
           function () {
             if (anyDropON != null &&
               anyDropON != this.getAttribute('g_id') + '_dropbtn') {
-              console.log(`${this.getAttribute('g_id')}_dropbtn`)
               interact_dropmenu(`${this.getAttribute('g_id')}_dropbtn`)
               this.focus()
             }

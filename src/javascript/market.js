@@ -201,13 +201,11 @@ const extensions = {
     const client = github.client()
     const request = require("request");
     const me = this;
-
     if (plugins_market[start] == undefined) {
       if (document.getElementById("load_more_plugins") != undefined) document.getElementById("load_more_plugins").remove();
       return;
     }
     me.extensions = plugins_market.slice(start, start + 5);
-    console.log(me.extensions)
     current_plugins = start + me.extensions.length
     for (i = 0; i < me.extensions.length; i++) {
       const this_i = i;

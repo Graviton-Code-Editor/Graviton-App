@@ -12,6 +12,8 @@
 
 ![example screenshot](example.png)
 
+Changes on this source may not be released as an official build yet.
+
 Graviton is a cross-platform editor with a minimalist looking. Somethings about it:
 
 - Themes

@@ -85,7 +85,7 @@ const Setup = {
           languageDiv.setAttribute('class', 'language_div')
           languageDiv.setAttribute(
             'onclick',
-            "loadLanguage('" + languages[i].name + "'); selectLang(this);"
+            `loadLanguage('${languages[i].name}'); selectLang(this);`
           )
           languageDiv.innerText = languages[i].name
           if (languages[i].name === current_config.language.name) {
