@@ -147,6 +147,7 @@
     "SystemAccentColor.Errror1":"Dieses Feature ist auf ihrem System nich verfügbar.",
     "SystemAccentColor.Error2":"Möglicherweise funktioniert die Systemakzentfarbe mit ihrer Theme nicht gut.",
     "TelegramChannel":"Telegram Kanal",
-    "Settings-Advanced-Developer-Tools-text2":"Den Konfiguration's Ordner Öffnen"  
+    "Settings-Advanced-Developer-Tools-text2":"Den Konfiguration's Ordner Öffnen",
+    "ExplorerPosition":"Position des Explorers"
   }
 }
