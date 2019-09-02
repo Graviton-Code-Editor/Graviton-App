@@ -23,10 +23,10 @@
    </div>
 </div>
 <div class='welcomeButtons'>
-   <button onclick='openFolder(); welcome_window.close();' id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${
+   <button onclick="openFolder(); closeWindow('welcome_window');" id='open_folder_welcome' class=" button1 translate_word" idT="OpenFolder">${
       getTranslation("OpenFolder")
     }</button>
-   <button onclick='welcome_window.close();' id='skip_welcome' class=" button1 translate_word" idT="Skip">${
+   <button onclick="closeWindow('welcome_window')" id='skip_welcome' class=" button1 translate_word" idT="Skip">${
       getTranslation("Skip")
     }</button>
 </div>`

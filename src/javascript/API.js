@@ -373,6 +373,24 @@ graviton = {
       })
     })
   },
+  factoryResetDialog: function () {
+    new Dialog({
+      id: 'factory_reset',
+      title: getTranslation('FactoryReset'),
+      content: getTranslation('FactoryReset-dialog-message'),
+      buttons: {
+        [getTranslation('Decline')]: {},
+        [`${getTranslation('Yes')} , ${
+          getTranslation('Continue')
+        }`]: {
+          click: () => {
+            FactoryReset()
+          },
+          important: true
+        }
+      }
+    })
+  },
   removeScreen: function () {
     let content_editors = ''
     for (i = 0; i < editor_screens.length; i++) {

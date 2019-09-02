@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-   date: "190831",
+   date: "190802",
    version: "1.1.0",
    state: "Beta"
 };
@@ -59,6 +59,17 @@ const screens = require(path.join(__dirname, 'src', 'javascript', 'api', 'screen
 const updater = require(path.join(__dirname, 'src', 'javascript', 'api', 'updater.js'));
 graviton.setTheme = require(path.join(__dirname, "src", "javascript", "api", "theming.js")).setTheme;
 
+
+const Settings = require(path.join(__dirname, 'src', 'javascript', 'windows', 'settings.js')).Settings;
+const Welcome = require(path.join(__dirname, 'src', 'javascript', 'windows', 'welcome.js')).Welcome;
+const Setup = require(path.join(__dirname, 'src', 'javascript', 'windows', 'setup.js')).Setup;
+const Market = require(path.join(__dirname, 'src', 'javascript', 'windows', 'market.js')).Market;
+
+const Plugins = require(path.join(__dirname, 'src', 'javascript', 'api', 'plugins.js')).Plugins;
+const Menus = require(path.join(__dirname, 'src', 'javascript', 'api', 'menus.js')).Menus;
+
+window.customElements.define('gv-switch',require(path.join(__dirname, 'src', 'javascript', 'api', 'switch.js')).Switch)
+
 let current_screen,
    dir_path,
    i,
@@ -98,9 +109,23 @@ let current_screen,
    dictionary = autocomplete,
    Mousetrap = require('mousetrap'),
    terminal = null,
-   workspaces = [];
+   workspaces = [],
+   plugins_market = [],
+   current_plugins = 0;
 
 let templates = {};
+
+let plugins_list = [],
+    plugins_dbs = [];
+
+let anyDropON = null;
+
+let full_plugins = [];
+
+const default_plugins = [
+  "Graviton-Code-Editor/Dark",
+  "Graviton-Code-Editor/Arctic"
+]; //Plugins which are installed in the setup process
 
 if (graviton.isProduction()) {
    DataFolderDir = path.join(getAppDataPath(), ".graviton");
@@ -202,9 +227,6 @@ window.onload = function() {
 }
 
 graviton.setTitle(`v${GravitonInfo.version}`); //Initial title
-
-
-
 
 const appendBinds = () => {
    Mousetrap.bind("mod+s", function() {
@@ -654,19 +676,6 @@ const registerNewProject = function (dir) {
   }
 };
 
-const HTML_template = `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>New Project</title>
-    <meta name="description" content="Graviton Project">
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
-</html>
-`;
 const createNewProject = function (template) {
   dialog.showOpenDialog({
     properties: ["openDirectory"]
@@ -681,7 +690,7 @@ const createNewProject = function (template) {
           fs.mkdirSync(g_project_dir);
           fs.writeFile(
             path.join(g_project_dir, "index.html"),
-            HTML_template,
+            graviton.getTemplate('html_project'),
             err => {
               if (err) {
                 return err;
@@ -694,18 +703,6 @@ const createNewProject = function (template) {
     }
   });
 };
-const NewProject = () => {
-  const new_projects_window = new Window({
-    id: "new_projects_window",
-    content: `
-      <h2 class="window_title">${getTranslation("Templates")}</h2>
-      <div onclick="createNewProject('html'); closeWindow('new_projects_window');" class="section-2">
-        <p>HTML</p>
-      </div>`
-  });
-  new_projects_window.launch();
-};
-
 const touchingResizer = type => {
   if (type == false) {
     if (!mouseClicked) {
@@ -746,3 +743,71 @@ function checkVariables(text) {
   }
   return _variables;
 }
+
+const installCli = function () {
+   const npm = require('npm')
+   npm.load({
+     global: true
+   }, function (er) {
+     if (er) return er;
+     npm.commands.install(['graviton-cli'], function (er, data) {
+       if (er) return er;
+       console.log("Graviton CLI has been installed!")
+     })
+   })
+ }
+
+ window.onclick = function(event) {
+   if (
+     !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
+   ) {
+     graviton.closeDropmenus();
+   }
+   if (!event.target.matches(".option")) {
+     document.getElementById("context").parentElement.style = "display:none";
+   }
+   if (!event.target.matches("#context_menu")) {
+     if (document.getElementById("context_menu") != undefined) {
+       document.getElementById("context_menu").remove();
+     }
+   }
+ };
+ graviton.refreshCustomization =  () => {
+   document.documentElement.style.setProperty(
+     '--editor-font-size',
+     `${current_config.fontSizeEditor}px`
+   ) // Update settings from start
+   webFrame.setZoomFactor(current_config.appZoom / 25)
+   if (current_config.blurPreferences != 0) {
+     document.documentElement.style.setProperty(
+       '--blur',
+       `${current_config.blurPreferences}px`
+     )
+   } else {
+     document.documentElement.style.setProperty('--blur', `none`)
+   }
+ }
+ 
+function selectLang (lang) {
+   const languages_divs = document.getElementsByClassName('language_div')
+   for (i = 0; i < languages_divs.length; i++) {
+     languages_divs[i].classList.remove('active')
+   }
+   lang.classList.add('active')
+ }
+ 
+ function selectTheme (from, theme) {
+   let themes_divs
+   switch (from) {
+     case '1':
+       themes_divs = document.getElementsByClassName('theme_div')
+       break
+     case '2':
+       themes_divs = document.getElementsByClassName('theme_div2')
+       break
+   }
+   for (i = 0; i < themes_divs.length; i++) {
+     themes_divs[i].classList.remove('active')
+   }
+   theme.classList.add('active')
+ }

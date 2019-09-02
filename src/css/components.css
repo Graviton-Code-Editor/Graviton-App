@@ -793,7 +793,7 @@ button.button3:active {
    position: relative;
    padding: 15px;
    border-radius: 8px;
-   margin: 15px;
+   margin: 13px;
    transform: scale(1);
    min-height: 110px;
    height: auto;

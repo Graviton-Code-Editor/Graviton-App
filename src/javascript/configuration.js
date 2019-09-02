@@ -41,16 +41,17 @@ if (!fs.existsSync(logDir)) {
 
 function loadConfig() {
    // Loads the configuration from the config.json for the first time
-   if (!fs.existsSync(configDir)) {
+   if (!fs.existsSync(configDir) ) {
       fs.writeFile(configDir, JSON.stringify(current_config)) // Save the config
-      updateSettings()
-      loadLanguage(current_config.language)
+      loadLanguage(current_config.language)  
+      graviton.refreshCustomization()
       screens.add() // Creates the first screen
-      detectPlugins(function() {
+      Menus.loadDefaults();
+      Plugins.detect(function() {
          if (!current_config.justInstalled) {
-            openWelcome()
+            Welcome.open()   
          } else {
-            Setup.open()
+            Setup.open() 
          }
          appendBinds() // Creates the general key binds
       })
@@ -60,13 +61,14 @@ function loadConfig() {
          if (local_config[key] != undefined && current_config[key] != undefined) { current_config[key] = local_config[key] } // Will only change the extisting parameters
       })
       loadLanguage(current_config.language)
-      updateSettings()
+      graviton.refreshCustomization()
       graviton.changeExplorerPosition(current_config.explorerPosition)
+      Menus.loadDefaults();
       screens.add() // Creates the first screen
-      detectPlugins(function() {
+      Plugins.detect(function() {
          if (current_config['theme'] != undefined) { graviton.setTheme(current_config['theme']) }
          if (!current_config.justInstalled) {
-            openWelcome()
+            Welcome.open()
          } else {
             Setup.open()
          }

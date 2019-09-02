@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190802 - 1 [1.0.3]
+- Font previewer wasn't working
+- Fix: space lines while redefining the buttons list on a dropmenu were rendering as buttons and not lines 
+- Better source management
+
 ### 190830 - 1 [1.0.3]
 - Accent color switch was always off
 

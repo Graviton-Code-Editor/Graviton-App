@@ -91,8 +91,6 @@ Donating 🎁
 
 Thank you for the donations!
 
-
-
 And all people who helped me :)
 
 Available platforms 💻🖥

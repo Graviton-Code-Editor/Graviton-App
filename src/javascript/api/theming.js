@@ -17,11 +17,11 @@ module.exports = {
     for (i = 0; i < themes.length; i++) {
       if (themes[i]["name"] === name) {
         if (themeObject.type === "custom_theme") {
-          plugins.disableCSS(themeObject);
+          Plugins.disableCSS(themeObject);
         }
         current_config["theme"] = themes[i].name;
         if (themes[i].type === "custom_theme") {
-          plugins.enableCSS(themes[i]);
+          Plugins.enableCSS(themes[i]);
           themes[i].colors;
           themeObject = themes[i];
         }

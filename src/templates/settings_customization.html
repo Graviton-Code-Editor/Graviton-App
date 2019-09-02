@@ -16,7 +16,7 @@
    </div>
    <h>${getTranslation("ZoomSize")}</h4>
       <div class="section-1">
-         <input id="slider_zoom" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="5" max="50" value="${
+         <input id="slider_zoom" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="5" max="50" value="${
           current_config.appZoom
         }" class="slider">
          <br>
@@ -24,7 +24,7 @@
       </div>
       <h4>${getTranslation("Blur")}</h4>
       <div class="section-1">
-         <input id="slider_blur" onchange="updateCustomization(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
+         <input id="slider_blur" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
         current_config.blurPreferences
       }" class="slider">
       </div>
