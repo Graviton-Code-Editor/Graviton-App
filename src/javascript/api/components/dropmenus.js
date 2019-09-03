@@ -67,7 +67,7 @@ module.exports = {
           "button"
         ].replace(/ +/g, "")}" onclick="Menus.trigger('${
           this.id
-        }_dropbtn')"  >${panel["button"]}</button>`;
+        }_dropbtn')"  >${getTranslation(panel["button"])}</button>`;
       }
       let last;
       let toTransx = this.translation;
@@ -118,7 +118,7 @@ module.exports = {
                     ${icon}
                     </div>
                     <div class="translate_word" idT="${key.replace(/ +/g, "")}">
-                      ${key}
+                      ${getTranslation(key)}
                     </div>
                     `;
               }

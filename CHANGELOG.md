@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190803 - 1 [1.0.3]
+- Dropmenus weren't being translated
+
 ### 190802 - 1 [1.0.3]
 - Font previewer wasn't working
 - Fix: space lines while redefining the buttons list on a dropmenu were rendering as buttons and not lines 

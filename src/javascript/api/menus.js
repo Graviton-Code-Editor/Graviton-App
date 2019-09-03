@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-'use strict'
+"use strict";
 
 module.exports = {
   Menus: {
@@ -186,7 +186,7 @@ module.exports = {
             shell.openExternal(
               "https://github.com/Graviton-Code-Editor/Graviton-App"
             ),
-          TelegramChannel: () =>
+          "Telegram Channel": () =>
             shell.openExternal("https://t.me/gravitoneditor"),
           a1: "*line",
           Donate: () => shell.openExternal("https://www.paypal.me/mkenzo8"),
@@ -203,7 +203,7 @@ module.exports = {
         }
       });
     },
-    trigger : (id) => {
+    trigger: id => {
       const dropdowns = document.getElementsByClassName("dropdown-content");
       for (i = 0; i < dropdowns.length; i++) {
         if (dropdowns[i].id != id) {
@@ -220,30 +220,4 @@ module.exports = {
       }
     }
   }
-  
 };
-
-const aaa = new dropMenu({
-  id: "edit",
-  translation: true
-});
-
-aaa.setList({
-  button: "Edit",
-  list: {
-    "Open dddd": () => openFolder(),
-    "Open File": () => openFile(),
-    "Save As": () => saveFileAs(),
-    Save: {
-      click: () => saveFile(),
-      hint: "Ctrl+S"
-    },
-    "*line": "",
-    "New Project": () => NewProject(),
-    space1: "*line",
-    Exit: {
-      click: () => remote.app.exit(0),
-      icon: "exit"
-    }
-  }
-});
