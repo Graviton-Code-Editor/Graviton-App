@@ -63,7 +63,7 @@ module.exports = {
                     )
                   )
                   .then(function(repository) {
-                    me.install(config, function() {
+                    me.load(config, function() {
                       loaded++;
                       if (loaded == default_plugins.length) {
                         return call != undefined ? call() : "";
@@ -146,7 +146,7 @@ module.exports = {
                 paths[loaded],
                 "package.json"
               ));
-              me.install(config, function() {
+              me.load(config, function() {
                 loaded++;
 
                 if (loaded == paths.length) {
@@ -159,7 +159,7 @@ module.exports = {
         });
       }
     },
-    install: function(config, call) {
+    load: function(config, call) {
       /*
        * @desc Load a pluign
        * @param {object} config - package.json of the plugin
@@ -178,7 +178,7 @@ module.exports = {
               ));
             } catch {
               console.warn(
-                "Cannot install succesfully the plugin >" +
+                "Cannot load succesfully the plugin >" +
                   `%c ${config.name}` +
                   " %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues",
                 "color:red; font-weight:bold;",
@@ -258,7 +258,7 @@ module.exports = {
           for (const depen in config["dependencies"]) {
             npm.commands.install([depen], function(er, data) {
               if (er) return er;
-              me.install(config);
+              me.load(config);
             });
           }
         }

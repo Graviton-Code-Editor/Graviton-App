@@ -67,15 +67,15 @@ module.exports = {
                 <p style="margin:11px 0; font-size:17px; line-height:2px;">${
                   theme.name
                 }</p>
-                                <p style="font-size:14px;">${getTranslation(
-                                  "MadeBy"
-                                ) + theme.author}</p>
-                                <p style="font-size:13px; line-height:2px;">${
-                                  theme.description
-                                }</p>
-                                <div class="accent" style="background:${
-                                  theme.colors["accentColor"]
-                                };"></div>
+                <p style="font-size:14px;">${getTranslation(
+                  "MadeBy"
+                ) + theme.author}</p>
+                <p style="font-size:13px; line-height:2px;">${
+                  theme.description
+                }</p>
+                <div class="accent" style="background:${
+                  theme.colors["accentColor"]
+                };"></div>
               `;
               if (theme.name === current_config.theme) {
                 selectTheme("1", themeDiv);

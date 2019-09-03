@@ -9,57 +9,69 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-'use strict'
+"use strict";
 
 module.exports = {
   Market: {
     open: function(callback) {
-        const market_window = new Window({
-          id: "market_window",
-          content: `
-                <div class=center>
-                  <div class="spinner">
-                    <div></div> 
-                  </div>
+      const market_window = new Window({
+        id: "market_window",
+        content: `
+              <div class=center>
+                <div class="spinner">
+                  <div></div> 
                 </div>
-                  `
-        });
-        market_window.launch();
-        if (full_plugins.length != 0) {
-          this.loadMenus();
-          return callback();
-        }
-        const request = require("request");
-        this.extensions = [];
-        const me = this;
-        request(
-          "https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json",
-          function(error, response, body) {
-            if (!error && response.statusCode == 200) {
-              me.extensions = JSON.parse(body);
-            } else {
-              me.loadMenus();
-              return callback(1);
-            }
-            plugins_market = me.extensions;
-            current_plugins = 5;
-            me.loadMoreExtensions(0, callback);
+              </div>
+                `
+      });
+      market_window.launch();
+      if (full_plugins.length != 0) {
+        this.loadMenus();
+        return callback();
+      }
+      const request = require("request");
+      this.extensions = [];
+      const me = this;
+      request(
+        "https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json",
+        function(error, response, body) {
+          if (!error && response.statusCode == 200) {
+            me.extensions = JSON.parse(body);
+          } else {
+            me.loadMenus();
+            return callback(1);
           }
-        );
-      },
-    loadMenus: function () {
-        /*
-         * @desc Load the Market page structure
-         */
-        if (document.getElementById("market_window_window") == undefined) return;
-        graviton.windowContent("market_window", `
+          plugins_market = me.extensions;
+          current_plugins = 5;
+          me.loadMoreExtensions(0, callback);
+        }
+      );
+    },
+    loadMenus: function() {
+      /*
+       * @desc Load the Market page structure
+       */
+      if (document.getElementById("market_window_window") == undefined) return;
+      graviton.windowContent(
+        "market_window",
+        `
             <div class="g_lateral_panel">
-              <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation('Market')}</h2> 
+              <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(
+                "Market"
+              )}</h2> 
               <div id="navbar2" class="navbar">
-                <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation("All")}</button>
-                <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation('Installed')}</button>
-                <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation('Themes')}</button>
-                <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation('Settings')}</button>
+                <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation(
+                  "All"
+                )}</button>
+                <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
+                  "Installed"
+                )}</button>
+                <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(
+                  "Themes"
+                )}</button>
+                <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation(
+                  "Settings"
+                )}</button>
               </div>
             </div>
             <div id="_content2" class="window_content">
@@ -68,21 +80,22 @@ module.exports = {
               <div id="sec_themes"></div>
               <div id="sec_settings"></div>
             </div>  
-            `);
-        elasticContainer.append(document.getElementById("_content2"));
-      },
-      clearCache: function () {
-        /*
-         * @desc Clear the market cache 
-         */
-        const rimraf = require('rimraf')
-        rimraf.sync(market_file)
-        full_plugins = []
-        current_plugins = 0
-        plugins_market = []
-        this.extensions = []
-        closeWindow('market_window')
-      },
+            `
+      );
+      elasticContainer.append(document.getElementById("_content2"));
+    },
+    clearCache: function() {
+      /*
+       * @desc Clear the market cache
+       */
+      const rimraf = require("rimraf");
+      rimraf.sync(market_file);
+      full_plugins = [];
+      current_plugins = 0;
+      plugins_market = [];
+      this.extensions = [];
+      closeWindow("market_window");
+    },
     navigate: function(num, err) {
       if (document.getElementById("market_window_window") == undefined) return;
       for (i = 0; i < document.getElementById("navbar2").children.length; i++) {
@@ -484,7 +497,7 @@ module.exports = {
           if (plugin.repo.package["dependencies"] != undefined) {
             Plugins.installDependencies(plugin.repo.package);
           } else {
-            Plugins.install(plugin.repo.package);
+            Plugins.load(plugin.repo.package);
           }
         });
     },
@@ -544,7 +557,7 @@ module.exports = {
           if (plugin.repo.package["dependencies"] != undefined) {
             Plugins.installDependencies(plugin.repo.package);
           } else {
-            Plugins.install(plugin.repo.package);
+            Plugins.load(plugin.repo.package);
           }
         });
     },

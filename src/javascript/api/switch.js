@@ -1,3 +1,16 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espin Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+"use strict"
+
+
 module.exports = {
   Switch: class extends HTMLElement {
     constructor() {
@@ -5,9 +18,9 @@ module.exports = {
     }
     connectedCallback() {
       this.innerHTML = `
-            <div class="${this.getAttribute("class")} switch">
-                <div></div>
-            </div>`;
+        <div class="${this.getAttribute("class")} switch">
+            <div></div>
+        </div>`;
       this.addEventListener("click", function() {
         const dot = this.children[0];
         if (this.classList.contains("disabled") === false) {

@@ -62,9 +62,11 @@ module.exports = {
                            'editor-background-color'
                         ],
                         foreground: themeObject.colors['white-black'],
+                        cursor:themeObject.colors['white-black'],
                         selection: themeObject.colors['scroll-color']
-
                      },
+                     cursorStyle: 'underline',
+                     cursorBlink: true,
                      fontFamily: 'Consolas'
                   })
                   xterm.open(

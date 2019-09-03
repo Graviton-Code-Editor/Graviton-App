@@ -98,6 +98,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    color: var(--white-black);
    cursor: pointer;
 }
+.theme_div p{
+   margin: 20px 2px;
+}
 
 .theme_div:not(.active):hover {
    background: var(--widget-color);

@@ -8,12 +8,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-"use strict"
+"use strict";
 
 module.exports = {
-  setTheme: function (name) {
+  setTheme: function(name) {
     const tinycolor = require("tinycolor2");
-    if(graviton.getCurrentTheme() === name) return;
+    if (graviton.getCurrentTheme() === name) return;
     for (i = 0; i < themes.length; i++) {
       if (themes[i]["name"] === name) {
         if (themeObject.type === "custom_theme") {
@@ -40,14 +40,14 @@ module.exports = {
               document.documentElement.style.setProperty(
                 "--accentDarkColor",
                 tinycolor(systemPreferences.getAccentColor())
-                .darken()
-                .toString()
+                  .darken()
+                  .toString()
               );
               document.documentElement.style.setProperty(
                 "--accentLightColor",
                 tinycolor(systemPreferences.getAccentColor())
-                .brighten()
-                .toString()
+                  .brighten()
+                  .toString()
               );
               i += 2;
             } catch {}
@@ -66,37 +66,62 @@ module.exports = {
             }
           }
         }
-        const explorer_icons = document.getElementsByClassName("explorer_file_icon");
+        const explorer_icons = document.getElementsByClassName(
+          "explorer_file_icon"
+        );
         for (i = 0; i < explorer_icons.length; i++) {
           const format = getFormat(explorer_icons[i].getAttribute("file"));
-          explorer_icons[i].src = (function () {
+          explorer_icons[i].src = (function() {
             if (explorer_icons[i].getAttribute("elementType") === "directory") {
-              return directories.getCustomIcon(explorer_icons[i].getAttribute("file"), explorer_icons[i].parentElement.parentElement.getAttribute("opened") === "false" ? "close" : "open")
+              return directories.getCustomIcon(
+                explorer_icons[i].getAttribute("file"),
+                explorer_icons[i].parentElement.parentElement.getAttribute(
+                  "opened"
+                ) === "false"
+                  ? "close"
+                  : "open"
+              );
             } else {
-              if (themeObject.icons === undefined || (themeObject.icons[format.lang] === undefined && format.trust === true)) {
-                return `src/icons/files/${format.lang}.svg`
+              if (
+                themeObject.icons === undefined ||
+                (themeObject.icons[format.lang] === undefined &&
+                  format.trust === true)
+              ) {
+                return `src/icons/files/${format.lang}.svg`;
               } else {
-                if (themeObject.icons[format.lang] === undefined && themeObject.icons[format.format] === undefined) {
-                  return `src/icons/files/${format.lang}.svg`
+                if (
+                  themeObject.icons[format.lang] === undefined &&
+                  themeObject.icons[format.format] === undefined
+                ) {
+                  return `src/icons/files/${format.lang}.svg`;
                 }
                 if (format.trust === true) {
-                  return path.join(plugins_folder, themeObject.name, themeObject.icons[format.lang])
+                  return path.join(
+                    plugins_folder,
+                    themeObject.name,
+                    themeObject.icons[format.lang]
+                  );
                 } else {
-                  return path.join(plugins_folder, themeObject.name, themeObject.icons[format.format])
+                  return path.join(
+                    plugins_folder,
+                    themeObject.name,
+                    themeObject.icons[format.format]
+                  );
                 }
               }
             }
-          })()
+          })();
         }
-        editors.forEach((current_editor)=>{
-          if(current_editor.editor !== undefined ){
+        editors.forEach(current_editor => {
+          if (current_editor.editor !== undefined) {
             current_editor.editor.setOption("theme", themeObject["highlight"]);
           }
-        })
-        if(terminal!=null){
+        });
+        if (terminal != null) {
           terminal.xterm.setOption("theme", {
             background: themeObject.colors["editor-background-color"],
             foreground: themeObject.colors["white-black"],
+            cursor:themeObject.colors['white-black'],
             selection: themeObject.colors["scroll-color"]
           });
         }
@@ -104,5 +129,4 @@ module.exports = {
       }
     }
   }
-}
-
+};

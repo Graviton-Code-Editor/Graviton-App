@@ -3,6 +3,9 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 190803 - 1 [1.0.3]
+- Changed cursor style on terminal, now also changes it's color depending on the selected theme
+- Improved source management
+- Couldn't create free tabs
 - Dropmenus weren't being translated
 
 ### 190802 - 1 [1.0.3]

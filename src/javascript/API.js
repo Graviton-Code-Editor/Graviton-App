@@ -121,7 +121,7 @@ const context_menu_list_file = {
 }
 const context_menu_directory_options = {
   Reload: function () {
-    loadDirs(
+    Explorer.load(
       document.getElementById(this.getAttribute('target')).getAttribute('dir'),
       document
         .getElementById(this.getAttribute('target'))
@@ -135,7 +135,7 @@ const context_menu_directory_options = {
     shell.openItem(document.getElementById(document.getElementById(this.getAttribute('target')).getAttribute('parent')).getAttribute('dir'))
   },
   OpenAsGlobal: function () {
-    loadDirs(
+    Explorer.load(
       document.getElementById(this.getAttribute('target')).getAttribute('dir').replace(/\\\\/g, '\\'),
       'g_directories',
       true

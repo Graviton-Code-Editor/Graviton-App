@@ -17,7 +17,7 @@ module.exports = {
       if (graviton.isProduction() == true) {
         if (remote.process.argv[1] != undefined) {
           const dir = path.resolve(remote.process.argv[1]);
-          loadDirs(dir, "g_directories", true);
+          Explorer.load(dir, "g_directories", true);
           if (error_showed == false) DeleteBoot();
           return;
         }
@@ -33,7 +33,7 @@ module.exports = {
           project.setAttribute("class", "section-2");
           project.setAttribute(
             "onclick",
-            `loadDirs('${log[i].Path.replace(
+            `Explorer.load('${log[i].Path.replace(
               /\\/g,
               "\\\\"
             )}','g_directories','yes'); closeWindow('welcome_window'); `

@@ -188,15 +188,17 @@ module.exports = {
             ),
           "Telegram Channel": () =>
             shell.openExternal("https://t.me/gravitoneditor"),
-          a1: "*line",
-          Donate: () => shell.openExternal("https://www.paypal.me/mkenzo8"),
-          Twitter: () =>
+          "Discord": () =>
+            shell.openExternal("https://discord.gg/gg6CTYA"),
+          "a1": "*line",
+          "Donate": () => shell.openExternal("https://www.paypal.me/mkenzo8"),
+          "Twitter": () =>
             shell.openExternal("https://twitter.com/gravitoneditor"),
-          FAQs: () => shell.openExternal("https://www.graviton.ml/faqs"),
-          Website: () => shell.openExternal("https://www.graviton.ml"),
-          a2: "*line",
-          Changelog: () => graviton.dialogChangelog(),
-          About: {
+          "FAQs": () => shell.openExternal("https://www.graviton.ml/faqs"),
+          "Website": () => shell.openExternal("https://www.graviton.ml"),
+          "a2": "*line",
+          "Changelog": () => graviton.dialogChangelog(),
+          "About": {
             click: () => graviton.dialogAbout(),
             icon: "info"
           }
