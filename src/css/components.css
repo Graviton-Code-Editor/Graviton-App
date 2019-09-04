@@ -476,7 +476,7 @@ button.button1.disabled {
    pointer-events: none;
 }
 
-button.button1:not(.fixed-scale):active {
+button.button1:active {
    transition: 0.1s;
    border:2px solid var(--accentColor);
    box-sizing: border-box;
@@ -598,19 +598,16 @@ button.button2 {
    text-transform: uppercase;
    letter-spacing: 1px;
    font-size: 11px;
-   transform: scale(1);
+   border:2px solid transparent;
 }
 
 button.button2:hover {
-   transition: 0.05s;
    cursor: pointer;
    background: var(--widget-color);
 }
 
 button.button2:active {
-   transition: 0.05s;
-   transform: scale(var(--scalation));
-   opacity: 0.7;
+   border:2px solid var(--accentColor);
 }
 
 button.button3 {
@@ -618,23 +615,21 @@ button.button3 {
    border-radius: 50px;
    border: 0;
    color: var(--white-black);
-   padding: 8px 12px;
+   padding: 6px 10px;
    max-height: 150px;
    position: relative;
    font-family: _main_font;
    transform: scale(1);
+   border:2px solid transparent;
 }
 
 button.button3:hover {
    cursor: pointer;
-   transition: 0.1s;
    background: var(--widget-color);
 }
 
 button.button3:active {
-   transition: 0.1s;
-   transform: scale(var(--scalation));
-   opacity: 0.95;
+   border:2px solid var(--accentColor);
 }
 
 .section-2 p.title {

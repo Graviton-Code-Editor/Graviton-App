@@ -125,7 +125,13 @@ module.exports = {
           },
           a2: "*line",
           openTerminal: {
-            click: () => commanders.terminal(),
+            click: () => {
+              if (terminal != null) {
+                commanders.show(terminal.id);
+                return;
+              }
+              commanders.terminal();
+            },
             icon: "new_terminal",
             hint: "Ctrl+T"
           },
@@ -178,7 +184,7 @@ module.exports = {
       Help.setList({
         button: "Help",
         list: {
-          Issues: () =>
+          "Issues": () =>
             shell.openExternal(
               "https://github.com/Graviton-Code-Editor/Graviton-App/issues"
             ),
@@ -186,14 +192,14 @@ module.exports = {
             shell.openExternal(
               "https://github.com/Graviton-Code-Editor/Graviton-App"
             ),
+          "a1": "*line",
           "Telegram Channel": () =>
             shell.openExternal("https://t.me/gravitoneditor"),
           "Discord": () =>
             shell.openExternal("https://discord.gg/gg6CTYA"),
-          "a1": "*line",
-          "Donate": () => shell.openExternal("https://www.paypal.me/mkenzo8"),
           "Twitter": () =>
             shell.openExternal("https://twitter.com/gravitoneditor"),
+          "Donate": () => shell.openExternal("https://www.paypal.me/mkenzo8"),
           "FAQs": () => shell.openExternal("https://www.graviton.ml/faqs"),
           "Website": () => shell.openExternal("https://www.graviton.ml"),
           "a2": "*line",

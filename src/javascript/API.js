@@ -598,7 +598,7 @@ graviton = {
     return (!path.basename(__dirname) === 'Graviton-Editor' || !path.basename(__dirname) === 'Graviton-App')
   },
   resizeTerminals () {
-    if (terminal != null) fit.fit(terminal.xterm)
+    if (terminal != (null||undefined)) fit.fit(terminal.xterm)
   },
   toggleFullScreen () {
     if (graviton.isProduction()) {

@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+
+### 190804 - 1 [1.0.3]
+- Added bounce effect to the plugin's page
+- Fixed, couldn't show terminal from the Editor's menu
+
+
 ### 190803 - 1 [1.0.3]
 - Changed cursor style on terminal, now also changes it's color depending on the selected theme
 - Improved source management

@@ -1,4 +1,6 @@
-`<button class="button1 close_exts" onclick="closeWindow('sec${name}')">${icons.close}</button>
+`
+<elastic-container related=self>
+<button class="button1 close_exts" onclick="closeWindow('sec${name}')">${icons.close}</button>
 <div class=sub_extension_div id=${name+ '_div'}>
    <div class="top">
       <div>
@@ -40,4 +42,5 @@
       </div>
    </div>
 </div>
-</div>`
+</div>
+</elastic-container>`

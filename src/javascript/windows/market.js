@@ -285,7 +285,7 @@ module.exports = {
             if (plugins_market.length != full_plugins.length) {
               document.getElementById("sec_themes").innerHTML += `
                       <div  id=load_more_plugins  class="extension_div static" >
-                        <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; Market.navigate('themes')}); " class=" center button1 fixed-scale" > Load more</button>
+                        <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; Market.navigate('themes')}); " class=" center button1" > Load more</button>
                       </div>`;
             }
           }
