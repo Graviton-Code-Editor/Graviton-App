@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190805 - 1 [1.0.3]
+- Preparing for v1.1.0 release
+- Fixed, Dev mode notification after finishing setup was being throwed always
 
 ### 190804 - 1 [1.0.3]
 - Added bounce effect to the plugin's page

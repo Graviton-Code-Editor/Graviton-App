@@ -69,7 +69,7 @@ module.exports = {
           ).innerHTML = graviton.getTemplate("setup_additional_settings");
           break;
         case "welcome":
-          if (!graviton.isProduction()) {
+          if (graviton.isProduction()===true) {
             new Notification({
               title: "Graviton",
               content:

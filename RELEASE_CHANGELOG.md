@@ -14,7 +14,7 @@
 - You can now load files by dragging and dropping to empty screens 
 - Restructured the menus on the top bar
 - Added some emojies across the app
-- Added Esperanto language
+- Added Esperanto language (not finished yet)
 - Added a blur effect which can be ajusted or disabled from settings
 - Added a clear recent projects in the welcome page
 - Added a bounce effect to some part of the app (can be disabled)
@@ -32,6 +32,7 @@
 
 ## Bug fixes
 
+- Closing screens wasn't working properly
 - No more undefined texts
 - Ruby highlighter wasn't working
 - Couldn't close any terminal
