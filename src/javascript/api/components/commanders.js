@@ -55,7 +55,7 @@ module.exports = {
                         graviton.getCurrentDirectory() : object.path,
                      env: process.env
                   })
-                  const xterm = new Terminal({
+                  const config = {
                      rows: '10',
                      theme: {
                         background: themeObject.colors[
@@ -66,9 +66,11 @@ module.exports = {
                         selection: themeObject.colors['scroll-color']
                      },
                      cursorStyle: 'underline',
-                     cursorBlink: true,
-                     fontFamily: 'Consolas'
-                  })
+                     cursorBlink: true
+                     
+                  }
+                  if(graviton.currentOS().codename === 'win32')  config.fontFamily =  'Consolas';
+                  const xterm = new Terminal(config)
                   xterm.open(
                      document.getElementById(`container${randomID}`)
                   )
