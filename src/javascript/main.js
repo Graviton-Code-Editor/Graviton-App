@@ -176,7 +176,10 @@ let current_screen,
       ).getPropertyValue("--accentLightColor"),
       accentDarkColor: getComputedStyle(
         document.documentElement
-      ).getPropertyValue("--accentDarkColor")
+      ).getPropertyValue("--accentDarkColor"),
+      "editor-background-color":getComputedStyle(
+        document.documentElement
+      ).getPropertyValue("--editor-background-color")
     }
   },
   new_update = false,

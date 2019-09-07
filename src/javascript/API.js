@@ -595,7 +595,7 @@ graviton = {
     remote.app.exit(0)
   },
   isProduction () {
-    return (!path.basename(__dirname) === 'Graviton-Editor' || !path.basename(__dirname) === 'Graviton-App')
+    return (path.basename(__dirname) !== 'Graviton-Editor' && path.basename(__dirname) !== 'Graviton-App')
   },
   resizeTerminals () {
     if (terminal != (null||undefined)) fit.fit(terminal.xterm)
