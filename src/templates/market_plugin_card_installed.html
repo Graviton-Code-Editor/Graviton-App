@@ -2,7 +2,7 @@
 <div onclick=Market.openSubExtensions(this) class=extension_div id=${sec_ID} name=${plugin.local.name} update=${new_update}>
    ${new_update?icons["update"]:""}
    <h3>${plugin.local.name} </h3>
-   <p>${plugin.local.description} </p>
+   <p class=description>${plugin.local.description} </p>
    <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `· ${plugin.repo.git.stargazers_count} ${icons.star}`:""}`:""} </p>
 </div>
 `

@@ -739,6 +739,12 @@ graviton = {
         graviton.refreshStatusBarLinesAndChars(screen_id)
       }
     }
+  },
+  getTerminal(){
+    /*
+      This is to avoid API issues whern there are breaking changes.
+    */
+    return terminal;
   }
 }
 

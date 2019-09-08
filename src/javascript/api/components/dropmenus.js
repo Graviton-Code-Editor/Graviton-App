@@ -19,7 +19,7 @@ module.exports = {
     this.id = id;
     this.translation = translation; // Detect if translation is enabled on the plugin's dropmenu
     this.setList = function(panel) {
-      /*
+      /**
        * Dropmenu constructor
        * @param {string} button  Dropmenu's button name
        * @param {object} list    (optional) Dropmenu's buttons list

@@ -16,6 +16,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    margin: 15px 0;
 }
 
+
 .navbar {
    height: auto;
    width: 100%;
@@ -61,18 +62,78 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    background: var(--accentDarkColor);
 }
 
+.top_panel{
+   overflow:auto;
+   min-height:130px;
+   max-height:130px;
+   margin:15px 0px;
+   margin-bottom: 5px;
+}
+.align-center{
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   margin-top: 15px;
+}
+
+.navbar2{
+   display: flex;
+}
+.navbar2 button {
+   margin:0px 4px;
+   padding:0px 15px;
+   font-family: _main_font;
+   font-size: 15px;
+   color: var(--white-black);
+   background-color: transparent;
+   text-decoration: none;
+   display: inline-block;
+   border: 0;
+   text-align: left;
+   transform: scale(1);
+   position: relative;
+   border-bottom: 3px solid transparent;
+   min-height: 40px;
+}
+
+.navbar2 button:hover {
+   color: var(--accentColor);
+   cursor: pointer;
+}
+
+.navbar2 button.active {
+   font-weight: bold;
+   cursor: pointer;
+   transition: 0.05s;
+   border-bottom: 3px solid var(--accentColor);
+   color: var(--accentColor);
+}
+
 #settings_window_body,
 #market_window_body {
    display: flex;
 }
 
+#market_window_body {
+   display: flex;
+   flex-direction: column;
+}
+
 .window_content {
    margin: 20px 0;
    padding: 20px;
-   width: 80%;
+   width: 80%;;
    overflow: auto;
    box-shadow: 0px 2px 12px var(--shadows);
    border-radius: 8px;
+}
+
+.window_content.width-auto {
+   width: auto;
+   box-shadow: none;
+   align-content: center;
+   margin:1px;
+   min-height: auto;
 }
 
 #theme_list {
@@ -177,3 +238,4 @@ div.active {
    transition: 0.05s;
    transform: scale(var(--scalation));
 }
+

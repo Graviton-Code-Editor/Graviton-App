@@ -44,14 +44,17 @@ input[type="number"]::-webkit-inner-spin-button {
    margin: 0;
 }
 
-input[type="number"] {
-   -moz-appearance: textfield;
-}
-
 input[type="number"]::selection {
    background-color: var(--accentColor);
    color: var(--black-white);
 }
+
+.input2{
+   padding:6px;
+   border:0;
+   background:transparent;
+}
+
 
 .slider {
    -webkit-appearance: none;
@@ -787,14 +790,16 @@ button.button3:active {
    float: left;
    position: relative;
    padding: 15px;
-   border-radius: 8px;
+   border-radius: 5px;
    margin: 13px;
    transform: scale(1);
-   min-height: 110px;
+   min-height: 92px;
    height: auto;
-   max-height: 110px;
+   max-height: 92px;
 }
-
+.extension_div:hover{
+   box-shadow: 0px 3px 7px rgba(0,0,0,0.3);
+}
 .extension_div>svg {
    position: absolute;
    right: 0;
@@ -809,7 +814,12 @@ button.button3:active {
    line-height: 12px;
    font-size: 15px;
 }
-
+.extension_div .description {
+   overflow:hidden;
+   white-space: nowrap; 
+   text-overflow: ellipsis;
+   max-height: 18px;
+}
 .extension_div p {
    font-size: 13px;
 }
@@ -882,7 +892,6 @@ button.button3:active {
    border-top: 2px solid var(--primaryColor);
    overflow: auto;
    position: relative;
-   max-height: auto;
 }
 
 .ext_content a {
@@ -956,3 +965,16 @@ textarea {
     user-select: none;
     -webkit-user-drag: none;
  }
+
+ .image-scroller{
+   max-height: auto;
+   overflow: auto;
+   padding:10px;
+ }
+
+ .image-scroller img {
+   position: relative;
+   white-space:nowrap;
+   margin:5px;
+   border-radius:5px;
+}

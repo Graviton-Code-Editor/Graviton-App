@@ -160,7 +160,7 @@ module.exports = {
       }
     },
     load: function(config, call) {
-      /*
+      /**
        * @desc Load a pluign
        * @param {object} config - package.json of the plugin
        * @param {function} call - Function's callback
@@ -243,7 +243,7 @@ module.exports = {
       }
     },
     installDependencies: function(config) {
-      /*
+      /**
        * @desc Install NodeJS dependencies of the plugin
        * @param {object} config - Dependencies object of the plugin
        */
@@ -265,7 +265,7 @@ module.exports = {
       );
     },
     disableCSS: function(config) {
-      /*
+      /**
        * @desc Disable plugin's CSS
        * @param {object} config - Package.json's of the plugin
        */
@@ -277,7 +277,7 @@ module.exports = {
       }
     },
     enableCSS: function(config) {
-      /*
+      /**
        * @desc Enable plugin's CSS
        * @param {object} config - Package.json's of the plugin
        */

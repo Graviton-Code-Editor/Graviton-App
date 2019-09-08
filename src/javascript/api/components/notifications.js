@@ -34,7 +34,7 @@ my_noti.close() //Close
 'use strict'
 
 module.exports = {
-   /*
+   /**
     * Notification constructor
     * @param {string} title     Notification's title
     * @param {string} content   Notification's content
@@ -96,7 +96,7 @@ module.exports = {
          }
       }
    },
-   /*
+   /**
     * Close a notification
     * @param {HTML element} element   DOM element
     */

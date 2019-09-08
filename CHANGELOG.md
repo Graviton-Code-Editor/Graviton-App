@@ -2,37 +2,43 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 190805 - 1 [1.0.3]
+### 190808 - 1 [1.2.0]
+- You can now show screenshoots on the market, by adding a property to the package.json , example : "screenshoots":["image1.png"],
+- Market redesign
+- Creating folder and files dialogs now also accepts Enter
+- Fixed, Dev tools were enabled even on production
+
+### 190805 - 1 [1.1.0]
 - Preparing for v1.1.0 release
 - Fixed, Dev mode notification after finishing setup was being throwed always
 
-### 190804 - 1 [1.0.3]
+### 190804 - 1 [1.1.0]
 - Added bounce effect to the plugin's page
 - Fixed, couldn't show terminal from the Editor's menu
 
 
-### 190803 - 1 [1.0.3]
+### 190803 - 1 [1.1.0]
 - Changed cursor style on terminal, now also changes it's color depending on the selected theme
 - Improved source management
 - Couldn't create free tabs
 - Dropmenus weren't being translated
 
-### 190802 - 1 [1.0.3]
+### 190802 - 1 [1.1.0]
 - Font previewer wasn't working
 - Fix: space lines while redefining the buttons list on a dropmenu were rendering as buttons and not lines 
 - Better source management
 
-### 190830 - 1 [1.0.3]
+### 190830 - 1 [1.1.0]
 - Accent color switch was always off
 
-### 190829 - 1 [1.0.3]
+### 190829 - 1 [1.1.0]
 - Some improvements
 
-### 190828 - 1 [1.0.3]
+### 190828 - 1 [1.1.0]
 - Improved terminal
 - Fixed some bugs when closing screens
 
-### 190827 - 1 [1.0.3]
+### 190827 - 1 [1.1.0]
 - Fixed inline vertical height between the editor lines
 - Added bracket matching and active line colorizer
 - Fixed changelog dates... omg.
@@ -40,203 +46,203 @@ This file contains "important" commits, small ones will probably not be added.
 - Now, the themes not installed also shows it's version on it's card. (Market)
 - Source code management improvements
 
-### 190826 - 1 [1.0.3]
+### 190826 - 1 [1.1.0]
 - The english fallback on the getTranslation method wasn't working
 - Terminal improvements
 - Added an option to move the explorer panel to the right side
 
-### 190825 - 1 [1.0.3]
+### 190825 - 1 [1.1.0]
 - Unique terminal instead of one terminal for screen
 
-### 190824 - 1 [1.0.3]
+### 190824 - 1 [1.1.0]
 - Added a font previewer
 - Themes section in Market wasn't duplicating the load more buttons when it couldn't read the plugin list repository
 - Couldn't unninstall plugins in Graviton when it couldn't read the plugin list repository
 
-### 190823 - 1 [1.0.3]
+### 190823 - 1 [1.1.0]
 - Added bouncing effect to the market
 - Created an Issues template
 - Converted Setup pages into templates
 - Added a button in Settings > Advanced > Developer Tools to open a directory folder
 - Fixed, market_plugin template's select button wasn't applyng the theme
 
-### 190822 - 1 [1.0.3]
+### 190822 - 1 [1.1.0]
 - Some parts of the UI are becoming modificable templates
 - Renamed CSS class g_editors to editor_screen
 - Wasn't saving the language properly
 
-### 190821 - 1 [1.0.3]
+### 190821 - 1 [1.1.0]
 - You can now drag and drop a file in to an empty screen
 - Fixed Market, it was showing the select button even for no-theme plugins
 
-### 190820 - 1 [1.0.3]
+### 190820 - 1 [1.1.0]
 - Better source code management
 - Applying accent color was throwing not supported error
 
-### 190819 - 1 [1.0.3]
+### 190819 - 1 [1.1.0]
 - Better language management
 
-### 190818 - 2 [1.0.3]
+### 190818 - 2 [1.1.0]
 - Updated plugin notification wasn't throwing
 - Improvements
 
-### 190818 - 1 [1.0.3]
+### 190818 - 1 [1.1.0]
 - Fixed char counter
 - Improved design of the screens
 - Added a remove screen button when it's empty
 
-### 190817 - 1 [1.0.3]
+### 190817 - 1 [1.1.0]
 - Now using Semver to parse plugin versions
 - Better dark highlighting
 - Prevent from overloading a theme
 
-### 190816 - 1 [1.0.3]
+### 190816 - 1 [1.1.0]
 - Added Esperanto (not finished)
 - Removed mousetrap from source, now it's a dependency
 - If there are not themes intalled it will show a message it is supposed to appear the themes list
 - Mistakes on plugin's package.json won't cause boot blocks, but it will throw a warn message
 
-### 190814 - 3 [1.0.3]
+### 190814 - 3 [1.1.0]
 - Fixed from previous commits, codemirror dialogs were the default.
 - Added a new menu, Edit, and re structured the menus.
 
-### 190814 - 2 [1.0.3]
+### 190814 - 2 [1.1.0]
 - Fixed, cannot read the reame of plugins in the market
 
-### 190814 - 1 [1.0.3]
+### 190814 - 1 [1.1.0]
 - Created a basic test
 - Removed Codemirror from source and turned in to a dependency
 - Created a basic test script
 - Bug fixes on market
 
-### 190813 - 2 [1.0.3]
+### 190813 - 2 [1.1.0]
 - Fixed, selecting text from another editor while having another one focused won't bug the line and char counter
 - Removed the minimap option due it was too unestable
 
-### 190813 - 1 [1.0.3]
+### 190813 - 1 [1.1.0]
 - FluentMod caused to appear two Dark themes 
 - Added 2 tabs in the plugin opened page, Readme and permissions
 - When closing files the line and char counter wasn't been hiding
 - When changing themes it also loads it's custom icons
 
-### 190812 - 1 [1.0.3]
+### 190812 - 1 [1.1.0]
 - Now themes can use custom icons
 - New file & folder input now are focused by default
 - Added a "Load more" plugins button in the market
 
-### 190810 - 1 [1.0.3]
+### 190810 - 1 [1.1.0]
 - Now, you can use Ctrl+Wheel or Ctrl+Up/Down to change the editor font size
 - Increased the space between lines in the editor
 - Added a line and char indicator in the status bar of the editors
 - Now using getTranslation() method around all the app, which prevents from getting undefined in the texts
 - A notification will be thrown when trying to update a plugin which is not listed in the official market
 
-### 190809 - 1 [1.0.3]
+### 190809 - 1 [1.1.0]
 - Better way of requiring plugin's package.json
 - Fixed, when closing tabs from different screen it's language reference in status bar wasn't been updated
 
-### 190808 - 1 [1.0.3]
+### 190808 - 1 [1.1.0]
 - Added a settings icon
 - Added a button to clear recents projects in the welcome screen
 
-### 190808 - 1 [1.0.3]
+### 190808 - 1 [1.1.0]
 - Dialogs content now have a maxium height
 
-### 190807 - 1 [1.0.3]
+### 190807 - 1 [1.1.0]
 - Added some emojies to the UI
 - Refreshed the customization section in settings
 - Fixed, the context menus button onclicks weren't binding
 - Now, all JavaScript files are using the strict mode
 
-### 190806 - 1 [1.0.3]
+### 190806 - 1 [1.1.0]
 - Modified the notification constructor, check the docs
 - Added a MiniMap (optional)
 
-### 190805 - 1 [1.0.3]
+### 190805 - 1 [1.1.0]
 - Updated Electron to  v5.0.0
 - A plugin with errors on it's javascript will throw a warn in Graviton console and will not block it's start-up.
 
-### 190804 - 1 [1.0.3]
+### 190804 - 1 [1.1.0]
 - Resizing free C(custom) / image editors was throwing error
 
-### 190803 - 1 [1.0.3]
+### 190803 - 1 [1.1.0]
 - Now you can pass a directory to open as argument when starting graviton from the terminal
 - Fixed, production build couldn't boot
 - You can now put spacers on the context menus
 - Added a method which makes easier to update the current focused editor status bar language
 
-### 190802 - 1 [1.0.3]
+### 190802 - 1 [1.1.0]
 - Added an optional parameter to the notification constructor which allows you to set a default delay, you can also close it
 
-### 190801 - 1 [1.0.3]
+### 190801 - 1 [1.1.0]
 - Added the font tipography to the context menu
 - Implemented a cache system for the market
 
-### 190731 - 2 [1.0.3]
+### 190731 - 2 [1.1.0]
 - Added the bounce effect to the autocompletion context
 - Fixed, you weren't able to show the terminal once was hidden from the top menu "Editor"
 - Fixed, the plugins databases folder wasn't creating
 
-### 190731 - 1 [1.0.3]
+### 190731 - 1 [1.1.0]
 - Added a "Open in explorer" option in the context menu for directories on the explorer menu
 
-### 190730 - 3 [1.0.3]
+### 190730 - 3 [1.1.0]
 - Deprecated the property "folder"
 
-### 190730 - 2 [1.0.3]
+### 190730 - 2 [1.1.0]
 - Graviton will throw a warn message in the console while getting error while parsing the plugins's package.json
 - Added an empty message in case there aren't any plugin installed in the market section
 
-### 190730 - 1 [1.0.3]
+### 190730 - 1 [1.1.0]
 - Added an optional parameter to the notification builder, a buttons object.
 
-### 190729 - 3 [1.0.3]
+### 190729 - 3 [1.1.0]
 - Added a background to the editor numbers
 - Added a missing class
 - Fixed, vertical scroll bounce animation was throwed always while scrolling horizontally
 
-### 190729 - 2 [1.0.3]
+### 190729 - 2 [1.1.0]
 - Removed unnecessary code
 - Addded a new section in the setup process
 - Added Turkish language
 
-### 190729 - 1 [1.0.3]
+### 190729 - 1 [1.1.0]
 - Fixed, after creating a new tab you were unable to focus another editor by just clicking on it.
 - You don't have to close settings to save current changed preference
 - Added a toggle for the bounce effect
 
-### 190728 - 1 [1.0.3]
+### 190728 - 1 [1.1.0]
 - Testing a bouncing effect in some lists
 - Better maximize button (Windows)
 
-### 190727 - 2 [1.0.3]
+### 190727 - 2 [1.1.0]
 - You can now reorganize tabs of the same screen by drag & drop!
 - Better Dialog building
 
-### 190727 - 1 [1.0.3]
+### 190727 - 1 [1.1.0]
 - graviton.getPlugin('name') now also returns it's database object in case it exists
 
-### 190726 - 1 [1.0.3]
+### 190726 - 1 [1.1.0]
 - You can now link codemirror themes and use it in your theme
 - You can now create & and remove folders and also create files!
 - Added Hungarian support
 - Added a report button in the market
 
-### 190725 - 3 [1.0.3]
+### 190725 - 3 [1.1.0]
 - Rolling back to the old updating system
 
-### 190725 - 2 [1.0.3]
+### 190725 - 2 [1.1.0]
 - Added Rust support
 - Fixed, custom themes were removing the selected blur ammount
 
-### 190725 - 1 [1.0.3]
+### 190725 - 1 [1.1.0]
 - Custom themes! You can now make use of CSS code
 - Fixed, now you can see not-download plugin's readmes
 
-### 190723 - 1 [1.0.3]
+### 190723 - 1 [1.1.0]
 - Fixed Markdown highlighter
 
-### 190723 - 1 [1.0.3]
+### 190723 - 1 [1.1.0]
 - New theme selector in the setup proecss
 - Added a blur slider
 - You can now open a terminal in a custom path even if there is no folder opened
@@ -244,113 +250,113 @@ This file contains "important" commits, small ones will probably not be added.
 - Dividede the CSS source
 - Added the function "installFromLocal()" to install plugins from local source
 
-### 190721 - 1 [1.0.3]
+### 190721 - 1 [1.1.0]
 - You can now pass a path when opening a terminal
 - Rewrote the autocompletator almost in Js (less bugs, faster)
 - Fixed, now Ruby files with .rb format are also highlighted
 - Fixed, sometimes Graviton wasn't selecting the saved theme at booting
 - Removed the year from the license
 
-### 190720 - 1 [1.0.3]
+### 190720 - 1 [1.1.0]
 - Fixed some bugs when starting Graviton
 - New CSS icon
 
-### 190719 - 1 [1.0.3]
+### 190719 - 1 [1.1.0]
 - Fixed, Installing the default themes before the setup couldn't finish sometimes
 - Improved Market (better plugin loading)
 - Fixed Hoek and Cryptiles securities alerts
 
-### 190718 - 1 [1.0.3]
+### 190718 - 1 [1.1.0]
 - Market throws a notification if you have any plugin which has a new update
 - You can now update your plugins by clicking on the Update button
 - Market now shows you what plugins need to be updated
 - Fixed some dialogs were unable to open
 - Added 3 more CSS variables
 
-### 190717 - 1 [1.0.3]
+### 190717 - 1 [1.1.0]
 - Now you can right click to reload a folder in the explorer (also works for the global directory)
 - Fixed global directory title
 - Fixed, now you can apply a different theme while having a terminal opened
 
-### 190716 - 1 [1.0.3]
+### 190716 - 1 [1.1.0]
 - Themes section on Market now loads faster
 - Installed plugins now also show it's stars count
 - Better source organization
 - Installed plugins showed undefined on stars count
 
-### 190715 - 1 [1.0.3]
+### 190715 - 1 [1.1.0]
 - Better factory reset
 - Better plugin uninstalling
 - Other improvements
 
-### 190714 - 1 [1.0.3]
+### 190714 - 1 [1.1.0]
 - Added an stars counter, which refers to the plugin's repository stars
 - Added market error strings to English
 - Fixed themes section error wasn't displaying
 - Fixed context menu while hovering lights color buttons
 
-### 190713 - 2 [1.0.3]
+### 190713 - 2 [1.1.0]
 - Fixed, now you can open new terminals
 
-### 190713 - 1 [1.0.3]
+### 190713 - 1 [1.1.0]
 - Added a market shortcut in settings (under themes)
 
-### 190712 - 2 [1.0.3]
+### 190712 - 2 [1.1.0]
 - Fixed, cannot load files cause of codemirror cannot load the highlighting theme
 - Fixed changelog.md dates
 - Fixed the loading animation background
 
-### 190712 - 1 [1.0.3]
+### 190712 - 1 [1.1.0]
 - Installing a plugin will automatically load it's css files
 - Uninstalling a plugin will automatically remove it's css links from the editor
 - Better loading animation on Market
 - Bug fixes
 - Added installed and uninstalled extensions events
 
-### 190711 - 2 [1.0.3]
+### 190711 - 2 [1.1.0]
 - Added an spinner animation
 - Added Dark theme to the market
 
-### 190711 - 1 [1.0.3]
+### 190711 - 1 [1.1.0]
 - Added themes to the market
 - (Breaking update)
 - Unified themes are plugins, now are the same
 
-### 190710 - 1 [1.0.3]
+### 190710 - 1 [1.1.0]
 - Now the plugins list is allocated in a repository (https://github.com/Graviton-Code-Editor/plugins_list)
 
-### 190709 - 1 [1.0.3]
+### 190709 - 1 [1.1.0]
 - Improved the Market
 
-### 190708 - 2 [1.0.3]
+### 190708 - 2 [1.1.0]
 - Added an installed plugins section
 - Other improvements
 
-### 190708 - 1 [1.0.3]
+### 190708 - 1 [1.1.0]
 - Improved the market
 
-### 190707 - 2 [1.0.3]
+### 190707 - 2 [1.1.0]
 - Using nodegit instead of git directly, so the host doesn't have to install git to install extensions
 - Small improvements
 
-### 190707 - 1 [1.0.3]
+### 190707 - 1 [1.1.0]
 - A extensions market! (currently testing)
 
-### 190706 - 1 [1.0.3]
+### 190706 - 1 [1.1.0]
  - Changed Ctrl+P to Ctrl+Q (toggling menus visibility)
 
-### 190705 - 1 [1.0.3]
+### 190705 - 1 [1.1.0]
 - Added a button to hide the top menus in "Window" , you can also press Ctrl+P to toggle it
 - Now the working directory is showed on top
 
-### 190704 - 2 [1.0.3]
+### 190704 - 2 [1.1.0]
 - Better terminals resizing
 
-### 190704 - 1 [1.0.3]
+### 190704 - 1 [1.1.0]
 - Terminals now resize if you resize the window(Still working on)
 
-### 190702 - 1 [1.0.3]
-- v1.0.3
+### 190702 - 1 [1.1.0]
+- v1.1.0
 - Fixed, you cannot close an opened terminal
 - Added a new donation in the readme(2€ by Cristian Piva)
 

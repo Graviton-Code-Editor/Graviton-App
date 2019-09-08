@@ -9,9 +9,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 'use strict'
-/*
+/**
  *
- *@desc Load the languages JSON files and push it to an array
+ * @desc Load the languages JSON files and push it to an array
  *
  */
 

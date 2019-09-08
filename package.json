@@ -1,11 +1,12 @@
 {
   "name": "Graviton",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "scripts": {
-    "start": "electron . GravitonEditor ",
+    "start": "electron . Graviton ",
+    "start:no.sandbox":"electron . Graviton --no-sandbox",
     "pack": "build --dir",
     "build": "build",
     "build:snap": "build --linux snap",

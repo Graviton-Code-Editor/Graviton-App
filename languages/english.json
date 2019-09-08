@@ -148,7 +148,8 @@
 		"SystemAccentColor.Error2":"Using the system accent color might not work well in the current theme.",
 		"TelegramChannel":"Telegram Channel",
 		"Settings-Advanced-Developer-Tools-text2":"Open the configuration directory",
-		"ExplorerPosition":"Directory Explorer's position"
+		"ExplorerPosition":"Directory Explorer's position",
+		"Screenshoots":"Screenshoots"
 	}
 	
 }

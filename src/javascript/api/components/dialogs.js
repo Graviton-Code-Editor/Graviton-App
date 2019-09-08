@@ -29,31 +29,34 @@ closeDialog('my_dialog1'); //Close the dialog by passing the id
 'use strict'
 
 module.exports = {
-   /*
+   /**
     * Dialog constructor
     * @param {string} id       Dialog's id
     * @param {string} title    Dialog's title
     * @param {string} content  Dialog's content
     * @param {object} buttons  Dialog's buttons
     */
-   Dialog: function({ id, title, content, buttons }) {
+   Dialog: function({ id =Math.random(), title, content, buttons }) {
+      this.id = id;
+      console.log(id);
       if (typeof [...arguments] !== 'object') {
          graviton.throwError('Parsed argument is not object.')
          return
       }
       const all = document.createElement('div')
-      all.id = id + '_dialog'
+      all.id = id + '_dialog';
+      all.setAttribute("myID",id);
       all.innerHTML = `
       <div myID="${
-  id
-}" class="background_window" onclick="closeDialog(this)"></div>`
+            id
+      }" class="background_window" onclick="closeDialog('${id}')"></div>`
       const body_dialog = document.createElement('div')
       body_dialog.setAttribute('class', 'dialog_body')
       body_dialog.innerHTML = `
       <h3 >
         ${title}
       </h3>
-      <div style="font-size:15px; min-height:15px;">
+      <div style="font-size:15px; min-height:15px; position:relative;">
         <elastic-container related=self>
         ${content}
         </elastic-container>
@@ -65,7 +68,7 @@ module.exports = {
          button.setAttribute('myID', id)
          sleeping(1).then(() => {
             button.addEventListener('click', buttons[key].click)
-            button.setAttribute('onclick', 'closeDialog(this)')
+            button.setAttribute('onclick', `closeDialog('${id}')`)
          })
          button.setAttribute(
             'class',
@@ -81,21 +84,21 @@ module.exports = {
             Number(document.getElementById('body').getAttribute('windows')) + 1
          )
       document.body.appendChild(all)
-      this.close = function(me) {
-         closeDialog(me)
+      this.close = function() {
+         closeDialog(this.id)
       }
    },
-   /*
+   /**
     * Close a dialog
     * @param {HTML element} ele  DOM element
     */
-   closeDialog: ele => {
+   closeDialog: id => {
       document
          .getElementById('body')
          .setAttribute(
             'windows',
             Number(document.getElementById('body').getAttribute('windows')) - 1
          )
-      document.getElementById(ele.getAttribute('myID') + '_dialog').remove()
+      document.getElementById(id+'_dialog').remove()
    }
 }

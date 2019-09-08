@@ -31,7 +31,7 @@ loadTab(document.getElementById('my_tab1_freeTab')) //Load the tab by passing it
 'use strict'
 
 module.exports = {
-  /*
+  /**
    * Tab constructor
    * @param {string} id    unique ID for the tab
    * @param {string} type  type of the tab (free,image,file)

@@ -12,8 +12,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190802",
-  version: "1.1.0",
+  date: "190808",
+  version: "1.2.0",
   state: "Beta"
 };
 const os = require("os"),
@@ -177,7 +177,7 @@ let current_screen,
       accentDarkColor: getComputedStyle(
         document.documentElement
       ).getPropertyValue("--accentDarkColor"),
-      "editor-background-color":getComputedStyle(
+      "editor-background-color": getComputedStyle(
         document.documentElement
       ).getPropertyValue("--editor-background-color")
     }
@@ -194,14 +194,11 @@ let current_screen,
   plugins_market = [],
   current_plugins = 0;
 
-let templates = {};
-
-let plugins_list = [],
-  plugins_dbs = [];
-
-let anyDropON = null;
-
-let full_plugins = [];
+let templates = {},
+  plugins_list = [],
+  plugins_dbs = [],
+  anyDropON = null,
+  full_plugins = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
@@ -462,42 +459,62 @@ const directories = {
     new Dialog({
       id: "new_folder",
       title: getTranslation("Dialog.RenameTo"),
-      content:
-        "<div  id='rename_dialog' class='section-1' contentEditable> New Folder </div>",
+      content: `<input  id='rename_dialog' class='section-1 input2' placeholder="New Folder" >  </input>`,
       buttons: {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
             create.folder(
               object,
-              document.getElementById("rename_dialog").innerText
+              document.getElementById("rename_dialog").value === ""
+                ? "New folder"
+                : document.getElementById("rename_dialog").value
             );
           },
           important: true
         }
       }
     });
+    document
+      .getElementById("rename_dialog")
+      .addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          create.folder(object, this.value === "" ? "New folder" : this.value);
+          closeDialog("new_folder");
+        }
+      });
     document.getElementById("rename_dialog").focus();
   },
   newFile: function(object) {
     new Dialog({
       id: "new_file",
       title: getTranslation("Dialog.RenameTo"),
-      content:
-        "<div id='rename_dialog' class='section-1' contentEditable> New File.txt </div>",
+      content: `<input  id='rename_dialog' class='section-1 input2' placeholder="NewFile.txt" >  </input>`,
       buttons: {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
             create.file(
               object,
-              document.getElementById("rename_dialog").innerText
+              document.getElementById("rename_dialog").value === ""
+                ? "NewFile.txt"
+                : document.getElementById("rename_dialog").value
             );
           },
           important: true
         }
       }
     });
+    document
+      .getElementById("rename_dialog")
+      .addEventListener("keyup", function(event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          create.file(object, this.value === "" ? "NewFile.txt" : this.value);
+          closeDialog("new_file");
+        }
+      });
     document.getElementById("rename_dialog").focus();
   },
   removeFileDialog: function(object) {

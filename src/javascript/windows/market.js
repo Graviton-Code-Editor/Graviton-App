@@ -17,11 +17,11 @@ module.exports = {
       const market_window = new Window({
         id: "market_window",
         content: `
-              <div class=center>
-                <div class="spinner">
-                  <div></div> 
-                </div>
-              </div>
+          <div class=center>
+            <div class="spinner">
+              <div></div> 
+            </div>
+          </div>
                 `
       });
       market_window.launch();
@@ -55,26 +55,30 @@ module.exports = {
       graviton.windowContent(
         "market_window",
         `
-            <div class="g_lateral_panel">
+            <div class="top_panel">
+            <div class="align-center">
               <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(
                 "Market"
-              )}</h2> 
-              <div id="navbar2" class="navbar">
+              )}</h2>
+            </div>
+            <div class="align-center">
+              <div id="navbar2" class="navbar2">
                 <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation(
                   "All"
                 )}</button>
-                <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
-                  "Installed"
-                )}</button>
                 <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(
                   "Themes"
+                )}</button>
+                <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
+                  "Installed"
                 )}</button>
                 <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation(
                   "Settings"
                 )}</button>
               </div>
             </div>
-            <div id="_content2" class="window_content">
+            </div>
+            <div id="_content2" class="window_content width-auto">
               <div id="sec_all"></div>
               <div id="sec_installed"></div>
               <div id="sec_themes"></div>
@@ -167,13 +171,11 @@ module.exports = {
               ).innerHTML += graviton.getTemplate(
                 "market_plugin_card",
                 `
-      
                     const sec_ID = "${sec_ID}";
                     const _package = ${JSON.stringify(_package)};
                     const _new_update = ${new_update};
                     const plugin = ${JSON.stringify(plugin)};
                     const data = ${JSON.stringify(data)} ;
-      
                     `
               );
             });
@@ -405,30 +407,73 @@ module.exports = {
         content: graviton.getTemplate(
           "market_plugin",
           `
-              const name = '${data.getAttribute("name")}';
-              const update = '${data.getAttribute("update")}';
-              const plugin = ${JSON.stringify(plugin)};
+            const name = '${data.getAttribute("name")}';
+            const update = '${data.getAttribute("update")}';
+            const plugin = ${JSON.stringify(plugin)};
             `
         )
       });
       ext_win.launch();
+      const plugin_navbar = document.getElementById("plugin_navbar");
+      for (let ele of plugin_navbar.children) {
+        ele.onclick = () => {
+          for (let bro of plugin_navbar.children) {
+            bro.classList.remove("active");
+          }
+          const references = document.getElementById("plugin_navbar_refs")
+            .children;
+          for (let refs of references) {
+            refs.style.display = "none";
+            if (refs.getAttribute("ref") == ele.getAttribute("ref")) {
+              refs.style.display = "block";
+            }
+          }
+          ele.classList.add("active");
+        };
+      }
+
       const bottom_section = document.getElementById(
-        data.getAttribute("name") + "_div2"
+        data.getAttribute("name") + "readme"
       );
       if (bottom_section != null) {
         if (plugin.local != undefined) {
+          /*
+          Local Readme
+          */
           fs.readFile(
             path.join(plugins_folder, data.getAttribute("name"), "readme.md"),
             "utf8",
             function(err, readme) {
               document.getElementById(
-                data.getAttribute("name") + "_div2"
+                data.getAttribute("name") + "readme"
               ).innerHTML = `<div style="flex:1;" >${
                 !err ? marked(readme) : getTranslation("NoReadme")
               }</div>`;
             }
           );
+          /*
+          Local Screenshoots
+          */
+          if (plugin.local != undefined) {
+            if (plugin.local.screenshoots != undefined) {
+              plugin.local.screenshoots.forEach(sc => {
+                const screenshoot = document.createElement("img");
+                screenshoot.setAttribute(
+                  "src",
+                  path.join(plugins_folder, plugin.local.name, sc)
+                );
+                screenshoot.style = "height:200px; ";
+                screenshoot.draggable = false;
+                document
+                  .getElementById(plugin.local.name + "_screenshoots")
+                  .appendChild(screenshoot);
+              });
+            }
+          }
         } else {
+          /*
+          Repository Readme
+          */
           const request = require("request");
           request(
             `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`,
@@ -439,7 +484,7 @@ module.exports = {
               )
                 return;
               document.getElementById(
-                data.getAttribute("name") + "_div2"
+                data.getAttribute("name") + "readme"
               ).innerHTML = `<div style="flex:1;" >${
                 !error && response.statusCode == 200
                   ? marked(body3)
@@ -451,7 +496,7 @@ module.exports = {
       }
     },
     installExtension: function(name) {
-      /*
+      /**
        * @desc Install a plugin from the market
        * @param {string} name - Name of the plugin
        */
@@ -484,6 +529,7 @@ module.exports = {
                 [getTranslation("Select")]: {
                   click: function() {
                     graviton.setTheme(name);
+                    saveConfig();
                   }
                 }
               }
@@ -502,7 +548,7 @@ module.exports = {
         });
     },
     updateExtension: function(name) {
-      /*
+      /**
        * @desc Update a plugin from the market
        * @param {string} name - Name of the plugin
        */
@@ -562,7 +608,7 @@ module.exports = {
         });
     },
     uninstallExtension: function(name) {
-      /*
+      /**
        * @desc Load a pluign
        * @param {string} name - Name of the plugin
        */

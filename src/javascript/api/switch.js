@@ -10,7 +10,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 "use strict"
 
-
 module.exports = {
   Switch: class extends HTMLElement {
     constructor() {

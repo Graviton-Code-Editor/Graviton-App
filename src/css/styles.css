@@ -499,8 +499,8 @@ h4 {
 navbar a {
    transition: 0.1s;
    font-style: normal !important;
-   background: var(--secondaryColor);
-   border-radius: 5px;
+   background: transparent;
+   border-bottom: 3px solid  transparent;
    padding: 8px;
    margin: 3px;
    cursor: pointer;
@@ -513,13 +513,8 @@ navbar a:hover {
 
 navbar a.active {
    transition: 0.1s;
-   background: var(--accentColor);
-   color: var(--black-white);
-}
-
-navbar a.active:hover {
-   transition: 0.1s;
-   background: var(--accentDarkColor);
+   border-bottom: 3px solid var(--accentColor);
+   color: var(--accentColor);
 }
 
 .image-container {
