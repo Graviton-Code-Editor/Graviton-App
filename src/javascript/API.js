@@ -409,7 +409,7 @@ graviton = {
       }
     })
   },
-  closingFileWarn: function () {
+  closingFileWarn: function (ele) {
     new Dialog({
       id: 'saving_file_warn',
       title: getTranslation('Warn'),

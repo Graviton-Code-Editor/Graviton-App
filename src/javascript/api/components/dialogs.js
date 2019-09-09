@@ -38,7 +38,6 @@ module.exports = {
     */
    Dialog: function({ id =Math.random(), title, content, buttons }) {
       this.id = id;
-      console.log(id);
       if (typeof [...arguments] !== 'object') {
          graviton.throwError('Parsed argument is not object.')
          return

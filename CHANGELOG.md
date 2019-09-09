@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190809 - 1 [1.2.0]
+- Plugin screenshoots list is now horizontal
+- Fixed, Couldn't force close a tab when there are changes
+
 ### 190808 - 1 [1.2.0]
 - You can now show screenshoots on the market, by adding a property to the package.json , example : "screenshoots":["image1.png"],
 - Market redesign

@@ -56,27 +56,27 @@ module.exports = {
         "market_window",
         `
             <div class="top_panel">
-            <div class="align-center">
-              <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(
-                "Market"
-              )}</h2>
-            </div>
-            <div class="align-center">
-              <div id="navbar2" class="navbar2">
-                <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation(
-                  "All"
-                )}</button>
-                <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(
-                  "Themes"
-                )}</button>
-                <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
-                  "Installed"
-                )}</button>
-                <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation(
-                  "Settings"
-                )}</button>
+              <div class="align-center">
+                <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(
+                  "Market"
+                )}</h2>
               </div>
-            </div>
+              <div class="align-center">
+                <div id="navbar2" class="navbar2">
+                  <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation(
+                    "All"
+                  )}</button>
+                  <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(
+                    "Themes"
+                  )}</button>
+                  <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
+                    "Installed"
+                  )}</button>
+                  <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation(
+                    "Settings"
+                  )}</button>
+                </div>
+              </div>
             </div>
             <div id="_content2" class="window_content width-auto">
               <div id="sec_all"></div>

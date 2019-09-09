@@ -6,7 +6,7 @@
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "scripts": {
     "start": "electron . Graviton ",
-    "start:no.sandbox":"electron . Graviton --no-sandbox",
+    "start:no.sandbox": "electron . Graviton --no-sandbox",
     "pack": "build --dir",
     "build": "build",
     "build:snap": "build --linux snap",
