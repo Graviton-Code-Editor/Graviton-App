@@ -501,6 +501,7 @@ module.exports = {
        * @param {string} name - Name of the plugin
        */
       const plugin = graviton.getPlugin(name);
+      console.log(plugin)
       if (fs.existsSync(path.join(plugins_folder, name))) {
         new Notification({
           title: "Market",
@@ -508,44 +509,49 @@ module.exports = {
         });
         return;
       }
-      const nodegit = require("nodegit");
-      nodegit
-        .Clone(
-          plugin.repo.git.clone_url,
-          path.join(plugins_folder.replace(/\\/g, "\\\\"), name)
-        )
-        .then(function(repository) {
-          const installed_ext_event = new CustomEvent("extension_installed", {
-            detail: {
-              name: name
-            }
-          });
-          document.dispatchEvent(installed_ext_event);
-          if (plugin.repo.package.colors != undefined) {
-            new Notification({
-              title: "Market",
-              content: name + getTranslation("ExtInstalled"),
-              buttons: {
-                [getTranslation("Select")]: {
-                  click: function() {
-                    graviton.setTheme(name);
-                    saveConfig();
-                  }
-                }
-              }
-            });
-          } else {
-            new Notification({
-              title: "Market",
-              content: name + getTranslation("ExtInstalled")
-            });
-          }
-          if (plugin.repo.package["dependencies"] != undefined) {
-            Plugins.installDependencies(plugin.repo.package);
-          } else {
-            Plugins.load(plugin.repo.package);
+
+      /*DEGIT*/
+
+      const degit = require('degit');
+ 
+      const emitter = degit(plugin.repo.git.full_name);
+      
+      emitter.on('info', info => {
+          console.log(info.message);
+      });
+      
+      emitter.clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name)).then(() => {
+        const installed_ext_event = new CustomEvent("extension_installed", {
+          detail: {
+            name: name
           }
         });
+        document.dispatchEvent(installed_ext_event);
+        if (plugin.repo.package.colors != undefined) {
+          new Notification({
+            title: "Market",
+            content: name + getTranslation("ExtInstalled"),
+            buttons: {
+              [getTranslation("Select")]: {
+                click: function() {
+                  graviton.setTheme(name);
+                  saveConfig();
+                }
+              }
+            }
+          });
+        } else {
+          new Notification({
+            title: "Market",
+            content: name + getTranslation("ExtInstalled")
+          });
+        }
+        if (plugin.repo.package["dependencies"] != undefined) {
+          Plugins.installDependencies(plugin.repo.package);
+        } else {
+          Plugins.load(plugin.repo.package);
+        }
+      });
     },
     updateExtension: function(name) {
       /**
@@ -583,29 +589,32 @@ module.exports = {
       }
       const rimraf = require("rimraf");
       rimraf.sync(path.join(plugins_folder, name));
-      const nodegit = require("nodegit");
-      nodegit
-        .Clone(
-          plugin.repo.git.clone_url,
-          path.join(plugins_folder.replace(/\\/g, "\\\\"), name)
-        )
-        .then(function(repository) {
-          const updated_ext_event = new CustomEvent("updated_installed", {
-            detail: {
-              name: name
-            }
-          });
-          document.dispatchEvent(updated_ext_event);
-          new Notification({
-            title: "Market",
-            content: name + getTranslation("ExtUpdated")
-          });
-          if (plugin.repo.package["dependencies"] != undefined) {
-            Plugins.installDependencies(plugin.repo.package);
-          } else {
-            Plugins.load(plugin.repo.package);
+
+      const degit = require('degit');
+ 
+      const emitter = degit(plugin.repo.git.full_name);
+      
+      emitter.on('info', info => {
+          console.log(info.message);
+      });
+      
+      emitter.clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name)).then(() => {
+        const updated_ext_event = new CustomEvent("updated_installed", {
+          detail: {
+            name: name
           }
         });
+        document.dispatchEvent(updated_ext_event);
+        new Notification({
+          title: "Market",
+          content: name + getTranslation("ExtUpdated")
+        });
+        if (plugin.repo.package["dependencies"] != undefined) {
+          Plugins.installDependencies(plugin.repo.package);
+        } else {
+          Plugins.load(plugin.repo.package);
+        }
+      });
     },
     uninstallExtension: function(name) {
       /**

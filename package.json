@@ -43,11 +43,11 @@
   "dependencies": {
     "appdata-path": "^1.0.0",
     "codemirror": "^5.48.2",
+    "degit": "^2.1.4",
     "fs-extra": "^7.0.1",
     "marked": "^0.7.0",
     "mousetrap": "^1.6.3",
     "node-pty": "^0.9.0-beta24",
-    "nodegit": "^0.25.1",
     "npm": "^6.10.1",
     "octonode": "^0.9.5",
     "request": "^2.88.0",

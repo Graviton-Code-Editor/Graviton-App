@@ -37,7 +37,7 @@ app.on('ready', function () {
     })
   )
   main.setMenuBarVisibility(
-    path.basename(__dirname) !== 'Graviton-Editor' && path.basename(__dirname) !== 'Graviton-App'
+    path.basename(__dirname) === 'Graviton-Editor' || path.basename(__dirname) === 'Graviton-App'
   ) // True = when it's not on production
 })
 app.on('window-all-closed', () => {

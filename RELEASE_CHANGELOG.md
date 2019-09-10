@@ -1,6 +1,7 @@
 ## Important
 
 - Market redesign
+- Reduced installer weight and installation time x5 times
 
 ## New
 
