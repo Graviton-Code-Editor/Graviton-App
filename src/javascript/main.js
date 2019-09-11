@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190809",
+  date: "190811",
   version: "1.2.0",
   state: "Beta"
 };
@@ -31,7 +31,8 @@ const os = require("os"),
   marked = require("marked"),
   fit = require("./node_modules/xterm/lib/addons/fit/fit.js"),
   CodeMirror = require("codemirror"),
-  semver = require("semver");
+  semver = require("semver"),
+  request = require("request");
 
 require(path.join(
   __dirname,
@@ -120,7 +121,13 @@ const Market = require(path.join(
   "windows",
   "market.js"
 )).Market;
-
+const NewProject = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "windows",
+  "new_project.js"
+)).NewProject;
 const Plugins = require(path.join(
   __dirname,
   "src",

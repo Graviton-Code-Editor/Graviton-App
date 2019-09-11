@@ -29,7 +29,7 @@ module.exports = {
         this.loadMenus();
         return callback();
       }
-      const request = require("request");
+      
       this.extensions = [];
       const me = this;
       request(
@@ -150,7 +150,7 @@ module.exports = {
             document.getElementById("sec_all").innerHTML = `
                           <div id=loading_exts>Loading extensions...</div>
                         `;
-            const request = require("request");
+            
             full_plugins.forEach(_plugin => {
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
@@ -319,7 +319,7 @@ module.exports = {
       let plugins_to_update = false;
       const github = require("octonode");
       const client = github.client();
-      const request = require("request");
+      
       const me = this;
       if (plugins_market[start] == undefined) {
         if (document.getElementById("load_more_plugins") != undefined)
@@ -452,7 +452,7 @@ module.exports = {
             }
           );
           /*
-          Local Screenshoots
+          Local Screenshots
           */
           if (plugin.local != undefined) {
             if (plugin.local.screenshoots != undefined) {
@@ -474,7 +474,7 @@ module.exports = {
           /*
           Repository Readme
           */
-          const request = require("request");
+          
           request(
             `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`,
             function(error, response, body3) {

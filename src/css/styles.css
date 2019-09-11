@@ -431,6 +431,25 @@ h4 {
    animation: bounce_bottom 0.35s;
 }
 
+.bounce_left {
+   position: relative;
+   left: 0;
+   animation: bounce_left 0.35s;
+   display: inline-block;
+   height:0;
+   top:0;
+}
+
+.bounce_right {
+   position: relative;
+   right: 0;
+   animation: bounce_right 0.35s;
+   display: inline-block;
+   height:0;
+   top:0;
+   border:0;
+}
+
 @keyframes bounce_top {
    20% {
       height: 7px
@@ -461,6 +480,43 @@ h4 {
    }
    100% {
       height: 0px
+   }
+}
+
+@keyframes bounce_left {
+   20% {
+      width: 15px;
+   }
+   40% {
+      width: 27px
+   }
+   60% {
+      width: 15px
+   }
+   80% {
+      width: 7px
+   }
+   100% {
+      width: 0px
+   }
+}
+
+
+@keyframes bounce_right {
+   20% {
+      width: 15px;
+   }
+   40% {
+      width: 27px
+   }
+   60% {
+      width: 15px
+   }
+   80% {
+      width: 7px
+   }
+   100% {
+      width: 0px
    }
 }
 

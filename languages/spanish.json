@@ -129,7 +129,7 @@
 		"Cache": "Cache",
 		"Clear": "Limpiar",
 		"CopyPath": "Copiar el directorio",
-		"NoUpdateFound": "Ninguna actualización se ha encontrado",
+		"NoUpdateFound": "No se ha encontrado ninguna actualización",
 		"ExtNotListed": "no está listado en el mercado",
 		"OpenAsGlobal": "Abrir como global",
 		"DetectedUpdateMessage": "Quieres actualizar a la versión",

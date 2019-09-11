@@ -27,7 +27,7 @@
    <navbar id=plugin_navbar style="display:flex; justify-content:center; align-items:center">
       <a ref=readme class="active" >${getTranslation("Readme")}</a>
       <a ref=permissions >${getTranslation("Permissions")}</a>
-      <a ref=screenshoots ${plugin.local!=undefined? plugin.local.screenshoots!=undefined? "":'style="display:none;"':'style="display:none;"'}>${getTranslation("Screenshoots")}</a>
+      <a ref=screenshoots ${plugin.local!=undefined? plugin.local.screenshoots!=undefined? "":'style="display:none;"':'style="display:none;"'}>${getTranslation("Screenshots")}</a>
    </navbar>
    <div id=plugin_navbar_refs> 
       <div ref=permissions style="display:none;">
@@ -43,6 +43,7 @@
          <p> Loading... </p>
       </div>
       <div class=image-scroller ref=screenshoots  id=${ name + '_screenshoots'} style="display:none;">
+         <elastic-container related=parent direction=horizontal></elastic-container>
       </div>
    </div>
 </div>

@@ -29,20 +29,20 @@ closeWindow('my_window1'); //Close the window by passing the id
 'use strict'
 
 module.exports = {
-   Window: function(data) {
+   Window: function({id , content , onClose}) {
       /**
        * @desc Window constructor
-       * @param {object} data.id                 Unique ID for the window
-       * @param {string} data.code               Window's content
-       * @param {function} data.onClose (optional) When the window is closed the passed function will be executed
+       * @param {string} id                   Unique ID for the window
+       * @param {string} code                 Window's content
+       * @param {function} onClose (optional) When the window is closed the passed function will be executed
        */
       if (typeof [...arguments] !== 'object') {
          graviton.throwError('Parsed argument is not object.')
          return
       }
-      this.id = data.id
-      this.code = data.content
-      this.onClose = data.onClose == undefined ? '' : data.onClose
+      this.id = id
+      this.code = content
+      this.onClose = onClose == undefined ? '' : onClose
       const newWindow = document.createElement('div')
       newWindow.setAttribute('id', this.id + '_window')
       newWindow.innerHTML = `

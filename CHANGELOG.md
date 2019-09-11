@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190811 - 1 [1.2.0]
+- Added Elastic Container support for horizontal  contents
+- Re-added NewProject window
+- Improvements on the update detector
+
 ### 190810 - 1 [1.2.0]
 - Using Degit instead of Nodegit
 - Fixed, dev tools were still enabled on production

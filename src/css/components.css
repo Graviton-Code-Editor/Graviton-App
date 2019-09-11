@@ -967,13 +967,14 @@ textarea {
  }
 
  .image-scroller{
-   overflow: auto;
    width: 95%;
    height: auto;
-   overflow: auto;
+   overflow-x:auto;
+   overflow-y: hidden;
    white-space: nowrap;
    padding:5px 3%;
    margin-top:7px;
+   max-height: 220px;
  }
 
  .image-scroller > img{

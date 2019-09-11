@@ -49,7 +49,7 @@ module.exports = {
             hint: "Ctrl+S"
           },
           "*line": "",
-          "New Project": () => NewProject(),
+          "New Project": () => NewProject.open(),
           space1: "*line",
           Exit: {
             click: () => remote.app.exit(0),

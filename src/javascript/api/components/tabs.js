@@ -224,12 +224,6 @@ module.exports = {
         tab.appendChild(tab_x)
         document.getElementById(current_screen.id).children[0].appendChild(tab)
         tabs.push(tab)
-        const tab_created_event = new CustomEvent('tab_created', {
-          detail: {
-            tab: tab
-          }
-        })
-        document.dispatchEvent(tab_created_event)
         graviton.loadEditor({
           type: 'free',
           dir: id,
@@ -238,6 +232,12 @@ module.exports = {
         })
         filepath = null
         editingTab = id
+        const tab_created_event = new CustomEvent('tab_created', {
+          detail: {
+            tab: tab
+          }
+        })
+        document.dispatchEvent(tab_created_event)
         break
     }
     this.setData = function (data) {

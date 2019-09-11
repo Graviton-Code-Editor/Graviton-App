@@ -81,6 +81,7 @@ module.exports = {
                 selectTheme("1", themeDiv);
               }
               document.getElementById("theme_list").appendChild(themeDiv);
+              elasticContainer.append(document.getElementById("theme_list"),"horizontal")
             });
             if (themes.length == 0) {
               document.getElementById("theme_list").innerHTML = `
