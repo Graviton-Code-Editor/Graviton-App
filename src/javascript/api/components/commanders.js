@@ -1,3 +1,13 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espin Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
 module.exports = {
    commander: class {
       constructor(object, callback) {

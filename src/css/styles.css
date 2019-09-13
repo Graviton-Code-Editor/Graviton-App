@@ -586,3 +586,11 @@ navbar a.active {
 .list li{
    padding:5px;
 }
+
+.readme-container{
+   overflow: auto;
+}
+.readme-container * {
+   cursor: not-allowed;
+   pointer-events: none;
+}

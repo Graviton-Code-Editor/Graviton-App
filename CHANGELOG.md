@@ -2,6 +2,7 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+
 ### 190811 - 1 [1.2.0]
 - Added Elastic Container support for horizontal  contents
 - Re-added NewProject window

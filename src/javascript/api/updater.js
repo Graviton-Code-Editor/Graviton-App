@@ -23,8 +23,7 @@ module.exports = {
             console.log(i,res.length);
             console.log(res[i].tag_name,GravitonInfo.version)
             if (semver.gt(res[i].tag_name,GravitonInfo.version)) {
-              // New update detected
-              new Dialog({
+               new Dialog({
                 id: 'update',
                 title: `<strong>${GravitonInfo.state}</strong> Update avaiable !`,
                 content: getTranslation('DetectedUpdateMessage') + ' ' + res[i].tag_name + '?',
