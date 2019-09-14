@@ -64,13 +64,13 @@ module.exports = {
                 `graviton.setTheme('${theme.name}'); selectTheme('1',this); saveConfig();`
               );
               themeDiv.innerHTML = `
-                <p style="margin:11px 0; font-size:17px; line-height:2px;">${
+                <p style="margin:0px 0; font-size:17px;">${
                   theme.name
                 }</p>
-                <p style="font-size:14px;">${getTranslation(
+                <p style="font-size:14px; margin:12px 0px;">${getTranslation(
                   "MadeBy"
                 ) + theme.author}</p>
-                <p style="font-size:13px; line-height:2px;">${
+                <p style="font-size:13px; margin:12px 0px;">${
                   theme.description
                 }</p>
                 <div class="accent" style="background:${

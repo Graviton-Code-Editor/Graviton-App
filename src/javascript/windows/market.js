@@ -149,7 +149,6 @@ module.exports = {
             document.getElementById("sec_all").innerHTML = `
                           <div id=loading_exts>Loading extensions...</div>
                         `;
-            
             full_plugins.forEach(_plugin => {
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
@@ -519,9 +518,7 @@ module.exports = {
  
       const emitter = degit(plugin.repo.git.full_name);
       
-      emitter.on('info', info => {
-          console.log(info.message);
-      });
+      emitter.on('info', info => {});
       
       emitter.clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name)).then(() => {
         const installed_ext_event = new CustomEvent("extension_installed", {

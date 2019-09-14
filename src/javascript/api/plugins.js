@@ -42,7 +42,9 @@ module.exports = {
               _old_error = true;
               return call != undefined ? call() : "";
             }
-            const nodegit = require("nodegit");
+            const degit = require('degit');
+
+            
             request(
               `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
               function(error, response, body2) {
@@ -54,22 +56,21 @@ module.exports = {
                   return call != undefined ? call() : "";
                 }
                 const config = JSON.parse(body2);
-                nodegit
-                  .Clone(
-                    data.clone_url,
+                const emitter = degit(data.full_name);
+                emitter.on('info', info => {});
+                emitter.clone(
                     path.join(
                       plugins_folder.replace(/\\/g, "\\\\"),
                       config.name
                     )
-                  )
-                  .then(function(repository) {
-                    me.load(config, function() {
-                      loaded++;
-                      if (loaded == default_plugins.length) {
-                        return call != undefined ? call() : "";
-                      }
-                    });
+                ).then(() => {
+                  me.load(config, function() {
+                    loaded++;
+                    if (loaded == default_plugins.length) {
+                      return call != undefined ? call() : "";
+                    }
                   });
+                });
               }
             );
           });

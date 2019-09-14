@@ -77,10 +77,11 @@ input[type="number"]::selection {
    cursor: pointer;
    border-radius: 50px;
    outline: 0;
+   box-shadow: 0px 1px 1px rgba(0,0,0,0.15)
 }
 
 .switch {
-   width: 37px;
+   width: 40px;
    height: 20px;
    border-radius: 20px;
    margin: 4px;
@@ -92,11 +93,12 @@ input[type="number"]::selection {
 }
 
 .switch>div {
-   height: 16px;
-   width: 16px;
+   height: 13px;
+   width: 13px;
    border-radius: 50px;
    position: relative;
-   top: 2px;
+   top: 3.4px;
+   box-shadow: 0px 1px 1px rgba(0,0,0,0.15)
 }
 
 .switch:active {
@@ -104,12 +106,12 @@ input[type="number"]::selection {
 }
 
 .activated.switch {
-   background: var(--primaryColor);
+   background: var(--accentColor);
 }
 
 .activated.switch>div {
-   background: var(--accentColor);
-   left: 18px;
+   background: var(--secondaryColor);
+   left: 23px;
 }
 
 .desactivated.switch {
@@ -118,7 +120,7 @@ input[type="number"]::selection {
 
 .desactivated.switch>div {
    background: gray;
-   left: 3px;
+   left: 4px;
 }
 
 .disabled.switch {
@@ -784,9 +786,9 @@ button.button3:active {
 .extension_div {
    background: transparent;
    border: 2px solid var(--primaryColor);
-   max-width: 210px;
    min-width: 210px;
-   overflow: auto;
+   max-width: 210px;
+   overflow: hidden;
    float: left;
    position: relative;
    padding: 15px;
@@ -809,6 +811,26 @@ button.button3:active {
    top: 0;
 }
 
+.extension_div img {
+   position: relative;
+   margin-top: 0px;
+   min-height: 46px;
+   max-height: 46px;
+   min-width: 46px;
+   max-width: 46px;
+}
+
+
+.extension_div>div {
+  display: flex;
+  
+}
+.extension_div>div > div{
+   margin-top: 5px;
+   margin-left: 10px;
+   display: flex;
+   flex-direction: column;
+ }
 .extension_div h3 {
    margin: 2px 0px;
    line-height: 12px;
@@ -818,7 +840,7 @@ button.button3:active {
    overflow:hidden;
    white-space: nowrap; 
    text-overflow: ellipsis;
-   max-height: 18px;
+   max-width: 150px;
 }
 .extension_div p {
    font-size: 13px;

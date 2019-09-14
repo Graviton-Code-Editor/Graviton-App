@@ -146,13 +146,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 .theme_div {
    border-radius: 7px;
-   padding: 13px;
+   padding: 16px;
    margin: 8px 4px;
    display: inline-block;
-   min-width: 120px;
-   max-width: 250px;
-   overflow: auto;
-   width: auto;
+   min-width: 175px;
+   max-width: 175px;
+   text-overflow: ellipsis;
+   overflow: hidden;
    min-height: 110px;
    max-height: 110px;
    background: var(--primaryColor);
@@ -160,7 +160,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    cursor: pointer;
 }
 .theme_div p{
-   margin: 20px 2px;
+   text-overflow: ellipsis;
+   min-height: auto;
+   line-height: auto;
+   overflow: hidden;
 }
 
 .theme_div:not(.active):hover {
@@ -183,7 +186,6 @@ div.active {
 }
 
 .theme_div .accent {
-   transition: 0.05s;
    height: 14px !important;
    width: 14px !important;
    border: 2px solid var(--primaryColor);

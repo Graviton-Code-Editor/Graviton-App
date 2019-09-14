@@ -15,7 +15,7 @@ module.exports = {
   Setup: {
     open: function() {
       languages.map((lang,index)=>{
-        if(navigator.language.includes(languages[i].locale)){
+        if(navigator.language.includes(languages[index].locale)){
           loadLanguage(languages[i].name)
         }else if(index == languages.length+1){
           loadLanguage(languages[0]); 

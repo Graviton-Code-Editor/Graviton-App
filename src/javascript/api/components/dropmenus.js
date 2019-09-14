@@ -1,4 +1,5 @@
 /*
+
 ########################################
               MIT License
 
@@ -7,6 +8,24 @@ Copyright (c) 2019 Marc Espin Sanz
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
 #########################################
+
+*/
+
+/*
+
+const myDropMenu = new dropMenu({
+	id:"my_dropmenu"
+});
+
+myDropMenu.setList({
+  "button": "Button",
+  "list":{
+     "Click me!":{
+        click:()=> console.log("Clicked!")
+      }
+  }
+})
+
 */
 "use strict";
 
@@ -27,25 +46,13 @@ module.exports = {
        */
       let bar = document.getElementById("dropmenus_app");
       let exists = false;
-      if (document.getElementById(this.id + "_dropbtn") != undefined) {
+      if (document.getElementById(this.id + "_dropbtn") != null) {
         exists = true;
         var droplist = document.getElementById(this.id + "_dropbtn");
         droplist.innerHTML = ""; // Remove current code and then add the updated one
         var newTab = droplist.parentElement;
-        newTab.innerText = panel.button;
-        newTab.addEventListener(
-          "mouseover",
-          function() {
-            if (
-              anyDropON != null &&
-              anyDropON != this.getAttribute("g_id") + "_dropbtn"
-            ) {
-              Menus.trigger(`${this.getAttribute("g_id")}_dropbtn`);
-              this.focus();
-            }
-          },
-          false
-        );
+        newTab.children[0].innerText = panel.button;
+        console.log(newTab.children[0]);
       } else {
         var newTab = document.createElement("div");
         var droplist = document.createElement("div");
@@ -61,9 +68,7 @@ module.exports = {
         }_dropbtn')" class="dropbtn" >${panel["button"]}</button>`;
       } else {
         newTab.innerHTML = `
-        <button g_id="${
-          this.id
-        }" class=" translate_word dropbtn " idT="${panel[
+        <button g_id="${this.id}" class=" translate_word dropbtn " idT="${panel[
           "button"
         ].replace(/ +/g, "")}" onclick="Menus.trigger('${
           this.id
@@ -137,23 +142,20 @@ module.exports = {
         }
       });
       newTab.appendChild(droplist);
-
-      if (exists === false) {
-        bar.appendChild(newTab);
-        newTab.children[0].addEventListener(
-          "mouseover",
-          function() {
-            if (
-              anyDropON != null &&
-              anyDropON != this.getAttribute("g_id") + "_dropbtn"
-            ) {
-              Menus.trigger(`${this.getAttribute("g_id")}_dropbtn`);
-              this.focus();
-            }
-          },
-          false
-        );
-      }
+      if (exists === false) bar.appendChild(newTab);
+      newTab.children[0].addEventListener(
+        "mouseover",
+        function() {
+          if (
+            anyDropON != null &&
+            anyDropON != this.getAttribute("g_id") + "_dropbtn"
+          ) {
+            Menus.trigger(`${this.getAttribute("g_id")}_dropbtn`);
+            this.focus();
+          }
+        },
+        false
+      );
     };
   }
 };

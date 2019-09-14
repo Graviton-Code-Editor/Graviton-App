@@ -5,8 +5,11 @@
 
 ## New
 
-- Plugins can now show screenshoots on the market
+- Readded the New Project page
+- Implemented a loading bar in Market
+- Plugins can now show screenshoots in Market
+- Improved creating files and folders dialogs
 
 ## Bug fixes
 
-- Couldn't force close an unsaved tab
+- Couldn't force to close an unsaved tab

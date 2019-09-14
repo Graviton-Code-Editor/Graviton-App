@@ -1,8 +1,13 @@
 `
 <div onclick=Market.openSubExtensions(this) class=extension_div id=${sec_ID} name=${plugin.local.name} update=${new_update}>
    ${new_update?icons["update"]:""}
-   <h3>${plugin.local.name} </h3>
-   <p class=description>${plugin.local.description} </p>
+   <div >
+         ${plugin.local.logo!=undefined? `<img src=${path.join(plugins_folder,plugin.local.name,plugin.local.logo)}>`:`<img src=${graviton.getTypePlugin(plugin.local) == "theme" || graviton.getTypePlugin(plugin.local) == "custom_theme" ? "src/icons/default_logo_theme.svg":"src/icons/default_logo_plugin.svg"}>`}
+         <div>
+            <h3>${plugin.local.name} </h3>
+            <p class=description>${plugin.local.description} </p>
+         </div>
+      </div>
    <p class=installed>v${plugin.local.version}${plugin.repo!=undefined?` ${plugin.repo.git.stargazers_count!=undefined? `· ${plugin.repo.git.stargazers_count} ${icons.star}`:""}`:""} </p>
 </div>
 `

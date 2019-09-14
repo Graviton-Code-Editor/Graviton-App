@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190814 - 2 [1.2.0]
+- Market now shows plugin's logo
+- Fixed, "Installing themes" screen was never quited
+- New switches design
+- Prevent from breaking dropmenus when it's list are changed
+
 ### 190814 - 1 [1.2.0]
 - Implemented a loading bar in the market
 

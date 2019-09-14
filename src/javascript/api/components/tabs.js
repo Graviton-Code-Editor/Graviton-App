@@ -39,10 +39,6 @@ module.exports = {
    * @param {string} data  the tab's content
    */
   Tab: function ({id,type,name,path,data}) {
-    if (typeof [...arguments] !== 'object') {
-      graviton.throwError('Parsed argument is not ')
-      return
-    }
     this.type = type
     this.id = id
     switch (type) {

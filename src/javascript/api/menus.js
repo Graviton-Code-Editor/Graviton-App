@@ -210,6 +210,8 @@ module.exports = {
           }
         }
       });
+
+      
     },
     trigger: id => {
       const dropdowns = document.getElementsByClassName("dropdown-content");

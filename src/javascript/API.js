@@ -651,6 +651,21 @@ graviton = {
       }
     }
   },
+  getTypePlugin(config){
+      if (config.icons!=undefined) {
+        return "custom_theme"
+      }
+      if (config.css!=undefined) {
+        return "custom_theme"
+      }
+      if (config.colors!=undefined) {
+        return "theme"
+      }
+      if (config.main!=undefined) {
+        return "plugin"
+      }
+
+  },
   windowContent (id, content) {
     document.getElementById(`${id}_body`).innerHTML = content
   },
@@ -960,3 +975,4 @@ graviton.closeDropmenus = function () {
     }
   }
 }
+

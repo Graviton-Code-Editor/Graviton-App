@@ -606,10 +606,13 @@ navbar a.active {
    position: absolute;
    border-radius: 100px;
    box-sizing: border-box;
+   border-top-right-radius: 0px;
+   border-bottom-right-radius: 0px;
 }
 #market_loader > .bg{
    background: var(--widget-color);
    width:100%;
    position: absolute;
    z-index:-1;
+   border-radius: 100px;
 }
