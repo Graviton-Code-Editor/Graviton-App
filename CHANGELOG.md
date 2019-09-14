@@ -2,6 +2,8 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190814 - 1 [1.2.0]
+- Implemented a loading bar in the market
 
 ### 190811 - 1 [1.2.0]
 - Added Elastic Container support for horizontal  contents

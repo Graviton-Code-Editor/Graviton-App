@@ -17,10 +17,9 @@ module.exports = {
       const market_window = new Window({
         id: "market_window",
         content: `
-          <div class=center>
-            <div class="spinner">
-              <div></div> 
-            </div>
+          <div id=market_loader class="center">
+            <div></div>
+            <div class=bg></div>
           </div>
                 `
       });
@@ -358,6 +357,9 @@ module.exports = {
                 me.loadMenus();
                 return callback(3);
               }
+              if(start===0){
+                document.getElementById("market_loader").children[0].style.width = i*20+20+"%";
+              }
               if (i == current_plugins - 1) {
                 let date = new Date();
                 date = Number(
@@ -388,6 +390,7 @@ module.exports = {
                 }
                 if (callback != undefined) callback();
               }
+              
             }
           );
         });

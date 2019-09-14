@@ -594,3 +594,22 @@ navbar a.active {
    cursor: not-allowed;
    pointer-events: none;
 }
+
+#market_loader{
+   width: 300px;
+   border-radius: 100px;
+}
+#market_loader > div{
+   background: var(--accentColor);
+   height: 15px;
+   width:10px;
+   position: absolute;
+   border-radius: 100px;
+   box-sizing: border-box;
+}
+#market_loader > .bg{
+   background: var(--widget-color);
+   width:100%;
+   position: absolute;
+   z-index:-1;
+}
