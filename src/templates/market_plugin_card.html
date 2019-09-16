@@ -2,8 +2,8 @@
 <div onclick=Market.openSubExtensions(this) class=extension_div id=${sec_ID} name=${_package.name} update=${new_update}>
    ${_new_update?icons["update"]:""}
    <div >
-      ${_package.logo!=undefined? `<img src=${"https://raw.githubusercontent.com/"+data.owner.login+"/"+data.name+"/master/"+_package.logo+"?sanitize=true"}>`:`<img src=${graviton.getTypePlugin(_package) == "theme" || graviton.getTypePlugin(_package) == "custom_theme" ? "src/icons/default_logo_theme.svg":"src/icons/default_logo_plugin.svg"}>`}
-      <div>
+      ${_package.logo!=undefined? `<img src=${"https://raw.githubusercontent.com/"+data.owner.login+"/"+data.name+"/master/"+_package.logo+"?sanitize=true"}>`: graviton.getTypePlugin(_package) == "theme" || graviton.getTypePlugin(_package) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>"}
+      <div class=text>
          <h3>${data.name} </h3>
          <p class=description>${data.description} </p>
       </div>

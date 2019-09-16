@@ -1,0 +1,210 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espin Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+.g_lateral_panel {
+   width: 20%;
+   min-width: 200px;
+   padding: 20px;
+   margin: 15px 0;
+}
+
+
+.navbar {
+   height: auto;
+   width: 100%;
+   overflow: auto;
+   position: relative;
+   padding: 15px 0;
+}
+
+#_content2>div {
+   overflow: auto;
+}
+
+.navbar button {
+   font-family: _main_font;
+   font-size: 15px;
+   color: var(--white-black);
+   background-color: transparent;
+   padding: 7px 10px;
+   width: 80%;
+   text-decoration: none;
+   display: block;
+   border: 0;
+   margin: 2px 0px;
+   border-radius: 5px;
+   text-align: left;
+   transform: scale(1);
+   position: relative;
+}
+
+.navbar button:hover {
+   color: var(--accentColor);
+   cursor: pointer;
+}
+
+.navbar button.active {
+   cursor: pointer;
+   transition: 0.05s;
+   background: var(--accentColor);
+   color: var(--black-white);
+}
+
+.navbar button.active:hover {
+   background: var(--accentDarkColor);
+}
+
+.top_panel{
+   overflow:auto;
+   min-height:130px;
+   max-height:130px;
+   margin:15px 0px;
+   margin-bottom: 5px;
+}
+.align-center{
+   display: flex;
+   align-content: center;
+   justify-content: center;
+   margin-top: 15px;
+}
+
+#settings_window_body,
+#market_window_body {
+   display: flex;
+}
+
+#market_window_body {
+   display: flex;
+   flex-direction: column;
+}
+
+.window_content {
+   margin: 20px 0;
+   padding: 20px;
+   width: 80%;;
+   overflow: auto;
+   box-shadow: 0px 2px 12px var(--shadows);
+   border-radius: 8px;
+}
+
+.window_content.width-auto {
+   width: auto;
+   box-shadow: none;
+   align-content: center;
+   margin:1px;
+   min-height: auto;
+}
+
+#theme_list {
+   overflow: auto;
+   width: 100%;
+   height: auto;
+   overflow: auto;
+   white-space: nowrap;
+}
+
+.theme_div {
+   border-radius: 7px;
+   padding: 16px;
+   margin: 8px 4px;
+   display: inline-block;
+   min-width: 175px;
+   max-width: 175px;
+   text-overflow: ellipsis;
+   overflow: hidden;
+   min-height: 110px;
+   max-height: 110px;
+   background: var(--primaryColor);
+   color: var(--white-black);
+   cursor: pointer;
+}
+.theme_div p{
+   text-overflow: ellipsis;
+   min-height: auto;
+   line-height: auto;
+   overflow: hidden;
+}
+
+.theme_div:not(.active):hover {
+   background: var(--widget-color);
+   cursor: pointer;
+}
+
+.theme_div.active:hover {
+   background: var(--accentDarkColor);
+   cursor: pointer;
+}
+
+.theme_div:active {
+   transform: scale(var(--scalation));
+}
+
+div.active {
+   background: var(--accentColor);
+   color: white;
+}
+
+.theme_div .accent {
+   height: 14px !important;
+   width: 14px !important;
+   border: 2px solid var(--primaryColor);
+   border-radius: 50px;
+}
+
+.theme_div:hover:not(.active) .accent {
+   transition: 0.05s;
+   border: 2px solid var(--widget-color);
+}
+
+#language_list {
+   overflow: auto;
+   width: 100%;
+   height: auto;
+   position: relative;
+   top: 0;
+   left: 0;
+}
+
+#language_list.welcome {
+   margin: -20px 0px;
+   max-height: 55%;
+}
+
+#settings_content p {
+   font-size: 14px;
+   line-height: 20px;
+   margin: 16px 0px;
+}
+
+.language_div {
+   transition: 0.05s;
+   border-radius: 7px;
+   padding: 10px;
+   margin: 5px;
+   min-width: 80px;
+   width: auto;
+   background: var(--primaryColor);
+   color: var(--white-black);
+   transform: scale(1);
+   cursor: pointer;
+   font-size: 14px;
+}
+
+.language_div:not(.active):hover {
+   transition: 0.05s;
+   background: var(--widget-color);
+}
+
+.language_div:active {
+   transition: 0.05s;
+   transform: scale(var(--scalation));
+}
+

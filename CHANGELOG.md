@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190816 - 1 [1.2.0]
+- Plugin logos now appear also on the subpage
+
+### 190815 - 1 [1.2.0]
+- Plugins that doesn't have a logo will have a dynamic logo
+
 ### 190814 - 2 [1.2.0]
 - Market now shows plugin's logo
 - Fixed, "Installing themes" screen was never quited

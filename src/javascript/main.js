@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190814",
+  date: "190815",
   version: "1.2.0",
   state: "Beta"
 };
@@ -427,9 +427,7 @@ const create = {
         element.getAttribute("dir"),
         element.id,
         element.getAttribute("global"),
-        function() {
-          //Created the new folder
-        }
+        () => { /* created folder */ } 
       );
     } else {
       new Notification({
