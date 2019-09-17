@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190817 - 1 [1.2.0]
+- Better icon detector for plugins in market
+- Fixed, the plugin update detector was broken
+
 ### 190816 - 1 [1.2.0]
 - Plugin logos now appear also on the subpage
 

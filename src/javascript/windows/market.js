@@ -157,13 +157,21 @@ module.exports = {
                 document.getElementById("loading_exts").remove();
               }
               const sec_ID = "sec" + Math.random().toString();
+              if(plugin.local!=undefined){
+                console.log( semver.gt(
+                  semver.parse(_package.version),
+                  semver.parse(plugin.local.version)
+                ))
+                console.log(_package.version,plugin.local.version)
+              }
               const _new_update =
                 plugin.local != undefined
                   ? semver.gt(
-                      semver.parse(_package.version).version,
-                      semver.parse(plugin.local.version).version
+                      semver.parse(_package.version),
+                      semver.parse(plugin.local.version)
                     )
                   : false;
+                  console.log(_new_update)
               document.getElementById(
                 "sec_all"
               ).innerHTML += graviton.getTemplate(
@@ -171,7 +179,7 @@ module.exports = {
                 `
                     const sec_ID = "${sec_ID}";
                     const _package = ${JSON.stringify(_package)};
-                    const _new_update = ${new_update};
+                    const _new_update = ${_new_update};
                     const plugin = ${JSON.stringify(plugin)};
                     const data = ${JSON.stringify(data)} ;
                     `
@@ -210,11 +218,12 @@ module.exports = {
                 document.getElementById("loading_exts2").remove();
               }
               const plugin = graviton.getPlugin(_data.name);
+              if(plugin.repo!=undefined)console.log(plugin.repo.package.version,plugin.local.version)
               const new_update =
                 plugin.repo != undefined
                   ? semver.gt(
-                      semver.parse(plugin.repo.package.version).version,
-                      semver.parse(plugin.local.version).version
+                      semver.parse(plugin.repo.package.version),
+                      semver.parse(plugin.local.version)
                     )
                   : false;
               const sec_ID = "sec" + Math.random().toString();
@@ -268,10 +277,9 @@ module.exports = {
                 ).innerHTML += graviton.getTemplate(
                   "market_plugin_card",
                   `
-      
                     const sec_ID = "${sec_ID}";
                     const _package = ${JSON.stringify(_package)};
-                    const _new_update = ${new_update};
+                    const _new_update = ${_new_update};
                     const plugin = ${JSON.stringify(plugin)};
                     const data = ${JSON.stringify(data)} ;
       
@@ -345,8 +353,8 @@ module.exports = {
               const _new_update =
                 plugin.local != undefined
                   ? semver.gt(
-                      semver.parse(_package.version).version,
-                      semver.parse(plugin.local.version).version
+                      semver.parse(_package.version),
+                      semver.parse(plugin.local.version)
                     )
                   : false;
               if (_new_update) {

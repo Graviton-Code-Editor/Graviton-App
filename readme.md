@@ -13,32 +13,32 @@
 
 Changes on this source may not be released as an official build yet.
 
-Graviton is a cross-platform editor with a minimalist looking. Somethings about it:
-
-- Themes
-- Plugins
-- Splitted screens
-- Built-in terminal
-- Tons of supported programming languages
-- Zen mode
-- An integrated plugins & themes market
-
-**[Changelog](CHANGELOG.md)**
-
-Social media:
+✨ Highlights:
 ---
 
-Telegram channel: https://t.me/gravitoneditor
+* 🎨 Themes 
+* 📦 Plugins 
+* 🖇  Infinite splitted screens 
+* 🕹  Built-in terminal 
+* 🏭 A Plugin and Themes Market 
+* 😇 More respectful of RAM than many alternatives 
+* ✔  Tons of supported programming languages 
+* 📝 Multi line editing 
+* 🎧 Zen mode 
 
-Discord server: https://discord.gg/gg6CTYA
+**[Commit Changelog](CHANGELOG.md)**
 
-Twitter: https://twitter.com/gravitoneditor
-
-
-Contributing (working on) ⚙
+📣 Social media:
 ---
 
-**[Documentatiom](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)**
+* [Telegram Channel](https://t.me/gravitoneditor)
+* [Discord Server](https://discord.gg/gg6CTYA)
+* [Twitter](https://twitter.com/gravitoneditor)
+
+⚙ Contributing (working on) 
+---
+
+**[Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)**
 
 **[Code of conduct](CODE_OF_CONDUCT.md)**
 
@@ -54,28 +54,28 @@ Some ways to contribute to Graviton's project:
 For people who translates to a new language:
 Please consider revising and updating your languages in case they are missing some new strings.
 
-Authors 👽
+👽 Authors 
 ---
 
-### Main Developer:
+#### Main Developer:
 * Marc Espín [Github](https://github.com/marc2332)
 
-### Main Contributors:
+#### Main Contributors:
 * Max1Truc [Github](https://github.com/Max1Truc)
 * David Niederweis [Github](https://github.com/DJN1)
 
-### Credits:
-* Miguel Ranger for first autocompletation version
+#### Credits:
+* Miguel Ranger for first autocomplete version
 * Old logo by Saúl Blanco
 * Advices from León Alvarez
 
 
-Useful libraries 🤩
+🤩 Useful libraries 
 ---
 * [CodeMirror](https://codemirror.net/)
 * [OpenEmoji](https://openmoji.org)
 
-Donating 🎁
+🎁 Donating 
 ---
 
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
@@ -92,7 +92,7 @@ Thank you for the donations!
 
 And all people who helped me :)
 
-Available platforms 💻🖥
+💻🖥 Available platforms 
 ---
 
 **Windows**
@@ -112,18 +112,18 @@ Available platforms 💻🖥
 
 The current state is beta, check the releases page to download the latest version. 
 
-Building 🧱
+🧱Building 
 ---
 Do you want to build Graviton from source?
 
 **Check [this](BUILDING.md)**
 
-Known problems 😓
+😓 Known problems 
 ---
 - May not open on some Linux systems
 - Terminal might not work very well (Windows)
 
-License 🧾
+🧾License 
 ---
 MIT License
 

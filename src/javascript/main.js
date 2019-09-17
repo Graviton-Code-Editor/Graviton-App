@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190815",
+  date: "190817",
   version: "1.2.0",
   state: "Beta"
 };
@@ -267,17 +267,17 @@ preload([
 ]);
 
 window.onload = function() {
-  fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
+  fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => { /* Load UI templates */
     let temporal_count = 0;
     paths.forEach((dir, index) => {
       fs.readFile(
         path.join(__dirname, "src", "templates", dir),
         "utf8",
         function(err, data) {
-          templates[path.basename(dir, ".html")] = data;
+          templates[path.basename(dir, ".js")] = data;
           temporal_count++;
           if (temporal_count == paths.length) {
-            fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
+            fs.readdir(path.join(__dirname, "languages"), (err, paths) => {  /* Load languages */
               let path_count = paths.length;
               paths.forEach(dir => {
                 fs.readFile(

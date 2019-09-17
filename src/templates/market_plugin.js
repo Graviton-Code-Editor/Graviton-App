@@ -3,7 +3,49 @@
 <button class="button1 close_exts" onclick="closeWindow('sec${name}')">${icons.close}</button>
 <div class=sub_extension_div id=${name+ '_div'}>
    <div class="top">
-         ${plugin.local !=undefined ? plugin.repo.package.logo!=undefined? `<img  src=${"https://raw.githubusercontent.com/"+plugin.repo.git.owner.login+"/"+plugin.repo.git.name+"/master/"+plugin.local.logo+"?sanitize=true"}>`: plugin.local.logo!=undefined? `<img  src=${path.join(plugins_folder,plugin.local.name,plugin.local.logo)}>`: graviton.getTypePlugin(plugin.local) == "theme" || graviton.getTypePlugin(plugin.local) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>":graviton.getTypePlugin(plugin.repo.package) == "theme" || graviton.getTypePlugin(plugin.repo.package) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>"}
+      ${(function(){
+         console.log(update)
+         /* 
+
+            If plugin is not installed:
+
+               Case 1( It has a logo):
+                  The logo is loaded directly from the source repository
+
+               Case 2(It doesn't have any logo):
+                  It shows a dynamic logo  base on the repository's package.json
+
+            If plugin is installed:
+
+               Case 1( It has a logo):
+                  The logo is loaded locally
+                  
+               Case 2(It doesn't have any logo):
+                  It shows a dynamic logo base on the local package.json
+
+         */
+         if(plugin.local !=undefined){
+            if(plugin.local.logo !=undefined){  /* LOCAL LOGO */
+               return `<img  src=${path.join(plugins_folder,plugin.local.name,plugin.local.logo)}>`
+            }else{
+               if(plugin.repo !=undefined){
+                  if(plugin.repo.package.logo!=undefined){ /* ONLINE LOGO */
+                     return `<img  src=${"https://raw.githubusercontent.com/"+plugin.repo.git.owner.login+"/"+plugin.repo.git.name+"/master/"+plugin.local.logo+"?sanitize=true"}>`
+                  }else{ /* DYNAMIC ONLINE LOGO */
+                     return  graviton.getTypePlugin(plugin.repo.package) == "theme" || graviton.getTypePlugin(plugin.repo.package) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>"
+                  }
+               }else{ /* DYNAMIC LOCAL LOGO */
+                  return  graviton.getTypePlugin(plugin.local) == "theme" || graviton.getTypePlugin(plugin.local) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>"
+               }
+            }
+         }else{ /* DYNAMIC ONLINE LOGO */
+              if(plugin.repo.package.logo !=undefined){
+                  return `<img  src=${"https://raw.githubusercontent.com/"+plugin.repo.git.owner.login+"/"+plugin.repo.git.name+"/master/"+plugin.repo.package.logo+"?sanitize=true"}>`
+              }else{
+                  return graviton.getTypePlugin(plugin.repo.package) == "theme" || graviton.getTypePlugin(plugin.repo.package) == "custom_theme" ? "<div class=img >"+icons.market_theme+"</div>":"<div class=img >"+icons.market_plugin+"</div>"
+              } 
+         }
+      })()}
       <div>
          <h1>${name}</h1>
          <p>${plugin.repo!=undefined?plugin.repo.package.description:plugin.local.description}</p>

@@ -12,4 +12,5 @@
 
 ## Bug fixes
 
+- Plugin update detector
 - Couldn't force to close an unsaved tab
