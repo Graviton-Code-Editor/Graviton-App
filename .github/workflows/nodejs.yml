@@ -4,11 +4,11 @@ on: [push]
 
 jobs:
   build:
-  runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest , windows-latest , macOS]
-        node-version: [8.x, 10.x, 12.x]
+        os: [ubuntu-latest, windows-latest, macOS]
+        node-version: [12.x]
 
     steps:
     - uses: actions/checkout@v1
