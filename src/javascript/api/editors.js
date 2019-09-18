@@ -78,17 +78,6 @@ module.exports = {
           });
           editorID = new_editor_text.id;
           editor = new_editor_text.editor;
-          graviton.changeLanguageStatusBar(
-            getLanguageName(
-              getFormat(path.basename(dir)).lang != "unknown"
-                ? getFormat(path.basename(dir)).lang
-                : path
-                    .basename(dir)
-                    .split(".")
-                    .pop()
-            ),
-            screen
-          );
           text_container.style.display = "block";
           codemirror.on("cursorActivity", function(a) {
             for (i = 0; i < editors.length; i++) {
@@ -112,7 +101,6 @@ module.exports = {
             graviton.closeDropmenus();
             graviton.focusScreen(a.options.screen);
           });
-          graviton.refreshStatusBarLinesAndChars(screen);
           graviton.focusScreen(screen);
           break;
         case "font":
@@ -151,8 +139,6 @@ module.exports = {
             dir.replace(/\\/g, "") + "_editor"
           ).style.display = "block";
           editorID = new_editor_font.id;
-          graviton.changeLanguageStatusBar("Font", screen);
-          graviton.refreshStatusBarLinesAndChars(screen);
           graviton.focusScreen(screen);
           break;
         case "image":
@@ -188,8 +174,6 @@ module.exports = {
             dir.replace(/\\/g, "") + "_editor"
           ).style.display = "block";
           editorID = new_editor_image.id;
-          graviton.changeLanguageStatusBar("Image", screen);
-          graviton.refreshStatusBarLinesAndChars(screen);
           graviton.focusScreen(screen);
           break;
         case "free":
@@ -223,8 +207,6 @@ module.exports = {
             dir.replace(/\\/g, "") + "_editor"
           ).style.display = "block";
           editorID = new_editor_free.id;
-          graviton.changeLanguageStatusBar("", screen);
-          graviton.refreshStatusBarLinesAndChars(screen);
           graviton.focusScreen(screen);
           break;
       }
@@ -241,32 +223,10 @@ module.exports = {
           if (editors[i].editor != undefined) {
             // Editors
             editor = editors[i].editor;
-            graviton.changeLanguageStatusBar(
-              getLanguageName(
-                getFormat(path.basename(dir)).lang != "unknown"
-                  ? getFormat(path.basename(dir)).lang
-                  : path
-                      .basename(dir)
-                      .split(".")
-                      .pop()
-              ),
-              screen
-            );
           } else {
             editor = undefined;
-            switch (type) {
-              case "free":
-                graviton.changeLanguageStatusBar("", screen);
-                break;
-              case "image":
-                graviton.changeLanguageStatusBar("Image", screen);
-                break;
-              case "font":
-                graviton.changeLanguageStatusBar("Font", screen);
-                break;
-            }
+            
           }
-          graviton.refreshStatusBarLinesAndChars(screen);
           editorID = editors[i].id;
           document.getElementById(editorID).style.display = "block";
           if (editor != undefined) editor.refresh();
