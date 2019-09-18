@@ -19,7 +19,9 @@ jobs:
     - name: Building
       run: |
         npm install
+        echo INSTALLED
         npm run build 
+        echo BUILT
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
