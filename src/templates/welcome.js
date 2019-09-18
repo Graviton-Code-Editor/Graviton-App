@@ -1,7 +1,7 @@
 `
 <h2 idT="Welcome" class='translate_word window_title'>${ getTranslation("Welcome") }
 </h2>
-<div class="flex">
+<div style="height:70%;" class="flex">
    <div id="recent_projects" class="horizontal">
       <elastic-container>
          <div class="flex-2">

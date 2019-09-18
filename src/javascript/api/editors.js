@@ -1,5 +1,5 @@
 module.exports = {
-  loadEditor: ({ dir, type, data, screen }) => {
+  loadEditor: ({ dir, type, data, screen },callback) => {
     if (
       document.getElementById(dir.replace(/\\/g, "") + "_editor") == undefined
     ) {
@@ -228,6 +228,7 @@ module.exports = {
           graviton.focusScreen(screen);
           break;
       }
+      if(callback!=undefined) callback();
     } else {
       for (i = 0; i < editors.length; i++) {
         if (
@@ -270,6 +271,7 @@ module.exports = {
           document.getElementById(editorID).style.display = "block";
           if (editor != undefined) editor.refresh();
         }
+        if(callback!=undefined) callback(editor);
       }
     }
 

@@ -20,6 +20,8 @@ Changes on this source may not be released as an official build yet.
 * 📦 Plugins 
 * 🖇  Infinite splitted screens 
 * 🕹  Built-in terminal 
+* 🗺 Built-in image previewer
+* 📰 Built-in font previewer
 * 🏭 A Plugin and Themes Market 
 * 😇 More respectful of RAM than many alternatives 
 * ✔  Tons of supported programming languages 

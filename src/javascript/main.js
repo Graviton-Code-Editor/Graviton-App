@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190817",
+  date: "190818",
   version: "1.2.0",
   state: "Beta"
 };
@@ -775,4 +775,54 @@ function selectTheme(from, theme) {
     themes_divs[i].classList.remove("active");
   }
   theme.classList.add("active");
+}
+
+try{
+  document.addEventListener("screen_loaded",(e)=>{
+    setTimeout(()=>{
+      const screen = e.detail.screen;
+      function refreshStats(id = current_screen.id){
+        if(id!=screen) return;
+        langController.setText(graviton.getLanguage());
+        langController.setHint(`Current: ${graviton.getLanguage()}`);
+        if(editor==undefined) {
+          counter.hide()
+          return;
+        }
+        counter.show()
+        counter.setText(editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1))
+        counter.setHint(`Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`)
+        editor.on("cursorActivity", function(a) {
+          counter.setText(editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1))
+          counter.setHint(`Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`)
+          counter.show()
+        });
+      }
+      let langController = new Control({
+        text : graviton.getLanguage(),
+        hint:`Current: ${graviton.getLanguage()}`
+      });
+      if(editor!=undefined){
+        var counter = new Control({
+          text : editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1),
+          hint : `Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`
+        });
+        refreshStats()
+      }else{
+        var counter = new Control({
+          text : "",
+        });
+        counter.hide()
+        refreshStats()
+      }
+      document.addEventListener("tab_loaded",(e)=>{
+        refreshStats(e.detail.screen)
+      })
+      document.addEventListener("tab_created",()=>{
+        refreshStats()
+      })
+    },50)
+  })
+}catch(err){
+  graviton.consoleWarn("This graviton doesn't support Control Component",err)
 }

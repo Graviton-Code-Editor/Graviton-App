@@ -96,12 +96,7 @@ module.exports = {
             tabs.push(tab)
             const g_newPath = path
             filepath = g_newPath
-            const tab_created_event = new CustomEvent('tab_created', {
-              detail: {
-                tab: tab
-              }
-            })
-            document.dispatchEvent(tab_created_event)
+            
             switch (filepath.split('.').pop()) {
               case 'woff2':
               case 'ttf':
@@ -121,7 +116,24 @@ module.exports = {
                   dir: filepath,
                   data: null,
                   screen: current_screen.id
-                })
+                },function(){
+                    editingTab = id
+                    const tab_created_event = new CustomEvent('tab_created', {
+                      detail: {
+                        tab: tab
+                      }
+                    })
+                    document.dispatchEvent(tab_created_event)
+                    if(document.getElementById(current_screen.id).children[0].children.length === 1){
+                      const screen_loaded_event = new CustomEvent('screen_loaded', {
+                        detail: {
+                          tab: tab,
+                          screen:current_screen.id
+                        }
+                      })
+                      document.dispatchEvent(screen_loaded_event)
+                    }
+                  })
                 break
               case 'svg':
               case 'png':
@@ -143,7 +155,24 @@ module.exports = {
                   dir: filepath,
                   data: null,
                   screen: current_screen.id
-                })
+                },function(){
+                    editingTab = id
+                    const tab_created_event = new CustomEvent('tab_created', {
+                      detail: {
+                        tab: tab
+                      }
+                    })
+                    document.dispatchEvent(tab_created_event)
+                    if(document.getElementById(current_screen.id).children[0].children.length === 1){
+                      const screen_loaded_event = new CustomEvent('screen_loaded', {
+                        detail: {
+                          tab: tab,
+                          screen:current_screen.id
+                        }
+                      })
+                      document.dispatchEvent(screen_loaded_event)
+                    }
+                  })
                 break
               default:
                 fs.readFile(g_newPath, 'utf8', function (err, data) {
@@ -165,7 +194,23 @@ module.exports = {
                     dir: g_newPath,
                     data: data,
                     screen: current_screen.id
-                  })
+                  },function(){
+                    const tab_created_event = new CustomEvent('tab_created', {
+                      detail: {
+                        tab: tab
+                      }
+                    })
+                    document.dispatchEvent(tab_created_event)
+                    if(document.getElementById(current_screen.id).children[0].children.length === 1){
+                      const screen_loaded_event = new CustomEvent('screen_loaded', {
+                        detail: {
+                          tab: tab,
+                          screen:current_screen.id
+                        }
+                      })
+                      document.dispatchEvent(screen_loaded_event)
+                    }
+                    })
 
                   editor.refresh()
                 })
@@ -225,15 +270,26 @@ module.exports = {
           dir: id,
           data: data,
           screen: current_screen.id
-        })
-        filepath = null
-        editingTab = id
-        const tab_created_event = new CustomEvent('tab_created', {
-          detail: {
-            tab: tab
+        },function(){
+          filepath = null
+          editingTab = id
+          const tab_created_event = new CustomEvent('tab_created', {
+            detail: {
+              tab: tab
+            }
+          })
+          document.dispatchEvent(tab_created_event)
+          if(document.getElementById(current_screen.id).children[0].children.length === 1){
+            const screen_loaded_event = new CustomEvent('screen_loaded', {
+              detail: {
+                tab: tab,
+                screen:current_screen.id
+              }
+            })
+            document.dispatchEvent(screen_loaded_event)
           }
-        })
-        document.dispatchEvent(tab_created_event)
+          })
+        
         break
     }
     this.setData = function (data) {
@@ -344,12 +400,7 @@ module.exports = {
           tabs[i].classList.remove('selected')
         }
       }
-      const tab_loaded_event = new CustomEvent('tab_loaded', {
-        detail: {
-          tab: object
-        }
-      })
-      document.dispatchEvent(tab_loaded_event)
+      
       object.classList.add('selected')
       const g_newPath = object.getAttribute('longpath')
       filepath = g_newPath
@@ -360,6 +411,13 @@ module.exports = {
         screen: object.getAttribute('screen')
       })
       editingTab = object.id
+      const tab_loaded_event = new CustomEvent('tab_loaded', {
+        detail: {
+          tab: object,
+          screen: object.getAttribute('screen')
+        }
+      })
+      document.dispatchEvent(tab_loaded_event)
     }
   }
 }

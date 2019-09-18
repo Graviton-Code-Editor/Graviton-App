@@ -124,6 +124,8 @@ module.exports = {
          case 'toml':
          case 'rs':
             return 'Rust'
+         case 'image':
+            return 'Image'
          default:
             return format
       }

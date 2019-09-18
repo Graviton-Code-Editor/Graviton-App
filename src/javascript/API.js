@@ -760,6 +760,16 @@ graviton = {
       This is to avoid API issues whern there are breaking changes.
     */
     return terminal;
+  },
+  getLanguage(){
+    return getLanguageName(
+      getFormat(path.basename(graviton.getCurrentFile().path)).lang != "unknown"
+        ? getFormat(path.basename(graviton.getCurrentFile().path)).lang
+        : path
+            .basename(graviton.getCurrentFile().path)
+            .split(".")
+            .pop()
+    )
   }
 }
 
@@ -976,3 +986,22 @@ graviton.closeDropmenus = function () {
   }
 }
 
+function Control({text,hint}){
+  this.text = text;
+  const controlSpan = document.createElement("span");
+  controlSpan.innerText = text;
+  if(hint!=undefined) controlSpan.title = hint;
+  document.getElementById(current_screen.id).children[2].appendChild(controlSpan);
+  this.setText = (newText)=>{
+    controlSpan.innerText = newText;
+  }
+  this.setHint = (newHint)=>{
+    controlSpan.title = newHint;
+  }
+  this.hide = ()=>{
+    controlSpan.style.display = "none";
+  }
+  this.show = ()=>{
+    controlSpan.style.display = "block";
+  }
+}

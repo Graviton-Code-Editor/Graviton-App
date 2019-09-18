@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190818 - 1 [1.2.0]
+- Updated Electron to version 6
+- Bug fixes
+- New Component called Control
+
 ### 190817 - 1 [1.2.0]
 - Better icon detector for plugins in market
 - Fixed, the plugin update detector was broken
