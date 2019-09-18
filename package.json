@@ -15,7 +15,6 @@
     "build:win:linux": "build --linux && build --win ",
     "rebuild": "electron-rebuild -f -w node-pty",
     "standard": "standard --fix",
-    "postinstall": "electron-builder install-app-deps",
     "test": "mocha test"
   },
   "standard": {
