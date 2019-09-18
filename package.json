@@ -23,12 +23,7 @@
       "/node_modules",
       "/build",
       "/dist",
-      "/languages",
-      "/plugins",
-      "/themes",
-      "/src/lib",
-      "/src/mode",
-      "/src/addons"
+      "/languages"
     ]
   },
   "keywords": [
