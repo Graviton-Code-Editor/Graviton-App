@@ -76,10 +76,10 @@ module.exports = {
                         selection: themeObject.colors['scroll-color']
                      },
                      cursorStyle: 'underline',
-                     cursorBlink: true
+                     cursorBlink: true,
+                     fontFamily : 'terminal'
                      
                   }
-                  if(graviton.currentOS().codename === 'win32')  config.fontFamily =  'Consolas';
                   const xterm = new Terminal(config)
                   xterm.open(
                      document.getElementById(`container${randomID}`)
@@ -90,16 +90,11 @@ module.exports = {
                   ptyProcess.on('data', function(data) {
                      xterm.write(data)
                   })
-                  graviton.resizeTerminals()
                   terminal = {
                      id: 'xterm' + randomID,
                      xterm: xterm
                   }
-                  const screen_id = editor_screens.filter((screen) => screen.id == current_screen.id)[0]
-                  screen_id.terminal = {
-
-                  }
-                  current_screen.terminal = screen_id.terminal
+                  current_screen.terminal  = editor_screens.filter((screen) => screen.id == current_screen.id)[0]
                   const new_terminal_event = new CustomEvent('new_terminal', {
                      detail: {
                         id: 'xterm' + randomID,
@@ -108,6 +103,7 @@ module.exports = {
                   })
                   document.dispatchEvent(new_terminal_event)
                   graviton.resizeTerminals()
+                  xterm.refresh()
                }
             })
       },

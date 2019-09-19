@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190818",
+  date: "190819",
   version: "1.2.0",
   state: "Beta"
 };
@@ -825,4 +825,14 @@ document.addEventListener("screen_loaded",(e)=>{
     })
 })
 
+/*
 
+
+const stand = require("standard")
+stand.lintText(editor.getValue(),{
+  fix:false
+},(aa)=>{
+  console.log(aa)
+})
+
+*/

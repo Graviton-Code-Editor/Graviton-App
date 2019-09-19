@@ -330,8 +330,6 @@ module.exports = {
             filepath = null
             plang = ''
             editor = null
-            graviton.refreshStatusBarLinesAndChars(working_tab.getAttribute('screen'))
-            graviton.changeLanguageStatusBar(plang, working_tab.getAttribute('screen'))
             document.getElementById(working_tab.getAttribute('screen')).children[1].children[0].style = 'visibility:visible; display:block;'
             document
               .getElementById(working_tab.getAttribute('screen'))

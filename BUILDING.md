@@ -1,9 +1,8 @@
-# Building Graviton
+# 🦾 Building Graviton
 
 Prerequisites:
-- NodeJS v10 installed
+- NodeJS installed
 - Git installed
-
 
 Instructions to build Graviton from the source:
 
@@ -25,7 +24,7 @@ Run as admin:
 Install the dependencies:
 > $ npm install
 
-Rebuild node-pty:
+Rebuild a dependency:
 > $ npm run rebuild
 
 ### Linux
@@ -37,7 +36,7 @@ You must have Python 2.7 installed.
 Install the dependencies:
 > $ npm install
 
-Rebuild node-pty and nodegit:
+Rebuild a dependency:
 > $ npm run rebuild
 
 Install RPM package:
@@ -50,8 +49,7 @@ You must have Python 2.7 installed.
 Install the dependencies:
 > $ npm install
 
-Rebuild node-pty:
-(You might need to run it a few times until it says "Rebuild completed")
+Rebuild a dependency:
 > $ npm run rebuild
 
 ## 3 - Building 

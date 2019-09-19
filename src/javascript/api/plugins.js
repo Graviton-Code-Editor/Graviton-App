@@ -31,7 +31,6 @@ module.exports = {
         let loaded = 0;
         let _old_error = false;
         for (i = 0; i < default_plugins.length; i++) {
-          const i_t = i;
           client.repo(default_plugins[i]).info(function(err, data) {
             if (_old_error) return;
             if (err) {
@@ -43,8 +42,6 @@ module.exports = {
               return call != undefined ? call() : "";
             }
             const degit = require('degit');
-
-            
             request(
               `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
               function(error, response, body2) {

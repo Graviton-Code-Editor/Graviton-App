@@ -46,6 +46,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    src: url(../fonts/FiraCode-Regular.woff2);
 }
 
+@font-face {
+   font-family: terminal;
+   src: url(../fonts/Cascadia.ttf);
+}
+
 html,
 body,
 head {
@@ -305,6 +310,7 @@ body{
    max-height: 300px;
    overflow: visible;
 }
+
 
 #editors .editor_screen>.g_editors_editors>.code-space>div {
    min-width: 100%;
@@ -623,4 +629,3 @@ navbar a.active {
    z-index:-1;
    border-radius: 100px;
 }
-

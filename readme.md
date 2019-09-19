@@ -17,6 +17,7 @@ Changes on this source may not be released as an official build yet.
 ✨ Highlights:
 ---
 
+* 💅 Minimal UI
 * 🎨 Themes 
 * 📦 Plugins 
 * 🖇  Infinite splitted screens 
@@ -104,7 +105,6 @@ And all people who helped me :)
 
 **Linux**
 
-   * `Snapcraft` 
    * `Appimage (.appimage)`
    * `Debian  (.deb)`
    * `CentOS (.rpm)`

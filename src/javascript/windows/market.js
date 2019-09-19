@@ -157,13 +157,6 @@ module.exports = {
                 document.getElementById("loading_exts").remove();
               }
               const sec_ID = "sec" + Math.random().toString();
-              if(plugin.local!=undefined){
-                console.log( semver.gt(
-                  semver.parse(_package.version),
-                  semver.parse(plugin.local.version)
-                ))
-                console.log(_package.version,plugin.local.version)
-              }
               const _new_update =
                 plugin.local != undefined
                   ? semver.gt(
@@ -171,7 +164,6 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-                  console.log(_new_update)
               document.getElementById(
                 "sec_all"
               ).innerHTML += graviton.getTemplate(
@@ -341,6 +333,7 @@ module.exports = {
             me.loadMenus(); //Maxium calls error, 60calls/hour/ip
             return callback(2);
           }
+          console.log(data)
           request(
             `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
             function(error, response, body2) {
