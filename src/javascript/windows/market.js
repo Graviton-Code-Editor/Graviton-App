@@ -333,7 +333,6 @@ module.exports = {
             me.loadMenus(); //Maxium calls error, 60calls/hour/ip
             return callback(2);
           }
-          console.log(data)
           request(
             `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
             function(error, response, body2) {

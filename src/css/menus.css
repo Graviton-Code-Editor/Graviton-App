@@ -10,292 +10,291 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 
 #top_bar_app {
-   max-height: 35px;
-   -webkit-user-select: none;
-   -webkit-app-region: drag;
-   position: relative;
-   color: var(--white-black);
-   height: 35px;
-   background-color: var(--primaryColor);
-   padding: 0;
-   margin: 0px;
-   list-style-type: none;
-   overflow: hidden;
-   font-family: _main_font;
-   margin: 0;
-   display: flex;
+  max-height: 35px;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  position: relative;
+  color: var(--white-black);
+  height: 35px;
+  background-color: var(--primaryColor);
+  padding: 0;
+  margin: 0px;
+  list-style-type: none;
+  overflow: hidden;
+  font-family: _main_font;
+  margin: 0;
+  display: flex;
 }
 
-#top_bar_app>#controls {
-   flex: 1;
-   display: flex;
-   -webkit-app-region: no-drag;
-   min-width: auto;
-   max-width: 144px;
+#top_bar_app > #controls {
+  flex: 1;
+  display: flex;
+  -webkit-app-region: no-drag;
+  min-width: auto;
+  max-width: 144px;
 }
 
-#top_bar_app>#controls button {
-   transition: 0.05s;
-   padding: 6px 0px;
-   width: 48px;
-   border: none;
-   margin: 0;
-   background: transparent;
-   
+#top_bar_app > #controls button {
+  transition: 0.05s;
+  padding: 6px 0px;
+  width: 48px;
+  border: none;
+  margin: 0;
+  background: transparent;
 }
 
-#top_bar_app>#controls button:hover {
-   transition: 0.05s;
-   background: var(--widget-color);
+#top_bar_app > #controls button:hover {
+  transition: 0.05s;
+  background: var(--widget-color);
 }
 
-#top_bar_app>#controls>#minimize:hover>svg>rect {
-   fill: var(--white-black);
+#top_bar_app > #controls > #minimize:hover > svg > rect {
+  fill: var(--white-black);
 }
 
-#top_bar_app>#controls>#maximize:hover>svg>rect {
-   stroke: var(--white-black);
+#top_bar_app > #controls > #maximize:hover > svg > rect {
+  stroke: var(--white-black);
 }
 
-#top_bar_app>#controls>#close:hover {
-   background: red;
+#top_bar_app > #controls > #close:hover {
+  background: red;
 }
 
-#top_bar_app>#controls>#close>svg>rect {
-   stroke: transparent !important;
+#top_bar_app > #controls > #close > svg > rect {
+  stroke: transparent !important;
 }
 
-#top_bar_app>#controls>#close:hover>svg>rect {
-   stroke: white;
-   fill: white;
+#top_bar_app > #controls > #close:hover > svg > rect {
+  stroke: white;
+  fill: white;
 }
 
-#top_bar_app>#controls>#close:active {
-   background: rgb(241, 112, 122);
+#top_bar_app > #controls > #close:active {
+  background: rgb(241, 112, 122);
 }
 
-#top_bar_app>#controls>#close:active>svg>rect {
-   stroke: transparent;
-   fill: black;
+#top_bar_app > #controls > #close:active > svg > rect {
+  stroke: transparent;
+  fill: black;
 }
 
-#top_bar_app>#title_directory {
-   flex: 1;
-   text-align: center;
-   min-width: 0px;
-   overflow: hidden;
-   text-overflow: ellipsis;
+#top_bar_app > #title_directory {
+  flex: 1;
+  text-align: center;
+  min-width: 0px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-#top_bar_app>#title_directory p {
-   font-size: 12px;
-   color: var(--titleBar-icons-color);
-   top: 28%;
-   position: relative;
-   margin: 0;
-   white-space: nowrap;
-   width: 100%;
-   margin: 0px 10px;
+#top_bar_app > #title_directory p {
+  font-size: 12px;
+  color: var(--titleBar-icons-color);
+  top: 28%;
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  width: 100%;
+  margin: 0px 10px;
 }
 
-#top_bar_app>#dropmenus_app {
-   display: flex;
-   list-style-type: none;
-   padding: 0;
-   overflow: auto;
-   overflow-y: hidden;
-   -webkit-app-region: drag;
-   margin-left: 35px;
-   border: 0;
-   position: relative;
-   float: left;
-   min-width: auto;
-   max-width: auto;
+#top_bar_app > #dropmenus_app {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  overflow: auto;
+  overflow-y: hidden;
+  -webkit-app-region: drag;
+  margin-left: 35px;
+  border: 0;
+  position: relative;
+  float: left;
+  min-width: auto;
+  max-width: auto;
 }
 
-#top_bar_app>#dropmenus_app button.dropbtn {
-   position: relative;
-   display: inline-block;
-   color: var(--white-black);
-   height: 35px;
-   padding: 0px 6px;
-   margin: 0;
-   overflow: hidden;
-   font-size: 12px;
-   border: none;
-   cursor: pointer;
-   top: 0;
-   font-family: _main_font;
-   -webkit-app-region: no-drag;
-   white-space: nowrap;
-   min-width: auto;
-   background: var(--primaryColor);
+#top_bar_app > #dropmenus_app button.dropbtn {
+  position: relative;
+  display: inline-block;
+  color: var(--white-black);
+  height: 35px;
+  padding: 0px 6px;
+  margin: 0;
+  overflow: hidden;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  top: 0;
+  font-family: _main_font;
+  -webkit-app-region: no-drag;
+  white-space: nowrap;
+  min-width: auto;
+  background: var(--primaryColor);
 }
 
-#top_bar_app>#dropmenus_app .dropbtn:hover {
-   background-color: var(--widget-color);
+#top_bar_app > #dropmenus_app .dropbtn:hover {
+  background-color: var(--widget-color);
 }
 
-#top_bar_app>#dropmenus_app .dropbtn:focus {
-   background-color: var(--widget-color);
+#top_bar_app > #dropmenus_app .dropbtn:focus {
+  background-color: var(--widget-color);
 }
 
 .dropdown {
-   position: relative;
-   display: inline-block;
-   margin: 0px;
+  position: relative;
+  display: inline-block;
+  margin: 0px;
 }
 
 .dropdown-content {
-   border-radius: 3px;
-   border-top-left-radius: 0px;
-   position: fixed;
-   background-color: var(--dropmenu-background-color);
-   min-width: auto;
-   overflow: auto;
-   z-index: 1;
-   box-shadow: 1px 3px 7px var(--shadows);
-   padding: 5px;
-   margin: 0;
+  border-radius: 3px;
+  border-top-left-radius: 0px;
+  position: fixed;
+  background-color: var(--dropmenu-background-color);
+  min-width: auto;
+  overflow: auto;
+  z-index: 1;
+  box-shadow: 1px 3px 7px var(--shadows);
+  padding: 5px;
+  margin: 0;
 }
 
-.dropdown-content>button:not(.dropbtn) {
-   font-family: _main_font;
-   font-size: 13px;
-   color: var(--white-black);
-   background-color: transparent;
-   padding: 7px 2px;
-   width: 100%;
-   text-decoration: none;
-   display: block;
-   border: 0;
-   border-radius: 5px;
-   text-align: left;
-   transform: scale(1);
-   padding-right: 10px;
-   white-space: nowrap;
-   overflow: auto;
-   position: relative;
+.dropdown-content > button:not(.dropbtn) {
+  font-family: _main_font;
+  font-size: 13px;
+  color: var(--white-black);
+  background-color: transparent;
+  padding: 7px 2px;
+  width: 100%;
+  text-decoration: none;
+  display: block;
+  border: 0;
+  border-radius: 5px;
+  text-align: left;
+  transform: scale(1);
+  padding-right: 10px;
+  white-space: nowrap;
+  overflow: auto;
+  position: relative;
 }
 
-.dropdown-content>button:hover:not(.dropbtn) {
-   color: var(--black-white);
-   background-color: var(--accentColor);
-   border-radius: 3px;
-   cursor: pointer;
+.dropdown-content > button:hover:not(.dropbtn) {
+  color: var(--black-white);
+  background-color: var(--accentColor);
+  border-radius: 3px;
+  cursor: pointer;
 }
 
-.dropdown-content>button:active:not(.dropbtn) {
-   transition: 0.05s;
-   transform: scale(var(--scalation));
+.dropdown-content > button:active:not(.dropbtn) {
+  transition: 0.05s;
+  transform: scale(var(--scalation));
 }
 
-.dropdown-content>button:not(.dropbtn) div {
-   display: inline-block;
+.dropdown-content > button:not(.dropbtn) div {
+  display: inline-block;
 }
 
-.dropdown-content>button:not(.dropbtn) *:nth-child(1) {
-   margin: 0 1px;
-   position: relative;
-   top: 0.7px;
+.dropdown-content > button:not(.dropbtn) *:nth-child(1) {
+  margin: 0 1px;
+  position: relative;
+  top: 0.7px;
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .abo {
-   stroke: var(--accentColor);
+.dropdown-content > button:not(.dropbtn):hover div .abo {
+  stroke: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .aba {
-   fill: var(--black-white);
+.dropdown-content > button:not(.dropbtn):hover div .aba {
+  fill: var(--black-white);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .bbo {
-   stroke: var(--black-white);
+.dropdown-content > button:not(.dropbtn):hover div .bbo {
+  stroke: var(--black-white);
 }
 
-.dropdown-content>button:not(.dropbtn):hover div .bba {
-   fill: var(--accentColor);
+.dropdown-content > button:not(.dropbtn):hover div .bba {
+  fill: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .abo {
-   stroke: var(--dropmenu-background-color);
+.dropdown-content > button:not(.dropbtn) div .abo {
+  stroke: var(--dropmenu-background-color);
 }
 
-.dropdown-content>button:not(.dropbtn) div .aba {
-   fill: var(--accentColor);
+.dropdown-content > button:not(.dropbtn) div .aba {
+  fill: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .bbo {
-   stroke: var(--accentColor);
+.dropdown-content > button:not(.dropbtn) div .bbo {
+  stroke: var(--accentColor);
 }
 
-.dropdown-content>button:not(.dropbtn) div .bba {
-   fill: var(--dropmenu-background-color);
+.dropdown-content > button:not(.dropbtn) div .bba {
+  fill: var(--dropmenu-background-color);
 }
 
 .icon .abo {
-   stroke: var(--dropmenu-background-color);
+  stroke: var(--dropmenu-background-color);
 }
 
 .icon .aba {
-   fill: var(--white-black);
+  fill: var(--white-black);
 }
 
 .icon .bbo {
-   stroke: var(--white-black);
+  stroke: var(--white-black);
 }
 
 .icon .bba {
-   fill: var(--dropmenu-background-color);
+  fill: var(--dropmenu-background-color);
 }
 
 .icon .cbo {
-   stroke: var(--accentColor);
+  stroke: var(--accentColor);
 }
 
 .icon .cba {
-   fill: var(--accentColor);
+  fill: var(--accentColor);
 }
 
 .icon {
-   cursor: pointer;
+  cursor: pointer;
 }
 
 .icon:hover .abo {
-   stroke: var(--dropmenu-background-color);
+  stroke: var(--dropmenu-background-color);
 }
 
 .icon:hover .aba {
-   fill: var(--accentColor);
+  fill: var(--accentColor);
 }
 
 .icon:hover .bbo {
-   stroke: var(--accentColor);
+  stroke: var(--accentColor);
 }
 
 .icon:hover .bba {
-   fill: var(--dropmenu-background-color);
+  fill: var(--dropmenu-background-color);
 }
 
 span.line_space_menus {
-   width: auto;
-   display: block;
-   height: 2px;
-   margin: 5px;
-   border-radius: 50px;
-   background: var(--dropmenu-span-color);
+  width: auto;
+  display: block;
+  height: 2px;
+  margin: 5px;
+  border-radius: 50px;
+  background: var(--dropmenu-span-color);
 }
 
 .show {
-   transition: 0.05s;
-   transform: translateY(0px);
-   opacity: 1;
-   display: block;
-   visibility: visible;
+  transition: 0.05s;
+  transform: translateY(0px);
+  opacity: 1;
+  display: block;
+  visibility: visible;
 }
 
 .hide {
-   transition: 0.05s;
-   opacity: 0.3;
-   transform: translateY(-4px);
-   visibility: hidden;
+  transition: 0.05s;
+  opacity: 0.3;
+  transform: translateY(-4px);
+  visibility: hidden;
 }
