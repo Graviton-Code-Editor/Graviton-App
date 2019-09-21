@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190821 - 1 [1.2.0]
+- Fixed, when closing a tab it wasn't updating it's screen language and line counter controls
+- Fixed, free tabs weren't working
+- Added a new method, graviton.getCurrentTab() , it returns the current focused tab's HTML element
+
 ### 190818 - 1 [1.2.0]
 - Updated Electron to version 6
 - Bug fixes

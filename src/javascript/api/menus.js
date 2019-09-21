@@ -13,6 +13,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Menus: {
     loadDefaults: () => {
+      /**
+       * 
+       *  @desc This contains the default menus for Graviton, such as File, Editor, Help...
+       * 
+       */
       const File = new dropMenu({
         id: "file",
         translation: true

@@ -36,7 +36,7 @@
   "license": "MIT",
   "dependencies": {
     "appdata-path": "^1.0.0",
-    "codemirror": "^5.48.2",
+    "codemirror": "^5.49.0",
     "degit": "^2.1.4",
     "fs-extra": "^7.0.1",
     "marked": "^0.7.0",

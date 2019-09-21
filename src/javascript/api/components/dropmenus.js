@@ -52,7 +52,6 @@ module.exports = {
         droplist.innerHTML = ""; // Remove current code and then add the updated one
         var newTab = droplist.parentElement;
         newTab.children[0].innerText = panel.button;
-        console.log(newTab.children[0]);
       } else {
         var newTab = document.createElement("div");
         var droplist = document.createElement("div");

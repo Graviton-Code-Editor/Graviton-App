@@ -207,13 +207,16 @@ body {
 #g_directory {
   margin: 15px;
 }
-
+#g_directory *{
+  min-height: auto;
+}
 #g_directory > div:nth-child(1) {
   margin: 0px 15px;
   font-size: 16px;
   white-space: nowrap;
   display: flex;
 }
+
 
 #g_directory > div:nth-child(1) > p {
   margin: 10px 0px;
@@ -560,7 +563,7 @@ h4 {
 }
 
 .editor_screen .CodeMirror-line > span > span {
-  line-height: 1.3em;
+  line-height: 1.4em;
 }
 
 navbar a {

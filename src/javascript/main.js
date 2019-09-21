@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190820",
+  date: "190821",
   version: "1.2.0",
   state: "Beta"
 };
@@ -58,33 +58,33 @@ graviton.loadEditor = require(path.join(
 window.customElements.define("elastic-container", elasticContainerComponent);
 
 const { loadLanguage, getTranslation } = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "languages.js"
-));
-const { getFormat, getLanguageName, updateCodeMode } = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "format.js"
-));
-const screens = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "screens.js"
-));
-const updater = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "updater.js"
-));
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "languages.js"
+  )),
+  { getFormat, getLanguageName, updateCodeMode } = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "format.js"
+  )),
+  screens = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "screens.js"
+  )),
+  updater = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "updater.js"
+  ));
 graviton.setTheme = require(path.join(
   __dirname,
   "src",
@@ -94,62 +94,121 @@ graviton.setTheme = require(path.join(
 )).setTheme;
 
 const Settings = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "windows",
-  "settings.js"
-)).Settings;
-const Welcome = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "windows",
-  "welcome.js"
-)).Welcome;
-const Setup = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "windows",
-  "setup.js"
-)).Setup;
-const Market = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "windows",
-  "market.js"
-)).Market;
-const NewProject = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "windows",
-  "new_project.js"
-)).NewProject;
-const Plugins = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "windows",
+    "settings.js"
+  )).Settings,
+  Welcome = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "windows",
+    "welcome.js"
+  )).Welcome,
+  Setup = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "windows",
+    "setup.js"
+  )).Setup,
+  Market = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "windows",
+    "market.js"
+  )).Market,
+  NewProject = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "windows",
+    "new_project.js"
+  )).NewProject,
+  Plugins = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "plugins.js"
+  )).Plugins,
+  Menus = require(path.join(__dirname, "src", "javascript", "api", "menus.js"))
+    .Menus,
+  Explorer = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "explorer.js"
+  )).Explorer,
+  Control = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "control.js"
+  )).Control,
+  { Dialog, closeDialog } = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "dialogs.js"
+  )),
+  { Window, closeWindow } = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "windows.js"
+  )),
+  { Notification, closeNotification } = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "notifications.js"
+  )),
+  { Tab, closeTab, loadTab } = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "tabs.js"
+  )),
+  dropMenu = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "dropmenus.js"
+  )).Dropmenu;
+let { icons } = require(path.join(
   __dirname,
   "src",
   "javascript",
   "api",
-  "plugins.js"
-)).Plugins;
-const Menus = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "menus.js"
-)).Menus;
-const Explorer = require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "api",
-  "explorer.js"
-)).Explorer;
+  "components",
+  "icons.js"
+));
 
+const { commander, commanders } = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "api",
+  "components",
+  "commanders.js"
+));
 window.customElements.define(
   "gv-switch",
   require(path.join(__dirname, "src", "javascript", "api", "switch.js")).Switch
@@ -199,9 +258,8 @@ let current_screen,
   terminal = null,
   workspaces = [],
   plugins_market = [],
-  current_plugins = 0;
-
-let templates = {},
+  current_plugins = 0,
+  templates = {},
   plugins_list = [],
   plugins_dbs = [],
   anyDropON = null,
@@ -267,7 +325,8 @@ preload([
 ]);
 
 window.onload = function() {
-  fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => { /* Load UI templates */
+  fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
+    /* Load UI templates */
     let temporal_count = 0;
     paths.forEach((dir, index) => {
       fs.readFile(
@@ -277,7 +336,8 @@ window.onload = function() {
           templates[path.basename(dir, ".js")] = data;
           temporal_count++;
           if (temporal_count == paths.length) {
-            fs.readdir(path.join(__dirname, "languages"), (err, paths) => {  /* Load languages */
+            fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
+              /* Load languages */
               let path_count = paths.length;
               paths.forEach(dir => {
                 fs.readFile(
@@ -427,7 +487,9 @@ const create = {
         element.getAttribute("dir"),
         element.id,
         element.getAttribute("global"),
-        () => { /* created folder */ } 
+        () => {
+          /* created folder */
+        }
       );
     } else {
       new Notification({
@@ -781,58 +843,68 @@ function selectTheme(from, theme) {
   Language  indicator and Line/Char counter Controls
 
 */
-document.addEventListener("screen_loaded",(e)=>{
+document.addEventListener("screen_loaded", e => {
   const screen = e.detail.screen;
-    function refreshStats(id = current_screen.id){
-      if(id!=screen) return;
-      langController.setText(graviton.getLanguage());
-      langController.setHint(`Current: ${graviton.getLanguage()}`);
-      if(editor==undefined) {
-        counter.hide()
-        return;
-      }
-      counter.show()
-      counter.setText(editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1))
-      counter.setHint(`Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`)
-      editor.on("cursorActivity", function(a) {
-        counter.setText(editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1))
-        counter.setHint(`Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`)
-        counter.show()
-      });
+  function refreshStats(id = current_screen.id) {
+    if (id != screen) return;
+    langController.setText(graviton.getLanguage());
+    langController.setHint(`Current: ${graviton.getLanguage()}`);
+    if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
+      langController.hide();
     }
-    let langController = new Control({
-      text : graviton.getLanguage(),
-      hint:`Current: ${graviton.getLanguage()}`
+    if (editor == undefined) {
+      counter.hide();
+      return;
+    }
+    counter.show();
+    langController.show();
+    counter.setText(
+      editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+    );
+    counter.setHint(
+      `Line ${editor.getCursor().line + 1} , Char ${Number(
+        editor.getCursor().ch + 1
+      )}`
+    );
+    editor.on("cursorActivity", function(a) {
+      counter.setText(
+        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+      );
+      counter.setHint(
+        `Line ${editor.getCursor().line + 1} , Char ${Number(
+          editor.getCursor().ch + 1
+        )}`
+      );
+      counter.show();
     });
-    if(editor!=undefined){
-      var counter = new Control({
-        text : editor.getCursor().line + 1 + '/' + Number(editor.getCursor().ch + 1),
-        hint : `Line ${editor.getCursor().line + 1 } , Char ${ Number(editor.getCursor().ch + 1)}`
-      });
-      refreshStats()
-    }else{
-      var counter = new Control({
-        text : "",
-      });
-      counter.hide()
-      refreshStats()
-    }
-    document.addEventListener("tab_loaded",(e)=>{
-      refreshStats(e.detail.screen)
-    })
-    document.addEventListener("tab_created",()=>{
-      refreshStats()
-    })
-})
-
-/*
-
-
-const stand = require("standard")
-stand.lintText(editor.getValue(),{
-  fix:false
-},(aa)=>{
-  console.log(aa)
-})
-
-*/
+  }
+  let langController = new Control({
+    text: graviton.getLanguage(),
+    hint: `Current: ${graviton.getLanguage()}`
+  });
+  if (editor != undefined) {
+    var counter = new Control({
+      text:
+        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1),
+      hint: `Line ${editor.getCursor().line + 1} , Char ${Number(
+        editor.getCursor().ch + 1
+      )}`
+    });
+    refreshStats();
+  } else {
+    var counter = new Control({
+      text: ""
+    });
+    counter.hide();
+    refreshStats();
+  }
+  document.addEventListener("tab_loaded", e => {
+    refreshStats(e.detail.screen);
+  });
+  document.addEventListener("tab_closed", e => {
+    refreshStats(e.detail.screen);
+  });
+  document.addEventListener("tab_created", () => {
+    refreshStats();
+  });
+});

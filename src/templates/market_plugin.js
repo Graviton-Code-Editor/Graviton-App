@@ -4,7 +4,6 @@
 <div class=sub_extension_div id=${name+ '_div'}>
    <div class="top">
       ${(function(){
-         console.log(update)
          /* 
 
             If plugin is not installed:

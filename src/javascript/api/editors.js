@@ -156,7 +156,7 @@ module.exports = {
           const new_editor_image = {
             object: image_container,
             id: dir.replace(/\\/g, "") + "_editor",
-            editor: undefined,
+            editor: null,
             path: dir,
             screen: screen,
             type: "image"
@@ -236,9 +236,9 @@ module.exports = {
     }
 
     function filterIt(arr, searchKey, cb) {
-      var list = [];
-      for (var i = 0; i < arr.length; i++) {
-        var curr = arr[i];
+      let list = [];
+      for (i = 0; i < arr.length; i++) {
+        const curr = arr[i];
         Object.keys(curr).some(function(key) {
           if (typeof curr[key] === "string" && curr[key].includes(searchKey)) {
             list.push(curr);

@@ -14,76 +14,7 @@ const _os = require('os')
 const pty = require('node-pty')
 const path = require('path')
 let graviton = {}
-const {
-  Dialog,
-  closeDialog
-} = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'dialogs.js'
-)); const {
-  Window,
-  closeWindow
-} = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'windows.js'
-)); const {
-  Notification,
-  closeNotification
-} = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'notifications.js'
-)); const {
-  Tab,
-  closeTab,
-  loadTab
-} = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'tabs.js'
-))
 
-const dropMenu = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'dropmenus.js'
-)).Dropmenu
-let {
-  icons
-} = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'icons.js'
-))
-
-const { commander, commanders } = require(path.join(
-  __dirname,
-  'src',
-  'javascript',
-  'api',
-  'components',
-  'commanders.js'
-))
 
 let menus_showing = true
 let context_menu_list_text = {
@@ -717,6 +648,9 @@ graviton = {
     return terminal;
   },
   getLanguage(){
+    if(graviton.getCurrentFile().path==null){
+      return null
+    }
     return getLanguageName(
       getFormat(path.basename(graviton.getCurrentFile().path)).lang != "unknown"
         ? getFormat(path.basename(graviton.getCurrentFile().path)).lang
@@ -725,6 +659,9 @@ graviton = {
             .split(".")
             .pop()
     )
+  },
+  getCurrentTab(){
+    return document.getElementById(editingTab);
   }
 }
 
@@ -941,22 +878,3 @@ graviton.closeDropmenus = function () {
   }
 }
 
-function Control({text,hint}){
-  this.text = text;
-  const controlSpan = document.createElement("span");
-  controlSpan.innerText = text;
-  if(hint!=undefined) controlSpan.title = hint;
-  document.getElementById(current_screen.id).children[2].appendChild(controlSpan);
-  this.setText = (newText)=>{
-    controlSpan.innerText = newText;
-  }
-  this.setHint = (newHint)=>{
-    controlSpan.title = newHint;
-  }
-  this.hide = ()=>{
-    controlSpan.style.display = "none";
-  }
-  this.show = ()=>{
-    controlSpan.style.display = "block";
-  }
-}

@@ -8,7 +8,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-'use strict'
+"use strict";
 /**
  *
  * @desc Load the languages JSON files and push it to an array
@@ -18,26 +18,28 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   loadLanguage: language => {
     languages.map((item, index) => {
-      if (item['name'] === language) {
-        current_config.language = item
-        const toTranslate = document.getElementsByClassName('translate_word')
+      if (item["name"] === language) {
+        current_config.language = item;
+        const toTranslate = document.getElementsByClassName("translate_word");
         for (i = 0; i < toTranslate.length; i++) {
-          toTranslate[i].innerText = getTranslation(toTranslate[i].getAttribute('idT'))
+          toTranslate[i].innerText = getTranslation(
+            toTranslate[i].getAttribute("idT")
+          );
         }
       }
-    })
+    });
   },
   getTranslation: text => {
     if (current_config.language.strings[text] === undefined) {
-      let output = text
-      languages.forEach((lang) => {
-        if (lang.name === 'english') {
-          output = lang.strings[text] !== undefined ? lang.strings[text] : text
+      let output = text;
+      languages.forEach(lang => {
+        if (lang.name === "english") {
+          output = lang.strings[text] !== undefined ? lang.strings[text] : text;
         }
-      })
-      return output
+      });
+      return output;
     } else {
-      return current_config.language.strings[text]
+      return current_config.language.strings[text];
     }
   }
-}
+};

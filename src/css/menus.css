@@ -284,6 +284,16 @@ span.line_space_menus {
   background: var(--dropmenu-span-color);
 }
 
+span.divider-2 {
+  max-width: 175px;
+  display: block;
+  height: 2px;
+  margin: 5px;
+  margin-left: 13px;
+  border-radius: 50px;
+  background: var(--dropmenu-span-color);
+}
+
 .show {
   transition: 0.05s;
   transform: translateY(0px);
@@ -297,4 +307,12 @@ span.line_space_menus {
   opacity: 0.3;
   transform: translateY(-4px);
   visibility: hidden;
+}
+
+
+
+.panel{
+  height: 500px;
+  width: 300px;
+  background: blue;
 }

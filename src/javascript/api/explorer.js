@@ -84,8 +84,8 @@ module.exports = {
                dir
              )} parent=g_directories elementType=directory dir=${FirstFolder}>${path.basename(
           dir
-        )}</p>
-           </div>`;
+        )}</p> 
+        </div>`;
         document.getElementById(appender_id).appendChild(working_folder);
       } else {
         working_folder = document.getElementById(appender_id).children[1];
