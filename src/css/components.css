@@ -52,6 +52,7 @@ input[type="number"]::selection {
   padding: 6px;
   border: 0;
   background: transparent;
+  color:var(--white-black);
 }
 .input3 {
   padding: 4px;
@@ -60,6 +61,7 @@ input[type="number"]::selection {
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
   background: var(--secondaryColor);
   max-width: 70px;
+  color:var(--white-black);
 }
 
 .slider {

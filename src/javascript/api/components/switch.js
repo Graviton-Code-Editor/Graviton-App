@@ -9,7 +9,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 "use strict"
-
+/**
+ * 
+ * @desc This is a web component for making switches
+ * 
+*/
 module.exports = {
   Switch: class extends HTMLElement {
     constructor() {
@@ -23,7 +27,7 @@ module.exports = {
       this.addEventListener("click", function() {
         const dot = this.children[0];
         if (this.classList.contains("disabled") === false) {
-          if (this.getState(this)) {
+          if (this.getState()) {
             this.classList.replace("activated", "desactivated");
             dot.classList.replace("activated", "desactivated");
           } else {
@@ -33,11 +37,11 @@ module.exports = {
         }
       });
     }
-    getState(element) {
-      if (element.classList.contains("disabled")) {
+    getState() {
+      if (this.classList.contains("disabled")) {
         return "disabled";
       } else {
-        return element.classList.contains("activated");
+        return this.classList.contains("activated");
       }
     }
   }

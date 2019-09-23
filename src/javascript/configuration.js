@@ -13,7 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 /**
  *
- *@desc Default (initial) configuration object
+ * @desc Default (initial) configuration object
  *
  */
 let current_config = {

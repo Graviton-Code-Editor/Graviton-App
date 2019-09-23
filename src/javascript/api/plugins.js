@@ -146,7 +146,6 @@ module.exports = {
               ));
               me.load(config, function() {
                 loaded++;
-
                 if (loaded == paths.length) {
                   graviton.consoleInfo("All plugins have been loaded.");
                   return call != undefined ? call() : "";

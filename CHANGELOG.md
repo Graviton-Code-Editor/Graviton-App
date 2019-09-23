@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190822 - 1 [1.2.0]
+- Fixed, Creating files & folders dialog's input color wasn't matching the selected theme colors
+
 ### 190821 - 1 [1.2.0]
 - Fixed, when closing a tab it wasn't updating it's screen language and line counter controls
 - Fixed, free tabs weren't working

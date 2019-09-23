@@ -164,7 +164,6 @@ module.exports = {
                     screen: current_screen.id
                   },
                   function() {
-                    editingTab = id;
                     const tab_created_event = new CustomEvent("tab_created", {
                       detail: {
                         tab: tab

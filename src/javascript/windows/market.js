@@ -475,10 +475,9 @@ module.exports = {
             }
           }
         } else {
-          /*
-          Repository Readme
+          /**
+          * @desc Repository Readme
           */
-
           request(
             `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`,
             function(error, response, body3) {
@@ -512,15 +511,9 @@ module.exports = {
         });
         return;
       }
-
-      /*DEGIT*/
-
       const degit = require("degit");
-
       const emitter = degit(plugin.repo.git.full_name);
-
       emitter.on("info", info => {});
-
       emitter
         .clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name))
         .then(() => {

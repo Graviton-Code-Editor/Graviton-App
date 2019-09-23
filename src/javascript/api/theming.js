@@ -125,6 +125,7 @@ module.exports = {
             selection: themeObject.colors["scroll-color"]
           });
         }
+        document.body.setAttribute("theme",themeObject.name)
         return;
       }
     }

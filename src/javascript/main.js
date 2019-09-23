@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190821",
+  date: "190823",
   version: "1.2.0",
   state: "Beta"
 };
@@ -46,6 +46,7 @@ const { elasticContainerComponent, elasticContainer } = require(path.join(
   "src",
   "javascript",
   "api",
+  "components",
   "elastic_container.js"
 ));
 graviton.loadEditor = require(path.join(
@@ -211,7 +212,7 @@ const { commander, commanders } = require(path.join(
 ));
 window.customElements.define(
   "gv-switch",
-  require(path.join(__dirname, "src", "javascript", "api", "switch.js")).Switch
+  require(path.join(__dirname, "src", "javascript", "api", "components", "switch.js")).Switch
 );
 
 let current_screen,
@@ -277,7 +278,7 @@ if (graviton.isProduction()) {
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
 /* Set path for graviton's files and dirs */
-let logDir = path.join(DataFolderDir, "log.json"),
+let logDir = path.join(DataFolderDir, "log.json"), 
   configDir = path.join(DataFolderDir, "config.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),

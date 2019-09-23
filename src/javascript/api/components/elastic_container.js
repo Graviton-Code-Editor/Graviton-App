@@ -1,3 +1,9 @@
+/**
+ * 
+ * @desc This is a web component which makes a bouncing effect wben it tops to an edge of the selected element on scrolling
+ * 
+*/
+"use strict"
 module.exports = {
   elasticContainerComponent: class extends HTMLElement {
     constructor() {
