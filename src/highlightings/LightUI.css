@@ -7,7 +7,7 @@
   The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 */
 .cm-s-lightui.CodeMirror { color: #999; background-color: var(--editorBackgroundColor); }
-.cm-s-lightui div.CodeMirror-selected { background: rgba(78, 153, 252, 0.281); }
+.cm-s-lightui div.CodeMirror-selected { background: rgba(78, 153, 252, 0.281); border-radius: 3px; }
 .cm-s-lightui .CodeMirror-line::selection, .cm-s-lightui .CodeMirror-line > span::selection, .cm-s-lightui .CodeMirror-line > span > span::selection { background: #cfc; }
 .cm-s-lightui .CodeMirror-line::-moz-selection, .cm-s-lightui .CodeMirror-line > span::-moz-selection, .cm-s-lightui .CodeMirror-line > span > span::-moz-selection { background: #cfc; }
 
@@ -40,6 +40,20 @@
 .cm-s-lightui .cm-link { color:#ad9361; font-style:italic; text-decoration:none; }
 .cm-s-lightui .cm-error { border-bottom: 1px solid red; }
 
-div.cm-s-lightui .CodeMirror-activeline-background { background: #efefff; }
-div.cm-s-lightui span.CodeMirror-matchingbracket { outline:1px solid grey; color: inherit; }
+.cm-s-lightui .CodeMirror-activeline-background { background: rgba(120, 178, 253, 0.281) }
+.cm-s-lightui span.CodeMirror-matchingbracket { outline:1px solid grey; color: inherit; }
 
+.cm-s-lightui .CodeMirror-foldmarker {
+  color: black;
+  text-shadow: 0px 1px 4px rgba(0,0,0,0.4) ;
+}
+
+.cm-s-lightui .CodeMirror-foldgutter-open:after {
+  color:black;
+}
+.cm-s-lightui .CodeMirror-foldgutter-folded:after {
+  color:black;
+}
+.cm-tab {
+  border-left: 1px solid rgb(82, 82, 82);
+}

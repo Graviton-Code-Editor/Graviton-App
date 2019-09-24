@@ -2,10 +2,10 @@ module.exports = {
   add: function () {
     const current_id = `screen_${editor_screens.length + Math.random()}`
     current_screen = {
-      id: current_id,
+      id: current_id
     }
     const screen = {
-      id: current_screen.id,
+      id: current_screen.id
     }
     editor_screens.push(screen)
     const new_screen_editor = document.createElement('div')
@@ -130,9 +130,9 @@ module.exports = {
                   .getElementById(editor_screens[0].id)
                   .children[1].children[0].children[1].remove()
               }
-                if(tabs.length==0){
-                  editingTab = null;
-                }        
+              if (tabs.length == 0) {
+                editingTab = null
+              }
             }
             return true
           } else {

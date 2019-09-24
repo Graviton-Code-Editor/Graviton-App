@@ -47,6 +47,21 @@
 .cm-s-default .CodeMirror-activeline-background { background: rgba(255,255,255,0.1); }
 .cm-s-default .CodeMirror-matchingbracket { outline:1px solid rgb(241, 187, 37) !important; color: inherit !important; }
 
-.highlight {
+.cm-s-default .highlight {
   color: orange;
+}
+.cm-s-default .CodeMirror-foldmarker {
+  color: white;
+  text-shadow: 0px 1px 4px rgba(255,255,255,0.4) ;
+}
+
+.cm-s-default .CodeMirror-foldgutter-open:after {
+  color:white;
+}
+.cm-s-default .CodeMirror-foldgutter-folded:after {
+  color:white;
+}
+
+.cm-s-default  .cm-tab {
+  border-left: 1px solid rgb(209, 209, 209);
 }

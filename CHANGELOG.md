@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190824 - 1 [1.2.0]
+- Preloading editor's and terminal's font
+- Added folding arrow (Codemirror addon)
+- Dark Codemirror theme now has a different color for active line and selected lines
+- Better formatting for JavaScript files
+
 ### 190822 - 1 [1.2.0]
 - Fixed, Creating files & folders dialog's input color wasn't matching the selected theme colors
 

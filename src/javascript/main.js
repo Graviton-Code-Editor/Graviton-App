@@ -325,6 +325,11 @@ preload([
   "src/icons/custom_icons/node_modules.svg"
 ]);
 
+preloadFont([
+  "editor",
+  "terminal"
+]);
+
 window.onload = function() {
   fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
     /* Load UI templates */

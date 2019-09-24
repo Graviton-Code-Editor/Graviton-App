@@ -9,25 +9,25 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 module.exports = {
-  Control: function({ text, hint }) {
-    this.text = text;
-    const controlSpan = document.createElement("span");
-    controlSpan.innerText = text;
-    if (hint != undefined) controlSpan.title = hint;
+  Control: function ({ text, hint }) {
+    this.text = text
+    const controlSpan = document.createElement('span')
+    controlSpan.innerText = text
+    if (hint != undefined) controlSpan.title = hint
     document
       .getElementById(current_screen.id)
-      .children[2].appendChild(controlSpan);
+      .children[2].appendChild(controlSpan)
     this.setText = newText => {
-      controlSpan.innerText = newText;
-    };
+      controlSpan.innerText = newText
+    }
     this.setHint = newHint => {
-      controlSpan.title = newHint;
-    };
+      controlSpan.title = newHint
+    }
     this.hide = () => {
-      controlSpan.style.display = "none";
-    };
+      controlSpan.style.display = 'none'
+    }
     this.show = () => {
-      controlSpan.style.display = "block";
-    };
+      controlSpan.style.display = 'block'
+    }
   }
-};
+}

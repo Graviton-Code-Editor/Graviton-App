@@ -8,41 +8,41 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
-"use strict"
+'use strict'
 /**
- * 
+ *
  * @desc This is a web component for making switches
- * 
+ *
 */
 module.exports = {
   Switch: class extends HTMLElement {
-    constructor() {
-      super();
+    constructor () {
+      super()
     }
-    connectedCallback() {
+    connectedCallback () {
       this.innerHTML = `
-        <div class="${this.getAttribute("class")} switch">
+        <div class="${this.getAttribute('class')} switch">
             <div></div>
-        </div>`;
-      this.addEventListener("click", function() {
-        const dot = this.children[0];
-        if (this.classList.contains("disabled") === false) {
+        </div>`
+      this.addEventListener('click', function () {
+        const dot = this.children[0]
+        if (this.classList.contains('disabled') === false) {
           if (this.getState()) {
-            this.classList.replace("activated", "desactivated");
-            dot.classList.replace("activated", "desactivated");
+            this.classList.replace('activated', 'desactivated')
+            dot.classList.replace('activated', 'desactivated')
           } else {
-            this.classList.replace("desactivated", "activated");
-            dot.classList.replace("desactivated", "activated");
+            this.classList.replace('desactivated', 'activated')
+            dot.classList.replace('desactivated', 'activated')
           }
         }
-      });
+      })
     }
-    getState() {
-      if (this.classList.contains("disabled")) {
-        return "disabled";
+    getState () {
+      if (this.classList.contains('disabled')) {
+        return 'disabled'
       } else {
-        return this.classList.contains("activated");
+        return this.classList.contains('activated')
       }
     }
   }
-};
+}

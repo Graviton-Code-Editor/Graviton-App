@@ -15,7 +15,6 @@ const pty = require('node-pty')
 const path = require('path')
 let graviton = {}
 
-
 let menus_showing = true
 let context_menu_list_text = {
   // Initial value
@@ -529,7 +528,7 @@ graviton = {
     return (path.basename(__dirname) !== 'Graviton-Editor' && path.basename(__dirname) !== 'Graviton-App')
   },
   resizeTerminals () {
-    if (terminal != (null||undefined)) fit.fit(terminal.xterm)
+    if (terminal != (null || undefined)) fit.fit(terminal.xterm)
   },
   toggleFullScreen () {
     if (graviton.isProduction()) {
@@ -582,20 +581,19 @@ graviton = {
       }
     }
   },
-  getTypePlugin(config){
-      if (config.icons!=undefined) {
-        return "custom_theme"
-      }
-      if (config.css!=undefined) {
-        return "custom_theme"
-      }
-      if (config.colors!=undefined) {
-        return "theme"
-      }
-      if (config.main!=undefined) {
-        return "plugin"
-      }
-
+  getTypePlugin (config) {
+    if (config.icons != undefined) {
+      return 'custom_theme'
+    }
+    if (config.css != undefined) {
+      return 'custom_theme'
+    }
+    if (config.colors != undefined) {
+      return 'theme'
+    }
+    if (config.main != undefined) {
+      return 'plugin'
+    }
   },
   windowContent (id, content) {
     document.getElementById(`${id}_body`).innerHTML = content
@@ -626,8 +624,8 @@ graviton = {
     try {
       eval(result)
     } catch (error) {
-      graviton.throwError('Cannot load the current template: ' + error);
-      if(!graviton.isProduction()){
+      graviton.throwError('Cannot load the current template: ' + error)
+      if (!graviton.isProduction()) {
         console.log(result)
       }
       return ''
@@ -641,27 +639,27 @@ graviton = {
       }
     }
   },
-  getTerminal(){
+  getTerminal () {
     /*
       This is to avoid API issues whern there are breaking changes.
     */
-    return terminal;
+    return terminal
   },
-  getLanguage(){
-    if(graviton.getCurrentFile().path==null){
+  getLanguage () {
+    if (graviton.getCurrentFile().path == null) {
       return null
     }
     return getLanguageName(
-      getFormat(path.basename(graviton.getCurrentFile().path)).lang != "unknown"
+      getFormat(path.basename(graviton.getCurrentFile().path)).lang != 'unknown'
         ? getFormat(path.basename(graviton.getCurrentFile().path)).lang
         : path
-            .basename(graviton.getCurrentFile().path)
-            .split(".")
-            .pop()
+          .basename(graviton.getCurrentFile().path)
+          .split('.')
+          .pop()
     )
   },
-  getCurrentTab(){
-    return document.getElementById(editingTab);
+  getCurrentTab () {
+    return document.getElementById(editingTab)
   }
 }
 
@@ -821,6 +819,20 @@ const preload = array => {
   }
 }
 
+const preloadFont = array => {
+  // Preload images when booting
+  for (i = 0; i < array.length; i++) {
+     const ele  = document.createElement("p");
+     ele.textContent = ".";
+     ele.id = array[i];
+     ele.style.fontFamily = array[i]
+     document.body.appendChild(ele)
+      setTimeout(function(){
+        ele.remove();
+      }, 1);
+  }
+}
+
 graviton.changeExplorerPosition = (position) => {
   const content_app = document.getElementById('content_app')
   if (position === 'right') {
@@ -877,4 +889,3 @@ graviton.closeDropmenus = function () {
     }
   }
 }
-
