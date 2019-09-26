@@ -9,8 +9,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 'use strict'
-
-const _os = require('os')
+const _os = require("os")
 const pty = require('node-pty')
 const path = require('path')
 let graviton = {}

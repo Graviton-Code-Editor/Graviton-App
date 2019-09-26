@@ -12,7 +12,7 @@
 
 ![example screenshot](example.png)
 
-Changes on this source may not be released as an official build yet.
+**Changes on this source may not be released as an official build yet.**
 
 ✨ Highlights:
 ---
@@ -24,11 +24,12 @@ Changes on this source may not be released as an official build yet.
 * 🕹  Built-in terminal 
 * 🗺 Built-in image previewer
 * 📰 Built-in font previewer
-* 🏭 A Plugin and Themes Market 
-* 😇 More respectful of RAM than many alternatives 
+* 🏭 A Plugin and Themes market 
+* 😇 More respectful on RAM than other alternatives 
 * ✔  Tons of supported programming languages 
 * 📝 Multi line editing 
 * 🎧 Zen mode 
+* ⛓  Code folding
 
 **[Commit Changelog](CHANGELOG.md)**
 

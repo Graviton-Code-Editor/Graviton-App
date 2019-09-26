@@ -29,7 +29,7 @@ closeWindow('my_window1'); //Close the window by passing the id
 'use strict'
 
 module.exports = {
-  Window: function ({ id, content, onClose }) {
+  Window: function ({ id = Math.random(), content, onClose }) {
     /**
        * @desc Window constructor
        * @param {string} id                   Unique ID for the window

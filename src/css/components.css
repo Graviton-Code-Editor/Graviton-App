@@ -345,6 +345,7 @@ input[type="number"]::selection {
 
 .g_tabs_bar .tabs > p {
   overflow: hidden;
+	text-overflow:ellipsis;
   position: relative;
   font-size: 12px;
   min-width: 50px;

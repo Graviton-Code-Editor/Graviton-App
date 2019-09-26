@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190826 - 1 [1.2.0]
+- New Markdown file icon
+
 ### 190824 - 1 [1.2.0]
 - Preloading editor's and terminal's font
 - Added folding arrow (Codemirror addon)
