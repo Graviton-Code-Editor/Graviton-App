@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190827 - 1 [1.2.0]
+- Fixed, couldn't open fonts preview
+- Now using gv-sidemenu on Settings and Market
+- Added a new Web Component (gv-sidemenu) to creat side menus on windows
+
 ### 190826 - 1 [1.2.0]
 - New Markdown file icon
 

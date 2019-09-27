@@ -13,8 +13,6 @@
   animation: window_up linear 0.1s;
   color: var(--white-black);
   font-size: 17px;
-  padding: 12px;
-  overflow-y: scroll;
   border-radius: var(--window-radius);
   box-shadow: 0px 3px 15px var(--shadows);
   width: 85%;
@@ -27,6 +25,7 @@
   transform: translate(-50%, -50%);
   border: 1px solid var(--window-border-color);
   -webkit-user-select: none;
+  overflow: auto;
 }
 
 .body_window_full {

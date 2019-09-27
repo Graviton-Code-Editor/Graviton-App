@@ -14,6 +14,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Settings: {
     open: function () {
+      /*
       const settings_window = new Window({
         id: 'settings_window',
         content: `
@@ -41,18 +42,37 @@ module.exports = {
         </div>
         <div id="_content1" class="window_content"></div>`,
         onClose: 'saveConfig();'
+      })*/
+      
+      const settings_window = new Window({
+        id: 'settings_window',
+        content: `
+        <gv-sidemenu>
+          <side-menu>
+            <side-title class="translate_word" idT="Settings">${getTranslation("Settings")}</side-title>
+            <menu-button href=Customization onclick="Settings.navigate('customization')" class="translate_word" idT="Customization" default >${getTranslation("Customization")}</menu-button>
+            <menu-button href=Languages onclick="Settings.navigate('languages');" class="translate_word" idT="Languages">${getTranslation("Languages")}</menu-button>
+            <menu-button href=Editor onclick="Settings.navigate('editor');" class="translate_word" idT="Editor">${getTranslation("Editor")}</menu-button>
+            <menu-button href=Advanced onclick="Settings.navigate('advanced');" class="translate_word" idT="Editor">${getTranslation("Advanced")}</menu-button>
+            <menu-button href=About onclick="Settings.navigate('about');" class="translate_word" idT="About">${getTranslation("About")}</menu-button>
+          </side-menu>
+          <side-content id=settings_content>
+            <side-page id=settings.customization href=Customization default></side-page>
+            <side-page id=settings.languages href=Languages></side-page>
+            <side-page id=settings.editor href=Editor></side-page>
+            <side-page id=settings.advanced href=Advanced></side-page>
+            <side-page id=settings.about href=About></side-page>
+          </side-content>
+        </gv-sidemenu>`,
+        onClose: 'saveConfig();'
       })
       settings_window.launch()
+      elasticContainer.append(document.getElementById("settings_content"))
     },
     navigate: function (num) {
-      for (i = 0; i < document.getElementById('navbar1').children.length; i++) {
-        document
-          .getElementById('navbar1')
-          .children[i].classList.remove('active')
-      }
       switch (num) {
         case 'customization':
-          document.getElementById('_content1').innerHTML = graviton.getTemplate(
+          document.getElementById('settings.customization').innerHTML = graviton.getTemplate(
             'settings_customization'
           )
           if (document.getElementById('theme_list') != null) {
@@ -65,17 +85,17 @@ module.exports = {
               )
               themeDiv.innerHTML = `
                 <p style="margin:0px 0; font-size:17px;">${
-  theme.name
-}</p>
-                <p style="font-size:14px; margin:12px 0px;">${getTranslation(
-    'MadeBy'
-  ) + theme.author}</p>
-                <p style="font-size:13px; margin:12px 0px;">${
-  theme.description
-}</p>
-                <div class="accent" style="background:${
-  theme.colors['accentColor']
-};"></div>
+                  theme.name
+                }</p>
+                                <p style="font-size:14px; margin:12px 0px;">${getTranslation(
+                    'MadeBy'
+                  ) + theme.author}</p>
+                                <p style="font-size:13px; margin:12px 0px;">${
+                  theme.description
+                }</p>
+                                <div class="accent" style="background:${
+                  theme.colors['accentColor']
+                };"></div>
               `
               if (theme.name === current_config.theme) {
                 selectTheme('1', themeDiv)
@@ -89,10 +109,9 @@ module.exports = {
               `
             }
           }
-          document.getElementById('navB1').classList.add('active')
           break
         case 'languages':
-          document.getElementById('_content1').innerHTML = graviton.getTemplate(
+          document.getElementById('settings.languages').innerHTML = graviton.getTemplate(
             'settings_languages'
           )
           if (document.getElementById('language_list') != null) {
@@ -110,22 +129,19 @@ module.exports = {
               document.getElementById('language_list').appendChild(languageDiv)
             })
           }
-          document.getElementById('navB2').classList.add('active')
           break
-        case 'editors':
-          document.getElementById('_content1').innerHTML = graviton.getTemplate(
+        case 'editor':
+          document.getElementById('settings.editor').innerHTML = graviton.getTemplate(
             'settings_editor'
           )
-          document.getElementById('navB3').classList.add('active')
           break
         case 'advanced':
-          document.getElementById('_content1').innerHTML = graviton.getTemplate(
+          document.getElementById('settings.advanced').innerHTML = graviton.getTemplate(
             'settings_advanced'
           )
-          document.getElementById('navB4').classList.add('active')
           break
         case 'about':
-          document.getElementById('_content1').innerHTML = graviton.getTemplate(
+          document.getElementById('settings.about').innerHTML = graviton.getTemplate(
             'settings_about'
           )
           if (new_update != false) {
@@ -137,7 +153,6 @@ module.exports = {
               `
             }
           }
-          document.getElementById('navB5').classList.add('active')
           break
       }
     },

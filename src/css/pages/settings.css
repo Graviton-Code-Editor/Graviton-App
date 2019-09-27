@@ -9,97 +9,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-.g_lateral_panel {
-  width: 20%;
-  min-width: 200px;
-  padding: 20px;
-  margin: 15px 0;
-}
-
-.navbar {
-  height: auto;
-  width: 100%;
-  overflow: auto;
-  position: relative;
-  padding: 15px 0;
-}
-
-#_content2 > div {
-  overflow: auto;
-}
-
-.navbar button {
-  font-family: _main_font;
-  font-size: 15px;
-  color: var(--white-black);
-  background-color: transparent;
-  padding: 7px 10px;
-  width: 80%;
-  text-decoration: none;
-  display: block;
-  border: 0;
-  margin: 2px 0px;
-  border-radius: 5px;
-  text-align: left;
-  transform: scale(1);
-  position: relative;
-}
-
-.navbar button:hover {
-  color: var(--accentColor);
-  cursor: pointer;
-}
-
-.navbar button.active {
-  cursor: pointer;
-  transition: 0.05s;
-  background: var(--accentColor);
-  color: var(--black-white);
-}
-
-.navbar button.active:hover {
-  background: var(--accentDarkColor);
-}
-
-.top_panel {
-  overflow: auto;
-  min-height: 130px;
-  max-height: 130px;
-  margin: 15px 0px;
-  margin-bottom: 5px;
-}
-.align-center {
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  margin-top: 15px;
-}
-
 #settings_window_body,
 #market_window_body {
   display: flex;
-}
-
-#market_window_body {
-  display: flex;
-  flex-direction: column;
-}
-
-.window_content {
-  margin: 20px 0;
-  padding: 20px;
-  width: 80%;
-  overflow: auto;
-  box-shadow: 0px 2px 12px var(--shadows);
-  border-radius: 8px;
-}
-
-.window_content.width-auto {
-  width: auto;
-  box-shadow: none;
-  align-content: center;
-  margin: 1px;
-  min-height: auto;
 }
 
 #theme_list {

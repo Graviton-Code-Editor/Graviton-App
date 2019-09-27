@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190826",
+  date: "190827",
   version: "1.2.0",
   state: "Beta"
 };
@@ -211,9 +211,26 @@ const { commander, commanders } = require(path.join(
 ));
 window.customElements.define(
   "gv-switch",
-  require(path.join(__dirname, "src", "javascript", "api", "components", "switch.js")).Switch
+  require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "switch.js"
+  ))
 );
-
+window.customElements.define(
+  "gv-sidemenu",
+  require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "side_menu.js"
+  ))
+);
 let current_screen,
   dir_path,
   i,
@@ -277,7 +294,7 @@ if (graviton.isProduction()) {
 if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
 /* Set path for graviton's files and dirs */
-let logDir = path.join(DataFolderDir, "log.json"), 
+let logDir = path.join(DataFolderDir, "log.json"),
   configDir = path.join(DataFolderDir, "config.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
@@ -324,10 +341,7 @@ preload([
   "src/icons/custom_icons/node_modules.svg"
 ]);
 
-preloadFont([
-  "editor",
-  "terminal"
-]);
+preloadFont(["editor", "terminal"]);
 
 window.onload = function() {
   fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {

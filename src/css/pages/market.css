@@ -1,34 +1,3 @@
-.navbar2 {
-  display: flex;
-}
-.navbar2 button {
-  margin: 0px 4px;
-  padding: 0px 15px;
-  font-family: _main_font;
-  font-size: 15px;
-  color: var(--white-black);
-  background-color: transparent;
-  text-decoration: none;
-  display: inline-block;
-  border: 0;
-  text-align: left;
-  transform: scale(1);
-  position: relative;
-  border-bottom: 3px solid transparent;
-  min-height: 40px;
-}
-
-.navbar2 button:hover {
-  color: var(--accentColor);
-  cursor: pointer;
-}
-
-.navbar2 button.active {
-  cursor: pointer;
-  transition: 0.05s;
-  border-bottom: 3px solid var(--accentColor);
-  color: var(--accentColor);
-}
 .extension_div {
   background: transparent;
   border: 2px solid var(--primaryColor);

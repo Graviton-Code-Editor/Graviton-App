@@ -51,41 +51,24 @@ module.exports = {
        * @desc Load the Market page structure
        */
       if (document.getElementById('market_window_window') == undefined) return
-      graviton.windowContent(
-        'market_window',
-        `
-            <div class="top_panel">
-              <div class="align-center">
-                <h2 class="window_title window_title2 translate_word"  idT="Market">${getTranslation(
-    'Market'
-  )}</h2>
-              </div>
-              <div class="align-center">
-                <div id="navbar2" class="navbar2">
-                  <button id="navC1" onclick="Market.navigate('all')" class="translate_word" idT="All">${getTranslation(
-    'All'
-  )}</button>
-                  <button id="navC3" onclick="Market.navigate('themes')" class="translate_word" idT="Themes">${getTranslation(
-    'Themes'
-  )}</button>
-                  <button id="navC2" onclick="Market.navigate('installed')" class="translate_word" idT="Installed">${getTranslation(
-    'Installed'
-  )}</button>
-                  <button id="navC4" onclick="Market.navigate('settings')" class="translate_word" idT="Settings">${getTranslation(
-    'Settings'
-  )}</button>
-                </div>
-              </div>
-            </div>
-            <div id="_content2" class="window_content width-auto">
-              <div id="sec_all"></div>
-              <div id="sec_installed"></div>
-              <div id="sec_themes"></div>
-              <div id="sec_settings"></div>
-            </div>  
-            `
-      )
-      elasticContainer.append(document.getElementById('_content2'))
+
+      graviton.windowContent('market_window',`
+      <gv-sidemenu>
+        <side-menu>
+          <side-title>${getTranslation("Market")}</side-title>
+          <menu-button href=All default onclick="Market.navigate('all')"  >${getTranslation("All")}</menu-button>
+          <menu-button href=Installed onclick="Market.navigate('installed');">${getTranslation("Installed")}</menu-button>
+          <menu-button href=Themes onclick="Market.navigate('themes');">${getTranslation("Themes")}</menu-button>
+          <menu-button href=Settings onclick="Market.navigate('settings')">${getTranslation("Settings")}</menu-button>
+        </side-menu>
+        <side-content id=market_content>
+          <side-page id=sec_all href=All default></side-page>
+          <side-page id=sec_installed href=Installed></side-page>
+          <side-page id="sec_themes" href=Themes></side-page>
+          <side-page id=sec_settings href=Settings></side-page>
+        </side-content>
+      </gv-sidemenu>`)
+      elasticContainer.append(document.getElementById('market_content'))
     },
     clearCache: function () {
       /*
@@ -101,23 +84,8 @@ module.exports = {
     },
     navigate: function (num, err) {
       if (document.getElementById('market_window_window') == undefined) return
-      for (i = 0; i < document.getElementById('navbar2').children.length; i++) {
-        document
-          .getElementById('navbar2')
-          .children[i].classList.remove('active')
-      }
       switch (num) {
         case 'all':
-          for (
-            i = 0;
-            i < document.getElementById('_content2').children.length;
-            i++
-          ) {
-            document.getElementById('_content2').children[i].classList =
-              'page_hidden'
-          }
-          document.getElementById('sec_all').classList = 'page_showed'
-          document.getElementById('navC1').classList.add('active')
           if (err == 1) {
             document.getElementById('sec_all').innerHTML = getTranslation(
               'MarketError1'
@@ -186,16 +154,6 @@ module.exports = {
           }
           return
         case 'installed':
-          for (
-            i = 0;
-            i < document.getElementById('_content2').children.length;
-            i++
-          ) {
-            document.getElementById('_content2').children[i].classList =
-              'page_hidden'
-          }
-          document.getElementById('sec_installed').classList = 'page_showed'
-          document.getElementById('navC2').classList.add('active')
           if (document.getElementById('sec_installed').innerHTML == '') {
             document.getElementById('sec_installed').innerHTML = `
                       <div id=loading_exts2>Loading extensions...</div>
@@ -234,16 +192,6 @@ module.exports = {
           }
           return
         case 'themes':
-          for (
-            i = 0;
-            i < document.getElementById('_content2').children.length;
-            i++
-          ) {
-            document.getElementById('_content2').children[i].classList =
-              'page_hidden'
-          }
-          document.getElementById('sec_themes').classList = 'page_showed'
-          document.getElementById('navC3').classList.add('active')
           if (document.getElementById('sec_themes').innerHTML == '') {
             document.getElementById('sec_themes').innerHTML = `
                     <div id=loading_exts3>Loading extensions...</div>`
@@ -291,22 +239,12 @@ module.exports = {
 
           return
         case 'settings':
-          for (
-            i = 0;
-            i < document.getElementById('_content2').children.length;
-            i++
-          ) {
-            document.getElementById('_content2').children[i].classList =
-              'page_hidden'
-          }
-          document.getElementById('sec_settings').classList = 'page_showed'
-          document.getElementById('navC4').classList.add('active')
           document.getElementById('sec_settings').innerHTML = `
                 <h4>${getTranslation('Cache')}</h4>
                 <div class="section-1">
                   <button class=button1 onclick='Market.clearCache()'>${getTranslation(
-    'Clear'
-  )}</button>
+                    'Clear'
+                  )}</button>
                 </div>
                 `
       }

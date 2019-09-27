@@ -1,5 +1,4 @@
 `
-<elastic-container related=self>
    <h4>${getTranslation('Themes')}</h4>
    <div class="section-1">
       <div id='theme_list' style="min-height:50px;"></div>
@@ -60,4 +59,4 @@
           </label>
       </div>
       
-</elastic-container> `
+ `
