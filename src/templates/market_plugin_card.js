@@ -1,5 +1,5 @@
 `
-<div onclick=Market.openSubExtensions(this) class=extension_div id=${sec_ID} name=${_package.name} update=${_new_update}>
+<div onclick=Market.openSubExtensions(this) class=extension_div id=${sec_ID} name="${_package.name}" update=${_new_update}>
    ${_new_update ? icons['update'] : ''}
    <div >
       ${(function () {

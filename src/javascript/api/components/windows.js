@@ -47,8 +47,8 @@ module.exports = {
     newWindow.setAttribute('id', this.id + '_window')
     newWindow.innerHTML = `
       <div class="background_window" onclick="closeWindow('${
-  this.id
-}'); ${this.onClose}"></div>
+        this.id
+      }'); ${this.onClose}"></div>
       <div id="${this.id + '_body'}" class="body_window">
           ${this.code}
       </div>`

@@ -1,6 +1,6 @@
 module.exports = {
-  add: function () {
-    const current_id = `screen_${editor_screens.length + Math.random()}`
+  add: function (id="screen_"+graviton.getRandom()) {
+    const current_id = id;
     current_screen = {
       id: current_id
     }
@@ -185,3 +185,16 @@ module.exports = {
     }
   }
 }
+
+
+/*
+
+screens.add("hola");
+
+graviton.focusScreen("hola");
+
+new Control({text:"jaja"})
+
+
+
+*/

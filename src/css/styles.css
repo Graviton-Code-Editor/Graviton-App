@@ -293,7 +293,7 @@ body {
 	flex: 0;
 	min-width: 8px;
 	background: var(--primaryColor);
-	cursor: ew-resize;
+	cursor: col-resize;
 	margin: 0 0px;
 	user-select: none;
 	-webkit-app-region: no-drag;

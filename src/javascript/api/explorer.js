@@ -62,6 +62,12 @@ module.exports = {
         }
       }
       if (first_time) {
+        const opened_project = new CustomEvent('loaded_project', {
+          detail: {
+            path: FirstFolder
+          }
+        })
+        document.dispatchEvent(opened_project)
         workspaces[0] = FirstFolder
         graviton.setTitle(FirstFolder)
         if (document.getElementById('openFolder') != null) { document.getElementById('openFolder').remove() }

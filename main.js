@@ -14,6 +14,7 @@ const path = require("path")
 const { app, BrowserWindow } = require("electron")
 let main // Main window
 
+
 app.on("ready", function() {
 	main = new BrowserWindow({
 		webPreferences: {

@@ -22,3 +22,5 @@
 
 * Updated Electron to v6
 * New Graviton component called Control 
+* New events
+* New Web Component (gv-sidemenu)

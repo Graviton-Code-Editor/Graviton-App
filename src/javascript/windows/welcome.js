@@ -48,7 +48,11 @@ module.exports = {
           document.getElementById('clear_log').style = ''
         }
       }
-      if (error_showed == false) DeleteBoot()
+      if (error_showed == false){
+        DeleteBoot()
+        const graviton_loaded = new CustomEvent('graviton_loaded', {})
+        document.dispatchEvent(graviton_loaded)
+      }    
     }
   }
 }

@@ -635,12 +635,14 @@ graviton = {
     for (i = 0; i < editor_screens.length; i++) {
       if (editor_screens[i].id == screen_id) {
         current_screen.id = screen_id
+        return true
       }
     }
+    return false
   },
   getTerminal () {
-    /*
-      This is to avoid API issues whern there are breaking changes.
+    /**
+    * @desc This is to avoid API issues whern there are breaking changes.
     */
     return terminal
   },
@@ -659,7 +661,8 @@ graviton = {
   },
   getCurrentTab () {
     return document.getElementById(editingTab)
-  }
+  },
+  getRandom : () => Math.floor(Math.random() * 400)+Math.floor(Math.random())
 }
 
 function floatingWindow ([xSize, ySize], content) {

@@ -65,6 +65,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 150px;
+  min-height: 20px;
 }
 .extension_div p {
   font-size: 13px;
@@ -101,6 +102,7 @@
 .sub_extension_div .top h1 {
   margin-top: 5px;
 }
+
 
 .sub_extension_div .top > div {
   flex: 1;

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190828 - 1 [1.2.0]
+- Fixed, plugins with spaces on it's name had some issues
+- Updated spectron to 8.0.0
+
 ### 190827 - 1 [1.2.0]
 - Fixed, couldn't open fonts preview
 - Now using gv-sidemenu on Settings and Market

@@ -345,7 +345,6 @@ module.exports = {
             .remove()
           editors.splice(i, 1)
           let filtered_tabs = tabs.filter(c_tab => {
-            console.log(c_tab.getAttribute('screen'), working_tab.getAttribute('screen'))
             return (
               c_tab.getAttribute('screen') == working_tab.getAttribute('screen')
             )

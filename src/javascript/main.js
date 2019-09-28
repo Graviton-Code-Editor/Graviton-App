@@ -31,7 +31,8 @@ const { shell } = require("electron"),
   fit = require("./node_modules/xterm/lib/addons/fit/fit.js"),
   CodeMirror = require("codemirror"),
   semver = require("semver"),
-  request = require("request");
+  request = require("request"),
+  tinycolor = require("tinycolor2");
 
 require(path.join(
   __dirname,
@@ -710,6 +711,13 @@ const registerNewProject = function(dir) {
         Name: path.basename(dir),
         Path: dir
       });
+      const recent_project_event = new CustomEvent('new_recent_project', {
+        detail: {
+          name: path.basename(dir),
+          path: dir
+        }
+      })
+      document.dispatchEvent(recent_project_event)
       fs.writeFile(logDir, JSON.stringify(log));
       return;
     }
