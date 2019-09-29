@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190829 - 1 [1.2.0]
+- Added a method to create custom sections on the Settings page
+
 ### 190828 - 1 [1.2.0]
 - Fixed, plugins with spaces on it's name had some issues
 - Updated spectron to 8.0.0

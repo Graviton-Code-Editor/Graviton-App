@@ -46,24 +46,7 @@ module.exports = {
       
       const settings_window = new Window({
         id: 'settings_window',
-        content: `
-        <gv-sidemenu>
-          <side-menu>
-            <side-title class="translate_word" idT="Settings">${getTranslation("Settings")}</side-title>
-            <menu-button href=Customization onclick="Settings.navigate('customization')" class="translate_word" idT="Customization" default >${getTranslation("Customization")}</menu-button>
-            <menu-button href=Languages onclick="Settings.navigate('languages');" class="translate_word" idT="Languages">${getTranslation("Languages")}</menu-button>
-            <menu-button href=Editor onclick="Settings.navigate('editor');" class="translate_word" idT="Editor">${getTranslation("Editor")}</menu-button>
-            <menu-button href=Advanced onclick="Settings.navigate('advanced');" class="translate_word" idT="Editor">${getTranslation("Advanced")}</menu-button>
-            <menu-button href=About onclick="Settings.navigate('about');" class="translate_word" idT="About">${getTranslation("About")}</menu-button>
-          </side-menu>
-          <side-content id=settings_content>
-            <side-page id=settings.customization href=Customization default></side-page>
-            <side-page id=settings.languages href=Languages></side-page>
-            <side-page id=settings.editor href=Editor></side-page>
-            <side-page id=settings.advanced href=Advanced></side-page>
-            <side-page id=settings.about href=About></side-page>
-          </side-content>
-        </gv-sidemenu>`,
+        content: graviton.getTemplate("settings_sidemenu"),
         onClose: 'saveConfig();'
       })
       settings_window.launch()
@@ -169,6 +152,17 @@ module.exports = {
         document.documentElement.style.setProperty('--blur', `none`)
       }
       saveConfig()
+    },
+    addNewSection({name,content}){
+      const html_simulation = document.createElement("div");
+      html_simulation.innerHTML = templates.settings_sidemenu;
+      html_simulation.children[0].children[0].innerHTML += `
+      <menu-button href="${name}" >${name}</menu-button>
+      `
+      html_simulation.children[0].children[1].innerHTML += `
+      <side-page id="settings.${name}" href="${name}">${content}</side-page>
+      `
+      templates.settings_sidemenu = html_simulation.innerHTML;
     }
   }
 }
