@@ -9,27 +9,29 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-'use strict'
+"use strict";
 
 module.exports = {
   NewProject: {
     open: () => {
+      /**
+       * @desc Open the new project window
+       */
       const new_project_window = new Window({
-        id: 'new_project',
+        id: "new_project",
         content: `
-                <div class="section-1">
-                    <h1>${getTranslation('NewProject')}</h1>
-                    <div >
-                        <div class="section-2" onclick="createNewProject('html'); closeWindow('new_project');">
-                            <p>HTML</p>
-                        </div>
-                    </div>
-                </div>
-                
-                `
-      })
-
-      new_project_window.launch()
+          <div class="section-1">
+              <h1>${getTranslation("NewProject")}</h1>
+              <div >
+                  <div class="section-2" onclick="createNewProject('html'); closeWindow('new_project');">
+                      <p>HTML</p>
+                  </div>
+              </div>
+          </div>
+          
+          `
+      });
+      new_project_window.launch();
     }
   }
-}
+};

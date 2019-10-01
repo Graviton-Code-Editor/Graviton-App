@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190827",
+  date: "190901",
   version: "1.2.0",
   state: "Beta"
 };
@@ -711,13 +711,13 @@ const registerNewProject = function(dir) {
         Name: path.basename(dir),
         Path: dir
       });
-      const recent_project_event = new CustomEvent('new_recent_project', {
+      const recent_project_event = new CustomEvent("new_recent_project", {
         detail: {
           name: path.basename(dir),
           path: dir
         }
-      })
-      document.dispatchEvent(recent_project_event)
+      });
+      document.dispatchEvent(recent_project_event);
       fs.writeFile(logDir, JSON.stringify(log));
       return;
     }

@@ -9,87 +9,96 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-'use strict'
+"use strict";
 
 module.exports = {
   Setup: {
-    open: function () {
+    open: function() {
+      /**
+       * @desc Open the setu`p window
+       */
       languages.map((lang, index) => {
         if (navigator.language.includes(languages[index].locale)) {
-          loadLanguage(languages[i].name)
+          loadLanguage(languages[i].name);
         } else if (index == languages.length + 1) {
-          loadLanguage(languages[0])
+          loadLanguage(languages[0]);
         }
-      })
-      const all = document.createElement('div')
-      all.id = 'graviton_setup'
+      });
+      const all = document.createElement("div");
+      all.id = "graviton_setup";
       all.innerHTML = `
         <div class="body_window_full">
             <div id="body_window_full">
             </div>
-        </div>`
-      document.body.appendChild(all)
-      Setup.navigate('languages')
-      graviton.deleteLog()
-      if (error_showed == false) DeleteBoot()
+        </div>`;
+      document.body.appendChild(all);
+      Setup.navigate("languages");
+      graviton.deleteLog();
+      if (error_showed == false) DeleteBoot();
     },
-    close: function () {
-      document.getElementById('graviton_setup').remove()
-      current_config.justInstalled = false
-      saveConfig()
+    close: function() {
+      /**
+       * @desc Close the setup window
+       */
+      document.getElementById("graviton_setup").remove();
+      current_config.justInstalled = false;
+      saveConfig();
     },
-    navigate: function (page) {
+    navigate: function(page) {
+      /**
+       * @desc Navigate through the Setup pages
+       */
       switch (page) {
-        case 'languages':
+        case "languages":
           document.getElementById(
-            'body_window_full'
-          ).innerHTML = graviton.getTemplate('setup_languages')
+            "body_window_full"
+          ).innerHTML = graviton.getTemplate("setup_languages");
           for (i = 0; i < languages.length; i++) {
-            const languageDiv = document.createElement('div')
-            languageDiv.setAttribute('class', 'language_div')
+            const languageDiv = document.createElement("div");
+            languageDiv.setAttribute("class", "language_div");
             languageDiv.setAttribute(
-              'onclick',
+              "onclick",
               `loadLanguage('${languages[i].name}'); selectLang(this);`
-            )
-            languageDiv.innerText = languages[i].name
+            );
+            languageDiv.innerText = languages[i].name;
             if (languages[i].name === current_config.language.name) {
-              selectLang(languageDiv)
+              selectLang(languageDiv);
             }
-            document.getElementById('language_list').appendChild(languageDiv)
+            document.getElementById("language_list").appendChild(languageDiv);
           }
-          break
-        case 'themes':
+          break;
+        case "themes":
           document.getElementById(
-            'body_window_full'
-          ).innerHTML = graviton.getTemplate('setup_themes')
-          break
-        case 'additional_settings':
+            "body_window_full"
+          ).innerHTML = graviton.getTemplate("setup_themes");
+          break;
+        case "additional_settings":
           document.getElementById(
-            'body_window_full'
-          ).innerHTML = graviton.getTemplate('setup_additional_settings')
-          break
-        case 'welcome':
+            "body_window_full"
+          ).innerHTML = graviton.getTemplate("setup_additional_settings");
+          break;
+        case "welcome":
           if (graviton.isProduction() === true) {
             new Notification({
-              title: 'Graviton',
+              title: "Graviton",
               content:
-                'You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.',
-              delay: '10000',
+                "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
+              delay: "10000",
               buttons: {
-                'Dev tools': {
-                  click: function () {
-                    graviton.openDevTools()
+                "Dev tools": {
+                  click: function() {
+                    graviton.openDevTools();
                   }
                 },
                 Close: {}
               }
-            })
+            });
           }
           document.getElementById(
-            'body_window_full'
-          ).innerHTML = graviton.getTemplate('setup_welcome')
-          break
+            "body_window_full"
+          ).innerHTML = graviton.getTemplate("setup_welcome");
+          break;
       }
     }
   }
-}
+};
