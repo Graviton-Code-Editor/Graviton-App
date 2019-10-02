@@ -8,10 +8,10 @@
   overflow: auto;
   border-radius: var(--window-radius);
   box-shadow: 0px 3px 15px var(--shadows);
-  min-width: 25%;
-  max-width: 70%;
+  min-width: 15%;
+  max-width: 300px;
   min-height: 110px;
-  max-height: 70%;
+  max-height: 500px;
   margin: 0;
   text-align: left;
   background: var(--secondaryColor);

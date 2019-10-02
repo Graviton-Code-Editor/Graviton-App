@@ -301,21 +301,23 @@ graviton = {
   dialogAbout: function() {
     new Dialog({
       id: "about",
-      title: getTranslation("About") + " Graviton",
+      title: "",
       content: `
-	      ${getTranslation("Version")}: ${GravitonInfo.version} (${
-        GravitonInfo.date
-      }) - ${GravitonInfo.state}
-	      <br> ${getTranslation("OS")}: ${graviton.currentOS().name}`,
+      <div style="text-align:center; width:300px;">
+        <img style="height:40px; margin-bottom:20px;" src="src/icons/logo.svg">
+        <br>
+        <div style="left:25%; width:50%;position:relative;text-align:left;">
+	      <b> ${getTranslation("Version")}:</b> ${GravitonInfo.version} <br>
+        <b> ${getTranslation("Build")}: </b> ${GravitonInfo.date}<br>
+        <b> ${getTranslation("State")}: </b> ${GravitonInfo.state}<br>
+        <b> ${getTranslation("SO")}: </b> ${graviton.currentOS().name}
+        </div>
+      </div>`,
       buttons: {
-        [getTranslation("More")]: {
-          click: () => {
-            Settings.open();
-            Settings.navigate("about");
-          },
-          important: true
-        },
-        [getTranslation("Close")]: {}
+        [getTranslation("Accept")]: {
+          click:{},
+          important:true
+        }
       }
     });
   },
