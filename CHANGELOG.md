@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 190903 - 1 [1.2.0]
+- Better About dialog
+- More catalan translation
+
 ### 190829 - 1 [1.2.0]
 - Added a method to create custom sections on the Settings page
 

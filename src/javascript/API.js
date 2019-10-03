@@ -303,10 +303,11 @@ graviton = {
       id: "about",
       title: "",
       content: `
-      <div style="text-align:center; width:300px;">
-        <img style="height:40px; margin-bottom:20px;" src="src/icons/logo.svg">
+      <div style="text-align:center; width:230px;">
+        <img style="height:40px; margin-bottom:15px;" src="src/icons/logo.svg">
         <br>
-        <div style="left:25%; width:50%;position:relative;text-align:left;">
+        <span class="divider-2" style="margin:0px 30px; margin-bottom:20px; "></span>
+        <div style="left:25%; width:50%;position:relative;text-align:left; margin-bottom:10px;">
 	      <b> ${getTranslation("Version")}:</b> ${GravitonInfo.version} <br>
         <b> ${getTranslation("Build")}: </b> ${GravitonInfo.date}<br>
         <b> ${getTranslation("State")}: </b> ${GravitonInfo.state}<br>
