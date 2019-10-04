@@ -166,6 +166,12 @@ module.exports = {
       <side-page id="settings.${name}" href="${name}">${content}</side-page>
       `;
       templates.settings_sidemenu = html_simulation.innerHTML;
+      const eventEmitter = new EventEmitter();
+      pagesEvents.push({
+        name:name,
+        emitter:eventEmitter
+      })
+      return eventEmitter;
     }
   }
 };

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "190903",
+  date: "191004",
   version: "1.2.0",
   state: "Beta"
 };
@@ -33,7 +33,7 @@ const { shell } = require("electron"),
   semver = require("semver"),
   request = require("request"),
   tinycolor = require("tinycolor2");
-
+const EventEmitter = require('events')
 require(path.join(
   __dirname,
   "src",
@@ -250,6 +250,7 @@ let current_screen,
   g_highlighting = "activated",
   log = [],
   themes = [],
+  pagesEvents = [],
   themeObject = {
     colors: {
       accentColor: getComputedStyle(document.documentElement).getPropertyValue(
@@ -865,10 +866,8 @@ function selectTheme(from, theme) {
   }
   theme.classList.add("active");
 }
-/*
-
-  Language  indicator and Line/Char counter Controls
-
+/**
+  * @desc Language  indicator and Line/Char counter Controls
 */
 document.addEventListener("screen_loaded", e => {
   const screen = e.detail.screen;

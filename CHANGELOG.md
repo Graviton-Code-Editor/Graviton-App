@@ -2,98 +2,98 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 190903 - 1 [1.2.0]
+### 191003 - 1 [1.2.0]
 - Better About dialog
 - More catalan translation
 
-### 190829 - 1 [1.2.0]
+### 190929 - 1 [1.2.0]
 - Added a method to create custom sections on the Settings page
 
-### 190828 - 1 [1.2.0]
+### 190928 - 1 [1.2.0]
 - Fixed, plugins with spaces on it's name had some issues
 - Updated spectron to 8.0.0
 
-### 190827 - 1 [1.2.0]
+### 190927 - 1 [1.2.0]
 - Fixed, couldn't open fonts preview
 - Now using gv-sidemenu on Settings and Market
 - Added a new Web Component (gv-sidemenu) to creat side menus on windows
 
-### 190826 - 1 [1.2.0]
+### 190926 - 1 [1.2.0]
 - New Markdown file icon
 
-### 190824 - 1 [1.2.0]
+### 190924 - 1 [1.2.0]
 - Preloading editor's and terminal's font
 - Added folding arrow (Codemirror addon)
 - Dark Codemirror theme now has a different color for active line and selected lines
 - Better formatting for JavaScript files
 
-### 190822 - 1 [1.2.0]
+### 190922 - 1 [1.2.0]
 - Fixed, Creating files & folders dialog's input color wasn't matching the selected theme colors
 
-### 190821 - 1 [1.2.0]
+### 190921 - 1 [1.2.0]
 - Fixed, when closing a tab it wasn't updating it's screen language and line counter controls
 - Fixed, free tabs weren't working
 - Added a new method, graviton.getCurrentTab() , it returns the current focused tab's HTML element
 
-### 190818 - 1 [1.2.0]
+### 190918 - 1 [1.2.0]
 - Updated Electron to version 6
 - Bug fixes
 - New Component called Control
 
-### 190817 - 1 [1.2.0]
+### 190917 - 1 [1.2.0]
 - Better icon detector for plugins in market
 - Fixed, the plugin update detector was broken
 
-### 190816 - 1 [1.2.0]
+### 190916 - 1 [1.2.0]
 - Plugin logos now appear also on the subpage
 
-### 190815 - 1 [1.2.0]
+### 190915 - 1 [1.2.0]
 - Plugins that doesn't have a logo will have a dynamic logo
 
-### 190814 - 2 [1.2.0]
+### 190914 - 2 [1.2.0]
 - Market now shows plugin's logo
 - Fixed, "Installing themes" screen was never quited
 - New switches design
 - Prevent from breaking dropmenus when it's list are changed
 
-### 190814 - 1 [1.2.0]
+### 190914 - 1 [1.2.0]
 - Implemented a loading bar in the market
 
-### 190811 - 1 [1.2.0]
+### 190911 - 1 [1.2.0]
 - Added Elastic Container support for horizontal  contents
 - Re-added NewProject window
 - Improvements on the update detector
 
-### 190810 - 1 [1.2.0]
+### 190910 - 1 [1.2.0]
 - Using Degit instead of Nodegit
 - Fixed, dev tools were still enabled on production
 
-### 190809 - 1 [1.2.0]
+### 190909 - 1 [1.2.0]
 - Plugin screenshoots list is now horizontal
 - Fixed, Couldn't force close a tab when there are changes
 
-### 190808 - 1 [1.2.0]
+### 190908 - 1 [1.2.0]
 - You can now show screenshoots on the market, by adding a property to the package.json , example : "screenshoots":["image1.png"],
 - Market redesign
 - Creating folder and files dialogs now also accepts Enter
 - Fixed, Dev tools were enabled even on production
 
-### 190805 - 1 [1.1.0]
+### 190905 - 1 [1.1.0]
 - Preparing for v1.1.0 release
 - Fixed, Dev mode notification after finishing setup was being throwed always
 
-### 190804 - 1 [1.1.0]
+### 190904 - 1 [1.1.0]
 - Added bounce effect to the plugin's page
 - Fixed, couldn't show terminal from the Editor's menu
 
 
-### 190803 - 1 [1.1.0]
+### 190903 - 1 [1.1.0]
 - Changed cursor style on terminal, now also changes it's color depending on the selected theme
 - Improved source management
 - Couldn't create free tabs
 - Dropmenus weren't being translated
 
-### 190802 - 1 [1.1.0]
+### 190902 - 1 [1.1.0]
 - Font previewer wasn't working
 - Fix: space lines while redefining the buttons list on a dropmenu were rendering as buttons and not lines 
 - Better source management

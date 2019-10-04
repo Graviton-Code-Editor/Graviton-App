@@ -59,6 +59,12 @@ module.exports = class GvSideMenu extends HTMLElement {
             menuButtons[i].classList.remove("active");
         }
         button.classList.add("active");
+        const event = pagesEvents.filter((ev)=>{
+          return ev.name == button.getAttribute("href");
+        })[0]
+        if( event !== undefined){
+          event.emitter.emit("load")
+        }
       });
     }
   }

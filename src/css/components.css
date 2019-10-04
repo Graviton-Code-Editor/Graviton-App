@@ -64,6 +64,16 @@ input[type="number"]::selection {
   color:var(--white-black);
 }
 
+.input4 {
+  padding: 8px;
+  border: 0;
+  border-radius: 3px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+  background: var(--primaryColor);
+  max-width: 125px;
+  color:var(--white-black);
+}
+
 .slider {
   -webkit-appearance: none;
   width: auto;
