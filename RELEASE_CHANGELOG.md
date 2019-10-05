@@ -7,6 +7,7 @@
 ## ✔ New
 
 * Using new Microsoft's font Cascadia for terminal
+* Better autocomplete
 * Readded the New Project page
 * Implemented a loading bar in Market
 * Plugins can now show screenshoots in Market

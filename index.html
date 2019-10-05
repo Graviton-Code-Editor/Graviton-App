@@ -15,6 +15,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 <link rel="stylesheet" href="src/css/fast_loading.css" />
 <div id="g_bootanimation">
    <img src="src/icons/logo.svg" />
+   <div id=boot_loader class="center loading_bar">
+      <div></div>
+      <div class=bg></div>
+    </div>
 </div>
 <script>
    let editor_booted = false,
@@ -37,7 +41,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
       if (editor_booted == false && error_showed == false) {
          error_showed = true
          document.getElementById("g_bootanimation").innerHTML += `
-         <div>
+         <div class=err>
          <p>An error has appeared when booting Graviton.</p>
          <button class="Button1 red" onclick="FactoryReset()">Factory Reset</button>
          <button class="Button1" onclick="restartApp()">Reboot</button>

@@ -295,20 +295,22 @@ module.exports = {
             editor
               .getValue()
               .replace(/(\r\n|\n|\r)/gm, ' ')
-              .split(
-                /\s|(\()([\w\s!?="`[<>,\/*':&.;_-{}]+)(\))|\s|(\<)([\w\s!?="`[,\/*()':&.;_-{}]+)(\>)|\s|(\()([\w\s!?="<>`[,'+:&.;_-{}]+)(\))\s|(\B\$)(\w+)|\s(\/\*)([\w\s!?()="<>`[':.;_-{}]+)(\*\/)|("[\w\s!?():=`.;_-{}]+")\s|(%%)([\w\s!?()="+<>`[\/'*,.;_-{}]+)(%%)|("[\w\s!?()='.`;_-{}]+")/g
-              )
+              .split(" ")
               .filter(Boolean)
           )
           dic = dic.concat(vars)
           filterIt(dic, lastWord, function (filterResult) {
             if (filterResult.length > 0 && lastWord.length >= 3) {
               let contextOptions
-              for (var i = 0; i < filterResult.length; i++) {
+              for ( i = 0; i < filterResult.length; i++) {
                 const id = Math.random()
-                contextOptions += `<button id=${id} class=option >
-                      ${filterResult[i]._name}
-                      </button>`
+                contextOptions += `
+                <div class=option>
+                  <button id=${id}  >
+                    ${filterResult[i]._name}
+                  </button>
+                  <p></p>
+                </div>`
                 contextOptions = contextOptions.replace('undefined', '')
                 context.innerHTML = contextOptions
                 sleeping(1).then(() => {

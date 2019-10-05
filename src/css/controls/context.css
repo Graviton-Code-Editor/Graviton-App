@@ -33,7 +33,7 @@ context .menuWrapper::-webkit-scrollbar-thumb:hover {
   background: var(--scroll-color-hover);
 }
 
-context .menuWrapper .option {
+context .menuWrapper .option button {
   height: 30px;
   font-size: 13px;
   color: var(--white-black);
@@ -49,21 +49,53 @@ context .menuWrapper .option {
   font-family: _main_font;
 }
 
-context .menuWrapper .option.hover {
-  background-color: var(--accentColor);
-  color: var(--black-white);
+context .menuWrapper .option {
+  display: flex;
+}
+context .menuWrapper .option:hover {
+  cursor: pointer;
 }
 
-context .menuWrapper .option:hover {
+context .menuWrapper .option p{
+  height: 20px;
+  font-size: 13px;
+  background-color: transparent;
+  width: 30px;
+  text-decoration: none;
+  display: block;
+  border: 0;
+  border-radius: 5px;
+  text-align: left;
+  font-family: _main_font;
+  margin:0;
+  padding: 5px;
+  padding-top: 7px;
+  font-size: 12px;
+}
+context .menuWrapper .option p::after {
+  content: "TAB";
+  color:transparent;
+}
+
+
+
+context .menuWrapper .option:hover button {
   background-color: var(--widget-color);
   color: var(--white-black);
 }
-
-context .menuWrapper .option:active {
+context .menuWrapper .option.hover button {
+  background-color: var(--accentColor);
+  color: var(--black-white);
+  cursor: pointer;
+}
+context .menuWrapper .option.hover p::after {
+  color: var(--white-black);
+}
+context .menuWrapper .option:active button {
   transform: scale(var(--scalation));
 }
 
-context .menuWrapper .option:last-child {
+context .menuWrapper .option button:last-child {
   border-bottom: none;
 }
 

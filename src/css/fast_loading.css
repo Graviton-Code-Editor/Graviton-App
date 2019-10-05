@@ -34,7 +34,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   max-height: 200px;
 }
 
-#g_bootanimation div {
+#g_bootanimation .err {
   color: white;
   z-index: 999;
   position: fixed;
@@ -52,4 +52,30 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   margin: 0;
   position: absolute;
   height: 19px;
+}
+
+.loading_bar {
+	width: 300px;
+	border-radius: 100px;
+}
+.loading_bar > div {
+	background: var(--accentColor);
+	height: 15px;
+	width: 10px;
+	position: absolute;
+	border-radius: 100px;
+	box-sizing: border-box;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+}
+.loading_bar > .bg {
+	background: var(--widget-color);
+	width: 100%;
+	position: absolute;
+	z-index: -1;
+	border-radius: 100px;
+}
+
+#boot_loader{
+  margin-top:50px;
 }

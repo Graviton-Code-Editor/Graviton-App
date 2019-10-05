@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191005 - 1 [1.2.0]
+- Selecting a theme from market now will be saved
+- Added a TAB label on the autocomplete
+
 ### 191003 - 1 [1.2.0]
 - Better About dialog
 - More catalan translation

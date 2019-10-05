@@ -20,7 +20,7 @@ module.exports = {
       const market_window = new Window({
         id: "market_window",
         content: `
-          <div id=market_loader class="center">
+          <div id=market_loader class="center loading_bar">
             <div></div>
             <div class=bg></div>
           </div>

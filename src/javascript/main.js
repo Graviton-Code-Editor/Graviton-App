@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191004",
+  date: "191005",
   version: "1.2.0",
   state: "Beta"
 };
@@ -32,8 +32,8 @@ const { shell } = require("electron"),
   CodeMirror = require("codemirror"),
   semver = require("semver"),
   request = require("request"),
-  tinycolor = require("tinycolor2");
-const EventEmitter = require('events')
+  tinycolor = require("tinycolor2"),
+  EventEmitter = require('events')
 require(path.join(
   __dirname,
   "src",
@@ -356,11 +356,14 @@ window.onload = function() {
         function(err, data) {
           templates[path.basename(dir, ".js")] = data;
           temporal_count++;
+          document.getElementById(
+            "boot_loader"
+          ).children[0].style.width = temporal_count   + 20 + "%";
           if (temporal_count == paths.length) {
             fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
               /* Load languages */
               let path_count = paths.length;
-              paths.forEach(dir => {
+              paths.forEach((dir,index) => {
                 fs.readFile(
                   path.join(__dirname, "languages", dir),
                   "utf8",
@@ -379,10 +382,16 @@ window.onload = function() {
                     if (!_err_parsing) {
                       languages.push(JSON.parse(data)); // Push the language
                     }
+                    document.getElementById(
+                      "boot_loader"
+                    ).children[0].style.width = index *6 + 30 + "%";
                     if (languages.length === path_count) {
                       graviton.loadControlButtons();
                       loadConfig();
                       graviton.consoleInfo("All templates have been loaded.");
+                      document.getElementById(
+                        "boot_loader"
+                      ).children[0].style.width = "100%";
                     }
                   }
                 );

@@ -61,7 +61,7 @@
           <div>
               ${(function () {
       if (plugin.local != undefined) {
-        return ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}');">Select</button>` } else { return '' } })()}
+        return ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
               <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
               <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> `
       } else {
