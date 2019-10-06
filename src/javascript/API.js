@@ -173,7 +173,6 @@ class Plugin {
         function(err) {}
       );
       return "created";
-      continue;
     }
       return "already_exists";
   }
