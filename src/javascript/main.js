@@ -442,6 +442,8 @@ const appendBinds = () => {
   });
 };
 
+//functions
+
 function saveFileAs() {
   dialog.showSaveDialog(fileName => {
     fs.writeFile(fileName, editor.getValue(), err => {
@@ -508,7 +510,7 @@ function saveFile() {
 }
 
 const create = {
-  folder: function(id, value) {
+  folder (id, value) {
     const element = document.getElementById(id);
     const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
@@ -528,7 +530,7 @@ const create = {
       });
     }
   },
-  file: function(id, value) {
+  file (id, value) {
     const element = document.getElementById(id);
     const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
@@ -552,7 +554,7 @@ const create = {
 };
 
 const directories = {
-  newFolder: function(object) {
+  newFolder(object) {
     new Dialog({
       id: "new_folder",
       title: getTranslation("Dialog.RenameTo"),
@@ -583,7 +585,7 @@ const directories = {
       });
     document.getElementById("rename_dialog").focus();
   },
-  newFile: function(object) {
+  newFile(object) {
     new Dialog({
       id: "new_file",
       title: getTranslation("Dialog.RenameTo"),
@@ -614,7 +616,7 @@ const directories = {
       });
     document.getElementById("rename_dialog").focus();
   },
-  removeFileDialog: function(object) {
+  removeFileDialog(object) {
     new Dialog({
       id: "remove_file",
       title: getTranslation("Dialog.AreYouSure"),
@@ -629,7 +631,7 @@ const directories = {
       }
     });
   },
-  removeFolderDialog: function(object) {
+  removeFolderDialog(object) {
     new Dialog({
       id: "remove_folder",
       title: getTranslation("Dialog.AreYouSure"),
@@ -644,20 +646,20 @@ const directories = {
       }
     });
   },
-  removeFile: function(id) {
+  removeFile(id) {
     const object = document.getElementById(id);
     fs.unlink(object.getAttribute("dir"), function(err) {
       if (err) graviton.throwError(err);
       object.remove();
     });
   },
-  removeFolder: function(id) {
+  removeFolder(id) {
     const rimraf = require("rimraf");
     const object = document.getElementById(id);
     rimraf.sync(object.getAttribute("dir"));
     object.remove();
   },
-  getCustomIcon: function(dir, state) {
+  getCustomIcon(dir, state) {
     if (
       themeObject.icons == undefined ||
       dir == "node_modules" ||

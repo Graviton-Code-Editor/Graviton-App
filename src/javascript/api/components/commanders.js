@@ -34,7 +34,7 @@ module.exports = {
     }
   },
   commanders: {
-    terminal: function (object) {
+    terminal   (object) {
       if (graviton.getCurrentDirectory() == null && object == undefined) {
         graviton.throwError(getTranslation('CannotRunTerminalCauseDirectory'))
         return
@@ -111,19 +111,19 @@ module.exports = {
         }
       )
     },
-    hide: function () {
+    hide() {
       if (terminal != null) {
         document.getElementById(terminal.id + '_commander').style.display =
           'none'
       }
     },
-    show: function () {
+    show   () {
       if (terminal != null) { document.getElementById(terminal.id + '_commander').style = '' }
     },
-    close: function () {
+    close   () {
       if (terminal != null) { document.getElementById(terminal.id + '_commander').remove() }
     },
-    closeTerminal: function () {
+    closeTerminal() {
       const closed_terminal_event = new CustomEvent('closed_terminal', {
         detail: terminal
       })
