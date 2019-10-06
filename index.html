@@ -40,6 +40,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
    window.addEventListener("error", function () {
       if (editor_booted == false && error_showed == false) {
          error_showed = true
+         document.getElementById("boot_loader").remove();
          document.getElementById("g_bootanimation").innerHTML += `
          <div class=err>
          <p>An error has appeared when booting Graviton.</p>

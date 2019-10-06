@@ -59,7 +59,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	border-radius: 100px;
 }
 .loading_bar > div {
-	background: var(--accentColor);
+	background:   -webkit-linear-gradient(-45deg, rgba(255,0,72,1) 0%, rgba(255,89,0,1) 100%);
 	height: 15px;
 	width: 10px;
 	position: absolute;
@@ -77,5 +77,5 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 #boot_loader{
-  margin-top:50px;
+  margin-top:70px;
 }

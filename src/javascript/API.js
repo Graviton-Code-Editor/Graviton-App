@@ -174,7 +174,7 @@ class Plugin {
       );
       return "created";
     }
-      return "already_exists";
+    return "already_exists";
   }
   getData(callback) {
     const me = this;

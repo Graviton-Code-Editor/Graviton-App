@@ -57,7 +57,7 @@ function loadConfig() {
     });
   } else {
     const local_config = require(configDir);
-    Object.keys(current_config).forEach(function(key, index) {
+    Object.keys(current_config).forEach(function(key) {
       if (local_config[key] != undefined && current_config[key] != undefined) {
         current_config[key] = local_config[key];
       } // Will only change the extisting parameters
@@ -65,7 +65,7 @@ function loadConfig() {
     loadLanguage(current_config.language);
     graviton.refreshCustomization();
     graviton.changeExplorerPosition(current_config.explorerPosition);
-    Menus.loadDefaults();
+    Menus.loadDefaults(); //Load default menus
     screens.add(); // Creates the first screen
     Plugins.detect(function() {
       if (current_config["theme"] != undefined) {
