@@ -50,19 +50,19 @@ module.exports = {
               );
               i += 2;
             } catch {}
-          } else {
-            if (
-              (current_config.animationsPreferences === "desactivated" &&
-                Object.keys(colors)[i] !== "scalation") ||
-              current_config.animationsPreferences === "activated" ||
-              Object.keys(colors)[i] !== "blur"
-            ) {
-              //Prevent changing the scalation when the animations are off
-              document.documentElement.style.setProperty(
-                "--" + Object.keys(colors)[i],
-                colors[Object.keys(colors)[i]]
-              ); //Update the CSS variables
-            }
+            continue
+          }
+          if (
+            (current_config.animationsPreferences === "desactivated" &&
+              Object.keys(colors)[i] !== "scalation") ||
+            current_config.animationsPreferences === "activated" ||
+            Object.keys(colors)[i] !== "blur"
+          ) {
+            //Prevent changing the scalation when the animations are off
+            document.documentElement.style.setProperty(
+              "--" + Object.keys(colors)[i],
+              colors[Object.keys(colors)[i]]
+            ); //Update the CSS variables
           }
         }
         const explorer_icons = document.getElementsByClassName(
