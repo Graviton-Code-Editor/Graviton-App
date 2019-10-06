@@ -173,9 +173,9 @@ class Plugin {
         function(err) {}
       );
       return "created";
-    } else {
-      return "already_exists";
+      continue;
     }
+      return "already_exists";
   }
   getData(callback) {
     const me = this;

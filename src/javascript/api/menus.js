@@ -220,15 +220,15 @@ module.exports = {
       const dropdowns = document.getElementsByClassName('dropdown-content')
       for (i = 0; i < dropdowns.length; i++) {
         if (dropdowns[i].id != id) {
-          dropdowns[i].classList.replace('show', 'hide') // Close the other menus
+          dropdowns[i].classList.replace('show', 'hide')
+          continue // Close the other menus
+        }
+        if (dropdowns[i].classList.contains('show')) {
+          dropdowns[i].classList.replace('show', 'hide') // Hide the clicked menu
+          anyDropON = null
         } else {
-          if (dropdowns[i].classList.contains('show')) {
-            dropdowns[i].classList.replace('show', 'hide') // Hide the clicked menu
-            anyDropON = null
-          } else {
-            dropdowns[i].classList.replace('hide', 'show') // Show the clicked menu
-            anyDropON = id
-          }
+          dropdowns[i].classList.replace('hide', 'show') // Show the clicked menu
+          anyDropON = id
         }
       }
     }
