@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191008 - 1 [1.2.0]
+- Updated last logo in the top bar
+
 ### 191005 - 1 [1.2.0]
 - Selecting a theme from market now will be saved
 - Added a TAB label on the autocomplete

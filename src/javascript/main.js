@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191005",
+  date: "191008",
   version: "1.2.0",
   state: "Beta"
 };
@@ -391,7 +391,7 @@ window.onload = function() {
                       graviton.consoleInfo("All templates have been loaded.");
                       document.getElementById(
                         "boot_loader"
-                      ).children[0].style.width = "100%";
+                      ).children[0].style = "width: 100%; border-radius:100px;";
                     }
                   }
                 );
