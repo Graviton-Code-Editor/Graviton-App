@@ -491,7 +491,7 @@ module.exports = {
                 [getTranslation("Select")]: {
                   click: function() {
                     graviton.setTheme(name);
-                    saveConfig();
+                    graviton.saveConfiguration();
                   }
                 }
               }

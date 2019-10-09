@@ -90,25 +90,34 @@ function loadConfig() {
   }
 }
 
-function saveConfig() {
-  // Saves the current configuration to config.json
-  let newConfig = {
-    justInstalled: current_config.justInstalled,
-    theme: current_config.theme,
-    fontSizeEditor: current_config.fontSizeEditor,
-    appZoom: current_config.appZoom,
-    language: current_config.language.name,
-    animationsPreferences: current_config.animationsPreferences,
-    autoCompletionPreferences: current_config.autoCompletionPreferences,
-    lineWrappingPreferences: current_config.lineWrappingPreferences,
-    accentColorPreferences: current_config.accentColorPreferences,
-    blurPreferences: current_config.blurPreferences,
-    bouncePreferences: current_config.bouncePreferences,
-    explorerPosition: current_config.explorerPosition,
-    version: GravitonInfo.version,
-    build: GravitonInfo.date
-  };
-  newConfig = JSON.stringify(newConfig);
-  fs.writeFile(configDir, newConfig, err => {});
+graviton.saveConfiguration = () => {
+  /**
+   * @desc Saves the current configuration to config.json
+   *
+   */
+  fs.writeFile(
+    configDir,
+    JSON.stringify({
+      justInstalled: current_config.justInstalled,
+      theme: current_config.theme,
+      fontSizeEditor: current_config.fontSizeEditor,
+      appZoom: current_config.appZoom,
+      language: current_config.language.name,
+      animationsPreferences: current_config.animationsPreferences,
+      autoCompletionPreferences: current_config.autoCompletionPreferences,
+      lineWrappingPreferences: current_config.lineWrappingPreferences,
+      accentColorPreferences: current_config.accentColorPreferences,
+      blurPreferences: current_config.blurPreferences,
+      bouncePreferences: current_config.bouncePreferences,
+      explorerPosition: current_config.explorerPosition,
+      version: GravitonInfo.version,
+      build: GravitonInfo.date
+    }),
+    err => {
+      if (err) graviton.throwError("Couldn't save the configuration file.");
+    }
+  );
   if (editor != undefined) editor.refresh();
-}
+};
+
+const saveConfig = graviton.saveConfiguration; //Prevent API problems

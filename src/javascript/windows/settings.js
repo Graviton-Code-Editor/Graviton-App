@@ -41,13 +41,13 @@ module.exports = {
           </div>
         </div>
         <div id="_content1" class="window_content"></div>`,
-        onClose: 'saveConfig();'
+        onClose: 'graviton.saveConfiguration();'
       })*/
 
       const settings_window = new Window({
         id: "settings_window",
         content: graviton.getTemplate("settings_sidemenu"),
-        onClose: "saveConfig();"
+        onClose: "graviton.saveConfiguration();"
       });
       settings_window.launch();
       elasticContainer.append(document.getElementById("settings_content"));
@@ -64,7 +64,7 @@ module.exports = {
               themeDiv.setAttribute("class", "theme_div");
               themeDiv.setAttribute(
                 "onclick",
-                `graviton.setTheme('${theme.name}'); selectTheme('1',this); saveConfig();`
+                `graviton.setTheme('${theme.name}'); selectTheme('1',this); graviton.saveConfiguration();`
               );
               themeDiv.innerHTML = `
                 <p style="margin:0px 0; font-size:17px;">${theme.name}</p>
@@ -104,7 +104,7 @@ module.exports = {
               languageDiv.setAttribute("class", "language_div");
               languageDiv.setAttribute(
                 "onclick",
-                `loadLanguage('${lang.name}'); selectLang(this); saveConfig();`
+                `loadLanguage('${lang.name}'); selectLang(this); graviton.saveConfiguration();`
               );
               languageDiv.innerText = lang.name;
               if (lang.name === current_config.language.name) {
@@ -154,7 +154,7 @@ module.exports = {
       } else {
         document.documentElement.style.setProperty("--blur", `none`);
       }
-      saveConfig();
+      graviton.saveConfiguration();
     },
     addNewSection({ name, content }) {
       const html_simulation = document.createElement("div");

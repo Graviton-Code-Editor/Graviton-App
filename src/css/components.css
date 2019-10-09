@@ -499,6 +499,7 @@ button.button1:active {
   transition: 0.1s;
   border: 2px solid var(--accentColor);
   box-sizing: border-box;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.35);
 }
 
 button.button1 svg * {
@@ -863,6 +864,9 @@ textarea {
 
 .radio:hover input {
   background-color: var(--widget-color);
+}
+.radio:hover .radio_dot{
+  box-shadow:0px 2px 6px rgba(0,0,0,0.25)
 }
 
 .radio input:checked ~ .radio_dot {

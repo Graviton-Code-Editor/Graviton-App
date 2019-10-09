@@ -42,7 +42,7 @@ module.exports = {
        */
       document.getElementById("graviton_setup").remove();
       current_config.justInstalled = false;
-      saveConfig();
+      graviton.saveConfiguration();
     },
     navigate: function(page) {
       /**

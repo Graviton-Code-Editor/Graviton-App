@@ -530,7 +530,7 @@ graviton = {
     if (_value >= 0 && _value <= 50) {
       current_config.appZoom = _value;
       webFrame.setZoomFactor(current_config.appZoom / 25);
-      saveConfig();
+      graviton.saveConfiguration();
     }
   },
   editorSearch() {
@@ -909,7 +909,7 @@ graviton.setEditorFontSize = function(new_size) {
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.refresh();
   }
-  saveConfig();
+  graviton.saveConfiguration();
 };
 
 graviton.loadControlButtons = () => {
