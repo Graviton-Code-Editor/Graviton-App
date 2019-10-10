@@ -15,8 +15,8 @@
   font-size: 17px;
   border-radius: var(--window-radius);
   box-shadow: 0px 3px 15px var(--shadows);
-  width: 85%;
-  height: 85%;
+  max-width: 85%;
+  max-height: 85%;
   position: absolute;
   text-align: left;
   background: var(--secondaryColor);

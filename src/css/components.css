@@ -888,6 +888,7 @@ gv-sidemenu{
   display: flex;
   min-width: 100%;
   max-width: 100%;
+  min-height: 100%;
   overflow: auto;
 }
 gv-sidemenu side-title{

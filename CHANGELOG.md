@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191010 - 1 [1.2.0]
+- Full redesigned welcome page, simpler UI but more features.
+- Added an array where a plugin could add it's own "New project" service.
+
 ### 191008 - 1 [1.2.0]
 - Updated last logo in the top bar
 

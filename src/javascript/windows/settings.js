@@ -14,36 +14,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Settings: {
     open: function() {
-      /*
-      const settings_window = new Window({
-        id: 'settings_window',
-        content: `
-        <div class="g_lateral_panel">
-          <h2 class="window_title window_title2 translate_word"  idT="Settings">${getTranslation(
-    'Settings'
-  )}</h2> 
-          <div id="navbar1" class="navbar">
-            <button id="navB1" onclick="Settings.navigate('customization')" class="translate_word" idT="Customization">${getTranslation(
-    'Customization'
-  )}</button>
-            <button id="navB2" onclick="Settings.navigate('languages')" class="translate_word" idT="Languages">${getTranslation(
-    'Languages'
-  )}</button>
-            <button id="navB3" onclick="Settings.navigate('editors')" class="translate_word" idT="Editor">${getTranslation(
-    'Editor'
-  )}</button>
-            <button id="navB4" onclick="Settings.navigate('advanced')" class="translate_word" idT="Advanced">${getTranslation(
-    'Advanced'
-  )}</button>
-            <button id="navB5" onclick="Settings.navigate('about')" class="translate_word" idT="About">${getTranslation(
-    'About'
-  )}</button>
-          </div>
-        </div>
-        <div id="_content1" class="window_content"></div>`,
-        onClose: 'graviton.saveConfiguration();'
-      })*/
-
       const settings_window = new Window({
         id: "settings_window",
         content: graviton.getTemplate("settings_sidemenu"),
@@ -68,15 +38,15 @@ module.exports = {
               );
               themeDiv.innerHTML = `
                 <p style="margin:0px 0; font-size:17px;">${theme.name}</p>
-                                <p style="font-size:14px; margin:12px 0px;">${getTranslation(
-                                  "MadeBy"
-                                ) + theme.author}</p>
-                                <p style="font-size:13px; margin:12px 0px;">${
-                                  theme.description
-                                }</p>
-                                <div class="accent" style="background:${
-                                  theme.colors["accentColor"]
-                                };"></div>
+                  <p style="font-size:14px; margin:12px 0px;">${getTranslation(
+                    "MadeBy"
+                  ) + theme.author}</p>
+                  <p style="font-size:13px; margin:12px 0px;">${
+                    theme.description
+                  }</p>
+                  <div class="accent" style="background:${
+                    theme.colors["accentColor"]
+                      };"></div>
               `;
               if (theme.name === current_config.theme) {
                 selectTheme("1", themeDiv);

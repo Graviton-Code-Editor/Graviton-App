@@ -26,36 +26,18 @@ module.exports = {
         }
       }
       const welcome_window = new Window({
-        id: "welcome_window",
-        content: graviton.getTemplate("welcome")
-      });
-      welcome_window.launch();
-      if (document.getElementById("recent_projects") != null) {
-        for (i = 0; i < log.length; i++) {
-          const project = document.createElement("div");
-          project.setAttribute("class", "section-2");
-          project.setAttribute(
-            "onclick",
-            `Explorer.load('${log[i].Path.replace(
-              /\\/g,
-              "\\\\"
-            )}','g_directories','yes'); closeWindow('welcome_window'); `
-          );
-          project.innerText = log[i].Name;
-          const description = document.createElement("p");
-          description.innerText = log[i].Path;
-          description.setAttribute("style", "font-size:12px;");
-          project.appendChild(description);
-          if (document.getElementById("recent_projects") == undefined) return;
-          document.getElementById("recent_projects").appendChild(project);
-          document.getElementById("clear_log").style = "";
-        }
-      }
-      if (error_showed == false) {
-        DeleteBoot();
-        const graviton_loaded = new CustomEvent("graviton_loaded", {});
-        document.dispatchEvent(graviton_loaded);
-      }
+        id:'welcome_window',
+        content:graviton.getTemplate("welcome"),
+        height:"400px",
+        width:"600px"
+    })
+    welcome_window.launch()
+    elasticContainer.append(document.getElementById("recent_projects"))
+    if (error_showed == false) {
+      DeleteBoot();
+      const graviton_loaded = new CustomEvent("graviton_loaded", {});
+      document.dispatchEvent(graviton_loaded);
+    }
     }
   }
 };

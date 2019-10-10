@@ -29,11 +29,11 @@ closeWindow('my_window1'); //Close the window by passing the id
 'use strict'
 
 module.exports = {
-  Window: function ({ id = Math.random(), content, onClose }) {
+  Window: function ({ id = Math.random(), content = "", onClose , height="85%", width="85%" }) {
     /**
        * @desc Window constructor
        * @param {string} id                   Unique ID for the window
-       * @param {string} code                 Window's content
+       * @param {string} content                 Window's content
        * @param {function} onClose (optional) When the window is closed the passed function will be executed
        */
     if (typeof [...arguments] !== 'object') {
@@ -49,7 +49,7 @@ module.exports = {
       <div class="background_window" onclick="closeWindow('${
         this.id
       }'); ${this.onClose}"></div>
-      <div id="${this.id + '_body'}" class="body_window">
+      <div id="${this.id + '_body'}" style="height:${height}; width:${width};" class="body_window">
           ${this.code}
       </div>`
     this.myWindow = newWindow

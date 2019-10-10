@@ -282,7 +282,8 @@ let current_screen,
   plugins_list = [],
   plugins_dbs = [],
   anyDropON = null,
-  full_plugins = [];
+  full_plugins = [],
+  projectServices = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
@@ -742,7 +743,7 @@ const createNewProject = function(template) {
       properties: ["openDirectory"]
     },
     selectedFiles => {
-      if (selectedFiles !== undefined) {
+      if (selectedFiles.length != 0) {
         switch (template) {
           case "html":
             const g_project_dir = path.join(
@@ -945,3 +946,9 @@ document.addEventListener("screen_loaded", e => {
     refreshStats();
   });
 });
+
+projectServices.push({
+  name:"HTML",
+  description:"Basic HTML project",
+  onclick:() => createNewProject("html")
+})
