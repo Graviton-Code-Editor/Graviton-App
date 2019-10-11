@@ -137,7 +137,7 @@ body {
 	transition: 0.08s;
 	overflow: hidden;
 	position: relative;
-	height: 100%;
+	max-height: 100%;
 	flex: 1;
 }
 

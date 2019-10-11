@@ -555,6 +555,12 @@ button.button1-round svg * {
   border: 2px solid transparent;
 }
 
+.section-2 h3{
+  font-weight: bold;
+  font-size: 15px;
+  margin:0px 0;
+}
+
 .section-2:hover {
   background: var(--widget-color);
 }
