@@ -315,8 +315,8 @@ graviton = {
       </div>`,
       buttons: {
         [getTranslation("Close")]: {
-          click:{},
-          important:true
+          click: {},
+          important: true
         }
       }
     });

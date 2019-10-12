@@ -87,6 +87,7 @@
                 return `<gv-navbutton href=screenshots >${getTranslation('Screenshots')}</gv-navbutton>`
               }
             }
+            return "";
           })()}
       </gv-navbar>
       <gv-navcontent>

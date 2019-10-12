@@ -33,7 +33,7 @@ const { shell } = require("electron"),
   semver = require("semver"),
   request = require("request"),
   tinycolor = require("tinycolor2"),
-  EventEmitter = require('events')
+  EventEmitter = require("events");
 require(path.join(
   __dirname,
   "src",
@@ -357,14 +357,13 @@ window.onload = function() {
         function(err, data) {
           templates[path.basename(dir, ".js")] = data;
           temporal_count++;
-          document.getElementById(
-            "boot_loader"
-          ).children[0].style.width = temporal_count   + 20 + "%";
+          document.getElementById("boot_loader").children[0].style.width =
+            temporal_count + 20 + "%";
           if (temporal_count == paths.length) {
             fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
               /* Load languages */
               let path_count = paths.length;
-              paths.forEach((dir,index) => {
+              paths.forEach((dir, index) => {
                 fs.readFile(
                   path.join(__dirname, "languages", dir),
                   "utf8",
@@ -385,14 +384,13 @@ window.onload = function() {
                     }
                     document.getElementById(
                       "boot_loader"
-                    ).children[0].style.width = index *6 + 30 + "%";
+                    ).children[0].style.width = index * 6 + 30 + "%";
                     if (languages.length === path_count) {
                       graviton.loadControlButtons();
                       loadConfig();
                       graviton.consoleInfo("All templates have been loaded.");
-                      document.getElementById(
-                        "boot_loader"
-                      ).children[0].style = "width: 100%; border-radius:100px;";
+                      document.getElementById("boot_loader").children[0].style =
+                        "width: 100%; border-radius:100px;";
                     }
                   }
                 );
@@ -511,7 +509,7 @@ function saveFile() {
 }
 
 const create = {
-  folder (id, value) {
+  folder(id, value) {
     const element = document.getElementById(id);
     const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
@@ -531,7 +529,7 @@ const create = {
       });
     }
   },
-  file (id, value) {
+  file(id, value) {
     const element = document.getElementById(id);
     const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
@@ -879,8 +877,8 @@ function selectTheme(from, theme) {
   theme.classList.add("active");
 }
 /**
-  * @desc Language  indicator and Line/Char counter Controls
-*/
+ * @desc Language  indicator and Line/Char counter Controls
+ */
 document.addEventListener("screen_loaded", e => {
   const screen = e.detail.screen;
   function refreshStats(id = current_screen.id) {
@@ -948,7 +946,7 @@ document.addEventListener("screen_loaded", e => {
 });
 
 projectServices.push({
-  name:"HTML",
-  description:"Basic HTML project",
-  onclick:() => createNewProject("html")
-})
+  name: "HTML",
+  description: "Basic HTML project",
+  onclick: () => createNewProject("html")
+});

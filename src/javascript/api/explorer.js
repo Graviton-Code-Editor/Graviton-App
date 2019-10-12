@@ -41,6 +41,10 @@ module.exports = {
           'src',
           directories.getCustomIcon(path.basename(FirstFolder), 'open')
         )
+        const load_explorer = new CustomEvent('load_explorer', {
+          detail: {}
+        })
+        document.dispatchEvent(load_explorer)
       } else {
         if (appender.getAttribute('opened') == 'true') {
           appender.setAttribute('opened', 'false')
@@ -58,6 +62,10 @@ module.exports = {
               'src',
               directories.getCustomIcon(path.basename(FirstFolder), 'open')
             )
+            const load_explorer = new CustomEvent('load_explorer', {
+              detail: {}
+            })
+            document.dispatchEvent(load_explorer)
           }
         }
       }
