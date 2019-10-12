@@ -1,12 +1,12 @@
 `
-<gv-sidemenu>
-    <side-menu>
-        <side-title>${getTranslation("Welcome")}</side-title>
-        <menu-button href=recent_projects default >${getTranslation("RecentProjects")}</menu-button>
-        <menu-button href=new_project >${getTranslation("NewProject")}</menu-button>
-    </side-menu>
-    <side-content>
-        <side-page href=recent_projects default>
+<gv-navpanel>
+    <gv-navbar>
+        <gv-navtitle>${getTranslation("Welcome")}</gv-navtitle>
+        <gv-navbutton href=recent_projects default >${getTranslation("RecentProjects")}</gv-navbutton>
+        <gv-navbutton href=new_project >${getTranslation("NewProject")}</gv-navbutton>
+    </gv-navbar>
+    <gv-navcontent>
+        <gv-navpage href=recent_projects default>
           <div id="recent_projects" style="max-height:260px; padding-right:10px; overflow:auto;">
             ${(function() {
               let list_projects = "";
@@ -36,8 +36,8 @@
             "OpenFolder"
           )}</button> 
         </div>
-        </side-page>
-        <side-page href=new_project>
+        </gv-navpage>
+        <gv-navpage href=new_project>
             ${(() => {
               let content = "";
               projectServices.map((service, index) => {
@@ -50,6 +50,6 @@
               });
               return content;
             })()}
-        </side-page>
-    </side-content>
-</gv-sidemenu>`;
+        </gv-navpage>
+    </gv-navcontent>
+</gv-navpanel>`;

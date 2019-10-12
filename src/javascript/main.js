@@ -222,14 +222,14 @@ window.customElements.define(
   ))
 );
 window.customElements.define(
-  "gv-sidemenu",
+  "gv-navpanel",
   require(path.join(
     __dirname,
     "src",
     "javascript",
     "api",
     "components",
-    "side_menu.js"
+    "gv_navbar.js"
   ))
 );
 let current_screen,

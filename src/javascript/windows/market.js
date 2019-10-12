@@ -58,29 +58,29 @@ module.exports = {
       graviton.windowContent(
         "market_window",
         `
-      <gv-sidemenu>
-        <side-menu>
-          <side-title>${getTranslation("Market")}</side-title>
-          <menu-button href=All default onclick="Market.navigate('all')"  >${getTranslation(
+      <gv-navpanel>
+        <gv-navbar>
+          <gv-navtitle>${getTranslation("Market")}</gv-navtitle>
+          <gv-navbutton href=All default onclick="Market.navigate('all')"  >${getTranslation(
             "All"
-          )}</menu-button>
-          <menu-button href=Installed onclick="Market.navigate('installed');">${getTranslation(
-            "Installed"
-          )}</menu-button>
-          <menu-button href=Themes onclick="Market.navigate('themes');">${getTranslation(
+          )}</gv-navbutton>
+          <gv-navbutton href=Themes onclick="Market.navigate('themes');">${getTranslation(
             "Themes"
-          )}</menu-button>
-          <menu-button href=Settings onclick="Market.navigate('settings')">${getTranslation(
+          )}</gv-navbutton>
+          <gv-navbutton href=Installed onclick="Market.navigate('installed');">${getTranslation(
+            "Installed"
+          )}</gv-navbutton>
+          <gv-navbutton href=Settings onclick="Market.navigate('settings')">${getTranslation(
             "Settings"
-          )}</menu-button>
-        </side-menu>
-        <side-content id=market_content>
-          <side-page id=sec_all href=All default></side-page>
-          <side-page id=sec_installed href=Installed></side-page>
-          <side-page id="sec_themes" href=Themes></side-page>
-          <side-page id=sec_settings href=Settings></side-page>
-        </side-content>
-      </gv-sidemenu>`
+          )}</gv-navbutton>
+        </gv-navbar>
+        <gv-navcontent id=market_content>
+          <gv-navpage id=sec_all href=All default></gv-navpage>
+          <gv-navpage id=sec_installed href=Installed></gv-navpage>
+          <gv-navpage id="sec_themes" href=Themes></gv-navpage>
+          <gv-navpage id=sec_settings href=Settings></gv-navpage>
+        </gv-navcontent>
+      </gv-navpanel>`
       );
       elasticContainer.append(document.getElementById("market_content"));
     },
@@ -365,7 +365,6 @@ module.exports = {
         });
         return;
       }
-      console.log(plugin.repo.package)
       const ext_win = new Window({
         id: "sec" + data.getAttribute("name"),
         content: graviton.getTemplate(
@@ -378,24 +377,6 @@ module.exports = {
         )
       });
       ext_win.launch();
-      const plugin_navbar = document.getElementById("plugin_navbar");
-      for (let ele of plugin_navbar.children) {
-        ele.onclick = () => {
-          for (let bro of plugin_navbar.children) {
-            bro.classList.remove("active");
-          }
-          const references = document.getElementById("plugin_navbar_refs")
-            .children;
-          for (let refs of references) {
-            refs.style.display = "none";
-            if (refs.getAttribute("ref") == ele.getAttribute("ref")) {
-              refs.style.display = "block";
-            }
-          }
-          ele.classList.add("active");
-        };
-      }
-
       const bottom_section = document.getElementById(
         data.getAttribute("name") + "readme"
       );

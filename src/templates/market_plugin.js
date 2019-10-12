@@ -1,6 +1,7 @@
 `
+<elastic-container related=parent >
 <div style="padding:15px;">
-  <elastic-container related=self >
+  
   <button class="button1 close_exts" onclick="closeWindow('sec${name}')">${icons.close}</button>
   <div class=sub_extension_div id=${name + '_div'}>
     <div class="top">
@@ -54,58 +55,69 @@
           <p>${getTranslation('Stars')}: ${plugin.repo != undefined ? plugin.repo.git.stargazers_count : 'Unknown'}</p>
           ${plugin.repo != undefined ? `
           <p class=link onclick="shell.openExternal('www.github.com/Graviton-Code-Editor/plugins_list/issues')">${getTranslation(`Report`)}</p>` : ''}
-
-        </div>
-        
+        </div>  
         <div>
           <div>
               ${(function () {
-      if (plugin.local != undefined) {
-        return ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
-              <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
-              <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> `
-      } else {
-        return `<button onclick="Market.installExtension('${name}')" id=${Math.random() +
-                'install'} class=button1>${getTranslation('Install')}</button> `
-      }
-    })()}
+              if (plugin.local != undefined) {
+                return ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
+                      <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
+                      <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> `
+              } else {
+                return `<button onclick="Market.installExtension('${name}')" id=${Math.random() +
+                        'install'} class=button1>${getTranslation('Install')}</button> `
+              }
+            })()}
           </div>
         </div>
     </div>
   </div>
   <div class=ext_content>
-    <navbar id=plugin_navbar style="display:flex; justify-content:center; align-items:center">
-        <a ref=readme class="active" >${getTranslation('Readme')}</a>
-        <a ref=permissions >${getTranslation('Permissions')}</a>
-        <a ref=screenshots ${plugin.local != undefined ? plugin.local.screenshots != undefined ? 'style="display:none;"' :   'style="display:none;" ':plugin.repo.package.screenshots != undefined ? "" : 'style="display:none;"'}>${getTranslation('Screenshots')}</a>
-    </navbar>
-    <div id=plugin_navbar_refs> 
-        <div ref=permissions style="display:none;">
-          <ul  class="list">
-              ${(function () {
-      let html = ''; if ((plugin.repo != undefined ? plugin.repo.package.icons : plugin.local.icons) != undefined) {
-        html += `
-              <li>${getTranslation('PermissionCustomIcons')}</li>`
-      } if ((plugin.repo != undefined ? plugin.repo.package.css : plugin.local.css) != undefined) {
-        html += `
-              <li> ${getTranslation('PermissionCustomStyling')} </li>`
-      } if ((plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors) != undefined) {
-        html += `
-              <li>${getTranslation('PermissionCustomColors')}</li>`
-      } if ((plugin.repo != undefined ? plugin.repo.package.main : plugin.local.main) != undefined) {
-        html += `
-              <li>${getTranslation('PermissionExecuteJavaScript')}</li>`
-      } return html
-    })()}
-          </ul>
-        </div>
-        <div ref=readme id=${name + 'readme'} class=readme-container >
-          <p> Loading... </p>
-        </div>
-        <div class=image-scroller ref=screenshots  id=${name + '_screenshots'} style="display:none;">
-          <elastic-container related=parent direction=horizontal></elastic-container>
-        </div>
+    <gv-navpanel class="top-bar">
+      <gv-navbar>
+          <gv-navbutton href=readme default >${getTranslation('Readme')}</gv-navbutton>
+          <gv-navbutton href=permissions >${getTranslation('Permissions')}</gv-navbutton>
+          ${(()=>{
+            if(plugin.local!=undefined){
+              if(plugin.local.screenshots){
+                return `<gv-navbutton href=screenshots >${getTranslation('Screenshots')}</gv-navbutton>`
+              }
+            }else{
+              if(plugin.repo.package.screenshots!=undefined){
+                return `<gv-navbutton href=screenshots >${getTranslation('Screenshots')}</gv-navbutton>`
+              }
+            }
+          })()}
+      </gv-navbar>
+      <gv-navcontent>
+          <gv-navpage href=readme id=${name + 'readme'} class=readme-container default>
+            <p> Loading... </p>
+          </gv-navpage>
+          <gv-navpage href=permissions >
+            <ul  class="list">
+            ${(function () {
+              let html = ''; if ((plugin.repo != undefined ? plugin.repo.package.icons : plugin.local.icons) != undefined) {
+                html += `
+                      <li>${getTranslation('PermissionCustomIcons')}</li>`
+              } if ((plugin.repo != undefined ? plugin.repo.package.css : plugin.local.css) != undefined) {
+                html += `
+                      <li> ${getTranslation('PermissionCustomStyling')} </li>`
+              } if ((plugin.repo != undefined ? plugin.repo.package.colors : plugin.local.colors) != undefined) {
+                html += `
+                      <li>${getTranslation('PermissionCustomColors')}</li>`
+              } if ((plugin.repo != undefined ? plugin.repo.package.main : plugin.local.main) != undefined) {
+                html += `
+                      <li>${getTranslation('PermissionExecuteJavaScript')}</li>`
+              } return html
+            })()}
+            </ul>
+          </gv-navpage>
+          <gv-navpage href=screenshots class=image-scroller ref=screenshots  id=${name + '_screenshots'} style="height:300px; overflow-y:hidden;">
+            <elastic-container related=self  direction=horizontal></elastic-container>
+          </gv-navpage>
+      </gv-navcontent>
+    </gv-navpanel>
     </div>
-  </div>
-  </elastic-container>
-</div>`
+  
+</div>
+</elastic-container>`

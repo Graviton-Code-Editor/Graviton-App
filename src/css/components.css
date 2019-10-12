@@ -890,20 +890,20 @@ textarea {
   user-select: none;
   -webkit-user-drag: none;
 }
-gv-sidemenu{
+gv-navpanel.side-menu{
   display: flex;
   min-width: 100%;
   max-width: 100%;
   min-height: 100%;
   overflow: auto;
 }
-gv-sidemenu side-title{
+gv-navpanel.side-menu gv-navtitle{
   font-weight: bold;
   font-size: 30px;
   margin-bottom:20px;
   display: block
 }
-gv-sidemenu side-menu {
+gv-navpanel.side-menu gv-navbar {
   width: 10%;
   min-width: 175px;
   padding: 30px 20px;
@@ -913,7 +913,7 @@ gv-sidemenu side-menu {
 
 }
 
-gv-sidemenu side-menu menu-button{
+gv-navpanel.side-menu gv-navbar gv-navbutton{
   font-family: _main_font;
   font-size: 15px;
   color: var(--white-black);
@@ -930,21 +930,21 @@ gv-sidemenu side-menu menu-button{
   position: relative;
 }
 
-gv-sidemenu side-menu menu-button.active ,gv-sidemenu side-menu menu-button[default=""]{
+gv-navpanel.side-menu gv-navbar gv-navbutton.active ,gv-navpanel gv-navbar gv-navbutton[default=""]{
   cursor: pointer;
   transition: 0.05s;
   background: var(--accentColor);
   color: var(--black-white);
 }
-gv-sidemenu side-menu menu-button:hover {
+gv-navpanel.side-menu gv-navbar gv-navbutton:hover {
   color: var(--accentColor);
   cursor: pointer;
 }
-gv-sidemenu side-menu menu-button.active:hover ,gv-sidemenu side-menu menu-button[default=""]:hover {
+gv-navpanel.side-menu gv-navbar gv-navbutton.active:hover , gv-navpanel gv-navbar gv-navbutton[default=""]:hover {
   background: var(--accentDarkColor);
   color:white;
 }
-gv-sidemenu side-content {
+gv-navpanel.side-menu gv-navcontent {
   margin: 20px 0;
   padding: 20px;
   width: 80%;
@@ -954,11 +954,79 @@ gv-sidemenu side-content {
   overflow: auto;
   display: block;
 }
-gv-sidemenu side-content side-page{
+gv-navpanel.side-menu gv-navcontent gv-navpage{
   display: none;
   overflow: auto;
   
 }
-gv-sidemenu side-content side-page[default=""]{
+gv-navpanel.side-menu gv-navcontent gv-navpage[default=""]{
+  display: block ;
+}
+
+
+gv-navpanel.top-bar{
+  display: flex;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: auto;
+  overflow: auto;
+  flex-direction: column;
+}
+gv-navpanel.top-bar gv-navtitle{
+  display: none;
+}
+gv-navpanel.top-bar  gv-navbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0px;
+}
+
+gv-navpanel.top-bar gv-navbar gv-navbutton{
+  text-align: center;
+  font-family: _main_font;
+  font-size: 15px;
+  color: var(--white-black);
+  background-color: transparent;
+  padding: 7px 10px;
+  text-decoration: none;
   display: block;
+  border: 0;
+  margin: 2px 5px;
+  border-radius: 5px;
+  text-align: left;
+  transform: scale(1);
+  position: relative;
+}
+
+gv-navpanel.top-bar gv-navbar gv-navbutton.active ,gv-navpanel gv-navbar gv-navbutton[default=""]{
+  cursor: pointer;
+  transition: 0.05s;
+  background: var(--accentColor);
+  color: var(--black-white);
+}
+gv-navpanel.top-bar gv-navbar gv-navbutton:hover {
+  color: var(--accentColor);
+  cursor: pointer;
+}
+gv-navpanel.top-bar gv-navbar gv-navbutton.active:hover , gv-navpanel gv-navbar gv-navbutton[default=""]:hover {
+  background: var(--accentDarkColor);
+  color:white;
+}
+gv-navpanel.top-bar gv-navcontent {
+  width: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
+  overflow: auto;
+  display: block;
+  padding:15px;
+}
+gv-navpanel.top-bar gv-navcontent gv-navpage{
+  display: none;
+  overflow: auto;
+  
+}
+gv-navpanel.top-bar gv-navcontent gv-navpage[default=""]{
+  display: block ;
 }

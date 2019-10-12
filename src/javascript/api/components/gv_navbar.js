@@ -12,24 +12,24 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 /**
  *
  * @desc This is a web component for side menus
- * @usage <gv-sidemenu>
-            <side-menu>
-                <side-title>Window</side-title>
-                <menu-button href=AA default >Content 1</menu-button>
-                <menu-button href=BB >Content 2</menu-button>
-            </side-menu>
-            <side-content>
-                <side-page href=AA default>
+ * @usage <gv-navpanel>
+            <gv-navbar
+                <gv-navtitle>Window</gv-navtitle>
+                <gv-navbutton href=AA default >Content 1</gv-navbutton>
+                <gv-navbutton href=BB >Content 2</gv-navbutton>
+            </gv-navbar>
+            <gv-navcontent>
+                <gv-navpage href=AA default>
                     <p>SOME CONTENT 1 </p>
-                </side-page>
-                <side-page href=BB>
+                </gv-navpage>
+                <gv-navpage href=BB>
                     <p>SOME CONTENT 2 </p>
-                </side-page>
-            </side-content>
-        </gv-sidemenu>
+                </gv-navpage>
+            </gv-navcontent>
+        </gv-navpanel>
  *
  */
-module.exports = class GvSideMenu extends HTMLElement {
+module.exports = class GvNavBar extends HTMLElement {
   constructor() {
     super();
   }
@@ -38,8 +38,9 @@ module.exports = class GvSideMenu extends HTMLElement {
     const sideContent = this.children[1];
     const menuButtons = sideMenu.children;
     const contentPages = sideContent.children;
-
-    for (i = 1; i < menuButtons.length; i++) {
+    if(this.classList.length==0) this.classList.add("side-menu")
+    
+    for (i = 0; i < menuButtons.length; i++) {
       const button = menuButtons[i];
       button.addEventListener("click", () => {
         for (i = 0; i < contentPages.length; i++) {
