@@ -81,29 +81,19 @@ In case you just wanna test it, run:
 
 >  $ npm run build 
 
-This will build an AppImage file. It works on all the linux distros and works like a Windows' portable program.
-You can learn more about AppImages here: https://appimage.org/
+This will build an AppImage, Debian and RPM packages by default. You can change that on the package.json.
 
-If you want to build an specific package for your distribution (with i recommend) try this command
+If you want to build an specific package for your distribution, try this command (it might not be added yet):
 
 >  $ npm run build:packageExtensionHere
 
-You can choose between snap, deb, apk, freebsd, p5p, rpm and pacman.
 For example if you want to build this for your Ubuntu machine type this:
 
 >  $ npm run build:deb
 
-You can also build packages for other distros but sometimes you will need to install some dependencies. For example if you 
-want to build a npm package for your RedHat-like distro with your Ubuntu machine you need to install this:
-
-> $ sudo apt-get install rpm
-
-And then just build it like shown before
-
->  $ npm run build:rpm
+You might need some dependencies to build in some formats.
 
    
-
 ### MacOS
 
 - From a Macintosh: 

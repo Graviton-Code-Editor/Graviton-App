@@ -10,7 +10,7 @@ const fs = require('fs')
 
 const DataFolderDir = path.join(path.join(__dirname, '..'), '.graviton')
 
-describe('Graviton opening', function () {
+describe('Opening Graviton ', function () {
   this.timeout(25000)
   this.beforeAll(function () {
     this.app = new Application({
