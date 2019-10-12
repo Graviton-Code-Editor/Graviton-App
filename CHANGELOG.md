@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191012 - 1 [1.2.0]
+- You can now see a plugin's screenshoots without installing it
+
 ### 191010 - 1 [1.2.0]
 - Full redesigned welcome page, simpler UI but more features.
 - Added an array where a plugin could add it's own "New project" service.

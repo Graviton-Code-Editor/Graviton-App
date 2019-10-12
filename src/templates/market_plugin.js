@@ -77,7 +77,7 @@
     <navbar id=plugin_navbar style="display:flex; justify-content:center; align-items:center">
         <a ref=readme class="active" >${getTranslation('Readme')}</a>
         <a ref=permissions >${getTranslation('Permissions')}</a>
-        <a ref=screenshoots ${plugin.local != undefined ? plugin.local.screenshoots != undefined ? '' : 'style="display:none;"' : 'style="display:none;"'}>${getTranslation('Screenshots')}</a>
+        <a ref=screenshots ${plugin.local != undefined ? plugin.local.screenshots != undefined ? 'style="display:none;"' :   'style="display:none;" ':plugin.repo.package.screenshots != undefined ? "" : 'style="display:none;"'}>${getTranslation('Screenshots')}</a>
     </navbar>
     <div id=plugin_navbar_refs> 
         <div ref=permissions style="display:none;">
@@ -102,7 +102,7 @@
         <div ref=readme id=${name + 'readme'} class=readme-container >
           <p> Loading... </p>
         </div>
-        <div class=image-scroller ref=screenshoots  id=${name + '_screenshoots'} style="display:none;">
+        <div class=image-scroller ref=screenshots  id=${name + '_screenshots'} style="display:none;">
           <elastic-container related=parent direction=horizontal></elastic-container>
         </div>
     </div>

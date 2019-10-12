@@ -365,6 +365,7 @@ module.exports = {
         });
         return;
       }
+      console.log(plugin.repo.package)
       const ext_win = new Window({
         id: "sec" + data.getAttribute("name"),
         content: graviton.getTemplate(
@@ -417,9 +418,8 @@ module.exports = {
           /*
           Local Screenshots
           */
-          if (plugin.local != undefined) {
-            if (plugin.local.screenshoots != undefined) {
-              plugin.local.screenshoots.forEach(sc => {
+            if (plugin.local.screenshots != undefined) {
+              plugin.local.screenshots.forEach(sc => {
                 const screenshoot = document.createElement("img");
                 screenshoot.setAttribute(
                   "src",
@@ -428,11 +428,10 @@ module.exports = {
                 screenshoot.style = "height:200px; ";
                 screenshoot.draggable = false;
                 document
-                  .getElementById(plugin.local.name + "_screenshoots")
+                  .getElementById(plugin.local.name + "_screenshots")
                   .appendChild(screenshoot);
               });
             }
-          }
         } else {
           /**
            * @desc Repository Readme
@@ -455,6 +454,20 @@ module.exports = {
               }</div>`;
             }
           );
+          if (plugin.repo.package.screenshots != undefined) {
+            plugin.repo.package.screenshots.forEach(sc => {
+              const screenshoot = document.createElement("img");
+              screenshoot.setAttribute(
+                "src",
+                `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/${sc}`
+              );
+              screenshoot.style = "height:200px; ";
+              screenshoot.draggable = false;
+              document
+                .getElementById(plugin.repo.package.name + "_screenshots")
+                .appendChild(screenshoot);
+            });
+          }
         }
       }
     },
