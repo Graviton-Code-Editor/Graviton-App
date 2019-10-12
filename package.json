@@ -10,6 +10,13 @@
     "pack": "build --dir",
     "build": "build",
     "build:snap": "build --linux snap",
+    "build:pacman": "build --linux pacman",
+    "build:deb": "build --linux deb",
+    "build:apk": "build --linux apk",
+    "build:freebsd": "build --linux freebsd",
+    "build:p5p": "build --linux p5p",
+    "build:rpm": "build --linux rpm",
+    "build:AppImage": "build --linux AppImage",
     "build:win": "build --win",
     "build:win32": "build --win --ia32",
     "build:win:linux": "build --linux && build --win ",
@@ -76,9 +83,7 @@
     "linux": {
       "category": "Utility",
       "target": [
-        "AppImage",
-        "deb",
-        "rpm"
+        "AppImage"
       ],
       "icon": "assets/linux"
     },

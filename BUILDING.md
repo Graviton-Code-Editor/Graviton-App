@@ -43,9 +43,6 @@ Install the dependencies:
 Rebuild a dependency:
 > $ npm run rebuild
 
-Install RPM package:
-> $ sudo apt-get install rpm
-
 ### MacOS
 
 You must have Python 2.7 installed.
@@ -83,6 +80,28 @@ In case you just wanna test it, run:
 - From a Linux machine: 
 
 >  $ npm run build 
+
+This will build an AppImage file. It works on all the linux distros and works like a Windows' portable program.
+You can learn more about AppImages here: https://appimage.org/
+
+If you want to build an specific package for your distribution (with i recommend) try this command
+
+>  $ npm run build:packageExtensionHere
+
+You can choose between snap, deb, apk, freebsd, p5p, rpm and pacman.
+For example if you want to build this for your Ubuntu machine type this:
+
+>  $ npm run build:deb
+
+You can also build packages for other distros but sometimes you will need to install some dependencies. For example if you 
+want to build a npm package for your RedHat-like distro with your Ubuntu machine you need to install this:
+
+> $ sudo apt-get install rpm
+
+And then just build it like shown before
+
+>  $ npm run build:rpm
+
    
 
 ### MacOS
