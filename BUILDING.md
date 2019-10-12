@@ -11,6 +11,10 @@ Instructions to build Graviton from the source:
 Clone the git repository:
 > $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
 
+There are 2 different branches:
+* Master: daily source
+* Stable: this doesn't mean it's ready to be released as stable build , peroit doesn't have that many bugs, in general it's more stable.
+
 ## 2 - Installing the dependencies
 
 Go inside the folder:
