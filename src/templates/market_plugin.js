@@ -82,7 +82,7 @@
   <div class=ext_content>
     <gv-navpanel class="top-bar">
       <gv-navbar>
-          <gv-navbutton href=readme default >${getTranslation('Readme')}</gv-navbutton>
+          <gv-navbutton href="readme" default >${getTranslation('Readme')}</gv-navbutton>
           <gv-navbutton href=permissions >${getTranslation('Permissions')}</gv-navbutton>
           ${(()=>{
             if(plugin.local!=undefined){
@@ -98,7 +98,7 @@
           })()}
       </gv-navbar>
       <gv-navcontent>
-          <gv-navpage href=readme id=${name + 'readme'} class=readme-container default>
+          <gv-navpage href="readme" id=${name + 'readme'} class=readme-container default>
             <p> Loading... </p>
           </gv-navpage>
           <gv-navpage href=permissions >

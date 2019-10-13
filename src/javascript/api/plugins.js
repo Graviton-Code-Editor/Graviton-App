@@ -20,7 +20,7 @@ module.exports = {
       }
       if (!fs.existsSync(plugins_folder)) {
         //If the plugins folder doesn't exist
-        document.getElementById("g_bootanimation").innerHTML += `
+        document.getElementById("g_bootanimation").children[0].innerHTML += `
           <div>
             <p>Installing themes...</p>
           </div>`;

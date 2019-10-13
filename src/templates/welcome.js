@@ -7,7 +7,7 @@
     </gv-navbar>
     <gv-navcontent>
         <gv-navpage href=recent_projects default>
-          <div id="recent_projects" style="max-height:260px; padding-right:10px; overflow:auto;">
+          <div id="recent_projects" style="min-height:260px; max-height:260px; padding-right:10px; overflow:auto;">
             ${(function() {
               let list_projects = "";
               for (i = 0; i < log.length; i++) {

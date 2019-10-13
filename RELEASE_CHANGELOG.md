@@ -1,8 +1,10 @@
 ## 🔝 Important
 
+* Welcome redesign
+* Settings redesign
 * Market redesign
 * Reduced installer weight and installation x5 times
-* Code folding
+* Code folding on editor
 
 ## ✔ New
 
@@ -24,4 +26,4 @@
 * Updated Electron to v6
 * New Graviton component called Control 
 * New events
-* New Web Component (gv-sidemenu)
+* New Web Component (gv-navpanel)

@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191013 - 3 [1.2.0]
+- Improved: recent projects list on welcome page now has a minium height.
+- Fixed: Couldn't click the first button on any top-bar menu.
+
 ### 191013 - 2 [1.2.0]
 - Settings redesign
 - Fixed: a blank page was showing when clicking the title on a Graviton-Navbar component
