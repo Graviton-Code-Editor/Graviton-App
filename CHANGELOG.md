@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191013 - 2 [1.2.0]
+- Settings redesign
+- Fixed: a blank page was showing when clicking the title on a Graviton-Navbar component
+- Restructured the About dialog to better compatibility with FluentMod
+
 ### 191013 - 1 [1.2.0]
 - Prevent from dragging plugin's logos from the market
 

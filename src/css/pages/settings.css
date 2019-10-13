@@ -33,9 +33,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   overflow: hidden;
   min-height: 110px;
   max-height: 110px;
-  background: var(--primaryColor);
+  background: var(--secondaryColor);
   color: var(--white-black);
   cursor: pointer;
+  border:2px solid var(--primaryColor)
 }
 .theme_div p {
   text-overflow: ellipsis;
@@ -46,11 +47,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 .theme_div:not(.active):hover {
   background: var(--widget-color);
+  border:2px solid var(--widget-color);
   cursor: pointer;
 }
 
 .theme_div.active:hover {
   background: var(--accentDarkColor);
+  border:2px solid var(--accentDarkColor);
   cursor: pointer;
 }
 
@@ -60,6 +63,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 div.active {
   background: var(--accentColor);
+  border:2px solid var(--accentColor);
   color: white;
 }
 

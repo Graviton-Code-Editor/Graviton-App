@@ -40,7 +40,7 @@ module.exports = class GvNavBar extends HTMLElement {
     const contentPages = sideContent.children;
     if(this.classList.length==0) this.classList.add("side-menu")
     
-    for (i = 0; i < menuButtons.length; i++) {
+    for (i = 1; i < menuButtons.length; i++) {
       const button = menuButtons[i];
       button.addEventListener("click", () => {
         for (i = 0; i < contentPages.length; i++) {

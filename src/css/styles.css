@@ -534,17 +534,21 @@ h4 {
 }
 
 .emoji-medium {
-	height: 30px;
+	height: 17px;
 	top: 8px;
 	position: relative;
 	user-select: none;
+	margin:0;
+	padding:0px
 }
 
 .emoji-normal {
-	height: 35px;
+	height: 30px;
 	top: 10px;
 	position: relative;
 	user-select: none;
+	margin:0;
+	padding:0;
 }
 
 .emoji-title {

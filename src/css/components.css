@@ -533,14 +533,15 @@ button.button1-round svg * {
 }
 
 .section-1 {
-  margin: 3px;
-  margin-bottom: 12px;
-  padding: 10px;
-  padding-top: 5px;
+  margin: 5px;
+  padding: 7px;
   background: transparent;
   height: auto;
 }
-
+.inline {
+  display: flex;
+  align-content: center;
+}
 .section-2 {
   position: relative;
   transition: 0.05s;
@@ -664,10 +665,11 @@ button.button3:active {
   font-weight: 700;
 }
 
-.body_window h4 {
+.body_window h5 {
   font-weight: 570;
   margin: 0;
-  padding: 0;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .link {
@@ -1029,4 +1031,22 @@ gv-navpanel.top-bar gv-navcontent gv-navpage{
 }
 gv-navpanel.top-bar gv-navcontent gv-navpage[default=""]{
   display: block ;
+}
+
+gv-navpanel gv-navcontent gv-blocktitle {
+  display: block;
+  font-size: 14px;
+  background:var(--primaryColor);
+  margin: 5px;
+  padding:15px;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-content: center;
+}
+
+gv-navpanel gv-navcontent gv-blockcontent {
+  display: block;
+  padding:10px;
+  margin:10px;
 }
