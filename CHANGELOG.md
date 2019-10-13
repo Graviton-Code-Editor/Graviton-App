@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191013 - 1 [1.2.0]
+- Prevent from dragging plugin's logos from the market
+
 ### 191012 - 1 [1.2.0]
 
 - You can now see a plugin's screenshoots without installing it

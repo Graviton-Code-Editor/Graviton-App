@@ -27,11 +27,11 @@
           */
       if (plugin.local != undefined) {
         if (plugin.local.logo != undefined) { /* LOCAL LOGO */
-          return `<img  src=${path.join(plugins_folder, plugin.local.name, plugin.local.logo)}>`
+          return `<img draggable=false src=${path.join(plugins_folder, plugin.local.name, plugin.local.logo)}>`
         } else {
           if (plugin.repo != undefined) {
             if (plugin.repo.package.logo != undefined) { /* ONLINE LOGO */
-              return `<img  src=${'https://raw.githubusercontent.com/' + plugin.repo.git.owner.login + '/' + plugin.repo.git.name + '/master/' + plugin.local.logo + '?sanitize=true'}>`
+              return `<img draggable=false src=${'https://raw.githubusercontent.com/' + plugin.repo.git.owner.login + '/' + plugin.repo.git.name + '/master/' + plugin.local.logo + '?sanitize=true'}>`
             } else { /* DYNAMIC ONLINE LOGO */
               return graviton.getTypePlugin(plugin.repo.package) == 'theme' || graviton.getTypePlugin(plugin.repo.package) == 'custom_theme' ? '<div class=img >' + icons.market_theme + '</div>' : '<div class=img >' + icons.market_plugin + '</div>'
             }
@@ -41,9 +41,9 @@
         }
       } else { /* DYNAMIC ONLINE LOGO */
         if (plugin.repo.package.logo != undefined) {
-          return `<img  src=${'https://raw.githubusercontent.com/' + plugin.repo.git.owner.login + '/' + plugin.repo.git.name + '/master/' + plugin.repo.package.logo + '?sanitize=true'}>`
+          return `<img draggable=false src=${'https://raw.githubusercontent.com/' + plugin.repo.git.owner.login + '/' + plugin.repo.git.name + '/master/' + plugin.repo.package.logo + '?sanitize=true'}>`
         } else {
-          return graviton.getTypePlugin(plugin.repo.package) == 'theme' || graviton.getTypePlugin(plugin.repo.package) == 'custom_theme' ? '<div class=img >' + icons.market_theme + '</div>' : '<div class=img >' + icons.market_plugin + '</div>'
+          return graviton.getTypePlugin(plugin.repo.package) == 'theme' || graviton.getTypePlugin(plugin.repo.package) == 'custom_theme' ? '<div draggable=false class=img >' + icons.market_theme + '</div>' : '<div draggable=false class=img >' + icons.market_plugin + '</div>'
         }
       }
     })()}
@@ -60,9 +60,16 @@
           <div>
               ${(function () {
               if (plugin.local != undefined) {
-                return ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
-                      <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
-                      <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> `
+                let button_content = "";
+                if(update == true){
+                  button_content += `
+                    <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
+                  `
+                }
+                button_content += ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
+                      <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> 
+                `
+                return button_content;
               } else {
                 return `<button onclick="Market.installExtension('${name}')" id=${Math.random() +
                         'install'} class=button1>${getTranslation('Install')}</button> `
