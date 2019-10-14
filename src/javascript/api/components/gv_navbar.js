@@ -40,8 +40,7 @@ module.exports = class GvNavBar extends HTMLElement {
     const contentPages = sideContent.children;
     const designType = this.classList[0];
     if(this.classList.length==0) this.classList.add("side-menu")
-    const initialCount = designType == "top-bar"? 0:1;
-    console.log(initialCount);
+    const initialCount = designType == "top-bar" ? 0 : 1;
     for (i = initialCount; i < menuButtons.length; i++) {
       const button = menuButtons[i];
       button.addEventListener("click", () => {

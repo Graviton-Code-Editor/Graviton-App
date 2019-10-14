@@ -148,6 +148,8 @@
     "TelegramChannel": "Telegram Channel",
     "Settings-Advanced-Developer-Tools-text2": "Open the configuration directory",
     "ExplorerPosition": "Directory Explorer's position",
-    "Screenshots": "Screenshots"
+    "Screenshots": "Screenshots",
+    "NoRecentProjects":"No recent projects.",
+    "Miscellaneous":"Miscellaneous"
   }
 }

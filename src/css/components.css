@@ -825,7 +825,8 @@ button.button3:active {
 }
 
 .close_exts {
-  margin-left: 15px !important;
+  position: absolute;
+  right: 15px !important;
 }
 
 .center {

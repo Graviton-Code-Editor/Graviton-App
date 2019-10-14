@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191014 - 1 [1.2.0]
+- Moved the close button of plugins page to the right
+- Added a sad face on welcome page if there isn't any project on recents.
+
 ### 191013 - 3 [1.2.0]
 - Improved: recent projects list on welcome page now has a minium height.
 - Fixed: Couldn't click the first button on any top-bar menu.

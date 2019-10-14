@@ -27,7 +27,17 @@
                 `;
                 list_projects += project.outerHTML;
               }
-              return list_projects;
+              if(log.length !== 0) return list_projects;
+              return `
+               <div style="display:flex; align-content: center; justify-content:center; min-height:auto;">
+                <div style="position:relative; top:100px; min-height:100%;">
+                  <img style="margin-left:30px; " draggable="false" class="emoji-title" src="src/openemoji/1F622.svg">       
+                  <br>   
+                  <p>${getTranslation("NoRecentProjects")}</p>   
+                </div>  
+               </div>
+               
+              `
             })()}
           
           </div>

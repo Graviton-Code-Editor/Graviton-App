@@ -21,7 +21,7 @@
           : "desactivated"
       }"></gv-switch>
   </gv-blockcontent>
-  <gv-blocktitle>Miscellaneuos</gv-blocktitle>
+  <gv-blocktitle>${getTranslation("Miscellaneous")}</gv-blocktitle>
   <gv-blockcontent>
     <div class="section-1 inline">
       <h5>${getTranslation("ZoomSize")}</h5>
