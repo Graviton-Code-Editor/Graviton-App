@@ -95,7 +95,7 @@ module.exports = {
            <div>
              <p global=true id=directory_${path.basename(
     dir
-  )} parent=g_directories elementType=directory dir=${FirstFolder}>${path.basename(
+  )} parent=g_directories elementType=directory dir="${FirstFolder}">${path.basename(
   dir
 )}</p> 
         </div>`
@@ -126,20 +126,20 @@ module.exports = {
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             directory_temp.innerHTML += `
              <div title=${path.join(
-    dir,
-    paths[i]
-  )} global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
-  paths[i]
-}" style="padding-left:${paddingListDir}px; vertical-align:middle;">
-               <div parent=${parent_id}  ID="${parent_id +
-              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="Explorer.load('${_long_path}','${parent_id}',false)">
-                 <img draggable=false file=${
-  paths[i]
-} class="explorer_file_icon" parent=${parent_id} ID="${parent_id +
-              '_img'}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
-  paths[i],
-  'close'
-)}">
+                    dir,
+                    paths[i]
+                  )} global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
+                  paths[i]
+                }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
+                              <div parent=${parent_id}  ID="${parent_id +
+                              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="Explorer.load('${_long_path}','${parent_id}',false)">
+                                <img draggable=false file=${
+                  paths[i]
+                } class="explorer_file_icon" parent=${parent_id} ID="${parent_id +
+                              '_img'}" elementType=directory global=reload dir="${_long_path}" style="float:left; padding-right:3px; height:22px; width:24px; " src="${directories.getCustomIcon(
+                  paths[i],
+                  'close'
+                )}">
                  <p parent=${parent_id} ID="${parent_id +
               '_p'}" elementType=directory global=reload dir="${_long_path}">
                  ${paths[i]}

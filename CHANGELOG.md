@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191016 - 1 [1.2.0]
+- Couldn't reload directories with spaces on it's path
+
 ### 191014 - 1 [1.2.0]
 - Moved the close button of plugins page to the right
 - Added a sad face on welcome page if there isn't any project on recents.

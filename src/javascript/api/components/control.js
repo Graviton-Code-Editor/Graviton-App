@@ -8,16 +8,24 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 #########################################
 */
+
+/*
+new Control({
+  text:"Some text",
+  hint:"Something"
+})
+*/
+
 module.exports = {
-  Control: function ({ text, hint }) {
+  Control: function ({ text, hint, screen = current_screen.id }) {
     this.text = text
     this.hint = hint
-    this.screen = current_screen.id
+    this.screen = screen;
     const controlSpan = document.createElement('span')
     controlSpan.innerText = text
     if (hint != undefined) controlSpan.title = hint
     document
-      .getElementById(current_screen.id)
+      .getElementById(this.screen)
       .children[2].appendChild(controlSpan)
     this.setText = newText => {
       controlSpan.innerText = newText

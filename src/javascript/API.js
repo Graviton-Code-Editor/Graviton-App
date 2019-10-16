@@ -697,7 +697,8 @@ graviton = {
   getCurrentTab() {
     return document.getElementById(editingTab);
   },
-  getRandom: () => Math.floor(Math.random() * 400) + Math.floor(Math.random())
+  getRandom: () => Math.floor(Math.random() * 400) + Math.floor(Math.random()),
+  getScreens: () => editor_screens
 };
 
 function floatingWindow([xSize, ySize], content) {
