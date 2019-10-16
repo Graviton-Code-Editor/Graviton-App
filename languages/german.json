@@ -149,6 +149,8 @@
     "TelegramChannel":"Telegram Kanal",
     "Settings-Advanced-Developer-Tools-text2":"Den Konfiguration's Ordner Öffnen",
     "ExplorerPosition":"Position des Explorers",
-    "Screenshots":"Bildschirmschnappschüsse"
+    "Screenshots":"Bildschirmschnappschüsse",
+    "NoRecentProjects":"Keine zuletzt geöffnete Projekte",
+    "Miscellaneous":"Sonstiges"
   }
 }
