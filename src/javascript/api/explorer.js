@@ -24,7 +24,6 @@ module.exports = {
         document.getElementById(
           'explorer_app'
         ).innerHTML = `<div global=true dir="${dir}" id="g_directories"></div>`
-        dir_path = dir
       }
       let working_folder
       FirstFolder = dir
@@ -70,12 +69,15 @@ module.exports = {
         }
       }
       if (first_time) {
-        const opened_project = new CustomEvent('loaded_project', {
-          detail: {
-            path: FirstFolder
-          }
-        })
-        document.dispatchEvent(opened_project)
+        if(graviton.getCurrentDirectory() !== dir){
+          dir_path = dir
+          const opened_project = new CustomEvent('loaded_project', {
+            detail: {
+              path: FirstFolder
+            }
+          })
+          document.dispatchEvent(opened_project)
+        }
         workspaces[0] = FirstFolder
         graviton.setTitle(FirstFolder)
         if (document.getElementById('openFolder') != null) { document.getElementById('openFolder').remove() }
