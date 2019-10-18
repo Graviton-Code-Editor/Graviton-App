@@ -12,7 +12,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Explorer: {
-    load: (dir, app_id, f_t, callback) => {
+    load: (dir, app_id, f_t, callback, object = {animation : true} ) => {
+      const class_anim = object.animation !== true? "":"moving";
       const first_time =
         f_t == (true || 'true') ? true : f_t == 'reload' ? false : f_t
       if (!fs.existsSync(dir)) {
@@ -40,10 +41,6 @@ module.exports = {
           'src',
           directories.getCustomIcon(path.basename(FirstFolder), 'open')
         )
-        const load_explorer = new CustomEvent('load_explorer', {
-          detail: {}
-        })
-        document.dispatchEvent(load_explorer)
       } else {
         if (appender.getAttribute('opened') == 'true') {
           appender.setAttribute('opened', 'false')
@@ -61,13 +58,13 @@ module.exports = {
               'src',
               directories.getCustomIcon(path.basename(FirstFolder), 'open')
             )
-            const load_explorer = new CustomEvent('load_explorer', {
-              detail: {}
-            })
-            document.dispatchEvent(load_explorer)
           }
         }
       }
+      const load_explorer = new CustomEvent('load_explorer', {
+        detail: {}
+      })
+      document.dispatchEvent(load_explorer)
       if (first_time) {
         if(graviton.getCurrentDirectory() !== dir){
           dir_path = dir
@@ -96,11 +93,11 @@ module.exports = {
         working_folder.innerHTML = `
            <div>
              <p global=true id=directory_${path.basename(
-    dir
-  )} parent=g_directories elementType=directory dir="${FirstFolder}">${path.basename(
-  dir
-)}</p> 
-        </div>`
+              dir
+            )} parent=g_directories elementType=directory dir="${FirstFolder}">${path.basename(
+            dir
+          )}</p> 
+          </div>`
         document.getElementById(appender_id).appendChild(working_folder)
       } else {
         working_folder = document.getElementById(appender_id).children[1]
@@ -127,14 +124,14 @@ module.exports = {
             const directory_temp = document.createElement('div')
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             directory_temp.innerHTML += `
-             <div title=${path.join(
+             <div title="${path.join(
                     dir,
                     paths[i]
-                  )} global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
+                  )}" global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
                   paths[i]
                 }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
                               <div parent=${parent_id}  ID="${parent_id +
-                              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory" onclick="Explorer.load('${_long_path}','${parent_id}',false)">
+                              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory " onclick="Explorer.load('${_long_path}','${parent_id}',false)">
                                 <img draggable=false file=${
                   paths[i]
                 } class="explorer_file_icon" parent=${parent_id} ID="${parent_id +
@@ -162,54 +159,54 @@ module.exports = {
             const file_temp = document.createElement('div')
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             file_temp.innerHTML += `
-                <div title=${path.join(
-    dir,
-    paths[i]
-  )} parent="${parent_id}" elementType="file" onclick="new Tab({
-                id:'${parent_id + 'B'}',
+                <div title="${path.join(
+                  dir,
+                  paths[i]
+                )}" parent="${parent_id}" elementType="file" onclick="new Tab({
+                id:'${parent_id + "B"}',
                 path:'${_long_path}',
                 name:'${paths[i]}',
                 type:'file'
-                })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory" ID="${parent_id}" name="${
-  paths[i]
-}" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
+                })" myPadding="${paddingListDir}" dir="${_long_path}" class="directory ${class_anim}" ID="${parent_id}" name="${
+              paths[i]
+            }" style=" margin-left:${paddingListDir}px; vertical-align:middle;">
                 <img draggable=false file=${
-  paths[i]
-} class="explorer_file_icon" parent="${parent_id}" ID="${parent_id +
-              '_img'}" dir="${_long_path}" elementType="file" style="float:left; padding-right:3px; height:24px; width:24px;" src="${(function () {
-  if (
-    themeObject.icons == undefined ||
+                  paths[i]
+                } class="explorer_file_icon" parent="${parent_id}" ID="${parent_id +
+              "_img"}" dir="${_long_path}" elementType="file" style="float:left; padding-right:3px; height:24px; width:24px;" src="${(function() {
+              if (
+                themeObject.icons == undefined ||
                 (themeObject.icons[getFormat(paths[i]).lang] == undefined &&
                   getFormat(paths[i]).trust == true)
-  ) {
-    return `src/icons/files/${getFormat(paths[i]).lang}.svg`
-  } else {
-    if (
-      themeObject.icons[getFormat(paths[i]).lang] == undefined &&
+              ) {
+                return `src/icons/files/${getFormat(paths[i]).lang}.svg`;
+              } else {
+                if (
+                  themeObject.icons[getFormat(paths[i]).lang] == undefined &&
                   themeObject.icons[getFormat(paths[i]).format] == undefined
-    ) {
-      return `src/icons/files/${getFormat(paths[i]).lang}.svg `
-    }
-    if (getFormat(paths[i]).trust == true) {
-      return path.join(
-        plugins_folder,
-        themeObject.name,
-        themeObject.icons[getFormat(paths[i]).lang]
-      )
-    } else {
-      return path.join(
-        plugins_folder,
-        themeObject.name,
-        themeObject.icons[getFormat(paths[i]).format]
-      )
-    }
-  }
-})()}">
+                ) {
+                  return `src/icons/files/${getFormat(paths[i]).lang}.svg `;
+                }
+                if (getFormat(paths[i]).trust == true) {
+                  return path.join(
+                    plugins_folder,
+                    themeObject.name,
+                    themeObject.icons[getFormat(paths[i]).lang]
+                  );
+                } else {
+                  return path.join(
+                    plugins_folder,
+                    themeObject.name,
+                    themeObject.icons[getFormat(paths[i]).format]
+                  );
+                }
+              }
+            })()}">
                <p parent="${parent_id}" ID="${parent_id +
-              '_p'}" dir="${_long_path}" elementType="file">
+              "_p"}" dir="${_long_path}" elementType="file">
                ${paths[i]}
                </p>
-             </div>`
+             </div>`;
             working_folder.appendChild(file_temp)
           }
         }

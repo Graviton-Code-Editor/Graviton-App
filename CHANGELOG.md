@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191018 - 1 [1.2.0]
+- Better regex for autocompletate
+
 ### 191016 - 1 [1.2.0]
 - Couldn't reload directories with spaces on it's path
 
