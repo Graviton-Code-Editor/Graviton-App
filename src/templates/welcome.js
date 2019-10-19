@@ -52,7 +52,7 @@
               let content = "";
               projectServices.map((service, index) => {
                 content += `
-                    <div  class="section-2" onclick="projectServices[${index}].onclick()">
+                    <div  class="section-2" onclick="projectServices[${index}].onclick();closeWindow('welcome_window');">
                       <h3>${service.name}</h3>
                       <p>${service.description}</p>
                     </div>

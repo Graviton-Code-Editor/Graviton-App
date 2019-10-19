@@ -82,3 +82,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #boot_loader{
   margin-top:70px;
 }
+
+#welcome_wall{
+  position: absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width: 100%;
+  padding:10px;
+  z-index:-1;
+}

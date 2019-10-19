@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191016",
+  date: "191019",
   version: "1.2.0",
   state: "Beta"
 };
@@ -337,7 +337,7 @@ document.addEventListener(
   },
   true
 );
-
+console.log
 preload([
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",

@@ -27,7 +27,8 @@ app.on("ready", function() {
 		minHeight: 310,
 		minWidth: 310,
 		backgroundColor: "#191919",
-		title: "Graviton Editor"
+		title: "Graviton Editor",
+		icon: __dirname + '/assets/general.png'
 	})
 	main.loadURL(
 		url.format({

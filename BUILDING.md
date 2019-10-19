@@ -13,7 +13,7 @@ Clone the git repository:
 
 There are 2 different branches:
 * Master: daily source (maybe unstable).
-* Stable: this doesn't mean it's ready to be released as stable build , peroit doesn't have that many bugs, in general it's more stable.
+* Stable: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
 
 ## 2 - Installing the dependencies
 
