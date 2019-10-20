@@ -698,7 +698,23 @@ graviton = {
     return document.getElementById(editingTab);
   },
   getRandom: () => Math.floor(Math.random() * 400) + Math.floor(Math.random()),
-  getScreens: () => editor_screens
+  getScreens: () => editor_screens,
+  getEnv: () => {
+    return new Promise(resolve => {
+      if(fs.existsSync(path.join(graviton.getCurrentDirectory(),"package.json"))){
+        fs.readFile(path.join(graviton.getCurrentDirectory(),"package.json"),"UTF-8",(err,data)=>{
+          const packageJSON = JSON.parse(data);
+          resolve({
+            path:graviton.getCurrentDirectory(),
+            env:"node",
+            scripts: packageJSON.scripts !== undefined? packageJSON.scripts : []
+          })
+        })
+        
+      }
+    });
+    
+  } 
 };
 
 function floatingWindow([xSize, ySize], content) {

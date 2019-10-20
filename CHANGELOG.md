@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191020 - 1 [1.2.0]
+- Added a NPM Scripts panel for NodeJS projects.
+- New Component, the panel, which allows you to create panels on the explorer panel
+
 ### 191018 - 1 [1.2.0]
 - Better regex for autocompletate
 

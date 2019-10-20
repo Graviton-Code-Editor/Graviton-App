@@ -53,9 +53,11 @@
       }"></gv-switch>
     </div>
     </gv-blockcontent>
-    <gv-blocktitle>${getTranslation("ExplorerPosition")}</gv-blocktitle>
+    <gv-blocktitle>${getTranslation("Explorer")}</gv-blocktitle>
     <gv-blockcontent>
-      <label class="radio" onclick="graviton.changeExplorerPosition('left'); saveConfig();"  value="Left" ${
+       <div class="section-1 ">
+        <h5>${getTranslation("ExplorerPosition")}</h5>
+        <label class="radio" onclick="graviton.changeExplorerPosition('left'); saveConfig();"  value="Left" ${
         current_config.explorerPosition === "left" ? "checked" : ""
       }>
         Left
@@ -71,6 +73,7 @@
         }>
         <span class="radio_dot"></span>
       </label>
+      </div>
     </gv-blockcontent>
       
  `;

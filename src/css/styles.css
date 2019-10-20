@@ -195,31 +195,33 @@ body {
 	max-width: 70%;
 	left: 0;
 	height: 100%;
-	overflow: auto;
+	overflow: hidden;
 	font-size: 12px;
 	color: var(--white-black);
 	background: var(--primaryColor);
 	-webkit-user-select: none;
 	float: left;
-	direction: ltr;
+	display: flex;
+	flex-direction: column;
+}
+.explorer_panel{
+	overflow: auto;
+	min-height: 45px !important;
+}
+.explorer_panel * {
+	font-family:_main_font ;
 }
 
-#g_directory {
-	margin: 15px;
-}
 #g_directory * {
 	min-height: auto;
 }
 #g_directory > div:nth-child(1) {
-	margin: 0px 15px;
 	font-size: 16px;
 	white-space: nowrap;
 	display: flex;
 }
 
-#g_directory > div:nth-child(1) > p {
-	margin: 10px 0px;
-}
+
 
 .terminal {
 	margin: 0;
@@ -612,3 +614,26 @@ navbar a.active {
 }
 
 
+gv-panel{
+	padding:25px;
+	display: block;
+}
+gv-paneltitle{
+	font-size: 14px;
+	font-weight: normal;
+	display: inline-block;
+	margin-bottom: 5px;
+	border-bottom: 1px solid var(--white-black);
+	position: relative;
+	max-width: auto;
+}
+
+
+.explorer_resizer {
+	height: 3px;
+	margin: 2px 15px;
+	padding:4px;
+	border-top:2px solid var(--widget-color);
+	background:transparent;
+	cursor: n-resize;
+}

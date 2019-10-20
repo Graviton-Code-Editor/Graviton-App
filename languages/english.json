@@ -150,6 +150,7 @@
     "ExplorerPosition": "Directory Explorer's position",
     "Screenshots": "Screenshots",
     "NoRecentProjects":"No recent projects.",
-    "Miscellaneous":"Miscellaneous"
+    "Miscellaneous":"Miscellaneous",
+    "Explorer":"Explorer"
   }
 }

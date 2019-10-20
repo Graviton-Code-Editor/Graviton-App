@@ -22,13 +22,16 @@ module.exports = {
       }
       const appender_id = app_id.replace(/\\/g, '')
       if (appender_id == 'g_directories') {
-        document.getElementById(
-          'explorer_app'
-        ).innerHTML = `<div global=true dir="${dir}" id="g_directories"></div>`
+        EXPLORER_PANEL.panelObject.innerHTML = `
+        <gv-panel id="g_directories" dir="${dir}" myPadding="-10" global=true>
+          <gv-paneltitle>f</gv-paneltitle>
+        </gv-panel>
+        `;
       }
       let working_folder
       FirstFolder = dir
       const appender = document.getElementById(appender_id)
+      elasticContainer.append(document.getElementById(EXPLORER_PANEL.panelObject.id))
       if (f_t == 'reload') {
         appender.setAttribute('opened', 'true')
         appender.children[0].children[0].setAttribute(
@@ -77,7 +80,6 @@ module.exports = {
         }
         workspaces[0] = FirstFolder
         graviton.setTitle(FirstFolder)
-        if (document.getElementById('openFolder') != null) { document.getElementById('openFolder').remove() }
         registerNewProject(dir)
         working_folder = document.createElement('div')
         for (
@@ -89,14 +91,13 @@ module.exports = {
         }
         document.getElementById(appender_id).setAttribute('opened', 'false')
         working_folder.setAttribute('id', 'g_directory')
-        working_folder.setAttribute('myPadding', '50')
         working_folder.innerHTML = `
            <div>
-             <p global=true id=directory_${path.basename(
+            <gv-paneltitle global=true id=directory_${path.basename(
               dir
-            )} parent=g_directories elementType=directory dir="${FirstFolder}">${path.basename(
+            )} parent=g_directories  elementType=directory dir="${FirstFolder}">${path.basename(
             dir
-          )}</p> 
+          )}</gv-paneltitle>
           </div>`
         document.getElementById(appender_id).appendChild(working_folder)
       } else {
@@ -122,6 +123,7 @@ module.exports = {
           const stats = fs.statSync(_long_path)
           if (stats.isDirectory()) {
             const directory_temp = document.createElement('div')
+            directory_temp.style = "padding-bottom:24px; padding-top:1px;"
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             directory_temp.innerHTML += `
              <div title="${path.join(
@@ -129,9 +131,9 @@ module.exports = {
                     paths[i]
                   )}" global=reload dir="${_long_path}"  opened="false" ID="${parent_id}" name="${
                   paths[i]
-                }" style="padding-left:${paddingListDir}px; vertical-align:middle;">
+                }" style="padding-left:${paddingListDir}px; vertical-align:middle; position:relative;">
                               <div parent=${parent_id}  ID="${parent_id +
-                              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory " onclick="Explorer.load('${_long_path}','${parent_id}',false)">
+                              '_div'}" elementType=directory global=reload dir="${_long_path}"  class="directory ${class_anim}" onclick="Explorer.load('${_long_path}','${parent_id}',false)">
                                 <img draggable=false file=${
                   paths[i]
                 } class="explorer_file_icon" parent=${parent_id} ID="${parent_id +
@@ -157,6 +159,7 @@ module.exports = {
           const stats = fs.statSync(_long_path)
           if (stats.isFile()) {
             const file_temp = document.createElement('div')
+            file_temp.style = "padding-bottom:24px; padding-top:1px;"
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             file_temp.innerHTML += `
                 <div title="${path.join(

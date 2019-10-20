@@ -54,7 +54,7 @@ module.exports = {
         <div>
           <p style="display:inline-block;"dragable=false class="translate_word " idT="WelcomeMessage" >${getTranslation(
     'WelcomeMessage'
-  )}</p>
+  )}Graviton</p>
           <img style="display:inline-block;" draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
         </div>
         ${(function () {

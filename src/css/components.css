@@ -459,6 +459,29 @@ input[type="number"]::selection {
   }
 }
 
+
+.panel_button{
+  color: var(--white-black);
+  border-radius: 70px;
+  transition: 0.05s;
+  font-size: 12px;
+  cursor: pointer;
+  background: transparent;
+  width: auto;
+  white-space: nowrap;
+  display: flex;
+  padding:5px;
+  border:0;
+}
+.panel_button:hover{
+  transition: 0.05s;
+  border-radius: 4px;
+  background: var(--widget-color);
+}
+.panel_button:active {
+  transition: 0.05s;
+  transform: scale(var(--scalation));
+}
 /* Buttons, texts and sections*/
 
 button.button1 {
