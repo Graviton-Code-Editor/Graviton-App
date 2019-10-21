@@ -975,6 +975,17 @@ function Panel({id=Math.random(),content="",minHeight="",maxHeight=""}){
   this.panelObject.style.maxHeight = maxHeight;
   this.panelObject.id = id;
   this.panelObject.innerHTML = content;
+  const me = this;
+  this.close = () =>{
+    me.panelObject = document.getElementById(id)
+    for(i=0; i< me.panelObject.parentElement.children.length;i++){
+      if( me.panelObject.parentElement.children[i].id ==  me.panelObject.id ){
+        me.panelObject.parentElement.children[i-1].remove();
+        me.panelObject.remove();
+        return;
+      }
+    }
+  }
   const explorer = document.getElementById("explorer_app");
   explorer.appendChild(this.panelObject);
   if(document.getElementById("explorer_app").children.length>1){
@@ -989,14 +1000,14 @@ function Panel({id=Math.random(),content="",minHeight="",maxHeight=""}){
       }
     }
     const box = resizeElement.parentElement.children[boxNum-1]
-    resizeElement.addEventListener('mousedown', initialiseResize, false);
-    function initialiseResize(e) {
+   
+    const initialiseResize = (e) => {
       window.addEventListener('mousemove', startResizing, false);
-        window.addEventListener('mouseup', stopResizing, false);
+      window.addEventListener('mouseup', stopResizing, false);
     }
-    function startResizing(e) {
+    resizeElement.addEventListener('mousedown', initialiseResize, false);
+    const  startResizing = (e) =>  {
      const past =  box.parentElement.children
-    // console.log(past)
      let calc_height = 35;
      for(i=0;i<past.length;i++){
        const brother = past[i]
@@ -1007,14 +1018,12 @@ function Panel({id=Math.random(),content="",minHeight="",maxHeight=""}){
       box.style.maxHeight =  e.clientY - calc_height  + 'px';
      
     }
-    function stopResizing(e) {
+    const stopResizing = (e) => {
         window.removeEventListener('mousemove', startResizing, false);
         window.removeEventListener('mouseup', stopResizing, false);
     }
   }
-  return {
-    panelObject : document.getElementById(id)
-  }
+  this.panelObject = document.getElementById(id)
 }
 
 const EXPLORER_PANEL = new Panel({

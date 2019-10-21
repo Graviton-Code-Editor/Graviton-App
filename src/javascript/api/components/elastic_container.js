@@ -84,6 +84,7 @@ module.exports = {
             setTimeout(function () {
               spacer.remove()
             }, 360)
+            return;
           }
           if (el.scrollWidth - 1 <= el.scrollLeft + el.clientWidth) {
             if (
@@ -130,13 +131,14 @@ module.exports = {
           if (Number(el.getAttribute('totop')) != el.scrollTop) return
           el.setAttribute('totop', el.scrollTop)
 
-          if (el.scrollLeft >= 0 && el.scrollLeft < 1) {
+          if (el.scrollLeft <= 1 ) {
             const spacer = document.createElement('div')
             spacer.classList.add('bounce_left')
             this.insertBefore(spacer, this.children[0])
             setTimeout(function () {
               spacer.remove()
             }, 360)
+            return;
           }
           if (el.scrollWidth - 1 <= el.scrollLeft + el.scrollWidth) {
             if (document.getElementsByClassName('bounce_right').length != 0) { return }
