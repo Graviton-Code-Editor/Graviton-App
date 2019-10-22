@@ -637,3 +637,24 @@ gv-paneltitle{
 	background:transparent;
 	cursor: n-resize;
 }
+
+
+gv-process{
+	background:transparent;
+	padding:0px;
+	display: block;
+}
+
+gv-process gv-process-bar{
+	padding:6.5px;
+	background:var(--accentColor);
+	margin: 10px 0px;
+	border-radius: 5px;
+	display: block;
+}
+gv-process gv-process-text{
+	color:var(--white-black);
+	display: block;
+	font-size:14px;
+	margin:15px 0px;
+}

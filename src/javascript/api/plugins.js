@@ -239,7 +239,7 @@ module.exports = {
         return call != undefined ? call() : "";
       }
     },
-    installDependencies: function(config) {
+    installDependencies: function(config,call) {
       /**
        * @desc Install NodeJS dependencies of the plugin
        * @param {object} config - Dependencies object of the plugin
@@ -256,6 +256,7 @@ module.exports = {
             npm.commands.install([depen], function(er, data) {
               if (er) return er;
               me.load(config);
+              if(call!=undefined) call();
             });
           }
         }

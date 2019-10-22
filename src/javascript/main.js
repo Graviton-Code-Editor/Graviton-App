@@ -239,6 +239,18 @@ require(path.join(
   "npm",
   "npm_panel.js"
 ))
+window.customElements.define(
+  "gv-process",
+  require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "api",
+    "components",
+    "process_bar.js"
+  ))
+)
+
 let current_screen,
   dir_path,
   i,

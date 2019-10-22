@@ -465,12 +465,26 @@ module.exports = {
         });
         return;
       }
+      (()=>{
+        const content = document.getElementById(`${name}_div`)
+        content.innerHTML += `
+        <gv-process id="plugin_process${name}" style="width:100%" value="0">
+            <gv-process-bar></gv-process-bar>
+            <gv-process-text>Retrieving package information...</gv-process-text>
+        </gv-process>
+        `
+      })()
+      const processLoader = document.getElementById(`plugin_process${name}`)
       const degit = require("degit");
       const emitter = degit(plugin.repo.git.full_name);
-      emitter.on("info", info => {});
+      processLoader.setValue("10")
+      processLoader.setText("Downloading the sources...")
+      emitter.on("info", info => { });
       emitter
         .clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name))
         .then(() => {
+          processLoader.setValue("40")
+          processLoader.setText("Checking for dependencies...")
           const installed_ext_event = new CustomEvent("extension_installed", {
             detail: {
               name: name
@@ -497,8 +511,14 @@ module.exports = {
             });
           }
           if (plugin.repo.package["dependencies"] != undefined) {
-            Plugins.installDependencies(plugin.repo.package);
+            processLoader.setValue("90")
+            processLoader.setText("Installing dependencies...")
+            Plugins.installDependencies(plugin.repo.package,()=>{
+              processLoader.close() 
+            });
+            
           } else {
+            processLoader.close() 
             Plugins.load(plugin.repo.package);
           }
         });
