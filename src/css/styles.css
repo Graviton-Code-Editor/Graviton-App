@@ -646,7 +646,8 @@ gv-process{
 }
 
 gv-process gv-process-bar{
-	padding:6.5px;
+	padding:0px;
+	height:13px;
 	background:var(--accentColor);
 	margin: 10px 0px;
 	border-radius: 5px;

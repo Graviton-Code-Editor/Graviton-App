@@ -151,6 +151,10 @@
     "Screenshots": "Screenshots",
     "NoRecentProjects":"No recent projects.",
     "Miscellaneous":"Miscellaneous",
-    "Explorer":"Explorer"
+    "Explorer":"Explorer",
+    "Process.DownloadingSource":"Downloading the source...",
+    "Process.CheckingDependencies":"Checking the dependencies...",
+    "Process.InstallingDependencies":"Installing dependencies...",
+    "Process.Completed":"Completed!"
   }
 }

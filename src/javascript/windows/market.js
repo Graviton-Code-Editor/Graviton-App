@@ -477,14 +477,33 @@ module.exports = {
       const processLoader = document.getElementById(`plugin_process${name}`)
       const degit = require("degit");
       const emitter = degit(plugin.repo.git.full_name);
-      processLoader.setValue("10")
-      processLoader.setText("Downloading the sources...")
+      processLoader.setValue("15")
+      processLoader.setText(getTranslation("Process.DownloadingSource"))
       emitter.on("info", info => { });
       emitter
         .clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name))
         .then(() => {
-          processLoader.setValue("40")
-          processLoader.setText("Checking for dependencies...")
+          processLoader.setValue("45")
+          processLoader.setText(getTranslation("Process.DownloadingSource"))
+          
+          if (plugin.repo.package["dependencies"] != undefined) {
+            processLoader.setValue("75")
+            processLoader.setText(getTranslation("Process.CheckingDependencies"))
+            Plugins.installDependencies(plugin.repo.package,()=>{
+              processLoader.setValue("100")
+              processLoader.setText(getTranslation("Process.InstallingDependencies"))
+              setTimeout(function(){
+                processLoader.close() 
+              }, 1500);
+            });
+          } else {
+            processLoader.setValue("100")
+            processLoader.setText(getTranslation("Process.Completed"))
+            setTimeout(function(){
+              processLoader.close() 
+            }, 1500);
+            Plugins.load(plugin.repo.package);
+          }
           const installed_ext_event = new CustomEvent("extension_installed", {
             detail: {
               name: name
@@ -509,17 +528,6 @@ module.exports = {
               title: "Market",
               content: name + getTranslation("ExtInstalled")
             });
-          }
-          if (plugin.repo.package["dependencies"] != undefined) {
-            processLoader.setValue("90")
-            processLoader.setText("Installing dependencies...")
-            Plugins.installDependencies(plugin.repo.package,()=>{
-              processLoader.close() 
-            });
-            
-          } else {
-            processLoader.close() 
-            Plugins.load(plugin.repo.package);
           }
         });
     },

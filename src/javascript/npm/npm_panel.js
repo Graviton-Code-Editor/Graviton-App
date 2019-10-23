@@ -14,15 +14,14 @@ document.addEventListener("loaded_project", function() {
         button.classList.add("panel_button");
         button.textContent = script;
         button.onclick = () => {
-          console.log("TEST");
           const { exec } = require("child_process");
           exec(
             `npm ${script}`,
             {
               cwd: graviton.getCurrentDirectory()
             },
-            (a, b, c) => {
-              console.log(a, b, c);
+            (err,data) => {
+              console.log(err,data)
             }
           );
         };
