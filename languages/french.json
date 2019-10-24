@@ -150,6 +150,15 @@
 		"SystemAccentColor.Error1": "Votre système n'est pas compatible avec cette fonctionnalité.",
 		"SystemAccentColor.Error2": "L'utilisation des couleurs d'accent du système pourrait ne pas fonctionner correctement avec le thème actuel.",
 		"TelegramChannel": "Cannal Telegram",
-		"Settings-Advanced-Developer-Tools-text2": "Ouvrir le dossier de configuration"
+		"Settings-Advanced-Developer-Tools-text2": "Ouvrir le dossier de configuration",
+		"ExplorerPosition": "Position de l'explorateur de dossiers",
+		"Screenshots": "Captures d'écran",
+		"NoRecentProjects": "Aucun projet récent.",
+		"Miscellaneous": "Divers",
+		"Explorer": "Explorateur",
+		"Process.DownloadingSource": "Téléchargement du code source...",
+		"Process.CheckingDependencies": "Vérification des dépendances...",
+		"Process.InstallingDependencies": "Installation des dépendances...",
+		"Process.Completed": "Terminé !"
 	}
 }
