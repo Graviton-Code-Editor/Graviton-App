@@ -207,6 +207,7 @@ body {
 .explorer_panel{
 	overflow: auto;
 	min-height: 45px !important;
+	height:100%;
 }
 .explorer_panel * {
 	font-family:_main_font ;
@@ -297,6 +298,7 @@ body {
 	background: var(--primaryColor);
 	cursor: col-resize;
 	margin: 0 0px;
+	padding:0px 1px;
 	user-select: none;
 	-webkit-app-region: no-drag;
 }

@@ -1076,3 +1076,15 @@ gv-navpanel gv-navcontent gv-blockcontent {
   padding:10px;
   margin:10px;
 }
+
+select{
+  padding:5px 8px;
+  border-radius: 5px;
+  background:var(--primaryColor);
+  border:0;
+}
+
+select:hover{
+  cursor: pointer;
+  box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
+}

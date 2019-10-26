@@ -42,7 +42,7 @@
     "appdata-path": "^1.0.0",
     "codemirror": "^5.49.2",
     "degit": "^2.1.4",
-    "fs-extra": "^7.0.1",
+    "fs-extra": "^8.1.0",
     "marked": "^0.7.0",
     "mousetrap": "^1.6.3",
     "node-pty": "^0.9.0",
@@ -55,11 +55,11 @@
     "xterm": "^3.14.5"
   },
   "devDependencies": {
-    "electron": "^6.0.0",
+    "electron": "^7.0.0",
     "electron-builder": "^20.44.4",
     "electron-rebuild": "^1.8.5",
     "mocha": "^6.2.0",
-    "spectron": "^8.0.0",
+    "spectron": "^9.0.0",
     "standard": "^12.0.1"
   },
   "build": {

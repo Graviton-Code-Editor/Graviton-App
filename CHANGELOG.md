@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191026 - 1 [1.2.0]
+- Changed: You can now multiselected more than 1 file to open
+- Changed: Native dialogs are now attached to the window, so they cannot duplicate
+- Fixed: couldn't open new folders or save file with different names
+
 ### 191023 - 1 [1.2.0]
 - Improved: better plugin process bar loader
 

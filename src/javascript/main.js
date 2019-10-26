@@ -473,46 +473,55 @@ const appendBinds = () => {
 }
 
 function saveFileAs() {
-  dialog.showSaveDialog(fileName => {
-    fs.writeFile(fileName, editor.getValue(), err => {
+  dialog.showSaveDialog(g_window).then(result => {
+    if(result.canceled) return;
+    fs.writeFile(result.filePath, editor.getValue(), err => {
       if (err) {
         alert(`An error ocurred creating the file ${err.message}`)
         return
       }
-      filepath = fileName
+      filepath = result.filePath
       new Notification({
         title: "Graviton",
-        content: `The file has been succesfully saved in ${fileName}`
+        content: `The file has been succesfully saved in ${result.filePath}`
       })
     })
+  }).catch(err => {
+    console.log(err)
   })
 }
 
 function openFile() {
-  dialog.showOpenDialog(fileNames => {
-    // fileNames is an array that contains all the selected files
-    if (fileNames === undefined) {
-      return
-    }
-    new Tab({
-      id: Math.random() + fileNames[0].replace(/\\/g, "") + "B",
-      path: fileNames[0],
-      name: fileNames[0],
-      type: "file"
+  dialog.showOpenDialog(g_window,{
+    properties: ['openFile','multiSelections']
+  }).then(result => {
+    if(result.canceled) return;
+    result.filePaths.forEach((file)=>{
+      new Tab({
+        id: Math.random() +file.replace(/\\/g, "") + "B",
+        path: file,
+        name: file,
+        type: "file"
+      })
     })
+    
+  }).catch(err => {
+    console.log(err)
   })
 }
 
 function openFolder() {
   dialog.showOpenDialog(
+    g_window,
     {
-      properties: ["openDirectory"]
-    },
-    selectedFiles => {
-      if (selectedFiles === undefined) return
-      Explorer.load(selectedFiles[0], "g_directories", true)
+      properties: ['openDirectory']
     }
-  )
+  ).then(result => {
+    if(result.canceled) return;
+    Explorer.load(result.filePaths[0], "g_directories", true)
+  }).catch(err => {
+    console.log(err)
+  })
 }
 
 function saveFile() {
