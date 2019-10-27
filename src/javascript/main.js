@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191023",
+  date: "191027",
   version: "1.2.0",
   state: "Beta"
 }
@@ -209,6 +209,14 @@ const { commander, commanders } = require(path.join(
   "api",
   "components",
   "commanders.js"
+))
+const { Panel } = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "api",
+  "components",
+  "panels.js"
 ))
 window.customElements.define(
   "gv-switch",
@@ -923,12 +931,12 @@ document.addEventListener("screen_loaded", e => {
     if (id != screen) return
     langController.setText(graviton.getLanguage())
     langController.setHint(`Current: ${graviton.getLanguage()}`)
-    if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
-      langController.hide()
-    }
     if (editor == undefined) {
       counter.hide()
       return
+    }
+    if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
+      langController.hide()
     }
     counter.show()
     langController.show()
@@ -989,63 +997,7 @@ projectServices.push({
   onclick: () => createNewProject("html")
 })
 
-function Panel({id=Math.random(),content="",minHeight="",maxHeight=""}){
-  this.panelObject = document.createElement("div");
-  this.panelObject.classList = "explorer_panel";
-  this.panelObject.style.minHeight = minHeight;
-  this.panelObject.style.maxHeight = maxHeight;
-  this.panelObject.id = id;
-  this.panelObject.innerHTML = content;
-  const me = this;
-  this.close = () =>{
-    me.panelObject = document.getElementById(id)
-    for(i=0; i< me.panelObject.parentElement.children.length;i++){
-      if( me.panelObject.parentElement.children[i].id ==  me.panelObject.id ){
-        me.panelObject.parentElement.children[i-1].remove();
-        me.panelObject.remove();
-        return;
-      }
-    }
-  }
-  const explorer = document.getElementById("explorer_app");
-  explorer.appendChild(this.panelObject);
-  if(document.getElementById("explorer_app").children.length>1){
-    const random_ID = Math.random()
-    const resizeElement = document.createElement("div")
-    resizeElement.classList = "explorer_resizer";
-    resizeElement.id = random_ID;
-    explorer.insertBefore(resizeElement ,document.getElementById(id))
-    for(i=0; i< resizeElement.parentElement.children.length;i++){
-      if(resizeElement.parentElement.children[i] == resizeElement){
-        var boxNum = i;
-      }
-    }
-    const box = resizeElement.parentElement.children[boxNum-1]
-   
-    const initialiseResize = (e) => {
-      window.addEventListener('mousemove', startResizing, false);
-      window.addEventListener('mouseup', stopResizing, false);
-    }
-    resizeElement.addEventListener('mousedown', initialiseResize, false);
-    const  startResizing = (e) =>  {
-     const past =  box.parentElement.children
-     let calc_height = 35;
-     for(i=0;i<past.length;i++){
-       const brother = past[i]
-       if(brother.id == box.id) break;
-       calc_height +=brother.clientHeight + 12;
-     }
-      box.style.height =  e.clientY - calc_height  + 'px';
-      box.style.maxHeight =  e.clientY - calc_height  + 'px';
-     
-    }
-    const stopResizing = (e) => {
-        window.removeEventListener('mousemove', startResizing, false);
-        window.removeEventListener('mouseup', stopResizing, false);
-    }
-  }
-  this.panelObject = document.getElementById(id)
-}
+
 
 const EXPLORER_PANEL = new Panel({
   minHeight:"",

@@ -1,6 +1,7 @@
 document.addEventListener("loaded_project", function() {
   graviton.getEnv().then(result => {
     if (result.env === "node") {
+      if(Object.keys(result.scripts).length == 0) return;
       const npm_panel = new Panel({
         maxHeight: "",
         content: `

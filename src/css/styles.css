@@ -207,7 +207,8 @@ body {
 .explorer_panel{
 	overflow: auto;
 	min-height: 45px !important;
-	height:100%;
+	height:auto;
+	max-height:100%;
 }
 .explorer_panel * {
 	font-family:_main_font ;
@@ -222,7 +223,9 @@ body {
 	display: flex;
 }
 
-
+#g_directory >  div > div > div:not(.directory){
+	top:25px;
+}
 
 .terminal {
 	margin: 0;
@@ -619,6 +622,7 @@ navbar a.active {
 gv-panel{
 	padding:25px;
 	display: block;
+	min-height:100%;
 }
 gv-paneltitle{
 	font-size: 14px;

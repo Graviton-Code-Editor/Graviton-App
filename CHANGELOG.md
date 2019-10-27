@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191027 - 1 [1.2.0]
+- Fixed: A notification for devs was throwed after finishing the setup process on production
+- Added: right-click a panel resizer and it will show up a contextual menu to hide or show a panel
+
 ### 191026 - 1 [1.2.0]
 - Changed: You can now multiselected more than 1 file to open
 - Changed: Native dialogs are now attached to the window, so they cannot duplicate

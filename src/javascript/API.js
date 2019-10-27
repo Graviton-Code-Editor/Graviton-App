@@ -52,6 +52,26 @@ const context_menu_list_file = {
     );
   }
 };
+const context_menu_resizer_options = {
+  Hide: function() {
+      const resizeElement = document.getElementById(this.getAttribute("target"))
+      for(i=0; i< resizeElement.parentElement.children.length;i++){
+        if(resizeElement.parentElement.children[i] == resizeElement){
+          resizeElement.parentElement.children[i+1].style.display = "none";
+          resizeElement.style = "padding-bottom:20px;";
+        }
+      }
+  },
+  Show: function() {
+    const resizeElement = document.getElementById(this.getAttribute("target"))
+    for(i=0; i< resizeElement.parentElement.children.length;i++){
+      if(resizeElement.parentElement.children[i] == resizeElement){
+        resizeElement.parentElement.children[i+1].style.display="block";
+        resizeElement.style = "";
+      }
+    }
+}
+}
 const context_menu_directory_options = {
   Reload: function() {
     Explorer.load(
@@ -291,7 +311,7 @@ graviton = {
     return editor_mode;
   },
   throwError: function(message) {
-    console.log("%c Graviton ERROR :: ", " color: red", message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c Graviton ERROR :: `, " color: red",message);
     new Notification({
       title: "Error ",
       content: message
@@ -648,10 +668,10 @@ graviton = {
     }
   },
   consoleInfo(message) {
-    console.log("%c INFO::", "color:#0066FF;", message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c INFO::`, "color:#0066FF;", message);
   },
   consoleWarn(message) {
-    console.log("%c WARN::", "color:#F6B149;", message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c WARN::`, "color:#F6B149;", message);
   },
   getTemplate(name, code) {
     const result = `${code != undefined ? code : ""} ${templates[name]}`;
@@ -800,6 +820,31 @@ document.addEventListener("mousedown", function(event) {
               context_menu.appendChild(span);
             }
           });
+          break;
+        case "panel_resizer":
+            Object.keys(context_menu_resizer_options).forEach(function(
+              key,
+              index
+            ) {
+              if (context_menu_resizer_options[key] != "*line") {
+                const button = document.createElement("button");
+                button.classList.add("part_of_context_menu");
+                button.innerText = getTranslation(key);
+                button.setAttribute("target", event.target.id);
+  
+                sleeping(1).then(() => {
+                  button.addEventListener(
+                    "click",
+                    context_menu_resizer_options[key]
+                  );
+                });
+                context_menu.appendChild(button);
+              } else {
+                const span = document.createElement("span");
+                span.classList = "line_space_menus";
+                context_menu.appendChild(span);
+              }
+            });
           break;
         default:
           Object.keys(context_menu_list_text).forEach(function(key, index) {

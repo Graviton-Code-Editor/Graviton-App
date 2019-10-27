@@ -123,7 +123,7 @@ module.exports = {
           const stats = fs.statSync(_long_path)
           if (stats.isDirectory()) {
             const directory_temp = document.createElement('div')
-            directory_temp.style = "padding-bottom:24px; padding-top:1px;"
+            directory_temp.style = ""
             const parent_id = _long_path.replace(/[\\\s]/g, '') + '_div'
             directory_temp.innerHTML += `
              <div title="${path.join(
@@ -146,7 +146,7 @@ module.exports = {
                  ${paths[i]}
                  </p>
                </div>
-               <div myPadding="${paddingListDir}" dir="${_long_path}"></div>
+               <div myPadding="${paddingListDir}" style="padding-top:25px;" dir="${_long_path}"></div>
              </div>`
             working_folder.appendChild(directory_temp)
           }
