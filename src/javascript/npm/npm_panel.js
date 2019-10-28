@@ -1,3 +1,6 @@
+
+"use strict"
+
 document.addEventListener("loaded_project", function() {
   graviton.getEnv().then(result => {
     if (result.env === "node") {

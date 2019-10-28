@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191027",
+  date: "191028",
   version: "1.2.0",
   state: "Beta"
 }
@@ -996,8 +996,6 @@ projectServices.push({
   description: "Basic HTML project",
   onclick: () => createNewProject("html")
 })
-
-
 
 const EXPLORER_PANEL = new Panel({
   minHeight:"",

@@ -9,25 +9,27 @@
         "Market"
       )}
       </p>
-      `;
+      `
         } else {
           return "";
         }
       })()}
-      <p>${getTranslation("Themes.Text")}</p>
+      <div class=" inline">
       <gv-switch onclick="graviton.useSystemAccent(); saveConfig();" class="${
         current_config.accentColorPreferences == "system"
           ? "activated"
           : "desactivated"
       }"></gv-switch>
+        <h5>${getTranslation("Themes.Text")}</h5>
+    </div>   
   </gv-blockcontent>
   <gv-blocktitle>${getTranslation("Miscellaneous")}</gv-blocktitle>
   <gv-blockcontent>
     <div class="section-1 inline">
-      <h5>${getTranslation("ZoomSize")}</h5>
       <input id="slider_zoom" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="5" max="50" value="${
         current_config.appZoom
       }" class="slider">
+      <h5>${getTranslation("ZoomSize")}</h5>
     </div>
     <div class="section-1 inline">
       <button class="Button1" onClick="graviton.setZoom(25); document.getElementById('slider_zoom').value=25;">${getTranslation(
@@ -35,22 +37,22 @@
       )}</button>
     </div>
     <div class="section-1 inline">
-      <h5>${getTranslation("Blur")}</h5>
       <input id="slider_blur" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
         current_config.blurPreferences
       }" class="slider">
+      <h5>${getTranslation("Blur")}</h5>
     </div>
     <div class="section-1 inline">
-      <h5>${getTranslation("Bounce")}</h5>
       <gv-switch onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
         current_config.bouncePreferences
       }"></gv-switch>
+      <h5>${getTranslation("Bounce")}</h5>
     </div>
     <div class="section-1 inline">
-      <h5>${getTranslation("ZenMode")}</h5>
       <gv-switch onclick="graviton.toggleZenMode()" class="${
         editor_mode != " zen " ? "activated " : "desactivated "
       }"></gv-switch>
+      <h5>${getTranslation("ZenMode")}</h5>
     </div>
     </gv-blockcontent>
     <gv-blocktitle>${getTranslation("Explorer")}</gv-blocktitle>

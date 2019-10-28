@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191028 - 1 [1.2.0]
+- Made some components on settings look better
+- Updated Node-Abi manually so node-pty can be rebuild
+
 ### 191027 - 1 [1.2.0]
 - Fixed: A notification for devs was throwed after finishing the setup process on production
 - Added: right-click a panel resizer and it will show up a contextual menu to hide or show a panel
