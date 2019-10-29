@@ -3,9 +3,10 @@
   getTranslation('Welcome.TakeATheme')}
 </h1>
 <div class=theme_divs>
-    <img draggable=false onclick="graviton.setTheme('Dark'); selectTheme('2',this);"
-        class='theme_div2 ${current_config.theme == 'Dark' ? 'active' : ''}' src=src/icons/dark.svg> <img draggable=false
-        onclick="graviton.setTheme('Arctic'); selectTheme('2',this);"
+    <img draggable=false onclick="graviton.setTheme('Dark'); selectionFromTo(this.parentElement,this)"
+        class='theme_div2 ${current_config.theme == 'Dark' ? 'active' : ''}' src=src/icons/dark.svg> 
+    <img draggable=false
+        onclick="graviton.setTheme('Arctic'); selectionFromTo(this.parentElement,this)"
         class='theme_div2 ${current_config.theme == 'Arctic' ? 'active' : ''}' src=src/icons/light.svg> </div> <button
         onclick='Setup.navigate("languages"); ' style=" position:fixed; left:5%; bottom: 5%;  "
         class='button1 translate_word' idT="Back">${

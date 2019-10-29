@@ -751,11 +751,6 @@ const directories = {
   }
 }
 
-/*
- * Used for loading it's icon in the explorer menu
- * Not recognized formats will have the unknown icon as default
- */
-
 const registerNewProject = function(dir) {
   // Add a new directory to the history if it is the first time it has been opened in the editor
   for (i = 0; i < log.length + 1; i++) {
@@ -811,46 +806,7 @@ const createNewProject = function(template) {
     }
   )
 }
-const touchingResizer = type => {
-  if (type == false) {
-    if (!mouseClicked) {
-      touchingResizerValue = false
-    }
-  } else {
-    touchingResizerValue = true
-  }
-}
 
-function checkVariables(text) {
-  let _variables = []
-  for (i = 0; i < text.length; i++) {
-    switch (editor.getMode().name) {
-      case "javascript":
-        switch (text[i]) {
-          case "let":
-          case "var":
-          case "const":
-            _variables.push({
-              _name: text[i + 1]
-            })
-            break
-        }
-        break
-      case "java":
-        switch (text[i]) {
-          case "int":
-          case "char":
-          case "float":
-            _variables.push({
-              _name: text[i + 1]
-            })
-            break
-        }
-        break
-    }
-  }
-  return _variables
-}
 
 const installCli = function() {
   const npm = require("npm")
@@ -899,29 +855,14 @@ graviton.refreshCustomization = () => {
   }
 }
 
-function selectLang(lang) {
-  const languages_divs = document.getElementsByClassName("language_div")
-  for (i = 0; i < languages_divs.length; i++) {
-    languages_divs[i].classList.remove("active")
+const selectionFromTo = (parent,toSelect) => {
+  const children = parent.children;
+  for( let child of children){
+    child.classList.remove("active");
   }
-  lang.classList.add("active")
+  toSelect.classList.add("active");
 }
 
-function selectTheme(from, theme) {
-  let themes_divs
-  switch (from) {
-    case "1":
-      themes_divs = document.getElementsByClassName("theme_div")
-      break
-    case "2":
-      themes_divs = document.getElementsByClassName("theme_div2")
-      break
-  }
-  for (i = 0; i < themes_divs.length; i++) {
-    themes_divs[i].classList.remove("active")
-  }
-  theme.classList.add("active")
-}
 /**
  * @desc Language  indicator and Line/Char counter Controls
  */
@@ -1005,6 +946,3 @@ const EXPLORER_PANEL = new Panel({
       </div>
   `
 })
-
-
-

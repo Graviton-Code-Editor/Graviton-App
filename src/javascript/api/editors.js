@@ -252,6 +252,36 @@ module.exports = {
           .getElementById(editingTab)
           .setAttribute('data', editor.getValue())
         if (current_config['autoCompletionPreferences'] == 'activated') {
+          function checkVariables(text) {
+            let _variables = []
+            for (i = 0; i < text.length; i++) {
+              switch (editor.getMode().name) {
+                case "javascript":
+                  switch (text[i]) {
+                    case "let":
+                    case "var":
+                    case "const":
+                      _variables.push({
+                        _name: text[i + 1]
+                      })
+                      break
+                  }
+                  break
+                case "java":
+                  switch (text[i]) {
+                    case "int":
+                    case "char":
+                    case "float":
+                      _variables.push({
+                        _name: text[i + 1]
+                      })
+                      break
+                  }
+                  break
+              }
+            }
+            return _variables
+          }
           elasticContainer.append(document.getElementById('context'))
           const cursorPos = editor.cursorCoords()
           const A1 = editor.getCursor().line

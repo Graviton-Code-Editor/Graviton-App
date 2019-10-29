@@ -34,7 +34,7 @@ module.exports = {
               themeDiv.setAttribute("class", "theme_div");
               themeDiv.setAttribute(
                 "onclick",
-                `graviton.setTheme('${theme.name}'); selectTheme('1',this); graviton.saveConfiguration();`
+                `graviton.setTheme('${theme.name}'); selectionFromTo(this.parentElement,this); graviton.saveConfiguration();`
               );
               themeDiv.innerHTML = `
                 <p style="margin:0px 0; font-size:17px;">${theme.name}</p>
@@ -49,7 +49,7 @@ module.exports = {
                       };"></div>
               `;
               if (theme.name === current_config.theme) {
-                selectTheme("1", themeDiv);
+                selectionFromTo(document.getElementById("theme_list"), themeDiv);
               }
               document.getElementById("theme_list").appendChild(themeDiv);
               elasticContainer.append(

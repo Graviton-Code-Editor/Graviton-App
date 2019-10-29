@@ -19,7 +19,7 @@ module.exports = {
        */
       languages.map((lang, index) => {
         if (navigator.language.includes(languages[index].locale)) {
-          loadLanguage(languages[i].name);
+          loadLanguage(languages[index].name);
         } else if (index == languages.length + 1) {
           loadLanguage(languages[0]);
         }
@@ -58,7 +58,7 @@ module.exports = {
             languageDiv.setAttribute("class", "language_div");
             languageDiv.setAttribute(
               "onclick",
-              `loadLanguage('${languages[i].name}'); selectLang(this);`
+              `loadLanguage('${languages[i].name}'); selectionFromTo(this.parentElement,this)`
             );
             languageDiv.innerText = languages[i].name;
             if (languages[i].name === current_config.language.name) {
