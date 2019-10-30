@@ -159,6 +159,8 @@
 		"Process.DownloadingSource": "Téléchargement du code source...",
 		"Process.CheckingDependencies": "Vérification des dépendances...",
 		"Process.InstallingDependencies": "Installation des dépendances...",
-		"Process.Completed": "Terminé !"
+		"Process.Completed": "Terminé !",
+		"Hide":"Cacher",
+		"Show":"Montrer"
 	}
 }
