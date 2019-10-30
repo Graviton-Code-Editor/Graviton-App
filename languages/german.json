@@ -151,6 +151,13 @@
     "ExplorerPosition":"Position des Explorers",
     "Screenshots":"Bildschirmschnappschüsse",
     "NoRecentProjects":"Keine zuletzt geöffnete Projekte",
-    "Miscellaneous":"Sonstiges"
+    "Miscellaneous":"Sonstiges",
+    "Explorer":"Explorer",
+    "Process.DownloadingSource":"Quellcode wird heruntergeladen...",
+    "Process.CheckingDependencies":"Abhängigkeiten werden überprüft...",
+    "Process.InstallingDependencies":"Abhängigkeiten werden installiert...",
+    "Process.Completed":"Abgeschlossen!",
+    "Hide":"Ausblenden",
+    "Show":"Einblenden"
   }
 }
