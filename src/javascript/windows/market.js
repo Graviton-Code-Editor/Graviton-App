@@ -34,20 +34,20 @@ module.exports = {
 
       this.extensions = [];
       const me = this;
-      request(
-        "https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json",
-        function(error, response, body) {
-          if (!error && response.statusCode == 200) {
-            me.extensions = JSON.parse(body);
-          } else {
-            me.loadMenus();
-            return callback(1);
-          }
+      const fetch = require("node-fetch");
+      fetch(
+        "https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json"
+      )
+        .then(res => res.json())
+        .then(body => {
+          me.extensions = body;
           plugins_market = me.extensions;
           current_plugins = 5;
           me.loadMoreExtensions(0, callback);
-        }
-      );
+        }).catch(err=>{
+          me.loadMenus()
+          return callback(1)
+        })
     },
     loadMenus: function() {
       /**
@@ -290,10 +290,12 @@ module.exports = {
             me.loadMenus(); // Maxium calls error, 60calls/hour/ip
             return callback(2);
           }
-          request(
-            `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
-            function(error, response, body2) {
-              const _package = JSON.parse(body2);
+          const fetch = require("node-fetch");
+          fetch(
+            `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`
+          )
+            .then(res => res.json())
+            .then(_package => {
               full_plugins.push({
                 git: data,
                 package: _package
@@ -348,8 +350,7 @@ module.exports = {
                 }
                 if (callback != undefined) callback();
               }
-            }
-          );
+            });
         });
       }
     },
@@ -389,6 +390,7 @@ module.exports = {
             path.join(plugins_folder, data.getAttribute("name"), "readme.md"),
             "utf8",
             function(err, readme) {
+              const marked = require("marked")
               document.getElementById(
                 data.getAttribute("name") + "readme"
               ).innerHTML = `<div style="flex:1;" >${
@@ -399,27 +401,30 @@ module.exports = {
           /*
           Local Screenshots
           */
-            if (plugin.local.screenshots != undefined) {
-              plugin.local.screenshots.forEach(sc => {
-                const screenshoot = document.createElement("img");
-                screenshoot.setAttribute(
-                  "src",
-                  path.join(plugins_folder, plugin.local.name, sc)
-                );
-                screenshoot.style = "height:200px; ";
-                screenshoot.draggable = false;
-                document
-                  .getElementById(plugin.local.name + "_screenshots")
-                  .appendChild(screenshoot);
-              });
-            }
+          if (plugin.local.screenshots != undefined) {
+            plugin.local.screenshots.forEach(sc => {
+              const screenshoot = document.createElement("img");
+              screenshoot.setAttribute(
+                "src",
+                path.join(plugins_folder, plugin.local.name, sc)
+              );
+              screenshoot.style = "height:200px; ";
+              screenshoot.draggable = false;
+              document
+                .getElementById(plugin.local.name + "_screenshots")
+                .appendChild(screenshoot);
+            });
+          }
         } else {
           /**
            * @desc Repository Readme
            */
-          request(
-            `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`,
-            function(error, response, body3) {
+          const fetch = require("node-fetch");
+          fetch(
+            `https://raw.githubusercontent.com/${plugin.repo.git.owner.login}/${plugin.repo.git.name}/${plugin.repo.git.default_branch}/readme.md`
+          )
+            .then(res => res.text())
+            .then(body3 => {
               if (
                 document.getElementById(data.getAttribute("name") + "_div") ==
                 undefined
@@ -429,12 +434,11 @@ module.exports = {
               document.getElementById(
                 data.getAttribute("name") + "readme"
               ).innerHTML = `<div style="flex:1;" >${
-                !error && response.statusCode == 200
+                !body3.match("404: Not Found")
                   ? marked(body3)
                   : getTranslation("NoReadme")
               }</div>`;
-            }
-          );
+            });
           if (plugin.repo.package.screenshots != undefined) {
             plugin.repo.package.screenshots.forEach(sc => {
               const screenshoot = document.createElement("img");
@@ -465,42 +469,46 @@ module.exports = {
         });
         return;
       }
-      (()=>{
-        const content = document.getElementById(`${name}_div`)
+      (() => {
+        const content = document.getElementById(`${name}_div`);
         content.innerHTML += `
         <gv-process id="plugin_process${name}" style="width:100%" value="0">
             <gv-process-bar></gv-process-bar>
             <gv-process-text>Retrieving package information...</gv-process-text>
         </gv-process>
-        `
-      })()
-      const processLoader = document.getElementById(`plugin_process${name}`)
+        `;
+      })();
+      const processLoader = document.getElementById(`plugin_process${name}`);
       const degit = require("degit");
       const emitter = degit(plugin.repo.git.full_name);
-      processLoader.setValue("15")
-      processLoader.setText(getTranslation("Process.DownloadingSource"))
-      emitter.on("info", info => { });
+      processLoader.setValue("15");
+      processLoader.setText(getTranslation("Process.DownloadingSource"));
+      emitter.on("info", info => {});
       emitter
         .clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name))
         .then(() => {
-          processLoader.setValue("45")
-          processLoader.setText(getTranslation("Process.DownloadingSource"))
-          
+          processLoader.setValue("45");
+          processLoader.setText(getTranslation("Process.DownloadingSource"));
+
           if (plugin.repo.package["dependencies"] != undefined) {
-            processLoader.setValue("75")
-            processLoader.setText(getTranslation("Process.CheckingDependencies"))
-            Plugins.installDependencies(plugin.repo.package,()=>{
-              processLoader.setValue("100")
-              processLoader.setText(getTranslation("Process.InstallingDependencies"))
-              setTimeout(function(){
-                processLoader.close() 
+            processLoader.setValue("75");
+            processLoader.setText(
+              getTranslation("Process.CheckingDependencies")
+            );
+            Plugins.installDependencies(plugin.repo.package, () => {
+              processLoader.setValue("100");
+              processLoader.setText(
+                getTranslation("Process.InstallingDependencies")
+              );
+              setTimeout(function() {
+                processLoader.close();
               }, 1500);
             });
           } else {
-            processLoader.setValue("100")
-            processLoader.setText(getTranslation("Process.Completed"))
-            setTimeout(function(){
-              processLoader.close() 
+            processLoader.setValue("100");
+            processLoader.setText(getTranslation("Process.Completed"));
+            setTimeout(function() {
+              processLoader.close();
             }, 1500);
             Plugins.load(plugin.repo.package);
           }

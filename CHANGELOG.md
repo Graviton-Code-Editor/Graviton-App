@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191031 - 1 [1.2.0]
+- Replaced requestJS for node-fetch
+- Only load required dependencies on start
+- Theme's custom highlighting will be loaded when it's applied
+
 ### 191028 - 1 [1.2.0]
 - Made some components on settings look better
 - Updated Node-Abi manually so node-pty can be rebuild

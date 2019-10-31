@@ -65,8 +65,8 @@ function loadConfig() {
     loadLanguage(current_config.language);
     graviton.refreshCustomization();
     graviton.changeExplorerPosition(current_config.explorerPosition);
-    Menus.loadDefaults(); //Load default menus
     screens.add(); // Creates the first screen
+    Menus.loadDefaults();
     Plugins.detect(function() {
       if (current_config["theme"] != undefined) {
         graviton.setTheme(current_config["theme"]);
@@ -112,7 +112,7 @@ graviton.saveConfiguration = () => {
       explorerPosition: current_config.explorerPosition,
       version: GravitonInfo.version,
       build: GravitonInfo.date
-    }),
+    },null,3),
     err => {
       if (err) graviton.throwError("Couldn't save the configuration file.");
     }

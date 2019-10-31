@@ -23,7 +23,7 @@
 
 ## 🤓 Developers
 
-* Updated Electron to v6
+* Updated Electron to v7
 * New Graviton component called Control 
 * New events
 * New Web Component (gv-navpanel)

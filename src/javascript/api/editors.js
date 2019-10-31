@@ -265,6 +265,11 @@ module.exports = {
                         _name: text[i + 1]
                       })
                       break
+                    case "{":
+                      _variables.push({
+                        _name: text[i + 1]
+                      })
+                      break
                   }
                   break
                 case "java":
@@ -452,7 +457,7 @@ module.exports = {
               const selected = (function () {
                 for (i = 0; i < childs.length; i++) {
                   if (childs[i].classList.contains('hover')) {
-                    return childs[i].innerText
+                    return `${childs[i].innerText} `
                   }
                 }
               })()

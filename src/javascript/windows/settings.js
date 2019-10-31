@@ -74,11 +74,11 @@ module.exports = {
               languageDiv.setAttribute("class", "language_div");
               languageDiv.setAttribute(
                 "onclick",
-                `loadLanguage('${lang.name}'); selectLang(this); graviton.saveConfiguration();`
+                `loadLanguage('${lang.name}'); selectionFromTo(this.parentElement,this); graviton.saveConfiguration();`
               );
               languageDiv.innerText = lang.name;
               if (lang.name === current_config.language.name) {
-                selectLang(languageDiv);
+                selectionFromTo(document.getElementById("language_list"),languageDiv);
               }
               document.getElementById("language_list").appendChild(languageDiv);
             });

@@ -62,7 +62,7 @@ module.exports = {
             );
             languageDiv.innerText = languages[i].name;
             if (languages[i].name === current_config.language.name) {
-              selectLang(languageDiv);
+              selectionFromTo(document.getElementById("language_list"),languageDiv);
             }
             document.getElementById("language_list").appendChild(languageDiv);
           }

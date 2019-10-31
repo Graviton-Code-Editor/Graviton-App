@@ -66,8 +66,10 @@ Please consider revising and updating your languages in case they are missing so
 * Marc Espín [Github](https://github.com/marc2332)
 
 #### Main Contributors:
-* Max1Truc [Github](https://github.com/Max1Truc)
 * David Niederweis [Github](https://github.com/DJN1)
+* LucasAlt [Github](https://github.com/LucasCtrl)
+* Max1Truc [Github](https://github.com/Max1Truc)
+
 
 #### Credits:
 * Miguel Ranger for first autocomplete version

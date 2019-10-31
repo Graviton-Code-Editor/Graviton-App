@@ -700,6 +700,7 @@ button.button3:active {
 .link {
   text-decoration: underline;
   pointer-events: auto !important;
+  cursor: pointer;
 }
 
 .link:hover {
@@ -1069,6 +1070,8 @@ gv-navpanel gv-navcontent gv-blocktitle {
   font-weight: bold;
   display: flex;
   align-content: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 gv-navpanel gv-navcontent gv-blockcontent {

@@ -41,7 +41,7 @@ module.exports = {
               _old_error = true;
               return call != undefined ? call() : "";
             }
-            const degit = require('degit');
+            const degit = require("degit");
             request(
               `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`,
               function(error, response, body2) {
@@ -54,20 +54,22 @@ module.exports = {
                 }
                 const config = JSON.parse(body2);
                 const emitter = degit(data.full_name);
-                emitter.on('info', info => {});
-                emitter.clone(
+                emitter.on("info", info => {});
+                emitter
+                  .clone(
                     path.join(
                       plugins_folder.replace(/\\/g, "\\\\"),
                       config.name
                     )
-                ).then(() => {
-                  me.load(config, function() {
-                    loaded++;
-                    if (loaded == default_plugins.length) {
-                      return call != undefined ? call() : "";
-                    }
+                  )
+                  .then(() => {
+                    me.load(config, function() {
+                      loaded++;
+                      if (loaded == default_plugins.length) {
+                        return call != undefined ? call() : "";
+                      }
+                    });
                   });
-                });
               }
             );
           });
@@ -214,32 +216,19 @@ module.exports = {
       } else {
         themes.push(config); //Push the theme to the array
         plugins_list.push(config);
-        const newLink = document.createElement("link");
-        newLink.setAttribute("rel", "stylesheet");
-        if (
-          config.type != "custom_theme" ||
-          config.highlight == "default" ||
-          config.highlight == "LightUI"
-        ) {
-          newLink.setAttribute(
+        const highlightLink = document.createElement("link");
+        highlightLink.setAttribute("rel", "stylesheet");
+        if (config.highlight == "default" || config.highlight == "LightUI") {
+          highlightLink.setAttribute(
             "href",
             path.join("src", "highlightings", config["highlight"] + ".css")
           ); //Link new themes
-        } else {
-          newLink.setAttribute(
-            "href",
-            path.join(
-              plugins_folder,
-              config["name"],
-              config["highlight"] + ".css"
-            )
-          ); //Link new themes
         }
-        document.body.appendChild(newLink);
+        document.body.appendChild(highlightLink);
         return call != undefined ? call() : "";
       }
     },
-    installDependencies: function(config,call) {
+    installDependencies: function(config, call) {
       /**
        * @desc Install NodeJS dependencies of the plugin
        * @param {object} config - Dependencies object of the plugin
@@ -256,7 +245,7 @@ module.exports = {
             npm.commands.install([depen], function(er, data) {
               if (er) return er;
               me.load(config);
-              if(call!=undefined) call();
+              if (call != undefined) call();
             });
           }
         }
@@ -281,15 +270,23 @@ module.exports = {
        */
       if (config.css == undefined || config.css.length == 0) return;
       for (b = 0; b < config.css.length; b++) {
-        const link = document.createElement("link");
-        link.setAttribute("rel", "stylesheet");
-        link.classList = config["name"] + "_css";
-        link.setAttribute(
+        const cssLink = document.createElement("link");
+        cssLink.setAttribute("rel", "stylesheet");
+        cssLink.classList = config["name"] + "_css";
+        cssLink.setAttribute(
           "href",
           path.join(plugins_folder, config["name"], config["css"][b])
         ),
-          document.body.appendChild(link);
+        document.body.appendChild(cssLink);
       }
+      const highLightLink = document.createElement("link");
+      highLightLink.setAttribute("rel", "stylesheet");
+      highLightLink.classList = config["name"] + "_highlight";
+      highLightLink.setAttribute(
+        "href",
+        path.join(plugins_folder, config["name"], config["highlight"] + ".css")
+      ); //Link new themes
+      document.body.appendChild(highLightLink);
     },
     installFromLocal: () => {
       dialog.showOpenDialog(

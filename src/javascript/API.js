@@ -9,9 +9,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 "use strict";
+
 const _os = require("os");
 const pty = require("node-pty");
 const path = require("path");
+
 let graviton = {};
 
 let menus_showing = true;
@@ -85,6 +87,7 @@ const context_menu_directory_options = {
     );
   },
   OpenInExplorer: function() {
+    const { shell } = require("electron")
     shell.openItem(
       document
         .getElementById(
@@ -311,7 +314,7 @@ graviton = {
     return editor_mode;
   },
   throwError: function(message) {
-    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c Graviton ERROR :: `, " color: red",message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})%c Graviton ERROR :: `, " color: red",message);
     new Notification({
       title: "Error ",
       content: message
@@ -344,6 +347,7 @@ graviton = {
     });
   },
   dialogChangelog: function() {
+    const marked = require("marked")
     fs.readFile(path.join(__dirname, "RELEASE_CHANGELOG.md"), "utf8", function(
       err,
       data
@@ -581,6 +585,7 @@ graviton = {
     );
   },
   resizeTerminals() {
+    const fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
     if (terminal != (null || undefined)) fit.fit(terminal.xterm);
   },
   toggleFullScreen() {
@@ -668,10 +673,10 @@ graviton = {
     }
   },
   consoleInfo(message) {
-    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c INFO::`, "color:#0066FF;", message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})%c INFO::`, "color:#0066FF;", message);
   },
   consoleWarn(message) {
-    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}) %c WARN::`, "color:#F6B149;", message);
+    console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})%c WARN::`, "color:#F6B149;", message);
   },
   getTemplate(name, code) {
     const result = `${code != undefined ? code : ""} ${templates[name]}`;

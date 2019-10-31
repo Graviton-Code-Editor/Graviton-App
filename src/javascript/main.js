@@ -12,26 +12,20 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191028",
+  date: "191031",
   version: "1.2.0",
   state: "Beta"
 }
-const { shell } = require("electron"),
-  fs = require("fs-extra"),
-  { dialog } = require("electron").remote,
+const fs = require("fs-extra"),
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,
-  app = require("electron").remote,
+  app = remote.remote,
   getAppDataPath = require("appdata-path"),
   { webFrame } = require("electron"),
-  g_window = require("electron").remote.getCurrentWindow(),
-  { systemPreferences } = require("electron").remote,
-  url = require("url"),
-  marked = require("marked"),
-  fit = require("./node_modules/xterm/lib/addons/fit/fit.js"),
+  g_window = remote.getCurrentWindow(),
+  { systemPreferences } = remote,
   CodeMirror = require("codemirror"),
   semver = require("semver"),
-  request = require("request"),
   tinycolor = require("tinycolor2"),
   EventEmitter = require("events")
 require(path.join(
@@ -49,6 +43,9 @@ const { elasticContainerComponent, elasticContainer } = require(path.join(
   "components",
   "elastic_container.js"
 ))
+
+window.customElements.define("elastic-container", elasticContainerComponent)
+
 graviton.loadEditor = require(path.join(
   __dirname,
   "src",
@@ -56,7 +53,6 @@ graviton.loadEditor = require(path.join(
   "api",
   "editors.js"
 )).loadEditor
-window.customElements.define("elastic-container", elasticContainerComponent)
 
 const { loadLanguage, getTranslation } = require(path.join(
     __dirname,
@@ -401,38 +397,17 @@ window.onload = function() {
           if (temporal_count == paths.length) {
             fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
               /* Load languages */
-              let path_count = paths.length
+              let path_count = 0
               paths.forEach((dir, index) => {
-                fs.readFile(
-                  path.join(__dirname, "languages", dir),
-                  "utf8",
-                  function(err, data) {
-                    if (err) throw err
-                    let _err_parsing = false
-                    try {
-                      JSON.parse(data)
-                    } catch {
-                      path_count--
-                      graviton.consoleWarn(
-                        "Couldn't parse the language: " + dir
-                      )
-                      _err_parsing = true
-                    }
-                    if (!_err_parsing) {
-                      languages.push(JSON.parse(data)) // Push the language
-                    }
-                    document.getElementById(
-                      "boot_loader"
-                    ).children[0].style.width = index * 6 + 30 + "%"
-                    if (languages.length === path_count) {
-                      graviton.loadControlButtons()
-                      loadConfig()
-                      graviton.consoleInfo("All templates have been loaded.")
-                      document.getElementById("boot_loader").children[0].style =
-                        "width: 100%; border-radius:100px;"
-                    }
-                  }
-                )
+                languages.push(require(path.join(__dirname, "languages", dir))) 
+                path_count++;
+                if (paths.length === path_count) {
+                  graviton.loadControlButtons()
+                  loadConfig()
+                  graviton.consoleInfo("All templates have been loaded.")
+                  if(document.getElementById("boot_loader") !== null) document.getElementById("boot_loader").children[0].style =
+                    "width: 100%; border-radius:100px;"
+                }
               })
             })
           }
@@ -481,6 +456,7 @@ const appendBinds = () => {
 }
 
 function saveFileAs() {
+  const { dialog } = remote
   dialog.showSaveDialog(g_window).then(result => {
     if(result.canceled) return;
     fs.writeFile(result.filePath, editor.getValue(), err => {
@@ -500,6 +476,7 @@ function saveFileAs() {
 }
 
 function openFile() {
+  const { dialog } = remote
   dialog.showOpenDialog(g_window,{
     properties: ['openFile','multiSelections']
   }).then(result => {
@@ -519,6 +496,7 @@ function openFile() {
 }
 
 function openFolder() {
+  const { dialog } = remote
   dialog.showOpenDialog(
     g_window,
     {
@@ -533,6 +511,7 @@ function openFolder() {
 }
 
 function saveFile() {
+  const { dialog } = remote
   if (graviton.getCurrentEditor() === null) return
   if (graviton.getCurrentEditor().editor === undefined) return
   fs.writeFile(filepath, editor.getValue(), err => {

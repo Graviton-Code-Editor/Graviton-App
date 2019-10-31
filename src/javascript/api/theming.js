@@ -112,7 +112,7 @@ module.exports = {
           })();
         }
         editors.forEach(current_editor => {
-          if (current_editor.editor !== undefined) {
+          if (current_editor.editor !== undefined && current_editor.editor !== null) {
             current_editor.editor.setOption("theme", themeObject["highlight"]);
           }
         });
