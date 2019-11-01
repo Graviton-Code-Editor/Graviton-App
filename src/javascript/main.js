@@ -9,13 +9,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-"use strict"
+"use strict";
 
 const GravitonInfo = {
-  date: "191031",
+  date: "191101",
   version: "1.2.0",
   state: "Beta"
-}
+};
 const fs = require("fs-extra"),
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,
@@ -27,14 +27,15 @@ const fs = require("fs-extra"),
   CodeMirror = require("codemirror"),
   semver = require("semver"),
   tinycolor = require("tinycolor2"),
-  EventEmitter = require("events")
+  EventEmitter = require("events");
+
 require(path.join(
   __dirname,
   "src",
   "javascript",
   "api",
   "codemirror-langs.js"
-)).langs() //Load CodeMirror files
+)).langs(); //Load CodeMirror files
 const { elasticContainerComponent, elasticContainer } = require(path.join(
   __dirname,
   "src",
@@ -42,9 +43,9 @@ const { elasticContainerComponent, elasticContainer } = require(path.join(
   "api",
   "components",
   "elastic_container.js"
-))
+));
 
-window.customElements.define("elastic-container", elasticContainerComponent)
+window.customElements.define("elastic-container", elasticContainerComponent);
 
 graviton.loadEditor = require(path.join(
   __dirname,
@@ -52,7 +53,7 @@ graviton.loadEditor = require(path.join(
   "javascript",
   "api",
   "editors.js"
-)).loadEditor
+)).loadEditor;
 
 const { loadLanguage, getTranslation } = require(path.join(
     __dirname,
@@ -81,14 +82,14 @@ const { loadLanguage, getTranslation } = require(path.join(
     "javascript",
     "api",
     "updater.js"
-  ))
+  ));
 graviton.setTheme = require(path.join(
   __dirname,
   "src",
   "javascript",
   "api",
   "theming.js"
-)).setTheme
+)).setTheme;
 
 const Settings = require(path.join(
     __dirname,
@@ -188,7 +189,7 @@ const Settings = require(path.join(
     "api",
     "components",
     "dropmenus.js"
-  )).Dropmenu
+  )).Dropmenu;
 let { icons } = require(path.join(
   __dirname,
   "src",
@@ -196,7 +197,7 @@ let { icons } = require(path.join(
   "api",
   "components",
   "icons.js"
-))
+));
 
 const { commander, commanders } = require(path.join(
   __dirname,
@@ -205,7 +206,7 @@ const { commander, commanders } = require(path.join(
   "api",
   "components",
   "commanders.js"
-))
+));
 const { Panel } = require(path.join(
   __dirname,
   "src",
@@ -213,7 +214,7 @@ const { Panel } = require(path.join(
   "api",
   "components",
   "panels.js"
-))
+));
 window.customElements.define(
   "gv-switch",
   require(path.join(
@@ -224,7 +225,7 @@ window.customElements.define(
     "components",
     "switch.js"
   ))
-)
+);
 window.customElements.define(
   "gv-navpanel",
   require(path.join(
@@ -235,14 +236,8 @@ window.customElements.define(
     "components",
     "gv_navbar.js"
   ))
-)
-require(path.join(
-  __dirname,
-  "src",
-  "javascript",
-  "npm",
-  "npm_panel.js"
-))
+);
+require(path.join(__dirname, "src", "javascript", "npm", "npm_panel.js"));
 window.customElements.define(
   "gv-process",
   require(path.join(
@@ -253,7 +248,7 @@ window.customElements.define(
     "components",
     "process_bar.js"
   ))
-)
+);
 
 let current_screen,
   dir_path,
@@ -306,276 +301,285 @@ let current_screen,
   plugins_dbs = [],
   anyDropON = null,
   full_plugins = [],
-  projectServices = []
+  projectServices = [];
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
   "Graviton-Code-Editor/Arctic"
-] //Plugins which are installed in the setup process
+]; //Plugins which are installed in the setup process
 
 if (graviton.isProduction()) {
-  DataFolderDir = path.join(getAppDataPath(), ".graviton")
+  DataFolderDir = path.join(getAppDataPath(), ".graviton");
 }
 
-if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir) // Create .graviton if it doesn't exist
+if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
 
 /* Set path for graviton's files and dirs */
 let logDir = path.join(DataFolderDir, "log.json"),
   configDir = path.join(DataFolderDir, "config.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
-  market_file = path.join(DataFolderDir, "market.json")
+  market_file = path.join(DataFolderDir, "market.json");
 
 document.addEventListener(
   "mousedown",
   function(event) {
-    if (event.which) mouseClicked = true
+    if (event.which) mouseClicked = true;
   },
   true
-)
+);
 
 document.addEventListener(
   "mouseup",
   function(event) {
-    if (event.which) mouseClicked = false
+    if (event.which) mouseClicked = false;
   },
   true
-)
+);
 
-document.addEventListener("graviton_loaded",()=>{
+document.addEventListener("graviton_loaded", () => {
   /**
    * @desc The resizer between the explorer panel and the editors
-  */
- const element =  document.getElementById("editor_resizer");
- element.addEventListener('mousedown', initialiseResize, false);
+   */
+  const element = document.getElementById("editor_resizer");
+  element.addEventListener("mousedown", initialiseResize, false);
 
- function initialiseResize(e) {
-   window.addEventListener('mousemove', startResizing, false);
-   window.addEventListener('mouseup', stopResizing, false);
- }
+  function initialiseResize(e) {
+    window.addEventListener("mousemove", startResizing, false);
+    window.addEventListener("mouseup", stopResizing, false);
+  }
 
- function startResizing(e) {
-     const explorer = document.getElementById("explorer_app")
-     const content_app = document.getElementById("content_app")
-     if (current_config.explorerPosition === "left") {
-       explorer.style = `width: ${e.clientX - 3}px`
-     } else {
-       explorer.style = `width: ${content_app.clientWidth - e.clientX}px`
-     }
-     for (i = 0; i < editors.length; i++) {
-       editors[i].object.blur()
-     }
-     graviton.resizeTerminals()
- }
- function stopResizing(e) {
-     window.removeEventListener('mousemove', startResizing, false);
-     window.removeEventListener('mouseup', stopResizing, false);
- }
-})
+  function startResizing(e) {
+    const explorer = document.getElementById("explorer_app");
+    const content_app = document.getElementById("content_app");
+    if (current_config.explorerPosition === "left") {
+      explorer.style = `width: ${e.clientX - 3}px`;
+    } else {
+      explorer.style = `width: ${content_app.clientWidth - e.clientX}px`;
+    }
+    for (i = 0; i < editors.length; i++) {
+      editors[i].object.blur();
+    }
+    graviton.resizeTerminals();
+  }
+  function stopResizing(e) {
+    window.removeEventListener("mousemove", startResizing, false);
+    window.removeEventListener("mouseup", stopResizing, false);
+  }
+});
 
 preload([
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
-])
+]);
 
-preloadFont(["editor", "terminal"])
+preloadFont(["editor", "terminal"]);
 
 window.onload = function() {
   fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
     /* Load UI templates */
-    let temporal_count = 0
+    let temporal_count = 0;
     paths.forEach((dir, index) => {
       fs.readFile(
         path.join(__dirname, "src", "templates", dir),
         "utf8",
         function(err, data) {
-          templates[path.basename(dir, ".js")] = data
-          temporal_count++
+          templates[path.basename(dir, ".js")] = data;
+          temporal_count++;
           document.getElementById("boot_loader").children[0].style.width =
-            temporal_count + 20 + "%"
+            temporal_count + 20 + "%";
           if (temporal_count == paths.length) {
             fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
               /* Load languages */
-              let path_count = 0
+              let path_count = 0;
               paths.forEach((dir, index) => {
-                languages.push(require(path.join(__dirname, "languages", dir))) 
+                languages.push(require(path.join(__dirname, "languages", dir)));
                 path_count++;
                 if (paths.length === path_count) {
-                  graviton.loadControlButtons()
-                  loadConfig()
-                  graviton.consoleInfo("All templates have been loaded.")
-                  if(document.getElementById("boot_loader") !== null) document.getElementById("boot_loader").children[0].style =
-                    "width: 100%; border-radius:100px;"
+                  graviton.loadControlButtons();
+                  loadConfig();
+                  graviton.consoleInfo("All templates have been loaded.");
+                  if (document.getElementById("boot_loader") !== null)
+                    document.getElementById("boot_loader").children[0].style =
+                      "width: 100%; border-radius:100px;";
                 }
-              })
-            })
+              });
+            });
           }
         }
-      )
-    })
-  })
-}
+      );
+    });
+  });
+};
 
-graviton.setTitle(`v${GravitonInfo.version}`) //Initial title
+graviton.setTitle(`v${GravitonInfo.version}`); //Initial title
 
 const appendBinds = () => {
   Mousetrap.bind("mod+s", function() {
-    saveFile()
-  })
+    saveFile();
+  });
   Mousetrap.bind("mod+n", function() {
-    screens.add()
-  })
+    screens.add();
+  });
   Mousetrap.bind("mod+l", function() {
-    screens.remove(current_screen.id)
-  })
+    screens.remove(current_screen.id);
+  });
   Mousetrap.bind("mod+e", function() {
-    graviton.toggleZenMode()
-  })
+    graviton.toggleZenMode();
+  });
   Mousetrap.bind("mod+t", function() {
     if (terminal != null) {
-      commanders.show(terminal.id)
-      return
+      commanders.show(terminal.id);
+      return;
     }
-    commanders.terminal()
-  })
+    commanders.terminal();
+  });
   Mousetrap.bind("mod+u", function() {
-    commanders.closeTerminal()
-  })
+    commanders.closeTerminal();
+  });
   Mousetrap.bind("mod+h", function() {
     if (terminal != null) {
-      commanders.hide(terminal.id)
+      commanders.hide(terminal.id);
     }
-  })
+  });
   Mousetrap.bind("f11", function() {
-    graviton.toggleFullScreen()
-  })
+    graviton.toggleFullScreen();
+  });
   Mousetrap.bind("mod+tab", function() {
-    graviton.toggleMenus()
-  })
-}
+    graviton.toggleMenus();
+  });
+};
 
 function saveFileAs() {
-  const { dialog } = remote
-  dialog.showSaveDialog(g_window).then(result => {
-    if(result.canceled) return;
-    fs.writeFile(result.filePath, editor.getValue(), err => {
-      if (err) {
-        alert(`An error ocurred creating the file ${err.message}`)
-        return
-      }
-      filepath = result.filePath
-      new Notification({
-        title: "Graviton",
-        content: `The file has been succesfully saved in ${result.filePath}`
-      })
+  const { dialog } = remote;
+  dialog
+    .showSaveDialog(g_window)
+    .then(result => {
+      if (result.canceled) return;
+      fs.writeFile(result.filePath, editor.getValue())
+        .then(() => {
+          filepath = result.filePath;
+          new Notification({
+            title: "Graviton",
+            content: `The file has been succesfully saved in ${result.filePath}`
+          });
+        })
+        .catch(err => {
+          if (err) {
+            alert(`An error ocurred creating the file ${err.message}`);
+            return;
+          }
+        });
     })
-  }).catch(err => {
-    console.log(err)
-  })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 function openFile() {
-  const { dialog } = remote
-  dialog.showOpenDialog(g_window,{
-    properties: ['openFile','multiSelections']
-  }).then(result => {
-    if(result.canceled) return;
-    result.filePaths.forEach((file)=>{
-      new Tab({
-        id: Math.random() +file.replace(/\\/g, "") + "B",
-        path: file,
-        name: file,
-        type: "file"
-      })
+  const { dialog } = remote;
+  dialog
+    .showOpenDialog(g_window, {
+      properties: ["openFile", "multiSelections"]
     })
-    
-  }).catch(err => {
-    console.log(err)
-  })
+    .then(result => {
+      if (result.canceled) return;
+      result.filePaths.forEach(file => {
+        new Tab({
+          id: Math.random() + file.replace(/\\/g, "") + "B",
+          path: file,
+          name: file,
+          type: "file"
+        });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
-
 function openFolder() {
-  const { dialog } = remote
-  dialog.showOpenDialog(
-    g_window,
-    {
-      properties: ['openDirectory']
-    }
-  ).then(result => {
-    if(result.canceled) return;
-    Explorer.load(result.filePaths[0], "g_directories", true)
-  }).catch(err => {
-    console.log(err)
-  })
+  const { dialog } = remote;
+  dialog
+    .showOpenDialog(g_window, {
+      properties: ["openDirectory"]
+    })
+    .then(result => {
+      if (result.canceled) return;
+      console.log("dsf");
+      Explorer.load(result.filePaths[0], "g_directories", true);
+    })
+    .catch(err => {
+      console.log(err);
+    });
 }
 
 function saveFile() {
-  const { dialog } = remote
-  if (graviton.getCurrentEditor() === null) return
-  if (graviton.getCurrentEditor().editor === undefined) return
-  fs.writeFile(filepath, editor.getValue(), err => {
-    if (err) return err
-    document.getElementById(editingTab).setAttribute("file_status", "saved")
-    document
-      .getElementById(editingTab)
-      .children[1].setAttribute(
-        "onclick",
-        document.getElementById(editingTab).children[1].getAttribute("onclose")
-      )
-    document.getElementById(editingTab).children[1].innerHTML = icons["close"]
-    const file_saved_event = new CustomEvent("file_saved", {
-      data: {
-        object: graviton.getCurrentEditor().object
-      }
+  const { dialog } = remote;
+  if (graviton.getCurrentEditor() === null) return;
+  if (graviton.getCurrentEditor().editor === undefined) return;
+  fs.writeFile(filepath, editor.getValue())
+    .then(() => {
+      document.getElementById(editingTab).setAttribute("file_status", "saved");
+      document
+        .getElementById(editingTab)
+        .children[1].setAttribute(
+          "onclick",
+          document
+            .getElementById(editingTab)
+            .children[1].getAttribute("onclose")
+        );
+      document.getElementById(editingTab).children[1].innerHTML =
+        icons["close"];
+      const file_saved_event = new CustomEvent("file_saved", {
+        data: {
+          object: graviton.getCurrentEditor().object
+        }
+      });
+      document.dispatchEvent(file_saved_event);
     })
-    document.dispatchEvent(file_saved_event)
-  })
+    .catch(err => {
+      console.err(err);
+    });
 }
 
 const create = {
   folder(id, value) {
-    const element = document.getElementById(id)
-    const dir = path.join(element.getAttribute("dir"), value)
+    const element = document.getElementById(id);
+    const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir)
+      fs.mkdirSync(dir);
       Explorer.load(
         element.getAttribute("dir"),
         element.id,
-        element.getAttribute("global"),
-        () => {
-          /* created folder */
-        }
-      )
+        element.getAttribute("global")
+      );
     } else {
       new Notification({
         title: "Graviton",
         content: getTranslation("ExplorerError2")
-      })
+      });
     }
   },
   file(id, value) {
-    const element = document.getElementById(id)
-    const dir = path.join(element.getAttribute("dir"), value)
+    const element = document.getElementById(id);
+    const dir = path.join(element.getAttribute("dir"), value);
     if (!fs.existsSync(dir)) {
       fs.writeFile(dir, "", function() {
         Explorer.load(
           element.getAttribute("dir"),
           element.id,
-          element.getAttribute("global"),
-          function() {
-            //callback
-          }
-        )
-      })
+          element.getAttribute("global")
+        );
+      });
     } else {
       new Notification({
         title: "Graviton",
         content: getTranslation("ExplorerError1")
-      })
+      });
     }
   }
-}
+};
 
 const directories = {
   newFolder(object) {
@@ -592,22 +596,22 @@ const directories = {
               document.getElementById("rename_dialog").value === ""
                 ? "New folder"
                 : document.getElementById("rename_dialog").value
-            )
+            );
           },
           important: true
         }
       }
-    })
+    });
     document
       .getElementById("rename_dialog")
       .addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
-          event.preventDefault()
-          create.folder(object, this.value === "" ? "New folder" : this.value)
-          closeDialog("new_folder")
+          event.preventDefault();
+          create.folder(object, this.value === "" ? "New folder" : this.value);
+          closeDialog("new_folder");
         }
-      })
-    document.getElementById("rename_dialog").focus()
+      });
+    document.getElementById("rename_dialog").focus();
   },
   newFile(object) {
     new Dialog({
@@ -623,22 +627,22 @@ const directories = {
               document.getElementById("rename_dialog").value === ""
                 ? "NewFile.txt"
                 : document.getElementById("rename_dialog").value
-            )
+            );
           },
           important: true
         }
       }
-    })
+    });
     document
       .getElementById("rename_dialog")
       .addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
-          event.preventDefault()
-          create.file(object, this.value === "" ? "NewFile.txt" : this.value)
-          closeDialog("new_file")
+          event.preventDefault();
+          create.file(object, this.value === "" ? "NewFile.txt" : this.value);
+          closeDialog("new_file");
         }
-      })
-    document.getElementById("rename_dialog").focus()
+      });
+    document.getElementById("rename_dialog").focus();
   },
   removeFileDialog(object) {
     new Dialog({
@@ -649,11 +653,11 @@ const directories = {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
-            directories.removeFile(object.id)
+            directories.removeFile(object.id);
           }
         }
       }
-    })
+    });
   },
   removeFolderDialog(object) {
     new Dialog({
@@ -664,24 +668,24 @@ const directories = {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
-            directories.removeFolder(object.id)
+            directories.removeFolder(object.id);
           }
         }
       }
-    })
+    });
   },
   removeFile(id) {
-    const object = document.getElementById(id)
+    const object = document.getElementById(id);
     fs.unlink(object.getAttribute("dir"), function(err) {
-      if (err) graviton.throwError(err)
-      object.remove()
-    })
+      if (err) graviton.throwError(err);
+      object.remove();
+    });
   },
   removeFolder(id) {
-    const rimraf = require("rimraf")
-    const object = document.getElementById(id)
-    rimraf.sync(object.getAttribute("dir"))
-    object.remove()
+    const rimraf = require("rimraf");
+    const object = document.getElementById(id);
+    rimraf.sync(object.getAttribute("dir"));
+    object.remove();
   },
   getCustomIcon(dir, state) {
     if (
@@ -693,67 +697,67 @@ const directories = {
     ) {
       switch (dir) {
         case "node_modules":
-          return "src/icons/custom_icons/node_modules.svg"
-          break
+          return "src/icons/custom_icons/node_modules.svg";
+          break;
         case ".git":
-          return "src/icons/custom_icons/git.svg"
-          break
+          return "src/icons/custom_icons/git.svg";
+          break;
         default:
           if (state == "close") {
-            return "src/icons/folder_closed.svg"
+            return "src/icons/folder_closed.svg";
           } else {
-            return "src/icons/folder_opened.svg"
+            return "src/icons/folder_opened.svg";
           }
       }
     } else {
       switch (dir) {
         case "node_modules":
-          return path.join(themeObject.name, themeObject.icons["node_modules"])
-          break
+          return path.join(themeObject.name, themeObject.icons["node_modules"]);
+          break;
         case ".git":
-          return path.join(themeObject.name, themeObject.icons["git"])
-          break
+          return path.join(themeObject.name, themeObject.icons["git"]);
+          break;
         default:
           if (state == "close") {
             return path.join(
               themeObject.name,
               themeObject.icons["folder_closed"]
-            )
+            );
           } else {
             return path.join(
               themeObject.name,
               themeObject.icons["folder_opened"]
-            )
+            );
           }
       }
     }
   }
-}
+};
 
 const registerNewProject = function(dir) {
   // Add a new directory to the history if it is the first time it has been opened in the editor
   for (i = 0; i < log.length + 1; i++) {
     if (i != log.length) {
       if (log[i].Path == dir) {
-        return
+        return;
       }
     } else if (i == log.length) {
       log.unshift({
         Name: path.basename(dir),
         Path: dir
-      })
+      });
       const recent_project_event = new CustomEvent("new_recent_project", {
         detail: {
           name: path.basename(dir),
           path: dir
         }
-      })
-      document.dispatchEvent(recent_project_event)
-      fs.writeFile(logDir, JSON.stringify(log))
-      return
+      });
+      document.dispatchEvent(recent_project_event);
+      fs.writeFile(logDir, JSON.stringify(log));
+      return;
     }
   }
-}
+};
 
 const createNewProject = function(template) {
   dialog.showOpenDialog(
@@ -767,123 +771,122 @@ const createNewProject = function(template) {
             const g_project_dir = path.join(
               selectedFiles[0],
               ".GravitonProject " + Date.now()
-            )
-            fs.mkdirSync(g_project_dir)
+            );
+            fs.mkdirSync(g_project_dir);
             fs.writeFile(
               path.join(g_project_dir, "index.html"),
               graviton.getTemplate("html_project"),
               err => {
                 if (err) {
-                  return err
+                  return err;
                 }
-                Explorer.load(g_project_dir, "g_directories", true)
+                Explorer.load(g_project_dir, "g_directories", true);
               }
-            )
-            break
+            );
+            break;
         }
       }
     }
-  )
-}
-
+  );
+};
 
 const installCli = function() {
-  const npm = require("npm")
+  const npm = require("npm");
   npm.load(
     {
       global: true
     },
     function(er) {
-      if (er) return er
+      if (er) return er;
       npm.commands.install(["graviton-cli"], function(er, data) {
-        if (er) return er
-        console.log("Graviton CLI has been installed!")
-      })
+        if (er) return er;
+        console.log("Graviton CLI has been installed!");
+      });
     }
-  )
-}
+  );
+};
 
 window.onclick = function(event) {
   if (
     !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
   ) {
-    graviton.closeDropmenus()
+    graviton.closeDropmenus();
   }
   if (!event.target.matches(".option")) {
-    document.getElementById("context").parentElement.style = "display:none"
+    document.getElementById("context").parentElement.style = "display:none";
   }
   if (!event.target.matches("#context_menu")) {
     if (document.getElementById("context_menu") != undefined) {
-      document.getElementById("context_menu").remove()
+      document.getElementById("context_menu").remove();
     }
   }
-}
+};
 graviton.refreshCustomization = () => {
   document.documentElement.style.setProperty(
     "--editor-font-size",
     `${current_config.fontSizeEditor}px`
-  ) // Update settings from start
-  webFrame.setZoomFactor(current_config.appZoom / 25)
+  ); // Update settings from start
+  webFrame.setZoomFactor(current_config.appZoom / 25);
   if (current_config.blurPreferences != 0) {
     document.documentElement.style.setProperty(
       "--blur",
       `${current_config.blurPreferences}px`
-    )
+    );
   } else {
-    document.documentElement.style.setProperty("--blur", `none`)
+    document.documentElement.style.setProperty("--blur", `none`);
   }
-}
+};
 
-const selectionFromTo = (parent,toSelect) => {
+const selectionFromTo = (parent, toSelect) => {
   const children = parent.children;
-  for( let child of children){
+  for (let child of children) {
     child.classList.remove("active");
   }
   toSelect.classList.add("active");
-}
+};
 
 /**
  * @desc Language  indicator and Line/Char counter Controls
  */
 document.addEventListener("screen_loaded", e => {
-  const screen = e.detail.screen
+  const screen = e.detail.screen;
   function refreshStats(id = current_screen.id) {
-    if (id != screen) return
-    langController.setText(graviton.getLanguage())
-    langController.setHint(`Current: ${graviton.getLanguage()}`)
+    if (id != screen) return;
+    langController.setText(graviton.getLanguage());
+    langController.setHint(`Current: ${graviton.getLanguage()}`);
     if (editor == undefined) {
-      counter.hide()
-      return
+      counter.hide();
+      return;
     }
     if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
-      langController.hide()
+      langController.hide();
     }
-    counter.show()
-    langController.show()
+    counter.show();
+    langController.show();
     counter.setText(
       editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
-    )
+    );
     counter.setHint(
       `Line ${editor.getCursor().line + 1} , Char ${Number(
         editor.getCursor().ch + 1
       )}`
-    )
+    );
     editor.on("cursorActivity", function(a) {
       counter.setText(
         editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
-      )
+      );
       counter.setHint(
         `Line ${editor.getCursor().line + 1} , Char ${Number(
           editor.getCursor().ch + 1
         )}`
-      )
-      counter.show()
-    })
+      );
+      counter.show();
+    });
   }
   let langController = new Control({
     text: graviton.getLanguage(),
     hint: `Current: ${graviton.getLanguage()}`
-  })
+  });
   if (editor != undefined) {
     var counter = new Control({
       text:
@@ -891,37 +894,37 @@ document.addEventListener("screen_loaded", e => {
       hint: `Line ${editor.getCursor().line + 1} , Char ${Number(
         editor.getCursor().ch + 1
       )}`
-    })
-    refreshStats()
+    });
+    refreshStats();
   } else {
     var counter = new Control({
       text: ""
-    })
-    counter.hide()
-    refreshStats()
+    });
+    counter.hide();
+    refreshStats();
   }
   document.addEventListener("tab_loaded", e => {
-    refreshStats(e.detail.screen)
-  })
+    refreshStats(e.detail.screen);
+  });
   document.addEventListener("tab_closed", e => {
-    refreshStats(e.detail.screen)
-  })
+    refreshStats(e.detail.screen);
+  });
   document.addEventListener("tab_created", () => {
-    refreshStats()
-  })
-})
+    refreshStats();
+  });
+});
 
 projectServices.push({
   name: "HTML",
   description: "Basic HTML project",
   onclick: () => createNewProject("html")
-})
+});
 
 const EXPLORER_PANEL = new Panel({
-  minHeight:"",
-  content:`
+  minHeight: "",
+  content: `
   <div style="height:100%;">
       <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
       </div>
   `
-})
+});
