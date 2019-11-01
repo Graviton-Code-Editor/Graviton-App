@@ -130,10 +130,10 @@ module.exports = {
       const html_simulation = document.createElement("div");
       html_simulation.innerHTML = templates.settings_sidemenu;
       html_simulation.children[0].children[0].innerHTML += `
-      <menu-button href="${name}" >${name}</menu-button>
+      <gv-navbutton href="${name}" >${name}</gv-navbutton>
       `;
       html_simulation.children[0].children[1].innerHTML += `
-      <side-page id="settings.${name}" href="${name}">${content}</side-page>
+      <gv-navpage id="settings.${name}" href="${name}">${content}</gv-navpage>
       `;
       templates.settings_sidemenu = html_simulation.innerHTML;
       const eventEmitter = new EventEmitter();
