@@ -37,12 +37,12 @@ module.exports = {
                 `graviton.setTheme('${theme.name}'); selectionFromTo(this.parentElement,this); graviton.saveConfiguration();`
               );
               themeDiv.innerHTML = `
-                <p style="margin:0px 0; font-size:17px;">${theme.name}</p>
+                <p style="margin:0px 0; font-size:17px;">${sanitize(theme.name)}</p>
                   <p style="font-size:14px; margin:12px 0px;">${getTranslation(
                     "MadeBy"
-                  ) + theme.author}</p>
+                  ) + sanitize(theme.author)}</p>
                   <p style="font-size:13px; margin:12px 0px;">${
-                    theme.description
+                    sanitize(theme.description)
                   }</p>
                   <div class="accent" style="background:${
                     theme.colors["accentColor"]

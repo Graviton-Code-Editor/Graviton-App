@@ -43,6 +43,7 @@
     "codemirror": "^5.49.2",
     "degit": "^2.1.4",
     "fs-extra": "^8.1.0",
+    "light-sanitize-html": "^1.0.2",
     "marked": "^0.7.0",
     "mousetrap": "^1.6.3",
     "node-fetch": "^2.6.0",

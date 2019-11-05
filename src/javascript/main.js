@@ -17,6 +17,7 @@ const GravitonInfo = {
   state: "Beta"
 };
 const fs = require("fs-extra"),
+  {shell} = require("electron").remote,
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,
   app = remote.remote,
@@ -27,7 +28,9 @@ const fs = require("fs-extra"),
   CodeMirror = require("codemirror"),
   semver = require("semver"),
   tinycolor = require("tinycolor2"),
-  EventEmitter = require("events");
+  EventEmitter = require("events"),
+  sanitize = require('light-sanitize-html');
+  
 
 require(path.join(
   __dirname,
