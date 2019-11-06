@@ -1,9 +1,11 @@
 ## 🔝 Important
 
+* Reduced installer weight and installation x5 times
+* Git integration !! (via GitPlus plugin)
+* New plugins
 * Welcome redesign
 * Settings redesign
 * Market redesign
-* Reduced installer weight and installation x5 times
 * Code folding on editor
 
 ## ✔ New
@@ -18,12 +20,14 @@
 
 ## 😁 Bug fixes
 
+* Could pass HTML tags in the plugins package.json's keywords
 * Plugin update detector
 * Couldn't force to close an unsaved tab
 
 ## 🤓 Developers
 
 * Updated Electron to v7
-* New Graviton component called Control 
 * New events
-* New Web Component (gv-navpanel)
+* New components 
+    * gv-navpanel (Web component)
+    * Control (Javascript)

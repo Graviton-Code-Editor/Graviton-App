@@ -1,4 +1,10 @@
 
+
+
+/**
+ * @desc Load NPM scripts panel when a NodeJS project is loaded
+*/
+
 "use strict"
 
 document.addEventListener("loaded_project", function() {
@@ -6,12 +12,11 @@ document.addEventListener("loaded_project", function() {
     if (result.env === "node") {
       if(Object.keys(result.scripts).length == 0) return;
       const npm_panel = new Panel({
-        maxHeight: "",
         content: `
-            <gv-panel id="npm_scripts_panel">
-                <gv-paneltitle>NPM Scripts</gv-paneltitle>
-            </gv-panel>
-            `
+          <gv-panel id="npm_scripts_panel">
+              <gv-paneltitle>NPM Scripts</gv-paneltitle>
+          </gv-panel>
+          `
       });
       for (const script in result.scripts) {
         const button = document.createElement("button");

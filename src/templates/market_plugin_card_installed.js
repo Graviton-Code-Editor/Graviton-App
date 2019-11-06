@@ -21,8 +21,8 @@
     }
   })()}
       <div class=text>
-         <h3>${plugin.local.name} </h3>
-         <p class=description>${plugin.local.description} </p>
+         <h3>${sanitize(plugin.local.name)} </h3>
+         <p class=description>${sanitize(plugin.local.description)} </p>
       </div>
    </div>
    <p class=installed>v${plugin.local.version}${plugin.repo != undefined ? ` ${plugin.repo.git.stargazers_count != undefined ? `· ${plugin.repo.git.stargazers_count} ${icons.star}` : ''}` : ''} </p>

@@ -66,9 +66,12 @@
                     <button onclick="Market.updateExtension('${name}')" id=${Math.random() + 'update'} class=button1>${getTranslation('Update')}</button>
                   `
                 }
-                button_content += ` ${(function () { if (plugin.local.colors != undefined) { return ` <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>` } else { return '' } })()}
-                      <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button> 
+                if (plugin.local.colors != undefined) {
+                  button_content += `
+                  <button class=button1 onclick="graviton.setTheme('${name}'); saveConfig();">Select</button>
                 `
+                }
+                button_content += ` <button onclick="Market.uninstallExtension('${name}')" id=${Math.random() + 'uninstall'} class=button1>${getTranslation('Uninstall')}</button>`
                 return button_content;
               } else {
                 return `<button onclick="Market.installExtension('${name}')" id=${Math.random() +

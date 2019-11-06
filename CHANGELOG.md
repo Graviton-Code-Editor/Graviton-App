@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191106 - 1 [1.2.0]
+- Fixed: Sanitizing posible HTML code on plugins package.json's keywords
+
 ### 191031 - 1 [1.2.0]
 - Replaced requestJS for node-fetch
 - Only load required dependencies on start

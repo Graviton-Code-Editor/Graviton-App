@@ -46,8 +46,8 @@
   })()}
       
       <div class=text>
-         <h3>${data.name} </h3>
-         <p class=description>${data.description} </p>
+         <h3>${sanitize(data.name)} </h3>
+         <p class=description>${sanitize(data.description)} </p>
       </div>
    </div>
    <p class=installed>${plugin.local != undefined ? ` ${getTranslation('Installed')} · v${plugin.local.version} ·` : ` v${plugin.repo.package.version} · `}    ${data.stargazers_count} ${icons.star} </p>
