@@ -41,7 +41,7 @@ module.exports = {
                   <p style="font-size:14px; margin:12px 0px;">${getTranslation(
                     "MadeBy"
                   ) + sanitize(theme.author)}</p>
-                  <p style="font-size:13px; margin:12px 0px;">${
+                  <p style="font-size:13px; margin:12px 0px; min-height:20px;">${
                     sanitize(theme.description)
                   }</p>
                   <div class="accent" style="background:${

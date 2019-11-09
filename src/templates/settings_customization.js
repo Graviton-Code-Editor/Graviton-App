@@ -76,6 +76,12 @@
         <span class="radio_dot"></span>
       </label>
       </div>
+      <div class="section-1 inline">
+        <gv-switch onclick="graviton.toggleNPMPanel(); saveConfig();" class="${
+          current_config.npm_panel?"activated":"desactivated"
+        }"></gv-switch>
+        <h5>${getTranslation("NPMPanel")}</h5>
+      </div>
     </gv-blockcontent>
       
  `;

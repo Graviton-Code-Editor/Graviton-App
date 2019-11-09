@@ -20,10 +20,11 @@ module.exports = {
         }
         current_config["theme"] = themes[i].name;
         if (themes[i].type === "custom_theme") {
-          Plugins.enableCSS(themes[i]);
+         
           themes[i].colors;
           themeObject = themes[i];
         }
+        Plugins.enableCSS(themes[i]);
         themeObject = themes[i];
         const colors = themes[i]["colors"]; //Take the colors object inside the json file of the selected theme
         for (i = 0; i < Object.keys(colors).length; i++) {

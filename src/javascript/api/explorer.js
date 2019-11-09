@@ -148,7 +148,7 @@ module.exports = {
                  ${paths[i]}
                  </p>
                </div>
-               <div myPadding="${paddingListDir}" style="padding-top:25px;" dir="${_long_path}"></div>
+               <div myPadding="${paddingListDir}" style="padding-top:25px" dir="${_long_path}"></div>
              </div>`;
             working_folder.appendChild(directory_temp);
           }

@@ -29,7 +29,8 @@ let current_config = {
   blurPreferences: "3",
   bouncePreferences: "activated",
   version: undefined,
-  explorerPosition: "left"
+  explorerPosition: "left",
+  npm_panel: true
 };
 
 if (!fs.existsSync(logDir)) {
@@ -111,7 +112,8 @@ graviton.saveConfiguration = () => {
       bouncePreferences: current_config.bouncePreferences,
       explorerPosition: current_config.explorerPosition,
       version: GravitonInfo.version,
-      build: GravitonInfo.date
+      build: GravitonInfo.date,
+      npm_panel: current_config.npm_panel
     },null,3),
     err => {
       if (err) graviton.throwError("Couldn't save the configuration file.");

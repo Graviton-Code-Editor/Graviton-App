@@ -738,8 +738,17 @@ graviton = {
         
       }
     });
+  },
+  panels : [],
+  toggleNPMPanel:()=>{
     
-  } 
+    if(current_config.npm_panel){
+      graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0].close()
+    }else{
+      graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0].open()
+    }
+    current_config.npm_panel = !current_config.npm_panel
+  }
 };
 
 function floatingWindow([xSize, ySize], content) {

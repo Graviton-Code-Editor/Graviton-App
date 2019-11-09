@@ -12,11 +12,13 @@ document.addEventListener("loaded_project", function() {
     if (result.env === "node") {
       if(Object.keys(result.scripts).length == 0) return;
       const npm_panel = new Panel({
+        id:"npm_panel",
         content: `
           <gv-panel id="npm_scripts_panel">
               <gv-paneltitle>NPM Scripts</gv-paneltitle>
           </gv-panel>
-          `
+          `,
+        visible:current_config.npm_panel
       });
       for (const script in result.scripts) {
         const button = document.createElement("button");

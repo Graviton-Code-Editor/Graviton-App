@@ -141,11 +141,20 @@ module.exports = {
             hint: 'Ctrl+T'
           },
           hideTerminal: {
-            click: () => commanders.hide(terminal.id),
+            click: () => {
+              if (terminal != null) {
+                commanders.hide(terminal.id)}
+                return
+              },
             hint: 'Ctrl+H'
           },
           closeTerminal: {
-            click: () => commanders.closeTerminal(),
+            click: () => {
+              if (terminal != null) {
+                commanders.closeTerminal()
+                return
+              }
+            },
             icon: 'close_terminal',
             hint: 'Ctrl+U'
           }

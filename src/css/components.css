@@ -875,6 +875,8 @@ textarea {
   position: relative;
   padding-left: 35px;
   margin-bottom: 12px;
+  margin-left: 10px;
+  font-size: 14px;
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;

@@ -3,16 +3,38 @@ module.exports = {
     id = Math.random(),
     content = "",
     minHeight = "",
-    maxHeight = ""
+    maxHeight = "",
+    visible = true
   }) {
     this.panelObject = document.createElement("div");
     this.panelObject.classList = "explorer_panel";
     this.panelObject.style.minHeight = minHeight;
     this.panelObject.style.maxHeight = maxHeight;
+    this.panelObject.style.display = visible?"block":"none";
     this.panelObject.id = id;
     this.panelObject.innerHTML = content;
     const me = this;
+    this.open = () => {
+      me.panelObject = document.getElementById(id);
+      for (i = 0; i < me.panelObject.parentElement.children.length; i++) {
+        if (me.panelObject.parentElement.children[i].id == me.panelObject.id) {
+          me.panelObject.parentElement.children[i - 1].style.display = "block";
+          me.panelObject.style.display = "block";
+          return;
+        }
+      }
+    };
     this.close = () => {
+      me.panelObject = document.getElementById(id);
+      for (i = 0; i < me.panelObject.parentElement.children.length; i++) {
+        if (me.panelObject.parentElement.children[i].id == me.panelObject.id) {
+          me.panelObject.parentElement.children[i - 1].style.display = "none";
+          me.panelObject.style.display = "none";
+          return;
+        }
+      }
+    };
+    this.destroy = () => {
       me.panelObject = document.getElementById(id);
       for (i = 0; i < me.panelObject.parentElement.children.length; i++) {
         if (me.panelObject.parentElement.children[i].id == me.panelObject.id) {
@@ -60,5 +82,6 @@ module.exports = {
       };
     }
     this.panelObject = document.getElementById(id);
+    graviton.panels.push(this)
   }
 };

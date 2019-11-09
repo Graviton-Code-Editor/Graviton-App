@@ -216,15 +216,6 @@ module.exports = {
       } else {
         themes.push(config); //Push the theme to the array
         plugins_list.push(config);
-        const highlightLink = document.createElement("link");
-        highlightLink.setAttribute("rel", "stylesheet");
-        if (config.highlight == "default" || config.highlight == "LightUI") {
-          highlightLink.setAttribute(
-            "href",
-            path.join("src", "highlightings", config["highlight"] + ".css")
-          ); //Link new themes
-        }
-        document.body.appendChild(highlightLink);
         return call != undefined ? call() : "";
       }
     },
@@ -268,24 +259,27 @@ module.exports = {
        * @desc Enable plugin's CSS
        * @param {object} config - Package.json's of the plugin
        */
-      if (config.css == undefined || config.css.length == 0) return;
-      for (b = 0; b < config.css.length; b++) {
-        const cssLink = document.createElement("link");
-        cssLink.setAttribute("rel", "stylesheet");
-        cssLink.classList = config["name"] + "_css";
-        cssLink.setAttribute(
-          "href",
-          path.join(plugins_folder, config["name"], config["css"][b])
-        ),
-        document.body.appendChild(cssLink);
+      if(config.css !=undefined) {
+        for (b = 0; b < config.css.length; b++) {
+          const cssLink = document.createElement("link");
+          cssLink.setAttribute("rel", "stylesheet");
+          cssLink.classList = config["name"] + "_css";
+          cssLink.setAttribute(
+            "href",
+            path.join(plugins_folder, config["name"], config["css"][b])
+          ),
+          document.body.appendChild(cssLink);
+        }
       }
       const highLightLink = document.createElement("link");
       highLightLink.setAttribute("rel", "stylesheet");
       highLightLink.classList = config["name"] + "_highlight";
-      highLightLink.setAttribute(
-        "href",
-        path.join(plugins_folder, config["name"], config["highlight"] + ".css")
-      ); //Link new themes
+      const highlightLink = document.createElement("link");
+      if (config.highlight == "default" || config.highlight == "LightUI") {
+        highLightLink.href = path.join("src", "highlightings", config["highlight"] + ".css")
+      }else{
+        highLightLink.href = path.join(plugins_folder, config["name"], config["highlight"] + ".css")
+      }
       document.body.appendChild(highLightLink);
     },
     installFromLocal: () => {

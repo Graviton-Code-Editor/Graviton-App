@@ -68,6 +68,10 @@ head {
 	text-rendering: optimizeLegibility !important;
 	-webkit-font-smoothing: subpixel-antialiased !important;
 }
+*, :after,:before {
+	-webkit-box-sizing:default !important;
+	box-sizing:default !important;
+}
 
 .CodeMirror {
 	z-index: 0;
