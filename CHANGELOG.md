@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191112 - 1 [1.2.0]
+- Explorer panels are now hidden by default
+- Added an inner shadow on loader bars
+
 ### 191106 - 1 [1.2.0]
 - Fixed: Sanitizing posible HTML code on plugins package.json's keywords
 

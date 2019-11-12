@@ -157,6 +157,7 @@
     "Process.InstallingDependencies":"Installing dependencies...",
     "Process.Completed":"Completed!",
     "Hide":"Hide",
-    "Show":"Show"
+    "Show":"Show",
+    "NPMPanel":"NPM Panel"
   }
 }

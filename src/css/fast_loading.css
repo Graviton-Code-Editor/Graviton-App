@@ -69,7 +69,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	border-radius: 100px;
 	box-sizing: border-box;
 	border-top-right-radius: 0px;
-	border-bottom-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-shadow: inset 0px 1px 4px rgba(0,0,0,0.22);
 }
 .loading_bar > .bg {
 	background: var(--widget-color);
