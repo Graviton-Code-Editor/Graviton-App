@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191107",
+  date: "191118",
   version: "1.2.0",
   state: "Beta"
 };
@@ -509,11 +509,10 @@ function openFolder() {
     })
     .then(result => {
       if (result.canceled) return;
-      console.log("dsf");
       Explorer.load(result.filePaths[0], "g_directories", true);
     })
     .catch(err => {
-      console.log(err);
+      console.error(err);
     });
 }
 

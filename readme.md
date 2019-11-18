@@ -16,10 +16,10 @@
 
 ✨ Highlights:
 ---
-
+* 🧬 Git support (plugin)
 * 💅 Minimal UI
 * 🎨 Themes 
-* 📦 Plugins 
+* 📦 Plugins
 * 🖇  Infinite splitted screens 
 * 🕹  Built-in terminal 
 * 🗺 Built-in image previewer
@@ -51,6 +51,8 @@ Some ways to contribute to Graviton's project:
 
 - Translating to new language or improving the existing
 - Revise the commits
+- Adding new features to the source
+- Making plugins
 - Opening issues or help on answering them
 - Request features
 - Revise documentation
@@ -94,7 +96,6 @@ Please consider revising and updating your languages in case they are missing so
 - [Machou](http://GitHub.com/Machou)
 - Cristina Piva
 
-
 Thank you for the donations!
 
 And all people who helped me :)
@@ -126,14 +127,13 @@ Do you want to build Graviton from source?
 
 😓 Known problems 
 ---
-- May not open on some Linux systems
-- Terminal might not work very well (Windows)
+- May not work on all Linux distributions
 
 🧾License 
 ---
 MIT License
 
-Copyright (c) Marc Espin Sanz
+Copyright (c) Marc Espín Sanz
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

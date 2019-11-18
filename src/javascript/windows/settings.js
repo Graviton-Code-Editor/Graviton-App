@@ -25,42 +25,23 @@ module.exports = {
     navigate: function(num) {
       switch (num) {
         case "customization":
-          document.getElementById(
-            "settings.customization"
-          ).innerHTML = graviton.getTemplate("settings_customization");
-          if (document.getElementById("theme_list") != null) {
-            themes.forEach(theme => {
-              const themeDiv = document.createElement("div");
-              themeDiv.setAttribute("class", "theme_div");
-              themeDiv.setAttribute(
-                "onclick",
-                `graviton.setTheme('${theme.name}'); selectionFromTo(this.parentElement,this); graviton.saveConfiguration();`
-              );
-              themeDiv.innerHTML = `
-                <p style="margin:0px 0; font-size:17px;">${sanitize(theme.name)}</p>
-                  <p style="font-size:14px; margin:12px 0px;">${getTranslation(
-                    "MadeBy"
-                  ) + sanitize(theme.author)}</p>
-                  <p style="font-size:13px; margin:12px 0px; min-height:20px;">${
-                    sanitize(theme.description)
-                  }</p>
-                  <div class="accent" style="background:${
-                    theme.colors["accentColor"]
-                      };"></div>
-              `;
-              if (theme.name === current_config.theme) {
-                selectionFromTo(document.getElementById("theme_list"), themeDiv);
-              }
-              document.getElementById("theme_list").appendChild(themeDiv);
-              elasticContainer.append(
-                document.getElementById("theme_list"),
-                "horizontal"
-              );
-            });
+          document.getElementById("settings.customization").innerHTML = "";
+          const {puffin } = require("@mkenzo_8/puffin")
+          const ThemeCard = require("../components/theme_card.js")
+          const customizationSection = puffin.element(graviton.getTemplate("settings_customization"),{
+            components:{
+              ThemeCard
+            },
+            methods:[]
+          })
+          puffin.render(customizationSection,document.getElementById("settings.customization"))
+          if (document.getElementById("theme_list") != null) { 
             if (themes.length == 0) {
               document.getElementById("theme_list").innerHTML = `
               <span style="font-size:14px">No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');Market.open(function(){Market.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
               `;
+            }else{
+              selectionFromTo(document.getElementById("theme_list"),document.getElementById("theme_card_"+themeObject.name))
             }
           }
           break;

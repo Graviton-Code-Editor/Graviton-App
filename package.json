@@ -4,6 +4,15 @@
   "description": "Graviton is a simple code editor.",
   "main": "main.js",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
+  "author": "Marc Espín Sanz <mespinsanz@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "Graviton",
+    "Editor",
+    "code",
+    "open source",
+    "modern"
+  ],
   "scripts": {
     "start": "electron . Graviton",
     "start:no.sandbox": "electron . Graviton --no-sandbox",
@@ -29,16 +38,8 @@
       "/languages"
     ]
   },
-  "keywords": [
-    "Graviton",
-    "Editor",
-    "code",
-    "open source",
-    "modern"
-  ],
-  "author": "Marc Espin Sanz <mespinsanz@gmail.com>",
-  "license": "MIT",
   "dependencies": {
+    "@mkenzo_8/puffin": "0.0.16",
     "appdata-path": "^1.0.0",
     "codemirror": "^5.49.2",
     "degit": "^2.1.4",
@@ -48,7 +49,7 @@
     "mousetrap": "^1.6.3",
     "node-fetch": "^2.6.0",
     "node-pty": "^0.9.0",
-    "npm": "^6.12.0",
+    "npm": "^6.13.0",
     "octonode": "^0.9.5",
     "rimraf": "^2.6.3",
     "semver": "^6.3.0",

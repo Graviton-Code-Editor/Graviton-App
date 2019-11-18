@@ -1,5 +1,5 @@
-/*
- * Basic testing
+/**
+ * @desc Basic testing
  */
 
 const Application = require('spectron').Application

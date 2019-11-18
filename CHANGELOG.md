@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191114 - 1 [1.2.0]
+- Started using PuffinJS for UI components
+
 ### 191112 - 1 [1.2.0]
 - Explorer panels are now hidden by default
 - Added an inner shadow on loader bars

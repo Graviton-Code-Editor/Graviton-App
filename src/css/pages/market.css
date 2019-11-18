@@ -60,7 +60,7 @@
   line-height: 12px;
   font-size: 15px;
 }
-.extension_div .description {
+.extension_div .text p {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -103,22 +103,22 @@
   margin-top: 5px;
 }
 
-
+.sub_extension_div .top > div:nth-child(1) {
+  max-width: 200px;
+}
 .sub_extension_div .top > div {
   flex: 1;
 }
 .sub_extension_div .top img {
-  min-width: 150px;
   justify-content: center;
   height: 150px;
-  max-width: 150px;
+  width:150px;
   margin: 15px 25px;
 }
 .sub_extension_div .top .img {
-  min-width: 125px;
   justify-content: center;
   height: 125px;
-  max-width: 125px;
+  width: 125px;
   margin: 25px 35px;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
   border-radius: 10px;

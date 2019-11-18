@@ -66,15 +66,14 @@ div.active {
   border:2px solid var(--accentColor);
   color: white;
 }
-
-.theme_div .accent {
+.theme_div .theme_card_accent {
   height: 14px !important;
   width: 14px !important;
   border: 2px solid var(--primaryColor);
   border-radius: 50px;
 }
 
-.theme_div:hover:not(.active) .accent {
+.theme_div:hover:not(.active) .theme_card_accent {
   transition: 0.05s;
   border: 2px solid var(--widget-color);
 }

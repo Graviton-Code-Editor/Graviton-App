@@ -29,47 +29,78 @@ closeWindow('my_window1'); //Close the window by passing the id
 'use strict'
 
 module.exports = {
-  Window: function ({ id = Math.random(), content = "", onClose , height="85%", width="85%" }) {
+  Window: function ({ id = Math.random(), content = "", onClose = "" , height="85%", width="85%" ,closeButton=false}) {
     /**
        * @desc Window constructor
        * @param {string} id                   Unique ID for the window
        * @param {string} content                 Window's content
        * @param {function} onClose (optional) When the window is closed the passed function will be executed
-       */
+    */
     if (typeof [...arguments] !== 'object') {
       graviton.throwError('Parsed argument is not object.')
       return
     }
-    this.id = id
-    this.code = content
-    this.onClose = onClose == undefined ? '' : onClose
-    const newWindow = document.createElement('div')
-    newWindow.setAttribute('id', this.id + '_window')
-    newWindow.innerHTML = `
-      <div class="background_window" onclick="closeWindow('${
-        this.id
-      }'); ${this.onClose}"></div>
-      <div id="${this.id + '_body'}" style="height:${height}; width:${width};" class="body_window">
-          ${this.code}
-      </div>`
-    this.myWindow = newWindow
-    this.launch = function () {
-      document
-        .getElementById('body')
-        .setAttribute(
-          'windows',
-          Number(document.getElementById('body').getAttribute('windows')) + 1
-        ) // Plus an opened screen
-      document.body.appendChild(this.myWindow)
-    }
-    this.close = function () {
-      document
+
+    const {puffin} = require("@mkenzo_8/puffin")
+
+    const buildingCloseButton = puffin.element(
+      `
+        <button class="Button1 close_exts" click="$closeMe"></button>
+      `,
+      {
+        props:[],
+        methods: [
+          function closeMe() {
+            closeWindow(id)
+          }
+        ]
+      }
+    );
+    buildingCloseButton.node.innerHTML = icons.close
+    const buildingWindow = puffin.element(
+      `
+     <div id="${id}_window"> 
+      <div class="background_window" click="$closeMe" onclick="${onClose}" ></div>
+        <div id="${id + '_body'}" style="height:${height}; width:${width};" class="body_window">
+            ${(()=>{
+              if(closeButton){
+                  return `<buildingCloseButton/>`
+              }
+              return ""
+            })()}
+            ${content}
+        </div>
+      </div>`,
+      {
+        components:{
+          buildingCloseButton
+        },
+        methods: [
+          function closeMe() {
+            closeWindow(id)
+          }
+        ]
+      }
+    );
+    return {
+        launch: ()=>{
+          document
+          .getElementById('body')
+          .setAttribute(
+            'windows',
+            Number(document.getElementById('body').getAttribute('windows')) + 1
+          ) // Plus an opened window
+          puffin.render(buildingWindow, document.getElementById("windows"));
+        },
+        close: ()=>{
+          document
         .getElementById('body')
         .setAttribute(
           'windows',
           Number(document.getElementById('body').getAttribute('windows')) - 1
-        ) // Substract an opened screen
-      document.getElementById(`${this.id}_window`).remove()
+        ) // Substract an opened window
+      document.getElementById(`${id}_window`).remove()
+        }
     }
   },
   /**

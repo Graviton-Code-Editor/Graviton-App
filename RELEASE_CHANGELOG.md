@@ -10,6 +10,7 @@
 
 ## ✔ New
 
+* Better UI rendering infrasctructure
 * Using new Microsoft's font Cascadia for terminal
 * Better autocomplete
 * Readded the New Project page
@@ -29,5 +30,6 @@
 * Updated Electron to v7
 * New events
 * New components 
-    * gv-navpanel (Web component)
-    * Control (Javascript)
+    * gv-navpanel 
+    * Control 
+    * Explorer panel 

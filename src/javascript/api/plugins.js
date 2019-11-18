@@ -158,13 +158,26 @@ module.exports = {
         });
       }
     },
-    load: function(config, call) {
+    sanitizePlugin(config){
+      const inConfig = config;
+      inConfig.name != undefined? inConfig.name = sanitize(inConfig.name) : ""
+      inConfig.description != undefined? inConfig.description = sanitize(inConfig.description) : ""
+      inConfig.author != undefined? inConfig.author = sanitize(inConfig.author) : ""
+      
+      inConfig.author = inConfig.author.replace("&","and")
+      inConfig.description = inConfig.description.replace("&","and")
+      return inConfig
+    },
+    load: function(inConfig, call) {
       /**
        * @desc Load a pluign
        * @param {object} config - package.json of the plugin
        * @param {function} call - Function's callback
        * @return call - Function's callback
        */
+      
+      const config = this.sanitizePlugin(inConfig)
+
       if (config.colors == undefined) {
         plugins_list.push(config);
         if (config["main"] != undefined) {
@@ -176,7 +189,7 @@ module.exports = {
                 config["main"]
               ));
             } catch {
-              console.warn(
+              graviton.consoleWarn(
                 "Cannot load succesfully the plugin >" +
                   `%c ${config.name}` +
                   " %c <. \nReport it in: https://github.com/Graviton-Code-Editor/plugins_list/issues",

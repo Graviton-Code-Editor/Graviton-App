@@ -37,6 +37,7 @@ module.exports = {
         }
       })()
       const el = this.parentElement
+      
       el.onscroll = function () {
         if (direction === 'vertical') {
           if (Number(el.getAttribute('toleft')) != el.scrollLeft) return

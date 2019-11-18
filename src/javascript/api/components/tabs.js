@@ -240,7 +240,6 @@ module.exports = {
           }
         }
         break;
-
       case "free":
         for (i = 0; i < tabs.length; i++) {
           if (
@@ -250,7 +249,6 @@ module.exports = {
             tabs[i].classList.remove("selected");
           }
         }
-        
         document.getElementById(
           current_screen.id
         ).children[1].children[0].style = "visibility:hidden; display:none;";

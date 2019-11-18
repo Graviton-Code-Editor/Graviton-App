@@ -25,22 +25,22 @@ Go inside the folder:
 Run as admin:
 > $ npm --global --production install windows-build-tools
 
-Install the dependencies:
+Install the project dependencies:
 > $ npm install
 
-Rebuild a dependency:
+Rebuild some dependencies with:
 > $ npm run rebuild
 
 ### Linux
 
-(Tested on ubuntu)
+(Tested on Ubuntu)
 
 You must have Python 2.7 installed.
 
 Install the dependencies:
 > $ npm install
 
-Rebuild a dependency:
+Rebuild some dependencies with:
 > $ npm run rebuild
 
 ### MacOS
@@ -50,7 +50,7 @@ You must have Python 2.7 installed.
 Install the dependencies:
 > $ npm install
 
-Rebuild a dependency:
+Rebuild some dependencies with:
 > $ npm run rebuild
 
 ## 3 - Building 
@@ -91,11 +91,11 @@ For example if you want to build this for your Ubuntu machine type this:
 
 >  $ npm run build:deb
 
-You might need some dependencies to build in some formats.
+You might need some dependencies to build it.
 
    
 ### MacOS
 
-- From a Macintosh: 
+- From MacOS: 
 
 >  $ npm run build 

@@ -158,6 +158,7 @@
     "Process.Completed":"Completed!",
     "Hide":"Hide",
     "Show":"Show",
-    "NPMPanel":"NPM Panel"
+    "NPMPanel":"NPM Panel",
+    "Select":"Select"
   }
 }

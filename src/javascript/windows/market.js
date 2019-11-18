@@ -20,9 +20,9 @@ module.exports = {
       const market_window = new Window({
         id: "market_window",
         content: `
-          <div id=market_loader class="center loading_bar">
+          <div id="market_loader" class="center loading_bar">
             <div></div>
-            <div class=bg></div>
+            <div class="bg"></div>
           </div>
                 `
       });
@@ -61,24 +61,24 @@ module.exports = {
       <gv-navpanel>
         <gv-navbar>
           <gv-navtitle>${getTranslation("Market")}</gv-navtitle>
-          <gv-navbutton href=All default onclick="Market.navigate('all')"  >${getTranslation(
+          <gv-navbutton href="All" default="" onclick="Market.navigate('all')"  >${getTranslation(
             "All"
           )}</gv-navbutton>
-          <gv-navbutton href=Themes onclick="Market.navigate('themes');">${getTranslation(
+          <gv-navbutton href="Themes" onclick="Market.navigate('themes');">${getTranslation(
             "Themes"
           )}</gv-navbutton>
-          <gv-navbutton href=Installed onclick="Market.navigate('installed');">${getTranslation(
+          <gv-navbutton href="Installed" onclick="Market.navigate('installed');">${getTranslation(
             "Installed"
           )}</gv-navbutton>
-          <gv-navbutton href=Settings onclick="Market.navigate('settings')">${getTranslation(
+          <gv-navbutton href="Settings" onclick="Market.navigate('settings')">${getTranslation(
             "Settings"
           )}</gv-navbutton>
         </gv-navbar>
-        <gv-navcontent id=market_content>
-          <gv-navpage id=sec_all href=All default></gv-navpage>
-          <gv-navpage id=sec_installed href=Installed></gv-navpage>
-          <gv-navpage id="sec_themes" href=Themes></gv-navpage>
-          <gv-navpage id=sec_settings href=Settings></gv-navpage>
+        <gv-navcontent id="market_content">
+          <gv-navpage id="sec_all" href="All" default=""></gv-navpage>
+          <gv-navpage id="sec_installed" href="Installed"></gv-navpage>
+          <gv-navpage id="sec_themes" href="Themes"></gv-navpage>
+          <gv-navpage id="sec_settings" href="Settings"></gv-navpage>
         </gv-navcontent>
       </gv-navpanel>`
       );
@@ -141,7 +141,6 @@ module.exports = {
               if (document.getElementById("loading_exts") != undefined) {
                 document.getElementById("loading_exts").remove();
               }
-              const sec_ID = "sec" + Math.random().toString();
               const _new_update =
                 plugin.local != undefined
                   ? semver.gt(
@@ -149,24 +148,23 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              document.getElementById(
-                "sec_all"
-              ).innerHTML += graviton.getTemplate(
-                "market_plugin_card",
-                `
-                    const sec_ID = "${sec_ID}";
-                    const _package = ${JSON.stringify(_package)};
-                    const _new_update = ${_new_update};
-                    const plugin = ${JSON.stringify(plugin)};
-                    const data = ${JSON.stringify(data)} ;
-                    `
-              );
+              const retrieveCard = require("../components/plugin_card")
+              const test = retrieveCard({
+                plugin:plugin,
+                package:_package,
+                newUpdate:_new_update,
+                repository:data,
+                isInstalled:graviton.getPlugin(_package.name).local != undefined,
+                section:"all"
+              })
+              const {puffin} = require("@mkenzo_8/puffin")
+              puffin.render(test,document.getElementById("sec_all"))
             });
             if (plugins_market.length != full_plugins.length) {
               document.getElementById("sec_all").innerHTML += `
-                      <div  id=load_more_plugins  class="extension_div static" >
-                        <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; Market.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
-                      </div>`;
+                <div  id=load_more_plugins  class="extension_div static" >
+                  <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; Market.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
+                </div>`;
             }
           }
           return;
@@ -185,26 +183,23 @@ module.exports = {
                 document.getElementById("loading_exts2").remove();
               }
               const plugin = graviton.getPlugin(_data.name);
-              const new_update =
+              const newUpdate =
                 plugin.repo != undefined
                   ? semver.gt(
                       semver.parse(plugin.repo.package.version),
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              const sec_ID = "sec" + Math.random().toString();
-              document.getElementById(
-                "sec_installed"
-              ).innerHTML += graviton.getTemplate(
-                "market_plugin_card_installed",
-                `
-      
-                  const sec_ID = "${sec_ID}";
-                  const _new_update = ${new_update};
-                  const plugin = ${JSON.stringify(plugin)};
-      
-                  `
-              );
+              const retrieveCard = require("../components/plugin_card")
+              const test = retrieveCard({
+                plugin:plugin,
+                package:plugin.local,
+                newUpdate:newUpdate,
+                isInstalled:true,
+                section:"installed"
+              })
+              const {puffin} = require("@mkenzo_8/puffin")
+              puffin.render(test,document.getElementById("sec_installed"))
             }
           }
           return;
@@ -220,27 +215,24 @@ module.exports = {
                 if (document.getElementById("loading_exts3") != undefined) {
                   document.getElementById("loading_exts3").remove();
                 }
-                const _new_update =
+                const newUpdate =
                   plugin.local != undefined
                     ? semver.gt(
                         semver.parse(_package.version).version,
                         semver.parse(plugin.local.version).version
                       )
                     : false;
-                const sec_ID = "sec" + Math.random().toString();
-                document.getElementById(
-                  "sec_themes"
-                ).innerHTML += graviton.getTemplate(
-                  "market_plugin_card",
-                  `
-                    const sec_ID = "${sec_ID}";
-                    const _package = ${JSON.stringify(_package)};
-                    const _new_update = ${_new_update};
-                    const plugin = ${JSON.stringify(plugin)};
-                    const data = ${JSON.stringify(data)} ;
-      
-                    `
-                );
+                const retrieveCard = require("../components/plugin_card")
+                const test = retrieveCard({
+                  plugin:plugin,
+                  package:_package,
+                  newUpdate:newUpdate,
+                  repository:data,
+                  isInstalled:graviton.getPlugin(_package.name).local != undefined,
+                  section:"all"
+                })
+                const {puffin} = require("@mkenzo_8/puffin")
+                puffin.render(test,document.getElementById("sec_themes"))
               }
             }
             if (document.getElementById("loading_exts3") != undefined) {
@@ -354,11 +346,11 @@ module.exports = {
         });
       }
     },
-    openSubExtensions: function(data) {
+    openSubExtensions: function({name,update}) {
       /**
        * @desc Open each's eextension window
        */
-      const plugin = graviton.getPlugin(data.getAttribute("name"));
+      const plugin = graviton.getPlugin(name);
       if (plugin == undefined) {
         new Notification({
           title: getTranslation("Market"),
@@ -366,20 +358,26 @@ module.exports = {
         });
         return;
       }
+      const pluginPackage = plugin.repo?plugin.repo.package:plugin.local
+      const retrieveWindow = require("../components/plugin_window")
+      const pluginWindow = retrieveWindow({
+        plugin:plugin,
+        newUpdate:update,
+        package:pluginPackage,
+        isInstalled:plugin.local != undefined,
+        repository:plugin.repo?plugin.repo.git:undefined
+      })
+      
       const ext_win = new Window({
-        id: "sec" + data.getAttribute("name"),
-        content: graviton.getTemplate(
-          "market_plugin",
-          `
-            const name = '${data.getAttribute("name")}';
-            const update = '${data.getAttribute("update")}';
-            const plugin = ${JSON.stringify(plugin)};
-            `
-        )
+        id: `sec${name}`,
+        content: `<div id="${name}_window" style="height:100%;overflow:auto;"></div>`,
+        closeButton:true
       });
       ext_win.launch();
+      const { puffin } = require("@mkenzo_8/puffin")
+      puffin.render(pluginWindow,document.getElementById(`${name}_window`))
       const bottom_section = document.getElementById(
-        data.getAttribute("name") + "readme"
+        `${name}_readme`
       );
       if (bottom_section != null) {
         if (plugin.local != undefined) {
@@ -387,13 +385,11 @@ module.exports = {
           Local Readme
           */
           fs.readFile(
-            path.join(plugins_folder, data.getAttribute("name"), "readme.md"),
+            path.join(plugins_folder, name, "readme.md"),
             "utf8",
             function(err, readme) {
               const marked = require("marked")
-              document.getElementById(
-                data.getAttribute("name") + "readme"
-              ).innerHTML = `<div style="flex:1;" >${
+              bottom_section.innerHTML = `<div style="flex:1;" >${
                 !err ? marked(readme) : getTranslation("NoReadme")
               }</div>`;
             }
@@ -411,7 +407,7 @@ module.exports = {
               screenshoot.style = "height:200px; ";
               screenshoot.draggable = false;
               document
-                .getElementById(plugin.local.name + "_screenshots")
+                .getElementById(`${name}_screenshots`)
                 .appendChild(screenshoot);
             });
           }
@@ -426,18 +422,15 @@ module.exports = {
             .then(res => res.text())
             .then(body3 => {
               if (
-                document.getElementById(data.getAttribute("name") + "_div") ==
+                document.getElementById(data.getAttribute("name") + "_div") !=
                 undefined
               ) {
-                return;
+                bottom_section.innerHTML = `<div style="flex:1;" >${
+                  !body3.match("404: Not Found")
+                    ? marked(body3)
+                    : getTranslation("NoReadme")
+                }</div>`;
               }
-              document.getElementById(
-                data.getAttribute("name") + "readme"
-              ).innerHTML = `<div style="flex:1;" >${
-                !body3.match("404: Not Found")
-                  ? marked(body3)
-                  : getTranslation("NoReadme")
-              }</div>`;
             });
           if (plugin.repo.package.screenshots != undefined) {
             plugin.repo.package.screenshots.forEach(sc => {

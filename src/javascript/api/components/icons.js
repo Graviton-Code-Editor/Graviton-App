@@ -156,7 +156,7 @@ module.exports = {
 	
 	`,
     market_theme: `
-	<svg width="46px" height="46px" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<svg  viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
 	<rect width="46" height="46" rx="5" fill="var(--secondaryColor)"/>
 	<path d="M19 21L23 21V34C23 34.5523 22.5523 35 22 35H20C19.4477 35 19 34.5523 19 34V21Z" fill="var(--widget-color)"/>
 	<path d="M19 21H32C32.5523 21 33 20.5523 33 20V19H20C19.4477 19 19 19.4477 19 20V21Z" fill="var(--widget-color)"/>
