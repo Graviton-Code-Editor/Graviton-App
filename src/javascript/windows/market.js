@@ -151,7 +151,7 @@ module.exports = {
               const retrieveCard = require("../components/plugin_card")
               const test = retrieveCard({
                 plugin:plugin,
-                package:_package,
+                packageConf:_package,
                 newUpdate:_new_update,
                 repository:data,
                 isInstalled:graviton.getPlugin(_package.name).local != undefined,
@@ -193,7 +193,7 @@ module.exports = {
               const retrieveCard = require("../components/plugin_card")
               const test = retrieveCard({
                 plugin:plugin,
-                package:plugin.local,
+                packageConf:plugin.local,
                 newUpdate:newUpdate,
                 isInstalled:true,
                 section:"installed"
@@ -225,7 +225,7 @@ module.exports = {
                 const retrieveCard = require("../components/plugin_card")
                 const test = retrieveCard({
                   plugin:plugin,
-                  package:_package,
+                  packageConf:_package,
                   newUpdate:newUpdate,
                   repository:data,
                   isInstalled:graviton.getPlugin(_package.name).local != undefined,

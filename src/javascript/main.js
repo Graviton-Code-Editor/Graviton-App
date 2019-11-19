@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191118",
+  date: "191119",
   version: "1.2.0",
   state: "Beta"
 };
@@ -31,7 +31,6 @@ const fs = require("fs-extra"),
   EventEmitter = require("events"),
   sanitize = require('light-sanitize-html');
   
-
 require(path.join(
   __dirname,
   "src",

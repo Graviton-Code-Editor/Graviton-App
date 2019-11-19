@@ -4,7 +4,7 @@ function retrieveCard({
   plugin,
   newUpdate,
   isInstalled,
-  package,
+  packageConf,
   repository,
   section
 }) {
@@ -14,8 +14,8 @@ function retrieveCard({
 
   const cardLogo = puffin.element(`<div></div>`, { props: [] });
 
-  if (package.logo == undefined) {
-    switch (graviton.getTypePlugin(package)) {
+  if (packageConf.logo == undefined) {
+    switch (graviton.getTypePlugin(packageConf)) {
       case "theme":
       case "custom_theme":
         cardLogo.node.innerHTML = `<div class='img' >${icons.market_theme}</div>`;
@@ -39,31 +39,31 @@ function retrieveCard({
   const cardBottom = puffin.element(`<div></div>`, { props: [] });
 
   if(repository === undefined){
-    cardBottom.node.innerHTML = `v${package.version} · ${getTranslation('Installed')} `
+    cardBottom.node.innerHTML = `v${packageConf.version} · ${getTranslation('Installed')} `
   }else{
     if(isInstalled){
-      cardBottom.node.innerHTML = `v${package.version} · ${getTranslation('Installed')} · ${repository.stargazers_count}${icons.star}`
+      cardBottom.node.innerHTML = `v${packageConf.version} · ${getTranslation('Installed')} · ${repository.stargazers_count}${icons.star}`
     }else{
-      cardBottom.node.innerHTML = `v${package.version} · ${repository.stargazers_count}${icons.star}`
+      cardBottom.node.innerHTML = `v${packageConf.version} · ${repository.stargazers_count}${icons.star}`
     }
   }
 
   const pluginCard = puffin.element(
     `
-    <div click="$openMe" class="extension_div" name="${
-      package.name
-    }" update="${newUpdate}">
-      ${newUpdate ? "<updateIcon/>" : ""} 
-    <div>
-      <cardLogo/>
-      <div class="text">
-        <h3 class="plugin_name_prop" >${package.name} </h3>
-        <p class="plugin_description_prop">${package.description}</p>   
+      <div click="$openMe" class="extension_div" name="${
+        packageConf.name
+      }" update="${newUpdate}">
+        ${newUpdate ? "<updateIcon/>" : ""} 
+      <div>
+        <cardLogo/>
+        <div class="text">
+          <h3 class="plugin_name_prop" >${packageConf.name} </h3>
+          <p class="plugin_description_prop">${packageConf.description}</p>   
+        </div>
       </div>
-    </div>
-    <p class="installed"><cardBottom/></p>
-    </div>
-  `,
+      <p class="installed"><cardBottom/></p>
+      </div>
+    `,
     {
       components: {
         updateIcon,
@@ -74,7 +74,7 @@ function retrieveCard({
       methods: [
         function openMe() {
           Market.openSubExtensions({
-            name:package.name,
+            name:packageConf.name,
             update:newUpdate
           });
         }

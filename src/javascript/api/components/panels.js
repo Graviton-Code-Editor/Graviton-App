@@ -6,13 +6,12 @@ module.exports = {
     maxHeight = "",
     visible = true
   }) {
-    this.panelObject = document.createElement("div");
-    this.panelObject.classList = "explorer_panel";
-    this.panelObject.style.minHeight = minHeight;
-    this.panelObject.style.maxHeight = maxHeight;
-    this.panelObject.style.display = visible?"block":"none";
-    this.panelObject.id = id;
-    this.panelObject.innerHTML = content;
+    const {puffin} = require("@mkenzo_8/puffin")
+    const panelPuffin = puffin.element(`
+      <div class="explorer_panel" id="${id}" style="min-height:${minHeight};max-height:${maxHeight}; display:${visible?"block":"none"}">${content}</div>
+    `)
+    console.log(panelPuffin)
+    this.panelObject = panelPuffin.node;
     const me = this;
     this.open = () => {
       me.panelObject = document.getElementById(id);
@@ -45,7 +44,8 @@ module.exports = {
       }
     };
     const explorer = document.getElementById("explorer_app");
-    explorer.appendChild(this.panelObject);
+    console.log(panelPuffin.node,explorer)
+    puffin.render(panelPuffin,explorer)
     if (document.getElementById("explorer_app").children.length > 1) {
       const random_ID = Math.random();
       const resizeElement = document.createElement("div");

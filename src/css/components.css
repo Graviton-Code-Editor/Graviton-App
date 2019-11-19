@@ -925,6 +925,9 @@ textarea {
   user-select: none;
   -webkit-user-drag: none;
 }
+gv-navpanel{
+  height: 100%;
+}
 gv-navpanel.side-menu{
   display: flex;
   min-width: 100%;
