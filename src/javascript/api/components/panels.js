@@ -44,7 +44,6 @@ module.exports = {
       }
     };
     const explorer = document.getElementById("explorer_app");
-    console.log(panelPuffin.node,explorer)
     puffin.render(panelPuffin,explorer)
     if (document.getElementById("explorer_app").children.length > 1) {
       const random_ID = Math.random();
@@ -59,7 +58,6 @@ module.exports = {
         }
       }
       const box = resizeElement.parentElement.children[boxNum - 1];
-
       const initialiseResize = e => {
         window.addEventListener("mousemove", startResizing, false);
         window.addEventListener("mouseup", stopResizing, false);
