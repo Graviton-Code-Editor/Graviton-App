@@ -44,11 +44,13 @@
 }
 
 @keyframes window_up {
-  from {
-    transform: translate3d(0, 0, 0) translate(-50%, -48%);
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) translate(-50%, -46%)  scale(.98);
   }
-  to {
-    transform: translate3d(0, 0, 0) translate(-50%, -50%);
+  100%{
+    opacity: 1;
+    transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1);
   }
 }
 

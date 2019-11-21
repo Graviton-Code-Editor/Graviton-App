@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191121 - 1 [1.2.0]
+- Polished Themes card
+- Better opening windows and dialogs animation
+
 ### 191114 - 1 [1.2.0]
 - Started using PuffinJS for UI components
 

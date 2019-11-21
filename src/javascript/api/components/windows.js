@@ -35,6 +35,9 @@ module.exports = {
        * @param {string} id                   Unique ID for the window
        * @param {string} content                 Window's content
        * @param {function} onClose (optional) When the window is closed the passed function will be executed
+       * @param {string} height custom height for the window
+       * @param {string} width custom width for the window
+       * @param {boolean} closeButton close button for the window
     */
     if (typeof [...arguments] !== 'object') {
       graviton.throwError('Parsed argument is not object.')

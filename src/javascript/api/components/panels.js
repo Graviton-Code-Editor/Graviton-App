@@ -10,7 +10,6 @@ module.exports = {
     const panelPuffin = puffin.element(`
       <div class="explorer_panel" id="${id}" style="min-height:${minHeight};max-height:${maxHeight}; display:${visible?"block":"none"}">${content}</div>
     `)
-    console.log(panelPuffin)
     this.panelObject = panelPuffin.node;
     const me = this;
     this.open = () => {

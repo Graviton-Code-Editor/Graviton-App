@@ -24,14 +24,6 @@
   -webkit-user-select: none;
 }
 
-@keyframes window_up {
-  from {
-    transform: translate3d(0, 0, 0) translate(-50%, -48%);
-  }
-  to {
-    transform: translate3d(0, 0, 0) translate(-50%, -50%);
-  }
-}
 
 .dialog_body > h3 {
   margin: 5px 0px 10px 0px;

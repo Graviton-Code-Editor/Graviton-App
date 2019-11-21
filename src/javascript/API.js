@@ -983,7 +983,7 @@ graviton.setEditorFontSize = function(new_size) {
   document.documentElement.style.setProperty(
     "--editor-font-size",
     `${current_config.fontSizeEditor}px`
-  ); // Update settings from window
+  ); 
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.refresh();
   }
