@@ -158,6 +158,9 @@
     "Process.InstallingDependencies":"Abhängigkeiten werden installiert...",
     "Process.Completed":"Abgeschlossen!",
     "Hide":"Ausblenden",
-    "Show":"Einblenden"
+    "Show":"Einblenden",
+     "NPMPanel":"NPM Panel",
+    "Select":"Auswählen",
+    "By":"Bei"
   }
 }
