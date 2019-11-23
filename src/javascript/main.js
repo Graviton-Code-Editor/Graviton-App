@@ -12,15 +12,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191121",
+  date: "191123",
   version: "1.2.0",
   state: "Beta"
 };
 const fs = require("fs-extra"),
-  {shell} = require("electron").remote,
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,
-  app = remote.remote,
   getAppDataPath = require("appdata-path"),
   { webFrame } = require("electron"),
   g_window = remote.getCurrentWindow(),
@@ -261,7 +259,6 @@ let current_screen,
   FirstFolder = null,
   editingTab,
   plang = "",
-  _notifications = [],
   filepath = null,
   editors = [],
   editor,

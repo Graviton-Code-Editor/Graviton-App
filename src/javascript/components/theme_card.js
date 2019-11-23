@@ -43,7 +43,7 @@ const theme_card = puffin.element(`
         function setTheme(){
             graviton.setTheme(this.getAttribute("name"))
             selectionFromTo(this.parentElement,this);
-            saveConfig()
+            graviton.saveConfiguration()
         }
     ]
 });

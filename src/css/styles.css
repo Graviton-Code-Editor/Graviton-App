@@ -86,9 +86,9 @@ head {
 
 *::-webkit-scrollbar {
 	transition: 0.1s;
-	width: 12px;
-	height: 12px;
-	background: transparent;
+	width: 10px;
+	height: 10px;
+	background: transparent;	
 }
 
 *::-webkit-scrollbar-track {
@@ -96,9 +96,8 @@ head {
 }
 
 *::-webkit-scrollbar-thumb {
+	border-radius: 0.2rem;
 	transition: 0.1s;
-	width: 9px !important;
-	height: 9px !important;
 	background: var(--scroll-color);
 }
 
@@ -291,11 +290,11 @@ body {
 	border-top-left-radius: 0px;
 }
 
-.g_tabs_bar .tabs:first-child {
+.g_tabs_bar .tab_component:first-child {
 	border-top-left-radius: 5px;
 }
 
-.editor_screen ~ .editor_screen .g_tabs_bar .tabs {
+.editor_screen ~ .editor_screen .g_tabs_bar .tab_component {
 	border-top-left-radius: 0px;
 }
 
@@ -636,14 +635,6 @@ gv-paneltitle{
 	border-bottom: 1px solid var(--white-black);
 	position: relative;
 	max-width: auto;
-}
-
-.explorer_panel:hover::-webkit-scrollbar{
-	display: block;
-}
-
-.explorer_panel::-webkit-scrollbar {
-	display: none;
 }
 
 .explorer_resizer {

@@ -264,7 +264,6 @@ input[type="number"]::selection {
   top: 20px;
   right: 40px;
   transform: translate(20px, 40px);
-  background: red;
   position: fixed;
   min-width: 50px;
   min-height: 50px;
@@ -322,7 +321,7 @@ input[type="number"]::selection {
 
 /* Tabs */
 
-.g_tabs_bar .tabs {
+.g_tabs_bar .tab_component {
   position: relative;
   transition: 0.05s;
   color: var(--white-black);
@@ -337,23 +336,23 @@ input[type="number"]::selection {
   min-width: 300px;
 }
 
-.g_tabs_bar .tabs:hover {
+.g_tabs_bar .tab_component:hover {
   transform: scale(1);
   transition: 0.05;
   background: var(--widget-color);
 }
 
-.g_tabs_bar .tabs:active {
+.g_tabs_bar .tab_component:active {
   transition: 0.05;
   transform: scale(var(--scalation));
 }
 
-.g_tabs_bar .tabs.selected {
+.g_tabs_bar .tab_component.selected {
   background: var(--secondaryColor);
   box-shadow: 0px 0px 7px var(--shadows);
 }
 
-.g_tabs_bar .tabs > p {
+.g_tabs_bar .tab_component > p {
   overflow: hidden;
 	text-overflow:ellipsis;
   position: relative;
@@ -370,7 +369,7 @@ input[type="number"]::selection {
   text-align: center;
 }
 
-.g_tabs_bar .tabs .close_tab {
+.g_tabs_bar .tab_component .close_tab {
   position: relative;
   top: 32%;
   right: 0;
@@ -388,15 +387,15 @@ input[type="number"]::selection {
   fill: var(--white-black);
 }
 
-.g_tabs_bar .tabs[file_status~="saved"]:not(.selected) .close_tab {
+.g_tabs_bar .tab_component[file_status~="saved"]:not(.selected) .close_tab {
   opacity: 0;
 }
 
-.g_tabs_bar .tabs[file_status~="saved"]:hover .close_tab {
+.g_tabs_bar .tab_component[file_status~="saved"]:hover .close_tab {
   opacity: 1;
 }
 
-.g_tabs_bar .tabs .close_tab:hover {
+.g_tabs_bar .tab_component .close_tab:hover {
   cursor: pointer;
   fill: var(--accentColor);
   stroke: var(--accentColor);
@@ -519,7 +518,12 @@ button.button1.red:hover {
 button.button1.disabled {
   pointer-events: none;
 }
-
+button.button1.red:active {
+  transition: 0.1s;
+  border: 2px solid darkred;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 6px rgba(0,0,0,0.35);
+}
 button.button1:active {
   transition: 0.1s;
   border: 2px solid var(--accentColor);
@@ -589,7 +593,9 @@ button.button1-round svg * {
   font-size: 15px;
   margin:0px 0;
 }
-
+.section-2 * {
+  white-space: nowrap;
+}
 .section-2:hover {
   background: var(--widget-color);
 }

@@ -42,17 +42,17 @@ module.exports = {
    */
   Notification: function ({ title, content, buttons, delay = 7000 }) {
     if (typeof [...arguments] !== 'object') {
-      graviton.throwError('Parsed argument is not ')
+      graviton.throwError('Parsed argument is not an object.')
       return
     }
-    if (_notifications.length >= 3) {
-      // Remove one notification in case there are already 3
-      _notifications[0].remove()
-      _notifications.splice(0, 1)
+    if (graviton.notifications.length >= 3) {
+      // Remove one notification if there are more or equal to 3
+      graviton.notifications[0].remove()
+      graviton.notifications.splice(0, 1)
     }
     const body = document.createElement('div')
     body.classList.add('notificationBody')
-    body.setAttribute('id', _notifications.length)
+    body.setAttribute('id', graviton.notifications.length)
     body.innerHTML = `
       <button class=close onclick="closeNotification(this)">
           ${icons['close']}
@@ -82,19 +82,19 @@ module.exports = {
     }
     document.getElementById('notifications').appendChild(body)
     this.body = body
-    _notifications.push(body)
+    graviton.notifications.push(body)
     const wait = setTimeout(() => {
-      for (i = 0; i < _notifications.length; i++) {
-        if (_notifications[i] === body) {
-          _notifications.splice(i, 1)
+      for (i = 0; i < graviton.notifications.length; i++) {
+        if (graviton.notifications[i] === body) {
+          graviton.notifications.splice(i, 1)
           body.remove()
         }
       }
     }, delay) // Wait 7 seconds until the notification automatically deletes it self
     this.close = function () {
-      for (i = 0; i < _notifications.length; i++) {
-        if (_notifications[i] === this.body) {
-          _notifications.splice(i, 1)
+      for (i = 0; i < graviton.notifications.length; i++) {
+        if (graviton.notifications[i] === this.body) {
+          graviton.notifications.splice(i, 1)
           this.body.remove()
         }
       }
@@ -105,9 +105,9 @@ module.exports = {
    * @param {HTML element} element   DOM element
    */
   closeNotification: function (element) {
-    for (i = 0; i < _notifications.length; i++) {
-      if (_notifications[i] === element.parentElement) {
-        _notifications.splice(i, 1)
+    for (i = 0; i < graviton.notifications.length; i++) {
+      if (graviton.notifications[i] === element.parentElement) {
+        graviton.notifications.splice(i, 1)
         element.parentElement.remove()
       }
     }

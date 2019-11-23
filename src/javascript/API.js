@@ -740,12 +740,19 @@ graviton = {
     });
   },
   panels : [],
+  notifications:[],
   toggleNPMPanel:()=>{
     
     if(current_config.npm_panel){
-      graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0].close()
+      const npm_panel = graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0]
+      if(npm_panel!=undefined){
+        npm_panel.close()
+      }
     }else{
-      graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0].open()
+      const npm_panel = graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0]
+      if(npm_panel!=undefined){
+        npm_panel.open()
+      }
     }
     current_config.npm_panel = !current_config.npm_panel
   }
@@ -936,7 +943,7 @@ const preload = array => {
 };
 
 const preloadFont = array => {
-  // Preload images when booting
+  // Preload fonts when booting
   for (i = 0; i < array.length; i++) {
     const ele = document.createElement("p");
     ele.textContent = ".";

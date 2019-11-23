@@ -18,7 +18,7 @@
                   `Explorer.load('${log[i].Path.replace(
                     /\\/g,
                     "\\\\"
-                  )}','g_directories','yes'); closeWindow('welcome_window'); `
+                  )}','g_directories',true); closeWindow('welcome_window'); `
                 );
                 project.innerText = log[i].Name;
                 project.innerHTML = `

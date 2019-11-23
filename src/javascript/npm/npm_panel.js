@@ -19,7 +19,7 @@ document.addEventListener("loaded_project", function() {
           </gv-panel>
           `,
         visible:current_config.npm_panel
-      });
+      });      
       for (const script in result.scripts) {
         const button = document.createElement("button");
         button.classList.add("panel_button");

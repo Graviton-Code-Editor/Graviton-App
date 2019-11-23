@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191123 - 1 [1.2.0]
+- Fixed, an error was thrown when enabling or disabling the NPM panel while having a non-NodeJS project opened 
+- Using puffin to render tabs
+- IDs for free tabs is now optional
+- Danger buttons now have red border
+
 ### 191121 - 1 [1.2.0]
 - Polished Themes card
 - Better opening windows and dialogs animation

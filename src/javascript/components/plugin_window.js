@@ -61,7 +61,7 @@ function retrieveWindow({
       }
       if (plugin.local.colors != undefined) {
         button_content += `
-          <button class="button1" onclick="graviton.setTheme('${package.name}'); saveConfig();">${getTranslation("Select")}</button>
+          <button class="button1" onclick="graviton.setTheme('${package.name}'); graviton.saveConfiguration();">${getTranslation("Select")}</button>
        `;
       }
       button_content += ` <button onclick="Market.uninstallExtension('${package.name}')" id="${Math.random() +

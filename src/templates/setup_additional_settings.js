@@ -6,21 +6,21 @@
   <div class=section-1>
     <div class=section-4>
       <p>${getTranslation('ZoomSize')}</p>
-      <input id="slider_zoom" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="5" max="50"
+      <input id="slider_zoom" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="5" max="50"
         value="${
   current_config.appZoom
 }" class="slider">
     </div>
     <div class=section-4>
       <p>${getTranslation('Blur')}</p>
-      <input id="slider_blur" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="0.2" max="50"
+      <input id="slider_blur" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="0.2" max="50"
         value="${
   current_config.blurPreferences
 }" class="slider">
     </div>
     <div class=section-4>
       <p>${getTranslation('Bounce')}</p>
-      <gv-switch onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
+      <gv-switch onclick="graviton.toggleBounceEffect(); graviton.saveConfiguration();" class="${
   current_config.bouncePreferences
 }"></gv-switch>
     </div>

@@ -22,7 +22,7 @@
     </elastic-container>
     </div>
     <div class=" inline">
-    <gv-switch onclick="graviton.useSystemAccent(); saveConfig();" class="${
+    <gv-switch onclick="graviton.useSystemAccent(); graviton.saveConfiguration();" class="${
       current_config.accentColorPreferences == "system"
         ? "activated"
         : "desactivated"
@@ -33,7 +33,7 @@
 <gv-blocktitle>${getTranslation("Miscellaneous")}</gv-blocktitle>
 <gv-blockcontent>
   <div class="section-1 inline">
-    <input id="slider_zoom" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="5" max="50" value="${
+    <input id="slider_zoom" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="5" max="50" value="${
       current_config.appZoom
     }" class="slider"/>
     <h5>${getTranslation("ZoomSize")}</h5>
@@ -44,13 +44,13 @@
     )}</button>
   </div>
   <div class="section-1 inline">
-    <input id="slider_blur" onchange="Settings.refresh(); saveConfig();" type="range" min="0" step="0.2" max="50" value="${
+    <input id="slider_blur" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="0.2" max="50" value="${
       current_config.blurPreferences
     }" class="slider"/>
     <h5>${getTranslation("Blur")}</h5>
   </div>
   <div class="section-1 inline">
-    <gv-switch onclick="graviton.toggleBounceEffect(); saveConfig();" class="${
+    <gv-switch onclick="graviton.toggleBounceEffect(); graviton.saveConfiguration();" class="${
       current_config.bouncePreferences
     }"></gv-switch>
     <h5>${getTranslation("Bounce")}</h5>
@@ -66,7 +66,7 @@
   <gv-blockcontent>
      <div class="section-1 ">
       <h5>${getTranslation("ExplorerPosition")}</h5>
-      <label class="radio" onclick="graviton.changeExplorerPosition('left'); saveConfig();"  value="Left" ${
+      <label class="radio" onclick="graviton.changeExplorerPosition('left'); graviton.saveConfiguration();"  value="Left" ${
         current_config.explorerPosition === "left" ? 'checked=""' : ""
       }> Left
         <input type="radio" name="explorer_position"  ${
@@ -74,7 +74,7 @@
         }/>
         <span class="radio_dot"></span>
       </label>
-    <label class="radio" onclick="graviton.changeExplorerPosition('right'); saveConfig();"  value="Right"> Right
+    <label class="radio" onclick="graviton.changeExplorerPosition('right'); graviton.saveConfiguration();"  value="Right"> Right
       <input type="radio" name="explorer_position"  ${
         current_config.explorerPosition === "right" ? 'checked=""' : ""
       }/>
@@ -82,7 +82,7 @@
     </label>
     </div>
     <div class="section-1 inline">
-      <gv-switch onclick="graviton.toggleNPMPanel(); saveConfig();" class="${
+      <gv-switch onclick="graviton.toggleNPMPanel(); graviton.saveConfiguration();" class="${
         current_config.npm_panel ? "activated" : "desactivated"
       }"></gv-switch>
       <h5>${getTranslation("NPMPanel")}</h5>

@@ -53,10 +53,9 @@ module.exports = {
       explorer.insertBefore(resizeElement, document.getElementById(id));
       for (i = 0; i < resizeElement.parentElement.children.length; i++) {
         if (resizeElement.parentElement.children[i] == resizeElement) {
-          var boxNum = i;
+          var box =  resizeElement.parentElement.children[i - 1]
         }
       }
-      const box = resizeElement.parentElement.children[boxNum - 1];
       const initialiseResize = e => {
         window.addEventListener("mousemove", startResizing, false);
         window.addEventListener("mouseup", stopResizing, false);

@@ -38,7 +38,7 @@ module.exports = {
    * @param {string} name  the tab's title
    * @param {string} data  the tab's content
    */
-  Tab: function({ id, type, name, path, data }) {
+  Tab: function({ id = Math.random().toString(), type, name, path, data }) {
     this.type = type;
     this.id = id;
     this.path = path;
@@ -54,46 +54,22 @@ module.exports = {
               current_screen.id
             ).children[1].children[0].style =
               "visibility:hidden; display:none;";
-            const tab = document.createElement("div");
-            tab.setAttribute("draggable", "true");
-            tab.setAttribute("id", id + "Tab");
-            tab.setAttribute("TabID", id + "Tab");
-            tab.setAttribute("longPath", path);
-            tab.setAttribute("screen", current_screen.id);
-            tab.setAttribute("class", "tabs tab_part");
-            tab.setAttribute("elementType", "tab");
-            tab.style = `min-width: ${name.length * 4 + 115}px; 
-              max-width: ${name.length * 5 + 100}px`;
-            tab.setAttribute("onclick", "loadTab(this)");
-            tab.setAttribute("file_status", "saved");
-            tab.innerHTML += `<p id="${id +
-              "TextTab"}" TabID="${id}Tab" class="tab_part" elementType="tab">${name}</p>`;
-            const tab_x = document.createElement("button");
-            tab_x.setAttribute("onclose", `closeTab("${id}Tab",true);`);
-            tab_x.setAttribute("onclick", `closeTab("${id}Tab",false);`);
-            tab_x.setAttribute("class", "close_tab tab_part");
-            tab_x.setAttribute("hovering", "false");
-            tab_x.setAttribute("elementType", "tab");
-            tab_x.setAttribute("TabID", id + "Tab");
-            tab_x.setAttribute("id", id + "CloseButton");
-            tab_x.innerHTML = icons["close"];
-            tab_x.addEventListener("mouseover", function(e) {
-              this.setAttribute("hovering", true);
+            const { puffin } = require("@mkenzo_8/puffin")
+            const retrieveTab = require("../../components/tab")
+            const tab = retrieveTab({
+              id: id,
+              name: name,
+              data: data,
+              screen: current_screen.id,
+              type:"free",
+              longpath:path
             });
-            tab_x.addEventListener("mouseout", function(e) {
-              this.setAttribute("hovering", false);
-            });
-            tab.ondragstart = function(event) {
-              event.dataTransfer.setData("id", tab.id);
-            };
-            tab.appendChild(tab_x);
-            document
+            puffin.render(tab,document
               .getElementById(current_screen.id)
-              .children[0].appendChild(tab);
-            tabs.push(tab);
-            const g_newPath = path;
-            filepath = g_newPath;
-            editingTab = tab.id;
+              .children[0])
+            tabs.push(tab.node)
+            filepath = path;
+            editingTab = tab.node.id;
             switch (filepath.split(".").pop()) {
               case "woff2":
               case "ttf":
@@ -105,9 +81,9 @@ module.exports = {
                     tabs[i].classList.remove("selected");
                   }
                 }
-                tab.classList.add("selected");
-                tab.setAttribute("typeEditor", "font");
-                editingTab = tab.id;
+                tab.node.classList.add("selected");
+                tab.node.setAttribute("typeEditor", "font");
+                editingTab = tab.node.id;
                 graviton.loadEditor(
                   {
                     type: "font",
@@ -118,7 +94,7 @@ module.exports = {
                   function() {
                     const tab_created_event = new CustomEvent("tab_created", {
                       detail: {
-                        tab: tab
+                        tab: tab.node
                       }
                     });
                     document.dispatchEvent(tab_created_event);
@@ -130,7 +106,7 @@ module.exports = {
                         "screen_loaded",
                         {
                           detail: {
-                            tab: tab,
+                            tab: tab.node,
                             screen: current_screen.id
                           }
                         }
@@ -152,9 +128,9 @@ module.exports = {
                     tabs[i].classList.remove("selected");
                   }
                 }
-                tab.classList.add("selected");
-                editingTab = tab.id;
-                tab.setAttribute("typeEditor", "image");
+                tab.node.classList.add("selected");
+                editingTab = tab.node.id;
+                tab.node.setAttribute("typeEditor", "image");
                 graviton.loadEditor(
                   {
                     type: "image",
@@ -165,7 +141,7 @@ module.exports = {
                   function() {
                     const tab_created_event = new CustomEvent("tab_created", {
                       detail: {
-                        tab: tab
+                        tab: tab.node
                       }
                     });
                     document.dispatchEvent(tab_created_event);
@@ -177,7 +153,7 @@ module.exports = {
                         "screen_loaded",
                         {
                           detail: {
-                            tab: tab,
+                            tab: tab.node,
                             screen: current_screen.id
                           }
                         }
@@ -189,8 +165,8 @@ module.exports = {
                 break;
               default:
                 (async () => {
-                  const data = await fs.readFile(tab.getAttribute("longpath"), "utf-8");
-                  tab.setAttribute("data", data);
+                  const data = await fs.readFile(tab.node.getAttribute("longpath"), "utf-8");
+                  tab.node.setAttribute("data", data);
                   tabs.forEach(tab => {
                     if (
                       tab.getAttribute("screen") == current_screen.id &&
@@ -199,20 +175,20 @@ module.exports = {
                       tab.classList.remove("selected");
                     }
                   });
-                  tab.classList.add("selected");
-                  editingTab = tab.id;
-                  tab.setAttribute("typeEditor", "text");
+                  tab.node.classList.add("selected");
+                  editingTab = tab.node.id;
+                  tab.node.setAttribute("typeEditor", "text");
                   graviton.loadEditor(
                     {
                       type: "text",
-                      dir: g_newPath,
+                      dir: filepath,
                       data: data,
                       screen: current_screen.id
                     },
                     function() {
                       const tab_created_event = new CustomEvent("tab_created", {
                         detail: {
-                          tab: tab
+                          tab: tab.node
                         }
                       });
                       document.dispatchEvent(tab_created_event);
@@ -224,7 +200,7 @@ module.exports = {
                           "screen_loaded",
                           {
                             detail: {
-                              tab: tab,
+                              tab: tab.node,
                               screen: current_screen.id
                             }
                           }
@@ -240,6 +216,7 @@ module.exports = {
           }
         }
         break;
+      case "custom":
       case "free":
         for (i = 0; i < tabs.length; i++) {
           if (
@@ -252,38 +229,17 @@ module.exports = {
         document.getElementById(
           current_screen.id
         ).children[1].children[0].style = "visibility:hidden; display:none;";
-        const tab = document.createElement("div");
-        tab.setAttribute("data", data);
-        tab.setAttribute("id", id + "_freeTab");
-        tab.setAttribute("TabID", id + "_freeTab");
-        tab.setAttribute("screen", current_screen.id);
-        tab.setAttribute("class", "tabs selected");
-        tab.setAttribute("longPath", id);
-        tab.setAttribute("elementType", "tab");
-        tab.style = `min-width: ${name.length * 4 + 115}px; 
-          max-width: ${name.length * 5 + 100}px`;
-        tab.setAttribute("onclick", "loadTab(this)");
-        tab.setAttribute("file_status", "saved");
-        tab.innerHTML += `<p id="${id +
-          "TextTab"}" TabID="${id}_freeTab" elementType="tab">${name}</p>`;
-        const tab_x = document.createElement("button");
-        tab_x.setAttribute("onclick", `closeTab("${id}_freeTab");`);
-        tab_x.setAttribute("class", "close_tab");
-        tab_x.setAttribute("hovering", "false");
-        tab_x.setAttribute("elementType", "tab");
-        tab_x.setAttribute("TabID", id + "_freeTab");
-        tab_x.setAttribute("id", id + "CloseButton");
-        tab.setAttribute("typeEditor", "free");
-        tab_x.innerHTML = icons["close"];
-        tab_x.addEventListener("mouseover", function(e) {
-          this.setAttribute("hovering", true);
+        const { puffin } = require("@mkenzo_8/puffin")
+        const retrieveTab = require("../../components/tab")
+        const tab = retrieveTab({
+          id: id,
+          name: name,
+          data: data,
+          screen: current_screen.id,
+          type:"free"
         });
-        tab_x.addEventListener("mouseout", function(e) {
-          this.setAttribute("hovering", false);
-        });
-        tab.appendChild(tab_x);
-        document.getElementById(current_screen.id).children[0].appendChild(tab);
-        tabs.push(tab);
+        puffin.render(tab,document.getElementById(current_screen.id).children[0])
+        tabs.push(tab.node);
         graviton.loadEditor(
           {
             type: "free",
@@ -293,10 +249,10 @@ module.exports = {
           },
           function() {
             filepath = null;
-            editingTab = tab.id;
+            editingTab = tab.node.id;
             const tab_created_event = new CustomEvent("tab_created", {
               detail: {
-                tab: tab
+                tab: tab.node
               }
             });
             document.dispatchEvent(tab_created_event);
@@ -306,7 +262,7 @@ module.exports = {
             ) {
               const screen_loaded_event = new CustomEvent("screen_loaded", {
                 detail: {
-                  tab: tab,
+                  tab: tab.node,
                   screen: current_screen.id
                 }
               });
@@ -314,7 +270,6 @@ module.exports = {
             }
           }
         );
-
         break;
     }
     this.setData = function(data) {
@@ -405,11 +360,11 @@ module.exports = {
             }
             editingTab = new_selected_tab.id;
             new_selected_tab.classList.add("selected");
-            const g_newPath = new_selected_tab.getAttribute("longpath");
-            filepath = g_newPath;
+            const newTabPath = new_selected_tab.getAttribute("longpath");
+            filepath = newTabPath;
             graviton.loadEditor({
               type: new_selected_tab.getAttribute("typeeditor"),
-              dir: g_newPath,
+              dir: newTabPath,
               data: new_selected_tab.getAttribute("data"),
               screen: new_selected_tab.getAttribute("screen")
             });
@@ -443,11 +398,11 @@ module.exports = {
         }
       })
       object.classList.add("selected");
-      const g_newPath = object.getAttribute("longpath");
-      filepath = g_newPath;
+      const newTabPath = object.getAttribute("longpath");
+      filepath = newTabPath;
       graviton.loadEditor({
         type: object.getAttribute("typeeditor"),
-        dir: g_newPath,
+        dir: newTabPath,
         data: object.getAttribute("data"),
         screen: object.getAttribute("screen")
       });
