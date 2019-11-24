@@ -70,7 +70,7 @@
 		"WelcomeMessage": "Bienvenido a ",
 		"CheckUpdates": "Comprobar actualizaciones",
 		"Settings-Editor-AutoCompletion-text": "Desactívalo para esconder las predicciones",
-		"Line-Wrapping": "Line-Wrapping",
+		"Line-Wrapping": "Ajuste de línea",
 		"Themes.Text": "Utilizar el color de acento del sistema",
 		"Author": "Autor",
 		"Notification.CannotRemoveMoreScreens": "No se pueden borrar más pantallas.",
@@ -159,6 +159,8 @@
 		"Mostrar":"Mostrar",
 		"NPMPanel":"Panel de NPM",
 		"Select":"Seleccionar",
-		"Settings-Advanced-Developer-Tools-text2":"Abrir el directorio de configuración"
+		"Settings-Advanced-Developer-Tools-text2":"Abrir el directorio de configuración",
+		"openTerminal": "Abrir terminal",
+    		"hideTerminal": "Ocultar terminal"
 	}
 }
