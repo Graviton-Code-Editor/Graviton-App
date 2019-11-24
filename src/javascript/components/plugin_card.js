@@ -1,4 +1,4 @@
-const { puffin } = require("@mkenzo_8/puffin");
+
 
 function retrieveCard({
   plugin,
@@ -8,9 +8,7 @@ function retrieveCard({
   repository,
   section
 }) {
-  const updateIcon = puffin.element(`<div></div>`, { props: [] });
-
-  updateIcon.node.innerHTML = newUpdate ? icons.update : "";
+  const updateIcon = puffin.element(`<div>${newUpdate ? icons.update : ""}</div>`, { props: [] });
 
   const cardLogo = puffin.element(`<div></div>`, { props: [] });
 

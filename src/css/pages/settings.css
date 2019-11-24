@@ -37,7 +37,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   color: var(--white-black);
   cursor: pointer;
   border:1px solid var(--primaryColor);
-  box-shadow: 0px 2px 7px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
   transition-property:box-shadow;
 }
 .theme_div p {

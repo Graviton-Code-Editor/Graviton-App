@@ -1,4 +1,4 @@
-const { puffin } = require("@mkenzo_8/puffin");
+
 
 function retrieveWindow({
   plugin,
@@ -33,21 +33,19 @@ function retrieveWindow({
         break;
     }
   }
-
-  const pluginContent = puffin.element(`<div></div>`, { props: [] });
-  pluginContent.node.innerHTML = `
+  const pluginContent = puffin.element(`
+  <div>
     <div>
-        <h1>${package.name}</h1>
-        <p>${package.description}</p>
-        <p>${getTranslation("MadeBy")}${package.author}</p>
-        <p>${getTranslation("Version")}: ${package.version} ${newUpdate?"(🎉 update:"+plugin.repo.package.version+")":""}</p>
-        <p>${getTranslation("Stars")}: ${plugin.repo != undefined ? plugin.repo.git.stargazers_count : "Unknown"}</p>
-        <p class="link" onclick="shell.openExternal('www.github.com/Graviton-Code-Editor/plugins_list/issues')">${getTranslation("Report")}</p>
-    </div>` 
-
+      <h1>${package.name}</h1>
+      <p>${package.description}</p>
+      <p>${getTranslation("MadeBy")}${package.author}</p>
+      <p>${getTranslation("Version")}: ${package.version} ${newUpdate?"(🎉 update:"+plugin.repo.package.version+")":""}</p>
+      <p>${getTranslation("Stars")}: ${plugin.repo != undefined ? plugin.repo.git.stargazers_count : "Unknown"}</p>
+      <p class="link" onclick="shell.openExternal('www.github.com/Graviton-Code-Editor/plugins_list/issues')">${getTranslation("Report")}</p>
+    </div>
+  </div>`, { props: [] });
   const pluginButtons = puffin.element(`
   <div>
-  
   ${(function() {
     if (plugin.local != undefined) {
       let button_content = "";

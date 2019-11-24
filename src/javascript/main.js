@@ -27,7 +27,8 @@ const fs = require("fs-extra"),
   semver = require("semver"),
   tinycolor = require("tinycolor2"),
   EventEmitter = require("events"),
-  sanitize = require('light-sanitize-html');
+  sanitize = require('light-sanitize-html'),
+  { puffin } = require("@mkenzo_8/puffin");
   
 require(path.join(
   __dirname,
@@ -179,7 +180,6 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
     "tabs.js"
   )),
   dropMenu = require(path.join(
@@ -319,22 +319,6 @@ let logDir = path.join(DataFolderDir, "log.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
   market_file = path.join(DataFolderDir, "market.json");
-
-document.addEventListener(
-  "mousedown",
-  function(event) {
-    if (event.which) mouseClicked = true;
-  },
-  true
-);
-
-document.addEventListener(
-  "mouseup",
-  function(event) {
-    if (event.which) mouseClicked = false;
-  },
-  true
-);
 
 document.addEventListener("graviton_loaded", () => {
   /**
