@@ -371,7 +371,8 @@ module.exports = {
       const ext_win = new Window({
         id: `sec${name}`,
         content: `<div id="${name}_window" style="height:100%;overflow:auto;"></div>`,
-        closeButton:true
+        closeButton:true,
+        animation:"slide_up"
       });
       ext_win.launch();
       const { puffin } = require("@mkenzo_8/puffin")

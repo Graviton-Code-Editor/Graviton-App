@@ -29,12 +29,13 @@ closeWindow('my_window1'); //Close the window by passing the id
 'use strict'
 
 module.exports = {
-  Window: function ({ id = Math.random(), content = "", onClose = "" , height="85%", width="85%" ,closeButton=false}) {
+  Window: function ({ id = Math.random(), content = "", onClose = "" , animation="scale_up", height="85%", width="85%" ,closeButton=false}) {
     /**
        * @desc Window constructor
        * @param {string} id                   Unique ID for the window
        * @param {string} content                 Window's content
        * @param {function} onClose (optional) When the window is closed the passed function will be executed
+       * @param {string} animatiom opening animation
        * @param {string} height custom height for the window
        * @param {string} width custom width for the window
        * @param {boolean} closeButton close button for the window
@@ -43,7 +44,7 @@ module.exports = {
       graviton.throwError('Parsed argument is not object.')
       return
     }
-
+    const openingAnimation = `window_${animation}`
     const {puffin} = require("@mkenzo_8/puffin")
 
     const buildingCloseButton = puffin.element(
@@ -64,7 +65,7 @@ module.exports = {
       `
      <div id="${id}_window"> 
       <div class="background_window" click="$closeMe" onclick="${onClose}" ></div>
-        <div id="${id + '_body'}" style="height:${height}; width:${width};" class="body_window">
+        <div id="${id + '_body'}" style="height:${height}; width:${width}; animation: ${openingAnimation} linear 0.1s;" class="body_window">
             ${(()=>{
               if(closeButton){
                   return `<buildingCloseButton/>`

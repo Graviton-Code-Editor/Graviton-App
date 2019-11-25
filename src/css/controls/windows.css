@@ -10,7 +10,6 @@
 }
 
 .body_window {
-  animation: window_up linear 0.1s;
   color: var(--white-black);
   font-size: 17px;
   border-radius: var(--window-radius);
@@ -43,14 +42,23 @@
   -webkit-user-select: none;
 }
 
-@keyframes window_up {
+@keyframes window_scale_up {
   0% {
-    opacity: 1;
     transform: translate3d(0, 0, 0) translate(-50%, -46%)  scale(.98);
   }
   100%{
-    opacity: 1;
     transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes window_slide_up {
+  0% {
+    opacity: 0.5;
+    transform: translate3d(0, 0, 0) translate(-50%, -48%) ;
+  }
+  100%{
+    opacity: 1;
+    transform: translate3d(0, 0, 0) translate(-50%, -50%) ;
   }
 }
 
