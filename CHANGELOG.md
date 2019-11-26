@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191126 - 1 [1.2.0]
+- Added a language load event
+- Fixed, dialogs didn't have opening animations
+
 ### 191124 - 1 [1.2.0]
 - Polished Settings page
 - Custom tabs couldn't be dragged

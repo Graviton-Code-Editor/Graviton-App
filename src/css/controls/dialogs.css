@@ -1,5 +1,5 @@
 .dialog_body {
-  animation: window_up linear 0.1s;
+  animation: window_slide_up linear 0.1s;
   opacity: 1;
   position: absolute;
   color: var(--white-black);
@@ -70,7 +70,7 @@
 }
 .dialog_body .buttons > button:active {
   transition: 0.1s;
-  box-shadow:0px 2px 6px rgba(0,0,0,0.25)
+  box-shadow:0px 1px 4px rgba(0,0,0,0.4)
 }
 
 
@@ -82,3 +82,7 @@
 .dialog_body .buttons > button.important:hover {
   background: var(--accentDarkColor);
 }
+.dialog_body .buttons > button.important:active {
+  background: var(--accentDarkColor);
+}
+

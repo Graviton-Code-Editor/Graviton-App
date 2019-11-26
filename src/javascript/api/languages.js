@@ -26,6 +26,12 @@ module.exports = {
             toTranslate[i].getAttribute('idT')
           )
         }
+        const language_loaded_event = new CustomEvent("language_loaded", {
+          detail: {
+            language: item
+          }
+        });
+        document.dispatchEvent(language_loaded_event);
       }
     })
   },
