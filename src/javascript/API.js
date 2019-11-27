@@ -706,6 +706,9 @@ graviton = {
      */
     return terminal;
   },
+  getUILanguage(){
+    return current_config.language.name
+  },
   getLanguage() {
     if (graviton.getCurrentFile().path == null) {
       return null;

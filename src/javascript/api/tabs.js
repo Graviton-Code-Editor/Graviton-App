@@ -79,26 +79,9 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
                   screen: current_screen.id
                 },
                 function() {
-                  const tab_created_event = new CustomEvent("tab_created", {
-                    detail: {
-                      tab: fontTab.node
-                    }
-                  });
-                  document.dispatchEvent(tab_created_event);
-                  if (
-                    document.getElementById(current_screen.id).children[0]
-                      .children.length === 1
-                  ) {
-                    const screen_loaded_event = new CustomEvent(
-                      "screen_loaded",
-                      {
-                        detail: {
-                          tab: fontTab.node,
-                          screen: current_screen.id
-                        }
-                      }
-                    );
-                    document.dispatchEvent(screen_loaded_event);
+                  document.dispatchEvent(graviton.events.tabCreated(fontTab.node)); //Throw tab created event
+                  if ( document.getElementById(current_screen.id).children[0].children.length === 1) {
+                    document.dispatchEvent(graviton.events.screenLoaded(current_screen.id))
                   }
                 }
               );
@@ -131,23 +114,9 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
                   screen: current_screen.id
                 },
                 function() {
-                  const tab_created_event = new CustomEvent("tab_created", {
-                    detail: {
-                      tab: imageTab.node
-                    }
-                  });
-                  document.dispatchEvent(tab_created_event);
+                  document.dispatchEvent(graviton.events.tabCreated(imageTab.node)); //Throw tab created event
                   if (document.getElementById(current_screen.id).children[0].children.length === 1) {
-                    const screen_loaded_event = new CustomEvent(
-                      "screen_loaded",
-                      {
-                        detail: {
-                          tab: imageTab.node,
-                          screen: current_screen.id
-                        }
-                      }
-                    );
-                    document.dispatchEvent(screen_loaded_event);
+                    document.dispatchEvent(graviton.events.screenLoaded(current_screen.id))
                   }
                 }
               );
@@ -179,23 +148,9 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
                     screen: current_screen.id
                   },
                   function() {
-                    const tab_created_event = new CustomEvent("tab_created", {
-                      detail: {
-                        tab: textTab.node
-                      }
-                    });
-                    document.dispatchEvent(tab_created_event);
+                    document.dispatchEvent(graviton.events.tabCreated(textTab.node)); //Throw tab created event
                     if (document.getElementById(current_screen.id).children[0].children.length === 1) {
-                      const screen_loaded_event = new CustomEvent(
-                        "screen_loaded",
-                        {
-                          detail: {
-                            tab: textTab.node,
-                            screen: current_screen.id
-                          }
-                        }
-                      );
-                      document.dispatchEvent(screen_loaded_event);
+                      document.dispatchEvent(graviton.events.screenLoaded(current_screen.id))
                     }
                   }
                 );
@@ -234,23 +189,9 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
         },
         function() {
           filepath = null;
-          const tab_created_event = new CustomEvent("tab_created", {
-            detail: {
-              tab: customTab.node
-            }
-          });
-          document.dispatchEvent(tab_created_event);
-          if (
-            document.getElementById(current_screen.id).children[0].children
-              .length === 1
-          ) {
-            const screen_loaded_event = new CustomEvent("screen_loaded", {
-              detail: {
-                tab: customTab.node,
-                screen: current_screen.id
-              }
-            });
-            document.dispatchEvent(screen_loaded_event);
+          document.dispatchEvent(graviton.events.tabCreated(customTab.node)); //Throw tab created event
+          if ( document.getElementById(current_screen.id).children[0].children .length === 1 ) {
+            document.dispatchEvent(graviton.events.screenLoaded(current_screen.id))
           }
         }
       );
@@ -333,13 +274,7 @@ function closeTab(tab_id, fromWarn) {
             screen: new_selected_tab.getAttribute("screen")
           });
         }
-        const tab_closed_event = new CustomEvent("tab_closed", {
-          detail: {
-            tab: working_tab,
-            screen: working_tab.getAttribute("screen")
-          }
-        });
-        document.dispatchEvent(tab_closed_event);
+        document.dispatchEvent(graviton.events.tabClosed(working_tab))
         working_tab.remove();
       }
     }
@@ -364,13 +299,7 @@ function loadTab(incomingTab) {
       screen: incomingTab.getAttribute("screen")
     });
     editingTab = incomingTab.id;
-    const tab_loaded_event = new CustomEvent("tab_loaded", {
-      detail: {
-        tab: incomingTab,
-        screen: incomingTab.getAttribute("screen")
-      }
-    });
-    document.dispatchEvent(tab_loaded_event);
+    document.dispatchEvent(graviton.events.tabLoaded(incomingTab))
   }
 }
 

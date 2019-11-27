@@ -56,6 +56,13 @@ graviton.loadEditor = require(path.join(
   "editors.js"
 )).loadEditor;
 
+graviton.events = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "events.js"
+));
+
 const { loadLanguage, getTranslation } = require(path.join(
     __dirname,
     "src",
