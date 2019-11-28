@@ -2,8 +2,8 @@ module.exports = {
   Panel: function({
     id = Math.random(),
     content = "",
-    minHeight = "",
-    maxHeight = "",
+    minHeight = "45px",
+    maxHeight = "auto",
     visible = true
   }) {
     const {puffin} = require("@mkenzo_8/puffin")

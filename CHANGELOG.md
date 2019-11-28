@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191128 - 1 [1.2.0]
+- Fixed spanish string
+- Little improvements over the panel resizer
+
 ### 191126 - 1 [1.2.0]
 - Added a language load event
 - Fixed, dialogs didn't have opening animations

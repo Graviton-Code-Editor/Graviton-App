@@ -156,7 +156,7 @@
 		"Process.InstallingDependencies":"Instalando las dependencias...",
 		"Process.Completed":"Completado!",
 		"Hide":"Esconder",
-		"Mostrar":"Mostrar",
+		"Show":"Mostrar",
 		"NPMPanel":"Panel de NPM",
 		"Select":"Seleccionar",
 		"Settings-Advanced-Developer-Tools-text2":"Abrir el directorio de configuración",
