@@ -30,7 +30,7 @@ function retrieveCard({
         plugin.local.logo
       )}"/>`;
     }else{
-      cardLogo.node.innerHTML = `<img  src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${package.logo}?sanitize=true">`;
+      cardLogo.node.innerHTML = `<img  src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${packageConf.logo}?sanitize=true">`;
     }
   }
 
@@ -59,7 +59,9 @@ function retrieveCard({
           <p class="plugin_description_prop">${packageConf.description}</p>   
         </div>
       </div>
-      <p class="installed"><cardBottom/></p>
+      <div class="installed"> 
+        <cardBottom/>
+      </div>
       </div>
     `,
     {

@@ -423,7 +423,7 @@ module.exports = {
             .then(res => res.text())
             .then(body3 => {
               if (
-                document.getElementById(data.getAttribute("name") + "_div") !=
+                document.getElementById(`${name}_div`) !=
                 undefined
               ) {
                 bottom_section.innerHTML = `<div style="flex:1;" >${

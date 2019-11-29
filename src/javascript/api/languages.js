@@ -18,7 +18,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   loadLanguage: language => {
     languages.map((item, index) => {
-      if (item['name'] === language) {
+      if (item.name === language) {
         current_config.language = item
         const toTranslate = document.getElementsByClassName('translate_word')
         for (i = 0; i < toTranslate.length; i++) {

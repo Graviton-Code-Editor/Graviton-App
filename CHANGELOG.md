@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191129 - 1 [1.2.0]
+- Fixed, Market cards weren't rendering properly
+- Improved some code
+
 ### 191128 - 1 [1.2.0]
 - Fixed spanish string
 - Little improvements over the panel resizer

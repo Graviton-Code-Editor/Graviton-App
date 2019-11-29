@@ -82,6 +82,7 @@
   border-top: 2px solid var(--primaryColor);
   padding: 12px 0px 4px 4px;
   margin: 2px;
+  font-size: 13px;
   color: var(--white-black);
 }
 

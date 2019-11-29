@@ -40,14 +40,16 @@ if (!fs.existsSync(logDir)) {
   log = require(logDir);
 }
 
-function loadConfig() {
-  // Loads the configuration from the config.json for the first time
+/**
+ * @desc Loads the configuration from the config.json for the first time
+ */
+graviton.loadConfiguration = function(){
   if (!fs.existsSync(configDir)) {
-    fs.writeFile(configDir, JSON.stringify(current_config)); // Save the config
-    loadLanguage(current_config.language);
-    graviton.refreshCustomization();
+     fs.writeFile(configDir, JSON.stringify(current_config)); // Saves the config
+    loadLanguage(current_config.language); //Loads the configured language
+    graviton.refreshCustomization(); //Load basic UI configuration (zoom, font-size...)
     screens.add(); // Creates the first screen
-    Menus.loadDefaults();
+    Menus.loadDefaults(); //Loads default top bar's menus
     Plugins.detect(function() {
       if (!current_config.justInstalled) {
         Welcome.open();
@@ -57,20 +59,22 @@ function loadConfig() {
       appendBinds(); // Creates the general key binds
     });
   } else {
-    const local_config = require(configDir);
+    const localConfig = require(configDir);
     Object.keys(current_config).forEach(function(key) {
-      if (local_config[key] != undefined && current_config[key] != undefined) {
-        current_config[key] = local_config[key];
-      } // Will only change the extisting parameters
+      if (localConfig[key] != undefined && current_config[key] != undefined) {
+        current_config[key] = localConfig[key];
+      } // Will only update the extisting parameters
     });
-    loadLanguage(current_config.language);
-    graviton.refreshCustomization();
-    graviton.changeExplorerPosition(current_config.explorerPosition);
-    screens.add(); // Creates the first screen
-    Menus.loadDefaults();
+    loadLanguage(current_config.language); //Loads the configured language
+    graviton.setTitle(`v${GravitonInfo.version}`); //Initial window's title
+    graviton.loadControlButtons();      //Load window's buttons (minimize, maximize & close)
+    graviton.refreshCustomization(); //Load basic UI configuration (zoom, font-size...)
+    graviton.changeExplorerPosition(current_config.explorerPosition); //Set explorer's configured position
+    screens.add();  //Create first screen
+    Menus.loadDefaults(); //Loads default top bar's menus
     Plugins.detect(function() {
-      if (current_config["theme"] != undefined) {
-        graviton.setTheme(current_config["theme"]);
+      if (current_config.theme != undefined) {
+        graviton.setTheme(current_config.theme);
       }
       if (!current_config.justInstalled) {
         Welcome.open();
@@ -79,9 +83,12 @@ function loadConfig() {
       }
       if (current_config.animationsPreferences == "desactivated") {
         const style = document.createElement("style");
-        style.innerText = `*{-webkit-transition: none !important;
-               transition: none !important;
-               animation:0;}`;
+        style.innerText = `
+          *{
+            -webkit-transition: none !important;
+            transition: none !important;
+            animation:0;
+          }`;
         style.id = "_ANIMATIONS";
         document.documentElement.appendChild(style);
         document.documentElement.style.setProperty("--scalation", "1");
@@ -90,12 +97,10 @@ function loadConfig() {
     });
   }
 }
-
-graviton.saveConfiguration = () => {
-  /**
-   * @desc Saves the current configuration to config.json
-   *
-   */
+/**
+ * @desc Saves the current configuration to config.json
+ */
+graviton.saveConfiguration = function(){
   fs.writeFile(
     configDir,
     JSON.stringify({
@@ -114,7 +119,7 @@ graviton.saveConfiguration = () => {
       version: GravitonInfo.version,
       build: GravitonInfo.date,
       npm_panel: current_config.npm_panel
-    },null,3),
+    },null,2),
     err => {
       if (err) graviton.throwError("Couldn't save the configuration file.");
     }
@@ -123,3 +128,4 @@ graviton.saveConfiguration = () => {
 };
 
 const saveConfig = graviton.saveConfiguration; //Prevent API problems
+const loadConfig = graviton.loadConfiguration; //Prevent API problems

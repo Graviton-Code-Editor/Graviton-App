@@ -209,8 +209,8 @@ body {
 }
 .explorer_panel{
 	overflow: auto;
-	min-height: auto !important;
-	max-height: auto;
+	min-height: 45px !important;
+	max-height: 100%;
 }
 .explorer_panel * {
 	font-family:_main_font ;
@@ -629,7 +629,7 @@ gv-panel{
 	padding:25px;
 	display: block;
 	min-height:auto;
-	max-height: auto;
+	max-height: 100%;
 }
 gv-paneltitle{
 	font-size: 14px;

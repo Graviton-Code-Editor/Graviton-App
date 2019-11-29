@@ -427,7 +427,7 @@ graviton = {
     if (editor_mode == "zen") {
       editor_mode = "normal";
       document.getElementById("explorer_app").style =
-        "visibility: visible; width:210px; display:block;";
+        "visibility: visible; width:210px; display:flex;";
       document.getElementById("editor_resizer").style = " display:block;";
     } else {
       editor_mode = "zen";

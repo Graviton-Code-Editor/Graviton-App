@@ -33,5 +33,13 @@ module.exports = {
                 screen: screenID
             }
         });
+    },
+    newRecentProject: function(dir){
+        return new CustomEvent("new_recent_project", {
+            detail: {
+                name: path.basename(dir),
+                path: dir
+            }
+        });
     }
 }

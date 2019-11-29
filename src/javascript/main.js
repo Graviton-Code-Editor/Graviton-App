@@ -366,44 +366,36 @@ preload([
 
 preloadFont(["editor", "terminal"]);
 
-window.onload = function() {
-  fs.readdir(path.join(__dirname, "src", "templates"), (err, paths) => {
-    /* Load UI templates */
-    let temporal_count = 0;
+window.onload = async function() {
+  const templateDirs = await fs.readdir(path.join(__dirname, "src", "templates"))
+  templateDirs.forEach( async function(dir, index) {
+    const templateData = await fs.readFile(path.join(__dirname, "src", "templates", dir),"utf8")
+    templates[path.basename(dir, ".js")] = templateData;
+    if (document.getElementById("boot_loader") !== null){
+      document.getElementById("boot_loader").children[0].style.width += index + 20 + "%";
+    }
+    if(index === templateDirs.length-1){
+      loadGraviton()
+    }
+  });  
+  await fs.readdir(path.join(__dirname, "languages")).then(function(paths){
     paths.forEach((dir, index) => {
-      fs.readFile(
-        path.join(__dirname, "src", "templates", dir),
-        "utf8",
-        function(err, data) {
-          templates[path.basename(dir, ".js")] = data;
-          temporal_count++;
-          document.getElementById("boot_loader").children[0].style.width =
-            temporal_count + 20 + "%";
-          if (temporal_count == paths.length) {
-            fs.readdir(path.join(__dirname, "languages"), (err, paths) => {
-              /* Load languages */
-              let path_count = 0;
-              paths.forEach((dir, index) => {
-                languages.push(require(path.join(__dirname, "languages", dir)));
-                path_count++;
-                if (paths.length === path_count) {
-                  graviton.loadControlButtons();
-                  loadConfig();
-                  graviton.consoleInfo("All templates have been loaded.");
-                  if (document.getElementById("boot_loader") !== null)
-                    document.getElementById("boot_loader").children[0].style =
-                      "width: 100%; border-radius:100px;";
-                }
-              });
-            });
-          }
-        }
-      );
+      languages.push(require(path.join(__dirname, "languages", dir)));
+      if (document.getElementById("boot_loader") !== null){
+        document.getElementById("boot_loader").children[0].style.width += index + 20 + "%";
+      } 
     });
-  });
+  })
+  function loadGraviton(){
+    graviton.loadConfiguration();
+    graviton.consoleInfo("All templates have been loaded.");
+    if (document.getElementById("boot_loader") !== null){
+      document.getElementById("boot_loader").children[0].style = "width: 100%; border-radius:100px;";
+    }
+  }
 };
 
-graviton.setTitle(`v${GravitonInfo.version}`); //Initial title
+
 
 const appendBinds = () => {
   Mousetrap.bind("mod+s", function() {
@@ -723,7 +715,7 @@ const directories = {
   }
 };
 
-const registerNewProject = function(dir) {
+function registerNewProject(dir){
   // Add a new directory to the history if it is the first time it has been opened in the editor
   for (i = 0; i < log.length + 1; i++) {
     if (i != log.length) {
@@ -735,20 +727,14 @@ const registerNewProject = function(dir) {
         Name: path.basename(dir),
         Path: dir
       });
-      const recent_project_event = new CustomEvent("new_recent_project", {
-        detail: {
-          name: path.basename(dir),
-          path: dir
-        }
-      });
-      document.dispatchEvent(recent_project_event);
-      fs.writeFile(logDir, JSON.stringify(log));
+      document.dispatchEvent(graviton.events.newRecentProject(dir));
+      fs.writeFile(logDir, JSON.stringify(log,null,2));
       return;
     }
   }
 };
 
-const createNewProject = function(template) {
+function createNewProject(template){
   dialog.showOpenDialog(
     {
       properties: ["openDirectory"]
@@ -757,19 +743,19 @@ const createNewProject = function(template) {
       if (selectedFiles.length != 0) {
         switch (template) {
           case "html":
-            const g_project_dir = path.join(
+            const newProjectDir = path.join(
               selectedFiles[0],
               ".GravitonProject " + Date.now()
             );
-            fs.mkdirSync(g_project_dir);
+            fs.mkdirSync(newProjectDir);
             fs.writeFile(
-              path.join(g_project_dir, "index.html"),
+              path.join(newProjectDir, "index.html"),
               graviton.getTemplate("html_project"),
               err => {
                 if (err) {
                   return err;
                 }
-                Explorer.load(g_project_dir, "g_directories", true);
+                Explorer.load(newProjectDir, "g_directories", true);
               }
             );
             break;
@@ -831,7 +817,7 @@ const selectionFromTo = (parent, toSelect) => {
   for (let child of children) {
     child.classList.remove("active");
   }
-  toSelect.classList.add("active");
+  if(toSelect!=undefined) toSelect.classList.add("active");
 };
 
 /**

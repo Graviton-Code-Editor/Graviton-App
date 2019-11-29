@@ -32,7 +32,7 @@ module.exports = {
         width:"600px"
     })
     welcome_window.launch()
-    elasticContainer.append(document.getElementById("recent_projects"))
+    //elasticContainer.append(document.getElementById("recent_projects"))
     if (error_showed == false) {
       DeleteBoot();
       const graviton_loaded = new CustomEvent("graviton_loaded", {});
