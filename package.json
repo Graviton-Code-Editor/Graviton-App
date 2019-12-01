@@ -69,9 +69,8 @@
   "build": {
     "appId": "graviton-editor",
     "artifactName": "${name}-${version}-${arch}-${platform}.${ext}",
-    "icon": "assets/mac/icon.png",
     "asar": true,
-    "dmg": {
+    "mac": {
       "contents": [
         {
           "x": 240,
@@ -80,7 +79,8 @@
           "path": "/Applications"
         }
       ],
-      "target":"pkg"
+      "target":"pkg",
+      "icon": "assets/mac/icon.png"
     },
     "linux": {
       "category": "Development",
