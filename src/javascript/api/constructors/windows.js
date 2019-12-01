@@ -66,6 +66,7 @@ module.exports = {
       var buildingWindow = puffin.element(
         `
        <div id="${id}_window" class="body_window_full"> 
+          <div class="draggable-box" style="min-width:100%; height:35px; padding:0px; margin:0; position:absolute; top:0;left:0;"></div>
           <div id="${id + '_body'}">
               ${(()=>{
                 let list = "";

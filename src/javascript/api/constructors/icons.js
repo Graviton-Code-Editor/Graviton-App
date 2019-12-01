@@ -178,6 +178,28 @@ module.exports = {
 
 	`,
     empty: `
-			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14"></svg>`
+			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="15" viewBox="0 0 14 14"></svg>`,
+	cross:`
+		<svg mouseout="$notHovering" width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect width="6.78821" height="1.69705" rx="0.5" transform="matrix(0.707106 -0.707108 0.707106 0.707108 0 4.79999)" fill="#9E423D"/>
+			<rect width="6.78821" height="1.69705" rx="0.5" transform="matrix(0.707106 0.707108 -0.707106 0.707108 1.19995 0)" fill="#9E423D"/>
+		</svg>
+	
+	`,
+	minimize:`
+		<svg mouseout="$notHovering" width="8" height="2" viewBox="0 0 8 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect width="8" height="2" rx="0.5" fill="#9F7002"/>
+		</svg>
+	
+	`,
+	zoom:`
+		<svg mouseout="$notHovering" width="6" height="6" viewBox="0 0 6 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0 2.20711C0 1.76165 0.538571 1.53857 0.853553 1.85355L2.5 3.5L4.14645 5.14645C4.46143 5.46143 4.23835 6 3.79289 6H0.5C0.223858 6 0 5.77614 0 5.5V2.20711Z" fill="#168326"/>
+			<path d="M6 3.79289C6 4.23835 5.46143 4.46143 5.14645 4.14645L3.5 2.5L1.85355 0.853554C1.53857 0.538572 1.76165 1.19209e-07 2.20711 1.19209e-07L5.5 1.19209e-07C5.77614 1.19209e-07 6 0.223858 6 0.5L6 3.79289Z" fill="#168326"/>
+		</svg>
+	
+	
+	`
+
   }
 }

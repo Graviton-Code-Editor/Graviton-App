@@ -22,18 +22,16 @@ const windows = puffin.element(`
 `)
 
 const macOS = puffin.element(`
-    <div class="controls">
+    <div class="controls" >
         <button title="Close" onclick="g_window.close();" id="close" class="macOS" style=" height: auto;">
-            
+            <img/>
         </button>
         <button title="Minimize" onclick="g_window.minimize(); " class="macOS" id="minimize" style=" height: auto;">
-            
+            <img/>
         </button>
         <button title="Zoom" onclick="g_window.maximize(); " class="macOS" id="maximize" style=" height: auto;">
-           
+            <img/>
         </button>
-       
-        
     </div>
 `)
 

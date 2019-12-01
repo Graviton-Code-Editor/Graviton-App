@@ -25,7 +25,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   margin: 0;
   display: flex;
 }
-
+.draggable-box{
+  -webkit-app-region: drag;
+}
 #top_bar_app  .controls {
   flex: 1;
   display: flex;
@@ -330,14 +332,54 @@ span.divider-2 {
 }
 
 #close.macOS{
-  background: #ff6058;
-  border:2px solid #f85a52
+  background: #FF746D;
+  border:1px solid #f85a52
 }
+#close.macOS:hover{
+  background: #FF746D !important;
+  border:1px solid #f85a52 !important;
+}
+#close.macOS:active{
+  background: #D0716C !important;
+  border:1px solid #AA4F4B !important;
+}
+.controls:hover #close.macOS  img {
+  content: url("../icons/cross.svg")
+}
+
 #minimize.macOS{
   background: #fdbe2e;
-  border:2px solid #faba25
+  border:1px solid #DFA620
 }
+#minimize.macOS:hover  {
+  background: #fdbe2e;
+  border:1px solid #DFA620
+}
+#minimize.macOS:active  {
+  background: #E0AD38;
+  border:1px solid #B38B2E
+}
+.controls:hover #minimize.macOS img  {
+  content: url("../icons/control_minimize.svg")
+}
+
 #maximize.macOS{
+  background: #1DE33D;
+  border:1px solid #1ECE38
+}
+#maximize.macOS:hover{
+  background: #1DE33D;
+  border:1px solid #1ECE38
+}
+#maximize.macOS:active{
   background: #27cb41;
-  border:2px solid #1fc938
+  border:1px solid #1AAC2F
+}
+.controls:hover #maximize.macOS img  {
+  content: url("../icons/zoom.svg")
+}
+
+#controls_macOS.blur .macOS {
+  background:#CDCECD;
+  border:0px;
 }

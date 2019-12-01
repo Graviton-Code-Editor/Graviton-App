@@ -69,7 +69,7 @@ module.exports = {
             new Notification({
               title: "Graviton",
               content:
-                "You are being on dev mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
+                "You are on developer mode. The .graviton folder is created in the parent folder of the source. Press Ctrl+shift+i or click the button to open dev tools.",
               delay: "10000",
               buttons: {
                 "Dev tools": {

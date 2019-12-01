@@ -793,3 +793,15 @@ function foo(){
   puffin.render(test,document.getElementById("test_test"))
 
 }
+
+
+g_window.on("blur",function(){
+  if(graviton.currentOS().codename === "darwin"){
+    document.getElementById("controls_macOS").classList.toggle("blur")
+  }
+})
+g_window.on("focus",function(){
+  if(graviton.currentOS().codename === "darwin"){
+    document.getElementById("controls_macOS").classList.remove("blur")
+  }
+})

@@ -58,13 +58,13 @@
     "xterm": "^3.14.5"
   },
   "devDependencies": {
-    "electron": "^7.0.0",
-    "electron-builder": "^20.44.4",
+    "electron": "^7.1.2",
+    "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.8.5",
     "mocha": "^6.2.0",
+    "node-abi": "^2.12.0",
     "spectron": "^9.0.0",
-    "standard": "^12.0.1",
-    "node-abi": "^2.12.0"
+    "standard": "^12.0.1"
   },
   "build": {
     "appId": "graviton-editor",
