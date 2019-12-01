@@ -79,7 +79,8 @@
           "type": "link",
           "path": "/Applications"
         }
-      ]
+      ],
+      "target":"pkg"
     },
     "linux": {
       "category": "Development",
