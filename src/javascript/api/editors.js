@@ -105,13 +105,8 @@ module.exports = {
           const font_container = document.createElement('div')
           font_container.classList = 'code-space'
           font_container.setAttribute('id', `${dir.replace(/\\/g, '')}_editor`)
-          const random_id = Math.random()
-          font_container.innerHTML = graviton.getTemplate(
-            'editor_font_previewer',
-            `
-               const info = ${JSON.stringify({ dir, type, data, screen })};
-            `
-          )
+          const returnPreview = require(path.join("..","components","global","font_previewer"));
+          puffin.render(returnPreview(dir),font_container)
           document
             .getElementById(screen)
             .children[1].appendChild(font_container)

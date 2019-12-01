@@ -1,11 +1,8 @@
 /*
 ########################################
               MIT License
-
 Copyright (c) 2019 Marc Espin Sanztor
-
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
-
 #########################################
 */
 
@@ -14,6 +11,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Welcome: {
     open: function() {
+        if (error_showed == false && document.body.getAttribute("loaded") !== "true") {
+            DeleteBoot();
+            document.body.setAttribute("loaded","true")
+            const graviton_loaded = new CustomEvent("graviton_loaded", {});
+            document.dispatchEvent(graviton_loaded);
+        }
       /**
        * @desc Open the welcome window
        */
@@ -25,19 +28,15 @@ module.exports = {
           return;
         }
       }
+      const welcomePage = require(path.join("..","components","welcome","welcome"));
       const welcome_window = new Window({
         id:'welcome_window',
-        content:graviton.getTemplate("welcome"),
+        component:welcomePage,
         height:"400px",
         width:"600px"
-    })
-    welcome_window.launch()
-    //elasticContainer.append(document.getElementById("recent_projects"))
-    if (error_showed == false) {
-      DeleteBoot();
-      const graviton_loaded = new CustomEvent("graviton_loaded", {});
-      document.dispatchEvent(graviton_loaded);
-    }
+      })
+      welcome_window.launch()
+      elasticContainer.append(document.getElementById("recent_projects"))
     }
   }
 };

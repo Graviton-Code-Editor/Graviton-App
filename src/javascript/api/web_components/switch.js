@@ -23,7 +23,7 @@ module.exports = class Switch extends HTMLElement {
       <div class="${this.getAttribute("class")} switch">
           <div></div>
       </div>`;
-    this.addEventListener("click", function() {
+    this.toggle = function() {
       const dot = this.children[0];
       if (this.classList.contains("disabled") === false) {
         if (this.getState()) {
@@ -34,7 +34,8 @@ module.exports = class Switch extends HTMLElement {
           dot.classList.replace("desactivated", "activated");
         }
       }
-    });
+    };
+    this.addEventListener("click", ()=> this.toggle())
   }
   getState() {
     if (this.classList.contains("disabled")) {

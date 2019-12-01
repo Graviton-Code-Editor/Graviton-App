@@ -27,7 +27,7 @@ module.exports = {
                 buttons: {
                   [getTranslation('No')]: {},
                   [getTranslation('Yes')]: {
-                    click: 'updater.update()',
+                    click: ()=> updater.update(),
                     important: true
                   }
                 }
@@ -45,6 +45,7 @@ module.exports = {
     })
   },
   update: function () {
+    const shell = require("electron").shell
     shell.openExternal(
       'https://github.com/Graviton-Code-Editor/Graviton-App/releases'
     )

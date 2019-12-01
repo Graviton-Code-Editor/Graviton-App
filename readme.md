@@ -81,6 +81,7 @@ Please consider revising and updating your languages in case they are missing so
 
 🤩 Useful libraries 
 ---
+* [PuffinJS](https://github.com/PuffinJS/puffin)
 * [CodeMirror](https://codemirror.net/)
 * [OpenEmoji](https://openmoji.org)
 

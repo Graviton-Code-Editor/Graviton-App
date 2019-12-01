@@ -1,4 +1,6 @@
-`<!DOCTYPE html>
+
+module.exports.html = `
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Graviton Project</p>
@@ -9,4 +11,6 @@
   <body>
     <h1>Hello World!</h1>
   </body>
-</html>`
+</html>
+
+`

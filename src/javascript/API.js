@@ -608,10 +608,10 @@ graviton = {
     }
   },
   getPlugin: function(plugin_name) {
-    for (i = 0; i < full_plugins.length; i++) {
-      if (full_plugins[i].package.name == plugin_name) {
+    for (i = 0; i < marketCache.length; i++) {
+      if (marketCache[i].package.name == plugin_name) {
         return {
-          repo: full_plugins[i],
+          repo: marketCache[i],
           local: (function() {
             for (let a = 0; a < plugins_list.length; a++) {
               if (plugins_list[a].name == plugin_name) {
@@ -665,7 +665,7 @@ graviton = {
     }
   },
   setTitle(title) {
-    if (graviton.currentOS().codename == "win32") {
+    if (graviton.currentOS().codename != "linux") {
       document.getElementById("title_directory").children[0].innerText =
         title + " · Graviton";
     } else {
@@ -742,10 +742,9 @@ graviton = {
       }
     });
   },
-  panels : [],
+  panels: [],
   notifications:[],
-  toggleNPMPanel:()=>{
-    
+  toggleNPMPanel:function(){
     if(current_config.npm_panel){
       const npm_panel = graviton.panels.filter(panel => panel.panelObject.id === "npm_panel")[0]
       if(npm_panel!=undefined){
@@ -758,6 +757,24 @@ graviton = {
       }
     }
     current_config.npm_panel = !current_config.npm_panel
+  },
+  refreshCustomization : function(){
+    document.documentElement.style.setProperty(
+      "--editor-font-size",
+      `${current_config.fontSizeEditor}px`
+    ); // Update settings from start
+    webFrame.setZoomFactor(current_config.appZoom / 25);
+    if (current_config.blurPreferences != 0) {
+      document.documentElement.style.setProperty(
+        "--blur",
+        `${current_config.blurPreferences}px`
+      );
+    } else {
+      document.documentElement.style.setProperty("--blur", `none`);
+    }
+  },
+  updateAvailable(){
+    return new_update;
   }
 };
 
@@ -936,29 +953,6 @@ graviton.copyText = content => {
   text.remove();
 };
 
-const preload = array => {
-  // Preload images when booting
-  for (i = 0; i < array.length; i++) {
-    document.body.innerHTML += `
-     <img id="${array[i]}"src="${array[i]}" style="visibility:hidden;"></img>`;
-    document.getElementById(array[i]).remove();
-  }
-};
-
-const preloadFont = array => {
-  // Preload fonts when booting
-  for (i = 0; i < array.length; i++) {
-    const ele = document.createElement("p");
-    ele.textContent = ".";
-    ele.id = array[i];
-    ele.style.fontFamily = array[i];
-    document.body.appendChild(ele);
-    setTimeout(function() {
-      ele.remove();
-    }, 1);
-  }
-};
-
 graviton.changeExplorerPosition = position => {
   const content_app = document.getElementById("content_app");
   if (position === "right") {
@@ -1001,10 +995,17 @@ graviton.setEditorFontSize = function(new_size) {
 };
 
 graviton.loadControlButtons = () => {
-  if (graviton.currentOS().codename == "win32") {
-    document.getElementById("controls").innerHTML = graviton.getTemplate(
-      "control_buttons"
-    );
+  const {puffin} = require("@mkenzo_8/puffin");
+  if(graviton.currentOS().codename == "win32"){
+    document.getElementById("controls_macOS").remove()
+    const {windows } = require(path.join(__dirname,"src","javascript","components","global","control_buttons"));
+    puffin.render(windows,document.getElementById("controls_windows"))
+  }else if(graviton.currentOS().codename == "darwin"){
+    document.getElementById("graviton_logo_topbar").remove()
+    const {macOS } = require(path.join(__dirname,"src","javascript","components","global","control_buttons"));
+    puffin.render(macOS,document.getElementById("controls_macOS"))
+  }
+  if (graviton.currentOS().codename !== "linux") {
     g_window.on("maximize", (e, cmd) => {
       const button = document.getElementById("maximize");
       button.setAttribute("onclick", "g_window.unmaximize();");
@@ -1013,9 +1014,6 @@ graviton.loadControlButtons = () => {
       const button = document.getElementById("maximize");
       button.setAttribute("onclick", "g_window.maximize();");
     });
-  } else {
-    document.getElementById("controls").innerHTML = " ";
-    document.getElementById("controls").setAttribute("os", "not_windows");
   }
 };
 
@@ -1027,5 +1025,28 @@ graviton.closeDropmenus = function() {
       openDropdown.classList.replace("show", "hide");
       anyDropON = null;
     }
+  }
+};
+
+const preload = array => {
+  // Preload images when booting
+  for (i = 0; i < array.length; i++) {
+    document.body.innerHTML += `
+     <img id="${array[i]}"src="${array[i]}" style="visibility:hidden;"></img>`;
+    document.getElementById(array[i]).remove();
+  }
+};
+
+const preloadFont = array => {
+  // Preload fonts when booting
+  for (i = 0; i < array.length; i++) {
+    const ele = document.createElement("p");
+    ele.textContent = ".";
+    ele.id = array[i];
+    ele.style.fontFamily = array[i];
+    document.body.appendChild(ele);
+    setTimeout(function() {
+      ele.remove();
+    }, 1);
   }
 };

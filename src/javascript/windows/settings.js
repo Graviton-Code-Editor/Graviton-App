@@ -14,26 +14,22 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Settings: {
     open: function() {
+      const sidePanel = require(path.join("..","components","settings","sidepanel"));
       const settings_window = new Window({
         id: "settings_window",
-        content: graviton.getTemplate("settings_sidemenu"),
+        component:sidePanel,
         onClose: "graviton.saveConfiguration();"
       });
       settings_window.launch();
       elasticContainer.append(document.getElementById("settings_content"));
     },
     navigate: function(num) {
+      const {puffin } = require("@mkenzo_8/puffin")
       switch (num) {
         case "customization":
           document.getElementById("settings.customization").innerHTML = "";
-          const {puffin } = require("@mkenzo_8/puffin")
-          const ThemeCard = require("../components/theme_card.js")
-          const customizationSection = puffin.element(graviton.getTemplate("settings_customization"),{
-            components:{
-              ThemeCard
-            },
-            methods:[]
-          })
+          const customizationSection = require(path.join("..","components","settings","customization"));
+
           puffin.render(customizationSection,document.getElementById("settings.customization"))
           if (document.getElementById("theme_list") != null) { 
             if (themes.length == 0) {
@@ -46,44 +42,29 @@ module.exports = {
           }
           break;
         case "languages":
-          document.getElementById(
-            "settings.languages"
-          ).innerHTML = graviton.getTemplate("settings_languages");
-          if (document.getElementById("language_list") != null) {
-            languages.forEach(lang => {
-              const languageDiv = document.createElement("div");
-              languageDiv.setAttribute("class", "language_div");
-              languageDiv.setAttribute(
-                "onclick",
-                `loadLanguage('${lang.name}'); selectionFromTo(this.parentElement,this); graviton.saveConfiguration();`
-              );
-              languageDiv.innerText = lang.name;
-              if (lang.name === current_config.language.name) {
-                selectionFromTo(document.getElementById("language_list"),languageDiv);
-              }
-              document.getElementById("language_list").appendChild(languageDiv);
-            });
-          }
+          document.getElementById("settings.languages").innerHTML = ""
+          const languagesSection = require(path.join("..","components","settings","languages"));
+          puffin.render(languagesSection,document.getElementById("settings.languages"))
           break;
         case "editor":
-          document.getElementById(
-            "settings.editor"
-          ).innerHTML = graviton.getTemplate("settings_editor");
+          document.getElementById("settings.editor").innerHTML = ""
+          const editorSection = require(path.join("..","components","settings","editor"));
+          puffin.render(editorSection,document.getElementById("settings.editor"))
           break;
         case "advanced":
-          document.getElementById(
-            "settings.advanced"
-          ).innerHTML = graviton.getTemplate("settings_advanced");
+          document.getElementById("settings.advanced").innerHTML = ""
+          const advancedSection = require(path.join("..","components","settings","advanced"));
+          puffin.render(advancedSection,document.getElementById("settings.advanced"))
           break;
         case "about":
-          document.getElementById(
-            "settings.about"
-          ).innerHTML = graviton.getTemplate("settings_about");
-          if (new_update != false) {
+          document.getElementById("settings.about").innerHTML = ""
+          const about_section = require(path.join("..","components","settings","about"));
+          puffin.render(about_section,document.getElementById("settings.about"))
+          if (graviton.updateAvailable() != false) {
             if (document.getElementById("about_section") != null) {
               document.getElementById("about_section").innerHTML += `
               <p style="color:var(--accentColor);">New update is live! - ${
-                new_update[GravitonInfo.state]["version"]
+                graviton.updateAvailable()[GravitonInfo.state]["version"]
               }</p>
               `;
             }
@@ -91,7 +72,7 @@ module.exports = {
           break;
       }
     },
-    refresh: () => {
+    refresh: function(){
       current_config.appZoom = document.getElementById("slider_zoom").value;
       webFrame.setZoomFactor(current_config.appZoom / 25);
       current_config.blurPreferences = document.getElementById(

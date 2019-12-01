@@ -66,7 +66,7 @@ module.exports = {
       button.innerText = key
       button.setAttribute('myID', id)
       sleeping(1).then(() => {
-        button.addEventListener('click', buttons[key].click)
+        if(buttons[key].click!==undefined)  button.addEventListener('click', buttons[key].click)
         button.setAttribute('onclick', `closeDialog('${id}')`)
       })
       button.setAttribute(

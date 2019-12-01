@@ -12,24 +12,33 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const url = require("url")
 const path = require("path")
 const { app, BrowserWindow } = require("electron")
+const windowStateKeeper = require('electron-window-state');
 let main // Main window
 
 app.on("ready", function() {
+	let mainWindowState = windowStateKeeper({
+		defaultWidth: 750,
+		defaultHeight: 650
+	  });
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true
 		},
-		frame: process.platform != "win32",
-		width: 750,
-		height: 650,
+		frame: process.platform === "linux",
+		x:mainWindowState.x,
+		y:mainWindowState.y,
+		width: mainWindowState.width,
+		height: mainWindowState.height,
 		minHeight: 310,
 		minWidth: 310,
 		backgroundColor: "#191919",
 		title: "Graviton Editor",
-		icon: __dirname + '/assets/general.png'
+		icon: __dirname + '/assets/general.png',
+		show:false
 	})
+	mainWindowState.manage(main);
 	main.loadURL(
 		url.format({
 			pathname: path.join(__dirname, "index.html"),
@@ -37,6 +46,10 @@ app.on("ready", function() {
 			slashes: true
 		})
 	)
+	main.on("ready-to-show", () => {
+		main.show()
+		main.focus()
+	})
 	if (
 		path.basename(__dirname) === "Graviton-Editor" ||
 		path.basename(__dirname) === "Graviton-App"
@@ -49,6 +62,7 @@ app.on("ready", function() {
 app.on("window-all-closed", () => {
 	app.quit()
 })
+
 app.on("before-quit", () => {
 	app.removeAllListeners("close")
 })

@@ -70,7 +70,7 @@
 }
 .dialog_body .buttons > button:active {
   transition: 0.1s;
-  box-shadow:0px 1px 4px rgba(0,0,0,0.4)
+  box-shadow:0 0 0 2.5px var(--accentColor)
 }
 
 
@@ -84,5 +84,6 @@
 }
 .dialog_body .buttons > button.important:active {
   background: var(--accentDarkColor);
+  box-shadow:0 0 0 2.5px var(--accentLightColor)
 }
 

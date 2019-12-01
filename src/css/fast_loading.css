@@ -53,8 +53,9 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   left: 0;
   padding: 8px;
   margin: 0;
-  position: absolute;
+  flex:1;
   height: 19px;
+  max-width: 19px;
 }
 
 .loading_bar {

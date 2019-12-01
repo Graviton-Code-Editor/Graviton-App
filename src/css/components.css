@@ -84,7 +84,7 @@ input[type="number"]::selection {
   padding: 0px 4px 0px 4px;
   font-family: _main_font;
   margin:0;
-  padding:0;
+  padding:0px 5px;
 }
 
 .slider::-webkit-slider-thumb {
@@ -486,16 +486,17 @@ input[type="number"]::selection {
 
 button.button1 {
   font-family: _main_font;
-  transition: 0.03s;
+  transition: 0.1s;
   border-radius: var(--buttons-roundness);
   width: auto;
-  margin: 2px 3px;
-  padding: 7px 20px;
+  margin: 4px 3px;
+  padding: 8px 20px;
   background: var(--primaryColor);
   color: var(--white-black);
   box-sizing: border-box;
   opacity: 1;
-  border: 2px solid transparent;
+  box-shadow: 0 0 0 0px var(--accentColor);
+  border:0px transparent;
   user-select: auto;
   -webkit-app-region: auto;
 }
@@ -507,7 +508,9 @@ button.button1:hover {
 }
 
 button.button1.red {
+  transition: 0.1s;
   background: red;
+  box-shadow: 0 0 0 0px pink;
   color: white;
 }
 
@@ -521,15 +524,13 @@ button.button1.disabled {
 }
 button.button1.red:active {
   transition: 0.1s;
-  border: 2px solid darkred;
   box-sizing: border-box;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.35);
+  box-shadow: 0 0 0 3px pink;
 }
 button.button1:active {
   transition: 0.1s;
-  border: 2px solid var(--accentColor);
+  box-shadow: 0 0 0 3px var(--accentColor);
   box-sizing: border-box;
-  box-shadow: 0px 2px 6px rgba(0,0,0,0.35);
 }
 button.button1 svg *{
   height: 50px;
@@ -557,6 +558,18 @@ button.button1 svg * {
 
 button.button1-round svg * {
   fill: var(--white-black);
+}
+
+button.fullScreenWindow-right{
+  position:fixed; 
+  right:5%;
+  bottom: 5%;
+}
+
+button.fullScreenWindow-left{
+  position:fixed; 
+  left:5%;
+  bottom: 5%;
 }
 
 .icon {
@@ -1107,3 +1120,6 @@ select:hover{
   cursor: pointer;
   box-shadow: 0px 1px 3px rgba(0,0,0,0.15);
 }
+
+
+

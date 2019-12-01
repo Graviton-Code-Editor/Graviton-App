@@ -27,7 +27,7 @@ module.exports = {
                 `
       });
       market_window.launch();
-      if (full_plugins.length != 0) {
+      if (marketCache.length != 0) {
         this.loadMenus();
         return callback();
       }
@@ -90,7 +90,7 @@ module.exports = {
        */
       const rimraf = require("rimraf");
       rimraf.sync(market_file);
-      full_plugins = [];
+      marketCache = [];
       current_plugins = 0;
       plugins_market = [];
       this.extensions = [];
@@ -134,7 +134,7 @@ module.exports = {
             document.getElementById("sec_all").innerHTML = `
                           <div id=loading_exts>Loading extensions...</div>
                         `;
-            full_plugins.forEach(_plugin => {
+            marketCache.forEach(_plugin => {
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
               const _package = plugin.repo.package;
@@ -148,8 +148,8 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              const retrieveCard = require("../components/plugin_card")
-              const test = retrieveCard({
+              const retrieveCard = require("../components/plugins/plugin_card")
+              const card = retrieveCard({
                 plugin:plugin,
                 packageConf:_package,
                 newUpdate:_new_update,
@@ -158,9 +158,9 @@ module.exports = {
                 section:"all"
               })
               const {puffin} = require("@mkenzo_8/puffin")
-              puffin.render(test,document.getElementById("sec_all"))
+              puffin.render(card  ,document.getElementById("sec_all"))
             });
-            if (plugins_market.length != full_plugins.length) {
+            if (plugins_market.length != marketCache.length) {
               document.getElementById("sec_all").innerHTML += `
                 <div  id=load_more_plugins  class="extension_div static" >
                   <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_all').innerHTML = ''; Market.navigate('all')}); " class=" center button1 fixed-scale" > Load more</button>
@@ -190,7 +190,7 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              const retrieveCard = require("../components/plugin_card")
+              const retrieveCard = require("../components/plugins/plugin_card")
               const test = retrieveCard({
                 plugin:plugin,
                 packageConf:plugin.local,
@@ -207,7 +207,7 @@ module.exports = {
           if (document.getElementById("sec_themes").innerHTML == "") {
             document.getElementById("sec_themes").innerHTML = `
                     <div id=loading_exts3>Loading extensions...</div>`;
-            for (const _data of full_plugins) {
+            for (const _data of marketCache) {
               const plugin = graviton.getPlugin(_data.package.name);
               const data = plugin.repo.git;
               const _package = plugin.repo.package;
@@ -222,7 +222,7 @@ module.exports = {
                         semver.parse(plugin.local.version).version
                       )
                     : false;
-                const retrieveCard = require("../components/plugin_card")
+                const retrieveCard = require("../components/plugins/plugin_card")
                 const test = retrieveCard({
                   plugin:plugin,
                   packageConf:_package,
@@ -238,7 +238,7 @@ module.exports = {
             if (document.getElementById("loading_exts3") != undefined) {
               document.getElementById("loading_exts3").remove();
             }
-            if (plugins_market.length != full_plugins.length) {
+            if (plugins_market.length != marketCache.length) {
               document.getElementById("sec_themes").innerHTML += `
                       <div  id=load_more_plugins  class="extension_div static" >
                         <button onclick=" Market.loadMoreExtensions(current_plugins,function(){ document.getElementById('sec_themes').innerHTML = ''; Market.navigate('themes')}); " class=" center button1" > Load more</button>
@@ -263,9 +263,6 @@ module.exports = {
        * @desc Load extensions
        */
       let plugins_to_update = false;
-      const github = require("octonode");
-      const client = github.client();
-
       const me = this;
       if (plugins_market[start] == undefined) {
         if (document.getElementById("load_more_plugins") != undefined) {
@@ -277,74 +274,84 @@ module.exports = {
       current_plugins = start + me.extensions.length;
       for (i = 0; i < me.extensions.length; i++) {
         const this_i = i;
-        client.repo(me.extensions[this_i]).info(function(err, data) {
-          if (err) {
-            me.loadMenus(); // Maxium calls error, 60calls/hour/ip
-            return callback(2);
+        me.getExtensionData(me.extensions[this_i],callback,function(){
+          if (start === 0) {
+            document.getElementById(
+              "market_loader"
+            ).children[0].style.width = i * 20 + 20 + "%";
           }
-          const fetch = require("node-fetch");
-          fetch(
-            `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`
-          )
-            .then(res => res.json())
-            .then(_package => {
-              full_plugins.push({
-                git: data,
-                package: _package
-              });
-              const plugin = graviton.getPlugin(_package.name);
-              const _new_update =
-                plugin.local != undefined
-                  ? semver.gt(
-                      semver.parse(_package.version),
-                      semver.parse(plugin.local.version)
-                    )
-                  : false;
-              if (_new_update) {
-                plugins_to_update = true;
-              }
+          if (i == current_plugins - 1) {
+            let date = new Date();
+            date = Number(
+              date.getFullYear() +
+                "" +
+                date.getMonth() +
+                "" +
+                date.getDate()
+            );
+            const new_cache = {
+              date: date,
+              list: plugins_market,
+              cache: marketCache
+            };
+            fs.writeFile(market_file, JSON.stringify(new_cache), function(
+              err
+            ) {
               if (err) {
-                me.loadMenus();
-                return callback(3);
-              }
-              if (start === 0) {
-                document.getElementById(
-                  "market_loader"
-                ).children[0].style.width = i * 20 + 20 + "%";
-              }
-              if (i == current_plugins - 1) {
-                let date = new Date();
-                date = Number(
-                  date.getFullYear() +
-                    "" +
-                    date.getMonth() +
-                    "" +
-                    date.getDate()
-                );
-                const new_cache = {
-                  date: date,
-                  list: plugins_market,
-                  cache: full_plugins
-                };
-                fs.writeFile(market_file, JSON.stringify(new_cache), function(
-                  err
-                ) {
-                  if (err) {
-                    return err;
-                  }
-                });
-                me.loadMenus();
-                if (plugins_to_update) {
-                  new Notification({
-                    title: getTranslation("Market"),
-                    content: getTranslation("ExtUpdateNotification")
-                  });
-                }
-                if (callback != undefined) callback();
+                return err;
               }
             });
-        });
+            me.loadMenus();
+            if (plugins_to_update) {
+              new Notification({
+                title: getTranslation("Market"),
+                content: getTranslation("ExtUpdateNotification")
+              });
+            }
+            if (callback != undefined) callback();
+          }
+        })
       }
+    },
+    getExtensionData(extension,callback,succCallback){
+      const me = this;
+      const github = require("octonode");
+      const client = github.client();
+      client.repo(extension).info(function(err, data) {
+        if (err) {
+          me.loadMenus(); 
+          console.log(err)
+          return callback(2); // Maxium requests error, 60 requests / hour / ip
+        }
+        const fetch = require("node-fetch");
+        fetch(
+          `https://raw.githubusercontent.com/${data.owner.login}/${data.name}/${data.default_branch}/package.json`
+        )
+          .then(res => res.json())
+          .then(packageConf => {
+            const extensionData = {
+              git: data,
+              package: Plugins.sanitizePlugin(packageConf)
+            }
+            marketCache.push(extensionData);
+            const plugin = graviton.getPlugin(packageConf.name);
+            const _new_update =
+              plugin.local != undefined
+                ? semver.gt(
+                    semver.parse(packageConf.version),
+                    semver.parse(plugin.local.version)
+                  )
+                : false;
+            if (_new_update) {
+              plugins_to_update = true;
+            }
+            if (err) {
+              me.loadMenus();
+              return callback(3);
+            }
+            return succCallback(extensionData)
+          });
+      });
     },
     openSubExtensions: function({name,update}) {
       /**
@@ -359,7 +366,7 @@ module.exports = {
         return;
       }
       const pluginPackage = plugin.repo?plugin.repo.package:plugin.local
-      const retrieveWindow = require("../components/plugin_window")
+      const retrieveWindow = require("../components/plugins/plugin_window")
       const pluginWindow = retrieveWindow({
         plugin:plugin,
         newUpdate:update,
@@ -422,6 +429,7 @@ module.exports = {
           )
             .then(res => res.text())
             .then(body3 => {
+              const marked = require("marked")
               if (
                 document.getElementById(`${name}_div`) !=
                 undefined

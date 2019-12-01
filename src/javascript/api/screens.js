@@ -53,17 +53,17 @@ module.exports = {
        <div class=temp_dir_message> 
         <div>
           <p style="display:inline-block;"dragable=false class="translate_word " idT="WelcomeMessage" >${getTranslation(
-    'WelcomeMessage'
-  )}Graviton</p>
+            'WelcomeMessage'
+          )}Graviton</p>
           <img style="display:inline-block;" draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
         </div>
         ${(function () {
-    if (editor_screens.length > 1) {
-      return `<span aa=${current_id} class=link onclick="screens.remove('${current_id}')">Remove screen</span> `
-    } else {
-      return ''
-    }
-  })()}
+      if (editor_screens.length > 1) {
+        return `<span aa=${current_id} class=link onclick="screens.remove('${current_id}')">Remove screen</span> `
+      } else {
+        return ''
+      }
+    })()}
         </div>
        </div>
       <div class="g_status_bar" ></div>`

@@ -2,6 +2,14 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191130 - 1 [1.2.0]
+- Integrated "traffic lights" buttons for MacOS
+- Better buttons across the UI
+- You can now pass a puffin component as content in Window constructor
+- Fixed updater dialog
+- Better source management
+- You can now build Windows on full screen
+
 ### 191129 - 1 [1.2.0]
 - Fixed, Market cards weren't rendering properly
 - Improved some code

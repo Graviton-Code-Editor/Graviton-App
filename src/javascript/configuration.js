@@ -97,6 +97,149 @@ graviton.loadConfiguration = function(){
     });
   }
 }
+document.addEventListener("graviton_loaded",function(){
+  
+  /**
+   * @desc Creates HTML project service
+   */ 
+  projectServices.push({
+    name: "HTML",
+    description: "Basic HTML project",
+    onclick: () => createNewProject("html")
+  });
+
+  /**
+   * @desc Creates explorer panel instance
+   */ 
+  EXPLORER_PANEL = new Panel({
+    minHeight: "",
+    content: `
+      <div style="height:100%;">
+        <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
+      </div>
+    `
+  });
+
+  /**
+   * @desc Language  indicator and Line/Char counter Controls
+   */
+  document.addEventListener("screen_loaded", e => {
+    const screen = e.detail.screen;
+    function refreshStats(id = current_screen.id) {
+      if (id != screen) return;
+      langController.setText(graviton.getLanguage());
+      langController.setHint(`Current: ${graviton.getLanguage()}`);
+      if (editor == undefined) {
+        counter.hide();
+        return;
+      }
+      if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
+        langController.hide();
+      }
+      counter.show();
+      langController.show();
+      counter.setText(
+        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+      );
+      counter.setHint(
+        `Line ${editor.getCursor().line + 1} , Char ${Number(
+          editor.getCursor().ch + 1
+        )}`
+      );
+      editor.on("cursorActivity", function(a) {
+        counter.setText(
+          editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+        );
+        counter.setHint(
+          `Line ${editor.getCursor().line + 1} , Char ${Number(
+            editor.getCursor().ch + 1
+          )}`
+        );
+        counter.show();
+      });
+    }
+    let langController = new Control({
+      text: graviton.getLanguage(),
+      hint: `Current: ${graviton.getLanguage()}`
+    });
+    if (editor != undefined) {
+      var counter = new Control({
+        text:
+          editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1),
+        hint: `Line ${editor.getCursor().line + 1} , Char ${Number(
+          editor.getCursor().ch + 1
+        )}`
+      });
+      refreshStats();
+    } else {
+      var counter = new Control({
+        text: ""
+      });
+      counter.hide();
+      refreshStats();
+    }
+    document.addEventListener("tab_loaded", e => {
+      refreshStats(e.detail.screen);
+    });
+    document.addEventListener("tab_closed", e => {
+      refreshStats(e.detail.screen);
+    });
+    document.addEventListener("tab_created", () => {
+      refreshStats();
+    });
+  });
+
+  /**
+   * @desc Close dropmenus when clicking out of them
+   */
+
+  window.onclick = function(event) {
+    if (
+      !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
+    ) {
+      graviton.closeDropmenus();
+    }
+    if (!event.target.matches(".option")) {
+      document.getElementById("context").parentElement.style = "display:none";
+    }
+    if (!event.target.matches("#context_menu")) {
+      if (document.getElementById("context_menu") != undefined) {
+        document.getElementById("context_menu").remove();
+      }
+    }
+  };
+
+  /**
+   * @desc Creates the resizer between the explorer panel and the editors
+   */
+  (function(){
+    const element = document.getElementById("editor_resizer");
+    element.addEventListener("mousedown", initialiseResize, false);
+
+    function initialiseResize(e) {
+      window.addEventListener("mousemove", startResizing, false);
+      window.addEventListener("mouseup", stopResizing, false);
+    }
+
+    function startResizing(e) {
+      const explorer = document.getElementById("explorer_app");
+      const content_app = document.getElementById("content_app");
+      if (current_config.explorerPosition === "left") {
+        explorer.style = `width: ${e.clientX - 3}px`;
+      } else {
+        explorer.style = `width: ${content_app.clientWidth - e.clientX}px`;
+      }
+      for (i = 0; i < editors.length; i++) {
+        editors[i].object.blur();
+      }
+      graviton.resizeTerminals();
+    }
+    function stopResizing(e) {
+      window.removeEventListener("mousemove", startResizing, false);
+      window.removeEventListener("mouseup", stopResizing, false);
+    }
+  })()
+})
 /**
  * @desc Saves the current configuration to config.json
  */

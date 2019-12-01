@@ -624,13 +624,14 @@ navbar a.active {
 	pointer-events: none;
 }
 
-
 gv-panel{
 	padding:25px;
 	display: block;
-	min-height:auto;
-	max-height: 100%;
+	min-height:100%;
+	max-height: auto;
+	position: relative;
 }
+
 gv-paneltitle{
 	font-size: 14px;
 	font-weight: normal;
@@ -673,3 +674,4 @@ gv-process gv-process-text{
 	font-size:14px;
 	margin:15px 0px;
 }
+

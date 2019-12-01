@@ -24,14 +24,14 @@ module.exports = {
           loadLanguage(languages[0]);
         }
       });
-      const all = document.createElement("div");
-      all.id = "graviton_setup";
-      all.innerHTML = `
-        <div class="body_window_full">
-            <div id="body_window_full">
-            </div>
-        </div>`;
-      document.body.appendChild(all);
+      const setupWindow = new Window({
+        id:"graviton_setup",
+        content:`
+          <div id="setupWindow"></div>
+        `, 
+        fullScreen:true
+      })
+      setupWindow.launch()
       Setup.navigate("languages");
       graviton.deleteLog();
       if (error_showed == false) DeleteBoot();
@@ -40,7 +40,7 @@ module.exports = {
       /**
        * @desc Close the setup window
        */
-      document.getElementById("graviton_setup").remove();
+     closeWindow("graviton_setup")
       current_config.justInstalled = false;
       graviton.saveConfiguration();
     },
@@ -50,32 +50,19 @@ module.exports = {
        */
       switch (page) {
         case "languages":
-          document.getElementById(
-            "body_window_full"
-          ).innerHTML = graviton.getTemplate("setup_languages");
-          for (i = 0; i < languages.length; i++) {
-            const languageDiv = document.createElement("div");
-            languageDiv.setAttribute("class", "language_div");
-            languageDiv.setAttribute(
-              "onclick",
-              `loadLanguage('${languages[i].name}'); selectionFromTo(this.parentElement,this)`
-            );
-            languageDiv.innerText = languages[i].name;
-            if (languages[i].name === current_config.language.name) {
-              selectionFromTo(document.getElementById("language_list"),languageDiv);
-            }
-            document.getElementById("language_list").appendChild(languageDiv);
-          }
+          document.getElementById("setupWindow").innerHTML = ""
+          const languagesPage = require(path.join("..","components","setup","languages"));
+          puffin.render(languagesPage,document.getElementById("setupWindow"))
           break;
         case "themes":
-          document.getElementById(
-            "body_window_full"
-          ).innerHTML = graviton.getTemplate("setup_themes");
+            document.getElementById("setupWindow").innerHTML = ""
+            const themesPage = require(path.join("..","components","setup","themes"));
+            puffin.render(themesPage,document.getElementById("setupWindow"))
           break;
         case "additional_settings":
-          document.getElementById(
-            "body_window_full"
-          ).innerHTML = graviton.getTemplate("setup_additional_settings");
+            document.getElementById("setupWindow").innerHTML = ""
+            const additionalSettingsPage = require(path.join("..","components","setup","additionalSettings"));
+            puffin.render(additionalSettingsPage,document.getElementById("setupWindow"))
           break;
         case "welcome":
           if (graviton.isProduction() !== true) {
@@ -94,9 +81,9 @@ module.exports = {
               }
             });
           }
-          document.getElementById(
-            "body_window_full"
-          ).innerHTML = graviton.getTemplate("setup_welcome");
+          document.getElementById("setupWindow").innerHTML = ""
+          const welcomePage = require(path.join("..","components","setup","welcome"));
+          puffin.render(welcomePage,document.getElementById("setupWindow"))
           break;
       }
     }

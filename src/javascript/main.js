@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191128",
+  date: "191201",
   version: "1.2.0",
   state: "Beta"
 };
@@ -42,7 +42,7 @@ const { elasticContainerComponent, elasticContainer } = require(path.join(
   "src",
   "javascript",
   "api",
-  "components",
+  "web_components",
   "elastic_container.js"
 ));
 
@@ -155,7 +155,7 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
+    "constructors",
     "control.js"
   )).Control,
   { Dialog, closeDialog } = require(path.join(
@@ -163,7 +163,7 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
+    "constructors",
     "dialogs.js"
   )),
   { Window, closeWindow } = require(path.join(
@@ -171,7 +171,7 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
+    "constructors",
     "windows.js"
   )),
   { Notification, closeNotification } = require(path.join(
@@ -179,7 +179,7 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
+    "constructors",
     "notifications.js"
   )),
   { Tab, closeTab, loadTab } = require(path.join(
@@ -194,7 +194,7 @@ const Settings = require(path.join(
     "src",
     "javascript",
     "api",
-    "components",
+    "constructors",
     "dropmenus.js"
   )).Dropmenu;
 let { icons } = require(path.join(
@@ -202,7 +202,7 @@ let { icons } = require(path.join(
   "src",
   "javascript",
   "api",
-  "components",
+  "constructors",
   "icons.js"
 ));
 
@@ -211,7 +211,7 @@ const { commander, commanders } = require(path.join(
   "src",
   "javascript",
   "api",
-  "components",
+  "constructors",
   "commanders.js"
 ));
 const { Panel } = require(path.join(
@@ -219,7 +219,7 @@ const { Panel } = require(path.join(
   "src",
   "javascript",
   "api",
-  "components",
+  "constructors",
   "panels.js"
 ));
 window.customElements.define(
@@ -229,7 +229,7 @@ window.customElements.define(
     "src",
     "javascript",
     "api",
-    "components",
+    "web_components",
     "switch.js"
   ))
 );
@@ -240,8 +240,8 @@ window.customElements.define(
     "src",
     "javascript",
     "api",
-    "components",
-    "gv_navbar.js"
+    "web_components",
+    "navpanel.js"
   ))
 );
 require(path.join(__dirname, "src", "javascript", "npm", "npm_panel.js"));
@@ -252,7 +252,7 @@ window.customElements.define(
     "src",
     "javascript",
     "api",
-    "components",
+    "web_components",
     "process_bar.js"
   ))
 );
@@ -306,8 +306,10 @@ let current_screen,
   plugins_list = [],
   plugins_dbs = [],
   anyDropON = null,
-  full_plugins = [],
-  projectServices = [];
+  marketCache = [],
+  projectServices = [],
+  EXPLORER_PANEL = null,
+  projectTemplates = require(path.join(__dirname,"src","javascript","templates"));
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
@@ -327,63 +329,27 @@ let logDir = path.join(DataFolderDir, "log.json"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
   market_file = path.join(DataFolderDir, "market.json");
 
-document.addEventListener("graviton_loaded", () => {
-  /**
-   * @desc The resizer between the explorer panel and the editors
-   */
-  const element = document.getElementById("editor_resizer");
-  element.addEventListener("mousedown", initialiseResize, false);
-
-  function initialiseResize(e) {
-    window.addEventListener("mousemove", startResizing, false);
-    window.addEventListener("mouseup", stopResizing, false);
-  }
-
-  function startResizing(e) {
-    const explorer = document.getElementById("explorer_app");
-    const content_app = document.getElementById("content_app");
-    if (current_config.explorerPosition === "left") {
-      explorer.style = `width: ${e.clientX - 3}px`;
-    } else {
-      explorer.style = `width: ${content_app.clientWidth - e.clientX}px`;
-    }
-    for (i = 0; i < editors.length; i++) {
-      editors[i].object.blur();
-    }
-    graviton.resizeTerminals();
-  }
-  function stopResizing(e) {
-    window.removeEventListener("mousemove", startResizing, false);
-    window.removeEventListener("mouseup", stopResizing, false);
-  }
-});
-
 preload([
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
 ]);
 
-preloadFont(["editor", "terminal"]);
+preloadFont([
+  "editor",
+  "terminal"
+]);
 
 window.onload = async function() {
-  const templateDirs = await fs.readdir(path.join(__dirname, "src", "templates"))
-  templateDirs.forEach( async function(dir, index) {
-    const templateData = await fs.readFile(path.join(__dirname, "src", "templates", dir),"utf8")
-    templates[path.basename(dir, ".js")] = templateData;
-    if (document.getElementById("boot_loader") !== null){
-      document.getElementById("boot_loader").children[0].style.width += index + 20 + "%";
-    }
-    if(index === templateDirs.length-1){
-      loadGraviton()
-    }
-  });  
   await fs.readdir(path.join(__dirname, "languages")).then(function(paths){
     paths.forEach((dir, index) => {
       languages.push(require(path.join(__dirname, "languages", dir)));
       if (document.getElementById("boot_loader") !== null){
-        document.getElementById("boot_loader").children[0].style.width += index + 20 + "%";
+        document.getElementById("boot_loader").children[0].style.width += index + 35 + "%";
       } 
+      if(index === paths.length-1){
+        loadGraviton()
+      }
     });
   })
   function loadGraviton(){
@@ -397,7 +363,7 @@ window.onload = async function() {
 
 
 
-const appendBinds = () => {
+const appendBinds = function(){
   Mousetrap.bind("mod+s", function() {
     saveFile();
   });
@@ -735,22 +701,25 @@ function registerNewProject(dir){
 };
 
 function createNewProject(template){
-  dialog.showOpenDialog(
-    {
+  const { dialog } = remote;
+  dialog
+    .showOpenDialog(g_window, {
       properties: ["openDirectory"]
-    },
-    selectedFiles => {
-      if (selectedFiles.length != 0) {
+    })
+    .then(result => {
+      console.log(result.filePaths)
+      if (result.canceled) return;
+      if (result.filePaths != 0) {
         switch (template) {
           case "html":
             const newProjectDir = path.join(
-              selectedFiles[0],
+              result.filePaths[0],
               ".GravitonProject " + Date.now()
             );
             fs.mkdirSync(newProjectDir);
             fs.writeFile(
               path.join(newProjectDir, "index.html"),
-              graviton.getTemplate("html_project"),
+              projectTemplates.html,
               err => {
                 if (err) {
                   return err;
@@ -761,55 +730,11 @@ function createNewProject(template){
             break;
         }
       }
-    }
-  );
-};
+    })
+    .catch(err => {
+      console.error(err);
+    });
 
-const installCli = function() {
-  const npm = require("npm");
-  npm.load(
-    {
-      global: true
-    },
-    function(er) {
-      if (er) return er;
-      npm.commands.install(["graviton-cli"], function(er, data) {
-        if (er) return er;
-        console.log("Graviton CLI has been installed!");
-      });
-    }
-  );
-};
-
-window.onclick = function(event) {
-  if (
-    !(event.target.matches(".dropbtn") || event.target.matches(".icon_border"))
-  ) {
-    graviton.closeDropmenus();
-  }
-  if (!event.target.matches(".option")) {
-    document.getElementById("context").parentElement.style = "display:none";
-  }
-  if (!event.target.matches("#context_menu")) {
-    if (document.getElementById("context_menu") != undefined) {
-      document.getElementById("context_menu").remove();
-    }
-  }
-};
-graviton.refreshCustomization = () => {
-  document.documentElement.style.setProperty(
-    "--editor-font-size",
-    `${current_config.fontSizeEditor}px`
-  ); // Update settings from start
-  webFrame.setZoomFactor(current_config.appZoom / 25);
-  if (current_config.blurPreferences != 0) {
-    document.documentElement.style.setProperty(
-      "--blur",
-      `${current_config.blurPreferences}px`
-    );
-  } else {
-    document.documentElement.style.setProperty("--blur", `none`);
-  }
 };
 
 const selectionFromTo = (parent, toSelect) => {
@@ -820,86 +745,51 @@ const selectionFromTo = (parent, toSelect) => {
   if(toSelect!=undefined) toSelect.classList.add("active");
 };
 
-/**
- * @desc Language  indicator and Line/Char counter Controls
- */
-document.addEventListener("screen_loaded", e => {
-  const screen = e.detail.screen;
-  function refreshStats(id = current_screen.id) {
-    if (id != screen) return;
-    langController.setText(graviton.getLanguage());
-    langController.setHint(`Current: ${graviton.getLanguage()}`);
-    if (editor == undefined) {
-      counter.hide();
-      return;
-    }
-    if (graviton.getCurrentTab().getAttribute("typeeditor") === "free") {
-      langController.hide();
-    }
-    counter.show();
-    langController.show();
-    counter.setText(
-      editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
-    );
-    counter.setHint(
-      `Line ${editor.getCursor().line + 1} , Char ${Number(
-        editor.getCursor().ch + 1
-      )}`
-    );
-    editor.on("cursorActivity", function(a) {
-      counter.setText(
-        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
-      );
-      counter.setHint(
-        `Line ${editor.getCursor().line + 1} , Char ${Number(
-          editor.getCursor().ch + 1
-        )}`
-      );
-      counter.show();
-    });
-  }
-  let langController = new Control({
-    text: graviton.getLanguage(),
-    hint: `Current: ${graviton.getLanguage()}`
-  });
-  if (editor != undefined) {
-    var counter = new Control({
-      text:
-        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1),
-      hint: `Line ${editor.getCursor().line + 1} , Char ${Number(
-        editor.getCursor().ch + 1
-      )}`
-    });
-    refreshStats();
-  } else {
-    var counter = new Control({
-      text: ""
-    });
-    counter.hide();
-    refreshStats();
-  }
-  document.addEventListener("tab_loaded", e => {
-    refreshStats(e.detail.screen);
-  });
-  document.addEventListener("tab_closed", e => {
-    refreshStats(e.detail.screen);
-  });
-  document.addEventListener("tab_created", () => {
-    refreshStats();
-  });
-});
 
-projectServices.push({
-  name: "HTML",
-  description: "Basic HTML project",
-  onclick: () => createNewProject("html")
-});
+//Use plugin card on a custom window
 
-const EXPLORER_PANEL = new Panel({
-  minHeight: "",
-  content: `
-  <div style="height:100%;">
-      <span id="openFolder" height="24px" width="24px" onclick="openFolder()"></span>
+function meh(){
+  Market.getExtensionData("marc2332/flutter-node",
+  function(err){
+    console.log(err)
+  },function(extensionData){
+    const test_window = new Window({
+      content:` 
+      <div id="test_test">  
+
       </div>
-  `
-});
+      `
+    })
+    test_window.launch()
+    const { puffin } = require("@mkenzo_8/puffin")
+
+    const retrieveCard = require(path.join(__dirname,"src","javascript","components","plugin_card"));
+
+    const card = retrieveCard({
+      plugin:graviton.getPlugin("flutter-node"),
+      newUpdate:false,
+      isInstalled:false,
+      packageConf:extensionData.package,
+      repository:extensionData.git,
+      clickable: false
+    })
+
+    puffin.render(card,document.getElementById("test_test"))
+  })
+}
+
+function foo(){
+  const test_window = new Window({
+    content:` 
+    <div id="test_test">  
+
+    </div>
+    `
+  })
+  test_window.launch()
+
+  const test = require(path.join(__dirname,"src","javascript","components","setup","languages"));
+
+  puffin.render(test,document.getElementById("test_test"))
+
+}

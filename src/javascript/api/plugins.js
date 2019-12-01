@@ -14,12 +14,10 @@ module.exports = {
   Plugins: {
     detect: function(call) {
       const me = this;
-      if (!fs.existsSync(plugins_db)) {
-        //If the plugins_db folder doesn't exist
+      if (!fs.existsSync(plugins_db)) { //If the plugins_db folder doesn't exist
         fs.mkdirSync(plugins_db);
       }
-      if (!fs.existsSync(plugins_folder)) {
-        //If the plugins folder doesn't exist
+      if (!fs.existsSync(plugins_folder)) { //If the plugins folder doesn't exist
         document.getElementById("g_bootanimation").children[0].innerHTML += `
           <div>
             <p>Installing themes...</p>
@@ -29,16 +27,16 @@ module.exports = {
         const client = github.client();
         const request = require("request");
         let loaded = 0;
-        let _old_error = false;
+        let errorWasThrown = false;
         for (i = 0; i < default_plugins.length; i++) {
           client.repo(default_plugins[i]).info(function(err, data) {
-            if (_old_error) return;
+            if (errorWasThrown) return;
             if (err) {
               new Notification({
                 title: "Graviton",
                 content: getTranslation("SetupError1")
               });
-              _old_error = true;
+              errorWasThrown = true;
               return call != undefined ? call() : "";
             }
             const degit = require("degit");
@@ -80,18 +78,19 @@ module.exports = {
           date.getFullYear() + "" + date.getMonth() + "" + date.getDate()
         );
         if (fs.existsSync(market_file)) {
-          fs.readFile(market_file, "utf8", (err, data) => {
+          fs.readFile(market_file, "utf8").then(function(data){
             const market = JSON.parse(data);
             if (date > market.date) {
               const rimraf = require("rimraf");
               rimraf.sync(market_file);
             } else {
-              full_plugins = market.cache;
+              marketCache = market.cache;
               plugins_market = market.list;
             }
-            current_plugins = full_plugins.length;
-            if (!err) return;
-          });
+            current_plugins = marketCache.length;
+          }).catch(function(){
+            graviton.throwError("Cannot read Market file.")
+          })
         }
         fs.readdir(plugins_folder, (err, paths) => {
           let loaded = 0;

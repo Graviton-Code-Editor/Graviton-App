@@ -11,7 +11,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 /**
  *
- * @desc This is a web component for side menus
+ * @desc  This is a web component for side menus
  * @usage <gv-navpanel>
             <gv-navbar
                 <gv-navtitle>Window</gv-navtitle>

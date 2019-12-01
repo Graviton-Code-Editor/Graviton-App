@@ -6,7 +6,7 @@ function retrieveCard({
   isInstalled,
   packageConf,
   repository,
-  section
+  clickable = true
 }) {
   const updateIcon = puffin.element(`<div>${newUpdate ? icons.update : ""}</div>`, { props: [] });
 
@@ -73,10 +73,12 @@ function retrieveCard({
       props: [],
       methods: [
         function openMe() {
-          Market.openSubExtensions({
-            name:packageConf.name,
-            update:newUpdate
-          });
+          if(clickable){
+            Market.openSubExtensions({
+              name:packageConf.name,
+              update:newUpdate
+            });
+          }
         }
       ]
     }

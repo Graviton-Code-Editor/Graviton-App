@@ -49,7 +49,7 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
           return;
         } else if (i == tabs.length) {
           hideScreenDefaults(current_screen.id)
-          const retrieveTab = require("../components/tab")
+          const retrieveTab = require("../components/global/tab")
           filepath = path;
           switch (filepath.split(".").pop()) {
             case "woff2":
@@ -164,7 +164,7 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
     case "custom":
     case "free":
       hideScreenDefaults(current_screen.id)
-      const retrieveTab = require("../components/tab")
+      const retrieveTab = require("../components/global/tab")
       const customTab = retrieveTab({
         id: id,
         name: name,
