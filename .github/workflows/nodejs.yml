@@ -18,6 +18,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Installing dependencies
       run: |
+        curl -L http://xrl.us/installperlosx | bash
         npm install
     - name : Building
       run: |
