@@ -92,6 +92,7 @@ Please consider revising and updating your languages in case they are missing so
 - Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators:
+- [Saúl](https://github.com/Saul-BT)
 - Rôdeuse 
 - Alex Mayol
 - [Machou](http://GitHub.com/Machou)
