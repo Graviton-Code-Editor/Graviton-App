@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest , macOS]
         node-version: [12.x]
     steps:
     - uses: actions/checkout@v1
@@ -20,7 +20,7 @@ jobs:
         npm install
     - name : Building
       run: |
-        npm run build 
+        npm run build:ci 
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}

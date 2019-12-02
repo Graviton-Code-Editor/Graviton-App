@@ -28,7 +28,8 @@
     "build:win:linux": "build --linux && build --win ",
     "rebuild": "electron-rebuild -f -w node-pty",
     "standard": "standard --fix",
-    "test": "mocha test"
+    "test": "mocha test",
+    "build:ci":"npx electron-builder build"
   },
   "standard": {
     "ignore": [
