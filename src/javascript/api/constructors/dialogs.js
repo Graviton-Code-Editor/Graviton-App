@@ -42,6 +42,7 @@ module.exports = {
       graviton.throwError('Parsed argument is not object.')
       return
     }
+    const openingAnimation = current_config.animationsPreferences=="activated"?`window_slide_up linear 0.1s;`:""
     const all = document.createElement('div')
     all.id = id + '_dialog'
     all.setAttribute('myID', id)
@@ -51,6 +52,7 @@ module.exports = {
 }" class="background_window" onclick="closeDialog('${id}')"></div>`
     const body_dialog = document.createElement('div')
     body_dialog.setAttribute('class', 'dialog_body')
+    body_dialog.style =  `animation: ${openingAnimation}`
     body_dialog.innerHTML = `
       <h3 >
         ${title}

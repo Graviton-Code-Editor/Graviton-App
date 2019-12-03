@@ -57,6 +57,7 @@ module.exports = {
           puffin.render(advancedSection,document.getElementById("settings.advanced"))
           break;
         case "about":
+            document.getElementById("settings.advanced").innerHTML = ""
           document.getElementById("settings.about").innerHTML = ""
           const about_section = require(path.join("..","components","settings","about"));
           puffin.render(about_section,document.getElementById("settings.about"))

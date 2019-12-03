@@ -35,7 +35,7 @@ module.exports = class Switch extends HTMLElement {
         }
       }
     };
-    this.addEventListener("click", ()=> this.toggle())
+    this.children[0].onclick = ()=> this.toggle()
   }
   getState() {
     if (this.classList.contains("disabled")) {

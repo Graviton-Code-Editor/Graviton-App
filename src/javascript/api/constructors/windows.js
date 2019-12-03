@@ -45,7 +45,7 @@ module.exports = {
       graviton.throwError('Parsed argument is not object.')
       return
     }
-    const openingAnimation = `window_${animation}`
+    const openingAnimation = current_config.animationsPreferences=="activated"?`window_${animation} linear 0.1s;`:""
     const {puffin} = require("@mkenzo_8/puffin")
 
     const buildingCloseButton = puffin.element(
@@ -99,7 +99,7 @@ module.exports = {
         `
        <div id="${id}_window"> 
         <div class="background_window" click="$closeMe" onclick="${onClose}" ></div>
-          <div id="${id + '_body'}" style="height:${height}; width:${width}; animation: ${openingAnimation} linear 0.1s;" class="body_window">
+          <div id="${id + '_body'}" style="height:${height}; width:${width}; animation: ${openingAnimation}" class="body_window">
               ${(()=>{
                 let list = "";
                 if(closeButton){

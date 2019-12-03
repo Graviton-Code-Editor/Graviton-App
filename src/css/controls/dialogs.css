@@ -1,5 +1,4 @@
 .dialog_body {
-  animation: window_slide_up linear 0.1s;
   opacity: 1;
   position: absolute;
   color: var(--white-black);

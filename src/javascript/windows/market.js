@@ -577,13 +577,9 @@ module.exports = {
       }
       const rimraf = require("rimraf");
       rimraf.sync(path.join(plugins_folder, name));
-
       const degit = require("degit");
-
       const emitter = degit(plugin.repo.git.full_name);
-
       emitter.on("info", info => {});
-
       emitter
         .clone(path.join(plugins_folder.replace(/\\/g, "\\\\"), name))
         .then(() => {

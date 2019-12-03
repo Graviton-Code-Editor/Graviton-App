@@ -12,7 +12,7 @@ Clone the git repository:
 > $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
 
 There are 2 different branches:
-* Master: daily source (maybe unstable).
+* Master: daily source (default).
 * Stable: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
 
 ## 2 - Installing the dependencies

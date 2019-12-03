@@ -539,13 +539,16 @@ span.CodeMirror-selectedtext {
 .CodeMirror-dialog {
   animation: show_down linear 0.1s;
   position: absolute;
-  left: 0;
+  margin:5px;
+  left:0;
+  max-width: 300px;
+  padding:10px 15px;
+  border-radius: 8px;
   right: 0;
   background: inherit;
   background-color: var(--secondaryColor);
   box-shadow: 0px 3px 5px var(--shadows);
   z-index: 15;
-  padding: 0.3em 0.8em;
   overflow: hidden;
   color: var(--white-black);
   font-family: _main_font;
@@ -577,9 +580,10 @@ span.CodeMirror-selectedtext {
   outline: none;
   background: transparent;
   background-color: var(--secondaryColor);
-  width: 2em;
+  width: 1em;
   color: var(--white-black);
   font-size: 100%;
+  font-size: 14px;
 }
 
 .CodeMirror-dialog button {

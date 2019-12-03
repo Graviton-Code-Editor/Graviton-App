@@ -117,7 +117,9 @@ module.exports = {
             document.dispatchEvent(closed_screen_event)
             document.getElementById(id).remove()
             editor_screens.splice(i, 1)
-            editors.splice(i, 1)
+            editors.map((ed,index)=>{
+              if(ed.screen == id) editors.splice(index,1)
+            })  
             current_screen = {
               id: editor_screens[editor_screens.length - 1].id
             }

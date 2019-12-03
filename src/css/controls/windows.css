@@ -44,7 +44,7 @@
 
 @keyframes window_scale_up {
   0% {
-    transform: translate3d(0, 0, 0) translate(-50%, -46%)  scale(.98);
+    transform: translate3d(0, 0, 0) translate(-50%, -48%)  scale(.98);
   }
   100%{
     transform: translate3d(0, 0, 0) translate(-50%, -50%) scale(1);

@@ -17,7 +17,7 @@
     "start": "electron . Graviton",
     "start:no.sandbox": "electron . Graviton --no-sandbox",
     "pack": "build --dir",
-    "build": "build",
+    "build": "npx electron-builder build",
     "build:snap": "build --linux snap",
     "build:pacman": "build --linux pacman",
     "build:deb": "build --linux deb",
@@ -28,8 +28,7 @@
     "build:win:linux": "build --linux && build --win ",
     "rebuild": "electron-rebuild -f -w node-pty",
     "standard": "standard --fix",
-    "test": "mocha test",
-    "build:ci":"npx electron-builder build"
+    "test": "mocha test"
   },
   "standard": {
     "ignore": [

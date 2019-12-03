@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191203 - 1 [1.2.0]
+- Fixed a bug when switching between tabs after closing an screen
+- Fixed build script
+- Fixed switches: sometimes didn't work properly
+
 ### 191130 - 1 [1.2.0]
 - Integrated "traffic lights" buttons for MacOS
 - Better buttons across the UI
@@ -1088,4 +1093,4 @@ This file contains "important" commits, small ones will probably not be added.
 - Added links to the buttons on the About page on Settings
 - Created changelog.md
 
-This changelog didn't start when the project did ,so don't expect all commits to be here.
+This changelog didn't start when the project did, so don't expect all commits to be here.

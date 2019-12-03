@@ -432,6 +432,7 @@ input[type="number"]::selection {
 
 
 .explorer div.directory p {
+  padding-top:3px;
   line-height: 3px;
   margin: auto;
   font-size: 12px;
