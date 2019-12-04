@@ -1,4 +1,4 @@
-# Graviton Editor
+<h1 align="center"> Graviton Editor </h1>
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FGraviton-Code-Editor%2FGraviton-App%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/Graviton-Code-Editor/Graviton-App/goto?ref=master)
 [![HitCount](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App.svg)](http://hits.dwyl.io/https://github.com/marc2332/https://github.com/Graviton-Code-Editor/Graviton-App)
@@ -12,7 +12,7 @@
 
 ![example screenshot](example.png)
 
-**Changes on this source may not be released as an official build yet.**
+**IMPORTANT: Changes on this source may not be released as an official build yet.**
 
 ✨ Highlights:
 ---
@@ -92,7 +92,7 @@ Please consider revising and updating your languages in case they are missing so
 - Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators:
-- [Saúl](https://github.com/Saul-BT)
+- [Saúl Blanco](https://github.com/Saul-BT)
 - Rôdeuse 
 - Alex Mayol
 - [Machou](http://GitHub.com/Machou)

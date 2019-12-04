@@ -55,7 +55,8 @@
     "rimraf": "^2.6.3",
     "semver": "^6.3.0",
     "tinycolor2": "^1.4.1",
-    "xterm": "^3.14.5"
+    "xterm": "^4.3.0-beta.31",
+    "xterm-addon-fit": "^0.3.0"
   },
   "devDependencies": {
     "electron": "^7.1.2",

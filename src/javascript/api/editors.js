@@ -7,7 +7,7 @@ module.exports = {
         case 'text':
           const text_container = document.createElement('div')
           text_container.classList = 'code-space'
-          text_container.setAttribute('id', dir.replace(/\\/g, '') + '_editor')
+          text_container.id = `${dir.replace(/\\/g, '')}_editor`
           text_container.setAttribute('path', dir)
           document
             .getElementById(screen)
@@ -452,7 +452,7 @@ module.exports = {
               const selected = (function () {
                 for (i = 0; i < childs.length; i++) {
                   if (childs[i].classList.contains('hover')) {
-                    return `${childs[i].innerText} `
+                    return `${childs[i].innerText}`
                   }
                 }
               })()

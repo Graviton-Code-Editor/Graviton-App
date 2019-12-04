@@ -82,18 +82,17 @@ module.exports = {
               cursorBlink: true,
               fontFamily: 'terminal'
             }
-            //if (graviton.currentOS().codename == 'win32') config.fontFamily = 'Consolas'
-            const xterm = new Terminal(config)
-            xterm.open(document.getElementById(`container${randomID}`))
-            xterm.on('data', data => {
+            const xtermInstance = new Terminal(config)
+            xtermInstance.open(document.getElementById(`container${randomID}`))
+            xtermInstance.onData((data) => {
               ptyProcess.write(data)
             })
             ptyProcess.on('data', function (data) {
-              xterm.write(data)
+              xtermInstance.write(data)
             })
             terminal = {
               id: 'xterm' + randomID,
-              xterm: xterm
+              xterm: xtermInstance
             }
             current_screen.terminal = editor_screens.filter(
               screen => screen.id == current_screen.id
@@ -101,12 +100,13 @@ module.exports = {
             const new_terminal_event = new CustomEvent('new_terminal', {
               detail: {
                 id: 'xterm' + randomID,
-                xterm: xterm
+                xterm: xtermInstance
               }
             })
             document.dispatchEvent(new_terminal_event)
             graviton.resizeTerminals()
-            xterm.refresh()
+            xtermInstance.refresh(0,0)
+            xtermInstance.focus()
           }
         }
       )
@@ -128,7 +128,7 @@ module.exports = {
         detail: terminal
       })
       document.dispatchEvent(closed_terminal_event)
-      terminal.xterm.destroy()
+      terminal.xterm.dispose()
       commanders.close(terminal.id)
       terminal = null
       graviton.resizeTerminals()

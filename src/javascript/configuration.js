@@ -239,6 +239,12 @@ document.addEventListener("graviton_loaded",function(){
       window.removeEventListener("mouseup", stopResizing, false);
     }
   })()
+   /**
+   * @desc Force the terminal resizing when resizing the window
+   */
+  window.onresize = function() {
+    graviton.resizeTerminals();
+  };
 })
 /**
  * @desc Saves the current configuration to config.json

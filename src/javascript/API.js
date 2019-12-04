@@ -585,8 +585,12 @@ graviton = {
     );
   },
   resizeTerminals() {
-    const fit = require("./node_modules/xterm/lib/addons/fit/fit.js");
-    if (terminal != (null || undefined)) fit.fit(terminal.xterm);
+    const {FitAddon} = require("xterm-addon-fit");
+    const fit = new FitAddon()
+    if (terminal != (null || undefined)) {
+      graviton.getTerminal().xterm.loadAddon(fit);
+      fit.fit();
+    }
   },
   toggleFullScreen() {
     if (graviton.isProduction()) {
@@ -936,10 +940,6 @@ document.addEventListener("mousedown", function(event) {
     }
   }
 });
-
-window.onresize = function() {
-  graviton.resizeTerminals();
-};
 
 graviton.copyText = content => {
   const text = document.createElement("textarea");
