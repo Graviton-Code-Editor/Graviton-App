@@ -12,10 +12,11 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const GravitonInfo = {
-  date: "191204",
+  date: "191205",
   version: "1.2.0",
   state: "Beta"
 };
+
 const fs = require("fs-extra"),
   remote = require("electron").remote,
   BrowserWindow = require("electron").BrowserWindow,

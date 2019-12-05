@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191205 - 1 [1.2.0]
+- Fetch Market's data from the 1.2.0 branch 
+- Better messages when installing/unninstalling/updating extensions on market (english)
+
 ### 191203 - 1 [1.2.0]
 - Fixed a bug when switching between tabs after closing an screen
 - Fixed build script

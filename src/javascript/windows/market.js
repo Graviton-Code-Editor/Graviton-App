@@ -36,7 +36,7 @@ module.exports = {
       const me = this;
       const fetch = require("node-fetch");
       fetch(
-        "https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/master/list.json"
+        `https://raw.githubusercontent.com/Graviton-Code-Editor/plugins_list/${GravitonInfo.version}/list.json`
       )
         .then(res => res.json())
         .then(body => {
