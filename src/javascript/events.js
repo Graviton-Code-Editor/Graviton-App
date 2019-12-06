@@ -41,5 +41,26 @@ module.exports = {
                 path: dir
             }
         });
+    },
+    splitScreen: function(){
+        return new CustomEvent("split_screen", {
+            detail: {
+                screen:current_screen
+            }
+        });
+    },
+    closedScreen: function(screen){
+        return new CustomEvent("closed_screen", {
+            detail: {
+                screen:screen
+            }
+        });
+    },
+    tabReorganized: function(data){
+        return new CustomEvent("tab_reorganized", {
+            detail: data
+        });
     }
+    
+    
 }

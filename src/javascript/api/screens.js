@@ -52,9 +52,9 @@ module.exports = {
       <div class="g_editors_editors" >
        <div class=temp_dir_message> 
         <div>
-          <p style="display:inline-block;"dragable=false class="translate_word " idT="WelcomeMessage" >${getTranslation(
-            'WelcomeMessage'
-          )}Graviton</p>
+          <p style="display:inline-block;"dragable=false class="translate_word " idT="FullWelcomeMessage" >${getTranslation(
+            'FullWelcomeMessage'
+          )}</p>
           <img style="display:inline-block;" draggable="false" class="emoji-normal" src="src/openemoji/1F60E.svg"> 
         </div>
         ${(function () {
@@ -93,12 +93,7 @@ module.exports = {
       },
       false
     )
-    const split_screen_event = new CustomEvent('split_screen', {
-      detail: {
-        screen: current_screen
-      }
-    })
-    document.dispatchEvent(split_screen_event)
+    document.dispatchEvent(graviton.events.splitScreen())
     graviton.resizeTerminals()
   },
   remove: function (id) {
@@ -109,12 +104,7 @@ module.exports = {
             return tab.getAttribute('screen') === id
           })
           if (screen_tabs.length === 0) {
-            const closed_screen_event = new CustomEvent('closed_screen', {
-              detail: {
-                screen: editor_screens[i]
-              }
-            })
-            document.dispatchEvent(closed_screen_event)
+            document.dispatchEvent(graviton.events.closedScreen( editor_screens[i]))
             document.getElementById(id).remove()
             editor_screens.splice(i, 1)
             editors.map((ed,index)=>{
@@ -187,16 +177,3 @@ module.exports = {
     }
   }
 }
-
-
-/*
-
-screens.add("hola");
-
-graviton.focusScreen("hola");
-
-new Control({text:"jaja"})
-
-
-
-*/

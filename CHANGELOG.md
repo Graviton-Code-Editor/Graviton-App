@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191206 - 1 [1.2.0]
+- Added more events to the centralized file
+- Fixed: update icon on Plugins cards on Market wasn't showing
+- Fixed: installed version on Plugins window on market was wrong
+
 ### 191205 - 1 [1.2.0]
 - Fetch Market's data from the 1.2.0 branch 
 - Better messages when installing/unninstalling/updating extensions on market (english)

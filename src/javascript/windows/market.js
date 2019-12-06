@@ -365,14 +365,15 @@ module.exports = {
         });
         return;
       }
-      const pluginPackage = plugin.repo?plugin.repo.package:plugin.local
+      const pluginPackage = plugin.local?plugin.local:plugin.repo.package
       const retrieveWindow = require("../components/plugins/plugin_window")
       const pluginWindow = retrieveWindow({
         plugin:plugin,
         newUpdate:update,
         package:pluginPackage,
         isInstalled:plugin.local != undefined,
-        repository:plugin.repo?plugin.repo.git:undefined
+        repository:plugin.repo?plugin.repo.git:undefined,
+        remotePackage:plugin.repo?plugin.repo.package:undefined
       })
       
       const ext_win = new Window({

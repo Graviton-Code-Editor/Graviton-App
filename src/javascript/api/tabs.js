@@ -348,14 +348,11 @@ document.ondrop = function(event) {
         );
       }
     }
-    const tab_reorganized_event = new CustomEvent("tab_reorganized", {
-      data: {
-        screen: todrag.getAttribute("screen"),
-        from_tab: dragging,
-        to_tab: todrag
-      }
-    });
-    document.dispatchEvent(tab_reorganized_event);
+    document.dispatchEvent(graviton.events.tabReorganized({
+      screen: todrag.getAttribute("screen"),
+      from_tab: dragging,
+      to_tab: todrag
+    }));
   }
 };
 

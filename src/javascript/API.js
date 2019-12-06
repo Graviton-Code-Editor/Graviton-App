@@ -682,19 +682,6 @@ graviton = {
   consoleWarn(message) {
     console.log(`(${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()})%c WARN::`, "color:#F6B149;", message);
   },
-  getTemplate(name, code) {
-    const result = `${code != undefined ? code : ""} ${templates[name]}`;
-    try {
-      eval(result);
-    } catch (error) {
-      graviton.throwError("Cannot load the current template: " + error);
-      if (!graviton.isProduction()) {
-        console.log(result);
-      }
-      return "";
-    }
-    return eval(result);
-  },
   focusScreen(screen_id) {
     for (i = 0; i < editor_screens.length; i++) {
       if (editor_screens[i].id == screen_id) {
@@ -742,7 +729,7 @@ graviton = {
             scripts: packageJSON.scripts !== undefined? packageJSON.scripts : []
           })
         })
-        
+
       }
     });
   },
@@ -876,7 +863,7 @@ document.addEventListener("mousedown", function(event) {
                 button.classList.add("part_of_context_menu");
                 button.innerText = getTranslation(key);
                 button.setAttribute("target", event.target.id);
-  
+
                 sleeping(1).then(() => {
                   button.addEventListener(
                     "click",
@@ -987,7 +974,7 @@ graviton.setEditorFontSize = function(new_size) {
   document.documentElement.style.setProperty(
     "--editor-font-size",
     `${current_config.fontSizeEditor}px`
-  ); 
+  );
   for (i = 0; i < editors.length; i++) {
     if (editors[i].editor != undefined) editors[i].editor.refresh();
   }

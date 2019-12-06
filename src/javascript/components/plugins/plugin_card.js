@@ -8,7 +8,10 @@ function retrieveCard({
   repository,
   clickable = true
 }) {
-  const updateIcon = puffin.element(`<div>${newUpdate ? icons.update : ""}</div>`, { props: [] });
+  if(newUpdate){
+   var updateIcon = puffin.element(icons.update, { props: [] });
+  }
+   
 
   const cardLogo = puffin.element(`<div></div>`, { props: [] });
 

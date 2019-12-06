@@ -5,7 +5,8 @@ function retrieveWindow({
   newUpdate,
   isInstalled,
   package,
-  repository
+  repository,
+  remotePackage
 }) {
   const pluginLogo = puffin.element(`<div></div>`, { props: [] });
 
@@ -39,7 +40,7 @@ function retrieveWindow({
       <h1>${package.name}</h1>
       <p>${package.description}</p>
       <p>${getTranslation("MadeBy")}${package.author}</p>
-      <p>${getTranslation("Version")}: ${package.version} ${newUpdate?"(🎉 update:"+plugin.repo.package.version+")":""}</p>
+      <p>${getTranslation("Version")}: ${package.version} ${newUpdate?"(🎉 update:"+remotePackage.version+")":""}</p>
       <p>${getTranslation("Stars")}: ${plugin.repo != undefined ? plugin.repo.git.stargazers_count : "Unknown"}</p>
       <p class="link" onclick="shell.openExternal('www.github.com/Graviton-Code-Editor/plugins_list/issues')">${getTranslation("Report")}</p>
     </div>
@@ -51,7 +52,7 @@ function retrieveWindow({
       let button_content = "";
       if (newUpdate) {
         button_content += `
-          <button click onclick="Market.updateExtension('${package.name}')" id="${Math.random() +
+          <button onclick="Market.updateExtension('${package.name}')" id="${Math.random() +
           "update"}" class="button1">${getTranslation(
           "Update"
         )}</button>
