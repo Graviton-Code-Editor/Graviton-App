@@ -28,7 +28,7 @@ module.exports = {
           return;
         }
       }
-      const welcomePage = require(path.join("..","components","welcome","welcome"));
+      const welcomePage = require(path.join("..","components","welcome","welcome"))();
       const welcome_window = new Window({
         id:'welcome_window',
         component:welcomePage,

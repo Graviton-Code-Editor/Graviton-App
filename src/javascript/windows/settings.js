@@ -34,7 +34,7 @@ module.exports = {
           if (document.getElementById("theme_list") != null) { 
             if (themes.length == 0) {
               document.getElementById("theme_list").innerHTML = `
-              <span style="font-size:14px">No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');Market.open(function(){Market.navigate('all')})" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
+              <span style="font-size:14px">No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');Market.open('themes')" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
               `;
             }else{
               selectionFromTo(document.getElementById("theme_list"),document.getElementById("theme_card_"+themeObject.name))

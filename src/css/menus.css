@@ -152,7 +152,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   border-top-left-radius: 0px;
   position: fixed;
   background-color: var(--dropmenu-background-color);
-  min-width: auto;
+  min-width: 175px;
   overflow: auto;
   z-index: 1;
   box-shadow: 1px 3px 7px var(--shadows);
@@ -168,7 +168,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
   padding: 7px 2px;
   width: 100%;
   text-decoration: none;
-  display: block;
+  display: flex;
   border: 0;
   border-radius: 5px;
   text-align: left;
@@ -192,13 +192,26 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 .dropdown-content > button:not(.dropbtn) div {
-  display: inline-block;
+  flex:1;
+  display:inline-flex;
 }
 
-.dropdown-content > button:not(.dropbtn) *:nth-child(1) {
+.dropdown-content > button:not(.dropbtn) div:nth-child(1) {
   margin: 0 1px;
   position: relative;
   top: 0.7px;
+  min-width: 25px;
+  max-width: 25px;
+}
+.dropdown-content > button:not(.dropbtn) div:nth-child(2) {
+  width:80%;
+  text-align: left;
+  margin-right: 25px;
+  text-overflow: ellipsis;
+}
+.dropdown-content > button:not(.dropbtn) div:nth-child(3) {
+  justify-content: flex-end;
+  width: 20%;
 }
 
 .dropdown-content > button:not(.dropbtn):hover div .abo {

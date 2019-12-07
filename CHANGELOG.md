@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191207 - 1 [1.2.0]
+- Better source management
+- Dropmenu's buttons now also shows it's hint right to the text
+
 ### 191206 - 1 [1.2.0]
 - Added more events to the centralized file
 - Fixed: update icon on Plugins cards on Market wasn't showing

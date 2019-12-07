@@ -593,8 +593,8 @@ button.fullScreenWindow-left{
 }
 .section-2 {
   position: relative;
-  transition: 0.05s;
-  margin: 7px 0;
+  transition: 0.1s;
+  margin: 7px 4px;
   padding: 17px;
   background: var(--primaryColor);
   cursor: pointer;
@@ -602,7 +602,7 @@ button.fullScreenWindow-left{
   min-height: auto;
   border-radius: 8px;
   overflow: auto;
-  border: 2px solid transparent;
+  box-shadow: 0 0 0 0px var(--accentColor);
 }
 
 .section-2 h3{
@@ -618,7 +618,7 @@ button.fullScreenWindow-left{
 }
 
 .section-2:active {
-  border: 2px solid var(--accentColor);
+  box-shadow: 0px 0px 0px 3px var(--accentColor);
 }
 
 .section-3 {
@@ -978,7 +978,7 @@ gv-navpanel.side-menu gv-navbar gv-navbutton{
   color: var(--white-black);
   background-color: transparent;
   padding: 7px 10px;
-  width: 80%;
+  width: 83%;
   text-decoration: none;
   display: block;
   border: 0;

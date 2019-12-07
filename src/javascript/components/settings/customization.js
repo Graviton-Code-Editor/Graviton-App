@@ -12,14 +12,8 @@ const customizationSection = puffin.element(`
                 themes.map((th)=>{
                     content += `<ThemeCard id="theme_card_${th.name}" author="${getTranslation("By")} ${th.author}" description="${th.description}" accent="background:${th.colors.accentColor}" name="${th.name}"></ThemeCard> `
                 })
-                if (themes.length === 0) {
-                    return `
-                    <p class="link" onclick="closeWindow('settings_window');Market.open(function(){Market.navigate('all')})">
-                        ${getTranslation("Market")}
-                    </p>
-                    `;
-                } else {
-                    return content;
+                if (themes.length !== 0) {
+                   return content;
                 }
             })()}
             </elastic-container>

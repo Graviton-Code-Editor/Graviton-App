@@ -15,6 +15,9 @@ const welcomeSetupPage = puffin.element(`
                 <button click="$goBack"  class="button1 translate_word" idT="Finish">${getTranslation(
                 "GoBack"
                 )}</button> 
+                <button click="$openMarket"  class="button1 translate_word" idT="Market">${getTranslation(
+                "Market"
+                )}</button> 
                 <button click="$finish" class="button1 translate_word" idT="Finish">${getTranslation(
                 "Finish"
                 )}</button> 
@@ -23,6 +26,9 @@ const welcomeSetupPage = puffin.element(`
     </div>
 `,{
     methods:[
+        function openMarket(){
+            Market.open()
+        },
         function goBack(){
             Setup.navigate("additional_settings");
         },
@@ -33,4 +39,4 @@ const welcomeSetupPage = puffin.element(`
     ]
 })
 
-module.exports = welcomeSetupPage
+module.exports =  welcomeSetupPage

@@ -58,20 +58,19 @@ module.exports = {
         droplist.classList = 'dropdown-content hide'
         droplist.setAttribute('id', this.id + '_dropbtn')
         newTab.classList.add('dropdown')
-      }
-
+      } 
       if (this.translation != true) {
         newTab.innerHTML = `
-              <button g_id="${this.id}" onclick="Menus.trigger('${
-  this.id
-}_dropbtn')" class="dropbtn" >${panel['button']}</button>`
+        <button g_id="${this.id}" onclick="Menus.trigger('${
+          this.id
+        }_dropbtn')" class="dropbtn" >${panel['button']}</button>`
       } else {
         newTab.innerHTML = `
         <button g_id="${this.id}" class=" translate_word dropbtn " idT="${panel[
-  'button'
-].replace(/ +/g, '')}" onclick="Menus.trigger('${
-  this.id
-}_dropbtn')"  >${getTranslation(panel['button'])}</button>`
+          'button'
+        ].replace(/ +/g, '')}" onclick="Menus.trigger('${
+          this.id
+        }_dropbtn')" >${getTranslation(panel['button'])}</button>`
       }
       let last
       let toTransx = this.translation
@@ -111,19 +110,17 @@ module.exports = {
               })
               if (toTransx != true) {
                 button.innerHTML += `
-                    <div>
-                    ${icon}
-                    </div>
+                    <div>${icon}</div>
                     <div>${key}</div>
+                    <div>${hint}</div
                     `
               } else {
                 button.innerHTML += `
-                    <div>
-                    ${icon}
-                    </div>
+                    <div>${icon}</div>
                     <div class="translate_word" idT="${key.replace(/ +/g, '')}">
                       ${getTranslation(key)}
                     </div>
+                    <div>${hint}</div>
                     `
               }
               droplist.appendChild(button)

@@ -96,7 +96,7 @@ module.exports = {
         button: 'Tools',
         list: {
           Market: () => {
-            Market.open(err => Market.navigate('all', err))
+            Market.open("all")
           },
           ShowWelcome: () => Welcome.open(),
           'Zen Mode': {

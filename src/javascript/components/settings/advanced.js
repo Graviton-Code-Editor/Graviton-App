@@ -18,7 +18,7 @@ const advancedSection = puffin.element(`
             "DeveloperTools"
             )}</button>
             <p>${getTranslation("Settings-Advanced-Developer-Tools-text2")}</p>
-            <button class="button1" onclick="shell.openItem(DataFolderDir)">${getTranslation(
+            <button class="button1" click="$openConfiguration">${getTranslation(
                 "Open Configuration"
             )}</button>
         </gv-blockcontent>
@@ -30,6 +30,13 @@ const advancedSection = puffin.element(`
             )}</button>
         </gv-blockcontent>
     </elastic-container>
-`)
+`,{
+    methods:[
+        function openConfiguration(){
+            const shell = remote.shell
+            shell.openItem(DataFolderDir)
+        }
+    ]
+})
 
 module.exports = advancedSection

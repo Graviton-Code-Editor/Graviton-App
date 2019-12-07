@@ -13,10 +13,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Market: {
-    open: function(callback) {
+    open: function(section = "all") {
       /**
        * @desc Open the Market window
        */
+      const callback = function(err){
+        document.getElementById("button_"+section).click()
+      }
       const market_window = new Window({
         id: "market_window",
         content: `
@@ -24,14 +27,13 @@ module.exports = {
             <div></div>
             <div class="bg"></div>
           </div>
-                `
+        `
       });
       market_window.launch();
       if (marketCache.length != 0) {
         this.loadMenus();
         return callback();
       }
-
       this.extensions = [];
       const me = this;
       const fetch = require("node-fetch");
@@ -61,16 +63,16 @@ module.exports = {
       <gv-navpanel>
         <gv-navbar>
           <gv-navtitle>${getTranslation("Market")}</gv-navtitle>
-          <gv-navbutton href="All" default="" onclick="Market.navigate('all')"  >${getTranslation(
+          <gv-navbutton id="button_all" href="All" default="" onclick="Market.navigate('all')"  >${getTranslation(
             "All"
           )}</gv-navbutton>
-          <gv-navbutton href="Themes" onclick="Market.navigate('themes');">${getTranslation(
+          <gv-navbutton id="button_themes" href="Themes" onclick="Market.navigate('themes');">${getTranslation(
             "Themes"
           )}</gv-navbutton>
-          <gv-navbutton href="Installed" onclick="Market.navigate('installed');">${getTranslation(
+          <gv-navbutton id="button_installed" href="Installed" onclick="Market.navigate('installed');">${getTranslation(
             "Installed"
           )}</gv-navbutton>
-          <gv-navbutton href="Settings" onclick="Market.navigate('settings')">${getTranslation(
+          <gv-navbutton id="button_settings"  href="Settings" onclick="Market.navigate('settings')">${getTranslation(
             "Settings"
           )}</gv-navbutton>
         </gv-navbar>
@@ -132,8 +134,8 @@ module.exports = {
           }
           if (document.getElementById("sec_all").innerHTML == "") {
             document.getElementById("sec_all").innerHTML = `
-                          <div id=loading_exts>Loading extensions...</div>
-                        `;
+              <div id=loading_exts>Loading extensions...</div>
+            `;
             marketCache.forEach(_plugin => {
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
