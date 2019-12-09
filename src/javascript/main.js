@@ -9,13 +9,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
-"use strict";
+"use strict"
 
 const GravitonInfo = {
-  date: "191207",
+  date: "191208",
   version: "1.2.0",
   state: "Beta"
-};
+}
 
 const fs = require("fs-extra"),
   remote = require("electron").remote,
@@ -28,16 +28,19 @@ const fs = require("fs-extra"),
   semver = require("semver"),
   tinycolor = require("tinycolor2"),
   EventEmitter = require("events"),
-  sanitize = require('light-sanitize-html'),
-  { puffin } = require("@mkenzo_8/puffin");
-  
+  sanitize = require("light-sanitize-html"),
+  { puffin } = require("@mkenzo_8/puffin"),
+  shell = remote.shell
+
+require('v8-compile-cache');
+
 require(path.join(
   __dirname,
   "src",
   "javascript",
   "api",
   "codemirror-langs.js"
-)).langs(); //Load CodeMirror files
+)).langs() //Load CodeMirror files
 const { elasticContainerComponent, elasticContainer } = require(path.join(
   __dirname,
   "src",
@@ -45,9 +48,9 @@ const { elasticContainerComponent, elasticContainer } = require(path.join(
   "api",
   "web_components",
   "elastic_container.js"
-));
+))
 
-window.customElements.define("elastic-container", elasticContainerComponent);
+window.customElements.define("elastic-container", elasticContainerComponent)
 
 graviton.loadEditor = require(path.join(
   __dirname,
@@ -55,14 +58,14 @@ graviton.loadEditor = require(path.join(
   "javascript",
   "api",
   "editors.js"
-)).loadEditor;
+)).loadEditor
 
 graviton.events = require(path.join(
   __dirname,
   "src",
   "javascript",
   "events.js"
-));
+))
 
 const { loadLanguage, getTranslation } = require(path.join(
     __dirname,
@@ -91,14 +94,14 @@ const { loadLanguage, getTranslation } = require(path.join(
     "javascript",
     "api",
     "updater.js"
-  ));
+  ))
 graviton.setTheme = require(path.join(
   __dirname,
   "src",
   "javascript",
   "api",
   "theming.js"
-)).setTheme;
+)).setTheme
 
 const Settings = require(path.join(
     __dirname,
@@ -197,7 +200,7 @@ const Settings = require(path.join(
     "api",
     "constructors",
     "dropmenus.js"
-  )).Dropmenu;
+  )).Dropmenu
 let { icons } = require(path.join(
   __dirname,
   "src",
@@ -205,7 +208,7 @@ let { icons } = require(path.join(
   "api",
   "constructors",
   "icons.js"
-));
+))
 
 const { commander, commanders } = require(path.join(
   __dirname,
@@ -214,7 +217,7 @@ const { commander, commanders } = require(path.join(
   "api",
   "constructors",
   "commanders.js"
-));
+))
 const { Panel } = require(path.join(
   __dirname,
   "src",
@@ -222,7 +225,7 @@ const { Panel } = require(path.join(
   "api",
   "constructors",
   "panels.js"
-));
+))
 window.customElements.define(
   "gv-switch",
   require(path.join(
@@ -233,7 +236,7 @@ window.customElements.define(
     "web_components",
     "switch.js"
   ))
-);
+)
 window.customElements.define(
   "gv-navpanel",
   require(path.join(
@@ -244,8 +247,8 @@ window.customElements.define(
     "web_components",
     "navpanel.js"
   ))
-);
-require(path.join(__dirname, "src", "javascript", "npm", "npm_panel.js"));
+)
+require(path.join(__dirname, "src", "javascript", "npm", "npm_panel.js"))
 window.customElements.define(
   "gv-process",
   require(path.join(
@@ -256,7 +259,7 @@ window.customElements.define(
     "web_components",
     "process_bar.js"
   ))
-);
+)
 
 let current_screen,
   dir_path,
@@ -310,135 +313,136 @@ let current_screen,
   marketCache = [],
   projectServices = [],
   EXPLORER_PANEL = null,
-  projectTemplates = require(path.join(__dirname,"src","javascript","templates")),
-  sourceDir = __dirname;
+  projectTemplates = require(path.join(
+    __dirname,
+    "src",
+    "javascript",
+    "templates"
+  )),
+  sourceDir = __dirname
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",
   "Graviton-Code-Editor/Arctic"
-]; //Plugins which are installed in the setup process
+] //Plugins which are installed in the setup process
 
 if (graviton.isProduction()) {
-  DataFolderDir = path.join(getAppDataPath(), ".graviton");
+  DataFolderDir = path.join(getAppDataPath(), ".graviton")
 }
 
-if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir); // Create .graviton if it doesn't exist
+if (!fs.existsSync(DataFolderDir)) fs.mkdirSync(DataFolderDir) // Create .graviton if it doesn't exist
 
 /* Set path for graviton's files and dirs */
 let logDir = path.join(DataFolderDir, "log.json"),
   configDir = path.join(DataFolderDir, "config.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
-  market_file = path.join(DataFolderDir, "market.json");
+  market_file = path.join(DataFolderDir, "market.json")
 
 preload([
   "src/icons/folder_opened.svg",
   "src/icons/custom_icons/git.svg",
   "src/icons/custom_icons/node_modules.svg"
-]);
+])
 
-preloadFont([
-  "editor",
-  "terminal"
-]);
+preloadFont(["editor", "terminal"])
 
 window.onload = async function() {
-  await fs.readdir(path.join(__dirname, "languages")).then(function(paths){
+  await fs.readdir(path.join(__dirname, "languages")).then(function(paths) {
     paths.forEach((dir, index) => {
-      languages.push(require(path.join(__dirname, "languages", dir)));
-      if (document.getElementById("boot_loader") !== null){
-        document.getElementById("boot_loader").children[0].style.width += index + 35 + "%";
-      } 
-      if(index === paths.length-1){
+      languages.push(require(path.join(__dirname, "languages", dir)))
+      if (document.getElementById("boot_loader") !== null) {
+        document.getElementById("boot_loader").children[0].style.width +=
+          index + 35 + "%"
+      }
+      if (index === paths.length - 1) {
         loadGraviton()
       }
-    });
+    })
   })
-  function loadGraviton(){
-    graviton.loadConfiguration();
-    graviton.consoleInfo("Configuration has been synched.");
-    if (document.getElementById("boot_loader") !== null){
-      document.getElementById("boot_loader").children[0].style = "width: 100%; border-radius:100px;";
+  function loadGraviton() {
+    graviton.loadConfiguration()
+    graviton.consoleInfo("Configuration has been synched.")
+    if (document.getElementById("boot_loader") !== null) {
+      document.getElementById("boot_loader").children[0].style =
+        "width: 100%; border-radius:100px;"
     }
   }
-};
+}
 
-
-
-const appendBinds = function(){
+const appendBinds = function() {
   Mousetrap.bind("mod+s", function() {
-    saveFile();
-  });
+    saveFile()
+  })
   Mousetrap.bind("mod+n", function() {
-    screens.add();
-  });
+    screens.add()
+  })
   Mousetrap.bind("mod+l", function() {
-    screens.remove(current_screen.id);
-  });
+    screens.remove(current_screen.id)
+  })
   Mousetrap.bind("mod+e", function() {
-    graviton.toggleZenMode();
-  });
+    graviton.toggleZenMode()
+  })
   Mousetrap.bind("mod+t", function() {
     if (terminal != null) {
-      commanders.show(terminal.id);
-      return;
+      commanders.show(terminal.id)
+      return
     }
-    commanders.terminal();
-  });
+    commanders.terminal()
+  })
   Mousetrap.bind("mod+u", function() {
-    commanders.closeTerminal();
-  });
+    commanders.closeTerminal()
+  })
   Mousetrap.bind("mod+h", function() {
     if (terminal != null) {
-      commanders.hide(terminal.id);
+      commanders.hide(terminal.id)
     }
-  });
+  })
   Mousetrap.bind("f11", function() {
-    graviton.toggleFullScreen();
-  });
+    graviton.toggleFullScreen()
+  })
   Mousetrap.bind("mod+tab", function() {
-    graviton.toggleMenus();
-  });
-};
-
+    graviton.toggleMenus()
+  })
+}
 
 const create = {
   folder(id, value) {
-    const element = document.getElementById(id);
-    const dir = path.join(element.getAttribute("dir"), value);
+    const element = document.getElementById(id)
+    const dir = path.join(element.getAttribute("dir"), value)
     if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir);
+      fs.mkdirSync(dir)
       Explorer.load(
         element.getAttribute("dir"),
         element.id,
         element.getAttribute("global")
-      );
+      )
     } else {
       new Notification({
         title: "Graviton",
         content: getTranslation("ExplorerError2")
-      });
+      })
     }
   },
   file(id, value) {
-    const element = document.getElementById(id);
-    const dir = path.join(element.getAttribute("dir"), value);
+    const element = document.getElementById(id)
+    const dir = path.join(element.getAttribute("dir"), value)
     if (!fs.existsSync(dir)) {
       fs.writeFile(dir, "", function() {
         Explorer.load(
           element.getAttribute("dir"),
           element.id,
           element.getAttribute("global")
-        );
-      });
+        )
+      })
     } else {
       new Notification({
         title: "Graviton",
         content: getTranslation("ExplorerError1")
-      });
+      })
     }
   }
-};
+}
 
 const directories = {
   newFolder(object) {
@@ -455,22 +459,22 @@ const directories = {
               document.getElementById("rename_dialog").value === ""
                 ? "New folder"
                 : document.getElementById("rename_dialog").value
-            );
+            )
           },
           important: true
         }
       }
-    });
+    })
     document
       .getElementById("rename_dialog")
       .addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
-          event.preventDefault();
-          create.folder(object, this.value === "" ? "New folder" : this.value);
-          closeDialog("new_folder");
+          event.preventDefault()
+          create.folder(object, this.value === "" ? "New folder" : this.value)
+          closeDialog("new_folder")
         }
-      });
-    document.getElementById("rename_dialog").focus();
+      })
+    document.getElementById("rename_dialog").focus()
   },
   newFile(object) {
     new Dialog({
@@ -486,22 +490,22 @@ const directories = {
               document.getElementById("rename_dialog").value === ""
                 ? "NewFile.txt"
                 : document.getElementById("rename_dialog").value
-            );
+            )
           },
           important: true
         }
       }
-    });
+    })
     document
       .getElementById("rename_dialog")
       .addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
-          event.preventDefault();
-          create.file(object, this.value === "" ? "NewFile.txt" : this.value);
-          closeDialog("new_file");
+          event.preventDefault()
+          create.file(object, this.value === "" ? "NewFile.txt" : this.value)
+          closeDialog("new_file")
         }
-      });
-    document.getElementById("rename_dialog").focus();
+      })
+    document.getElementById("rename_dialog").focus()
   },
   removeFileDialog(object) {
     new Dialog({
@@ -512,11 +516,11 @@ const directories = {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
-            directories.removeFile(object.id);
+            directories.removeFile(object.id)
           }
         }
       }
-    });
+    })
   },
   removeFolderDialog(object) {
     new Dialog({
@@ -527,24 +531,24 @@ const directories = {
         [getTranslation("Cancel")]: {},
         [getTranslation("Accept")]: {
           click: () => {
-            directories.removeFolder(object.id);
+            directories.removeFolder(object.id)
           }
         }
       }
-    });
+    })
   },
   removeFile(id) {
-    const object = document.getElementById(id);
+    const object = document.getElementById(id)
     fs.unlink(object.getAttribute("dir"), function(err) {
-      if (err) graviton.throwError(err);
-      object.remove();
-    });
+      if (err) graviton.throwError(err)
+      object.remove()
+    })
   },
   removeFolder(id) {
-    const rimraf = require("rimraf");
-    const object = document.getElementById(id);
-    rimraf.sync(object.getAttribute("dir"));
-    object.remove();
+    const rimraf = require("rimraf")
+    const object = document.getElementById(id)
+    rimraf.sync(object.getAttribute("dir"))
+    object.remove()
   },
   getCustomIcon(dir, state) {
     if (
@@ -556,164 +560,113 @@ const directories = {
     ) {
       switch (dir) {
         case "node_modules":
-          return "src/icons/custom_icons/node_modules.svg";
-          break;
+          return "src/icons/custom_icons/node_modules.svg"
+          break
         case ".git":
-          return "src/icons/custom_icons/git.svg";
-          break;
+          return "src/icons/custom_icons/git.svg"
+          break
         default:
           if (state == "close") {
-            return "src/icons/folder_closed.svg";
+            return "src/icons/folder_closed.svg"
           } else {
-            return "src/icons/folder_opened.svg";
+            return "src/icons/folder_opened.svg"
           }
       }
     } else {
       switch (dir) {
         case "node_modules":
-          return path.join(themeObject.name, themeObject.icons["node_modules"]);
-          break;
+          return path.join(themeObject.name, themeObject.icons["node_modules"])
+          break
         case ".git":
-          return path.join(themeObject.name, themeObject.icons["git"]);
-          break;
+          return path.join(themeObject.name, themeObject.icons["git"])
+          break
         default:
           if (state == "close") {
             return path.join(
               themeObject.name,
               themeObject.icons["folder_closed"]
-            );
+            )
           } else {
             return path.join(
               themeObject.name,
               themeObject.icons["folder_opened"]
-            );
+            )
           }
       }
     }
   }
-};
+}
 
-function registerNewProject(dir){
+function registerNewProject(dir) {
   // Add a new directory to the history if it is the first time it has been opened in the editor
   for (i = 0; i < log.length + 1; i++) {
     if (i != log.length) {
       if (log[i].Path == dir) {
-        return;
+        return
       }
     } else if (i == log.length) {
       log.unshift({
         Name: path.basename(dir),
         Path: dir
-      });
-      document.dispatchEvent(graviton.events.newRecentProject(dir));
-      fs.writeFile(logDir, JSON.stringify(log,null,2));
-      return;
+      })
+      document.dispatchEvent(graviton.events.newRecentProject(dir))
+      fs.writeFile(logDir, JSON.stringify(log, null, 2))
+      return
     }
   }
-};
+}
 
-function createNewProject(template){
-  const { dialog } = remote;
+function createNewProject(template) {
+  const { dialog } = remote
   dialog
     .showOpenDialog(g_window, {
       properties: ["openDirectory"]
     })
     .then(result => {
       console.log(result.filePaths)
-      if (result.canceled) return;
+      if (result.canceled) return
       if (result.filePaths != 0) {
         switch (template) {
           case "html":
             const newProjectDir = path.join(
               result.filePaths[0],
               ".GravitonProject " + Date.now()
-            );
-            fs.mkdirSync(newProjectDir);
+            )
+            fs.mkdirSync(newProjectDir)
             fs.writeFile(
               path.join(newProjectDir, "index.html"),
               projectTemplates.html,
               err => {
                 if (err) {
-                  return err;
+                  return err
                 }
-                Explorer.load(newProjectDir, "g_directories", true);
+                Explorer.load(newProjectDir, "g_directories", true)
               }
-            );
-            break;
+            )
+            break
         }
       }
     })
     .catch(err => {
-      console.error(err);
-    });
-
-};
+      console.error(err)
+    })
+}
 
 const selectionFromTo = (parent, toSelect) => {
-  const children = parent.children;
+  const children = parent.children
   for (let child of children) {
-    child.classList.remove("active");
+    child.classList.remove("active")
   }
-  if(toSelect!=undefined) toSelect.classList.add("active");
-};
-
-
-//Use plugin card on a custom window
-
-function meh(){
-  Market.getExtensionData("marc2332/flutter-node",
-  function(err){
-    console.log(err)
-  },function(extensionData){
-    const test_window = new Window({
-      content:` 
-      <div id="test_test">  
-
-      </div>
-      `
-    })
-    test_window.launch()
-    const { puffin } = require("@mkenzo_8/puffin")
-
-    const retrieveCard = require(path.join(__dirname,"src","javascript","components","plugin_card"));
-
-    const card = retrieveCard({
-      plugin:graviton.getPlugin("flutter-node"),
-      newUpdate:false,
-      isInstalled:false,
-      packageConf:extensionData.package,
-      repository:extensionData.git,
-      clickable: false
-    })
-
-    puffin.render(card,document.getElementById("test_test"))
-  })
+  if (toSelect != undefined) toSelect.classList.add("active")
 }
 
-function foo(){
-  const test_window = new Window({
-    content:` 
-    <div id="test_test">  
-
-    </div>
-    `
-  })
-  test_window.launch()
-
-  const test = require(path.join(__dirname,"src","javascript","components","setup","languages"));
-
-  puffin.render(test,document.getElementById("test_test"))
-
-}
-
-
-g_window.on("blur",function(){
-  if(graviton.currentOS().codename === "darwin"){
+g_window.on("blur", function() {
+  if (graviton.currentOS().codename === "darwin") {
     document.getElementById("controls_macOS").classList.toggle("blur")
   }
 })
-g_window.on("focus",function(){
-  if(graviton.currentOS().codename === "darwin"){
+g_window.on("focus", function() {
+  if (graviton.currentOS().codename === "darwin") {
     document.getElementById("controls_macOS").classList.remove("blur")
   }
 })

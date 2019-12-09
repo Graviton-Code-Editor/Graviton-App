@@ -988,6 +988,14 @@ gv-navpanel.side-menu gv-navbar gv-navbutton{
   transform: scale(1);
   position: relative;
 }
+gv-navpanel.side-menu gv-navbar gv-navdiv{
+  display: block;
+  background: var(--dropmenu-span-color);
+  min-height:2px;
+  margin:15px 8px;
+  min-width: 90%;
+  position: relative;
+}
 
 gv-navpanel.side-menu gv-navbar gv-navbutton.active ,gv-navpanel gv-navbar gv-navbutton[default=""]{
   cursor: pointer;

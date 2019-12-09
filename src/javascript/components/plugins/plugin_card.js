@@ -11,8 +11,7 @@ function retrieveCard({
   if(newUpdate){
    var updateIcon = puffin.element(icons.update, { props: [] });
   }
-   
-
+  
   const cardLogo = puffin.element(`<div></div>`, { props: [] });
 
   if (packageConf.logo == undefined) {
@@ -29,8 +28,8 @@ function retrieveCard({
     if(isInstalled){
       cardLogo.node.innerHTML = `<img src="${path.join(
         plugins_folder,
-        plugin.local.name,
-        plugin.local.logo
+        packageConf.name,
+        packageConf.logo
       )}"/>`;
     }else{
       cardLogo.node.innerHTML = `<img  src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${packageConf.logo}?sanitize=true">`;
@@ -53,18 +52,18 @@ function retrieveCard({
     `
       <div click="$openMe" class="extension_div" name="${
         packageConf.name
-      }" update="${newUpdate}">
-        ${newUpdate ? "<updateIcon/>" : ""} 
-      <div>
-        <cardLogo/>
-        <div class="text">
-          <h3 class="plugin_name_prop" >${packageConf.name} </h3>
-          <p class="plugin_description_prop">${packageConf.description}</p>   
+        }" update="${newUpdate}">
+          ${newUpdate ? "<updateIcon/>" : ""} 
+        <div>
+          <cardLogo/>
+          <div class="text">
+            <h3 class="plugin_name_prop" >${packageConf.name} </h3>
+            <p class="plugin_description_prop">${packageConf.description}</p>   
+          </div>
         </div>
-      </div>
-      <div class="installed"> 
-        <cardBottom/>
-      </div>
+        <div class="installed"> 
+          <cardBottom/>
+        </div>
       </div>
     `,
     {
@@ -76,6 +75,7 @@ function retrieveCard({
       props: [],
       methods: [
         function openMe() {
+          console.log(clickable)
           if(clickable){
             Market.openSubExtensions({
               name:packageConf.name,

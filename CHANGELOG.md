@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191209 - 1 [1.2.0]
+- Improved Market
+
 ### 191207 - 1 [1.2.0]
 - Better source management
 - Dropmenu's buttons now also shows it's hint right to the text
