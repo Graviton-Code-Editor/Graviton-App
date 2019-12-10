@@ -25,11 +25,9 @@ describe('Opening Graviton ', function () {
     })
   })
   it('.graviton is created', function () {
-    return fs.existsSync(DataFolderDir)
-  })
-  afterEach(function () {
     if (this.app && this.app.isRunning()) {
       return this.app.stop()
     }
+    return fs.existsSync(DataFolderDir)
   })
 })

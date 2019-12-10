@@ -75,7 +75,6 @@ function retrieveCard({
       props: [],
       methods: [
         function openMe() {
-          console.log(clickable)
           if(clickable){
             Market.openSubExtensions({
               name:packageConf.name,

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191208",
+  date: "191210",
   version: "1.2.0",
   state: "Beta"
 }
@@ -41,6 +41,7 @@ require(path.join(
   "api",
   "codemirror-langs.js"
 )).langs() //Load CodeMirror files
+
 const { elasticContainerComponent, elasticContainer } = require(path.join(
   __dirname,
   "src",

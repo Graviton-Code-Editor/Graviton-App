@@ -1,4 +1,3 @@
-
 module.exports.html = `
 <!DOCTYPE html>
 <html lang="en">
@@ -13,4 +12,4 @@ module.exports.html = `
   </body>
 </html>
 
-`
+`;

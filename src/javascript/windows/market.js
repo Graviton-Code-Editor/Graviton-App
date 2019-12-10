@@ -13,7 +13,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Market: {
-    open: function(section = "all") {
+    open: fun
+    ction(section = "all") {
       /**
        * @desc Open the Market window
        */
