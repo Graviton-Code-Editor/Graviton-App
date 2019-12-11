@@ -13,14 +13,13 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Market: {
-    open: fun
-    ction(section = "all") {
+    open: function(section = "all") {
       /**
        * @desc Open the Market window
        */
-      const callback = function(err){
-        document.getElementById("button_"+section).click()
-      }
+      const callback = function(err) {
+        document.getElementById("button_" + section).click();
+      };
 
       const market_window = new Window({
         id: "market_window",
@@ -48,10 +47,11 @@ module.exports = {
           plugins_market = me.extensions;
           current_plugins = 5;
           me.loadMoreExtensions(0, callback);
-        }).catch(err=>{
-          me.loadMenus()
-          return callback(1)
         })
+        .catch(err => {
+          me.loadMenus();
+          return callback(1);
+        });
     },
     loadMenus: function() {
       /**
@@ -105,7 +105,8 @@ module.exports = {
        * @desc Load the market pages
        */
       if (document.getElementById("market_window_window") == undefined) return;
-      if(param == "force") document.getElementById(`button_${section}`).click()
+      if (param == "force")
+        document.getElementById(`button_${section}`).click();
       switch (section) {
         case "all":
           if (param == 1) {
@@ -153,22 +154,29 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              const retrieveCard = require("../components/plugins/plugin_card")
+              const retrieveCard = require("../components/plugins/plugin_card");
               const card = retrieveCard({
-                plugin:plugin,
-                packageConf:_package,
-                newUpdate:_new_update,
-                repository:data,
-                isInstalled:graviton.getPlugin(_package.name).local != undefined,
-                section:"all"
-              })
-              
-              const {puffin} = require("@mkenzo_8/puffin")
-              puffin.render(card  ,document.getElementById("sec_all"))
+                plugin: plugin,
+                packageConf: _package,
+                newUpdate: _new_update,
+                repository: data,
+                isInstalled:
+                  graviton.getPlugin(_package.name).local != undefined,
+                section: "all"
+              });
+
+              const { puffin } = require("@mkenzo_8/puffin");
+              puffin.render(card, document.getElementById("sec_all"));
             });
             if (plugins_market.length != marketCache.length) {
-              const loadMore = require(path.join(__dirname,"..","components","plugins","loadMore_button"))("all");
-              puffin.render(loadMore,document.getElementById("sec_all"))
+              const loadMore = require(path.join(
+                __dirname,
+                "..",
+                "components",
+                "plugins",
+                "loadMore_button"
+              ))("all");
+              puffin.render(loadMore, document.getElementById("sec_all"));
             }
           }
           return;
@@ -194,16 +202,16 @@ module.exports = {
                       semver.parse(plugin.local.version)
                     )
                   : false;
-              const retrieveCard = require("../components/plugins/plugin_card")
+              const retrieveCard = require("../components/plugins/plugin_card");
               const card = retrieveCard({
-                plugin:plugin,
-                packageConf:plugin.local,
-                newUpdate:newUpdate,
-                isInstalled:true,
-                section:"installed"
-              })
-              const {puffin} = require("@mkenzo_8/puffin")
-              puffin.render(card,document.getElementById("sec_installed"))
+                plugin: plugin,
+                packageConf: plugin.local,
+                newUpdate: newUpdate,
+                isInstalled: true,
+                section: "installed"
+              });
+              const { puffin } = require("@mkenzo_8/puffin");
+              puffin.render(card, document.getElementById("sec_installed"));
             }
           }
           return;
@@ -212,7 +220,7 @@ module.exports = {
             document.getElementById("sec_themes").innerHTML = `
                     <div id=loading_exts3>Loading extensions...</div>`;
             for (const pluginData of marketCache) {
-              const pluginPackage = pluginData.package 
+              const pluginPackage = pluginData.package;
               const plugin = graviton.getPlugin(pluginPackage.name);
               const data = plugin.repo.git;
               if (pluginPackage.colors != undefined) {
@@ -226,24 +234,31 @@ module.exports = {
                         semver.parse(plugin.local.version).version
                       )
                     : false;
-                const retrieveCard = require("../components/plugins/plugin_card")
+                const retrieveCard = require("../components/plugins/plugin_card");
                 const card = retrieveCard({
-                  plugin:plugin,
-                  packageConf:pluginPackage,
-                  newUpdate:newUpdate,
-                  repository:data,
-                  isInstalled:graviton.getPlugin(pluginPackage.name).local != undefined,
-                  section:"themes"
-                })
-                puffin.render(card,document.getElementById("sec_themes"))
+                  plugin: plugin,
+                  packageConf: pluginPackage,
+                  newUpdate: newUpdate,
+                  repository: data,
+                  isInstalled:
+                    graviton.getPlugin(pluginPackage.name).local != undefined,
+                  section: "themes"
+                });
+                puffin.render(card, document.getElementById("sec_themes"));
               }
             }
             if (document.getElementById("loading_exts3") != undefined) {
               document.getElementById("loading_exts3").remove();
             }
             if (plugins_market.length != marketCache.length) {
-              const loadMore = require(path.join(__dirname,"..","components","plugins","loadMore_button"))("themes");
-              puffin.render(loadMore,document.getElementById("sec_themes"))
+              const loadMore = require(path.join(
+                __dirname,
+                "..",
+                "components",
+                "plugins",
+                "loadMore_button"
+              ))("themes");
+              puffin.render(loadMore, document.getElementById("sec_themes"));
             }
           }
           return;
@@ -273,20 +288,17 @@ module.exports = {
       current_plugins = start + me.extensions.length;
       for (i = 0; i < me.extensions.length; i++) {
         const this_i = i;
-        me.getExtensionData(me.extensions[this_i],callback,function(newUpdate){
+        me.getExtensionData(me.extensions[this_i], callback, function(
+          newUpdate
+        ) {
           if (start === 0) {
-            document.getElementById(
-              "market_loader"
-            ).children[0].style.width = i * 20 + 20 + "%";
+            document.getElementById("market_loader").children[0].style.width =
+              i * 20 + 20 + "%";
           }
           if (i == current_plugins - 1) {
             let date = new Date();
             date = Number(
-              date.getFullYear() +
-                "" +
-                date.getMonth() +
-                "" +
-                date.getDate()
+              date.getFullYear() + "" + date.getMonth() + "" + date.getDate()
             );
             const cacheToSave = {
               date: date,
@@ -309,17 +321,17 @@ module.exports = {
             }
             if (callback != undefined) callback();
           }
-        })
+        });
       }
     },
-    getExtensionData(extension,callback,succCallback){
+    getExtensionData(extension, callback, succCallback) {
       const me = this;
       const github = require("octonode");
       const client = github.client();
       client.repo(extension).info(function(err, data) {
         if (err) {
-          me.loadMenus(); 
-          console.log(err)
+          me.loadMenus();
+          console.log(err);
           return callback(2); // Maxium requests error, 60 requests / hour / ip
         }
         const fetch = require("node-fetch");
@@ -331,7 +343,7 @@ module.exports = {
             const extensionData = {
               git: data,
               package: Plugins.sanitizePlugin(packageConf)
-            }
+            };
             marketCache.push(extensionData);
             const plugin = graviton.getPlugin(packageConf.name);
             const newUpdate =
@@ -345,11 +357,11 @@ module.exports = {
               me.loadMenus();
               return callback(3);
             }
-            return succCallback(newUpdate)
+            return succCallback(newUpdate);
           });
       });
     },
-    openSubExtensions: function({name,update}) {
+    openSubExtensions: function({ name, update }) {
       /**
        * @desc Open each's eextension window
        */
@@ -361,29 +373,27 @@ module.exports = {
         });
         return;
       }
-      const pluginPackage = plugin.local?plugin.local:plugin.repo.package
-      const retrieveWindow = require("../components/plugins/plugin_window")
+      const pluginPackage = plugin.local ? plugin.local : plugin.repo.package;
+      const retrieveWindow = require("../components/plugins/plugin_window");
       const pluginWindow = retrieveWindow({
-        plugin:plugin,
-        newUpdate:update,
-        package:pluginPackage,
-        isInstalled:plugin.local != undefined,
-        repository:plugin.repo?plugin.repo.git:undefined,
-        remotePackage:plugin.repo?plugin.repo.package:undefined
-      })
-      
+        plugin: plugin,
+        newUpdate: update,
+        package: pluginPackage,
+        isInstalled: plugin.local != undefined,
+        repository: plugin.repo ? plugin.repo.git : undefined,
+        remotePackage: plugin.repo ? plugin.repo.package : undefined
+      });
+
       const ext_win = new Window({
         id: `sec${name}`,
         content: `<div id="${name}_window" style="height:100%;overflow:auto;"></div>`,
-        closeButton:true,
-        animation:"slide_up"
+        closeButton: true,
+        animation: "slide_up"
       });
       ext_win.launch();
-      const { puffin } = require("@mkenzo_8/puffin")
-      puffin.render(pluginWindow,document.getElementById(`${name}_window`))
-      const bottom_section = document.getElementById(
-        `${name}_readme`
-      );
+      const { puffin } = require("@mkenzo_8/puffin");
+      puffin.render(pluginWindow, document.getElementById(`${name}_window`));
+      const bottom_section = document.getElementById(`${name}_readme`);
       if (bottom_section != null) {
         if (plugin.local != undefined) {
           /*
@@ -393,7 +403,7 @@ module.exports = {
             path.join(plugins_folder, name, "readme.md"),
             "utf8",
             function(err, readme) {
-              const marked = require("marked")
+              const marked = require("marked");
               bottom_section.innerHTML = `<div style="flex:1;" >${
                 !err ? marked(readme) : getTranslation("NoReadme")
               }</div>`;
@@ -426,11 +436,8 @@ module.exports = {
           )
             .then(res => res.text())
             .then(body3 => {
-              const marked = require("marked")
-              if (
-                document.getElementById(`${name}_div`) !=
-                undefined
-              ) {
+              const marked = require("marked");
+              if (document.getElementById(`${name}_div`) != undefined) {
                 bottom_section.innerHTML = `<div style="flex:1;" >${
                   !body3.match("404: Not Found")
                     ? marked(body3)
