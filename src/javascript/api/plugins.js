@@ -84,12 +84,12 @@ module.exports = {
               const rimraf = require("rimraf");
               rimraf.sync(market_file);
             } else {
-              marketCache = market.cache;
+              marketCache = market;
               plugins_market = market.list;
             }
-            current_plugins = marketCache.length;
-          }).catch(function(){
-            graviton.throwError("Cannot read Market file.")
+            current_plugins = marketCache.list.length;
+          }).catch(function(err){
+            graviton.throwError("Cannot read Market file."+err)
           })
         }
         fs.readdir(plugins_folder, (err, paths) => {

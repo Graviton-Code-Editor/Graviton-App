@@ -311,7 +311,11 @@ let current_screen,
   plugins_list = [],
   plugins_dbs = [],
   anyDropON = null,
-  marketCache = [],
+  marketCache = {
+    date :null,
+    plugins :[],
+    fancyDate:null
+  },
   projectServices = [],
   EXPLORER_PANEL = null,
   projectTemplates = require(path.join(

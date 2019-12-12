@@ -355,10 +355,10 @@ const graviton = {
       }
     },
     getPlugin: function(plugin_name) {
-      for (i = 0; i < marketCache.length; i++) {
-        if (marketCache[i].package.name == plugin_name) {
+      for (i = 0; i < marketCache.plugins.length; i++) {
+        if (marketCache.plugins[i].package.name == plugin_name) {
           return {
-            repo: marketCache[i],
+            repo: marketCache.plugins[i],
             local: (function() {
               for (let a = 0; a < plugins_list.length; a++) {
                 if (plugins_list[a].name == plugin_name) {

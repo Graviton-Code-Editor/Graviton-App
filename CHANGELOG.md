@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191212 - 1 [1.2.0]
+- Fixed, errors on Markets werent displayed correctly
+- Now, cache's date is also showed on Market > Settings
+
 ### 191209 - 1 [1.2.0]
 - Improved Market
 

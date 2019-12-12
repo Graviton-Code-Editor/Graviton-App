@@ -18,9 +18,35 @@ module.exports = {
        * @desc Open the Market window
        */
       const callback = function(err) {
-        document.getElementById("button_" + section).click();
+        if(!err) document.getElementById("button_" + section).click();
+        if (err == 1) {
+          document.getElementById("sec_all").innerHTML = getTranslation(
+            "MarketError1"
+          );
+          document.getElementById("sec_themes").innerHTML = getTranslation(
+            "MarketError1"
+          );
+          return;
+        }
+        if (err == 2) {
+          document.getElementById("sec_all").innerHTML = getTranslation(
+            "MarketError2"
+          );
+          document.getElementById("sec_themes").innerHTML = getTranslation(
+            "MarketError2"
+          );
+          return;
+        }
+        if (err == 3) {
+          document.getElementById("sec_all").innerHTML = getTranslation(
+            "MarketError3"
+          );
+          document.getElementById("sec_themes").innerHTML = getTranslation(
+            "MarketError3"
+          );
+          return;
+        }
       };
-
       const market_window = new Window({
         id: "market_window",
         content: `
@@ -31,7 +57,7 @@ module.exports = {
         `
       });
       market_window.launch();
-      if (marketCache.length != 0) {
+      if (marketCache.plugins.length != 0) {
         this.loadMenus();
         return callback();
       }
@@ -94,7 +120,7 @@ module.exports = {
        */
       const rimraf = require("rimraf");
       rimraf.sync(market_file);
-      marketCache = [];
+      marketCache.plugins = [];
       current_plugins = 0;
       plugins_market = [];
       this.extensions = [];
@@ -109,45 +135,19 @@ module.exports = {
         document.getElementById(`button_${section}`).click();
       switch (section) {
         case "all":
-          if (param == 1) {
-            document.getElementById("sec_all").innerHTML = getTranslation(
-              "MarketError1"
-            );
-            document.getElementById("sec_themes").innerHTML = getTranslation(
-              "MarketError1"
-            );
-            return;
-          }
-          if (param == 2) {
-            document.getElementById("sec_all").innerHTML = getTranslation(
-              "MarketError2"
-            );
-            document.getElementById("sec_themes").innerHTML = getTranslation(
-              "MarketError2"
-            );
-            return;
-          }
-          if (param == 3) {
-            document.getElementById("sec_all").innerHTML = getTranslation(
-              "MarketError3"
-            );
-            document.getElementById("sec_themes").innerHTML = getTranslation(
-              "MarketError3"
-            );
-            return;
-          }
+          
           if (document.getElementById("sec_all").innerHTML == "") {
             document.getElementById("sec_all").innerHTML = `
               <div id=loading_exts>Loading extensions...</div>
             `;
-            marketCache.forEach(_plugin => {
+            marketCache.plugins.forEach(_plugin => {
               const plugin = graviton.getPlugin(_plugin.package.name);
               const data = plugin.repo.git;
               const _package = plugin.repo.package;
               if (document.getElementById("loading_exts") != undefined) {
                 document.getElementById("loading_exts").remove();
               }
-              const _new_update =
+              const newUpdate =
                 plugin.local != undefined
                   ? semver.gt(
                       semver.parse(_package.version),
@@ -158,7 +158,7 @@ module.exports = {
               const card = retrieveCard({
                 plugin: plugin,
                 packageConf: _package,
-                newUpdate: _new_update,
+                newUpdate: newUpdate,
                 repository: data,
                 isInstalled:
                   graviton.getPlugin(_package.name).local != undefined,
@@ -168,7 +168,7 @@ module.exports = {
               const { puffin } = require("@mkenzo_8/puffin");
               puffin.render(card, document.getElementById("sec_all"));
             });
-            if (plugins_market.length != marketCache.length) {
+            if (plugins_market.length != marketCache.plugins.length) {
               const loadMore = require(path.join(
                 __dirname,
                 "..",
@@ -219,7 +219,7 @@ module.exports = {
           if (document.getElementById("sec_themes").innerHTML == "") {
             document.getElementById("sec_themes").innerHTML = `
                     <div id=loading_exts3>Loading extensions...</div>`;
-            for (const pluginData of marketCache) {
+            for (const pluginData of marketCache.plugins) {
               const pluginPackage = pluginData.package;
               const plugin = graviton.getPlugin(pluginPackage.name);
               const data = plugin.repo.git;
@@ -250,7 +250,7 @@ module.exports = {
             if (document.getElementById("loading_exts3") != undefined) {
               document.getElementById("loading_exts3").remove();
             }
-            if (plugins_market.length != marketCache.length) {
+            if (plugins_market.length != marketCache.plugins.length) {
               const loadMore = require(path.join(
                 __dirname,
                 "..",
@@ -264,12 +264,13 @@ module.exports = {
           return;
         case "settings":
           document.getElementById("sec_settings").innerHTML = `
-                <h4>${getTranslation("Cache")}</h4>
-                <div class="section-1">
+                <gv-blocktitle>${getTranslation("Cache")}</gv-blocktitle>
+                <gv-blockcontent>
+                <p><b>Date:</b> ${marketCache.fancyDate == null? "Not available.":marketCache.fancyDate}</p>
                   <button class=button1 onclick='Market.clearCache()'>${getTranslation(
                     "Clear"
                   )}</button>
-                </div>
+                </gv-blockcontent>
                 `;
       }
     },
@@ -286,6 +287,7 @@ module.exports = {
       }
       me.extensions = plugins_market.slice(start, start + 5);
       current_plugins = start + me.extensions.length;
+      let errorDetected = false;
       for (i = 0; i < me.extensions.length; i++) {
         const this_i = i;
         me.getExtensionData(me.extensions[this_i], callback, function(
@@ -300,10 +302,12 @@ module.exports = {
             date = Number(
               date.getFullYear() + "" + date.getMonth() + "" + date.getDate()
             );
+            marketCache.fancyDate = new Date()
             const cacheToSave = {
               date: date,
               list: plugins_market,
-              cache: marketCache
+              plugins: marketCache.plugins,
+              fancyDate: marketCache.fancyDate
             };
             fs.writeFile(market_file, JSON.stringify(cacheToSave), function(
               err
@@ -332,7 +336,7 @@ module.exports = {
         if (err) {
           me.loadMenus();
           console.log(err);
-          return callback(2); // Maxium requests error, 60 requests / hour / ip
+          return callback(2)// Maxium requests error, 60 requests / hour / ip
         }
         const fetch = require("node-fetch");
         fetch(
@@ -344,7 +348,7 @@ module.exports = {
               git: data,
               package: Plugins.sanitizePlugin(packageConf)
             };
-            marketCache.push(extensionData);
+            marketCache.plugins.push(extensionData);
             const plugin = graviton.getPlugin(packageConf.name);
             const newUpdate =
               plugin.local != undefined
