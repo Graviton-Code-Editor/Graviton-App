@@ -5,24 +5,7 @@ const themeComponent = puffin.element(`
     <img draggable="false" class="theme_div2" click="$setMe"/> 
 `,{
     props:[
-        {
-            class:"theme_div2",
-            type:"attribute",
-            attribute:"src",
-            value:"$src"
-        },
-        {
-            class:"theme_div2",
-            type:"attribute",
-            attribute:"name",
-            value:"$name"
-        },
-        {
-            class:"theme_div2",
-            type:"attribute",
-            attribute:"class",
-            value:"$class"
-        }
+        "src","name","class"
     ],
     methods:[
         function setMe(){

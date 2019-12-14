@@ -3,41 +3,24 @@
 const theme_card = puffin.element(`
     <div  click="$setTheme" class="theme_div" id="$id" >
         <div class="theme_div_top">
-            <p style=" font-size:18px; " class="theme_card_name"></p>
-            <p style="font-size:10px; "  class="theme_card_author"></p>
+            <p style="font-size:18px;" >{{name}}</p>
+            <p style="font-size:10px;" class="theme_card_author">{{author}}</p>
         </div>
-        <p style="font-size:14px; margin:12px 0px;" class="theme_card_description"></p>
-        <div class="theme_card_accent" ></div>
+        <p style="font-size:14px; margin:12px 0px;" class="theme_card_description">{{description}}</p>
+        <div class="colors_list">
+            <div class="theme_card_accent" style="background:{{accentDark}}"></div>
+            <div class="theme_card_accent" style="background:{{accentLight}}"></div>
+            <div class="theme_card_accent" style="background:{{accent}}"></div>
+        </div>  
     </div>
 `,{
     props:[
-       {
-        class: "theme_card_name",
-        type:"text",
-        value:"$name"
-       },
-       {
-        class: "theme_card_description",
-        type:"text",
-        value:"$description"
-       },
-       {
-        class: "theme_card_author",
-        type:"text",
-        value:"$author"
-       },
-       {
-        class: "theme_div",
-        type:"attribute",
-        attribute:"name",
-        value:"$name"
-       },
-       {
-        class: "theme_card_accent",
-        type:"attribute",
-        attribute:"style",
-        value:"$accent"
-       }
+       "description",
+       "author",
+       "name",
+       "accentLight",
+       "accent",
+       "accentDark"
     ],
     methods:[
         function setTheme(){

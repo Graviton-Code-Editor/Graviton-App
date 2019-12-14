@@ -1,29 +1,12 @@
 const { puffin } = require("@mkenzo_8/puffin")
 
-
 const languageComponent = puffin.element(`
     <div class="language_div" click="$loadMe">
-        <div class="language_text"></div>
+        <div class="language_text">{{name}}</div>
     </div>
 `,{
     props:[
-        {
-            class:"language_div",
-            type:"attribute",
-            attribute:"name",
-            value:"$name"
-        },
-        {
-            class:"language_div",
-            type:"attribute",
-            attribute:"class",
-            value:"$class"
-        },
-        {
-            class:"language_text",
-            type:"text",
-            value:"$name"
-        }
+        "name","class"
     ],
     methods:[
         function loadMe(){
@@ -32,7 +15,6 @@ const languageComponent = puffin.element(`
         }
     ]
 })
-
 
 const languagesSection = puffin.element(`
 <div>

@@ -5,12 +5,12 @@ const customizationSection = puffin.element(`
     <div>
         <gv-blocktitle>${getTranslation("Themes")}</gv-blocktitle>
         <gv-blockcontent>
-            <div id="theme_list" style="min-height:60px; padding:10px 0px; margin:5px 0px; overflow-y:hidden;">
+            <div id="theme_list" style="min-height:60px; padding:10px 0px; margin:5px 0px; overflow-y:hidden; overflow-x:scroll;">
             <elastic-container direction="horizontal">
             ${(function() {
                 let content = "";
                 themes.map((th)=>{
-                    content += `<ThemeCard id="theme_card_${th.name}" author="${getTranslation("By")} ${th.author}" description="${th.description}" accent="background:${th.colors.accentColor}" name="${th.name}"></ThemeCard> `
+                    content += `<ThemeCard id="theme_card_${th.name}" author="${getTranslation("By")} ${th.author}" description="${th.description}" accent="${th.colors.accentColor}" accentLight="${th.colors.accentLightColor}" accentDark="${th.colors.accentDarkColor}" name="${th.name}"></ThemeCard> `
                 })
                 if (themes.length !== 0) {
                    return content;

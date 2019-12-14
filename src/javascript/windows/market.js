@@ -164,8 +164,6 @@ module.exports = {
                   graviton.getPlugin(_package.name).local != undefined,
                 section: "all"
               });
-
-              const { puffin } = require("@mkenzo_8/puffin");
               puffin.render(card, document.getElementById("sec_all"));
             });
             if (plugins_market.length != marketCache.plugins.length) {
@@ -210,7 +208,6 @@ module.exports = {
                 isInstalled: true,
                 section: "installed"
               });
-              const { puffin } = require("@mkenzo_8/puffin");
               puffin.render(card, document.getElementById("sec_installed"));
             }
           }
@@ -264,33 +261,32 @@ module.exports = {
           return;
         case "settings":
           document.getElementById("sec_settings").innerHTML = `
-                <gv-blocktitle>${getTranslation("Cache")}</gv-blocktitle>
-                <gv-blockcontent>
-                <p><b>Date:</b> ${marketCache.fancyDate == null? "Not available.":marketCache.fancyDate}</p>
-                  <button class=button1 onclick='Market.clearCache()'>${getTranslation(
-                    "Clear"
-                  )}</button>
-                </gv-blockcontent>
-                `;
+            <gv-blocktitle>${getTranslation("Cache")}</gv-blocktitle>
+            <gv-blockcontent>
+            <p><b>Date:</b> ${marketCache.fancyDate == null? "Not available.":marketCache.fancyDate}</p>
+              <button class=button1 onclick='Market.clearCache()'>${getTranslation(
+                "Clear"
+              )}</button>
+            </gv-blockcontent>
+            `;
       }
     },
     loadMoreExtensions(start, callback) {
       /**
        * @desc Load extensions
        */
-      const me = this;
+      const headThis = this;
       if (plugins_market[start] == undefined) {
         if (document.getElementById("load_more_plugins") != undefined) {
           document.getElementById("load_more_plugins").remove();
         }
         return;
       }
-      me.extensions = plugins_market.slice(start, start + 5);
-      current_plugins = start + me.extensions.length;
-      let errorDetected = false;
-      for (i = 0; i < me.extensions.length; i++) {
-        const this_i = i;
-        me.getExtensionData(me.extensions[this_i], callback, function(
+      this.extensions = plugins_market.slice(start, start + 5);
+      current_plugins = start + this.extensions.length;
+      for (i = 0; i < this.extensions.length; i++) {
+        const headCounter = i;
+        this.getExtensionData(this.extensions[headCounter], callback, function(
           newUpdate
         ) {
           if (start === 0) {
@@ -316,7 +312,7 @@ module.exports = {
                 return err;
               }
             });
-            me.loadMenus();
+            headThis.loadMenus();
             if (newUpdate) {
               new Notification({
                 title: getTranslation("Market"),
@@ -329,12 +325,12 @@ module.exports = {
       }
     },
     getExtensionData(extension, callback, succCallback) {
-      const me = this;
+      const headThis = this;
       const github = require("octonode");
       const client = github.client();
       client.repo(extension).info(function(err, data) {
         if (err) {
-          me.loadMenus();
+          headThis.loadMenus();
           console.log(err);
           return callback(2)// Maxium requests error, 60 requests / hour / ip
         }
@@ -358,7 +354,7 @@ module.exports = {
                   )
                 : false;
             if (err) {
-              me.loadMenus();
+              headThis.loadMenus();
               return callback(3);
             }
             return succCallback(newUpdate);
@@ -387,22 +383,21 @@ module.exports = {
         repository: plugin.repo ? plugin.repo.git : undefined,
         remotePackage: plugin.repo ? plugin.repo.package : undefined
       });
-
-      const ext_win = new Window({
+      const windowComponent = new Window({
         id: `sec${name}`,
         content: `<div id="${name}_window" style="height:100%;overflow:auto;"></div>`,
         closeButton: true,
         animation: "slide_up"
       });
-      ext_win.launch();
+      windowComponent.launch();
       const { puffin } = require("@mkenzo_8/puffin");
       puffin.render(pluginWindow, document.getElementById(`${name}_window`));
       const bottom_section = document.getElementById(`${name}_readme`);
       if (bottom_section != null) {
         if (plugin.local != undefined) {
-          /*
-          Local Readme
-          */
+          /**
+            *@desc Display the readme from the installed source
+            */
           fs.readFile(
             path.join(plugins_folder, name, "readme.md"),
             "utf8",
@@ -413,9 +408,9 @@ module.exports = {
               }</div>`;
             }
           );
-          /*
-          Local Screenshots
-          */
+          /**
+            *@desc Display the Screenshoots from the installed source 
+            */
           if (plugin.local.screenshots != undefined) {
             plugin.local.screenshots.forEach(sc => {
               const screenshoot = document.createElement("img");
@@ -432,7 +427,7 @@ module.exports = {
           }
         } else {
           /**
-           * @desc Repository Readme
+           * @desc Display the repository from the remote repository 
            */
           const fetch = require("node-fetch");
           fetch(
@@ -449,6 +444,9 @@ module.exports = {
                 }</div>`;
               }
             });
+          /**
+           * @desc Display the screenshots from the remote repository 
+           */
           if (plugin.repo.package.screenshots != undefined) {
             plugin.repo.package.screenshots.forEach(sc => {
               const screenshoot = document.createElement("img");

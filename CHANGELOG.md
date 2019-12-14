@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191214 - 1 [1.2.0]
+- Small code updates
+- Theme cards now show all 3 accent colors
+- Updated to Puffin v0.1.0
+
 ### 191212 - 1 [1.2.0]
 - Fixed, errors on Markets werent displayed correctly
 - Now, cache's date is also showed on Market > Settings

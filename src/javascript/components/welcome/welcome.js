@@ -13,29 +13,14 @@ function retrieve() {
 
   const cardProject = puffin.element(
     `
-    <div click="$loadMe" class="section-2">
-      <h3 class="card_title"></h3>
-      <p class="card_path"></p>
+    <div click="$loadMe" class="section-2" >
+      <h3 class="card_title">{{name}}</h3>
+      <p class="card_path">{{path}}</p>
     </div>
   `,
     {
       props: [
-        {
-          class: "card_title",
-          type: "text",
-          value: "$name"
-        },
-        {
-          class: "card_path",
-          type: "text",
-          value: "$path"
-        },
-        {
-          class: "section-2",
-          type: "attribute",
-          attribute: "path",
-          value: "$path"
-        }
+        "name","path"
       ],
       methods: [
         function loadMe() {
@@ -49,28 +34,13 @@ function retrieve() {
   const cardService = puffin.element(
     `
     <div click="$loadMe" class="section-2">
-      <h3 class="card_title"></h3>
-      <p class="card_description"></p>
+      <h3 class="card_title">{{name}}</h3>
+      <p class="card_description">{{description}}</p>
     </div>
   `,
     {
       props: [
-        {
-          class: "card_title",
-          type: "text",
-          value: "$name"
-        },
-        {
-          class: "card_description",
-          type: "text",
-          value: "$description"
-        },
-        {
-          class: "section-2",
-          type: "attribute",
-          attribute: "index",
-          value: "$index"
-        }
+        "name","description","index"
       ],
       methods: [
         function loadMe() {
