@@ -60,10 +60,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 .loading_bar {
 	width: 300px;
-	border-radius: 100px;
+  border-radius: 100px;
+  height:15px;
+  overflow: auto;
 }
 .loading_bar > div {
-	background:   -webkit-linear-gradient(-45deg, rgba(255,0,72,1) 0%, rgba(255,89,0,1) 100%);
+	background:   -webkit-linear-gradient(-45deg, var(--accentDarkColor) 0%, var(--accentColor) 100%);
 	height: 15px;
 	width: 10px;
 	position: absolute;
@@ -72,6 +74,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   box-shadow: inset 0px 1px 4px rgba(0,0,0,0.22);
+  max-width: 300px !important;;
 }
 .loading_bar > .bg {
 	background: var(--widget-color);

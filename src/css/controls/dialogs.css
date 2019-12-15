@@ -43,6 +43,7 @@
 }
 
 .dialog_body .buttons > button {
+  transition: 0.1s;
   width: auto;
   margin-left: 8px;
   padding: 7px 27px;

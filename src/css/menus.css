@@ -60,7 +60,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 #top_bar_app  .controls  #close:hover {
-  background: red;
+  background: #E81123;
 }
 
 #top_bar_app  .controls  #close > svg > rect {

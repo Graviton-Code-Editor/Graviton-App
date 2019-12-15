@@ -82,6 +82,20 @@ module.exports = {
             document.getElementById("setupWindow")
           );
           break;
+        case "suggestions":
+          document.getElementById("setupWindow").innerHTML = "";
+          const suggestionsPage = require(path.join(
+            "..",
+            "components",
+            "setup",
+            "suggestions"
+          ));
+          puffin.render(
+            suggestionsPage,
+            document.getElementById("setupWindow")
+          );
+          
+          break;
         case "welcome":
           if (graviton.isProduction() !== true) {
             new Notification({

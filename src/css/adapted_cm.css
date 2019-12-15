@@ -541,8 +541,9 @@ span.CodeMirror-selectedtext {
   position: absolute;
   margin:5px;
   left:0;
-  max-width: 300px;
-  padding:10px 15px;
+  width: 250px;
+  display: block;
+  padding:1rem 2rem;
   border-radius: 8px;
   right: 0;
   background: inherit;
@@ -580,10 +581,9 @@ span.CodeMirror-selectedtext {
   outline: none;
   background: transparent;
   background-color: var(--secondaryColor);
-  width: 1em;
+  min-width: 2em;
   color: var(--white-black);
-  font-size: 100%;
-  font-size: 14px;
+  font-size: var(--editor-font-size);
 }
 
 .CodeMirror-dialog button {

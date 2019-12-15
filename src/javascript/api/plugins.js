@@ -87,7 +87,7 @@ module.exports = {
               marketCache = market;
               plugins_market = market.list;
             }
-            current_plugins = marketCache.list.length;
+            current_plugins = marketCache.plugins.length;
           }).catch(function(err){
             graviton.throwError("Cannot read Market file."+err)
           })

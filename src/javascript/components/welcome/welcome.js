@@ -1,6 +1,6 @@
 const { puffin } = require("@mkenzo_8/puffin");
 
-function retrieve() {
+function retrieve(page) {
   const emptyProjectsPanel = puffin.element(`
     <div style="display:flex; align-content: center; justify-content:center; min-height:auto;">
       <div style="position:relative; top:100px; min-height:100%;">
@@ -56,15 +56,15 @@ function retrieve() {
     <gv-navpanel>
       <gv-navbar>
         <gv-navtitle>${getTranslation("Welcome")}</gv-navtitle>
-        <gv-navbutton href="recent_projects" default=""  >${getTranslation(
+        <gv-navbutton href="recent_projects" ${page=="Recents"?"default=''":''} >${getTranslation(
           "RecentProjects"
         )}</gv-navbutton>
-        <gv-navbutton id="test" href="new_project" >${getTranslation(
+        <gv-navbutton href="new_project" ${page=="NewProject"?"default=''":''}>${getTranslation(
           "NewProject"
         )}</gv-navbutton>
       </gv-navbar>
       <gv-navcontent>
-          <gv-navpage href="recent_projects" default="">
+          <gv-navpage href="recent_projects" ${page=="Recents"?"default=''":''}>
             <div id="recent_projects" style="min-height:260px; max-height:260px; padding-right:10px; overflow:auto;">
               ${(function() {
                 let content = "";
@@ -84,7 +84,7 @@ function retrieve() {
             )}</button> 
           </div>
           </gv-navpage>
-          <gv-navpage href="new_project">
+          <gv-navpage href="new_project" ${page=="NewProject"?"default=''":''}>
               ${(() => {
                 let content = "";
                 projectServices.map((service, index) => {

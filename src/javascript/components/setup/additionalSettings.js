@@ -5,7 +5,7 @@ const additionalSettingsPage = puffin.element(`
         <h1 style="font-size:5vh; text-align:center;" class="translate_word" idT="Welcome.TakeATheme">${
             getTranslation('Welcome.AdditionalSettings')}
         </h1>
-        <div style="overflow:auto; position:relative;max-height:60%">
+        <div style="overflow:auto; position:relative;max-height:60%"  class="center-column">
             <div class="section-1">
                 <div class="section-4">
                     <p>${getTranslation('ZoomSize')}</p>
@@ -29,10 +29,10 @@ const additionalSettingsPage = puffin.element(`
                 </div>
             </div>
         </div>
-        <button click="$goBack" class="button1 fullScreenWindow-left translate_word" idT="Back">${
+        <button click="$goBack" class="button1 fullScreenWindow-left">${
             getTranslation('Back')
         }</button>
-        <button click="$goForward" class="button1 fullScreenWindow-right" idT="Continue">${
+        <button click="$goForward" class="button1 fullScreenWindow-right" >${
             getTranslation('Continue')
         }</button>
     </div>
@@ -42,7 +42,7 @@ const additionalSettingsPage = puffin.element(`
             Setup.navigate("themes");
         },
         function goForward(){
-            Setup.navigate("welcome");
+            Setup.navigate("suggestions");
         },
         function refreshSettings(){
             Settings.refresh(); 

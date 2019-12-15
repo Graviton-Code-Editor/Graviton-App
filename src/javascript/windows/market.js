@@ -148,10 +148,10 @@ module.exports = {
                 document.getElementById("loading_exts").remove();
               }
               const newUpdate =
-                plugin.local != undefined
+                plugin.package != undefined
                   ? semver.gt(
                       semver.parse(_package.version),
-                      semver.parse(plugin.local.version)
+                      semver.parse(plugin.package.version)
                     )
                   : false;
               const retrieveCard = require("../components/plugins/plugin_card");
@@ -160,8 +160,7 @@ module.exports = {
                 packageConf: _package,
                 newUpdate: newUpdate,
                 repository: data,
-                isInstalled:
-                  graviton.getPlugin(_package.name).local != undefined,
+                isInstalled:plugin.isInstalled,
                 section: "all"
               });
               puffin.render(card, document.getElementById("sec_all"));
@@ -197,13 +196,13 @@ module.exports = {
                 plugin.repo != undefined
                   ? semver.gt(
                       semver.parse(plugin.repo.package.version),
-                      semver.parse(plugin.local.version)
+                      semver.parse(plugin.package.version)
                     )
                   : false;
               const retrieveCard = require("../components/plugins/plugin_card");
               const card = retrieveCard({
                 plugin: plugin,
-                packageConf: plugin.local,
+                packageConf: plugin.package,
                 newUpdate: newUpdate,
                 isInstalled: true,
                 section: "installed"
@@ -225,10 +224,10 @@ module.exports = {
                   document.getElementById("loading_exts3").remove();
                 }
                 const newUpdate =
-                  plugin.local != undefined
+                  plugin.package != undefined
                     ? semver.gt(
                         semver.parse(pluginPackage.version).version,
-                        semver.parse(plugin.local.version).version
+                        semver.parse(plugin.package.version).version
                       )
                     : false;
                 const retrieveCard = require("../components/plugins/plugin_card");
@@ -237,8 +236,7 @@ module.exports = {
                   packageConf: pluginPackage,
                   newUpdate: newUpdate,
                   repository: data,
-                  isInstalled:
-                    graviton.getPlugin(pluginPackage.name).local != undefined,
+                  isInstalled:graviton.getPlugin(pluginPackage.name).isInstalled,
                   section: "themes"
                 });
                 puffin.render(card, document.getElementById("sec_themes"));
@@ -347,17 +345,17 @@ module.exports = {
             marketCache.plugins.push(extensionData);
             const plugin = graviton.getPlugin(packageConf.name);
             const newUpdate =
-              plugin.local != undefined
+              plugin.package != undefined
                 ? semver.gt(
                     semver.parse(packageConf.version),
-                    semver.parse(plugin.local.version)
+                    semver.parse(plugin.package.version)
                   )
                 : false;
             if (err) {
               headThis.loadMenus();
               return callback(3);
             }
-            return succCallback(newUpdate);
+            return succCallback(newUpdate,extensionData);
           });
       });
     },
@@ -373,13 +371,13 @@ module.exports = {
         });
         return;
       }
-      const pluginPackage = plugin.local ? plugin.local : plugin.repo.package;
+      const pluginPackage = plugin.package ? plugin.package : plugin.repo.package;
       const retrieveWindow = require("../components/plugins/plugin_window");
       const pluginWindow = retrieveWindow({
         plugin: plugin,
         newUpdate: update,
         package: pluginPackage,
-        isInstalled: plugin.local != undefined,
+        isInstalled: plugin.isInstalled,
         repository: plugin.repo ? plugin.repo.git : undefined,
         remotePackage: plugin.repo ? plugin.repo.package : undefined
       });
@@ -394,7 +392,7 @@ module.exports = {
       puffin.render(pluginWindow, document.getElementById(`${name}_window`));
       const bottom_section = document.getElementById(`${name}_readme`);
       if (bottom_section != null) {
-        if (plugin.local != undefined) {
+        if (plugin.package != undefined) {
           /**
             *@desc Display the readme from the installed source
             */
@@ -411,12 +409,12 @@ module.exports = {
           /**
             *@desc Display the Screenshoots from the installed source 
             */
-          if (plugin.local.screenshots != undefined) {
-            plugin.local.screenshots.forEach(sc => {
+          if (plugin.package.screenshots != undefined) {
+            plugin.package.screenshots.forEach(sc => {
               const screenshoot = document.createElement("img");
               screenshoot.setAttribute(
                 "src",
-                path.join(plugins_folder, plugin.local.name, sc)
+                path.join(plugins_folder, plugin.package.name, sc)
               );
               screenshoot.style = "height:200px; ";
               screenshoot.draggable = false;
@@ -554,10 +552,10 @@ module.exports = {
        */
       const plugin = graviton.getPlugin(name);
       const new_update =
-        plugin.local != undefined && plugin.repo != undefined
+        plugin.package != undefined && plugin.repo != undefined
           ? semver.gt(
               semver.parse(plugin.repo.package.version).version,
-              semver.parse(plugin.local.version).version
+              semver.parse(plugin.package.version).version
             )
           : false;
       if (plugin.repo == undefined) {
@@ -641,6 +639,30 @@ module.exports = {
         }
       });
       document.dispatchEvent(uninstalled_ext_event);
+    },
+    fetchPlugins(lists=[]){
+      return new Promise((resolve, reject) => {
+        const exportList = []
+        lists.map(function(plugin){
+          const dataPlugin = graviton.getPlugin(plugin.split("/")[1]);
+          if(dataPlugin != undefined ) {
+            if(dataPlugin.repo != undefined){
+              exportList.push(dataPlugin.repo)
+            }
+          }
+          if(exportList.length === lists.length){
+            resolve(exportList)
+          }
+          Market.getExtensionData(plugin,function(){
+            reject()
+          },function(newUpdate,data){
+            exportList.push(data)
+            if(exportList.length === lists.length){
+              resolve(exportList)
+            }
+          })
+        })
+      });
     }
   }
 };

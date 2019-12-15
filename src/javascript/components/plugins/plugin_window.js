@@ -28,8 +28,8 @@ function retrieveWindow({
       case true:
         pluginLogo.node.innerHTML = `<img draggable="false" src="${path.join(
           plugins_folder,
-          plugin.local.name,
-          plugin.local.logo
+          plugin.package.name,
+          plugin.package.logo
         )}"/>`;
         break;
     }
@@ -48,7 +48,7 @@ function retrieveWindow({
   const pluginButtons = puffin.element(`
   <div>
   ${(function() {
-    if (plugin.local != undefined) {
+    if (isInstalled) {
       let button_content = "";
       if (newUpdate) {
         button_content += `
@@ -58,7 +58,7 @@ function retrieveWindow({
         )}</button>
       `;
       }
-      if (plugin.local.colors != undefined) {
+      if (plugin.package.colors != undefined) {
         button_content += `
           <button class="button1" onclick="graviton.setTheme('${package.name}'); graviton.saveConfiguration();">${getTranslation("Select")}</button>
        `;

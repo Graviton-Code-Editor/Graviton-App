@@ -359,13 +359,26 @@ const graviton = {
         if (marketCache.plugins[i].package.name == plugin_name) {
           return {
             repo: marketCache.plugins[i],
-            local: (function() {
+            package: (function() {
               for (let a = 0; a < plugins_list.length; a++) {
                 if (plugins_list[a].name == plugin_name) {
                   return plugins_list[a];
                 }
               }
+              for (let a = 0; a < marketCache.plugins.length; a++) {
+                if (marketCache.plugins[a].package.name == plugin_name) {
+                  return marketCache.plugins[a].package;
+                }
+              }
               return undefined;
+            })(),
+            isInstalled:(function(){
+              for (let a = 0; a < plugins_list.length; a++) {
+                if (plugins_list[a].name == plugin_name) {
+                  return true
+                }
+              }
+              return false
             })(),
             database: (function() {
               for (let a = 0; a < plugins_dbs.length; a++) {
@@ -381,7 +394,7 @@ const graviton = {
       for (let a = 0; a < plugins_list.length; a++) {
         if (plugins_list[a].name == plugin_name) {
           return {
-            local: plugins_list[a],
+            package: plugins_list[a],
             repo: undefined
           };
         }

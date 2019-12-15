@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191215 - 1 [1.2.0]
+- Removed "New Project" old window
+- Fixed Codemirror dialog input's font size, it wasn't scaling properly
+- Updated PuffinJS to v1.0.1 (dependency)
+- "Load more" button on Market wasn't working properly
+- Added a suggestions page on Setup
+
 ### 191214 - 1 [1.2.0]
 - Small code updates
 - Theme cards now show all 3 accent colors

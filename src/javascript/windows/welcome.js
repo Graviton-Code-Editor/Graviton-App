@@ -10,7 +10,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Welcome: {
-    open: function() {
+    open: function(page = "Recents") {
         if (error_showed == false && document.body.getAttribute("loaded") !== "true") {
             DeleteBoot();
             document.body.setAttribute("loaded","true")
@@ -28,7 +28,7 @@ module.exports = {
           return;
         }
       }
-      const welcomePage = require(path.join("..","components","welcome","welcome"))();
+      const welcomePage = require(path.join("..","components","welcome","welcome"))(page);
       const welcome_window = new Window({
         id:'welcome_window',
         component:welcomePage,

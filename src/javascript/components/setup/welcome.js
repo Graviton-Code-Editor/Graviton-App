@@ -12,13 +12,13 @@ const welcomeSetupPage = puffin.element(`
             </div>
             <br/>
             <div style="display:flex; align-items:center;justify-content: center;">
-                <button click="$goBack"  class="button1 translate_word" idT="Finish">${getTranslation(
+                <button click="$goBack"  class="button1" >${getTranslation(
                 "GoBack"
                 )}</button> 
-                <button click="$openMarket"  class="button1 translate_word" idT="Market">${getTranslation(
+                <button click="$openMarket"  class="button1" >${getTranslation(
                 "Market"
                 )}</button> 
-                <button click="$finish" class="button1 translate_word" idT="Finish">${getTranslation(
+                <button click="$finish" class="button1" >${getTranslation(
                 "Finish"
                 )}</button> 
             </div>
@@ -30,7 +30,7 @@ const welcomeSetupPage = puffin.element(`
             Market.open()
         },
         function goBack(){
-            Setup.navigate("additional_settings");
+            Setup.navigate("suggestions");
         },
         function finish(){
             Setup.close(); 
