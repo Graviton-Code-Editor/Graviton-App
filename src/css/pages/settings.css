@@ -69,16 +69,16 @@ div.active {
   border:1px solid var(--accentColor);
   color: white;
 }
-.theme_div .colors_list{
+.colors_list{
   display: flex;
   padding-left: 10px;
 }
-.theme_div .colors_list *{
+.colors_list *{
   margin-left:-10px;
 }
-.theme_div .theme_card_accent {
-  height: 14px !important;
-  width: 14px !important;
+.theme_card_accent {
+  height: 14px ;
+  width: 14px ;
   border: 2px solid var(--primaryColor);
   border-radius: 50px;
 }

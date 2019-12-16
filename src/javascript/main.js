@@ -2,7 +2,7 @@
 ########################################
               MIT License
 
-Copyright (c) 2019 Marc Espin Sanz
+Copyright (c) 2019 Marc Espín Sanz
 
 License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
 
@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191215",
+  date: "191216",
   version: "1.2.0",
   state: "Beta"
 }

@@ -125,7 +125,7 @@
   min-width: 125px !important;
   min-height: 125px !important;
 }
-.sub_extension_div .top div:nth-child(3) {
+.sub_extension_div .top > div:nth-child(2) div:nth-child(3) {
   max-width: 25%;
   justify-content: center;
   padding: 7px;
@@ -162,4 +162,23 @@
   width: auto;
   background: var(--primaryColor);
   box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.3);
+}
+
+.ext_content {
+  padding: 15px;
+  border-top: 2px solid var(--primaryColor);
+  overflow: auto;
+  position: relative;
+}
+
+.ext_content a {
+  color: var(--white-black);
+  font-style: oblique;
+}
+
+.extension_window .colors_list{
+  margin:10px 80px ;
+}
+.extension_window .colors_list * {
+  padding:1px;
 }

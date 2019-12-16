@@ -14,26 +14,56 @@ function retrieveWindow({
     switch (graviton.getTypePlugin(package)) {
       case "theme":
       case "custom_theme":
-        pluginLogo.node.innerHTML = `<div draggable="false" class='img' >${icons.market_theme}</div>`;
+        pluginLogo.node.innerHTML = `
+        <div>
+          <div draggable="false" class='img' >${icons.market_theme}</div>
+          <div class="colors_list">
+            <div class="theme_card_accent" style="background:${package.colors.accentDarkColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentLightColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentColor}"></div>
+          </div>
+        </div>
+        `;
         break;
       case "plugin":
-        pluginLogo.node.innerHTML = `<div draggable="false" class='img' >${icons.market_plugin}</div>`;
+        pluginLogo.node.innerHTML = `
+          <div draggable="false" class='img' >${icons.market_plugin}</div>
+        `;
         break;
     }
   } else {
     switch (isInstalled) {
       case false:
-        pluginLogo.node.innerHTML = `<img draggable="false" src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${package.logo}?sanitize=true">`;
+        pluginLogo.node.innerHTML = `
+        <div>
+          <img draggable="false" src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${package.logo}?sanitize=true">
+          <div class="colors_list">
+            <div class="theme_card_accent" style="background:${package.colors.accentDarkColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentLightColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentColor}"></div>
+          </div>
+        </div>
+        `;
         break;
       case true:
-        pluginLogo.node.innerHTML = `<img draggable="false" src="${path.join(
+        pluginLogo.node.innerHTML = `
+        <div>
+        <img draggable="false" src="${path.join(
           plugins_folder,
           plugin.package.name,
           plugin.package.logo
-        )}"/>`;
+        )}"/>
+        <div class="colors_list">
+            <div class="theme_card_accent" style="background:${package.colors.accentDarkColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentLightColor}"></div>
+            <div class="theme_card_accent" style="background:${package.colors.accentColor}"></div>
+          </div>
+        </div>
+        `;
         break;
     }
   }
+
   const pluginContent = puffin.element(`
   <div>
     <div>
@@ -116,7 +146,7 @@ function retrieveWindow({
   const pluginPage = puffin.element(
     `
     <elastic-container related="parent" >
-    <div style="padding:15px;">
+    <div style="padding:15px;" class="extension_window">
     <div class="sub_extension_div" id="${package.name}_div">
         <div class="top">
             <pluginLogo/>

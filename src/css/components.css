@@ -861,18 +861,6 @@ button.button3:active {
   display: block;
 }
 
-.ext_content {
-  padding: 15px;
-  border-top: 2px solid var(--primaryColor);
-  overflow: auto;
-  position: relative;
-}
-
-.ext_content a {
-  color: var(--white-black);
-  font-style: oblique;
-}
-
 .close_exts {
   position: absolute;
   top:15px;
