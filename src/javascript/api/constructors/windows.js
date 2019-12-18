@@ -70,13 +70,14 @@ module.exports = {
           <div id="${id + '_body'}">
               ${(()=>{
                 let list = "";
-                if(closeButton){
-                  list += `<buildingCloseButton/>`
-                }
+                
                 if(component != null && component !=undefined ){
                   list += "<component/>"
                 }else{
                   list += content
+                }
+                if(closeButton){
+                  list += `<buildingCloseButton/>`
                 }
                 return list
               })()}
@@ -102,13 +103,14 @@ module.exports = {
           <div id="${id + '_body'}" style="height:${height}; width:${width}; animation: ${openingAnimation}" class="body_window">
               ${(()=>{
                 let list = "";
-                if(closeButton){
-                  list += `<buildingCloseButton/>`
-                }
+                
                 if(component != null && component !=undefined ){
                   list += "<component/>"
                 }else{
                   list += content
+                }
+                if(closeButton){
+                  list += `<buildingCloseButton/>`
                 }
                 return list
               })()}
