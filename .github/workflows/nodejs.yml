@@ -1,6 +1,9 @@
 name: Node CI
 
-on: [push]
+on: 
+  push:
+    tags:
+      - 'v*'
 
 jobs:
   build:
@@ -24,3 +27,17 @@ jobs:
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    - name: Checkout code
+        uses: actions/checkout@master
+    - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            test
+          draft: true
+          prerelease: true
