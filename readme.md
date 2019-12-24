@@ -1,5 +1,7 @@
-<p align="center">s
-   <img align="center" src="https://graviton.ml/static/media/logo.2c3aa008.svg"  width="250" height="50" />
+<p align="center">
+   <img align="center" src="https://graviton.ml/static/media/logo.2c3aa008.svg"  width="250" height="50" style="marign-bottom:15px" />
+   <br>
+   <a href="https://graviton.ml">graviton.ml</a>
 </p>
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FGraviton-Code-Editor%2FGraviton-App%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/Graviton-Code-Editor/Graviton-App/goto?ref=master)
