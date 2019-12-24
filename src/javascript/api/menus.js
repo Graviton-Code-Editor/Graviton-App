@@ -180,7 +180,7 @@ module.exports = {
             click: () => graviton.setZoom(parseInt(current_config.appZoom) + 3),
             icon: 'plus'
           },
-          DicreaseZoom: {
+          DecreaseZoom: {
             click: () =>
               graviton.setZoom(parseInt(current_config.appZoom) + -3),
             icon: 'minus'
