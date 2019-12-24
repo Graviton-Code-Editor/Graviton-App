@@ -161,6 +161,10 @@
 		"Process.InstallingDependencies": "Installation des dépendances...",
 		"Process.Completed": "Terminé !",
 		"Hide":"Cacher",
-		"Show":"Montrer"
+		"Show":"Montrer",
+		"NPMPanel":"Panneau NPM",
+		"Select":"Sélectionner",
+		"By":"Par",
+		"Suggestions":"Suggestions"
 	}
 }

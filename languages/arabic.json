@@ -157,6 +157,10 @@
 		"Process.InstallingDependencies":"تثبيت التبعيات ...",
 		"Process.Completed":"منجز!",
 		"Hide":"إخفاء",
-		"Show":"إظهار"
+		"Show":"إظهار",
+		"NPMPanel":"NPM لوحة",
+		"Select":"تحديد",
+		"By":"من قبل",
+		"Suggestions":"اقتراحات"
 	}
 }
