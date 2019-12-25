@@ -375,6 +375,7 @@ const graviton = {
             isInstalled:(function(){
               for (let a = 0; a < plugins_list.length; a++) {
                 if (plugins_list[a].name == plugin_name) {
+                  console.log(plugins_list[a].name,plugin_name)
                   return true
                 }
               }
@@ -395,7 +396,16 @@ const graviton = {
         if (plugins_list[a].name == plugin_name) {
           return {
             package: plugins_list[a],
-            repo: undefined
+            repo: undefined,
+            isInstalled:(function(){
+              for (let a = 0; a < plugins_list.length; a++) {
+                if (plugins_list[a].name == plugin_name) {
+                  console.log(plugins_list[a].name,plugin_name)
+                  return true
+                }
+              }
+              return false
+            })()
           };
         }
       }

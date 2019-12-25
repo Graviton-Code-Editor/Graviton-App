@@ -33,6 +33,10 @@ let current_config = {
   npm_panel: true
 };
 
+const GravitonState = new puffin.state({
+  currentConfig:current_config
+})
+
 if (!fs.existsSync(logDir)) {
   fs.writeFile(logDir, "[]");
   log = [];

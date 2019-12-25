@@ -30,20 +30,16 @@ const customizationSection = puffin.element(`
         <gv-blocktitle>${getTranslation("Miscellaneous")}</gv-blocktitle>
         <gv-blockcontent>
         <div class="inline-widget">
-            <input id="slider_zoom" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="5" max="50" value="${
-            current_config.appZoom
-            }" class="slider"/>
+            <input id="slider_zoom" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="5" max="50" value="{{appZoom}}" class="slider"/>
             <h5>${getTranslation("ZoomSize")}</h5>
         </div>
         <div class="inline-widget">
-            <button class="Button1" onClick="graviton.setZoom(25); document.getElementById('slider_zoom').value=25;">${getTranslation(
+            <button class="Button1" click="$setDefaultZoom">${getTranslation(
             "DefaultZoom"
             )}</button>
         </div>
         <div class="inline-widget">
-            <input id="slider_blur" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="0.2" max="50" value="${
-            current_config.blurPreferences
-            }" class="slider"/>
+            <input id="slider_blur" onchange="Settings.refresh(); graviton.saveConfiguration();" type="range" min="0" step="0.2" max="50" value="{{blurPreferences}}" class="slider"/>
             <h5>${getTranslation("Blur")}</h5>
         </div>
         <div class="inline-widget">
@@ -87,7 +83,19 @@ const customizationSection = puffin.element(`
 `,{
     components:{
         ThemeCard
-    }
+    },
+    events:{
+        mounted(target){
+            target.props.blurPreferences = GravitonState.data.currentConfig.blurPreferences
+            target.props.appZoom = GravitonState.data.currentConfig.appZoom
+        }
+    },
+    methods:[
+        function setDefaultZoom(){
+            graviton.setZoom(25); 
+        }
+    ],
+    props:["blurPreferences","appZoom"]
 })
 
 module.exports = customizationSection

@@ -8,6 +8,7 @@ function retrieveWindow({
   repository,
   remotePackage
 }) {
+  console.log(isInstalled)
   const pluginLogo = puffin.element(`<div></div>`, { props: [] });
 
   if (package.logo == undefined) {
@@ -50,7 +51,7 @@ function retrieveWindow({
             break;
           case "plugin":
             pluginLogo.node.innerHTML = `
-              <div draggable="false" class='img' >${icons.market_plugin}</div>
+              <img draggable="false" src="https://raw.githubusercontent.com/${repository.owner.login}/${repository.name}/master/${package.logo}?sanitize=true">
             `;
             break;
         }
@@ -85,11 +86,9 @@ function retrieveWindow({
             `;
             break;
         }
-        
         break;
     }
   }
-
   const pluginContent = puffin.element(`
   <div>
     <div>
@@ -104,8 +103,8 @@ function retrieveWindow({
   const pluginButtons = puffin.element(`
   <div>
   ${(function() {
+    let button_content = "";
     if (isInstalled) {
-      let button_content = "";
       if (newUpdate) {
         button_content += `
           <button onclick="Market.updateExtension('${package.name}')" id="${Math.random() +

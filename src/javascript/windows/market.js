@@ -75,6 +75,7 @@ module.exports = {
           me.loadMoreExtensions(0, callback);
         })
         .catch(err => {
+          console.log(err)
           me.loadMenus();
           return callback(1);
         });

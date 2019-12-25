@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191224 - 1 [1.2.0]
+- graviton.getPlugin() now returns an isInstalled methods for non-market plugins
+
 ### 191215 - 1 [1.2.0]
 - Removed "New Project" old window
 - Fixed Codemirror dialog input's font size, it wasn't scaling properly
