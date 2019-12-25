@@ -9,6 +9,7 @@ module.exports = {
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'xml', 'xml.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'javascript', 'javascript.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'jsx', 'jsx.js'))
+    require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'vue', 'vue.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'htmlmixed', 'htmlmixed.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'markdown', 'markdown.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'go', 'go.js'))
