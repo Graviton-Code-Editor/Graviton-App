@@ -70,6 +70,8 @@ module.exports = {
         return 'JavaScript'
       case 'jsx':
         return 'React JavaScript'
+			case 'vue':
+        return 'Vue.js'
       case 'json':
         return 'JSON '
       case 'go':
@@ -155,6 +157,12 @@ module.exports = {
           instance.setOption('htmlMode', false)
           instance.setOption('mode', 'jsx')
           plang = 'React JavaScript'
+          instance.refresh()
+          break
+				case 'vue':
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'vue')
+          plang = 'Vue.js'
           instance.refresh()
           break
         case 'json':
