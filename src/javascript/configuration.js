@@ -67,6 +67,14 @@ let current_config = {
     {
       "combo":"ctrl tab",
       "action":"Menu bar"
+    },
+    {
+      "combo":"ctrl p",
+      "action":"Commander"
+    },
+    {
+      "combo":"esc",
+      "action":"Close all windows"
     }
   ]
 };
@@ -108,6 +116,14 @@ if(graviton.currentOS().codename === "darwin"){
     {
       "combo":"cmd tab",
       "action":"Menu bar"
+    },
+    {
+      "combo":"ctrl p",
+      "action":"Commander"
+    },
+    {
+      "combo":"esc",
+      "action":"Close all windows"
     }
   ]
 }
@@ -152,9 +168,11 @@ graviton.loadConfiguration = function(){
   } else {
     const localConfig = require(configDir);
     Object.keys(current_config).forEach(function(key) {
-      if (localConfig[key] != undefined && current_config[key] != undefined) {
+      if (localConfig[key] != undefined && current_config[key] != undefined && key != "shortCuts") {
         current_config[key] = localConfig[key];
-      } // Will only update the extisting parameters
+      } else if(key == "shorcuts"){
+        current_config.shortCuts = current_config.shortCuts.concat(localConfig.shorcuts)
+      }
     });
     loadLanguage(current_config.language); //Loads the configured language
     graviton.setTitle(`v${GravitonInfo.version}`); //Initial window's title
@@ -187,7 +205,6 @@ graviton.loadConfiguration = function(){
   }
 }
 document.addEventListener("graviton_loaded",function(){
-  graviton.loadKeyShortcuts()
   graviton.loadControlButtons();   //Load window's buttons (minimize, maximize & close)
   
   /**
@@ -336,6 +353,47 @@ document.addEventListener("graviton_loaded",function(){
   window.onresize = function() {
     graviton.resizeTerminals();
   };
+  GravitonCommander = new CommandLauncher({
+    options:[
+      {
+        name:"Open settings",
+        action:function(){
+          Settings.open("customization")
+        }
+      },{
+        name:"Open Market",
+        action:function(){
+          Market.open("all")
+        }
+      },{
+        name:"Open Welcome",
+        action:function(){
+         Welcome.open()
+        }
+      },
+      {
+        name:"Set theme",
+        action:function(){
+          const listThemes = themes.map((theme)=>{
+            return {
+              name:theme.name,
+              action:function(){
+                graviton.setTheme(theme.name);
+                graviton.saveConfiguration()
+              }
+            }
+          })
+          const ThemesCommander = new CommandLauncher({
+            options:listThemes,
+            showAnimation:false,
+            closeOnEnter:false
+          })
+          ThemesCommander.open()
+        }
+      }
+    ]
+  })
+  graviton.loadKeyShortcuts()
 })
 /**
  * @desc Saves the current configuration to config.json

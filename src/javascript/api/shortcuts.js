@@ -8,7 +8,9 @@ function loadKeyshortcuts(){
     function isCorrect(shortcuts){
         let error = false;
         try{    
-            shortcutJS.loadFromJson(shorcuts)
+            shortcutJS.loadFromJson(shorcuts,{
+                debug: false,
+            })
         }catch{
             error = true
             
@@ -24,9 +26,9 @@ function loadKeyshortcuts(){
             })
             return;
         }
-
-        shortcutJS.loadFromJson(shorcuts)
-
+        shortcutJS.loadFromJson(shorcuts,{
+            debug: false,
+        })
         shortcutJS.subscribe('Save File', ev => graviton.saveFile())
         shortcutJS.subscribe('Split screen', ev => screens.add())
         shortcutJS.subscribe('Close screen', ev => screens.remove(current_screen.id))
@@ -46,6 +48,8 @@ function loadKeyshortcuts(){
         })
         shortcutJS.subscribe('Fullscreen', ev => graviton.toggleFullScreen())
         shortcutJS.subscribe('Menu bar', ev => graviton.toggleMenus())
+        shortcutJS.subscribe('Commander', ev => GravitonCommander.open())
+        shortcutJS.subscribe('Close all windows', ev => graviton.cancelPrompts())
         callback()
     }
     init(shorcuts)

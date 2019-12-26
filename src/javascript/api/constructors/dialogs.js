@@ -84,7 +84,7 @@ module.exports = {
         'windows',
         Number(document.getElementById('body').getAttribute('windows')) + 1
       )
-    document.body.appendChild(all)
+    document.getElementById("windows").appendChild(all)
     this.close = function () {
       closeDialog(this.id)
     }

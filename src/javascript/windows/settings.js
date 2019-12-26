@@ -13,7 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 
 module.exports = {
   Settings: {
-    open: function() {
+    open: function(section) {
       const sidePanel = require(path.join("..","components","settings","sidepanel"));
       const settings_window = new Window({
         id: "settings_window",
@@ -22,6 +22,7 @@ module.exports = {
       });
       settings_window.launch();
       elasticContainer.append(document.getElementById("settings_content"));
+      if(section != null) Settings.navigate(section)
     },
     navigate: function(num) {
       const {puffin } = require("@mkenzo_8/puffin")
@@ -37,7 +38,7 @@ module.exports = {
               <span style="font-size:14px">No themes are installed. Go <span class="link" onclick="closeWindow('settings_window');Market.open('themes')" >Market</span> and explore ! <img draggable="false" class="emoji-medium" src="src/openemoji/1F9D0.svg"> </span>
               `;
             }else{
-              selectionFromTo(document.getElementById("theme_list"),document.getElementById("theme_card_"+themeObject.name))
+              selectionFromTo(document.getElementById("theme_list").children[0],document.getElementById("theme_card_"+themeObject.name))
             }
           }
           break;

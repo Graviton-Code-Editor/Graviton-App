@@ -61,6 +61,25 @@ graviton.loadEditor = require(path.join(
   "editors.js"
 )).loadEditor
 
+
+graviton.closeCommander = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "components",
+  "global",
+  "commander.js"
+)).closeCommander
+
+const CommandLauncher = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "components",
+  "global",
+  "commander.js"
+)).CommandLauncher
+
 graviton.events = require(path.join(
   __dirname,
   "src",
@@ -323,7 +342,8 @@ let current_screen,
     "javascript",
     "templates"
   )),
-  sourceDir = __dirname
+  sourceDir = __dirname,
+  GravitonCommander = null
 
 const default_plugins = [
   "Graviton-Code-Editor/Dark",

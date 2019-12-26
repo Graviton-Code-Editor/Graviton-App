@@ -1123,3 +1123,58 @@ select:hover{
   justify-content: center; 
   align-items: center;
 }
+
+.commander_container{
+  font-family: _main_font;
+  position: fixed;
+  top:50px;
+  left:50%;
+  transform: translateX(-50%);
+  background:var(--primaryColor);
+  box-shadow: 0px 2px 4px var(--shadows);
+  padding:8px;
+  min-width: 200px;
+  border-radius: 7px;
+  z-index: 999;
+}
+.commander_container input{
+  font-family: _main_font;
+  background:var(--secondaryColor);
+  padding:7px;
+  min-width: 100%;
+  color:var(--white-black);
+  border:2px solid var(--accentColor);
+  border-radius: 5px;
+}
+
+@keyframes open_commander{
+  from{
+    opacity: 0.4;
+    top:45px;
+  }
+  to{
+    opacity: 1;
+    top:50px;
+  }
+}
+
+
+.commander_container a{
+  color:var(--white-black);
+  font-size: 14px;
+  display: block;
+  white-space: pre-wrap;
+  padding:8px 10px;
+}
+
+.commander_container div:nth-child(2){
+  padding:5px 3px;
+  max-height: 300px;
+  overflow: auto;
+}
+
+.commander_container a.active{
+  background:var(--accentColor);
+  color:var(--black-white);
+  border-radius: 5px;;
+}

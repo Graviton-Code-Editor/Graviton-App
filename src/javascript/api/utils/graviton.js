@@ -537,7 +537,14 @@ const graviton = {
     saveFile:saveFile,
     saveFileAs:saveFileAs,
     openFolder:openFolder,
-    openFile:openFile 
+    openFile:openFile,
+    commands:[],
+    cancelPrompts(){
+      graviton.closeDropmenus()
+      graviton.closeCommander();
+      document.getElementById("windows").innerHTML = "";
+      document.getElementById('body').setAttribute('windows',0)
+    }
   };
   
   

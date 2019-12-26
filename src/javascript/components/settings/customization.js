@@ -5,7 +5,7 @@ const customizationSection = puffin.element(`
     <div>
         <gv-blocktitle>${getTranslation("Themes")}</gv-blocktitle>
         <gv-blockcontent>
-            <div id="theme_list" style="min-height:60px; padding:10px 0px; margin:5px 0px; overflow-y:hidden; overflow-x:scroll;">
+            <div id="theme_list" >
             <elastic-container direction="horizontal">
             ${(function() {
                 let content = "";

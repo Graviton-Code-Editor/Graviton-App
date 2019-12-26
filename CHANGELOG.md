@@ -2,7 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 191226 - 2 [1.2.0]
+### 191227 - 1 [1.2.0]
+- New ESC keybinding to close all opened windows, dialogs etc
+- Started working on a command launcher
+- Fixed: using setTheme() method cause bugs on the themes list on Settings > Customization
+
+### 191226 - 1 [1.2.0]
 - Added key bindings configuration on Settings > Editor
 
 ### 191224 - 2 [1.2.0]

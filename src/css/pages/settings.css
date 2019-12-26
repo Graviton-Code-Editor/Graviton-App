@@ -15,11 +15,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 
 #theme_list {
-  overflow: auto;
   width: 100%;
-  height: auto;
-  overflow: auto;
+  height: 180px;
   white-space: nowrap;
+  min-height:60px; 
+  padding:10px 0px; 
+  margin:5px 0px; 
+  overflow-y:hidden; 
+  overflow-x:scroll;
+  display: block;
+  max-height:200px;
 }
 
 .theme_div {

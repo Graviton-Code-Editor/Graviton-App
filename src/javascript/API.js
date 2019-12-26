@@ -411,6 +411,9 @@ document.addEventListener("mousedown", function(event) {
         }
       }
     }
+    if (!event.target.matches(".commander_struct")) {
+      graviton.closeCommander()
+    }
   }
 });
 
