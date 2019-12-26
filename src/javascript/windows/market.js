@@ -393,7 +393,7 @@ module.exports = {
       puffin.render(pluginWindow, document.getElementById(`${name}_window`));
       const bottom_section = document.getElementById(`${name}_readme`);
       if (bottom_section != null) {
-        if (plugin.package != undefined) {
+        if (plugin.isInstalled) {
           /**
             *@desc Display the readme from the installed source
             */

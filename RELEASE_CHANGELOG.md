@@ -1,7 +1,8 @@
-## 🔝 Important
+## 🔝 Important changes
 
 ## ✔ New
+* Keybinds configuration
 
-## 😁 Bug fixes
+## 😁 Important fixes
 
-## 🤓 Developers
+## 🤓 Core

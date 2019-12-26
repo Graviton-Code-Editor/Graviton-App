@@ -162,6 +162,7 @@
     "NPMPanel":"NPM Panel",
     "Select":"Select",
     "By":"By",
-    "Suggestions":"Suggestions"
+    "Suggestions":"Suggestions",
+    "KeyBindings":"Key bindings"
   }
 }

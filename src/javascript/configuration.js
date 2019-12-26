@@ -30,11 +30,99 @@ let current_config = {
   bouncePreferences: "activated",
   version: undefined,
   explorerPosition: "left",
-  npm_panel: true
+  npm_panel: true,
+  shortCuts:[
+    {
+      "combo":"ctrl s",
+      "action":"Save File"
+    },
+    {
+      "combo":"ctrl n",
+      "action":"Split screen"
+    },
+    {
+      "combo":"ctrl l",
+      "action":"Close screen"
+    },
+    {
+      "combo":"ctrl e",
+      "action":"Zen Mode"
+    },
+    {
+      "combo":"ctrl t",
+      "action":"Open terminal"
+    },
+    {
+      "combo":"ctrl u",
+      "action":"Close terminal"
+    },
+    {
+      "combo":"ctrl h",
+      "action":"Hide terminal"
+    },
+    {
+      "combo":"f11",
+      "action":"Fullscreen"
+    },
+    {
+      "combo":"ctrl tab",
+      "action":"Menu bar"
+    }
+  ]
 };
+
+if(graviton.currentOS().codename === "darwin"){
+  currentConfig.shortCuts = [
+    {
+      "combo":"cmd s",
+      "action":"Save File"
+    },
+    {
+      "combo":"cmd n",
+      "action":"Split screen"
+    },
+    {
+      "combo":"cmd l",
+      "action":"Close screen"
+    },
+    {
+      "combo":"cmd e",
+      "action":"Zen Mode"
+    },
+    {
+      "combo":"cmd t",
+      "action":"Open terminal"
+    },
+    {
+      "combo":"cmd u",
+      "action":"Close terminal"
+    },
+    {
+      "combo":"cmd h",
+      "action":"Hide terminal"
+    },
+    {
+      "combo":"f11",
+      "action":"Fullscreen"
+    },
+    {
+      "combo":"cmd tab",
+      "action":"Menu bar"
+    }
+  ]
+}
 
 const GravitonState = new puffin.state({
   currentConfig:current_config
+})
+
+GravitonState.changed(()=>{
+  console.log("what")
+  graviton.saveConfiguration()
+})
+
+GravitonState.on("ConfigurationChanged",()=>{
+  graviton.saveConfiguration()
 })
 
 if (!fs.existsSync(logDir)) {
@@ -60,7 +148,6 @@ graviton.loadConfiguration = function(){
       } else {
         Setup.open();
       }
-      appendBinds(); // Creates the general key binds
     });
   } else {
     const localConfig = require(configDir);
@@ -96,11 +183,11 @@ graviton.loadConfiguration = function(){
         document.documentElement.appendChild(style);
         document.documentElement.style.setProperty("--scalation", "1");
       }
-      appendBinds(); // Creates the general key binds
     });
   }
 }
 document.addEventListener("graviton_loaded",function(){
+  graviton.loadKeyShortcuts()
   graviton.loadControlButtons();   //Load window's buttons (minimize, maximize & close)
   
   /**
@@ -257,21 +344,22 @@ graviton.saveConfiguration = function(){
   fs.writeFile(
     configDir,
     JSON.stringify({
-      justInstalled: current_config.justInstalled,
-      theme: current_config.theme,
-      fontSizeEditor: current_config.fontSizeEditor,
-      appZoom: current_config.appZoom,
-      language: current_config.language.name,
-      animationsPreferences: current_config.animationsPreferences,
-      autoCompletionPreferences: current_config.autoCompletionPreferences,
-      lineWrappingPreferences: current_config.lineWrappingPreferences,
-      accentColorPreferences: current_config.accentColorPreferences,
-      blurPreferences: current_config.blurPreferences,
-      bouncePreferences: current_config.bouncePreferences,
-      explorerPosition: current_config.explorerPosition,
+      justInstalled: GravitonState.data.currentConfig.justInstalled,
+      theme: GravitonState.data.currentConfig.theme,
+      fontSizeEditor: GravitonState.data.currentConfig.fontSizeEditor,
+      appZoom: GravitonState.data.currentConfig.appZoom,
+      language: GravitonState.data.currentConfig.language.name,
+      animationsPreferences: GravitonState.data.currentConfig.animationsPreferences,
+      autoCompletionPreferences: GravitonState.data.currentConfig.autoCompletionPreferences,
+      lineWrappingPreferences: GravitonState.data.currentConfig.lineWrappingPreferences,
+      accentColorPreferences: GravitonState.data.currentConfig.accentColorPreferences,
+      blurPreferences: GravitonState.data.currentConfig.blurPreferences,
+      bouncePreferences: GravitonState.data.currentConfig.bouncePreferences,
+      explorerPosition: GravitonState.data.currentConfig.explorerPosition,
       version: GravitonInfo.version,
       build: GravitonInfo.date,
-      npm_panel: current_config.npm_panel
+      npm_panel: GravitonState.data.currentConfig.npm_panel,
+      shortCuts:GravitonState.data.currentConfig.shortCuts
     },null,2),
     err => {
       if (err) graviton.throwError("Couldn't save the configuration file.");

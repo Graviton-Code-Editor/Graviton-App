@@ -13,7 +13,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const _os = require("os");
 const pty = require("node-pty");
 const path = require("path");
-const { saveFile, saveFileAs, openFolder, opennFile } = require(path.join(__dirname,"src","javascript","api","utils","filesystem.js"))
+const { saveFile, saveFileAs, openFolder, openFile } = require(path.join(__dirname,"src","javascript","api","utils","filesystem.js"))
 let graviton = require(path.join(__dirname,"src","javascript","api","utils","graviton.js"))
 
 let menus_showing = true;

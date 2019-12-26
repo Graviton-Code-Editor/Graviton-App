@@ -8,7 +8,6 @@ function retrieveWindow({
   repository,
   remotePackage
 }) {
-  console.log(isInstalled)
   const pluginLogo = puffin.element(`<div></div>`, { props: [] });
 
   if (package.logo == undefined) {
@@ -210,12 +209,7 @@ function retrieveWindow({
         pluginTabs,
         pluginTabsContent
       },
-      props: [],
-      methods: [
-        function installMe() {
-          alert("installing");
-        }
-      ]
+      props: []
     }
   );
   return pluginPage;

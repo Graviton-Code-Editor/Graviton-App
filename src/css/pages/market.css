@@ -63,15 +63,21 @@
 }
 .extension_div h3 {
   margin: 2px 0px;
-  line-height: 12px;
+  line-height: 15px;
+  margin: 0px;
+  min-height: 18px;
+  white-space: nowrap;
+  max-width: 100px;
   font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .extension_div .text p {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   max-width: 150px;
-  min-height: 20px;
+  max-height: 15px;
 }
 .extension_div p {
   font-size: 13px;

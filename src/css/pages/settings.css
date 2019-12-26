@@ -145,3 +145,30 @@ div.active {
   transition: 0.05s;
   transform: scale(var(--scalation));
 }
+
+.round-box{
+  background: var(--primaryColor);
+  padding: 14px;
+  border-radius: 12px;
+  width: 150px;
+  margin:5px;
+  display: inline-block;
+}
+
+.round-box p{
+  font-size: 16px;
+  margin:1px 0px !important;
+}
+.round-box b{
+  font-size: 14px;
+}
+
+.round-box:hover{
+  background: var(--widget-color);
+  cursor: pointer;
+  box-shadow: 0px 2px 4px var(--shadows);
+}
+
+.round-box:active{
+  transform: scale(var(--scalation));
+}

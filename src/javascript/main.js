@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191223",
+  date: "191226",
   version: "1.3.0",
   state: "Beta"
 }
@@ -253,6 +253,13 @@ window.customElements.define(
     "process_bar.js"
   ))
 )
+graviton.loadKeyShortcuts = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "api",
+  "shortcuts.js"
+));
 
 let current_screen,
   dir_path,
@@ -365,42 +372,6 @@ window.onload = async function() {
         "width: 100%; border-radius:100px;"
     }
   }
-}
-
-const appendBinds = function() {
-  Mousetrap.bind("mod+s", function() {
-    saveFile()
-  })
-  Mousetrap.bind("mod+n", function() {
-    screens.add()
-  })
-  Mousetrap.bind("mod+l", function() {
-    screens.remove(current_screen.id)
-  })
-  Mousetrap.bind("mod+e", function() {
-    graviton.toggleZenMode()
-  })
-  Mousetrap.bind("mod+t", function() {
-    if (terminal != null) {
-      commanders.show(terminal.id)
-      return
-    }
-    commanders.terminal()
-  })
-  Mousetrap.bind("mod+u", function() {
-    commanders.closeTerminal()
-  })
-  Mousetrap.bind("mod+h", function() {
-    if (terminal != null) {
-      commanders.hide(terminal.id)
-    }
-  })
-  Mousetrap.bind("f11", function() {
-    graviton.toggleFullScreen()
-  })
-  Mousetrap.bind("mod+tab", function() {
-    graviton.toggleMenus()
-  })
 }
 
 const create = {

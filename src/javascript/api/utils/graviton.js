@@ -375,7 +375,6 @@ const graviton = {
             isInstalled:(function(){
               for (let a = 0; a < plugins_list.length; a++) {
                 if (plugins_list[a].name == plugin_name) {
-                  console.log(plugins_list[a].name,plugin_name)
                   return true
                 }
               }
@@ -400,7 +399,6 @@ const graviton = {
             isInstalled:(function(){
               for (let a = 0; a < plugins_list.length; a++) {
                 if (plugins_list[a].name == plugin_name) {
-                  console.log(plugins_list[a].name,plugin_name)
                   return true
                 }
               }
@@ -532,7 +530,14 @@ const graviton = {
     },
     updateAvailable(){
       return new_update;
-    }
+    },
+    getConfiguration(){
+      return current_config
+    },
+    saveFile:saveFile,
+    saveFileAs:saveFileAs,
+    openFolder:openFolder,
+    openFile:openFile 
   };
   
   

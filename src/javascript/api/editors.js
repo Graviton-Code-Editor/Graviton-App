@@ -477,28 +477,6 @@ module.exports = {
         }
       })
       editor.addKeyMap({
-        'Ctrl-S': function (cm) {
-          saveFile()
-        },
-        'Ctrl-N': function (cm) {
-          screens.add()
-        },
-        'Ctrl-L': function (cm) {
-          screens.remove(current_screen.id)
-        },
-        'Ctrl-E': function (cm) {
-          graviton.toggleZenMode()
-        },
-        'Ctrl-T': function (cm) {
-          if (terminal != null) {
-            commanders.show(terminal.id)
-            return
-          }
-          commanders.terminal()
-        },
-        'Ctrl-U': function (cm) {
-          commanders.closeTerminal()
-        },
         'Ctrl-H': function (cm) {
           if (terminal != null) {
             commanders.hide(terminal.id)

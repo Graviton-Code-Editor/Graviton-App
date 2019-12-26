@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191226 - 2 [1.2.0]
+- Added key bindings configuration on Settings > Editor
+
+### 191224 - 2 [1.2.0]
+- Fixed: openFile method wasn't well imported
+- Fixed: screenshoots of not-installed plugins weren't showed on the market
+
 ### 191224 - 1 [1.2.0]
 - graviton.getPlugin() now returns an isInstalled methods for non-market plugins
 
