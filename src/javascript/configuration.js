@@ -171,8 +171,10 @@ graviton.loadConfiguration = function(){
         current_config[key] = localConfig[key];
       } else if(key == "shortCuts"){
         localConfig.shortCuts = localConfig.shortCuts.filter(a=>Boolean(a))
-        current_config.shortCuts.map(function(bind){
-          bind.combo = localConfig.shortCuts.filter(bind=> bind.action == bind.action)[0].combo
+        current_config.shortCuts.forEach(function(bind){
+          bind.combo = localConfig.shortCuts.filter(function(bd){
+            return bd.action == bind.action
+          })[0].combo
         })
       }
     });
