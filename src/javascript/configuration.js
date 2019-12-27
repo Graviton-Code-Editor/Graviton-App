@@ -133,7 +133,6 @@ const GravitonState = new puffin.state({
 })
 
 GravitonState.changed(()=>{
-  console.log("what")
   graviton.saveConfiguration()
 })
 
@@ -393,7 +392,6 @@ document.addEventListener("graviton_loaded",function(){
       }
     ]
   })
-  graviton.loadKeyShortcuts()
 })
 /**
  * @desc Saves the current configuration to config.json
