@@ -477,19 +477,6 @@ module.exports = {
         }
       })
       editor.addKeyMap({
-        'Ctrl-H': function (cm) {
-          if (terminal != null) {
-            commanders.hide(terminal.id)
-          }
-        },
-        'F11': function (cm) {
-          !g_window.isFullScreen()
-            ? g_window.setFullScreen(true)
-            : g_window.setFullScreen(false)
-        },
-        'Ctrl-Tab': function (cm) {
-          graviton.toggleMenus()
-        },
         'Ctrl-Up': function (cm) {
           graviton.setEditorFontSize(
             `${Number(current_config.fontSizeEditor) + 2}`

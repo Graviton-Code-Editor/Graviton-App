@@ -15,10 +15,13 @@
     "modern"
   ],
   "scripts": {
-    "start": "electron . Graviton",
+    "start": "run-p start:electron watch:sass",
     "start:no.sandbox": "electron . Graviton --no-sandbox",
-    "pack": "build --dir",
+    "start:electron": "electron . Graviton",
+    "compile:sass": "sass src/sass/main.scss src/css/styling.css",
+    "watch:sass": "sass --watch src/sass/main.scss src/css/styling.css",
     "build": "npx electron-builder build",
+    "build:packaged": "npx electron-builder build --dir",
     "build:snap": "npx electron-builder build --linux snap",
     "build:pacman": "npx electron-builder build --linux pacman",
     "build:deb": "npx electron-builder build --linux deb",
@@ -53,6 +56,7 @@
     "node-pty": "^0.9.0",
     "npm": "^6.13.4",
     "octonode": "^0.9.5",
+    "onchange": "^6.1.0",
     "rimraf": "^2.7.1",
     "semver": "^6.3.0",
     "shortcutjs": "^1.6.0",
@@ -67,7 +71,9 @@
     "electron-rebuild": "^1.8.8",
     "mocha": "^6.2.2",
     "spectron": "^9.0.0",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "sass": "^1.24.0",
+    "npm-run-all": "^4.1.5"
   },
   "build": {
     "appId": "graviton-editor",

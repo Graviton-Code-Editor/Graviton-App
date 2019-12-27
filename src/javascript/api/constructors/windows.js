@@ -131,6 +131,7 @@ module.exports = {
     }
     return {
         launch: ()=>{
+          if(document.getElementById(buildingWindow.node.id) != undefined) return; //Prevent opening already opened windows
           document.getElementById('body').setAttribute(
             'windows',
             Number(document.getElementById('body').getAttribute('windows')) + 1

@@ -1,7 +1,7 @@
 function openCommander(Commander){
     const commander = puffin.element(`
         <div count="0" id="commander_container" class="commander_container commander_struct">
-            <input class="commander_struct" placeHolder="Write a command" keydown="$scrolling"  keyup="$writing"/>
+            <input type="${Commander.inputType}" maxlength="${Commander.maxCharacters}" class="commander_struct" placeHolder="Write a command" keydown="$scrolling"  keyup="$writing"/>
             <div class="commander_struct">
 
             </div>
@@ -19,6 +19,10 @@ function openCommander(Commander){
         methods:[
             function scrolling(e){
                 switch(e.keyCode){
+                    case 9:
+                        selectFromOption(Commander)
+                        e.preventDefault()
+                        break;
                     case 13:
                         selectFromOption(Commander)
                         break;
@@ -33,6 +37,7 @@ function openCommander(Commander){
             function writing(e){
                 switch(e.keyCode){
                     case 13:
+                    case 9:
                     case 38:
                     case 40:
                         break;
@@ -42,6 +47,7 @@ function openCommander(Commander){
                         break;
                     default:
                         showOptions(matchCommands(Commander,this.value))
+                        Commander.onWriting(this.value)
                         break;
                 }                
             }
@@ -53,6 +59,7 @@ function openCommander(Commander){
 function selectFromOption(Commander){
     const commander = document.getElementById("commander_container")
     const option = commander.getElementsByClassName("active")[0]
+    Commander.onEnter(document.getElementById("commander_container").children[0].value)
     if(option != undefined){
         const value = option.textContent
         if(existsCommand(Commander,value)){
@@ -96,13 +103,17 @@ function hintOption(direction){
     }
 }
 
-function CommandLauncher({options, showAnimation = true, closeOnEnter = true}){
+function CommandLauncher({options, showAnimation = true, closeOnEnter = true ,onEnter = ()=>{}, onWriting = ()=>{},inputType="",maxCharacters = 35}){
     return {
         options:options,
         open : ()=> openCommander({
             options:options,
             showAnimation:showAnimation,
-            closeOnEnter:closeOnEnter
+            closeOnEnter:closeOnEnter,
+            onEnter:onEnter,
+            onWriting:onWriting,
+            inputType,
+            maxCharacters:maxCharacters
         }),
         close : ()=> closeCommander()
     }
@@ -114,7 +125,7 @@ function matchCommands(Commander,command){
         return Commander.options
     }else{
         return Commander.options.filter((cmd)=>{
-            return cmd.name.match(command)
+            return cmd.name.match( new RegExp(command, "i"))
         })
     }
 }

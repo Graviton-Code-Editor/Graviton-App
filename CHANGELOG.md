@@ -3,6 +3,11 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 191227 - 1 [1.2.0]
+- New: now using SASS (SCSS)
+- Command Launcher now supports TAB as Enter key
+- Added a "Go to line" command for files
+
+### 191226 - 2 [1.2.0]
 - New ESC keybinding to close all opened windows, dialogs etc
 - Started working on a command launcher
 - Fixed: using setTheme() method cause bugs on the themes list on Settings > Customization

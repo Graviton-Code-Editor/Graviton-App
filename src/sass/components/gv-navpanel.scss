@@ -1,0 +1,168 @@
+
+gv-navpanel {
+	height: auto;
+    max-height: 100%;
+    overflow: auto;
+	gv-navbar {
+		gv-navbutton{
+            transition: 0.05s;
+			cursor: pointer;
+			background:transparent;
+			font-family: _main_font;
+			font-size: 15px;
+			text-decoration: none;
+			display: block;
+			transform: scale(1);
+			position: relative;
+            &[default=""] {
+                background: var(--accentColor);
+            }
+		}
+	}
+	gv-navcontent {
+		gv-blocktitle {
+			display: block;
+			font-size: 16px;
+			border-bottom: 2px solid var(--primaryColor);
+			margin: 0px 3px;
+			padding: 15px 3px;
+			border-radius: 0px;
+			font-weight: normal;
+			display: flex;
+			align-content: center;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		gv-blockcontent {
+			display: block;
+			padding: 8px;
+			margin: 2px 10px;
+		}
+	}
+}
+gv-navpanel.side-menu {
+	display: flex;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: 100%;
+	gv-navtitle {
+		font-weight: bold;
+		font-size: 30px;
+		margin-bottom: 20px;
+		display: block;
+	}
+	gv-navbar {
+		width: 10%;
+		min-width: 175px;
+		padding: 30px 20px;
+		display: block;
+		box-shadow: 3px 0px 5px var(--shadows);
+		background: var(--primaryColor);
+		gv-navbutton {
+			padding: 7px 10px;
+			width: 83%;
+			border: 0;
+			margin: 2px 0px;
+			border-radius: 5px;
+			text-align: left;
+			&:hover {
+				color: var(--accentColor);
+				cursor: pointer;
+            }
+            &.active , &[default=""] {
+                cursor: pointer;
+                transition: 0.05s;
+                background: var(--accentColor);
+                color: var(--black-white); 
+                &:hover {
+                    background: var(--accentDarkColor);
+                    color: white; 
+			    }
+            }
+		}
+		gv-navdiv {
+			display: block;
+			background: var(--dropmenu-span-color);
+			min-height: 2px;
+			margin: 15px 8px;
+			min-width: 90%;
+			position: relative;
+		}
+	}
+	gv-navcontent {
+		margin: 20px 0;
+		padding: 20px;
+		width: 80%;
+		max-width: 100%;
+		max-height: 100%;
+		border-radius: 8px;
+		overflow: auto;
+		display: block;
+		gv-navpage {
+			display: none;
+			overflow: auto;
+		}
+		gv-navpage[default=""] {
+			display: block;
+		}
+	}
+}
+gv-navpanel.top-bar {
+	display: flex;
+	min-width: 100%;
+	max-width: 100%;
+	min-height: auto;
+	overflow: auto;
+	flex-direction: column;
+	gv-navtitle {
+		display: none;
+	}
+	gv-navbar {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding: 20px 0px;
+		gv-navbutton {
+			text-align: center;
+			font-family: _main_font;
+			font-size: 15px;
+			color: var(--white-black);
+			background-color: transparent;
+			padding: 7px 10px;
+			text-decoration: none;
+			display: block;
+			border: 0;
+			margin: 2px 5px;
+			border-radius: 5px;
+			text-align: left;
+			transform: scale(1);
+			position: relative;
+			&:hover { 
+				color: var(--accentColor);
+				cursor: pointer;
+            }
+            &.active, &[default=""]{
+                cursor: pointer;
+                transition: 0.05s;
+                background: var(--accentColor);
+                color: var(--black-white);
+            }
+		}
+	}
+	gv-navcontent {
+		width: auto;
+		max-width: 100%;
+		max-height: 100%;
+		border-radius: 8px;
+		overflow: auto;
+		display: block;
+		padding: 15px;
+		gv-navpage {
+			display: none;
+			overflow: auto;
+		}
+		gv-navpage[default=""] {
+			display: block;
+		}
+	}
+}

@@ -65,7 +65,7 @@ let current_config = {
       "action":"Fullscreen"
     },
     {
-      "combo":"ctrl tab",
+      "combo":"ctrl shift tab",
       "action":"Menu bar"
     },
     {
@@ -114,7 +114,7 @@ if(graviton.currentOS().codename === "darwin"){
       "action":"Fullscreen"
     },
     {
-      "combo":"cmd tab",
+      "combo":"cmd shift tab",
       "action":"Menu bar"
     },
     {
@@ -169,8 +169,11 @@ graviton.loadConfiguration = function(){
     Object.keys(current_config).forEach(function(key) {
       if (localConfig[key] != undefined && current_config[key] != undefined && key != "shortCuts") {
         current_config[key] = localConfig[key];
-      } else if(key == "shorcuts"){
-        current_config.shortCuts = current_config.shortCuts.concat(localConfig.shorcuts)
+      } else if(key == "shortCuts"){
+        localConfig.shortCuts = localConfig.shortCuts.filter(a=>Boolean(a))
+        current_config.shortCuts.map(function(bind){
+          bind.combo = localConfig.shortCuts.filter(bind=> bind.action == bind.action)[0].combo
+        })
       }
     });
     loadLanguage(current_config.language); //Loads the configured language
@@ -369,6 +372,39 @@ document.addEventListener("graviton_loaded",function(){
         action:function(){
          Welcome.open()
         }
+      },{
+        name:"Go to line",
+        action:function(){
+          const goToLine = new CommandLauncher({
+            options:[],
+            showAnimation:false,
+            closeOnEnter:false,
+            inputType:"number",
+            onEnter(lineNumber){
+              if(editor != null){
+                if(lineNumber < 0){
+                  editor.scrollIntoView({line:0, char:0}, 300)
+                }else if(lineNumber > editor.lineCount()){
+                  editor.scrollIntoView({line:editor.lineCount()-1, char:0}, 300)
+                }else{
+                  editor.scrollIntoView({line:lineNumber, char:0}, 300)
+                }
+              }
+            },
+            onWriting(lineNumber){
+              if(editor != null ){
+                if(lineNumber < 0){
+                  editor.scrollIntoView({line:0, char:0}, 300)
+                }else if(lineNumber > editor.lineCount()){
+                  editor.scrollIntoView({line:editor.lineCount()-1, char:0}, 300)
+                }else{
+                  editor.scrollIntoView({line:lineNumber, char:0}, 300)
+                }
+              }
+            }
+          })
+          goToLine.open()
+        }
       },
       {
         name:"Set theme",
@@ -392,6 +428,7 @@ document.addEventListener("graviton_loaded",function(){
       }
     ]
   })
+  graviton.loadKeyShortcuts()
 })
 /**
  * @desc Saves the current configuration to config.json

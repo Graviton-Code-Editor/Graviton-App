@@ -1,0 +1,428 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espín Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+@keyframes open_commander {
+	from {
+		opacity: 0.4;
+		top: 45px;
+	}
+	to {
+		opacity: 1;
+		top: 50px;
+	}
+}
+#top_bar_app {
+	max-height: 35px;
+	-webkit-user-select: none;
+	-webkit-app-region: drag;
+	position: relative;
+	color: var(--white-black);
+	height: 35px;
+	background-color: var(--primaryColor);
+	padding: 0;
+	margin: 0px;
+	list-style-type: none;
+	overflow: hidden;
+	font-family: _main_font;
+	margin: 0;
+	display: flex;
+	.controls {
+		flex: 1;
+		display: flex;
+		-webkit-app-region: no-drag;
+		min-width: auto;
+		max-width: 144px;
+		min-height: 100%;
+		button {
+			&:not(.macOS) {
+				transition: 0.05s;
+				padding: 6px 0px;
+				width: 48px;
+				border: none;
+				margin: 0;
+				background: transparent;
+				&:hover {
+					transition: 0.05s;
+					background: var(--widget-color);
+				}
+			}
+		}
+		#minimize {
+			&:hover {
+				>svg {
+					>rect {
+						fill: var(--white-black);
+					}
+				}
+			}
+		}
+		#maximize {
+			&:hover {
+				>svg {
+					>rect {
+						stroke: var(--white-black);
+					}
+				}
+			}
+		}
+		#close {
+			&:hover {
+				background: #E81123;
+				>svg {
+					>rect {
+						stroke: white;
+						fill: white;
+					}
+				}
+			}
+			>svg {
+				>rect {
+					stroke: transparent !important;
+				}
+			}
+			&:active {
+				background: rgb(241, 112, 122);
+				>svg {
+					>rect {
+						stroke: transparent;
+						fill: black;
+					}
+				}
+			}
+		}
+	}
+	#title_directory {
+		flex: 1;
+		text-align: center;
+		min-width: 0px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		p {
+			font-size: 12px;
+			color: var(--titleBar-icons-color);
+			top: 28%;
+			position: relative;
+			margin: 0;
+			white-space: nowrap;
+			width: 100%;
+			margin: 0px 10px;
+		}
+	}
+	#dropmenus_app {
+		display: flex;
+		list-style-type: none;
+		padding: 0;
+		overflow: auto;
+		overflow-y: hidden;
+		-webkit-app-region: drag;
+		border: 0;
+		position: relative;
+		float: left;
+		min-width: auto;
+		max-width: auto;
+	}
+	>#dropmenus_app {
+		button.dropbtn {
+			position: relative;
+			display: inline-block;
+			color: var(--white-black);
+			height: 35px;
+			padding: 0px 6px;
+			margin: 0;
+			overflow: hidden;
+			font-size: 12px;
+			border: none;
+			cursor: pointer;
+			top: 0;
+			font-family: _main_font;
+			-webkit-app-region: no-drag;
+			white-space: nowrap;
+			min-width: auto;
+			background: var(--primaryColor);
+		}
+		.dropbtn {
+			&:hover {
+				background-color: var(--widget-color);
+			}
+			&:focus {
+				background-color: var(--widget-color);
+			}
+		}
+	}
+}
+.draggable-box {
+	-webkit-app-region: drag;
+}
+.dropdown {
+	position: relative;
+	display: inline-block;
+	margin: 0px;
+}
+.dropdown-content {
+	border-radius: 3px;
+	border-top-left-radius: 0px;
+	position: fixed;
+	background-color: var(--dropmenu-background-color);
+	min-width: 175px;
+	overflow: auto;
+	z-index: 1;
+	box-shadow: 1px 3px 7px var(--shadows);
+	padding: 5px;
+	margin: 0;
+	>button {
+		&:not(.dropbtn) {
+			font-family: _main_font;
+			font-size: 13px;
+			color: var(--white-black);
+			background-color: transparent;
+			padding: 7px 2px;
+			width: 100%;
+			text-decoration: none;
+			display: flex;
+			border: 0;
+			border-radius: 5px;
+			text-align: left;
+			transform: scale(1);
+			padding-right: 10px;
+			white-space: nowrap;
+			overflow: auto;
+			position: relative;
+			div {
+				flex: 1;
+				display: inline-flex;
+				&:nth-child(1) {
+					margin: 0 1px;
+					position: relative;
+					top: 0.7px;
+					min-width: 25px;
+					max-width: 25px;
+				}
+				&:nth-child(2) {
+					width: 80%;
+					text-align: left;
+					margin-right: 25px;
+					text-overflow: ellipsis;
+				}
+				&:nth-child(3) {
+					justify-content: flex-end;
+					width: 20%;
+				}
+				.abo {
+					stroke: var(--dropmenu-background-color);
+				}
+				.aba {
+					fill: var(--accentColor);
+				}
+				.bbo {
+					stroke: var(--accentColor);
+				}
+				.bba {
+					fill: var(--dropmenu-background-color);
+				}
+			}
+			&:hover {
+				div {
+					.abo {
+						stroke: var(--accentColor);
+					}
+					.aba {
+						fill: var(--black-white);
+					}
+					.bbo {
+						stroke: var(--black-white);
+					}
+					.bba {
+						fill: var(--accentColor);
+					}
+				}
+			}
+		}
+		&:hover {
+			&:not(.dropbtn) {
+				color: var(--black-white);
+				background-color: var(--accentColor);
+				border-radius: 3px;
+				cursor: pointer;
+			}
+		}
+		&:active {
+			&:not(.dropbtn) {
+				transition: 0.05s;
+				transform: scale(var(--scalation));
+			}
+		}
+	}
+}
+.icon {
+	.abo {
+		stroke: var(--dropmenu-background-color);
+	}
+	.aba {
+		fill: var(--white-black);
+	}
+	.bbo {
+		stroke: var(--white-black);
+	}
+	.bba {
+		fill: var(--dropmenu-background-color);
+	}
+	.cbo {
+		stroke: var(--accentColor);
+	}
+	.cba {
+		fill: var(--accentColor);
+	}
+	cursor: pointer;
+	&:hover {
+		.abo {
+			stroke: var(--dropmenu-background-color);
+		}
+		.aba {
+			fill: var(--accentColor);
+		}
+		.bbo {
+			stroke: var(--accentColor);
+		}
+		.bba {
+			fill: var(--dropmenu-background-color);
+		}
+	}
+}
+span.line_space_menus {
+	width: auto;
+	display: block;
+	height: 2px;
+	margin: 5px;
+	border-radius: 50px;
+	background: var(--dropmenu-span-color);
+}
+span.divider-2 {
+	display: block;
+	height: 2px;
+	margin: 5px;
+	margin-left: 13px;
+	border-radius: 50px;
+	background: var(--dropmenu-span-color);
+}
+.show {
+	transition: 0.05s;
+	transform: translateY(0px);
+	opacity: 1;
+	display: block;
+	visibility: visible;
+}
+.hide {
+	transition: 0.05s;
+	opacity: 0.3;
+	transform: translateY(-4px);
+	visibility: hidden;
+}
+.panel {
+	height: 500px;
+	width: 300px;
+	background: blue;
+}
+#controls_macOS {
+	padding: 10px;
+}
+.macOS {
+	border-radius: 100px;
+	min-height: 12px;
+	border: 0px;
+	width: 12px;
+	padding: 0px;
+	margin: auto 3px;
+	background: var(--widget-color);
+	&:hover {
+		background: darkgray;
+	}
+}
+#close.macOS {
+	background: #FF746D;
+	border: 1px solid #f85a52;
+	&:hover {
+		background: #FF746D !important;
+		border: 1px solid #f85a52 !important;
+	}
+	&:active {
+		background: #D0716C !important;
+		border: 1px solid #AA4F4B !important;
+	}
+}
+.controls {
+	&:hover {
+		#close.macOS {
+			img {
+				content: url("../icons/cross.svg");
+			}
+		}
+		#minimize.macOS {
+			img {
+				content: url("../icons/control_minimize.svg");
+			}
+		}
+		#maximize.macOS {
+			img {
+				content: url("../icons/zoom.svg");
+			}
+		}
+	}
+}
+#minimize.macOS {
+	background: #fdbe2e;
+	border: 1px solid #DFA620;
+	&:hover {
+		background: #fdbe2e;
+		border: 1px solid #DFA620;
+	}
+	&:active {
+		background: #E0AD38;
+		border: 1px solid #B38B2E;
+	}
+}
+#maximize.macOS {
+	background: #1DE33D;
+	border: 1px solid #1ECE38;
+	&:hover {
+		background: #1DE33D;
+		border: 1px solid #1ECE38;
+	}
+	&:active {
+		background: #27cb41;
+		border: 1px solid #1AAC2F;
+	}
+}
+#controls_macOS.blur {
+	.macOS {
+		background: #CDCECD;
+		border: 0px;
+	}
+}
+.commander_container {
+	a {
+		color: var(--white-black);
+		font-size: 14px;
+		display: block;
+		white-space: pre-wrap;
+		padding: 8px 10px;
+	}
+	div {
+		&:nth-child(2) {
+			padding: 5px 3px;
+			max-height: 300px;
+			overflow: auto;
+		}
+	}
+	a.active {
+		background: var(--accentColor);
+		color: var(--black-white);
+		border-radius: 5px;
+	}
+}

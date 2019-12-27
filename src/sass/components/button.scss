@@ -1,0 +1,81 @@
+button.button1 {
+	font-family: _main_font;
+	transition: 0.1s;
+	border-radius: var(--buttons-roundness);
+	width: auto;
+	margin: 4px 3px;
+	padding: 8px 20px;
+	background: var(--primaryColor);
+	color: var(--white-black);
+	box-sizing: border-box;
+	opacity: 1;
+	box-shadow: 0 0 0 0px var(--accentColor);
+	border: 0px transparent;
+	user-select: auto;
+    -webkit-app-region: auto;
+    cursor: pointer;
+	&:hover {
+		transition: 0.03s;
+		background: var(--widget-color);
+	}
+	&:active {
+		transition: 0.1s;
+		box-shadow: 0 0 0 3px var(--accentColor);
+		box-sizing: border-box;
+	}
+	svg {
+		* {
+			height: 50px;
+			width: 50px;
+			fill: var(--white-black);
+		}
+	}
+}
+button.button1.red {
+	background: #E81123;
+	box-shadow: 0 0 0 0px pink;
+	color: white;
+	&:hover {
+		background: rgb(124, 12, 21);
+		color: white;
+	}
+	&:active {
+		transition: 0.1s;
+		box-sizing: border-box;
+		box-shadow: 0 0 0 3px pink;
+	}
+}
+button.button1.disabled {
+	pointer-events: none;
+}
+.button1-round {
+	position: absolute;
+	border-radius: 50px;
+	background: var(--primaryColor);
+	bottom: 50px;
+	right: 30px;
+	border: 0px;
+	width: 50px;
+	height: 50px;
+	&:hover {
+		background: var(--widget-color);
+		cursor: pointer;
+	}
+}
+button.button1-round {
+	svg {
+		* {
+			fill: var(--white-black);
+		}
+	}
+}
+button.fullScreenWindow-right {
+	position: fixed;
+	right: 5%;
+	bottom: 5%;
+}
+button.fullScreenWindow-left {
+	position: fixed;
+	left: 5%;
+	bottom: 5%;
+}
