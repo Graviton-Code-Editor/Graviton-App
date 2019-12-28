@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191228 - 1 [1.2.0]
+- Removed files and directories now will be moved to trash intead of direct deletion
+- Better radio design
+- Better SASS integration
+
 ### 191227 - 1 [1.2.0]
 - New: now using SASS (SCSS)
 - Command Launcher now supports TAB as Enter key

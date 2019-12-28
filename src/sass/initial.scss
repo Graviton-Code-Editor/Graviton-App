@@ -1,0 +1,99 @@
+/*
+########################################
+              MIT License
+
+Copyright (c) 2019 Marc Espin Sanz
+
+License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICENSE.md
+
+#########################################
+*/
+
+/* Css that needs to be loaded fast */
+
+#g_bootanimation {
+    position: fixed;
+    z-index: 100;
+    height: 100%;
+    width: 100%;
+    background: #191919;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    white-space: nowrap;
+    color:white;
+  }
+  
+  #g_bootanimation > div{
+    text-align: center;
+  }
+  
+  #g_bootanimation img {
+    pointer-events: none;
+    -webkit-user-select: none;
+    -webkit-app-region: drag;
+    z-index: 999;
+    position: relative;
+    min-height: 10%;
+    min-width: 10%;
+    max-width: 200px;
+    max-height: 200px;
+  }
+  
+  #g_bootanimation .err {
+    color: white;
+    z-index: 999;
+    text-align: center;
+  }
+  
+  #top_bar_app > img {
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    padding: 8px;
+    margin: 0;
+    flex:1;
+    height: 19px;
+    max-width: 19px;
+  }
+  
+  .loading_bar {
+      width: 300px;
+    border-radius: 100px;
+    height:15px;
+    overflow: auto;
+  }
+  .loading_bar > div {
+      background:   -webkit-linear-gradient(-45deg, #c8002f 0%, #ff0048 100%);
+      height: 15px;
+      width: 10px;
+      position: absolute;
+      border-radius: 100px;
+      box-sizing: border-box;
+      border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    box-shadow: inset 0px 1px 4px rgba(0,0,0,0.22);
+    max-width: 300px !important;;
+  }
+  .loading_bar > .bg {
+      background: var(--widget-color);
+      width: 100%;
+      position: absolute;
+      z-index: -1;
+      border-radius: 100px;
+  }
+  
+  #boot_loader{
+    margin-top:70px;
+  }
+  
+  #welcome_wall{
+    position: absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width: 100%;
+    padding:10px;
+    z-index:-1;
+  }

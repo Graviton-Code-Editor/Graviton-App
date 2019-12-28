@@ -38,6 +38,14 @@ gv-navpanel {
 			padding: 8px;
 			margin: 2px 10px;
 		}
+		gv-sectiontitle {
+			display: block;
+			font-size: 14px;
+			margin: 8px 3px;
+			border-radius: 0px;
+			font-weight: normal;
+			text-overflow: ellipsis;
+		}
 	}
 }
 gv-navpanel.side-menu {

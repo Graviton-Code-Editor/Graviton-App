@@ -57,7 +57,7 @@ const customizationSection = puffin.element(`
         </gv-blockcontent>
         <gv-blocktitle>${getTranslation("Explorer")}</gv-blocktitle>
         <gv-blockcontent>
-            <h5>${getTranslation("ExplorerPosition")}</h5>
+            <gv-sectiontitle>${getTranslation("ExplorerPosition")}</gv-sectiontitle>
             <label class="radio" onclick="graviton.changeExplorerPosition('left'); graviton.saveConfiguration();"  value="Left" ${
                 current_config.explorerPosition === "left" ? 'checked=""' : ""
             }> Left

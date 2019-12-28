@@ -179,7 +179,7 @@ graviton.loadConfiguration = function(){
       }
     });
     loadLanguage(current_config.language); //Loads the configured language
-    graviton.setTitle(`v${GravitonInfo.version}`); //Initial window's title
+    graviton.setTitle(`Any folder opened`); //Initial window's title
     graviton.refreshCustomization(); //Load basic UI configuration (zoom, font-size...)
     graviton.changeExplorerPosition(current_config.explorerPosition); //Set explorer's configured position
     screens.add();  //Create first screen

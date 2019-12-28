@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191227",
+  date: "191228",
   version: "1.3.0",
   state: "Beta"
 }
@@ -320,7 +320,6 @@ let current_screen,
   editor_screens = [],
   languages = [],
   dictionary = autocomplete,
-  Mousetrap = require("mousetrap"),
   terminal = null,
   workspaces = [],
   plugins_market = [],
@@ -526,17 +525,14 @@ const directories = {
     })
   },
   removeFile(id) {
+    const trash = require('trash');
     const object = document.getElementById(id)
-    fs.unlink(object.getAttribute("dir"), function(err) {
-      if (err) graviton.throwError(err)
-      object.remove()
-    })
+    trash([object.getAttribute("dir")]).then(a=>object.parentElement.remove())
   },
   removeFolder(id) {
-    const rimraf = require("rimraf")
+    const trash = require('trash');
     const object = document.getElementById(id)
-    rimraf.sync(object.getAttribute("dir"))
-    object.remove()
+    trash([object.getAttribute("dir")]).then(a=>object.parentElement.remove())
   },
   getCustomIcon(dir, state) {
     if (

@@ -9,17 +9,25 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 #########################################
 */
 
+@use './initial';
+
 @use './windows/settings';
 @use './windows/market';
 
 @use './components/button';
 @use './components/context';
 @use './components/dialogs';
-@use './components/gv-navpanel.scss';
+@use './components/gv-navpanel';
 @use './components/windows';
+
+@use './codemirror/custom';
+
+@use './codemirror/themes/dark';
+@use './codemirror/themes/light';
 
 @use './components';
 @use './menus';
+
 
 :root {
 	--primarycolor: #222222;

@@ -260,11 +260,13 @@ module.exports = {
        * @param {object} config - Package.json's of the plugin
        */
       if (config.css == undefined || config.css.length == 0) return;
-      const csss = document.getElementsByClassName(config.name + "_css");
-      for (b = 0; b < csss.length; b++) {
-        csss[b].remove();
-        b--;
-      }
+      const CSSlinks = document.getElementsByClassName(config.name + "_css")
+      Object.keys(CSSlinks).map(function(link){
+        CSSlinks[link].remove()
+      })
+      const HighlightLink = document.getElementsByClassName(config.name + "_highlight")
+      if(HighlightLink[0] != null) HighlightLink[0].remove()
+
     },
     enableCSS: function(config) {
       /**
@@ -283,16 +285,14 @@ module.exports = {
           document.body.appendChild(cssLink);
         }
       }
-      const highLightLink = document.createElement("link");
-      highLightLink.setAttribute("rel", "stylesheet");
-      highLightLink.classList = config["name"] + "_highlight";
-      const highlightLink = document.createElement("link");
-      if (config.highlight == "default" || config.highlight == "LightUI") {
-        highLightLink.href = path.join("src", "highlightings", config["highlight"] + ".css")
-      }else{
+      if(config.highlight != "default" && config.highlight != "LightUI" ){
+        const highLightLink = document.createElement("link");
+        highLightLink.setAttribute("rel", "stylesheet");
+        highLightLink.classList = `${config.name}_highlight`;
         highLightLink.href = path.join(plugins_folder, config["name"], config["highlight"] + ".css")
+        document.body.appendChild(highLightLink);
       }
-      document.body.appendChild(highLightLink);
+     
     },
     installFromLocal: () => {
       dialog.showOpenDialog(
