@@ -81,7 +81,7 @@
         "SplitScreen": "Bölünmüş Ekran",
         "RemoveScreen": "Ekranı Kaldır",
         "DirectoryDoesntExist": "Bu dizin mevcut değil",
-        "Remove": "Sil",
+        "SendToTrash": "Sil",
         "Dialog.AreYouSure": "Emin misin?",
         "Exit": "Çık",
         "openTerminal": "Terminali aç",

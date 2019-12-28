@@ -79,3 +79,51 @@ button.fullScreenWindow-left {
 	left: 5%;
 	bottom: 5%;
 }
+
+
+button.button2 {
+	font-weight: bold;
+	right: 0;
+	width: auto;
+	border: none;
+	margin-top: 2.5px;
+	padding: 10px 16px;
+	background: transparent;
+	color: var(--white-black);
+	box-sizing: border-box;
+	position: relative;
+	left: 0px;
+	bottom: 0px;
+	border-radius: 3px;
+	font-family: _main_font;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-size: 11px;
+	border: 2px solid transparent;
+	&:hover {
+		cursor: pointer;
+		background: var(--widget-color);
+	}
+	&:active {
+		border: 2px solid var(--accentColor);
+	}
+}
+button.button3 {
+	background: var(--primaryColor);
+	border-radius: 50px;
+	border: 0;
+	color: var(--white-black);
+	padding: 6px 10px;
+	max-height: 150px;
+	position: relative;
+	font-family: _main_font;
+	transform: scale(1);
+	border: 2px solid transparent;
+	&:hover {
+		cursor: pointer;
+		background: var(--widget-color);
+	}
+	&:active {
+		border: 2px solid var(--accentColor);
+	}
+}

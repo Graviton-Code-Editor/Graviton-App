@@ -173,7 +173,7 @@ module.exports = {
                 content: getTranslation('ToggleMenuTipMessage')
               })
             },
-            hint: 'Ctrl+Tab'
+            hint: 'Ctrl+Shift+Tab'
           },
           '2a': '*line',
           IncreaseZoom: {

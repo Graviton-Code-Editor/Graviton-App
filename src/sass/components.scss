@@ -392,71 +392,6 @@ input[type="number"] {
 		}
 	}
 }
-.directory.moving {
-	animation: slide_right linear 0.1s;
-	transform: translateX(3px);
-}
-.explorer {
-	div.directory {
-		color: var(--white-black);
-		border-radius: 70px;
-		transition: 0.05s;
-		clear: both;
-		white-space: nowrap;
-		font-size: 12px;
-		padding-left: 3px;
-		padding-top: 1px;
-		padding-bottom: 4px;
-		padding-right: 8px;
-		background: transparent;
-		line-height: 0px;
-		height: 20px;
-		cursor: pointer;
-		background: transparent;
-		transform: scale(1);
-		width: auto;
-		float: left;
-		white-space: nowrap;
-		display: flex;
-		p {
-			padding-top: 3px;
-			line-height: 3px;
-			margin: auto;
-			font-size: 12px;
-		}
-		&:hover {
-			transition: 0.05s;
-			border-radius: 4px;
-			background: var(--widget-color);
-		}
-		&:active {
-			transition: 0.05s;
-			transform: scale(var(--scalation));
-		}
-	}
-}
-.panel_button {
-	color: var(--white-black);
-	border-radius: 70px;
-	transition: 0.05s;
-	font-size: 12px;
-	cursor: pointer;
-	background: transparent;
-	width: auto;
-	white-space: nowrap;
-	display: flex;
-	padding: 5px;
-	border: 0;
-	&:hover {
-		transition: 0.05s;
-		border-radius: 4px;
-		background: var(--widget-color);
-	}
-	&:active {
-		transition: 0.05s;
-		transform: scale(var(--scalation));
-	}
-}
 
 .icon {
 	background: transparent;
@@ -539,52 +474,6 @@ input[type="number"] {
 	width: auto;
 	min-height: auto;
 	transform: scale(1);
-}
-button.button2 {
-	font-weight: bold;
-	right: 0;
-	width: auto;
-	border: none;
-	margin-top: 2.5px;
-	padding: 10px 16px;
-	background: transparent;
-	color: var(--white-black);
-	box-sizing: border-box;
-	position: relative;
-	left: 0px;
-	bottom: 0px;
-	border-radius: 3px;
-	font-family: _main_font;
-	text-transform: uppercase;
-	letter-spacing: 1px;
-	font-size: 11px;
-	border: 2px solid transparent;
-	&:hover {
-		cursor: pointer;
-		background: var(--widget-color);
-	}
-	&:active {
-		border: 2px solid var(--accentColor);
-	}
-}
-button.button3 {
-	background: var(--primaryColor);
-	border-radius: 50px;
-	border: 0;
-	color: var(--white-black);
-	padding: 6px 10px;
-	max-height: 150px;
-	position: relative;
-	font-family: _main_font;
-	transform: scale(1);
-	border: 2px solid transparent;
-	&:hover {
-		cursor: pointer;
-		background: var(--widget-color);
-	}
-	&:active {
-		border: 2px solid var(--accentColor);
-	}
 }
 .body_window {
 	h5 {

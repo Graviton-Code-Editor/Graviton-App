@@ -1,7 +1,8 @@
 ## 🔝 Important changes
 
-## ✔ New
-* Keybinds configuration
+## ✔ Changes
+* Added Keybinds configuration
+* Removed files and directories are moved to the trash
 
 ## 😁 Important fixes
 

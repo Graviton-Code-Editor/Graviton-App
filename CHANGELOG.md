@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191228 - 2 [1.2.0]
+- Renamed some strings to match new "Hide menus" keybind
+- Renamed word "Remove" to "Send to trash" since it's now sent to trash
+- Added Sass compiling steps on building instructions
+- Included sass compling on Graviton building
+
 ### 191228 - 1 [1.2.0]
 - Removed files and directories now will be moved to trash intead of direct deletion
 - Better radio design

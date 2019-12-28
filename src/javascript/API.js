@@ -133,7 +133,7 @@ const context_menu_directory_options = {
     );
   },
   a3: "*line",
-  Remove: function() {
+  SendToTrash: function() {
     directories.removeFolderDialog(
       document.getElementById(
         document

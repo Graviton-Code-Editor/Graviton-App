@@ -67,10 +67,10 @@ const customizationSection = puffin.element(`
                 <span class="radio_dot"></span>
             </label>
             <label class="radio" onclick="graviton.changeExplorerPosition('right'); graviton.saveConfiguration();"  value="Right"> Right
-            <input type="radio" name="explorer_position"  ${
-                current_config.explorerPosition === "right" ? 'checked=""' : ""
-            }/>
-            <span class="radio_dot"></span>
+                <input type="radio" name="explorer_position"  ${
+                    current_config.explorerPosition === "right" ? 'checked=""' : ""
+                }/>
+                <span class="radio_dot"></span>
             </label>
             <div class="inline-widget">
             <gv-switch onclick="graviton.toggleNPMPanel(); graviton.saveConfiguration();" class="${

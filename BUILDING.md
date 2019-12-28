@@ -58,7 +58,9 @@ Rebuild some dependencies with:
 ### Testing
 
 In case you just wanna test it, run:
+> $ npm run compile:sass
 
+And then:
 > $ npm start
 
 ### Windows
