@@ -14,6 +14,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 @use './windows/settings';
 @use './windows/market';
 
+@use './dialogs/about';
+
 @use './components/button';
 @use './components/context';
 @use './components/dialogs';

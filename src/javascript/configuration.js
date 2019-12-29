@@ -372,7 +372,17 @@ document.addEventListener("graviton_loaded",function(){
       },{
         name:"Open Welcome",
         action:function(){
-         Welcome.open()
+          Welcome.open()
+        }
+      },{
+        name:"New Project",
+        action:function(){
+          Welcome.open("NewProject")
+        }
+      },{
+        name:"Open About",
+        action:function(){
+          graviton.dialogAbout()
         }
       },{
         name:"Go to line",

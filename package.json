@@ -43,7 +43,7 @@
     ]
   },
   "dependencies": {
-    "@mkenzo_8/puffin": "^0.1.17",
+    "@mkenzo_8/puffin": "^0.1.19",
     "appdata-path": "^1.0.0",
     "codemirror": "^5.49.2",
     "degit": "^2.2.2",

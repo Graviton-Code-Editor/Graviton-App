@@ -43,48 +43,56 @@ module.exports = {
       return
     }
     const openingAnimation = current_config.animationsPreferences=="activated"?`window_slide_up linear 0.1s;`:""
-    const all = document.createElement('div')
-    all.id = id + '_dialog'
-    all.setAttribute('myID', id)
-    all.innerHTML = `
-      <div myID="${
-  id
-}" class="background_window" onclick="closeDialog('${id}')"></div>`
-    const body_dialog = document.createElement('div')
-    body_dialog.setAttribute('class', 'dialog_body')
-    body_dialog.style =  `animation: ${openingAnimation}`
-    body_dialog.innerHTML = `
-      <h3 >
-        ${title}
-      </h3>
-      <div style="font-size:15px; min-height:15px; position:relative;">
-        <elastic-container related=self>
-        ${content}
-        </elastic-container>
-      </div>
-      <div class="buttons" style="display:flex;"></div>`
-    Object.keys(buttons).forEach(function (key, index) {
-      const button = document.createElement('button')
-      button.innerText = key
-      button.setAttribute('myID', id)
-      sleeping(1).then(() => {
-        if(buttons[key].click!==undefined)  button.addEventListener('click', buttons[key].click)
-        button.setAttribute('onclick', `closeDialog('${id}')`)
-      })
-      button.setAttribute(
-        'class',
-        buttons[key].important == true ? 'important' : ''
-      )
-      body_dialog.children[2].appendChild(button)
+
+    const buttonComponent = puffin.element(`
+      <button myID="{{id}}">{{value}}</button>
+    `,{
+      methods:[
+        function onClick(){
+          buttons[this.props.index].click()
+          closeDialog(this.props.id)
+        }
+      ],
+      props:["index","value","id"]
     })
-    all.appendChild(body_dialog)
+
+    let buttonsContent = "";
+
+    Object.keys(buttons).forEach(function (key, index) {
+      buttonsContent += `
+        <buttonComponent class="${buttons[key].important == true ? 'important' : ''}" index="${index}" id="${id}" value="${key}"/>
+      `
+    })
+
+    const dialogComponent = puffin.element(`
+      <div id="${id + '_dialog'}" myID="${id}">
+        <div myID="${id}" class="background_window" onclick="closeDialog('${id}')">
+          <div style="animation: ${openingAnimation}" class="dialog_body">
+            <h3 >${title}</h3>
+            <div style="font-size:15px; min-height:15px; position:relative;">
+              <elastic-container related="self">
+              ${content}
+              </elastic-container>
+            </div>
+            <div class="buttons" style="display:flex;">
+              ${buttonsContent}
+            </div>
+          </div>
+        </div>
+      </div>
+    `,{
+      components:{
+        buttonComponent
+      }
+    })
+    
+    puffin.render(dialogComponent,document.getElementById("windows"))
     document
       .getElementById('body')
       .setAttribute(
         'windows',
         Number(document.getElementById('body').getAttribute('windows')) + 1
       )
-    document.getElementById("windows").appendChild(all)
     this.close = function () {
       closeDialog(this.id)
     }

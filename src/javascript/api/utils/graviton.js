@@ -68,16 +68,16 @@ const graviton = {
         id: "about",
         title: "",
         content: `
-        <div style="display:flex; justify-content:center;  overflow:hidden; min-width:230px; ">
+        <div class="dialog_about" style="display:flex; justify-content:center;  overflow:hidden; min-width:230px; ">
           <div>
-            <img style="height:40px; margin-bottom:15px;" src="src/icons/logo.svg">
-            <br>
+            <img style="height:40px; margin-bottom:15px;" src="src/icons/logo.svg"/>
+            <br/>
             <span class="divider-2" style="margin:0px 30px; margin-bottom:20px; "></span>
             <div style=" left:17%;position:relative;text-align:left;margin-bottom:10px;">
-            <b> ${getTranslation("Version")}:</b> ${GravitonInfo.version} <br>
-            <b> ${getTranslation("Build")}: </b> ${GravitonInfo.date}<br>
-            <b> ${getTranslation("State")}: </b> ${GravitonInfo.state}<br>
-            <b> ${getTranslation("SO")}: </b> ${graviton.currentOS().name}
+            <b> ${getTranslation("Version")}:</b><p> ${GravitonInfo.version}</p> <br/>
+            <b> ${getTranslation("Build")}: </b><p> ${GravitonInfo.date}</p><br/>
+            <b> ${getTranslation("State")}: </b><p> ${GravitonInfo.state}</p><br/>
+            <b> ${getTranslation("SO")}: </b><p> ${graviton.currentOS().name}</p>
             </div>
           </div>
         </div>`,

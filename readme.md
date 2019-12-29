@@ -82,6 +82,10 @@ Please consider revising and updating your languages in case they are missing so
 * Old logo by Saúl Blanco
 * Advices from León Alvarez
 
+🤗 Useful plugins
+* [GitPlus](https://github.com/marc2332/GitPlus): adds Git support to Graviton
+
+[Add mine!](https://github.com/marc2332/GitPlus/issues/new)
 
 🤩 Useful libraries 
 ---

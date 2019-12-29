@@ -2,7 +2,14 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191229 - 1 [1.2.0]
+- Using PuffinJS to render the dialogs
+- Added "New project" and "Open About" commands to Command Launcher
+- Keybinds cards are now reactive
+- Added "Cool plugins" section on readme
+
 ### 191228 - 2 [1.2.0]
+- Splitted some Sass code
 - Renamed some strings to match new "Hide menus" keybind
 - Renamed word "Remove" to "Send to trash" since it's now sent to trash
 - Added Sass compiling steps on building instructions

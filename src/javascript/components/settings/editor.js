@@ -25,7 +25,16 @@ const shortCutButton = puffin.element(`
                 }
             })
         }
-    ]
+    ],
+    events:{
+        mounted(target){
+            GravitonState.on('KeyShortCutsChanged',function(changedBinds){
+                target.props.combo = changedBinds.filter(function(bind){
+                    return bind.action == target.getAttribute("action")
+                })[0].combo
+            })
+        }
+    }
 })
 
 
@@ -36,15 +45,6 @@ graviton.getConfiguration().shortCuts.map(function(sh){
         <shortCutButton action="${sh.action}" combo="${sh.combo}"/>
     `
 })
-
-const shortCutList = puffin.element(`
-    <div>${content}</div>
-`,{
-    components:{
-        shortCutButton
-    }
-})
-
 
 const editorSection = puffin.element(`
     <div>
@@ -75,12 +75,12 @@ const editorSection = puffin.element(`
         </gv-blockcontent>
         <gv-blocktitle>${getTranslation("KeyBindings")}</gv-blocktitle>
         <gv-blockcontent>
-            <shortCutList/>
+        <div>${content}</div>
         </gv-blockcontent>
     </div>
 `,{
     components:{
-        shortCutList
+        shortCutButton
     }
 })
 
