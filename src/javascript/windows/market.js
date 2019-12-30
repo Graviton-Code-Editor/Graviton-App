@@ -487,7 +487,9 @@ module.exports = {
       })();
       const processLoader = document.getElementById(`plugin_process${name}`);
       const degit = require("degit");
-      const emitter = degit(plugin.repo.git.full_name);
+      const emitter = degit(plugin.repo.git.full_name,{
+        cache: false  
+      });
       processLoader.setValue("15");
       processLoader.setText(getTranslation("Process.DownloadingSource"));
       emitter.on("info", info => {});

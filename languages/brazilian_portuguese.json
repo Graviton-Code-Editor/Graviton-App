@@ -149,7 +149,7 @@
 	"SystemAccentColor.Error2":"Utilizar a cor de destaque do sistema pode não funcionar muito bem no tema atual.",
 	"TelegramChannel":"Canal do Telegram",
 	"Settings-Advanced-Developer-Tools-text2":"Abrir a pasta de configuração",
-	"ExplorerPosition":"Posição do Explorador de Arquivos"
+	"ExplorerPosition":"Posição do Explorador de Arquivos",
 	"Screenshots": "Screenshots",
     	"NoRecentProjects":"Nenhum projeto recente.",
     	"Miscellaneous":"Diversos",
@@ -157,14 +157,14 @@
     	"Process.DownloadingSource":"Baixando os arquivos...",
     	"Process.CheckingDependencies":"Verificando as dependências...",
     	"Process.InstallingDependencies":"Instalando as dependências...",
-   	"Process.Completed":"Concluído!",
-   	"Hide":"Ocultar",
-    	"Show":"Mostrar",
-    	"NPMPanel":"Painel NPM",
-    	"Select":"Selecione",
-    	"By":"Por",
-    	"Suggestions":"Sugestões",
-   	"KeyBindings":"Teclas de Atalho"
+		"Process.Completed":"Concluído!",
+		"Hide":"Ocultar",
+		"Show":"Mostrar",
+		"NPMPanel":"Painel NPM",
+		"Select":"Selecione",
+		"By":"Por",
+		"Suggestions":"Sugestões",
+		"KeyBindings":"Teclas de Atalho"
 	}
 	
 }
