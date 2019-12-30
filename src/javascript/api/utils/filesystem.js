@@ -61,10 +61,8 @@ function saveFileAs() {
   }
   
   function saveFile() {
-    const { dialog } = remote;
-    if (graviton.getCurrentEditor() === null) return;
-    if (graviton.getCurrentEditor().editor === undefined) return;
-    fs.writeFile(filepath, editor.getValue())
+    if(graviton.getCurrentEditor() != null && graviton.getCurrentEditorInstance() != null){
+      fs.writeFile(filepath, graviton.getCurrentEditor().execute("getValue"))
       .then(() => {
         document.getElementById(editingTab).setAttribute("file_status", "saved");
         document
@@ -87,6 +85,7 @@ function saveFileAs() {
       .catch(err => {
         console.err(err);
       });
+    }
   }
 
   module.exports = { saveFile,saveFileAs, openFile, openFolder}

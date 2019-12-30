@@ -392,7 +392,7 @@ head {
 		}
 		>.g_editors_editors {
 			flex: auto;
-			overflow: auto;
+			overflow: hidden;
 			height: 90%;
 			>.code-space {
 				position: relative;

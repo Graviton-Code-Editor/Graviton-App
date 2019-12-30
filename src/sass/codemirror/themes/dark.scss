@@ -119,6 +119,7 @@
 	}
 	.CodeMirror-activeline-background {
 		background: rgba(255,255,255,0.1);
+		outline:1px solid rgb(158, 158, 158);
 	}
 	.CodeMirror-matchingbracket {
 		outline: 1px solid rgb(241, 187, 37) !important;
@@ -144,25 +145,26 @@
 	.cm-tab {
 		border-left: 1px solid rgb(209, 209, 209);
 	}
-}
-.cm-negative {
-	color: rgb(255, 0, 119);
-}
-.cm-positive {
-	color: rgb(178, 49, 211);
-}
-.cm-header {
-	font-weight: bold;
-}
-.cm-strong {
-	font-weight: bold;
-}
-.cm-em {
-	font-style: italic;
-}
-.cm-link {
-	text-decoration: underline;
-}
-.cm-strikethrough {
-	text-decoration: line-through;
+	.cm-negative {
+		color: rgb(255, 0, 119);
+	}
+	.cm-positive {
+		color: rgb(178, 49, 211);
+	}
+	.cm-header {
+		font-weight: bold;
+	}
+	.cm-strong {
+		font-weight: bold;
+	}
+	.cm-em {
+		font-style: italic;
+	}
+	.cm-link {
+		text-decoration: underline;
+	}
+	.cm-strikethrough {
+		text-decoration: line-through;
+	}
+	
 }

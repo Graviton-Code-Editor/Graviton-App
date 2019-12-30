@@ -154,7 +154,12 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
                     }
                   }
                 );
-              editor.refresh();
+              if(graviton.isEditorAvailable()){
+                if(graviton.getEditorClient() == "codemirror"){
+                  editor.refresh();
+                }
+              }
+              
             })();
           }
           return;
@@ -205,7 +210,7 @@ function Tab({ id = Math.random().toString(), type, name, path, data }) {
 }
 function closeTab(tab_id, fromWarn) {
   const working_tab = document.getElementById(tab_id);
-  const tab_screen = working_tab.getAttribute("screen");
+  const tabScreen = working_tab.getAttribute("screen");
   if (working_tab.getAttribute("file_status") == "saved" || fromWarn) {
     for (i = 0; i < tabs.length; i++) {
       const tab = tabs[i];
@@ -229,7 +234,7 @@ function closeTab(tab_id, fromWarn) {
             .call(document.getElementsByClassName("selected"))
             .filter(tab => tab.getAttribute("elementType") == "tab");
           const screen_index = editor_screens.filter(screen => {
-            screen.id == tab_screen;
+            screen.id == tabScreen;
           })[0];
           if (screen_index == editor_screens.length) {
             new_selected_tab = opened_tabs.filter(tab => {
@@ -290,6 +295,14 @@ function loadTab(incomingTab) {
         loopedTab.classList.remove("selected")
       }
     });
+    for (i = 0; i < editors.length; i++) {
+      if (
+        editors[i].screen == tabsScreen &&
+        document.getElementById(editors[i].id) != null
+      ) {
+        document.getElementById(editors[i].id).style.display = 'none'
+      }
+    }
     incomingTab.classList.add("selected");
     filepath = incomingTab.getAttribute("longpath");
     graviton.loadEditor({
@@ -366,7 +379,7 @@ function hideScreenDefaults(screenId){
 
 function showScreenDefaults(screenId){
   document.getElementById(screenId).children[1].children[0].style ="visibility:visible; display:block;"; //Make visible default text
-  document.getElementById(screenId).children[2].innerHTML = ""; //Hide status bar content
+  document.getElementById(screenId).children[2].innerHTML = ""; //Remove it's status bar 'scontent
 }
 
 module.exports = { Tab, loadTab, closeTab }

@@ -1,107 +1,69 @@
+function createInstance(clientName = "codemirror", clientConf){
+
+  const resultInstance = graviton.editorClients.filter(function(instance){
+    return instance.name == clientName
+  })[0]
+  return {
+    instance:resultInstance,
+    editor:resultInstance.onLoadTab(clientConf)
+  }
+
+}
+
+function hideEditors(){
+  for (i = 0; i < editors.length; i++) {
+    if (
+      editors[i].screen == screen &&
+      document.getElementById(editors[i].id) != null
+    ) {
+      document.getElementById(editors[i].id).style.display = 'none'
+    }
+  }
+}
+
+
+function editorClient(conf){
+  graviton.editorClients.push(conf)
+}
+
 module.exports = {
-  loadEditor: ({ dir, type, data, screen }, callback) => {
+  editorClient:editorClient,
+  loadEditor({ dir, type, data, screen }, callback){
     if (
       document.getElementById(dir.replace(/\\/g, '') + '_editor') == undefined
     ) {
       switch (type) {
         case 'text':
-          const text_container = document.createElement('div')
-          text_container.classList = 'code-space'
-          text_container.id = `${dir.replace(/\\/g, '')}_editor`
-          text_container.setAttribute('path', dir)
+          hideEditors()
+          const textContainer = document.createElement('div')
+          textContainer.classList = 'code-space'
+          textContainer.id = `${dir.replace(/\\/g, '')}_editor`
+          textContainer.setAttribute('path', dir)
           document
             .getElementById(screen)
-            .children[1].appendChild(text_container)
-          let codemirror = CodeMirror(
-            document.getElementById(text_container.id),
-            {
-              value: data,
-              mode: 'text/plain',
-              htmlMode: false,
-              theme:
-                themeObject['highlight'] != undefined
-                  ? themeObject['highlight']
-                  : 'default',
-              lineNumbers: true,
-              autoCloseTags: true,
-              indentWithTabs: true,
-              indentUnit: 2,
-              tabSize: 2,
-              id: dir.replace(/\\/g, '') + '_editor',
-              screen: screen,
-              styleActiveLine: { nonEmpty: true },
-              gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
-              lineWrapping:
-                current_config['lineWrappingPreferences'] == 'activated',
-              autoCloseBrackets: true,
-              matchBrackets: true,
-              matchTags: { bothTags: true },
-              styleActiveLine: { nonEmpty: true },
-              styleActiveSelected: true,
-              foldGutter:true,
-              gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
-            }
-          )
-          codemirror.focus()
-          const new_editor_text = {
-            object: text_container,
-            id: text_container.id,
-            editor: codemirror,
-            path: dir,
-            screen: screen,
-            type: type
-          }
-          text_container.focus()
-          elasticContainer.append(
-            text_container.children[0].children[
-              Number(text_container.children[0].children.length - 1)
-            ]
-          )
-          editors.push(new_editor_text)
-          if (g_highlighting == 'activated') updateCodeMode(codemirror, dir)
-          for (i = 0; i < editors.length; i++) {
-            if (
-              editors[i].screen == screen &&
-              document.getElementById(editors[i].id) != null
-            ) {
-              document.getElementById(editors[i].id).style.display = 'none'
-            }
-          }
-          text_container.addEventListener('wheel', function (e) {
-            if (e.ctrlKey) {
-              if (e.deltaY < 0) {
-                graviton.setEditorFontSize(
-                  `${Number(current_config.fontSizeEditor) + 1}`
-                )
-              } else if (e.deltaY > 0) {
-                graviton.setEditorFontSize(
-                  `${Number(current_config.fontSizeEditor) - 1}`
-                )
+            .children[1].appendChild(textContainer)
+          const {instance , editor} = createInstance(graviton.getEditorClient(),{
+            dir:dir,
+            type:type,
+            data:data,
+            screen:screen,
+            textContainer:textContainer
+          })
+          editors.push({
+            id:textContainer.id,
+            screen:screen,
+            editor:editor,
+            instance:instance,
+            execute(name,data){
+              if(instance[name] != undefined){
+                return instance[name](data)
               }
+              return false
             }
           })
-          editorID = new_editor_text.id
-          editor = new_editor_text.editor
-          text_container.style.display = 'block'
-          codemirror.on('cursorActivity', function (cm) {
-            editor = cm
-            editorID = cm.options.id
-            for (let b = 0; b < tabs.length; b++) {
-              if (
-                tabs[b].getAttribute('screen') == cm.options.screen &&
-                tabs[b].classList.contains('selected')
-              ) {
-                editingTab = tabs[b].id
-                filepath = tabs[b].getAttribute('longpath')
-              }
-            }
-            graviton.closeDropmenus()
-            graviton.focusScreen(cm.options.screen)
-          })
-          graviton.focusScreen(screen)
           break
         case 'font':
-          editor = undefined
+          graviton.setCurrentEditor(null)
           const font_container = document.createElement('div')
           font_container.classList = 'code-space'
           font_container.setAttribute('id', `${dir.replace(/\\/g, '')}_editor`)
@@ -118,14 +80,7 @@ module.exports = {
             screen: screen,
             type: 'font'
           }
-          for (i = 0; i < editors.length; i++) {
-            if (
-              editors[i].screen == screen &&
-              document.getElementById(editors[i].id) != null
-            ) {
-              document.getElementById(editors[i].id).style.display = 'none'
-            }
-          }
+          hideEditors()
           editors.push(new_editor_font)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -134,7 +89,7 @@ module.exports = {
           graviton.focusScreen(screen)
           break
         case 'image':
-          editor = undefined
+          graviton.setCurrentEditor(null)
           const image_container = document.createElement('div')
           image_container.classList = 'code-space'
           image_container.setAttribute(
@@ -153,14 +108,7 @@ module.exports = {
             screen: screen,
             type: 'image'
           }
-          for (i = 0; i < editors.length; i++) {
-            if (
-              editors[i].screen == screen &&
-              document.getElementById(editors[i].id) != null
-            ) {
-              document.getElementById(editors[i].id).style.display = 'none'
-            }
-          }
+          hideEditors()
           editors.push(new_editor_image)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -169,7 +117,7 @@ module.exports = {
           graviton.focusScreen(screen)
           break
         case 'free':
-          editor = undefined
+          graviton.setCurrentEditor(null)
           const free_id = 'free_tab' + Math.random()
           const free_container = document.createElement('div')
           free_container.classList = 'code-space'
@@ -186,14 +134,7 @@ module.exports = {
             screen: screen,
             type: 'free'
           }
-          for (i = 0; i < editors.length; i++) {
-            if (
-              editors[i].screen == screen &&
-              document.getElementById(editors[i].id) != null
-            ) {
-              document.getElementById(editors[i].id).style.display = 'none'
-            }
-          }
+          hideEditors()
           editors.push(new_editor_free)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -205,12 +146,7 @@ module.exports = {
       if (callback != undefined) callback()
     } else {
       for (i = 0; i < editors.length; i++) {
-        if (
-          editors[i].screen == screen &&
-          document.getElementById(editors[i].id) != null
-        ) {
-          document.getElementById(editors[i].id).style.display = 'none'
-        }
+        hideEditors()
         if (editors[i].id == dir.replace(/\\/g, '') + '_editor') {
           if (editors[i].editor != undefined) {
             // Editors

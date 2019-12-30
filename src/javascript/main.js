@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191229",
+  date: "191230",
   version: "1.3.0",
   state: "Beta"
 }
@@ -60,6 +60,16 @@ graviton.loadEditor = require(path.join(
   "api",
   "editors.js"
 )).loadEditor
+
+graviton.editorClient = require(path.join(
+  __dirname,
+  "src",
+  "javascript",
+  "api",
+  "editors.js"
+)).editorClient
+
+
 
 
 graviton.closeCommander = require(path.join(
@@ -653,4 +663,107 @@ g_window.on("focus", function() {
   if (graviton.currentOS().codename === "darwin") {
     document.getElementById("controls_macOS").classList.remove("blur")
   }
+})
+
+
+
+
+document.addEventListener("graviton_loaded",function(){
+  new graviton.editorClient({
+    name: "codemirror",
+    cursorActivity(func){
+      editor.on('cursorActivity',func)
+    },
+    getCursor(){
+      return editor.getCursor()
+    },
+    getValue(){
+      return editor.getValue()
+    },
+    goToLine({line,char}){
+      editor.scrollIntoView({line:line, char:char}, 300)
+    },
+    onLoadTab(clientConf){
+          let codemirror = CodeMirror(
+            document.getElementById(clientConf.textContainer.id),
+            {
+              value: clientConf.data,
+              mode: 'text/plain',
+              htmlMode: false,
+              theme:
+                themeObject['highlight'] != undefined
+                  ? themeObject['highlight']
+                  : 'default',
+              lineNumbers: true,
+              autoCloseTags: true,
+              indentWithTabs: true,
+              indentUnit: 2,
+              tabSize: 2,
+              id: clientConf.dir.replace(/\\/g, '') + '_editor',
+              screen: clientConf.screen,
+              styleActiveLine: { nonEmpty: true },
+              gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter'],
+              lineWrapping:
+                current_config['lineWrappingPreferences'] == 'activated',
+              autoCloseBrackets: true,
+              matchBrackets: true,
+              matchTags: { bothTags: true },
+              styleActiveLine: { nonEmpty: true },
+              styleActiveSelected: true,
+              foldGutter:true,
+              gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+            }
+          )
+          codemirror.focus()
+          const new_editor_text = {
+            object: clientConf.textContainer,
+            id: clientConf.textContainer.id,
+            editor: codemirror,
+            path: clientConf.dir,
+            screen: clientConf.screen,
+            type: clientConf.type
+          }
+          clientConf.textContainer.focus()
+          elasticContainer.append(
+            clientConf.textContainer.children[0].children[
+              Number(clientConf.textContainer.children[0].children.length - 1)
+            ]
+          )
+          if (g_highlighting == 'activated') updateCodeMode(codemirror, clientConf.dir)
+          clientConf.textContainer.addEventListener('wheel', function (e) {
+            if (e.ctrlKey) {
+              if (e.deltaY < 0) {
+                graviton.setEditorFontSize(
+                  `${Number(current_config.fontSizeEditor) + 1}`
+                )
+              } else if (e.deltaY > 0) {
+                graviton.setEditorFontSize(
+                  `${Number(current_config.fontSizeEditor) - 1}`
+                )
+              }
+            }
+          })
+          editorID = new_editor_text.id
+          editor = new_editor_text.editor
+          clientConf.textContainer.style.display = 'block'
+          codemirror.on('cursorActivity', function (cm) {
+            editor = cm
+            editorID = cm.options.id
+            for (let b = 0; b < tabs.length; b++) {
+              if (
+                tabs[b].getAttribute('screen') == cm.options.screen &&
+                tabs[b].classList.contains('selected')
+              ) {
+                editingTab = tabs[b].id
+                filepath = tabs[b].getAttribute('longpath')
+              }
+            }
+            graviton.closeDropmenus()
+            graviton.focusScreen(cm.options.screen)
+          })
+          graviton.focusScreen(screen)
+          return codemirror
+    }
+  })
+  
 })

@@ -15,9 +15,26 @@ const graviton = {
         path: filepath
       };
     },
+    setCurrentEditor(value){
+      editor = value
+    },
     getCurrentEditor: function() {
       if (editors.length == 0) return null;
       return editors.find(item => item.id === editorID);
+    },
+    getCurrentEditorInstance(){
+      return editor
+    },
+    isEditorAvailable: function() {
+      return editor != null
+    },
+    getEditorClient(){
+      return GravitonState.data.currentConfig.editorClient 
+    },
+    setEditorClient(){
+      GravitonState.data.currentConfig.editorClient = "monaco"
+
+      GravitonState.triggerChange()
     },
     getCurrentDirectory: function() {
       if (dir_path == undefined) return null;
@@ -544,7 +561,8 @@ const graviton = {
       graviton.closeCommander();
       document.getElementById("windows").innerHTML = "";
       document.getElementById('body').setAttribute('windows',0)
-    }
+    },
+    editorClients:[]
   };
   
   

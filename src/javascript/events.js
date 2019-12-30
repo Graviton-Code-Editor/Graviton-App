@@ -14,9 +14,9 @@ module.exports = {
         });
     },
     tabLoaded:function(tabElement){
-        return new CustomEvent("tab_created", {
+        return new CustomEvent("tab_loaded", {
             detail: {
-                tab: tabElement
+                screen: tabElement.getAttribute("screen")
             }
         });
     },

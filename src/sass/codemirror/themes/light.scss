@@ -7,11 +7,15 @@
   The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
 */
 
+
 .cm-s-lightui.CodeMirror {
 	color: #999;
 	background-color: var(--editorBackgroundColor);
 }
 .cm-s-lightui {
+	pre{
+		color:gray;
+	}
 	div.CodeMirror-selected {
 		background: rgba(78, 153, 252, 0.281);
 		border-radius: 3px;
@@ -128,10 +132,11 @@
 	}
 	.CodeMirror-activeline-background {
 		background: rgba(120, 178, 253, 0.281);
+		outline:1px solid gray;
 	}
-	span.CodeMirror-matchingbracket {
-		outline: 1px solid grey;
-		color: inherit;
+	.CodeMirror-matchingbracket {
+		color:red;
+		outline: 1px solid gray;
 	}
 	.CodeMirror-foldmarker {
 		color: black;

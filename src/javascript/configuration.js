@@ -170,6 +170,7 @@ graviton.loadConfiguration = function(){
       if (localConfig[key] != undefined && current_config[key] != undefined && key != "shortCuts") {
         current_config[key] = localConfig[key];
       } else if(key == "shortCuts"){
+        if(localConfig.shortCuts == undefined) localConfig.shortCuts = current_config.shortCuts
         localConfig.shortCuts = localConfig.shortCuts.filter(a=>Boolean(a))
         current_config.shortCuts.forEach(function(bind){
           bind.combo = localConfig.shortCuts.filter(function(bd){
@@ -251,20 +252,20 @@ document.addEventListener("graviton_loaded",function(){
       counter.show();
       langController.show();
       counter.setText(
-        editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+        graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1)
       );
       counter.setHint(
-        `Line ${editor.getCursor().line + 1} , Char ${Number(
-          editor.getCursor().ch + 1
+        `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
+          graviton.getCurrentEditor().execute("getCursor").ch + 1
         )}`
       );
-      editor.on("cursorActivity", function(a) {
+      graviton.getCurrentEditor().execute("cursorActivity", function(a) {
         counter.setText(
-          editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1)
+          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1)
         );
         counter.setHint(
-          `Line ${editor.getCursor().line + 1} , Char ${Number(
-            editor.getCursor().ch + 1
+          `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
+            graviton.getCurrentEditor().execute("getCursor").ch + 1
           )}`
         );
         counter.show();
@@ -274,12 +275,12 @@ document.addEventListener("graviton_loaded",function(){
       text: graviton.getLanguage(),
       hint: `Current: ${graviton.getLanguage()}`
     });
-    if (editor != undefined) {
+    if (graviton.getCurrentEditorInstance() != undefined) {
       var counter = new Control({
         text:
-          editor.getCursor().line + 1 + "/" + Number(editor.getCursor().ch + 1),
-        hint: `Line ${editor.getCursor().line + 1} , Char ${Number(
-          editor.getCursor().ch + 1
+          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1),
+        hint: `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
+          graviton.getCurrentEditor().execute("getCursor").ch + 1
         )}`
       });
       refreshStats();
@@ -395,22 +396,22 @@ document.addEventListener("graviton_loaded",function(){
             onEnter(lineNumber){
               if(editor != null){
                 if(lineNumber < 0){
-                  editor.scrollIntoView({line:0, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:0, char:0})
                 }else if(lineNumber > editor.lineCount()){
-                  editor.scrollIntoView({line:editor.lineCount()-1, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:editor.lineCount()-1, char:0}, 300)
                 }else{
-                  editor.scrollIntoView({line:lineNumber, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:lineNumber, char:0}, 300)
                 }
               }
             },
             onWriting(lineNumber){
               if(editor != null ){
                 if(lineNumber < 0){
-                  editor.scrollIntoView({line:0, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:0, char:0}, 300)
                 }else if(lineNumber > editor.lineCount()){
-                  editor.scrollIntoView({line:editor.lineCount()-1, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:editor.lineCount()-1, char:0}, 300)
                 }else{
-                  editor.scrollIntoView({line:lineNumber, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:lineNumber, char:0}, 300)
                 }
               }
             }

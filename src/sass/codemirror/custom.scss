@@ -1,27 +1,5 @@
-/* BASICS */
-/* PADDING */
-/* GUTTER */
-/* CURSOR */
-/* Shown when moving in bi-directional text */
-@-moz-keyframes "blink" {
-	0% {
-	}
-	50% {
-		background-color: transparent;
-	}
-	100% {
-	}
-}
-@-webkit-keyframes "blink" {
-	0% {
-	}
-	50% {
-		background-color: transparent;
-	}
-	100% {
-	}
-}
-@keyframes "blink" {
+
+@keyframes blink {
 	0% {
 	}
 	50% {
@@ -44,7 +22,7 @@
 /* Hide the cursor when printing */
 /* See issue #2901 */
 /* Help users use markselection to safely style text background */
-@keyframes "show_down" {
+@keyframes show_down {
 	from {
 		transform: translateY(-10px);
 		opacity: 0.7;
@@ -259,13 +237,11 @@
 .CodeMirror-composing {
 	border-bottom: 2px solid;
 }
-div.CodeMirror {
-	span.CodeMirror-matchingbracket {
-		color: #0b0;
-	}
-	span.CodeMirror-nonmatchingbracket {
-		color: #a22;
-	}
+CodeMirror-matchingbracket {
+	color: #0b0;
+}
+CodeMirror-nonmatchingbracket {
+	color: #a22;
 }
 .CodeMirror-matchingtag {
 	background: rgba(255, 150, 0, 0.3);

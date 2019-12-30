@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191230 - 1 [1.2.0]
+- Fixed: shortcuts weren't created on start 
+- Allow to use a different editor instead of Codemirror
+
 ### 191229 - 1 [1.2.0]
 - Using PuffinJS to render the dialogs
 - Added "New project" and "Open About" commands to Command Launcher
