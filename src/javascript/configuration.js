@@ -291,6 +291,11 @@ document.addEventListener("graviton_loaded",function(){
       counter.hide();
       refreshStats();
     }
+    if(graviton.isEditorAvailable()){
+      graviton.getCurrentEditor().execute("onCursorActivity",()=>{
+        refreshStats()
+      })
+    }
     document.addEventListener("tab_loaded", e => {
       refreshStats(e.detail.screen);
     });
@@ -298,7 +303,12 @@ document.addEventListener("graviton_loaded",function(){
       refreshStats(e.detail.screen);
     });
     document.addEventListener("tab_created", () => {
-      refreshStats();
+      if(graviton.isEditorAvailable()){
+        graviton.getCurrentEditor().execute("onCursorActivity",()=>{
+          refreshStats()
+        })
+      }
+      refreshStats()
     });
   });
 

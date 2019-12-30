@@ -91,7 +91,7 @@ const graviton = {
             <br/>
             <span class="divider-2" style="margin:0px 30px; margin-bottom:20px; "></span>
             <div style=" left:17%;position:relative;text-align:left;margin-bottom:10px;">
-            <b> ${getTranslation("Version")}:</b><p> ${GravitonInfo.version}</p> <br/>
+            <b> ${getTranslation("Version")}: </b><p> ${GravitonInfo.version}</p> <br/>
             <b> ${getTranslation("Build")}: </b><p> ${GravitonInfo.date}</p><br/>
             <b> ${getTranslation("State")}: </b><p> ${GravitonInfo.state}</p><br/>
             <b> ${getTranslation("SO")}: </b><p> ${graviton.currentOS().name}</p>

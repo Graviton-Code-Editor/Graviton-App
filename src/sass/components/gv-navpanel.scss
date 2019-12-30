@@ -58,10 +58,13 @@ gv-navpanel.side-menu {
 		font-size: 30px;
 		margin-bottom: 20px;
 		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	gv-navbar {
-		width: 10%;
-		min-width: 175px;
+		width: auto;
+		max-width: 250px;
+		min-width: 180px;
 		padding: 30px 20px;
 		display: block;
 		box-shadow: 3px 0px 5px var(--shadows);

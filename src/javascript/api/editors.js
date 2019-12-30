@@ -10,7 +10,7 @@ function createInstance(clientName = "codemirror", clientConf){
 
 }
 
-function hideEditors(){
+function hideEditors(screen){
   for (i = 0; i < editors.length; i++) {
     if (
       editors[i].screen == screen &&
@@ -34,7 +34,7 @@ module.exports = {
     ) {
       switch (type) {
         case 'text':
-          hideEditors()
+          hideEditors(screen)
           const textContainer = document.createElement('div')
           textContainer.classList = 'code-space'
           textContainer.id = `${dir.replace(/\\/g, '')}_editor`
@@ -80,7 +80,7 @@ module.exports = {
             screen: screen,
             type: 'font'
           }
-          hideEditors()
+          hideEditors(screen)
           editors.push(new_editor_font)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -108,7 +108,7 @@ module.exports = {
             screen: screen,
             type: 'image'
           }
-          hideEditors()
+          hideEditors(screen)
           editors.push(new_editor_image)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -134,7 +134,7 @@ module.exports = {
             screen: screen,
             type: 'free'
           }
-          hideEditors()
+          hideEditors(screen)
           editors.push(new_editor_free)
           document.getElementById(
             dir.replace(/\\/g, '') + '_editor'
@@ -145,284 +145,19 @@ module.exports = {
       }
       if (callback != undefined) callback()
     } else {
-      for (i = 0; i < editors.length; i++) {
-        hideEditors()
-        if (editors[i].id == dir.replace(/\\/g, '') + '_editor') {
-          if (editors[i].editor != undefined) {
-            // Editors
-            editor = editors[i].editor
+      hideEditors(screen)
+      editors.map(function(et){
+        if (et.id == dir.replace(/\\/g, '') + '_editor') {
+          if (et.editor != undefined) {
+            editor = et.editor
           } else {
-            editor = undefined
+            editor = null
           }
-          editorID = editors[i].id
+          editorID = et.id
           document.getElementById(editorID).style.display = 'block'
           if (editor != undefined) editor.refresh()
         }
         if (callback != undefined) callback(editor)
-      }
-    }
-
-    function filterIt (arr, searchKey, cb) {
-      let list = []
-      for (i = 0; i < arr.length; i++) {
-        const curr = arr[i]
-        Object.keys(curr).some(function (key) {
-          if (typeof curr[key] === 'string' && curr[key].includes(searchKey)) {
-            list.push(curr)
-          }
-        })
-      }
-      return cb(list)
-    }
-    if (editor != undefined) {
-      editor.on('change', function () {
-        const close_icon = document.getElementById(editingTab)
-        close_icon.setAttribute('file_status', 'unsaved')
-        close_icon.children[1].innerHTML = icons['unsaved']
-        document
-          .getElementById(editingTab)
-          .setAttribute('data', editor.getValue())
-        if (current_config['autoCompletionPreferences'] == 'activated') {
-          function checkVariables(text) {
-            let _variables = []
-            for (i = 0; i < text.length; i++) {
-              switch (editor.getMode().name) {
-                case "javascript":
-                  switch (text[i]) {
-                    case "let":
-                    case "var":
-                    case "const":
-                      _variables.push({
-                        _name: text[i + 1]
-                      })
-                      break
-                    case "{":
-                      _variables.push({
-                        _name: text[i + 1]
-                      })
-                      break
-                  }
-                  break
-                case "java":
-                  switch (text[i]) {
-                    case "int":
-                    case "char":
-                    case "float":
-                      _variables.push({
-                        _name: text[i + 1]
-                      })
-                      break
-                  }
-                  break
-              }
-            }
-            return _variables
-          }
-          elasticContainer.append(document.getElementById('context'))
-          const cursorPos = editor.cursorCoords()
-          const A1 = editor.getCursor().line
-          const A2 = editor.getCursor().ch
-          const B1 = editor.findWordAt({
-            line: A1,
-            ch: A2
-          }).anchor.ch
-          const B2 = editor.findWordAt({
-            line: A1,
-            ch: A2
-          }).head.ch
-          const lastWord = editor.getRange(
-            {
-              line: A1,
-              ch: B1
-            },
-            {
-              line: A1,
-              ch: B2
-            }
-          )
-          const context = document.getElementById('context')
-          if (context.style.display == 'block') return
-          const selectedLangNum = (function () {
-            for (i = 0; i < dictionary.length; i++) {
-              if (
-                dictionary[i].name ==
-                path
-                  .basename(graviton.getCurrentFile().path)
-                  .split('.')
-                  .pop()
-              ) {
-                return i
-              }
-            }
-          })()
-          if (selectedLangNum == undefined) return
-          let dic = dictionary[selectedLangNum].list
-          const vars = checkVariables(
-            editor
-              .getValue()
-              .replace(/(\r\n|\n|\r)/gm, ' ')
-              .split (
-                /\s|(\()([\w\s+!?="`[<>,\/*':&.`$;_-{}]+)(\))|\s|(\<)([\w\s!?="`[,\/*()':&.;_-{}]+)(\>)|\s|(\()([\w\s!?="<>`[,'+:&.;_-{}]+)(\))\s|(\B\$)(\w+)|\s(\/\*)([\w\s!?()="<>`[':.;_-{}]+)(\*\/)|("[\w\s!?():=`.;_-{}]+")\s|(%%)([\w\s!?()="+<>`[\/'*,$.;_-{}]+)(%%)|("[\w\s!?()='.`;_-{}]+")/g
-              )
-              .filter(Boolean)
-          )
-          dic = dic.concat(vars)
-          filterIt(dic, lastWord, function (filterResult) {
-            if (filterResult.length > 0 && lastWord.length >= 3) {
-              let contextOptions
-              for ( i = 0; i < filterResult.length; i++) {
-                const id = Math.random()
-                contextOptions += `
-                <div class=option>
-                  <button id=${id}  >
-                    ${filterResult[i]._name}
-                  </button>
-                  <p></p>
-                </div>`
-                contextOptions = contextOptions.replace('undefined', '')
-                context.innerHTML = contextOptions
-                sleeping(1).then(() => {
-                  if (document.getElementById(id) == null) return
-                  document.getElementById(id).onclick = function () {
-                    const A1 = editor.getCursor().line
-                    const A2 = editor.getCursor().ch
-                    const B1 = editor.findWordAt({
-                      line: A1,
-                      ch: A2
-                    }).anchor.ch
-                    const B2 = editor.findWordAt({
-                      line: A1,
-                      ch: A2
-                    }).head.ch
-                    const selected = this.innerText
-                    editor.replaceRange(
-                      selected,
-                      {
-                        line: A1,
-                        ch: B1
-                      },
-                      {
-                        line: A1,
-                        ch: B2
-                      }
-                    )
-                    context.parentElement.style.display = 'none'
-                    context.innerHTML = ''
-                  }
-                })
-              }
-              context.parentElement.style = `top:${cursorPos.top +
-                30}px; left:${cursorPos.left}px; display:block;`
-              if (cursorPos.top < window.innerHeight / 2) {
-              } // Cursor is above the mid height
-              context.children[0].classList.add('hover')
-            } else if (filterResult.length === 0 || lastWord.length < 3) {
-              context.parentElement.style.display = 'none'
-              context.innerHTML = ''
-            }
-          })
-        }
-      })
-      editor.on('keydown', function (editor, e) {
-        if (
-          document.getElementById('context').parentElement.style.display !=
-          'none'
-        ) {
-          editor.setOption('extraKeys', {
-            Up: function () {
-              return CodeMirror.PASS
-            },
-            Down: function () {
-              return CodeMirror.PASS
-            },
-            Enter: function () {
-              return CodeMirror.PASS
-            },
-            Tab: function () {
-              return CodeMirror.PASS
-            }
-          })
-        } else {
-          editor.setOption('extraKeys', {
-            Up: 'goLineUp',
-            Down: 'goLineDown'
-          })
-        }
-        const context = document.getElementById('context')
-        const childs = context.querySelectorAll('.option')
-        for (i = 0; i < childs.length; i++) {
-          if (childs[i].classList.contains('hover')) {
-            if (
-              e.keyCode === 40 &&
-              i != childs.length - 1 &&
-              context.style.display != 'none'
-            ) {
-              // DOWN
-              childs[i].classList.remove('hover')
-              childs[i + 1].classList.add('hover')
-              context.scrollBy(0, 30)
-              return false
-            } else if (
-              e.keyCode === 38 &&
-              i != 0 &&
-              context.style.display != 'none'
-            ) {
-              // UP
-              childs[i].classList.remove('hover')
-              childs[i - 1].classList.add('hover')
-              context.scrollBy(0, -30)
-              return false
-            }
-            if (e.keyCode === 9 || e.keyCode === 13) {
-              // 9 = Tab & 13 = Enter
-              const A1 = editor.getCursor().line
-              const A2 = editor.getCursor().ch
-              const B1 = editor.findWordAt({
-                line: A1,
-                ch: A2
-              }).anchor.ch
-              const B2 = editor.findWordAt({
-                line: A1,
-                ch: A2
-              }).head.ch
-              const selected = (function () {
-                for (i = 0; i < childs.length; i++) {
-                  if (childs[i].classList.contains('hover')) {
-                    return `${childs[i].innerText}`
-                  }
-                }
-              })()
-              editor.replaceRange(
-                selected,
-                {
-                  line: A1,
-                  ch: B1
-                },
-                {
-                  line: A1,
-                  ch: B2
-                }
-              )
-              context.innerHTML = ''
-              setTimeout(function () {
-                context.parentElement.style.display = 'none'
-                context.innerHTML = ''
-              }, 1)
-            }
-          }
-        }
-      })
-      editor.addKeyMap({
-        'Ctrl-Up': function (cm) {
-          graviton.setEditorFontSize(
-            `${Number(current_config.fontSizeEditor) + 2}`
-          )
-        },
-        'Ctrl-Down': function (cm) {
-          graviton.setEditorFontSize(
-            `${Number(current_config.fontSizeEditor) - 2}`
-          )
-        }
       })
     }
   }
