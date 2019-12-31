@@ -61,6 +61,15 @@ module.exports = {
               return false
             }
           })
+          graviton.getCurrentEditor().execute("onContentChanged", function () {
+            const close_icon = document.getElementById(editingTab)
+            close_icon.setAttribute('file_status', 'unsaved')
+            close_icon.children[1].innerHTML = icons['unsaved']
+            document
+              .getElementById(editingTab)
+              .setAttribute('data', graviton.getCurrentEditor().execute("getValue"));
+          })
+          if (g_highlighting  == 'activated') updateCodeMode( graviton.getCurrentEditor(), dir)
           break
         case 'font':
           graviton.setCurrentEditor(null)
@@ -150,14 +159,20 @@ module.exports = {
         if (et.id == dir.replace(/\\/g, '') + '_editor') {
           if (et.editor != undefined) {
             editor = et.editor
-          } else {
+          } else{
             editor = null
           }
           editorID = et.id
           document.getElementById(editorID).style.display = 'block'
-          if (editor != undefined) editor.refresh()
+          if(graviton.isEditorAvailable()){
+            graviton.getCurrentEditor().execute("forceRefresh")
+          }
+          if (callback != undefined)  callback(editor)
+          return 
         }
-        if (callback != undefined) callback(editor)
+        
+        if (callback != undefined)  callback(editor)
+        return
       })
     }
   }

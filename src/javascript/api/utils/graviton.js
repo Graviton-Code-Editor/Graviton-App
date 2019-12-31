@@ -320,18 +320,18 @@ const graviton = {
       }
     },
     editorSearch() {
-      if (editor != undefined) {
-        CodeMirror.commands.find(editor);
+      if (graviton.isEditorAvailable()) {
+        graviton.getCurrentEditor().execute("openFind")
       }
     },
     editorReplace() {
-      if (editor != undefined) {
-        CodeMirror.commands.replace(editor);
+      if (graviton.isEditorAvailable()) {
+        graviton.getCurrentEditor().execute("openReplace")
       }
     },
     editorJumpToLine() {
-      if (editor != undefined) {
-        CodeMirror.commands.jumpToLine(editor);
+      if (graviton.isEditorAvailable()) {
+        graviton.getCurrentEditor().execute("openJumpToLine")
       }
     },
     restartApp() {
@@ -426,6 +426,9 @@ const graviton = {
       }
     },
     getTypePlugin(config) {
+      if (config.main != undefined) {
+        return "plugin";
+      }
       if (config.icons != undefined) {
         return "custom_theme";
       }
@@ -434,9 +437,6 @@ const graviton = {
       }
       if (config.colors != undefined) {
         return "theme";
-      }
-      if (config.main != undefined) {
-        return "plugin";
       }
     },
     windowContent(id, content) {

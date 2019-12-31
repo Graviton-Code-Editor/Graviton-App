@@ -252,20 +252,20 @@ document.addEventListener("graviton_loaded",function(){
       counter.show();
       langController.show();
       counter.setText(
-        graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1)
+        graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").column + 1)
       );
       counter.setHint(
         `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
-          graviton.getCurrentEditor().execute("getCursor").ch + 1
+          graviton.getCurrentEditor().execute("getCursor").column + 1
         )}`
       );
       graviton.getCurrentEditor().execute("cursorActivity", function(a) {
         counter.setText(
-          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1)
+          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").column + 1)
         );
         counter.setHint(
           `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
-            graviton.getCurrentEditor().execute("getCursor").ch + 1
+            graviton.getCurrentEditor().execute("getCursor").column + 1
           )}`
         );
         counter.show();
@@ -278,9 +278,9 @@ document.addEventListener("graviton_loaded",function(){
     if (graviton.getCurrentEditorInstance() != undefined) {
       var counter = new Control({
         text:
-          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").ch + 1),
+          graviton.getCurrentEditor().execute("getCursor").line + 1 + "/" + Number(graviton.getCurrentEditor().execute("getCursor").column + 1),
         hint: `Line ${graviton.getCurrentEditor().execute("getCursor").line + 1} , Char ${Number(
-          graviton.getCurrentEditor().execute("getCursor").ch + 1
+          graviton.getCurrentEditor().execute("getCursor").column + 1
         )}`
       });
       refreshStats();
@@ -408,9 +408,9 @@ document.addEventListener("graviton_loaded",function(){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0})
                 }else if(lineNumber > editor.lineCount()){
-                  graviton.getCurrentEditor().execute("goToLine",{line:editor.lineCount()-1, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(editor.lineCount()-1), char:0}, 300)
                 }else{
-                  graviton.getCurrentEditor().execute("goToLine",{line:lineNumber, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber), char:0}, 300)
                 }
               }
             },
@@ -419,9 +419,9 @@ document.addEventListener("graviton_loaded",function(){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0}, 300)
                 }else if(lineNumber > editor.lineCount()){
-                  graviton.getCurrentEditor().execute("goToLine",{line:editor.lineCount()-1, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(editor.lineCount())-1, char:0}, 300)
                 }else{
-                  graviton.getCurrentEditor().execute("goToLine",{line:lineNumber, char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber), char:0}, 300)
                 }
               }
             }
@@ -481,7 +481,9 @@ graviton.saveConfiguration = function(){
       if (err) graviton.throwError("Couldn't save the configuration file.");
     }
   );
-  if (editor != undefined) editor.refresh();
+  if(graviton.isEditorAvailable()){
+    graviton.getCurrentEditor().execute("forceRefresh")
+  }
 };
 
 const saveConfig = graviton.saveConfiguration; //Prevent API problems

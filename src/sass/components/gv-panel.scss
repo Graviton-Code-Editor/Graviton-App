@@ -1,0 +1,16 @@
+gv-panel {
+	padding: 25px;
+	display: block;
+	min-height: 100%;
+	max-height: auto;
+	position: relative;
+}
+gv-paneltitle {
+	font-size: 14px;
+	font-weight: normal;
+	display: inline-block;
+	margin-bottom: 5px;
+	border-bottom: 1px solid var(--white-black);
+	position: relative;
+	max-width: auto;
+}

@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191230",
+  date: "191231",
   version: "1.3.0",
   state: "Beta"
 }
@@ -665,8 +665,9 @@ g_window.on("focus", function() {
   }
 })
 
-
-
+/**
+ * @desc CodeMirror client instance
+*/
 
 document.addEventListener("graviton_loaded",function(){
   new graviton.editorClient({
@@ -681,12 +682,71 @@ document.addEventListener("graviton_loaded",function(){
       editor.on('cursorActivity',func)
     },
     getCursor(){
-      return editor.getCursor()
+      const value = editor.getCursor()
+      return {line:value.line,column:value.ch}
+    },
+    getValue(){
+      return editor.getValue()
+    },
+    openFind(){
+      CodeMirror.commands.find(editor);
+    },
+    openReplace(){
+      CodeMirror.commands.replace(editor);
+    },
+    openJumpToLine(){
+      CodeMirror.commands.jumpToLine(editor);
+    },
+    setLanguage(language){
+      switch(language){
+        case "json":
+          editor.setOption('mode', 'application/json')
+          editor.setOption('htmlMode', false)
+          break;
+        case "html":
+          editor.setOption('mode', 'htmlmixed')
+          editor.setOption('htmlMode', false)
+          break;
+        case "cpp":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'text/x-c++src')
+          break;
+        case "cs":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'text/x-csharp')
+          break;
+        case "java":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'text/x-java')
+          break;
+        case "objectivec":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'text/x-objectivec') 
+          break;
+        case "kotlin":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'text/x-kotlin')
+          break;
+        case "typescript":
+          editor.setOption('htmlMode', false)
+          editor.setOption('mode', 'application/typescript')
+          break;
+        default:
+          editor.setOption('mode', language)
+          editor.setOption('htmlMode', true)
+      }     
+    },
+    onContentChanged(func){
+      editor.on('change',func)
+    },
+    forceRefresh(){
+      editor.refresh()
     },
     getValue(){
       return editor.getValue()
     },
     goToLine({line,char}){
+      editor.setCursor(line, char)
       editor.scrollIntoView({line:line, char:char}, 300)
     },
     onLoadTab(clientConf){
@@ -735,7 +795,6 @@ document.addEventListener("graviton_loaded",function(){
           Number(clientConf.textContainer.children[0].children.length - 1)
         ]
       )
-      if (g_highlighting == 'activated') updateCodeMode(codemirror, clientConf.dir)
       clientConf.textContainer.addEventListener('wheel', function (e) {
         if (e.ctrlKey) {
           if (e.deltaY < 0) {
@@ -783,12 +842,6 @@ document.addEventListener("graviton_loaded",function(){
       }
       if (codemirror != undefined) {
         codemirror.on("change", function () {
-          const close_icon = document.getElementById(editingTab)
-          close_icon.setAttribute('file_status', 'unsaved')
-          close_icon.children[1].innerHTML = icons['unsaved']
-          document
-            .getElementById(editingTab)
-            .setAttribute('data', codemirror.getValue())
           if (current_config['autoCompletionPreferences'] == 'activated') {
             function checkVariables(text) {
               let _variables = []

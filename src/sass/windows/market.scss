@@ -186,3 +186,25 @@
 		}
 	}
 }
+
+
+.image-container {
+	position: relative;
+	overflow: auto;
+	>* {
+		position: relative;
+		padding: 0px 20px;
+	}
+}
+.list {
+	li {
+		padding: 5px;
+	}
+}
+.readme-container {
+	overflow: auto;
+	* {
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+}

@@ -45,22 +45,24 @@ module.exports = {
     const openingAnimation = current_config.animationsPreferences=="activated"?`window_slide_up linear 0.1s;`:""
 
     const buttonComponent = puffin.element(`
-      <button myID="{{id}}">{{value}}</button>
+      <button myID="{{id}}" click="$onClick">{{value}}</button>
     `,{
       methods:[
         function onClick(){
-          buttons[this.props.index].click()
-          closeDialog(this.props.id)
+          if(typeof buttons[this.getAttribute("value")].click == "function"){
+            buttons[this.getAttribute("value")].click()
+          }
+          closeDialog(this.id)
         }
       ],
-      props:["index","value","id"]
+      props:["value","id"]
     })
 
     let buttonsContent = "";
 
     Object.keys(buttons).forEach(function (key, index) {
       buttonsContent += `
-        <buttonComponent class="${buttons[key].important == true ? 'important' : ''}" index="${index}" id="${id}" value="${key}"/>
+        <buttonComponent class="${buttons[key].important == true ? 'important' : ''}" id="${id}" value="${key}"/>
       `
     })
 
@@ -102,12 +104,14 @@ module.exports = {
     * @param {HTML element} ele  DOM element
     */
   closeDialog: id => {
-    document
+    if(document.getElementById(id + '_dialog') !=null){
+      document.getElementById(id + '_dialog').remove()
+      document
       .getElementById('body')
       .setAttribute(
         'windows',
         Number(document.getElementById('body').getAttribute('windows')) - 1
       )
-    document.getElementById(id + '_dialog').remove()
+    }
   }
 }

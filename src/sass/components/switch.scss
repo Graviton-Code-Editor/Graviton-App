@@ -1,0 +1,48 @@
+.switch {
+	width: 40px;
+	height: 20px;
+	border-radius: 20px;
+	margin: 0px;
+	transform: scale(1);
+	&:hover {
+		cursor: pointer;
+	}
+	> div {
+		height: 13px;
+		width: 13px;
+		border-radius: 50px;
+		position: relative;
+		top: 3.4px;
+		box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+	}
+	&:active {
+		transform: scale(var(--scalation));
+	}
+}
+.activated.switch {
+	background: var(--accentColor);
+	> div {
+		background: var(--secondaryColor);
+		left: 23px;
+	}
+}
+.desactivated.switch {
+	background: lightgray;
+	> div {
+		background: gray;
+		left: 4px;
+	}
+}
+.disabled.switch {
+	transition: 0.07s;
+	background: lightgray;
+	box-sizing: border-box;
+}
+.disabled.switch.desactivated {
+	> div {
+		transition: 0.07s;
+		background-color: gray;
+		left: -4px;
+		position: relative;
+	}
+}

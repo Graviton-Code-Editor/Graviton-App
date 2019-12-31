@@ -21,6 +21,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 @use './components/dialogs';
 @use './components/explorer';
 @use './components/gv-navpanel';
+@use './components/gv-panel';
+@use './components/gv-processbar';
+@use './components/input';
+@use './components/switch';
 @use './components/windows';
 
 @use './codemirror/custom';
@@ -601,62 +605,8 @@ h4 {
 	padding: 0;
 	margin: 0;
 }
-navbar {
-	a {
-		transition: 0.1s;
-		font-style: normal !important;
-		background: transparent;
-		border-bottom: 3px solid transparent;
-		padding: 8px;
-		margin: 3px;
-		cursor: pointer;
-		&:hover {
-			transition: 0.1s;
-			color: var(--accentColor);
-		}
-	}
-	a.active {
-		transition: 0.1s;
-		border-bottom: 3px solid var(--accentColor);
-		color: var(--accentColor);
-	}
-}
-.image-container {
-	position: relative;
-	overflow: auto;
-	>* {
-		position: relative;
-		padding: 0px 20px;
-	}
-}
-.list {
-	li {
-		padding: 5px;
-	}
-}
-.readme-container {
-	overflow: auto;
-	* {
-		cursor: not-allowed;
-		pointer-events: none;
-	}
-}
-gv-panel {
-	padding: 25px;
-	display: block;
-	min-height: 100%;
-	max-height: auto;
-	position: relative;
-}
-gv-paneltitle {
-	font-size: 14px;
-	font-weight: normal;
-	display: inline-block;
-	margin-bottom: 5px;
-	border-bottom: 1px solid var(--white-black);
-	position: relative;
-	max-width: auto;
-}
+
+
 .explorer_resizer {
 	height: 3px;
 	margin: 2px 15px;
@@ -664,24 +614,4 @@ gv-paneltitle {
 	border-top: 2px solid var(--widget-color);
 	background: transparent;
 	cursor: n-resize;
-}
-gv-process {
-	background: transparent;
-	padding: 0px;
-	display: block;
-	gv-process-bar {
-		padding: 0px;
-		height: 13px;
-		background: var(--accentColor);
-		margin: 10px 0px;
-		border-radius: 5px;
-		display: block;
-		box-shadow: inset 0 0 3px #000000;
-	}
-	gv-process-text {
-		color: var(--white-black);
-		display: block;
-		font-size: 14px;
-		margin: 15px 0px;
-	}
 }

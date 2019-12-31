@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 191231 - 1 [1.2.0]
+- Fixed: plugins with javascript and CSS code were identified as themes
+- Better SASS source structure organization 
+- Command "go to line" now highlights the line
+- Better integration for external editors
+- Fixed: dialogs buttons weren't working properly
+
 ### 191230 - 1 [1.2.0]
 - Fixed: shortcuts weren't created on start 
 - Allow to use a different editor instead of Codemirror

@@ -136,154 +136,130 @@ module.exports = {
     if (g_highlighting == 'activated') {
       switch (path.split('.').pop()) {
         case 'html':
-          instance.setOption('mode', 'htmlmixed')
-          instance.setOption('htmlMode', true)
+          instance.execute('setLanguage','html')
           plang = 'HTML'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'css':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'css')
+          instance.execute('setLanguage','css')
           plang = 'CSS'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'js':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'javascript')
+          instance.execute('setLanguage','javascript')
           plang = 'JavaScript'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'jsx':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'jsx')
+          instance.execute('setLanguage','jsx')
           plang = 'React JavaScript'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
 				case 'vue':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'vue')
+          instance.execute('setLanguage','vue')
           plang = 'Vue.js'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'json':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'application/json')
+          instance.execute('setLanguage','json')
           plang = 'JSON / JavaScript'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'go':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'go')
+          instance.execute('setLanguage','go')
           plang = 'Go'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'sql':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'sql')
+          instance.execute('setLanguage','aql')
           plang = 'SQL'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'rb':
         case 'ruby':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'ruby')
+          instance.execute('setLanguage','ruby')
           plang = 'Ruby'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'php':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'php')
+          instance.execute('setLanguage','php')
           plang = 'PHP'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'sass':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'sass')
+          instance.execute('setLanguage','sass')
           plang = 'Sass'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'dart':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'dart')
+          instance.execute('setLanguage','dart')
           plang = 'Dart'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'pascal':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'pascal')
+          instance.execute('setLanguage','pascal')
           plang = 'Pascal'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'md':
-          instance.setOption('htmlMode', true)
-          instance.setOption('mode', 'markdown')
+          instance.execute('setLanguage','markdown')
           plang = 'Markdown'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'py':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'python')
+          instance.execute('setLanguage','python')
           plang = 'Python'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'sh':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'shell')
+          instance.execute('setLanguage','shell')
           plang = 'Shell'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'c':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-csrc')
+          instance.execute('setLanguage','c')
           plang = 'C'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'cpp':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-c++src')
+          instance.execute('setLanguage','cpp')
           plang = 'C++'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'cs':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-csharp')
+          instance.execute('setLanguage','cs')
           plang = 'C#'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'java':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-java')
+          instance.execute('setLanguage','java')
           plang = 'Java'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'h':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-objectivec')
+          instance.execute('setLanguage','objectivec')
           plang = 'Objective-C'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'kt':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'text/x-kotlin')
+          instance.execute('setLanguage','kotlin')
           plang = 'Kotlin'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'ts':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'application/typescript')
+          instance.execute('setLanguage','typescript')
           plang = 'TypeScript'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         case 'toml':
         case 'rs':
-          instance.setOption('htmlMode', false)
-          instance.setOption('mode', 'rust')
+          instance.execute('setLanguage','rust')
           plang = 'Rust'
-          instance.refresh()
+          instance.execute('forceRefresh')
           break
         default:
           plang = 'Unknown'
-          instance.refresh()
+          instance.execute('forceRefresh')
       }
     }
   }

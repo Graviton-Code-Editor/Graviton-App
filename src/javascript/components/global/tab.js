@@ -18,7 +18,7 @@ function retrieveTab({ id, name, data, screen, type, longpath = "" }) {
       methods: [
         function closeMe() {
           if(type == "text"){
-            closeTab(`${id}${type}`);
+            closeTab(`${id}${type}`,false);
           }else{
             closeTab(`${id}${type}`, true);
           }
