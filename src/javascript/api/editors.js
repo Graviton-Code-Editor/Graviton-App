@@ -5,7 +5,7 @@ function createInstance(clientName = "codemirror", clientConf){
   })[0]
   return {
     instance:resultInstance,
-    editor:resultInstance.onLoadTab(clientConf)
+    editorInstance:resultInstance.onLoadTab(clientConf)
   }
 
 }
@@ -42,7 +42,7 @@ module.exports = {
           document
             .getElementById(screen)
             .children[1].appendChild(textContainer)
-          const {instance , editor} = createInstance(graviton.getEditorClient(),{
+          const {instance , editorInstance} = createInstance(graviton.getEditorClient(),{
             dir:dir,
             type:type,
             data:data,
@@ -52,11 +52,11 @@ module.exports = {
           editors.push({
             id:textContainer.id,
             screen:screen,
-            editor:editor,
+            editor:editorInstance,
             instance:instance,
             execute(name,data){
               if(instance[name] != undefined){
-                return instance[name](data)
+                return instance[name](editorInstance,data)
               }
               return false
             }

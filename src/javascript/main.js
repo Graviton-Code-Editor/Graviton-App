@@ -12,7 +12,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict"
 
 const GravitonInfo = {
-  date: "191231",
+  date: "200101",
   version: "1.3.0",
   state: "Beta"
 }
@@ -370,15 +370,42 @@ let logDir = path.join(DataFolderDir, "log.json"),
   configDir = path.join(DataFolderDir, "config.json"),
   plugins_folder = path.join(DataFolderDir, "plugins"),
   plugins_db = path.join(DataFolderDir, "plugins_db"),
-  market_file = path.join(DataFolderDir, "market.json")
+  market_file = path.join(DataFolderDir, "market.json");
 
-preload([
-  "src/icons/folder_opened.svg",
-  "src/icons/custom_icons/git.svg",
-  "src/icons/custom_icons/node_modules.svg"
-])
+(function(){
+  const preload = array => {
+    // Preload images when booting
+    for (i = 0; i < array.length; i++) {
+      document.body.innerHTML += `
+       <img id="${array[i]}"src="${array[i]}" style="visibility:hidden;"></img>`;
+      document.getElementById(array[i]).remove();
+    }
+  };
+  
+  const preloadFont = array => {
+    // Preload fonts when booting
+    for (i = 0; i < array.length; i++) {
+      const ele = document.createElement("p");
+      ele.textContent = ".";
+      ele.id = array[i];
+      ele.style.fontFamily = array[i];
+      document.body.appendChild(ele);
+      setTimeout(function() {
+        ele.remove();
+      }, 1);
+    }
+  };
 
-preloadFont(["editor", "terminal"])
+  preload([
+    "src/icons/folder_opened.svg",
+    "src/icons/custom_icons/git.svg",
+    "src/icons/custom_icons/node_modules.svg"
+  ])
+  
+  preloadFont(["editor", "terminal"])
+
+})()
+
 
 window.onload = async function() {
   await fs.readdir(path.join(__dirname, "languages")).then(function(paths) {
@@ -591,60 +618,6 @@ const directories = {
   }
 }
 
-function registerNewProject(dir) {
-  // Add a new directory to the history if it is the first time it has been opened in the editor
-  for (i = 0; i < log.length + 1; i++) {
-    if (i != log.length) {
-      if (log[i].Path == dir) {
-        return
-      }
-    } else if (i == log.length) {
-      log.unshift({
-        Name: path.basename(dir),
-        Path: dir
-      })
-      document.dispatchEvent(graviton.events.newRecentProject(dir))
-      fs.writeFile(logDir, JSON.stringify(log, null, 2))
-      return
-    }
-  }
-}
-
-function createNewProject(template) {
-  const { dialog } = remote
-  dialog
-    .showOpenDialog(g_window, {
-      properties: ["openDirectory"]
-    })
-    .then(result => {
-      console.log(result.filePaths)
-      if (result.canceled) return
-      if (result.filePaths != 0) {
-        switch (template) {
-          case "html":
-            const newProjectDir = path.join(
-              result.filePaths[0],
-              ".GravitonProject " + Date.now()
-            )
-            fs.mkdirSync(newProjectDir)
-            fs.writeFile(
-              path.join(newProjectDir, "index.html"),
-              projectTemplates.html,
-              err => {
-                if (err) {
-                  return err
-                }
-                Explorer.load(newProjectDir, "g_directories", true)
-              }
-            )
-            break
-        }
-      }
-    })
-    .catch(err => {
-      console.error(err)
-    })
-}
 
 const selectionFromTo = (parent, toSelect) => {
   const children = parent.children
@@ -672,82 +645,88 @@ g_window.on("focus", function() {
 document.addEventListener("graviton_loaded",function(){
   new graviton.editorClient({
     name: "codemirror",
-    onKeyDown(func){
-      editor.on('keydown',func)
+    onKeyDown(instance,func){
+      instance.on('keydown',func)
     },
-    onChange(func){
-      editor.on('change',func)
+    onChange(instance,func){
+      instance.on('change',func)
     },
-    onCursorActivity(func){
-      editor.on('cursorActivity',func)
+    onCursorActivity(instance,func){
+      instance.on('cursorActivity',func)
     },
-    getCursor(){
-      const value = editor.getCursor()
+    getCursor(instance){
+      const value = instance.getCursor()
       return {line:value.line,column:value.ch}
     },
-    getValue(){
-      return editor.getValue()
+    getValue(instance){
+      return instance.getValue()
     },
-    openFind(){
-      CodeMirror.commands.find(editor);
+    openFind(instance){
+      CodeMirror.commands.find(instance);
     },
-    openReplace(){
-      CodeMirror.commands.replace(editor);
+    openReplace(instance){
+      CodeMirror.commands.replace(instance);
     },
-    openJumpToLine(){
-      CodeMirror.commands.jumpToLine(editor);
+    openJumpToLine(instance){
+      CodeMirror.commands.jumpToLine(instance);
     },
-    setLanguage(language){
+    setLanguage(instance,language){
       switch(language){
         case "json":
-          editor.setOption('mode', 'application/json')
-          editor.setOption('htmlMode', false)
+          instance.setOption('mode', 'application/json')
+          instance.setOption('htmlMode', false)
           break;
         case "html":
-          editor.setOption('mode', 'htmlmixed')
-          editor.setOption('htmlMode', false)
+          instance.setOption('mode', 'htmlmixed')
+          instance.setOption('htmlMode', false)
           break;
         case "cpp":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'text/x-c++src')
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'text/x-c++src')
           break;
         case "cs":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'text/x-csharp')
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'text/x-csharp')
           break;
         case "java":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'text/x-java')
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'text/x-java')
           break;
         case "objectivec":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'text/x-objectivec') 
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'text/x-objectivec') 
           break;
         case "kotlin":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'text/x-kotlin')
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'text/x-kotlin')
           break;
         case "typescript":
-          editor.setOption('htmlMode', false)
-          editor.setOption('mode', 'application/typescript')
+          instance.setOption('htmlMode', false)
+          instance.setOption('mode', 'application/typescript')
           break;
         default:
-          editor.setOption('mode', language)
-          editor.setOption('htmlMode', true)
+          instance.setOption('mode', language)
+          instance.setOption('htmlMode', true)
       }     
     },
-    onContentChanged(func){
-      editor.on('change',func)
+    doBlur(instance){
+      instance.blur()
     },
-    forceRefresh(){
-      editor.refresh()
+    getLineCount(instance){
+      return instance.lineCount()
     },
-    getValue(){
-      return editor.getValue()
+    onContentChanged(instance,func){
+      instance.on('change',func)
     },
-    goToLine({line,char}){
-      editor.setCursor(line, char)
-      editor.scrollIntoView({line:line, char:char}, 300)
+    forceRefresh(instance){
+      instance.refresh()
+    },
+    getValue(instance){
+      return instance.getValue()
+    },
+    goToLine(instance,{line,char}){
+      instance.setCursor(line, char)
+      instance.scrollIntoView({line:line, char:char}, 300)
     },
     onLoadTab(clientConf){
       let codemirror = CodeMirror(
@@ -1085,9 +1064,15 @@ document.addEventListener("graviton_loaded",function(){
           }
         })
       }
-
       return codemirror
     }
   })
-  
 })
+
+
+window.addEventListener("resize",function(){
+  graviton.refreshEditors()
+})
+
+
+

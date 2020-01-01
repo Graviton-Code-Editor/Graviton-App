@@ -218,7 +218,20 @@ document.addEventListener("graviton_loaded",function(){
   projectServices.push({
     name: "HTML",
     description: "Basic HTML project",
-    onclick: () => createNewProject("html")
+    onclick: () => {
+      graviton.newProject("html").then(function(projectDir){
+        fs.writeFile(
+          path.join(projectDir, "index.html"),
+          projectTemplates.html,
+          err => {
+            if (err) {
+              return err
+            }
+            Explorer.load(projectDir, "g_directories", true)
+          }
+        )
+      })
+    }
   });
 
   /**
@@ -241,7 +254,7 @@ document.addEventListener("graviton_loaded",function(){
     function refreshStats(id = current_screen.id) {
       if (id != screen) return;
       langController.setText(graviton.getLanguage());
-      langController.setHint(`Current: ${graviton.getLanguage()}`);
+      langController.setHint(`Current language: ${graviton.getLanguage()}`);
       if (editor == undefined) {
         counter.hide();
         return;
@@ -353,7 +366,8 @@ document.addEventListener("graviton_loaded",function(){
         explorer.style = `width: ${content_app.clientWidth - e.clientX}px`;
       }
       for (i = 0; i < editors.length; i++) {
-        editors[i].object.blur();
+        editors[i].execute("doBlur");
+        editors[i].execute('forceRefresh')  
       }
       graviton.resizeTerminals();
     }
@@ -407,10 +421,10 @@ document.addEventListener("graviton_loaded",function(){
               if(editor != null){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0})
-                }else if(lineNumber > editor.lineCount()){
-                  graviton.getCurrentEditor().execute("goToLine",{line:Number(editor.lineCount()-1), char:0}, 300)
+                }else if(lineNumber > graviton.getCurrentEditor().execute("getLineCount")){
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber > graviton.getCurrentEditor().execute("getLineCount")-1), char:0}, 300)
                 }else{
-                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber), char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber-1), char:0}, 300)
                 }
               }
             },
@@ -418,10 +432,10 @@ document.addEventListener("graviton_loaded",function(){
               if(editor != null ){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0}, 300)
-                }else if(lineNumber > editor.lineCount()){
-                  graviton.getCurrentEditor().execute("goToLine",{line:Number(editor.lineCount())-1, char:0}, 300)
+                }else if(lineNumber > graviton.getCurrentEditor().execute("getLineCount")){
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber > graviton.getCurrentEditor().execute("getLineCount"))-1, char:0}, 300)
                 }else{
-                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber), char:0}, 300)
+                  graviton.getCurrentEditor().execute("goToLine",{line:Number(lineNumber-1), char:0}, 300)
                 }
               }
             }

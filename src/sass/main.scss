@@ -19,6 +19,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 @use './components/button';
 @use './components/context';
 @use './components/dialogs';
+@use './components/emojies';
 @use './components/explorer';
 @use './components/gv-navpanel';
 @use './components/gv-panel';
@@ -578,27 +579,7 @@ h4 {
 	top: 0;
 	border: 0;
 }
-.emoji-medium {
-	height: 17px;
-	top: 8px;
-	position: relative;
-	user-select: none;
-	margin: 0;
-	padding: 0px;
-}
-.emoji-normal {
-	height: 30px;
-	top: 10px;
-	position: relative;
-	user-select: none;
-	margin: 0;
-	padding: 0;
-}
-.emoji-title {
-	height: 50px;
-	top: 10px;
-	user-select: none;
-}
+
 .flex-2 {
 	display: flex;
 	justify-content: flex-start;

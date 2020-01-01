@@ -1,5 +1,8 @@
 module.exports = {
-    language_load:function(){
+    gravitonLoaded(){
+        return new CustomEvent("graviton_loaded", {});
+    },
+    languageLoaded:function(){
         return new CustomEvent("language_loaded", {
             detail: {
                 language: graviton.getUILanguage()

@@ -14,8 +14,7 @@ module.exports = {
         if (error_showed == false && document.body.getAttribute("loaded") !== "true") {
             DeleteBoot();
             document.body.setAttribute("loaded","true")
-            const graviton_loaded = new CustomEvent("graviton_loaded", {});
-            document.dispatchEvent(graviton_loaded);
+            document.dispatchEvent(graviton.events.gravitonLoaded());
         }
       /**
        * @desc Open the welcome window

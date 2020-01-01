@@ -14,7 +14,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 module.exports = {
   Settings: {
     open: function(section) {
-      const sidePanel = require(path.join("..","components","settings","sidepanel"));
+      const sidePanel = require(path.join("..","components","settings","sidepanel"))();
       const settings_window = new Window({
         id: "settings_window",
         component:sidePanel,
@@ -29,7 +29,7 @@ module.exports = {
       switch (num) {
         case "customization":
           document.getElementById("settings.customization").innerHTML = "";
-          const customizationSection = require(path.join("..","components","settings","customization"));
+          const customizationSection = require(path.join("..","components","settings","customization"))();
 
           puffin.render(customizationSection,document.getElementById("settings.customization"))
           if (document.getElementById("theme_list") != null) { 
@@ -44,23 +44,23 @@ module.exports = {
           break;
         case "languages":
           document.getElementById("settings.languages").innerHTML = ""
-          const languagesSection = require(path.join("..","components","settings","languages"));
+          const languagesSection = require(path.join("..","components","settings","languages"))();
           puffin.render(languagesSection,document.getElementById("settings.languages"))
           break;
         case "editor":
           document.getElementById("settings.editor").innerHTML = ""
-          const editorSection = require(path.join("..","components","settings","editor"));
+          const editorSection = require(path.join("..","components","settings","editor"))();
           puffin.render(editorSection,document.getElementById("settings.editor"))
           break;
         case "advanced":
           document.getElementById("settings.advanced").innerHTML = ""
-          const advancedSection = require(path.join("..","components","settings","advanced"));
+          const advancedSection = require(path.join("..","components","settings","advanced"))();
           puffin.render(advancedSection,document.getElementById("settings.advanced"))
           break;
         case "about":
             document.getElementById("settings.advanced").innerHTML = ""
           document.getElementById("settings.about").innerHTML = ""
-          const about_section = require(path.join("..","components","settings","about"));
+          const about_section = require(path.join("..","components","settings","about"))();
           puffin.render(about_section,document.getElementById("settings.about"))
           if (graviton.updateAvailable() != false) {
             if (document.getElementById("about_section") != null) {

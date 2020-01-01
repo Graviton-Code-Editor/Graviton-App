@@ -26,7 +26,7 @@ module.exports = {
             toTranslate[i].getAttribute('idT')
           )
         }
-        document.dispatchEvent(graviton.events.language_load());
+        document.dispatchEvent(graviton.events.languageLoaded());
       }
     })
   },

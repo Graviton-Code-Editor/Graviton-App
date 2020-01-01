@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200101 - 1 [1.2.0]
+- Some refactorization
+- Added blur event to Codemirror client
+- Fixed: after language is changed some parts of the app weren't updating properly
+
 ### 191231 - 1 [1.2.0]
 - Fixed: plugins with javascript and CSS code were identified as themes
 - Better SASS source structure organization 

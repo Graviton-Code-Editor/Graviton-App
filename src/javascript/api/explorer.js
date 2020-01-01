@@ -82,7 +82,7 @@ module.exports = {
         }
         workspaces[0] = FirstFolder;
         graviton.setTitle(FirstFolder);
-        registerNewProject(dir);
+        graviton.logNewProject(dir);
         working_folder = document.createElement("div");
         for (
           i = 0;
