@@ -984,7 +984,8 @@ document.addEventListener("graviton_loaded",function(){
           } else {
             codemirror.setOption('extraKeys', {
               Up: 'goLineUp',
-              Down: 'goLineDown'
+              Down: 'goLineDown',
+              'Ctrl-/':'toggleComment'
             })
           }
           const context = document.getElementById('context')
