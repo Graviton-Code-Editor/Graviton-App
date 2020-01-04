@@ -6,14 +6,14 @@
 	border: none;
 	padding: 5px 7px;
 	background: var(--primaryColor);
-	color: var(--white-black);
+	color: var(--primaryText);
 	box-sizing: border-box;
 	position: relative;
 	text-align: center;
 	&:hover {
 		transition: 0.1s;
 		cursor: text;
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 }
 .input1.auto {
@@ -32,14 +32,14 @@ input[type="number"] {
 	}
 	&::selection {
 		background-color: var(--accentColor);
-		color: var(--black-white);
+		color: var(--secondaryText);
 	}
 }
 .input2 {
 	padding: 6px;
 	border: 0;
 	background: transparent;
-	color: var(--white-black);
+	color: var(--primaryText);
 }
 .input3 {
 	padding: 4px;
@@ -48,7 +48,7 @@ input[type="number"] {
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 	background: var(--secondaryColor);
 	max-width: 70px;
-	color: var(--white-black);
+	color: var(--primaryText);
 }
 .input4 {
 	padding: 8px;
@@ -57,5 +57,5 @@ input[type="number"] {
 	box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
 	background: var(--primaryColor);
 	max-width: 125px;
-	color: var(--white-black);
+	color: var(--primaryText);
 }

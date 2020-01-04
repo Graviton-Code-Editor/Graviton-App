@@ -257,12 +257,12 @@ function sleeping(milliseconds) {
 
 function floatingWindow([xSize, ySize], content) {
   // Method to create flaoting windows
-  const floating_window = document.createElement("div");
-  floating_window.style.height = ySize + "px";
-  floating_window.style.width = xSize + "px";
-  floating_window.classList = "floating_window";
-  floating_window.innerHTML = content;
-  document.body.appendChild(floating_window);
+  const floatinGravitonWindow = document.createElement("div");
+  floatinGravitonWindow.style.height = ySize + "px";
+  floatinGravitonWindow.style.width = xSize + "px";
+  floatinGravitonWindow.classList = "floatinGravitonWindow";
+  floatinGravitonWindow.innerHTML = content;
+  document.body.appendChild(floatinGravitonWindow);
 }
 document.addEventListener("mousedown", function(event) {
   if (editor_booted === true) {
@@ -400,14 +400,14 @@ document.addEventListener("mousedown", function(event) {
     ) {
       document.getElementById("context_menu").remove();
     }
-    if (!event.target.matches(".floating_window")) {
-      if (document.getElementsByClassName("floating_window").length != 0) {
+    if (!event.target.matches(".floatinGravitonWindow")) {
+      if (document.getElementsByClassName("floatinGravitonWindow").length != 0) {
         for (
           i = 0;
-          i < document.getElementsByClassName("floating_window").length;
+          i < document.getElementsByClassName("floatinGravitonWindow").length;
           i++
         ) {
-          document.getElementsByClassName("floating_window")[i].remove();
+          document.getElementsByClassName("floatinGravitonWindow")[i].remove();
         }
       }
     }

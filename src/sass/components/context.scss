@@ -40,7 +40,7 @@ context {
 			button {
 				height: 30px;
 				font-size: 13px;
-				color: var(--white-black);
+				color: var(--primaryText);
 				background-color: transparent;
 				padding: 5px 10px;
 				width: 100%;
@@ -59,8 +59,8 @@ context {
 			&:hover {
 				cursor: pointer;
 				button {
-					background-color: var(--widget-color);
-					color: var(--white-black);
+					background-color: var(--widgetColor);
+					color: var(--primaryText);
 				}
 			}
 			p {
@@ -97,7 +97,7 @@ context {
 			}
 			p {
 				&::after {
-					color: var(--white-black);
+					color: var(--primaryText);
 				}
 			}
 		}
@@ -118,7 +118,7 @@ context {
 		border-radius: 3px;
 		border: 0;
 		font-size: 13px;
-		color: var(--white-black);
+		color: var(--primaryText);
 		background-color: var(--dropmenu-background-color);
 		padding: 7px 10px;
 		width: 100%;

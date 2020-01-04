@@ -78,14 +78,14 @@ gv-navpanel.side-menu {
 			text-align: left;
 			&:hover {
 				transition:0.1s;
-				background:var(--widget-color);
+				background:var(--widgetColor);
 				cursor: pointer;
             }
             &.active , &[default=""] {
                 cursor: pointer;
                 transition: 0.05s;
                 background: var(--accentColor);
-                color: var(--black-white); 
+                color: var(--secondaryText); 
                 &:hover {
                     background: var(--accentDarkColor);
                     color: white; 
@@ -138,7 +138,7 @@ gv-navpanel.top-bar {
 			text-align: center;
 			font-family: _main_font;
 			font-size: 15px;
-			color: var(--white-black);
+			color: var(--primaryText);
 			background-color: transparent;
 			padding: 7px 10px;
 			text-decoration: none;
@@ -157,7 +157,7 @@ gv-navpanel.top-bar {
                 cursor: pointer;
                 transition: 0.05s;
                 background: var(--accentColor);
-                color: var(--black-white);
+                color: var(--secondaryText);
             }
 		}
 	}

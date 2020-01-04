@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200104 - 1 [1.2.0]
+- Better SASS management
+- Some refactorization
+- Renamed some CSS variables (compatibility for old variables is in on work)
+- Introduced unfocusedText CSS property, a gray color (used for tabs in not-focused screens)
+
 ### 200101 - 1 [1.2.0]
 - Some refactorization
 - Added blur event to Codemirror client

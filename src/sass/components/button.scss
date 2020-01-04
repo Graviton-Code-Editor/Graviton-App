@@ -6,7 +6,7 @@ button.button1 {
 	margin: 4px 3px;
 	padding: 8px 20px;
 	background: var(--primaryColor);
-	color: var(--white-black);
+	color: var(--primaryText);
 	box-sizing: border-box;
 	opacity: 1;
 	box-shadow: 0 0 0 0px var(--accentColor);
@@ -16,7 +16,7 @@ button.button1 {
     cursor: pointer;
 	&:hover {
 		transition: 0.03s;
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 	&:active {
 		transition: 0.1s;
@@ -27,7 +27,7 @@ button.button1 {
 		* {
 			height: 50px;
 			width: 50px;
-			fill: var(--white-black);
+			fill: var(--primaryText);
 		}
 	}
 }
@@ -58,14 +58,14 @@ button.button1.disabled {
 	width: 50px;
 	height: 50px;
 	&:hover {
-		background: var(--widget-color);
+		background: var(--widgetColor);
 		cursor: pointer;
 	}
 }
 button.button1-round {
 	svg {
 		* {
-			fill: var(--white-black);
+			fill: var(--primaryText);
 		}
 	}
 }
@@ -89,7 +89,7 @@ button.button2 {
 	margin-top: 2.5px;
 	padding: 10px 16px;
 	background: transparent;
-	color: var(--white-black);
+	color: var(--primaryText);
 	box-sizing: border-box;
 	position: relative;
 	left: 0px;
@@ -102,7 +102,7 @@ button.button2 {
 	border: 2px solid transparent;
 	&:hover {
 		cursor: pointer;
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 	&:active {
 		border: 2px solid var(--accentColor);
@@ -112,7 +112,7 @@ button.button3 {
 	background: var(--primaryColor);
 	border-radius: 50px;
 	border: 0;
-	color: var(--white-black);
+	color: var(--primaryText);
 	padding: 6px 10px;
 	max-height: 150px;
 	position: relative;
@@ -121,7 +121,7 @@ button.button3 {
 	border: 2px solid transparent;
 	&:hover {
 		cursor: pointer;
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 	&:active {
 		border: 2px solid var(--accentColor);

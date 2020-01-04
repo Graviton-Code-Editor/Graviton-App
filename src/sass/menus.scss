@@ -23,7 +23,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	-webkit-user-select: none;
 	-webkit-app-region: drag;
 	position: relative;
-	color: var(--white-black);
+	color: var(--primaryText);
 	height: 35px;
 	background-color: var(--primaryColor);
 	padding: 0;
@@ -50,7 +50,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 				background: transparent;
 				&:hover {
 					transition: 0.05s;
-					background: var(--widget-color);
+					background: var(--widgetColor);
 				}
 			}
 		}
@@ -58,7 +58,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 			&:hover {
 				>svg {
 					>rect {
-						fill: var(--white-black);
+						fill: var(--primaryText);
 					}
 				}
 			}
@@ -67,7 +67,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 			&:hover {
 				>svg {
 					>rect {
-						stroke: var(--white-black);
+						stroke: var(--primaryText);
 					}
 				}
 			}
@@ -106,7 +106,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		text-overflow: ellipsis;
 		p {
 			font-size: 12px;
-			color: var(--titleBar-icons-color);
+			color: var(--titleBarIconsColor);
 			top: 28%;
 			position: relative;
 			margin: 0;
@@ -132,7 +132,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		button.dropbtn {
 			position: relative;
 			display: inline-block;
-			color: var(--white-black);
+			color: var(--primaryText);
 			height: 35px;
 			padding: 0px 6px;
 			margin: 0;
@@ -149,10 +149,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		}
 		.dropbtn {
 			&:hover {
-				background-color: var(--widget-color);
+				background-color: var(--widgetColor);
 			}
 			&:focus {
-				background-color: var(--widget-color);
+				background-color: var(--widgetColor);
 			}
 		}
 	}
@@ -169,7 +169,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	border-radius: 3px;
 	border-top-left-radius: 0px;
 	position: fixed;
-	background-color: var(--dropmenu-background-color);
+	background-color: var(--dropmenuBackgroundColor);
 	min-width: 175px;
 	overflow: auto;
 	z-index: 1;
@@ -180,7 +180,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		&:not(.dropbtn) {
 			font-family: _main_font;
 			font-size: 13px;
-			color: var(--white-black);
+			color: var(--primaryText);
 			background-color: transparent;
 			padding: 7px 2px;
 			width: 100%;
@@ -215,7 +215,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 					width: 20%;
 				}
 				.abo {
-					stroke: var(--dropmenu-background-color);
+					stroke: var(--dropmenuBackgroundColor);
 				}
 				.aba {
 					fill: var(--accentColor);
@@ -224,7 +224,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 					stroke: var(--accentColor);
 				}
 				.bba {
-					fill: var(--dropmenu-background-color);
+					fill: var(--dropmenuBackgroundColor);
 				}
 			}
 			&:hover {
@@ -233,10 +233,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 						stroke: var(--accentColor);
 					}
 					.aba {
-						fill: var(--black-white);
+						fill: var(--secondaryText);
 					}
 					.bbo {
-						stroke: var(--black-white);
+						stroke: var(--secondaryText);
 					}
 					.bba {
 						fill: var(--accentColor);
@@ -246,7 +246,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		}
 		&:hover {
 			&:not(.dropbtn) {
-				color: var(--black-white);
+				color: var(--secondaryText);
 				background-color: var(--accentColor);
 				border-radius: 3px;
 				cursor: pointer;
@@ -262,16 +262,16 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 }
 .icon {
 	.abo {
-		stroke: var(--dropmenu-background-color);
+		stroke: var(--dropmenuBackgroundColor);
 	}
 	.aba {
-		fill: var(--white-black);
+		fill: var(--primaryText);
 	}
 	.bbo {
-		stroke: var(--white-black);
+		stroke: var(--primaryText);
 	}
 	.bba {
-		fill: var(--dropmenu-background-color);
+		fill: var(--dropmenuBackgroundColor);
 	}
 	.cbo {
 		stroke: var(--accentColor);
@@ -282,7 +282,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	cursor: pointer;
 	&:hover {
 		.abo {
-			stroke: var(--dropmenu-background-color);
+			stroke: var(--dropmenuBackgroundColor);
 		}
 		.aba {
 			fill: var(--accentColor);
@@ -291,7 +291,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 			stroke: var(--accentColor);
 		}
 		.bba {
-			fill: var(--dropmenu-background-color);
+			fill: var(--dropmenuBackgroundColor);
 		}
 	}
 }
@@ -301,7 +301,7 @@ span.line_space_menus {
 	height: 2px;
 	margin: 5px;
 	border-radius: 50px;
-	background: var(--dropmenu-span-color);
+	background: var(--dropmenuSpanColor);
 }
 span.divider-2 {
 	display: block;
@@ -309,7 +309,7 @@ span.divider-2 {
 	margin: 5px;
 	margin-left: 13px;
 	border-radius: 50px;
-	background: var(--dropmenu-span-color);
+	background: var(--dropmenuSpanColor);
 }
 .show {
 	transition: 0.05s;
@@ -339,7 +339,7 @@ span.divider-2 {
 	width: 12px;
 	padding: 0px;
 	margin: auto 3px;
-	background: var(--widget-color);
+	background: var(--widgetColor);
 	&:hover {
 		background: darkgray;
 	}
@@ -407,7 +407,7 @@ span.divider-2 {
 }
 .commander_container {
 	a {
-		color: var(--white-black);
+		color: var(--primaryText);
 		font-size: 14px;
 		display: block;
 		white-space: pre-wrap;
@@ -422,7 +422,7 @@ span.divider-2 {
 	}
 	a.active {
 		background: var(--accentColor);
-		color: var(--black-white);
+		color: var(--secondaryText);
 		border-radius: 5px;
 	}
 }

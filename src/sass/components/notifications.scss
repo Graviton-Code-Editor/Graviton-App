@@ -1,0 +1,81 @@
+#notifications {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 200;
+}
+.notificationBody {
+	transition: 0.1s;
+	-webkit-app-region: no-drag;
+	animation: open_up linear 0.15s;
+	width: 300px;
+	min-height: 65px;
+	height: auto;
+	max-height: 310px;
+	background: var(--notificationsBackgroundColor);
+	position: relative;
+	color: var(--primaryText);
+	padding: 12px;
+	margin: 10px;
+	border-radius: var(--notificationsWindowRadius);
+	box-shadow: 1px 3px 5px var(--shadows);
+	transform: scale(1);
+	&:active {
+		transition: 0.1s;
+		transform: scale(var(--scalation));
+	}
+	> div {
+		position: relative;
+		height: auto;
+		max-height: 100px;
+		overflow: auto;
+		> p {
+			font-size: 12px;
+		}
+	}
+	> button.close {
+		position: absolute;
+		right: 10px;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+		path {
+			fill: var(--primaryText);
+			stroke: transparent;
+			border: 0;
+		}
+		&:hover {
+			path {
+				stroke: var(--accentColor);
+				fill: var(--accentColor);
+				border: 0;
+			}
+			svg {
+				stroke: var(--accentColor);
+				fill: var(--accentColor);
+				border: 0;
+			}
+		}
+	}
+	> h1 {
+		font-size: 18px;
+		line-height: 1px;
+		user-select: none;
+	}
+	button {
+		&:not(.close) {
+			background: var(--notificationsBackgroundColor);
+			border: none;
+			outline: none;
+			color: var(--primaryText);
+			padding: 7px 12px;
+			border-radius: 5px;
+			cursor: pointer;
+			font-family: _main_font;
+			user-select: none !important;
+			&:hover {
+				background: var(--widgetColor);
+			}
+		}
+	}
+}

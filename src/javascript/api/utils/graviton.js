@@ -181,7 +181,7 @@ const graviton = {
       });
     },
     toggleFullScreen: function(status) {
-      g_window.setFullScreen(status);
+      GravitonWindow.setFullScreen(status);
     },
     toggleZenMode: function() {
       if (editor_mode == "zen") {
@@ -355,10 +355,10 @@ const graviton = {
     },
     toggleFullScreen() {
       if (graviton.isProduction()) {
-        if (g_window.isFullScreen() === false) {
-          g_window.setFullScreen(true);
+        if (GravitonWindow.isFullScreen() === false) {
+          GravitonWindow.setFullScreen(true);
         } else {
-          g_window.setFullScreen(false);
+          GravitonWindow.setFullScreen(false);
         }
       }
     },
@@ -455,7 +455,7 @@ const graviton = {
         document.getElementById("title_directory").children[0].innerText =
           title + " · Graviton";
       } else {
-        g_window.setTitle(title + " · Graviton");
+        GravitonWindow.setTitle(title + " · Graviton");
       }
     },
     consoleInfo(message) {
@@ -567,7 +567,7 @@ const graviton = {
     newProject() {
       return new Promise(function(resolve, reject) {
         const { dialog } = remote
-        dialog.showOpenDialog(g_window, {
+        dialog.showOpenDialog(GravitonWindow, {
           properties: ["openDirectory"]
         })
         .then(result => {
@@ -606,7 +606,9 @@ const graviton = {
     },
     refreshEditors(){
       editors.forEach(function(ed){
-        ed.execute('forceRefresh')
+        if(ed.editor != null){
+          ed.execute('forceRefresh')
+        }
       });
     },
     closeDropmenus() {
@@ -626,17 +628,17 @@ const graviton = {
         puffin.render(windows,document.getElementById("controls_windows"))
       }else if(graviton.currentOS().codename == "darwin"){
         document.getElementById("graviton_logo_topbar").remove()
-        const {macOS } = require(path.join(__dirname,"src","javascript","components","global","control_buttons"));
+        const {macOS } = require(path.join(__dirname,"..","..","components","global","control_buttons"));
         puffin.render(macOS,document.getElementById("controls_macOS"))
       }
       if (graviton.currentOS().codename !== "linux") {
-        g_window.on("maximize", (e, cmd) => {
+        GravitonWindow.on("maximize", (e, cmd) => {
           const button = document.getElementById("maximize");
-          button.setAttribute("onclick", "g_window.unmaximize();");
+          button.setAttribute("onclick", "GravitonWindow.unmaximize();");
         });
-        g_window.on("unmaximize", (e, cmd) => {
+        GravitonWindow.on("unmaximize", (e, cmd) => {
           const button = document.getElementById("maximize");
-          button.setAttribute("onclick", "g_window.maximize();");
+          button.setAttribute("onclick", "GravitonWindow.maximize();");
         });
       }
     },
@@ -689,7 +691,12 @@ const graviton = {
       text.select();
       document.execCommand("copy");
       text.remove();
-    }
+    },
+    loadEditor : require('../editors').loadEditor,
+    editorClient : require('../editors').editorClient,
+    closeCommander: require('../../components/global/commander').closeCommander,
+    events: require('./events'),
+    setTheme : require('../theming').setTheme
   };
 
   module.exports = graviton;

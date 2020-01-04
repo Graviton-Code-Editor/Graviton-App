@@ -1,0 +1,227 @@
+#editors {
+	.editor_screen {
+		font-size: var(--editor-font-size);
+		background: var(--editorBackgroundColor);
+		float: left;
+		display: flex;
+		flex-direction: column;
+		max-height: 100%;
+		width: 100%;
+		margin: 0;
+		color: var(--primaryText);
+		overflow: hidden;
+		box-shadow: -2px 0px 7px var(--shadows);
+		opacity: 1;
+		~ {
+			.editor_screen {
+				.g_tabs_bar {
+					.tab_component {
+						border-top-left-radius: 0px;
+					}
+				}
+			}
+		}
+		.CodeMirror-line {
+			>span {
+				>span {
+					line-height: 1.4em;
+				}
+			}
+		}
+		.g_tabs_bar {
+			.tab_component {
+				position: relative;
+				transition: 0.05s;
+				color:var(--unfocusedText);
+				text-align: center;
+				vertical-align: middle;
+				height: 37px;
+				white-space: nowrap;
+				display: inline-block;
+				background: transparent;
+				cursor: pointer;
+				transform: scale(1);
+				min-width: 300px;
+				&:hover {
+					transform: scale(1);
+					transition: 0.05;
+					background: var(--widgetColor);
+				}
+				&:active {
+					transition: 0.05;
+					transform: scale(var(--scalation));
+				}
+				> p {
+					overflow: hidden;
+					text-overflow: ellipsis;
+					position: relative;
+					font-size: 12px;
+					min-width: 50px;
+					max-width: 65%;
+					white-space: nowrap;
+					height: auto;
+					line-height: 20px;
+					bottom: 4.5px;
+					left: 0px;
+					margin-left: 11px;
+					float: left;
+					text-align: center;
+				}
+				.close_tab {
+					position: relative;
+					top: 32%;
+					right: 0;
+					float: right;
+					margin-right: 25px;
+					margin-left: 5px;
+					vertical-align: center;
+					position: relative;
+					min-width: 12px;
+					width: 12px;
+					min-height: 12px;
+					height: 12px;
+					border: none;
+					background: transparent;
+					fill: var(--primaryText);
+					&:hover {
+						cursor: pointer;
+						fill: var(--accentColor);
+						stroke: var(--accentColor);
+					}
+				}
+			}
+			.tab_component.selected {
+				background: var(--secondaryColor);
+				box-shadow: 0px 0px 7px var(--shadows);
+			}
+			.tab_component[file_status~="saved"] {
+				&:not(.selected) {
+					.close_tab {
+						opacity: 0;
+					}
+				}
+				&:hover {
+					.close_tab {
+						opacity: 1;
+					}
+				}
+			}
+		}
+		>.g_tabs_bar {
+			min-height: 37px;
+			max-height: 37px;
+			position: relative;
+			float: left;
+			flex: 37px;
+			overflow: auto;
+			overflow-y: hidden;
+			-webkit-user-select: none;
+			font-size: 15px;
+			background: var(--primaryColor);
+			top: 0;
+			left: 0;
+			margin: 0;
+			padding: 0;
+			color: var(--primaryText);
+			border-top-left-radius: inherit;
+			&:empty {
+				background: var(--editorBackgroundColors);
+			}
+		}
+		~ {
+			.editor_screen {
+				border-top-left-radius: 0px;
+			}
+		}
+		>.g_editors_editors {
+			flex: auto;
+			overflow: hidden;
+			height: 90%;
+			>.code-space {
+				position: relative;
+				display: flex;
+				min-height: 0px;
+				max-height: 300px;
+				overflow: visible;
+				>div {
+					min-width: 100%;
+					margin: 0;
+					max-width: 100%;
+				}
+				.map {
+					>div {
+						min-width: 100% !important;
+					}
+				}
+			}
+		}
+		.g_editors_editors {
+			>.code-space {
+				img {
+					user-select: none;
+					pointer-events: none;
+					position: relative;
+					max-width: 90%;
+					max-height: 90%;
+					margin: 0 auto;
+					border-style: none;
+				}
+			}
+		}
+		>.g_status_bar {
+			flex: 30px;
+			min-height: 30px;
+			max-height: 30px;
+			background: var(--primaryColor);
+			border: none;
+			display: flex;
+			justify-content: left;
+			box-shadow: 0px 3px 5px var(--shadows);
+			display: block;
+			border: 0px !important;
+			&:empty {
+				background: var(--editorBackgroundColor);
+			}
+			span {
+				top: 0;
+				margin: 0;
+				padding: 6px;
+				text-align: left;
+				flex: 1;
+				color: var(--primaryText);
+				font-size: 13px;
+				user-select: none;
+				min-height: 100%;
+				position: relative;
+				width: auto;
+				background: transparent;
+				max-width: auto;
+				white-space: pre-wrap;
+				float: left;
+				bottom: 0;
+				&:hover {
+					background: var(--widgetColor);
+				}
+			} 
+		}
+		&.dragging {
+			transition: 0.1s;
+			background: var(--primaryColor);
+			>.g_status_bar {
+				transition: 0.1s;
+				background: var(--primaryColor);
+			}
+			>.g_tabs_bar {
+				transition: 0.1s;
+				background: var(--primaryColor);
+			}
+		}
+		&.active{
+			border:none;
+			background:var(--editorBackgroundColor);
+			.tab_component {
+				color:var(--primaryText) ;
+			}
+		}
+	}
+}

@@ -19,12 +19,14 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 @use './components/button';
 @use './components/context';
 @use './components/dialogs';
+@use './components/editor_screen';
 @use './components/emojies';
 @use './components/explorer';
 @use './components/gv-navpanel';
 @use './components/gv-panel';
 @use './components/gv-processbar';
 @use './components/input';
+@use './components/notifications';
 @use './components/switch';
 @use './components/windows';
 
@@ -36,31 +38,30 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 @use './components';
 @use './menus';
 
-
 :root {
-	--primarycolor: #222222;
-	--secondarycolor: #171717;
-	--accentcolor: #ff0048;
-	--accentlightcolor: #fe3d78;
-	--accentdarkcolor: #c8002f;
-	--white-black: white;
-	--black-white: white;
-	--editor-background-color: #191919;
-	--editor-font-size: 13px;
-	--widget-color: #3b3b3b;
-	--buttons-roundness: 5px;
-	--dropmenu-background-color: #2e2e2e;
-	--dropmenu-buttons-disabled-color: lightgray;
-	--dropmenu-span-color: #818181;
-	--titlebar-icons-color: white;
-	--window-radius: 8px;
-	--notifications-background-color: #252525;
-	--notifications-window-radius: 5px;
+	--primaryColor: #222222;
+	--secondaryColor: #171717;
+	--accentColor: #ff0048;
+	--accentLightColor: #fe3d78;
+	--accentDarkColor: #c8002f;
+	--primaryText: white;
+	--secondaryText: black;
+	--unfocusedText:lightgray;
+	--editorBackgroundColor: #191919;
+	--editorFontSize: 13px;
+	--widgetColor: #3b3b3b;
+	--buttonsRoundness: 5px;
+	--dropmenuBackgroundColor: #2e2e2e;
+	--dropmenuSpanColor: #818181;
+	--titlebarIconsColor: white;
+	--windowRadius: 8px;
+	--notificationsBackgroundColor: #252525;
+	--notificationsWindowRadius: 5px;
 	--shadows: rgba(0, 0, 0, 0.25);
 	--scalation: 0.98;
-	--scroll-color: rgba(255, 255, 255, 0.2);
-	--scroll-color-hover: rgba(255, 255, 255, 0.5);
-	--window-border-color: #2e2e2e;
+	--scrollColor: rgba(255, 255, 255, 0.2);
+	--scrollColorHover: rgba(255, 255, 255, 0.5);
+	--windowBorderColor: #2e2e2e;
 	--blur: 0px;
 }
 
@@ -228,7 +229,7 @@ head {
 	box-shadow: 0px 3px 5px var(--shadows);
 }
 .CodeMirror-linenumber {
-	background: var(--editor-background-color);
+	background: var(--editorBackgroundColor);
 }
 .smallScrollBar {
 	&::-webkit-scrollbar {
@@ -307,19 +308,7 @@ head {
 	padding: 0;
 	margin: 0;
 	display: flex;
-	.editor_screen {
-		font-size: var(--editor-font-size);
-		background: var(--editor-background-color);
-		float: left;
-		display: flex;
-		flex-direction: column;
-		max-height: 100%;
-		width: 100%;
-		margin: 0;
-		color: var(--white-black);
-		overflow: hidden;
-		box-shadow: -2px 0px 7px var(--shadows);
-	}
+	
 }
 .explorer {
 	min-width: 15%;
@@ -329,7 +318,7 @@ head {
 	height: 100%;
 	overflow: hidden;
 	font-size: 12px;
-	color: var(--white-black);
+	color: var(--primaryText);
 	background: var(--primaryColor);
 	-webkit-user-select: none;
 	float: left;
@@ -367,119 +356,7 @@ head {
 	margin: 0;
 	padding: 0;
 }
-#editors {
-	.editor_screen {
-		>.g_tabs_bar {
-			min-height: 37px;
-			max-height: 37px;
-			position: relative;
-			float: left;
-			flex: 37px;
-			overflow: auto;
-			overflow-y: hidden;
-			-webkit-user-select: none;
-			font-size: 15px;
-			background: var(--primaryColor);
-			top: 0;
-			left: 0;
-			margin: 0;
-			padding: 0;
-			color: var(--white-black);
-			border-top-left-radius: inherit;
-			&:empty {
-				background: var(--editor-background-colors);
-			}
-		}
-		~ {
-			.editor_screen {
-				border-top-left-radius: 0px;
-			}
-		}
-		>.g_editors_editors {
-			flex: auto;
-			overflow: hidden;
-			height: 90%;
-			>.code-space {
-				position: relative;
-				display: flex;
-				min-height: 0px;
-				max-height: 300px;
-				overflow: visible;
-				>div {
-					min-width: 100%;
-					margin: 0;
-					max-width: 100%;
-				}
-				.map {
-					>div {
-						min-width: 100% !important;
-					}
-				}
-			}
-		}
-		.g_editors_editors {
-			>.code-space {
-				img {
-					user-select: none;
-					pointer-events: none;
-					position: relative;
-					max-width: 90%;
-					max-height: 90%;
-					margin: 0 auto;
-					border-style: none;
-				}
-			}
-		}
-		>.g_status_bar {
-			flex: 30px;
-			min-height: 30px;
-			max-height: 30px;
-			background: var(--primaryColor);
-			border: none;
-			display: flex;
-			justify-content: left;
-			box-shadow: 0px 3px 5px var(--shadows);
-			display: block;
-			border: 0px !important;
-			&:empty {
-				background: var(--editor-background-color);
-			}
-			span {
-				top: 0;
-				margin: 0;
-				padding: 6px;
-				text-align: left;
-				flex: 1;
-				color: var(--white-black);
-				font-size: 13px;
-				user-select: none;
-				min-height: 100%;
-				position: relative;
-				width: auto;
-				background: transparent;
-				max-width: auto;
-				white-space: pre-wrap;
-				float: left;
-				bottom: 0;
-				&:hover {
-					background: var(--widget-color);
-				}
-			}
-		}
-	}
-	.editor_screen.dragging {
-		transition: 0.1s;
-		background: var(--primaryColor);
-		>.g_status_bar {
-			transition: 0.1s;
-			background: var(--primaryColor);
-		}
-		>.g_tabs_bar {
-			transition: 0.1s;
-			background: var(--primaryColor);
-		}
-	}
-}
+
 .temp_dir_message {
 	font-size: 15px;
 	user-select: none;
@@ -490,7 +367,7 @@ head {
 	top: 50%;
 	text-align: center;
 	transform: translate(-50%, -50%);
-	color: var(--white-black);
+	color: var(--primaryText);
 	width: auto;
 }
 .g_tabs_bar {
@@ -503,24 +380,7 @@ head {
 		}
 	}
 }
-.editor_screen {
-	~ {
-		.editor_screen {
-			.g_tabs_bar {
-				.tab_component {
-					border-top-left-radius: 0px;
-				}
-			}
-		}
-	}
-	.CodeMirror-line {
-		>span {
-			>span {
-				line-height: 1.4em;
-			}
-		}
-	}
-}
+
 .flex {
 	padding: 0px 15px;
 	margin: 0;
@@ -543,7 +403,7 @@ head {
 		width: 40px;
 		height: 40px;
 		margin: 3px;
-		background: var(--white-black);
+		background: var(--primaryText);
 		float: left;
 		animation: up_down 0.6s linear infinite;
 	}
@@ -592,7 +452,7 @@ h4 {
 	height: 3px;
 	margin: 2px 15px;
 	padding: 4px;
-	border-top: 2px solid var(--widget-color);
+	border-top: 2px solid var(--widgetColor);
 	background: transparent;
 	cursor: n-resize;
 }

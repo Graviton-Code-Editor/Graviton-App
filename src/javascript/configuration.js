@@ -418,7 +418,7 @@ document.addEventListener("graviton_loaded",function(){
             closeOnEnter:false,
             inputType:"number",
             onEnter(lineNumber){
-              if(editor != null){
+              if(graviton.isEditorAvailable() && lineNumber != ""){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0})
                 }else if(lineNumber > graviton.getCurrentEditor().execute("getLineCount")){
@@ -429,7 +429,7 @@ document.addEventListener("graviton_loaded",function(){
               }
             },
             onWriting(lineNumber){
-              if(editor != null ){
+              if(graviton.isEditorAvailable() && lineNumber != ""){
                 if(lineNumber < 0){
                   graviton.getCurrentEditor().execute("goToLine",{line:0, char:0}, 300)
                 }else if(lineNumber > graviton.getCurrentEditor().execute("getLineCount")){

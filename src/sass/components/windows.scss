@@ -27,7 +27,7 @@
 	overflow: hidden;
 }
 .body_window {
-	color: var(--white-black);
+	color: var(--primaryText);
 	font-size: 17px;
 	border-radius: var(--window-radius);
 	box-shadow: 0px 3px 15px var(--shadows);
@@ -45,14 +45,14 @@
 	>span {
 		line-height: 30px;
 		font-size: 12px;
-		color: var(--white-black);
+		color: var(--primaryText);
 	}
 	p {
 		font-size: 14px;
 	}
 }
 .body_window_full {
-	color: var(--white-black);
+	color: var(--primaryText);
 	font-size: 17px;
 	margin: 0 auto;
 	width: 100%;

@@ -80,87 +80,6 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	}
 }
 
-#notifications {
-	position: fixed;
-	right: 20px;
-	bottom: 20px;
-	z-index: 200;
-}
-.notificationBody {
-	transition: 0.1s;
-	-webkit-app-region: no-drag;
-	animation: open_up linear 0.15s;
-	width: 300px;
-	min-height: 65px;
-	height: auto;
-	max-height: 310px;
-	background: var(--notifications-background-color);
-	position: relative;
-	color: var(--white-black);
-	padding: 12px;
-	margin: 10px;
-	border-radius: var(--notifications-window-radius);
-	box-shadow: 1px 3px 5px var(--shadows);
-	transform: scale(1);
-	&:active {
-		transition: 0.1s;
-		transform: scale(var(--scalation));
-	}
-	> div {
-		position: relative;
-		height: auto;
-		max-height: 100px;
-		overflow: auto;
-		> p {
-			font-size: 12px;
-		}
-	}
-	> button.close {
-		position: absolute;
-		right: 10px;
-		background: transparent;
-		border: 0;
-		cursor: pointer;
-		path {
-			fill: var(--white-black);
-			stroke: transparent;
-			border: 0;
-		}
-		&:hover {
-			path {
-				stroke: var(--accentColor);
-				fill: var(--accentColor);
-				border: 0;
-			}
-			svg {
-				stroke: var(--accentColor);
-				fill: var(--accentColor);
-				border: 0;
-			}
-		}
-	}
-	> h1 {
-		font-size: 18px;
-		line-height: 1px;
-		user-select: none;
-	}
-	button {
-		&:not(.close) {
-			background: var(--notifications-background-color);
-			border: none;
-			outline: none;
-			color: var(--white-black);
-			padding: 7px 12px;
-			border-radius: 5px;
-			cursor: pointer;
-			font-family: _main_font;
-			user-select: none !important;
-			&:hover {
-				background: var(--widget-color);
-			}
-		}
-	}
-}
 .floating_window {
 	animation: window_in linear 0.2s;
 	z-index: 50;
@@ -171,7 +90,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	min-width: 50px;
 	min-height: 50px;
 	background: var(--notifications-background-color);
-	color: var(--white-black);
+	color: var(--primaryText);
 	padding: 10px;
 	margin: 10px;
 	border-radius: var(--notifications-window-radius);
@@ -206,90 +125,12 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		opacity: 0.6;
 	}
 }
-.g_tabs_bar {
-	.tab_component {
-		position: relative;
-		transition: 0.05s;
-		color: var(--white-black);
-		text-align: center;
-		vertical-align: middle;
-		height: 37px;
-		white-space: nowrap;
-		display: inline-block;
-		background: transparent;
-		cursor: pointer;
-		transform: scale(1);
-		min-width: 300px;
-		&:hover {
-			transform: scale(1);
-			transition: 0.05;
-			background: var(--widget-color);
-		}
-		&:active {
-			transition: 0.05;
-			transform: scale(var(--scalation));
-		}
-		> p {
-			overflow: hidden;
-			text-overflow: ellipsis;
-			position: relative;
-			font-size: 12px;
-			min-width: 50px;
-			max-width: 65%;
-			white-space: nowrap;
-			height: auto;
-			line-height: 20px;
-			bottom: 4.5px;
-			left: 0px;
-			margin-left: 11px;
-			float: left;
-			text-align: center;
-		}
-		.close_tab {
-			position: relative;
-			top: 32%;
-			right: 0;
-			float: right;
-			margin-right: 25px;
-			margin-left: 5px;
-			vertical-align: center;
-			position: relative;
-			min-width: 12px;
-			width: 12px;
-			min-height: 12px;
-			height: 12px;
-			border: none;
-			background: transparent;
-			fill: var(--white-black);
-			&:hover {
-				cursor: pointer;
-				fill: var(--accentColor);
-				stroke: var(--accentColor);
-			}
-		}
-	}
-	.tab_component.selected {
-		background: var(--secondaryColor);
-		box-shadow: 0px 0px 7px var(--shadows);
-	}
-	.tab_component[file_status~="saved"] {
-		&:not(.selected) {
-			.close_tab {
-				opacity: 0;
-			}
-		}
-		&:hover {
-			.close_tab {
-				opacity: 1;
-			}
-		}
-	}
-}
+
 
 .icon {
 	background: transparent;
 	border: 0px;
-	color: var(--white-black);
+	color: var(--primaryText);
 }
 .inline-widget {
 	display: flex;
@@ -324,7 +165,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 		white-space: nowrap;
 	}
 	&:hover {
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 	&:active {
 		box-shadow: 0px 0px 0px 3px var(--accentColor);
@@ -452,7 +293,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	overflow: hidden;
 	position: relative;
 	width: auto;
-	background: var(--editor-background-color);
+	background: var(--editorBackgroundColor);
 	padding: 10px;
 	box-sizing: border-box;
 	max-width: 100%;
@@ -474,7 +315,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	overflow: auto;
 	position: relative;
 	width: auto;
-	background: var(--editor-background-color);
+	background: var(--editorBackgroundColor);
 	box-sizing: border-box;
 	max-width: 100%;
 	padding: 0;
@@ -515,7 +356,7 @@ textarea {
 	border-radius: 5px;
 	border: 0;
 	background: var(--primaryColor);
-	color: var(--white-black);
+	color: var(--primaryText);
 }
 .radio {
 	@keyframes scale_dot {
@@ -614,12 +455,12 @@ select {
 		background: var(--secondaryColor);
 		padding: 7px;
 		min-width: 100%;
-		color: var(--white-black);
+		color: var(--primaryText);
 		border: 2px solid var(--accentColor);
 		border-radius: 5px;
 	}
 	a {
-		color: var(--white-black);
+		color: var(--primaryText);
 		font-size: 14px;
 		display: block;
 		white-space: pre-wrap;
@@ -634,7 +475,7 @@ select {
 	}
 	a.active {
 		background: var(--accentColor);
-		color: var(--black-white);
+		color: var(--secondaryText);
 		border-radius: 5px;
 	}
 }

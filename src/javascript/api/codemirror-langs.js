@@ -1,9 +1,4 @@
-module.exports = {
-  /*
-    * Organized way of requiring all codemirror dependencies
-    */
-  langs () {
-    require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'mode', 'simple.js'))
+require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'mode', 'simple.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'clike', 'clike.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'css', 'css.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'xml', 'xml.js'))
@@ -42,5 +37,3 @@ module.exports = {
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'indent-fold.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'markdown-fold.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'xml-fold.js'))
-  }
-}

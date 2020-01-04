@@ -12,14 +12,14 @@ const additionalSettingsPage = puffin.element(`
                     <input id="slider_zoom" change="$refreshSettings" type="range" min="0" step="5" max="50"
                     value="${
                         current_config.appZoom
-                    }" class="slider"/>
+                    }" class="slider-widget"/>
                 </div>
                 <div class="section-4">
                     <p>${getTranslation('Blur')}</p>
                     <input id="slider_blur" change="$refreshSettings" type="range" min="0" step="0.2" max="50"
                     value="${
                         current_config.blurPreferences
-                    }" class="slider"/>
+                    }" class="slider-widget"/>
                 </div>
                 <div class="section-4">
                     <p>${getTranslation('Bounce')}</p>

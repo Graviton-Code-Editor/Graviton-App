@@ -4,7 +4,7 @@
 }
 .explorer {
 	div.directory {
-		color: var(--white-black);
+		color: var(--primaryText);
 		border-radius: 70px;
 		transition: 0.05s;
 		clear: both;
@@ -33,7 +33,7 @@
 		&:hover {
 			transition: 0.05s;
 			border-radius: 4px;
-			background: var(--widget-color);
+			background: var(--widgetColor);
 		}
 		&:active {
 			transition: 0.05s;
@@ -42,7 +42,7 @@
 	}
 }
 .panel_button {
-	color: var(--white-black);
+	color: var(--primaryText);
 	border-radius: 70px;
 	transition: 0.05s;
 	font-size: 12px;
@@ -56,7 +56,7 @@
 	&:hover {
 		transition: 0.05s;
 		border-radius: 4px;
-		background: var(--widget-color);
+		background: var(--widgetColor);
 	}
 	&:active {
 		transition: 0.05s;

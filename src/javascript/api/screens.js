@@ -1,5 +1,16 @@
+function highlightScreen(id){
+  if(document.getElementById(id)==null) return;
+  editor_screens.forEach(function(screen){
+    if(screen.id != id){
+      document.getElementById(screen.id).classList.remove("active");
+    }
+  })
+  document.getElementById(id).classList.add("active");
+  current_screen.id = id
+}
+
 module.exports = {
-  add: function (id="screen_"+graviton.getRandom()) {
+  add: function (id=`screen_${graviton.getRandom()}`) {
     const current_id = id;
     current_screen = {
       id: current_id
@@ -82,17 +93,10 @@ module.exports = {
         }')">Remove screen</span>`
       }
     }
-    new_screen_editor.addEventListener(
-      'click',
-      function (event) {
-        for (i = 0; i < editor_screens.length; i++) {
-          if (editor_screens[i].id === this.id) {
-            current_screen.id = this.id
-          }
-        }
-      },
-      false
-    )
+    new_screen_editor.onclick = function(){
+      highlightScreen(current_id)
+    }
+    highlightScreen(current_id)
     document.dispatchEvent(graviton.events.splitScreen())
     graviton.resizeTerminals()
   },
@@ -126,6 +130,7 @@ module.exports = {
                 editingTab = null
               }
             }
+            highlightScreen(current_screen.id)
             return true
           } else {
             graviton.throwError(
@@ -168,6 +173,7 @@ module.exports = {
                 .children[1].children[0].children[1].remove()
             }
           }
+          highlightScreen(current_screen.id)
         } else {
           graviton.throwError(
             getTranslation('Notification.CloseAllTabsBefore')

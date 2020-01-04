@@ -1,7 +1,7 @@
 .dialog_body {
 	opacity: 1;
 	position: absolute;
-	color: var(--white-black);
+	color: var(--primaryText);
 	font-size: 17px;
 	padding: 17px;
 	overflow: auto;
@@ -43,7 +43,7 @@
 			margin-left: 8px;
 			padding: 7px 27px;
 			background: var(--primaryColor);
-			color: var(--white-black);
+			color: var(--primaryText);
 			box-sizing: border-box;
 			position: relative;
 			left: 0px;
@@ -59,7 +59,7 @@
 			&:hover {
 				transition: 0.1s;
 				cursor: pointer;
-				background: var(--widget-color);
+				background: var(--widgetColor);
 			}
 			&:active {
 				transition: 0.1s;
@@ -68,7 +68,7 @@
 		}
 		>button.important {
 			background: var(--accentColor);
-			color: var(--black-white);
+			color: var(--secondaryText);
 			&:hover {
 				background: var(--accentDarkColor);
 			}

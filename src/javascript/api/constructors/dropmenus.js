@@ -30,7 +30,7 @@ myDropMenu.setList({
 'use strict'
 
 module.exports = {
-  Dropmenu: function ({ id, translation = false }) {
+  dropMenu: function ({ id, translation = false }) {
     if (typeof [...arguments] !== 'object') {
       graviton.throwError('Parsed argument is not object.')
       return
