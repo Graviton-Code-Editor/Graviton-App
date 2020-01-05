@@ -11,15 +11,20 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 "use strict";
 
 const fallbackProperties = {
-  'white-black' : 'primaryText',
-  'black-white' : 'secondaryText',
-  'editor-background-color':'editorBackgroundColor',
-  'widget-color':'widgetColor',
-  'editor-font-size':'editorFontSize',
-  'buttons-roundness':'buttonsRoundness',
-  'dropmenu-background-color':'dropmenuBackgroundColor',
-  'dropmenu-buttons-span-color':'dropmenuButtonsDisabledColor',
-  'dropmenu-span-color':'dropmenuSpanColor'
+	'editor-background-color':'editorBackgroundColor',
+	'white-black' : 'primaryText',
+	'black-white' : 'secondaryText',
+	'widget-color':'widgetColor',
+	'buttons-roundness':'buttonsRoundness',
+	'dropmenu-background-color':'dropmenuBackgroundColor',
+	'dropmenu-span-color':'dropmenuSpanColor',
+	'titleBar-icons-color':'titleBarIconsColor',
+	'window-radius':'windowsRadius',
+	"window-border-color":"windowsBorderColor",
+	"notifications-background-color":"notificationsBackgroundColor",
+	"notifications-window-radius":"notificationsRadius",
+	"scroll-color":"scrollColor",
+	"scroll-color-hover":"scrollColorHovering"
 }
 
 function setProperties(current_config) {
@@ -56,17 +61,24 @@ function setProperties(current_config) {
 			current_config.animationsPreferences === "activated" ||
 			Object.keys(colors)[i] !== "blur"
 		) {
-      //Prevent changing the scalation when the animations are off
-      let propertyName = Object.keys(colors)[i];
-      if(propertyName in fallbackProperties) propertyName = fallbackProperties[propertyName]
-
 			document.documentElement.style.setProperty(
-				"--" + propertyName,
+				`--${Object.keys(colors)[i]}`,
 				colors[Object.keys(colors)[i]]
 			); //Update the CSS variables
 		}
 	}
 }
+
+
+function filterColors(colors){
+	Object.keys(colors).map(function(color){
+		if(color in fallbackProperties) {
+			colors[fallbackProperties[color]] = colors[color]
+			delete colors[color]
+		}
+	})
+}
+
 module.exports = {
 	setTheme: function(name) {
 		if (graviton.getCurrentTheme() === name) return;
@@ -78,8 +90,8 @@ module.exports = {
 				current_config["theme"] = themes[i].name;
 				if (themes[i].type === "custom_theme") {
 					themes[i].colors;
-					themeObject = themes[i];
 				}
+				filterColors(themes[i].colors)
 				Plugins.enableCSS(themes[i]);
 				themeObject = themes[i];
 				setProperties(current_config);
@@ -152,10 +164,10 @@ module.exports = {
 				if (terminal != null) {
 					terminal.xterm.setOption("theme", {
 						background:
-							themeObject.colors["editor-background-color"],
-						foreground: themeObject.colors["white-black"],
-						cursor: themeObject.colors["white-black"],
-						selection: themeObject.colors["scroll-color"]
+							themeObject.colors["editorBackgroundColor"],
+						foreground: themeObject.colors["primaryText"],
+						cursor: themeObject.colors["primaryText"],
+						selection: themeObject.colors["scrollColor"]
 					});
 				}
 				document.body.setAttribute("theme", themeObject.name);

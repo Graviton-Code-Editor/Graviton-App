@@ -1,7 +1,7 @@
 function saveFileAs() {
     const { dialog } = remote;
     dialog
-      .showSaveDialog(g_window)
+      .showSaveDialog(GravitonWindow)
       .then(result => {
         if (result.canceled) return;
         fs.writeFile(result.filePath, editor.getValue())
@@ -27,7 +27,7 @@ function saveFileAs() {
   function openFile() {
     const { dialog } = remote;
     dialog
-      .showOpenDialog(g_window, {
+      .showOpenDialog(GravitonWindow, {
         properties: ["openFile", "multiSelections"]
       })
       .then(result => {
@@ -48,7 +48,7 @@ function saveFileAs() {
   function openFolder() {
     const { dialog } = remote;
     dialog
-      .showOpenDialog(g_window, {
+      .showOpenDialog(GravitonWindow, {
         properties: ["openDirectory"]
       })
       .then(result => {

@@ -390,10 +390,6 @@ textarea {
 		border-radius: 50px;
 		border: 3px solid var(--widget-color);
 		box-sizing: border-box;
-		&:active{ 
-			transition: 0.1s;
-			box-shadow:0 0 0 2px var(--accentLightColor)
-		}
 	} 
 	& input {
 		position: relative;
@@ -412,6 +408,15 @@ textarea {
 	}
 	&:hover{
 		background:var(--primaryColor);
+		.radio_dot {
+			background: var(--widgetColor);
+		}
+	}
+	&:active{ 
+		.radio_dot {
+			transition: 0.1s;
+			box-shadow:0 0 0 2px var(--accentLightColor)
+		}
 
 	}
 }

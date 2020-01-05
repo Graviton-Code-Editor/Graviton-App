@@ -29,7 +29,7 @@
 .body_window {
 	color: var(--primaryText);
 	font-size: 17px;
-	border-radius: var(--window-radius);
+	border-radius: var(--windowRadius);
 	box-shadow: 0px 3px 15px var(--shadows);
 	max-width: 85%;
 	max-height: 85%;
@@ -39,7 +39,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border: 1px solid var(--window-border-color);
+	border: 1px solid var(--windowsBorderColor);
 	-webkit-user-select: none;
 	overflow: auto;
 	>span {

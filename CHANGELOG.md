@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200105 - 1 [1.2.0]
+- Created a "Switch tab" commander, binded in 'Ctrl + Tab'
+- Fully adapted the CSS variables fallback system
+
 ### 200104 - 1 [1.2.0]
 - Better SASS management
 - Some refactorization

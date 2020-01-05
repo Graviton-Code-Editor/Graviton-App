@@ -53,7 +53,7 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 	--buttonsRoundness: 5px;
 	--dropmenuBackgroundColor: #2e2e2e;
 	--dropmenuSpanColor: #818181;
-	--titlebarIconsColor: white;
+	--titleBarIconsColor: white;
 	--windowRadius: 8px;
 	--notificationsBackgroundColor: #252525;
 	--notificationsWindowRadius: 5px;
@@ -197,10 +197,10 @@ head {
 	&::-webkit-scrollbar-thumb {
 		border-radius: 0.2rem;
 		transition: 0.1s;
-		background: var(--scroll-color);
+		background: var(--scrollColor);
 		&:hover {
 			transition: 0.1s;
-			background: var(--scroll-color-hover);
+			background: var(--scrollColorHovering);
 		}
 	}
 	&::-webkit-scrollbar-corner {

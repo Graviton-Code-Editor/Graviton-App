@@ -75,6 +75,10 @@ let current_config = {
     {
       "combo":"esc",
       "action":"Close all windows"
+    },
+    {
+      "combo":"alt tab",
+      "action":"Switch tabs"
     }
   ]
 };
@@ -461,6 +465,26 @@ document.addEventListener("graviton_loaded",function(){
             closeOnEnter:false
           })
           ThemesCommander.open()
+        }
+      },
+      {
+        name:"Switch tabs",
+        action:function(){
+          const TabsList = tabs.map((tab)=>{
+            return {
+              name:tab.getAttribute("name"),
+              action:function(){
+                loadTab(tab)
+              }
+            }
+          })
+          const TabsCommander = new CommandLauncher({
+            options:TabsList,
+            showAnimation:false,
+            closeOnUnpress:true,
+            enterOnClose:true
+          })
+          TabsCommander.open()
         }
       }
     ]

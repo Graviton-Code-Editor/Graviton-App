@@ -50,6 +50,7 @@ function loadKeyshortcuts(){
         shortcutJS.subscribe('Menu bar', ev => graviton.toggleMenus())
         shortcutJS.subscribe('Commander', ev => GravitonCommander.open())
         shortcutJS.subscribe('Close all windows', ev => graviton.cancelPrompts())
+        shortcutJS.subscribe('Switch tabs', ev => GravitonCommander.trigger("Switch tabs"))
         callback()
     }
     init(shorcuts)
@@ -58,9 +59,7 @@ function loadKeyshortcuts(){
         shortcutJS.reset()
         init(newShortCuts)
         GravitonState.emit("ConfigurationChanged")
-        
     })
-
 }
 
 module.exports = loadKeyshortcuts

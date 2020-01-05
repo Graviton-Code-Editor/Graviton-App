@@ -1,4 +1,4 @@
-require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'mode', 'simple.js'))
+    require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'mode', 'simple.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'clike', 'clike.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'css', 'css.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'mode', 'xml', 'xml.js'))
@@ -37,3 +37,5 @@ require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'ad
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'indent-fold.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'markdown-fold.js'))
     require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'xml-fold.js'))
+    require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'fold', 'xml-fold.js'))
+    require(path.join(__dirname, '..', '..', '..', 'node_modules', 'codemirror', 'addon', 'comment', 'comment.js'))

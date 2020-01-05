@@ -40,7 +40,7 @@ module.exports = {
    * @param {string} content   Notification's content
    * @param {object} buttons   Notification's buttons list
    */
-  Notification: function ({ title, content, buttons, delay = 7000 }) {
+  Notification: function ({ title = "Notification", content ="", buttons, delay = 7000 }) {
     if (typeof [...arguments] !== 'object') {
       graviton.throwError('Parsed argument is not an object.')
       return

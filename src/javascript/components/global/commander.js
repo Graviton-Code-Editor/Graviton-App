@@ -1,4 +1,5 @@
 function openCommander(Commander){
+    if(document.getElementById("commander_container")!=null)return;
     const commander = puffin.element(`
         <div count="0" id="commander_container" class="commander_container commander_struct">
             <input type="${Commander.inputType}" maxlength="${Commander.maxCharacters}" class="commander_struct" placeHolder="Write a command" keydown="$scrolling"  keyup="$writing"/>
@@ -10,7 +11,7 @@ function openCommander(Commander){
         events:{
             mounted(target){
                 if(Commander.showAnimation){
-                    target.style = "  animation: open_commander 0.10s;"
+                    target.style = "animation: open_commander 0.10s;"
                 }
                 target.children[0].focus()
                 showOptions(Commander.options)
@@ -19,23 +20,27 @@ function openCommander(Commander){
         methods:[
             function scrolling(e){
                 switch(e.keyCode){
-                    case 9:
-                        selectFromOption(Commander)
-                        e.preventDefault()
-                        break;
                     case 13:
                         selectFromOption(Commander)
                         break;
                     case 38:
                         hintOption("up")
                         break;
+                    case 9:
                     case 40:
                         hintOption("down")
+                        e.preventDefault()
                         break;
                 }                
             },
             function writing(e){
+
                 switch(e.keyCode){
+                    case 17:
+                        if(Commander.closeOnUnpress){
+                            closeCommander(Commander)
+                        }
+                        break;
                     case 13:
                     case 9:
                     case 38:
@@ -97,13 +102,25 @@ function hintOption(direction){
                 if(currentOption > 8){
                     list.parentElement.scrollTop +=33
                 }
+            }else{
+                list.children[currentOption].classList.toggle("active")
+                currentOption = 0
+                commander.setAttribute("count",currentOption)
+                list.children[0].classList.toggle("active")
+                if(currentOption > 8){
+                    list.parentElement.scrollTop = currentOption
+                }
             }
             
         break;
     }
 }
 
-function CommandLauncher({options, showAnimation = true, closeOnEnter = true ,onEnter = ()=>{}, onWriting = ()=>{},inputType="",maxCharacters = 35}){
+function triggerCommand(command,options){
+    options.filter((op)=> op.name === command)[0].action()
+}
+
+function CommandLauncher({options, showAnimation = true, closeOnEnter = true ,onEnter = ()=>{}, onWriting = ()=>{},inputType="",maxCharacters = 35,enterOnClose=false,closeOnUnpress=false}){
     return {
         options:options,
         open : ()=> openCommander({
@@ -113,8 +130,11 @@ function CommandLauncher({options, showAnimation = true, closeOnEnter = true ,on
             onEnter:onEnter,
             onWriting:onWriting,
             inputType,
-            maxCharacters:maxCharacters
+            maxCharacters:maxCharacters,
+            enterOnClose:enterOnClose,
+            closeOnUnpress:closeOnUnpress
         }),
+        trigger: (command)=>triggerCommand(command,options),
         close : ()=> closeCommander()
     }
 }
@@ -130,9 +150,15 @@ function matchCommands(Commander,command){
     }
 }
 
-function closeCommander(){
+function closeCommander(Commander){
+    if(Commander != null){
+        if(Commander.enterOnClose){
+            selectFromOption(Commander)
+        }
+    }
     const target = document.getElementById("commander_container")
     if(target!=null) target.remove()
+    
 }
 
 function existsCommand(Commander,command){

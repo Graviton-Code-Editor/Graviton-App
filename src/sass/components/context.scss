@@ -28,12 +28,12 @@ context {
 			margin-left: 3px;
 		}
 		&::-webkit-scrollbar-thumb {
-			background: var(--scroll-color);
+			background: var(--scrollColorHovering);
 			border-radius: 3px;
 			border: 3px solid transparent;
 			padding: 8px;
 			&:hover {
-				background: var(--scroll-color-hover);
+				background: var(--scrollColorHovering-hover);
 			}
 		}
 		.option {

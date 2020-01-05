@@ -5,7 +5,7 @@
 	font-size: 17px;
 	padding: 17px;
 	overflow: auto;
-	border-radius: var(--window-radius);
+	border-radius: var(--windowsRadius);
 	box-shadow: 0px 3px 15px var(--shadows);
 	min-width: 15%;
 	max-width: 350px;
@@ -17,7 +17,7 @@
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	border: 1px solid var(--window-border-color);
+	border: 1px solid var(--windowBorderColor);
 	display: flex;
 	flex-direction: column;
 	-webkit-user-select: none;
