@@ -1,5 +1,5 @@
 <p align="center">
-   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="250" height="50" style="marign-bottom:15px" />
+   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="256" height="64.5" style="marign-bottom:15px" />
    <br>
    <a href="https://graviton.ml">graviton.ml</a>
 </p>
