@@ -68,8 +68,8 @@ module.exports = {
 
     const dialogComponent = puffin.element(`
       <div id="${id + '_dialog'}" myID="${id}">
-        <div myID="${id}" class="background_window" onclick="closeDialog('${id}')">
-          <div style="animation: ${openingAnimation}" class="dialog_body">
+        <div myID="${id}" class="background_window" onclick="closeDialog('${id}')"></div>
+        <div style="animation: ${openingAnimation}" class="dialog_body">
             <h3 >${title}</h3>
             <div style="font-size:15px; min-height:15px; position:relative;">
               <elastic-container related="self">
@@ -80,7 +80,6 @@ module.exports = {
               ${buttonsContent}
             </div>
           </div>
-        </div>
       </div>
     `,{
       components:{
