@@ -1,8 +1,8 @@
 # 🦾 Building Graviton
 
 Prerequisites:
-- NodeJS installed
-- Git installed
+- NodeJS 
+- Git
 
 Instructions to build Graviton from the source:
 
@@ -57,7 +57,7 @@ Rebuild some dependencies with:
 
 ### Testing
 
-In case you just wanna test it, run:
+In case you just wanna test it, run to compile SASS source:
 > $ npm run compile:sass
 
 And then:

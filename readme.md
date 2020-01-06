@@ -1,5 +1,5 @@
 <p align="center">
-   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="256" height="64.5" style="marign-bottom:15px" />
+   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="256" height="64.5" style="marign-bottom:15px"/>
    <br>
    <a href="https://graviton.ml">graviton.ml</a>
 </p>
@@ -20,7 +20,7 @@
 
 ✨ Highlights:
 ---
-* 🧬 Git support (plugin)
+* 🧬 Git integration (plugin)
 * 💅 Minimal UI
 * 🎨 Themes 
 * 📦 Plugins
@@ -30,7 +30,8 @@
 * 📰 Built-in font previewer
 * 🏭 A Plugin and Themes market 
 * 😇 More respectful on RAM than other alternatives 
-* ✔  Tons of supported programming languages 
+* 💆‍♀️  No telemetry
+* ✔  A lot of integrated programming languages 
 * 📝 Multi line editing 
 * 🎧 Zen mode 
 * ⛓  Code folding
@@ -69,7 +70,7 @@ Please consider revising and updating your languages in case they are missing so
 ---
 
 #### Main Developer:
-* Marc Espín [Github](https://github.com/marc2332)
+* Marc Espín Sanz [Github](https://github.com/marc2332)
 
 #### Main Contributors:
 * David Niederweis [Github](https://github.com/DJN1)
@@ -84,8 +85,7 @@ Please consider revising and updating your languages in case they are missing so
 
 🤗 Useful plugins
 * [GitPlus](https://github.com/marc2332/GitPlus): adds Git support to Graviton
-
-[Add mine!](https://github.com/marc2332/GitPlus/issues/new)
+* [Add yours](https://github.com/Graviton-Code-Editor/Graviton-App/issues/new)
 
 🤩 Useful libraries 
 ---
@@ -137,7 +137,7 @@ Do you want to build Graviton from source?
 
 😓 Known problems 
 ---
-- May not work on all Linux distributions
+- May not work on all Linux distributions, if it happens, please create an [issue](https://github.com/Graviton-Code-Editor/Graviton-App/issues/new)
 
 🧾License 
 ---
@@ -145,20 +145,4 @@ MIT License
 
 Copyright (c) Marc Espín Sanz
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+[Full license](license.md)

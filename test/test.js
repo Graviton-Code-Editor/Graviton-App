@@ -4,7 +4,7 @@
 
 const Application = require('spectron').Application
 const assert = require('assert')
-const electronPath = require('electron') // Require Electron from the binaries included in node_modules.
+const electronPath = require('electron') 
 const path = require('path')
 const fs = require('fs')
 
