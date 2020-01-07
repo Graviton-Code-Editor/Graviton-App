@@ -77,7 +77,7 @@ let current_config = {
       "action":"Close all windows"
     },
     {
-      "combo":"alt tab",
+      "combo":"ctrl tab",
       "action":"Switch tabs"
     }
   ]
@@ -128,6 +128,10 @@ if(graviton.currentOS().codename === "darwin"){
     {
       "combo":"esc",
       "action":"Close all windows"
+    },
+    {
+      "combo":"ctrl tab",
+      "action":"Switch tabs"
     }
   ]
 }
@@ -177,9 +181,13 @@ graviton.loadConfiguration = function(){
         if(localConfig.shortCuts == undefined) localConfig.shortCuts = current_config.shortCuts
         localConfig.shortCuts = localConfig.shortCuts.filter(a=>Boolean(a))
         current_config.shortCuts.forEach(function(bind){
-          bind.combo = localConfig.shortCuts.filter(function(bd){
+          const comboLoading = localConfig.shortCuts.filter(function(bd){
             return bd.action == bind.action
-          })[0].combo
+          })[0]
+          if(comboLoading != null){
+            bind.combo = comboLoading.combo
+          }
+           
         })
       }
     });
