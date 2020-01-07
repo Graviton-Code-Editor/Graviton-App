@@ -159,8 +159,10 @@
     "Process.Completed":"Abgeschlossen!",
     "Hide":"Ausblenden",
     "Show":"Einblenden",
-     "NPMPanel":"NPM Panel",
+    "NPMPanel":"NPM Panel",
     "Select":"Auswählen",
-    "By":"Bei"
+    "By":"Bei",
+    "Suggestions":"Vorschläge",
+    "KeyBindings":"Tastenkombinationen"
   }
 }
