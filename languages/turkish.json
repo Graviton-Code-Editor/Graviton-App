@@ -143,6 +143,26 @@
         "PermissionExecuteJavaScript": "JavaScript kodu çalıştırma",
         "Edit": "Düzenle",
         "Undo": "Geri al",
-        "Redo": "Tekrarla"
+        "Redo": "Tekrarla",
+        "SystemAccentColor.Error1": "Sisteminiz bu özellikle uyumlu değil.",
+        "SystemAccentColor.Error2": "Şuan ki temada sistem vurgu rengi özelliği düzgün çalışmayabilir.",
+        "TelegramChannel": "Telegram Kanalı",
+        "Settings-Advanced-Developer-Tools-text2": "Yapılandırma klasörünü aç",
+        "ExplorerPosition": "Klasör Gezgini pozisyonu",
+        "Screenshots": "Ekran görüntüleri",
+        "NoRecentProjects":"Son zamanlarda proje yok.",
+        "Miscellaneous":"Diğerleri",
+        "Explorer":"Gezgin",
+        "Process.DownloadingSource":"Kaynak indiriliyor...",
+        "Process.CheckingDependencies":"Bağımlılıklar kontrol ediliyor...",
+        "Process.InstallingDependencies":"Bağımlılıklar yükleniyor...",
+        "Process.Completed":"Tamamlandı!",
+        "Hide":"Gizle",
+        "Show":"Göster",
+        "NPMPanel":"NPM Paneli",
+        "Select":"Seç",
+        "By":"Tarafından",
+        "Suggestions":"Öneriler",
+        "KeyBindings":"Tuş atamaları"
     }
 }
