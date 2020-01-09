@@ -107,7 +107,7 @@ context {
 	animation: context_up linear 0.1s;
 	border-radius: 3px;
 	position: fixed;
-	background-color: var(--dropmenu-background-color);
+	background-color: var(--dropmenuBackgroundColor);
 	min-width: 100px;
 	width: auto;
 	overflow: auto;
@@ -119,7 +119,7 @@ context {
 		border: 0;
 		font-size: 13px;
 		color: var(--primaryText);
-		background-color: var(--dropmenu-background-color);
+		background-color: var(--dropmenuBackgroundColor);
 		padding: 7px 10px;
 		width: 100%;
 		text-align: left;

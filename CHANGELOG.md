@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 2001010 - 1 [1.2.0]
+- Updated: PuffinJS to v0.1.27
+- Fixed: context menus ( right click ) background wasn't been well applied
+
 ### 200105 - 1 [1.2.0]
 - Created a "Switch tab" commander, binded in 'Ctrl + Tab'
 - Fully adapted the CSS variables fallback system
