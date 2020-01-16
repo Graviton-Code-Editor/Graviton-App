@@ -92,11 +92,11 @@ const returnCustomization = function(){
                 target.props.appZoom = GravitonState.data.currentConfig.appZoom
             }
         },
-        methods:[
-            function setDefaultZoom(){
+        methods:{
+            setDefaultZoom(){
                 graviton.setZoom(25); 
             }
-        ],
+        },
         props:["blurPreferences","appZoom"]
     })
     return customizationSection

@@ -53,12 +53,11 @@ module.exports = {
         <button class="Button1 close_exts" click="$closeMe"></button>
       `,
       {
-        props:[],
-        methods: [
-          function closeMe() {
+        methods: {
+          closeMe() {
             closeWindow(id)
           }
-        ]
+        }
       }
     );
     buildingCloseButton.node.innerHTML = icons.close
@@ -88,11 +87,11 @@ module.exports = {
             buildingCloseButton,
             component
           },
-          methods: [
-            function closeMe() {
+          methods: {
+            closeMe() {
               closeWindow(id)
             }
-          ]
+          }
         }
       );
     }else{
@@ -121,11 +120,11 @@ module.exports = {
             buildingCloseButton,
             component
           },
-          methods: [
-            function closeMe() {
+          methods: {
+            closeMe() {
               closeWindow(id)
             }
-          ]
+          }
         }
       );
     }

@@ -15,27 +15,27 @@ function retrieveTab({ id, name, data, screen, type, longpath = "" }) {
     </div>  
 `,
     {
-      methods: [
-        function closeMe() {
+      methods: {
+        closeMe() {
           if(type == "text"){
             closeTab(`${id}${type}`,false);
           }else{
             closeTab(`${id}${type}`, true);
           }
         },
-        function hoveringMe() {
+        hoveringMe() {
           this.setAttribute("hovering", true);
         },
-        function notHoveringMe() {
+        notHoveringMe() {
           this.setAttribute("hovering", false);
         },
-        function loadMe() {
+        loadMe() {
           loadTab(this);
         },
-        function dragging() {
+        dragging() {
           event.dataTransfer.setData("id", this.id);
         }
-      ]
+      }
     }
   );
   tab.node.data = data

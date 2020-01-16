@@ -6,14 +6,14 @@ function retrieveButton(section){
           </div>
             `,
         {
-          methods: [
-            function loadMe() {
+          methods: {
+            loadMe() {
               Market.loadMoreExtensions(current_plugins,function(){
                   document.getElementById(`sec_${section}`).innerHTML = '';
                   Market.navigate(section,"force")
               }); 
             }
-          ]
+          }
         }
       );
       return button

@@ -25,18 +25,18 @@ const welcomeSetupPage = puffin.element(`
         </div>
     </div>
 `,{
-    methods:[
-        function openMarket(){
+    methods:{
+        openMarket(){
             Market.open()
         },
-        function goBack(){
+        goBack(){
             Setup.navigate("suggestions");
         },
-        function finish(){
+        finish(){
             Setup.close(); 
             Welcome.open();
         }
-    ]
+    }
 })
 
 module.exports =  welcomeSetupPage

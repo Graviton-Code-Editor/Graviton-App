@@ -8,8 +8,8 @@ function returnEditorSection(){
     </div>
     `,{
         props:["action","combo"],
-        methods:[
-            function changekey(){
+        methods:{
+            changekey(){
                 const button = this;
                 new Dialog({
                     title:"Modify shortcut",
@@ -26,7 +26,7 @@ function returnEditorSection(){
                     }
                 })
             }
-        ],
+        },
         events:{
             mounted(target){
                 GravitonState.on('KeyShortCutsChanged',function(changedBinds){

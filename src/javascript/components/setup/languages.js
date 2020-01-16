@@ -8,12 +8,12 @@ const languagesComponent = puffin.element(`
     props:[
         "name","class"
     ],
-    methods:[
-        function loadMe(){
+    methods:{
+        loadMe(){
             loadLanguage(this.getAttribute("name")); 
             selectionFromTo(this.parentElement,this);
         }
-    ]
+    }
 })
 
 const languagesPage = puffin.element(`
@@ -39,15 +39,15 @@ const languagesPage = puffin.element(`
     components:{
         languagesComponent
     },
-    methods:[
-        function goForward(){
+    methods:{
+        goForward(){
             if(themes.length){
                 Setup.navigate('themes') 
             }else{
                 Setup.navigate('additional_settings')
             }
         }
-    ]
+    }
 })
 
 module.exports = languagesPage

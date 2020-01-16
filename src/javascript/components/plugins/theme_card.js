@@ -22,13 +22,13 @@ const theme_card = puffin.element(`
        "accent",
        "accentDark"
     ],
-    methods:[
-        function setTheme(){
+    methods:{
+        setTheme(){
             graviton.setTheme(this.getAttribute("name"))
             selectionFromTo(this.parentElement,this);
             GravitonState.emit("ConfigurationChanged")
         }
-    ]
+    }
 });
 
 module.exports = theme_card;

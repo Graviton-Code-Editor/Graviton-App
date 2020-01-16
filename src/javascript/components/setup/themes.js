@@ -7,12 +7,12 @@ const themeComponent = puffin.element(`
     props:[
         "src","name","class"
     ],
-    methods:[
-        function setMe(){
+    methods:{
+        setMe(){
             graviton.setTheme(this.getAttribute("name")); 
             selectionFromTo(this.parentElement,this);
         }
-    ]
+    }
 })
 
 
@@ -36,14 +36,14 @@ const themesPage = puffin.element(`
     components:{
         themeComponent
     },
-    methods:[
-        function goBack(){
+    methods:{
+        goBack(){
             Setup.navigate("languages"); 
         },
-        function goForward(){
+        goForward(){
             Setup.navigate("additional_settings");
         }
-    ]
+    }
 })
 
 module.exports = themesPage

@@ -32,12 +32,12 @@ function returnAdvanced(){
             </gv-blockcontent>
         </elastic-container>
     `,{
-        methods:[
-            function openConfiguration(){
+        methods:{
+            openConfiguration(){
                 const shell = remote.shell
                 shell.openItem(DataFolderDir)
             }
-        ]
+        }
     })
     return advancedSection
 }

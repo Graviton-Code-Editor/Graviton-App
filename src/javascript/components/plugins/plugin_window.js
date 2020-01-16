@@ -130,7 +130,7 @@ function retrieveWindow({
     }
   })()}
   
-  </div>`, { props: [] });
+  </div>`);
 
   const pluginTabs = puffin.element(`
     <gv-navbar class="top-bar">
@@ -143,7 +143,7 @@ function retrieveWindow({
         ${package.screenshots? `<gv-navbutton href="screenshots" >${getTranslation(
             "Screenshots"
         )}</gv-navbutton>`:""}  
-    </gv-navbar>`, { props: [] });
+    </gv-navbar>`);
 
     const pluginTabsContent = puffin.element(`
     <ul  class="list">
@@ -165,7 +165,7 @@ function retrieveWindow({
         return content;
       })()}
     </ul>
-   `, { props: [] });
+   `);
 
   const pluginPage = puffin.element(
     `
@@ -208,8 +208,7 @@ function retrieveWindow({
         pluginButtons,
         pluginTabs,
         pluginTabsContent
-      },
-      props: []
+      }
     }
   );
   return pluginPage;

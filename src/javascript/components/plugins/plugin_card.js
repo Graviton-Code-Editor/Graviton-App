@@ -73,8 +73,8 @@ function retrieveCard({
         cardBottom
       },
       props: [],
-      methods: [
-        function openMe() {
+      methods: {
+        openMe() {
           if(clickable){
             Market.openSubExtensions({
               name:packageConf.name,
@@ -82,7 +82,7 @@ function retrieveCard({
             });
           }
         }
-      ]
+      }
     }
   );
   return pluginCard;

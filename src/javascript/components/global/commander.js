@@ -17,8 +17,8 @@ function openCommander(Commander){
                 showOptions(Commander.options)
             }
         },
-        methods:[
-            function scrolling(e){
+        methods:{
+            scrolling(e){
                 switch(e.keyCode){
                     case 13:
                         selectFromOption(Commander)
@@ -33,7 +33,7 @@ function openCommander(Commander){
                         break;
                 }                
             },
-            function writing(e){
+            writing(e){
 
                 switch(e.keyCode){
                     case 17:
@@ -56,7 +56,7 @@ function openCommander(Commander){
                         break;
                 }                
             }
-        ]
+        }
     })
     puffin.render(commander,document.body)
 }

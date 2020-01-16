@@ -9,14 +9,13 @@ function returnLanguages(){
         props:[
             "name","class"
         ],
-        methods:[
-            function loadMe(){
+        methods:{
+            loadMe(){
                 loadLanguage(this.getAttribute("name")); 
                 selectionFromTo(this.parentElement,this);
             }
-        ]
+        }
     })
-
     const languagesSection = puffin.element(`
     <div>
         <div>

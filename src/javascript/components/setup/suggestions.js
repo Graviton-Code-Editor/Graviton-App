@@ -20,14 +20,14 @@ const suggestionsPage = puffin.element(`
     </div>
 </div>
 `,{
-    methods:[
-        function goBack(){
+    methods:{
+        goBack(){
             Setup.navigate("additional_settings");
         },
-        function goForward(){
+        goForward(){
             Setup.navigate("welcome");
         }
-    ],
+    },
     events:{
         mounted(target){
             Market.fetchPlugins(["marc2332/GitPlus"]).then(function(plugins){

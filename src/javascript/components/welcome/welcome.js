@@ -22,12 +22,12 @@ function retrieve(page) {
       props: [
         "name","path"
       ],
-      methods: [
-        function loadMe() {
+      methods: {
+        loadMe() {
           Explorer.load(this.getAttribute("path"), "g_directories", true);
           closeWindow("welcome_window");
         }
-      ]
+      }
     }
   );
 
@@ -42,12 +42,12 @@ function retrieve(page) {
       props: [
         "name","description","index"
       ],
-      methods: [
-        function loadMe() {
+      methods:{
+        loadMe() {
           projectServices[this.getAttribute("index")].onclick();
           closeWindow("welcome_window");
         }
-      ]
+      }
     }
   );
 
@@ -97,7 +97,6 @@ function retrieve(page) {
     </gv-navpanel>
     `,
     {
-      methods: [],
       components: {
         cardProject,
         emptyProjectsPanel,

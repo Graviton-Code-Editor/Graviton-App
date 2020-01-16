@@ -47,14 +47,14 @@ module.exports = {
     const buttonComponent = puffin.element(`
       <button myID="{{id}}" click="$onClick">{{value}}</button>
     `,{
-      methods:[
-        function onClick(){
+      methods:{
+        onClick(){
           if(typeof buttons[this.getAttribute("value")].click == "function"){
             buttons[this.getAttribute("value")].click()
           }
           closeDialog(this.id)
         }
-      ],
+      },
       props:["value","id"]
     })
 

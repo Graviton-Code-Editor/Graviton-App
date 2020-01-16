@@ -37,23 +37,23 @@ const additionalSettingsPage = puffin.element(`
         }</button>
     </div>
 `,{
-    methods:[
-        function goBack(){
+    methods:{
+        goBack(){
             Setup.navigate("themes");
         },
-        function goForward(){
+        goForward(){
             Setup.navigate("suggestions");
         },
-        function refreshSettings(){
+        refreshSettings(){
             Settings.refresh(); 
             graviton.saveConfiguration();
         },
-        function changeBounce(){
+        changeBounce(){
             this.toggle();
             graviton.toggleBounceEffect();
             graviton.saveConfiguration();
         }
-    ]
+    }
 })
 
 module.exports = additionalSettingsPage
