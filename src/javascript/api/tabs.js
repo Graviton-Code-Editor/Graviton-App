@@ -224,11 +224,10 @@ function closeTab(tab_id, fromWarn) {
             c_tab.getAttribute("screen") == working_tab.getAttribute("screen")
           );
         });
-        if (filtered_tabs.length == 0) {
-          // Any tab opened
+        if (filtered_tabs.length == 0) { //No tabs opened on the screen
           filepath = null;
           plang = "";
-          editor = null;
+          graviton.setCurrentEditor(null)
           showScreenDefaults(working_tab.getAttribute("screen"))
           const opened_tabs = Array.prototype.slice
             .call(document.getElementsByClassName("selected"))

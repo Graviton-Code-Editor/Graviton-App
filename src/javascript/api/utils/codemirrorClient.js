@@ -30,6 +30,12 @@ document.addEventListener("graviton_loaded",function(){
     openJumpToLine(instance){
       CodeMirror.commands.jumpToLine(instance);
     },
+    setTheme(instance,theme){
+      instance.setOption(
+        "theme",
+        theme
+      );
+    },
     setLanguage(instance,language){
       switch(language){
         case "json":

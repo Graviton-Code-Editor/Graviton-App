@@ -26,6 +26,7 @@ module.exports = {
     tabClosed:function(tabElement){
         return new CustomEvent("tab_closed", {
             detail: {
+                screen: tabElement.getAttribute("screen"),
                 tab: tabElement
             }
         });

@@ -49,7 +49,7 @@ module.exports = {
             screen:screen,
             textContainer:textContainer
           })
-          editors.push({
+          const newEditor = {
             id:textContainer.id,
             screen:screen,
             editor:editorInstance,
@@ -60,7 +60,9 @@ module.exports = {
               }
               return false
             }
-          })
+          }
+          editors.push(newEditor)
+          graviton.setCurrentEditor(newEditor)
           graviton.getCurrentEditor().execute("onContentChanged", function () {
             const close_icon = document.getElementById(editingTab)
             close_icon.setAttribute('file_status', 'unsaved')
@@ -158,9 +160,9 @@ module.exports = {
       editors.map(function(et){
         if (et.id == dir.replace(/\\/g, '') + '_editor') {
           if (et.editor != undefined) {
-            editor = et.editor
+            graviton.setCurrentEditor(et.editor)
           } else{
-            editor = null
+            graviton.setCurrentEditor(null)
           }
           editorID = et.id
           document.getElementById(editorID).style.display = 'block'
@@ -170,7 +172,6 @@ module.exports = {
           if (callback != undefined)  callback(editor)
           return 
         }
-        
         if (callback != undefined)  callback(editor)
         return
       })

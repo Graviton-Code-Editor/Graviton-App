@@ -84,7 +84,7 @@ let current_config = {
 };
 
 if(graviton.currentOS().codename === "darwin"){
-  currentConfig.shortCuts = [
+  current_config.shortCuts = [
     {
       "combo":"cmd s",
       "action":"Save File"
@@ -267,7 +267,7 @@ document.addEventListener("graviton_loaded",function(){
       if (id != screen) return;
       langController.setText(graviton.getLanguage());
       langController.setHint(`Current language: ${graviton.getLanguage()}`);
-      if (editor == undefined) {
+      if (editor == null) { 
         counter.hide();
         return;
       }

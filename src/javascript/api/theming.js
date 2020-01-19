@@ -152,13 +152,9 @@ module.exports = {
 				}
 				editors.forEach(current_editor => {
 					if (
-						current_editor.editor !== undefined &&
-						current_editor.editor !== null
+						current_editor.editor != undefined 
 					) {
-						current_editor.editor.setOption(
-							"theme",
-							themeObject["highlight"]
-						);
+						current_editor.execute("setTheme",themeObject.highlight)
 					}
 				});
 				if (terminal != null) {

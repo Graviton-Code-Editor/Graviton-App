@@ -2,7 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 2001010 - 1 [1.2.0]
+### 200119 - 1 [1.2.0]
+- Fixed some bugs when closing ,loading and opening screens
+- Couldn't boot in MacOS cause of a shortcuts bug
+- Added a setTheme method to the editorClient API
+
+### 200110 - 1 [1.2.0]
 - Updated: PuffinJS to v0.1.27
 - Fixed: context menus ( right click ) background wasn't been well applied
 
