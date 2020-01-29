@@ -12,14 +12,10 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const url = require("url")
 const path = require("path")
 const { app, BrowserWindow } = require("electron")
-const windowStateKeeper = require('electron-window-state');
-let main // Main window
-
+let main 
+const isDev = require('electron-is-dev');
+ 
 app.on("ready", function() {
-	let mainWindowState = windowStateKeeper({
-		defaultWidth: 750,
-		defaultHeight: 650
-	  });
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
@@ -27,31 +23,29 @@ app.on("ready", function() {
 			nodeIntegration: true
 		},
 		frame: process.platform === "linux",
-		x:mainWindowState.x,
-		y:mainWindowState.y,
-		width: mainWindowState.width,
-		height: mainWindowState.height,
 		minHeight: 320,
 		minWidth: 320,
 		backgroundColor: "#191919",
 		title: "Graviton Editor",
-		icon: __dirname + '/assets/general.png',
 		show:false
-	})
-	mainWindowState.manage(main);
-	main.loadURL(
-		url.format({
-			pathname: path.join(__dirname, "index.html"),
-			protocol: "file:",
-			slashes: true
-		})
-	)
+    })
+    if (isDev) {
+        main.loadURL("http://localhost:4321/")
+    } else {
+        main.loadURL(
+            url.format({
+                pathname: path.join(__dirname,"parcel", "index.html"),
+                protocol: "file:",
+                slashes: true
+            })
+        )
+    }
+	
 	main.on("ready-to-show", () => {
 		main.show()
 		main.focus()
 	})
 	if (
-		path.basename(__dirname) === "Graviton-Editor" ||
 		path.basename(__dirname) === "Graviton-App"
 	) {
 		main.setMenuBarVisibility(true)

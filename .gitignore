@@ -1,4 +1,4 @@
 node_modules/
 dist/
-
-src/dist_css
+.cache
+dist_parcel

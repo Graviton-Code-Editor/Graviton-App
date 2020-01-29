@@ -16,7 +16,10 @@
 
 ![example screenshot](example.png)
 
-**IMPORTANT: Changes on this source may not be released as an official build yet.**
+**-- NOTE --**
+Graviton is going through a full remake from the ground up. Version 1.3.0 source code is located in a different branch on this repository.
+
+**IMPORTANT:  Changes on this source may not be released as an official build yet**
 
 ✨ Highlights:
 ---

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200129 - 1 [2.0.0]
+- First commit with new source
+
 ### 200119 - 1 [1.2.0]
 - Fixed some bugs when closing ,loading and opening screens
 - Couldn't boot in MacOS cause of a shortcuts bug
