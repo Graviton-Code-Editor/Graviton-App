@@ -7,6 +7,8 @@ import Welcome from './defaults/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 
+import '../sass/codemirror.reset.scss'
+
 const App = puffin.element(`
     <div class="${puffin.style.css`
         ${ThemeProvider}
@@ -47,6 +49,7 @@ const App = puffin.element(`
             flex:1;
             box-shadow:-2px 0px 6px rgba(0,0,0,0.2);
             border-top-left-radius:5px;
+            background:{{mainpanelBackground}}
         }
         #windows{
             position:absolute;

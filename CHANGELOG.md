@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200130 - 1 [2.0.0]
+- Added Codemirror as dependency
+- Added 2 old themes and 1 codemirror reset
+- Improved some file names
+- Created a separated Configuration state
+- Started working on tabs (WIP)
+
 ### 200129 - 1 [2.0.0]
 - First commit with new source
 

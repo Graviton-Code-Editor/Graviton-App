@@ -1,4 +1,5 @@
 import requirePath from '../utils/require'
+
 function openFolder(){
     return new Promise((resolve, reject) => {
         const { dialog , getCurrentWindow} = requirePath("electron").remote;
@@ -15,6 +16,5 @@ function openFolder(){
             });
     })
 }
-
 
 export { openFolder }

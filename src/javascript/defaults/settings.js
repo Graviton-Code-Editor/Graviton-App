@@ -1,8 +1,7 @@
 import {puffin} from '@mkenzo_8/puffin'
 import Window from '../constructors/window'
 import {Titles , RadioGroup } from '@mkenzo_8/puffin-drac'
-import ConfigProvider from 'ConfigProvider'
-console.log(ConfigProvider)
+import StaticConfig from 'StaticConfig'
 
 const SettingsPage = puffin.element(`
     <div>
@@ -21,7 +20,7 @@ const SettingsPage = puffin.element(`
         selected(e){
             const newTheme = e.detail.target.getAttribute("name")
 
-            ConfigProvider.data.theme = newTheme
+            StaticConfig.data.theme = newTheme
         }
     }
 })

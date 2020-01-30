@@ -1,18 +1,22 @@
 import {puffin} from '@mkenzo_8/puffin'
+import RunningConfig from 'RunningConfig'
 
 const PanelBody  = puffin.element(`
-    <div ok="true" class="${
+    <div click="$focusPanel" class="${
         puffin.style.css`
             &{
-                display:flex;
-                align-items:center;
-                justify-content:center;
                 min-height:100%;
             }
         `
     }">
-        <b>panel</b>
+
     </div>
-`)
+`,{
+    methods:{
+        focusPanel(){
+            RunningConfig.data.focusedPanel = this
+        }
+    }
+})
 
 export default PanelBody

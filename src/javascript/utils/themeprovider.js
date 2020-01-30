@@ -20,7 +20,8 @@ const ThemeProvider = puffin.state({
     contextmenuButtonBackground:'white',
     contextmenuButtonText:'black',
     contextmenuButtonHoveringBackground:'#0066FF',
-    contextmenuButtonHoveringText:'white'
+    contextmenuButtonHoveringText:'white',
+    mainpanelBackground:'white'
 })
 
 export default ThemeProvider

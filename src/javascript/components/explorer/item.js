@@ -2,11 +2,13 @@ import { puffin } from '@mkenzo_8/puffin'
 import Explorer from '../../constructors/explorer'
 import ContextMenu from '../../constructors/contextmenu'
 import Panel from '../../constructors/panel'
+import Editor from '../../constructors/editor'
 
 import ClosedFolder from '../../../../assets/icons/folder.closed.svg'
 import OpenedFolder from '../../../../assets/icons/folder.opened.svg'
 
 import requirePath from '../../utils/require'
+const fs = requirePath("fs-extra");
 
 
 const ItemWrapper = puffin.style.div`
@@ -74,8 +76,15 @@ const Item = puffin.element(`
                 }
             }else{
                 //Open the file
-
-                new Panel()
+                const { element } = new Panel()
+                fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
+                    new Editor({
+                        element:element,
+                        language:'javascript',
+                        value:data ,
+                        theme:'arctic'
+                    })
+                })
             }
         },
         contextMenu(e){
