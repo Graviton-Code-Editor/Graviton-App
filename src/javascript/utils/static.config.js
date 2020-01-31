@@ -6,7 +6,7 @@ const cachedConfiguration = getConfiguration()
 
 let editorConf = Object.assign({},cachedConfiguration.editor)
 
-const StaticConfig = puffin.state(editorConf)
+const StaticConfig = new puffin.state(editorConf)
 
 StaticConfig.changed(function(data){
     cachedConfiguration.store.set('editor',data)

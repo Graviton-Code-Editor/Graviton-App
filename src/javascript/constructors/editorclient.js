@@ -6,7 +6,7 @@ function EditorClient({
     return {
         do(name,args){
             if(object[name]!=null){
-                object[name](null,args)
+                return object[name](args)
             }
         }
     }

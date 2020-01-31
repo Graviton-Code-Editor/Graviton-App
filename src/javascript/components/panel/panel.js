@@ -5,18 +5,13 @@ const PanelBody  = puffin.element(`
     <div click="$focusPanel" class="${
         puffin.style.css`
             &{
-                min-height:100%;
+                max-height:100%;
+                overflow:auto;
             }
         `
     }">
 
     </div>
-`,{
-    methods:{
-        focusPanel(){
-            RunningConfig.data.focusedPanel = this
-        }
-    }
-})
+`)
 
 export default PanelBody

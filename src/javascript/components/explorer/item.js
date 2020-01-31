@@ -1,8 +1,9 @@
 import { puffin } from '@mkenzo_8/puffin'
 import Explorer from '../../constructors/explorer'
 import ContextMenu from '../../constructors/contextmenu'
-import Panel from '../../constructors/panel'
+import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
+import path from 'path'
 
 import ClosedFolder from '../../../../assets/icons/folder.closed.svg'
 import OpenedFolder from '../../../../assets/icons/folder.opened.svg'
@@ -12,7 +13,6 @@ const fs = requirePath("fs-extra");
 
 
 const ItemWrapper = puffin.style.div`
-
     &{
         background:transparent;
         white-space:nowrap;
@@ -53,7 +53,6 @@ const ItemWrapper = puffin.style.div`
 
 const Item = puffin.element(`
     <ItemWrapper>
-        
         <button click="$openFolder" contextmenu="$contextMenu">
             <img class="icon"/>
             <span>{{path}}</span>
@@ -75,16 +74,21 @@ const Item = puffin.element(`
                     setClosedIcon(this.parentElement.children[0].children[0])
                 }
             }else{
-                //Open the file
-                const { element } = new Panel()
+                const basename = path.basename(this.parentElement.getAttribute("fullpath"))
+                const fileExtension = path.basename(this.parentElement.getAttribute("fullpath")).split('.')[path.basename(this.parentElement.getAttribute("fullpath")).split('.').length-1]
+                const { tabElement, bodyElement } = new Tab({
+                    title:basename,
+                    directory:basename
+                })
                 fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
                     new Editor({
-                        element:element,
-                        language:'javascript',
+                        element:bodyElement,
+                        language:fileExtension,
                         value:data ,
                         theme:'arctic'
                     })
                 })
+
             }
         },
         contextMenu(e){

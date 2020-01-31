@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200131 - 1 [2.0.0]
+* Other improvements
+* Created Tab constructor                   
+* Better EditorClient API
+* All Codemirror modes are loaded by default
+
 ### 200130 - 1 [2.0.0]
 - Added Codemirror as dependency
 - Added 2 old themes and 1 codemirror reset

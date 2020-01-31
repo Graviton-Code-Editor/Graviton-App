@@ -66,6 +66,45 @@ const App = puffin.element(`
         #windows > div > div {
             flex:1;
         }
+        
+
+    * {
+        outline: 0;
+        text-rendering: optimizeLegibility !important;
+        -webkit-font-smoothing: subpixel-antialiased !important;
+        -webkit-box-sizing: default !important;
+        box-sizing: default !important;
+    }
+	& *::-webkit-scrollbar {
+		transition: 0.1s;
+		width: 10px;
+		height: 10px;
+		background: transparent;
+	}
+	& * ::-webkit-scrollbar-track {
+		background: transparent;
+	}
+	& * ::-webkit-scrollbar-thumb {
+		border-radius: 0.2rem;
+		transition: 0.1s;
+		background: {{scrollbarBackground}};
+		
+    }
+    & * ::-webkit-scrollbar-thumb:hover {
+        transition: 0.1s;
+        background: {{scrollbarHoverBackground}}
+    }
+	& * ::-webkit-scrollbar-corner {
+		visibility: hidden !important;
+		opacity: 0 !important;
+		height: 0 !important;
+		width: 0 !important;
+		display: none !important;
+	}
+	& * ::-webkit-resizer {
+		cursor: ew-resize;
+	}
+
     `}">
         <TitleBar/>
         <div id="body">

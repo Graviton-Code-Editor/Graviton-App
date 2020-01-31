@@ -1,6 +1,6 @@
 import {puffin} from '@mkenzo_8/puffin'
 
-const ThemeProvider = puffin.state({
+const ThemeProvider = new puffin.state({
     accentColor: "#0066FF",
     bodyBackground:'rgb(238,238,238)',
     titlebarBackground:"rgb(238,238,238)",
@@ -21,7 +21,11 @@ const ThemeProvider = puffin.state({
     contextmenuButtonText:'black',
     contextmenuButtonHoveringBackground:'#0066FF',
     contextmenuButtonHoveringText:'white',
-    mainpanelBackground:'white'
+    mainpanelBackground:'white',
+    tabBackground:'rgb(238,238,238)',
+    tabActiveBackground:'rgb(212,212,212)',
+    scrollbarBackground:'rgb(238,238,238)',
+    scrollbarHoverBackground:'rgb(212,212,212)'
 })
 
 export default ThemeProvider

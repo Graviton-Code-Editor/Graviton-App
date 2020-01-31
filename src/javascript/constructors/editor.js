@@ -7,10 +7,9 @@ function Editor({
     theme
 }){
     const Instance = CodemirrorClient
-
     Instance.do('create',{
         element:element,
-        language:language,
+        language:Instance.do('getLangFromExt',language),
         value:value,
         theme:theme
     })
