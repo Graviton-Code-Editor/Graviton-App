@@ -2,7 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200131 - 1 [2.0.0]
+### 200201 - 1 [2.0.01]
+* General improvements
+* Started working on a Night theme variant
+* A cross is showed on hovering a tab, you can click it to close the tab
+
+### 200131 - 1 [2.0.01]
 * Other improvements
 * Created Tab constructor                   
 * Better EditorClient API

@@ -7,7 +7,10 @@ if("windows" == "windows"){
         <div class="buttons" class="${puffin.style.css`
             ${ThemeProvider}
             rect{
-                stroke:{{controlButtonsFill}}
+                stroke:{{controlButtonsFill}};
+            }
+            rect.fill{
+                fill:{{controlButtonsFill}};
             }
         `}">
             <button title="Minimize">
@@ -22,8 +25,8 @@ if("windows" == "windows"){
             </button>
             <button title="Close">
                 <svg width="20" height="20" viewBox="0 0 174 174" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="40.3309" y="127.305" width="123" height="9" rx="4.5" transform="rotate(-45 40.3309 127.305)" />
-                    <rect x="127.305" y="133.669" width="123" height="9" rx="4.5" transform="rotate(-135 127.305 133.669)"  />
+                    <rect class="fill" x="40.3309" y="127.305" width="123" height="9" rx="4.5" transform="rotate(-45 40.3309 127.305)" />
+                    <rect class="fill" x="127.305" y="133.669" width="123" height="9" rx="4.5" transform="rotate(-135 127.305 133.669)"  />
                 </svg>
             </button>
         </div>

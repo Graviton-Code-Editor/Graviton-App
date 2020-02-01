@@ -26,11 +26,11 @@ const TitleBar = puffin.element(`
                 background:transparent;
             }
             & .buttons button:hover{
-                background:{{controlButtonsHoverBackground}}
+                background:{{controlButtonsHoverBackground}};
             }
             & .buttons button:nth-child(3):hover{
                 background:{{controlCloseButtonHoverBackground}};
-                fill:{{controlCloseButtonHoverFill}}
+                fill:{{controlCloseButtonHoverFill}};
             }
             & .title{
                 -webkit-app-region: drag;
@@ -38,7 +38,6 @@ const TitleBar = puffin.element(`
                 width:auto;
             }
             & .dropmenus{
-                background:red;
                 min-width:auto; 
                 width:auto;
                 overflow:hidden; 

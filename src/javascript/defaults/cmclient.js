@@ -9,8 +9,12 @@ const CodemirrorClient = new EditorClient({
     getValue: (cm) => cm.getValue(),
     getLangFromExt(extension){
         switch(extension){
+            case 'html':
+                return 'htmlmixed'
             case 'js':
                 return 'javascript'
+            case 'json':
+                return 'application/json'
             case 'css':
                 return 'css'
             default:

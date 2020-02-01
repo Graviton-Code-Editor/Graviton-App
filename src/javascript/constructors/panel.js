@@ -23,10 +23,12 @@ function Panel(){
             <div class="tabsbar ${
                 puffin.style.css`
                     &{
+                        min-height:40px;
                         max-height:40px;
                         white-space:nowrap;
                         display:flex;
                         flex:1;
+                        overflow-x:auto;
                     }
                 `
             }"></div>

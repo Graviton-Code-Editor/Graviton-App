@@ -2,6 +2,7 @@ import TabBody from '../components/panel/tab'
 import TabEditor from '../components/panel/tab.editor'
 import {puffin} from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
+import Cross from '../components/icons/cross'
 
 function Tab({
     title,
@@ -16,16 +17,29 @@ function Tab({
     })
 
     const TabComp = puffin.element(`
-        <TabBody click="$focusTab" active="{{active}}">
-            <p>${directory}</p>
+        <TabBody click="$focusTab" active="{{active}}" mouseover="$showCross" mouseleave="$hideCross">
+            <p>${title}</p>
+            <Cross style="opacity:{{crossOpacity}}" click="$closeTab"/>
         </TabBody>
     `,{
         components:{
-            TabBody
+            TabBody,
+            Cross
         },
         methods:{
             focusTab(){
                 tabState.data.active = true
+            },
+            closeTab(e){
+                e.stopPropagation()
+                TabComp.node.remove()
+                TabEditorComp.node.remove();
+            },
+            showCross(target){
+                this.props.crossOpacity = "1"
+            },
+            hideCross(target){
+                this.props.crossOpacity = "0"
             }
         },
         events:{
@@ -36,9 +50,10 @@ function Tab({
                 })
                 target.props.active = tabState.data.active
                 target.props.state = tabState
+                target.props.crossOpacity = "0"
             }
         },
-        props:["active"]
+        props:["active","crossOpacity"]
     })
 
     puffin.render(TabComp,panel.children[0])
@@ -82,4 +97,6 @@ function unfocusBrothers(element){
     }
 }
 
+
+console.log(Tab)
 export default Tab

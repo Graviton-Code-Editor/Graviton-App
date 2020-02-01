@@ -21,10 +21,10 @@
   "alias": {
     "ThemeProvider": "./src/javascript/utils/themeprovider.js",
     "StaticConfig": "./src/javascript/utils/static.config.js",
-    "RunningConfig":"./src/javascript/utils/running.config.js"
+    "RunningConfig": "./src/javascript/utils/running.config.js"
   },
   "dependencies": {
-    "@mkenzo_8/puffin": "^0.3.2",
+    "@mkenzo_8/puffin": "^0.3.4",
     "@mkenzo_8/puffin-drac": "0.0.5",
     "codemirror": "^5.51.0",
     "electron-is-dev": "^1.1.0",

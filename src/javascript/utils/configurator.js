@@ -3,24 +3,21 @@ import requirePath from './require'
 const electronStore = requirePath('electron-store')
 
 const schema = {
-    log:[
-
-    ],
-    editor: {
+    config:{
         theme:'Arctic',
-        fontSize:'16'
-    },
-    theme:{
-
+        fontSize:'16',
+        log:[]
     }
 }
 
 function initConfiguration(){
     const store = new electronStore();
 
-    if(!store.has('editor')){
-        store.set(schema);
-    }
+    Object.keys(schema.config).map(function(key){
+        if(!store.has(`config.${key}`)){
+            store.set(`config.${key}`,schema.config[key])
+        }
+    })
 
     return {
         store:store
@@ -29,20 +26,11 @@ function initConfiguration(){
 
 function getConfiguration(){
     
-    const store = new electronStore();
-
-    Object.keys(schema).map((section)=>{
-        Object.keys(schema[section]).map((key)=>{
-            if(!store.has(`${section}.${key}`)){
-             store.set(`${section}.${key}`,schema[section][key])
-            }
-         })
-    })
-    
+    const {store} = initConfiguration()
 
     return {
         store:store,
-        editor:store.get('editor')
+        config:store.get('config')
     }
 }
 

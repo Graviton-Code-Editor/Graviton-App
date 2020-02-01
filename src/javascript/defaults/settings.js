@@ -7,8 +7,8 @@ const SettingsPage = puffin.element(`
     <div>
         <H1>Settings</H1>
         <RadioGroup radioSelected="$selected">
-            <label name="arctic" checked="">Arctic</label>
-            <label name="dark">Dark</label>
+            <label name="Arctic" checked="">Arctic</label>
+            <label name="Night">Night</label>
         </RadioGroup>
     </div>
 `,{

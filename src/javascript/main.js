@@ -15,6 +15,7 @@ const App = puffin.element(`
         body{
             padding:0px;
             margin:0px;
+            --puffinTextColor:{{textColor}};
         }
         @font-face {
             font-family: mainFont;
@@ -49,7 +50,7 @@ const App = puffin.element(`
             flex:1;
             box-shadow:-2px 0px 6px rgba(0,0,0,0.2);
             border-top-left-radius:5px;
-            background:{{mainpanelBackground}}
+            background:{{mainpanelBackground}};
         }
         #windows{
             position:absolute;

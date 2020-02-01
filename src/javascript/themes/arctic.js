@@ -1,26 +1,16 @@
-import {puffin} from '@mkenzo_8/puffin'
-import StaticConfig from 'StaticConfig'
-import Arctic from '../themes/arctic'
-import Night from '../themes/night'
-
-StaticConfig.changed(function(){
-    applyTheme(StaticConfig)
-})
-
-
-
-const ThemeProvider = new puffin.state({
+const Arctic = {
     accentColor: "#0066FF",
+    textColor:'black',
     bodyBackground:'rgb(238,238,238)',
     titlebarBackground:"rgb(238,238,238)",
     dropmenuBackground:'white',
     dropmenuButtonBackground:"rgb(238,238,238)",
     dropmenuButtonHoveringBackground:"rgb(212,212,212)",
     dropmenuButtonText:"black",
-    dropmenuButtonHoveringText:"black",
+    dropmenuButtonHoveringText:"white",
     dropmenuOptionText:"black",
     dropmenuOptionHoveringText:"white",
-    controlButtonsFill:"red",
+    controlButtonsFill:"black",
     controlButtonsHoverBackground:"rgb(212,212,212)",
     controlCloseButtonHoverBackground:"rgba(232,17,35)",
     controlCloseButtonHoverFill:"white",
@@ -37,23 +27,6 @@ const ThemeProvider = new puffin.state({
     scrollbarHoverBackground:'rgba(0,0,0,0.5)',
     tabIconStroke:'black',
     tabIconHoverStroke:'gray'
-})
-
-function applyTheme(state){
-    console.log(state,ThemeProvider)
-    switch(state.data.theme){
-        case "Arctic":
-            ThemeProvider.data = Arctic
-        break;
-        case "Night":
-            ThemeProvider.data = Night
-        break;
-    }
-    ThemeProvider.triggerChange()
 }
 
-applyTheme(StaticConfig)
-
-
-
-export default ThemeProvider
+export default Arctic

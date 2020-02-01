@@ -1,0 +1,32 @@
+const Night = {
+    accentColor: "rgb(255, 0, 72)",
+    textColor:'white',
+    bodyBackground:'#222222',
+    titlebarBackground:"#222222",
+    dropmenuBackground:'#191919',
+    dropmenuButtonBackground:"transparent",
+    dropmenuButtonHoveringBackground:"#191919",
+    dropmenuButtonText:"white",
+    dropmenuButtonHoveringText:"white",
+    dropmenuOptionText:"white",
+    dropmenuOptionHoveringText:"white",
+    controlButtonsFill:"white",
+    controlButtonsHoverBackground:"rgb(60,60,60)",
+    controlCloseButtonHoverBackground:"rgba(232,17,35)",
+    controlCloseButtonHoverFill:"white",
+    windowBackground:'#222222',
+    contextmenuBackground:'white',
+    contextmenuButtonBackground:'white',
+    contextmenuButtonText:'black',
+    contextmenuButtonHoveringBackground:'#0066FF',
+    contextmenuButtonHoveringText:'white',
+    mainpanelBackground:'#191919',
+    tabBackground:'rgb(238,238,238)',
+    tabActiveBackground:'rgb(212,212,212)',
+    scrollbarBackground:'rgba(0,0,0,0.2)',
+    scrollbarHoverBackground:'rgba(0,0,0,0.5)',
+    tabIconStroke:'black',
+    tabIconHoverStroke:'gray'
+}
+
+export default Night

@@ -34,19 +34,19 @@ const DropMenu = puffin.element(`
             white-space:nowrap;
             left:0;
         }
-        & button{
+        & > button{
             min-height:100%;
             background:{{dropmenuButtonBackground}};
             color:{{dropmenuButtonText}};
             border:none;
             outline:0;
         }
-        & button:hover{
+        & > button:hover{
             min-height:100%;
             background:{{dropmenuButtonHoveringBackground}};
             color:{{dropmenuButtonHoveringText}}
         }
-        & button.active , & button:focus{
+        & > button.active , & button:focus{
             background:{{dropmenuButtonHoveringBackground}};
         }
         & > div{
@@ -71,8 +71,7 @@ const DropMenu = puffin.element(`
         }
         & > div a:hover{
             background:{{accentColor}};
-            color:{{dropmenuOptionHoveringText}}
-            
+            color:{{dropmenuOptionHoveringText}};
         }
     
     `} dropmenu">
