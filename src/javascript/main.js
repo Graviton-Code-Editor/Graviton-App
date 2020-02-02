@@ -16,13 +16,22 @@ const App = puffin.element(`
             padding:0px;
             margin:0px;
             --puffinTextColor:{{textColor}};
+            --puffinFont:mainFont;
+            --sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
         }
         @font-face {
             font-family: mainFont;
             src: url(Inter-Regular.woff2) format("woff2") ;
         }
+        @font-face {
+            font-family: codeFont;
+            src: url(JetBrainsMono-Regular.woff2) format("woff2") ;
+        }
         * {
-            font-family: mainFont !important;
+            font-family: mainFont;
+        }
+        .CodeMirror * {
+            font-family:codeFont !important;
         }
         #body{
             display:flex;
@@ -69,43 +78,42 @@ const App = puffin.element(`
         }
         
 
-    * {
-        outline: 0;
-        text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: subpixel-antialiased !important;
-        -webkit-box-sizing: default !important;
-        box-sizing: default !important;
-    }
-	& *::-webkit-scrollbar {
-		transition: 0.1s;
-		width: 10px;
-		height: 10px;
-		background: transparent;
-	}
-	& * ::-webkit-scrollbar-track {
-		background: transparent;
-	}
-	& * ::-webkit-scrollbar-thumb {
-		border-radius: 0.2rem;
-		transition: 0.1s;
-		background: {{scrollbarBackground}};
-		
-    }
-    & * ::-webkit-scrollbar-thumb:hover {
-        transition: 0.1s;
-        background: {{scrollbarHoverBackground}}
-    }
-	& * ::-webkit-scrollbar-corner {
-		visibility: hidden !important;
-		opacity: 0 !important;
-		height: 0 !important;
-		width: 0 !important;
-		display: none !important;
-	}
-	& * ::-webkit-resizer {
-		cursor: ew-resize;
-	}
-
+        * {
+            outline: 0;
+            text-rendering: optimizeLegibility !important;
+            -webkit-font-smoothing: subpixel-antialiased !important;
+            -webkit-box-sizing: default !important;
+            box-sizing: default !important;
+        }
+        & *::-webkit-scrollbar {
+            transition: 0.1s;
+            width: 10px;
+            height: 10px;
+            background: transparent;
+        }
+        & * ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        & * ::-webkit-scrollbar-thumb {
+            border-radius: 0.2rem;
+            transition: 0.1s;
+            background: {{scrollbarBackground}};
+            
+        }
+        & * ::-webkit-scrollbar-thumb:hover {
+            transition: 0.1s;
+            background: {{scrollbarHoverBackground}};
+        }
+        & * ::-webkit-scrollbar-corner {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            display: none !important;
+        }
+        & * ::-webkit-resizer {
+            cursor: ew-resize;
+        }
     `}">
         <TitleBar/>
         <div id="body">

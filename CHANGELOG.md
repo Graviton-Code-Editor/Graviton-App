@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200202 - 1 [2.0.01]
+* Better looking tabs
+* Added About menu with About dialog
+* Added dialog constructor
+* Added custom height and width for Window constructor
+* Added a Side menu puffin component (used now in Welcome and Settings)
+
 ### 200201 - 1 [2.0.01]
 * General improvements
 * Started working on a Night theme variant

@@ -32,8 +32,11 @@ function Tab({
             },
             closeTab(e){
                 e.stopPropagation()
+
+                focusATab(this.parentElement)
+
                 TabComp.node.remove()
-                TabEditorComp.node.remove();
+                TabEditorComp.node.remove(); 
             },
             showCross(target){
                 this.props.crossOpacity = "1"
@@ -70,14 +73,14 @@ function Tab({
             mounted(target){
                 tabState.changed(function(){
                     if(tabState.data.active){
-                        unfocusBrothers(target)
+                        unfocusTabs(target)
                         target.style.display = "block"
                     }else{
                         target.style.display = "none"
                     }
                     target.props.state = tabState
                 })
-                unfocusBrothers(target)
+                unfocusTabs(target)
                 target.props.state = tabState
             }
         }
@@ -91,12 +94,31 @@ function Tab({
     }
 }
 
-function unfocusBrothers(element){
-    for( let brother of element.parentElement.children){
-        if(brother != element) brother.props.state.data.active = false
+function unfocusTabs(element){
+    for( let tab of element.parentElement.children){
+        if(tab != element) tab.props.state.data.active = false
     }
 }
 
+function focusATab(element){
 
-console.log(Tab)
+    const parent = element.parentElement;
+    const children = parent.children;
+
+    const position = (function(){
+        
+        for( let tabIndex =0; tabIndex < children.length;tabIndex++){
+            if(children[tabIndex] == element) return tabIndex
+        }
+    })()
+
+    if(position === 0){
+        if(children.length > 1){
+            children[position+1].props.state.data.active = true
+        }
+    }else{
+        children[position-1].props.state.data.active = true
+    }
+}
+
 export default Tab

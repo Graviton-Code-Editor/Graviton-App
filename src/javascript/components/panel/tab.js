@@ -17,11 +17,17 @@ const TabBody  = puffin.element(`
                 cursor:pointer;
                 padding:0px 10px;
             }
+            &:active{
+                transform:scale(0.98);
+            }
             & p{
                 margin:0;
                 font-size:14px;
                 height:17px;
                 position:relative;
+                max-width:100px;
+                overflow:hidden;
+                text-overflow:ellipsis;
             }
             & svg{
                 margin-left:5px;
@@ -32,6 +38,7 @@ const TabBody  = puffin.element(`
             }
             &[active="true"]{
                 background:{{tabActiveBackground}};
+                box-shadow:0px 0px 10px rgba(0,0,0,0.2);
             }
         `
     }">

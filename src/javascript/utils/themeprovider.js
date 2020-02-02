@@ -7,8 +7,6 @@ StaticConfig.changed(function(){
     applyTheme(StaticConfig)
 })
 
-
-
 const ThemeProvider = new puffin.state({
     accentColor: "#0066FF",
     bodyBackground:'rgb(238,238,238)',
@@ -36,11 +34,11 @@ const ThemeProvider = new puffin.state({
     scrollbarBackground:'rgba(0,0,0,0.2)',
     scrollbarHoverBackground:'rgba(0,0,0,0.5)',
     tabIconStroke:'black',
-    tabIconHoverStroke:'gray'
+    tabIconHoverStroke:'gray',
+    sidemenuBackground:'rgb(238,238,238)'
 })
 
 function applyTheme(state){
-    console.log(state,ThemeProvider)
     switch(state.data.theme){
         case "Arctic":
             ThemeProvider.data = Arctic
@@ -53,7 +51,5 @@ function applyTheme(state){
 }
 
 applyTheme(StaticConfig)
-
-
 
 export default ThemeProvider

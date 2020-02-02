@@ -1,7 +1,7 @@
 import PanelBody from '../components/panel/panel'
 import {puffin} from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
-
+import ThemeProvider from 'ThemeProvider'
 function Panel(){
     const randomSelector = Math.random()
     const PanelComp = puffin.element(`
@@ -22,6 +22,7 @@ function Panel(){
         }">    
             <div class="tabsbar ${
                 puffin.style.css`
+                    ${ThemeProvider}
                     &{
                         min-height:40px;
                         max-height:40px;
@@ -29,6 +30,7 @@ function Panel(){
                         display:flex;
                         flex:1;
                         overflow-x:auto;
+                        background:{{tabsbarBackground}};
                     }
                 `
             }"></div>

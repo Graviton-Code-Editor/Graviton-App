@@ -7,14 +7,14 @@ const WindowBody = puffin.element(`
         &{
             border:1px solid gray;
             width:200px;
-            min-width:60%;
             max-width: 80%;
-            min-height: 80%;
-            max-height: 60%;
+            max-height: 75%;
             background: {{windowBackground}};
             border-radius: 7px;
             overflow:auto;
             position:absolute;
+            height:auto;
+            display:flex;
         }
     `}">
         

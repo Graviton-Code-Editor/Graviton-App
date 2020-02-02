@@ -11,8 +11,8 @@ function startResizing(e,box = document.getElementById(ResizerID)){
         }
         
     }
-    leftPanel.style.width = e.clientX - 40 + "px";
-    leftPanel.style.maxWidth = e.clientX -40 + "px";
+    leftPanel.style.width = e.clientX - 25 + "px";
+    leftPanel.style.maxWidth = e.clientX -25 + "px";
 }
 
 function stopResizing(e,box){

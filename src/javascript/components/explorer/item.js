@@ -9,8 +9,8 @@ import ClosedFolder from '../../../../assets/icons/folder.closed.svg'
 import OpenedFolder from '../../../../assets/icons/folder.opened.svg'
 
 import requirePath from '../../utils/require'
-const fs = requirePath("fs-extra");
 
+const fs = requirePath("fs-extra");
 
 const ItemWrapper = puffin.style.div`
     &{

@@ -21,12 +21,19 @@ const Arctic = {
     contextmenuButtonHoveringBackground:'#0066FF',
     contextmenuButtonHoveringText:'white',
     mainpanelBackground:'white',
-    tabBackground:'rgb(238,238,238)',
-    tabActiveBackground:'rgb(212,212,212)',
+    tabsbarBackground:'rgb(238,238,238)',
+    tabBackground:'transparent',
+    tabActiveBackground:'white',
     scrollbarBackground:'rgba(0,0,0,0.2)',
     scrollbarHoverBackground:'rgba(0,0,0,0.5)',
     tabIconStroke:'black',
-    tabIconHoverStroke:'gray'
+    tabIconHoverStroke:'gray',
+    sidemenuBackground:'rgb(238,238,238)',
+    sidemenuButtonBackground:'transparent',
+    sidemenuButtonHoverBackground:'rgb(212,212,212)',
+    sidemenuButtonActiveBackground:'#0066FF',
+    sidemenuButtonText:'black',
+    sidemenuButtonActiveText:'white'
 }
 
 export default Arctic
