@@ -5,6 +5,7 @@ import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import path from 'path'
 
+import ThemeProvider from 'ThemeProvider'
 import ClosedFolder from '../../../../assets/icons/folder.closed.svg'
 import OpenedFolder from '../../../../assets/icons/folder.opened.svg'
 
@@ -13,6 +14,7 @@ import requirePath from '../../utils/require'
 const fs = requirePath("fs-extra");
 
 const ItemWrapper = puffin.style.div`
+    ${ThemeProvider}
     &{
         background:transparent;
         white-space:nowrap;
@@ -33,10 +35,12 @@ const ItemWrapper = puffin.style.div`
         display:flex;
         align-items: center;
         justify-content: center;
+        color:{{explorerItemText}};
     }
     & button *{
         align-items: center;
         display:flex;
+        color:{{explorerItemText}};
     }
     & button:hover{
         background:rgba(150,150,150,0.6);

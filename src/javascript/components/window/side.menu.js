@@ -17,11 +17,12 @@ function goTo(page,buttons,pages){
 }
 
 const SideMenu = puffin.element(`
-    <div test="1" class="${puffin.style.css`
+    <div class="${puffin.style.css`
         ${ThemeProvider}
         & {
             display:flex;
             min-height:100%;
+            max-height:100%;
             flex:1;
             overflow:hidden;
         }
@@ -40,7 +41,7 @@ const SideMenu = puffin.element(`
             padding:7px;
             border-radius:6px;
             background:{{sidemenuButtonBackground}};
-            color:{{sidemenuButtonext}};
+            color:{{sidemenuButtonText}};
             margin:3px 0px;
         }
         & > div:nth-child(1) > label:hover:not(.active) {
@@ -55,8 +56,10 @@ const SideMenu = puffin.element(`
             min-height:auto;
             max-height:100%;
             width:auto;
+            height:auto;
             overflow:auto;
             padding:15px;
+            flex:1;
         }
     `}">
 

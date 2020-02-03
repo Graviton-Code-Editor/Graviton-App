@@ -21,12 +21,19 @@ const Night = {
     contextmenuButtonHoveringBackground:'#0066FF',
     contextmenuButtonHoveringText:'white',
     mainpanelBackground:'#191919',
-    tabBackground:'rgb(238,238,238)',
+    tabBackground:'#222222',
     tabActiveBackground:'rgb(212,212,212)',
     scrollbarBackground:'rgba(0,0,0,0.2)',
     scrollbarHoverBackground:'rgba(0,0,0,0.5)',
-    tabIconStroke:'black',
-    tabIconHoverStroke:'gray'
+    tabIconStroke:'white',
+    tabIconHoverStroke:'gray',
+    sidemenuBackground:'#222222',
+    sidemenuButtonBackground:'transparent',
+    sidemenuButtonHoverBackground:'rgb(212,212,212)',
+    sidemenuButtonActiveBackground:'#0066FF',
+    sidemenuButtonText:'white',
+    sidemenuButtonActiveText:'white',
+    explorerItemText:'white'
 }
 
 export default Night

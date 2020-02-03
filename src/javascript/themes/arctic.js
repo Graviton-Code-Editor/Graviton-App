@@ -33,7 +33,8 @@ const Arctic = {
     sidemenuButtonHoverBackground:'rgb(212,212,212)',
     sidemenuButtonActiveBackground:'#0066FF',
     sidemenuButtonText:'black',
-    sidemenuButtonActiveText:'white'
+    sidemenuButtonActiveText:'white',
+    explorerItemText:'black'
 }
 
 export default Arctic
