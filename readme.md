@@ -148,4 +148,4 @@ MIT License
 
 Copyright (c) Marc Espín Sanz
 
-[Full license](license.md)
+[Full license](LICENSE.md)
