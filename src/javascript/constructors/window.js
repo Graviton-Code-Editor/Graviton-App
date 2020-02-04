@@ -34,12 +34,17 @@ function Window({
     })
 
     return {
-        launch:()=> launch(WindowComponent)
+        launch:()=> launch(WindowComponent),
+        close:()=> close(WindowComponent)
     }
 }
 
 function launch(WindowComponent){
     puffin.render(WindowComponent,document.getElementById("windows"))
+}
+
+function close(WindowComponent){
+    WindowComponent.node.remove()
 }
 
 export default Window

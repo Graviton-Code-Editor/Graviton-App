@@ -92,10 +92,7 @@ const SideMenu = puffin.element(`
                 }
                 return list
             })()
-
-
             goTo(defaultPage,buttons,pages)
-            console.log(buttons,pages)
         }
     }
 })

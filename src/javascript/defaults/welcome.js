@@ -100,6 +100,7 @@ const WelcomePage = puffin.element(`
     methods:{
         openDirectory(){
             new Explorer(this.getAttribute("directory"),document.getElementById("sidepanel"))
+            Welcome.close()
         },
         openDirectoryFromWindow(){
             openFolder().then(function(folder){
