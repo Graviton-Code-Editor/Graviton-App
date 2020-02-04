@@ -29,7 +29,7 @@ function Explorer(folderPath,parent,level = 0){
             </div>
         `,{
             components:{
-                Item
+                Item:Item()
             }
         })
         puffin.render(explorerComponent,parent)

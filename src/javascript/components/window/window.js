@@ -16,6 +16,9 @@ const WindowBody = puffin.element(`
             height:auto;
             display:flex;
         }
+        & * {
+            color:{{textColor}};
+        }
     `}">
         
     </div>

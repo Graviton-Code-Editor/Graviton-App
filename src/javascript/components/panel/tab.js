@@ -8,6 +8,7 @@ const TabBody  = puffin.element(`
             &{
                 height:40px;
                 background:{{tabBackground}};
+                color:{{tabText}};
                 min-width:100px;
                 width:auto;
                 max-width:150px;
@@ -39,6 +40,7 @@ const TabBody  = puffin.element(`
             &[active="true"]{
                 background:{{tabActiveBackground}};
                 box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+                color:{{tabActiveText}};
             }
         `
     }">

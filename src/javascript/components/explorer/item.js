@@ -13,123 +13,127 @@ import requirePath from '../../utils/require'
 
 const fs = requirePath("fs-extra");
 
-const ItemWrapper = puffin.style.div`
-    ${ThemeProvider}
-    &{
-        background:transparent;
-        white-space:nowrap;
-        padding:0px;
+function Item(){
 
-    }
-    & button{
-        margin:0;
-        border-radius:5px;
-        font-size:13px;
-        transition:0.05s;
-        padding:3px 5px;
-        border:none;
-        margin:0px;
-        background:transparent;
-        outline:0;
-        white-space:nowrap;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        color:{{explorerItemText}};
-    }
-    & button *{
-        align-items: center;
-        display:flex;
-        color:{{explorerItemText}};
-    }
-    & button:hover{
-        background:rgba(150,150,150,0.6);
-        transition:0.05s;
-    }
-    & .icon{
-        height:20px;
-        width:20px;
-        margin-right:4px;
-        position:relative;
-    }
+    const ItemWrapper = puffin.style.div`
+        ${ThemeProvider}
+        &{
+            background:transparent;
+            white-space:nowrap;
+            padding:0px;
 
-`
+        }
+        & button{
+            margin:0;
+            border-radius:5px;
+            font-size:13px;
+            transition:0.05s;
+            padding:3px 5px;
+            border:none;
+            margin:0px;
+            background:transparent;
+            outline:0;
+            white-space:nowrap;
+            display:flex;
+            align-items: center;
+            justify-content: center;
+            color:{{explorerItemText}};
+        }
+        & button *{
+            align-items: center;
+            display:flex;
+            color:{{explorerItemText}};
+        }
+        & button:hover{
+            background:rgba(150,150,150,0.6);
+            transition:0.05s;
+        }
+        & .icon{
+            height:20px;
+            width:20px;
+            margin-right:4px;
+            position:relative;
+        }
 
-const Item = puffin.element(`
-    <ItemWrapper>
-        <button click="$openFolder" contextmenu="$contextMenu">
-            <img class="icon"/>
-            <span>{{path}}</span>
-        </button>
-    </ItemWrapper>
-`,{
-    props:['path'],
-    components:{
-        ItemWrapper
-    },
-    methods:{
-        openFolder(e){
-            if(this.parentElement.getAttribute("isDirectory") == "true"){
-                if(this.parentElement.children[1] == null){
-                    new Explorer(this.parentElement.getAttribute("fullpath"),this.parentElement,Number(this.parentElement.getAttribute("level"))+1)
-                    setOpenIcon(this.parentElement.children[0].children[0])
+    `
+
+    const ItemComp = puffin.element(`
+        <ItemWrapper>
+            <button click="$openFolder" contextmenu="$contextMenu">
+                <img class="icon"/>
+                <span>{{path}}</span>
+            </button>
+        </ItemWrapper>
+    `,{
+        props:['path'],
+        components:{
+            ItemWrapper
+        },
+        methods:{
+            openFolder(e){
+                if(this.parentElement.getAttribute("isDirectory") == "true"){
+                    if(this.parentElement.children[1] == null){
+                        new Explorer(this.parentElement.getAttribute("fullpath"),this.parentElement,Number(this.parentElement.getAttribute("level"))+1)
+                        setOpenIcon(this.parentElement.children[0].children[0])
+                    }else{
+                        this.parentElement.children[1].remove()
+                        setClosedIcon(this.parentElement.children[0].children[0])
+                    }
                 }else{
-                    this.parentElement.children[1].remove()
-                    setClosedIcon(this.parentElement.children[0].children[0])
-                }
-            }else{
-                const basename = path.basename(this.parentElement.getAttribute("fullpath"))
-                const fileExtension = path.basename(this.parentElement.getAttribute("fullpath")).split('.')[path.basename(this.parentElement.getAttribute("fullpath")).split('.').length-1]
-                const { tabElement, bodyElement } = new Tab({
-                    title:basename,
-                    directory:basename
-                })
-                fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
-                    new Editor({
-                        element:bodyElement,
-                        language:fileExtension,
-                        value:data ,
-                        theme:'arctic'
+                    const basename = path.basename(this.parentElement.getAttribute("fullpath"))
+                    const fileExtension = path.basename(this.parentElement.getAttribute("fullpath")).split('.')[path.basename(this.parentElement.getAttribute("fullpath")).split('.').length-1]
+                    const { tabElement, bodyElement } = new Tab({
+                        title:basename,
+                        directory:basename
                     })
-                })
+                    fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
+                        new Editor({
+                            element:bodyElement,
+                            language:fileExtension,
+                            value:data ,
+                            theme:'arctic'
+                        })
+                    })
 
+                }
+            },
+            contextMenu(e){
+                if(this.parentElement.getAttribute("isDirectory") == "true"){
+                    new ContextMenu({
+                        list:[
+                            {
+                                label:"New folder",
+                                action:()=>console.log("test")
+                            }
+                        ],
+                        parent:this,
+                        event:e
+                    })
+                }
             }
         },
-        contextMenu(e){
-            if(this.parentElement.getAttribute("isDirectory") == "true"){
-                new ContextMenu({
-                    list:[
-                        {
-                            label:"New folder",
-                            action:()=>console.log("test")
-                        }
-                    ],
-                    parent:this,
-                    event:e
-                })
+        events:{
+            mounted(target){
+                target.children[0].children[1].textContent = target.props.path //FIX
+
+                target.style.paddingLeft = `${Number(target.getAttribute("level"))*6}px`
+
+                if(target.getAttribute("isDirectory") == "true"){
+                    setClosedIcon(target.children[0].children[0])
+                }
+                
             }
         }
-    },
-    events:{
-        mounted(target){
-            target.children[0].children[1].textContent = target.props.path //FIX
+    })
 
-            target.style.paddingLeft = `${Number(target.getAttribute("level"))*6}px`
-
-            if(target.getAttribute("isDirectory") == "true"){
-                setClosedIcon(target.children[0].children[0])
-            }
-            
-        }
+    function setOpenIcon(target){
+        target.src = OpenedFolder
     }
-})
 
-function setOpenIcon(target){
-    target.src = OpenedFolder
-}
-
-function setClosedIcon(target){
-    target.src = ClosedFolder
+    function setClosedIcon(target){
+        target.src = ClosedFolder
+    }
+    return ItemComp
 }
 
 export default Item
