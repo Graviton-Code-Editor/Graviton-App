@@ -2,15 +2,32 @@
 import {puffin} from '@mkenzo_8/puffin'
 import ThemeProvider from '../../utils/themeprovider'
 
-if("windows" == "windows"){
+if(eval(`process.platform`) == "win32"){
     var Buttons = puffin.element(`
-        <div class="buttons" class="${puffin.style.css`
+        <div class="buttons ${puffin.style.css`
             ${ThemeProvider}
             rect{
                 stroke:{{controlButtonsFill}};
             }
             rect.fill{
                 fill:{{controlButtonsFill}};
+            }
+            & button{
+                border:0;
+                margin:0;
+                flex-align:right;
+                min-height:40px;
+                padding:0px 12px;
+                outline:0;
+                left:0;
+                background:transparent;
+            }
+            & button:hover{
+                background:{{controlButtonsHoverBackground}};
+            }
+            & button:nth-child(3):hover{
+                background:{{controlCloseButtonHoverBackground}};
+                fill:{{controlCloseButtonHoverFill}};
             }
         `}">
             <button title="Minimize">
@@ -33,7 +50,57 @@ if("windows" == "windows"){
     `)
 }else{
     var Buttons = puffin.element(`
-        <div class="buttons" >
+        <div class="buttons ${puffin.style.css`
+            & > button {
+                border-radius: 100px;
+                min-height: 12px;
+                border: 0px;
+                width: 12px;
+                padding: 0px;
+                margin: auto 3px;
+                background: gray;
+            }
+
+            & > button[title="Close"]{
+                background: #FF746D;
+	            border: 1px solid #f85a52;
+            }
+            & > button[title="Close"]:hover{
+                background: #FF746D;
+		        border: 1px solid #f85a52;
+            }
+            & > button[title="Close"]:active{
+                background: #D0716C !important;
+		        border: 1px solid #AA4F4B !important;
+            }
+          
+            & > button[title="Minimize"]{
+                background: #fdbe2e;
+	            border: 1px solid #DFA620;
+            }
+            & > button[title="Minimize"]:hover{
+                background: #fdbe2e;
+		        border: 1px solid #DFA620;
+            }
+            & > button[title="Minimize"]:active{
+                background: #E0AD38;
+                border: 1px solid #B38B2E;
+            }
+
+            & > button[title="Zoom"]{
+                background: #1DE33D;
+	            border: 1px solid #1ECE38;
+            }
+            & > button[title="Zoom"]:hover{
+                background: #1DE33D;
+		        border: 1px solid #1ECE38;
+            }
+            & > button[title="Zoom"]:active{
+                background: #27cb41;
+                border: 1px solid #1AAC2F;
+            }
+
+        `}">
             <button title="Close" >
                 <img/>
             </button>

@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200207 - 1 [2.0.04]
+- Improved: MacOS custom title bar (WIP)
+- Fixed: You could open as many times the same or even a different project in the explorer
+- Improved: Drac components support (Better Dark theme)
+- Changed: Version showed in About dialog is taken from the package.json when building
+
 ### 200202 - 1 [2.0.01]
 * Better looking tabs
 * Added About menu with About dialog

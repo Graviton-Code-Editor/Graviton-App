@@ -1,6 +1,6 @@
 {
   "name": "Graviton",
-  "version": "2.0.03",
+  "version": "2.0.04",
   "description": "Minimalist looking code editor.",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "homepage": "https://graviton.ml",
@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "@mkenzo_8/puffin": "^0.3.4",
-    "@mkenzo_8/puffin-drac": "0.0.7",
+    "@mkenzo_8/puffin-drac": "0.0.11",
     "codemirror": "^5.51.0",
     "electron-is-dev": "^1.1.0",
     "electron-store": "^5.1.0",

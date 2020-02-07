@@ -1,11 +1,12 @@
 import Menu from "../constructors/menu";
-import SettingsPage from '../defaults/settings'
+import SettingsPage from './settings'
 import Welcome from "./welcome";
 import Panel from '../constructors/panel'
 import Dialog from '../constructors/dialog'
+import GravitonPackage from '../../../package.json'
 
 function loadDefaultMenus(){
-    new Menu({
+    new Menu({ //FILE
          button:'File',
          list:[
             {
@@ -16,7 +17,7 @@ function loadDefaultMenus(){
             }
          ]
      })
-    new Menu({
+    new Menu({ //TOOLS
         button:'Tools',
         list:[
             {
@@ -29,7 +30,7 @@ function loadDefaultMenus(){
             }
         ]
     })
-    new Menu({
+    new Menu({ //EDITOR
         button:'Editor',
         list:[
             {
@@ -38,18 +39,20 @@ function loadDefaultMenus(){
             }
         ]
     })
-    new Menu({
+    new Menu({ //HELP
         button:'Help',
         list:[
             {
                 label:'About',
                 action:()=> new Dialog({
                     title:'About',
-                    content:'Graviton v2'
+                    content:`Graviton v${GravitonPackage.version}`
                 })
             }
         ]
     })
+
+    new Panel() //Initial Panel
 }
 
 export default loadDefaultMenus

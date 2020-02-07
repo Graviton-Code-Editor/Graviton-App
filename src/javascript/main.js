@@ -2,7 +2,7 @@
 import { puffin } from '@mkenzo_8/puffin'
 import TitleBar from './components/titlebar/titlebar'
 import BootAnimation from './components/bootanimation'
-import loadDefaultMenus from './defaults/menus'
+import loadInitial from './defaults/initial'
 import Welcome from './defaults/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
@@ -18,6 +18,11 @@ const App = puffin.element(`
             --puffinTextColor:{{textColor}};
             --puffinFont:mainFont;
             --sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
+            --puffinButtonBackground:{{buttonBackground}};
+            --puffinCardBackground:{{cardBackground}};
+            --puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
+            --puffinRadioCircleBackground:{{radioCircleBackground}};
+            --puffinRadioCircleBorder:{{radioCircleBorder}};
         }
         @font-face {
             font-family: mainFont;
@@ -136,6 +141,8 @@ const App = puffin.element(`
     },
     events:{
         mounted(){
+            loadInitial()
+            
             window.addEventListener("load",function(){
                 Welcome.launch()
             })
@@ -147,8 +154,3 @@ puffin.render(App,document.getElementById("App"),{
     removeContent:true
 })
 
-import Panel from './constructors/panel'
-
-new Panel()
-
-loadDefaultMenus()

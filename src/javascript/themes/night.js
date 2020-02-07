@@ -1,3 +1,5 @@
+import { read } from "fs"
+
 const Night = {
     accentColor: "rgb(255, 0, 72)",
     textColor:'white',
@@ -21,6 +23,7 @@ const Night = {
     contextmenuButtonHoveringBackground:'#0066FF',
     contextmenuButtonHoveringText:'white',
     mainpanelBackground:'#191919',
+    tabsbarBackground:'#222222',
     tabBackground:'#222222',
     tabText:'white',
     tabActiveText:'white',
@@ -31,11 +34,17 @@ const Night = {
     tabIconHoverStroke:'gray',
     sidemenuBackground:'#191919',
     sidemenuButtonBackground:'transparent',
-    sidemenuButtonHoverBackground:'rgb(212,212,212)',
+    sidemenuButtonHoverBackground:'#222222',
     sidemenuButtonActiveBackground:'#0066FF',
     sidemenuButtonText:'white',
     sidemenuButtonActiveText:'white',
-    explorerItemText:'white'
+    explorerItemText:'white',
+    cardBackground:'#191919',
+    buttonBackground:'#191919',
+    radioBackgroundHovering:'rgb(60,60,60)',
+    radioCircleBackground:'#222222',
+    radioCircleBorder:'#666666',
+    windowBorder:'#666666'
 }
 
 export default Night

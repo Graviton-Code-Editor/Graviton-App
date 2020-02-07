@@ -6,14 +6,18 @@ function Editor({
     language,
     theme
 }){
-    const Instance = CodemirrorClient
-    Instance.do('create',{
+    const Client = CodemirrorClient
+
+    const { instance } = Client.do('create',{
         element:element,
-        language:Instance.do('getLangFromExt',language),
+        language:Client.do('getLangFromExt',language),
         value:value,
         theme:theme
     })
-    return Instance
+    
+    Client.do('refresh',instance)
+
+    return Client
 }
 
 export default Editor

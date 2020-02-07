@@ -21,7 +21,7 @@ const CodemirrorClient = new EditorClient({
                 return extension    
         }
     },
-    create: ({element,language, value, theme}) => {
+    create({element,language, value, theme}){
         const CodemirrorEditor = CodeMirror(element,{
             mode:language,
             value:value,
@@ -29,7 +29,14 @@ const CodemirrorClient = new EditorClient({
             htmlMode:false,
             theme:theme
         })
-        return CodemirrorEditor
+        return {
+            instance : CodemirrorEditor
+        }
+    },
+    refresh(cm){
+        setTimeout(function() {
+            cm.refresh()
+        },1);
     }
 })
 

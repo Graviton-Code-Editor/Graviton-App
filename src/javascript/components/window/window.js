@@ -5,7 +5,7 @@ const WindowBody = puffin.element(`
     <div class="${puffin.style.css`
     ${ThemeProvider}
         &{
-            border:1px solid gray;
+            border:1px solid {{windowBorder}};
             width:200px;
             max-width: 80%;
             max-height: 75%;

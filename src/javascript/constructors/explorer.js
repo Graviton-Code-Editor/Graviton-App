@@ -32,7 +32,9 @@ function Explorer(folderPath,parent,level = 0){
                 Item:Item()
             }
         })
-        puffin.render(explorerComponent,parent)
+        puffin.render(explorerComponent,parent,{
+            removeContent:level==0
+        })
     })    
 }
 

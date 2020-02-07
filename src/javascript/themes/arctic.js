@@ -36,7 +36,13 @@ const Arctic = {
     sidemenuButtonActiveBackground:'#0066FF',
     sidemenuButtonText:'black',
     sidemenuButtonActiveText:'white',
-    explorerItemText:'black'
+    explorerItemText:'black',
+    cardBackground:'rgb(238,238,238)',
+    buttonBackground:'rgb(238,238,238)',
+    radioBackgroundHovering:'#EFEFEF',
+    radioCircleBackground:'white',
+    radioCircleBorder:'#CFCFCF',
+    windowBorder:'gray'
 }
 
 export default Arctic

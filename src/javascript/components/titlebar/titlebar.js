@@ -15,23 +15,6 @@ const TitleBar = puffin.element(`
                 max-height:40px;
                 overflow:hidden;
             }
-            & .buttons button{
-                border:0;
-                margin:0;
-                flex-align:right;
-                min-height:40px;
-                padding:0px 12px;
-                outline:0;
-                left:0;
-                background:transparent;
-            }
-            & .buttons button:hover{
-                background:{{controlButtonsHoverBackground}};
-            }
-            & .buttons button:nth-child(3):hover{
-                background:{{controlCloseButtonHoverBackground}};
-                fill:{{controlCloseButtonHoverFill}};
-            }
             & .title{
                 -webkit-app-region: drag;
                 flex:1;
@@ -54,14 +37,11 @@ const TitleBar = puffin.element(`
                 padding:9px;
             }
         `}">
+            ${process.platform === "darwin"?'<Buttons/>':''}
             <img src="${Logo}" class="logo"/>
-            <div id="dropmenus" class="dropmenus">
-
-            </div>
-            <div class="title">
-
-            </div>
-            <Buttons/>
+            <div id="dropmenus" class="dropmenus"></div>
+            <div class="title"></div>
+            ${process.platform === "darwin"?'':'<Buttons/>'}
         </div>
     </div>
 `,{

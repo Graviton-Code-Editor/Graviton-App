@@ -106,7 +106,6 @@ function focusATab(element){
     const children = parent.children;
 
     const position = (function(){
-        
         for( let tabIndex =0; tabIndex < children.length;tabIndex++){
             if(children[tabIndex] == element) return tabIndex
         }

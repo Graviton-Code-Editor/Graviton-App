@@ -59,7 +59,7 @@ function Item(){
 
     const ItemComp = puffin.element(`
         <ItemWrapper>
-            <button click="$openFolder" contextmenu="$contextMenu">
+            <button click="$openDirectory" contextmenu="$contextMenu">
                 <img class="icon"/>
                 <span>{{path}}</span>
             </button>
@@ -70,7 +70,7 @@ function Item(){
             ItemWrapper
         },
         methods:{
-            openFolder(e){
+            openDirectory(e){
                 if(this.parentElement.getAttribute("isDirectory") == "true"){
                     if(this.parentElement.children[1] == null){
                         new Explorer(this.parentElement.getAttribute("fullpath"),this.parentElement,Number(this.parentElement.getAttribute("level"))+1)
@@ -82,7 +82,7 @@ function Item(){
                 }else{
                     const basename = path.basename(this.parentElement.getAttribute("fullpath"))
                     const fileExtension = path.basename(this.parentElement.getAttribute("fullpath")).split('.')[path.basename(this.parentElement.getAttribute("fullpath")).split('.').length-1]
-                    const { tabElement, bodyElement } = new Tab({
+                    const { bodyElement } = new Tab({
                         title:basename,
                         directory:basename
                     })
