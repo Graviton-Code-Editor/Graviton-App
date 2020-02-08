@@ -29,7 +29,7 @@ Install the dependencies:
 ### Testing (optional)
 
 In case you just wanna test it, just run:
-> $ npm start
+> $ npm test
 
 ### Building the installer:
 
