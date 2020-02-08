@@ -12,7 +12,6 @@ function Panel(){
                     min-width:1px;
                     overflow:hidden;
                     box-shadow:-2px 0px 5px rgba(0,0,0,0.2);
-                    border-top-left-radius:5px;
                     max-height:100%;
                     min-height:100%;
                     display:flex;

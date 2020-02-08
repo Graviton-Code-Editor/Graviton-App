@@ -9,7 +9,7 @@ function Window({
 }){
     const randomID = Math.random()
     const WindowComponent = puffin.element(`
-        <div id="${randomID}"  class="${puffin.style.css`
+        <div id="${randomID}" class="${puffin.style.css`
             &{
                 min-height:100%;
                 min-width:100%;
@@ -30,6 +30,15 @@ function Window({
             WindowBody,
             WindowBackground,
             component
+        },
+        events:{
+            mounted(){
+                window.addEventListener('keydown',(e)=>{
+                    if(e.keyCode === 27){
+                        close(WindowComponent)
+                    }
+                })
+            }
         }
     })
 

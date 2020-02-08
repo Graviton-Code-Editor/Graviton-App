@@ -33,6 +33,7 @@ function ContextMenu({
 }){
     const randomID = Math.random()
     const contextMenusCreated = document.getElementsByClassName("contextMenu");
+    const computedMethods = {...list.map(a=>a.action)}
     if(contextMenusCreated.length != 0) {
         contextMenusCreated[0].remove()
     }
@@ -40,13 +41,14 @@ function ContextMenu({
             <ContextWrapper id="${randomID}" class="contextMenu" style="top:${event.pageY}px; left:${event.pageX};">
                 ${(function(){
                     let content = "";
-                        list.map((option)=>{
-                            content += `<button>${option.label}</button>`
+                        list.map((option,index)=>{
+                            content += `<button click="$${index}">${option.label}</button>`
                         })
                     return content
                 })()}
             </ContextWrapper>
         `,{
+            methods:computedMethods,
             components:{
                 ContextWrapper
             },

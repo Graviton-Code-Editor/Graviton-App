@@ -4,17 +4,15 @@ import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import path from 'path'
+import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 
 import ThemeProvider from 'ThemeProvider'
-import ClosedFolder from '../../../../assets/icons/folder.closed.svg'
-import OpenedFolder from '../../../../assets/icons/folder.opened.svg'
+import Icons from '../../../../assets/icons/**.svg'
 
 import requirePath from '../../utils/require'
-
 const fs = requirePath("fs-extra");
 
 function Item(){
-
     const ItemWrapper = puffin.style.div`
         ${ThemeProvider}
         &{
@@ -81,7 +79,7 @@ function Item(){
                     }
                 }else{
                     const basename = path.basename(this.parentElement.getAttribute("fullpath"))
-                    const fileExtension = path.basename(this.parentElement.getAttribute("fullpath")).split('.')[path.basename(this.parentElement.getAttribute("fullpath")).split('.').length-1]
+                    const fileExtension = getExtension(this.parentElement)
                     const { bodyElement } = new Tab({
                         title:basename,
                         directory:basename
@@ -91,7 +89,7 @@ function Item(){
                             element:bodyElement,
                             language:fileExtension,
                             value:data ,
-                            theme:'arctic'
+                            theme:'Arctic'
                         })
                     })
 
@@ -103,7 +101,13 @@ function Item(){
                         list:[
                             {
                                 label:"New folder",
-                                action:()=>console.log("test")
+                                action:()=>{
+                                    newDirectoryDialog({
+                                        isFolder:true,
+                                        parentDirectory:this.parentElement.getAttribute("fullpath"),
+                                        explorerContainer:this.parentElement
+                                    })
+                                }
                             }
                         ],
                         parent:this,
@@ -114,26 +118,48 @@ function Item(){
         },
         events:{
             mounted(target){
+
+                const fileExtension = getExtension(target)
+
                 target.children[0].children[1].textContent = target.props.path //FIX
 
-                target.style.paddingLeft = `${Number(target.getAttribute("level"))*6}px`
+                target.style.paddingLeft = `${Number(target.getAttribute("level"))*4.5}px`
 
                 if(target.getAttribute("isDirectory") == "true"){
                     setClosedIcon(target.children[0].children[0])
+                }else{
+                    setFileIcon(target.children[0].children[0],fileExtension)
                 }
+
+                target.reload = ()=> reload(target)
                 
             }
         }
     })
-
-    function setOpenIcon(target){
-        target.src = OpenedFolder
-    }
-
-    function setClosedIcon(target){
-        target.src = ClosedFolder
-    }
     return ItemComp
+}
+
+function reload(target){
+    if(target.children[1] != null) target.children[1].remove()
+    new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
+}
+
+function getExtension(target){
+    return path.basename(target.getAttribute("fullpath")).split('.')[path.basename(target.getAttribute("fullpath")).split('.').length-1]
+}
+
+function setFileIcon(target,extension){
+    if(Icons[`${extension}.lang`] != null){
+       target.src = Icons[`${extension}.lang`] 
+    }        
+}
+
+function setOpenIcon(target){
+    target.src = Icons["folder.opened"]
+}
+
+function setClosedIcon(target){
+    target.src = Icons["folder.closed"]
 }
 
 export default Item

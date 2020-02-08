@@ -36,7 +36,7 @@ const CodemirrorClient = new EditorClient({
     refresh(cm){
         setTimeout(function() {
             cm.refresh()
-        },1);
+        },10);
     }
 })
 

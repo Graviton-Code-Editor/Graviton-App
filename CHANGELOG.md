@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200208 - 1 [2.0.05]
+- Improved: Folder(closed & opened) icons
+- Added: JavaScript file icon
+- Added: ESC keybind to close current window or dialog
+- Added: You can now add buttons to dialogs
+- Added: right click a folder in the explorer to create a folder inside it
+
 ### 200207 - 1 [2.0.04]
 - Improved: MacOS custom title bar (WIP)
 - Fixed: You could open as many times the same or even a different project in the explorer

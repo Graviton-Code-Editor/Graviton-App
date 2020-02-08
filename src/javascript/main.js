@@ -3,7 +3,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import TitleBar from './components/titlebar/titlebar'
 import BootAnimation from './components/bootanimation'
 import loadInitial from './defaults/initial'
-import Welcome from './defaults/welcome'
+import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 
@@ -65,6 +65,9 @@ const App = puffin.element(`
             box-shadow:-2px 0px 6px rgba(0,0,0,0.2);
             border-top-left-radius:5px;
             background:{{mainpanelBackground}};
+        }
+        #mainpanel > div:nth-child(1){
+            border-top-left-radius:5px;
         }
         #windows{
             position:absolute;

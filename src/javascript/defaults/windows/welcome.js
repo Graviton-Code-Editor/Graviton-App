@@ -1,12 +1,13 @@
 import {puffin} from '@mkenzo_8/puffin'
-import Window from '../constructors/window'
+import Window from '../../constructors/window'
 import { Button } from '@mkenzo_8/puffin-drac'
-import {openFolder} from '../utils/filesystem'
-import Explorer from '../constructors/explorer'
+import {openFolder} from '../../utils/filesystem'
+import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
 import {Card , Titles} from '@mkenzo_8/puffin-drac'
-import SideMenu from '../components/window/side.menu'
-import requirePath from '../utils/require'
+import SideMenu from '../../components/window/side.menu'
+import requirePath from '../../utils/require'
+import parseDirectory from '../../utils/directory.parser'
 
 const path = requirePath("path")
 
@@ -15,6 +16,7 @@ const listWrapper = puffin.style.css `
     &{
         overflow:auto;
         padding-right:20px;
+        min-height:80%;
         max-height:80%;
         display:block;
     }
@@ -59,11 +61,7 @@ const WelcomePage = puffin.element(`
                         let content = "";
                         StaticConfig.data.log.map(({ name, directory })=> {
                            
-                            let nameFolder = path.basename(directory)
-
-                            if(process.platform == "win32"){
-                                 nameFolder = path.basename(directory.replace(/\\/g,'\\\\'))
-                            }
+                            let nameFolder = parseDirectory(directory)
 
                             content += `
                                 <Card click="$openDirectory" directory="${directory}">

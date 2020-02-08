@@ -15,7 +15,7 @@ const BootAnimation = puffin.element(`
         }
     
     `}">
-        loading...
+        Loading Graviton Editor.
     </div>
 `,{
     events:{

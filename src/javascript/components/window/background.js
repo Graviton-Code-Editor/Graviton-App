@@ -1,7 +1,7 @@
 import {puffin} from '@mkenzo_8/puffin'
 
 const WindowBackground = puffin.element(`
-    <div click="$closeMe" class="${puffin.style.css`
+    <div click="$closeMe" keyup="$keyPresssed" class="${puffin.style.css`
         &{
             position:fixed;
             top:0;

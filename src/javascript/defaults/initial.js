@@ -1,9 +1,14 @@
 import Menu from "../constructors/menu";
-import SettingsPage from './settings'
-import Welcome from "./welcome";
+import SettingsPage from './windows/settings'
+import Welcome from "./windows/welcome";
 import Panel from '../constructors/panel'
 import Dialog from '../constructors/dialog'
-import GravitonPackage from '../../../package.json'
+import ThemeRegistry from 'ThemeRegistry'
+import ThemeProvider from 'ThemeProvider'
+import Arctic from '../themes/arctic'
+import Night from '../themes/night'
+import StaticConfig from 'StaticConfig'
+import DialogAbout from './dialogs/about'
 
 function loadDefaultMenus(){
     new Menu({ //FILE
@@ -22,7 +27,7 @@ function loadDefaultMenus(){
         list:[
             {
                 label:'Open Settings',
-                action:SettingsPage.launch
+                action:()=>SettingsPage().launch()
             },
             {
                 label:'Open Welcome',
@@ -44,15 +49,18 @@ function loadDefaultMenus(){
         list:[
             {
                 label:'About',
-                action:()=> new Dialog({
-                    title:'About',
-                    content:`Graviton v${GravitonPackage.version}`
-                })
+                action:DialogAbout
             }
         ]
     })
 
     new Panel() //Initial Panel
+
+    ThemeRegistry.add(Arctic)    
+    ThemeRegistry.add(Night)  
+
+    StaticConfig.triggerChange()
+
 }
 
 export default loadDefaultMenus

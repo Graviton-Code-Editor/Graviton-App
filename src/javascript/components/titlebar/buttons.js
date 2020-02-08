@@ -1,8 +1,9 @@
 
 import {puffin} from '@mkenzo_8/puffin'
 import ThemeProvider from '../../utils/themeprovider'
+const os = eval('process.platform')
 
-if(eval(`process.platform`) == "win32"){
+if(os == "win32"){
     var Buttons = puffin.element(`
         <div class="buttons ${puffin.style.css`
             ${ThemeProvider}
@@ -51,53 +52,67 @@ if(eval(`process.platform`) == "win32"){
 }else{
     var Buttons = puffin.element(`
         <div class="buttons ${puffin.style.css`
+            & {
+                margin:0px
+                min-height:40px;
+                margin:0;
+                padding:0;
+                display:flex;
+                align-items:center;
+                margin:0 5px;
+            }
             & > button {
                 border-radius: 100px;
-                min-height: 12px;
+                height:12px;
+                padding:0px 12px;
                 border: 0px;
                 width: 12px;
                 padding: 0px;
-                margin: auto 3px;
+                margin: 0px 3px;
                 background: gray;
+                
             }
 
-            & > button[title="Close"]{
-                background: #FF746D;
-	            border: 1px solid #f85a52;
+            
+            & > button[title="Close"]:active{
+                background: #D0716C !important;
+		        border: 1px solid #AA4F4B !important;
             }
             & > button[title="Close"]:hover{
                 background: #FF746D;
 		        border: 1px solid #f85a52;
             }
-            & > button[title="Close"]:active{
-                background: #D0716C !important;
-		        border: 1px solid #AA4F4B !important;
+            & > button[title="Close"]{
+                background: #FF746D;
+	            border: 1px solid #f85a52;
             }
           
-            & > button[title="Minimize"]{
-                background: #fdbe2e;
-	            border: 1px solid #DFA620;
+            
+            & > button[title="Minimize"]:active{
+                background: #E0AD38;
+                border: 1px solid #B38B2E;
             }
             & > button[title="Minimize"]:hover{
                 background: #fdbe2e;
 		        border: 1px solid #DFA620;
             }
-            & > button[title="Minimize"]:active{
-                background: #E0AD38;
-                border: 1px solid #B38B2E;
+            & > button[title="Minimize"]{
+                background: #fdbe2e;
+	            border: 1px solid #DFA620;
             }
 
-            & > button[title="Zoom"]{
-                background: #1DE33D;
-	            border: 1px solid #1ECE38;
+            
+            & > button[title="Zoom"]:active{
+                background: #27cb41;
+                border: 1px solid #1AAC2F;
             }
             & > button[title="Zoom"]:hover{
                 background: #1DE33D;
 		        border: 1px solid #1ECE38;
             }
-            & > button[title="Zoom"]:active{
-                background: #27cb41;
-                border: 1px solid #1AAC2F;
+            & > button[title="Zoom"]{
+                background: #1DE33D;
+	            border: 1px solid #1ECE38;
             }
 
         `}">

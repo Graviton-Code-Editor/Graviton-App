@@ -3,6 +3,7 @@ import ThemeProvider from '../../utils/themeprovider'
 import DropMenu from '../dropmenu'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
+const os = eval('process.platform')
 
 const TitleBar = puffin.element(`
     <div>
@@ -14,6 +15,7 @@ const TitleBar = puffin.element(`
                 background:{{titlebarBackground}};
                 max-height:40px;
                 overflow:hidden;
+                min-height:40px;
             }
             & .title{
                 -webkit-app-region: drag;
@@ -37,11 +39,11 @@ const TitleBar = puffin.element(`
                 padding:9px;
             }
         `}">
-            ${process.platform === "darwin"?'<Buttons/>':''}
-            <img src="${Logo}" class="logo"/>
+            ${os === "darwin"?'<Buttons/>':''}
+            ${os !== "darwin"?`<img src="${Logo}" class="logo"/>`:''} 
             <div id="dropmenus" class="dropmenus"></div>
             <div class="title"></div>
-            ${process.platform === "darwin"?'':'<Buttons/>'}
+            ${os === "win32"?'<Buttons/>':''}
         </div>
     </div>
 `,{
