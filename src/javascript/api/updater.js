@@ -10,6 +10,8 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 */
 'use strict'
 
+function getLink () {}
+
 module.exports = {
   check_updates: function () {
     const github = require('octonode')
