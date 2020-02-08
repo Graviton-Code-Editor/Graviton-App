@@ -45,9 +45,16 @@ module.exports = {
     })
   },
   update: function () {
-    const shell = require("electron").shell
-    shell.openExternal(
-      'https://github.com/Graviton-Code-Editor/Graviton-App/releases'
-    )
+    let shell = new Promise(((resolve, reject) => {
+      resolve(require("electron").shell)
+    }))
+    shell.then(() => {
+      shell.openExternal(
+        getLink()
+      )
+    }).catch((error) => { console.log(error) })
+  },
+  getLink: function () {
+    return 'https://github.com/Graviton-Code-Editor/Graviton-App/releases'
   }
 }
