@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200209 - 2 [2.0.07]
+- Added: native MacOS menu bar
+
 ### 200209 - 1 [2.0.06]
 - Imrpoved: You can now save files
 - Added: global Ctrl+S keyshortcut to save the focused file
