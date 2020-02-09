@@ -11,9 +11,10 @@ Instructions to build Graviton from the source:
 Clone the git repository:
 > $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
 
-There are 2 different branches:
+There are 3 different branches:
 * Master: daily source (default).
 * Stable: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
+* 1.3.0: it refers to the old Graviton source code.
 
 ## 2 - Installing the dependencies
 
@@ -61,7 +62,7 @@ In case you just wanna test it, run to compile SASS source:
 > $ npm run compile:sass
 
 And then:
-> $ npm start
+> $ npm test
 
 ### Windows
 
