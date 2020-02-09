@@ -80,16 +80,18 @@ function Item(){
                 }else{
                     const basename = path.basename(this.parentElement.getAttribute("fullpath"))
                     const fileExtension = getExtension(this.parentElement)
-                    const { bodyElement } = new Tab({
+                    const { bodyElement, tabElement, panel } = new Tab({
                         title:basename,
-                        directory:basename
+                        directory:this.parentElement.getAttribute("fullpath")
                     })
                     fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
                         new Editor({
-                            element:bodyElement,
                             language:fileExtension,
                             value:data ,
-                            theme:'Arctic'
+                            theme:'Arctic',
+                            bodyElement,
+                            tabElement,
+                            panel
                         })
                     })
 

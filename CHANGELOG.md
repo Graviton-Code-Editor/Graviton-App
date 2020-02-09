@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200209 - 1 [2.0.06]
+- Imrpoved: You can now save files
+- Added: global Ctrl+S keyshortcut to save the focused file
+
 ### 200208 - 1 [2.0.05]
 - Improved: Folder(closed & opened) icons
 - Added: JavaScript file icon

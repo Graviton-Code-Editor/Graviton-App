@@ -3,6 +3,10 @@ import TabEditor from '../components/panel/tab.editor'
 import {puffin} from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
+import UnSavedIcon from '../components/icons/file.not.saved'
+import requirePath from '../utils/require'
+
+const fs = requirePath("fs-extra")
 
 function Tab({
     title,
@@ -13,13 +17,16 @@ function Tab({
 }){
 
     const tabState = new puffin.state({
-        active:true
+        active:true,
+        saved:true
     })
 
     const TabComp = puffin.element(`
         <TabBody click="$focusTab" active="{{active}}" mouseover="$showCross" mouseleave="$hideCross">
             <p>${title}</p>
-            <Cross style="opacity:{{crossOpacity}}" click="$closeTab"/>
+            <div>
+                <Cross style="opacity:0;" click="$closeTab"/>
+            </div>
         </TabBody>
     `,{
         components:{
@@ -33,38 +40,47 @@ function Tab({
             closeTab(e){
                 e.stopPropagation()
 
-                focusATab(this.parentElement)
+                focusATab(this.parentElement.parentElement)
 
                 TabComp.node.remove()
                 TabEditorComp.node.remove(); 
             },
-            showCross(target){
-                this.props.crossOpacity = "1"
+            showCross(e){
+                toggleCross(this.children[1].children[0],1)
             },
-            hideCross(target){
-                this.props.crossOpacity = "0"
+            hideCross(e){
+                toggleCross(this.children[1].children[0],0)
             }
         },
         events:{
             mounted(target){
+                target.directory = directory
                 tabState.changed(function(){
                     target.props.state = tabState
+                    if(tabState.data.active){
+                        RunningConfig.data.focusedTab = target
+                    }
                     target.props.active = tabState.data.active
+
+                    if( target.props.saved != tabState.data.saved){
+                        target.props.saved = tabState.data.saved
+                        isSaved(target,target.props.saved)
+                    }
                 })
+                RunningConfig.data.focusedTab = target
                 target.props.active = tabState.data.active
+                target.props.saved = tabState.data.saved
                 target.props.state = tabState
-                target.props.crossOpacity = "0"
+
             }
         },
-        props:["active","crossOpacity"]
+        props:["active"]
     })
 
     puffin.render(TabComp,panel.children[0])
 
     const TabEditorComp = puffin.element(`
-        <TabEditor>
-          
-        </TabEditor>
+        <TabEditor></TabEditor>
     `,{
         components:{
             TabEditor
@@ -90,8 +106,47 @@ function Tab({
 
     return {
         tabElement:TabComp.node,
-        bodyElement:TabEditorComp.node
+        bodyElement:TabEditorComp.node,
+        panel
     }
+}
+
+function toggleCross(target,state){
+    target.style.opacity = state
+}
+
+function isSaved(element,state){
+    if(state){
+        saveFile(element,()=>{
+            element.children[1].children[0].style.display = "block"
+            if(element.children[1].children[1]!=null)
+                element.children[1].children[1].remove()
+        })
+    }else{
+        element.children[1].children[0].style.display = "none"
+        const comp = puffin.element(`
+            <UnSavedIcon/>
+        `,{
+            components:{
+                UnSavedIcon
+            }
+        })
+        puffin.render(comp,element.children[1],{
+            removeContent:false
+        })
+    } 
+}
+
+function saveFile(target,callback){
+    
+    const  { client, instance } = RunningConfig.data.focusedEditor
+
+    fs.writeFile(target.directory, client.do('getValue',instance), function(err) {
+        if(err) {
+            return console.log(err);
+        }
+        callback()
+    }); 
 }
 
 function unfocusTabs(element){

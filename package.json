@@ -1,6 +1,6 @@
 {
   "name": "Graviton",
-  "version": "2.0.04",
+  "version": "2.0.06",
   "description": "Minimalist looking code editor.",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "homepage": "https://graviton.ml",
@@ -30,7 +30,9 @@
     "codemirror": "^5.51.0",
     "electron-is-dev": "^1.1.0",
     "electron-store": "^5.1.0",
-    "fs-extra": "^8.1.0"
+    "fs-extra": "^8.1.0",
+    "hotkeys-js": "^3.7.3",
+    "shortcuts": "^1.2.0"
   },
   "devDependencies": {
     "electron-builder": "^22.2.0",

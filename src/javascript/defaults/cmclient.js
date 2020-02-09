@@ -37,6 +37,13 @@ const CodemirrorClient = new EditorClient({
         setTimeout(function() {
             cm.refresh()
         },10);
+    },
+    onChanged({cm,action}){
+        cm.on('change',()=>action())
+    },
+    onActive({cm,action}){
+        cm.on('cursorActivity',()=>action(cm))
+        cm.on('mousedown',()=>action(cm))
     }
 })
 

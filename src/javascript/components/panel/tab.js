@@ -30,12 +30,22 @@ const TabBody  = puffin.element(`
                 overflow:hidden;
                 text-overflow:ellipsis;
             }
-            & svg{
-                margin-left:5px;
+            & > div{
+                padding-left:auto;
                 min-height:12px;
                 min-width:12px;
                 right:0;
                 flex:1;
+                display:flex;
+                justify-content:flex-end;
+            }
+            & > div > svg{
+                max-height:12px;
+                max-width:12px;
+                padding:0;
+                margin:0;
+                flex:1;
+                margin-right:7px;
             }
             &[active="true"]{
                 background:{{tabActiveBackground}};
@@ -43,9 +53,7 @@ const TabBody  = puffin.element(`
                 color:{{tabActiveText}};
             }
         `
-    }">
-
-    </div>
+    }"></div>
 `)
 
 export default TabBody

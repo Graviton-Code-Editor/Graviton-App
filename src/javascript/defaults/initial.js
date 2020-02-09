@@ -8,7 +8,9 @@ import ThemeProvider from 'ThemeProvider'
 import Arctic from '../themes/arctic'
 import Night from '../themes/night'
 import StaticConfig from 'StaticConfig'
+import RunningConfig from 'RunningConfig'
 import DialogAbout from './dialogs/about'
+import {Shortcuts} from 'shortcuts'
 
 function loadDefaultMenus(){
     new Menu({ //FILE
@@ -60,6 +62,16 @@ function loadDefaultMenus(){
     ThemeRegistry.add(Night)  
 
     StaticConfig.triggerChange()
+
+    
+    const shortcuts = new Shortcuts ();
+
+    shortcuts.add ([ 
+        { shortcut: 'Ctrl+S', handler: event => {
+            RunningConfig.data.focusedTab.props.state.data.saved = true
+          return true; 
+        }}
+    ]);
 
 }
 
