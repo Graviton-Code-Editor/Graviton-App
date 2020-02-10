@@ -38,14 +38,14 @@ const TabBody  = puffin.element(`
                 flex:1;
                 display:flex;
                 justify-content:flex-end;
+                margin-right:7px;
             }
             & > div > svg{
                 max-height:12px;
                 max-width:12px;
                 padding:0;
                 margin:0;
-                flex:1;
-                margin-right:7px;
+                flex:1;    
             }
             &[active="true"]{
                 background:{{tabActiveBackground}};

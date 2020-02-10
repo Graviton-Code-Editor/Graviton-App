@@ -1,36 +1,38 @@
 import { puffin } from '@mkenzo_8/puffin'
 import ThemeProvider from 'ThemeProvider'
 
-const ContextWrapper = puffin.style.div`
-    ${ThemeProvider}
-    &{
-        background:white;
-        padding:5px;
-        position:fixed;
-        color:white;
-        border-radius:5px;
-        box-shadow:0px 0px 3px rgba(0,0,0,0.2);
-    }
-    & button{
-        background:{{contextmenuButtonBackground}};
-        color:{{contextmenuButtonText}};
-        border:0;
-        padding:6px;
-        outline:0;
-        border-radius:5px;
-    }
-    & button:hover{
-        background:{{contextmenuButtonHoveringBackground}};
-        color:{{contextmenuButtonHoveringText}};
-    }
 
-    `
 
 function ContextMenu({
     list,
     parent,
     event
 }){
+
+    const ContextWrapper = puffin.style.div`
+        ${ThemeProvider}
+        &{
+            background:{{contextmenuBackground}};
+            padding:5px;
+            position:fixed;
+            color:white;
+            border-radius:5px;
+            box-shadow:0px 0px 3px rgba(0,0,0,0.2);
+        }
+        & > button{
+            background:{{contextmenuButtonBackground}};
+            color:{{contextmenuButtonText}};
+            border:0;
+            padding:6px;
+            outline:0;
+            border-radius:5px;
+        }
+        & >  button:hover{
+            background:{{contextmenuButtonHoveringBackground}};
+            color:{{contextmenuButtonHoveringText}};
+        }
+
+    `
     const randomID = Math.random()
     const contextMenusCreated = document.getElementsByClassName("contextMenu");
     const computedMethods = {...list.map(a=>a.action)}

@@ -21,7 +21,7 @@ const BootAnimation = puffin.element(`
     events:{
         mounted(target){
             window.addEventListener("load",function(){
-                console.log("LOADED")
+                console.log("%c 🎉 Loaded successfully. ", "color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;")
                 target.remove()
             })
         }
