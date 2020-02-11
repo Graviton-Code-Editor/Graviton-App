@@ -35,12 +35,12 @@
     "shortcuts": "^1.2.0"
   },
   "devDependencies": {
+    "electron": "^8.0.0",
     "electron-builder": "^22.2.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.3.1",
-    "sass": "^1.25.0",
-    "electron": "^7.1.10"
+    "sass": "^1.25.0"
   },
   "build": {
     "appId": "graviton-editor",
