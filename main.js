@@ -22,7 +22,7 @@ app.on("ready", function() {
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true
 		},
-		frame: process.platform === "linux",
+		frame: process.platform !== "win32",
 		minHeight: 320,
 		minWidth: 320,
 		backgroundColor: "#191919",
