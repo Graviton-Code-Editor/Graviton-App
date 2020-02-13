@@ -4,13 +4,16 @@
 		Forked from Michael Kaminsky (http://github.com/mkaminsky11)
 */
 .cm-s-night.CodeMirror {
-	background-color: var(--editorBackgroundColor) !important;
+	background-color: transparent !important;
 	color: #f8f8f2 !important;
 	border: none;
 }
 .cm-s-night {
+	pre{
+		color:gray;
+	}
 	.CodeMirror-gutters {
-		background-color: var(--editorBackgroundColor) !important;
+		background-color: transparent !important;
 		color: #f8f8f2 !important;
 		border: none;
 		color: #282a36;
@@ -43,16 +46,7 @@
 				&::selection {
 					background: rgba(255, 255, 255, 0.10);
 				}
-				&::-moz-selection {
-					background: rgba(255, 255, 255, 0.10);
-				}
 			}
-			&::-moz-selection {
-				background: rgba(255, 255, 255, 0.10);
-			}
-		}
-		&::-moz-selection {
-			background: rgba(255, 255, 255, 0.10);
 		}
 	}
 	span.cm-comment {

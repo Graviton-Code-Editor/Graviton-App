@@ -23,13 +23,22 @@ if(os == "win32"){
                 left:0;
                 background:transparent;
             }
+            & button:nth-child(3):active{
+                background:{{controlCloseButtonActiveBackground}};
+            }
+            & button:nth-child(3):active rect.fill{
+                fill:{{controlCloseButtonActiveFill}};
+            }
             & button:hover{
                 background:{{controlButtonsHoverBackground}};
             }
             & button:nth-child(3):hover{
                 background:{{controlCloseButtonHoverBackground}};
+            }
+            & button:nth-child(3):hover rect.fill{
                 fill:{{controlCloseButtonHoverFill}};
             }
+            
         `}">
             <button title="Minimize">
                 <svg xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24">

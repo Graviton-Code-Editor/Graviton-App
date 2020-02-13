@@ -1,4 +1,5 @@
 @use './arctic.theme.scss';
+@use './night.theme.scss';
 
 @keyframes blink {
 	0% {
@@ -38,7 +39,6 @@
 	direction: ltr;
 	position: relative;
 	overflow: hidden;
-	background: white;
 	z-index:0;
 	pre {
 		padding: 0 4px;
@@ -247,9 +247,6 @@ CodeMirror-nonmatchingbracket {
 }
 .CodeMirror-matchingtag {
 	background: rgba(255, 150, 0, 0.3);
-}
-.CodeMirror-activeline-background {
-	background: #e8f2ff;
 }
 .CodeMirror-scroll {
 	overflow: scroll !important;

@@ -1,5 +1,7 @@
 import CodemirrorClient from '../defaults/cmclient'
 import RunningConfig from 'RunningConfig'
+import StaticConfig from 'StaticConfig'
+import ThemeRegistry from 'ThemeRegistry'
 
 function Editor({
     bodyElement,
@@ -21,16 +23,28 @@ function Editor({
     
     Client.do('refresh',instance)
 
-    Client.do('onChanged',{cm:instance,action:()=>tabElement.props.state.data.saved = false})
+    Client.do('onChanged',{
+        cm:instance,
+        action:()=>tabElement.props.state.data.saved = false
+    })
 
-    Client.do('onActive',{cm:instance,action:(cm)=>{
-        RunningConfig.data.focusedEditor = {
-            client:Client,
-            instance:cm
+    Client.do('onActive',{
+        cm:instance,action:(cm)=>{
+            RunningConfig.data.focusedEditor = {
+                client:Client,
+                instance:cm
+            }
+            tabElement.props.state.data.active = true
+            RunningConfig.data.focusedPanel = panel
         }
-        tabElement.props.state.data.active = true
-        RunningConfig.data.focusedPanel = panel
-    }})
+    })
+
+    StaticConfig.changed(function(data){
+        Client.do('setTheme',{
+            cm:instance,
+            theme:ThemeRegistry.registry.data.list[data.theme].textTheme
+        })
+    })
 
     return Client
 }

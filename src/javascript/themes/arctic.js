@@ -1,5 +1,6 @@
 const Arctic = {
     name:'Arctic',
+    textTheme:'arctic',
     colorsScheme:{
         accentColor: "#0066FF",
         textColor:'black',
@@ -46,7 +47,9 @@ const Arctic = {
         radioCircleBorder:'#CFCFCF',
         windowBorder:'gray',
         fileNotSavedIndicator:'black',
-        fileNotSavedIndicatorHovering:'#0066FF'
+        fileNotSavedIndicatorHovering:'#0066FF',
+        controlCloseButtonActiveBackground:'rgba(241,112,122)',
+        controlCloseButtonActiveFill:'black'
     }
     
 }

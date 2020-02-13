@@ -9,7 +9,7 @@
 
 .cm-s-arctic.CodeMirror {
 	color: #999;
-	background-color: var(--editorBackgroundColor);
+	background-color: transparent;
 }
 .cm-s-arctic {
 	pre{
@@ -44,7 +44,7 @@
 		}
 	}
 	.CodeMirror-gutters {
-		background: var(--editorBackgroundColor);
+		background: transparent;
 		color: #333;
 	}
 	.CodeMirror-linenumber {

@@ -1,5 +1,6 @@
 const Night = {
     name:'Night',
+    textTheme:'night',
     colorsScheme:{
         accentColor: "rgb(255, 0, 72)",
         textColor:'white',
@@ -44,7 +45,9 @@ const Night = {
         radioBackgroundHovering:'rgb(60,60,60)',
         radioCircleBackground:'#222222',
         radioCircleBorder:'#666666',
-        windowBorder:'#666666'
+        windowBorder:'#666666',
+        controlCloseButtonActiveBackground:'rgba(241,112,122)',
+        controlCloseButtonActiveFill:'black'
     }
 }
 

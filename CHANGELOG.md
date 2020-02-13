@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200213 - 2 [2.0.08]
+- Improved: Windows close button
+- Added: current theme also changes text highlighting theme
+- Improved: better plugin loader code
+
 ### 200209 - 2 [2.0.07]
 - Added: native MacOS menu bar
 

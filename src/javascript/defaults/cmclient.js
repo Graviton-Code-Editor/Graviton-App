@@ -44,6 +44,9 @@ const CodemirrorClient = new EditorClient({
     onActive({cm,action}){
         cm.on('cursorActivity',()=>action(cm))
         cm.on('mousedown',()=>action(cm))
+    },
+    setTheme({cm,theme}){
+        cm.setOption('theme',theme)
     }
 })
 

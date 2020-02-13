@@ -1,7 +1,5 @@
 import {puffin} from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
-import Arctic from '../themes/arctic'
-import Night from '../themes/night'
 import ThemeRegistry from 'ThemeRegistry'
 
 StaticConfig.changed(function(){
