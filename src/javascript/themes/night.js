@@ -1,6 +1,7 @@
 const Night = {
     name:'Night',
     textTheme:'night',
+    type:'theme',
     colorsScheme:{
         accentColor: "rgb(255, 0, 72)",
         textColor:'white',

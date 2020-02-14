@@ -1,7 +1,7 @@
 import CodemirrorClient from '../defaults/cmclient'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import ThemeRegistry from 'ThemeRegistry'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 
 function Editor({
     bodyElement,
@@ -42,7 +42,7 @@ function Editor({
     StaticConfig.changed(function(data){
         Client.do('setTheme',{
             cm:instance,
-            theme:ThemeRegistry.registry.data.list[data.theme].textTheme
+            theme:ExtensionsRegistry.registry.data.list[data.theme].textTheme
         })
     })
 

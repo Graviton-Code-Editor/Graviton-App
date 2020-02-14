@@ -1,6 +1,9 @@
 
 import {puffin} from '@mkenzo_8/puffin'
 import ThemeProvider from '../../utils/themeprovider'
+import requirePath from '../../utils/require'
+
+const { remote } = requirePath('electron')
 const os = eval('process.platform')
 
 if(os == "win32"){
@@ -40,24 +43,30 @@ if(os == "win32"){
             }
             
         `}">
-            <button title="Minimize">
+            <button title="Minimize" click="$minimize">
                 <svg xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24">
                     <rect x="7" y="11.5" width="10" height="0.8" transform="matrix(1,0,0,1,0,0)" />
                 </svg>
             </button>
-            <button title="Maximize">
+            <button title="Maximize" click="$toggleMaximize">
                 <svg width="24" height="24" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="16" y="16" width="18.5714" height="18.5714"  stroke-width="2" />
                 </svg>
             </button>
-            <button title="Close">
+            <button title="Close" click="$close">
                 <svg width="20" height="20" viewBox="0 0 174 174" xmlns="http://www.w3.org/2000/svg">
                     <rect class="fill" x="40.3309" y="127.305" width="123" height="9" rx="4.5" transform="rotate(-45 40.3309 127.305)" />
                     <rect class="fill" x="127.305" y="133.669" width="123" height="9" rx="4.5" transform="rotate(-135 127.305 133.669)"  />
                 </svg>
             </button>
         </div>
-    `)
+    `,{
+        methods:{
+            toggleMaximize,
+            close,
+            minimize
+        }
+    })
 }else{
     var Buttons = puffin.element(`
         <div class="buttons ${puffin.style.css`
@@ -136,6 +145,26 @@ if(os == "win32"){
             </button>
         </div>
     `)
+}
+
+
+function toggleMaximize(){
+    const electronWindow = remote.getCurrentWindow();
+    if (!electronWindow.isMaximized()) {
+        electronWindow.maximize();          
+    } else {
+        electronWindow.unmaximize();
+    }
+}
+
+function close(){
+    const electronWindow = remote.getCurrentWindow();
+    electronWindow.close()
+}
+
+function minimize(){
+    const electronWindow = remote.getCurrentWindow();
+    electronWindow.minimize()
 }
 
 export default Buttons

@@ -6,7 +6,7 @@ import Editor from '../../constructors/editor'
 import path from 'path'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import StaticConfig from 'StaticConfig'
-import ThemeRegistry from 'ThemeRegistry'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 
 import ThemeProvider from 'ThemeProvider'
 import Icons from '../../../../assets/icons/**.svg'
@@ -90,7 +90,7 @@ function Item(){
                         new Editor({
                             language:fileExtension,
                             value:data ,
-                            theme:ThemeRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
+                            theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
                             bodyElement,
                             tabElement,
                             panel

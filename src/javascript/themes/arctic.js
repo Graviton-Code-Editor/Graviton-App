@@ -1,6 +1,7 @@
 const Arctic = {
     name:'Arctic',
     textTheme:'arctic',
+    type:'theme',
     colorsScheme:{
         accentColor: "#0066FF",
         textColor:'black',

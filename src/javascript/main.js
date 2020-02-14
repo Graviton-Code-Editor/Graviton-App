@@ -2,7 +2,7 @@
 import { puffin } from '@mkenzo_8/puffin'
 import TitleBar from './components/titlebar/titlebar'
 import BootAnimation from './components/bootanimation'
-import loadInitial from './defaults/initial'
+import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
@@ -144,7 +144,7 @@ const App = puffin.element(`
     },
     events:{
         mounted(){
-            loadInitial()
+            init()
             
             window.addEventListener("load",function(){
                 Welcome.launch()

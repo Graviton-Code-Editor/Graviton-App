@@ -1,6 +1,6 @@
 import {puffin} from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
-import ThemeRegistry from 'ThemeRegistry'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 
 StaticConfig.changed(function(){
     applyTheme(StaticConfig)
@@ -9,7 +9,7 @@ StaticConfig.changed(function(){
 const ThemeProvider = new puffin.state({})
 
 function applyTheme(state){
-    ThemeProvider.data = ThemeRegistry.registry.data.colorsSchemes[state.data.theme]
+    ThemeProvider.data = ExtensionsRegistry.registry.data.colorsSchemes[state.data.theme]
     ThemeProvider.triggerChange()
 }
 

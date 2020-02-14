@@ -3,7 +3,7 @@ import Window from '../../constructors/window'
 import {Titles , RadioGroup } from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
-import ThemeRegistry from 'ThemeRegistry'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 
 function Settings(){
     const SettingsPage = puffin.element(`
@@ -18,11 +18,14 @@ function Settings(){
                     <RadioGroup radioSelected="$selected">
                         ${(function(){
                             let content = "";
-                            const list = ThemeRegistry.registry.data.list
-                            Object.keys(list).map(function(theme){
-                                content +=`
-                                <label name="${theme}" checked="${StaticConfig.data.theme == theme?'':'false'}">${theme}</label>
-                                `
+                            const list = ExtensionsRegistry.registry.data.list
+                            Object.keys(list).map(function(extension){
+                                const pkg = ExtensionsRegistry.registry.data.list[extension]
+                                if(pkg.type == "theme"){
+                                    content +=`
+                                        <label name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">${extension}</label>
+                                    `
+                                }
                             })
                             return content
                         })()}

@@ -1,4 +1,8 @@
 import requirePath from './require'
+import getAppDataPath  from 'appdata-path'
+import path from 'path';
+
+const fs = requirePath('fs-extra')
 
 const electronStore = requirePath('electron-store')
 
@@ -6,7 +10,8 @@ const schema = {
     config:{
         theme:'Arctic',
         fontSize:'16',
-        log:[]
+        log:[],
+        configPath:path.join(getAppDataPath(),'.graviton')
     }
 }
 
@@ -18,6 +23,13 @@ function initConfiguration(){
             store.set(`config.${key}`,schema.config[key])
         }
     })
+
+    if(!fs.existsSync(schema.config.configPath)){
+        fs.mkdirSync(schema.config.configPath)
+    }
+    if(!fs.existsSync(path.join(schema.config.configPath,'plugins'))){
+        fs.mkdirSync(path.join(schema.config.configPath,'plugins'))
+    }
 
     return {
         store:store

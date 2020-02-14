@@ -12,10 +12,18 @@ License > https://github.com/Graviton-Code-Editor/Graviton-App/blob/master/LICEN
 const url = require("url")
 const path = require("path")
 const { app, BrowserWindow } = require("electron")
-let main 
 const isDev = require('electron-is-dev');
- 
+const windowStateKeeper = require('electron-window-state');
+
+let main 
+
 app.on("ready", function() {
+	
+	let mainWindowState = windowStateKeeper({
+		defaultWidth: 800,
+		defaultHeight: 600
+	});
+
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
@@ -25,10 +33,17 @@ app.on("ready", function() {
 		frame: process.platform !== "win32",
 		minHeight: 320,
 		minWidth: 320,
+		x:mainWindowState.x,
+		y:mainWindowState.y,
+		width:mainWindowState.width,
+		height:mainWindowState.height,
 		backgroundColor: "#191919",
 		title: "Graviton Editor",
 		show:false
-    })
+	})
+
+	mainWindowState.manage(main);
+
     if (isDev) {
         main.loadURL("http://localhost:4321/")
     } else {
@@ -42,6 +57,7 @@ app.on("ready", function() {
     }
 	
 	main.on("ready-to-show", () => {
+		mainWindowState.manage(main);
 		main.show()
 		main.focus()
 	})

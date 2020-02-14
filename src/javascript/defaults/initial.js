@@ -2,17 +2,19 @@ import Menu from "../constructors/menu";
 import SettingsPage from './windows/settings'
 import Welcome from "./windows/welcome";
 import Panel from '../constructors/panel'
-import Dialog from '../constructors/dialog'
-import ThemeRegistry from 'ThemeRegistry'
-import ThemeProvider from 'ThemeProvider'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 import Arctic from '../themes/arctic'
 import Night from '../themes/night'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import DialogAbout from './dialogs/about'
-import {Shortcuts} from 'shortcuts'
+import { Shortcuts } from 'shortcuts'
+import { loadAutomatically } from '../utils/extension.loader'
 
-function loadDefaultMenus(){
+function init(){
+
+    loadAutomatically()
+    
     new Menu({ //FILE
          button:'File',
          list:[
@@ -58,8 +60,8 @@ function loadDefaultMenus(){
 
     new Panel() //Initial Panel
 
-    ThemeRegistry.add(Arctic)    
-    ThemeRegistry.add(Night)  
+    ExtensionsRegistry.add(Arctic)    
+    ExtensionsRegistry.add(Night)  
 
     StaticConfig.triggerChange()
 
@@ -75,4 +77,4 @@ function loadDefaultMenus(){
 
 }
 
-export default loadDefaultMenus
+export default init

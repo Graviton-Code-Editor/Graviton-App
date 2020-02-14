@@ -2,7 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200213 - 2 [2.0.08]
+### 200214 - 1 [2.0.09]
+- New: you can now minimize, toggle mazimize or close the window
+- New: there is now a default created directory folder for extensions(including themes)
+
+### 200213 - 1 [2.0.08]
 - Improved: Windows close button
 - Added: current theme also changes text highlighting theme
 - Improved: better plugin loader code
