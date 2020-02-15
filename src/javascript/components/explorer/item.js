@@ -127,7 +127,7 @@ function Item(){
 
                 target.children[0].children[1].textContent = target.props.path //FIX
 
-                target.style.paddingLeft = `${Number(target.getAttribute("level"))*4.5}px`
+                target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
 
                 if(target.getAttribute("isDirectory") == "true"){
                     setClosedIcon(target.children[0].children[0])

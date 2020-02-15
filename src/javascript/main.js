@@ -23,6 +23,7 @@ const App = puffin.element(`
             --puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
             --puffinRadioCircleBackground:{{radioCircleBackground}};
             --puffinRadioCircleBorder:{{radioCircleBorder}};
+            --editorDialogBackground:{{editorDialogBackground}};
         }
         @font-face {
             font-family: mainFont;
@@ -35,8 +36,8 @@ const App = puffin.element(`
         * {
             font-family: mainFont;
         }
-        .CodeMirror * {
-            font-family:codeFont !important;
+        .CodeMirror *:not(.CodeMirror-dialog) {
+            font-family:codeFont;
         }
         #body{
             display:flex;

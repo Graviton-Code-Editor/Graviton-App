@@ -30,7 +30,7 @@ app.on("ready", function() {
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true
 		},
-		frame: process.platform !== "win32",
+		frame: process.platform == "linux",
 		minHeight: 320,
 		minWidth: 320,
 		x:mainWindowState.x,
@@ -61,6 +61,7 @@ app.on("ready", function() {
 		main.show()
 		main.focus()
 	})
+
 	if (
 		path.basename(__dirname) === "Graviton-App"
 	) {
@@ -69,6 +70,7 @@ app.on("ready", function() {
 		main.setMenuBarVisibility(false)
 	}
 })
+
 app.on("window-all-closed", () => {
 	app.quit()
 })

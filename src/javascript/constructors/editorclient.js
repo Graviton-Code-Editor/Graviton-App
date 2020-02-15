@@ -1,4 +1,5 @@
 
+let editorClients = []
 
 function EditorClient({
     name="",
@@ -12,4 +13,4 @@ function EditorClient({
     }
 }
 
-export default EditorClient
+export  { EditorClient, editorClients}

@@ -15,6 +15,7 @@ function Settings(){
             </div>
             <div>
                 <div href="customization">
+                    <H3>Themes</H3>
                     <RadioGroup radioSelected="$selected">
                         ${(function(){
                             let content = "";
@@ -40,6 +41,7 @@ function Settings(){
         components:{
             RadioGroup,
             H1:Titles.h1,
+            H3:Titles.h3,
             SideMenu
         },
         methods:{

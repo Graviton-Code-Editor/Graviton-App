@@ -32,8 +32,8 @@ const Arctic = {
         tabActiveBackground:'white',
         scrollbarBackground:'rgba(0,0,0,0.2)',
         scrollbarHoverBackground:'rgba(0,0,0,0.5)',
-        tabIconStroke:'black',
-        tabIconHoverStroke:'gray',
+        tabIconFill:'black',
+        tabIconHoverFill:'gray',
         sidemenuBackground:'rgb(238,238,238)',
         sidemenuButtonBackground:'transparent',
         sidemenuButtonHoverBackground:'rgb(212,212,212)',
@@ -50,7 +50,8 @@ const Arctic = {
         fileNotSavedIndicator:'black',
         fileNotSavedIndicatorHovering:'#0066FF',
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
-        controlCloseButtonActiveFill:'black'
+        controlCloseButtonActiveFill:'black',
+        editorDialogBackground:'white'
     }
     
 }

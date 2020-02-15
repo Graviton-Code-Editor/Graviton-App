@@ -18,7 +18,25 @@ function Editor({
         element:bodyElement,
         language:Client.do('getLangFromExt',language),
         value:value,
-        theme:theme
+        theme:theme,
+        fontSize:StaticConfig.data.fontSize,
+        CtrlPlusScroll:(direction)=> {
+            
+            
+            if(direction == 'up'){
+                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)+5
+            }else{
+                if( StaticConfig.data.fontSize <=5) return
+                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)-5
+            }
+            
+
+            Client.do('setFontSize',{
+                cm:instance,
+                element:bodyElement,
+                fontSize:StaticConfig.data.fontSize
+            })
+        }
     })
     
     Client.do('refresh',instance)
@@ -43,6 +61,12 @@ function Editor({
         Client.do('setTheme',{
             cm:instance,
             theme:ExtensionsRegistry.registry.data.list[data.theme].textTheme
+        })
+
+        Client.do('setFontSize',{
+            cm:instance,
+            element:bodyElement,
+            fontSize:StaticConfig.data.fontSize
         })
     })
 

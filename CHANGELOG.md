@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200215 - 1 [2.0.10]
+- Fixed: wrong alignment when opening directories in the explorer panel
+- Fixed: MacOS had native titlebar
+- New: you can now change the editor font size
+- New: you can now find text (Ctrl+F)
+- Improved: Night theme
+
 ### 200214 - 1 [2.0.09]
 - New: you can now minimize, toggle mazimize or close the window
 - New: there is now a default created directory folder for extensions(including themes)

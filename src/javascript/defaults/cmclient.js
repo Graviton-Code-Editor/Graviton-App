@@ -1,7 +1,9 @@
 import CodeMirror from 'codemirror'
-import EditorClient from '../constructors/editorclient'
+import { EditorClient } from '../constructors/editorclient'
 
 require ('../../../node_modules/codemirror/mode/**/*.js')
+
+require('../../../node_modules/codemirror/addon/search/search.js')
 
 const CodemirrorClient = new EditorClient({
     name:'codemirror',
@@ -21,7 +23,7 @@ const CodemirrorClient = new EditorClient({
                 return extension    
         }
     },
-    create({element,language, value, theme}){
+    create({element,language, value, theme, fontSize, CtrlPlusScroll}){
         const CodemirrorEditor = CodeMirror(element,{
             mode:language,
             value:value,
@@ -29,6 +31,18 @@ const CodemirrorClient = new EditorClient({
             htmlMode:false,
             theme:theme
         })
+
+        element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
+
+        CodemirrorEditor.addKeyMap({
+            'Ctrl-Up': function (cm) {
+                CtrlPlusScroll('up')
+            },
+            'Ctrl-Down': function (cm) {
+                CtrlPlusScroll('down')
+            }
+        })
+        CodemirrorEditor.refresh()
         return {
             instance : CodemirrorEditor
         }
@@ -47,6 +61,10 @@ const CodemirrorClient = new EditorClient({
     },
     setTheme({cm,theme}){
         cm.setOption('theme',theme)
+    },
+    setFontSize({cm, element, fontSize}){
+        element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
+        cm.refresh()
     }
 })
 

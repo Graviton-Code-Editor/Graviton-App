@@ -32,8 +32,8 @@ const Night = {
         tabActiveBackground:'#191919',
         scrollbarBackground:'rgba(0,0,0,0.2)',
         scrollbarHoverBackground:'rgba(0,0,0,0.5)',
-        tabIconStroke:'white',
-        tabIconHoverStroke:'gray',
+        tabIconFill:'white',
+        tabIconHoverFill:'gray',
         sidemenuBackground:'#191919',
         sidemenuButtonBackground:'transparent',
         sidemenuButtonHoverBackground:'#222222',
@@ -47,8 +47,11 @@ const Night = {
         radioCircleBackground:'#222222',
         radioCircleBorder:'#666666',
         windowBorder:'#666666',
+        fileNotSavedIndicator:'white',
+        fileNotSavedIndicatorHovering:'rgb(255, 0, 72)',
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
-        controlCloseButtonActiveFill:'black'
+        controlCloseButtonActiveFill:'black',
+        editorDialogBackground:'#191919'
     }
 }
 

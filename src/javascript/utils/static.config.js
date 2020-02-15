@@ -1,5 +1,5 @@
-import {puffin} from '@mkenzo_8/puffin'
-import {initConfiguration , getConfiguration} from './configurator'
+import { puffin } from '@mkenzo_8/puffin'
+import { getConfiguration } from './configurator'
 
 const cachedConfiguration = getConfiguration()
 
