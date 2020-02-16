@@ -15,6 +15,7 @@ const App = puffin.element(`
         body{
             padding:0px;
             margin:0px;
+            --puffinAccent:{{accentColor}};
             --puffinTextColor:{{textColor}};
             --puffinFont:mainFont;
             --sidemenuButtonActiveText:{{sidemenuButtonActiveText}};

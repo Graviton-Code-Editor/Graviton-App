@@ -44,8 +44,8 @@ const WelcomePage = puffin.element(`
     <SideMenu default="projects">
         <div>
             <H1 lang-string="Welcome"></H1>
-            <label to="projects">Projects</label>
-            <label to="create_project">Create project</label>
+            <label to="projects" lang-string="RecentProjects"></label>
+            <label to="create_project" lang-string="NewProject"></label>
         </div>
         <div>
             <div href="projects" class="${puffin.style.css`

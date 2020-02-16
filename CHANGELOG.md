@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200216 - 2 [2.0.11]
+- Improved: Better land addon support
+- Improved: Dark theme support
+- Improved: SideMenu component
+
 ### 200216 - 1 [2.0.11]
 - New: puffin lang addon implementation (WIP)
 

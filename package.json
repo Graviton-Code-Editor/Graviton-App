@@ -23,10 +23,10 @@
     "StaticConfig": "./src/javascript/utils/static.config.js",
     "RunningConfig": "./src/javascript/utils/running.config.js",
     "ExtensionsRegistry": "./src/javascript/utils/extensions.registry.js",
-    "LanguageConfig":"./src/javascript/utils/lang.config.js"
+    "LanguageConfig": "./src/javascript/utils/lang.config.js"
   },
   "dependencies": {
-    "@mkenzo_8/puffin": "^0.3.6",
+    "@mkenzo_8/puffin": "^0.3.7",
     "@mkenzo_8/puffin-drac": "0.0.11",
     "appdata-path": "^1.0.0",
     "codemirror": "^5.51.0",

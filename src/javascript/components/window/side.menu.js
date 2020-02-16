@@ -29,11 +29,16 @@ const SideMenu = puffin.element(`
         & > div:nth-child(1){
             background:{{sidemenuBackground}};
             min-height:100%;
-            min-width:165px;
+            min-width:180px;
+            max-width:180px;
             display:block;
             padding:20px;
             overflow:auto;
             box-shadow:0px 3px 10px rgba(0,0,0,0.2);
+        }
+        & > div:nth-child(1) > h1 {
+            overflow:hidden;
+            text-overflow:ellipsis;
         }
         & > div:nth-child(1) > label {
             display:block;

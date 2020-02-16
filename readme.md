@@ -86,10 +86,6 @@ Please consider revising and updating your languages in case they are missing so
 * Old logo by Saúl Blanco
 * Advices from León Alvarez
 
-🤗 Useful plugins
-* [GitPlus](https://github.com/marc2332/GitPlus): adds Git support to Graviton
-* [Add yours](https://github.com/Graviton-Code-Editor/Graviton-App/issues/new)
-
 🤩 Useful libraries 
 ---
 * [PuffinJS](https://github.com/PuffinJS/puffin)
@@ -98,7 +94,6 @@ Please consider revising and updating your languages in case they are missing so
 
 🎁 Donating 
 ---
-
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
 - Paypal: https://www.paypal.me/mkenzo8
 
