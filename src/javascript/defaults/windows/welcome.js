@@ -8,6 +8,7 @@ import {Card , Titles} from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
 import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
+import LanguageConfig from 'LanguageConfig'
 
 const path = requirePath("path")
 
@@ -42,7 +43,7 @@ const listWrapper = puffin.style.css `
 const WelcomePage = puffin.element(`
     <SideMenu default="projects">
         <div>
-            <H1>Welcome</H1>
+            <H1 lang-string="Welcome"></H1>
             <label to="projects">Projects</label>
             <label to="create_project">Create project</label>
         </div>
@@ -89,6 +90,9 @@ const WelcomePage = puffin.element(`
         </div>
     </SideMenu>
 `,{
+    addons:{
+        lang:puffin.lang(LanguageConfig)
+    },
     components:{
         Button,
         Card,

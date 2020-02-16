@@ -4,12 +4,13 @@ import {Titles , RadioGroup } from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import ExtensionsRegistry from 'ExtensionsRegistry'
+import LanguageConfig from 'LanguageConfig'
 
 function Settings(){
     const SettingsPage = puffin.element(`
         <SideMenu default="customization">
             <div>
-                <H1>Settings</H1>
+                <H1 lang-string="Settings"></H1>
                 <label to="customization">Customization</label>
                 <label to="about">About</label>
             </div>
@@ -51,6 +52,9 @@ function Settings(){
                 if( StaticConfig.data.theme != newTheme)
                     StaticConfig.data.theme = newTheme
             }
+        },
+        addons:{
+            lang:puffin.lang(LanguageConfig)
         }
     })
 

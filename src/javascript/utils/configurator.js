@@ -9,6 +9,7 @@ const electronStore = requirePath('electron-store')
 const schema = {
     config:{
         theme:'Arctic',
+        language:'english',
         fontSize:'16',
         log:[],
         configPath:path.join(getAppDataPath(),'.graviton')

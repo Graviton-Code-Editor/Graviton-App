@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200216 - 1 [2.0.11]
+- New: puffin lang addon implementation (WIP)
+
 ### 200215 - 1 [2.0.10]
 - Fixed: wrong alignment when opening directories in the explorer panel
 - Fixed: MacOS had native titlebar
