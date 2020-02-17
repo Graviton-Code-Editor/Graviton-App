@@ -50,6 +50,11 @@ function Dialog({
                 if(component != null){
                     puffin.render(component,target.children[1].children[1])
                 }
+                window.addEventListener('keydown',(e)=>{
+                    if(e.keyCode === 27){
+                        close(DialogComp)
+                    }
+                })
             }
         },
         methods:computedMethods
@@ -58,8 +63,12 @@ function Dialog({
     
     puffin.render(DialogComp,document.getElementById("windows"))
     return {
-        close:()=> document.getElementById(randomSelector).remove()
+        close:()=> close(DialogComp)
     }
+}
+
+function close(DialogComp){
+    DialogComp.node.remove()
 }
 
 export default Dialog

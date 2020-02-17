@@ -11,11 +11,11 @@ function Panel(){
                     flex:1;
                     min-width:1px;
                     overflow:hidden;
-                    box-shadow:-2px 0px 5px rgba(0,0,0,0.2);
                     max-height:100%;
                     min-height:100%;
                     display:flex;
                     flex-direction:column;
+                    border-left:1px solid rgba(150,150,150);
                 }
             `
         }">    
@@ -30,6 +30,9 @@ function Panel(){
                         flex:1;
                         overflow-x:auto;
                         background:{{tabsbarBackground}};
+                    }
+                    &:empty{
+                        background:transparent;
                     }
                 `
             }"></div>

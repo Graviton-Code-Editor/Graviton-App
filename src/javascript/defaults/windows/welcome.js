@@ -107,6 +107,7 @@ const WelcomePage = puffin.element(`
         openDirectoryFromWindow(){
             openFolder().then(function(folder){
                 new Explorer(folder,document.getElementById("sidepanel"))
+                Welcome.close()
             })
         }
     }

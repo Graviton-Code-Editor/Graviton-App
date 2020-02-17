@@ -49,7 +49,7 @@ app.on("ready", function() {
     } else {
         main.loadURL(
             url.format({
-                pathname: path.join(__dirname,"parcel", "index.html"),
+                pathname: path.join(__dirname,"dist_parcel", "index.html"),
                 protocol: "file:",
                 slashes: true
             })

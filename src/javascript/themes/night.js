@@ -22,7 +22,7 @@ const Night = {
         contextmenuBackground:'#191919',
         contextmenuButtonBackground:'#191919',
         contextmenuButtonText:'white',
-        contextmenuButtonHoveringBackground:'rgb(255, 0, 72)z',
+        contextmenuButtonHoveringBackground:'rgb(255, 0, 72);',
         contextmenuButtonHoveringText:'white',
         mainpanelBackground:'#191919',
         tabsbarBackground:'#222222',
@@ -51,7 +51,9 @@ const Night = {
         fileNotSavedIndicatorHovering:'rgb(255, 0, 72)',
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
         controlCloseButtonActiveFill:'black',
-        editorDialogBackground:'#191919'
+        editorDialogBackground:'#191919',
+        contextmenuDivider:'rgb(180,180,180)',
+        bottombarBackground:'#191919'
     }
 }
 

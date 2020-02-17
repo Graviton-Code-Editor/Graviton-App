@@ -24,6 +24,7 @@ const Resizer = puffin.element(`
     <div mousedown="$working" class="${
         puffin.style.css`
             &{
+                user-select: none;
                 padding:3px;
                 cursor:e-resize;
             }

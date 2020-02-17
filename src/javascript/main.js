@@ -6,6 +6,7 @@ import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
+import PanelBottomBar from './components/bottom.bar'
 
 import '../sass/codemirror.reset.scss'
 
@@ -43,7 +44,7 @@ const App = puffin.element(`
         #body{
             display:flex;
             flex-direction:columns;
-            height:calc(100% - 40px);
+            height:calc(100% - 65px);
             background:{{bodyBackground}};
         }
         #sidepanel{
@@ -64,12 +65,14 @@ const App = puffin.element(`
             min-width:50px;
             width:300px;
             flex:1;
-            box-shadow:-2px 0px 6px rgba(0,0,0,0.2);
+            border-left:1px solid rgba(150,150,150);
+            border-top:1px solid rgba(150,150,150);
             border-top-left-radius:5px;
             background:{{mainpanelBackground}};
         }
         #mainpanel > div:nth-child(1){
             border-top-left-radius:5px;
+            border-left:transparent;
         }
         #windows{
             position:absolute;
@@ -134,7 +137,9 @@ const App = puffin.element(`
             <div id="mainpanel">
             
             </div>
+          
         </div>
+        <PanelBottomBar/>
         <div id="windows"></div>
         <BootAnimation/>
     </div>
@@ -142,7 +147,8 @@ const App = puffin.element(`
     components:{
         TitleBar,
         BootAnimation,
-        Resizer
+        Resizer,
+        PanelBottomBar
     },
     events:{
         mounted(){

@@ -5,6 +5,7 @@ import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import path from 'path'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
+import areYouSureDialog from '../../defaults/dialogs/you.sure'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 
@@ -13,6 +14,7 @@ import Icons from '../../../../assets/icons/**.svg'
 
 import requirePath from '../../utils/require'
 const fs = requirePath("fs-extra");
+const trash = requirePath("trash")
 
 function Item(){
     const ItemWrapper = puffin.style.div`
@@ -112,7 +114,41 @@ function Item(){
                                         explorerContainer:this.parentElement
                                     })
                                 }
+                            },
+                            {
+                                label:"New file",
+                                action:()=>{
+                                    newDirectoryDialog({
+                                        isFolder:false,
+                                        parentDirectory:this.parentElement.getAttribute("fullpath"),
+                                        explorerContainer:this.parentElement
+                                    })
+                                }
+                            },
+                            {},
+                            {
+                                label:"Remove folder",
+                                action:()=>{
+                                    if(this.parentElement.getAttribute("level")!="0"){
+                                        removeDirectoryOrFile(this)
+                                    } 
+                                }
                             }
+
+                        ],
+                        parent:this,
+                        event:e
+                    })
+                }else{
+                    new ContextMenu({
+                        list:[
+                            {
+                                label:"Remove file",
+                                action:()=>{
+                                    removeDirectoryOrFile(this)
+                                }
+                            }
+
                         ],
                         parent:this,
                         event:e
@@ -146,6 +182,7 @@ function Item(){
 function reload(target){
     if(target.children[1] != null) target.children[1].remove()
     new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
+    setOpenIcon(target.children[0].children[0])
 }
 
 function getExtension(target){
@@ -164,6 +201,16 @@ function setOpenIcon(target){
 
 function setClosedIcon(target){
     target.src = Icons["folder.closed"]
+}
+
+function removeDirectoryOrFile(element){
+    areYouSureDialog().then(function(){
+        trash([element.parentElement.getAttribute("fullpath")]).then(function(){
+            element.parentElement.parentElement.parentElement.reload()
+        });        
+    }).catch(function(err){
+        //Clicked "No"
+    })
 }
 
 export default Item

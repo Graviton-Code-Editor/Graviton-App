@@ -17,6 +17,10 @@ const DialogBody = new puffin.element(`
                 position:absolute;
                 padding:10px;
             }
+            & > div{
+                display:flex;
+                justify-content:flex-end;
+            }
        `}">
 
        </div>

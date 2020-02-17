@@ -48,14 +48,20 @@ function newDirectoryDialog({
 
 function createDirectory(target,isFolder,parentDirectory,explorerContainer,DialogInstance){
     const dir = path.join(parentDirectory,target.value)
-    if(isFolder){
-        if (!fs.existsSync(dir)){
-            fs.mkdirSync(dir);
-        }
-    }else{
-        //creates new file
+    if (!fs.existsSync(dir)){
+        if(isFolder){
+            if (!fs.existsSync(dir)){
+                fs.mkdirSync(dir);
+                explorerContainer.reload()
+            }
+        }else{
+            fs.writeFile(dir, '', (err) => {
+                if (err) throw err;
+                explorerContainer.reload()
+            }); 
+        }     
     }
-    explorerContainer.reload()
+    
 }
 
 export default newDirectoryDialog

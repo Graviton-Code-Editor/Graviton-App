@@ -2,6 +2,16 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200217 - 1 [2.0.12]
+- Fixed: parcel was building to the wrong directory
+- Fixed: when creating a folder on an empty folder from the explorer panel it wasn't showing at first, you had to close and open
+- New: opened folder is also an item in the explorer panel
+- New: bottom bar
+- Improved: Night theme highlighter
+- New: Remove directory and file option for context menu in explorer panel
+- New: New file in context menu for directories
+- New: ESC key closes dialogs
+    
 ### 200216 - 2 [2.0.11]
 - Improved: Better land addon support
 - Improved: Dark theme support

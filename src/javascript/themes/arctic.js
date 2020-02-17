@@ -51,7 +51,9 @@ const Arctic = {
         fileNotSavedIndicatorHovering:'#0066FF',
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
         controlCloseButtonActiveFill:'black',
-        editorDialogBackground:'white'
+        editorDialogBackground:'white',
+        contextmenuDivider:'rgb(212,212,212)',
+        bottombarBackground:'white'
     }
     
 }

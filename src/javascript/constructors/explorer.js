@@ -2,8 +2,26 @@ import requirePath from '../utils/require'
 import { puffin } from '@mkenzo_8/puffin'
 import Item from '../components/explorer/item'
 import path from 'path'
+import parseDirectory from '../utils/directory.parser'
 
 function Explorer(folderPath,parent,level = 0){
+    if(level == 0){
+        var test = puffin.element(`
+            <Item isDirectory="true" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
+        `,{
+            components:{
+                Item:Item()
+            },
+            events:{
+                mounted(target){
+                    target.reload()
+                }
+            }
+        })
+        puffin.render(test,parent,{
+            removeContent:true
+        })
+    }
     const fs = requirePath('fs-extra')
     fs.readdir(folderPath).then(function(paths){
         const explorerComponent = puffin.element(`
@@ -32,9 +50,11 @@ function Explorer(folderPath,parent,level = 0){
                 Item:Item()
             }
         })
-        puffin.render(explorerComponent,parent,{
-            removeContent:level==0
-        })
+        if(level != 0){
+            puffin.render(explorerComponent,parent,{
+                removeContent:false
+            })
+        }
     })    
 }
 

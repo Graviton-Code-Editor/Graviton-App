@@ -4,7 +4,12 @@ import GravitonPackage from '../../../../package.json'
 function AboutDialog(){
     new Dialog({
         title:'About',
-        content:`Graviton v${GravitonPackage.version}`
+        content:`Graviton v${GravitonPackage.version}`,
+        buttons:[
+            {
+                label:'accept'
+            }
+        ]
     })
 }
 

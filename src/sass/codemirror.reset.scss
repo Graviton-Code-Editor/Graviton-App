@@ -378,9 +378,6 @@ div.CodeMirror-dragcursors {
 	div.CodeMirror-cursors {
 		visibility: visible;
 	}
-	.CodeMirror-selected {
-		background: #d7d4f0;
-	}
 }
 .CodeMirror-selected {
 	background: #d9d9d9;
@@ -431,14 +428,13 @@ span.CodeMirror-selectedtext {
 	animation: show_down linear 0.1s;
 	position: absolute;
 	margin: 5px;
-	right:0;
+	right:10px;
 	width: 125px;
 	height:auto;
 	display: block;
 	padding: 15px;
-	padding-right: 20px;;
+	padding-right: 20px;
 	border-radius: 8px;
-	right: 0;
 	background: var(--editorDialogBackground);
 	z-index: 5;
 	overflow: hidden;
