@@ -53,7 +53,11 @@ const Night = {
         controlCloseButtonActiveFill:'black',
         editorDialogBackground:'#191919',
         contextmenuDivider:'rgb(180,180,180)',
-        bottombarBackground:'#191919'
+        statusbarBackground:'#191919',
+        statusbarItemBackground:'transparent',
+        statusbarItemHoveringBackground:'rgb(60,60,60)',
+        statusbarItemText:'white',
+        statusbarItemHoveringText:'white',
     }
 }
 

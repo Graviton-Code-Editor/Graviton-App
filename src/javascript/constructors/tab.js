@@ -59,6 +59,7 @@ function Tab({
                     target.props.state = tabState
                     if(tabState.data.active){
                         RunningConfig.data.focusedTab = target
+                        target.focusEditor()
                     }
                     target.props.active = tabState.data.active
 
@@ -169,6 +170,8 @@ function focusATab(element){
     if(position === 0){
         if(children.length > 1){
             children[position+1].props.state.data.active = true
+        }else{
+            RunningConfig.data.focusedEditor = null
         }
     }else{
         children[position-1].props.state.data.active = true

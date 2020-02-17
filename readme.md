@@ -18,16 +18,16 @@
 
 **-- NOTE --**
 Graviton is going through a full remake from the ground up. Version 1.3.0 source code is located in a different branch on this repository.
+Also, changes on this source may not be released as an official build yet.
 
-**IMPORTANT:  Changes on this source may not be released as an official build yet**
 
 ✨ Highlights:
 ---
 * 🧬 Git integration (plugin)
-* 💅 Minimal UI
+* 💅 Modern UI
 * 🎨 Themes 
 * 📦 Plugins
-* 🖇  Infinite splitted screens 
+* 🖇  Infinite panels and tabs
 * 🕹  Built-in terminal 
 * 🗺 Built-in image previewer
 * 📰 Built-in font previewer
@@ -38,6 +38,8 @@ Graviton is going through a full remake from the ground up. Version 1.3.0 source
 * 📝 Multi line editing 
 * 🎧 Zen mode 
 * ⛓  Code folding
+
+**NOTE**: As mentioned earlier, not all highlights are in new version.
 
 **[Commit Changelog](CHANGELOG.md)**
 
@@ -79,7 +81,6 @@ Please consider revising and updating your languages in case they are missing so
 * David Niederweis [Github](https://github.com/DJN1)
 * LucasAlt [Github](https://github.com/LucasCtrl)
 * Max1Truc [Github](https://github.com/Max1Truc)
-
 
 #### Credits:
 * Miguel Ranger for first autocomplete version

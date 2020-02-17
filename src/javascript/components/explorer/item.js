@@ -190,9 +190,11 @@ function getExtension(target){
 }
 
 function setFileIcon(target,extension){
-    if(Icons[`${extension}.lang`] != null){
-       target.src = Icons[`${extension}.lang`] 
-    }        
+    if(Icons[`${extension}.lang`] !== undefined){
+        target.src = Icons[`${extension}.lang`] 
+    }else{
+        target.src = Icons['unknown.file'] 
+    }     
 }
 
 function setOpenIcon(target){

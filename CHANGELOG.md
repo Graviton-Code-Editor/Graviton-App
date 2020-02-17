@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200217 - 2 [2.0.13]
+- New: file icon for unknown files
+- New: Cursor position label on status bar
+- New: status bar (bottom bar)
+- New: You can now change the editor font size using Ctrl+Scrolling
+
 ### 200217 - 1 [2.0.12]
 - Fixed: parcel was building to the wrong directory
 - Fixed: when creating a folder on an empty folder from the explorer panel it wasn't showing at first, you had to close and open

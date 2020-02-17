@@ -8,7 +8,7 @@ require('../../../node_modules/codemirror/addon/search/search.js')
 const CodemirrorClient = new EditorClient({
     name:'codemirror',
 },{
-    getValue: (cm) => cm.getValue(),
+    getValue: (instance) => instance.getValue(),
     getLangFromExt(extension){
         switch(extension){
             case 'html':
@@ -35,36 +35,56 @@ const CodemirrorClient = new EditorClient({
         element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
 
         CodemirrorEditor.addKeyMap({
-            'Ctrl-Up': function (cm) {
+            'Ctrl-Up': function (instance) {
                 CtrlPlusScroll('up')
             },
-            'Ctrl-Down': function (cm) {
+            'Ctrl-Down': function (instance) {
                 CtrlPlusScroll('down')
             }
         })
+        
+        element.addEventListener('wheel',(e)=>{
+            if(!e.ctrlKey) return
+            if(e.wheelDeltaY.toString()[0]=='-'){
+                CtrlPlusScroll('down')
+            }else{
+                CtrlPlusScroll('up')
+            }
+        })
+
         CodemirrorEditor.refresh()
         return {
             instance : CodemirrorEditor
         }
     },
-    refresh(cm){
+    refresh(instance){
         setTimeout(function() {
-            cm.refresh()
+            instance.refresh()
         },10);
     },
-    onChanged({cm,action}){
-        cm.on('change',()=>action())
+    onChanged({instance,action}){
+        instance.on('change',()=>action())
     },
-    onActive({cm,action}){
-        cm.on('cursorActivity',()=>action(cm))
-        cm.on('mousedown',()=>action(cm))
+    onActive({instance,action}){
+        instance.on('cursorActivity',()=>action(instance))
+        instance.on('mousedown',()=>action(instance))
     },
-    setTheme({cm,theme}){
-        cm.setOption('theme',theme)
+    setTheme({instance,theme}){
+        instance.setOption('theme',theme)
     },
-    setFontSize({cm, element, fontSize}){
+    setFontSize({instance, element, fontSize}){
         element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
-        cm.refresh()
+        instance.refresh()
+    },
+    getCursorPosition({instance}){
+        const { line, ch } = instance.getCursor()
+        return {
+            line:line+1,
+            ch:ch+1
+        }
+    },
+    doFocus({instance}){
+        instance.focus()
     }
 })
 

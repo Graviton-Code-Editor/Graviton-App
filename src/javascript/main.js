@@ -6,7 +6,7 @@ import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
-import PanelBottomBar from './components/bottom.bar'
+import StatusBar from './components/status.bar/status.bar'
 
 import '../sass/codemirror.reset.scss'
 
@@ -139,7 +139,7 @@ const App = puffin.element(`
             </div>
           
         </div>
-        <PanelBottomBar/>
+        <StatusBar/>
         <div id="windows"></div>
         <BootAnimation/>
     </div>
@@ -148,7 +148,7 @@ const App = puffin.element(`
         TitleBar,
         BootAnimation,
         Resizer,
-        PanelBottomBar
+        StatusBar
     },
     events:{
         mounted(){

@@ -376,7 +376,7 @@ div.CodeMirror-dragcursors {
 }
 .CodeMirror-focused {
 	div.CodeMirror-cursors {
-		visibility: visible;
+		visibility: visible !important;
 	}
 }
 .CodeMirror-selected {
