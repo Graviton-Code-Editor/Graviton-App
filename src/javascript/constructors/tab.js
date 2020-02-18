@@ -21,8 +21,19 @@ function Tab({
         saved:true
     })
 
+    const classSelector = `${directory}`
+
+    if(document.getElementsByClassName(classSelector).length >= 1){
+        /**
+         *  Tab already exists so it won't be rendered again
+         */
+        return {
+            isCancelled : true
+        }
+    }
+
     const TabComp = puffin.element(`
-        <TabBody click="$focusTab" active="{{active}}" mouseover="$showCross" mouseleave="$hideCross">
+        <TabBody class="${classSelector}" click="$focusTab" active="{{active}}" mouseover="$showCross" mouseleave="$hideCross">
             <p>${title}</p>
             <div>
                 <Cross style="opacity:0;" click="$closeTab"/>
@@ -35,7 +46,7 @@ function Tab({
         },
         methods:{
             focusTab(){
-                tabState.data.active = true
+                tabState.emit('focusedMe')
             },
             closeTab(e){
                 e.stopPropagation()
@@ -55,19 +66,31 @@ function Tab({
         events:{
             mounted(target){
                 target.directory = directory
-                tabState.changed(function(){
-                    target.props.state = tabState
-                    if(tabState.data.active){
-                        RunningConfig.data.focusedTab = target
-                        target.focusEditor()
-                    }
-                    target.props.active = tabState.data.active
 
-                    if( target.props.saved != tabState.data.saved){
-                        target.props.saved = tabState.data.saved
-                        isSaved(target,target.props.saved)
-                    }
+                tabState.on('focusedMe',()=>{
+                    RunningConfig.data.focusedTab = target
+                    target.focusEditor()
+
+                    target.props.active = true
                 })
+
+                tabState.on('unfocusedMe',()=>{
+                    RunningConfig.data.focusedTab = target
+                    target.focusEditor()
+
+                    target.props.active = false
+                })
+
+                tabState.on('savedMe',()=>{
+                    isSaved(target,true)
+                    target.props.saved = true
+                })
+
+                tabState.on('unsavedMe',()=>{
+                    isSaved(target,false)
+                    target.props.saved = false
+                })
+
                 RunningConfig.data.focusedTab = target
                 target.props.active = tabState.data.active
                 target.props.saved = tabState.data.saved
@@ -88,13 +111,13 @@ function Tab({
         },
         events:{
             mounted(target){
-                tabState.changed(function(){
-                    if(tabState.data.active){
-                        unfocusTabs(target)
-                        target.style.display = "block"
-                    }else{
-                        target.style.display = "none"
-                    }
+                tabState.on('focusedMe',()=>{
+                    unfocusTabs(target)
+                    target.style.display = "block"
+                    target.props.state = tabState
+                })
+                tabState.on('unfocusedMe',()=>{
+                    target.style.display = "none"
                     target.props.state = tabState
                 })
                 unfocusTabs(target)
@@ -108,7 +131,8 @@ function Tab({
     return {
         tabElement:TabComp.node,
         bodyElement:TabEditorComp.node,
-        panel
+        panel,
+        isCancelled:false
     }
 }
 
@@ -116,14 +140,16 @@ function toggleCross(target,state){
     target.style.opacity = state
 }
 
-function isSaved(element,state){
-    if(state){
+function isSaved(element,isSaved){
+    if(isSaved){
+        element.isSaved = true
         saveFile(element,()=>{
             element.children[1].children[0].style.display = "block"
             if(element.children[1].children[1]!=null)
                 element.children[1].children[1].remove()
         })
-    }else{
+    }else if(element.isSaved != false){
+        element.isSaved = false
         element.children[1].children[0].style.display = "none"
         const comp = puffin.element(`
             <UnSavedIcon/>
@@ -152,7 +178,7 @@ function saveFile(target,callback){
 
 function unfocusTabs(element){
     for( let tab of element.parentElement.children){
-        if(tab != element) tab.props.state.data.active = false
+        if(tab != element) tab.props.state.emit('unfocusedMe')
     }
 }
 
@@ -169,12 +195,12 @@ function focusATab(element){
 
     if(position === 0){
         if(children.length > 1){
-            children[position+1].props.state.data.active = true
+            children[position+1].props.state.emit('focusedMe')
         }else{
             RunningConfig.data.focusedEditor = null
         }
     }else{
-        children[position-1].props.state.data.active = true
+        children[position-1].props.state.emit('focusedMe')
     }
 }
 

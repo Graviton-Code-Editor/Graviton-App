@@ -10,9 +10,9 @@ function add(pkg){
     registry.data.colorsSchemes[pkg.name] = pkg.colorsScheme
 }
 
-const ThemeRegistry = {
+const ExtensionsRegistry = {
     registry,
     add
 }
 
-export default ThemeRegistry
+export default ExtensionsRegistry

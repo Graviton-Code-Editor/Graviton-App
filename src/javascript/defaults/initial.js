@@ -12,7 +12,6 @@ import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
 
 function init(){
-
     loadAutomatically()
     
     new Menu({ //FILE
@@ -62,19 +61,17 @@ function init(){
 
     ExtensionsRegistry.add(Arctic)    
     ExtensionsRegistry.add(Night)  
-
-    StaticConfig.triggerChange()
-
     
     const shortcuts = new Shortcuts ();
 
     shortcuts.add ([ 
         { shortcut: 'Ctrl+S', handler: event => {
-            RunningConfig.data.focusedTab.props.state.data.saved = true
+            RunningConfig.data.focusedTab.props.state.emit('savedMe')
           return true; 
         }}
     ]);
 
+    RunningConfig.emit('appLoaded')
 }
 
 export default init

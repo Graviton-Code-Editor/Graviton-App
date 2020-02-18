@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200218 - 1 [2.0.14]
+- Improved: code refactoring
+- Fixed: you could open the same file more than once
+
 ### 200217 - 2 [2.0.13]
 - New: file icon for unknown files
 - New: Cursor position label on status bar

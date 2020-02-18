@@ -17,6 +17,7 @@ const PanelStatusBar = puffin.element(`
                 width:50%;
                 max-width:50%;
                 flex:1;
+                display:flex;
             }
             & > div:nth-child(2){
                 display:flex;

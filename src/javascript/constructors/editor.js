@@ -2,7 +2,7 @@ import CodemirrorClient from '../defaults/cmclient'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
-import CursorPositionBottomBarItem from '../defaults/status.bar.items/cursor.position'
+import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 
 function Editor({
     bodyElement,
@@ -42,7 +42,7 @@ function Editor({
 
     Client.do('onChanged',{
         instance:instance,
-        action:()=>tabElement.props.state.data.saved = false
+        action:()=>tabElement.props.state.emit('unsavedMe')
     })
 
     Client.do('onActive',{
@@ -50,11 +50,11 @@ function Editor({
         action:(instance)=>{
             focusEditor(Client,instance)
 
-            tabElement.props.state.data.active = true
+            tabElement.props.state.emit('focusedMe')
             RunningConfig.data.focusedPanel = panel
 
-            if(CursorPositionBottomBarItem.isHidden()){
-                CursorPositionBottomBarItem.show()
+            if(CursorPositionStatusBarItem.isHidden()){
+                CursorPositionStatusBarItem.show()
             }
             updateCursorPosition(Client,instance)
         }
@@ -72,13 +72,13 @@ function Editor({
             fontSize:StaticConfig.data.fontSize
         })
     })
-    if(CursorPositionBottomBarItem.isHidden()){
-        CursorPositionBottomBarItem.show() //Display cursor position item in bottom bar
+    if(CursorPositionStatusBarItem.isHidden()){
+        CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
     }
     updateCursorPosition(Client,instance)
     RunningConfig.changed(function(data){
         if(data.focusedEditor == null){
-            CursorPositionBottomBarItem.hide()
+            CursorPositionStatusBarItem.hide()
         }
     })
     tabElement.focusEditor = ()=>{
@@ -92,7 +92,7 @@ function Editor({
 
 function updateCursorPosition(Client,instance){
     const { line, ch } = Client.do('getCursorPosition',{instance:instance})
-    CursorPositionBottomBarItem.setLabel(`Ln ${line}, Ch ${ch}`)
+    CursorPositionStatusBarItem.setLabel(`Ln ${line}, Ch ${ch}`)
 }
 
 function focusEditor(Client,instance){

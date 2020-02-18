@@ -26,6 +26,7 @@ const App = puffin.element(`
             --puffinRadioCircleBackground:{{radioCircleBackground}};
             --puffinRadioCircleBorder:{{radioCircleBorder}};
             --editorDialogBackground:{{editorDialogBackground}};
+            --editorDialogText:{{editorDialogText}};
         }
         @font-face {
             font-family: mainFont;

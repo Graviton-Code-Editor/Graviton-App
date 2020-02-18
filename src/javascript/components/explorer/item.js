@@ -84,10 +84,14 @@ function Item(){
                 }else{
                     const basename = path.basename(this.parentElement.getAttribute("fullpath"))
                     const fileExtension = getExtension(this.parentElement)
-                    const { bodyElement, tabElement, panel } = new Tab({
+                    
+                    const { bodyElement, tabElement, panel, isCancelled } = new Tab({
                         title:basename,
                         directory:this.parentElement.getAttribute("fullpath")
                     })
+
+                    if(isCancelled) return; //Cancels the tab opening
+
                     fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
                         new Editor({
                             language:fileExtension,

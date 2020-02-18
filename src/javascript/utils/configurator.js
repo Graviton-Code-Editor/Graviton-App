@@ -12,7 +12,7 @@ const schema = {
         language:'english',
         fontSize:'16',
         log:[],
-        configPath:path.join(getAppDataPath(),'.graviton')
+        configPath:path.join(getAppDataPath(),'.graviton2')
     }
 }
 

@@ -1,5 +1,6 @@
 import { puffin } from '@mkenzo_8/puffin'
 import StatusBarItemBody from '../components/status.bar/status.bar.item'
+import RunningConfig from '../utils/running.config'
 
 function StatusBarItem({
     label,
@@ -25,7 +26,7 @@ function StatusBarItem({
         puffin.render(component,side)
     }else{
         
-        window.addEventListener("load",()=>{
+        RunningConfig.on("appLoaded",()=>{
             const side = document.getElementById('statusBar').children[position=='right'?1:0]
             puffin.render(component,side)
         })

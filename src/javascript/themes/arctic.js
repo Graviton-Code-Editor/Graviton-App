@@ -52,6 +52,7 @@ const Arctic = {
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
         controlCloseButtonActiveFill:'black',
         editorDialogBackground:'white',
+        editorDialogText:'black',
         contextmenuDivider:'rgb(212,212,212)',
         statusbarBackground:'white',
         statusbarItemBackground:'transparent',
