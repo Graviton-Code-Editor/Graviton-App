@@ -4,7 +4,9 @@ import ThemeProvider from 'ThemeProvider'
 function ContextMenu({
     list,
     parent,
-    event
+    event,
+    x,
+    y
 }){
 
     const ContextWrapper = puffin.style.div`
@@ -49,8 +51,12 @@ function ContextMenu({
     if(contextMenusCreated.length != 0) {
         contextMenusCreated[0].remove()
     }
+    const positions = {
+        x:event!= null?event.pageX:x,
+        y:event!= null?event.pageY:y,
+    }
     const ContextComponent = puffin.element(`
-            <ContextWrapper id="${randomID}" class="contextMenu" style="top:${event.pageY}px; left:${event.pageX};">
+            <ContextWrapper id="${randomID}" class="contextMenu" style="top:${positions.y}px; left:${positions.x};">
                 ${(function(){
                     let content = "";
                         list.map((option,index)=>{
@@ -73,12 +79,19 @@ function ContextMenu({
                 mounted(target){
                     parent.setAttribute("hasContext","true")
                     window.addEventListener("click",(e)=>{
-                        target.remove()
+                        if(e.target != parent) target.remove()
                     })
                     window.addEventListener("contextmenu",(e)=>{
                         e.stopPropagation()
                         
                     })
+
+                    const calculated = positions.y-((positions.y+target.clientHeight)-window.innerHeight)-5
+
+                    if(positions.y+target.clientHeight>window.innerHeight){
+                        target.style.top = calculated
+                    }
+                    
                 }
             }
         })

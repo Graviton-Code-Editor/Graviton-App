@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200218 - 2 [2.0.14]
+- New: tabSaved event on RunningConfig, emmited when any tab is saved
+- New: New property in RunningConfig state for current opened folders
+- New: enabled active line addon for codemirror
+- New: direct x and y positions for ContextMenu constructor instead of passing a DOM event
+
 ### 200218 - 1 [2.0.14]
 - Improved: code refactoring
 - Fixed: you could open the same file more than once

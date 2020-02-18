@@ -9,6 +9,7 @@ import Window from '../constructors/window'
 import Menu from '../constructors/menu'
 import Dialog from '../constructors/dialog'
 import StatusBarItem from '../constructors/status.bar.item'
+import ContextMenu from '../constructors/contextmenu'
 
 const fs = requirePath("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.configPath,'plugins')
@@ -18,12 +19,14 @@ function getExtension(path){
 }
 
 function loadExtension(path){
-   return require(path).entry({
-       Window,
-       puffin,
-       Menu,
-       Dialog,
-       StatusBarItem
+    return require(path).entry({
+        RunningConfig,
+        Window,
+        puffin,
+        Menu,
+        Dialog,
+        StatusBarItem,
+        ContextMenu
     })
 }
 

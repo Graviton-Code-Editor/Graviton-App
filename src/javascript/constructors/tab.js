@@ -7,18 +7,21 @@ import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
 
 const fs = requirePath("fs-extra")
+import path from 'path'
 
 function Tab({
     title,
     isEditor,
     directory,
+    parentFolder,
     component,
     panel = RunningConfig.data.focusedPanel
 }){
 
     const tabState = new puffin.state({
         active:true,
-        saved:true
+        saved:true,
+        parentFolder
     })
 
     const classSelector = `${directory}`
@@ -140,13 +143,19 @@ function toggleCross(target,state){
     target.style.opacity = state
 }
 
-function isSaved(element,isSaved){
+function isSaved(element,isSaved,directory){
     if(isSaved){
         element.isSaved = true
         saveFile(element,()=>{
             element.children[1].children[0].style.display = "block"
+
             if(element.children[1].children[1]!=null)
                 element.children[1].children[1].remove()
+
+            RunningConfig.emit('tabSaved',{
+                element:element,
+                parentFolder:element.props.state.data.parentFolder
+            })
         })
     }else if(element.isSaved != false){
         element.isSaved = false

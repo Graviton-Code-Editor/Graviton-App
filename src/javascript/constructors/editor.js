@@ -24,10 +24,10 @@ function Editor({
         CtrlPlusScroll:(direction)=> {
             
             if(direction == 'up'){
-                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)+5
+                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)+2
             }else{
-                if( StaticConfig.data.fontSize <=5) return
-                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)-5
+                if( StaticConfig.data.fontSize <=4) return
+                StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)-2
             }
 
             Client.do('setFontSize',{

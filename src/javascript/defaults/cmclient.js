@@ -3,7 +3,8 @@ import { EditorClient } from '../constructors/editorclient'
 
 require ('../../../node_modules/codemirror/mode/**/*.js')
 
-require('../../../node_modules/codemirror/addon/search/search.js')
+import '../../../node_modules/codemirror/addon/search/search.js'
+import '../../../node_modules/codemirror/addon/selection/active-line.js'
 
 const CodemirrorClient = new EditorClient({
     name:'codemirror',
@@ -29,6 +30,8 @@ const CodemirrorClient = new EditorClient({
             value:value,
             lineNumbers:true,
             htmlMode:false,
+            styleActiveLine: { nonEmpty: true },
+            styleActiveSelected: true,
             theme:theme
         })
 

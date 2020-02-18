@@ -87,7 +87,8 @@ function Item(){
                     
                     const { bodyElement, tabElement, panel, isCancelled } = new Tab({
                         title:basename,
-                        directory:this.parentElement.getAttribute("fullpath")
+                        directory:this.parentElement.getAttribute("fullpath"),
+                        parentFolder:this.parentElement.getAttribute("parentFolder")
                     })
 
                     if(isCancelled) return; //Cancels the tab opening
