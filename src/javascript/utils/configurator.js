@@ -1,10 +1,9 @@
 import requirePath from './require'
-import getAppDataPath  from 'appdata-path'
 import path from 'path';
 
 const fs = requirePath('fs-extra')
-
 const electronStore = requirePath('electron-store')
+const getAppDataPath = requirePath('appdata-path')
 
 const schema = {
     config:{
@@ -18,7 +17,7 @@ const schema = {
 
 function initConfiguration(){
     const store = new electronStore();
-
+    console.log(store)
     Object.keys(schema.config).map(function(key){
         if(!store.has(`config.${key}`)){
             store.set(`config.${key}`,schema.config[key])
