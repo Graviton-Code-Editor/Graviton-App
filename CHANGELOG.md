@@ -2,9 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200219 - 2 [2.0.15]
+- Improved: opened folder icon in explorer panel
+
 ### 200219 - 1 [2.0.15]
 - Improved: refactored some code
-- Add: Arrow indicator left to folders in the explorer panel
+- New: Arrow indicator left to folders in the explorer panel
 - Fixed: Opening a new folder will add it to top of recent projects
 
 ### 200218 - 2 [2.0.14]
