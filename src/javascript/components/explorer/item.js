@@ -11,6 +11,7 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 
 import ThemeProvider from 'ThemeProvider'
 import Icons from '../../../../assets/icons/**.svg'
+import FolderArrow from '../icons/folder.arrow'
 
 import requirePath from '../../utils/require'
 const fs = requirePath("fs-extra");
@@ -56,12 +57,28 @@ function Item(){
             margin-right:4px;
             position:relative;
         }
+        & .arrow{
+            height:8px;
+            width:8px;
+            position:relative;
+            padding:0px;
+            margin-right:3px;
+            transition:0.1s;
+            border-radius:1px;
+        }
+        &[opened="true"] .arrow{
+           transform:rotate(90deg);
+        }
+        &[opened="false"] .arrow{
+            transform:rotate(0deg);
+        }
 
     `
 
     const ItemComp = puffin.element(`
         <ItemWrapper>
             <button click="$openDirectory" contextmenu="$contextMenu">
+                <FolderArrow class="arrow"/>
                 <img class="icon"/>
                 <span>{{path}}</span>
             </button>
@@ -69,42 +86,12 @@ function Item(){
     `,{
         props:['path'],
         components:{
-            ItemWrapper
+            ItemWrapper,
+            FolderArrow
         },
         methods:{
             openDirectory(e){
-                if(this.parentElement.getAttribute("isDirectory") == "true"){
-                    if(this.parentElement.children[1] == null){
-                        new Explorer(this.parentElement.getAttribute("fullpath"),this.parentElement,Number(this.parentElement.getAttribute("level"))+1)
-                        setOpenIcon(this.parentElement.children[0].children[0])
-                    }else{
-                        this.parentElement.children[1].remove()
-                        setClosedIcon(this.parentElement.children[0].children[0])
-                    }
-                }else{
-                    const basename = path.basename(this.parentElement.getAttribute("fullpath"))
-                    const fileExtension = getExtension(this.parentElement)
-                    
-                    const { bodyElement, tabElement, panel, isCancelled } = new Tab({
-                        title:basename,
-                        directory:this.parentElement.getAttribute("fullpath"),
-                        parentFolder:this.parentElement.getAttribute("parentFolder")
-                    })
-
-                    if(isCancelled) return; //Cancels the tab opening
-
-                    fs.readFile(this.parentElement.getAttribute("fullpath"),'UTF-8').then(function(data){
-                        new Editor({
-                            language:fileExtension,
-                            value:data ,
-                            theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
-                            bodyElement,
-                            tabElement,
-                            panel
-                        })
-                    })
-
-                }
+                this.parentElement.state.emit('clickItem')
             },
             contextMenu(e){
                 if(this.parentElement.getAttribute("isDirectory") == "true"){
@@ -163,21 +150,66 @@ function Item(){
         },
         events:{
             mounted(target){
-
+                const itemState = new puffin.state({})
                 const fileExtension = getExtension(target)
+                const itemIcon = target.getElementsByClassName('icon')[0]
+                const itemArrow = target.getElementsByClassName('arrow')[0]
 
-                target.children[0].children[1].textContent = target.props.path //FIX
-
+                target.state = itemState
                 target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
 
                 if(target.getAttribute("isDirectory") == "true"){
-                    setClosedIcon(target.children[0].children[0])
+                    setStateClosed(target)
+
                 }else{
-                    setFileIcon(target.children[0].children[0],fileExtension)
+                    setFileIcon(itemIcon,fileExtension)
+                    itemArrow.style.opacity = "0"
+
                 }
 
-                target.reload = ()=> reload(target)
-                
+                target.state.on('clickItem',function(){
+
+                    if(target.getAttribute("isDirectory") == "true"){
+                        const itemContainer = target.children[1]
+
+                        if(itemContainer == null){
+                            new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
+                            setStateOpen(target)
+                        }else{
+                            itemContainer.remove()
+                            setStateClosed(target)
+                        }
+
+                    }else{
+                        const basename = path.basename(target.getAttribute("fullpath"))
+                        const fileExtension = getExtension(target)
+                        
+                        const { bodyElement, tabElement, panel, isCancelled } = new Tab({
+                            title:basename,
+                            directory:target.getAttribute("fullpath"),
+                            parentFolder:target.getAttribute("parentFolder")
+                        })
+
+                        if(isCancelled) return; //Cancels the tab opening
+
+                        fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
+                            new Editor({
+                                language:fileExtension,
+                                value:data ,
+                                theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
+                                bodyElement,
+                                tabElement,
+                                panel
+                            })
+                        })
+
+                    }
+                })
+
+                target.state.on('doReload',function(){
+                    reload(target)
+                })
+
             }
         }
     })
@@ -187,7 +219,7 @@ function Item(){
 function reload(target){
     if(target.children[1] != null) target.children[1].remove()
     new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
-    setOpenIcon(target.children[0].children[0])
+    setStateOpen(target)
 }
 
 function getExtension(target){
@@ -202,18 +234,22 @@ function setFileIcon(target,extension){
     }     
 }
 
-function setOpenIcon(target){
-    target.src = Icons["folder.opened"]
+function setStateOpen(target){
+    const itemIcon = target.getElementsByClassName('icon')[0]
+    itemIcon.src = Icons["folder.opened"]
+    target.setAttribute('opened','true')
 }
 
-function setClosedIcon(target){
-    target.src = Icons["folder.closed"]
+function setStateClosed(target){
+    const itemIcon = target.getElementsByClassName('icon')[0]
+    itemIcon.src = Icons["folder.closed"]
+    target.setAttribute('opened','false')
 }
 
 function removeDirectoryOrFile(element){
     areYouSureDialog().then(function(){
         trash([element.parentElement.getAttribute("fullpath")]).then(function(){
-            element.parentElement.parentElement.parentElement.reload()
+            element.parentElement.parentElement.parentElement.state.emit('doReload')
         });        
     }).catch(function(err){
         //Clicked "No"

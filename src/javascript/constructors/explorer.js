@@ -15,7 +15,7 @@ function Explorer(folderPath,parent,level = 0){
             },
             events:{
                 mounted(target){
-                    target.reload()
+                    target.state.emit('doReload')
                 }
             }
         })

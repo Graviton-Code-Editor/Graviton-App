@@ -41,6 +41,7 @@ const Night = {
         sidemenuButtonText:'white',
         sidemenuButtonActiveText:'white',
         explorerItemText:'white',
+        explorerItemArrowBackground:'white',
         cardBackground:'#191919',
         buttonBackground:'#191919',
         radioBackgroundHovering:'rgb(60,60,60)',

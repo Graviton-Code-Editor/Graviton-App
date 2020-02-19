@@ -12,9 +12,10 @@ function openFolder(){
                 if (result.canceled) return;
                 
                 if(!StaticConfig.data.log.filter((a)=>a.directory ==result.filePaths[0])[0]){
-                    StaticConfig.data.log.push({
+                    StaticConfig.data.log.splice(0, 0, {
                         directory:result.filePaths[0]
                     })
+                    StaticConfig.data.log.join()
                 }
                
                 StaticConfig.triggerChange()

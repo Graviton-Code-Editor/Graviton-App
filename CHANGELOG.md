@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200219 - 1 [2.0.15]
+- Improved: refactored some code
+- Add: Arrow indicator left to folders in the explorer panel
+- Fixed: Opening a new folder will add it to top of recent projects
+
 ### 200218 - 2 [2.0.14]
 - New: tabSaved event on RunningConfig, emmited when any tab is saved
 - New: New property in RunningConfig state for current opened folders

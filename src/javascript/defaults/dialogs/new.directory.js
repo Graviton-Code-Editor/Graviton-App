@@ -52,12 +52,12 @@ function createDirectory(target,isFolder,parentDirectory,explorerContainer,Dialo
         if(isFolder){
             if (!fs.existsSync(dir)){
                 fs.mkdirSync(dir);
-                explorerContainer.reload()
+                explorerContainer.state.emit('doReload')
             }
         }else{
             fs.writeFile(dir, '', (err) => {
                 if (err) throw err;
-                explorerContainer.reload()
+                explorerContainer.state.emit('doReload')
             }); 
         }     
     }
