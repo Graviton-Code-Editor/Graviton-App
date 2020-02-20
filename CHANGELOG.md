@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200220 - 1 [2.0.16]
+- Fixed: tab switching wasn't working properly
+- New: Ctrl+N creates a new panel and Ctrl+L closes the focused panel(only if all tabs are saved)
+- Fixed: Welcome wasn't updating it's text when switcing languages
+
 ### 200219 - 2 [2.0.15]
 - Improved: opened folder icon in explorer panel
 

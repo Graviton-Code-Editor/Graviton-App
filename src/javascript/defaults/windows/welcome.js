@@ -10,8 +10,6 @@ import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
 import LanguageConfig from 'LanguageConfig'
 
-const path = requirePath("path")
-
 const listWrapper = puffin.style.css `
 
     &{
@@ -39,85 +37,86 @@ const listWrapper = puffin.style.css `
     }
 
 `
-
-const WelcomePage = puffin.element(`
-    <SideMenu default="projects">
-        <div>
-            <H1 lang-string="Welcome"></H1>
-            <label to="projects" lang-string="RecentProjects"></label>
-            <label to="create_project" lang-string="NewProject"></label>
-        </div>
-        <div>
-            <div href="projects" class="${puffin.style.css`
-                &{
-                    display:flex;
-                    flex-direction:columns;
-                    flex:1;
-                    min-height:20%;
-                    max-height:50%;
-                }
-            `}">
-                <div class="${listWrapper}">
-                    ${(function(){
-                        let content = "";
-                        StaticConfig.data.log.map(({ name, directory })=> {
-                           
-                            let nameFolder = parseDirectory(directory)
-
-                            content += `
-                                <Card click="$openDirectory" directory="${directory}">
-                                    <b>${nameFolder}</b>
-                                    <p>${directory}</p>
-                                </Card>
-                            `
-                        })
-                        return content;
-                    })()}
-                </div>
-                <div class="${puffin.style.css`
+function Welcome(){
+    const WelcomePage = puffin.element(`
+        <SideMenu default="projects">
+            <div>
+                <H1 lang-string="Welcome"></H1>
+                <label to="projects" lang-string="RecentProjects"></label>
+                <label to="create_project" lang-string="NewProject"></label>
+            </div>
+            <div>
+                <div href="projects" class="${puffin.style.css`
                     &{
                         display:flex;
-                        justify-content:flex-end;
-                        padding-top:10px;
+                        flex-direction:columns;
+                        flex:1;
+                        min-height:20%;
+                        max-height:50%;
                     }
                 `}">
-                    <Button click="$openDirectoryFromWindow">Open a folder</Button>
+                    <div class="${listWrapper}">
+                        ${(function(){
+                            let content = "";
+                            StaticConfig.data.log.map(({ name, directory })=> {
+                            
+                                let nameFolder = parseDirectory(directory)
+
+                                content += `
+                                    <Card click="$openDirectory" directory="${directory}">
+                                        <b>${nameFolder}</b>
+                                        <p>${directory}</p>
+                                    </Card>
+                                `
+                            })
+                            return content;
+                        })()}
+                    </div>
+                    <div class="${puffin.style.css`
+                        &{
+                            display:flex;
+                            justify-content:flex-end;
+                            padding-top:10px;
+                        }
+                    `}">
+                        <Button click="$openDirectoryFromWindow">Open a folder</Button>
+                    </div>
+                </div>
+                <div href="create_project" class="${listWrapper}">
+                    <b>Empty.</b>
                 </div>
             </div>
-            <div href="create_project" class="${listWrapper}">
-                <b>Empty.</b>
-            </div>
-        </div>
-    </SideMenu>
-`,{
-    addons:{
-        lang:puffin.lang(LanguageConfig)
-    },
-    components:{
-        Button,
-        Card,
-        SideMenu,
-        H1:Titles.h1
-    },
-    methods:{
-        openDirectory(){
-            new Explorer(this.getAttribute("directory"),document.getElementById("sidepanel"))
-            Welcome.close()
+        </SideMenu>
+    `,{
+        addons:{
+            lang:puffin.lang(LanguageConfig)
         },
-        openDirectoryFromWindow(){
-            openFolder().then(function(folder){
-                new Explorer(folder,document.getElementById("sidepanel"))
+        components:{
+            Button,
+            Card,
+            SideMenu,
+            H1:Titles.h1
+        },
+        methods:{
+            openDirectory(){
+                new Explorer(this.getAttribute("directory"),document.getElementById("sidepanel"))
                 Welcome.close()
-            })
+            },
+            openDirectoryFromWindow(){
+                openFolder().then(function(folder){
+                    new Explorer(folder,document.getElementById("sidepanel"))
+                    Welcome.close()
+                })
+            }
         }
-    }
-})
+    })
 
-const Welcome = new Window({
-    component:WelcomePage,
-    height:'400px',
-    width:'600px'
-})
+    return new Window({
+        component:WelcomePage,
+        height:'400px',
+        width:'600px'
+    })
+}
 
 export default Welcome
 

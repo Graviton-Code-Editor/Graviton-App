@@ -78,9 +78,6 @@ function Tab({
                 })
 
                 tabState.on('unfocusedMe',()=>{
-                    RunningConfig.data.focusedTab = target
-                    target.focusEditor()
-
                     target.props.active = false
                 })
 
@@ -98,7 +95,7 @@ function Tab({
                 target.props.active = tabState.data.active
                 target.props.saved = tabState.data.saved
                 target.props.state = tabState
-
+                target.isSaved = true
             }
         },
         props:["active"]
@@ -156,10 +153,12 @@ function isSaved(element,isSaved,directory){
                 element:element,
                 parentFolder:element.props.state.data.parentFolder
             })
+            
         })
     }else if(element.isSaved != false){
         element.isSaved = false
         element.children[1].children[0].style.display = "none"
+
         const comp = puffin.element(`
             <UnSavedIcon/>
         `,{
@@ -167,17 +166,18 @@ function isSaved(element,isSaved,directory){
                 UnSavedIcon
             }
         })
+
         puffin.render(comp,element.children[1],{
             removeContent:false
         })
     } 
 }
 
-function saveFile(target,callback){
+function saveFile(tab,callback){
     
     const  { client, instance } = RunningConfig.data.focusedEditor
 
-    fs.writeFile(target.directory, client.do('getValue',instance), function(err) {
+    fs.writeFile(tab.directory, client.do('getValue',instance), function(err) {
         if(err) {
             return console.log(err);
         }
@@ -185,31 +185,35 @@ function saveFile(target,callback){
     }); 
 }
 
-function unfocusTabs(element){
-    for( let tab of element.parentElement.children){
-        if(tab != element) tab.props.state.emit('unfocusedMe')
+function unfocusTabs(tab){
+    const tabsBar = tab.parentElement;
+    const tabsBarChildren = tabsBar.children;
+
+    for( let otherTab of tabsBarChildren){
+        if(otherTab != tab) {
+            otherTab.props.state.emit('unfocusedMe')
+        }
     }
 }
 
-function focusATab(element){
-
-    const parent = element.parentElement;
-    const children = parent.children;
+function focusATab(tab){
+    const tabsBar = tab.parentElement;
+    const tabsBarChildren = tabsBar.children;
 
     const position = (function(){
-        for( let tabIndex =0; tabIndex < children.length;tabIndex++){
-            if(children[tabIndex] == element) return tabIndex
+        for( let tabIndex =0; tabIndex < tabsBarChildren.length;tabIndex++){
+            if(tabsBarChildren[tabIndex] == tab) return tabIndex
         }
     })()
 
     if(position === 0){
-        if(children.length > 1){
-            children[position+1].props.state.emit('focusedMe')
+        if(tabsBarChildren.length > 1){
+            tabsBarChildren[position+1].props.state.emit('focusedMe')
         }else{
             RunningConfig.data.focusedEditor = null
         }
     }else{
-        children[position-1].props.state.emit('focusedMe')
+        tabsBarChildren[position-1].props.state.emit('focusedMe')
     }
 }
 

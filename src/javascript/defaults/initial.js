@@ -1,7 +1,7 @@
 import Menu from "../constructors/menu";
 import SettingsPage from './windows/settings'
 import Welcome from "./windows/welcome";
-import Panel from '../constructors/panel'
+import { Panel, removePanel} from '../constructors/panel'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import Arctic from '../themes/arctic'
 import Night from '../themes/night'
@@ -34,7 +34,7 @@ function init(){
             },
             {
                 label:'Open Welcome',
-                action:Welcome.launch
+                action:()=>Welcome().launch()
             }
         ]
     })
@@ -65,10 +65,22 @@ function init(){
     const shortcuts = new Shortcuts ();
 
     shortcuts.add ([ 
-        { shortcut: 'Ctrl+S', handler: event => {
-            RunningConfig.data.focusedTab.props.state.emit('savedMe')
-          return true; 
-        }}
+        { 
+            shortcut: 'Ctrl+S', handler: event => {
+                RunningConfig.data.focusedTab.props.state.emit('savedMe')
+                return true; 
+            }
+        },
+        { 
+            shortcut: 'Ctrl+N', handler: event => {
+                new Panel()
+            }
+        },
+        { 
+            shortcut: 'Ctrl+L', handler: event => {
+                removePanel()
+            }
+        }
     ]);
 
     RunningConfig.emit('appLoaded')

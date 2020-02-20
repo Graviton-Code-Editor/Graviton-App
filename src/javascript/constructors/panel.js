@@ -2,6 +2,7 @@ import PanelBody from '../components/panel/panel'
 import {puffin} from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ThemeProvider from 'ThemeProvider'
+
 function Panel(){
     const randomSelector = Math.random()
     const PanelComp = puffin.element(`
@@ -58,4 +59,69 @@ function Panel(){
     }
 }
 
-export default Panel
+function focusOtherPanel(target){
+    const oldPanel = RunningConfig.data.focusedPanel
+    const panelParent = target.parentElement;
+    const parentChildren = panelParent.children;
+
+    const position = (function(){
+        for( let panelIndex = 0; panelIndex < parentChildren.length;panelIndex++){
+            if(parentChildren[panelIndex] == target) return panelIndex
+        }
+    })()
+
+    if(parentChildren.length !== 1){
+        if(position === 0){
+            if(parentChildren.length > 1){
+                RunningConfig.data.focusedPanel = parentChildren[position+1]
+                return {
+                    oldPanel
+                }
+            }else{
+                RunningConfig.data.focusedEditor = null
+                return {
+                    oldPanel:null
+                }
+            }
+        }else{
+            RunningConfig.data.focusedPanel = parentChildren[position-1]
+            return {
+                oldPanel
+            }
+        }
+    }
+    return {
+        oldPanel:null
+    }
+    
+}
+
+function removePanel(){
+    if(checkIfThereAreTabsUnSaved(RunningConfig.data.focusedPanel)){
+        const { oldPanel } = focusOtherPanel(RunningConfig.data.focusedPanel)
+
+    if(oldPanel != null) oldPanel.remove()
+    }
+
+    
+
+}
+
+function checkIfThereAreTabsUnSaved(panel){
+    const tabsBar = panel.children[0]
+    const panelTabs = tabsBar.childNodes
+
+    let _allTabsAreSaved = true;
+
+    panelTabs.forEach(function(tab){
+        if(!tab.isSaved) return _allTabsAreSaved = false
+    })
+
+    return _allTabsAreSaved
+}
+
+
+export { 
+    Panel,
+    removePanel
+}

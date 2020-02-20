@@ -16,6 +16,9 @@ const App = puffin.element(`
         body{
             padding:0px;
             margin:0px;
+            max-width:100%;
+            max-height:100%;
+            overflow:hidden;
             --puffinAccent:{{accentColor}};
             --puffinTextColor:{{textColor}};
             --puffinFont:mainFont;
@@ -156,7 +159,7 @@ const App = puffin.element(`
             init()
             
             window.addEventListener("load",function(){
-                Welcome.launch()
+                Welcome().launch()
             })
         }
     }
