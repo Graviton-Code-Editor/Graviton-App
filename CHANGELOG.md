@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200221 - 1 [2.0.17]
+- Fixed: opening projects from welcome page wasn't automatically closing the window
+- Improved: Dialogs with inputs styling
+
 ### 200220 - 1 [2.0.16]
 - Fixed: tab switching wasn't working properly
 - New: Ctrl+N creates a new panel and Ctrl+L closes the focused panel(only if all tabs are saved)

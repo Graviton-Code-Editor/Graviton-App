@@ -21,6 +21,9 @@ const DialogBody = new puffin.element(`
                 display:flex;
                 justify-content:flex-end;
             }
+            & button {
+                padding:8px 13px;
+            }
        `}">
 
        </div>

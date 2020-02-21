@@ -26,7 +26,7 @@ function Tab({
 
     const classSelector = `${directory}`
 
-    if(document.getElementsByClassName(classSelector).length >= 1){
+    if( document.getElementsByClassName(classSelector).length >= 1 ){
         /**
          *  Tab already exists so it won't be rendered again
          */
@@ -104,7 +104,7 @@ function Tab({
     puffin.render(TabComp,panel.children[0])
 
     const TabEditorComp = puffin.element(`
-        <TabEditor></TabEditor>
+        <TabEditor/>
     `,{
         components:{
             TabEditor
@@ -141,12 +141,12 @@ function toggleCross(target,state){
 }
 
 function isSaved(element,isSaved,directory){
-    if(isSaved){
+    if( isSaved ){
         element.isSaved = true
         saveFile(element,()=>{
             element.children[1].children[0].style.display = "block"
 
-            if(element.children[1].children[1]!=null)
+            if( element.children[1].children[1]!=null )
                 element.children[1].children[1].remove()
 
             RunningConfig.emit('tabSaved',{
@@ -190,7 +190,7 @@ function unfocusTabs(tab){
     const tabsBarChildren = tabsBar.children;
 
     for( let otherTab of tabsBarChildren){
-        if(otherTab != tab) {
+        if( otherTab != tab ) {
             otherTab.props.state.emit('unfocusedMe')
         }
     }
@@ -202,12 +202,12 @@ function focusATab(tab){
 
     const position = (function(){
         for( let tabIndex =0; tabIndex < tabsBarChildren.length;tabIndex++){
-            if(tabsBarChildren[tabIndex] == tab) return tabIndex
+            if( tabsBarChildren[tabIndex] == tab ) return tabIndex
         }
     })()
 
-    if(position === 0){
-        if(tabsBarChildren.length > 1){
+    if( position === 0 ){
+        if( tabsBarChildren.length > 1 ){
             tabsBarChildren[position+1].props.state.emit('focusedMe')
         }else{
             RunningConfig.data.focusedEditor = null

@@ -100,7 +100,7 @@ function Welcome(){
         methods:{
             openDirectory(){
                 new Explorer(this.getAttribute("directory"),document.getElementById("sidepanel"))
-                Welcome.close()
+                WelcomeWindow.close()
             },
             openDirectoryFromWindow(){
                 openFolder().then(function(folder){
@@ -111,11 +111,13 @@ function Welcome(){
         }
     })
 
-    return new Window({
+    const WelcomeWindow = new Window({
         component:WelcomePage,
         height:'400px',
         width:'600px'
     })
+
+    return WelcomeWindow
 }
 
 export default Welcome

@@ -2,6 +2,7 @@ import Dialog from '../../constructors/dialog'
 import { puffin } from '@mkenzo_8/puffin'
 import requirePath from '../../utils/require'
 import path from 'path'
+import Input from '../../components/input'
 
 const fs = requirePath("fs-extra")
 
@@ -13,7 +14,7 @@ function newDirectoryDialog({
     const randomSelector = Math.random();
     const component = puffin.element(`
         <div>
-            <input id="${randomSelector}" placeHolder="Enter a name" keyup="$onEnter"/>
+            <Input id="${randomSelector}" placeHolder="Enter a name" keyup="$onEnter"/>
         </div>
     `,{
         methods:{
@@ -29,6 +30,9 @@ function newDirectoryDialog({
             mounted(target){
                 target.children[0].focus()
             }
+        },
+        components:{
+            Input:Input()
         }
     })
 

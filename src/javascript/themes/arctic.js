@@ -59,7 +59,9 @@ const Arctic = {
         statusbarItemBackground:'transparent',
         statusbarItemHoveringBackground:'rgb(212,212,212)',
         statusbarItemText:'black',
-        statusbarItemHoveringText:'black'
+        statusbarItemHoveringText:'black',
+        inputBackground:'transparent',
+        inputText:'black'
         
     }
     
