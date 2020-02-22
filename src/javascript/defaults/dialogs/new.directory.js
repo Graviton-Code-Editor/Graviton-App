@@ -32,7 +32,7 @@ function newDirectoryDialog({
             }
         },
         components:{
-            Input:Input()
+            Input
         }
     })
 
@@ -43,14 +43,16 @@ function newDirectoryDialog({
             {
                 label:'Continue',
                 action(){
-                    createDirectory(document.getElementById(randomSelector),isFolder,parentDirectory,explorerContainer,DialogInstance)
+                    createDirectory(document.getElementById(randomSelector),isFolder,parentDirectory,explorerContainer)
                 }
             }
         ]
     })
+
+    DialogInstance.launch()
 }
 
-function createDirectory(target,isFolder,parentDirectory,explorerContainer,DialogInstance){
+function createDirectory(target,isFolder,parentDirectory,explorerContainer){
     const dir = path.join(parentDirectory,target.value)
     if (!fs.existsSync(dir)){
         if(isFolder){

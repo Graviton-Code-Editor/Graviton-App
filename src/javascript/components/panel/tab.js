@@ -54,7 +54,7 @@ const TabBody  = puffin.element(`
                 color:{{tabActiveText}};
             }
         `
-    }"></div>
+    }"/>
 `)
 
 export default TabBody

@@ -45,7 +45,7 @@ function ContextMenu({
         }
 
     `
-    const randomID = Math.random()
+    const randomSelector = Math.random()
     const contextMenusCreated = document.getElementsByClassName("contextMenu");
     const computedMethods = {...list.map(a=>a.action)}
     if(contextMenusCreated.length != 0) {
@@ -56,14 +56,14 @@ function ContextMenu({
         y:event!= null?event.pageY:y,
     }
     const ContextComponent = puffin.element(`
-            <ContextWrapper id="${randomID}" class="contextMenu" style="top:${positions.y}px; left:${positions.x};">
+            <ContextWrapper id="${randomSelector}" class="contextMenu" style="top:${positions.y}px; left:${positions.x};">
                 ${(function(){
                     let content = "";
                         list.map((option,index)=>{
                             if(option.label != undefined){
                                 content += `<button click="$${index}">${option.label}</button>`
                             }else{
-                                content += `<span></span>`
+                                content += `<span/>`
                             }
                             
                         })
@@ -78,6 +78,7 @@ function ContextMenu({
             events:{
                 mounted(target){
                     parent.setAttribute("hasContext","true")
+                    
                     window.addEventListener("click",(e)=>{
                         if(e.target != parent) target.remove()
                     })
@@ -86,10 +87,10 @@ function ContextMenu({
                         
                     })
 
-                    const calculated = positions.y-((positions.y+target.clientHeight)-window.innerHeight)-5
+                    const calculatedHeight = positions.y-((positions.y+target.clientHeight)-window.innerHeight)-5
 
                     if(positions.y+target.clientHeight>window.innerHeight){
-                        target.style.top = calculated
+                        target.style.top = calculatedHeight
                     }
                     
                 }

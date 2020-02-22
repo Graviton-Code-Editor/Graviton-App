@@ -8,6 +8,7 @@ function Panel(){
     const PanelComp = puffin.element(`
         <div id="${randomSelector}" click="$focusPanel" class="${
             puffin.style.css`
+                ${ThemeProvider}
                 &{
                     flex:1;
                     min-width:1px;
@@ -18,25 +19,22 @@ function Panel(){
                     flex-direction:column;
                     border-left:1px solid rgba(150,150,150);
                 }
+
+                & .tabsbar{
+                    min-height:40px;
+                    max-height:40px;
+                    white-space:nowrap;
+                    display:flex;
+                    flex:1;
+                    overflow-x:auto;
+                    background:{{tabsbarBackground}};
+                }
+                & .tabsbar:empty{
+                    background:transparent;
+                }
             `
         }">    
-            <div class="tabsbar ${
-                puffin.style.css`
-                    ${ThemeProvider}
-                    &{
-                        min-height:40px;
-                        max-height:40px;
-                        white-space:nowrap;
-                        display:flex;
-                        flex:1;
-                        overflow-x:auto;
-                        background:{{tabsbarBackground}};
-                    }
-                    &:empty{
-                        background:transparent;
-                    }
-                `
-            }"></div>
+            <div class="tabsbar"/>
             <PanelBody/>
         </div>
     `,{
@@ -59,14 +57,13 @@ function Panel(){
     }
 }
 
-function focusOtherPanel(target){
-    const oldPanel = RunningConfig.data.focusedPanel
-    const panelParent = target.parentElement;
+function focusOtherPanel(currentPanel){
+    const panelParent = currentPanel.parentElement;
     const parentChildren = panelParent.children;
 
     const position = (function(){
         for( let panelIndex = 0; panelIndex < parentChildren.length;panelIndex++){
-            if(parentChildren[panelIndex] == target) return panelIndex
+            if(parentChildren[panelIndex] == currentPanel) return panelIndex
         }
     })()
 
@@ -75,7 +72,7 @@ function focusOtherPanel(target){
             if(parentChildren.length > 1){
                 RunningConfig.data.focusedPanel = parentChildren[position+1]
                 return {
-                    oldPanel
+                    oldPanel:currentPanel
                 }
             }else{
                 RunningConfig.data.focusedEditor = null
@@ -86,7 +83,7 @@ function focusOtherPanel(target){
         }else{
             RunningConfig.data.focusedPanel = parentChildren[position-1]
             return {
-                oldPanel
+                oldPanel:currentPanel
             }
         }
     }
@@ -97,27 +94,26 @@ function focusOtherPanel(target){
 }
 
 function removePanel(){
-    if(checkIfThereAreTabsUnSaved(RunningConfig.data.focusedPanel)){
-        const { oldPanel } = focusOtherPanel(RunningConfig.data.focusedPanel)
-
-    if(oldPanel != null) oldPanel.remove()
-    }
-
     
+    if( checkIfThereAreTabsUnSaved(RunningConfig.data.focusedPanel) ){
 
+        const { oldPanel } = focusOtherPanel(RunningConfig.data.focusedPanel)
+        if( oldPanel != null ) oldPanel.remove()
+
+    }
 }
 
 function checkIfThereAreTabsUnSaved(panel){
     const tabsBar = panel.children[0]
     const panelTabs = tabsBar.childNodes
 
-    let _allTabsAreSaved = true;
+    let allTabsAreSaved = true;
 
     panelTabs.forEach(function(tab){
-        if(!tab.isSaved) return _allTabsAreSaved = false
+        if(!tab.isSaved) return allTabsAreSaved = false
     })
 
-    return _allTabsAreSaved
+    return allTabsAreSaved
 }
 
 

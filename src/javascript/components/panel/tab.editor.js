@@ -16,9 +16,7 @@ const TabEditor  = puffin.element(`
                 overflow-x:hidden;
             }
         `
-    }">
-
-    </div>
+    }"/>
 `)
 
 export default TabEditor

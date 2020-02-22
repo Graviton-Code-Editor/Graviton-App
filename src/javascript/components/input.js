@@ -1,8 +1,7 @@
 import { puffin } from '@mkenzo_8/puffin'
 import ThemeProvider from 'ThemeProvider'
 
-function Input(){
-    return puffin.style.input`
+const Input = puffin.style.input`
         ${ThemeProvider}
         &{
             background:{{inputBackground}};
@@ -12,6 +11,5 @@ function Input(){
             color:{{inputText}};
         }
     `
-}
 
 export default Input

@@ -1,17 +1,17 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 import ThemeProvider from '../utils/themeprovider'
 
 function hideAllMenus(element){
-    const otherMenus = element.parentElement.children
+    const allMenus = element.parentElement.children
 
-    for(let OM of otherMenus){
-        OM.children[1].style.display = "none";
-        OM.children[0].classList.remove("active")
-        OM.setAttribute("showed","false")
+    for(let otherMenu of allMenus){
+        otherMenu.children[1].style.display = "none";
+        otherMenu.children[0].classList.remove("active")
+        otherMenu.setAttribute("showed","false")
     }
 }
 
-function toggleStatus(element){
+function toggleMenuStatus(element){
     if(element.getAttribute("showed") == "true"){
         element.children[1].style.display = "none";
         element.children[0].classList.remove("active")
@@ -27,7 +27,7 @@ function toggleStatus(element){
 }
 
 const DropMenu = puffin.element(`
-    <div click="$onClick" mousemove="$onHover" showed="false" class="${puffin.style.css`
+    <div click="$onMenuClicked" mousemove="$onMenuHovering" showed="false" class="${puffin.style.css`
         ${ThemeProvider}
         &{
             display:block;
@@ -79,16 +79,16 @@ const DropMenu = puffin.element(`
     </div>
 `,{
     methods:{
-        onClick(){
-            toggleStatus(this)
+        onMenuClicked(){
+            toggleMenuStatus(this)
         },
-        onHover(){
+        onMenuHovering(){
             if(this.getAttribute("showed") == "true"){
                 this.parentElement.setAttribute("anyDropmenuOpened","true")
             }
             if(this.parentElement.getAttribute("anyDropmenuOpened")=="true"){
                 hideAllMenus(this)
-                toggleStatus(this)
+                toggleMenuStatus(this)
             }
         }
     },

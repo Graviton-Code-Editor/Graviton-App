@@ -1,26 +1,27 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 
-const ResizerID = Math.random()
+const resizeSelector = Math.random()
 
-function startResizing(e,box = document.getElementById(ResizerID)){
+function startResizing(event,resizerElement = document.getElementById(resizeSelector)){
+    const otherChildren = resizerElement.parentElement.children
     let leftPanel = null;
-    for (let i = 0; i < box.parentElement.children.length; i++) {
-        const child = box.parentElement.children[i];
-        if (child.id == box.id) {
-            leftPanel = box.parentElement.children[i-1]
+
+    Object.keys(otherChildren).forEach(function(index){
+        const child = otherChildren[index]
+        if (child.id == resizerElement.id) {
+            leftPanel = otherChildren[index-1]
         }
-        
-    }
-    leftPanel.style.width = e.clientX - 25 + "px";
-    leftPanel.style.maxWidth = e.clientX -25 + "px";
+    })
+
+    leftPanel.style.width = `${event.clientX - 25}px`
 }
 
-function stopResizing(e,box){
+function stopResizing(){
     window.removeEventListener("mousemove", startResizing, false);
     window.removeEventListener("mouseup", stopResizing, false);
 }
 
-const Resizer = puffin.element(`
+const resizerComponent = puffin.element(`
     <div mousedown="$working" class="${
         puffin.style.css`
             &{
@@ -29,13 +30,11 @@ const Resizer = puffin.element(`
                 cursor:e-resize;
             }
         `
-    }" >
-
-    </div>
+    }"/>
 `,{
     events:{
         mounted(target){
-            target.id = ResizerID
+            target.id = resizeSelector
         }
     },
     methods:{
@@ -46,4 +45,4 @@ const Resizer = puffin.element(`
     }
 })
 
-export default Resizer
+export default resizerComponent

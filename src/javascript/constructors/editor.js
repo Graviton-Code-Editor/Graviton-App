@@ -72,10 +72,11 @@ function Editor({
             fontSize:StaticConfig.data.fontSize
         })
     })
+
     if(CursorPositionStatusBarItem.isHidden()){
         CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
     }
-    updateCursorPosition(Client,instance)
+
     RunningConfig.changed(function(data){
         if(data.focusedEditor == null){
             CursorPositionStatusBarItem.hide()
@@ -86,7 +87,8 @@ function Editor({
         updateCursorPosition(Client,instance)
         Client.do('doFocus',{instance})
     };
-
+    
+    updateCursorPosition(Client,instance)
     return Client
 }
 

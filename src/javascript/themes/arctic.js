@@ -61,7 +61,9 @@ const Arctic = {
         statusbarItemText:'black',
         statusbarItemHoveringText:'black',
         inputBackground:'transparent',
-        inputText:'black'
+        inputText:'black',
+        splashScreenText:'black',
+        splashScreenBackground:'white'
         
     }
     

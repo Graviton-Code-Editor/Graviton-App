@@ -12,7 +12,10 @@ StaticConfig.changed(function(){
     }
 })
 
-const ThemeProvider = new puffin.state({})
+const ThemeProvider = new puffin.state({
+    splashScreenText:'white',
+    splashScreenBackground:'#191919'
+})
 
 function applyTheme(state){
     ThemeProvider.data = ExtensionsRegistry.registry.data.colorsSchemes[state.data.theme]

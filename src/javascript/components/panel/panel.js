@@ -9,9 +9,7 @@ const PanelBody  = puffin.element(`
                 overflow:auto;
             }
         `
-    }">
-
-    </div>
+    }"/>
 `)
 
 export default PanelBody

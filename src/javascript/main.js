@@ -1,7 +1,7 @@
 //Renderer process
 import { puffin } from '@mkenzo_8/puffin'
 import TitleBar from './components/titlebar/titlebar'
-import BootAnimation from './components/bootanimation'
+import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
@@ -145,12 +145,12 @@ const App = puffin.element(`
         </div>
         <StatusBar/>
         <div id="windows"></div>
-        <BootAnimation/>
+        <SplashScreen/>
     </div>
 `,{
     components:{
         TitleBar,
-        BootAnimation,
+        SplashScreen,
         Resizer,
         StatusBar
     },

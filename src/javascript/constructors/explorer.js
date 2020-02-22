@@ -6,6 +6,8 @@ import parseDirectory from '../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
 
 function Explorer(folderPath,parent,level = 0){
+    const fs = requirePath('fs-extra')
+
     if(level == 0){
         const explorerContainer = puffin.element(`
             <Item isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
@@ -31,10 +33,8 @@ function Explorer(folderPath,parent,level = 0){
         puffin.render(explorerContainer,parent,{
             removeContent:true
         })
-
     }
     
-    const fs = requirePath('fs-extra')
     fs.readdir(folderPath).then(function(paths){
         const explorerComponent = puffin.element(`
             <div class="${puffin.style.css`

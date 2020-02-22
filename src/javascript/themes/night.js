@@ -61,7 +61,9 @@ const Night = {
         statusbarItemText:'white',
         statusbarItemHoveringText:'white',
         inputBackground:'transparent',
-        inputText:'white'
+        inputText:'white',
+        splashScreenText:'white',
+        splashScreenBackground:'#191919'
     }
 }
 

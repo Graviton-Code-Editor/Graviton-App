@@ -5,7 +5,7 @@ const fs = requirePath('fs-extra')
 const electronStore = requirePath('electron-store')
 const getAppDataPath = requirePath('appdata-path')
 
-const schema = {
+const defaultConfiguration = {
     config:{
         theme:'Arctic',
         language:'english',
@@ -16,29 +16,36 @@ const schema = {
 }
 
 function initConfiguration(){
-    const store = new electronStore();
-    console.log(store)
-    Object.keys(schema.config).map(function(key){
-        if(!store.has(`config.${key}`)){
-            store.set(`config.${key}`,schema.config[key])
+    const configurationStore = new electronStore();
+    console.log(configurationStore)
+
+    Object.keys(defaultConfiguration.config).map(function(key){
+        
+        if(!configurationStore.has(`config.${key}`)){
+
+            configurationStore.set(
+                `config.${key}`,
+                defaultConfiguration.config[key]
+            )
+
         }
     })
 
-    if(!fs.existsSync(schema.config.configPath)){
-        fs.mkdirSync(schema.config.configPath)
+    if(!fs.existsSync(defaultConfiguration.config.configPath)){
+        fs.mkdirSync(defaultConfiguration.config.configPath)
     }
-    if(!fs.existsSync(path.join(schema.config.configPath,'plugins'))){
-        fs.mkdirSync(path.join(schema.config.configPath,'plugins'))
+    if(!fs.existsSync(path.join(defaultConfiguration.config.configPath,'plugins'))){
+        fs.mkdirSync(path.join(defaultConfiguration.config.configPath,'plugins'))
     }
 
     return {
-        store:store
+        store:configurationStore
     }
 }
 
 function getConfiguration(){
     
-    const {store} = initConfiguration()
+    const { store } = initConfiguration()
 
     return {
         store:store,

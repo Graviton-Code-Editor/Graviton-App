@@ -60,14 +60,17 @@ function Dialog({
         methods:computedMethods
     })
 
-    
-    puffin.render(DialogComp,document.getElementById("windows"))
     return {
-        close:()=> close(DialogComp)
+        launch:()=> launchDialog(DialogComp),
+        close:()=> closeDialog(DialogComp)
     }
 }
 
-function close(DialogComp){
+function launchDialog(DialogComp){
+    puffin.render(DialogComp,document.getElementById("windows"))
+}
+
+function closeDialog(DialogComp){
     DialogComp.node.remove()
 }
 
