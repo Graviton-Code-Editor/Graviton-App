@@ -1,7 +1,7 @@
 import Dialog from '../../constructors/dialog'
 import GravitonPackage from '../../../../package.json'
 
-function AboutDialog(){
+function About(){
     const DialogInstance = new Dialog({
         title:'About',
         content:`Graviton v${GravitonPackage.version}`,
@@ -12,8 +12,8 @@ function AboutDialog(){
         ]
     })
 
-    DialogInstance.launch()
+    return DialogInstance
 }
 
 
-export default AboutDialog
+export default About

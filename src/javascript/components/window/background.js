@@ -1,4 +1,4 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 
 const WindowBackground = puffin.element(`
     <div click="$closeMe" keyup="$keyPresssed" class="${puffin.style.css`

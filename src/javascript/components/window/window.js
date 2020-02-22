@@ -1,4 +1,4 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 import ThemeProvider from '../../utils/themeprovider'
 
 const WindowBody = puffin.element(`

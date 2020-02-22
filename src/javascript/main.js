@@ -86,12 +86,12 @@ const App = puffin.element(`
             width:0;
             display:flex;
         }
-        #windows > div {
+        #windows > div.window {
             display:flex;
             align-items:center;
             justify-content:center;
         }
-        #windows > div > div {
+        #windows > div.window > div {
             flex:1;
         }
         

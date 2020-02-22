@@ -9,7 +9,7 @@ function Window({
 }){
     const randomID = Math.random()
     const WindowComponent = puffin.element(`
-        <div id="${randomID}" class="${puffin.style.css`
+        <div id="${randomID}" class="window ${puffin.style.css`
             &{
                 min-height:100%;
                 min-width:100%;

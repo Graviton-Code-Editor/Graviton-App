@@ -12,6 +12,7 @@ const StatusBarItemBody = puffin.element(`
             background:{{statusbarItemBackground}};
             color:{{statusbarItemText}};
             border:0px;
+            white-space:nowrap;
         }
         &:hover{
             background:{{statusbarItemHoveringBackground}};

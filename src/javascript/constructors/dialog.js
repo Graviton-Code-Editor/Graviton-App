@@ -12,7 +12,7 @@ function Dialog({
     const randomSelector = Math.random()
     const computedMethods = {...buttons.map(btn=>btn.action)}
     const DialogComp = puffin.element(`
-        <div id="${randomSelector}" class="${puffin.style.css`
+        <div id="${randomSelector}" class="window ${puffin.style.css`
             &{
                 min-height:100%;
                 min-width:100%;

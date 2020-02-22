@@ -1,14 +1,16 @@
 import Menu from "../constructors/menu";
-import SettingsPage from './windows/settings'
+import Settings from './windows/settings'
 import Welcome from "./windows/welcome";
 import { Panel, removePanel} from '../constructors/panel'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import Arctic from '../themes/arctic'
 import Night from '../themes/night'
 import RunningConfig from 'RunningConfig'
-import DialogAbout from './dialogs/about'
+import StaticConfig from 'StaticConfig'
+import About from './dialogs/about'
 import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
+import CommandPrompt from '../constructors/command.prompt'
 
 function init(){
     loadAutomatically()
@@ -29,7 +31,7 @@ function init(){
         list:[
             {
                 label:'Open Settings',
-                action:()=>SettingsPage().launch()
+                action:()=>Settings().launch()
             },
             {
                 label:'Open Welcome',
@@ -51,7 +53,7 @@ function init(){
         list:[
             {
                 label:'About',
-                action:DialogAbout
+                action:()=>About().launch()
             }
         ]
     })
@@ -78,6 +80,61 @@ function init(){
         { 
             shortcut: 'Ctrl+L', handler: event => {
                 removePanel()
+            }
+        },
+        { 
+            shortcut: 'Ctrl+P', handler: event => {
+                new CommandPrompt({
+                    name:'global',
+                    showInput:true,
+                    inputPlaceHolder:'Enter a command',
+                    options:[
+                        {
+                            label:'Open Settings'
+                        },{
+                            label:'Open Welcome'
+                        },{
+                            label:'Open About'
+                        },{
+                            label:'Set theme'
+                        }
+                    ],
+                    onSelected(res){
+                        switch(res.label){
+                            case 'Open Settings':
+                                Settings().launch()
+                            break;
+                            case 'Open Welcome':
+                                Welcome().launch()
+                            break;
+                            case 'Open About':
+                                About().launch()
+                            break;
+                            case 'Set theme':
+                                new CommandPrompt({
+                                    showInput:true,
+                                    inputPlaceHolder:'Enter a command',
+                                    options:(function(){
+                                        const list = []
+                                        const registry = ExtensionsRegistry.registry.data.list
+                                        Object.keys(registry).filter(function(name){
+                                            const extension = registry[name]
+                                            if(extension.type == "theme"){
+                                                list.push({
+                                                    label:extension.name
+                                                })
+                                            }
+                                        })
+                                        return list;
+                                    })(),
+                                    onSelected(res){
+                                        StaticConfig.data.theme = res.label
+                                    }
+                                })
+                            break;
+                        }
+                    }
+                })
             }
         }
     ]);

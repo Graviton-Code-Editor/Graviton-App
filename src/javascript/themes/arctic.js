@@ -66,7 +66,14 @@ const Arctic = {
         inputBackground:'transparent',
         inputText:'black',
         splashScreenText:'black',
-        splashScreenBackground:'white'
+        splashScreenBackground:'white',
+        commandPromptInputBackground:'white',
+        commandPromptInputText:'black',
+        commandPromptBackground:'rgb(238,238,238)',
+        commandPromptOptionBackground:'rgb(238,238,238)',
+        commandPromptOptionActiveBackground:'#0066FF',
+        commandPromptOptionText:'black',
+        commandPromptOptionActiveText:'white'
         
     }
     

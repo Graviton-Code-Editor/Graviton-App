@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200222 - 1 [2.0.19]
+- New: Added a command prompt (WIP)
+
 ### 200222 - 1 [2.0.18]
 - New: Search box in settings
 - Improved: code refactoring

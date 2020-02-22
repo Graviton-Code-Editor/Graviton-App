@@ -24,6 +24,7 @@ const Night = {
         contextmenuButtonText:'white',
         contextmenuButtonHoveringBackground:'rgb(255, 0, 72);',
         contextmenuButtonHoveringText:'white',
+        contextmenuDivider:'rgb(180,180,180)',
         mainpanelBackground:'#191919',
         tabsbarBackground:'#222222',
         tabBackground:'#222222',
@@ -57,7 +58,6 @@ const Night = {
         controlCloseButtonActiveFill:'black',
         editorDialogBackground:'#191919',
         editorDialogText:'white',
-        contextmenuDivider:'rgb(180,180,180)',
         statusbarBackground:'#191919',
         statusbarItemBackground:'transparent',
         statusbarItemHoveringBackground:'rgb(60,60,60)',
@@ -66,7 +66,14 @@ const Night = {
         inputBackground:'transparent',
         inputText:'white',
         splashScreenText:'white',
-        splashScreenBackground:'#191919'
+        splashScreenBackground:'#191919',
+        commandPromptInputBackground:'#191919',
+        commandPromptInputText:'white',
+        commandPromptBackground:'#333333',
+        commandPromptOptionBackground:'#333333',
+        commandPromptOptionActiveBackground:'rgb(255, 0, 72)',
+        commandPromptOptionText:'white',
+        commandPromptOptionActiveText:'white'
     }
 }
 
