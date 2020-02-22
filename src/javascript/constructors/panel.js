@@ -2,11 +2,12 @@ import PanelBody from '../components/panel/panel'
 import {puffin} from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ThemeProvider from 'ThemeProvider'
+import ContextMenu from './contextmenu'
 
 function Panel(){
     const randomSelector = Math.random()
     const PanelComp = puffin.element(`
-        <div id="${randomSelector}" click="$focusPanel" class="${
+        <div id="${randomSelector}" click="$focusPanel" contextmenu="$contextmenu" class="${
             puffin.style.css`
                 ${ThemeProvider}
                 &{
@@ -44,6 +45,20 @@ function Panel(){
         methods:{
             focusPanel(){
                 RunningConfig.data.focusedPanel = this
+            },
+            contextmenu(event){
+                new ContextMenu({
+                    list:[
+                        {
+                            label:'Close',
+                            action:()=>{
+                                removePanel(this)
+                            }
+                        }
+                    ],
+                    event,
+                    parent:this.parentElement
+                })
             }
         }
     })
@@ -93,11 +108,11 @@ function focusOtherPanel(currentPanel){
     
 }
 
-function removePanel(){
+function removePanel(panelToRemove = RunningConfig.data.focusedPanel){
     
-    if( checkIfThereAreTabsUnSaved(RunningConfig.data.focusedPanel) ){
+    if( checkIfThereAreTabsUnSaved(panelToRemove) ){
 
-        const { oldPanel } = focusOtherPanel(RunningConfig.data.focusedPanel)
+        const { oldPanel } = focusOtherPanel(panelToRemove)
         if( oldPanel != null ) oldPanel.remove()
 
     }

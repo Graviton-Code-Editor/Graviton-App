@@ -49,6 +49,7 @@ const Arctic = {
         radioBackgroundHovering:'#EFEFEF',
         radioCircleBackground:'white',
         radioCircleBorder:'#CFCFCF',
+        radioCircleBorderHovering:'#5D9DFC',
         windowBorder:'gray',
         fileNotSavedIndicator:'black',
         fileNotSavedIndicatorHovering:'#0066FF',

@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200222 - 1 [2.0.18]
+- New: Search box in settings
+- Improved: code refactoring
+- New: context menu for panels, so you can close them
+
 ### 200221 - 1 [2.0.17]
 - Fixed: opening projects from welcome page wasn't automatically closing the window
 - Improved: Dialogs with inputs styling

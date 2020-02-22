@@ -28,6 +28,7 @@ const App = puffin.element(`
             --puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
             --puffinRadioCircleBackground:{{radioCircleBackground}};
             --puffinRadioCircleBorder:{{radioCircleBorder}};
+            --puffinRadioCircleBorderHovering:{{radioCircleBorderHovering}};
             --editorDialogBackground:{{editorDialogBackground}};
             --editorDialogText:{{editorDialogText}};
         }

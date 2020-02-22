@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@mkenzo_8/puffin": "^0.3.9",
-    "@mkenzo_8/puffin-drac": "0.0.11",
+    "@mkenzo_8/puffin-drac": "0.0.12",
     "appdata-path": "^1.0.0",
     "codemirror": "^5.51.0",
     "electron-is-dev": "^1.1.0",
