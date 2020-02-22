@@ -11,7 +11,8 @@
     "start": " run-p watch:parcel watch:electron ",
     "watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
     "watch:electron": "electron . Graviton --no-sandbox",
-    "build": "npx electron-builder build",
+    "build": "npm run build:parcel && npm run build:electron",
+    "build:electron":"npx electron-builder build",
     "build:parcel": "parcel build src/index.html --target electron --bundle-node-modules --out-dir dist_parcel --public-url ./"
   },
   "staticFiles": {
