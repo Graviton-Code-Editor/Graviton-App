@@ -17,7 +17,6 @@ function Window({
                 top:50%;
                 left:50%;
                 transform:translate(-50%,-50%);
-
             }
         `}">
             <WindowBackground window="${randomID}"/>
@@ -35,7 +34,7 @@ function Window({
             mounted(){
                 window.addEventListener('keydown',(e)=>{
                     if(e.keyCode === 27){
-                        close(WindowComponent)
+                        closeWindow(WindowComponent)
                     }
                 })
             }
@@ -43,16 +42,16 @@ function Window({
     })
 
     return {
-        launch:()=> launch(WindowComponent),
-        close:()=> close(WindowComponent)
+        launch:()=> launchWindow(WindowComponent),
+        close:()=> closeWindow(WindowComponent)
     }
 }
 
-function launch(WindowComponent){
+function launchWindow(WindowComponent){
     puffin.render(WindowComponent,document.getElementById("windows"))
 }
 
-function close(WindowComponent){
+function closeWindow(WindowComponent){
     WindowComponent.node.remove()
 }
 

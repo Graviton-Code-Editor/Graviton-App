@@ -7,7 +7,6 @@ import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
 
 const fs = requirePath("fs-extra")
-import path from 'path'
 
 function Tab({
     title,

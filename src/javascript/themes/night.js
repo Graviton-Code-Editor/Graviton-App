@@ -40,6 +40,8 @@ const Night = {
         sidemenuButtonActiveBackground:'rgb(255, 0, 72)',
         sidemenuButtonText:'white',
         sidemenuButtonActiveText:'white',
+        sidemenuSearcherBackground:'#222222',
+        sidemenuSearcherText:'white',
         explorerItemText:'white',
         explorerItemArrowBackground:'white',
         cardBackground:'#191919',

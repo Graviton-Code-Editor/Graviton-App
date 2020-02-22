@@ -40,6 +40,8 @@ const Arctic = {
         sidemenuButtonActiveBackground:'#0066FF',
         sidemenuButtonText:'black',
         sidemenuButtonActiveText:'white',
+        sidemenuSearcherBackground:'white',
+        sidemenuSearcherText:'black',
         explorerItemText:'black',
         explorerItemArrowBackground:'#646464',
         cardBackground:'rgb(238,238,238)',

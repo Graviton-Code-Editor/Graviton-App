@@ -3,6 +3,7 @@ import Window from '../../constructors/window'
 import {Titles , RadioGroup, Text} from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
+import SideMenuSearcher from '../../components/window/side.menu.searcher'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import LanguageConfig from 'LanguageConfig'
 import Languages from '../../../../languages/*.json'
@@ -12,46 +13,54 @@ function Settings(){
         <SideMenu default="customization">
             <div>
                 <H1 lang-string="Settings"></H1>
+                <SideMenuSearcher/>
                 <label to="customization" lang-string="Customization"></label>
                 <label to="languages" lang-string="Languages"></label>
                 <label to="about" lang-string="About"></label>
             </div>
             <div>
+                <div href="searching"/>
                 <div href="customization">
-                    <H3 lang-string="Themes"></H3>
-                    <RadioGroup radioSelected="$selectedTheme">
-                        ${(function(){
-                            let content = "";
-                            const list = ExtensionsRegistry.registry.data.list
-                            Object.keys(list).map(function(extension){
-                                const pkg = ExtensionsRegistry.registry.data.list[extension]
-                                if(pkg.type == "theme"){
-                                    content +=`
-                                        <label name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">${extension}</label>
-                                    `
-                                }
-                            })
-                            return content
-                        })()}
-                    </RadioGroup>
+                    <div href="themes">
+                        <H3 lang-string="Themes"></H3>
+                        <RadioGroup radioSelected="$selectedTheme">
+                            ${(function(){
+                                let content = "";
+                                const list = ExtensionsRegistry.registry.data.list
+                                Object.keys(list).map(function(extension){
+                                    const pkg = ExtensionsRegistry.registry.data.list[extension]
+                                    if(pkg.type == "theme"){
+                                        content +=`
+                                            <label name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">${extension}</label>
+                                        `
+                                    }
+                                })
+                                return content
+                            })()}
+                        </RadioGroup>
+                    </div>   
                 </div>
                 <div href="languages">
-                    <H3 lang-string="Languages"></H3>
-                    <RadioGroup radioSelected="$selectedLanguage">
-                        ${(function(){
-                            let content = "";
-                            Object.keys(Languages).map(function(lang){
-                                content +=`
-                                    <label name="${lang}" checked="${StaticConfig.data.language == lang?'':'false'}">${lang}</label>
-                                `
-                            })
-                            return content
-                        })()}
-                    </RadioGroup>
+                    <div href="languages">
+                        <H3 lang-string="Languages"></H3>
+                        <RadioGroup radioSelected="$selectedLanguage">
+                            ${(function(){
+                                let content = "";
+                                Object.keys(Languages).map(function(lang){
+                                    content +=`
+                                        <label name="${lang}" checked="${StaticConfig.data.language == lang?'':'false'}">${lang}</label>
+                                    `
+                                })
+                                return content
+                            })()}
+                        </RadioGroup>
+                    </div>
                 </div>
                 <div href="about">
-                    <H3 lang-string="About"></H3>
-                    <Text>Graviton is a modern looking code editor.</Text>
+                    <div href="about">
+                        <H3 lang-string="About"></H3>
+                        <Text>Graviton is a modern looking code editor.</Text>
+                    </div>
                 </div>
             </div>
         </SideMenu>
@@ -61,7 +70,8 @@ function Settings(){
             H1:Titles.h1,
             H3:Titles.h3,
             SideMenu,
-            Text
+            Text,
+            SideMenuSearcher
         },
         methods:{
             selectedTheme(e){
