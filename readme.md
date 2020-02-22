@@ -128,7 +128,7 @@ And all people who helped me :)
 
 The current state is beta, check the releases page to download the latest version. 
 
-🧱Building 
+🏗Building 
 ---
 Do you want to build Graviton from source?
 
