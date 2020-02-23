@@ -10,5 +10,5 @@ const StaticConfig = new puffin.state(editorConf)
 StaticConfig.changed(function(data){
     cachedConfiguration.store.set('config',StaticConfig.data)
 })
-
+console.log(StaticConfig)
 export default StaticConfig

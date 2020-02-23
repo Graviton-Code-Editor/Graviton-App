@@ -11,7 +11,8 @@ const defaultConfiguration = {
         language:'english',
         fontSize:'16',
         log:[],
-        configPath:path.join(getAppDataPath(),'.graviton2')
+        configPath:path.join(getAppDataPath(),'.graviton2'),
+        recentWorkspaces:[]
     }
 }
 

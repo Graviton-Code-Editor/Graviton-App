@@ -14,6 +14,7 @@ const Night = {
         dropmenuButtonHoveringText:"white",
         dropmenuOptionText:"white",
         dropmenuOptionHoveringText:"white",
+        dropmenuDivider:'rgb(180,180,180)',
         controlButtonsFill:"white",
         controlButtonsHoverBackground:"rgb(60,60,60)",
         controlCloseButtonHoverBackground:"rgba(232,17,35)",

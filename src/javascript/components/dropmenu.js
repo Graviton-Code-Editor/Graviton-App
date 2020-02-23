@@ -62,8 +62,8 @@ const DropMenu = puffin.element(`
             left:0;
             white-space:pre-wrap;
             display:block;
-            font-size:14px;
-            padding:7px;
+            font-size:13px;
+            padding:7px 8px;
             min-width:100px;
             border-radius:5px;
             color:{{dropmenuOptionText}};
@@ -72,6 +72,14 @@ const DropMenu = puffin.element(`
         & > div a:hover{
             background:{{accentColor}};
             color:{{dropmenuOptionHoveringText}};
+        }
+        & span{
+            height:1.5px;
+            border-radius:25px;
+            width:95%;
+            display:block;
+            background:{{dropmenuDivider}};
+            margin:3px auto;
         }
     
     `} dropmenu">

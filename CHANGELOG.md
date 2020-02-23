@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200223 - 2 [2.0.21]
+- Improved: settings searcher
+- New: created a InputDialog constructor
+- New: workspaces
+
 ### 200223 - 1 [2.0.20]
 - Fixed: useless theme refreshing at startup
 - New: you can now add new options to the global command prompt

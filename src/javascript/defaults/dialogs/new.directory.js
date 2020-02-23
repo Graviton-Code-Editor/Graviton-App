@@ -1,8 +1,6 @@
-import Dialog from '../../constructors/dialog'
-import { puffin } from '@mkenzo_8/puffin'
+import InputDialog from '../../constructors/dialog.input'
 import requirePath from '../../utils/require'
 import path from 'path'
-import Input from '../../components/input'
 
 const fs = requirePath("fs-extra")
 
@@ -11,49 +9,19 @@ function newDirectoryDialog({
     parentDirectory,
     explorerContainer
 }){
-    const randomSelector = Math.random();
-    const component = puffin.element(`
-        <div>
-            <Input id="${randomSelector}" placeHolder="Enter a name" keyup="$onEnter"/>
-        </div>
-    `,{
-        methods:{
-            onEnter(e){
-                if(e.keyCode === 13){
-                    e.preventDefault()
-                    createDirectory(this,isFolder,parentDirectory,explorerContainer,DialogInstance)
-                    DialogInstance.close()
-                }
-            }
-        },
-        events:{
-            mounted(target){
-                target.children[0].focus()
-            }
-        },
-        components:{
-            Input
-        }
-    })
-
-    const DialogInstance = new Dialog({
+    new InputDialog({
         title:isFolder?'New Folder':'New file',
-        component,
-        buttons:[
-            {
-                label:'Continue',
-                action(){
-                    createDirectory(document.getElementById(randomSelector),isFolder,parentDirectory,explorerContainer)
-                }
-            }
-        ]
-    })
+        placeHolder:isFolder?'Folder':'File',
+    }).then(function(res){
+        console.log(res)
+        createDirectory(res,isFolder,parentDirectory,explorerContainer)
+    }).catch(function(){
 
-    DialogInstance.launch()
+    })
 }
 
-function createDirectory(target,isFolder,parentDirectory,explorerContainer){
-    const dir = path.join(parentDirectory,target.value)
+function createDirectory(value,isFolder,parentDirectory,explorerContainer){
+    const dir = path.join(parentDirectory,value)
     if (!fs.existsSync(dir)){
         if(isFolder){
             if (!fs.existsSync(dir)){

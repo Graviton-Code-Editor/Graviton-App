@@ -18,7 +18,7 @@ function moveToPage(page,buttons,pages){
 
 
 function moveToSection(search,sections,buttons,pages){
-    const result = sections.filter(section=>section.title == search)[0];
+    const result = sections.filter(section=>section.title.match(new RegExp(search,'i')))[0];
     if(result != null){
         moveToPage(result.page,buttons,pages)
         result.element.scrollIntoView( false )

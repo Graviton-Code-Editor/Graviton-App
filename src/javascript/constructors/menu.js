@@ -1,4 +1,4 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 import Dropmenu  from '../components/dropmenu'
 import requirePath from '../utils/require'
 
@@ -25,7 +25,12 @@ function Menu({
                 ${(function(){
                     let content = "";
                     list.map(function(option,index){
-                        content += `<a click="$${index}">${option.label}</a>`
+                        if(option.label !== undefined){
+                            content += `<a click="$${index}">${option.label}</a>`
+                        }else{
+                            content += `<span/>`
+                        }
+                        
                     })
                     return content;
                 })()}
@@ -50,11 +55,17 @@ function createTemplate(button,list){
     return new MenuItem({
         label:button,
         submenu:(function(){
-           return list.map((btn)=>{
-                return {
-                    label:btn.label,
-                    click:btn.action
-                }
+            return list.map((btn)=>{
+                if(btn.label !== undefined){
+                    return {
+                        label:btn.label,
+                        click:btn.action
+                    } 
+                }else{
+                    return {
+                        type: 'separator'
+                    }
+                } 
             })
         })()
     })

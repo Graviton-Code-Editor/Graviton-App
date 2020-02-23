@@ -11,6 +11,7 @@ import About from './dialogs/about'
 import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
 import CommandPrompt from '../constructors/command.prompt'
+import { openWorkspace, addFolderToWorkspace, saveWorkspace } from '../utils/filesystem'
 
 function init(){
     loadAutomatically()
@@ -23,6 +24,25 @@ function init(){
             },
             {
                 label:'Open Folder'
+            },
+            {},
+            {
+                label:'Open workspace',
+                action:()=>{
+                    openWorkspace()
+                }
+            },
+            {
+                label:'Add folder to workspace',
+                action:()=>{
+                    addFolderToWorkspace()
+                }
+            },
+            {
+                label:'Save workspace',
+                action:()=>{
+                    saveWorkspace()
+                }
             }
          ]
      })

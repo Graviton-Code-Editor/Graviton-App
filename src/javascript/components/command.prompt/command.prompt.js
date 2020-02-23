@@ -23,7 +23,7 @@ const CommandPromptBody = puffin.style.div`
         max-width:100%;
         display:block;
         white-space:prewrap;
-        font-size:14px;
+        font-size:13px;
     }
     & .container{
         flex:1;

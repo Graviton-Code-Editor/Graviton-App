@@ -14,6 +14,7 @@ const Arctic = {
         dropmenuButtonHoveringText:"white",
         dropmenuOptionText:"black",
         dropmenuOptionHoveringText:"white",
+        dropmenuDivider:'rgb(212,212,212)',
         controlButtonsFill:"black",
         controlButtonsHoverBackground:"rgb(212,212,212)",
         controlCloseButtonHoverBackground:"rgba(232,17,35)",
@@ -73,7 +74,7 @@ const Arctic = {
         commandPromptOptionBackground:'rgb(238,238,238)',
         commandPromptOptionActiveBackground:'#0066FF',
         commandPromptOptionText:'black',
-        commandPromptOptionActiveText:'white'
+        commandPromptOptionActiveText:'white',
         
     }
     

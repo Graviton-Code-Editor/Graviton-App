@@ -5,6 +5,11 @@ let Config = {
     focusedTab:null,
     focusedEditor:null,
     openedFolders:[],
+    workspacePath:{
+        exists:false,
+        path:null,
+        name:null
+    },
     globalCommandPrompt:[]
 }
 

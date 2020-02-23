@@ -2,60 +2,50 @@ import {puffin} from '@mkenzo_8/puffin'
 import Window from '../../constructors/window'
 import { Button } from '@mkenzo_8/puffin-drac'
 import {openFolder} from '../../utils/filesystem'
-import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
 import {Card , Titles} from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
-import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
 import { LanguageState } from 'LanguageConfig'
+import RunningConfig from 'RunningConfig'
+import { loadWorkspace, removeWorkspace } from '../../utils/filesystem'
+import CardsListContainer from '../../components/welcome/cards.list'
+import ContextMenu from '../../constructors/contextmenu'
 
-const listWrapper = puffin.style.css `
-
-    &{
-        overflow:auto;
-        padding-right:20px;
-        min-height:80%;
-        max-height:80%;
-        display:block;
-    }
-    & > div{
-        min-width:100%;
-        max-width:auto;
-        white-space:nowrap;
-        overflow:hidden;
-        padding:20px 25px;
-        display:block;
-    }
-    & > div *{
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
-        left:0;
-        margin:6px 2px;
-        display:block;
-    }
-
-`
 function Welcome(){
     const WelcomePage = puffin.element(`
         <SideMenu default="projects">
             <div>
                 <H1 lang-string="Welcome"></H1>
                 <label to="projects" lang-string="RecentProjects"></label>
+                <label to="workspaces">Recent workspaces</label>
                 <label to="create_project" lang-string="NewProject"></label>
             </div>
             <div>
-                <div href="projects" class="${puffin.style.css`
-                    &{
-                        display:flex;
-                        flex-direction:columns;
-                        flex:1;
-                        min-height:20%;
-                        max-height:50%;
-                    }
-                `}">
-                    <div class="${listWrapper}">
+                <CardsListContainer href="workspaces">
+                    <div>
+                        ${(function(){
+                            let content = "";
+                            StaticConfig.data.recentWorkspaces.map(({ name, path, folders =[] })=> {
+                                let listContent = "";
+                                folders.map(folder=>{
+                                    listContent += `<li>· ${parseDirectory(folder)}</li>`
+                                })
+                                content += `
+                                    <Card click="$openWorkspace" directory="${path}" contextmenu="$contextMenuWorkspace">
+                                        <b>${name}</b>
+                                        <ul>
+                                            ${listContent}
+                                        </ul>
+                                    </Card>
+                                `
+                            })
+                            return content;
+                        })()}
+                    </div>
+                </CardsListContainer>
+                <CardsListContainer href="projects">
+                    <div>
                         ${(function(){
                             let content = "";
                             StaticConfig.data.log.map(({ name, directory })=> {
@@ -81,10 +71,10 @@ function Welcome(){
                     `}">
                         <Button click="$openDirectoryFromWindow">Open a folder</Button>
                     </div>
-                </div>
-                <div href="create_project" class="${listWrapper}">
+                </CardsListContainer>
+                <CardsListContainer href="create_project">
                     <b>Empty.</b>
-                </div>
+                </CardsListContainer>
             </div>
         </SideMenu>
     `,{
@@ -95,16 +85,41 @@ function Welcome(){
             Button,
             Card,
             SideMenu,
-            H1:Titles.h1
+            H1:Titles.h1,
+            CardsListContainer
         },
         methods:{
+            contextMenuWorkspace(event){
+                new ContextMenu({
+                    list:[
+                        {
+                            label:"Remove from here",
+                            action:()=>{
+                                removeWorkspace(this.getAttribute("directory"))
+                                this.remove()
+                            }
+                        }
+                    ],
+                    event,
+                    parent:this
+                })
+                
+            },
+            openWorkspace(){
+                loadWorkspace(this.getAttribute("directory"))
+                WelcomeWindow.close()
+            },
             openDirectory(){
-                new Explorer(this.getAttribute("directory"),document.getElementById("sidepanel"))
+                RunningConfig.emit('addFolderToWorkspace',{
+                    path:this.getAttribute("directory")
+                })
                 WelcomeWindow.close()
             },
             openDirectoryFromWindow(){
                 openFolder().then(function(folder){
-                    new Explorer(folder,document.getElementById("sidepanel"))
+                    RunningConfig.emit('addFolderToWorkspace',{
+                        path:folder
+                    })
                     WelcomeWindow.close()
                 })
             }

@@ -23,6 +23,11 @@ const SideMenuSearcher = puffin.element(`
         writing(){
             filterBy(this.parentElement.parentElement,this.value)
         }
+    },
+    events:{
+        mounted(target){
+            target.focus()
+        }
     }
 })
 
