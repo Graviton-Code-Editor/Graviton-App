@@ -15,6 +15,7 @@ const SideMenuSearcher = puffin.element(`
             max-width:auto;
             display:block;
             white-space:prewrap;
+            margin-bottom:3px;
         }
    `}"/>
 `,{

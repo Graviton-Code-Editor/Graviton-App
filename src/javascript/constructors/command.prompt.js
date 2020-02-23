@@ -7,14 +7,16 @@ function CommandPrompt({
     showInput = true,
     inputPlaceHolder = "",
     options=[],
-    onSelected = ()=>{}
+    onSelected = ()=>{},
+    onScrolled = ()=>{}
 }){
     if(document.getElementById(name) != null) return;
 
     let CommandPromptState = new puffin.state({
         hoveredOption : null
     })
-
+    
+    const config = arguments[0]
     const CommandPromptComponent = puffin.element(`
             <CommandPromptBody id="${name}" keydown="$scrolling">
                 <WindowBackground window="${name}"/>
@@ -44,10 +46,10 @@ function CommandPrompt({
                     default:
                         renderOptions(
                             {
+                                ...config,
                                 options:filterOptions(this.value,{
                                     options
-                                }),
-                                onSelected
+                                }) 
                             },
                             {
                                 parent:this.parentElement.children[1],
@@ -65,13 +67,15 @@ function CommandPrompt({
                     case 38:
                         scrollOptions({
                             state:CommandPromptState,
-                            scrollingDirection:'up'
+                            scrollingDirection:'up',
+                            ...config
                         })
                         break;
                     case 40:
                         scrollOptions({
                             state:CommandPromptState,
-                            scrollingDirection:'down'
+                            scrollingDirection:'down',
+                            ...config
                         })
                         break;
                 }
@@ -85,7 +89,7 @@ function CommandPrompt({
                 renderOptions(
                     {
                         options,
-                        onSelected
+                        ...arguments[0]
                     },
                     {
                         parent:container,
@@ -112,7 +116,7 @@ function closeCommandPrompt(CommandPromptComponent){
     CommandPromptComponent.node.remove()
 }
 
-function scrollOptions({state,scrollingDirection}){
+function scrollOptions({state,scrollingDirection,onScrolled}){
     const hoveredOption = state.data.hoveredOption
     const allOptions = hoveredOption.parentElement.children
     const hoveredOptionPosition = (function(){
@@ -130,13 +134,16 @@ function scrollOptions({state,scrollingDirection}){
         state.data.hoveredOption = allOptions[hoveredOptionPosition+1]
     }
 
-    hoverOption(state.data.hoveredOption,allOptions)   
+    hoverOption(state.data.hoveredOption,allOptions,onScrolled)   
 }
 
-function hoverOption(hoveredOption,allOptions){
+function hoverOption(hoveredOption,allOptions,onScrolled=()=>{}){
     for(let option of allOptions){
         if(option == hoveredOption){
             option.classList.add('active');
+            onScrolled({
+                label:option.textContent
+            })
         }else{
             option.classList.remove('active');
         }
@@ -160,10 +167,12 @@ function renderOptions({
     component
 }){
     let content = ""
-    options.map(({label})=>{
+    let hoveredDefault = 0;
+    options.map(({selected,label},index)=>{
         content+=`
             <a click="$onClicked">${label}</a>
         `
+        if(selected) hoveredDefault = index
     })
 
     const optionsComp = puffin.element(`
@@ -181,7 +190,7 @@ function renderOptions({
         removeContent:true
     })
 
-    state.data.hoveredOption = parent.children[0].children[0]
+    state.data.hoveredOption = parent.children[0].children[hoveredDefault]
     hoverOption(state.data.hoveredOption,parent.children[0].children)
 }
 

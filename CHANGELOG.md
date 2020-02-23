@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200223 - 1 [2.0.20]
+- Fixed: useless theme refreshing at startup
+- New: you can now add new options to the global command prompt
+
 ### 200222 - 1 [2.0.19]
 - New: Added a command prompt (WIP)
 

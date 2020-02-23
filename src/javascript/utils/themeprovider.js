@@ -3,10 +3,10 @@ import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 
-let currentTheme;
+let currentTheme = StaticConfig.data.theme;
 
 StaticConfig.changed(function(){
-    if(currentTheme !=StaticConfig.data.theme){
+    if(currentTheme != StaticConfig.data.theme){
         applyTheme(StaticConfig)
         currentTheme = StaticConfig.data.theme
     }

@@ -8,7 +8,7 @@ import {Card , Titles} from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
 import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
-import LanguageConfig from 'LanguageConfig'
+import { LanguageState } from 'LanguageConfig'
 
 const listWrapper = puffin.style.css `
 
@@ -89,7 +89,7 @@ function Welcome(){
         </SideMenu>
     `,{
         addons:{
-            lang:puffin.lang(LanguageConfig)
+            lang:puffin.lang(LanguageState)
         },
         components:{
             Button,

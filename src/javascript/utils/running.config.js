@@ -1,10 +1,11 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 
 let Config = {
     focusedPanel:null,
     focusedTab:null,
     focusedEditor:null,
-    openedFolders:[]
+    openedFolders:[],
+    globalCommandPrompt:[]
 }
 
 const RunningConfig = new puffin.state(Config)

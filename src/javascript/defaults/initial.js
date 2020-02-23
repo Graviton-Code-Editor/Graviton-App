@@ -97,7 +97,8 @@ function init(){
                             label:'Open About'
                         },{
                             label:'Set theme'
-                        }
+                        },
+                        ...RunningConfig.data.globalCommandPrompt
                     ],
                     onSelected(res){
                         switch(res.label){
@@ -111,6 +112,8 @@ function init(){
                                 About().launch()
                             break;
                             case 'Set theme':
+                                const configuredTheme = StaticConfig.data.theme
+
                                 new CommandPrompt({
                                     showInput:true,
                                     inputPlaceHolder:'Enter a command',
@@ -121,13 +124,17 @@ function init(){
                                             const extension = registry[name]
                                             if(extension.type == "theme"){
                                                 list.push({
-                                                    label:extension.name
+                                                    label:name,
+                                                    selected:configuredTheme == name
                                                 })
                                             }
                                         })
                                         return list;
                                     })(),
                                     onSelected(res){
+                                        StaticConfig.data.theme = res.label
+                                    },
+                                    onScrolled(res){
                                         StaticConfig.data.theme = res.label
                                     }
                                 })

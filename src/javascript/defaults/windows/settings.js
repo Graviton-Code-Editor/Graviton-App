@@ -5,7 +5,7 @@ import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
 import ExtensionsRegistry from 'ExtensionsRegistry'
-import LanguageConfig from 'LanguageConfig'
+import { LanguageState, getTranslation } from 'LanguageConfig'
 import Languages from '../../../../languages/*.json'
 
 function Settings(){
@@ -88,7 +88,7 @@ function Settings(){
             }
         },
         addons:{
-            lang:puffin.lang(LanguageConfig)
+            lang:puffin.lang(LanguageState)
         }
     })
 

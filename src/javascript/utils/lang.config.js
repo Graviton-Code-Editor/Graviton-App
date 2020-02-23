@@ -2,13 +2,26 @@ import { puffin } from '@mkenzo_8/puffin'
 import Languages from '../../../languages/*.json'
 import StaticConfig from 'StaticConfig'
 
-const LanguageConfig = new puffin.state(Languages[StaticConfig.data.language].strings)
+const LanguageState = new puffin.state(Languages[StaticConfig.data.language].strings)
 
 StaticConfig.changed(function(){
-    Object.keys(LanguageConfig.data).map(function(key){
-        LanguageConfig.data[key] = Languages[StaticConfig.data.language].strings[key]
+    Object.keys(LanguageState.data).map(function(key){
+        LanguageState.data[key] = Languages[StaticConfig.data.language].strings[key]
     })
-    LanguageConfig.triggerChange()
+    LanguageState.triggerChange()
 })
 
-export default LanguageConfig
+function getTranslation(string){
+    if(LanguageState.data[string]) {
+        return LanguageState.data[string]
+    }else if(Languages["english"].strings[string]){
+        return Languages["english"].strings[string]
+    }else{
+        return string
+    }
+}
+
+export {
+    LanguageState,
+    getTranslation
+}
