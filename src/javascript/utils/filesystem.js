@@ -59,78 +59,50 @@ function openFolder(){
     })
 }
 
-function openWorkspace(){
+function openWorkspace(state){
     selectFileDialog().then(function(res){
-        loadWorkspace(res)
+        loadWorkspace(state,res)
     }).catch(function(err){
         console.log(err)
     })
 }
 
-function loadWorkspace(path){
+function loadWorkspace(state,path){
     const workspaceConfig = require(path)
-    RunningConfig.data.workspacePath = {
+    state.data.workspacePath = {
         exists:true,
         path:path,
         name:workspaceConfig.name,
         folders:workspaceConfig.folders
     }
     workspaceConfig.folders.map(folder=>{
-        RunningConfig.emit('addFolderToWorkspace',{
+        state.emit('addFolderToWorkspace',{
             path:folder,
             replaceOldExplorer:false
         })
     })
-    addRecentWorkspace(path)
+    addRecentWorkspace(StaticConfig,path)
     return 
 }
 
-function addRecentWorkspace(path){
+function addRecentWorkspace(state,path){
 
-    const existingWorkspace = StaticConfig.data.recentWorkspaces.filter(workspace=>{
+    const existingWorkspace = state.data.recentWorkspaces.filter(workspace=>{
         return workspace.path == path
     })[0]
 
     if(existingWorkspace == null){
-        StaticConfig.data.recentWorkspaces.push({
+        state.data.recentWorkspaces.push({
             name:RunningConfig.data.workspacePath.name,
             path:RunningConfig.data.workspacePath.path,
             folders:RunningConfig.data.workspacePath.folders
         })
-        StaticConfig.triggerChange()
+        state.triggerChange()
     }
 }
 
 function isWorkspaceLoaded(){
     return  RunningConfig.data.exists
-}
-
-function saveWorkspace(){
-    function saveWorkspaceConfig(){
-        fs.writeFile(RunningConfig.data.workspacePath.path,stringifyWorkspaceConfig(),'UTF-8', (err, data) => {
-            if (err) throw err;
-        });
-    }
-    if(RunningConfig.data.workspacePath.exists){
-        saveWorkspaceConfig()
-    }else{
-        selectFolderDialog().then(function(res){
-            new InputDialog({
-                title:'Name your workspace',
-                placeHolder:'My workspace'
-            }).then(function(name){
-                const resultWorkspace = path.join(res,'gv-workspace.json')
-                RunningConfig.data.workspacePath = {
-                    exists:true,
-                    path:resultWorkspace,
-                    folders:RunningConfig.data.openedFolders.map(folder=>folder.absolutePath),
-                    name
-                }
-                addRecentWorkspace(resultWorkspace)
-                saveWorkspaceConfig()
-            })   
-        })
-    }
 }
 
 function stringifyWorkspaceConfig(){
@@ -163,11 +135,38 @@ function removeWorkspace(workspacePath){
     StaticConfig.triggerChange()
 }
 
+StaticConfig.on('saveCurrentWorkspace',function(){
+    function saveWorkspaceConfig(){
+        fs.writeFile(RunningConfig.data.workspacePath.path,stringifyWorkspaceConfig(),'UTF-8', (err, data) => {
+            if (err) throw err;
+        });
+    }
+    if(RunningConfig.data.workspacePath.exists){
+        saveWorkspaceConfig()
+    }else{
+        selectFolderDialog().then(function(res){
+            new InputDialog({
+                title:'Name your workspace',
+                placeHolder:'My workspace'
+            }).then(function(name){
+                const resultWorkspace = path.join(res,'gv-workspace.json')
+                RunningConfig.data.workspacePath = {
+                    exists:true,
+                    path:resultWorkspace,
+                    folders:RunningConfig.data.openedFolders.map(folder=>folder.absolutePath),
+                    name
+                }
+                addRecentWorkspace(StaticConfig,resultWorkspace)
+                saveWorkspaceConfig()
+            })   
+        })
+    }
+})
+
 export { 
     openFolder,
     openWorkspace,
     addFolderToWorkspace,
-    saveWorkspace,
     isWorkspaceLoaded,
     loadWorkspace,
     removeWorkspace

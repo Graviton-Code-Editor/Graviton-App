@@ -1,16 +1,16 @@
-import {puffin} from '@mkenzo_8/puffin'
-import Window from '../../constructors/window'
+import { puffin } from '@mkenzo_8/puffin'
+import { loadWorkspace, removeWorkspace } from '../../utils/filesystem'
 import { Button } from '@mkenzo_8/puffin-drac'
-import {openFolder} from '../../utils/filesystem'
-import StaticConfig from 'StaticConfig'
-import {Card , Titles} from '@mkenzo_8/puffin-drac'
+import { openFolder } from '../../utils/filesystem'
+import { LanguageState } from 'LanguageConfig'
+import { Card , Titles } from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
 import parseDirectory from '../../utils/directory.parser'
-import { LanguageState } from 'LanguageConfig'
 import RunningConfig from 'RunningConfig'
-import { loadWorkspace, removeWorkspace } from '../../utils/filesystem'
+import StaticConfig from 'StaticConfig'
 import CardsListContainer from '../../components/welcome/cards.list'
 import ContextMenu from '../../constructors/contextmenu'
+import Window from '../../constructors/window'
 
 function Welcome(){
     const WelcomePage = puffin.element(`
@@ -106,7 +106,7 @@ function Welcome(){
                 
             },
             openWorkspace(){
-                loadWorkspace(this.getAttribute("directory"))
+                loadWorkspace(RunningConfig,this.getAttribute("directory"))
                 WelcomeWindow.close()
             },
             openDirectory(){

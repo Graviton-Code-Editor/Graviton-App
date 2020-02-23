@@ -1,10 +1,12 @@
 import { puffin } from '@mkenzo_8/puffin'
+import { saveWorkspace, isWorkspaceLoaded } from '../utils/filesystem'
 import requirePath from '../utils/require'
 import Item from '../components/explorer/item'
 import path from 'path'
 import parseDirectory from '../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
-import { saveWorkspace, isWorkspaceLoaded } from '../utils/filesystem'
+
+const fs = requirePath('fs-extra')
 
 RunningConfig.on('addFolderToWorkspace',function({
     path,
@@ -19,7 +21,6 @@ RunningConfig.on('addFolderToWorkspace',function({
 });
 
 function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
-    const fs = requirePath('fs-extra')
     if(level == 0){
         const explorerContainer = puffin.element(`
             <Item isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>

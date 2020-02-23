@@ -1,17 +1,18 @@
+import { openWorkspace, addFolderToWorkspace } from '../utils/filesystem'
+import { Panel, removePanel } from '../constructors/panel'
+import { Shortcuts } from 'shortcuts'
+import { loadAutomatically } from '../utils/extension.loader'
 import Menu from "../constructors/menu";
 import Settings from './windows/settings'
 import Welcome from "./windows/welcome";
-import { Panel, removePanel} from '../constructors/panel'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import Arctic from '../themes/arctic'
 import Night from '../themes/night'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
-import { Shortcuts } from 'shortcuts'
-import { loadAutomatically } from '../utils/extension.loader'
 import CommandPrompt from '../constructors/command.prompt'
-import { openWorkspace, addFolderToWorkspace, saveWorkspace } from '../utils/filesystem'
+
 
 function init(){
     loadAutomatically()
@@ -29,7 +30,7 @@ function init(){
             {
                 label:'Open workspace',
                 action:()=>{
-                    openWorkspace()
+                    openWorkspace(RunningConfig)
                 }
             },
             {
@@ -41,7 +42,7 @@ function init(){
             {
                 label:'Save workspace',
                 action:()=>{
-                    saveWorkspace()
+                    StaticConfig.emit('saveCurrentWorkspace')
                 }
             }
          ]

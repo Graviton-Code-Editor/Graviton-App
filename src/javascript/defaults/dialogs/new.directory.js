@@ -13,7 +13,6 @@ function newDirectoryDialog({
         title:isFolder?'New Folder':'New file',
         placeHolder:isFolder?'Folder':'File',
     }).then(function(res){
-        console.log(res)
         createDirectory(res,isFolder,parentDirectory,explorerContainer)
     }).catch(function(){
 
