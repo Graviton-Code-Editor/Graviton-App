@@ -93,6 +93,7 @@ function Settings(){
     })
 
     return new Window({
+        title:'settings',
         component:SettingsPage
     })
 }

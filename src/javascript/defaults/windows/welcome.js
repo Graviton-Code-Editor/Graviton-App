@@ -127,6 +127,7 @@ function Welcome(){
     })
 
     const WelcomeWindow = new Window({
+        title:'welcome',
         component:WelcomePage,
         height:'400px',
         width:'600px'
