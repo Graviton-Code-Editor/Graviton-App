@@ -23,7 +23,7 @@ const TabBody  = puffin.element(`
             }
             & p{
                 margin:0;
-                font-size:14px;
+                font-size:13px;
                 height:17px;
                 position:relative;
                 max-width:100px;

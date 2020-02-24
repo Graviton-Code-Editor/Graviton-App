@@ -4,15 +4,14 @@ let Config = {
     focusedPanel:null,
     focusedTab:null,
     focusedEditor:null,
-    openedFolders:[],
-    workspacePath:{
-        exists:false,
-        path:null,
-        name:null
+    workspacePath:null,
+    workspaceConfig:{
+        name:null,
+        folders:[],
     },
     globalCommandPrompt:[]
 }
 
 const RunningConfig = new puffin.state(Config)
-
+console.log(RunningConfig)
 export default RunningConfig

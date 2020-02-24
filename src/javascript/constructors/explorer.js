@@ -1,5 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
-import { saveWorkspace, isWorkspaceLoaded } from '../utils/filesystem'
+import { isWorkspaceLoaded, updateWorkspaceByPath } from '../utils/filesystem'
 import requirePath from '../utils/require'
 import Item from '../components/explorer/item'
 import path from 'path'
@@ -7,18 +7,6 @@ import parseDirectory from '../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
 
 const fs = requirePath('fs-extra')
-
-RunningConfig.on('addFolderToWorkspace',function({
-    path,
-    replaceOldExplorer = true
-}){
-    RunningConfig.data.openedFolders.push({
-        absolutePath:path,
-        folderName:parseDirectory(path)
-    })
-    new Explorer(path,document.getElementById("sidepanel"),0,replaceOldExplorer)
-    if( isWorkspaceLoaded() ) saveWorkspace()
-});
 
 function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
     if(level == 0){
@@ -37,12 +25,10 @@ function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
         if(replaceOldExplorer && parent.children[0] != null){
 
             for( let otherExplorer of parent.children){
-                const index = RunningConfig.data.openedFolders.filter(({absolutePath,folderName},i)=>{
-                    if(absolutePath == otherExplorer.getAttribute("fullpath") && 
-                    folderName == parseDirectory(otherExplorer.getAttribute("fullpath"))) return i
-                })[0]
 
-                RunningConfig.data.openedFolders.splice(index,1) //Remove old opened folder from opened folders
+                RunningConfig.emit('removeFolderFromRunningWorkspace',{
+                    folderPath:otherExplorer.getAttribute("fullpath")
+                })
             }
            
         }

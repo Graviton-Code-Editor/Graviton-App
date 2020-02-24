@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200224 - 1 [2.0.22]
+- Improved: increase editor line height for better readbility
+- New: you can now rename your workspaces
+- Improved: rewritten all workspaces code ( more stable, but still WIP)
+
 ### 200223 - 2 [2.0.21]
 - Improved: settings searcher
 - New: created a InputDialog constructor

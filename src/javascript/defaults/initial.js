@@ -30,19 +30,21 @@ function init(){
             {
                 label:'Open workspace',
                 action:()=>{
-                    openWorkspace(RunningConfig)
+                    RunningConfig.emit('openWorkspaceDialog')
                 }
             },
             {
                 label:'Add folder to workspace',
                 action:()=>{
-                    addFolderToWorkspace()
+                    RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
+                        replaceOldExplorer:false
+                    })
                 }
             },
             {
                 label:'Save workspace',
                 action:()=>{
-                    StaticConfig.emit('saveCurrentWorkspace')
+                    RunningConfig.emit('saveCurrentWorkspace')
                 }
             }
          ]

@@ -20,7 +20,7 @@ const CardsListContainer = puffin.style.div`
         max-width:auto;
         white-space:nowrap;
         overflow:hidden;
-        padding:20px 25px;
+        padding:10px 25px;
         display:block;
     }
     & > div > div *{
@@ -28,8 +28,9 @@ const CardsListContainer = puffin.style.div`
         text-overflow:ellipsis;
         white-space:nowrap;
         left:0;
-        margin:6px 2px;
+        margin:10px 2px;
         display:block;
+        font-size:14px;
     }
 `
 

@@ -34,12 +34,14 @@
 		opacity: 1;
 	}
 }
+
 .CodeMirror {
 	color: black;
 	direction: ltr;
 	position: relative;
 	overflow: hidden;
 	z-index:0;
+	line-height:1.6em;
 	pre {
 		padding: 0 4px;
 		-moz-border-radius: 0;

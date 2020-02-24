@@ -1,5 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
-import { loadWorkspace, removeWorkspace } from '../../utils/filesystem'
+import { getWorkspaceConfig } from '../../utils/filesystem'
 import { Button } from '@mkenzo_8/puffin-drac'
 import { openFolder } from '../../utils/filesystem'
 import { LanguageState } from 'LanguageConfig'
@@ -26,13 +26,16 @@ function Welcome(){
                     <div>
                         ${(function(){
                             let content = "";
-                            StaticConfig.data.recentWorkspaces.map(({ name, path, folders =[] })=> {
+                            StaticConfig.data.recentWorkspaces.map((workspacePath)=> {
+                                const { name, folders = [] } = getWorkspaceConfig(workspacePath)
                                 let listContent = "";
-                                folders.map(folder=>{
-                                    listContent += `<li>· ${parseDirectory(folder)}</li>`
+
+                                folders.map(({name,path})=>{
+                                    listContent += `<li>· ${parseDirectory(name)}</li>`
                                 })
+
                                 content += `
-                                    <Card click="$openWorkspace" directory="${path}" contextmenu="$contextMenuWorkspace">
+                                    <Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
                                         <b>${name}</b>
                                         <ul>
                                             ${listContent}
@@ -50,7 +53,7 @@ function Welcome(){
                             let content = "";
                             StaticConfig.data.log.map(({ name, directory })=> {
                             
-                                let nameFolder = parseDirectory(directory)
+                                const nameFolder = parseDirectory(directory)
 
                                 content += `
                                     <Card click="$openDirectory" directory="${directory}">
@@ -93,9 +96,22 @@ function Welcome(){
                 new ContextMenu({
                     list:[
                         {
-                            label:"Remove from here",
+                            label:'Rename',
                             action:()=>{
-                                removeWorkspace(this.getAttribute("directory"))
+                                RunningConfig.emit('renameWorkspaceDialog',{
+                                    path:this.getAttribute("directory"),
+                                    onFinished:(newName)=>{
+                                        this.children[0].textContent = newName
+                                    }
+                                }) 
+                            }
+                        },
+                        {
+                            label:'Remove from here',
+                            action:()=>{
+                                RunningConfig.emit('removeWorkspaceFromLog',{
+                                    path:this.getAttribute("directory")
+                                })
                                 this.remove()
                             }
                         }
@@ -106,12 +122,15 @@ function Welcome(){
                 
             },
             openWorkspace(){
-                loadWorkspace(RunningConfig,this.getAttribute("directory"))
+                RunningConfig.emit('setWorkspace',{
+                    path:this.getAttribute("directory")
+                })
                 WelcomeWindow.close()
             },
             openDirectory(){
-                RunningConfig.emit('addFolderToWorkspace',{
-                    path:this.getAttribute("directory")
+                RunningConfig.emit('addFolderToRunningWorkspace',{
+                    folderPath:this.getAttribute("directory"),
+                    replaceOldExplorer:true
                 })
                 WelcomeWindow.close()
             },

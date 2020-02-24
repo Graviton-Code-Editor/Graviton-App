@@ -57,6 +57,7 @@ const SideMenu = puffin.element(`
             background:{{sidemenuButtonBackground}};
             color:{{sidemenuButtonText}};
             margin:2px 0px;
+            font-size:13px;
         }
         & > div:nth-child(1) > label:hover:not(.active) {
             background:{{sidemenuButtonHoverBackground}};

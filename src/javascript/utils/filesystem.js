@@ -59,71 +59,127 @@ function openFolder(){
     })
 }
 
-function openWorkspace(state){
-    selectFileDialog().then(function(res){
-        loadWorkspace(state,res)
+function getWorkspaceConfig( path ){
+    return require(path)
+}
+
+RunningConfig.on('addFolderToRunningWorkspace',function({
+    folderPath,
+    replaceOldExplorer = false
+}){
+    new Explorer(folderPath,document.getElementById("sidepanel"),0,replaceOldExplorer)
+    RunningConfig.data.workspaceConfig.folders.push({
+        name:parseDirectory(folderPath),
+        path:folderPath
+    })
+    
+    if(RunningConfig.data.workspacePath != null) {
+        RunningConfig.emit('saveCurrentWorkspace')
+    }
+});
+
+RunningConfig.on('addFolderToRunningWorkspaceDialog',function({
+    replaceOldExplorer = false
+}){
+    selectFolderDialog().then(function(folderPath){
+        RunningConfig.emit('addFolderToRunningWorkspace',{
+            folderPath,
+            replaceOldExplorer
+        })
+    }).catch(err => {
+        console.log(err)
+    });
+})
+
+RunningConfig.on('removeFolderFromRunningWorkspace',function({
+    folderPath
+}){
+    RunningConfig.data.workspaceConfig.folders.map(({path},index)=>{
+        if( path == folderPath ){
+            RunningConfig.data.workspaceConfig.folders.splice(index,1)
+        }
+    })
+});
+
+RunningConfig.on('setWorkspace',({ path })=>{
+    const workspace = getWorkspaceConfig(path)
+
+    RunningConfig.data.workspaceConfig = {
+        name: workspace.name,
+        folders:[]
+    }
+    RunningConfig.data.workspacePath = path
+    document.getElementById('sidepanel').innerHTML = ""
+
+    workspace.folders.map(function(folder){
+
+        RunningConfig.emit('addFolderToRunningWorkspace',{
+            folderPath:folder.path
+        })
+    })
+})
+
+RunningConfig.on('openWorkspaceDialog',()=>{
+    selectFileDialog().then(function(path){
+        RunningConfig.emit('addLogWorkspace',{path})
+        RunningConfig.emit('setWorkspace',{path})
     }).catch(function(err){
         console.log(err)
     })
-}
+})
 
-function loadWorkspace(state,path){
-    const workspaceConfig = require(path)
-    state.data.workspacePath = {
-        exists:true,
-        path:path,
-        name:workspaceConfig.name,
-        folders:workspaceConfig.folders
-    }
-    workspaceConfig.folders.map(folder=>{
-        state.emit('addFolderToWorkspace',{
-            path:folder,
-            replaceOldExplorer:false
-        })
+RunningConfig.on('addLogWorkspace',({ path })=>{
+
+    let noMatches = true;
+    StaticConfig.data.recentWorkspaces.map((workspace)=>{
+        if(workspace == path) return noMatches = false
     })
-    addRecentWorkspace(StaticConfig,path)
-    return 
-}
-
-function addRecentWorkspace(state,path){
-
-    const existingWorkspace = state.data.recentWorkspaces.filter(workspace=>{
-        return workspace.path == path
-    })[0]
-
-    if(existingWorkspace == null){
-        state.data.recentWorkspaces.push({
-            name:RunningConfig.data.workspacePath.name,
-            path:RunningConfig.data.workspacePath.path,
-            folders:RunningConfig.data.workspacePath.folders
-        })
-        state.triggerChange()
+    if(noMatches){
+        StaticConfig.data.recentWorkspaces.push(path)
+        StaticConfig.triggerChange()
     }
-}
+})
 
-function isWorkspaceLoaded(){
-    return  RunningConfig.data.exists
-}
-
-function stringifyWorkspaceConfig(){
-    return JSON.stringify({
-        name:RunningConfig.data.workspacePath.name,
-        folders:RunningConfig.data.openedFolders.map(({absolutePath})=>absolutePath)
-    })
-}
-
-function addFolderToWorkspace(){
-    selectFolderDialog().then(function(res){
-        RunningConfig.emit('addFolderToWorkspace',{
-            path:res,
-            replaceOldExplorer:false
-        })
-    }).catch(err => {
-        reject(err)
+function saveConfiguration(path,config){
+    fs.writeFile(path,JSON.stringify(config),'UTF-8', (err, data) => {
+        if (err) throw err;
+        StaticConfig.triggerChange()
     });
 }
 
-function removeWorkspace(workspacePath){
+RunningConfig.on('saveCurrentWorkspace',function(){
+    if(RunningConfig.data.workspacePath != null){
+
+        saveConfiguration(
+            RunningConfig.data.workspacePath,
+            RunningConfig.data.workspaceConfig
+        )
+
+    }else{
+        console.log("now")
+        selectFolderDialog().then(function(res){
+            new InputDialog({
+                title:'Name your workspace',
+                placeHolder:'My workspace'
+            }).then(function(name){
+                const resultWorkspace = path.join(res,'gv-workspace.json')
+
+                RunningConfig.data.workspacePath = resultWorkspace
+
+                RunningConfig.data.workspaceConfig.name = name
+
+                saveConfiguration(
+                    RunningConfig.data.workspacePath,
+                    RunningConfig.data.workspaceConfig
+                )
+
+                RunningConfig.emit('addLogWorkspace',{ path: resultWorkspace})
+            })   
+        })
+    }
+})
+
+RunningConfig.on('removeWorkspaceFromLog',({ path:workspacePath })=>{
     const index = (function(){
         let index = 0;
         StaticConfig.data.recentWorkspaces.forEach(({path},i)=>{
@@ -133,41 +189,37 @@ function removeWorkspace(workspacePath){
     })()
     StaticConfig.data.recentWorkspaces.splice(index,1)
     StaticConfig.triggerChange()
-}
+})
 
-StaticConfig.on('saveCurrentWorkspace',function(){
-    function saveWorkspaceConfig(){
-        fs.writeFile(RunningConfig.data.workspacePath.path,stringifyWorkspaceConfig(),'UTF-8', (err, data) => {
-            if (err) throw err;
-        });
-    }
-    if(RunningConfig.data.workspacePath.exists){
-        saveWorkspaceConfig()
-    }else{
-        selectFolderDialog().then(function(res){
-            new InputDialog({
-                title:'Name your workspace',
-                placeHolder:'My workspace'
-            }).then(function(name){
-                const resultWorkspace = path.join(res,'gv-workspace.json')
-                RunningConfig.data.workspacePath = {
-                    exists:true,
-                    path:resultWorkspace,
-                    folders:RunningConfig.data.openedFolders.map(folder=>folder.absolutePath),
-                    name
-                }
-                addRecentWorkspace(StaticConfig,resultWorkspace)
-                saveWorkspaceConfig()
-            })   
+RunningConfig.on('renameWorkspace',({ path:workspacePath,name="" })=>{
+    const workspaceConfig = getWorkspaceConfig(workspacePath)
+
+    workspaceConfig.name = name
+   
+    saveConfiguration(
+        workspacePath,
+        workspaceConfig
+    )
+});
+
+RunningConfig.on('renameWorkspaceDialog',({ path:workspacePath, onFinished=()=>{} })=>{
+    new InputDialog({
+        title:'Rename your workspace',
+        placeHolder:'My other workspace'
+    }).then(function(name){
+
+        RunningConfig.emit('renameWorkspace',{
+            path:workspacePath,
+            name
         })
-    }
+
+        onFinished(name)
+    }).catch(function(err){
+
+    })
 })
 
 export { 
-    openFolder,
-    openWorkspace,
-    addFolderToWorkspace,
-    isWorkspaceLoaded,
-    loadWorkspace,
-    removeWorkspace
+    getWorkspaceConfig,
+    openFolder
 }
