@@ -136,9 +136,11 @@ function Welcome( { defaultPage = "projects" } = {  }){
                 WelcomeWindow.close()
             },
             openDirectoryFromWindow(){
-                openFolder().then(function(folder){
-                    RunningConfig.emit('addFolderToWorkspace',{
-                        path:folder
+                openFolder().then(function(folderPath){
+                    RunningConfig.emit('addFolderToRunningWorkspace',{
+                        folderPath,
+                        replaceOldExplorer:true,
+                        workspacePath:null
                     })
                     WelcomeWindow.close()
                 })
