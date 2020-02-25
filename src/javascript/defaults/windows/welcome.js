@@ -12,9 +12,9 @@ import CardsListContainer from '../../components/welcome/cards.list'
 import ContextMenu from '../../constructors/contextmenu'
 import Window from '../../constructors/window'
 
-function Welcome(){
+function Welcome( { defaultPage = "projects" } = {  }){
     const WelcomePage = puffin.element(`
-        <SideMenu default="projects">
+        <SideMenu default="${defaultPage}">
             <div>
                 <H1 lang-string="Welcome"></H1>
                 <label to="projects" lang-string="RecentProjects"></label>

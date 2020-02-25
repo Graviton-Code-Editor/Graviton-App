@@ -115,7 +115,9 @@ function init(){
                         {
                             label:'Open Settings'
                         },{
-                            label:'Open Welcome'
+                            label:'Open Projects'
+                        },{
+                            label:'Open Workspaces'
                         },{
                             label:'Open About'
                         },{
@@ -128,8 +130,13 @@ function init(){
                             case 'Open Settings':
                                 Settings().launch()
                             break;
-                            case 'Open Welcome':
+                            case 'Open Projects':
                                 Welcome().launch()
+                            break;
+                            case 'Open Workspaces':
+                                Welcome({
+                                    defaultPage : 'workspaces'
+                                }).launch()
                             break;
                             case 'Open About':
                                 About().launch()
