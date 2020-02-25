@@ -130,7 +130,8 @@ function Welcome(){
             openDirectory(){
                 RunningConfig.emit('addFolderToRunningWorkspace',{
                     folderPath:this.getAttribute("directory"),
-                    replaceOldExplorer:true
+                    replaceOldExplorer:true,
+                    workspacePath:null
                 })
                 WelcomeWindow.close()
             },

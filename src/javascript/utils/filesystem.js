@@ -65,16 +65,20 @@ function getWorkspaceConfig( path ){
 
 RunningConfig.on('addFolderToRunningWorkspace',function({
     folderPath,
-    replaceOldExplorer = false
+    replaceOldExplorer = false,
+    workspacePath = RunningConfig.data.workspacePath
 }){
     new Explorer(folderPath,document.getElementById("sidepanel"),0,replaceOldExplorer)
+
     RunningConfig.data.workspaceConfig.folders.push({
         name:parseDirectory(folderPath),
         path:folderPath
     })
     
-    if(RunningConfig.data.workspacePath != null) {
+    if(workspacePath != null) {
         RunningConfig.emit('saveCurrentWorkspace')
+    }else{
+        RunningConfig.data.workspacePath = null
     }
 });
 
@@ -84,7 +88,8 @@ RunningConfig.on('addFolderToRunningWorkspaceDialog',function({
     selectFolderDialog().then(function(folderPath){
         RunningConfig.emit('addFolderToRunningWorkspace',{
             folderPath,
-            replaceOldExplorer
+            replaceOldExplorer,
+            workspacePath : RunningConfig.data.workspacePath
         })
     }).catch(err => {
         console.log(err)
@@ -141,7 +146,7 @@ RunningConfig.on('addLogWorkspace',({ path })=>{
 })
 
 function saveConfiguration(path,config){
-    fs.writeFile(path,JSON.stringify(config),'UTF-8', (err, data) => {
+    fs.writeFile(path,JSON.stringify(config,2),'UTF-8', (err, data) => {
         if (err) throw err;
         StaticConfig.triggerChange()
     });
@@ -156,7 +161,6 @@ RunningConfig.on('saveCurrentWorkspace',function(){
         )
 
     }else{
-        console.log("now")
         selectFolderDialog().then(function(res){
             new InputDialog({
                 title:'Name your workspace',
