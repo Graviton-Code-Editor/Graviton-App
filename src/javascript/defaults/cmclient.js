@@ -5,6 +5,10 @@ require ('../../../node_modules/codemirror/mode/**/*.js')
 
 import '../../../node_modules/codemirror/addon/search/search.js'
 import '../../../node_modules/codemirror/addon/selection/active-line.js'
+import '../../../node_modules/codemirror/addon/edit/matchbrackets'
+import '../../../node_modules/codemirror/addon/edit/matchtags'
+import '../../../node_modules/codemirror/addon/edit/closetag'
+import '../../../node_modules/codemirror/addon/edit/closebrackets'
 
 const CodemirrorClient = new EditorClient({
     name:'codemirror',
@@ -32,6 +36,10 @@ const CodemirrorClient = new EditorClient({
             htmlMode:false,
             styleActiveLine: { nonEmpty: true },
             styleActiveSelected: true,
+            matchTags: { bothTags: true },
+            autoCloseTags: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
             theme:theme
         })
 

@@ -70,7 +70,7 @@
 		color: #690;
 	}
 	span.cm-tag {
-		color: #690;
+		color: rgb(0, 75, 145);
 	}
 	span.cm-variable-3 {
 		color: rgb(0, 75, 145);
@@ -95,7 +95,7 @@
 		font-weight: normal;
 	}
 	.cm-string {
-		color: rgb(0, 75, 145);
+		color: rgb(11, 97, 179);
 	}
 	.cm-property {
 		color: rgb(228, 0, 87);
@@ -113,7 +113,7 @@
 		color: #997643;
 	}
 	.cm-attribute {
-		color: #d6bb6d;
+		color: #ff8800;
 	}
 	.cm-header {
 		color: #FF6400;
@@ -134,8 +134,10 @@
 		outline:1px solid gray;
 	}
 	.CodeMirror-matchingbracket {
-		color:red;
-		outline: 1px solid gray;
+		outline: 1.5px solid red;
+	}
+	.CodeMirror-matchingtag {
+		background: rgb(209, 209, 209);
 	}
 	.CodeMirror-foldmarker {
 		color: black;

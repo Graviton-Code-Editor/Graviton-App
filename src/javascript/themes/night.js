@@ -7,7 +7,7 @@ const Night = {
         textColor:'white',
         bodyBackground:'#222222',
         titlebarBackground:"#222222",
-        dropmenuBackground:'#191919',
+        dropmenuBackground:'#333333',
         dropmenuButtonBackground:"transparent",
         dropmenuButtonHoveringBackground:"#191919",
         dropmenuButtonText:"white",

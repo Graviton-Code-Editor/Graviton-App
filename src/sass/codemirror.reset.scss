@@ -240,11 +240,8 @@
 .CodeMirror-composing {
 	border-bottom: 2px solid;
 }
-CodeMirror-matchingbracket {
-	color: #0b0;
-}
-CodeMirror-nonmatchingbracket {
-	color: #a22;
+.CodeMirror-matchingbracket {
+	outline: 1px solid red;
 }
 .CodeMirror-matchingtag {
 	background: rgba(255, 150, 0, 0.3);

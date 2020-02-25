@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200225 - 1 [2.0.23]
+- New: Added matchtags, matchbrackets, closetags, closebrackets codemirror addons
+- Improved: editor themes
+- Fixed: bug when opening external folders with a workspace already opened
+
 ### 200224 - 1 [2.0.22]
 - Improved: increase editor line height for better readbility
 - New: you can now rename your workspaces
