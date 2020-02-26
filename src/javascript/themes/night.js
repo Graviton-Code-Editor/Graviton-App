@@ -57,7 +57,7 @@ const Night = {
         fileNotSavedIndicatorHovering:'rgb(255, 0, 72)',
         controlCloseButtonActiveBackground:'rgba(241,112,122)',
         controlCloseButtonActiveFill:'black',
-        editorDialogBackground:'#191919',
+        editorDialogBackground:'#333333',
         editorDialogText:'white',
         statusbarBackground:'#191919',
         statusbarItemBackground:'transparent',
@@ -74,7 +74,8 @@ const Night = {
         commandPromptOptionBackground:'#333333',
         commandPromptOptionActiveBackground:'rgb(255, 0, 72)',
         commandPromptOptionText:'white',
-        commandPromptOptionActiveText:'white'
+        commandPromptOptionActiveText:'white',
+        notificationBackground:'#333333'
     }
 }
 

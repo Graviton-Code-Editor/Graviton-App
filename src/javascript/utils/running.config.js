@@ -9,7 +9,8 @@ let Config = {
         name:null,
         folders:[],
     },
-    globalCommandPrompt:[]
+    globalCommandPrompt:[],
+    notifications:[]
 }
 
 const RunningConfig = new puffin.state(Config)

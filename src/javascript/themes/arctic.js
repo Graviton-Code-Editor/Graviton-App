@@ -75,6 +75,7 @@ const Arctic = {
         commandPromptOptionActiveBackground:'#0066FF',
         commandPromptOptionText:'black',
         commandPromptOptionActiveText:'white',
+        notificationBackground:'rgb(242,242,242)'
         
     }
     

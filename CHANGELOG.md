@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200226 - 1 [2.0.24]
+- New: Notification construcotr
+
 ### 200225 - 1 [2.0.23]
 - New: Added matchtags, matchbrackets, closetags, closebrackets codemirror addons
 - Improved: editor themes

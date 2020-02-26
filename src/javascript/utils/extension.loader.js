@@ -10,6 +10,7 @@ import Menu from '../constructors/menu'
 import Dialog from '../constructors/dialog'
 import StatusBarItem from '../constructors/status.bar.item'
 import ContextMenu from '../constructors/contextmenu'
+import Notification from '../constructors/notification'
 
 const fs = requirePath("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.configPath,'plugins')
@@ -26,7 +27,8 @@ function loadExtension(path){
         Menu,
         Dialog,
         StatusBarItem,
-        ContextMenu
+        ContextMenu,
+        Notification
     })
 }
 

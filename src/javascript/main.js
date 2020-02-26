@@ -94,8 +94,14 @@ const App = puffin.element(`
         #windows > div.window > div {
             flex:1;
         }
-        
-
+        #notifications{
+            position:absolute;
+            bottom:10px;
+            right:10px;
+            display:flex;
+            flex-direction:column;
+            overflow:hidden;
+        }
         * {
             outline: 0;
             text-rendering: optimizeLegibility !important;
@@ -145,7 +151,8 @@ const App = puffin.element(`
           
         </div>
         <StatusBar/>
-        <div id="windows"></div>
+        <div id="windows"/>
+        <div id="notifications"/>
         <SplashScreen/>
     </div>
 `,{
@@ -169,4 +176,3 @@ const App = puffin.element(`
 puffin.render(App,document.getElementById("App"),{
     removeContent:true
 })
-
