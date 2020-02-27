@@ -14,8 +14,8 @@
     "watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
     "watch:electron": "electron main.js Graviton --no-sandbox",
     "build": "npm run build:parcel && npm run build:electron",
-    "build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",
-    "build:parcel": "parcel build src/index.html --target electron --bundle-node-modules --out-dir dist_parcel --public-url ./"
+    "build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
+    "build:parcel": "parcel build src/index.html --target browser --bundle-node-modules --out-dir dist_parcel --public-url ./"
   },
   "staticFiles": {
     "staticPath": "assets",
@@ -29,7 +29,7 @@
     "LanguageConfig": "./src/javascript/utils/lang.config.js"
   },
   "dependencies": {
-    "@mkenzo_8/puffin": "^0.4.0",
+    "@mkenzo_8/puffin": "^0.4.2",
     "@mkenzo_8/puffin-drac": "0.0.12",
     "appdata-path": "^1.0.0",
     "babel-core": "^6.26.3",
@@ -39,7 +39,6 @@
     "electron-store": "^5.1.0",
     "electron-window-state": "^5.0.3",
     "fs-extra": "^8.1.0",
-    "hotkeys-js": "^3.7.3",
     "shortcuts": "^1.2.0",
     "simple-git": "^1.131.0",
     "trash": "^6.1.1"
