@@ -21,8 +21,12 @@ const NotificationBody = puffin.style.div`
         right:10px;
         
     }
+    & > h3{
+        color:{{notificationTitleText}};
+    }
     & > p{
         font-size:13px;
+        color:{{notificationContentText}};
     }
 `
 

@@ -5,11 +5,41 @@ import Item from '../components/explorer/item'
 import path from 'path'
 import parseDirectory from '../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
+import "babel-polyfill";
 
 const fs = requirePath('fs-extra')
+const simpleGit = requirePath("simple-git")
 
-function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
+function checkIfProjectIsGit(path){
+    const simpleInstance = simpleGit(path)
+    return new Promise((resolve,reject)=>{
+        simpleInstance.checkIsRepo((err,res)=>{
+            if(!err) {
+                resolve(res)
+            }else{
+                reject(err)
+            }
+        })
+        
+    })
+}
+
+function getStatus(path){
+    const simpleInstance = simpleGit(path)
+    return new Promise((resolve,reject)=>{
+        simpleInstance.status((err,result)=>{
+            resolve(result)
+        }) 
+    })
+}
+
+async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitChanges=null){
     if(level == 0){
+
+        let gitResult = await checkIfProjectIsGit(folderPath)
+
+        if( gitResult ) gitChanges = await getStatus(folderPath)
+
         const explorerContainer = puffin.element(`
             <Item isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
         `,{
@@ -19,18 +49,17 @@ function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
             events:{
                 mounted(target){
                     target.state.emit('doReload')
+
+                    target.gitChanges = gitChanges
                 }
             }
         })
         if(replaceOldExplorer && parent.children[0] != null){
-
             for( let otherExplorer of parent.children){
-
                 RunningConfig.emit('removeFolderFromRunningWorkspace',{
                     folderPath:otherExplorer.getAttribute("fullpath")
                 })
             }
-           
         }
         
         puffin.render(explorerContainer,parent,{
@@ -63,6 +92,11 @@ function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true){
         `,{
             components:{
                 Item:Item()
+            },
+            events:{
+                mounted(target){
+                    target.gitChanges = gitChanges
+                }
             }
         })
         if(level != 0){

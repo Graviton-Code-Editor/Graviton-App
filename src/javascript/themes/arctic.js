@@ -45,6 +45,8 @@ const Arctic = {
         sidemenuSearcherText:'black',
         explorerItemText:'black',
         explorerItemArrowBackground:'#646464',
+        explorerItemGitModifiedText:'#9F00AD',
+        explorerItemGitModifiedIndicator:'#9F00AD',
         cardBackground:'rgb(238,238,238)',
         buttonBackground:'rgb(238,238,238)',
         radioBackgroundHovering:'#EFEFEF',
@@ -75,8 +77,9 @@ const Arctic = {
         commandPromptOptionActiveBackground:'#0066FF',
         commandPromptOptionText:'black',
         commandPromptOptionActiveText:'white',
-        notificationBackground:'rgb(242,242,242)'
-        
+        notificationBackground:'rgb(242,242,242)',
+        notificationTitleText:'black',
+        notificationContentText:'black'
     }
     
 }

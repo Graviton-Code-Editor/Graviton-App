@@ -46,6 +46,8 @@ const Night = {
         sidemenuSearcherText:'white',
         explorerItemText:'white',
         explorerItemArrowBackground:'white',
+        explorerItemGitModifiedText:'#0066FF',
+        explorerItemGitModifiedIndicator:'#0066FF',
         cardBackground:'#191919',
         buttonBackground:'#191919',
         radioBackgroundHovering:'rgb(60,60,60)',
@@ -75,7 +77,9 @@ const Night = {
         commandPromptOptionActiveBackground:'rgb(255, 0, 72)',
         commandPromptOptionText:'white',
         commandPromptOptionActiveText:'white',
-        notificationBackground:'#333333'
+        notificationBackground:'#333333',
+        notificationTitleText:'white',
+        notificationContentText:'white'
     }
 }
 

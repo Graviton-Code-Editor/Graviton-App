@@ -91,7 +91,9 @@ function init(){
     shortcuts.add ([ 
         { 
             shortcut: 'Ctrl+S', handler: event => {
-                RunningConfig.data.focusedTab.props.state.emit('savedMe')
+                if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
+                    RunningConfig.data.focusedTab.props.state.emit('savedMe')
+                }
                 return true; 
             }
         },

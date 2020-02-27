@@ -1,6 +1,6 @@
 {
   "name": "graviton",
-  "version": "2.0.24",
+  "version": "2.0.25",
   "description": "Minimalist looking code editor.",
   "repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
   "homepage": "https://graviton.ml",
@@ -9,7 +9,7 @@
   "main": "main.js",
   "scripts": {
     "test": "run-p watch:parcel test:spectron ",
-    "test:spectron":"mocha test --delay",
+    "test:spectron": "mocha test --delay",
     "start": " run-p watch:parcel watch:electron ",
     "watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
     "watch:electron": "electron main.js Graviton --no-sandbox",
@@ -32,6 +32,8 @@
     "@mkenzo_8/puffin": "^0.4.0",
     "@mkenzo_8/puffin-drac": "0.0.12",
     "appdata-path": "^1.0.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
     "codemirror": "^5.51.0",
     "electron-is-dev": "^1.1.0",
     "electron-store": "^5.1.0",
@@ -39,9 +41,13 @@
     "fs-extra": "^8.1.0",
     "hotkeys-js": "^3.7.3",
     "shortcuts": "^1.2.0",
+    "simple-git": "^1.131.0",
     "trash": "^6.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "electron": "^8.0.0",
     "electron-builder": "^22.2.0",
     "mocha": "^7.0.1",

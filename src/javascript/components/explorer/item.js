@@ -3,7 +3,6 @@ import Explorer from '../../constructors/explorer'
 import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
-import path from 'path'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import areYouSureDialog from '../../defaults/dialogs/you.sure'
 import StaticConfig from 'StaticConfig'
@@ -14,8 +13,47 @@ import Icons from '../../../../assets/icons/**.svg'
 import FolderArrow from '../icons/folder.arrow'
 
 import requirePath from '../../utils/require'
-const fs = requirePath("fs-extra");
+
+const fs = requirePath("fs-extra")
 const trash = requirePath("trash")
+const path = requirePath("path")
+
+function getMyStatus(filePath,gitChanges,projectPath){
+    
+    let result = {
+        status:'unknown'
+    }
+    if(gitChanges){
+        gitChanges.modified.filter((gitPath)=>{
+            if( path.normalize(path.resolve(projectPath,gitPath)) == path.normalize(filePath) ){
+                return result = {
+                    status:'modified'
+                }
+            }else{
+                const dirsGit =  path.normalize(gitPath).split(path.sep)
+                const dirsLocal = path.normalize(filePath).split(path.sep)
+                dirsGit.map((dirGit)=>{
+                    const dirLocal = dirsLocal[dirsLocal.length-1]
+                    if(dirLocal == dirGit){
+                        if(gitPath.match(dirGit))
+                        return result = {
+                            status:'modified'
+                        }
+                    }
+                })
+            }
+        })
+    }
+    return result
+}
+
+function markStatus(target,status){
+    switch(status){
+        case 'modified':
+            target.setAttribute('gitStatus','modified')
+        break;
+    }
+}
 
 function Item(){
     const ItemWrapper = puffin.style.div`
@@ -24,9 +62,9 @@ function Item(){
             background:transparent;
             white-space:nowrap;
             padding:0px;
-
+            user-select:none;
         }
-        & button{
+        & > button{
             margin:0;
             border-radius:5px;
             font-size:13px;
@@ -42,10 +80,26 @@ function Item(){
             justify-content: center;
             color:{{explorerItemText}};
         }
-        & button *{
+        & > button > *{
             align-items: center;
             display:flex;
             color:{{explorerItemText}};
+        }
+        & .gitStatus {
+            display:none;
+            position:relative;
+            padding:3px;
+            border-radius:50px;
+            margin: 0 2px;
+            margin-left:6px;
+            top:4px;
+        }
+        &[gitStatus="modified"] > button > .gitStatus {
+            display:block;
+            background:{{explorerItemGitModifiedIndicator}};
+        }
+        &[gitStatus="modified"] > button > span {
+            color:{{explorerItemGitModifiedText}};
         }
         & button:hover{
             background:rgba(150,150,150,0.6);
@@ -81,6 +135,7 @@ function Item(){
                 <FolderArrow class="arrow"/>
                 <img class="icon"/>
                 <span>{{path}}</span>
+                <div class="gitStatus"/>
             </button>
         </ItemWrapper>
     `,{
@@ -154,6 +209,9 @@ function Item(){
                 const fileExtension = getExtension(target)
                 const itemIcon = target.getElementsByClassName('icon')[0]
                 const itemArrow = target.getElementsByClassName('arrow')[0]
+                const gitStatus = target.getAttribute("git-status") ||true
+                const gitChanges = target.parentElement.parentElement.gitChanges
+                target.gitChanges = gitChanges
 
                 target.state = itemState
                 target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
@@ -166,6 +224,12 @@ function Item(){
                     itemArrow.style.opacity = "0"
 
                 }
+                const gitResult = getMyStatus(
+                    target.getAttribute("fullpath"),
+                    gitChanges,
+                    target.getAttribute("parentfolder")
+                )
+                markStatus(target,gitResult.status)
 
                 target.state.on('clickItem',function(){
 
@@ -173,7 +237,7 @@ function Item(){
                         const itemContainer = target.children[1]
 
                         if(itemContainer == null){
-                            new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
+                            new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
                             setStateOpen(target)
                         }else{
                             itemContainer.remove()
@@ -207,7 +271,7 @@ function Item(){
                 })
 
                 target.state.on('doReload',function(){
-                    reload(target)
+                    reload(target,gitChanges)
                 })
 
             }
@@ -216,9 +280,9 @@ function Item(){
     return ItemComp
 }
 
-function reload(target){
+function reload(target,gitChanges){
     if(target.children[1] != null) target.children[1].remove()
-    new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1)
+    new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
     setStateOpen(target)
 }
 
