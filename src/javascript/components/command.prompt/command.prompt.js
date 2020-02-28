@@ -11,14 +11,15 @@ const CommandPromptBody = puffin.style.div`
         top:0;
         left:0; 
         position:fixed;
+        user-select:none;
     }
     & input{
         background:{{commandPromptInputBackground}};
         color:{{sidemenuSearcherText}};
-        border:0px;
+        border:2px solid {{commandPromptInputBorder}};
         padding:7px;
         margin:0 auto;
-        border-radius:5px;
+        border-radius:7px;
         margin:0;
         max-width:100%;
         display:block;

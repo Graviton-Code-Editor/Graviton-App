@@ -3,6 +3,11 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200227 - 1 [2.0.25]
+- Fixed: there were some issues when switching between languages
+- New: windows opening animation
+- Improve: design of side menu labels, and command prompt input
+
+### 200227 - 1 [2.0.25]
 - New: Git support, see modified files right from the explorer
 
 ### 200226 - 1 [2.0.24]

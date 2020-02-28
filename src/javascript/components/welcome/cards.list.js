@@ -7,6 +7,7 @@ const CardsListContainer = puffin.style.div`
         flex:1;
         max-height:100%;
         overflow:hidden;
+        user-select:none;
     }
     & > div{
         overflow:auto;

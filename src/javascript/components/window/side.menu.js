@@ -33,6 +33,7 @@ const SideMenu = puffin.element(`
             max-height:100%;
             flex:1;
             overflow:hidden;
+            user-select:none;
         }
         & > div:nth-child(1){
             background:{{sidemenuBackground}};
@@ -50,16 +51,18 @@ const SideMenu = puffin.element(`
             text-overflow:ellipsis;
         }
         & > div:nth-child(1) > label {
+            transition:0.04s;
             display:block;
             white-space:prewrap;
-            padding:7px;
+            padding:7px 9px;
             border-radius:6px;
             background:{{sidemenuButtonBackground}};
             color:{{sidemenuButtonText}};
-            margin:2px 0px;
+            margin:1px 0px;
             font-size:13px;
         }
         & > div:nth-child(1) > label:hover:not(.active) {
+            transition:0.04s;
             background:{{sidemenuButtonHoverBackground}};
         }
         & > div:nth-child(1) > label.active {

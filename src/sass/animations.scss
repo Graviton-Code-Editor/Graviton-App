@@ -1,0 +1,10 @@
+@keyframes windowOpens {
+	0% {
+        transform: scale(.98);
+        margin-top: 12px;
+	}
+	100% {
+        transform: scale(1);
+        margin-top: 0px;
+	}
+}

@@ -72,6 +72,7 @@ const Night = {
         splashScreenBackground:'#191919',
         commandPromptInputBackground:'#191919',
         commandPromptInputText:'white',
+        commandPromptInputBorder:'rgb(255, 0, 72)',
         commandPromptBackground:'#333333',
         commandPromptOptionBackground:'#333333',
         commandPromptOptionActiveBackground:'rgb(255, 0, 72)',

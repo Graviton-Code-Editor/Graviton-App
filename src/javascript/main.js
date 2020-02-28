@@ -8,7 +8,7 @@ import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
 
-import '../sass/codemirror.reset.scss'
+import '../sass/main.scss'
 
 const App = puffin.element(`
     <div class="${puffin.style.css`

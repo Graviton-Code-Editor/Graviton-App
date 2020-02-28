@@ -128,12 +128,19 @@ function scrollOptions({state,scrollingDirection,onScrolled}){
         return index
     })()
 
-    if(scrollingDirection == "up" && hoveredOptionPosition != 0 ){
-        state.data.hoveredOption = allOptions[hoveredOptionPosition-1]
-    }else if(scrollingDirection == "down" && hoveredOptionPosition != allOptions.length -1  ){
-        state.data.hoveredOption = allOptions[hoveredOptionPosition+1]
+    if( scrollingDirection == "up" ){
+        if(hoveredOptionPosition != 0){
+            state.data.hoveredOption = allOptions[hoveredOptionPosition-1]
+        }else{
+            state.data.hoveredOption = allOptions[allOptions.length-1]
+        } 
+    }else if( scrollingDirection == "down" ){
+        if( hoveredOptionPosition != allOptions.length -1 ){
+            state.data.hoveredOption = allOptions[hoveredOptionPosition+1]
+        }else{
+            state.data.hoveredOption = allOptions[0]
+        }
     }
-
     hoverOption(state.data.hoveredOption,allOptions,onScrolled)   
 }
 

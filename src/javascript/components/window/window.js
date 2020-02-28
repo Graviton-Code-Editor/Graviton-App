@@ -15,6 +15,7 @@ const WindowBody = puffin.element(`
             position:absolute;
             height:auto;
             display:flex;
+            animation:windowOpens ease-out 0.12s;
         }
         & * {
             color:{{textColor}};
