@@ -12,7 +12,7 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import CommandPrompt from '../constructors/command.prompt'
-
+import Languages from '../../../languages/*.json'
 
 function init(){
     loadAutomatically()
@@ -124,6 +124,8 @@ function init(){
                             label:'Open About'
                         },{
                             label:'Set theme'
+                        },{
+                            label:'Set Language'
                         },
                         ...RunningConfig.data.globalCommandPrompt
                     ],
@@ -148,7 +150,7 @@ function init(){
 
                                 new CommandPrompt({
                                     showInput:true,
-                                    inputPlaceHolder:'Enter a command',
+                                    inputPlaceHolder:'Select a theme',
                                     options:(function(){
                                         const list = []
                                         const registry = ExtensionsRegistry.registry.data.list
@@ -168,6 +170,30 @@ function init(){
                                     },
                                     onScrolled(res){
                                         StaticConfig.data.theme = res.label
+                                    }
+                                })
+                            break;
+                            case 'Set Language':
+                                const configuredLanguage = StaticConfig.data.language
+
+                                new CommandPrompt({
+                                    showInput:true,
+                                    inputPlaceHolder:'Select a language',
+                                    options:(function(){
+                                        const list = []
+                                        Object.keys(Languages).filter(function(name){
+                                            list.push({
+                                                label:name,
+                                                selected:configuredLanguage == name
+                                            })
+                                        })
+                                        return list;
+                                    })(),
+                                    onSelected(res){
+                                        StaticConfig.data.language = res.label
+                                    },
+                                    onScrolled(res){
+                                        StaticConfig.data.language = res.label
                                     }
                                 })
                             break;

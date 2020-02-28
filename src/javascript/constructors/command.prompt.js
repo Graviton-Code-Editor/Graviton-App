@@ -16,7 +16,7 @@ function CommandPrompt({
         hoveredOption : null
     })
     
-    const config = arguments[0]
+    const configArguments = arguments[0]
     const CommandPromptComponent = puffin.element(`
             <CommandPromptBody id="${name}" keydown="$scrolling">
                 <WindowBackground window="${name}"/>
@@ -37,7 +37,7 @@ function CommandPrompt({
                 e.preventDefault()
                 switch(e.keyCode){
                     case 13:
-                        selectOption({state:CommandPromptState},{onSelected})
+                        selectOption(CommandPromptState.data.hoveredOption,{onSelected})
                         closeCommandPrompt(CommandPromptComponent)
                         break;
                     case 38:
@@ -46,7 +46,7 @@ function CommandPrompt({
                     default:
                         renderOptions(
                             {
-                                ...config,
+                                ...configArguments,
                                 options:filterOptions(this.value,{
                                     options
                                 }) 
@@ -68,14 +68,14 @@ function CommandPrompt({
                         scrollOptions({
                             state:CommandPromptState,
                             scrollingDirection:'up',
-                            ...config
+                            ...configArguments
                         })
                         break;
                     case 40:
                         scrollOptions({
                             state:CommandPromptState,
                             scrollingDirection:'down',
-                            ...config
+                            ...configArguments
                         })
                         break;
                 }
@@ -89,7 +89,7 @@ function CommandPrompt({
                 renderOptions(
                     {
                         options,
-                        ...arguments[0]
+                        ...configArguments
                     },
                     {
                         parent:container,
@@ -188,7 +188,7 @@ function renderOptions({
         methods:{
             onClicked(){
                 closeCommandPrompt(component)
-                selectOption({state},{onSelected})
+                selectOption(this,{onSelected})
             }
         }
     })
@@ -201,9 +201,9 @@ function renderOptions({
     hoverOption(state.data.hoveredOption,parent.children[0].children)
 }
 
-function selectOption({state},{onSelected}){
+function selectOption(option,{onSelected}){
     onSelected({
-        label:state.data.hoveredOption.textContent
+        label:option.textContent
     })
 }
 

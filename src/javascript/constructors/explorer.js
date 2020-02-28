@@ -1,10 +1,10 @@
 import { puffin } from '@mkenzo_8/puffin'
-import { isWorkspaceLoaded, updateWorkspaceByPath } from '../utils/filesystem'
 import requirePath from '../utils/require'
 import Item from '../components/explorer/item'
 import path from 'path'
 import parseDirectory from '../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
+import Notification from './notification'
 import "babel-polyfill";
 
 const fs = requirePath('fs-extra')
@@ -47,10 +47,9 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
                 Item:Item()
             },
             events:{
-                mounted(target){
-                    target.state.emit('doReload')
-
-                    target.gitChanges = gitChanges
+                mounted(){
+                    this.state.emit('doReload')
+                    this.gitChanges = gitChanges
                 }
             }
         })
@@ -94,8 +93,8 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
                 Item:Item()
             },
             events:{
-                mounted(target){
-                    target.gitChanges = gitChanges
+                mounted(){
+                    this.gitChanges = gitChanges
                 }
             }
         })
@@ -104,9 +103,12 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
                 removeContent:false
             })
         }
-    }).catch(err=>console.log(err))
-
-    
+    }).catch(err=>{
+        new Notification({
+            title:'Error',
+            content:err
+        })
+    })    
 }
 
 export default Explorer
