@@ -26,7 +26,7 @@ function Menu({
                     let content = "";
                     list.map(function(option,index){
                         if(option.label !== undefined){
-                            content += `<a click="$${index}">${option.label}</a>`
+                            content += `<a ${option.hint != null?`title="${option.hint}"`:""} click="$${index}">${option.label}</a>`
                         }else{
                             content += `<span/>`
                         }

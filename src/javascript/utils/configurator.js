@@ -12,7 +12,8 @@ const defaultConfiguration = {
         fontSize:'16',
         log:[],
         configPath:path.join(getAppDataPath(),'.graviton2'),
-        recentWorkspaces:[]
+        recentWorkspaces:[],
+        zoom:1
     }
 }
 

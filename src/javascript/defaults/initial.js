@@ -1,4 +1,3 @@
-import { openWorkspace, addFolderToWorkspace } from '../utils/filesystem'
 import { Panel, removePanel } from '../constructors/panel'
 import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
@@ -13,6 +12,7 @@ import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import CommandPrompt from '../constructors/command.prompt'
 import Languages from '../../../languages/*.json'
+import StatusBarItem from '../constructors/status.bar.item'
 
 function init(){
     loadAutomatically()
@@ -71,6 +71,32 @@ function init(){
             }
         ]
     })
+    new Menu({ //Window
+        button:'Window',
+        list:[
+            {
+                label:'Default zoom',
+                action:()=> {
+                    StaticConfig.data.zoom = 1
+                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+                }
+            },
+            {
+                label:'Increase zoom',
+                action:()=> {
+                    StaticConfig.data.zoom += 0.1
+                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+                }
+            },
+            {
+                label:'Decrease zoom',
+                action:()=> {
+                    StaticConfig.data.zoom -= 0.1
+                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+                }
+            }
+        ]
+    })
     new Menu({ //HELP
         button:'Help',
         list:[
@@ -82,6 +108,24 @@ function init(){
     })
 
     new Panel() //Initial Panel
+
+    new StatusBarItem({
+        label:'+',
+        position:'right',
+        action:()=>{
+            StaticConfig.data.zoom += 0.1
+                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+        }
+    })
+
+    new StatusBarItem({
+        label:'-',
+        position:'right',
+        action:()=>{
+            StaticConfig.data.zoom -= 0.1
+                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+        }
+    })
 
     ExtensionsRegistry.add(Arctic)    
     ExtensionsRegistry.add(Night)  

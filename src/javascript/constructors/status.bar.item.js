@@ -25,7 +25,6 @@ function StatusBarItem({
         const side = document.getElementById('statusBar').children[position=='right'?1:0]
         puffin.render(component,side)
     }else{
-        
         RunningConfig.on("appLoaded",()=>{
             const side = document.getElementById('statusBar').children[position=='right'?1:0]
             puffin.render(component,side)

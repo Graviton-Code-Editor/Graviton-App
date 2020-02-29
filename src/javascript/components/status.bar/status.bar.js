@@ -12,6 +12,8 @@ const PanelStatusBar = puffin.element(`
                 background:{{statusbarBackground}};
                 box-sizing:border-box;
                 display:flex;
+                box-sizing:border-box;
+                padding-top:1px;
             }
             & > div{
                 width:50%;
