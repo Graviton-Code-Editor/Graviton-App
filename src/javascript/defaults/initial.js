@@ -13,6 +13,9 @@ import About from './dialogs/about'
 import CommandPrompt from '../constructors/command.prompt'
 import Languages from '../../../languages/*.json'
 import StatusBarItem from '../constructors/status.bar.item'
+import requirePath from '../utils/require'
+
+const { openExternal: openLink } = requirePath("electron").shell
 
 function init(){
     loadAutomatically()
@@ -100,6 +103,17 @@ function init(){
     new Menu({ //HELP
         button:'Help',
         list:[
+            {
+                label:'Blog',
+                action:()=>{
+                    openLink('https://graviton.ml/blog/')
+                }
+            },{
+                label:'Website',
+                action:()=>{
+                    openLink('https://graviton.ml/')
+                }
+            },
             {
                 label:'About',
                 action:()=>About().launch()
