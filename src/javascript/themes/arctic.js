@@ -47,6 +47,8 @@ const Arctic = {
         explorerItemArrowBackground:'#646464',
         explorerItemGitModifiedText:'#9F00AD',
         explorerItemGitModifiedIndicator:'#9F00AD',
+        explorerItemGitNotAddedText:'#0066FF',
+        explorerItemGitNotAddedIndicator:'#0066FF',
         cardBackground:'rgb(238,238,238)',
         buttonBackground:'rgb(238,238,238)',
         radioBackgroundHovering:'#EFEFEF',

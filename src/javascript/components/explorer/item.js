@@ -11,7 +11,6 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 import ThemeProvider from 'ThemeProvider'
 import Icons from '../../../../assets/icons/**.svg'
 import FolderArrow from '../icons/folder.arrow'
-
 import requirePath from '../../utils/require'
 
 const fs = requirePath("fs-extra")
@@ -19,38 +18,49 @@ const trash = requirePath("trash")
 const path = requirePath("path")
 
 function getMyStatus(filePath,gitChanges,projectPath){
-    
+    const supportedGitStatuses = ["not_added","modified"]
     let result = {
         status:'unknown'
     }
     if(gitChanges){
-        gitChanges.modified.filter((gitPath)=>{
-            if( path.normalize(path.resolve(projectPath,gitPath)) == path.normalize(filePath) ){
-                return result = {
-                    status:'modified'
-                }
-            }else{
-                const dirsGit =  path.normalize(gitPath).split(path.sep)
-                const dirsLocal = path.normalize(filePath).split(path.sep)
-                dirsGit.map((dirGit)=>{
-                    const dirLocal = dirsLocal[dirsLocal.length-1]
-                    if(dirLocal == dirGit){
-                        if(gitPath.match(dirGit))
-                        return result = {
-                            status:'modified'
-                        }
+        supportedGitStatuses.map((status)=>{
+            gitChanges[status].filter((gitPath)=>{
+                if( path.normalize(path.resolve(projectPath,gitPath)) == path.normalize(filePath) ){
+                    return result = {
+                        status:status
                     }
-                })
-            }
+                }else{
+                    const dirsGit =  path.normalize(gitPath).split(path.sep)
+                    const dirsLocal = path.normalize(filePath).split(path.sep)
+                    dirsGit.map((dirGit)=>{
+                        const dirLocal = dirsLocal[dirsLocal.length-1]
+                        if(dirLocal == dirGit){
+                            if(gitPath.match(dirGit))
+                            return result = {
+                                status:status
+                            }
+                        }
+                    })
+                }
+            })
         })
+        
     }
     return result
 }
 
 function markStatus(target,status){
+    const spanText = target.children[0].children[2]
+    const isDirectory = target.getAttribute("isDirectory") == "true"
+
     switch(status){
         case 'modified':
             target.setAttribute('gitStatus','modified')
+            if( !isDirectory) spanText.textContent += ` - M`
+        break;
+        case 'not_added': //Same as untracked
+            target.setAttribute('gitStatus','not_added')
+            if( !isDirectory) spanText.textContent += ` - U`
         break;
     }
 }
@@ -90,17 +100,26 @@ function Item(){
             position:relative;
             padding:3px;
             border-radius:50px;
-            margin: 0 2px;
+            margin: auto 2px;
             margin-left:6px;
-            top:4px;
         }
-        &[gitStatus="modified"] > button > .gitStatus {
+
+        &[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
             display:block;
             background:{{explorerItemGitModifiedIndicator}};
         }
         &[gitStatus="modified"] > button > span {
             color:{{explorerItemGitModifiedText}};
         }
+
+        &[gitStatus="not_added"][isDirectory="true"] > button > .gitStatus {
+            display:block;
+            background:{{explorerItemGitNotAddedIndicator}};
+        }
+        &[gitStatus="not_added"] > button > span {
+            color:{{explorerItemGitNotAddedText}};
+        }
+
         & button:hover{
             background:rgba(150,150,150,0.6);
             transition:0.05s;
