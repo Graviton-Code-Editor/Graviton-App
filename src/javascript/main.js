@@ -79,6 +79,9 @@ const App = puffin.element(`
             border-top-left-radius:5px;
             border-left:transparent;
         }
+        #mainpanel .tabsbar > div:nth-last-child(1){
+            border-top-right-radius:5px;
+        }
         #windows{
             position:absolute;
             top:0;
