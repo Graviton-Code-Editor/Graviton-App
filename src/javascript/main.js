@@ -70,8 +70,8 @@ const App = puffin.element(`
             min-width:50px;
             width:300px;
             flex:1;
-            border-left:1px solid rgba(150,150,150);
-            border-top:1px solid rgba(150,150,150);
+            border-left:1px solid {{componentsBorder}};
+            border-top:1px solid {{componentsBorder}};
             border-top-left-radius:5px;
             background:{{mainpanelBackground}};
         }

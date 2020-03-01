@@ -6,7 +6,7 @@ const PanelStatusBar = puffin.element(`
         puffin.style.css`
             ${ThemeProvider}
             &{
-                border-top:1px solid rgba(150,150,150);
+                border-top:1px solid {{componentsBorder}};
                 min-height:25px;
                 max-height:25px;
                 background:{{statusbarBackground}};

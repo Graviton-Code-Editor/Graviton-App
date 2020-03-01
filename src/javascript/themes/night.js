@@ -82,7 +82,8 @@ const Night = {
         commandPromptOptionActiveText:'white',
         notificationBackground:'#333333',
         notificationTitleText:'white',
-        notificationContentText:'white'
+        notificationContentText:'white',
+        componentsBorder:'rgba(150,150,150)'
     }
 }
 

@@ -82,7 +82,8 @@ const Arctic = {
         commandPromptOptionActiveText:'white',
         notificationBackground:'rgb(242,242,242)',
         notificationTitleText:'black',
-        notificationContentText:'black'
+        notificationContentText:'black',
+        componentsBorder:'rgba(150,150,150)'
     }
     
 }
