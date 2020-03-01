@@ -82,7 +82,8 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
                     })
                     paths.map(function(dir){
                         if(!fs.lstatSync(path.join(folderPath,dir)).isDirectory()){
-                            content += `<Item isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+                            if(! dir.match("~") )
+                                content += `<Item isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" test="${path.join(folderPath,dir)}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
                         }
                     })
                     return content
@@ -104,6 +105,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
             })
         }
     }).catch(err=>{
+        console.log(err)
         new Notification({
             title:'Error',
             content:err

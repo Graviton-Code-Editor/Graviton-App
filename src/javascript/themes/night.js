@@ -68,6 +68,7 @@ const Night = {
         statusbarItemHoveringBackground:'rgb(60,60,60)',
         statusbarItemText:'white',
         statusbarItemHoveringText:'white',
+        statusbarItemIconBackground:'white',
         inputBackground:'transparent',
         inputText:'white',
         splashScreenText:'white',

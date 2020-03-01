@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200301 - 1 [2.0.30]
+- New: Image viewer (svg, png and jpg for now)
+
 ### 200227 - 1 [2.0.25]
 - New: languages switching right from the command prompt
 - Fixed: there were some issues when switching between languages

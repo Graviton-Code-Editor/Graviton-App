@@ -13,10 +13,8 @@ function sortByRanking(language){
     })[0]
     
     if( selectedEditor != null ) {
-        console.log("good")
         return selectedEditor
     }else{
-        console.log("ohno")
         return RunningConfig.data.editorsRank[0]
     }
     
