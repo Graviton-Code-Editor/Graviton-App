@@ -60,7 +60,17 @@ function openFolder(){
 }
 
 function getWorkspaceConfig( path ){
-    return require(path)
+    let error = false
+    try{
+        require(path)
+    }catch{
+        error=true
+    }
+    if(!error) {
+        return require(path)
+    }else{
+        return null
+    }
 }
 
 RunningConfig.on('addFolderToRunningWorkspace',function({
@@ -109,19 +119,21 @@ RunningConfig.on('removeFolderFromRunningWorkspace',function({
 RunningConfig.on('setWorkspace',({ path })=>{
     const workspace = getWorkspaceConfig(path)
 
-    RunningConfig.data.workspaceConfig = {
-        name: workspace.name,
-        folders:[]
-    }
-    RunningConfig.data.workspacePath = path
-    document.getElementById('sidepanel').innerHTML = ""
-
-    workspace.folders.map(function(folder){
-
-        RunningConfig.emit('addFolderToRunningWorkspace',{
-            folderPath:folder.path
+    if( workspacePath != null){
+        RunningConfig.data.workspaceConfig = {
+            name: workspace.name,
+            folders:[]
+        }
+        RunningConfig.data.workspacePath = path
+        document.getElementById('sidepanel').innerHTML = ""
+    
+        workspace.folders.map(function(folder){
+    
+            RunningConfig.emit('addFolderToRunningWorkspace',{
+                folderPath:folder.path
+            })
         })
-    })
+    }
 })
 
 RunningConfig.on('openWorkspaceDialog',()=>{
@@ -198,12 +210,14 @@ RunningConfig.on('removeWorkspaceFromLog',({ path:workspacePath })=>{
 RunningConfig.on('renameWorkspace',({ path:workspacePath,name="" })=>{
     const workspaceConfig = getWorkspaceConfig(workspacePath)
 
-    workspaceConfig.name = name
+    if( workspaceConfig != null ){
+        workspaceConfig.name = name
    
-    saveConfiguration(
-        workspacePath,
-        workspaceConfig
-    )
+        saveConfiguration(
+            workspacePath,
+            workspaceConfig
+        )
+    }
 });
 
 RunningConfig.on('renameWorkspaceDialog',({ path:workspacePath, onFinished=()=>{} })=>{

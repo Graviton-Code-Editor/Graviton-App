@@ -27,21 +27,24 @@ function Welcome( { defaultPage = "projects" } = {  }){
                         ${(function(){
                             let content = "";
                             StaticConfig.data.recentWorkspaces.map((workspacePath)=> {
-                                const { name, folders = [] } = getWorkspaceConfig(workspacePath)
-                                let listContent = "";
+                                const workspaceConfig = getWorkspaceConfig(workspacePath)
+                                if( workspaceConfig != null ) {
+                                    const { name, folders = [] } = workspaceConfig
+                                    let listContent = "";
 
-                                folders.map(({name,path})=>{
-                                    listContent += `<li>· ${parseDirectory(name)}</li>`
-                                })
+                                    folders.map(({name,path})=>{
+                                        listContent += `<li>· ${parseDirectory(name)}</li>`
+                                    })
 
-                                content += `
-                                    <Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
-                                        <b>${name}</b>
-                                        <ul>
-                                            ${listContent}
-                                        </ul>
-                                    </Card>
-                                `
+                                    content += `
+                                        <Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
+                                            <b>${name}</b>
+                                            <ul>
+                                                ${listContent}
+                                            </ul>
+                                        </Card>
+                                    `
+                                    }
                             })
                             return content;
                         })()}

@@ -282,7 +282,8 @@ function Item(){
                                 theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
                                 bodyElement,
                                 tabElement,
-                                panel
+                                panel,
+                                directory:target.getAttribute("fullpath")
                             })
                         })
 

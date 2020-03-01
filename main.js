@@ -28,7 +28,8 @@ app.on("ready", function() {
 		webPreferences: {
 			nativeWindowOpen: true,
 			nodeIntegrationInWorker: true,
-			nodeIntegration: true
+			nodeIntegration: true,
+			webSecurity:!isDev
 		},
 		frame: process.platform == "linux",
 		minHeight: 320,

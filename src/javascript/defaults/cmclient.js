@@ -17,23 +17,26 @@ const CodemirrorClient = new EditorClient({
     getLangFromExt(extension){
         switch(extension){
             case 'html':
-                return 'htmlmixed'
+                return { name: 'htmlmixed' }
             case 'js':
-                return 'javascript'
+                return { name: 'javascript' }
             case 'json':
-                return 'application/json'
+                return { name: 'application/json' }
             case 'css':
-                return 'css'
+                return { name: 'css' }
             case 'd':
-                return 'text/x-d'
+                return { name: 'text/x-d' }
             case 'sass':
-                return 'text/x-sass'
+                return { name: 'text/x-sass' }
             case 'php':
-                return 'application/x-httpd-php'
+                return { name: 'application/x-httpd-php' }
             case 'md':
-                return 'text/x-markdown'
+                return { name: 'text/x-markdown' }
             default:
-                return extension    
+                return { 
+                    name: extension,
+                    unknown:true
+                 }   
         }
     },
     create({element,language, value, theme, fontSize, CtrlPlusScroll}){

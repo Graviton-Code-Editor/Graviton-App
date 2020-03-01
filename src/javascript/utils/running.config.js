@@ -1,4 +1,6 @@
 import { puffin } from '@mkenzo_8/puffin'
+import CodemirrorClient from '../defaults/cmclient'
+import ImageViewerClient from '../defaults/imageviewer.client'
 
 let Config = {
     focusedPanel:null,
@@ -10,7 +12,11 @@ let Config = {
         folders:[],
     },
     globalCommandPrompt:[],
-    notifications:[]
+    notifications:[],
+    editorsRank:[
+        CodemirrorClient, //Default editor
+        ImageViewerClient
+    ]
 }
 
 const RunningConfig = new puffin.state(Config)

@@ -1,8 +1,26 @@
-import CodemirrorClient from '../defaults/cmclient'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
+
+function sortByRanking(language){
+    const selectedEditor = RunningConfig.data.editorsRank.filter(function(Client){
+        const {
+            name,
+            unknown=false
+        } = Client.do('getLangFromExt',language)
+        if( !unknown ) return Client
+    })[0]
+    
+    if( selectedEditor != null ) {
+        console.log("good")
+        return selectedEditor
+    }else{
+        console.log("ohno")
+        return RunningConfig.data.editorsRank[0]
+    }
+    
+}
 
 function Editor({
     bodyElement,
@@ -10,17 +28,21 @@ function Editor({
     value,
     language,
     panel,
-    theme
+    theme,
+    directory
 }){
 
-    const Client = CodemirrorClient
+    const Client = sortByRanking(language)
+
+    
 
     const { instance } = Client.do('create',{
         element:bodyElement,
         language:Client.do('getLangFromExt',language),
-        value:value,
-        theme:theme,
+        value,
+        theme,
         fontSize:StaticConfig.data.fontSize,
+        directory,
         CtrlPlusScroll:(direction)=> {
             
             if(direction == 'up'){
