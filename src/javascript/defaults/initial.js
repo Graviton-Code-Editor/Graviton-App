@@ -1,6 +1,7 @@
 import { Panel, removePanel } from '../constructors/panel'
 import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
+import { puffin } from '@mkenzo_8/puffin'
 import Menu from "../constructors/menu";
 import Settings from './windows/settings'
 import Welcome from "./windows/welcome";
@@ -14,6 +15,9 @@ import CommandPrompt from '../constructors/command.prompt'
 import Languages from '../../../languages/*.json'
 import StatusBarItem from '../constructors/status.bar.item'
 import requirePath from '../utils/require'
+import ThemeProvider from '../utils/themeprovider';
+import Plus from '../components/icons/plus'
+import Minus from '../components/icons/minus'
 
 const { openExternal: openLink } = requirePath("electron").shell
 
@@ -124,7 +128,7 @@ function init(){
     new Panel() //Initial Panel
 
     new StatusBarItem({
-        label:'+',
+        component:Plus,
         position:'right',
         action:()=>{
             StaticConfig.data.zoom += 0.1
@@ -133,7 +137,7 @@ function init(){
     })
 
     new StatusBarItem({
-        label:'-',
+        component:Minus,
         position:'right',
         action:()=>{
             StaticConfig.data.zoom -= 0.1
