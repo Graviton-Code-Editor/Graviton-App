@@ -24,6 +24,14 @@ const CodemirrorClient = new EditorClient({
                 return 'application/json'
             case 'css':
                 return 'css'
+            case 'd':
+                return 'text/x-d'
+            case 'sass':
+                return 'text/x-sass'
+            case 'php':
+                return 'application/x-httpd-php'
+            case 'md':
+                return 'text/x-markdown'
             default:
                 return extension    
         }
