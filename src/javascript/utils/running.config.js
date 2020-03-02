@@ -1,5 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
-import CodemirrorClient from '../defaults/cmclient'
+import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 
 let Config = {

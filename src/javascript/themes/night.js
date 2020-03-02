@@ -28,7 +28,7 @@ const Night = {
         contextmenuDivider:'rgb(180,180,180)',
         mainpanelBackground:'#191919',
         tabsbarBackground:'#222222',
-        tabBackground:'#222222',
+        tabBackground:'transparent',
         tabText:'white',
         tabActiveText:'white',
         tabActiveBackground:'#191919',

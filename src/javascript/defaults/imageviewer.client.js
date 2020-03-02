@@ -23,6 +23,11 @@ const ImageViewerClient = new EditorClient({
     getValue: (instance) => "",
     getLangFromExt(extension){
         switch(extension){
+            /*
+            Every case refers to a supported image format.
+            */
+           case 'ico':
+                return { name: 'ico' }
             case 'svg':
                 return { name: 'svg' }
             case 'png':
@@ -40,7 +45,7 @@ const ImageViewerClient = new EditorClient({
         
         const ImageViewerComp = puffin.element(`
             <ImageViewerStyle>
-                <img src="${directory}"/>
+                <img draggable="false" src="${directory}"/>
             </ImageViewerStyle>
         `,{
             components:{
@@ -51,7 +56,7 @@ const ImageViewerClient = new EditorClient({
         puffin.render(ImageViewerComp,element)
 
         return {
-            instance : {}
+            instance : {} //Returns empty object because there is no editor instance
         }
     },
     getCursorPosition({instance}){
