@@ -267,7 +267,7 @@ function Item(){
                         const basename = path.basename(target.getAttribute("fullpath"))
                         const fileExtension = getExtension(target)
                         
-                        const { bodyElement, tabElement, panel, isCancelled } = new Tab({
+                        const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
                             title:basename,
                             directory:target.getAttribute("fullpath"),
                             parentFolder:target.getAttribute("parentFolder")
@@ -282,7 +282,7 @@ function Item(){
                                 theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
                                 bodyElement,
                                 tabElement,
-                                panel,
+                                tabState,
                                 directory:target.getAttribute("fullpath")
                             })
                         })

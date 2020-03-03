@@ -17,6 +17,7 @@ const TabBody  = puffin.element(`
                 align-items:center;
                 cursor:pointer;
                 padding:0px 10px;
+                user-select:none;
             }
             &:active{
                 transform:scale(0.98);

@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200303 - 1 [2.0.31]
+- New: you can now reorder tabs or even drag them to different panels
+
 ### 200301 - 1 [2.0.30]
 - New: Image viewer (svg, png and jpg for now)
 

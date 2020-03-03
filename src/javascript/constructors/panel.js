@@ -1,8 +1,17 @@
 import PanelBody from '../components/panel/panel'
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ThemeProvider from 'ThemeProvider'
 import ContextMenu from './contextmenu'
+
+function guessTabPosition(tab,tabsbar){
+    const res =Object.keys(tabsbar.children).filter((tabChildren,index)=>{
+        if( tabsbar.children[tabChildren] == tab ){
+            return tabChildren
+        }
+    })[0]
+    return Number(res)
+}
 
 function Panel(){
     const randomSelector = Math.random()
@@ -28,6 +37,7 @@ function Panel(){
                     display:flex;
                     flex:1;
                     overflow-x:auto;
+                    overflow-y:hidden;
                     background:{{tabsbarBackground}};
                 }
                 & .tabsbar:empty{
@@ -35,7 +45,7 @@ function Panel(){
                 }
             `
         }">    
-            <div class="tabsbar"/>
+            <div dragover="$allowDrop" drop="$onTabDropped" class="tabsbar"/>
             <PanelBody/>
         </div>
     `,{
@@ -43,6 +53,55 @@ function Panel(){
             PanelBody
         },
         methods:{
+            allowDrop(e){
+                e.preventDefault();
+            },
+            onTabDropped(e){
+                const target = document.getElementsByClassName(
+                    e.target.getAttribute("classSelector")
+                )[0] || e.target
+                
+                const movingTab = document.getElementsByClassName(
+                    e.dataTransfer.getData("classSelector")
+                )[0]
+                const nextOldTab = document.getElementsByClassName(
+                    e.dataTransfer.getData("classSelectorForNext")
+                )[0]
+                let nextTab = null
+                let tabsBar = null
+                let oldPanel = movingTab.props.state.data.panel
+                let panel = null
+                let position = 0
+
+                if(target.classList.contains("tabsbar")){
+                    tabsBar = target
+                    position = tabsBar.children.length-1
+                    panel = tabsBar.parentElement
+                }else{ 
+                    tabsBar=target.parentElement
+                    panel = tabsBar.parentElement
+                    const targetPosition = guessTabPosition(target,tabsBar)
+                    const draggingTabPosition = guessTabPosition(movingTab,tabsBar)
+
+                    if( targetPosition < draggingTabPosition ){
+                        nextTab = tabsBar.children[targetPosition]
+                    }else{
+                        nextTab = tabsBar.children[targetPosition+1]
+                    }
+
+                }
+
+                if(position == tabsBar.children.length-1){
+                    tabsBar.appendChild(movingTab) //Drag targeting the tabs bar
+                }else{
+                    tabsBar.insertBefore(movingTab,nextTab) //Drag between tabs
+                }
+                
+                movingTab.props.state.emit('changePanel',(panel)) //Make dragged tab the active one in the new panel and also move the editor 
+                if( oldPanel != panel && nextOldTab != null ) {
+                    nextOldTab.props.state.emit('focusedMe') //Focus a tab in old panel
+                }
+            },
             focusPanel(){
                 RunningConfig.data.focusedPanel = this
             },

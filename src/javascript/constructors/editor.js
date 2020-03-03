@@ -25,7 +25,7 @@ function Editor({
     tabElement,
     value,
     language,
-    panel,
+    tabState,
     theme,
     directory
 }){
@@ -71,7 +71,7 @@ function Editor({
             focusEditor(Client,instance)
 
             tabElement.props.state.emit('focusedMe')
-            RunningConfig.data.focusedPanel = panel
+            RunningConfig.data.focusedPanel = tabState.data.panel
 
             if(CursorPositionStatusBarItem.isHidden()){
                 CursorPositionStatusBarItem.show()

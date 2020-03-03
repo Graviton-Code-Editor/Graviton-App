@@ -6,6 +6,16 @@ import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
 
+function guessTabPosition(tab,tabsbar){
+    const res =Object.keys(tabsbar.children).filter((tabChildren,index)=>{
+        if( tabsbar.children[tabChildren] == tab ){
+            return tabChildren
+        }
+    })[0]
+    return Number(res)
+}
+
+
 const fs = requirePath("fs-extra")
 
 function Tab({
@@ -20,7 +30,8 @@ function Tab({
     const tabState = new puffin.state({
         active:true,
         saved:true,
-        parentFolder
+        parentFolder,
+        panel
     })
 
     const classSelector = `${directory}`
@@ -35,10 +46,19 @@ function Tab({
     }
 
     const TabComp = puffin.element(`
-        <TabBody class="${classSelector}" click="$focusTab" active="{{active}}" mouseover="$showCross" mouseleave="$hideCross">
-            <p>${title}</p>
-            <div>
-                <Cross style="opacity:0;" click="$closeTab"/>
+        <TabBody draggable="true" 
+            classSelector="${classSelector}" 
+            class="${classSelector}" 
+            dragstart="$startDrag" 
+            click="$focusTab" 
+            active="{{active}}" 
+            mouseover="$showCross" 
+            mouseleave="$hideCross">
+            <p classSelector="${classSelector}">
+                ${title}
+            </p>
+            <div classSelector="${classSelector}">
+                <Cross classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
             </div>
         </TabBody>
     `,{
@@ -47,6 +67,26 @@ function Tab({
             Cross
         },
         methods:{
+            startDrag(e){
+                event.dataTransfer.setData("classSelector", classSelector)
+
+                const tabsBar = this.parentElement
+                const tabPosition  = guessTabPosition(this,tabsBar)
+                let classSelectorForNext = null
+
+                if( tabsBar.children.length == 1){
+                    classSelectorForNext = null
+                }else if( tabPosition == 0){
+                    classSelectorForNext = tabsBar.children[1].getAttribute("classSelector")
+                }else{
+                    classSelectorForNext = tabsBar.children[tabPosition-1].getAttribute("classSelector")
+                }
+
+                event.dataTransfer.setData(
+                    "classSelectorForNext", 
+                    classSelectorForNext
+                )
+            },
             focusTab(){
                 tabState.emit('focusedMe')
             },
@@ -71,6 +111,7 @@ function Tab({
 
                 tabState.on('focusedMe',()=>{
                     RunningConfig.data.focusedTab = target
+                    unfocusTabs(target)
                     target.focusEditor()
 
                     target.props.active = true
@@ -89,6 +130,13 @@ function Tab({
                     isSaved(target,false)
                     target.props.saved = false
                 })
+
+                tabState.on('changePanel',(newPanel)=>{
+                    tabState.data.panel = newPanel
+                    unfocusTabs(target)
+                })
+
+                unfocusTabs(target)
 
                 RunningConfig.data.focusedTab = target
                 target.props.active = tabState.data.active
@@ -111,7 +159,6 @@ function Tab({
         events:{
             mounted(target){
                 tabState.on('focusedMe',()=>{
-                    unfocusTabs(target)
                     target.style.display = "block"
                     target.props.state = tabState
                 })
@@ -119,7 +166,11 @@ function Tab({
                     target.style.display = "none"
                     target.props.state = tabState
                 })
-                unfocusTabs(target)
+
+                tabState.on('changePanel',(newPanel)=>{
+                    newPanel.appendChild(target)
+                })
+
                 target.props.state = tabState
             }
         }
@@ -130,7 +181,7 @@ function Tab({
     return {
         tabElement:TabComp.node,
         bodyElement:TabEditorComp.node,
-        panel,
+        tabState,
         isCancelled:false
     }
 }

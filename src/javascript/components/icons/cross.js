@@ -4,6 +4,10 @@ import ThemeProvider from 'ThemeProvider'
 const Cross = puffin.element(`
     <svg width="50" height="50" viewBox="0 0 174 174" class="${puffin.style.css`
         ${ThemeProvider}
+        &{
+            min-height:18px;
+            min-width:18px;
+        }
         & rect{
             fill:{{tabIconFill}};
             
