@@ -168,7 +168,7 @@ function Tab({
                 })
 
                 tabState.on('changePanel',(newPanel)=>{
-                    newPanel.appendChild(target)
+                    newPanel.children[1].appendChild(target)
                 })
 
                 target.props.state = tabState

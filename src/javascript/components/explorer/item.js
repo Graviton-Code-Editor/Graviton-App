@@ -75,10 +75,10 @@ function Item(){
             user-select:none;
         }
         & > button{
+            transition:0.07s;
             margin:0;
-            border-radius:5px;
-            font-size:13px;
-            transition:0.05s;
+            border-radius:12px;
+            font-size:12px;
             padding:3px 5px;
             border:none;
             margin:0px;
@@ -89,6 +89,11 @@ function Item(){
             align-items: center;
             justify-content: center;
             color:{{explorerItemText}};
+        }
+        & button:hover{
+            transition:0.07s;
+            background:rgba(150,150,150,0.6);
+            border-radius:5px;
         }
         & > button > *{
             align-items: center;
@@ -118,11 +123,6 @@ function Item(){
         }
         &[gitStatus="not_added"] > button > span {
             color:{{explorerItemGitNotAddedText}};
-        }
-
-        & button:hover{
-            background:rgba(150,150,150,0.6);
-            transition:0.05s;
         }
         & .icon{
             height:20px;

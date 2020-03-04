@@ -42,7 +42,7 @@ app.on("ready", function() {
 		title: "Graviton Editor",
 		show:false
 	})
-
+	if( !isDev ) main.removeMenu()
 	mainWindowState.manage(main);
 
     if (isDev) {
