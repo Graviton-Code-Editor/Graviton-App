@@ -156,12 +156,19 @@ function init(){
                 if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
                     RunningConfig.data.focusedTab.props.state.emit('savedMe')
                 }
-                return true; 
             }
         },
         { 
             shortcut: 'Ctrl+N', handler: event => {
                 new Panel()
+            }
+        },
+        { 
+            shortcut: 'Ctrl+T', handler: event => {
+                console.log("working")
+                if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
+                    RunningConfig.data.focusedTab.props.state.emit('close')
+                }
             }
         },
         { 

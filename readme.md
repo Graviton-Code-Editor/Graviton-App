@@ -1,5 +1,5 @@
 <p align="center">
-   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="256" height="64.5" style="marign-bottom:15px"/>
+   <img align="center" src="https://graviton.ml/assets/graviton-logo.png"  width="256" height="64.5"/>
    <br>
    <a href="https://graviton.ml">graviton.ml</a>
 </p>
@@ -60,16 +60,9 @@ Also, changes on this source may not be released as an official build yet.
 Some ways to contribute to Graviton's project:
 
 - Translating to new language or improving the existing
-- Revise the commits
-- Adding new features to the source
-- Making plugins
-- Opening issues or help on answering them
-- Request features
-- Revise documentation
+- Opening issues or help answering them
+- Proposing features
 - Donating
-
-For people who translates to a new language:
-Please consider revising and updating your languages in case they are missing some new strings.
 
 👽 Authors 
 ---
@@ -107,7 +100,7 @@ Please consider revising and updating your languages in case they are missing so
 
 Thank you for the donations!
 
-And all people who helped me :)
+And all people who helped me.
 
 💻🖥 Available platforms 
 ---
@@ -128,7 +121,7 @@ And all people who helped me :)
 
 The current state is beta, check the releases page to download the latest version. 
 
-🏗Building 
+🏗 Building 
 ---
 Do you want to build Graviton from source?
 
@@ -138,7 +131,7 @@ Do you want to build Graviton from source?
 ---
 - May not work on all Linux distributions, if it happens, please create an [issue](https://github.com/Graviton-Code-Editor/Graviton-App/issues/new)
 
-🧾License 
+🧾 License 
 ---
 MIT License
 

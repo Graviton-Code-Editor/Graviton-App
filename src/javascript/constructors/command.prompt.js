@@ -202,9 +202,11 @@ function renderOptions({
 }
 
 function selectOption(option,{onSelected}){
-    onSelected({
-        label:option.textContent
-    })
+    if ( option != undefined ){
+        onSelected({
+            label:option.textContent
+        })
+    }
 }
 
 export default CommandPrompt

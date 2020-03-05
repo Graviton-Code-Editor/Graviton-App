@@ -80,10 +80,10 @@ function Editor({
         }
     })
 
-    StaticConfig.changed(function(data){
+    StaticConfig.changed(function(){
         Client.do('setTheme',{
             instance:instance,
-            theme:ExtensionsRegistry.registry.data.list[data.theme].textTheme
+            theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme
         })
 
         Client.do('setFontSize',{

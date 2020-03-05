@@ -93,10 +93,7 @@ function Tab({
             closeTab(e){
                 e.stopPropagation()
 
-                focusATab(this.parentElement.parentElement)
-
-                TabComp.node.remove()
-                TabEditorComp.node.remove(); 
+                tabState.emit('close')
             },
             showCross(e){
                 toggleCross(this.children[1].children[0],1)
@@ -134,6 +131,13 @@ function Tab({
                 tabState.on('changePanel',(newPanel)=>{
                     tabState.data.panel = newPanel
                     unfocusTabs(target)
+                })
+
+                tabState.on('close',(newPanel)=>{
+                    focusATab(this)
+
+                    TabComp.node.remove()
+                    TabEditorComp.node.remove(); 
                 })
 
                 unfocusTabs(target)
@@ -260,6 +264,7 @@ function focusATab(tab){
         if( tabsBarChildren.length > 1 ){
             tabsBarChildren[position+1].props.state.emit('focusedMe')
         }else{
+            RunningConfig.data.focusedTab = null
             RunningConfig.data.focusedEditor = null
         }
     }else{

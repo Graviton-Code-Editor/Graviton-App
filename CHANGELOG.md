@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200305 - 1 [2.0.32]
+- Fixed: error when pressing enter with any option selected in the prompt menu
+- New: Ctrl+T shortcut to tclose the current tab
+- Fixed: some bugs when closing tabs
+- Improved: readme
+
 ### 200303 - 1 [2.0.31]
 - New: you can now reorder tabs or even drag them to different panels
 
