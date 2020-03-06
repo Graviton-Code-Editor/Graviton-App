@@ -119,7 +119,7 @@ RunningConfig.on('removeFolderFromRunningWorkspace',function({
 RunningConfig.on('setWorkspace',({ path })=>{
     const workspace = getWorkspaceConfig(path)
 
-    if( workspacePath != null){
+    if( workspace != null){
         RunningConfig.data.workspaceConfig = {
             name: workspace.name,
             folders:[]

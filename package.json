@@ -45,6 +45,7 @@
     "trash": "^6.1.1"
   },
   "devDependencies": {
+    "parcel": "^1.12.4",
     "@babel/core": "^7.8.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
@@ -52,7 +53,6 @@
     "electron-builder": "^22.2.0",
     "mocha": "^7.0.1",
     "npm-run-all": "^4.1.5",
-    "parcel": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.3.1",
     "sass": "^1.25.0",
     "spectron": "^10.0.1"
