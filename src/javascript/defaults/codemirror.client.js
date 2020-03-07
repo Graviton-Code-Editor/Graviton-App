@@ -86,9 +86,7 @@ const CodemirrorClient = new EditorClient({
         }
     },
     refresh(instance){
-        setTimeout(function() {
-            instance.refresh()
-        },10);
+        instance.refresh()
     },
     onChanged({instance,action}){
         instance.on('change',()=>action())
@@ -99,6 +97,7 @@ const CodemirrorClient = new EditorClient({
     },
     setTheme({instance,theme}){
         instance.setOption('theme',theme)
+      	instance.refresh()
     },
     setFontSize({instance, element, fontSize}){
         element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;

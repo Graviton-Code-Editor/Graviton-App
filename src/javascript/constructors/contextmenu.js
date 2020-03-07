@@ -9,7 +9,6 @@ function ContextMenu({
 }){
 
     const ContextWrapper = puffin.style.div`
-        ${ThemeProvider}
         &{
             background:var(--contextmenuBackground);
             padding:5px;

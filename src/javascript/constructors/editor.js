@@ -29,10 +29,7 @@ function Editor({
     theme,
     directory
 }){
-
     const Client = sortByRanking(language)
-
-    
 
     const { instance } = Client.do('create',{
         element:bodyElement,
