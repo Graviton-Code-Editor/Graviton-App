@@ -16,7 +16,15 @@
     "build": "npm run build:parcel && npm run build:electron",
     "build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
     "build:electron:outpacked": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",
-    "build:parcel": "parcel build src/index.html --target browser --bundle-node-modules --out-dir dist_parcel --public-url ./"
+    "build:parcel": "parcel build src/index.html --target browser --bundle-node-modules --out-dir dist_parcel --public-url ./",
+    "build:snap": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux snap",
+    "build:pacman": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux pacman",
+    "build:deb": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux deb",
+    "build:apk": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux apk",
+    "build:freebsd": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux freebsd",
+    "build:p5p": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux p5p",
+    "build:rpm": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
+    "build:AppImage": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage"
   },
   "staticFiles": {
     "staticPath": "assets",
