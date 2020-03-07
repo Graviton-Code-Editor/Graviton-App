@@ -17,7 +17,7 @@ if(os == "win32"){
                 margin:0;
                 flex-align:right;
                 min-height:40px;
-                padding:0px 12px;
+                padding:0px 14px;
                 outline:0;
                 left:0;
                 background:transparent;
