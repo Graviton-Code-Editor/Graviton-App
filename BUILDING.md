@@ -28,10 +28,35 @@ Install the dependencies:
 
 ### Testing (optional)
 
-In case you just wanna test it, just run:
+In case you just wanna test it in dev mode, just run:
 > $ npm start
+
+If graviton starts but its screen is black just press Ctrl+r to reload the window. This happens because of Parcel server not being loaded yet. 
+This won't happen when building.
 
 ### Building the installer:
 
-For Windows, Linux and MacOS:
+For Windows, Linux(deb,AppImage,rpm) and MacOS:
 > $ npm run build 
+
+You can override the default platforms from the package.json.
+
+#### Building another linux installers
+
+If you want to build a specific linux package for your distro you can run: 
+> $ npm run build:extension
+
+For example if you are an Arch Linux user run
+ > $ npm run build:pacman
+
+ Here is the list of the supported extensions:
+ * snap
+ * pacman
+ * deb
+ * apk
+ * freebsd 
+ * p5p 
+ * rpm
+ * AppImage
+
+Please keep in mind that not all the distros can build some packages.
