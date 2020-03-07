@@ -21,6 +21,7 @@ import Plus from '../components/icons/plus'
 import Minus from '../components/icons/minus'
 
 const { openExternal: openLink } = requirePath("electron").shell
+const { getCurrentWindow } = requirePath("electron").remote
 
 function init(){
     loadAutomatically()
@@ -111,6 +112,12 @@ function init(){
                 action:()=> {
                     StaticConfig.data.zoom -= 0.1
                     StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+                }
+            },
+            {
+                label:'Open dev tools',
+                action:()=> {
+                   getCurrentWindow().toggleDevTools();
                 }
             }
         ]

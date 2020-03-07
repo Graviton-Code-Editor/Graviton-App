@@ -48,6 +48,7 @@
     "electron-store": "^5.1.0",
     "electron-window-state": "^5.0.3",
     "fs-extra": "^8.1.0",
+    "remote": "^0.2.6",
     "shortcuts": "^1.2.0",
     "simple-git": "^1.131.0",
     "trash": "^6.1.1"
