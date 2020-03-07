@@ -81,7 +81,11 @@ const CodemirrorClient = new EditorClient({
               event.keyCode != 17 && 
               event.keyCode != 18 && 
               event.keyCode != 188 &&
-              event.keyCode != 27
+              event.keyCode != 27 && 
+              event.keyCode != 46 && 
+              event.keyCode > 31 && 
+              ( event.keyCode < 48 ||  event.keyCode > 57) &&
+              event.keyCode != 32
           ) {
             CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
           }
