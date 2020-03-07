@@ -28,16 +28,18 @@ Install the dependencies:
 
 ### Testing (optional)
 
-In case you just wanna test it, just run:
+In case you just wanna test it in dev mode, just run:
 > $ npm start
+
+If graviton starts but its screen is black just press Ctrl+r to reload the window. This happens because of Parcel server not being loaded yet. 
+This won't happen when building.
 
 ### Building the installer:
 
 For Windows, Linux(deb,AppImage,rpm) and MacOS:
 > $ npm run build 
 
-If graviton starts but its screen is black press Ctrl+r 
-This is not going to happend when building.
+You can override the default platforms from the package.json.
 
 #### Building another linux installers
 
