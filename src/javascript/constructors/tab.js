@@ -134,10 +134,11 @@ function Tab({
                 })
 
                 tabState.on('close',(newPanel)=>{
-                    focusATab(this)
-
+                  if(this.props.saved){
+                  	focusATab(this)
                     TabComp.node.remove()
                     TabEditorComp.node.remove(); 
+                  }  
                 })
 
                 unfocusTabs(target)
