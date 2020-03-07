@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200307 - 2 [2.0.33]
+- Improved: using CSS3 variables for theming
+
 ### 200307 - 1 [2.0.33]
 - Added open folder dialog from the "File" Menu
 - Git status updates whenever you change,remove, add folders and files

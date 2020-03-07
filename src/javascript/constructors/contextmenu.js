@@ -1,5 +1,4 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
 
 function ContextMenu({
     list,
@@ -12,7 +11,7 @@ function ContextMenu({
     const ContextWrapper = puffin.style.div`
         ${ThemeProvider}
         &{
-            background:{{contextmenuBackground}};
+            background:var(--contextmenuBackground);
             padding:5px;
             position:fixed;
             color:white;
@@ -21,8 +20,8 @@ function ContextMenu({
             display:block;
         }
         & > button{
-            background:{{contextmenuButtonBackground}};
-            color:{{contextmenuButtonText}};
+            background:var(--contextmenuButtonBackground);
+            color:var(--contextmenuButtonText);
             border:0;
             padding:6px;
             outline:0;
@@ -32,15 +31,15 @@ function ContextMenu({
             text-align:left;
         }
         & >  button:hover{
-            background:{{contextmenuButtonHoveringBackground}};
-            color:{{contextmenuButtonHoveringText}};
+            background:var(--contextmenuButtonHoveringBackground);
+            color:var(--contextmenuButtonHoveringText);
         }
         & >  span{
             height:1.5px;
             border-radius:25px;
             width:95%;
             display:block;
-            background:{{contextmenuDivider}};
+            background:var(--contextmenuDivider);
             margin:3px auto;
         }
 

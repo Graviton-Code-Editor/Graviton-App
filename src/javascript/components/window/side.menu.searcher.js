@@ -1,12 +1,10 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
 
 const SideMenuSearcher = puffin.element(`
    <input keyup="$writing" placeHolder="Search" class="${puffin.style.css`
-        ${ThemeProvider}
         &{
-            background:{{sidemenuSearcherBackground}};
-            color:{{sidemenuSearcherText}};
+            background:var(--sidemenuSearcherBackground);
+            color:var(--sidemenuSearcherText);
             border:0px;
             padding:7px;
             margin:0 auto;

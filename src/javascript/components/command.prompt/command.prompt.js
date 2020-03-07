@@ -1,8 +1,6 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
 
 const CommandPromptBody = puffin.style.div`
-    ${ThemeProvider}
     &{
         min-height:100%;
         min-width:100%;
@@ -14,9 +12,9 @@ const CommandPromptBody = puffin.style.div`
         user-select:none;
     }
     & input{
-        background:{{commandPromptInputBackground}};
-        color:{{sidemenuSearcherText}};
-        border:2px solid {{commandPromptInputBorder}};
+        background:var(--commandPromptInputBackground);
+        color:var(--sidemenuSearcherText);
+        border:2px solid var(--commandPromptInputBorder);
         padding:7px;
         margin:0 auto;
         border-radius:7px;
@@ -37,7 +35,7 @@ const CommandPromptBody = puffin.style.div`
         align-items:center;
         display:flex;
         flex-direction:column;
-        background:{{commandPromptBackground}};
+        background:var(--commandPromptBackground);
         padding:7px;
         border-radius:6px;
     }
@@ -63,14 +61,14 @@ const CommandPromptBody = puffin.style.div`
         white-space:nowrap;
         display:block;
         padding:7px 8px;
-        background:{{commandPromptOptionBackground}};
-        color:{{commandPromptOptionText}};
+        background:var(--commandPromptOptionBackground);
+        color:var(--commandPromptOptionText);
         border-radius:5px;
         margin:1px 0px;
     }
     &  a.active{
-        background:{{commandPromptOptionActiveBackground}};
-        color:{{commandPromptOptionActiveText}};
+        background:var(--commandPromptOptionActiveBackground);
+        color:var(--commandPromptOptionActiveText);
     }
 `
 

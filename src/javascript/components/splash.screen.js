@@ -1,13 +1,11 @@
 import { puffin } from '@mkenzo_8/puffin'
 import { Text } from '@mkenzo_8/puffin-drac'
-import ThemeProvider from 'ThemeProvider'
 
 const SplashScreen = puffin.element(`
     <div class="${puffin.style.css`
-        ${ThemeProvider}
         &{
-            background:{{splashScreenBackground}};
-            color:{{splashScreenText}};
+            background:var(--splashScreenBackground);
+            color:var(--splashScreenText);
             position:fixed;
             top:0;
             left:0;

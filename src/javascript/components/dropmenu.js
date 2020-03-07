@@ -1,5 +1,4 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from '../utils/themeprovider'
 
 function hideAllMenus(element){
     const allMenus = element.parentElement.children
@@ -28,7 +27,6 @@ function toggleMenuStatus(element){
 
 const DropMenu = puffin.element(`
     <div click="$onMenuClicked" mousemove="$onMenuHovering" showed="false" class="${puffin.style.css`
-        ${ThemeProvider}
         &{
             display:block;
             white-space:nowrap;
@@ -36,22 +34,22 @@ const DropMenu = puffin.element(`
         }
         & > button{
             min-height:100%;
-            background:{{dropmenuButtonBackground}};
-            color:{{dropmenuButtonText}};
+            background:var(--dropmenuButtonBackground);
+            color:var(--dropmenuButtonText);
             border:none;
             outline:0;
         }
         & > button:hover{
             min-height:100%;
-            background:{{dropmenuButtonHoveringBackground}};
-            color:{{dropmenuButtonHoveringText}}
+            background:var(--dropmenuButtonHoveringBackground);
+            color:var(--dropmenuButtonHoveringText);
         }
         & > button.active , & button:focus{
-            background:{{dropmenuButtonHoveringBackground}};
+            background:var(--dropmenuButtonHoveringBackground);
         }
         & > div{
             position:absolute;
-            background:{{dropmenuBackground}};
+            background:var(--dropmenuBackground);
             padding:5px;
             border-radius:5px;
             border-top-left-radius:0px;
@@ -66,19 +64,19 @@ const DropMenu = puffin.element(`
             padding:7px 8px;
             min-width:100px;
             border-radius:5px;
-            color:{{dropmenuOptionText}};
+            color:var(--dropmenuOptionText);
             cursor:pointer;
         }
         & > div a:hover{
-            background:{{accentColor}};
-            color:{{dropmenuOptionHoveringText}};
+            background:var(--accentColor);
+            color:var(--dropmenuOptionHoveringText);
         }
         & span{
             height:1.5px;
             border-radius:25px;
             width:95%;
             display:block;
-            background:{{dropmenuDivider}};
+            background:var(--dropmenuDivider);
             margin:3px auto;
         }
     

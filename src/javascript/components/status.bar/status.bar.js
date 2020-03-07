@@ -1,15 +1,13 @@
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
+import { puffin } from '@mkenzo_8/puffin'
 
 const PanelStatusBar = puffin.element(`
     <div id="statusBar" class="${
         puffin.style.css`
-            ${ThemeProvider}
             &{
-                border-top:1px solid {{componentsBorder}};
+                border-top:1px solid var(--componentsBorder);
                 min-height:25px;
                 max-height:25px;
-                background:{{statusbarBackground}};
+                background:var(--statusbarBackground);
                 box-sizing:border-box;
                 display:flex;
                 box-sizing:border-box;

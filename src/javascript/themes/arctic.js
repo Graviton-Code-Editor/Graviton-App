@@ -11,7 +11,7 @@ const Arctic = {
         dropmenuButtonBackground:"rgb(238,238,238)",
         dropmenuButtonHoveringBackground:"rgb(212,212,212)",
         dropmenuButtonText:"black",
-        dropmenuButtonHoveringText:"white",
+        dropmenuButtonHoveringText:"black",
         dropmenuOptionText:"black",
         dropmenuOptionHoveringText:"white",
         dropmenuDivider:'rgb(212,212,212)',

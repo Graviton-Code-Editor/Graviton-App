@@ -1,5 +1,4 @@
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from '../../utils/themeprovider'
+import { puffin } from '@mkenzo_8/puffin'
 import DropMenu from '../dropmenu'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
@@ -8,11 +7,10 @@ const os = eval('process.platform')
 const TitleBar = puffin.element(`
     <div>
         <div class="${puffin.style.css`
-            ${ThemeProvider}
             &{
                 padding:0px;
                 display:flex;
-                background:{{titlebarBackground}};
+                background:var(--titlebarBackground);
                 max-height:40px;
                 overflow:hidden;
                 min-height:40px;

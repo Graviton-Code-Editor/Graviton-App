@@ -8,7 +8,6 @@ import areYouSureDialog from '../../defaults/dialogs/you.sure'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import RunningConfig from 'RunningConfig'
-import ThemeProvider from 'ThemeProvider'
 import Icons from '../../../../assets/icons/**.svg'
 import FolderArrow from '../icons/folder.arrow'
 import requirePath from '../../utils/require'
@@ -50,7 +49,6 @@ function getMyStatus(filePath,gitChanges,projectPath){
 
 function markStatus(target,status){
     const spanText = target.children[0].children[2]
-    console.log(spanText)
     const isDirectory = target.getAttribute("isDirectory") == "true"
 
     switch(status){
@@ -70,7 +68,6 @@ function markStatus(target,status){
 
 function Item(){
     const ItemWrapper = puffin.style.div`
-        ${ThemeProvider}
         &{
             background:transparent;
             white-space:nowrap;
@@ -91,7 +88,7 @@ function Item(){
             display:flex;
             align-items: center;
             justify-content: center;
-            color:{{explorerItemText}};
+            color:var(--explorerItemText);
         }
         & button:hover{
             transition:0.07s;
@@ -101,7 +98,7 @@ function Item(){
         & > button > *{
             align-items: center;
             display:flex;
-            color:{{explorerItemText}};
+            color:var(--explorerItemText);
         }
         & .gitStatus {
             display:none;
@@ -114,18 +111,18 @@ function Item(){
 
         &[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
             display:block;
-            background:{{explorerItemGitModifiedIndicator}};
+            background:var(--explorerItemGitModifiedIndicator);
         }
         &[gitStatus="modified"] > button > span {
-            color:{{explorerItemGitModifiedText}};
+            color:var(--explorerItemGitModifiedIndicator);
         }
 
         &[gitStatus="not_added"][isDirectory="true"] > button > .gitStatus {
             display:block;
-            background:{{explorerItemGitNotAddedIndicator}};
+            background:var(--explorerItemGitNotAddedIndicator);
         }
         &[gitStatus="not_added"] > button > span {
-            color:{{explorerItemGitNotAddedText}};
+            color:var(--explorerItemGitNotAddedText);
         }
         & .icon{
             height:20px;

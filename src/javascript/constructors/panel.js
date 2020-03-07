@@ -1,7 +1,6 @@
 import PanelBody from '../components/panel/panel'
 import { puffin } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
-import ThemeProvider from 'ThemeProvider'
 import ContextMenu from './contextmenu'
 
 function guessTabPosition(tab,tabsbar){
@@ -18,7 +17,6 @@ function Panel(){
     const PanelComp = puffin.element(`
         <div id="${randomSelector}" click="$focusPanel" contextmenu="$contextmenu" class="${
             puffin.style.css`
-                ${ThemeProvider}
                 &{
                     flex:1;
                     min-width:1px;
@@ -38,7 +36,7 @@ function Panel(){
                     flex:1;
                     overflow-x:auto;
                     overflow-y:hidden;
-                    background:{{tabsbarBackground}};
+                    background:var(--tabsbarBackground);
                 }
                 & .tabsbar:empty{
                     background:transparent;

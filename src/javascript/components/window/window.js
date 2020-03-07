@@ -5,11 +5,11 @@ const WindowBody = puffin.element(`
     <div class="${puffin.style.css`
     ${ThemeProvider}
         &{
-            border:1px solid {{windowBorder}};
+            border:1px solid var(--windowBorder);
             width:200px;
             max-width: 80%;
             max-height: 75%;
-            background: {{windowBackground}};
+            background: var(--windowBackground);
             border-radius: 7px;
             overflow:auto;
             position:absolute;

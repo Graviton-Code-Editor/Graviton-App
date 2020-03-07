@@ -1,17 +1,15 @@
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
+import { puffin } from '@mkenzo_8/puffin'
 
 const UnSavedIcon = puffin.element(`
     <div class="${puffin.style.css`
-        ${ThemeProvider}
         &{
-           background:{{fileNotSavedIndicator}};
+           background:var(--fileNotSavedIndicator);
            height:10px;
            width:10px;
            border-radius:100px;
         }
         &:hover{
-            background:{{fileNotSavedIndicatorHovering}};
+            background:var(--fileNotSavedIndicatorHovering);
         }
     `}"></div>
     

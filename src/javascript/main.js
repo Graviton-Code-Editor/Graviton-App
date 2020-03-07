@@ -22,15 +22,90 @@ const App = puffin.element(`
             --puffinAccent:{{accentColor}};
             --puffinTextColor:{{textColor}};
             --puffinFont:mainFont;
-            --sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
             --puffinButtonBackground:{{buttonBackground}};
             --puffinCardBackground:{{cardBackground}};
             --puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
             --puffinRadioCircleBackground:{{radioCircleBackground}};
             --puffinRadioCircleBorder:{{radioCircleBorder}};
             --puffinRadioCircleBorderHovering:{{radioCircleBorderHovering}};
+		}
+		html{
+			--accentColor: {{accentColor}};
+            --textColor:{{textColor}};
+            --bodyBackground:{{bodyBackground}};
+            --titlebarBackground:{{titlebarBackground}};
+            --dropmenuBackground:{{dropmenuBackground}};
+            --dropmenuButtonBackground:{{dropmenuButtonBackground}};
+            --dropmenuButtonHoveringBackground:{{dropmenuButtonHoveringBackground}};
+            --dropmenuButtonText:{{dropmenuButtonText}};
+            --dropmenuButtonHoveringText:{{dropmenuButtonHoveringText}};
+            --dropmenuOptionText:{{dropmenuOptionText}};
+            --dropmenuOptionHoveringText:{{dropmenuOptionHoveringText}};
+            --dropmenuDivider:{{dropmenuDivider}};
+            --controlButtonsFill:{{controlButtonsFill}};
+            --controlButtonsHoverBackground:{{controlButtonsHoverBackground}};
+            --controlCloseButtonHoverBackground:{{controlCloseButtonHoverBackground}};
+            --controlCloseButtonHoverFill:{{controlCloseButtonHoverFill}};
+            --windowBackground:{{windowBackground}};
+            --contextmenuBackground:{{contextmenuBackground}};
+            --contextmenuButtonBackground:{{contextmenuButtonBackground}};
+            --contextmenuButtonText:{{contextmenuButtonText}};
+            --contextmenuButtonHoveringBackground:{{contextmenuButtonHoveringBackground}};
+            --contextmenuButtonHoveringText:{{contextmenuButtonHoveringText}};
+            --mainpanelBackground:{{mainpanelBackground}};
+            --tabsbarBackground:{{tabsbarBackground}};
+            --tabText:{{tabText}};
+            --tabBackground:{{tabBackground}};
+            --tabActiveText:{{tabActiveText}};
+            --tabActiveBackground:{{tabActiveBackground}};
+            --scrollbarBackground:{{scrollbarBackground}};
+            --scrollbarHoverBackground:{{scrollbarHoverBackground}};
+            --tabIconFill:{{tabIconFill}};
+            --tabIconHoverFill:{{tabIconHoverFill}};
+            --sidemenuBackground:{{sidemenuBackground}};
+            --sidemenuButtonBackground:{{sidemenuButtonBackground}};
+            --sidemenuButtonHoverBackground:{{sidemenuButtonHoverBackground}};
+            --sidemenuButtonActiveBackground:{{sidemenuButtonActiveBackground}};
+            --sidemenuButtonText:{{sidemenuButtonText}};
+            --sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
+            --sidemenuSearcherBackground:{{sidemenuSearcherBackground}};
+            --sidemenuSearcherText:{{sidemenuSearcherText}};
+            --explorerItemText:{{explorerItemText}};
+            --explorerItemArrowBackground:{{explorerItemArrowBackground}};
+            --explorerItemGitModifiedText:{{explorerItemGitModifiedText}};
+            --explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
+            --explorerItemGitNotAddedText:{{explorerItemGitNotAddedText}};
+            --explorerItemGitNotAddedIndicator:{{explorerItemGitNotAddedIndicator}};
+            --windowBorder:{{windowBorder}};
+            --fileNotSavedIndicator:{{fileNotSavedIndicator}};
+            --fileNotSavedIndicatorHovering:{{fileNotSavedIndicatorHovering}};
+            --controlCloseButtonActiveBackground:{{controlCloseButtonActiveBackground}};
+            --controlCloseButtonActiveFill:{{controlCloseButtonActiveFill}};
             --editorDialogBackground:{{editorDialogBackground}};
             --editorDialogText:{{editorDialogText}};
+            --contextmenuDivider:{{contextmenuDivider}};
+            --statusbarBackground:{{statusbarBackground}};
+            --statusbarItemBackground:{{statusbarItemBackground}};
+            --statusbarItemHoveringBackground:{{statusbarItemHoveringBackground}};
+            --statusbarItemText:{{statusbarItemText}};
+            --statusbarItemHoveringText:{{statusbarItemHoveringText}};
+            --statusbarItemIconBackground:{{statusbarItemIconBackground}};
+            --inputBackground:{{inputBackground}};
+            --inputText:{{inputText}};
+            --splashScreenText:{{splashScreenText}};
+            --splashScreenBackground:{{splashScreenBackground}};
+            --commandPromptInputBackground:{{commandPromptInputBackground}};
+            --commandPromptInputText:{{commandPromptInputText}};
+            --commandPromptInputBorder:{{commandPromptInputBorder}};
+            --commandPromptBackground:{{commandPromptBackground}};
+            --commandPromptOptionBackground:{{commandPromptOptionBackground}};
+            --commandPromptOptionActiveBackground:{{commandPromptOptionActiveBackground}};
+            --commandPromptOptionText:{{commandPromptOptionText}};
+            --commandPromptOptionActiveText:{{commandPromptOptionActiveText}};
+            --notificationBackground:{{notificationBackground}};
+            --notificationTitleText:{{notificationTitleText}};
+            --notificationContentText:{{notificationContentText}};
+            --componentsBorder:{{componentsBorder}};
         }
         @font-face {
             font-family: mainFont;
@@ -50,10 +125,10 @@ const App = puffin.element(`
             display:flex;
             flex-direction:columns;
             height:calc(100% - 65px);
-            background:{{bodyBackground}};
+            background:var(--bodyBackground);
         }
         #sidepanel{
-            background:{{bodyBackground}};
+            background:var(--bodyBackground);
             padding:10px;
             min-width:50px;
             width:35%;
@@ -70,10 +145,10 @@ const App = puffin.element(`
             min-width:50px;
             width:300px;
             flex:1;
-            border-left:1px solid {{componentsBorder}};
-            border-top:1px solid {{componentsBorder}};
+            border-left:1px solid var(--componentsBorder);
+            border-top:1px solid var(--componentsBorder);
             border-top-left-radius:5px;
-            background:{{mainpanelBackground}};
+            background:var(--mainpanelBackground);
         }
         #mainpanel > div:nth-child(1){
             border-top-left-radius:5px;
@@ -124,12 +199,12 @@ const App = puffin.element(`
         & * ::-webkit-scrollbar-thumb {
             border-radius: 0.2rem;
             transition: 0.1s;
-            background: {{scrollbarBackground}};
+            background: var(--scrollbarBackground);
             
         }
         & * ::-webkit-scrollbar-thumb:hover {
             transition: 0.1s;
-            background: {{scrollbarHoverBackground}};
+            background: var(--scrollbarHoverBackground);
         }
         & * ::-webkit-scrollbar-corner {
             visibility: hidden !important;

@@ -1,12 +1,10 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
 
 const Plus = puffin.element(`
     <svg class="${
         puffin.style.css`
-            ${ThemeProvider}
             & > rect{
-                fill:{{statusbarItemIconBackground}};
+                fill:var(--statusbarItemIconBackground);
             }
         `
     }" width="15" height="15" viewBox="0 0 43 43" fill="none" xmlns="http://www.w3.org/2000/svg">

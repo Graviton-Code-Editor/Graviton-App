@@ -1,20 +1,16 @@
-
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from '../../utils/themeprovider'
+import { puffin } from '@mkenzo_8/puffin'
 import requirePath from '../../utils/require'
-
 const { remote } = requirePath('electron')
 const os = eval('process.platform')
 
 if(os == "win32"){
     var Buttons = puffin.element(`
         <div class="buttons ${puffin.style.css`
-            ${ThemeProvider}
             rect{
-                stroke:{{controlButtonsFill}};
+                stroke:var(--controlButtonsFill);
             }
             rect.fill{
-                fill:{{controlButtonsFill}};
+                fill:var(--controlButtonsFill);
             }
             & button{
                 border:0;
@@ -27,19 +23,19 @@ if(os == "win32"){
                 background:transparent;
             }
             & button:nth-child(3):active{
-                background:{{controlCloseButtonActiveBackground}};
+                background:var(--controlCloseButtonActiveBackground);
             }
             & button:nth-child(3):active rect.fill{
-                fill:{{controlCloseButtonActiveFill}};
+                fill:var(--controlCloseButtonActiveFill);
             }
             & button:hover{
-                background:{{controlButtonsHoverBackground}};
+                background:var(--controlButtonsHoverBackground);
             }
             & button:nth-child(3):hover{
-                background:{{controlCloseButtonHoverBackground}};
+                background:var(--controlCloseButtonHoverBackground);
             }
             & button:nth-child(3):hover rect.fill{
-                fill:{{controlCloseButtonHoverFill}};
+                fill:var(--controlCloseButtonHoverFill);
             }
             
         `}">

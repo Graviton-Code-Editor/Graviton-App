@@ -1,4 +1,4 @@
-import {puffin} from '@mkenzo_8/puffin'
+import { puffin } from '@mkenzo_8/puffin'
 
 const PanelBody  = puffin.element(`
     <div click="$focusPanel" class="${

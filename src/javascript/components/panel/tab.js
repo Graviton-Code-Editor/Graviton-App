@@ -1,14 +1,12 @@
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
+import { puffin } from '@mkenzo_8/puffin'
 
 const TabBody  = puffin.element(`
     <div class="${
         puffin.style.css`
-            ${ThemeProvider}
             &{
                 height:40px;
-                background:{{tabBackground}};
-                color:{{tabText}};
+                background:var(--tabBackground);
+                color:var(--tabText);
                 min-width:100px;
                 width:auto;
                 max-width:150px;
@@ -50,9 +48,9 @@ const TabBody  = puffin.element(`
                 margin-left:10px; 
             }
             &[active="true"]{
-                background:{{tabActiveBackground}};
+                background:var(--tabActiveBackground);
                 box-shadow:0px 0px 10px rgba(0,0,0,0.2);
-                color:{{tabActiveText}};
+                color:var(--tabActiveText);
             }
         `
     }"/>

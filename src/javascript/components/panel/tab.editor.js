@@ -1,10 +1,8 @@
-import {puffin} from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
+import { puffin } from '@mkenzo_8/puffin'
 
 const TabEditor  = puffin.element(`
     <div class="${
         puffin.style.css`
-            ${ThemeProvider}
             &{
                min-height:100%;
                max-height:100%;

@@ -1,5 +1,4 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from 'ThemeProvider'
 
 function moveToPage(page,buttons,pages){
     pages.map(function(contentPage){
@@ -27,7 +26,6 @@ function moveToSection(search,sections,buttons,pages){
 
 const SideMenu = puffin.element(`
     <div class="${puffin.style.css`
-        ${ThemeProvider}
         & {
             display:flex;
             max-height:100%;
@@ -36,7 +34,7 @@ const SideMenu = puffin.element(`
             user-select:none;
         }
         & > div:nth-child(1){
-            background:{{sidemenuBackground}};
+            background:var(--sidemenuBackground);
             min-height:100%;
             min-width:180px;
             max-width:180px;
@@ -56,18 +54,18 @@ const SideMenu = puffin.element(`
             white-space:prewrap;
             padding:7px 9px;
             border-radius:6px;
-            background:{{sidemenuButtonBackground}};
-            color:{{sidemenuButtonText}};
+            background:var(--sidemenuButtonBackground);
+            color:var(--sidemenuButtonText);
             margin:1px 0px;
             font-size:13px;
         }
         & > div:nth-child(1) > label:hover:not(.active) {
             transition:0.04s;
-            background:{{sidemenuButtonHoverBackground}};
+            background:var(--sidemenuButtonHoverBackground);
         }
         & > div:nth-child(1) > label.active {
-            background:{{sidemenuButtonActiveBackground}};
-            color:{{sidemenuButtonActiveText}};
+            background:var(--sidemenuButtonActiveBackground);
+            color:var(--sidemenuButtonActiveText);
         }
         & > div:nth-child(2){
             background:transparent;
