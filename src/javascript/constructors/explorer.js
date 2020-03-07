@@ -41,17 +41,25 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
         if( gitResult ) gitChanges = await getStatus(folderPath)
 
         const explorerContainer = puffin.element(`
-            <Item isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
+        	<Item isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
         `,{
-            components:{
-                Item:Item()
-            },
-            events:{
-                mounted(){
-                    this.state.emit('doReload')
-                    this.gitChanges = gitChanges
+          components:{
+            Item:Item()
+          },
+          events:{
+            mounted(){
+              this.state.emit('doReload')
+              this.gitChanges = gitChanges
+              
+              RunningConfig.on(['aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated'],async ()=>{
+                if( gitResult ) {
+                  RunningConfig.emit('gitStatusUpdated',{
+                    gitChanges : await getStatus(folderPath)
+                  })
                 }
+              })
             }
+          }
         })
         if(replaceOldExplorer && parent.children[0] != null){
             for( let otherExplorer of parent.children){
@@ -83,7 +91,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
                     paths.map(function(dir){
                         if(!fs.lstatSync(path.join(folderPath,dir)).isDirectory()){
                             if(! dir.match("~") )
-                                content += `<Item isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" test="${path.join(folderPath,dir)}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+                                content += `<Item isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
                         }
                     })
                     return content

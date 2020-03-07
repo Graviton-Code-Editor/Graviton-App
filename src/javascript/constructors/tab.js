@@ -119,8 +119,13 @@ function Tab({
                 })
 
                 tabState.on('savedMe',()=>{
-                    isSaved(target,true)
-                    target.props.saved = true
+                	if(!target.props.saved){
+                    	isSaved(target,true)
+                    	target.props.saved = true
+                    	RunningConfig.emit('aTabHasBeenSaved',{
+                        	tabElement:this
+                        })
+                    }
                 })
 
                 tabState.on('unsavedMe',()=>{

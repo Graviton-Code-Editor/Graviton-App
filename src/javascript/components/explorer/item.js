@@ -7,7 +7,7 @@ import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import areYouSureDialog from '../../defaults/dialogs/you.sure'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
-
+import RunningConfig from 'RunningConfig'
 import ThemeProvider from 'ThemeProvider'
 import Icons from '../../../../assets/icons/**.svg'
 import FolderArrow from '../icons/folder.arrow'
@@ -43,25 +43,28 @@ function getMyStatus(filePath,gitChanges,projectPath){
                     })
                 }
             })
-        })
-        
+        }) 
     }
     return result
 }
 
 function markStatus(target,status){
     const spanText = target.children[0].children[2]
+    console.log(spanText)
     const isDirectory = target.getAttribute("isDirectory") == "true"
 
     switch(status){
         case 'modified':
             target.setAttribute('gitStatus','modified')
-            if( !isDirectory) spanText.textContent += ` - M`
+            if( !isDirectory) spanText.textContent = `${spanText.getAttribute("originalName")} - M`
         break;
         case 'not_added': //Same as untracked
             target.setAttribute('gitStatus','not_added')
-            if( !isDirectory) spanText.textContent += ` - U`
+            if( !isDirectory) spanText.textContent = `${spanText.getAttribute("originalName")} - U`
         break;
+      default:
+        target.setAttribute('gitStatus',null)
+      	if( !isDirectory) spanText.textContent = spanText.getAttribute("originalName")
     }
 }
 
@@ -153,7 +156,7 @@ function Item(){
             <button click="$openDirectory" contextmenu="$contextMenu">
                 <FolderArrow class="arrow"/>
                 <img class="icon"/>
-                <span>{{path}}</span>
+                <span originalName="{{path}}">{{path}}</span>
                 <div class="gitStatus"/>
             </button>
         </ItemWrapper>
@@ -249,7 +252,16 @@ function Item(){
                     target.getAttribute("parentfolder")
                 )
                 markStatus(target,gitResult.status)
-
+              
+			    RunningConfig.on('gitStatusUpdated',({ gitChanges })=>{
+                  target.gitChanges = gitChanges
+                  const gitResult = getMyStatus(
+                    this.getAttribute("fullpath"),
+                    gitChanges,
+                    this.getAttribute("parentfolder")
+                  )
+                  markStatus(this,gitResult.status)
+                })
                 target.state.on('clickItem',function(){
 
                     if(target.getAttribute("isDirectory") == "true"){
