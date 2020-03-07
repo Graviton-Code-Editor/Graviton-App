@@ -5,22 +5,33 @@ const DialogBody = new puffin.element(`
         &{
             border:1px solid gray;
             width:200px;
-            min-width:25%;
-            max-width: 45%;
+            min-width:150px;
+			width:20%;
+            max-width: 300px;
             min-height: 15%;
-            max-height: 35%;
+            max-height: 32%;
             background: var(--windowBackground);
             border-radius: 7px;
             overflow:auto;
             position:absolute;
             padding:10px;
+			display:flex;
+			flex-direction:column;
         }
-        & > div{
+		& > div:nth-child(1){
+            min-height:auto;	
+			flex:1;
+        }
+        & > div:nth-child(2){
+			min-height:auto;
+            position:relative;
+            bottom:0px;
             display:flex;
             justify-content:flex-end;
         }
         & button {
-            padding:8px 13px;
+			max-height:auto;
+			padding:8px 13px;
         }
     `}"/>
 `)

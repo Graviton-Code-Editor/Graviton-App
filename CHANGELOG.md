@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200307 - 3 [2.0.34]
+- New: autocompletion for JavaScript, CSS, SQL and XML-like languages
+
 ### 200307 - 2 [2.0.33]
 - Improved: using CSS3 variables for theming
 

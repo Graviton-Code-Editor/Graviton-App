@@ -187,33 +187,33 @@ const App = puffin.element(`
             -webkit-box-sizing: default !important;
             box-sizing: default !important;
         }
-        & *::-webkit-scrollbar {
+        html *::-webkit-scrollbar {
             transition: 0.1s;
             width: 10px;
             height: 10px;
             background: transparent;
         }
-        & * ::-webkit-scrollbar-track {
+        html * ::-webkit-scrollbar-track {
             background: transparent;
         }
-        & * ::-webkit-scrollbar-thumb {
+        html * ::-webkit-scrollbar-thumb {
             border-radius: 0.2rem;
             transition: 0.1s;
             background: var(--scrollbarBackground);
             
         }
-        & * ::-webkit-scrollbar-thumb:hover {
+        html * ::-webkit-scrollbar-thumb:hover {
             transition: 0.1s;
             background: var(--scrollbarHoverBackground);
         }
-        & * ::-webkit-scrollbar-corner {
+        html * ::-webkit-scrollbar-corner {
             visibility: hidden !important;
             opacity: 0 !important;
             height: 0 !important;
             width: 0 !important;
             display: none !important;
         }
-        & * ::-webkit-resizer {
+        html * ::-webkit-resizer {
             cursor: ew-resize;
         }
     `}">

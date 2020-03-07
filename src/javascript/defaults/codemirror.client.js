@@ -9,6 +9,13 @@ import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/edit/matchtags'
 import 'codemirror/addon/edit/closetag'
 import 'codemirror/addon/edit/closebrackets'
+import 'codemirror/addon/hint/show-hint.css'
+import 'codemirror/addon/hint/show-hint'
+import 'codemirror/addon/hint/javascript-hint'
+import 'codemirror/addon/hint/css-hint'
+import 'codemirror/addon/hint/sql-hint'
+import 'codemirror/addon/hint/xml-hint'
+import 'codemirror/addon/hint/html-hint'
 
 const CodemirrorClient = new EditorClient({
     name:'codemirror',
@@ -32,6 +39,7 @@ const CodemirrorClient = new EditorClient({
                 return { name: 'css' }
             case 'd':
                 return { name: 'text/x-d' }
+            case 'scss':
             case 'sass':
                 return { name: 'text/x-sass' }
             case 'php':
@@ -57,8 +65,27 @@ const CodemirrorClient = new EditorClient({
             autoCloseTags: true,
             autoCloseBrackets: true,
             matchBrackets: true,
-            theme:theme
+            theme:theme,
+          	extraKeys: {"Ctrl-Space": "autocomplete"},
         })
+        CodemirrorEditor.on("keyup", function (cm, event) {
+          if (!cm.state.completionActive && 
+              event.keyCode != 13 &&
+              event.keyCode != 8 && 
+              event.keyCode != 9  && 
+              event.keyCode != 222 && 
+              event.keyCode != 38 && 
+              event.keyCode != 40 && 
+              event.keyCode != 39 && 
+              event.keyCode != 37 && 
+              event.keyCode != 17 && 
+              event.keyCode != 18 && 
+              event.keyCode != 188 &&
+              event.keyCode != 27
+          ) {
+            CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
+          }
+        });
 
         element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
 

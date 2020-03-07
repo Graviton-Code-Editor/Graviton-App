@@ -24,8 +24,10 @@ function Dialog({
         `}">
             <WindowBackground window="${randomSelector}"/>
             <DialogBody>
-                <H2>${title}</H2>
-                <Text>${content}</Text>
+				<div>
+                  <H2>${title}</H2>
+                  <Text>${content}</Text>
+				</div>
                 <div>
                     ${(function(){
                         let content = "";
