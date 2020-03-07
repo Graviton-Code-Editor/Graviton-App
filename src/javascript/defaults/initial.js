@@ -2,6 +2,7 @@ import { Panel, removePanel } from '../constructors/panel'
 import { Shortcuts } from 'shortcuts'
 import { loadAutomatically } from '../utils/extension.loader'
 import { puffin } from '@mkenzo_8/puffin'
+import { openFolder } from '../utils/filesystem'
 import Menu from "../constructors/menu";
 import Settings from './windows/settings'
 import Welcome from "./windows/welcome";
@@ -31,7 +32,17 @@ function init(){
                 label:'Open File'
             },
             {
-                label:'Open Folder'
+                label:'Open Folder',
+             	action:()=>{
+                  openFolder().then(function(folderPath){
+                    RunningConfig.emit('addFolderToRunningWorkspace',{
+                        folderPath,
+                        replaceOldExplorer:true,
+                        workspacePath:null
+                    })
+                    WelcomeWindow.close()
+                  })
+                }
             },
             {},
             {
