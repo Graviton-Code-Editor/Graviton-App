@@ -230,18 +230,20 @@ function Item(){
                 const itemArrow = target.getElementsByClassName('arrow')[0]
                 const gitStatus = target.getAttribute("git-status") ||true
                 const gitChanges = target.parentElement.parentElement.gitChanges
+                const parentFolder = path.normalize(
+                  this.parentElement.parentElement.getAttribute("parentFolder") || 
+                  this.getAttribute("parentFolder")
+                )
                 target.gitChanges = gitChanges
 
                 target.state = itemState
                 target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
 
                 if(target.getAttribute("isDirectory") == "true"){
-                    setStateClosed(target)
-
+                  setStateClosed(target)
                 }else{
-                    setFileIcon(itemIcon,fileExtension)
-                    itemArrow.style.opacity = "0"
-
+                  setFileIcon(itemIcon,fileExtension)
+                  itemArrow.style.opacity = "0"
                 }
                 const gitResult = getMyStatus(
                     target.getAttribute("fullpath"),
@@ -250,14 +252,16 @@ function Item(){
                 )
                 markStatus(target,gitResult.status)
               
-			    RunningConfig.on('gitStatusUpdated',({ gitChanges })=>{
-                  target.gitChanges = gitChanges
-                  const newGitResult = getMyStatus(
-                    this.getAttribute("fullpath"),
-                    gitChanges,
-                    this.getAttribute("parentfolder")
-                  )
-                  if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
+			    RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
+                  if(parentFolder == explorerParentfolder){
+                    target.gitChanges = gitChanges
+                    const newGitResult = getMyStatus(
+                      this.getAttribute("fullpath"),
+                      gitChanges,
+                      this.getAttribute("parentfolder")
+                    )
+                    if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
+                  }
                 })
                 target.state.on('clickItem',function(){
 

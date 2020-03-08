@@ -51,10 +51,11 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
               this.state.emit('doReload')
               this.gitChanges = gitChanges
               
-              RunningConfig.on(['aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated'],async ()=>{
-                if( gitResult ) {
+              RunningConfig.on(['aTabHasBeenUnSaved','aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated'],async ({parentFolder})=>{
+                if( gitResult && parentFolder == folderPath) {
                   RunningConfig.emit('gitStatusUpdated',{
-                    gitChanges : await getStatus(folderPath)
+                    gitChanges : await getStatus(folderPath),
+                    parentFolder
                   })
                 }
               })

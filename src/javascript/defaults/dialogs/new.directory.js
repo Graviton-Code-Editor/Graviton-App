@@ -1,6 +1,6 @@
 import InputDialog from '../../constructors/dialog.input'
 import requirePath from '../../utils/require'
-import path from 'path'
+const path = requirePath("path")
 import RunningConfig from 'RunningConfig'
 
 const fs = requirePath("fs-extra")
@@ -28,7 +28,8 @@ function createDirectory(value,isFolder,parentDirectory,explorerContainer){
                 fs.mkdirSync(dir);
                 explorerContainer.state.emit('doReload')
               	RunningConfig.emit('aFolderHasBeenCreated',{
-                  path:dir
+                  path:dir,
+                  parentFolder:path.normalize(explorerContainer.getAttribute("parentfolder"))
                 })
             }
         }else{
@@ -36,7 +37,8 @@ function createDirectory(value,isFolder,parentDirectory,explorerContainer){
                 if (err) throw err;
                 explorerContainer.state.emit('doReload')
                 RunningConfig.emit('aFileHasBeenCreated',{
-                  path:dir
+                  path:dir,
+                  parentFolder:path.normalize(explorerContainer.getAttribute("parentfolder"))
                 })
             }); 
           	

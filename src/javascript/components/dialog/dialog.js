@@ -12,7 +12,8 @@ const DialogBody = new puffin.element(`
             max-height: 32%;
             background: var(--windowBackground);
             border-radius: 7px;
-            overflow:auto;
+            overflow-x:hidden;
+			overflow-y:auto;
             position:absolute;
             padding:10px;
 			display:flex;

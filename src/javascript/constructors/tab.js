@@ -26,7 +26,6 @@ function Tab({
     component,
     panel = RunningConfig.data.focusedPanel
 }){
-
     const tabState = new puffin.state({
         active:true,
         saved:true,
@@ -123,14 +122,23 @@ function Tab({
                     	isSaved(target,true)
                     	target.props.saved = true
                     	RunningConfig.emit('aTabHasBeenSaved',{
-                        	tabElement:this
+                        	tabElement:this,
+                          	path:directory,
+                          	parentFolder
                         })
                     }
                 })
 
                 tabState.on('unsavedMe',()=>{
-                    isSaved(target,false)
-                    target.props.saved = false
+                    if(target.props.saved){
+                      isSaved(target,false)
+                      target.props.saved = false
+                      RunningConfig.emit('aTabHasBeenUnSaved',{
+                        tabElement:this,
+                        path:directory,
+                        parentFolder
+                      })
+                    }
                 })
 
                 tabState.on('changePanel',(newPanel)=>{
@@ -140,7 +148,7 @@ function Tab({
 
                 tabState.on('close',(newPanel)=>{
                   if(this.props.saved){
-                  	focusATab(this)
+                  	if( RunningConfig.data.focusedTab == this) focusATab(this)
                     TabComp.node.remove()
                     TabEditorComp.node.remove(); 
                   }  

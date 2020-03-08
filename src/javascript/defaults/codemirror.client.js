@@ -66,7 +66,8 @@ const CodemirrorClient = new EditorClient({
             autoCloseBrackets: true,
             matchBrackets: true,
             theme:theme,
-          	extraKeys: {"Ctrl-Space": "autocomplete"},
+          	indentWithTabs:true,
+          	tabSize:2
         })
         CodemirrorEditor.on("keyup", function (cm, event) {
           if (!cm.state.completionActive && 
