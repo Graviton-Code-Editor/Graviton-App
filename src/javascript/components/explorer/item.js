@@ -31,14 +31,17 @@ function getMyStatus(filePath,gitChanges,projectPath){
                 }else{
                     const dirsGit =  path.normalize(gitPath).split(path.sep)
                     const dirsLocal = path.normalize(filePath).split(path.sep)
-                    dirsGit.map((dirGit)=>{
-                        const dirLocal = dirsLocal[dirsLocal.length-1]
-                        if(dirLocal == dirGit){
-                            if(gitPath.match(dirGit))
-                            return result = {
-                                status:status
-                            }
-                        }
+                    dirsGit.filter((dirGit)=>{
+											const dirLocal = dirsLocal[dirsLocal.length-1]
+											if(dirLocal == dirGit){
+													if(path.normalize(path.resolve(projectPath,gitPath)).indexOf(path.normalize(filePath)) > -1){
+													return result = {
+														status:status
+													}
+												}
+											}else{
+												return
+											}
                     })
                 }
             })
