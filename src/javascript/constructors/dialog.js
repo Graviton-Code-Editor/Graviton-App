@@ -48,9 +48,10 @@ function Dialog({
             Button
         },
         events:{
-            mounted(target){
+            mounted(){
                 if(component != null){
-                    puffin.render(component,target.children[1].children[1])
+                  	console.log(this.children[1].children[0])
+                    puffin.render(component,this.children[1].children[0])
                 }
                 window.addEventListener('keydown',(e)=>{
                     if(e.keyCode === 27){

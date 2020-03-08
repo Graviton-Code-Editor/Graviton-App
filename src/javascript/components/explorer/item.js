@@ -252,12 +252,12 @@ function Item(){
               
 			    RunningConfig.on('gitStatusUpdated',({ gitChanges })=>{
                   target.gitChanges = gitChanges
-                  const gitResult = getMyStatus(
+                  const newGitResult = getMyStatus(
                     this.getAttribute("fullpath"),
                     gitChanges,
                     this.getAttribute("parentfolder")
                   )
-                  markStatus(this,gitResult.status)
+                  if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
                 })
                 target.state.on('clickItem',function(){
 

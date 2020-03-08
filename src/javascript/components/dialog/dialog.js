@@ -18,6 +18,9 @@ const DialogBody = new puffin.element(`
 			display:flex;
 			flex-direction:column;
         }
+		& p {
+			margin-top:15px;
+		}
 		& > div:nth-child(1){
             min-height:auto;	
 			flex:1;
