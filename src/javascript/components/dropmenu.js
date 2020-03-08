@@ -33,11 +33,12 @@ const DropMenu = puffin.element(`
             left:0;
         }
         & > button{
-            min-height:100%;
-            background:var(--dropmenuButtonBackground);
-            color:var(--dropmenuButtonText);
-            border:none;
-            outline:0;
+						min-height:100%;
+						background:var(--dropmenuButtonBackground);
+						color:var(--dropmenuButtonText);
+						border:none;
+						outline:0;
+						font-size:13px;
         }
         & > button:hover{
             min-height:100%;
@@ -48,13 +49,13 @@ const DropMenu = puffin.element(`
             background:var(--dropmenuButtonHoveringBackground);
         }
         & > div{
-            position:absolute;
-            background:var(--dropmenuBackground);
-            padding:5px;
-            border-radius:5px;
-            border-top-left-radius:0px;
-            box-shadow:0px 2px 10px rgba(0,0,0,0.2);
-            z-index:1;
+						position:absolute;
+						background:var(--dropmenuBackground);
+						padding:5px;
+						border-radius:5px;
+						border-top-left-radius:0px;
+						box-shadow:0px 2px 10px rgba(0,0,0,0.2);
+						z-index:1;
         }
         & > div a{
             left:0;

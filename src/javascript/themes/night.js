@@ -9,7 +9,7 @@ const Night = {
         titlebarBackground:"#222222",
         dropmenuBackground:'#333333',
         dropmenuButtonBackground:"transparent",
-        dropmenuButtonHoveringBackground:"#191919",
+        dropmenuButtonHoveringBackground:"#333333",
         dropmenuButtonText:"white",
         dropmenuButtonHoveringText:"white",
         dropmenuOptionText:"white",

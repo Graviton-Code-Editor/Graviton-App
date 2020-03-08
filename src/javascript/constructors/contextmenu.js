@@ -10,14 +10,14 @@ function ContextMenu({
 
     const ContextWrapper = puffin.style.div`
         &{
-            background:var(--contextmenuBackground);
-            padding:5px;
-            position:fixed;
-            color:white;
-            border-radius:5px;
-            box-shadow:0px 0px 3px rgba(0,0,0,0.2);
-            display:block;
-        }
+					background:var(--contextmenuBackground);
+					padding:5px;
+					position:fixed;
+					color:white;
+					border-radius:5px;
+					box-shadow:0px 0px 3px rgba(0,0,0,0.2);
+					display:block;
+				}
         & > button{
             background:var(--contextmenuButtonBackground);
             color:var(--contextmenuButtonText);
