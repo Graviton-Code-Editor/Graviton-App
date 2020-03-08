@@ -9,6 +9,9 @@ import { LanguageState, getTranslation } from 'LanguageConfig'
 import Languages from '../../../../languages/*.json'
 
 function Settings(){
+	
+	
+	
     const SettingsPage = puffin.element(`
         <SideMenu default="customization">
             <div>

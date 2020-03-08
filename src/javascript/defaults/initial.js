@@ -25,123 +25,125 @@ const { getCurrentWindow } = requirePath("electron").remote
 
 function init(){
     loadAutomatically()
-    
     new Menu({ //FILE
-         button:'File',
-         list:[
-            {
-                label:'Open File'
-            },
-            {
-                label:'Open Folder',
-             	action:()=>{
-                  openFolder().then(function(folderPath){
-                    RunningConfig.emit('addFolderToRunningWorkspace',{
-                        folderPath,
-                        replaceOldExplorer:true,
-                        workspacePath:null
-                    })
-                    WelcomeWindow.close()
-                  })
-                }
-            },
-            {},
-            {
-                label:'Open workspace',
-                action:()=>{
-                    RunningConfig.emit('openWorkspaceDialog')
-                }
-            },
-            {
-                label:'Add folder to workspace',
-                action:()=>{
-                    RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
-                        replaceOldExplorer:false
-                    })
-                }
-            },
-            {
-                label:'Save workspace',
-                action:()=>{
-                    RunningConfig.emit('saveCurrentWorkspace')
-                }
-            }
-         ]
+			button:'File',
+			list:[
+				{
+					label:'Open File'
+				},
+				{
+					label:'Open Folder',
+					action:()=>{
+						openFolder().then(function(folderPath){
+							RunningConfig.emit('addFolderToRunningWorkspace',{
+								folderPath,
+								replaceOldExplorer:true,
+								workspacePath:null
+							})
+							WelcomeWindow.close()
+						})
+					}
+				},
+				{},
+				{
+					label:'Open workspace',
+					action:()=>{
+						RunningConfig.emit('openWorkspaceDialog')
+					}
+				},
+				{
+					label:'Add folder to workspace',
+					action:()=>{
+						RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
+							replaceOldExplorer:false
+						})
+					}
+				},
+				{
+					label:'Save workspace',
+					action:()=>{
+						RunningConfig.emit('saveCurrentWorkspace')
+					}
+				}
+			]
      })
-    new Menu({ //TOOLS
-        button:'Tools',
-        list:[
-            {
-                label:'Open Settings',
-                action:()=>Settings().launch()
-            },
-            {
-                label:'Open Welcome',
-                action:()=>Welcome().launch()
-            }
-        ]
-    })
-    new Menu({ //EDITOR
-        button:'Editor',
-        list:[
-            {
-                label:'New panel',
-                action:()=> new Panel()
-            }
-        ]
-    })
-    new Menu({ //Window
-        button:'Window',
-        list:[
-            {
-                label:'Default zoom',
-                action:()=> {
-                    StaticConfig.data.zoom = 1
-                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
-                }
-            },
-            {
-                label:'Increase zoom',
-                action:()=> {
-                    StaticConfig.data.zoom += 0.1
-                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
-                }
-            },
-            {
-                label:'Decrease zoom',
-                action:()=> {
-                    StaticConfig.data.zoom -= 0.1
-                    StaticConfig.emit('setZoom',StaticConfig.data.zoom)
-                }
-            },
-            {
-                label:'Open dev tools',
-                action:()=> {
-                   getCurrentWindow().toggleDevTools();
-                }
-            }
-        ]
-    })
-    new Menu({ //HELP
-        button:'Help',
-        list:[
-            {
-                label:'Blog',
-                action:()=>{
-                    openLink('https://graviton.ml/blog/')
-                }
-            },{
-                label:'Website',
-                action:()=>{
-                    openLink('https://graviton.ml/')
-                }
-            },
-            {
-                label:'About',
-                action:()=>About().launch()
-            }
-        ]
-    })
+		new Menu({ //TOOLS
+			button:'Tools',
+			list:[
+				{
+					label:'Open Settings',
+					action:()=>Settings().launch()
+				},
+				{
+					label:'Open Welcome',
+					action:()=>Welcome().launch()
+				}
+			]
+		})
+		new Menu({ //EDITOR
+			button:'Editor',
+			list:[
+				{
+					label:'New panel',
+					action:()=> new Panel()
+				}
+			]
+		})
+		new Menu({ //Window
+			button:'Window',
+			list:[
+				{
+					label:'Default zoom',
+					action:()=> {
+						StaticConfig.data.zoom = 1
+						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+					}
+				},
+				{
+					label:'Increase zoom',
+					action:()=> {
+						StaticConfig.data.zoom += 0.1
+						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+					}
+				},
+				{
+					label:'Decrease zoom',
+					action:()=> {
+						StaticConfig.data.zoom -= 0.1
+						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+					}
+				},
+				{
+					label:'Open dev tools',
+					action:getCurrentWindow().toggleDevTools
+				}
+			]
+		})
+		new Menu({ //HELP
+			button:'Help',
+			list:[
+				{
+					label:'Blog',
+					action:()=>{
+						openLink('https://graviton.ml/blog/')
+					}
+				},{
+					label:'Website',
+					action:()=>{
+						openLink('https://graviton.ml/')
+					}
+				},{
+					label:'Source code',
+					action:()=>{
+						openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
+					}
+				},
+				{
+					label:'About',
+					action:About().launch
+				}
+			]
+		})
 
     new Panel() //Initial Panel
 
