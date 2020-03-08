@@ -5,6 +5,7 @@ import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
+import areYouSureDialog from '../defaults/dialogs/you.sure'
 
 function guessTabPosition(tab,tabsbar){
 	const res =Object.keys(tabsbar.children).filter((tabChildren,index)=>{
@@ -119,9 +120,12 @@ function Tab({
 				})
 
 				tabState.on('savedMe',()=>{
-					console.log(this.props.saved)
 					if(!this.props.saved){
-						isSaved(this,true)
+						toggleTabStatus({
+							tabElement:this,
+							newStatus:true,
+							tabEditor:TabEditorComp.node
+						})
 						this.props.saved = true
 						RunningConfig.emit('aTabHasBeenSaved',{
 							tabElement:this,
@@ -133,7 +137,11 @@ function Tab({
 
 				tabState.on('unsavedMe',()=>{
 					if(this.props.saved){
-						isSaved(this,false)
+						toggleTabStatus({
+							tabElement:this,
+							newStatus:false,
+							tabEditor:TabEditorComp.node
+						})
 						this.props.saved = false
 						RunningConfig.emit('aTabHasBeenUnSaved',{
 							tabElement:this,
@@ -155,9 +163,7 @@ function Tab({
 						TabEditorComp.node.remove(); 
 					}  
 				})
-
 				unfocusTabs(this)
-
 				RunningConfig.data.focusedTab = this
 				this.props.active = tabState.data.active
 				this.props.saved = tabState.data.saved
@@ -210,34 +216,47 @@ function toggleCross(target,state){
 	target.style.opacity = state
 }
 
-function isSaved(element,isSaved,directory){
-	if( isSaved ){
-		element.isSaved = true
-		saveFile(element,()=>{
-			element.children[1].children[0].style.display = "block"
+function toggleTabStatus({
+	tabElement,
+	tabEditor,
+	newStatus
+	}){
+	if( newStatus ){
+		tabElement.isSaved = true
+		saveFile(tabElement,()=>{
+			tabElement.children[1].children[0].style.display = "block"
 
-			if( element.children[1].children[1]!=null )
-				element.children[1].children[1].remove()
+			if( tabElement.children[1].children[1]!=null )
+				tabElement.children[1].children[1].remove()
 
 			RunningConfig.emit('tabSaved',{
-				element:element,
-				parentFolder:element.props.state.data.parentFolder
+				element:tabElement,
+				parentFolder:tabElement.props.state.data.parentFolder
 			})
 
 		})
-	}else if(element.isSaved != false){
-		element.isSaved = false
-		element.children[1].children[0].style.display = "none"
-
-const comp = puffin.element(`
-		<UnSavedIcon/>
-`,{
+	}else if(tabElement.isSaved != false){
+		tabElement.isSaved = false
+		tabElement.children[1].children[0].style.display = "none"
+		const comp = puffin.element(`
+			<UnSavedIcon click="$showWarning"/>
+		`,{
 			components:{
 				UnSavedIcon
+			},
+			methods:{
+				showWarning(){
+					new areYouSureDialog().then(()=>{
+						focusATab(tabElement)
+						tabElement.remove()
+						tabEditor.remove(); 
+					}).catch(()=>{
+						// nothing, tab remains opened
+					})
+				}
 			}
 		})
-
-		puffin.render(comp,element.children[1],{
+		puffin.render(comp,tabElement.children[1],{
 			removeContent:false
 		})
 	} 
