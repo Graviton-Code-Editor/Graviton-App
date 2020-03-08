@@ -4,6 +4,7 @@ import RunningConfig from 'RunningConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import path from 'path'
 import requirePath from './require'
+import CodeMirror from 'CodeMirror'
 
 import Window from '../constructors/window'
 import Menu from '../constructors/menu'
@@ -21,14 +22,15 @@ function getExtension(path){
 
 function loadExtension(path){
     return require(path).entry({
-        RunningConfig,
-        Window,
-        puffin,
-        Menu,
-        Dialog,
-        StatusBarItem,
-        ContextMenu,
-        Notification
+			RunningConfig,
+			Window,
+			puffin,
+			Menu,
+			Dialog,
+			StatusBarItem,
+			ContextMenu,
+			Notification,
+			CodeMirror
     })
 }
 
