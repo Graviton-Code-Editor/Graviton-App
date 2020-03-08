@@ -44,6 +44,8 @@ const Arctic = {
         sidemenuSearcherBackground:'white',
         sidemenuSearcherText:'black',
         explorerItemText:'black',
+        explorerItemHoveringBackground:'rgba(150,150,150,0.6)',
+        explorerItemSelectedBackground:'rgba(150,150,150,0.3)',
         explorerItemArrowBackground:'#646464',
         explorerItemGitModifiedText:'#9F00AD',
         explorerItemGitModifiedIndicator:'#9F00AD',

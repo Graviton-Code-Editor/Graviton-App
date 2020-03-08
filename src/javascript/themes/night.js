@@ -45,6 +45,8 @@ const Night = {
         sidemenuSearcherBackground:'#222222',
         sidemenuSearcherText:'white',
         explorerItemText:'white',
+        explorerItemHoveringBackground:'rgba(150,150,150,0.6)',
+        explorerItemSelectedBackground:'rgba(150,150,150,0.3)',
         explorerItemArrowBackground:'white',
         explorerItemGitModifiedText:'#69ABF4',
         explorerItemGitModifiedIndicator:'#69ABF4',

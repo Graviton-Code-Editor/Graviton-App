@@ -12,6 +12,7 @@ import Dialog from '../constructors/dialog'
 import StatusBarItem from '../constructors/status.bar.item'
 import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
+import Tab from '../constructors/tab'
 
 const fs = requirePath("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.configPath,'plugins')
@@ -19,6 +20,13 @@ const pluginsPath = path.join(StaticConfig.data.configPath,'plugins')
 function getExtension(path){
     return require(path)
 }
+
+console.log(()=>{
+	new Tab({
+	title:'hi',
+	component:puffin.element('<p>hi</p>')
+})
+})
 
 function loadExtension(path){
     return require(path).entry({
@@ -30,7 +38,8 @@ function loadExtension(path){
 			StatusBarItem,
 			ContextMenu,
 			Notification,
-			CodeMirror
+			CodeMirror,
+			Tab
     })
 }
 

@@ -93,11 +93,15 @@ function Item(){
             justify-content: center;
             color:var(--explorerItemText);
         }
-        & button:hover{
-            transition:0.07s;
-            background:rgba(150,150,150,0.6);
-            border-radius:5px;
-        }
+				& button:hover{
+					background:var(--explorerItemHoveringBackground);
+					border-radius:5px;
+				}
+				& [selected=true] button{
+					transition:0.07s;
+					background:var(--explorerItemSelectedBackground);
+					border-radius:5px;
+				}
         & > button > *{
             align-items: center;
             display:flex;
@@ -152,7 +156,7 @@ function Item(){
     `
 
     const ItemComp = puffin.element(`
-        <ItemWrapper>
+        <ItemWrapper selected="false">
             <button click="$openDirectory" contextmenu="$contextMenu">
                 <FolderArrow class="arrow"/>
                 <img class="icon"/>
@@ -161,7 +165,7 @@ function Item(){
             </button>
         </ItemWrapper>
     `,{
-        props:['path'],
+        props:['path','selected'],
         components:{
             ItemWrapper,
             FolderArrow
@@ -227,45 +231,45 @@ function Item(){
         },
         events:{
             mounted(target){
-                const itemState = new puffin.state({})
-                const fileExtension = getExtension(target)
-                const itemIcon = target.getElementsByClassName('icon')[0]
-                const itemArrow = target.getElementsByClassName('arrow')[0]
-                const gitStatus = target.getAttribute("git-status") ||true
-                const gitChanges = target.parentElement.parentElement.gitChanges
-                const parentFolder = path.normalize(
-                  this.parentElement.parentElement.getAttribute("parentFolder") || 
-                  this.getAttribute("parentFolder")
-                )
-                target.gitChanges = gitChanges
+							const itemState = new puffin.state({})
+							const fileExtension = getExtension(target)
+							const itemIcon = target.getElementsByClassName('icon')[0]
+							const itemArrow = target.getElementsByClassName('arrow')[0]
+							const gitStatus = target.getAttribute("git-status") ||true
+							const gitChanges = target.parentElement.parentElement.gitChanges
+							const parentFolder = path.normalize(
+								this.parentElement.parentElement.getAttribute("parentFolder") || 
+								this.getAttribute("parentFolder")
+							)
+							target.gitChanges = gitChanges
+							
+							target.state = itemState
+							target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
 
-                target.state = itemState
-                target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
+							if(target.getAttribute("isDirectory") == "true"){
+								setStateClosed(target)
+							}else{
+								setFileIcon(itemIcon,fileExtension)
+								itemArrow.style.opacity = "0"
+							}
+							const gitResult = getMyStatus(
+								target.getAttribute("fullpath"),
+								gitChanges,
+								target.getAttribute("parentfolder")
+							)
+							markStatus(target,gitResult.status)
 
-                if(target.getAttribute("isDirectory") == "true"){
-                  setStateClosed(target)
-                }else{
-                  setFileIcon(itemIcon,fileExtension)
-                  itemArrow.style.opacity = "0"
-                }
-                const gitResult = getMyStatus(
-                    target.getAttribute("fullpath"),
-                    gitChanges,
-                    target.getAttribute("parentfolder")
-                )
-                markStatus(target,gitResult.status)
-              
-			    RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-                  if(parentFolder == explorerParentfolder){
-                    target.gitChanges = gitChanges
-                    const newGitResult = getMyStatus(
-                      this.getAttribute("fullpath"),
-                      gitChanges,
-                      this.getAttribute("parentfolder")
-                    )
-                    if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
-                  }
-                })
+							RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
+								if(parentFolder == explorerParentfolder){
+									target.gitChanges = gitChanges
+									const newGitResult = getMyStatus(
+										this.getAttribute("fullpath"),
+										gitChanges,
+										this.getAttribute("parentfolder")
+									)
+									if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
+								}
+							})
                 target.state.on('clickItem',function(){
 
                     if(target.getAttribute("isDirectory") == "true"){
@@ -289,7 +293,7 @@ function Item(){
                             parentFolder:target.getAttribute("parentFolder")
                         })
 
-                        if(isCancelled) return; //Cancels the tab opening
+                        if( isCancelled ) return; //Cancels the tab opening
 
                         fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
                             new Editor({
@@ -302,14 +306,21 @@ function Item(){
                                 directory:target.getAttribute("fullpath")
                             })
                         })
-
+											tabState.on('focusedMe',()=>{
+												target.setAttribute("selected",true)
+											})
+											tabState.on('unfocusedMe',()=>{
+												target.setAttribute("selected",false)
+											})
+											tabState.on('destroyed',()=>{
+												target.setAttribute("selected",false)
+											})
+											target.setAttribute("selected",true)
                     }
                 })
-
                 target.state.on('doReload',function(){
                     reload(target,gitChanges)
                 })
-
             }
         }
     })

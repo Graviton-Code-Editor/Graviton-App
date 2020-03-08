@@ -111,7 +111,7 @@ function Tab({
 					RunningConfig.data.focusedTab = this
 					RunningConfig.data.focusedPanel = this.parentElement.parentElement
 					unfocusTabs(this)
-					this.focusEditor()
+					if(this.focusEditor) this.focusEditor() //Only file tabs have this function
 					this.props.active = true
 				})
 
@@ -161,6 +161,7 @@ function Tab({
 						if( RunningConfig.data.focusedTab == this) focusATab(this)
 						TabComp.node.remove()
 						TabEditorComp.node.remove(); 
+						tabState.emit('destroyed',{tabElement:TabComp.node})
 					}  
 				})
 				unfocusTabs(this)
@@ -250,6 +251,7 @@ function toggleTabStatus({
 						focusATab(tabElement)
 						tabElement.remove()
 						tabEditor.remove(); 
+						tabState.emit('destroyed',{tabElement})
 					}).catch(()=>{
 						// nothing, tab remains opened
 					})

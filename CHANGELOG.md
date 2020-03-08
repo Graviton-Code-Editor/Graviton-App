@@ -2,6 +2,15 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200308 - 1 [2.0.36]
+- Fixed: tab size was smaller when it was unsaved
+- Improved: night theme
+- Fixed: was acting weirdly when closing tabs
+- New: focused tabs will also hide it's file in the explorer panel
+- New: a warn dialog is displayed when trying to close an unsaved tab
+- Improved: dialogs layout
+- Fixed: improved git integration
+
 ### 200307 - 3 [2.0.34]
 - New: autocompletion for JavaScript, CSS, SQL and XML-like languages
 

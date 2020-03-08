@@ -71,6 +71,8 @@ const App = puffin.element(`
 			--sidemenuSearcherBackground:{{sidemenuSearcherBackground}};
 			--sidemenuSearcherText:{{sidemenuSearcherText}};
 			--explorerItemText:{{explorerItemText}};
+			--explorerItemHoveringBackground:{{explorerItemHoveringBackground}};
+			--explorerItemSelectedBackground:{{explorerItemSelectedBackground}};
 			--explorerItemArrowBackground:{{explorerItemArrowBackground}};
 			--explorerItemGitModifiedText:{{explorerItemGitModifiedText}};
 			--explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
