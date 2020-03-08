@@ -4,7 +4,7 @@ import RunningConfig from 'RunningConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import path from 'path'
 import requirePath from './require'
-import CodeMirror from 'CodeMirror'
+import CodeMirror from 'codemirror'
 
 import Window from '../constructors/window'
 import Menu from '../constructors/menu'
