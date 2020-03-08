@@ -90,7 +90,6 @@ const CodemirrorClient = new EditorClient({
               event.ctrlKey  == false &&
               event.keyCode  != 91
           ) {
-						console.log(event)
 						CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
           }
         });
