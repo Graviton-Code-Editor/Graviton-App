@@ -21,13 +21,6 @@ function getExtension(path){
     return require(path)
 }
 
-console.log(()=>{
-	new Tab({
-	title:'hi',
-	component:puffin.element('<p>hi</p>')
-})
-})
-
 function loadExtension(path){
     return require(path).entry({
 			RunningConfig,

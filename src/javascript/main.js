@@ -7,20 +7,14 @@ import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
+import requirePath from './utils/require'
+requirePath('v8-compile-cache')
 
 import '../sass/main.scss'
 
-const App = puffin.element(`
-    <div class="${puffin.style.css`
-		${ThemeProvider}
-		body{
-			padding:0px;
-			margin:0px;
-			max-width:100%;
-			max-height:100%;
-			overflow:hidden;
-		}
-		html{
+const ThemeWrapper = puffin.style.css`
+${ThemeProvider}
+	html{
 			--puffinAccent:{{accentColor}};
 			--puffinTextColor:{{textColor}};
 			--puffinFont:mainFont;
@@ -108,6 +102,17 @@ const App = puffin.element(`
 			--notificationTitleText:{{notificationTitleText}};
 			--notificationContentText:{{notificationContentText}};
 			--componentsBorder:{{componentsBorder}};
+		}
+`
+
+const App = puffin.element(`
+    <div class="${ThemeWrapper} ${puffin.style.css`
+		body{
+			padding:0px;
+			margin:0px;
+			max-width:100%;
+			max-height:100%;
+			overflow:hidden;
 		}
 		@font-face {
 			font-family: mainFont;

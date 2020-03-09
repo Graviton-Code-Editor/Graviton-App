@@ -50,7 +50,8 @@
     "fs-extra": "^8.1.0",
     "shortcuts": "^1.2.0",
     "simple-git": "^1.131.0",
-    "trash": "^6.1.1"
+    "trash": "^6.1.1",
+    "v8-compile-cache": "^2.1.0"
   },
   "devDependencies": {
     "parcel": "^1.12.4",

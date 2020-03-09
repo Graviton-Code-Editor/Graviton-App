@@ -185,7 +185,6 @@ function init(){
         },
         { 
             shortcut: 'Ctrl+T', handler: event => {
-                console.log("working")
                 if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
                     RunningConfig.data.focusedTab.props.state.emit('close')
                 }
@@ -292,7 +291,6 @@ function init(){
             }
         }
     ]);
-
     RunningConfig.emit('appLoaded')
 }
 
