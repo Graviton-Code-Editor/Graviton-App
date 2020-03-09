@@ -309,13 +309,10 @@ function Item(){
 											tabState.on('focusedMe',()=>{
 												target.setAttribute("selected",true)
 											})
-											tabState.on('unfocusedMe',()=>{
+											tabState.on(['unfocusedMe','destroyed'],()=>{
 												target.setAttribute("selected",false)
 											})
-											tabState.on('destroyed',()=>{
-												target.setAttribute("selected",false)
-											})
-											target.setAttribute("selected",true)
+											target.setAttribute("selected",true)	
                     }
                 })
                 target.state.on('doReload',function(){

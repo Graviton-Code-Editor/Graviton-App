@@ -119,8 +119,11 @@ const CodemirrorClient = new EditorClient({
             instance : CodemirrorEditor
         }
     },
-    refresh(instance){
-        instance.refresh()
+    doRefresh({instance,element}){
+			setTimeout(function() {
+				instance.focus()
+				instance.refresh()
+			},1);
     },
     onChanged({instance,action}){
         instance.on('change',()=>action())
@@ -130,8 +133,7 @@ const CodemirrorClient = new EditorClient({
         instance.on('mousedown',()=>action(instance))
     },
     setTheme({instance,theme}){
-        instance.setOption('theme',theme)
-      	instance.refresh()
+			instance.setOption('theme',theme)
     },
     setFontSize({instance, element, fontSize}){
         element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
