@@ -149,12 +149,10 @@ function Tab({
 						})
 					}
 				})
-
 				tabState.on('changePanel',(newPanel)=>{
 					tabState.data.panel = newPanel
-					unfocusTabs(this)
+					focusATab(this)
 				})
-
 				tabState.on('close',(newPanel)=>{
 					if(this.props.saved){
 						if( RunningConfig.data.focusedTab == this) focusATab(this)

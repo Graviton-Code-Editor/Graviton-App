@@ -50,7 +50,6 @@ function Dialog({
         events:{
             mounted(){
                 if(component != null){
-                  	console.log(this.children[1].children[0])
                     puffin.render(component,this.children[1].children[0])
                 }
                 window.addEventListener('keydown',(e)=>{

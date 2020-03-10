@@ -3,6 +3,10 @@
 This file contains "important" commits, small ones will probably not be added.
 
 ### 200308 - 1 [2.0.36]
+- Add: Fixed a bug when dragging tabs between panels
+- Add: Integrated a filesystem watcher, it currently adds and remove folders and files (WIP)
+
+### 200308 - 1 [2.0.36]
 - Fixed: tab size was smaller when it was unsaved
 - Improved: night theme
 - Fixed: was acting weirdly when closing tabs

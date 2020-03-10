@@ -6,30 +6,27 @@ const electronStore = requirePath('electron-store')
 const getAppDataPath = requirePath('appdata-path')
 
 const defaultConfiguration = {
-    config:{
-        theme:'Arctic',
-        language:'english',
-        fontSize:'16',
-        log:[],
-        configPath:path.join(getAppDataPath(),'.graviton2'),
-        recentWorkspaces:[],
-        zoom:1
-    }
+	config:{
+		theme:'Arctic',
+		language:'english',
+		fontSize:'16',
+		log:[],
+		configPath:path.join(getAppDataPath(),'.graviton2'),
+		recentWorkspaces:[],
+		zoom:1,
+		enableFileSystemWatcher:true
+	}
 }
 
 function initConfiguration(){
     const configurationStore = new electronStore();
     console.log(configurationStore)
-
-    Object.keys(defaultConfiguration.config).map(function(key){
-        
+    Object.keys(defaultConfiguration.config).map(function(key){   
         if(!configurationStore.has(`config.${key}`)){
-
             configurationStore.set(
                 `config.${key}`,
                 defaultConfiguration.config[key]
             )
-
         }
     })
 
