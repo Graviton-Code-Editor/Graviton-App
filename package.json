@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@mkenzo_8/puffin": "^0.4.4",
-    "@mkenzo_8/puffin-drac": "0.0.14",
+    "@mkenzo_8/puffin-drac": "0.0.15",
     "appdata-path": "^1.0.0",
     "babel-core": "^6.26.3",
     "babel-polyfill": "^6.26.0",

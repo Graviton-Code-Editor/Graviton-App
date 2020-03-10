@@ -13,26 +13,49 @@ const chokidar = requirePath('chokidar');
 const path = requirePath('path');
 
 function checkIfProjectIsGit(path){
-    const simpleInstance = simpleGit(path)
-    return new Promise((resolve,reject)=>{
-        simpleInstance.checkIsRepo((err,res)=>{
-            if(!err) {
-                resolve(res)
-            }else{
-                reject(err)
-            }
-        })
-        
-    })
+	const simpleInstance = simpleGit(path)
+	return new Promise((resolve,reject)=>{
+		simpleInstance.checkIsRepo((err,res)=>{
+			if(!err) {
+				resolve(res)
+			}else{
+				reject(err)
+			}
+		})
+	})
 }
 
 function getStatus(path){
-    const simpleInstance = simpleGit(path)
-    return new Promise((resolve,reject)=>{
-        simpleInstance.status((err,res)=>{
-            resolve(res)
-        }) 
-    })
+	const simpleInstance = simpleGit(path)
+	return new Promise((resolve,reject)=>{
+		simpleInstance.status((err,res)=>{
+			resolve(res)
+		}) 
+	})
+}
+
+function createWatcher(folderPath,explorerState){
+	const watcher = chokidar.watch(folderPath, {
+		ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
+		persistent: true,
+		interval: 250,
+		ignoreInitial: true
+	});
+	watcher
+		.on('add', filePath => {
+			explorerState.emit('newFile',{
+				folderPath:path.dirname(filePath),
+				fileName:path.basename(filePath)
+			})
+		})
+		.on('change', filePath => explorerState.emit('changedFile',{filePath}))
+		.on('unlink', filePath => explorerState.emit('removedFile',{filePath}))
+		.on('addDir', folderPath => explorerState.emit('newFolder',{
+			folderPath:path.dirname(folderPath),
+			folderName:path.basename(folderPath)
+		}))
+		.on('unlinkDir', folderPath => explorerState.emit('removedFolder',{folderPath}))
+	return watcher
 }
 
 function standarizePath(dir){
@@ -52,6 +75,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			events:{
 				mounted(){
 					const explorerState = this.state
+					let watcher = null;
 					explorerState.emit('doReload')
 					this.gitChanges = gitChanges
 					RunningConfig.on(['aTabHasBeenUnSaved','aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated'],async ({parentFolder})=>{
@@ -63,29 +87,29 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 						}
 					})
 					/*
-					*The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
+					* The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
 					*/
-					const watcher = chokidar.watch(folderPath, {
-						ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
-						persistent: true,
-						interval: 250,
-						ignoreInitial: true
-					});
+					explorerState.on('stopedWatcher',()=>{
+						if( watcher != null ){
+							watcher.close();
+							watcher = null;
+						}
+					})
+					explorerState.on('startedWatcher',()=>{
+						if( watcher == null ){
+							watcher = createWatcher(folderPath,explorerState)
+						}
+					})
+					StaticConfig.on('stopWatchers',()=>{
+						explorerState.emit('stopedWatcher')
+						StaticConfig.data.enableFileSystemWatcher = false
+					})
+					StaticConfig.on('startWatchers',()=>{
+						explorerState.emit('startedWatcher')
+						StaticConfig.data.enableFileSystemWatcher = true
+					})
 					if( StaticConfig.data.enableFileSystemWatcher ){
-						watcher
-							.on('add', filePath => {
-								explorerState.emit('newFile',{
-									folderPath:path.dirname(filePath),
-									fileName:path.basename(filePath)
-								})
-							})
-							.on('change', filePath => explorerState.emit('changedFile',{filePath}))
-							.on('unlink', filePath => explorerState.emit('removedFile',{filePath}))
-							.on('addDir', folderPath => explorerState.emit('newFolder',{
-									folderPath:path.dirname(folderPath),
-									folderName:path.basename(folderPath)
-								}))
-							.on('unlinkDir', folderPath => explorerState.emit('removedFolder',{folderPath}))
+						explorerState.emit('startedWatcher')
 					}
 					explorerState.on('createItem',({container,folderPath,filePath,folderName,level,fileName,isFolder = false})=>{ 
 						if( container == null) return; //Folder is not opened

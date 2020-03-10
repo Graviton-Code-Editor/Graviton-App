@@ -18,6 +18,7 @@ function Settings(){
                 <H1 lang-string="Settings"></H1>
                 <SideMenuSearcher/>
                 <label to="customization" lang-string="Customization"></label>
+                <label to="plugins" lang-string="Plugins"></label>
                 <label to="languages" lang-string="Languages"></label>
                 <label to="about" lang-string="About"></label>
             </div>
@@ -42,6 +43,24 @@ function Settings(){
                             })()}
                         </RadioGroup>
                     </div>   
+                </div>
+							<div href="plugins">
+                   <div href="plugins">
+										<H3 lang-string="Plugins"></H3>
+                            ${(function(){
+														let content = "";
+														const list = ExtensionsRegistry.registry.data.list
+														Object.keys(list).map(function(extension){
+															const pkg = ExtensionsRegistry.registry.data.list[extension]
+															if(pkg.type != "theme"){
+																content +=`
+																	<label name="${extension}">· ${extension}</label>
+																`
+															}
+														})
+														return content
+                            })()}
+                    </div>
                 </div>
                 <div href="languages">
                     <div href="languages">

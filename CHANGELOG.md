@@ -2,7 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
-### 200308 - 1 [2.0.36]
+### 200310 - 2 [2.0.38]
+- Improved: better files watcher code
+- Added a plugins section in settings (WIP)
+
+### 200310 - 2 [2.0.37]
 - Add: Fixed a bug when dragging tabs between panels
 - Add: Integrated a filesystem watcher, it currently adds and remove folders and files (WIP)
 

@@ -222,35 +222,34 @@ const App = puffin.element(`
 			cursor: ew-resize;
 		}
     `}">
-        <TitleBar/>
-        <div id="body">
-            <div id="sidepanel"/>
-            <Resizer/>
-            <div id="mainpanel"/>          
-        </div>
-        <StatusBar/>
-        <div id="windows"/>
-        <div id="notifications"/>
-        <SplashScreen/>
-    </div>
+		<TitleBar/>
+		<div id="body">
+			<div id="sidepanel"/>
+			<Resizer/>
+			<div id="mainpanel"/>          
+		</div>
+			<StatusBar/>
+			<div id="windows"/>
+			<div id="notifications"/>
+			<SplashScreen/>
+	</div>
 `,{
-    components:{
-        TitleBar,
-        SplashScreen,
-        Resizer,
-        StatusBar
-    },
-    events:{
-        mounted(){
-            init()
-            
-            window.addEventListener("load",function(){
-                Welcome().launch()
-            })
-        }
-    }
+	components:{
+		TitleBar,
+		SplashScreen,
+		Resizer,
+		StatusBar
+	},
+	events:{
+		mounted(){
+			init()
+			window.addEventListener("load",function(){
+				Welcome().launch()
+			})
+		}
+	}
 })
 
 puffin.render(App,document.getElementById("App"),{
-    removeContent:true
+	removeContent:true
 })
