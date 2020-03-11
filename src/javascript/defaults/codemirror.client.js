@@ -1,5 +1,6 @@
 import CodeMirror from 'codemirror'
 import { EditorClient } from '../constructors/editorclient'
+import StaticConfig from 'StaticConfig'
 
 require ('../../../node_modules/codemirror/mode/**/*.js')
 
@@ -70,8 +71,10 @@ const CodemirrorClient = new EditorClient({
 			tabSize:4,
 			indentUnit:4
 		})
+		
 		CodemirrorEditor.on("keyup", function (cm, event) {
-			if (!cm.state.completionActive && 
+			if(StaticConfig.data.autocomplete){
+				if (!cm.state.completionActive && 
 					event.keyCode != 13 &&
 					event.keyCode != 8 && 
 					event.keyCode != 9  && 
@@ -90,13 +93,12 @@ const CodemirrorClient = new EditorClient({
 					event.keyCode != 32 &&
 					event.ctrlKey  == false &&
 					event.keyCode  != 91
-				 ) {
-				CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
+				   ) {
+					CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
+				}
 			}
 		});
-
 		element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
-
 		CodemirrorEditor.addKeyMap({
 			'Ctrl-Up': function (instance) {
 				CtrlPlusScroll('up')
@@ -105,7 +107,6 @@ const CodemirrorClient = new EditorClient({
 				CtrlPlusScroll('down')
 			}
 		})
-
 		element.addEventListener('wheel',(e)=>{
 			if(!e.ctrlKey) return
 			if(e.wheelDeltaY.toString()[0]=='-'){
@@ -114,7 +115,6 @@ const CodemirrorClient = new EditorClient({
 				CtrlPlusScroll('up')
 			}
 		})
-
 		CodemirrorEditor.refresh()
 		return {
 			instance : CodemirrorEditor
@@ -125,6 +125,9 @@ const CodemirrorClient = new EditorClient({
 			instance.focus()
 			instance.refresh()
 		},1);
+	},
+	doChangeValue({instance,value}){
+		instance.setValue(value)
 	},
 	onChanged({instance,action}){
 		instance.on('change',()=>action())

@@ -310,6 +310,14 @@ function Item(){
 									this.remove()
 								}
 							})
+							explorerState.on('changedFile',async ({filePath})=>{
+								if( itemDirectory == filePath ){
+									RunningConfig.emit('aFileHasBeenChanged',{
+										filePath,
+										newData:await fs.readFile(itemDirectory,'UTF-8')
+									})
+								}
+							})
 							itemState.on('clickItem',function(){
 								if(target.getAttribute("isDirectory") == "true"){
 									const itemsContainer = target.children[1]

@@ -7,8 +7,7 @@ const TabBody  = puffin.element(`
                 height:40px;
                 background:var(--tabBackground);
                 color:var(--tabText);
-                min-width:100px;
-                width:auto;
+                min-width:150px;
                 max-width:150px;
                 display:flex;
                 justify-content:flex-start;

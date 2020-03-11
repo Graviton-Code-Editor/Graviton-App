@@ -102,6 +102,7 @@ ${ThemeProvider}
 			--notificationTitleText:{{notificationTitleText}};
 			--notificationContentText:{{notificationContentText}};
 			--componentsBorder:{{componentsBorder}};
+			--notificationButtonBackground:{{notificationButtonBackground}};
 		}
 `
 

@@ -2,6 +2,9 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
+import Notification from './notification'
+import requirePath from '../utils/require'
+const path = requirePath("path")
 
 function sortByRanking(language){
 	const selectedEditor = RunningConfig.data.editorsRank.filter(function(Client){
@@ -47,6 +50,27 @@ function Editor({
 				element:bodyElement,
 				fontSize:StaticConfig.data.fontSize
 			})
+		}
+	})
+	RunningConfig.on('aFileHasBeenChanged',({filePath,newData})=>{
+		if( filePath == directory ){
+			if(Client.do('getValue',instance) != newData){
+				new Notification({
+				title:path.basename(directory),
+				content:'This file content has changed',
+				buttons:[
+					{
+						label:'Update',
+						action:()=>{
+							Client.do('doChangeValue',{
+								instance:instance,
+								value:newData
+							})
+						}
+					}
+				]
+			})
+			}
 		}
 	})
 	Client.do('onChanged',{

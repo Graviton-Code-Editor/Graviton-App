@@ -86,6 +86,7 @@ const Night = {
         notificationBackground:'#333333',
         notificationTitleText:'white',
         notificationContentText:'white',
+        notificationButtonBackground:'#272727',
         componentsBorder:'rgba(150,150,150)'
     }
 }

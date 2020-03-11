@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200311 - 1 [2.0.39]
+- New: added a key to StaticConfig so you can disable the codemirror autocomplete
+- New: file content changed notification
+
 ### 200310 - 2 [2.0.38]
 - Improved: better files watcher code
 - Added a plugins section in settings (WIP)

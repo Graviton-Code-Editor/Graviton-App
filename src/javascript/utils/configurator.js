@@ -14,42 +14,39 @@ const defaultConfiguration = {
 		configPath:path.join(getAppDataPath(),'.graviton2'),
 		recentWorkspaces:[],
 		zoom:1,
-		enableFileSystemWatcher:true
+		enableFileSystemWatcher:true,
+		autocomplete:true
 	}
 }
 
 function initConfiguration(){
-    const configurationStore = new electronStore();
-    console.log(configurationStore)
-    Object.keys(defaultConfiguration.config).map(function(key){   
-        if(!configurationStore.has(`config.${key}`)){
-            configurationStore.set(
-                `config.${key}`,
-                defaultConfiguration.config[key]
-            )
-        }
-    })
-
-    if(!fs.existsSync(defaultConfiguration.config.configPath)){
-        fs.mkdirSync(defaultConfiguration.config.configPath)
-    }
-    if(!fs.existsSync(path.join(defaultConfiguration.config.configPath,'plugins'))){
-        fs.mkdirSync(path.join(defaultConfiguration.config.configPath,'plugins'))
-    }
-
-    return {
-        store:configurationStore
-    }
+	const configurationStore = new electronStore();
+	console.log(configurationStore)
+	Object.keys(defaultConfiguration.config).map(function(key){   
+		if(!configurationStore.has(`config.${key}`)){
+			configurationStore.set(
+				`config.${key}`,
+				defaultConfiguration.config[key]
+			)
+		}
+	})
+	if(!fs.existsSync(defaultConfiguration.config.configPath)){
+		fs.mkdirSync(defaultConfiguration.config.configPath)
+	}
+	if(!fs.existsSync(path.join(defaultConfiguration.config.configPath,'plugins'))){
+		fs.mkdirSync(path.join(defaultConfiguration.config.configPath,'plugins'))
+	}
+	return {
+		store:configurationStore
+	}
 }
 
 function getConfiguration(){
-    
-    const { store } = initConfiguration()
-
-    return {
-        store:store,
-        config:store.get('config')
-    }
+	const { store } = initConfiguration()
+	return {
+		store:store,
+		config:store.get('config')
+	}
 }
 
 export {initConfiguration,getConfiguration}

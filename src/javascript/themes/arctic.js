@@ -86,6 +86,7 @@ const Arctic = {
         notificationBackground:'rgb(242,242,242)',
         notificationTitleText:'black',
         notificationContentText:'black',
+        notificationButtonBackground:'rgb(220,220,220)',
         componentsBorder:'rgba(150,150,150)'
     }
     

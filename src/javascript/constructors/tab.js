@@ -190,18 +190,14 @@ const TabEditorComp = puffin.element(`
 					target.style.display = "none"
 					target.props.state = tabState
 				})
-
 				tabState.on('changePanel',(newPanel)=>{
 					newPanel.children[1].appendChild(target)
 				})
-
 				target.props.state = tabState
 			}
 		}
 })
-
 	puffin.render(TabEditorComp,panel.children[1])
-
 	return {
 		tabElement:TabComp.node,
 		bodyElement:TabEditorComp.node,
