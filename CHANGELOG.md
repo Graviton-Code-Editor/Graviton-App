@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200312 - 1 [2.0.41]
+- New: Added a switch to toggle File Watcher
+- New: Switch component
+
 ### 200311 - 1 [2.0.39]
 - New: added a key to StaticConfig so you can disable the codemirror autocomplete
 - New: file content changed notification

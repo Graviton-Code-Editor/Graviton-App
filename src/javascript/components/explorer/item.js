@@ -93,15 +93,15 @@ function Item(){
             justify-content: center;
             color:var(--explorerItemText);
         }
-				& button:hover{
-					background:var(--explorerItemHoveringBackground);
-					border-radius:5px;
-				}
-				& [selected=true] button{
-					transition:0.07s;
-					background:var(--explorerItemSelectedBackground);
-					border-radius:5px;
-				}
+		& button:hover{
+			background:var(--explorerItemHoveringBackground);
+			border-radius:5px;
+		}
+		& [selected=true] button{
+			transition:0.07s;
+			background:var(--explorerItemSelectedBackground);
+			border-radius:5px;
+		}
         & > button > *{
             align-items: center;
             display:flex;
@@ -152,9 +152,7 @@ function Item(){
         &[opened="false"] .arrow{
             transform:rotate(0deg);
         }
-
     `
-
     const ItemComp = puffin.element(`
         <ItemWrapper selected="false">
             <button click="$openDirectory" contextmenu="$contextMenu">
@@ -233,133 +231,133 @@ function Item(){
 			},
 			events:{
 				mounted(target){
-							const itemState = new puffin.state({})
-							target.state = itemState
-							const gitChanges = target.parentElement.parentElement.gitChanges
+					const itemState = new puffin.state({})
+					target.state = itemState
+					const gitChanges = target.parentElement.parentElement.gitChanges
+					target.gitChanges = gitChanges
+					const fileExtension = getExtension(target)
+					const itemIcon = target.getElementsByClassName('icon')[0]
+					const itemArrow = target.getElementsByClassName('arrow')[0]
+					const gitStatus = target.getAttribute("git-status") ||true
+					const IAmDirectory = target.getAttribute("isDirectory") == "true"
+					const parentFolder = path.normalize(
+						this.parentElement.parentElement.getAttribute("parentFolder") || 
+						this.getAttribute("parentFolder")
+					)
+					const itemDirectory = target.getAttribute("fullpath")
+					const explorerState = document.getElementById(path.normalize(parentFolder).replace(/\\/gi,"//")).state || itemState
+					target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
+
+					if(IAmDirectory){
+						//If it's a folder set it's icon to closed by default
+						setStateClosed(target)
+					}else{
+						//If it's a file set it's icon 
+						setFileIcon(itemIcon,fileExtension)
+						//Hide the folder icon
+						itemArrow.style.opacity = 0
+					}
+					const gitResult = getMyStatus(
+						target.getAttribute("fullpath"),
+						gitChanges,
+						target.getAttribute("parentfolder")
+					)
+					markStatus(target,gitResult.status)
+					RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
+						if(parentFolder == explorerParentfolder){
 							target.gitChanges = gitChanges
-							const fileExtension = getExtension(target)
-							const itemIcon = target.getElementsByClassName('icon')[0]
-							const itemArrow = target.getElementsByClassName('arrow')[0]
-							const gitStatus = target.getAttribute("git-status") ||true
-							const IAmDirectory = target.getAttribute("isDirectory") == "true"
-							const parentFolder = path.normalize(
-								this.parentElement.parentElement.getAttribute("parentFolder") || 
-								this.getAttribute("parentFolder")
-							)
-							const itemDirectory = target.getAttribute("fullpath")
-							const explorerState = document.getElementById(path.normalize(parentFolder).replace(/\\/gi,"//")).state || itemState
-							target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
-							
-							if(IAmDirectory){
-								//If it's a folder set it's icon to closed by default
-								setStateClosed(target)
-							}else{
-								//If it's a file set it's icon 
-								setFileIcon(itemIcon,fileExtension)
-								//Hide the folder icon
-								itemArrow.style.opacity = 0
-							}
-							const gitResult = getMyStatus(
-								target.getAttribute("fullpath"),
+							const newGitResult = getMyStatus(
+								this.getAttribute("fullpath"),
 								gitChanges,
-								target.getAttribute("parentfolder")
+								this.getAttribute("parentfolder")
 							)
-							markStatus(target,gitResult.status)
-							RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-								if(parentFolder == explorerParentfolder){
-									target.gitChanges = gitChanges
-									const newGitResult = getMyStatus(
-										this.getAttribute("fullpath"),
-										gitChanges,
-										this.getAttribute("parentfolder")
-									)
-									if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
-								}
+							if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
+						}
+					})
+					explorerState.on('newFile',({folderPath,fileName})=>{
+						if( IAmDirectory && folderPath == itemDirectory  ){
+							explorerState.emit('createItem',{
+								container:this,
+								folderPath:folderPath,
+								level:this.getAttribute("level"),
+								filePath:path.join(folderPath,fileName),
+								fileName,
+								isFolder:false
 							})
-							explorerState.on('newFile',({folderPath,fileName})=>{
-								if( IAmDirectory && folderPath == itemDirectory  ){
-									explorerState.emit('createItem',{
-										container:this,
-										folderPath:folderPath,
-										level:this.getAttribute("level"),
-										filePath:path.join(folderPath,fileName),
-										fileName,
-										isFolder:false
-									})
-								}
+						}
+					})
+					explorerState.on('removedFile',({filePath})=>{
+						if( itemDirectory == filePath ){
+							this.remove()
+						}
+					})
+					explorerState.on('newFolder',({folderPath,folderName})=>{
+						if( IAmDirectory && folderPath == itemDirectory  ){
+							explorerState.emit('createItem',{
+								container:this,
+								folderPath:folderPath,
+								level:this.getAttribute("level"),
+								filePath:path.join(folderPath,folderName),
+								folderName,
+								isFolder:true
 							})
-							explorerState.on('removedFile',({filePath})=>{
-								if( itemDirectory == filePath ){
-									this.remove()
-								}
+						}
+					})
+					explorerState.on('removedFolder',({folderPath})=>{
+						if( itemDirectory == folderPath ){
+							this.remove()
+						}
+					})
+					explorerState.on('changedFile',async ({filePath})=>{
+						if( itemDirectory == filePath ){
+							RunningConfig.emit('aFileHasBeenChanged',{
+								filePath,
+								newData:await fs.readFile(itemDirectory,'UTF-8')
 							})
-							explorerState.on('newFolder',({folderPath,folderName})=>{
-								if( IAmDirectory && folderPath == itemDirectory  ){
-									explorerState.emit('createItem',{
-										container:this,
-										folderPath:folderPath,
-										level:this.getAttribute("level"),
-										filePath:path.join(folderPath,folderName),
-										folderName,
-										isFolder:true
-									})
-								}
+						}
+					})
+					itemState.on('clickItem',function(){
+						if(target.getAttribute("isDirectory") == "true"){
+							const itemsContainer = target.children[1]
+							if(itemsContainer == null){
+								new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
+								setStateOpen(target)
+							}else{
+								itemsContainer.remove()
+								setStateClosed(target)
+							}
+						}else{
+							const basename = path.basename(target.getAttribute("fullpath"))
+							const fileExtension = getExtension(target)
+							const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+								title:basename,
+								directory:target.getAttribute("fullpath"),
+								parentFolder:target.getAttribute("parentFolder")
 							})
-							explorerState.on('removedFolder',({folderPath})=>{
-								if( itemDirectory == folderPath ){
-									this.remove()
-								}
+							if( isCancelled ) return; //Cancels the tab opening
+							fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
+								new Editor({
+									language:fileExtension,
+									value:data ,
+									theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
+									bodyElement,
+									tabElement,
+									tabState,
+									directory:target.getAttribute("fullpath")
+								})
 							})
-							explorerState.on('changedFile',async ({filePath})=>{
-								if( itemDirectory == filePath ){
-									RunningConfig.emit('aFileHasBeenChanged',{
-										filePath,
-										newData:await fs.readFile(itemDirectory,'UTF-8')
-									})
-								}
+							tabState.on('focusedMe',()=>{
+								target.setAttribute("selected",true)
 							})
-							itemState.on('clickItem',function(){
-								if(target.getAttribute("isDirectory") == "true"){
-									const itemsContainer = target.children[1]
-									if(itemsContainer == null){
-										new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
-										setStateOpen(target)
-									}else{
-										itemsContainer.remove()
-										setStateClosed(target)
-									}
-								}else{
-									const basename = path.basename(target.getAttribute("fullpath"))
-									const fileExtension = getExtension(target)
-									const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
-										title:basename,
-										directory:target.getAttribute("fullpath"),
-										parentFolder:target.getAttribute("parentFolder")
-									})
-									if( isCancelled ) return; //Cancels the tab opening
-									fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
-										new Editor({
-											language:fileExtension,
-											value:data ,
-											theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
-											bodyElement,
-											tabElement,
-											tabState,
-											directory:target.getAttribute("fullpath")
-										})
-									})
-									tabState.on('focusedMe',()=>{
-										target.setAttribute("selected",true)
-									})
-									tabState.on(['unfocusedMe','destroyed'],()=>{
-										target.setAttribute("selected",false)
-									})
-									target.setAttribute("selected",true)	
-								}
+							tabState.on(['unfocusedMe','destroyed'],()=>{
+								target.setAttribute("selected",false)
 							})
-							itemState.on('doReload',function(){
-								reload(target,gitChanges)
-							})
+							target.setAttribute("selected",true)	
+						}
+					})
+					itemState.on('doReload',function(){
+						reload(target,gitChanges)
+					})
 				}
 			}
 		})

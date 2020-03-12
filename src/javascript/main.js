@@ -103,6 +103,9 @@ ${ThemeProvider}
 			--notificationContentText:{{notificationContentText}};
 			--componentsBorder:{{componentsBorder}};
 			--notificationButtonBackground:{{notificationButtonBackground}};
+			--switchBackground:{{switchBackground}};
+			--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
+			--switchIndicatorDesactivatedBackground:{{switchIndicatorDesactivatedBackground}};
 		}
 `
 
