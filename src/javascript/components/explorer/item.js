@@ -399,7 +399,7 @@ function setStateClosed(target){
 function removeDirectoryOrFile(element){
 	areYouSureDialog().then(function(){
 		trash([element.parentElement.getAttribute("fullpath")]).then(function(){
-			if( element != null ){ //Watcher killed it already
+			if( element != null  && element.parentElement  && element.parentElement.parentElement ){ //Watcher killed it already
 				element.parentElement.parentElement.parentElement.state.emit('doReload')
 			}
 		});        

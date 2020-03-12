@@ -62,6 +62,14 @@ function standarizePath(dir){
 	return path.normalize(dir).replace(/\\/gi,"//")
 }
 
+function getlastFolderPosition(container){
+	const items = container.children
+	return Object.keys(items).filter((index)=>{
+		const item = items[index]
+		return item.getAttribute("isDirectory") == "false"?index:null
+	})[0]
+}
+
 async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitChanges=null){
 	if(level == 0){
 		let gitResult = await checkIfProjectIsGit(folderPath)
@@ -128,14 +136,21 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 							}
 							const hotItem = puffin.element(`
 									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${container.getAttribute("parentFolder")}" path="${isFolder?folderName:fileName}" fullpath="${filePath}" level="${level}"/>
-								`,{
-									components:{
-										Item:new Item()
-									}
-								})
-								if( container.children[1] != null){
+							`,{
+								components:{
+									Item:new Item()
+								}
+							})
+							if( container.children[1] != null){ //Check if the folder is opened
+								if(isFolder){
+									const folderPosition = getlastFolderPosition(container.children[1])
+									puffin.render(hotItem,container.children[1],{
+										position:folderPosition
+									})						
+								}else{
 									puffin.render(hotItem,container.children[1])
 								}
+							}
 						}
 					})
 				}
