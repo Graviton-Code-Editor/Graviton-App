@@ -1,6 +1,6 @@
 import {puffin} from '@mkenzo_8/puffin'
 import Window from '../../constructors/window'
-import {Titles , RadioGroup, Text} from '@mkenzo_8/puffin-drac'
+import {Titles , RadioGroup, Text, Card} from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
@@ -25,7 +25,7 @@ function Settings(){
 					<div href="customization">
 						<div href="themes">
 							<H3 lang-string="Themes"/>
-								<RadioGroup radioSelected="$selectedTheme">
+								<RadioGroup radioSelected="$selectedTheme" direction="vertically" styled="false">
 									${(function(){
 										let content = "";
 										const list = ExtensionsRegistry.registry.data.list
@@ -33,7 +33,9 @@ function Settings(){
 											const pkg = ExtensionsRegistry.registry.data.list[extension]
 											if(pkg.type == "theme"){
 												content +=`
-													<label name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">${extension}</label>
+													<label styled="false" hidden-radio="true" name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">
+														<Card>${extension}</Card>
+													</label>
 												`
 											}
 										})
@@ -96,7 +98,8 @@ function Settings(){
 			SideMenu,
 			Text,
 			SideMenuSearcher,
-			Switch
+			Switch,
+			Card
 		},
 		methods:{
 			selectedTheme(e){

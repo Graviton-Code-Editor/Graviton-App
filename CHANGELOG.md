@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200313 - 2 [2.0.42]
+- Fixed: notification constructor was always expecting a buttons object 
+- New: Theme radios are now cards in Settings > Themes
+
 ### 200313 - 1 [2.0.42]
 - New: Added file associations for HTML, CSS and JS so you can open them directly into Graviton
 - New: Added the open file dialog on menu "File"

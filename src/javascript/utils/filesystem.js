@@ -90,7 +90,6 @@ function getExtension(dir){
 	const array = path.extname(dir).split(".")
 	return array != undefined?array[array.length-1]:path.basename(dir)
 }
-console.log(getExtension)
 
 RunningConfig.on('loadFile',function({
     filePath
