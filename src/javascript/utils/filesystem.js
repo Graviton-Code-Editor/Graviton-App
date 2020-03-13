@@ -4,42 +4,45 @@ import Explorer from '../constructors/explorer'
 import RunningConfig from 'RunningConfig'
 import parseDirectory from './directory.parser'
 import InputDialog from '../constructors/dialog.input'
+import Tab from '../constructors/tab'
+import Editor from '../constructors/editor'
+import ExtensionsRegistry from 'ExtensionsRegistry'
 
 const path = requirePath("path")
 const fs = requirePath("fs-extra")
 
 function selectFolderDialog(){
-    return new Promise((resolve, reject) => {
-        const { dialog , getCurrentWindow} = requirePath("electron").remote;
-        dialog
-            .showOpenDialog(getCurrentWindow(), {
-                properties: ["openDirectory"]
-            })
-            .then(result => {
-                if (result.canceled) return;
-                resolve(result.filePaths[0])
-            })
-            .catch(err => {
-                reject(err)
-            });
-    })
+	return new Promise((resolve, reject) => {
+		const { dialog , getCurrentWindow} = requirePath("electron").remote;
+		dialog
+			.showOpenDialog(getCurrentWindow(), {
+			properties: ["openDirectory"]
+		})
+			.then(result => {
+			if (result.canceled) return;
+			resolve(result.filePaths[0])
+		})
+			.catch(err => {
+			reject(err)
+		});
+	})
 }
 
 function selectFileDialog(){
-    return new Promise((resolve, reject) => {
-        const { dialog , getCurrentWindow} = requirePath("electron").remote;
-        dialog
-            .showOpenDialog(getCurrentWindow(), {
-                properties: ["openFile"]
-            })
-            .then(result => {
-                if (result.canceled) return;
-                resolve(result.filePaths[0])
-            })
-            .catch(err => {
-                reject(err)
-            });
-    })
+	return new Promise((resolve, reject) => {
+		const { dialog , getCurrentWindow} = requirePath("electron").remote;
+		dialog
+			.showOpenDialog(getCurrentWindow(), {
+			properties: ["openFile"]
+		})
+			.then(result => {
+			if (result.canceled) return;
+			resolve(result.filePaths[0])
+		})
+			.catch(err => {
+			reject(err)
+		});
+	})
 }
 
 function openFolder(){
@@ -52,6 +55,16 @@ function openFolder(){
                 StaticConfig.data.log.join()
             }
             StaticConfig.triggerChange()
+            resolve(res)
+        }).catch(err => {
+            reject(err)
+        });
+    })
+}
+
+function openFile(){
+    return new Promise((resolve, reject) => {
+        selectFileDialog().then(function(res){
             resolve(res)
         }).catch(err => {
             reject(err)
@@ -72,6 +85,37 @@ function getWorkspaceConfig( path ){
         return null
     }
 }
+
+function getExtension(dir){
+	const array = path.extname(dir).split(".")
+	return array != undefined?array[array.length-1]:path.basename(dir)
+}
+console.log(getExtension)
+
+RunningConfig.on('loadFile',function({
+    filePath
+}){
+	const basename = path.basename(filePath)
+	const fileFolderPath = path.parse(filePath).dir
+	const fileExtension = getExtension(filePath)
+	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+		title:basename,
+		directory:filePath,
+		parentFolder:fileFolderPath
+	})
+	if( isCancelled ) return; //Cancels the tab opening
+	fs.readFile(filePath,'UTF-8').then(function(data){
+		new Editor({
+			language:fileExtension,
+			value:data ,
+			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
+			bodyElement,
+			tabElement,
+			tabState,
+			directory:filePath
+		})
+	})
+});
 
 RunningConfig.on('addFolderToRunningWorkspace',function({
     folderPath,
@@ -238,6 +282,7 @@ RunningConfig.on('renameWorkspaceDialog',({ path:workspacePath, onFinished=()=>{
 })
 
 export { 
-    getWorkspaceConfig,
-    openFolder
+	getWorkspaceConfig,
+	openFolder,
+	openFile
 }

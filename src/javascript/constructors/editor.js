@@ -99,7 +99,6 @@ function Editor({
 			element:bodyElement,
 			fontSize:StaticConfig.data.fontSize
 		})
-		Client.do('doRefresh',{instance,element:bodyElement})
 	})
 	if(CursorPositionStatusBarItem.isHidden()){
 		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar

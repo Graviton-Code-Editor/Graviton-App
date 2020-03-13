@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200313 - 1 [2.0.42]
+- New: Added file associations for HTML, CSS and JS so you can open them directly into Graviton
+- New: Added the open file dialog on menu "File"
+
 ### 200312 - 1 [2.0.41]
 - New: Added a switch to toggle File Watcher
 - New: Switch component

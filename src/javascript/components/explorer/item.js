@@ -235,11 +235,11 @@ function Item(){
 					target.state = itemState
 					const gitChanges = target.parentElement.parentElement.gitChanges
 					target.gitChanges = gitChanges
-					const fileExtension = getExtension(target)
+					const IAmDirectory = target.getAttribute("isDirectory") == "true"
+					const fileExtension = IAmDirectory?null:getExtension(target)
 					const itemIcon = target.getElementsByClassName('icon')[0]
 					const itemArrow = target.getElementsByClassName('arrow')[0]
 					const gitStatus = target.getAttribute("git-status") ||true
-					const IAmDirectory = target.getAttribute("isDirectory") == "true"
 					const parentFolder = path.normalize(
 						this.parentElement.parentElement.getAttribute("parentFolder") || 
 						this.getAttribute("parentFolder")
@@ -371,7 +371,8 @@ function reload(target,gitChanges){
 }
 
 function getExtension(target){
-	return path.basename(target.getAttribute("fullpath")).split('.')[path.basename(target.getAttribute("fullpath")).split('.').length-1]
+	const array = path.extname(target.getAttribute("fullpath")).split(".")
+	return array != undefined?array[array.length-1]:path.basename(target.getAttribute("fullpath"))
 }
 
 function setFileIcon(target,extension){

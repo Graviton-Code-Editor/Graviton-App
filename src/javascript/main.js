@@ -8,105 +8,106 @@ import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
 import requirePath from './utils/require'
+import RunningConfig from 'RunningConfig'
 requirePath('v8-compile-cache')
 
 import '../sass/main.scss'
 
 const ThemeWrapper = puffin.style.css`
-${ThemeProvider}
+	${ThemeProvider}
 	html{
-			--puffinAccent:{{accentColor}};
-			--puffinTextColor:{{textColor}};
-			--puffinFont:mainFont;
-			--puffinButtonBackground:{{buttonBackground}};
-			--puffinCardBackground:{{cardBackground}};
-			--puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
-			--puffinRadioCircleBackground:{{radioCircleBackground}};
-			--puffinRadioCircleBorder:{{radioCircleBorder}};
-			--puffinRadioCircleBorderHovering:{{radioCircleBorderHovering}};
-			--accentColor: {{accentColor}};
-			--textColor:{{textColor}};
-			--bodyBackground:{{bodyBackground}};
-			--titlebarBackground:{{titlebarBackground}};
-			--dropmenuBackground:{{dropmenuBackground}};
-			--dropmenuButtonBackground:{{dropmenuButtonBackground}};
-			--dropmenuButtonHoveringBackground:{{dropmenuButtonHoveringBackground}};
-			--dropmenuButtonText:{{dropmenuButtonText}};
-			--dropmenuButtonHoveringText:{{dropmenuButtonHoveringText}};
-			--dropmenuOptionText:{{dropmenuOptionText}};
-			--dropmenuOptionHoveringText:{{dropmenuOptionHoveringText}};
-			--dropmenuDivider:{{dropmenuDivider}};
-			--controlButtonsFill:{{controlButtonsFill}};
-			--controlButtonsHoverBackground:{{controlButtonsHoverBackground}};
-			--controlCloseButtonHoverBackground:{{controlCloseButtonHoverBackground}};
-			--controlCloseButtonHoverFill:{{controlCloseButtonHoverFill}};
-			--windowBackground:{{windowBackground}};
-			--contextmenuBackground:{{contextmenuBackground}};
-			--contextmenuButtonBackground:{{contextmenuButtonBackground}};
-			--contextmenuButtonText:{{contextmenuButtonText}};
-			--contextmenuButtonHoveringBackground:{{contextmenuButtonHoveringBackground}};
-			--contextmenuButtonHoveringText:{{contextmenuButtonHoveringText}};
-			--mainpanelBackground:{{mainpanelBackground}};
-			--tabsbarBackground:{{tabsbarBackground}};
-			--tabText:{{tabText}};
-			--tabBackground:{{tabBackground}};
-			--tabActiveText:{{tabActiveText}};
-			--tabActiveBackground:{{tabActiveBackground}};
-			--scrollbarBackground:{{scrollbarBackground}};
-			--scrollbarHoverBackground:{{scrollbarHoverBackground}};
-			--tabIconFill:{{tabIconFill}};
-			--tabIconHoverFill:{{tabIconHoverFill}};
-			--sidemenuBackground:{{sidemenuBackground}};
-			--sidemenuButtonBackground:{{sidemenuButtonBackground}};
-			--sidemenuButtonHoverBackground:{{sidemenuButtonHoverBackground}};
-			--sidemenuButtonActiveBackground:{{sidemenuButtonActiveBackground}};
-			--sidemenuButtonText:{{sidemenuButtonText}};
-			--sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
-			--sidemenuSearcherBackground:{{sidemenuSearcherBackground}};
-			--sidemenuSearcherText:{{sidemenuSearcherText}};
-			--explorerItemText:{{explorerItemText}};
-			--explorerItemHoveringBackground:{{explorerItemHoveringBackground}};
-			--explorerItemSelectedBackground:{{explorerItemSelectedBackground}};
-			--explorerItemArrowBackground:{{explorerItemArrowBackground}};
-			--explorerItemGitModifiedText:{{explorerItemGitModifiedText}};
-			--explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
-			--explorerItemGitNotAddedText:{{explorerItemGitNotAddedText}};
-			--explorerItemGitNotAddedIndicator:{{explorerItemGitNotAddedIndicator}};
-			--windowBorder:{{windowBorder}};
-			--fileNotSavedIndicator:{{fileNotSavedIndicator}};
-			--fileNotSavedIndicatorHovering:{{fileNotSavedIndicatorHovering}};
-			--controlCloseButtonActiveBackground:{{controlCloseButtonActiveBackground}};
-			--controlCloseButtonActiveFill:{{controlCloseButtonActiveFill}};
-			--editorDialogBackground:{{editorDialogBackground}};
-			--editorDialogText:{{editorDialogText}};
-			--contextmenuDivider:{{contextmenuDivider}};
-			--statusbarBackground:{{statusbarBackground}};
-			--statusbarItemBackground:{{statusbarItemBackground}};
-			--statusbarItemHoveringBackground:{{statusbarItemHoveringBackground}};
-			--statusbarItemText:{{statusbarItemText}};
-			--statusbarItemHoveringText:{{statusbarItemHoveringText}};
-			--statusbarItemIconBackground:{{statusbarItemIconBackground}};
-			--inputBackground:{{inputBackground}};
-			--inputText:{{inputText}};
-			--splashScreenText:{{splashScreenText}};
-			--splashScreenBackground:{{splashScreenBackground}};
-			--commandPromptInputBackground:{{commandPromptInputBackground}};
-			--commandPromptInputText:{{commandPromptInputText}};
-			--commandPromptInputBorder:{{commandPromptInputBorder}};
-			--commandPromptBackground:{{commandPromptBackground}};
-			--commandPromptOptionBackground:{{commandPromptOptionBackground}};
-			--commandPromptOptionActiveBackground:{{commandPromptOptionActiveBackground}};
-			--commandPromptOptionText:{{commandPromptOptionText}};
-			--commandPromptOptionActiveText:{{commandPromptOptionActiveText}};
-			--notificationBackground:{{notificationBackground}};
-			--notificationTitleText:{{notificationTitleText}};
-			--notificationContentText:{{notificationContentText}};
-			--componentsBorder:{{componentsBorder}};
-			--notificationButtonBackground:{{notificationButtonBackground}};
-			--switchBackground:{{switchBackground}};
-			--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
-			--switchIndicatorDesactivatedBackground:{{switchIndicatorDesactivatedBackground}};
-		}
+		--puffinAccent:{{accentColor}};
+		--puffinTextColor:{{textColor}};
+		--puffinFont:mainFont;
+		--puffinButtonBackground:{{buttonBackground}};
+		--puffinCardBackground:{{cardBackground}};
+		--puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
+		--puffinRadioCircleBackground:{{radioCircleBackground}};
+		--puffinRadioCircleBorder:{{radioCircleBorder}};
+		--puffinRadioCircleBorderHovering:{{radioCircleBorderHovering}};
+		--accentColor: {{accentColor}};
+		--textColor:{{textColor}};
+		--bodyBackground:{{bodyBackground}};
+		--titlebarBackground:{{titlebarBackground}};
+		--dropmenuBackground:{{dropmenuBackground}};
+		--dropmenuButtonBackground:{{dropmenuButtonBackground}};
+		--dropmenuButtonHoveringBackground:{{dropmenuButtonHoveringBackground}};
+		--dropmenuButtonText:{{dropmenuButtonText}};
+		--dropmenuButtonHoveringText:{{dropmenuButtonHoveringText}};
+		--dropmenuOptionText:{{dropmenuOptionText}};
+		--dropmenuOptionHoveringText:{{dropmenuOptionHoveringText}};
+		--dropmenuDivider:{{dropmenuDivider}};
+		--controlButtonsFill:{{controlButtonsFill}};
+		--controlButtonsHoverBackground:{{controlButtonsHoverBackground}};
+		--controlCloseButtonHoverBackground:{{controlCloseButtonHoverBackground}};
+		--controlCloseButtonHoverFill:{{controlCloseButtonHoverFill}};
+		--windowBackground:{{windowBackground}};
+		--contextmenuBackground:{{contextmenuBackground}};
+		--contextmenuButtonBackground:{{contextmenuButtonBackground}};
+		--contextmenuButtonText:{{contextmenuButtonText}};
+		--contextmenuButtonHoveringBackground:{{contextmenuButtonHoveringBackground}};
+		--contextmenuButtonHoveringText:{{contextmenuButtonHoveringText}};
+		--mainpanelBackground:{{mainpanelBackground}};
+		--tabsbarBackground:{{tabsbarBackground}};
+		--tabText:{{tabText}};
+		--tabBackground:{{tabBackground}};
+		--tabActiveText:{{tabActiveText}};
+		--tabActiveBackground:{{tabActiveBackground}};
+		--scrollbarBackground:{{scrollbarBackground}};
+		--scrollbarHoverBackground:{{scrollbarHoverBackground}};
+		--tabIconFill:{{tabIconFill}};
+		--tabIconHoverFill:{{tabIconHoverFill}};
+		--sidemenuBackground:{{sidemenuBackground}};
+		--sidemenuButtonBackground:{{sidemenuButtonBackground}};
+		--sidemenuButtonHoverBackground:{{sidemenuButtonHoverBackground}};
+		--sidemenuButtonActiveBackground:{{sidemenuButtonActiveBackground}};
+		--sidemenuButtonText:{{sidemenuButtonText}};
+		--sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
+		--sidemenuSearcherBackground:{{sidemenuSearcherBackground}};
+		--sidemenuSearcherText:{{sidemenuSearcherText}};
+		--explorerItemText:{{explorerItemText}};
+		--explorerItemHoveringBackground:{{explorerItemHoveringBackground}};
+		--explorerItemSelectedBackground:{{explorerItemSelectedBackground}};
+		--explorerItemArrowBackground:{{explorerItemArrowBackground}};
+		--explorerItemGitModifiedText:{{explorerItemGitModifiedText}};
+		--explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
+		--explorerItemGitNotAddedText:{{explorerItemGitNotAddedText}};
+		--explorerItemGitNotAddedIndicator:{{explorerItemGitNotAddedIndicator}};
+		--windowBorder:{{windowBorder}};
+		--fileNotSavedIndicator:{{fileNotSavedIndicator}};
+		--fileNotSavedIndicatorHovering:{{fileNotSavedIndicatorHovering}};
+		--controlCloseButtonActiveBackground:{{controlCloseButtonActiveBackground}};
+		--controlCloseButtonActiveFill:{{controlCloseButtonActiveFill}};
+		--editorDialogBackground:{{editorDialogBackground}};
+		--editorDialogText:{{editorDialogText}};
+		--contextmenuDivider:{{contextmenuDivider}};
+		--statusbarBackground:{{statusbarBackground}};
+		--statusbarItemBackground:{{statusbarItemBackground}};
+		--statusbarItemHoveringBackground:{{statusbarItemHoveringBackground}};
+		--statusbarItemText:{{statusbarItemText}};
+		--statusbarItemHoveringText:{{statusbarItemHoveringText}};
+		--statusbarItemIconBackground:{{statusbarItemIconBackground}};
+		--inputBackground:{{inputBackground}};
+		--inputText:{{inputText}};
+		--splashScreenText:{{splashScreenText}};
+		--splashScreenBackground:{{splashScreenBackground}};
+		--commandPromptInputBackground:{{commandPromptInputBackground}};
+		--commandPromptInputText:{{commandPromptInputText}};
+		--commandPromptInputBorder:{{commandPromptInputBorder}};
+		--commandPromptBackground:{{commandPromptBackground}};
+		--commandPromptOptionBackground:{{commandPromptOptionBackground}};
+		--commandPromptOptionActiveBackground:{{commandPromptOptionActiveBackground}};
+		--commandPromptOptionText:{{commandPromptOptionText}};
+		--commandPromptOptionActiveText:{{commandPromptOptionActiveText}};
+		--notificationBackground:{{notificationBackground}};
+		--notificationTitleText:{{notificationTitleText}};
+		--notificationContentText:{{notificationContentText}};
+		--componentsBorder:{{componentsBorder}};
+		--notificationButtonBackground:{{notificationButtonBackground}};
+		--switchBackground:{{switchBackground}};
+		--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
+		--switchIndicatorDesactivatedBackground:{{switchIndicatorDesactivatedBackground}};
+	}
 `
 
 const App = puffin.element(`
@@ -248,7 +249,9 @@ const App = puffin.element(`
 		mounted(){
 			init()
 			window.addEventListener("load",function(){
-				Welcome().launch()
+				if(RunningConfig.data.arguments[0] == null){
+					Welcome().launch()
+				}
 			})
 		}
 	}
