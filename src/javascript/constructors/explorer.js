@@ -35,27 +35,46 @@ function getStatus(path){
 }
 
 function createWatcher(folderPath,explorerState){
-	const watcher = chokidar.watch(folderPath, {
+	const COMMIT_EDITMSG_PATH = path.join(folderPath,'.git','COMMIT_EDITMSG')
+
+	const projectWatcher = chokidar.watch(folderPath, {
 		ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
 		persistent: true,
 		interval: 250,
 		ignoreInitial: true
 	});
-	watcher
+	projectWatcher
 		.on('add', filePath => {
 			explorerState.emit('newFile',{
 				folderPath:path.dirname(filePath),
 				fileName:path.basename(filePath)
 			})
 		})
-		.on('change', filePath => explorerState.emit('changedFile',{filePath}))
+		.on('change', async(filePath) => {
+			explorerState.emit('changedFile',{filePath})
+		})
 		.on('unlink', filePath => explorerState.emit('removedFile',{filePath}))
 		.on('addDir', folderPath => explorerState.emit('newFolder',{
 			folderPath:path.dirname(folderPath),
 			folderName:path.basename(folderPath)
 		}))
 		.on('unlinkDir', folderPath => explorerState.emit('removedFolder',{folderPath}))
-	return watcher
+	
+	const gitWatcher = chokidar.watch(COMMIT_EDITMSG_PATH, {
+		persistent: true,
+		interval: 400,
+		ignoreInitial: true
+	});
+	gitWatcher.on('change',async()=>{
+		RunningConfig.emit('gitStatusUpdated',{
+			gitChanges : await getStatus(folderPath),
+			parentFolder:folderPath
+		})
+	})
+	return {
+		projectWatcher,
+		gitWatcher
+	}
 }
 
 function standarizePath(dir){
@@ -83,7 +102,8 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			events:{
 				mounted(){
 					const explorerState = this.state
-					let watcher = null;
+					let projectWatcher = null;
+					let gitWatcher = null;
 					explorerState.emit('doReload')
 					this.gitChanges = gitChanges
 					RunningConfig.on(['aTabHasBeenUnSaved','aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated'],async ({parentFolder})=>{
@@ -96,16 +116,23 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					})
 					/*
 					* The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
+					* The Git watcher just watchs the commit message file.
 					*/
 					explorerState.on('stopedWatcher',()=>{
-						if( watcher != null ){
-							watcher.close();
-							watcher = null;
+						if( projectWatcher != null ){
+							projectWatcher.close();
+							projectWatcher = null;
+						}
+						if( gitWatcher != null ){
+							gitWatcher.close();
+							gitWatcher = null;
 						}
 					})
 					explorerState.on('startedWatcher',()=>{
-						if( watcher == null ){
-							watcher = createWatcher(folderPath,explorerState)
+						if( projectWatcher == null ){
+							const watchers = createWatcher(folderPath,explorerState)
+							projectWatcher = watchers.projectWatcher
+							gitWatcher = watchers.gitWatcher
 						}
 					})
 					StaticConfig.on('stopWatchers',()=>{

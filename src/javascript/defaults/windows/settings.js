@@ -24,7 +24,7 @@ function Settings(){
 				<div href="searching"/>
 					<div href="customization">
 						<div href="themes">
-							<H3 lang-string="Themes"/>
+							<H4 lang-string="Themes"/>
 								<RadioGroup radioSelected="$selectedTheme" direction="vertically" styled="false">
 									${(function(){
 										let content = "";
@@ -43,8 +43,8 @@ function Settings(){
 									})()}
 								</RadioGroup>
 							</div>   
-						<div href="others">
-							<H3>Others</H3>
+						<div href="filewatcher">
+							<H4>File Watcher</H4>
 							<Switch toggled="$toggledFileWatcher" default="${StaticConfig.data.enableFileSystemWatcher}" label="File watcher"/>
 						</div>
 					</div>
@@ -94,7 +94,7 @@ function Settings(){
 		components:{
 			RadioGroup,
 			H1:Titles.h1,
-			H3:Titles.h3,
+			H4:Titles.h4,
 			SideMenu,
 			Text,
 			SideMenuSearcher,
