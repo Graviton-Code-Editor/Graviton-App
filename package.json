@@ -72,6 +72,14 @@
 		"artifactName": "${name}-${version}-${arch}-${platform}.${ext}",
 		"icon": "assets/building/mac/icon.png",
 		"asar": true,
+		"files": [
+			"!**.cache",
+			"!**.git",
+			"!**.github",
+			"!**languages",
+			"!**assets",
+			"!**test"
+		],
 		"dmg": {
 			"contents": [
 				{
