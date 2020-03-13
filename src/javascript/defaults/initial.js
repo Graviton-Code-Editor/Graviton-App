@@ -120,9 +120,10 @@ function init(){
 						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
 					}
 				},
+				{},
 				{
 					label:'Open dev tools',
-					action:getCurrentWindow().toggleDevTools
+					action:()=>getCurrentWindow().toggleDevTools()
 				}
 			]
 		})

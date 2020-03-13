@@ -6,10 +6,10 @@ const os = eval('process.platform')
 if(os == "win32"){
     var Buttons = puffin.element(`
         <div class="buttons ${puffin.style.css`
-            rect{
+            & rect{
                 stroke:var(--controlButtonsFill);
             }
-            rect.fill{
+            & rect.fill{
                 fill:var(--controlButtonsFill);
             }
             & button{

@@ -126,6 +126,9 @@ const CodemirrorClient = new EditorClient({
 			instance.refresh()
 		},1);
 	},
+	clicked({instance,action}){
+		instance.on('mousedown',action)
+	},
 	doChangeValue({instance,value}){
 		instance.setValue(value)
 	},

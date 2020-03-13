@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200313 - 3 [2.0.42]
+- Improved: Arctic theme now has a colorized status bar
+- Fixed: there were some global styles in the title bar button component
+- Unable to close dropmenus and context menus when clicking a codemirror instance
+- Fixed: unable to open dev tools from the 'Window' menu
+
 ### 200313 - 2 [2.0.42]
 - Fixed: notification constructor was always expecting a buttons object 
 - New: Theme radios are now cards in Settings > Themes

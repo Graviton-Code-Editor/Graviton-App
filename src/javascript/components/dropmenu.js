@@ -1,4 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
+import RunningConfig from 'RunningConfig'
 
 function hideAllMenus(element){
 	const allMenus = element.parentElement.children
@@ -8,6 +9,7 @@ function hideAllMenus(element){
 		otherMenu.setAttribute("showed","false")
 	}
 }
+
 
 function toggleMenuStatus(element){
 	if(element.getAttribute("showed") == "true"){
@@ -102,12 +104,20 @@ const DropMenu = puffin.element(`
 			target.children[1].style.display = "none"
 			window.addEventListener("click",function(e){
 				e.stopPropagation()
-				if(((e.target.tagName == "A" || e.target.tagName == "BUTTON") && e.target.parentElement.classList.contains("dropmenu") && e.target.parentElement.id == target.id) == false && (e.target.classList.contains("dropmenu")&& e.target.id == target.id) == false){
-					target.children[1].style.display = "none";
-					target.children[0].classList.remove("active")
-					target.setAttribute("showed","false")
-					target.parentElement.setAttribute("anyDropmenuOpened","false")
+				if(
+					((e.target.tagName == "A" || e.target.tagName == "BUTTON") 
+					&& e.target.parentElement.classList.contains("dropmenu") 
+					&& e.target.parentElement.id == target.id) == false 
+					&& (e.target.classList.contains("dropmenu") && e.target.id == target.id) == false
+					&& target.getAttribute("showed") == "true"){
+					RunningConfig.emit('hideAllFloatingComps')
 				}
+			})
+			RunningConfig.on('hideAllFloatingComps',()=>{
+				target.children[1].style.display = "none";
+				target.children[0].classList.remove("active")
+				target.setAttribute("showed","false")
+				target.parentElement.setAttribute("anyDropmenuOpened","false")
 			})
 		}
 	}

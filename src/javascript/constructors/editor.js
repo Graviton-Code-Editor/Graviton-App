@@ -73,6 +73,10 @@ function Editor({
 			}
 		}
 	})
+	Client.do('clicked',{
+		instance,
+		action:()=> RunningConfig.emit('hideAllFloatingComps')
+	})
 	Client.do('onChanged',{
 		instance:instance,
 		action:()=>tabElement.props.state.emit('unsavedMe')
