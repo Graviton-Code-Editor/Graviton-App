@@ -100,7 +100,13 @@
 		},
 		"fileAssociations": [
 			{
-				"ext": ["html", "js", "css"],
+				"ext": "html",
+				"role": "Editor"
+			},{
+				"ext": "js",
+				"role": "Editor"
+			},{
+				"ext": "css",
 				"role": "Editor"
 			}
 		]
