@@ -12,6 +12,7 @@ import Icons from '../../../../assets/icons/**.svg'
 import FolderArrow from '../icons/folder.arrow'
 import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
+import getFormat from '../../utils/format.parser'
 
 const fs = requirePath("fs-extra")
 const trash = requirePath("trash")
@@ -236,7 +237,7 @@ function Item(){
 					const gitChanges = target.parentElement.parentElement.gitChanges
 					target.gitChanges = gitChanges
 					const IAmDirectory = target.getAttribute("isDirectory") == "true"
-					const fileExtension = IAmDirectory?null:getExtension(target)
+					const fileExtension = IAmDirectory?null:getFormat(target.getAttribute("fullpath"))
 					const itemIcon = target.getElementsByClassName('icon')[0]
 					const itemArrow = target.getElementsByClassName('arrow')[0]
 					const gitStatus = target.getAttribute("git-status") ||true
@@ -336,7 +337,7 @@ function Item(){
 							}
 						}else{
 							const basename = path.basename(target.getAttribute("fullpath"))
-							const fileExtension = getExtension(target)
+							const fileExtension = getFormat(target.getAttribute("fullpath"))
 							const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 								title:basename,
 								directory:target.getAttribute("fullpath"),
@@ -378,13 +379,18 @@ function reload(target,gitChanges){
 	setStateOpen(target)
 }
 
-function getExtension(target){
-	const array = path.extname(target.getAttribute("fullpath")).split(".")
-	return array != undefined?array[array.length-1]:path.basename(target.getAttribute("fullpath"))
-}
 
 function setFileIcon(target,extension){
-	if(Icons[`${extension}.lang`] !== undefined){
+	const fileName = target.parentElement.textContent
+	if(extension == ("png" || "jpg" || "ico")){
+		target.src = Icons.image
+		return;
+	}
+	if(Icons[`file.${fileName}`] ){
+		target.src = Icons[`file.${fileName}`] 
+		return
+	}
+	if(Icons[`${extension}.lang`] ){
 		target.src = Icons[`${extension}.lang`] 
 	}else{
 		target.src = Icons['unknown.file'] 
@@ -393,14 +399,24 @@ function setFileIcon(target,extension){
 
 function setStateOpen(target){
 	const itemIcon = target.getElementsByClassName('icon')[0]
-	itemIcon.src = Icons["folder.opened"]
+	const folderName = target.textContent
 	target.setAttribute('opened','true')
+	if( Icons[`folder.opened.${folderName}`]  ) {
+		itemIcon.src = Icons[`folder.opened.${folderName}`]
+	}else{
+		itemIcon.src = Icons["folder.opened"]
+	}
 }
 
 function setStateClosed(target){
 	const itemIcon = target.getElementsByClassName('icon')[0]
-	itemIcon.src = Icons["folder.closed"]
+	const folderName = target.textContent
 	target.setAttribute('opened','false')
+	if( Icons[`folder.closed.${folderName}`] ) {
+		itemIcon.src = Icons[`folder.closed.${folderName}`]
+	}else{
+		itemIcon.src = Icons["folder.closed"]
+	}
 }
 
 function removeDirectoryOrFile(element){

@@ -7,6 +7,7 @@ import InputDialog from '../constructors/dialog.input'
 import Tab from '../constructors/tab'
 import Editor from '../constructors/editor'
 import ExtensionsRegistry from 'ExtensionsRegistry'
+import getFormat from './format.parser'
 
 const path = requirePath("path")
 const fs = requirePath("fs-extra")
@@ -86,17 +87,12 @@ function getWorkspaceConfig( path ){
     }
 }
 
-function getExtension(dir){
-	const array = path.extname(dir).split(".")
-	return array != undefined?array[array.length-1]:path.basename(dir)
-}
-
 RunningConfig.on('loadFile',function({
     filePath
 }){
 	const basename = path.basename(filePath)
 	const fileFolderPath = path.parse(filePath).dir
-	const fileExtension = getExtension(filePath)
+	const fileExtension = getFormat(filePath)
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title:basename,
 		directory:filePath,
