@@ -108,7 +108,9 @@ function Editor({
 		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
 	}
 	RunningConfig.changed(function(data){
-		if(data.focusedEditor == null){
+		if(data.focusedEditor){
+			CursorPositionStatusBarItem.show()
+		}else{
 			CursorPositionStatusBarItem.hide()
 		}
 	})
@@ -119,6 +121,7 @@ function Editor({
 		Client.do('doRefresh',{instance,element:bodyElement})
 	})
 	updateCursorPosition(Client,instance)
+	focusEditor(Client,instance)
 	return Client
 }
 

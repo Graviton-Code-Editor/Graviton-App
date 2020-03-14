@@ -33,7 +33,6 @@ function Tab({
 		parentFolder,
 		panel
 	})
-
 	const classSelector = `${directory}`
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if( openedTabs.length >= 1 ){
@@ -45,7 +44,6 @@ function Tab({
 			isCancelled : true
 		}
 	}
-
 	const TabComp = puffin.element(`
 		<TabBody draggable="true" 
 		classSelector="${classSelector}" 
@@ -70,11 +68,9 @@ function Tab({
 		methods:{
 			startDrag(e){
 				event.dataTransfer.setData("classSelector", classSelector)
-
 				const tabsBar = this.parentElement
 				const tabPosition  = guessTabPosition(this,tabsBar)
 				let classSelectorForNext = null
-
 				if( tabsBar.children.length == 1){
 					classSelectorForNext = null
 				}else if( tabPosition == 0){
@@ -82,7 +78,6 @@ function Tab({
 				}else{
 					classSelectorForNext = tabsBar.children[tabPosition-1].getAttribute("classSelector")
 				}
-
 				event.dataTransfer.setData(
 					"classSelectorForNext", 
 					classSelectorForNext
@@ -93,7 +88,6 @@ function Tab({
 			},
 			closeTab(e){
 				e.stopPropagation()
-
 				tabState.emit('close')
 			},
 			showCross(e){
@@ -106,18 +100,15 @@ function Tab({
 		events:{
 			mounted(){
 				this.directory = directory
-
 				tabState.on('focusedMe',()=>{
 					RunningConfig.data.focusedTab = this
 					RunningConfig.data.focusedPanel = this.parentElement.parentElement
 					unfocusTabs(this)
 					this.props.active = true
 				})
-
 				tabState.on('unfocusedMe',()=>{
 					this.props.active = false
 				})
-
 				tabState.on('savedMe',()=>{
 					if(!this.props.saved){
 						toggleTabStatus({

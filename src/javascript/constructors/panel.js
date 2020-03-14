@@ -89,10 +89,10 @@ function Panel(){
 					tabsBar.insertBefore(movingTab,nextTab) //Drag between tabs
 				}
 				movingTab.props.state.emit('changePanel',panel) //Make dragged tab the active one in the new panel and also move the editor 
-				movingTab.props.state.emit('focusedMe',{}) //Focus the new tab
 				if( oldPanel != panel && nextOldTab != null ) {
 					nextOldTab.props.state.emit('focusedMe') //Focus a tab in old panel
 				}
+				movingTab.props.state.emit('focusedMe',{}) //Focus the new tab
 			},
 			focusPanel(){
 				RunningConfig.data.focusedPanel = this
