@@ -264,7 +264,7 @@ function Item(){
 					)
 					markStatus(target,gitResult.status)
 					RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-						if(parentFolder == explorerParentfolder){
+						if(parentFolder == explorerParentfolder && this.children[0]){
 							target.gitChanges = gitChanges
 							const newGitResult = getMyStatus(
 								this.getAttribute("fullpath"),
@@ -290,6 +290,10 @@ function Item(){
 						if( itemDirectory == filePath ){
 							this.remove()
 						}
+						RunningConfig.emit('aFileHasBeenRemoved',{
+							parentFolder,
+							filePath
+						})
 					})
 					explorerState.on('newFolder',({folderPath,folderName})=>{
 						if( IAmDirectory && folderPath == itemDirectory  ){
@@ -307,6 +311,10 @@ function Item(){
 						if( itemDirectory == folderPath ){
 							this.remove()
 						}
+						RunningConfig.emit('aFolderHasBeenRemoved',{
+							folderPath,
+							parentFolder
+						})
 					})
 					explorerState.on('changedFile',async ({filePath})=>{
 						if( itemDirectory == filePath ){
