@@ -124,7 +124,6 @@ function Tab({
 						})
 					}
 				})
-
 				tabState.on('unsavedMe',()=>{
 					if(this.props.saved){
 						toggleTabStatus({
@@ -144,14 +143,26 @@ function Tab({
 					tabState.data.panel = newPanel
 					focusATab(this)
 				})
-				tabState.on('close',(newPanel)=>{
+				tabState.on('close',()=>{
 					if(this.props.saved){
-						if( RunningConfig.data.focusedTab == this) focusATab(this)
+						focusATab(this)
 						TabComp.node.remove()
 						TabEditorComp.node.remove(); 
-						tabState.emit('destroyed',{tabElement:TabComp.node})
+						tabState.emit('destroyed',{
+							tabElement:TabComp.node
+						})
 					}  
 				})
+				this.getPanelTabs = ()=>{
+					const tabs = this.parentElement.children
+					return Object.keys(tabs).map((tab)=>{
+						return {
+							element:tabs[tab],
+							fileName:tabs[tab].children[0].textContent,
+							filePath:tabs[tab].getAttribute("classselector")
+						}
+					})
+				}
 				unfocusTabs(this)
 				RunningConfig.data.focusedTab = this
 				this.props.active = tabState.data.active

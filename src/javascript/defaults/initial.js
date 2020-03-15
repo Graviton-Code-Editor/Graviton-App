@@ -198,6 +198,31 @@ function init(){
 			}
 		},
 		{ 
+			shortcut: 'Ctrl+Tab', handler: event => {
+				if( RunningConfig.data.focusedTab ){
+					const focusedPanelTabs = RunningConfig.data.focusedTab.getPanelTabs()
+					new CommandPrompt({
+						name:'tab_switcher',
+						showInput:false,
+						scrollOnTab:true,
+						closeOnKeyUp:true,
+						inputPlaceHolder:'Enter a command',
+						options:[...focusedPanelTabs.map((tab)=>{
+							return {
+								label:tab.fileName
+							}
+						})],
+						onSelected(res){
+							const toFocusTab = focusedPanelTabs.filter((tab)=>{
+								return tab.fileName == res.label
+							})[0]
+							toFocusTab && toFocusTab.element.props.state.emit('focusedMe')
+						}
+					})
+				}
+			}
+		},
+		{ 
 			shortcut: 'Ctrl+P', handler: event => {
 				new CommandPrompt({
 					name:'global',

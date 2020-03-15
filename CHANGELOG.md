@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200315 - 1 [2.0.44]
+- Fixed: bug when closing a tab in a not focused panel
+- New: Press Ctrl+Tab to fast switch between tabs
+- Fixed: Couldn't open a command prompt with showInput with false
+
 ### 200313 - 3 [2.0.42]
 - Improved: Arctic theme now has a colorized status bar
 - Fixed: there were some global styles in the title bar button component
