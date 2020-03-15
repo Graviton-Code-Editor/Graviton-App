@@ -15,7 +15,8 @@ const defaultConfiguration = {
 		'appWorkspacesLog':[],
 		'appZoom':1,
 		'editorFSWatcher':true,
-		'editorAutocomplete':true
+		'editorAutocomplete':true,
+		'editorTabSize':4
 	}
 }
 

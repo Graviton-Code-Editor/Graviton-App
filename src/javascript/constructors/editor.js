@@ -8,10 +8,7 @@ const path = requirePath("path")
 
 function sortByRanking(language){
 	const selectedEditor = RunningConfig.data.editorsRank.filter(function(Client){
-		const {
-			name,
-			unknown=false
-		} = Client.do('getLangFromExt',language)
+		const { unknown=false } = Client.do('getLangFromExt',language)
 		if( !unknown ) return Client
 	})[0]
 	if( selectedEditor != null ) {
@@ -36,7 +33,6 @@ function Editor({
 		language:Client.do('getLangFromExt',language),
 		value,
 		theme,
-		fontSize:StaticConfig.data.fontSize,
 		directory,
 		CtrlPlusScroll:(direction)=> {
 			if(direction == 'up'){
@@ -97,6 +93,12 @@ function Editor({
 		Client.do('setTheme',{
 			instance:instance,
 			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme
+		})
+	})
+	StaticConfig.keyChanged('editorTabSize',function(value){
+		Client.do('setTabSize',{
+			instance:instance,
+			tabSize:value
 		})
 	})
 	StaticConfig.keyChanged('editorFontSize',function(value){

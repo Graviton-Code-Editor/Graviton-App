@@ -35,7 +35,7 @@ function Settings(){
 											if(pkg.type == "theme"){
 												content +=`
 													<label styled="false" hidden-radio="true" name="${extension}" checked="${StaticConfig.data['app.theme'] == extension?'':'false'}">
-														<Card>${extension}</Card>
+														<Card style="font-size:13px;">${extension}</Card>
 													</label>
 												`
 											}

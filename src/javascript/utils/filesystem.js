@@ -195,7 +195,7 @@ RunningConfig.on('addLogWorkspace',({ path })=>{
 })
 
 function saveConfiguration(path,config){
-	fs.writeFile(path,JSON.stringify(config,2),'UTF-8', (err, data) => {
+	fs.writeFile(path,JSON.stringify(config,null,2),'UTF-8', (err, data) => {
 		if (err) throw err;
 		StaticConfig.triggerChange()
 	});

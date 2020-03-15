@@ -54,7 +54,7 @@ const CodemirrorClient = new EditorClient({
 				}   
 		}
 	},
-	create({element,language, value, theme, fontSize, CtrlPlusScroll}){
+	create({element,language, value, theme, CtrlPlusScroll}){
 		const CodemirrorEditor = CodeMirror(element,{
 			mode:language,
 			value:value,
@@ -68,8 +68,8 @@ const CodemirrorClient = new EditorClient({
 			matchBrackets: true,
 			theme:theme,
 			indentWithTabs:true,
-			tabSize:4,
-			indentUnit:4,
+			tabSize:StaticConfig.data.editorTabSize,
+			indentUnit:StaticConfig.data.editorTabSize,
 			undoDepth:500
 		})
 		
@@ -99,7 +99,7 @@ const CodemirrorClient = new EditorClient({
 				}
 			}
 		});
-		element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
+		element.getElementsByClassName("Codemirror")[0].style.fontSize = StaticConfig.data.editorFontSize;
 		CodemirrorEditor.addKeyMap({
 			'Ctrl-Up': function (instance) {
 				CtrlPlusScroll('up')
@@ -130,6 +130,13 @@ const CodemirrorClient = new EditorClient({
 	clicked({instance,action}){
 		instance.on('mousedown',action)
 	},
+	doIndent({instance}){
+		const cursorPos = instance.getCursor()
+		instance.extendSelection({line:0,ch:0},{line:instance.lineCount()})
+		instance.execCommand('indentAuto')
+		instance.setCursor(cursorPos)
+		instance.refresh()
+	},
 	doChangeValue({instance,value}){
 		instance.setValue(value)
 	},
@@ -142,6 +149,11 @@ const CodemirrorClient = new EditorClient({
 	},
 	setTheme({instance,theme}){
 		instance.setOption('theme',theme)
+	},
+	setTabSize({instance, tabSize}){
+		instance.setOption('tabSize',tabSize)
+		instance.setOption('indentUnit',tabSize)
+		instance.refresh()
 	},
 	setFontSize({instance, element, fontSize}){
 		element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;

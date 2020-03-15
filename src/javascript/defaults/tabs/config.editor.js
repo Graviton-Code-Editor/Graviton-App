@@ -27,5 +27,8 @@ function configEditor(){
 	tabElement.props.state.on('savedMe',()=>{
 		updateStaticConfigByKey(client,instance)
 	})
+	
+	client.do('doIndent',{instance}) //Force an initial indentation
+	tabState.emit('savedMe') //Save the tab
 }
 export default configEditor

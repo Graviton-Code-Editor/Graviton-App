@@ -13,21 +13,21 @@ const Switch = puffin.element(`
 			background:var(--switchBackground);
 			border-radius:15px;
 			padding:3px 6px;
-			min-width:40px;
-			height:20px;
+			min-width:38px;
+			height:18px;
 			display:flex;
 			align-items:center;
 			cursor:pointer;
 		}
 		& .indicator{
-			height: 16px;
-			width: 16px;
+			height: 14px;
+			width: 14px;
 			border-radius:100px;
 		}
 		&[status=true] .indicator{
 			transition:0.13s;
 			background:var(--switchIndicatorActivatedBackground);
-			left:25px;
+			left:24px;
 			position:relative;
 		}
 		&[status=false] .indicator{
@@ -38,9 +38,10 @@ const Switch = puffin.element(`
 		}
 		& label {
 			margin-left:10px;
-			margin-top:1px;
+			margin-top:2px;
 			overflow:hidden;
 			text-overflow:ellipsis;
+			font-size:13px;
 		}
 	`}">
 		<div class="wrapper">
