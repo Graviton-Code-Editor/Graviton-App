@@ -145,13 +145,13 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 						explorerState.emit('startedWatcher')
 					}
 					explorerState.on('createItem',({container,folderPath,filePath,folderName,level,fileName,isFolder = false})=>{ 
-						if( container == null) return; //Folder is not opened
-						const possibleClass = standarizePath(filePath)
+						if( container === null) return; //Folder is not opened
+						const possibleClass = standarizePath(isFolder?folderPath:filePath)
 						if(document.getElementsByClassName(possibleClass)[0] == null){ //Might have been already created by watcher
 							if( isFolder ){
 								RunningConfig.emit('aFolderHasBeenCreated',{
 									parentFolder:container.getAttribute("parentFolder"),
-									path:filePath
+									path:folderPath
 								})
 							}else{
 								RunningConfig.emit('aFileHasBeenCreated',{

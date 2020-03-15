@@ -7,7 +7,7 @@ import RunningConfig from '../utils/running.config'
 function Notification({
 	title = 'Title',
 	content = '',
-	buttons = {}
+	buttons = []
 }){
 	const listedMethods = buttons.map(({action})=>action)
 	const NotificationComp = puffin.element(`
