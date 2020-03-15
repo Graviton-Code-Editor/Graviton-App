@@ -53,7 +53,7 @@ function Editor({
 		}
 	})
 	RunningConfig.on('aFileHasBeenChanged',({filePath,newData})=>{
-		if( filePath == directory ){
+		if( filePath == directory && tabElement.parentElement ){
 			if(Client.do('getValue',instance) != newData){
 				new Notification({
 					title:path.basename(directory),
