@@ -14,156 +14,146 @@ import Window from '../../constructors/window'
 
 function Welcome( { defaultPage = "projects" } = {  }){
     const WelcomePage = puffin.element(`
-        <SideMenu default="${defaultPage}">
-            <div>
-                <H1 lang-string="Welcome"></H1>
-                <label to="projects" lang-string="RecentProjects"></label>
-                <label to="workspaces">Recent workspaces</label>
-                <label to="create_project" lang-string="NewProject"></label>
-            </div>
-            <div>
-                <CardsListContainer href="workspaces">
-                    <div>
-                        ${(function(){
-                            let content = "";
-                            StaticConfig.data.recentWorkspaces.map((workspacePath)=> {
-                                const workspaceConfig = getWorkspaceConfig(workspacePath)
-                                if( workspaceConfig != null ) {
-                                    const { name, folders = [] } = workspaceConfig
-                                    let listContent = "";
-
-                                    folders.map(({name,path})=>{
-                                        listContent += `<li>· ${parseDirectory(name)}</li>`
-                                    })
-
-                                    content += `
-                                        <Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
-                                            <b>${name}</b>
-                                            <ul>
-                                                ${listContent}
-                                            </ul>
-                                        </Card>
-                                    `
-                                    }
-                            })
-                            return content;
-                        })()}
-                    </div>
-                </CardsListContainer>
-                <CardsListContainer href="projects">
-                    <div>
-                        ${(function(){
-                            let content = "";
-                            StaticConfig.data.log.map(({ name, directory })=> {
-                            
-                                const nameFolder = parseDirectory(directory)
-
-                                content += `
-                                    <Card click="$openDirectory" directory="${directory}">
-                                        <b>${nameFolder}</b>
-                                        <p>${directory}</p>
-                                    </Card>
-                                `
-                            })
-                            return content;
-                        })()}
-                    </div>
-                    <div class="${puffin.style.css`
-                        &{
-                            display:flex;
-                            justify-content:flex-end;
-                            padding-top:10px;
-                        }
-                    `}">
-                        <Button click="$openDirectoryFromWindow">Open a folder</Button>
-                    </div>
-                </CardsListContainer>
-                <CardsListContainer href="create_project">
-                    <b>Empty.</b>
-                </CardsListContainer>
-            </div>
-        </SideMenu>
+		<SideMenu default="${defaultPage}">
+			<div>
+				<H1 lang-string="Welcome"/>
+				<label to="projects" lang-string="RecentProjects"></label>
+				<label to="workspaces">Recent workspaces</label>
+				<label to="create_project" lang-string="NewProject"></label>
+			</div>
+			<div>
+				<CardsListContainer href="workspaces">
+					<div>
+						${(function(){
+							let content = "";
+							StaticConfig.data.appWorkspacesLog.map((workspacePath)=> {
+								const workspaceConfig = getWorkspaceConfig(workspacePath)
+								if( workspaceConfig != null ) {
+									const { name, folders = [] } = workspaceConfig
+									let listContent = "";
+									folders.map(({name,path})=>{
+										listContent += `<li>· ${parseDirectory(name)}</li>`
+									})
+									content += `
+										<Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
+											<b>${name}</b>
+											<ul>
+												${listContent}
+											</ul>
+										</Card>
+									`
+								}
+							})
+							return content;
+						})()}
+					</div>
+				</CardsListContainer>
+				<CardsListContainer href="projects">
+					<div>
+						${(function(){
+							let content = "";
+							StaticConfig.data.appProjectsLog.map(({ name, directory })=> {
+								const nameFolder = parseDirectory(directory)
+								content += `
+									<Card click="$openDirectory" directory="${directory}">
+										<b>${nameFolder}</b>
+										<p>${directory}</p>
+									</Card>
+									`
+							})
+							return content;
+						})()}
+					</div>
+				<div class="${puffin.style.css`
+					&{
+						display:flex;
+						justify-content:flex-end;
+						padding-top:10px;
+					}
+				`}">
+					<Button click="$openDirectoryFromWindow">Open a folder</Button>
+				</div>
+				</CardsListContainer>
+				<CardsListContainer href="create_project">
+					<b>Empty.</b>
+				</CardsListContainer>
+			</div>
+		</SideMenu>
     `,{
-        addons:{
-            lang:puffin.lang(LanguageState)
-        },
-        components:{
-            Button,
-            Card,
-            SideMenu,
-            H1:Titles.h1,
-            CardsListContainer
-        },
-        methods:{
-            contextMenuWorkspace(event){
-                new ContextMenu({
-                    list:[
-                        {
-                            label:'Rename',
-                            action:()=>{
-                                RunningConfig.emit('renameWorkspaceDialog',{
-                                    path:this.getAttribute("directory"),
-                                    onFinished:(newName)=>{
-                                        this.children[0].textContent = newName
-                                    }
-                                }) 
-                            }
-                        },
-                        {
-                            label:'Remove from here',
-                            action:()=>{
-                                RunningConfig.emit('removeWorkspaceFromLog',{
-                                    path:this.getAttribute("directory")
-                                })
-                                this.remove()
-                            }
-                        }
-                    ],
-                    event,
-                    parent:this
-                })
-                
-            },
-            openWorkspace(){
-                RunningConfig.emit('setWorkspace',{
-                    path:this.getAttribute("directory")
-                })
-                WelcomeWindow.close()
-            },
-            openDirectory(){
-                RunningConfig.emit('addFolderToRunningWorkspace',{
-                    folderPath:this.getAttribute("directory"),
-                    replaceOldExplorer:true,
-                    workspacePath:null
-                })
-                WelcomeWindow.close()
-            },
-            openDirectoryFromWindow(){
-                openFolder().then(function(folderPath){
-                    RunningConfig.emit('addFolderToRunningWorkspace',{
-                        folderPath,
-                        replaceOldExplorer:true,
-                        workspacePath:null
-                    })
-                    WelcomeWindow.close()
-                })
-            }
-        }
-    })
+		addons:{
+			lang:puffin.lang(LanguageState)
+		},
+		components:{
+			Button,
+			Card,
+			SideMenu,
+			H1:Titles.h1,
+			CardsListContainer
+		},
+		methods:{
+			contextMenuWorkspace(event){
+				new ContextMenu({
+					list:[
+						{
+							label:'Rename',
+							action:()=>{
+								RunningConfig.emit('renameWorkspaceDialog',{
+									path:this.getAttribute("directory"),
+									name:this.children[0].textContent,
+									onFinished:(newName)=>{
+										this.children[0].textContent = newName
+									}
+								}) 
+							}
+						},
+						{
+							label:'Remove from here',
+							action:()=>{
+								RunningConfig.emit('removeWorkspaceFromLog',{
+									path:this.getAttribute("directory")
+								})
+								this.remove()
+							}
+						}
+					],
+					event,
+					parent:this
+				})
+			},
+			openWorkspace(){
+				RunningConfig.emit('setWorkspace',{
+					path:this.getAttribute("directory")
+				})
+				WelcomeWindow.close()
+			},
+			openDirectory(){
+				RunningConfig.emit('addFolderToRunningWorkspace',{
+					folderPath:this.getAttribute("directory"),
+					replaceOldExplorer:true,
+					workspacePath:null
+				})
+				WelcomeWindow.close()
+			},
+			openDirectoryFromWindow(){
+				openFolder().then(function(folderPath){
+					RunningConfig.emit('addFolderToRunningWorkspace',{
+						folderPath,
+						replaceOldExplorer:true,
+						workspacePath:null
+					})
+					WelcomeWindow.close()
+				})
+			}
+		}
+	})
+	const WelcomeWindow = new Window({
+		title:'welcome',
+		component:WelcomePage,
+		height:'400px',
+		width:'600px'
+	})
 
-    const WelcomeWindow = new Window({
-        title:'welcome',
-        component:WelcomePage,
-        height:'400px',
-        width:'600px'
-    })
-
-    return WelcomeWindow
+	return WelcomeWindow
 }
 
 export default Welcome
-
-/*
-
-
-                */

@@ -260,15 +260,18 @@ function toggleTabStatus({
 }
 
 function saveFile(tab,callback){
-
-	const  { client, instance } = RunningConfig.data.focusedEditor
-
-	fs.writeFile(tab.directory, client.do('getValue',instance), function(err) {
-		if(err) {
-			return console.log(err);
-		}
+	if( tab.directory ) {
+		const  { client, instance } = RunningConfig.data.focusedEditor
+		fs.writeFile(tab.directory, client.do('getValue',instance), function(err) {
+			if(err) {
+				return console.log(err);
+			}
+			callback()
+		}); 
+	}else{
 		callback()
-	}); 
+	}
+
 }
 
 function unfocusTabs(tab){

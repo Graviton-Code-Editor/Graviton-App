@@ -16,11 +16,19 @@ StaticConfig.changed(function(data){
     saveConfiguration()
 })
 
-StaticConfig.on('setZoom',(zoom)=> {
-    webFrame.setZoomFactor(zoom)
+StaticConfig.keyChanged('appZoom',(value)=> {
+    webFrame.setZoomFactor(value)
 })
 
-StaticConfig.emit('setZoom',StaticConfig.data.zoom) //Set default zoom
+
+StaticConfig.keyChanged('editorFSWatcher',(status)=>{
+	if( status ){
+		StaticConfig.emit('startWatchers')
+	}else{
+		StaticConfig.emit('stopWatchers')
+	}
+})
+
 
 console.log(StaticConfig)
 

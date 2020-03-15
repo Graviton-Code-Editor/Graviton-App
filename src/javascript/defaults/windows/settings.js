@@ -1,6 +1,6 @@
 import {puffin} from '@mkenzo_8/puffin'
 import Window from '../../constructors/window'
-import {Titles , RadioGroup, Text, Card} from '@mkenzo_8/puffin-drac'
+import {Titles , RadioGroup, Text, Card, Button} from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
@@ -8,6 +8,7 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Languages from '../../../../languages/*.json'
 import Switch from '../../components/switch'
+import configEditor from '../tabs/config.editor.js'
 
 function Settings(){
 	const SettingsPage = puffin.element(`
@@ -33,7 +34,7 @@ function Settings(){
 											const pkg = ExtensionsRegistry.registry.data.list[extension]
 											if(pkg.type == "theme"){
 												content +=`
-													<label styled="false" hidden-radio="true" name="${extension}" checked="${StaticConfig.data.theme == extension?'':'false'}">
+													<label styled="false" hidden-radio="true" name="${extension}" checked="${StaticConfig.data['app.theme'] == extension?'':'false'}">
 														<Card>${extension}</Card>
 													</label>
 												`
@@ -43,10 +44,15 @@ function Settings(){
 									})()}
 								</RadioGroup>
 							</div>   
-						<div href="filewatcher">
+						<div href="file watcher">
 							<H4>File Watcher</H4>
-							<Switch toggled="$toggledFileWatcher" default="${StaticConfig.data.enableFileSystemWatcher}" label="File watcher"/>
+							<Switch toggled="$toggledFileWatcher" default="${StaticConfig.data.editorFSWatcher}" label="File watcher"/>
 						</div>
+						<div href="manual config">
+							<H4>Manual editing</H4>
+							<Button click="$configeditor">Edit configuration</Button>
+						</div>
+						
 					</div>
 			<div href="plugins">
 				<div href="plugins">
@@ -74,7 +80,7 @@ function Settings(){
 								let content = "";
 								Object.keys(Languages).map(function(lang){
 									content +=`
-										<label name="${lang}" checked="${StaticConfig.data.language == lang?'':'false'}">${lang}</label>
+										<label name="${lang}" checked="${StaticConfig.data.appLanguage == lang?'':'false'}">${lang}</label>
 									`
 								})
 								return content
@@ -99,36 +105,42 @@ function Settings(){
 			Text,
 			SideMenuSearcher,
 			Switch,
-			Card
+			Card,
+			Button
 		},
 		methods:{
+			configeditor(){
+				configEditor()	
+				SettingsWindow.close()
+			},
 			selectedTheme(e){
 				const newTheme = e.detail.target.getAttribute("name")
-				if( StaticConfig.data.theme != newTheme)
-					StaticConfig.data.theme = newTheme
+				if( StaticConfig.data.appTheme != newTheme)
+					StaticConfig.data.appTheme = newTheme
 			},
 			selectedLanguage(e){
 				const newLanguage = e.detail.target.getAttribute("name")
-				if( StaticConfig.data.language != newLanguage)
-					StaticConfig.data.language = newLanguage
+				if( StaticConfig.data.appLanguage != newLanguage)
+					StaticConfig.data.appLanguage = newLanguage
 			},
 			toggledFileWatcher(){
-				if( this.props.status == StaticConfig.data.enableFileSystemWatcher ) return;
-				if(this.props.status){
-					StaticConfig.emit('startWatchers')
+				if( this.props.status == StaticConfig.data.editorFSWatcher ) {
+					return;
 				}else{
-					StaticConfig.emit('stopWatchers')
+					StaticConfig.data.editorFSWatcher = this.props.status
 				}
+				
 			}
 		},
 		addons:{
 			lang:puffin.lang(LanguageState)
 		}
 	}) 
-	return new Window({
+	const SettingsWindow = new Window({
 		title:'settings',
 		component:SettingsPage
 	})
+	return SettingsWindow
 }
 
 export default Settings

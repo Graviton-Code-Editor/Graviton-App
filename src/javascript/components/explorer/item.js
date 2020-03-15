@@ -348,7 +348,7 @@ function Item(){
 								new Editor({
 									language:fileExtension,
 									value:data ,
-									theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme,
+									theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 									bodyElement,
 									tabElement,
 									tabState,

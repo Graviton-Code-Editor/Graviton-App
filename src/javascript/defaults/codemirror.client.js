@@ -74,7 +74,7 @@ const CodemirrorClient = new EditorClient({
 		})
 		
 		CodemirrorEditor.on("keyup", function (cm, event) {
-			if(StaticConfig.data.autocomplete){
+			if(StaticConfig.data.editorAutocomplete){
 				if (!cm.state.completionActive && 
 					event.keyCode != 13 &&
 					event.keyCode != 8 && 

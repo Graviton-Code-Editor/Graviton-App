@@ -15,7 +15,7 @@ import Notification from '../constructors/notification'
 import Tab from '../constructors/tab'
 
 const fs = requirePath("fs-extra")
-const pluginsPath = path.join(StaticConfig.data.configPath,'plugins')
+const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
 
 function getExtension(path){
     return require(path)

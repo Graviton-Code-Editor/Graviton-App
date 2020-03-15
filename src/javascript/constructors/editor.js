@@ -40,15 +40,15 @@ function Editor({
 		directory,
 		CtrlPlusScroll:(direction)=> {
 			if(direction == 'up'){
-				StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)+2
+				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+2
 			}else{
-				if( StaticConfig.data.fontSize <=4) return
-				StaticConfig.data.fontSize = Number(StaticConfig.data.fontSize)-2
+				if( StaticConfig.data.editorFontSize <=4) return
+				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-2
 			}
 			Client.do('setFontSize',{
 				instance:instance,
 				element:bodyElement,
-				fontSize:StaticConfig.data.fontSize
+				fontSize:StaticConfig.data.editorFontSize
 			})
 		}
 	})
@@ -56,20 +56,20 @@ function Editor({
 		if( filePath == directory ){
 			if(Client.do('getValue',instance) != newData){
 				new Notification({
-				title:path.basename(directory),
-				content:'This file content has changed',
-				buttons:[
-					{
-						label:'Update',
-						action:()=>{
-							Client.do('doChangeValue',{
-								instance:instance,
-								value:newData
-							})
+					title:path.basename(directory),
+					content:'This file content has changed',
+					buttons:[
+						{
+							label:'Update',
+							action:()=>{
+								Client.do('doChangeValue',{
+									instance:instance,
+									value:newData
+								})
+							}
 						}
-					}
-				]
-			})
+					]
+				})
 			}
 		}
 	})
@@ -93,22 +93,25 @@ function Editor({
 			updateCursorPosition(Client,instance)
 		}
 	})
-	StaticConfig.changed(function(){
+	StaticConfig.keyChanged('appTheme',function(){
 		Client.do('setTheme',{
 			instance:instance,
-			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.theme].textTheme
+			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme
 		})
+	})
+	StaticConfig.keyChanged('editorFontSize',function(value){
 		Client.do('setFontSize',{
 			instance:instance,
 			element:bodyElement,
-			fontSize:StaticConfig.data.fontSize
+			fontSize:value
 		})
 	})
+
 	if(CursorPositionStatusBarItem.isHidden()){
 		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
 	}
-	RunningConfig.changed(function(data){
-		if(data.focusedEditor){
+	RunningConfig.keyChanged('focusedEditor',function(editor){
+		if(editor){
 			CursorPositionStatusBarItem.show()
 		}else{
 			CursorPositionStatusBarItem.hide()
@@ -122,7 +125,10 @@ function Editor({
 	})
 	updateCursorPosition(Client,instance)
 	focusEditor(Client,instance)
-	return Client
+	return {
+		client:Client,
+		instance
+	}
 }
 
 function updateCursorPosition(Client,instance){

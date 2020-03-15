@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200315 - 2 [2.0.45]
+- New: Added a button to edit the app's configuration directly right from a file
+
 ### 200315 - 1 [2.0.44]
 - Fixed: bug when closing a tab in a not focused panel
 - New: Press Ctrl+Tab to fast switch between tabs

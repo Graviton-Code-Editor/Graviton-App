@@ -137,11 +137,9 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					})
 					StaticConfig.on('stopWatchers',()=>{
 						explorerState.emit('stopedWatcher')
-						StaticConfig.data.enableFileSystemWatcher = false
 					})
 					StaticConfig.on('startWatchers',()=>{
 						explorerState.emit('startedWatcher')
-						StaticConfig.data.enableFileSystemWatcher = true
 					})
 					if( StaticConfig.data.enableFileSystemWatcher ){
 						explorerState.emit('startedWatcher')

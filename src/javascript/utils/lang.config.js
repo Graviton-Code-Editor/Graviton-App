@@ -3,12 +3,12 @@ import Languages from '../../../languages/*.json'
 import StaticConfig from 'StaticConfig'
 
 const LanguageState = new puffin.state(
-    Object.assign({},Languages[StaticConfig.data.language].strings)
+    Object.assign({},Languages[StaticConfig.data.appLanguage].strings)
 )
 
-StaticConfig.changed(function(){
+StaticConfig.keyChanged('appLanguage',function(newLanguage){
     Object.keys(LanguageState.data).map(function(key){
-        LanguageState.data[key] = Languages[StaticConfig.data.language].strings[key]
+        LanguageState.data[key] = Languages[newLanguage].strings[key]
     })
     LanguageState.triggerChange()
 })

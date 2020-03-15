@@ -102,22 +102,19 @@ function init(){
 				{
 					label:'Default zoom',
 					action:()=> {
-						StaticConfig.data.zoom = 1
-						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+						StaticConfig.data.appZoom = 1
 					}
 				},
 				{
 					label:'Increase zoom',
 					action:()=> {
-						StaticConfig.data.zoom += 0.1
-						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+						StaticConfig.data.appZoom += 0.1
 					}
 				},
 				{
 					label:'Decrease zoom',
 					action:()=> {
-						StaticConfig.data.zoom -= 0.1
-						StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+						StaticConfig.data.appZoom -= 0.1
 					}
 				},
 				{},
@@ -157,16 +154,14 @@ function init(){
 		component:Plus,
 		position:'right',
 		action:()=>{
-			StaticConfig.data.zoom += 0.1
-			StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+			StaticConfig.data.appZoom += 0.1
 		}
 	})
 	new StatusBarItem({
 		component:Minus,
 		position:'right',
 		action:()=>{
-			StaticConfig.data.zoom -= 0.1
-			StaticConfig.emit('setZoom',StaticConfig.data.zoom)
+			StaticConfig.data.appZoom -= 0.1
 		}
 	})
 	ExtensionsRegistry.add(Arctic)    

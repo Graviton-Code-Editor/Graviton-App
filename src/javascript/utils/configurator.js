@@ -7,15 +7,15 @@ const getAppDataPath = requirePath('appdata-path')
 
 const defaultConfiguration = {
 	config:{
-		theme:'Arctic',
-		language:'english',
-		fontSize:'16',
-		log:[],
-		configPath:path.join(getAppDataPath(),'.graviton2'),
-		recentWorkspaces:[],
-		zoom:1,
-		enableFileSystemWatcher:true,
-		autocomplete:true
+		'appTheme':'Arctic',
+		'appLanguage':'english',
+		'editorFontSize':'16',
+		'appProjectsLog':[],
+		'appConfigPath':path.join(getAppDataPath(),'.graviton2'),
+		'appWorkspacesLog':[],
+		'appZoom':1,
+		'editorFSWatcher':true,
+		'editorAutocomplete':true
 	}
 }
 
@@ -30,11 +30,12 @@ function initConfiguration(){
 			)
 		}
 	})
-	if(!fs.existsSync(defaultConfiguration.config.configPath)){
-		fs.mkdirSync(defaultConfiguration.config.configPath)
+	if(!fs.existsSync(defaultConfiguration.config.appConfigPath)){
+		fs.mkdirSync(defaultConfiguration.config.appConfigPath)
 	}
-	if(!fs.existsSync(path.join(defaultConfiguration.config.configPath,'plugins'))){
-		fs.mkdirSync(path.join(defaultConfiguration.config.configPath,'plugins'))
+	
+	if(!fs.existsSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))){
+		fs.mkdirSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))
 	}
 	return {
 		store:configurationStore

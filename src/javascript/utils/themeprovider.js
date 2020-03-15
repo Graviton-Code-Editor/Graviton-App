@@ -5,10 +5,10 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 
 let currentTheme = StaticConfig.data.theme;
 
-StaticConfig.changed(function(){
-    if(currentTheme != StaticConfig.data.theme){
+StaticConfig.keyChanged('appTheme',function(newTheme){
+    if(currentTheme != newTheme){
         applyTheme(StaticConfig)
-        currentTheme = StaticConfig.data.theme
+        currentTheme = newTheme
     }
 })
 
@@ -18,7 +18,7 @@ const ThemeProvider = new puffin.state({
 })
 
 function applyTheme(state){
-    ThemeProvider.data = ExtensionsRegistry.registry.data.colorsSchemes[state.data.theme]
+    ThemeProvider.data = ExtensionsRegistry.registry.data.colorsSchemes[state.data.appTheme]
     ThemeProvider.triggerChange()
 }
 
