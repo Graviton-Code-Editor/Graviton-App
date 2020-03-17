@@ -185,7 +185,7 @@ const TabEditorComp = puffin.element(`
 		events:{
 			mounted(target){
 				tabState.on('focusedMe',()=>{
-					target.style.display = "block"
+					target.style.display = "flex"
 					target.props.state = tabState
 				})
 				tabState.on('unfocusedMe',()=>{

@@ -160,7 +160,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 								})
 							}
 							const hotItem = puffin.element(`
-									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${container.getAttribute("parentFolder")}" path="${isFolder?folderName:fileName}" fullpath="${filePath}" level="${Number(container.getAttribute('level'))+1}"/>
+									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${container.getAttribute("parentFolder")}" path="${isFolder?folderName:fileName}" fullpath="${isFolder?folderPath:filePath}" level="${Number(container.getAttribute('level'))+1}"/>
 							`,{
 								components:{
 									Item:new Item()
