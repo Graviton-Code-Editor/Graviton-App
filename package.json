@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.47",
+	"version": "2.0.48",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -14,6 +14,7 @@
 		"watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
 		"build": "npm run build:parcel && npm run build:electron",
+		"build:outpacked": "npm run build:parcel && npm run build:electron:outpacked",
 		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
 		"build:electron:outpacked": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",
 		"build:parcel": "parcel build src/index.html --target browser --bundle-node-modules --out-dir dist_parcel --public-url ./",

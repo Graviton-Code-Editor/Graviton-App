@@ -1,9 +1,10 @@
 import InputDialog from '../../constructors/dialog.input'
 import requirePath from '../../utils/require'
-const path = requirePath("path")
 import RunningConfig from 'RunningConfig'
+import normalizeDir from  '../../utils/directory.normalizer'
 
 const fs = requirePath("fs-extra")
+const path = requirePath("path")
 
 function newDirectoryDialog({
 	isFolder,
@@ -29,10 +30,10 @@ function createDirectory(value,isFolder,parentDirectory,container,explorerState)
 				fs.mkdirSync(dir);
 				explorerState.emit('createItem',{
 					container:container,
-					folderPath:container.getAttribute("parentfolder"),
+					containerFolder:normalizeDir(container.getAttribute("parentfolder")),
 					level:container.getAttribute("level"),
-					folderPath:dir,
-					folderName:path.basename(dir),
+					directory:dir,
+					directoryName:path.basename(dir),
 					isFolder:true
 				})
 			}
@@ -41,10 +42,10 @@ function createDirectory(value,isFolder,parentDirectory,container,explorerState)
 				if (err) throw err;
 				explorerState.emit('createItem',{
 					container:container,
-					folderPath:container.getAttribute("parentfolder"),
+					containerFolder:normalizeDir(container.getAttribute("parentfolder")),
 					level:container.getAttribute("level"),
-					filePath:dir,
-					fileName:path.basename(dir),
+					directory:dir,
+					directoryName:path.basename(dir),
 					isFolder:false
 				})
 			}); 

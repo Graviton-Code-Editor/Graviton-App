@@ -2,6 +2,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import requirePath from '../utils/require'
 import Item from '../components/explorer/item'
 import parseDirectory from '../utils/directory.parser'
+import normalizeDir from  '../utils/directory.normalizer'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
@@ -34,9 +35,9 @@ function getStatus(path){
 	})
 }
 
-function createWatcher(folderPath,explorerState){
-	const COMMIT_EDITMSG_PATH = path.join(folderPath,'.git','COMMIT_EDITMSG')
-
+function createWatcher(dirPath,explorerState){
+	const folderPath = normalizeDir(dirPath)	
+	const gitWatcherPath = normalizeDir(path.join(folderPath,'.git','logs','HEAD'))
 	const projectWatcher = chokidar.watch(folderPath, {
 		ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
 		persistent: true,
@@ -46,21 +47,35 @@ function createWatcher(folderPath,explorerState){
 	projectWatcher
 		.on('add', filePath => {
 			explorerState.emit('newFile',{
-				folderPath:path.dirname(filePath),
+				containerFolder:normalizeDir(path.dirname(filePath)),
 				fileName:path.basename(filePath)
 			})
 		})
-		.on('change', async(filePath) => {
-			explorerState.emit('changedFile',{filePath})
+		.on('change', async(fileDir) => {
+			const filePath = normalizeDir(fileDir)
+			explorerState.emit('changedFile',{
+				filePath
+			})
 		})
-		.on('unlink', filePath => explorerState.emit('removedFile',{filePath}))
-		.on('addDir', folderPath => explorerState.emit('newFolder',{
-			folderPath:path.dirname(folderPath),
-			folderName:path.basename(folderPath)
-		}))
-		.on('unlinkDir', folderPath => explorerState.emit('removedFolder',{folderPath}))
-	
-	const gitWatcher = chokidar.watch(COMMIT_EDITMSG_PATH, {
+		.on('unlink', fileDir =>{
+			const filePath = normalizeDir(fileDir)
+			explorerState.emit('removedFile',{
+				filePath
+			})
+		})
+		.on('addDir', folderPath => {
+			explorerState.emit('newFolder',{
+				containerFolder:normalizeDir(path.dirname(folderPath)),
+				folderName:path.basename(folderPath)
+			})
+		})
+		.on('unlinkDir', folderDir => {
+			const folderPath = normalizeDir(folderDir)
+			explorerState.emit('removedFolder',{
+				folderPath
+			})
+		})
+	const gitWatcher = chokidar.watch(gitWatcherPath, {
 		persistent: true,
 		interval: 400,
 		ignoreInitial: true
@@ -77,10 +92,6 @@ function createWatcher(folderPath,explorerState){
 	}
 }
 
-function standarizePath(dir){
-	return path.normalize(dir).replace(/\\/gi,"//")
-}
-
 function getlastFolderPosition(container){
 	const items = container.children
 	return Object.keys(items).filter((index)=>{
@@ -94,7 +105,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 		let gitResult = await checkIfProjectIsGit(folderPath)
 		if( gitResult ) gitChanges = await getStatus(folderPath)
 		const explorerContainer = puffin.element(`
-		<Item id="${standarizePath(folderPath)}" isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
+		<Item id="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${folderPath}" level="0"/>
 		`,{
 			components:{
 				Item:Item()
@@ -144,23 +155,24 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					if( StaticConfig.data.enableFileSystemWatcher ){
 						explorerState.emit('startedWatcher')
 					}
-					explorerState.on('createItem',({container,folderPath,filePath,folderName,level,fileName,isFolder = false})=>{ 
+					if( StaticConfig.data.editorFSWatcher ) explorerState.emit('startedWatcher')
+					explorerState.on('createItem',({container,containerFolder,directory,directoryName,level,isFolder = false})=>{
 						if( container === null) return; //Folder is not opened
-						const possibleClass = standarizePath(isFolder?folderPath:filePath)
+						const possibleClass = normalizeDir(directory)
 						if(document.getElementsByClassName(possibleClass)[0] == null){ //Might have been already created by watcher
 							if( isFolder ){
 								RunningConfig.emit('aFolderHasBeenCreated',{
-									parentFolder:container.getAttribute("parentFolder"),
-									path:folderPath
+									parentFolder:containerFolder,
+									path:directory
 								})
 							}else{
 								RunningConfig.emit('aFileHasBeenCreated',{
-									parentFolder:container.getAttribute("parentFolder"),
-									path:filePath
+									parentFolder:containerFolder,
+									path:directory
 								})
 							}
 							const hotItem = puffin.element(`
-									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${container.getAttribute("parentFolder")}" path="${isFolder?folderName:fileName}" fullpath="${isFolder?folderPath:filePath}" level="${Number(container.getAttribute('level'))+1}"/>
+									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${containerFolder}" path="${directoryName}" fullpath="${directory}" level="${Number(level)+1}"/>
 							`,{
 								components:{
 									Item:new Item()
@@ -199,13 +211,13 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					let content = "";
 					paths.map(function(dir){ //Load folders 
 						if(fs.lstatSync(path.join(folderPath,dir)).isDirectory()){
-							content += `<Item class="${standarizePath(folderPath)}" isDirectory="true" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+							content += `<Item class="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
 						}
 					})
 					paths.map(function(dir){ //Load files 
 						if(!fs.lstatSync(path.join(folderPath,dir)).isDirectory()){
 							if(! dir.match("~") )
-								content += `<Item class="${standarizePath(folderPath)}" isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+								content += `<Item class="${normalizeDir(folderPath)}" isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
 						}
 					})
 					return content

@@ -143,7 +143,6 @@ function Tab({
 					focusATab(this)
 				})
 				tabState.on('close',()=>{
-					console.log(this.props.saved)
 					if(this.props.saved){
 						focusATab(this)
 						TabComp.node.remove()

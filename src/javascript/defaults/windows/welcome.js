@@ -11,6 +11,7 @@ import StaticConfig from 'StaticConfig'
 import CardsListContainer from '../../components/welcome/cards.list'
 import ContextMenu from '../../constructors/contextmenu'
 import Window from '../../constructors/window'
+import beautifyDir from '../../utils/directory.beautifier.js'
 
 function Welcome( { defaultPage = "projects" } = {  }){
     const WelcomePage = puffin.element(`
@@ -57,7 +58,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 								content += `
 									<Card click="$openDirectory" directory="${directory}">
 										<b>${nameFolder}</b>
-										<p>${directory}</p>
+										<p>${beautifyDir(directory)}</p>
 									</Card>
 									`
 							})

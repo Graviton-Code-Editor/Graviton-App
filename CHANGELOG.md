@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200317 - 2 [2.0.48]
+- Improved: Forced to use double back slash on Windows so libraries such as chokidar work on production
+
 ### 200317 - 1 [2.0.47]
 - New: you can now toggle the editor's autocomplete from settings
 - Improved: Faster selection in the editor, a lot faster

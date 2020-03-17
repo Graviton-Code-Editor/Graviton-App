@@ -13,12 +13,15 @@ import FolderArrow from '../icons/folder.arrow'
 import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
+import normalizeDir from  '../../utils/directory.normalizer'
 
 const fs = requirePath("fs-extra")
 const trash = requirePath("trash")
 const path = requirePath("path")
 
-function getMyStatus(filePath,gitChanges,projectPath){
+function getMyStatus(fileDir,gitChanges,projectDir){
+	const filePath = normalizeDir(fileDir)
+	const projectPath = normalizeDir(projectDir)
 	const supportedGitStatuses = ["not_added","modified"]
 	let result = {
 		status:'unknown'
@@ -26,17 +29,17 @@ function getMyStatus(filePath,gitChanges,projectPath){
 	if(gitChanges){
 		supportedGitStatuses.map((status)=>{
 			gitChanges[status].filter((gitPath)=>{
-				if( path.normalize(path.resolve(projectPath,gitPath)) == path.normalize(filePath) ){
+				if( normalizeDir(path.resolve(projectPath,gitPath)) == normalizeDir(filePath) ){
 					return result = {
 						status:status
 					}
 				}else{
-					const dirsGit =  path.normalize(gitPath).split(path.sep)
-					const dirsLocal = path.normalize(filePath).split(path.sep)
+					const dirsGit =  normalizeDir(gitPath).split(path.sep)
+					const dirsLocal = normalizeDir(filePath).split(path.sep)
 					dirsGit.filter((dirGit)=>{
 						const dirLocal = dirsLocal[dirsLocal.length-1]
 						if(dirLocal == dirGit){
-							if(path.normalize(path.resolve(projectPath,gitPath)).indexOf(path.normalize(filePath)) > -1){
+							if(normalizeDir(path.resolve(projectPath,gitPath)).indexOf(normalizeDir(filePath)) > -1){
 								return result = {
 									status:status
 								}
@@ -183,7 +186,7 @@ function Item(){
 											isFolder:true,
 											parentDirectory:itemContainer.getAttribute("fullpath"),
 											container:itemContainer,
-											explorerState:document.getElementById(path.normalize(itemContainer.getAttribute("parentFolder")).replace(/\\/gi,"//")).state
+											explorerState:document.getElementById(normalizeDir(itemContainer.getAttribute("parentFolder"))).state
 										})
 									}
 								},
@@ -195,7 +198,7 @@ function Item(){
 											isFolder:false,
 											parentDirectory:itemContainer.getAttribute("fullpath"),
 											container:itemContainer,
-											explorerState:document.getElementById(path.normalize(itemContainer.getAttribute("parentFolder")).replace(/\\/gi,"//")).state
+											explorerState:document.getElementById(normalizeDir(itemContainer.getAttribute("parentFolder"))).state
 										})
 									}
 								},
@@ -239,12 +242,12 @@ function Item(){
 					const itemIcon = target.getElementsByClassName('icon')[0]
 					const itemArrow = target.getElementsByClassName('arrow')[0]
 					const gitStatus = target.getAttribute("git-status") ||true
-					const parentFolder = path.normalize(
+					const parentFolder = normalizeDir(
 						this.parentElement.parentElement.getAttribute("parentFolder") || 
 						this.getAttribute("parentFolder")
 					)
-					const itemDirectory = target.getAttribute("fullpath")
-					const explorerState = document.getElementById(path.normalize(parentFolder).replace(/\\/gi,"//")).state || itemState
+					const itemDirectory = normalizeDir(target.getAttribute("fullpath"))
+					const explorerState = document.getElementById(normalizeDir(parentFolder)).state || itemState
 					target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
 					if(IAmDirectory){
 						//If it's a folder set it's icon to closed by default
@@ -272,14 +275,14 @@ function Item(){
 							if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
 						}
 					})
-					explorerState.on('newFile',({folderPath,fileName})=>{
-						if( IAmDirectory && folderPath == itemDirectory  ){
+					explorerState.on('newFile',({containerFolder,fileName})=>{
+						if( IAmDirectory  && containerFolder == itemDirectory  ){
 							explorerState.emit('createItem',{
 								container:this,
-								folderPath:folderPath,
+								containerFolder,
 								level:this.getAttribute("level"),
-								filePath:path.join(folderPath,fileName),
-								fileName,
+								directory:path.join(containerFolder,fileName),
+								directoryName:fileName,
 								isFolder:false
 							})
 						}
@@ -294,14 +297,14 @@ function Item(){
 						}
 						
 					})
-					explorerState.on('newFolder',({folderPath,folderName})=>{
-						if( IAmDirectory && folderPath == itemDirectory  ){
+					explorerState.on('newFolder',({containerFolder,folderName})=>{
+						if( IAmDirectory && containerFolder == itemDirectory  ){
 							explorerState.emit('createItem',{
 								container:this,
-								folderPath:folderPath,
+								containerFolder,
 								level:this.getAttribute("level"),
-								filePath:path.join(folderPath,folderName),
-								folderName,
+								directory:path.join(containerFolder,folderName),
+								directoryName:folderName,
 								isFolder:true
 							})
 						}
@@ -350,7 +353,7 @@ function Item(){
 									bodyElement,
 									tabElement,
 									tabState,
-									directory:target.getAttribute("fullpath")
+									directory:itemDirectory
 								})
 							})
 							tabState.on('focusedMe',()=>{

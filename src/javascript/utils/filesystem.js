@@ -8,6 +8,7 @@ import Tab from '../constructors/tab'
 import Editor from '../constructors/editor'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import getFormat from './format.parser'
+import normalizeDir from  './directory.normalizer'
 
 const path = requirePath("path")
 const fs = requirePath("fs-extra")
@@ -21,7 +22,7 @@ function selectFolderDialog(){
 		})
 			.then(result => {
 			if (result.canceled) return;
-			resolve(result.filePaths[0])
+			resolve(normalizeDir(result.filePaths[0]))
 		})
 			.catch(err => {
 			reject(err)
@@ -38,7 +39,7 @@ function selectFileDialog(){
 		})
 			.then(result => {
 			if (result.canceled) return;
-			resolve(result.filePaths[0])
+			resolve(normalizeDir(result.filePaths[0]))
 		})
 			.catch(err => {
 			reject(err)
@@ -76,12 +77,12 @@ function openFile(){
 function getWorkspaceConfig( path ){
 	let error = false
 	try{
-		require(path)
+		require(normalizeDir(path))
 	}catch{
 		error=true
 	}
 	if(!error) {
-		return require(path)
+		return require(normalizeDir(path))
 	}else{
 		return null
 	}
@@ -90,16 +91,17 @@ function getWorkspaceConfig( path ){
 RunningConfig.on('loadFile',function({
 	filePath
 }){
-	const basename = path.basename(filePath)
-	const fileFolderPath = path.parse(filePath).dir
-	const fileExtension = getFormat(filePath)
+	const fileDir = normalizeDir(filePath)
+	const basename = path.basename(fileDir)
+	const fileFolderPath = path.parse(fileDir).dir
+	const fileExtension = getFormat(fileDir)
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title:basename,
-		directory:filePath,
+		directory:fileDir,
 		parentFolder:fileFolderPath
 	})
 	if( isCancelled ) return; //Cancels the tab opening
-	fs.readFile(filePath,'UTF-8').then(function(data){
+	fs.readFile(fileDir,'UTF-8').then(function(data){
 		new Editor({
 			language:fileExtension,
 			value:data ,
@@ -107,7 +109,7 @@ RunningConfig.on('loadFile',function({
 			bodyElement,
 			tabElement,
 			tabState,
-			directory:filePath
+			directory:fileDir
 		})
 	})
 });
@@ -117,13 +119,12 @@ RunningConfig.on('addFolderToRunningWorkspace',function({
 	replaceOldExplorer = false,
 	workspacePath = RunningConfig.data.workspacePath
 }){
-	new Explorer(folderPath,document.getElementById("sidepanel"),0,replaceOldExplorer)
-
+	const folderDir = normalizeDir(folderPath)
+	new Explorer(folderDir,document.getElementById("sidepanel"),0,replaceOldExplorer)
 	RunningConfig.data.workspaceConfig.folders.push({
-		name:parseDirectory(folderPath),
-		path:folderPath
+		name:parseDirectory(folderDir),
+		path:folderDir
 	})
-
 	if(workspacePath != null) {
 		RunningConfig.emit('saveCurrentWorkspace')
 	}else{
@@ -148,24 +149,25 @@ RunningConfig.on('addFolderToRunningWorkspaceDialog',function({
 RunningConfig.on('removeFolderFromRunningWorkspace',function({
 	folderPath
 }){
+	const folderDir = normalizeDir(folderPath)
 	RunningConfig.data.workspaceConfig.folders.map(({path},index)=>{
-		if( path == folderPath ){
+		if( path == folderDir ){
 			RunningConfig.data.workspaceConfig.folders.splice(index,1)
 		}
 	})
 });
 
-RunningConfig.on('setWorkspace',({ path })=>{
-	const workspace = getWorkspaceConfig(path)
+RunningConfig.on('setWorkspace',({ path:workspaceDir })=>{
+	const workspacePath = normalizeDir(workspaceDir)
+	const workspace = getWorkspaceConfig(workspacePath)
 	if( workspace != null){
 		RunningConfig.data.workspaceConfig = {
 			name: workspace.name,
 			folders:[]
 		}
-		RunningConfig.data.workspacePath = path
+		RunningConfig.data.workspacePath = workspacePath
 		document.getElementById('sidepanel').innerHTML = ""
 		workspace.folders.map(function(folder){
-
 			RunningConfig.emit('addFolderToRunningWorkspace',{
 				folderPath:folder.path
 			})
@@ -182,20 +184,21 @@ RunningConfig.on('openWorkspaceDialog',()=>{
 	})
 })
 
-RunningConfig.on('addLogWorkspace',({ path })=>{
-
+RunningConfig.on('addLogWorkspace',({ path:workspaceDir })=>{
+	const workspacePath = normalizeDir(workspaceDir)
 	let noMatches = true;
 	StaticConfig.data.appWorkspacesLog.map((workspace)=>{
-		if(workspace == path) return noMatches = false
+		if(workspace == workspacePath) return noMatches = false
 	})
 	if(noMatches){
-		StaticConfig.data.appWorkspacesLog.push(path)
+		StaticConfig.data.appWorkspacesLog.push(workspacePath)
 		StaticConfig.triggerChange()
 	}
 })
 
-function saveConfiguration(path,config){
-	fs.writeFile(path,JSON.stringify(config,null,2),'UTF-8', (err, data) => {
+function saveConfiguration(configDir,config){
+	const configPath = normalizeDir(configDir)
+	fs.writeFile(configPath,JSON.stringify(config,null,2),'UTF-8', (err, data) => {
 		if (err) throw err;
 		StaticConfig.triggerChange()
 	});
@@ -203,12 +206,10 @@ function saveConfiguration(path,config){
 
 RunningConfig.on('saveCurrentWorkspace',function(){
 	if(RunningConfig.data.workspacePath != null){
-
 		saveConfiguration(
 			RunningConfig.data.workspacePath,
 			RunningConfig.data.workspaceConfig
 		)
-
 	}else{
 		selectFolderDialog().then(function(res){
 			new InputDialog({
@@ -241,7 +242,7 @@ RunningConfig.on('removeWorkspaceFromLog',({ path:workspacePath })=>{
 })
 
 RunningConfig.on('renameWorkspace',({ path:workspacePath,name="" })=>{
-	const workspaceConfig = getWorkspaceConfig(workspacePath)
+	const workspaceConfig = getWorkspaceConfig(normalizeDir(workspacePath))
 	if( workspaceConfig != null ){
 		workspaceConfig.name = name
 		saveConfiguration(
@@ -251,7 +252,8 @@ RunningConfig.on('renameWorkspace',({ path:workspacePath,name="" })=>{
 	}
 });
 
-RunningConfig.on('renameWorkspaceDialog',({ path:workspacePath, name='My other workspace', onFinished=()=>{} })=>{
+RunningConfig.on('renameWorkspaceDialog',({ path:workspaceDir, name='My other workspace', onFinished=()=>{} })=>{
+	const workspacePath = normalizeDir(workspacePath)
 	new InputDialog({
 		title:'Rename your workspace',
 		placeHolder:name
