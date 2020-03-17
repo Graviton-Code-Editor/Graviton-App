@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200317 - 1 [2.0.47]
+- New: you can now toggle the editor's autocomplete from settings
+- Improved: Faster selection in the editor, a lot faster
+
 ### 200315 - 2 [2.0.45]
 - New: Added a button to edit the app's configuration directly right from a file
 

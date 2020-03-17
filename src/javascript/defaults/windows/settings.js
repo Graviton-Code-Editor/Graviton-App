@@ -48,6 +48,10 @@ function Settings(){
 							<H4>File Watcher</H4>
 							<Switch toggled="$toggledFileWatcher" default="${StaticConfig.data.editorFSWatcher}" label="File watcher"/>
 						</div>
+						<div href="autocomplete">
+							<H4>Autocomplete</H4>
+							<Switch toggled="$toggledAutoComplete" default="${StaticConfig.data.editorAutocomplete}" label="Autocomplete"/>
+						</div>
 						<div href="manual config">
 							<H4>Manual editing</H4>
 							<Button click="$configeditor">Edit configuration</Button>
@@ -56,25 +60,27 @@ function Settings(){
 					</div>
 			<div href="plugins">
 				<div href="plugins">
-				<H3 lang-string="Plugins"></H3>
-				${(function(){
-						let content = "";
-						const list = ExtensionsRegistry.registry.data.list
-						Object.keys(list).map(function(extension){
-							const pkg = ExtensionsRegistry.registry.data.list[extension]
-							if(pkg.type != "theme"){
-								content +=`
-									<label name="${extension}">· ${extension}</label>
-								`
-							}
-						})
-						return content
-					})()}
+					<H4 lang-string="Plugins"></H4>
+					<ul>
+					${(function(){
+							let content = "";
+							const list = ExtensionsRegistry.registry.data.list
+							Object.keys(list).map(function(extension){
+								const pkg = ExtensionsRegistry.registry.data.list[extension]
+								if(pkg.type != "theme"){
+									content +=`
+										<li name="${extension}">${extension}</li>
+									`
+								}
+							})
+							return content
+						})()}
+					</ul>
 				</div>
 			</div>
 			<div href="languages">
 				<div href="languages">
-					<H3 lang-string="Languages"></H3>
+					<H4 lang-string="Languages"></H4>
 					<RadioGroup radioSelected="$selectedLanguage">
 						${(function(){
 								let content = "";
@@ -90,7 +96,7 @@ function Settings(){
 			</div>
 			<div href="about">
 				<div href="about">
-					<H3 lang-string="About"></H3>
+					<H4 lang-string="About"></H4>
 					<Text>Graviton is a modern looking code editor.</Text>
 					</div>
 				</div>
@@ -124,12 +130,14 @@ function Settings(){
 					StaticConfig.data.appLanguage = newLanguage
 			},
 			toggledFileWatcher(){
-				if( this.props.status == StaticConfig.data.editorFSWatcher ) {
-					return;
-				}else{
+				if( this.props.status != StaticConfig.data.editorFSWatcher ) {
 					StaticConfig.data.editorFSWatcher = this.props.status
 				}
-				
+			},
+			toggledAutoComplete(){
+				if( this.props.status != StaticConfig.data.editorAutocomplete ) {
+					StaticConfig.data.editorAutocomplete = this.props.status
+				}
 			}
 		},
 		addons:{

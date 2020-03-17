@@ -19,6 +19,7 @@ import requirePath from '../utils/require'
 import ThemeProvider from '../utils/themeprovider';
 import Plus from '../components/icons/plus'
 import Minus from '../components/icons/minus'
+import configEditor from './tabs/config.editor.js'
 
 const fs = requirePath("fs-extra")
 const { openExternal: openLink } = requirePath("electron").shell
@@ -233,6 +234,8 @@ function init(){
 						},{
 							label:'Open About'
 						},{
+							label:'Open Manual Configuration'
+						},{
 							label:'Set theme'
 						},{
 							label:'Set Language'
@@ -251,6 +254,9 @@ function init(){
 								Welcome({
 									defaultPage : 'workspaces'
 								}).launch()
+								break;
+							case 'Open Manual Configuration':
+								configEditor()	
 								break;
 							case 'Open About':
 								About().launch()

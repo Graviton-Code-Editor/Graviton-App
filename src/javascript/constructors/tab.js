@@ -16,7 +16,6 @@ function guessTabPosition(tab,tabsbar){
 	return Number(res)
 }
 
-
 const fs = requirePath("fs-extra")
 
 function Tab({
@@ -144,6 +143,7 @@ function Tab({
 					focusATab(this)
 				})
 				tabState.on('close',()=>{
+					console.log(this.props.saved)
 					if(this.props.saved){
 						focusATab(this)
 						TabComp.node.remove()
@@ -151,7 +151,16 @@ function Tab({
 						tabState.emit('destroyed',{
 							tabElement:TabComp.node
 						})
-					}  
+					}else{
+						new areYouSureDialog().then(()=>{
+							focusATab(TabComp.node)
+							TabComp.node.remove()
+							TabEditorComp.node.remove(); 
+							TabComp.node.props.state.emit('destroyed',{tabElement:TabComp.node})
+						}).catch(()=>{
+							// nothing, tab remains opened
+						})
+					}
 				})
 				this.getPanelTabs = ()=>{
 					const tabs = this.parentElement.children
@@ -173,32 +182,30 @@ function Tab({
 		},
 		props:["active"]
 	})
-
-	puffin.render(TabComp,panel.children[0])
-
-const TabEditorComp = puffin.element(`
-	<TabEditor/>
-`,{
-		components:{
-			TabEditor
-		},
-		events:{
-			mounted(target){
-				tabState.on('focusedMe',()=>{
-					target.style.display = "flex"
+	const TabEditorComp = puffin.element(`
+		<TabEditor/>
+	`,{
+			components:{
+				TabEditor
+			},
+			events:{
+				mounted(target){
+					tabState.on('focusedMe',()=>{
+						target.style.display = "flex"
+						target.props.state = tabState
+					})
+					tabState.on('unfocusedMe',()=>{
+						target.style.display = "none"
+						target.props.state = tabState
+					})
+					tabState.on('changePanel',(newPanel)=>{
+						newPanel.children[1].appendChild(target)
+					})
 					target.props.state = tabState
-				})
-				tabState.on('unfocusedMe',()=>{
-					target.style.display = "none"
-					target.props.state = tabState
-				})
-				tabState.on('changePanel',(newPanel)=>{
-					newPanel.children[1].appendChild(target)
-				})
-				target.props.state = tabState
+				}
 			}
-		}
-})
+	})
+	puffin.render(TabComp,panel.children[0])
 	puffin.render(TabEditorComp,panel.children[1])
 	return {
 		tabElement:TabComp.node,
@@ -221,35 +228,25 @@ function toggleTabStatus({
 		tabElement.isSaved = true
 		saveFile(tabElement,()=>{
 			tabElement.children[1].children[0].style.display = "block"
-
 			if( tabElement.children[1].children[1]!=null )
 				tabElement.children[1].children[1].remove()
-
 			RunningConfig.emit('tabSaved',{
 				element:tabElement,
 				parentFolder:tabElement.props.state.data.parentFolder
 			})
-
 		})
 	}else if(tabElement.isSaved != false){
 		tabElement.isSaved = false
 		tabElement.children[1].children[0].style.display = "none"
 		const comp = puffin.element(`
-			<UnSavedIcon click="$showWarning"/>
+			<UnSavedIcon click="$tryToClose"/>
 		`,{
 			components:{
 				UnSavedIcon
 			},
 			methods:{
-				showWarning(){
-					new areYouSureDialog().then(()=>{
-						focusATab(tabElement)
-						tabElement.remove()
-						tabEditor.remove(); 
-						tabElement.props.state.emit('destroyed',{tabElement})
-					}).catch(()=>{
-						// nothing, tab remains opened
-					})
+				tryToClose(){
+					tabElement.props.state.emit('close')
 				}
 			}
 		})
@@ -277,7 +274,6 @@ function saveFile(tab,callback){
 function unfocusTabs(tab){
 	const tabsBar = tab.parentElement;
 	const tabsBarChildren = tabsBar.children;
-
 	for( let otherTab of tabsBarChildren){
 		if( otherTab != tab ) {
 			otherTab.props.state.emit('unfocusedMe')
@@ -288,13 +284,11 @@ function unfocusTabs(tab){
 function focusATab(tab){
 	const tabsBar = tab.parentElement;
 	const tabsBarChildren = tabsBar.children;
-
 	const position = (function(){
 		for( let tabIndex =0; tabIndex < tabsBarChildren.length;tabIndex++){
 			if( tabsBarChildren[tabIndex] == tab ) return tabIndex
 		}
 	})()
-
 	if( position === 0 ){
 		if( tabsBarChildren.length > 1 ){
 			tabsBarChildren[position+1].props.state.emit('focusedMe')

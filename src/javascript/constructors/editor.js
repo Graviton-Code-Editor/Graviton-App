@@ -80,9 +80,9 @@ function Editor({
 	Client.do('onActive',{
 		instance:instance,
 		action:(instance)=>{
-			tabElement.props.state.emit('focusedMe')
-			focusEditor(Client,instance)
-			RunningConfig.data.focusedPanel = tabState.data.panel
+			if( RunningConfig.data.focusedTab != tabElement ) tabElement.props.state.emit('focusedMe')
+			if( RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
+			if( RunningConfig.data.focusedPanel != tabState.data.panel ) RunningConfig.data.focusedPanel = tabState.data.panel
 			if(CursorPositionStatusBarItem.isHidden()){
 				CursorPositionStatusBarItem.show()
 			}
