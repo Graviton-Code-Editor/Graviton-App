@@ -12,12 +12,10 @@ function CommandPrompt({
 	onSelected = ()=>{},
 	onScrolled = ()=>{}
 }){
-	if(document.getElementById(name) != null) return;
-
+	if(document.getElementById(name) != null) return; // Check if there are any command prompts already opened
 	let CommandPromptState = new puffin.state({
 		hoveredOption : null
 	})
-
 	const configArguments = arguments[0]
 	const CommandPromptComponent = puffin.element(`
 		<CommandPromptBody id="${name}" keydown="$scrolling">

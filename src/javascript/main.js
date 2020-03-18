@@ -73,6 +73,7 @@ const ThemeWrapper = puffin.style.css`
 		--explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
 		--explorerItemGitNotAddedText:{{explorerItemGitNotAddedText}};
 		--explorerItemGitNotAddedIndicator:{{explorerItemGitNotAddedIndicator}};
+		--explorerItemGitIndicatorText:{{explorerItemGitIndicatorText}};
 		--windowBorder:{{windowBorder}};
 		--fileNotSavedIndicator:{{fileNotSavedIndicator}};
 		--fileNotSavedIndicatorHovering:{{fileNotSavedIndicatorHovering}};
@@ -233,10 +234,10 @@ const App = puffin.element(`
 			<Resizer/>
 			<div id="mainpanel"/>          
 		</div>
-			<StatusBar/>
-			<div id="windows"/>
-			<div id="notifications"/>
-			<SplashScreen/>
+		<StatusBar/>
+		<div id="windows"/>
+		<div id="notifications"/>
+		<SplashScreen/>
 	</div>
 `,{
 	components:{

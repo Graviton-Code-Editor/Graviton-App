@@ -36,10 +36,10 @@ function Editor({
 		directory,
 		CtrlPlusScroll:(direction)=> {
 			if(direction == 'up'){
-				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+2
+				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+1
 			}else{
 				if( StaticConfig.data.editorFontSize <=4) return
-				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-2
+				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-1
 			}
 			Client.do('setFontSize',{
 				instance:instance,

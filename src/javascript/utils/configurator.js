@@ -31,11 +31,10 @@ function initConfiguration(){
 			)
 		}
 	})
-	if(!fs.existsSync(defaultConfiguration.config.appConfigPath)){
+	if(!fs.existsSync(defaultConfiguration.config.appConfigPath)){ //If .graviton2 doesn't exist, it creates it
 		fs.mkdirSync(defaultConfiguration.config.appConfigPath)
 	}
-	
-	if(!fs.existsSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))){
+	if(!fs.existsSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))){ //If .graviton2/plugins doesn't exist, it creates it
 		fs.mkdirSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))
 	}
 	return {

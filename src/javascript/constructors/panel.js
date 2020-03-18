@@ -40,6 +40,9 @@ function Panel(){
 				& .tabsbar:empty{
 					background:transparent;
 				}
+				& .tabsbar::-webkit-scrollbar {
+					height:4px;
+				}
 			`
 			}">    
 		<div dragover="$allowDrop" drop="$onTabDropped" class="tabsbar"/>

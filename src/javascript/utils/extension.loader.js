@@ -32,40 +32,37 @@ function loadExtension(path){
 			ContextMenu,
 			Notification,
 			CodeMirror,
-			Tab
-    })
+		Tab
+	})
 }
 
 function loadAutomatically(){
-    RunningConfig.on("appLoaded",function(){
-        fs.readdir(pluginsPath).then(function(paths){
-            paths.map(function(pluginName){
-                const pluginPath = path.join(pluginsPath,pluginName)
-                const pkgPluginPath = path.join(pluginPath,'package.json')
-                if(fs.existsSync(pkgPluginPath)){
-                    const pluginPkg = getExtension(pkgPluginPath)
-                    pluginPkg.PATH = pluginPath
-                    ExtensionsRegistry.add(
-                        pluginPkg
-                    )
-                }
-            })
-            RunningConfig.emit('allExtensionsLoaded')
-            entryAllExtensions()
-
-        })
-    })
+	RunningConfig.on("appLoaded",function(){
+		fs.readdir(pluginsPath).then(function(paths){
+			paths.map(function(pluginName){
+				const pluginPath = path.join(pluginsPath,pluginName)
+				const pkgPluginPath = path.join(pluginPath,'package.json')
+				if(fs.existsSync(pkgPluginPath)){
+					const pluginPkg = getExtension(pkgPluginPath)
+					pluginPkg.PATH = pluginPath
+					ExtensionsRegistry.add(
+						pluginPkg
+					)
+				}
+			})
+			RunningConfig.emit('allExtensionsLoaded')
+			entryAllExtensions()
+		})
+	})
 }
 
 function entryAllExtensions(){
-    
-    Object.keys(ExtensionsRegistry.registry.data.list).map(function(pluginName){
-        const pluginPkg = ExtensionsRegistry.registry.data.list[pluginName]
-
-        if(pluginPkg.main != undefined){
-            loadExtension(path.join(pluginPkg.PATH,pluginPkg.main))
-        }  
-    })   
+	Object.keys(ExtensionsRegistry.registry.data.list).map(function(pluginName){
+		const pluginPkg = ExtensionsRegistry.registry.data.list[pluginName]
+		if(pluginPkg.main != undefined){
+			loadExtension(path.join(pluginPkg.PATH,pluginPkg.main))
+		}  
+	})   
 }
 
 export { loadExtension, loadAutomatically }

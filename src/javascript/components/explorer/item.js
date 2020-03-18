@@ -67,21 +67,34 @@ function getMyStatus(fileDir,gitChanges,projectDir){
 	return result
 }
 
-function markStatus(target,status){
+function markStatus(target,status,count){
 	const spanText = target.children[0].children[2]
+	const statusIndicator = target.children[0].children[3]
 	const isDirectory = target.getAttribute("isDirectory") == "true"
 	switch(status){
 		case 'modified':
 			target.setAttribute('gitStatus','modified')
-			if( !isDirectory) spanText.textContent = `${spanText.getAttribute("originalName")} - M`
+			if( isDirectory ) {
+				count && statusIndicator.setAttribute("count",count)
+			}else{
+				spanText.textContent = `${spanText.getAttribute("originalName")} - M`
+			}
 			break;
 		case 'not_added': //Same as untracked
 			target.setAttribute('gitStatus','not_added')
-			if( !isDirectory) spanText.textContent = `${spanText.getAttribute("originalName")} - U`
+			if( isDirectory ) {
+				count && statusIndicator.setAttribute("count",count)
+			}else{
+				spanText.textContent = `${spanText.getAttribute("originalName")} - U`
+			}
 			break;
 		default:
 			target.setAttribute('gitStatus',null)
-			if( !isDirectory) spanText.textContent = spanText.getAttribute("originalName")
+			if( isDirectory) {
+				statusIndicator.setAttribute("count","")
+			}else{
+				spanText.textContent = spanText.getAttribute("originalName")
+			}
 	}
 }
 
@@ -129,10 +142,16 @@ function Item({
 		& .gitStatus {
 			display:none;
 			position:relative;
-			padding:3px;
 			border-radius:50px;
 			margin: auto 2px;
 			margin-left:6px;
+			font-size:9px;
+			min-width:10px;
+			padding:1px 3px;
+		}
+		& .gitStatus[count=""]{
+			min-width:0px;
+			padding:3px;
 		}
 		&[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
 			display:block;
@@ -148,6 +167,11 @@ function Item({
 		&[gitStatus="not_added"] > button > span {
 			color:var(--explorerItemGitNotAddedText);
 		}
+		&[isDirectory="true"] > button > .gitStatus::after{	
+			content: attr(count) ;
+			color:var(--explorerItemGitIndicatorText);
+		}
+
 		& .icon{
 			height:20px;
 			width:20px;
@@ -171,16 +195,16 @@ function Item({
 		}
 		`
 	const ItemComp = puffin.element(`
-		<ItemWrapper selected="false" title="{{fullpath}}">
-			<button click="$openDirectory" contextmenu="$contextMenu">
+		<ItemWrapper selected="false">
+			<button click="$openDirectory" contextmenu="$contextMenu" title="{{fullpath}}">
 				<FolderArrow class="arrow"/>
 				<img class="icon"/>
-				<span originalName="{{path}}">{{path}}</span>
-				<div class="gitStatus"/>
+				<span originalName="{{dirName}}">{{dirName}}</span>
+				<div class="gitStatus" count=""/>
 			</button>
 		</ItemWrapper>
 		`,{
-			props:['path','selected','fullpath'],
+			props:['dirName','selected','fullpath'],
 			components:{
 				ItemWrapper,
 				FolderArrow
@@ -274,16 +298,27 @@ function Item({
 						itemProjectDirectory
 					)
 					markStatus(target,gitResult.status)
+					function markItem(gitChanges,isProjectcontainer=false){
+						target.gitChanges = gitChanges
+						const newGitResult = getMyStatus(
+							itemDirectory,
+							gitChanges,
+							itemProjectDirectory
+						)
+						if( gitResult != newGitResult ) markStatus(
+							target,
+							newGitResult.status,
+							isProjectcontainer?gitChanges.files.length:null
+						)
+					}
+					explorerState.on('gitMarkProjectContainer',({containerFolder,gitChanges})=>{
+						if( isItemFolder  && containerFolder == itemDirectory  ){
+							markItem(gitChanges,true)
+						}
+					})
 					RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-						console
 						if(itemProjectDirectory == explorerParentfolder && this.children[0]){
-							target.gitChanges = gitChanges
-							const newGitResult = getMyStatus(
-								itemDirectory,
-								gitChanges,
-								itemProjectDirectory
-							)
-							if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
+							markItem(gitChanges,itemDirectory==itemProjectDirectory)
 						}
 					})
 					explorerState.on('newFile',({containerFolder,fileName})=>{
@@ -306,7 +341,6 @@ function Item({
 								filePath
 							})
 						}
-						
 					})
 					explorerState.on('newFolder',({containerFolder,folderName})=>{
 						if( isItemFolder && containerFolder == itemDirectory  ){

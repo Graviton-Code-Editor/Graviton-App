@@ -106,7 +106,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
 		if( gitResult ) gitChanges = await getStatus(parsedFolderPath)
 		const explorerContainer = puffin.element(`
-		<Item id="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${folderPath}" path="${parseDirectory(folderPath)}" fullpath="${normalizeDir(folderPath)}" level="0"/>
+		<Item id="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${folderPath}" dirName="${parseDirectory(folderPath)}" fullpath="${normalizeDir(folderPath)}" level="0"/>
 		`,{
 			components:{
 				Item:Item({parentFolder:parsedFolderPath,explorerContainer:null})
@@ -118,7 +118,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					let gitWatcher = null;
 					explorerState.emit('doReload')
 					this.gitChanges = gitChanges
-					RunningConfig.on(['aTabHasBeenUnSaved','aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated','aFileHasBeenRemoved','aFolderHasBeenRemoved'],async ({parentFolder})=>{
+					RunningConfig.on(['aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated','aFileHasBeenRemoved','aFolderHasBeenRemoved'],async ({parentFolder})=>{
 						if( gitResult && parentFolder == folderPath) {
 							RunningConfig.emit('gitStatusUpdated',{
 								gitChanges : await getStatus(folderPath),
@@ -126,10 +126,12 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 							})
 						}
 					})
-					RunningConfig.emit('gitStatusUpdated',{ //Force to mark as modified the project item
-						gitChanges : await getStatus(folderPath),
-						parentFolder:folderPath
-					})
+					if( gitResult ){
+						explorerState.emit('gitMarkProjectContainer',{ //Force to mark as modified the project item
+							gitChanges : await getStatus(folderPath),
+							containerFolder:folderPath
+						})
+					}
 					/*
 					* The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
 					* The Git watcher just watchs the commit message file.
@@ -177,7 +179,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 								})
 							}
 							const hotItem = puffin.element(`
-									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${parsedFolderPath}" path="${directoryName}" fullpath="${directory}" level="${Number(level)+1}"/>
+									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${parsedFolderPath}" dirName="${directoryName}" fullpath="${directory}" level="${Number(level)+1}"/>
 							`,{
 								components:{
 									Item:new Item({parentFolder:parsedFolderPath,explorerContainer:container.explorerContainer})
@@ -216,13 +218,13 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					let content = "";
 					paths.map(function(dir){ //Load folders 
 						if(fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
-							content += `<Item class="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+							content += `<Item class="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${parent.getAttribute("parentFolder")}" dirName="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
 						}
 					})
 					paths.map(function(dir){ //Load files 
 						if(!fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
 							if(! dir.match("~") )
-								content += `<Item class="${normalizeDir(folderPath)}" isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" path="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
+								content += `<Item class="${normalizeDir(folderPath)}" isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" dirName="${dir}" fullpath="${path.join(folderPath,dir)}" level="${level}"/>` 
 						}
 					})
 					return content

@@ -2,6 +2,12 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200318 - 2 [2.0.49]
+- Improved: tabs bar and menu bar has now an small scroll bar
+- New: Every project container now has an small git-changed files counter
+- Fixed: IMP key won't trigger autocomplete
+- Improved: formatted with tabs a lot of files for a better reading
+
 ### 200318 - 1 [2.0.49]
 - Fixed: Zoom wasn't applied at startup
 - Improved: You can now open a WSL file system from graviton

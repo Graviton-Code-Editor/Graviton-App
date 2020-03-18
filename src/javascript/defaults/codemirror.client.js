@@ -25,11 +25,11 @@ const CodemirrorClient = new EditorClient({
 	getLangFromExt(extension){
 		switch(extension){
 				/*
-            Every case refers to a programming language's file format, 
-            (example: JavaScript -> js). 
-            If it's not supported it will go into the default case, 
-            bellow yo can see the list of supported by this CodeMirror Client.
-            */
+				Every case refers to a programming language's file format, 
+				(example: JavaScript -> js). 
+				If it's not supported it will go into the default case, 
+				bellow yo can see the list of supported by this CodeMirror Client.
+				*/
 			case 'html':
 				return { name: 'htmlmixed' }
 			case 'js':
@@ -93,8 +93,9 @@ const CodemirrorClient = new EditorClient({
 					( event.keyCode < 48 ||  event.keyCode > 57) &&
 					event.keyCode != 32 &&
 					event.ctrlKey  == false &&
-					event.keyCode  != 91
-				   ) {
+					event.keyCode  != 91 &&
+					event.keyCode  != 44
+				) {
 					CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
 				}
 			}
@@ -165,6 +166,12 @@ const CodemirrorClient = new EditorClient({
 			line:line+1,
 			ch:ch+1
 		}
+	},
+	setCursorPosition({instance, line,ch}){
+		instance.setCursor({
+			line:line-1,
+			ch:ch-1
+		})
 	},
 	doFocus({instance}){
 		instance.focus()

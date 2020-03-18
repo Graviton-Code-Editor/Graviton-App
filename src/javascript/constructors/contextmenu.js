@@ -8,7 +8,6 @@ function ContextMenu({
 	x,
 	y
 }){
-
 	const ContextWrapper = puffin.style.div`
 		&{
 			background:var(--contextmenuBackground);
