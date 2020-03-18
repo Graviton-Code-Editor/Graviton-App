@@ -95,6 +95,20 @@ li.CodeMirror-hint-active {
 	div.CodeMirror-secondarycursor {
 		border-left: 1px solid silver;
 	}
+	.CodeMirror-sizer {
+		padding-left:1em;
+	}
+	.CodeMirror-sizer > div{
+		margin-left:20px;
+	}
+	.CodeMirror-linenumber{
+		left:-20px !important;
+	}
+	.CodeMirror-linebackground{
+		left:-10em;
+		
+	}
+
 }
 .CodeMirror-lines {
 	padding: 4px 0;
@@ -102,7 +116,6 @@ li.CodeMirror-hint-active {
 	min-height: 1px;
 }
 .CodeMirror-gutters {
-	border-right: 1px solid #ddd;
 	background-color: #f7f7f7;
 	white-space: nowrap;
 	position: absolute;

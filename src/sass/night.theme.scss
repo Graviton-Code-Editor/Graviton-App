@@ -31,7 +31,7 @@
 		color: #6D8A88;
 	}
 	.CodeMirror-selected {
-		background: rgba(255, 255, 255, 0.15);
+		background: rgba(255, 255, 255, 0.1);
 		border-radius: 3px;
 	}
 	.CodeMirror-line {
@@ -112,7 +112,6 @@
 	}
 	.CodeMirror-activeline-background {
 		background: rgba(255,255,255,0.1);
-		outline:1px solid rgb(158, 158, 158);
 	}
 	.CodeMirror-matchingbracket {
 		outline:0;
