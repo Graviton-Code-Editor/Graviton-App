@@ -24,14 +24,17 @@ function configEditor(){
 		tabState
 	})
 	StaticConfig.keyChanged('editorFontSize',()=>{
-		const newConfig = JSON.parse(client.do('getValue',instance))
-		if( newConfig.editorFontSize != StaticConfig.data.editorFontSize ){
-			const initialCursor = client.do('getCursorPosition',{instance})
-			newConfig.editorFontSize = StaticConfig.data.editorFontSize
-			client.do('doChangeValue',{instance, value:JSON.stringify(newConfig,null,2)})
-			client.do('doIndent',{instance}) 
-			client.do('setCursorPosition',{instance,...initialCursor})
+		if( tabElement ){
+			const newConfig = JSON.parse(client.do('getValue',instance))
+			if( newConfig.editorFontSize != StaticConfig.data.editorFontSize ){
+				const initialCursor = client.do('getCursorPosition',{instance})
+				newConfig.editorFontSize = StaticConfig.data.editorFontSize
+				client.do('doChangeValue',{instance, value:JSON.stringify(newConfig,null,2)})
+				client.do('doIndent',{instance}) 
+				client.do('setCursorPosition',{instance,...initialCursor})
+			}
 		}
+
 	})
 	client.do('doIndent',{instance}) //Force an initial indentation
 	client.do('doFocus',{instance}) //Force an initial indentation

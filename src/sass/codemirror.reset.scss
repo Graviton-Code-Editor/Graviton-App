@@ -72,6 +72,7 @@ li.CodeMirror-hint-active {
 	overflow: hidden;
 	z-index:0;
 	line-height:1.6em;
+	padding-right:20px;
 	pre {
 		padding: 0 4px;
 		-moz-border-radius: 0;
@@ -105,6 +106,7 @@ li.CodeMirror-hint-active {
 		left:-20px !important;
 	}
 	.CodeMirror-linebackground{
+		right:-20px;
 		left:-20em;
 	}
 }

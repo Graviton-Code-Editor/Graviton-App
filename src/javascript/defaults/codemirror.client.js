@@ -70,7 +70,8 @@ const CodemirrorClient = new EditorClient({
 			indentWithTabs:true,
 			tabSize:StaticConfig.data.editorTabSize,
 			indentUnit:StaticConfig.data.editorTabSize,
-			undoDepth:500
+			undoDepth:500,
+			miniMap:false
 		})
 		
 		CodemirrorEditor.on("keyup", function (cm, event) {

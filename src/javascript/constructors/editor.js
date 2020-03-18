@@ -48,6 +48,7 @@ function Editor({
 			})
 		}
 	})
+	Client.do('doFocus',{instance})
 	RunningConfig.on('aFileHasBeenChanged',({filePath,newData})=>{
 		if( filePath == directory && tabElement.parentElement ){
 			if(Client.do('getValue',instance) != newData){
@@ -80,13 +81,15 @@ function Editor({
 	Client.do('onActive',{
 		instance:instance,
 		action:(instance)=>{
-			if( RunningConfig.data.focusedTab != tabElement ) tabElement.props.state.emit('focusedMe')
-			if( RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
-			if( RunningConfig.data.focusedPanel != tabState.data.panel ) RunningConfig.data.focusedPanel = tabState.data.panel
-			if(CursorPositionStatusBarItem.isHidden()){
-				CursorPositionStatusBarItem.show()
+			if( tabElement.parentElement ) {
+				if( RunningConfig.data.focusedTab != tabElement ) tabElement.props.state.emit('focusedMe')
+				if( RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
+				if( RunningConfig.data.focusedPanel != tabState.data.panel ) RunningConfig.data.focusedPanel = tabState.data.panel
+				if(CursorPositionStatusBarItem.isHidden()){
+					CursorPositionStatusBarItem.show()
+				}
+				updateCursorPosition(Client,instance)
 			}
-			updateCursorPosition(Client,instance)
 		}
 	})
 	StaticConfig.keyChanged('appTheme',function(){
