@@ -25,13 +25,13 @@ const Switch = puffin.element(`
 			border-radius:100px;
 		}
 		&[status=true] .indicator{
-			transition:0.13s;
+			transition:0.2s ease;
 			background:var(--switchIndicatorActivatedBackground);
 			left:24px;
 			position:relative;
 		}
 		&[status=false] .indicator{
-			transition:0.13s;
+			transition:0.2s ease;
 			background:var(--switchIndicatorDesactivatedBackground);
 			left:0;
 			position:relative;
