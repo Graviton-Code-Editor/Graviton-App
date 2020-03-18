@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200318 - 1 [2.0.49]
+- Fixed: Zoom wasn't applied at startup
+- Improved: You can now open a WSL file system from graviton
+
 ### 200317 - 2 [2.0.48]
 - Improved: Forced to use double back slash on Windows so libraries such as chokidar work on production
 

@@ -32,12 +32,13 @@ function Tab({
 		parentFolder,
 		panel
 	})
-	const classSelector = `${directory}`
+	const classSelector = `tab${directory}`
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if( openedTabs.length >= 1 ){
 		/**
          *  Tab already exists so it won't be rendered again
          */
+		console.log(openedTabs)
 		openedTabs[0].props.state.emit('focusedMe')
 		return {
 			isCancelled : true

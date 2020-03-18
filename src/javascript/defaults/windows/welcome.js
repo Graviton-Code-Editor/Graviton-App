@@ -12,6 +12,7 @@ import CardsListContainer from '../../components/welcome/cards.list'
 import ContextMenu from '../../constructors/contextmenu'
 import Window from '../../constructors/window'
 import beautifyDir from '../../utils/directory.beautifier.js'
+import normalizeDir from '../../utils/directory.normalizer.js'
 
 function Welcome( { defaultPage = "projects" } = {  }){
     const WelcomePage = puffin.element(`
@@ -58,7 +59,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 								content += `
 									<Card click="$openDirectory" directory="${directory}">
 										<b>${nameFolder}</b>
-										<p>${beautifyDir(directory)}</p>
+										<p>${beautifyDir(normalizeDir(directory,true))}</p>
 									</Card>
 									`
 							})
@@ -129,7 +130,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			},
 			openDirectory(){
 				RunningConfig.emit('addFolderToRunningWorkspace',{
-					folderPath:this.getAttribute("directory"),
+					folderPath:normalizeDir(this.getAttribute("directory")),
 					replaceOldExplorer:true,
 					workspacePath:null
 				})

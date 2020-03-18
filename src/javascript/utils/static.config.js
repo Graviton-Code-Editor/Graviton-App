@@ -29,6 +29,7 @@ StaticConfig.keyChanged('editorFSWatcher',(status)=>{
 	}
 })
 
+webFrame.setZoomFactor(StaticConfig.data.appZoom)
 
 console.log(StaticConfig)
 

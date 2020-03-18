@@ -27,6 +27,18 @@ function getMyStatus(fileDir,gitChanges,projectDir){
 		status:'unknown'
 	}
 	if(gitChanges){
+		if( filePath == projectPath ){
+			if( gitChanges.modified.length > 0 ){
+				return result = {
+					status:"modified"
+				}
+			}
+			if( gitChanges.not_added.length > 0 ){
+				return result = {
+					status:"not_added"
+				}
+			}	
+		}
 		supportedGitStatuses.map((status)=>{
 			gitChanges[status].filter((gitPath)=>{
 				if( normalizeDir(path.resolve(projectPath,gitPath)) == normalizeDir(filePath) ){
@@ -73,7 +85,10 @@ function markStatus(target,status){
 	}
 }
 
-function Item(){
+function Item({
+	parentFolder, //Directory parent
+	explorerContainer
+}){
 	const ItemWrapper = puffin.style.div`
 		&{
 			background:transparent;
@@ -233,50 +248,46 @@ function Item(){
 			},
 			events:{
 				mounted(target){
+					const isItemFolder = target.getAttribute("isDirectory") == "true"
 					const itemState = new puffin.state({})
 					target.state = itemState
-					const gitChanges = target.parentElement.parentElement.gitChanges
+					const gitChanges = target.parentElement.parentElement.gitChanges 
 					target.gitChanges = gitChanges
-					const IAmDirectory = target.getAttribute("isDirectory") == "true"
-					const fileExtension = IAmDirectory?null:getFormat(target.getAttribute("fullpath"))
+					const itemDirectory = normalizeDir(target.getAttribute("fullpath"),true)
+					const explorerState = explorerContainer && explorerContainer.state || itemState
+					this.explorerContainer = explorerContainer || this
+					const fileExtension = isItemFolder?null:getFormat(target.getAttribute("fullpath"))
 					const itemIcon = target.getElementsByClassName('icon')[0]
 					const itemArrow = target.getElementsByClassName('arrow')[0]
 					const gitStatus = target.getAttribute("git-status") ||true
-					const parentFolder = normalizeDir(
-						this.parentElement.parentElement.getAttribute("parentFolder") || 
-						this.getAttribute("parentFolder")
-					)
-					const itemDirectory = normalizeDir(target.getAttribute("fullpath"))
-					const explorerState = document.getElementById(normalizeDir(parentFolder)).state || itemState
+					const itemProjectDirectory = target.getAttribute("parentfolder")
 					target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
-					if(IAmDirectory){
-						//If it's a folder set it's icon to closed by default
-						setStateClosed(target)
+					if(isItemFolder){
+						setStateClosed(target) //If it's a folder set it's icon to closed by default
 					}else{
-						//If it's a file set it's icon 
-						setFileIcon(itemIcon,fileExtension)
-						//Hide the folder icon
-						itemArrow.style.opacity = 0
+						setFileIcon(itemIcon,fileExtension)//If it's a file set it's icon 
+						itemArrow.style.opacity = 0 //Hide the folder icon
 					}
 					const gitResult = getMyStatus(
-						target.getAttribute("fullpath"),
+						itemDirectory,
 						gitChanges,
-						target.getAttribute("parentfolder")
+						itemProjectDirectory
 					)
 					markStatus(target,gitResult.status)
 					RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-						if(parentFolder == explorerParentfolder && this.children[0]){
+						console
+						if(itemProjectDirectory == explorerParentfolder && this.children[0]){
 							target.gitChanges = gitChanges
 							const newGitResult = getMyStatus(
-								this.getAttribute("fullpath"),
+								itemDirectory,
 								gitChanges,
-								this.getAttribute("parentfolder")
+								itemProjectDirectory
 							)
 							if( gitResult != newGitResult ) markStatus(this,newGitResult.status)
 						}
 					})
 					explorerState.on('newFile',({containerFolder,fileName})=>{
-						if( IAmDirectory  && containerFolder == itemDirectory  ){
+						if( isItemFolder  && containerFolder == itemDirectory  ){
 							explorerState.emit('createItem',{
 								container:this,
 								containerFolder,
@@ -298,7 +309,7 @@ function Item(){
 						
 					})
 					explorerState.on('newFolder',({containerFolder,folderName})=>{
-						if( IAmDirectory && containerFolder == itemDirectory  ){
+						if( isItemFolder && containerFolder == itemDirectory  ){
 							explorerState.emit('createItem',{
 								container:this,
 								containerFolder,
@@ -379,7 +390,6 @@ function reload(target,gitChanges){
 	new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
 	setStateOpen(target)
 }
-
 
 function setFileIcon(target,extension){
 	const fileName = target.parentElement.textContent

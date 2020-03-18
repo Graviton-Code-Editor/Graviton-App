@@ -5,7 +5,7 @@ const path = requirePath("path")
 function parseDirectory(directory){
     let nameFolder = path.basename(directory)
 
-    if(process.platform == "win32"){
+    if(process.platform == "win32" && directory.includes(":")){
             nameFolder = path.basename(directory.replace(/\\/g,'\\\\'))
     }
 
