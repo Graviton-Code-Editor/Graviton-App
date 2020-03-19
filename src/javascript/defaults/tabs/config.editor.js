@@ -10,6 +10,17 @@ function updateStaticConfigByKey(client,instance){
 	})
 }
 
+function updateKey(client,instance,state,key){
+	const newConfig = JSON.parse(client.do('getValue',instance))
+	if( newConfig[key] != state.data[key] ){
+		const initialCursor = client.do('getCursorPosition',{instance})
+		newConfig[key] = state.data[key]
+		client.do('doChangeValue',{instance, value:JSON.stringify(newConfig,null,2)})
+		client.do('doIndent',{instance}) 
+		client.do('setCursorPosition',{instance,...initialCursor})
+	}
+}
+
 function configEditor(){
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title:'Configuration'
@@ -23,18 +34,16 @@ function configEditor(){
 		tabElement,
 		tabState
 	})
-	StaticConfig.keyChanged('editorFontSize',()=>{
-		if( tabElement ){
-			const newConfig = JSON.parse(client.do('getValue',instance))
-			if( newConfig.editorFontSize != StaticConfig.data.editorFontSize ){
-				const initialCursor = client.do('getCursorPosition',{instance})
-				newConfig.editorFontSize = StaticConfig.data.editorFontSize
-				client.do('doChangeValue',{instance, value:JSON.stringify(newConfig,null,2)})
-				client.do('doIndent',{instance}) 
-				client.do('setCursorPosition',{instance,...initialCursor})
-			}
-		}
-
+	const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize',()=>{
+		updateKey(client,instance,StaticConfig,'editorFontSize')
+	})
+	const appZoomWatcher = StaticConfig.keyChanged('appZoom',()=>{
+		updateKey(client,instance,StaticConfig,'appZoom')
+	})
+	const tabWatcher = tabElement.props.state.on('destroyed',()=>{
+		tabWatcher.cancel()
+		editorFontSizeWatcher.cancel()
+		appZoomWatcher.cancel()
 	})
 	client.do('doIndent',{instance}) //Force an initial indentation
 	client.do('doFocus',{instance}) //Force an initial indentation

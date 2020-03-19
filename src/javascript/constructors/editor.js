@@ -49,8 +49,8 @@ function Editor({
 		}
 	})
 	Client.do('doFocus',{instance})
-	RunningConfig.on('aFileHasBeenChanged',({filePath,newData})=>{
-		if( filePath == directory && tabElement.parentElement ){
+	const fileWatcher = RunningConfig.on('aFileHasBeenChanged',({filePath,newData})=>{
+		if( filePath == directory ){
 			if(Client.do('getValue',instance) != newData){
 				new Notification({
 					title:path.basename(directory),
@@ -92,44 +92,52 @@ function Editor({
 			}
 		}
 	})
-	StaticConfig.keyChanged('appTheme',function(){
+	const appThemeWatcher = StaticConfig.keyChanged('appTheme',function(){
 		Client.do('setTheme',{
 			instance:instance,
 			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme
 		})
 	})
-	StaticConfig.keyChanged('editorTabSize',function(value){
+	const editorTabSizeWatcher = StaticConfig.keyChanged('editorTabSize',function(value){
 		Client.do('setTabSize',{
 			instance:instance,
 			tabSize:value
 		})
 	})
-	StaticConfig.keyChanged('editorFontSize',function(value){
+	const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize',function(value){
 		Client.do('setFontSize',{
 			instance:instance,
 			element:bodyElement,
 			fontSize:value
 		})
 	})
-
-	if(CursorPositionStatusBarItem.isHidden()){
-		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
-	}
-	RunningConfig.keyChanged('focusedEditor',function(editor){
+	const focusedEditorWatcher = RunningConfig.keyChanged('focusedEditor',function(editor){
 		if(editor){
 			CursorPositionStatusBarItem.show()
 		}else{
 			CursorPositionStatusBarItem.hide()
 		}
 	})
-	tabState.on('focusedMe',()=>{
+	const tabFocusedWatcher = tabState.on('focusedMe',()=>{
 		focusEditor(Client,instance)
 		updateCursorPosition(Client,instance)
 		Client.do('doFocus',{instance})
 		Client.do('doRefresh',{instance,element:bodyElement})
 	})
+	if(CursorPositionStatusBarItem.isHidden()){
+		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
+	}
 	updateCursorPosition(Client,instance)
 	focusEditor(Client,instance)
+	const tabDestroyedWatcher = tabElement.props.state.on('destroyed',()=>{
+		fileWatcher.cancel()
+		appThemeWatcher.cancel()
+		editorTabSizeWatcher.cancel()
+		editorFontSizeWatcher.cancel()
+		tabFocusedWatcher.cancel()
+		focusedEditorWatcher.cancel()
+		tabDestroyedWatcher.cancel()
+	})
 	return {
 		client:Client,
 		instance

@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200319 - 1 [2.0.50]
+- New: event watchers no longer used will be now cancelled
+- New: appZoom also updates on the manual configuration editor
+- Improved: better tab behavior
+
 ### 200318 - 2 [2.0.49]
 - Improved: tabs bar and menu bar has now an small scroll bar
 - New: Every project container now has an small git-changed files counter

@@ -38,7 +38,6 @@ function Tab({
 		/**
          *  Tab already exists so it won't be rendered again
          */
-		console.log(openedTabs)
 		openedTabs[0].props.state.emit('focusedMe')
 		return {
 			isCancelled : true
@@ -281,23 +280,22 @@ function unfocusTabs(tab){
 	}
 }
 
-function focusATab(tab){
-	const tabsBar = tab.parentElement;
+function focusATab(toFocusTab){
+	const tabsBar = toFocusTab.parentElement;
 	const tabsBarChildren = tabsBar.children;
-	const position = (function(){
-		for( let tabIndex =0; tabIndex < tabsBarChildren.length;tabIndex++){
-			if( tabsBarChildren[tabIndex] == tab ) return tabIndex
-		}
-	})()
-	if( position === 0 ){
-		if( tabsBarChildren.length > 1 ){
-			tabsBarChildren[position+1].props.state.emit('focusedMe')
+	const toFocusTabPosition = guessTabPosition(toFocusTab,tabsBar)
+	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
+	if( toFocusTabPosition === 0 ){
+		if( tabsBarChildren.length == 2 ){
+			tabsBarChildren[toFocusTabPosition+1].props.state.emit('focusedMe')
 		}else{
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
-	}else{
-		tabsBarChildren[position-1].props.state.emit('focusedMe')
+	}else if(focusedTabPosition !== 0 && (toFocusTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1)){
+		tabsBarChildren[toFocusTabPosition-1].props.state.emit('focusedMe')
+	}else {
+		
 	}
 }
 
