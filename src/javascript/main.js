@@ -108,6 +108,7 @@ const ThemeWrapper = puffin.style.css`
 		--switchBackground:{{switchBackground}};
 		--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
 		--switchIndicatorDesactivatedBackground:{{switchIndicatorDesactivatedBackground}};
+		--tabHoveringWhileDraggingBackground:{{tabHoveringWhileDraggingBackground}};
 	}
 `
 

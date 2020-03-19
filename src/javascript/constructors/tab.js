@@ -51,12 +51,17 @@ function Tab({
 		click="$focusTab" 
 		active="{{active}}" 
 		mouseover="$showCross" 
-		mouseleave="$hideCross">
-			<p classSelector="${classSelector}">
+		mouseleave="$hideCross"
+		dragenter="$dragEnter"
+		dragleave="$dragLeave"
+		dragover="$dragover"
+		drop="$onDropped"
+		>
+			<p drop="$onDropped" classSelector="${classSelector}">
 			${title}
 			</p>
-			<div classSelector="${classSelector}">
-				<Cross classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
+			<div drop="$onDropped"  classSelector="${classSelector}">
+				<Cross  drop="$onDropped" classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
 			</div>
 		</TabBody>
 `,{
@@ -65,6 +70,21 @@ function Tab({
 			Cross
 		},
 		methods:{
+			dragover(e){
+				e.preventDefault()	
+				TabComp.node.classList.add("dragging")
+			},
+			dragEnter(e){
+				e.preventDefault()
+			},
+			dragLeave(e){
+				e.preventDefault()
+				e.target.classList.remove("dragging")
+			},
+			onDropped(e){
+				e.preventDefault()
+				TabComp.node.classList.remove("dragging")
+			},
 			startDrag(e){
 				event.dataTransfer.setData("classSelector", classSelector)
 				const tabsBar = this.parentElement
@@ -94,6 +114,7 @@ function Tab({
 			},
 			hideCross(e){
 				toggleCross(this.children[1].children[0],0)
+				e.target.classList.remove("dragging")
 			}
 		},
 		events:{
@@ -286,17 +307,15 @@ function focusATab(toFocusTab){
 	const toFocusTabPosition = guessTabPosition(toFocusTab,tabsBar)
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
 	if( toFocusTabPosition === 0 ){
-		if( tabsBarChildren.length == 2 ){
+		if( tabsBarChildren.length > 1 ){
 			tabsBarChildren[toFocusTabPosition+1].props.state.emit('focusedMe')
 		}else{
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
-	}else if(focusedTabPosition !== 0 && (toFocusTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1)){
+	}else if( focusedTabPosition !== 0 && (toFocusTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1) ){
 		tabsBarChildren[toFocusTabPosition-1].props.state.emit('focusedMe')
-	}else {
-		
-	}
+	}		
 }
 
 export default Tab

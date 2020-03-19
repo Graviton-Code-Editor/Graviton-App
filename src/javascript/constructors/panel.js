@@ -75,7 +75,7 @@ function Panel(){
 					tabsBar = target
 					position = tabsBar.children.length-1
 					panel = tabsBar.parentElement
-				}else{ 
+				}else if(target.parentElement.classList.contains("tabsbar")){ 
 					tabsBar=target.parentElement
 					panel = tabsBar.parentElement
 					const targetPosition = guessTabPosition(target,tabsBar)
@@ -86,6 +86,7 @@ function Panel(){
 						nextTab = tabsBar.children[targetPosition+1]
 					}
 				}
+				if(!tabsBar) return //Something went wrong
 				if(position == tabsBar.children.length-1){
 					tabsBar.appendChild(movingTab) //Drag targeting the tabs bar
 				}else{

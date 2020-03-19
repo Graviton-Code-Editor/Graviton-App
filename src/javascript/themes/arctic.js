@@ -33,6 +33,7 @@ const Arctic = {
 		tabBackground:'transparent',
 		tabActiveText:'black',
 		tabActiveBackground:'white',
+		tabHoveringWhileDraggingBackground:'rgb(250,250,250)',
 		scrollbarBackground:'rgba(0,0,0,0.2)',
 		scrollbarHoverBackground:'rgba(0,0,0,0.5)',
 		tabIconFill:'black',

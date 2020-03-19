@@ -34,6 +34,7 @@ const Night = {
 		tabText:'white',
 		tabActiveText:'white',
 		tabActiveBackground:'#191919',
+		tabHoveringWhileDraggingBackground:'rgb(50,50,50)',
 		scrollbarBackground:'rgba(0,0,0,0.4)',
 		scrollbarHoverBackground:'rgba(0,0,0,0.7)',
 		tabIconFill:'white',

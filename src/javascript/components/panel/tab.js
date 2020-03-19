@@ -50,7 +50,11 @@ const TabBody  = puffin.element(`
 			background:var(--tabActiveBackground);
 			box-shadow:0px 0px 10px rgba(0,0,0,0.2);
 			color:var(--tabActiveText);
-		}`}"/>
+		}
+		&.dragging{
+			background:var(--tabHoveringWhileDraggingBackground);
+		}
+	`}"/>
 `)
 
 export default TabBody
