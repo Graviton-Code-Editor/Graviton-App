@@ -8,7 +8,7 @@ import requirePath from '../utils/require'
 import areYouSureDialog from '../defaults/dialogs/you.sure'
 
 function guessTabPosition(tab,tabsbar){
-	const res =Object.keys(tabsbar.children).filter((tabChildren,index)=>{
+	const res = Object.keys(tabsbar.children).filter((tabChildren,index)=>{
 		if( tabsbar.children[tabChildren] == tab ){
 			return tabChildren
 		}
@@ -301,21 +301,21 @@ function unfocusTabs(tab){
 	}
 }
 
-function focusATab(toFocusTab){
-	const tabsBar = toFocusTab.parentElement;
+function focusATab(fromTab){
+	const tabsBar = fromTab.parentElement;
 	const tabsBarChildren = tabsBar.children;
-	const toFocusTabPosition = guessTabPosition(toFocusTab,tabsBar)
+	const fromTabPosition = guessTabPosition(fromTab,tabsBar)
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
-	if( toFocusTabPosition === 0 ){
-		if( tabsBarChildren.length > 1 ){
-			tabsBarChildren[toFocusTabPosition+1].props.state.emit('focusedMe')
+	if( fromTabPosition === 0 ){
+		if( tabsBarChildren.length == 2 ){
+			tabsBarChildren[fromTabPosition+1].props.state.emit('focusedMe')
 		}else{
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
-	}else if( focusedTabPosition !== 0 && (toFocusTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1) ){
-		tabsBarChildren[toFocusTabPosition-1].props.state.emit('focusedMe')
-	}		
+	}else if( focusedTabPosition !== 0 && (fromTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1) ){
+		tabsBarChildren[fromTabPosition-1].props.state.emit('focusedMe')
+	}	
 }
 
 export default Tab
