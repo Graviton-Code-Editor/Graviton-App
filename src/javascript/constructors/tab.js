@@ -7,6 +7,8 @@ import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
 import areYouSureDialog from '../defaults/dialogs/you.sure'
 
+const fs = requirePath("fs-extra")
+
 function guessTabPosition(tab,tabsbar){
 	const res = Object.keys(tabsbar.children).filter((tabChildren,index)=>{
 		if( tabsbar.children[tabChildren] == tab ){
@@ -15,8 +17,6 @@ function guessTabPosition(tab,tabsbar){
 	})[0]
 	return Number(res)
 }
-
-const fs = requirePath("fs-extra")
 
 function Tab({
 	title,
@@ -307,9 +307,9 @@ function focusATab(fromTab){
 	const fromTabPosition = guessTabPosition(fromTab,tabsBar)
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
 	if( fromTabPosition === 0 ){
-		if( tabsBarChildren.length == 2 ){
+		if( tabsBarChildren.length === 2 ){
 			tabsBarChildren[fromTabPosition+1].props.state.emit('focusedMe')
-		}else{
+		}else if( tabsBarChildren.length === 1 ){
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}

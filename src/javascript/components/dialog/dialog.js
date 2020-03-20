@@ -19,7 +19,7 @@ const DialogBody = new puffin.element(`
 				display:flex;
 				flex-direction:column;
 				animation:windowOpens ease-out 0.12s;
-       }
+			}
 			& p {
 				margin-top:15px;
 			}

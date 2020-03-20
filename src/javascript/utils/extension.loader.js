@@ -18,20 +18,20 @@ const fs = requirePath("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
 
 function getExtension(path){
-    return require(path)
+	return require(path)
 }
 
 function loadExtension(path){
-    return require(path).entry({
-			RunningConfig,
-			Window,
-			puffin,
-			Menu,
-			Dialog,
-			StatusBarItem,
-			ContextMenu,
-			Notification,
-			CodeMirror,
+	return require(path).entry({
+		RunningConfig,
+		Window,
+		puffin,
+		Menu,
+		Dialog,
+		StatusBarItem,
+		ContextMenu,
+		Notification,
+		CodeMirror,
 		Tab
 	})
 }
