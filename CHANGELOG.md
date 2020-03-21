@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200321 - 1 [2.0.51]
+- New: Added a mainDev keyword (optional) to use dev version of plugins when running graviton on dev version
+- Improved: behavior of items in the explorer panel 
+- New: Added JSX file icon
+
 ### 200319 - 1 [2.0.50]
 - New: event watchers no longer used will be now cancelled
 - New: appZoom also updates on the manual configuration editor

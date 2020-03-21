@@ -137,6 +137,12 @@ function Tab({
 					})
 					this.props.active = false
 				})
+				tabState.on('destroyed',()=>{
+					RunningConfig.emit('aTabHasBeenClosed',{
+						tabElement:this,
+						directory:directory
+					})
+				})
 				tabState.on('savedMe',()=>{
 					if(!this.props.saved){
 						toggleTabStatus({

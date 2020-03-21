@@ -414,6 +414,11 @@ function Item({
 							target.setAttribute("selected",false)
 						}
 					})
+					RunningConfig.on('aTabHasBeenClosed',({directory})=>{
+						if( directory == itemDirectory ){
+							target.setAttribute("selected",false)
+						}
+					})
 					itemState.on('doReload',function(){
 						reload(target,gitChanges)
 					})
