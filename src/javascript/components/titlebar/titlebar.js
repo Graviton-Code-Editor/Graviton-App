@@ -15,6 +15,9 @@ const TitleBar = puffin.element(`
 				overflow:hidden;
 				min-height:40px;
 			}
+			& *{
+				user-select:none;
+			}
 			& .title{
 				-webkit-app-region: drag;
 				flex:1;
@@ -41,7 +44,7 @@ const TitleBar = puffin.element(`
 			}
 		`}">
 		${os === "darwin"?'<Buttons/>':''}
-		${os !== "darwin"?`<img src="${Logo}" class="logo"/>`:''} 
+		${os !== "darwin"?`<img draggable="false" src="${Logo}" class="logo"/>`:''} 
 		<div id="dropmenus" class="dropmenus"/>
 		<div class="title"/>
 		${os === "win32"?'<Buttons/>':''}

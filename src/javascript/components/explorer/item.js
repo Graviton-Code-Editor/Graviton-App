@@ -401,13 +401,17 @@ function Item({
 									directory:itemDirectory
 								})
 							})
-							tabState.on('focusedMe',()=>{
-								target.setAttribute("selected",true)
-							})
-							tabState.on(['unfocusedMe','destroyed'],()=>{
-								target.setAttribute("selected",false)
-							})
-							target.setAttribute("selected",true)	
+							target.setAttribute("selected",true)
+						}
+					})
+					RunningConfig.on('aTabHasBeenFocused',({directory})=>{
+						if( directory == itemDirectory ){
+							target.setAttribute("selected",true)
+						}
+					})
+					RunningConfig.on('aTabHasBeenUnfocused',({directory})=>{
+						if( directory == itemDirectory ){
+							target.setAttribute("selected",false)
 						}
 					})
 					itemState.on('doReload',function(){

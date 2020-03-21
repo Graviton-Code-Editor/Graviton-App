@@ -123,10 +123,18 @@ function Tab({
 				tabState.on('focusedMe',()=>{
 					RunningConfig.data.focusedTab = this
 					RunningConfig.data.focusedPanel = this.parentElement.parentElement
+					RunningConfig.emit('aTabHasBeenFocused',{
+						tabElement:this,
+						directory:directory
+					})
 					unfocusTabs(this)
 					this.props.active = true
 				})
 				tabState.on('unfocusedMe',()=>{
+					RunningConfig.emit('aTabHasBeenUnfocused',{
+						tabElement:this,
+						directory:directory
+					})
 					this.props.active = false
 				})
 				tabState.on('savedMe',()=>{
