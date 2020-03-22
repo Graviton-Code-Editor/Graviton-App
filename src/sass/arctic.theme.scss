@@ -8,12 +8,12 @@
 
 
 .cm-s-arctic.CodeMirror {
-	color: #999;
+	color: rgb(70,70,70);
 	background-color: transparent;
 }
 .cm-s-arctic {
 	pre{
-		color:gray;
+		color:rgb(20,20,20);
 	}
 	div.CodeMirror-selected {
 		background: rgba(78, 153, 252, 0.281);
@@ -47,9 +47,11 @@
 		background: transparent;
 		color: #333;
 	}
+	.CodeMirror-activeline .CodeMirror-linenumber {
+		color: black;
+	}
 	.CodeMirror-linenumber {
 		color: #aaa;
-		padding-left: 8px;
 	}
 	.CodeMirror-cursor {
 		border-left: 2px solid #222;

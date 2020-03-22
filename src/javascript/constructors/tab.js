@@ -327,7 +327,7 @@ function focusATab(fromTab){
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
-	}else if( focusedTabPosition !== 0 && (fromTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length-1) ){
+	}else if( focusedTabPosition !== 0 && (fromTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length) ){
 		tabsBarChildren[fromTabPosition-1].props.state.emit('focusedMe')
 	}	
 }

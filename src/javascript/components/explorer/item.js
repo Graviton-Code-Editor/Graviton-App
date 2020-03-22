@@ -97,105 +97,105 @@ function markStatus(target,status,count){
 			}
 	}
 }
+const ItemWrapper = puffin.style.div`
+	&{
+		background:transparent;
+		white-space:nowrap;
+		padding:0px;
+		user-select:none;
+	}
+	& > button{
+		transition:0.07s;
+		margin:0;
+		border-radius:12px;
+		font-size:12px;
+		padding:3px 5px;
+		border:none;
+		margin:0px;
+		background:transparent;
+		outline:0;
+		white-space:nowrap;
+		display:flex;
+		align-items: center;
+		justify-content: center;
+		color:var(--explorerItemText);
+	}
+	& button:hover{
+		background:var(--explorerItemHoveringBackground);
+		border-radius:5px;
+	}
+	& [selected=true] button{
+		transition:0.07s;
+		background:var(--explorerItemSelectedBackground);
+		border-radius:5px;
+	}
+	& > button > *{
+		align-items: center;
+		display:flex;
+		color:var(--explorerItemText);
+	}
+	& .gitStatus {
+		display:none;
+		position:relative;
+		border-radius:50px;
+		margin: auto 2px;
+		margin-left:6px;
+		font-size:9px;
+		min-width:10px;
+		padding:1px 3px;
+	}
+	& .gitStatus[count=""]{
+		min-width:0px;
+		padding:3px;
+	}
+	&[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
+		display:block;
+		background:var(--explorerItemGitModifiedIndicator);
+	}
+	&[gitStatus="modified"] > button > span {
+		color:var(--explorerItemGitModifiedIndicator);
+	}
+	&[gitStatus="not_added"][isDirectory="true"] > button > .gitStatus {
+		display:block;
+		background:var(--explorerItemGitNotAddedIndicator);
+	}
+	&[gitStatus="not_added"] > button > span {
+		color:var(--explorerItemGitNotAddedText);
+	}
+	&[isDirectory="true"] > button > .gitStatus::after{	
+		content: attr(count) ;
+		color:var(--explorerItemGitIndicatorText);
+	}
 
+	& .icon{
+		height:20px;
+		width:20px;
+		margin-right:4px;
+		position:relative;
+	}
+	& .arrow{
+		height:8px;
+		width:8px;
+		position:relative;
+		padding:0px;
+		margin-right:3px;
+		transition:0.1s;
+		border-radius:1px;
+	}
+`
 function Item({
 	parentFolder, //Directory parent
 	explorerContainer
 }){
-	const ItemWrapper = puffin.style.div`
-		&{
-			background:transparent;
-			white-space:nowrap;
-			padding:0px;
-			user-select:none;
-		}
-		& > button{
-			transition:0.07s;
-			margin:0;
-			border-radius:12px;
-			font-size:12px;
-			padding:3px 5px;
-			border:none;
-			margin:0px;
-			background:transparent;
-			outline:0;
-			white-space:nowrap;
-			display:flex;
-			align-items: center;
-			justify-content: center;
-			color:var(--explorerItemText);
-		}
-		& button:hover{
-			background:var(--explorerItemHoveringBackground);
-			border-radius:5px;
-		}
-		& [selected=true] button{
-			transition:0.07s;
-			background:var(--explorerItemSelectedBackground);
-			border-radius:5px;
-		}
-		& > button > *{
-			align-items: center;
-			display:flex;
-			color:var(--explorerItemText);
-		}
-		& .gitStatus {
-			display:none;
-			position:relative;
-			border-radius:50px;
-			margin: auto 2px;
-			margin-left:6px;
-			font-size:9px;
-			min-width:10px;
-			padding:1px 3px;
-		}
-		& .gitStatus[count=""]{
-			min-width:0px;
-			padding:3px;
-		}
-		&[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
-			display:block;
-			background:var(--explorerItemGitModifiedIndicator);
-		}
-		&[gitStatus="modified"] > button > span {
-			color:var(--explorerItemGitModifiedIndicator);
-		}
-		&[gitStatus="not_added"][isDirectory="true"] > button > .gitStatus {
-			display:block;
-			background:var(--explorerItemGitNotAddedIndicator);
-		}
-		&[gitStatus="not_added"] > button > span {
-			color:var(--explorerItemGitNotAddedText);
-		}
-		&[isDirectory="true"] > button > .gitStatus::after{	
-			content: attr(count) ;
-			color:var(--explorerItemGitIndicatorText);
-		}
-
-		& .icon{
-			height:20px;
-			width:20px;
-			margin-right:4px;
-			position:relative;
-		}
-		& .arrow{
-			height:8px;
-			width:8px;
-			position:relative;
-			padding:0px;
-			margin-right:3px;
-			transition:0.1s;
-			border-radius:1px;
-		}
-		&[opened="true"] .arrow{
-			transform:rotate(90deg);
-		}
-		&[opened="false"] .arrow{
-			transform:rotate(0deg);
-		}
-		`
 	const ItemComp = puffin.element(`
-		<ItemWrapper selected="false">
+		<ItemWrapper selected="false" class="${puffin.style.css`
+			&[opened="true"] .arrow{
+				transform:rotate(90deg);
+			}
+			&[opened="false"] .arrow{
+				transform:rotate(0deg);
+			}
+		`}">
 			<button click="$openDirectory" contextmenu="$contextMenu" title="{{fullpath}}">
 				<FolderArrow class="arrow"/>
 				<img class="icon"/>

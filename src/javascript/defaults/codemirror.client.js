@@ -46,7 +46,7 @@ const CodemirrorClient = new EditorClient({
 			case 'php':
 				return { name: 'application/x-httpd-php' }
 			case 'md':
-				return { name: 'text/x-markdown' }
+				return { name: 'gfm' }
 			default:
 				return { 
 					name: extension,
@@ -73,7 +73,6 @@ const CodemirrorClient = new EditorClient({
 			undoDepth:500,
 			miniMap:false
 		})
-		
 		CodemirrorEditor.on("keyup", function (cm, event) {
 			if(StaticConfig.data.editorAutocomplete){
 				if (!cm.state.completionActive && 
@@ -160,6 +159,7 @@ const CodemirrorClient = new EditorClient({
 	setFontSize({instance, element, fontSize}){
 		element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
 		instance.refresh()
+		instance.scrollIntoView()
 	},
 	getCursorPosition({instance}){
 		const { line, ch } = instance.getCursor()

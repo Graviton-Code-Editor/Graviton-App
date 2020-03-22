@@ -262,7 +262,7 @@ function init(){
 								About().launch()
 								break;
 							case 'Set theme':
-								const configuredTheme = StaticConfig.data.theme
+								const configuredTheme = StaticConfig.data.appTheme
 								new CommandPrompt({
 									showInput:true,
 									inputPlaceHolder:'Select a theme',
@@ -281,10 +281,10 @@ function init(){
 										return list;
 									})(),
 									onSelected(res){
-										StaticConfig.data.theme = res.label
+										StaticConfig.data.appTheme = res.label
 									},
 									onScrolled(res){
-										StaticConfig.data.theme = res.label
+										StaticConfig.data.appTheme = res.label
 									}
 								})
 								break;
@@ -304,10 +304,10 @@ function init(){
 										return list;
 									})(),
 									onSelected(res){
-										StaticConfig.data.language = res.label
+										StaticConfig.data.appLanguage = res.label
 									},
 									onScrolled(res){
-										StaticConfig.data.language = res.label
+										StaticConfig.data.appLanguage = res.label
 									}
 								})
 								break;

@@ -27,6 +27,9 @@
 	.CodeMirror-cursor {
 		border-left: solid thin #f8f8f0;
 	}
+	.CodeMirror-activeline .CodeMirror-linenumber {
+		color:white;
+	}
 	.CodeMirror-linenumber {
 		color: #6D8A88;
 	}

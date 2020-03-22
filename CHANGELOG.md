@@ -1,6 +1,13 @@
-# Graviton Changelog
+## Graviton Changelog
 
 This file contains "important" commits, small ones will probably not be added.
+
+### 200322 - 1 [2.0.52]
+- Improved: better tabs behavior
+- Improved: while changing the font-size it will scroll to the cursor
+- Fixed: you couldn't change the language or theme from the command prompt
+- Improved: Better gutter width for codemirror instances
+- New: live markdown rendering by default
 
 ### 200321 - 1 [2.0.51]
 - New: Added a mainDev keyword (optional) to use dev version of plugins when running graviton on dev version

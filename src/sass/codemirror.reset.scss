@@ -40,20 +40,7 @@ li.CodeMirror-hint-active {
 	100% {
 	}
 }
-/* Can style cursor different in overwrite (non-insert) mode */
-/* DEFAULT THEME */
-/* Default styles for common addons */
-/* STOP */
-/* The rest of this file contains styles related to the mechanics of
-   the editor. You probably shouldn't touch them. */
-/* The fake, visible scrollbars. Used to force redraw during scrolling
-   before actual scrolling happens, thus preventing shaking and
-   flickering artifacts. */
-/* Force content-box sizing for the elements where we expect it */
-/* Used to force a border model for a node */
-/* Hide the cursor when printing */
-/* See issue #2901 */
-/* Help users use markselection to safely style text background */
+
 @keyframes show_down {
 	from {
 		transform: translateY(-8px);
@@ -80,7 +67,6 @@ li.CodeMirror-hint-active {
 		border-radius: 0;
 		border-width: 0;
 		background: transparent;
-		font-size: inherit;
 		margin: 0;
 		white-space: pre;
 		word-wrap: normal;
@@ -96,18 +82,20 @@ li.CodeMirror-hint-active {
 	div.CodeMirror-secondarycursor {
 		border-left: 1px solid silver;
 	}
-	.CodeMirror-sizer {
-		padding-left:1em;
-	}
-	.CodeMirror-sizer > div{
-		margin-left:20px;
-	}
-	.CodeMirror-linenumber{
-		left:-20px !important;
-	}
 	.CodeMirror-linebackground{
-		right:-20px;
-		left:-20em;
+		left:-100vh;
+		right:-2em;
+		min-width:100vh;
+		margin:0 auto;
+	}
+	.CodeMirror-gutter-wrapper{
+		display:flex;
+		align-items:center;
+		bottom:0.8em;
+		.CodeMirror-linenumber {
+			flex:1;
+			
+		}
 	}
 }
 .CodeMirror-lines {
@@ -127,13 +115,14 @@ li.CodeMirror-hint-active {
 	box-sizing: content-box;
 }
 .CodeMirror-linenumber {
-	padding: 0 3px 0 5px;
+	padding: 0 3rem ;
 	min-width: 20px;
 	text-align: right;
 	color: #999;
 	white-space: nowrap;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
+
 }
 .CodeMirror-guttermarker {
 	color: black;
@@ -519,3 +508,38 @@ span.CodeMirror-selectedtext {
 		}
 	}
 }
+
+.cm-header-1 {
+	font-size: 3.4em;
+	line-height:1.55em;
+}
+
+.cm-header-2 {
+	font-size: 2.4em;
+	line-height:1.45em;
+}
+
+.cm-header-3 {
+	font-size: 1.8em;
+	line-height:1.4em;
+}
+.cm-header-4 {
+	font-size: 1.45em;
+	line-height:1.3em;
+}
+
+.cm-header-5 {
+	font-size: 1.2em;
+	line-height:1.2em;
+}
+
+.cm-header-6 {
+	font-size:  1.05em;
+	line-height: inherit;
+}
+
+
+
+
+
+
