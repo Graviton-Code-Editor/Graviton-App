@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.53",
+	"version": "2.0.54",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -36,7 +36,8 @@
 		"StaticConfig": "./src/javascript/utils/static.config.js",
 		"RunningConfig": "./src/javascript/utils/running.config.js",
 		"ExtensionsRegistry": "./src/javascript/utils/extensions.registry.js",
-		"LanguageConfig": "./src/javascript/utils/lang.config.js"
+		"LanguageConfig": "./src/javascript/utils/lang.config.js",
+		"Process":"./src/javascript/utils/process.js"
 	},
 	"dependencies": {
 		"@mkenzo_8/puffin": "^0.4.8",

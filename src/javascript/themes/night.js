@@ -91,7 +91,8 @@ const Night = {
 		notificationTitleText:'white',
 		notificationContentText:'white',
 		notificationButtonBackground:'#272727',
-		componentsBorder:'rgba(150,150,150)',
+		panelBorder:'rgba(50,50,50)',
+		statusbarBorder:'rgba(150,150,150)',
 		switchBackground:'rgb(60,60,60)',
 		switchIndicatorActivatedBackground:'rgb(255, 0, 72)',
 		switchIndicatorDesactivatedBackground:'rgb(220,200,200)'

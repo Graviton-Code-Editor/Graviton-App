@@ -14,6 +14,7 @@ const chokidar = requirePath('chokidar');
 const path = requirePath('path');
 
 function checkIfProjectIsGit(path){
+	if ( path.includes("wsl$") ) return; // Simple-git will throw error "Directory doesn't exist" no matter what.
 	const simpleInstance = simpleGit(path)
 	return new Promise((resolve,reject)=>{
 		simpleInstance.checkIsRepo((err,res)=>{

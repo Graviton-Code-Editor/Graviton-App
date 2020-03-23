@@ -103,7 +103,8 @@ const ThemeWrapper = puffin.style.css`
 		--notificationBackground:{{notificationBackground}};
 		--notificationTitleText:{{notificationTitleText}};
 		--notificationContentText:{{notificationContentText}};
-		--componentsBorder:{{componentsBorder}};
+		--panelBorder:{{panelBorder}};
+		--statusbarBorder:{{statusbarBorder}};
 		--notificationButtonBackground:{{notificationButtonBackground}};
 		--switchBackground:{{switchBackground}};
 		--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
@@ -158,8 +159,8 @@ const App = puffin.element(`
 			min-width:50px;
 			width:300px;
 			flex:1;
-			border-left:1px solid var(--componentsBorder);
-			border-top:1px solid var(--componentsBorder);
+			border-left:1px solid var(--panelBorder);
+			border-top:1px solid var(--panelBorder);
 			border-top-left-radius:5px;
 			background:var(--mainpanelBackground);
 		}

@@ -57,7 +57,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 							StaticConfig.data.appProjectsLog.map(({ name, directory })=> {
 								const nameFolder = parseDirectory(directory)
 								content += `
-									<Card click="$openDirectory" directory="${directory}">
+									<Card click="$openDirectory" directory="${normalizeDir(directory)}">
 										<b>${nameFolder}</b>
 										<p>${beautifyDir(normalizeDir(directory,true))}</p>
 									</Card>

@@ -6,6 +6,7 @@ import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
 import requirePath from '../utils/require'
 import areYouSureDialog from '../defaults/dialogs/you.sure'
+import normalizeDir from '../utils/directory.normalizer'
 
 const fs = requirePath("fs-extra")
 
@@ -21,7 +22,7 @@ function guessTabPosition(tab,tabsbar){
 function Tab({
 	title,
 	isEditor,
-	directory,
+	directory ="",
 	parentFolder,
 	component,
 	panel = RunningConfig.data.focusedPanel,
@@ -48,9 +49,7 @@ function Tab({
 		panel
 	})
 	RunningConfig.on('isATabOpened',({directory:tabDir,id:tabID})=>{
-		console.log(tabDir,directory)
 		if( ( tabDir && tabDir ==  directory )||( tabID && tabID ==  id )){
-			console.log(TabComp)
 			return {
 				tabElement:TabComp.node
 			}
@@ -146,14 +145,14 @@ function Tab({
 				tabState.on('unfocusedMe',()=>{
 					RunningConfig.emit('aTabHasBeenUnfocused',{
 						tabElement:this,
-						directory:directory
+						directory:normalizeDir(directory)
 					})
 					this.props.active = false
 				})
 				tabState.on('destroyed',()=>{
 					RunningConfig.emit('aTabHasBeenClosed',{
 						tabElement:this,
-						directory:directory
+						directory:normalizeDir(directory)
 					})
 				})
 				tabState.on('savedMe',()=>{
@@ -161,7 +160,7 @@ function Tab({
 						tabState.emit('markAsSaved')
 						RunningConfig.emit('aTabHasBeenSaved',{
 							tabElement:this,
-							path:directory,
+							path:normalizeDir(directory),
 							parentFolder
 						})
 					}

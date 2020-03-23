@@ -91,7 +91,8 @@ const Arctic = {
 		notificationTitleText:'black',
 		notificationContentText:'black',
 		notificationButtonBackground:'rgb(220,220,220)',
-		componentsBorder:'rgba(150,150,150)',
+		panelBorder:'rgba(180,180,180)',
+		statusbarBorder:'white',
 		switchBackground:'rgb(220,220,220)',
 		switchIndicatorActivatedBackground:'#0066FF',
 		switchIndicatorDesactivatedBackground:'rgba(150,150,150,0.8)'

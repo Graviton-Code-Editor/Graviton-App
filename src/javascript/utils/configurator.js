@@ -17,7 +17,27 @@ const defaultConfiguration = {
 		'editorFSWatcher':true,
 		'editorAutocomplete':true,
 		'editorTabSize':4,
-		'editorWrapLines':false
+		'editorWrapLines':false,
+		'appShortCuts':{
+			'SaveCurrentFile':{
+				combos:['Ctrl+S']
+			},
+			'NewPanel':{
+				combos:['Ctrl+N']
+			},
+			'CloseCurrentTab':{
+				combos:['Ctrl+T']
+			},
+			'CloseCurrentPanel':{
+				combos:['Ctrl+L']
+			},
+			'OpenCommandPrompt':{
+				combos:['Ctrl+P']
+			},
+			'IterateCurrentPanelTabs':{
+				combos:['Ctrl+Tab']
+			}
+		}
 	}
 }
 

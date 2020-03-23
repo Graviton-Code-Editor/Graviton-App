@@ -25,7 +25,7 @@ function Panel(){
 					min-height:100%;
 					display:flex;
 					flex-direction:column;
-					border-left:1px solid rgba(150,150,150);
+					border-left:1px solid var(--panelBorder);
 				}
 				& .tabsbar{
 					min-height:40px;

@@ -1,17 +1,16 @@
 /*
-  MDN-LIKE Theme - Mozilla
-  Ported to CodeMirror by Peter Kroon <plakroon@gmail.com>
-  Report bugs/issues here: https://github.com/codemirror/CodeMirror/issues
-  GitHub: @peterkroon
-  The mdn-like theme is inspired on the displayed code examples at: https://developer.mozilla.org/en-US/docs/Web/CSS/animation
+	Name: Arctic
+	Original by Peter Kroon <plakroon@gmail.com>
 */
-
 
 .cm-s-arctic.CodeMirror {
 	color: rgb(70,70,70);
 	background-color: transparent;
 }
 .cm-s-arctic {
+	.cm-tab {
+		border-left: 1px solid rgb(195, 195, 195);
+	}
 	pre{
 		color:rgb(20,20,20);
 	}
@@ -154,7 +153,4 @@
 			color: black;
 		}
 	}
-}
-.cm-tab {
-	border-left: 1px solid rgb(82, 82, 82);
 }

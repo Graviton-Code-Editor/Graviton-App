@@ -3,7 +3,7 @@ import { puffin } from '@mkenzo_8/puffin'
 const PanelStatusBar = puffin.element(`
 <div id="statusBar" class="${puffin.style.css`
 		&{
-			border-top:1px solid var(--componentsBorder);
+			border-top:1px solid var(--statusbarBorder);
 			min-height:25px;
 			max-height:25px;
 			background:var(--statusbarBackground);
