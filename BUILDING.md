@@ -59,4 +59,4 @@ For example if you are an Arch Linux user run
  * rpm
  * AppImage
 
-Please keep in mind that not all the distros can build some packages.
+Please keep in mind that not all the distros can build some packages. Anyway, Ubuntu can build a Debian package and an AppImage installer out of the box.

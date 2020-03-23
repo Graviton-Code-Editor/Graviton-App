@@ -2,7 +2,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import DropMenu from '../dropmenu'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
-const os = eval('process.platform')
+import AppPlatform from 'AppPlatform'
 
 const TitleBar = puffin.element(`
 	<div>
@@ -43,11 +43,11 @@ const TitleBar = puffin.element(`
 				padding:9px;
 			}
 		`}">
-		${os === "darwin"?'<Buttons/>':''}
-		${os !== "darwin"?`<img draggable="false" src="${Logo}" class="logo"/>`:''} 
+		${AppPlatform === "darwin"?'<Buttons/>':''}
+		${AppPlatform !== "darwin"?`<img draggable="false" src="${Logo}" class="logo"/>`:''} 
 		<div id="dropmenus" class="dropmenus"/>
 		<div class="title"/>
-		${os === "win32"?'<Buttons/>':''}
+		${AppPlatform === "win32"?'<Buttons/>':''}
 		</div>
 	</div>
 	`,{

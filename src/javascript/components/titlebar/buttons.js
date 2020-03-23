@@ -1,9 +1,9 @@
 import { puffin } from '@mkenzo_8/puffin'
 import requirePath from '../../utils/require'
 const { remote } = requirePath('electron')
-const os = eval('process.platform')
+import AppPlatform from 'AppPlatform'
 
-if(os == "win32"){
+if(AppPlatform == "win32"){
 	var Buttons = puffin.element(`
 		<div class="buttons ${puffin.style.css`
 				& rect{
@@ -55,7 +55,7 @@ if(os == "win32"){
 				</svg>
 			</button>
 		</div>
-`,{
+	`,{
 		methods:{
 			toggleMaximize,
 			close,
@@ -121,17 +121,23 @@ if(os == "win32"){
 						border: 1px solid #1ECE38;
 					}
 				`}">
-					<button title="Close" >
-						<img/>
-					</button>
-					<button title="Minimize">
-						<img/>
-					</button>
-					<button title="Zoom">
-						<img/>
-					</button>
-				</div>
-	`)
+				<button title="Close" click="$close">
+					<img/>
+				</button>
+				<button title="Minimize" click="$minimize">
+					<img/>
+				</button>
+				<button title="Zoom" click="$toggleMaximize">
+					<img/>
+				</button>
+			</div>
+	`,{
+		methods:{
+			toggleMaximize,
+			close,
+			minimize
+		}
+	})
 }
 
 

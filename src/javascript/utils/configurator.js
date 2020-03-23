@@ -18,6 +18,7 @@ const defaultConfiguration = {
 		'editorAutocomplete':true,
 		'editorTabSize':4,
 		'editorWrapLines':false,
+		'appPlatform':'auto',
 		'appShortCuts':{
 			'SaveCurrentFile':{
 				combos:['Ctrl+S']

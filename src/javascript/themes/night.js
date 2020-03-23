@@ -62,7 +62,7 @@ const Night = {
 		radioCircleBackground:'#222222',
 		radioCircleBorder:'#666666',
 		radioCircleBorderHovering:'#FE5E8B',
-		windowBorder:'#666666',
+		windowBorder:'rgb(50,50,50)',
 		fileNotSavedIndicator:'white',
 		fileNotSavedIndicatorHovering:'rgb(255, 0, 72)',
 		controlCloseButtonActiveBackground:'rgba(241,112,122)',

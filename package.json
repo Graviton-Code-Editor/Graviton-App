@@ -37,7 +37,7 @@
 		"RunningConfig": "./src/javascript/utils/running.config.js",
 		"ExtensionsRegistry": "./src/javascript/utils/extensions.registry.js",
 		"LanguageConfig": "./src/javascript/utils/lang.config.js",
-		"Process":"./src/javascript/utils/process.js"
+		"AppPlatform":"./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
 		"@mkenzo_8/puffin": "^0.4.8",
