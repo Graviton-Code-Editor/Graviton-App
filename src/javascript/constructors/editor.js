@@ -28,6 +28,7 @@ function Editor({
 	directory
 }){
 	const Client = sortByRanking(language)
+	let editorValueSaved = value
 	const { instance } = Client.do('create',{
 		element:bodyElement,
 		language:Client.do('getLangFromExt',language),
@@ -76,13 +77,19 @@ function Editor({
 	})
 	Client.do('onChanged',{
 		instance:instance,
-		action:()=>tabElement.props.state.emit('unsavedMe')
+		action:(currentValue)=>{
+			if( currentValue == editorValueSaved ){
+				tabElement.props.state.emit('markAsSaved')
+			}else{
+				tabElement.props.state.emit('unsavedMe')
+			}
+			
+		}
 	})
 	Client.do('onActive',{
 		instance:instance,
 		action:(instance)=>{
 			if( tabElement.parentElement ) {
-				if( RunningConfig.data.focusedTab != tabElement ) tabElement.props.state.emit('focusedMe')
 				if( RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
 				if( RunningConfig.data.focusedPanel != tabState.data.panel ) RunningConfig.data.focusedPanel = tabState.data.panel
 				if(CursorPositionStatusBarItem.isHidden()){
@@ -118,11 +125,21 @@ function Editor({
 			CursorPositionStatusBarItem.hide()
 		}
 	})
+	const editorWrapLinesWatcher = StaticConfig.keyChanged('editorWrapLines',function(value){
+		if( value ){
+			Client.do('setLinesWrapping',{instance,status:true})
+		}else{
+			Client.do('setLinesWrapping',{instance,status:false})
+		}
+	})
 	const tabFocusedWatcher = tabState.on('focusedMe',()=>{
 		focusEditor(Client,instance)
 		updateCursorPosition(Client,instance)
 		Client.do('doFocus',{instance})
 		Client.do('doRefresh',{instance,element:bodyElement})
+	})
+	const tabSavedWatcher = tabState.on('savedMe',()=>{
+		editorValueSaved = Client.do('getValue',instance)
 	})
 	if(CursorPositionStatusBarItem.isHidden()){
 		CursorPositionStatusBarItem.show() //Display cursor position item in bottom bar
@@ -137,6 +154,7 @@ function Editor({
 		tabFocusedWatcher.cancel()
 		focusedEditorWatcher.cancel()
 		tabDestroyedWatcher.cancel()
+		tabSavedWatcher.cancel()
 	})
 	return {
 		client:Client,

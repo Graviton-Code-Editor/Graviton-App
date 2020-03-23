@@ -2,6 +2,13 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+### 200323 - 1 [2.0.53]
+- New: added a configuration keyword to enable line wrapping, editorWrapLines
+- Fixed: better tabs behavior when closing
+- Improved: better editors behavior
+- Improved: explorer panel items behavior
+- New: added mdx as markdown format
+
 ### 200322 - 1 [2.0.52]
 - Improved: better tabs behavior
 - Improved: while changing the font-size it will scroll to the cursor

@@ -16,7 +16,8 @@ const defaultConfiguration = {
 		'appZoom':1,
 		'editorFSWatcher':true,
 		'editorAutocomplete':true,
-		'editorTabSize':4
+		'editorTabSize':4,
+		'editorWrapLines':false
 	}
 }
 

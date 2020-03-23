@@ -40,10 +40,14 @@ function configEditor(){
 	const appZoomWatcher = StaticConfig.keyChanged('appZoom',()=>{
 		updateKey(client,instance,StaticConfig,'appZoom')
 	})
+	const appThemeWatcher = StaticConfig.keyChanged('appTheme',()=>{
+		updateKey(client,instance,StaticConfig,'appTheme')
+	})
 	const tabWatcher = tabElement.props.state.on('destroyed',()=>{
 		tabWatcher.cancel()
 		editorFontSizeWatcher.cancel()
 		appZoomWatcher.cancel()
+		appThemeWatcher.cancel()
 	})
 	client.do('doIndent',{instance}) //Force an initial indentation
 	client.do('doFocus',{instance}) //Force an initial indentation

@@ -94,7 +94,6 @@ li.CodeMirror-hint-active {
 		bottom:0.8em;
 		.CodeMirror-linenumber {
 			flex:1;
-			
 		}
 	}
 }
@@ -115,7 +114,7 @@ li.CodeMirror-hint-active {
 	box-sizing: content-box;
 }
 .CodeMirror-linenumber {
-	padding: 0 3rem ;
+	padding: 0 2.2rem ;
 	min-width: 20px;
 	text-align: right;
 	color: #999;

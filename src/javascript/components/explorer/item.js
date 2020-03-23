@@ -389,21 +389,25 @@ function Item({
 								directory:target.getAttribute("fullpath"),
 								parentFolder:target.getAttribute("parentFolder")
 							})
-							if( isCancelled ) return; //Cancels the tab opening
-							fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
-								new Editor({
-									language:fileExtension,
-									value:data ,
-									theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
-									bodyElement,
-									tabElement,
-									tabState,
-									directory:itemDirectory
+							if( !isCancelled ){
+								fs.readFile(target.getAttribute("fullpath"),'UTF-8').then(function(data){
+									new Editor({
+										language:fileExtension,
+										value:data ,
+										theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+										bodyElement,
+										tabElement,
+										tabState,
+										directory:itemDirectory
+									})
 								})
-							})
-							target.setAttribute("selected",true)
+								target.setAttribute("selected",true)
+							}
 						}
 					})
+					const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
+					if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute("selected",true)
+					
 					RunningConfig.on('aTabHasBeenFocused',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",true)

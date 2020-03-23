@@ -46,6 +46,7 @@ const CodemirrorClient = new EditorClient({
 			case 'php':
 				return { name: 'application/x-httpd-php' }
 			case 'md':
+			case 'mdx':
 				return { name: 'gfm' }
 			default:
 				return { 
@@ -71,7 +72,8 @@ const CodemirrorClient = new EditorClient({
 			tabSize:StaticConfig.data.editorTabSize,
 			indentUnit:StaticConfig.data.editorTabSize,
 			undoDepth:500,
-			miniMap:false
+			miniMap:false,
+			lineWrapping:StaticConfig.data.editorWrapLines
 		})
 		CodemirrorEditor.on("keyup", function (cm, event) {
 			if(StaticConfig.data.editorAutocomplete){
@@ -142,7 +144,7 @@ const CodemirrorClient = new EditorClient({
 		instance.setValue(value)
 	},
 	onChanged({instance,action}){
-		instance.on('change',()=>action())
+		instance.on('change',()=>action(instance.getValue()))
 	},
 	onActive({instance,action}){
 		instance.on('cursorActivity',()=>action(instance))
@@ -176,6 +178,12 @@ const CodemirrorClient = new EditorClient({
 	},
 	doFocus({instance}){
 		instance.focus()
+		instance.scrollIntoView()
+	},
+	setLinesWrapping({instance,status}){
+		instance.setOption('lineWrapping',status)
+		instance.refresh()
+		instance.scrollIntoView()
 	}
 })
 

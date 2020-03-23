@@ -24,25 +24,38 @@ function Tab({
 	directory,
 	parentFolder,
 	component,
-	panel = RunningConfig.data.focusedPanel
+	panel = RunningConfig.data.focusedPanel,
+	id
 }){
+
+	const classSelector = `tab${directory?directory:id}`
+	const openedTabs = document.getElementsByClassName(classSelector)
+	if( openedTabs.length >= 1 ){
+		/**
+		 *  Tab already exists so it won't be rendered again
+		*/
+		openedTabs[0].props.state.emit('focusedMe')
+		return {
+			isCancelled : true,
+			tabElement:openedTabs[0],
+			tabState:openedTabs[0].props.state
+		}
+	}
 	const tabState = new puffin.state({
 		active:true,
 		saved:true,
 		parentFolder,
 		panel
 	})
-	const classSelector = `tab${directory}`
-	const openedTabs = document.getElementsByClassName(classSelector)
-	if( openedTabs.length >= 1 ){
-		/**
-         *  Tab already exists so it won't be rendered again
-         */
-		openedTabs[0].props.state.emit('focusedMe')
-		return {
-			isCancelled : true
+	RunningConfig.on('isATabOpened',({directory:tabDir,id:tabID})=>{
+		console.log(tabDir,directory)
+		if( ( tabDir && tabDir ==  directory )||( tabID && tabID ==  id )){
+			console.log(TabComp)
+			return {
+				tabElement:TabComp.node
+			}
 		}
-	}
+	})
 	const TabComp = puffin.element(`
 		<TabBody draggable="true" 
 		classSelector="${classSelector}" 
@@ -145,16 +158,21 @@ function Tab({
 				})
 				tabState.on('savedMe',()=>{
 					if(!this.props.saved){
-						toggleTabStatus({
-							tabElement:this,
-							newStatus:true,
-							tabEditor:TabEditorComp.node
-						})
-						this.props.saved = true
+						tabState.emit('markAsSaved')
 						RunningConfig.emit('aTabHasBeenSaved',{
 							tabElement:this,
 							path:directory,
 							parentFolder
+						})
+					}
+				})
+				tabState.on('markAsSaved',()=>{
+					if( !this.props.saved ){
+						this.props.saved = true
+						toggleTabStatus({
+							tabElement:this,
+							newStatus:true,
+							tabEditor:TabEditorComp.node
 						})
 					}
 				})
@@ -320,8 +338,8 @@ function focusATab(fromTab){
 	const tabsBarChildren = tabsBar.children;
 	const fromTabPosition = guessTabPosition(fromTab,tabsBar)
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
-	if( fromTabPosition === 0 ){
-		if( tabsBarChildren.length === 2 ){
+	if( focusedTabPosition === 0 ){
+		if( fromTabPosition < tabsBarChildren.length-1 ){
 			tabsBarChildren[fromTabPosition+1].props.state.emit('focusedMe')
 		}else if( tabsBarChildren.length === 1 ){
 			RunningConfig.data.focusedTab = null
