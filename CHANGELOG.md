@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200324 - 2 [2.0.56]
+- Fixed: test wasn't working properly with more than one graviton instance opened
+- Fixed: Centered the images viewer
+
 #### 200323 - 2 [2.0.54]
 - Improved: better themes
 - New: you can now customize the shortcuts via the manual configurator

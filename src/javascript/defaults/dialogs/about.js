@@ -1,10 +1,14 @@
 import Dialog from '../../constructors/dialog'
-import GravitonPackage from '../../../../package.json'
+import packageJSON from '../../../../package.json'
 
 function About(){
 	const DialogInstance = new Dialog({
 		title:'About',
-		content:`Graviton v${GravitonPackage.version}`,
+		content:`
+			Graviton v${packageJSON.version} 
+
+			Author: Marc Espín Sanz
+		`,
 		buttons:[
 			{
 				label:'accept'

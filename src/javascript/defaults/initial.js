@@ -24,6 +24,7 @@ import configEditor from './tabs/config.editor.js'
 const fs = requirePath("fs-extra")
 const { openExternal: openLink } = requirePath("electron").shell
 const { getCurrentWindow } = requirePath("electron").remote
+const isDev = requirePath("electron-is-dev")
 
 function init(){
 	loadAutomatically()
@@ -335,7 +336,7 @@ function init(){
 		})
 	]);
 	RunningConfig.emit('appLoaded')
-	if(RunningConfig.data.arguments[0] != null){
+	if(RunningConfig.data.arguments[0] != null && !isDev){
 		const dir = RunningConfig.data.arguments[0]
 		if( fs.lstatSync(dir).isDirectory() ){
 			RunningConfig.emit('addFolderToRunningWorkspace',{

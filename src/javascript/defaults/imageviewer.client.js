@@ -7,6 +7,8 @@ const ImageViewerStyle = puffin.style.div`
 		justify-content:center;
 		align-items:center;
 		height:100%;
+		margin:auto 0;
+		width:100%;
 	}
 	& > img{
 		width:auto;
