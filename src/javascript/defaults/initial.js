@@ -179,11 +179,6 @@ function init(){
 			RunningConfig.data.focusedTab.props.state.emit('close')
 		}
 	})
-	RunningConfig.on('command.closeCurrentTab',()=>{
-		if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
-			RunningConfig.data.focusedTab.props.state.emit('close')
-		}
-	})
 	RunningConfig.on('command.closeCurrentPanel',()=>{
 		removePanel()
 	})
@@ -319,6 +314,7 @@ function init(){
 			}
 		}),
 		...StaticConfig.data.appShortCuts.CloseCurrentTab.combos.map(shortcut=>{
+			console.log(shortcut)
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentTab')
 			}

@@ -234,10 +234,19 @@ function Tab({
 		props:["active"]
 	})
 	const TabEditorComp = puffin.element(`
-		<TabEditor/>
+		<TabEditor>
+			${(()=>{
+				if(component){
+					return "<component/>"
+				}else{
+					return ""
+				}
+			})()}
+		</TabEditor>
 	`,{
 			components:{
-				TabEditor
+				TabEditor,
+				component
 			},
 			events:{
 				mounted(target){
