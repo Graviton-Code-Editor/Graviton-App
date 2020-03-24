@@ -314,7 +314,6 @@ function init(){
 			}
 		}),
 		...StaticConfig.data.appShortCuts.CloseCurrentTab.combos.map(shortcut=>{
-			console.log(shortcut)
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentTab')
 			}

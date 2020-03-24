@@ -90,8 +90,9 @@ function Editor({
 		instance:instance,
 		action:(instance)=>{
 			if( tabElement.parentElement ) {
-				if( RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
+				if( RunningConfig.data.focusedEditor == null || RunningConfig.data.focusedEditor.instance != instance )focusEditor(Client,instance)
 				if( RunningConfig.data.focusedPanel != tabState.data.panel ) RunningConfig.data.focusedPanel = tabState.data.panel
+				if( RunningConfig.data.focusedTab != tabElement ) RunningConfig.data.focusedTab = tabElement
 				if(CursorPositionStatusBarItem.isHidden()){
 					CursorPositionStatusBarItem.show()
 				}

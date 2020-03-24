@@ -319,12 +319,11 @@ function toggleTabStatus({
 function saveFile(tab,callback){
 	if( tab.directory ) {
 		const  { client, instance } = RunningConfig.data.focusedEditor
-		fs.writeFile(tab.directory, client.do('getValue',instance), function(err) {
-			if(err) {
-				return console.log(err);
-			}
+		fs.writeFile(tab.directory, client.do('getValue',instance)).then(()=> {
 			callback()
-		}); 
+		}).catch((err)=>{
+			console.log(err)
+		})
 	}else{
 		callback()
 	}
