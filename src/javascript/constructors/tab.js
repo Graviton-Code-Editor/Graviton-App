@@ -137,7 +137,7 @@ function Tab({
 					RunningConfig.data.focusedPanel = this.parentElement.parentElement
 					RunningConfig.emit('aTabHasBeenFocused',{
 						tabElement:this,
-						directory:directory
+						directory:normalizeDir(directory)
 					})
 					unfocusTabs(this)
 					this.props.active = true

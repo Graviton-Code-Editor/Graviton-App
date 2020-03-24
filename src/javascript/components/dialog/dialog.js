@@ -3,7 +3,7 @@ import { puffin } from '@mkenzo_8/puffin'
 const DialogBody = new puffin.element(`
     <div class="${puffin.style.css`
 			&{
-				border:1px solid gray;
+				border:1px solid var(--windowBorder);
 				width:200px;
 				min-width:150px;
 				width:20%;

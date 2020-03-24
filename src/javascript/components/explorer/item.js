@@ -97,7 +97,7 @@ function markStatus(target,status,count){
 			}
 	}
 }
-const ItemWrapper = puffin.style.div`
+const ItemWrapper = puffin.style.css`
 	&{
 		background:transparent;
 		white-space:nowrap;
@@ -188,7 +188,7 @@ function Item({
 	explorerContainer
 }){
 	const ItemComp = puffin.element(`
-		<ItemWrapper selected="false" class="${puffin.style.css`
+		<div selected="false" class="${ItemWrapper} ${puffin.style.css`
 			&[opened="true"] .arrow{
 				transform:rotate(90deg);
 			}
@@ -196,17 +196,16 @@ function Item({
 				transform:rotate(0deg);
 			}
 		`}">
-			<button click="$openDirectory" contextmenu="$contextMenu" title="{{fullpath}}">
+			<button click="$openDirectory" contextmenu="$contextMenu" title="{{hint}}">
 				<FolderArrow class="arrow"/>
 				<img class="icon"/>
 				<span originalName="{{dirName}}">{{dirName}}</span>
 				<div class="gitStatus" count=""/>
 			</button>
-		</ItemWrapper>
+		</div>
 		`,{
-			props:['dirName','selected','fullpath'],
+			props:['dirName','selected','fullpath','hint'],
 			components:{
-				ItemWrapper,
 				FolderArrow
 			},
 			methods:{
@@ -407,7 +406,6 @@ function Item({
 					})
 					const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
 					if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute("selected",true)
-					
 					RunningConfig.on('aTabHasBeenFocused',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",true)

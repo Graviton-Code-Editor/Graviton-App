@@ -178,6 +178,8 @@ const CodemirrorClient = new EditorClient({
 	},
 	doFocus({instance}){
 		instance.focus()
+	},
+	scrollToCursor({instance}){
 		instance.scrollIntoView()
 	},
 	setLinesWrapping({instance,status}){

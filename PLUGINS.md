@@ -1,7 +1,8 @@
-# Installing plugins
+## Installing plugins
 
-* You can use the [CLI](https://github.com/Graviton-Code-Editor/graviton-cli/blob/master/readme.md) (recommended)
+(WIP)
 
-* From the market (recommended)
-
-* Copying the plugin source directly to the plugins subfolder in .graviton , if it has dependencies you might have to install them or even rebuild. (not recommended)
+* 1. Clone the plugin inside .graviton2/plugins
+* 2. Install dependencies (if needed)
+* 3. Build (if necessary)
+* 4. Restart Graviton
