@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200325 - 2 [2.0.58]
+- Improved: created a build script which builds a build.json with build information ( just now only the build's date )
+
 #### 200325 - 1 [2.0.58]
 - New: You can now create submenus
 - Fixed: when closing a panel the tabs were not executing it's destroy event

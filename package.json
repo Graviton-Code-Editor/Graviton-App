@@ -10,10 +10,11 @@
 	"scripts": {
 		"test": "run-p watch:parcel test:spectron ",
 		"test:spectron": "mocha test --delay",
-		"start": " run-p watch:parcel watch:electron ",
+		"start": "run-p script:build watch:parcel watch:electron ",
+		"script:build":"node scripts/build.js",
 		"watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
-		"build": "npm run build:parcel && npm run build:electron",
+		"build": "npm run script:build && npm run build:parcel  && npm run build:electron",
 		"build:outpacked": "npm run build:parcel && npm run build:electron:outpacked",
 		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
 		"build:electron:outpacked": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",

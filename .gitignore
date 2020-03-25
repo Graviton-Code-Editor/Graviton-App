@@ -2,3 +2,4 @@ node_modules/
 dist/
 .cache
 dist_parcel
+assets/build.json
