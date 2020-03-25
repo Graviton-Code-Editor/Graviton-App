@@ -46,7 +46,7 @@ function Panel(){
 			`
 			}">    
 		<div dragover="$allowDrop" drop="$onTabDropped" class="tabsbar"/>
-			<PanelBody/>
+		<PanelBody/>
 		</div>
 `,{
 		components:{

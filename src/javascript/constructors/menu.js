@@ -1,5 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
-import Dropmenu  from '../components/dropmenu'
+import MenuComp  from '../components/menu'
 import requirePath from '../utils/require'
 import ArrowIcon from '../components/icons/arrow'
 
@@ -53,7 +53,7 @@ function getMenu(button,list,leftMargin){
 			return option.action
 		}else if(option.list){
 			return function(e){
-				closeAllSubmenus(e.target.parentElement)
+				closeAllSubmenus(e.target.parentElement.parentElement)
 				const subMenuComponent = getMenu(
 					null,
 					option.list,
@@ -64,13 +64,13 @@ function getMenu(button,list,leftMargin){
 		}
 	}))
 	return puffin.element(`
-		<Dropmenu class="${button?'':'submenu'}" submenu="${button?false:true}" style="${button?'':`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`}">
+		<MenuComp class="${button?'':'submenu'}" submenu="${button?false:true}" style="${button?'':`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`}">
 			${button?`<button mouseover="$hideMenus" click="$hideMenus">${button}</button>`:''}
 			${getDropmenu(list)}
-		</Dropmenu>
+		</MenuComp>
 	`,{
 		components:{
-			Dropmenu,
+			MenuComp,
 			ArrowIcon
 		},
 		methods:{

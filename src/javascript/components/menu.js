@@ -25,7 +25,7 @@ function toggleMenuStatus(element){
 	}
 }
 
-const DropMenu = puffin.element(`
+const MenuComp = puffin.element(`
     <div mouseenter="$focused" mouseleave="$unFocused" click="$onMenuClicked" mousemove="$onMenuHovering" showed="false" class="${puffin.style.css`
 		&{
 			display:block;
@@ -34,23 +34,23 @@ const DropMenu = puffin.element(`
 		}
 		& > button{
 			min-height:100%;
-			background:var(--dropmenuButtonBackground);
-			color:var(--dropmenuButtonText);
+			background:var(--menuButtonBackground);
+			color:var(--menuButtonText);
 			border:none;
 			outline:0;
 			font-size:13px;
 		}
 		& > button:hover{
 			min-height:100%;
-			background:var(--dropmenuButtonHoveringBackground);
-			color:var(--dropmenuButtonHoveringText);
+			background:var(--menuButtonHoveringBackground);
+			color:var(--menuButtonHoveringText);
 		}
 		& > button.active , & button:focus{
-			background:var(--dropmenuButtonHoveringBackground);
+			background:var(--menuButtonHoveringBackground);
 		}
 		& > div{
 			position:absolute;
-			background:var(--dropmenuBackground);
+			background:var(--menuBackground);
 			padding:5px;
 			border-radius:5px;
 			border-top-left-radius:0px;
@@ -69,23 +69,23 @@ const DropMenu = puffin.element(`
 			padding:7px 8px;
 			min-width:100px;
 			border-radius:5px;
-			color:var(--dropmenuOptionText);
+			color:var(--menuOptionText);
 			cursor:pointer;
 			align-items:center;
 		}
 		& > div a:hover{
 			background:var(--accentColor);
-			color:var(--dropmenuOptionHoveringText);
+			color:var(--menuOptionHoveringText);
 		}
 		& > div a:hover svg path{
-			fill:var(--dropmenuOptionHoveringText);
+			fill:var(--menuOptionHoveringText);
 		}
 		& span{
 			height:1.5px;
 			border-radius:25px;
 			width:95%;
 			display:block;
-			background:var(--dropmenuDivider);
+			background:var(--menuDivider);
 			margin:3px auto;
 		}
     `} dropmenu">
@@ -136,4 +136,4 @@ const DropMenu = puffin.element(`
 	}
 })
 
-export default DropMenu
+export default MenuComp

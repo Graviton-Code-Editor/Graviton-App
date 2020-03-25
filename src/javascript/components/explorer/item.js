@@ -103,6 +103,7 @@ const ItemWrapper = puffin.style.css`
 		white-space:nowrap;
 		padding:0px;
 		user-select:none;
+		margin-top:1px;
 	}
 	& > button{
 		transition:0.07s;

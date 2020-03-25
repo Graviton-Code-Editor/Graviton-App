@@ -56,27 +56,95 @@ function init(){
 				},
 				{},
 				{
-					label:'Open workspace',
-					action:()=>{
-						RunningConfig.emit('openWorkspaceDialog')
-					}
+					label:'Projects',
+					list:[
+						{
+							label:'Open Recents',
+							action:()=>{
+								Welcome().launch()
+							}
+						}
+					]
 				},
 				{
-					label:'Add folder to workspace',
+					label:'Workspaces',
+					list:[
+						{
+							label:'Open Workspaces',
+							action:()=>{
+								RunningConfig.emit('openWorkspaceDialog')
+							}
+						},
+						{
+							label:'Open from File',
+							action:()=>{
+								RunningConfig.emit('openWorkspaceDialog')
+							}
+						},
+						{
+							label:'Add folder to workspace',
+							action:()=>{
+								RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
+									replaceOldExplorer:false
+								})
+							}
+						},
+						{
+							label:'Save workspace',
+							action:()=>{
+								RunningConfig.emit('saveCurrentWorkspace')
+							}
+						}
+					]
+				}
+			]
+     })
+		new Menu({ //EDIT
+			button:'Edit',
+			list:[
+				{
+					label:'Undo',
 					action:()=>{
-						RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
-							replaceOldExplorer:false
+						if( !RunningConfig.data.focusedEditor ) return
+						const { client, instance } = RunningConfig.data.focusedEditor
+						client.do('executeUndo',{
+							instance
 						})
 					}
 				},
 				{
-					label:'Save workspace',
+					label:'Redo',
 					action:()=>{
-						RunningConfig.emit('saveCurrentWorkspace')
+						if( !RunningConfig.data.focusedEditor ) return
+						const { client, instance } = RunningConfig.data.focusedEditor
+						client.do('executeRedo',{
+							instance
+						})
+					}
+				},
+				{},
+				{
+					label:'Find',
+					action:()=>{
+						if( !RunningConfig.data.focusedEditor ) return
+						const { client, instance } = RunningConfig.data.focusedEditor
+						client.do('openFind',{
+							instance
+						})
+					}
+				},
+				{
+					label:'Replace',
+					action:()=>{
+						if( !RunningConfig.data.focusedEditor ) return
+						const { client, instance } = RunningConfig.data.focusedEditor
+						client.do('openReplace',{
+							instance
+						})
 					}
 				}
 			]
-     })
+		})
 		new Menu({ //TOOLS
 			button:'Tools',
 			list:[
@@ -84,15 +152,7 @@ function init(){
 					label:'Open Settings',
 					action:()=>Settings().launch()
 				},
-				{
-					label:'Open Welcome',
-					action:()=>Welcome().launch()
-				}
-			]
-		})
-		new Menu({ //EDITOR
-			button:'Editor',
-			list:[
+				{},
 				{
 					label:'Panels',
 					list:[

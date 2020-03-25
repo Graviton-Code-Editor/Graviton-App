@@ -1,5 +1,4 @@
 import { puffin } from '@mkenzo_8/puffin'
-import DropMenu from '../dropmenu'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
 import AppPlatform from 'AppPlatform'
@@ -52,7 +51,6 @@ const TitleBar = puffin.element(`
 	</div>
 	`,{
 	components:{
-		DropMenu,
 		Buttons
 	}
 })

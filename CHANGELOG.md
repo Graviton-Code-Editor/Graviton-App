@@ -2,6 +2,10 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200325 - 3 [2.0.59]
+- Fixed: codemirror dialog text had an automatic line height
+- General bug and fixes
+
 #### 200325 - 2 [2.0.58]
 - Improved: created a build script which builds a build.json with build information ( just now only the build's date )
 

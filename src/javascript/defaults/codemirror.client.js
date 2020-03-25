@@ -146,9 +146,21 @@ const CodemirrorClient = new EditorClient({
 	onChanged({instance,action}){
 		instance.on('change',()=>action(instance.getValue()))
 	},
+	executeUndo({instance,action}){
+		instance.execCommand('undo')
+	},
+	executeRedo({instance,action}){
+		instance.execCommand('redo')
+	},
 	onActive({instance,action}){
 		instance.on('cursorActivity',()=>action(instance))
 		instance.on('mousedown',()=>action(instance))
+	},
+	openFind({instance}){
+		instance.execCommand('find')
+	},
+	openReplace({instance}){
+		instance.execCommand('replace')
 	},
 	setTheme({instance,theme}){
 		instance.setOption('theme',theme)

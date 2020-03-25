@@ -141,6 +141,7 @@ function Tab({
 					})
 					unfocusTabs(this)
 					this.props.active = true
+					this.scrollIntoView()
 				})
 				tabState.on('unfocusedMe',()=>{
 					RunningConfig.emit('aTabHasBeenUnfocused',{

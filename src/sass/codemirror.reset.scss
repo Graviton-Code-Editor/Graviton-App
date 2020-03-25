@@ -460,7 +460,6 @@ span.CodeMirror-selectedtext {
 	margin: 5px;
 	right:10px;
 	width: 125px;
-	height:auto;
 	display: block;
 	padding: 15px;
 	padding-right: 20px;
@@ -470,7 +469,7 @@ span.CodeMirror-selectedtext {
 	overflow: hidden;
 	color: var(--editorDialogText);
 	box-shadow:0px 2px 5px rgba(0,0,0,0.2);
-	font-size:15px;
+	font-size:13px;
 	input {
 		border: none;
 		outline: none;
@@ -481,15 +480,21 @@ span.CodeMirror-selectedtext {
 		margin:3px 0px;
 		padding:3px 7px;
 	}
+	.CodeMirror-search-label{
+		line-height:20px;
+		bottom:100px !important;
+	}
 	.CodeMirror-search-hint{
 		display: none;
-	}
-	button {
-		font-size: 25%;
 	}
 	*{
 		font-family: mainFont !important;
 		color:inherit;
+	}
+	button{
+		padding:5px;
+		border:0;
+		background:var(--buttonBackground);
 	}
 }
 .CodeMirror-dialog-top {
