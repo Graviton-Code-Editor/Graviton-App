@@ -9,7 +9,7 @@ import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import RunningConfig from 'RunningConfig'
 import Icons from '../../../../assets/icons/**.svg'
-import FolderArrow from '../icons/folder.arrow'
+import ArrowIcon from '../icons/arrow'
 import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
@@ -197,7 +197,7 @@ function Item({
 			}
 		`}">
 			<button click="$openDirectory" contextmenu="$contextMenu" title="{{hint}}">
-				<FolderArrow class="arrow"/>
+				<ArrowIcon class="arrow"/>
 				<img class="icon"/>
 				<span originalName="{{dirName}}">{{dirName}}</span>
 				<div class="gitStatus" count=""/>
@@ -206,7 +206,7 @@ function Item({
 		`,{
 			props:['dirName','selected','fullpath','hint'],
 			components:{
-				FolderArrow
+				ArrowIcon
 			},
 			methods:{
 				openDirectory(e){

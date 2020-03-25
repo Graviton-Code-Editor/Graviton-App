@@ -1,6 +1,10 @@
-## Graviton Changelog
+### Graviton Changelog
 
 This file contains "important" commits, small ones will probably not be added.
+
+#### 200325 - 1 [2.0.58]
+- New: You can now create submenus
+- Fixed: when closing a panel the tabs were not executing it's destroy event
 
 #### 200324 - 2 [2.0.56]
 - Fixed: test wasn't working properly with more than one graviton instance opened

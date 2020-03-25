@@ -4,21 +4,20 @@ import RunningConfig from 'RunningConfig'
 function hideAllMenus(element){
 	const allMenus = element.parentElement.children
 	for(let otherMenu of allMenus){
-		otherMenu.children[1].style.display = "none";
+		if( otherMenu.children[1] ) otherMenu.children[1].style.display = "none";
 		otherMenu.children[0].classList.remove("active")
 		otherMenu.setAttribute("showed","false")
 	}
 }
 
-
 function toggleMenuStatus(element){
 	if(element.getAttribute("showed") == "true"){
-		element.children[1].style.display = "none";
+		if( element.children[1] ) element.children[1].style.display = "none";
 		element.children[0].classList.remove("active")
 		element.setAttribute("showed","false")
 		element.parentElement.setAttribute("anyDropmenuOpened","false")
 	}else{
-		element.children[1].style.display = "block";
+		if( element.children[1] ) element.children[1].style.display = "block";
 		element.children[0].classList.add("active")
 		element.children[0].focus()
 		element.setAttribute("showed","true")
@@ -27,7 +26,7 @@ function toggleMenuStatus(element){
 }
 
 const DropMenu = puffin.element(`
-    <div click="$onMenuClicked" mousemove="$onMenuHovering" showed="false" class="${puffin.style.css`
+    <div mouseenter="$focused" mouseleave="$unFocused" click="$onMenuClicked" mousemove="$onMenuHovering" showed="false" class="${puffin.style.css`
 		&{
 			display:block;
 			white-space:nowrap;
@@ -58,20 +57,28 @@ const DropMenu = puffin.element(`
 			box-shadow:0px 2px 10px rgba(0,0,0,0.2);
 			z-index:1;
 		}
+		& > div svg{
+			right:15px;
+			width:8px;
+			position:absolute
+		}
 		& > div a{
 			left:0;
-			white-space:pre-wrap;
-			display:block;
+			display:flex;
 			font-size:13px;
 			padding:7px 8px;
 			min-width:100px;
 			border-radius:5px;
 			color:var(--dropmenuOptionText);
 			cursor:pointer;
+			align-items:center;
 		}
 		& > div a:hover{
 			background:var(--accentColor);
 			color:var(--dropmenuOptionHoveringText);
+		}
+		& > div a:hover svg path{
+			fill:var(--dropmenuOptionHoveringText);
 		}
 		& span{
 			height:1.5px;
@@ -89,6 +96,7 @@ const DropMenu = puffin.element(`
 			toggleMenuStatus(this)
 		},
 		onMenuHovering(){
+			if(!this.parentElement) return
 			if(this.getAttribute("showed") == "true"){
 				this.parentElement.setAttribute("anyDropmenuOpened","true")
 			}
@@ -101,7 +109,9 @@ const DropMenu = puffin.element(`
 	events:{
 		mounted(target){
 			target.id = Math.random()
-			target.children[1].style.display = "none"
+			const isSubMenu = eval(target.getAttribute("submenu") == 'true')
+			const itemsContainer = target.children[1]?target.children[1]:target.children[0]
+			if( !isSubMenu ) itemsContainer.style.display = "none"
 			window.addEventListener("click",function(e){
 				e.stopPropagation()
 				if(
@@ -114,10 +124,13 @@ const DropMenu = puffin.element(`
 				}
 			})
 			RunningConfig.on('hideAllFloatingComps',()=>{
-				target.children[1].style.display = "none";
+				itemsContainer.style.display = "none";
 				target.children[0].classList.remove("active")
 				target.setAttribute("showed","false")
-				target.parentElement.setAttribute("anyDropmenuOpened","false")
+				target.parentElement && target.parentElement.setAttribute("anyDropmenuOpened","false")
+				if( isSubMenu ){
+					target.remove()
+				}
 			})
 		}
 	}

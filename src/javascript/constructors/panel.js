@@ -160,8 +160,19 @@ function focusOtherPanel(currentPanel){
 function removePanel(panelToRemove = RunningConfig.data.focusedPanel){
 	if( checkIfThereAreTabsUnSaved(panelToRemove) ){
 		const { oldPanel } = focusOtherPanel(panelToRemove)
-		if( oldPanel != null ) oldPanel.remove()
+		if( oldPanel != null ) {
+			destroyTabs(oldPanel)
+			oldPanel.remove()
+		}
 	}
+}
+
+function destroyTabs(panel){
+	const tabsBar = panel.children[0]
+	const panelTabs = tabsBar.childNodes
+	panelTabs.forEach(function(tab){
+		tab.props.state.emit('close')
+	})
 }
 
 function checkIfThereAreTabsUnSaved(panel){
@@ -173,7 +184,6 @@ function checkIfThereAreTabsUnSaved(panel){
 	})
 	return allTabsAreSaved
 }
-
 
 export { 
 	Panel,

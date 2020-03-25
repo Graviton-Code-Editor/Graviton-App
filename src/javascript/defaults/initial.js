@@ -20,6 +20,7 @@ import ThemeProvider from '../utils/themeprovider';
 import Plus from '../components/icons/plus'
 import Minus from '../components/icons/minus'
 import configEditor from './tabs/config.editor.js'
+import ContextMenu from '../constructors/contextmenu'
 
 const fs = requirePath("fs-extra")
 const { openExternal: openLink } = requirePath("electron").shell
@@ -93,8 +94,16 @@ function init(){
 			button:'Editor',
 			list:[
 				{
-					label:'New panel',
-					action:()=> new Panel()
+					label:'Panels',
+					list:[
+						{
+							label:'New panel',
+							action:()=> RunningConfig.emit('command.newPanel')
+						},{
+							label:'Close current panel',
+							action:()=> RunningConfig.emit('command.closeCurrentPanel')
+						}
+					]
 				}
 			]
 		})
@@ -102,22 +111,27 @@ function init(){
 			button:'Window',
 			list:[
 				{
-					label:'Default zoom',
-					action:()=> {
-						StaticConfig.data.appZoom = 1
-					}
-				},
-				{
-					label:'Increase zoom',
-					action:()=> {
-						StaticConfig.data.appZoom += 0.1
-					}
-				},
-				{
-					label:'Decrease zoom',
-					action:()=> {
-						StaticConfig.data.appZoom -= 0.1
-					}
+					label:'Zoom',
+					list:[
+						{
+							label:'Default zoom',
+							action:()=> {
+								StaticConfig.data.appZoom = 1
+							}
+						},
+						{
+							label:'Increase zoom',
+							action:()=> {
+								StaticConfig.data.appZoom += 0.1
+							}
+						},
+						{
+							label:'Decrease zoom',
+							action:()=> {
+								StaticConfig.data.appZoom -= 0.1
+							}
+						}
+					]
 				},
 				{},
 				{
