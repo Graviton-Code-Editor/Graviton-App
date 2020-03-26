@@ -11,6 +11,7 @@ const PanelStatusBar = puffin.element(`
 			display:flex;
 			box-sizing:border-box;
 			padding-top:1px;
+			user-select:none;
 		}
 		& > div{
 			width:50%;
