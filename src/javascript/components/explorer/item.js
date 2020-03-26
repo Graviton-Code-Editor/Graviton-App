@@ -70,7 +70,7 @@ function getMyStatus(fileDir,gitChanges,projectDir){
 function markStatus(target,status,count){
 	const spanText = target.children[0].children[2]
 	const statusIndicator = target.children[0].children[3]
-	const isDirectory = target.getAttribute("isDirectory") == "true"
+	const isDirectory = target.getAttribute("isFolder") == "true"
 	switch(status){
 		case 'modified':
 			target.setAttribute('gitStatus','modified')
@@ -90,6 +90,7 @@ function markStatus(target,status,count){
 			break;
 		default:
 			target.setAttribute('gitStatus',null)
+			target.getAttribute("fullpath")
 			if( isDirectory) {
 				statusIndicator.setAttribute("count","")
 			}else{
@@ -149,21 +150,21 @@ const ItemWrapper = puffin.style.css`
 		min-width:0px;
 		padding:3px;
 	}
-	&[gitStatus="modified"][isDirectory="true"] > button > .gitStatus {
+	&[gitStatus="modified"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitModifiedIndicator);
 	}
 	&[gitStatus="modified"] > button > span {
 		color:var(--explorerItemGitModifiedIndicator);
 	}
-	&[gitStatus="not_added"][isDirectory="true"] > button > .gitStatus {
+	&[gitStatus="not_added"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitNotAddedIndicator);
 	}
 	&[gitStatus="not_added"] > button > span {
 		color:var(--explorerItemGitNotAddedText);
 	}
-	&[isDirectory="true"] > button > .gitStatus::after{	
+	&[isFolder="true"] > button > .gitStatus::after{	
 		content: attr(count) ;
 		color:var(--explorerItemGitIndicatorText);
 	}
@@ -214,7 +215,7 @@ function Item({
 					this.parentElement.state.emit('clickItem')
 				},
 				contextMenu(e){
-					if(this.parentElement.getAttribute("isDirectory") == "true"){
+					if(this.parentElement.getAttribute("isFolder") == "true"){
 						new ContextMenu({
 							list:[
 								{
@@ -272,7 +273,7 @@ function Item({
 			},
 			events:{
 				mounted(target){
-					const isItemFolder = target.getAttribute("isDirectory") == "true"
+					const isItemFolder = target.getAttribute("isFolder") == "true"
 					const itemState = new puffin.state({})
 					target.state = itemState
 					const gitChanges = target.parentElement.parentElement.gitChanges 
@@ -316,11 +317,6 @@ function Item({
 							markItem(gitChanges,true)
 						}
 					})
-					RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-						if(itemProjectDirectory == explorerParentfolder && this.children[0]){
-							markItem(gitChanges,itemDirectory==itemProjectDirectory)
-						}
-					})
 					explorerState.on('newFile',({containerFolder,fileName})=>{
 						if( isItemFolder  && containerFolder == itemDirectory  ){
 							explorerState.emit('createItem',{
@@ -335,7 +331,7 @@ function Item({
 					})
 					explorerState.on('removedFile',({filePath})=>{
 						if( itemDirectory == filePath ){
-							this.remove()
+							this.state.emit('destroyed')
 							RunningConfig.emit('aFileHasBeenRemoved',{
 								parentFolder,
 								filePath
@@ -372,7 +368,7 @@ function Item({
 						}
 					})
 					itemState.on('clickItem',function(){
-						if(target.getAttribute("isDirectory") == "true"){
+						if(isItemFolder){
 							const itemsContainer = target.children[1]
 							if(itemsContainer == null){
 								new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
@@ -407,23 +403,35 @@ function Item({
 					})
 					const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
 					if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute("selected",true)
-					RunningConfig.on('aTabHasBeenFocused',({directory})=>{
+					const TabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",true)
 						}
 					})
-					RunningConfig.on('aTabHasBeenUnfocused',({directory})=>{
+					const TabUnfocusedWatcher = RunningConfig.on('aTabHasBeenUnfocused',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",false)
 						}
 					})
-					RunningConfig.on('aTabHasBeenClosed',({directory})=>{
+					const TabClosedWatcher = RunningConfig.on('aTabHasBeenClosed',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",false)
 						}
 					})
 					itemState.on('doReload',function(){
 						reload(target,gitChanges)
+					})
+					const GitWatcher = RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
+						if(itemProjectDirectory == explorerParentfolder && this.children[0]){
+							markItem(gitChanges,itemDirectory==itemProjectDirectory)
+						}
+					})
+					itemState.on('destroyed',()=>{
+						TabFocusedWatcher.cancel()
+						TabUnfocusedWatcher.cancel()
+						TabClosedWatcher.cancel()
+						GitWatcher.cancel()
+						this.remove()
 					})
 				}
 			}
@@ -479,7 +487,7 @@ function setStateClosed(target){
 function removeDirectoryOrFile(element){
 	areYouSureDialog().then(function(){
 		trash([element.parentElement.getAttribute("fullpath")]).then(function(){
-			element && element.remove()
+			element && element.state && element.state.emit('destroyed')
 		});        
 	}).catch(function(err){
 		//Clicked "No", do nothing

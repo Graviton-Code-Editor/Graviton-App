@@ -107,11 +107,19 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 	if(level == 0){
 		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
 		if( gitResult ) gitChanges = await getStatus(parsedFolderPath)
-		const explorerContainer = puffin.element(`
-		<Item id="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${folderPath}" dirName="${parseDirectory(folderPath)}" hint="${beautifyDir(normalizeDir(folderPath))}" fullpath="${normalizeDir(folderPath)}" level="0"/>
-		`,{
-			components:{
-				Item:Item({parentFolder:parsedFolderPath,explorerContainer:null})
+		const itemComputed = getItemComputed({
+			projectPath:folderPath,
+			folderPath,
+			dirName: parseDirectory(folderPath),
+			dirPath: normalizeDir(folderPath),
+			level:0,
+			isFolder: true
+		})
+		const explorerContainer = puffin.element(
+			itemComputed
+			 ,{
+				components:{
+					Item:Item({parentFolder:parsedFolderPath,explorerContainer:null})
 			},
 			events:{
 				mounted:async function(){
@@ -180,9 +188,15 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 									path:directory
 								})
 							}
-							const hotItem = puffin.element(`
-									<Item class="${possibleClass}" isDirectory="${isFolder}" parentFolder="${parsedFolderPath}" dirName="${directoryName}" hint="${beautifyDir(normalizeDir(directory))}" fullpath="${directory}" level="${Number(level)+1}"/>
-							`,{
+							const itemComputed = getItemComputed({
+								projectPath:parsedFolderPath,
+								classSelector:possibleClass,
+								dirName: directoryName,
+								dirPath: directory,
+								level:Number(level)+1,
+								isFolder
+							}) 
+							const hotItem = puffin.element(itemComputed,{
 								components:{
 									Item:new Item({parentFolder:parsedFolderPath,explorerContainer:container.explorerContainer})
 								}
@@ -221,18 +235,32 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					paths.map(function(dir){ //Load folders 
 						const itemDirectory = normalizeDir(path.join(folderPath,dir))
 						if(fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
-							content += `<Item class="${normalizeDir(folderPath)}" isDirectory="true" parentFolder="${parent.getAttribute("parentFolder")}" dirName="${dir}" hint="${beautifyDir(itemDirectory)}" fullpath="${itemDirectory}" level="${level}"/>` 
+							content += getItemComputed({
+								projectPath:parent.getAttribute("parentFolder"),
+								classSelector:folderPath,
+								dirName: dir,
+								dirPath: itemDirectory,
+								level,
+								isFolder: true
+							}) 
 						}
 					})
 					paths.map(function(dir){ //Load files 
 						const itemDirectory = normalizeDir(path.join(folderPath,dir))
 						if(!fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
 							if(! dir.match("~") )
-								content += `<Item class="${normalizeDir(folderPath)}" isDirectory="false" parentFolder="${parent.getAttribute("parentFolder")}" dirName="${dir}" hint="${beautifyDir(itemDirectory)}" fullpath="${itemDirectory}" level="${level}"/>` 
+								content += getItemComputed({
+									projectPath:parent.getAttribute("parentFolder"),
+									classSelector:folderPath,
+									dirName: dir,
+									dirPath: itemDirectory,
+									level,
+									isFolder: false
+								}) 
 						}
 					})
-					return content
-				})()}
+			return content
+		})()}
 			</div>
 		`,{
 			components:{
@@ -257,5 +285,19 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 		})
 	})    
 }
+
+
+function getItemComputed({
+	classSelector="",
+	projectPath,
+	dirName,
+	dirPath,
+	level,
+	isFolder
+}){
+	return `<Item ${projectPath?`id="${normalizeDir(projectPath)}"`:''} class="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" dirName="${dirName}" hint="${beautifyDir(dirPath)}" fullpath="${dirPath}" level="${level}"/>` 
+}
+
+
 
 export default Explorer

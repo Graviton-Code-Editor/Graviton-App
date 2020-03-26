@@ -81,12 +81,14 @@ const MenuComp = puffin.element(`
 			fill:var(--menuOptionHoveringText);
 		}
 		& span{
-			height:1.5px;
+			height:0.1px;
+			max-height:0.1px;
 			border-radius:25px;
-			width:95%;
+			width:90%;
 			display:block;
-			background:var(--menuDivider);
-			margin:3px auto;
+			border: 0.9px solid var(--menuDivider);
+			margin:5px auto;
+			box-sizing:border-box;
 		}
     `} dropmenu">
     </div>

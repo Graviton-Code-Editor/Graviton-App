@@ -75,6 +75,7 @@ function init(){
 								RunningConfig.emit('openWorkspaceDialog')
 							}
 						},
+						{},
 						{
 							label:'Open from File',
 							action:()=>{
@@ -139,6 +140,17 @@ function init(){
 						if( !RunningConfig.data.focusedEditor ) return
 						const { client, instance } = RunningConfig.data.focusedEditor
 						client.do('openReplace',{
+							instance
+						})
+					}
+				},
+				{},
+				{
+					label:'Format document',
+					action:()=>{
+						if( !RunningConfig.data.focusedEditor ) return
+						const { client, instance } = RunningConfig.data.focusedEditor
+						client.do('doIndent',{
 							instance
 						})
 					}

@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.59",
+	"version": "2.0.60",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -11,7 +11,7 @@
 		"test": "run-p watch:parcel test:spectron ",
 		"test:spectron": "mocha test --delay",
 		"start": "run-p script:build watch:parcel watch:electron ",
-		"script:build":"node scripts/build.js",
+		"script:build": "node scripts/build.js",
 		"watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
 		"build": "npm run script:build && npm run build:parcel  && npm run build:electron",
@@ -38,10 +38,10 @@
 		"RunningConfig": "./src/javascript/utils/running.config.js",
 		"ExtensionsRegistry": "./src/javascript/utils/extensions.registry.js",
 		"LanguageConfig": "./src/javascript/utils/lang.config.js",
-		"AppPlatform":"./src/javascript/utils/platform.js"
+		"AppPlatform": "./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
-		"@mkenzo_8/puffin": "^0.4.8",
+		"@mkenzo_8/puffin": "^0.4.9",
 		"@mkenzo_8/puffin-drac": "0.0.16",
 		"appdata-path": "^1.0.0",
 		"babel-core": "^6.26.3",

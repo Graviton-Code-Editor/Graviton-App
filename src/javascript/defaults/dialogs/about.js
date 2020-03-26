@@ -7,9 +7,7 @@ function About(){
 		title:'About',
 		content:`
 			Graviton v${packageJSON.version} 
-
 			Build date: ${buildJSON.date}
-
 			Author: Marc Espín Sanz
 		`,
 		buttons:[

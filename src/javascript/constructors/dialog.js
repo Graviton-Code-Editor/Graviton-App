@@ -21,6 +21,9 @@ function Dialog({
 				left:50%;
 				transform:translate(-50%,-50%);
 			}
+			& p{
+				line-height:30px;	
+			}
 		`}">
 			<WindowBackground window="${randomSelector}"/>
 			<DialogBody>
