@@ -73,7 +73,6 @@
 	"build": {
 		"appId": "graviton-editor",
 		"artifactName": "${name}-${version}-${arch}-${platform}.${ext}",
-		"icon": "assets/building/mac/icon.png",
 		"asar": true,
 		"files": [
 			"!**.cache",
@@ -81,10 +80,10 @@
 			"!**.github",
 			"!**languages",
 			"!**assets",
-			"!**test",
-			"!node_modules"
+			"!**test"
 		],
 		"dmg": {
+			"icon": "assets/building/darwin/icon.png",
 			"contents": [
 				{
 					"x": 240,
@@ -92,10 +91,10 @@
 					"type": "link",
 					"path": "/Applications"
 				}
-			],
-			"icon": "assets/building/linux"
+			]
 		},
 		"linux": {
+			"icon": "assets/building/linux",
 			"category": "Development",
 			"target": [
 				"AppImage",
@@ -104,6 +103,7 @@
 			]
 		},
 		"win": {
+			"icon": "assets/building/darwin/icon.png",
 			"target": [
 				{
 					"target": "nsis"

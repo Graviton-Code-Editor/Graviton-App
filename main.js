@@ -28,7 +28,8 @@ app.on("ready", function() {
 		height:mainWindowState.height,
 		backgroundColor: "#191919",
 		title: "Graviton Editor",
-		show:false
+		show:false,
+		icon:path.join(__dirname,"assets", "building",process.platform,"icon.ico")
 	})
 	if( !isDev ) main.removeMenu()
 	mainWindowState.manage(main);
