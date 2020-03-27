@@ -36,17 +36,21 @@ function Editor({
 		theme,
 		directory,
 		CtrlPlusScroll:(direction)=> {
-			if(direction == 'up'){
+			const ScrollUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+ScrollUp')
+			const ScrollDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+ScrollDown')
+			
+			if( direction == 'up' && ScrollUpShortcutEnabled ){
 				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+2
-			}else{
+			}else if( ScrollDownShortcutEnabled ){
 				if( StaticConfig.data.editorFontSize <=4) return
 				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-2
 			}
-			Client.do('setFontSize',{
-				instance:instance,
-				element:bodyElement,
-				fontSize:StaticConfig.data.editorFontSize
-			})
+			if( ScrollUpShortcutEnabled || ScrollDownShortcutEnabled)
+				Client.do('setFontSize',{
+					instance:instance,
+					element:bodyElement,
+					fontSize:StaticConfig.data.editorFontSize
+				})
 		}
 	})
 	Client.do('doFocus',{instance})
@@ -136,7 +140,7 @@ function Editor({
 	const tabFocusedWatcher = tabState.on('focusedMe',()=>{
 		focusEditor(Client,instance)
 		updateCursorPosition(Client,instance)
-
+		Client.do('doRefresh',{instance})
 	})
 	const tabSavedWatcher = tabState.on('savedMe',()=>{
 		editorValueSaved = Client.do('getValue',instance)

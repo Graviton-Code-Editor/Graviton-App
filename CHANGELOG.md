@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200327 - 1 [2.0.61]
+- New: you can now change the font size shortcuts
+
 #### 200325 - 3 [2.0.59]
 - Fixed: codemirror dialog text had an automatic line height
 - General bug and fixes

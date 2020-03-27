@@ -103,14 +103,22 @@ const CodemirrorClient = new EditorClient({
 			}
 		});
 		element.getElementsByClassName("Codemirror")[0].style.fontSize = StaticConfig.data.editorFontSize;
-		CodemirrorEditor.addKeyMap({
-			'Ctrl-Up': function (instance) {
-				CtrlPlusScroll('up')
-			},
-			'Ctrl-Down': function (instance) {
-				CtrlPlusScroll('down')
-			}
-		})
+		const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
+		const CtrlDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+Down')
+		if( CtrlUpShortcutEnabled ) {
+			CodemirrorEditor.addKeyMap({
+				'Ctrl-Up': function (instance) {
+					CtrlPlusScroll('up')
+				}
+			})
+		}
+		if( CtrlDownShortcutEnabled ){
+			CodemirrorEditor.addKeyMap({
+				'Ctrl-Down': function (instance) {
+					CtrlPlusScroll('down')
+				}
+			})
+		}
 		element.addEventListener('wheel',(e)=>{
 			if(!e.ctrlKey) return
 			if(e.wheelDeltaY.toString()[0]=='-'){

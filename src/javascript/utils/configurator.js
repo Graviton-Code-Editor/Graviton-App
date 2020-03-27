@@ -19,7 +19,7 @@ const defaultConfiguration = {
 		'editorTabSize':4,
 		'editorWrapLines':false,
 		'appPlatform':'auto',
-		'appShortCuts':{
+		'appShortcuts':{
 			'SaveCurrentFile':{
 				combos:['Ctrl+S']
 			},
@@ -37,23 +37,48 @@ const defaultConfiguration = {
 			},
 			'IterateCurrentPanelTabs':{
 				combos:['Ctrl+Tab']
+			},
+			'IncreaseEditorFontSize':{
+				combos:[
+					'Ctrl+Up',
+					'Ctrl+ScrollUp'
+				]
+			},
+			'DecreaseEditorFontSize':{
+				combos:[
+					'Ctrl+Down',
+					'Ctrl+ScrollDown'
+				]
 			}
 		},
 		'miscEnableLiveUpdateInManualConfig':true
 	}
 }
 
+function checkObject(object,subProperty,configurationStore,level){
+	if( level >= 2 ) return
+	Object.keys(object).map(function(key){   
+		let currentLevel = level
+		const query = `config${(()=>{
+			return subProperty? `.${subProperty}` : ""
+		})()}.${key}`
+		if(!configurationStore.has(query)){
+			configurationStore.set(
+				query,
+				object[key]
+			)
+		}
+		const queryValue = object[key]
+		if( typeof queryValue == 'object' && !Array.isArray(queryValue) ){
+			checkObject(queryValue,key,configurationStore,++currentLevel)
+		}
+	})
+}
+
 function initConfiguration(){
 	const configurationStore = new electronStore();
 	console.log(configurationStore)
-	Object.keys(defaultConfiguration.config).map(function(key){   
-		if(!configurationStore.has(`config.${key}`)){
-			configurationStore.set(
-				`config.${key}`,
-				defaultConfiguration.config[key]
-			)
-		}
-	})
+	checkObject(defaultConfiguration.config,null,configurationStore,0)
 	if(!fs.existsSync(defaultConfiguration.config.appConfigPath)){ //If .graviton2 doesn't exist, it creates it
 		fs.mkdirSync(defaultConfiguration.config.appConfigPath)
 	}

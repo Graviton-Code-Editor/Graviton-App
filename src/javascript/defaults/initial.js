@@ -125,6 +125,24 @@ function init(){
 				},
 				{},
 				{
+					label:'Font Size',
+					list:[
+						{
+							label:'Increase',
+							action:()=>{
+								RunningConfig.emit('command.increaseFontSize')
+							}
+						},
+						{
+							label:'Decrease',
+							action:()=>{
+								RunningConfig.emit('command.decreaseFontSize')
+							}
+						}
+					]
+				},
+				{},
+				{
 					label:'Find',
 					action:()=>{
 						if( !RunningConfig.data.focusedEditor ) return
@@ -388,36 +406,52 @@ function init(){
 			})
 		}
 	})
+	RunningConfig.on('command.increaseFontSize',({factor=2}={factor:2})=>{
+		StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+factor
+	})
+	RunningConfig.on('command.decreaseFontSize',({factor=2}={factor:2})=>{
+		StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-factor
+	})
 	const appShortCuts = new Shortcuts ();
 	appShortCuts.add ([ 
-		...StaticConfig.data.appShortCuts.SaveCurrentFile.combos.map(shortcut=>{ 
+		...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut=>{ 
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.saveCurrentFile')
 			}
 		}),
-		...StaticConfig.data.appShortCuts.NewPanel.combos.map(shortcut=>{ 
+		...StaticConfig.data.appShortcuts.NewPanel.combos.map(shortcut=>{ 
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.newPanel')
 			}
 		}),
-		...StaticConfig.data.appShortCuts.CloseCurrentTab.combos.map(shortcut=>{
+		...StaticConfig.data.appShortcuts.CloseCurrentTab.combos.map(shortcut=>{
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentTab')
 			}
 		}),
-		...StaticConfig.data.appShortCuts.CloseCurrentPanel.combos.map(shortcut=>{ 
+		...StaticConfig.data.appShortcuts.CloseCurrentPanel.combos.map(shortcut=>{ 
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentPanel')
 			}
 		}),
-		...StaticConfig.data.appShortCuts.OpenCommandPrompt.combos.map(shortcut=>{ 
+		...StaticConfig.data.appShortcuts.OpenCommandPrompt.combos.map(shortcut=>{ 
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.openCommandPrompt')
 			}
 		}),
-		...StaticConfig.data.appShortCuts.IterateCurrentPanelTabs.combos.map(shortcut=>{ 
+		...StaticConfig.data.appShortcuts.IterateCurrentPanelTabs.combos.map(shortcut=>{ 
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.openCurrentPanelTabsIterator')
+			}
+		}),
+		...StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.map(shortcut=>{ 
+			return { 
+				shortcut:shortcut, handler: event => RunningConfig.emit('command.increaseFontSize')
+			}
+		}),
+		...StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.map(shortcut=>{ 
+			return { 
+				shortcut:shortcut, handler: event => RunningConfig.emit('command.decreaseFontSize')
 			}
 		})
 	]);
