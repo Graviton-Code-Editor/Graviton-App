@@ -124,7 +124,7 @@ const CodemirrorClient = new EditorClient({
 			instance : CodemirrorEditor
 		}
 	},
-	doRefresh({instance,element}){
+	doRefresh({instance}){
 		setTimeout(function() {
 			instance.focus()
 			instance.refresh()

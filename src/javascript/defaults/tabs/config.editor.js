@@ -11,6 +11,7 @@ function updateStaticConfigByKey(client,instance){
 }
 
 function updateKey(client,instance,state,key){
+	if( !StaticConfig.data.miscEnableLiveUpdateInManualConfig ) return
 	const newConfig = JSON.parse(client.do('getValue',instance))
 	if( newConfig[key] != state.data[key] ){
 		const initialCursor = client.do('getCursorPosition',{instance})

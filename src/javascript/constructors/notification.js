@@ -4,15 +4,20 @@ import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'
 import RunningConfig from '../utils/running.config'
 
+const NOTIFICATION_LIVE_TIME = 6000 //Notification will fade out in 6 seconds after appear
+const MAX_NOTIFICATIONS_LIVING = 3 //There can only be 3 notifications living at once
+
 function Notification({
-	title = 'Title',
+	title = 'Notification',
 	content = '',
 	buttons = []
 }){
 	const listedMethods = buttons.map(({action})=>action)
 	const NotificationComp = puffin.element(`
-	<NotificationBody>
-			<div><Cross click="$closeNotification"/></div>
+		<NotificationBody>
+			<div>
+				<Cross click="$closeNotification"/>
+			</div>
 			<Title>${title}</Title>
 			<Content>${content}</Content>
 			<div class="buttons">
@@ -25,7 +30,14 @@ function Notification({
 				})()}
 			</div>
 		</NotificationBody>
-`,{
+	`,{
+		events:{
+			mounted(){
+				setTimeout(()=>{
+					this.remove()
+				},NOTIFICATION_LIVE_TIME)
+			}	
+		},
 		components:{
 			NotificationBody,
 			Title:Titles.h3,
@@ -56,9 +68,8 @@ function closeNotification(NotificationElement){
 }
 
 RunningConfig.on('notificationPushed',(notificationDetails)=>{
-	const maxNotifactionsOpened = 3 //This refers to the max of opened folders at once
 	RunningConfig.data.notifications.push(notificationDetails)
-	if( RunningConfig.data.notifications.length > maxNotifactionsOpened ){
+	if( RunningConfig.data.notifications.length > MAX_NOTIFICATIONS_LIVING ){
 		const { element } = RunningConfig.data.notifications[0]
 		RunningConfig.data.notifications.splice(0,1)
 		RunningConfig.emit('notificationRemoved',{ element });

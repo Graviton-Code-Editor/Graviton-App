@@ -4,13 +4,8 @@ import requirePath from '../utils/require'
 import ArrowIcon from '../components/icons/arrow'
 
 const { remote } = requirePath("electron")
-
-let MenuBarMacOS;
-
-(function(){
-	const { Menu } = remote
-	MenuBarMacOS  = new Menu()
-})()
+const { Menu:NativeMenu } = remote
+let NativeMenuBar = new NativeMenu()
 
 function closeAllSubmenus(parent){
 	const subMenusOpened = Object.keys(parent.getElementsByClassName("submenu")).map((ele)=>{
@@ -23,35 +18,37 @@ function closeAllSubmenus(parent){
 
 function getDropmenu(list){
 	return `
-	<div>
-	${(function(){
-		let content = "";
-		list.map(function(option,index){
-			if(option.label !== undefined){
-				content += `
-					<div>
-						<a 
-							${option.hint != null?`title="${option.hint}"`:""} 
-							click="${!option.list?`$${index}`:''}" 
-							mouseenter="${option.list?`$${index}`:'$hideMenus'}">
-							${option.label}
-							${option.list?'<ArrowIcon/>':''}
-						</a>
-					</div>`
-			}else{
-				content += `<span/>`
-			}
-		})
-		return content;
-	})()}
-	</div>`
+		<div>
+			${(function(){
+				let content = "";
+				list.map(function(option,index){
+					if(option.label !== undefined){
+						content += `
+							<div>
+								<a 
+									${option.hint != null?`title="${option.hint}"`:""} 
+									click="${!option.list?`$${index}`:''}" 
+									mouseenter="${option.list?`$${index}`:'$hideMenus'}"
+								>
+									${option.label}
+									${option.list?'<ArrowIcon/>':''}
+								</a>
+							</div>`
+					}else{
+						content += `<span/>`
+					}
+				})
+				return content;
+			})()}
+		</div>
+	`
 }
 
 function getMenu(button,list,leftMargin){
+	const isSubmenu = button == null && list != null
 	const methodsToBind = Object.assign({},list.map((option)=> {
-		if(option.action){
-			return option.action
-		}else if(option.list){
+		const isOptionASubmenu = option.action == null && option.list != null
+		if(isOptionASubmenu){
 			return function(e){
 				closeAllSubmenus(e.target.parentElement.parentElement)
 				const subMenuComponent = getMenu(
@@ -61,11 +58,14 @@ function getMenu(button,list,leftMargin){
 				)
 				puffin.render(subMenuComponent,e.target.parentElement)
 			}
+
+		}else{
+			return option.action
 		}
 	}))
 	return puffin.element(`
-		<MenuComp class="${button?'':'submenu'}" submenu="${button?false:true}" style="${button?'':`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`}">
-			${button?`<button mouseover="$hideMenus" click="$hideMenus">${button}</button>`:''}
+		<MenuComp class="${isSubmenu?'submenu':''}" submenu="${isSubmenu}" style="${isSubmenu?`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`:''}">
+			${isSubmenu?'':`<button mouseover="$hideMenus" click="$hideMenus">${button}</button>`}
 			${getDropmenu(list)}
 		</MenuComp>
 	`,{
@@ -123,9 +123,9 @@ function parseMenu(list){
 }
 
 function appendToBar(item){
-	const { Menu } = remote
-	MenuBarMacOS.append(item)
-	Menu.setApplicationMenu(MenuBarMacOS)
+	const { Menu:NativeMenu } = remote
+	NativeMenuBar.append(item)
+	NativeMenu.setApplicationMenu(NativeMenuBar)
 }
 
 export default Menu

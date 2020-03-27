@@ -136,8 +136,7 @@ function Editor({
 	const tabFocusedWatcher = tabState.on('focusedMe',()=>{
 		focusEditor(Client,instance)
 		updateCursorPosition(Client,instance)
-		Client.do('doFocus',{instance})
-		Client.do('doRefresh',{instance,element:bodyElement})
+
 	})
 	const tabSavedWatcher = tabState.on('savedMe',()=>{
 		editorValueSaved = Client.do('getValue',instance)

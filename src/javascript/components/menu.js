@@ -111,9 +111,9 @@ const MenuComp = puffin.element(`
 	events:{
 		mounted(target){
 			target.id = Math.random()
-			const isSubMenu = eval(target.getAttribute("submenu") == 'true')
+			const isSubmenu = eval(target.getAttribute("submenu"))
 			const itemsContainer = target.children[1]?target.children[1]:target.children[0]
-			if( !isSubMenu ) itemsContainer.style.display = "none"
+			if( !isSubmenu ) itemsContainer.style.display = "none"
 			window.addEventListener("click",function(e){
 				e.stopPropagation()
 				if(
@@ -130,7 +130,7 @@ const MenuComp = puffin.element(`
 				target.children[0].classList.remove("active")
 				target.setAttribute("showed","false")
 				target.parentElement && target.parentElement.setAttribute("anyDropmenuOpened","false")
-				if( isSubMenu ){
+				if( isSubmenu ){
 					target.remove()
 				}
 			})

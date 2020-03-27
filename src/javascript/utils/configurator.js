@@ -38,7 +38,8 @@ const defaultConfiguration = {
 			'IterateCurrentPanelTabs':{
 				combos:['Ctrl+Tab']
 			}
-		}
+		},
+		'miscEnableLiveUpdateInManualConfig':true
 	}
 }
 
