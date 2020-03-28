@@ -72,7 +72,9 @@ function init(){
 						{
 							label:'Open Workspaces',
 							action:()=>{
-								RunningConfig.emit('openWorkspaceDialog')
+								Welcome({
+									defaultPage:'workspaces'
+								}).launch()
 							}
 						},
 						{},
