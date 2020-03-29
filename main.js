@@ -3,6 +3,14 @@ const path = require("path")
 const { app, BrowserWindow } = require("electron")
 const isDev = require('electron-is-dev');
 const windowStateKeeper = require('electron-window-state');
+const zip  =require( 'extract-zip');
+const appData = require( 'appdata-path');
+const fs = require( 'fs');
+const axios = require( 'axios');
+const { ipcMain } = require('electron')
+
+const PLUGINS_DIR = path.join(appData(),'.graviton2','plugins')
+
 let main 
 
 app.on("ready", function() {
@@ -46,6 +54,7 @@ app.on("ready", function() {
 			})
 		)
 		main.argv = process.argv.splice(1)
+
 	}
 	main.on("ready-to-show", () => {
 		mainWindowState.manage(main);
@@ -69,4 +78,37 @@ app.on("before-quit", () => {
 	app.removeAllListeners("close")
 })
 
+ipcMain.on('download-plugin', (event, {url,name}) => {
+	getZip(url,name).then(()=>{
+		event.reply('plugin-installed', true)
+	})
+})
+
+function getZip(url,pluginName){
+	return new Promise((resolve,reject)=>{
+		axios({
+			method: 'get',
+			url,
+			responseType: 'stream'
+		}).then(async function (response) {
+			response.data.pipe(fs.createWriteStream(path.join(PLUGINS_DIR,`${pluginName}.zip`)))
+			createPluginFolder(pluginName)
+			extractZip(path.join(PLUGINS_DIR,`${pluginName}.zip`),pluginName).then(()=>{
+				resolve()
+			})
+			
+		})
+	})
+}
+
+function createPluginFolder(pluginName){
+	fs.mkdirSync(path.join(PLUGINS_DIR,pluginName))
+}
+
+function extractZip(zipPath,pluginName){
+	return new Promise((resolve,reject)=>{
+		zip(zipPath, { dir: path.join(PLUGINS_DIR,pluginName) })
+		resolve()
+	})
+}
 app.commandLine.appendSwitch("disable-smooth-scrolling", "true")

@@ -1,4 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
+import drac from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
@@ -24,6 +25,7 @@ function getExtension(path){
 
 function loadExtension(path){
 	return require(path).entry({
+		StaticConfig,
 		RunningConfig,
 		Window,
 		puffin,
@@ -33,7 +35,8 @@ function loadExtension(path){
 		ContextMenu,
 		Notification,
 		CodeMirror,
-		Tab
+		Tab,
+		drac
 	})
 }
 

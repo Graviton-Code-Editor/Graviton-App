@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.61",
+	"version": "2.0.62",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -44,6 +44,7 @@
 		"@mkenzo_8/puffin": "^0.4.9",
 		"@mkenzo_8/puffin-drac": "0.0.16",
 		"appdata-path": "^1.0.0",
+		"axios": "^0.19.2",
 		"babel-core": "^6.26.3",
 		"babel-polyfill": "^6.26.0",
 		"chokidar": "^3.3.1",
@@ -51,6 +52,7 @@
 		"electron-is-dev": "^1.1.0",
 		"electron-store": "^5.1.0",
 		"electron-window-state": "^5.0.3",
+		"extract-zip": "^2.0.0",
 		"fs-extra": "^8.1.0",
 		"shortcuts": "^1.2.0",
 		"simple-git": "^1.131.0",
