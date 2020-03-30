@@ -1,10 +1,19 @@
 @keyframes windowOpens {
 	0% {
-        transform: scale(.98);
-        margin-top: 12px;
+		transform: scale(.98);
+		margin-top: 12px;
 	}
 	100% {
-        transform: scale(1);
-        margin-top: 0px;
+		transform: scale(1);
+		margin-top: 0px;
+	}
+}
+
+@keyframes spin {
+	0% { 
+		transform: rotate(0deg); 
+	}
+	100% { 
+		transform: rotate(360deg);
 	}
 }

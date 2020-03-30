@@ -406,6 +406,7 @@ function Item({
 					const TabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused',({directory})=>{
 						if( directory == itemDirectory ){
 							target.setAttribute("selected",true)
+							target.scrollIntoView()
 						}
 					})
 					const TabUnfocusedWatcher = RunningConfig.on('aTabHasBeenUnfocused',({directory})=>{

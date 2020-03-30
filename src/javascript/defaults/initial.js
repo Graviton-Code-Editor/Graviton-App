@@ -5,6 +5,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import { openFolder, openFile } from '../utils/filesystem'
 import Menu from "../constructors/menu";
 import Settings from './windows/settings'
+import Store from './windows/store'
 import Welcome from "./windows/welcome";
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import Arctic from '../themes/arctic'
@@ -183,6 +184,10 @@ function init(){
 				{
 					label:'Open Settings',
 					action:()=>Settings().launch()
+				},
+				{
+					label:'Open Store',
+					action:()=>Store().launch()
 				},
 				{},
 				{

@@ -14,6 +14,7 @@ import StatusBarItem from '../constructors/status.bar.item'
 import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
 import Tab from '../constructors/tab'
+import SideMenu from '../components/window/side.menu'
 
 const fs = requirePath("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
@@ -36,7 +37,8 @@ function loadExtension(path){
 		Notification,
 		CodeMirror,
 		Tab,
-		drac
+		drac,
+		SideMenu
 	})
 }
 

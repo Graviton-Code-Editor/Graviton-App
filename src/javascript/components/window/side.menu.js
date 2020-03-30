@@ -5,6 +5,8 @@ function moveToPage(page,buttons,pages){
 		contentPage.style.display = 'none'
 		if(contentPage.getAttribute("href") == page){
 			contentPage.style.display = 'block'
+			const loadedEvent = new CustomEvent('loaded', {})
+			contentPage.dispatchEvent(loadedEvent)
 		}
 	})
 	buttons.map(function(buttonPage){

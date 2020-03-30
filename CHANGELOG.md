@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200430 - 1 [2.0.63]
+- New: integrated the plugins store
+
 #### 200327 - 1 [2.0.61]
 - New: you can now change the font size shortcuts
 

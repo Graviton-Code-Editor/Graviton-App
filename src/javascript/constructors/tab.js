@@ -158,7 +158,11 @@ function Tab({
 				})
 				tabState.on('savedMe',()=>{
 					if(!this.props.saved){
-						tabState.emit('markAsSaved')
+						toggleTabStatus({
+							tabElement:this,
+							newStatus:true,
+							tabEditor:TabEditorComp.node
+						})
 						RunningConfig.emit('aTabHasBeenSaved',{
 							tabElement:this,
 							path:normalizeDir(directory),
@@ -286,18 +290,25 @@ function toggleTabStatus({
 	newStatus
 	}){
 	if( newStatus ){
-		tabElement.isSaved = true
-		saveFile(tabElement,()=>{
+		if(!tabElement.props.saved){
+			
+			saveFile(tabElement,()=>{
+				RunningConfig.emit('tabSaved',{
+					element:tabElement,
+					parentFolder:tabElement.props.state.data.parentFolder
+				})
+				tabElement.children[1].children[0].style.display = "block"
+				if( tabElement.children[1].children[1]!=null )
+					tabElement.children[1].children[1].remove()
+				tabElement.props.saved = true
+			})
+		}else{
 			tabElement.children[1].children[0].style.display = "block"
 			if( tabElement.children[1].children[1]!=null )
 				tabElement.children[1].children[1].remove()
-			RunningConfig.emit('tabSaved',{
-				element:tabElement,
-				parentFolder:tabElement.props.state.data.parentFolder
-			})
-		})
-	}else if(tabElement.isSaved != false){
-		tabElement.isSaved = false
+		}
+	}else if(tabElement.props.saved){
+		tabElement.props.saved = false
 		tabElement.children[1].children[0].style.display = "none"
 		const comp = puffin.element(`
 			<UnSavedIcon click="$tryToClose"/>

@@ -20,6 +20,11 @@ const NotificationBody = puffin.style.div`
 	}
 	& > h3{
 		color:var(--notificationTitleText);
+		overflow:hidden;
+		text-overflow:ellipsis;
+		max-width:225px;
+		width:225px;
+		white-space:nowrap;
 	}
 	& > p{
 		font-size:13px;

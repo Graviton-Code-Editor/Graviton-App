@@ -5,7 +5,7 @@ const isDev = require('electron-is-dev');
 const windowStateKeeper = require('electron-window-state');
 const zip  =require( 'extract-zip');
 const appData = require( 'appdata-path');
-const fs = require( 'fs');
+const fs = require('fs-extra');
 const axios = require( 'axios');
 const { ipcMain } = require('electron')
 
@@ -102,13 +102,19 @@ function getZip(url,pluginName){
 }
 
 function createPluginFolder(pluginName){
-	fs.mkdirSync(path.join(PLUGINS_DIR,pluginName))
+	const pluginDirectory = path.join(PLUGINS_DIR,pluginName)
+	if( !fs.existsSync(pluginDirectory) ){
+		fs.mkdirSync(pluginDirectory)
+	}
 }
 
 function extractZip(zipPath,pluginName){
+	const pluginDirectory = path.join(PLUGINS_DIR,pluginName)
 	return new Promise((resolve,reject)=>{
-		zip(zipPath, { dir: path.join(PLUGINS_DIR,pluginName) })
-		resolve()
+		fs.unlink(pluginDirectory, ()=>{
+			zip(zipPath, { dir: pluginDirectory })
+			resolve()
+		})
 	})
 }
 app.commandLine.appendSwitch("disable-smooth-scrolling", "true")

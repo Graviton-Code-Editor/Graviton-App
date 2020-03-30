@@ -11,6 +11,7 @@ import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
 
 function Settings(){
+	const pluginsList = ExtensionsRegistry.registry.data.list
 	const SettingsPage = puffin.element(`
 		<SideMenu default="customization">
 			<div>
@@ -62,19 +63,14 @@ function Settings(){
 				<div href="plugins">
 					<H4 lang-string="Plugins"></H4>
 					<ul>
-					${(function(){
-							let content = "";
-							const list = ExtensionsRegistry.registry.data.list
-							Object.keys(list).map(function(extension){
-								const pkg = ExtensionsRegistry.registry.data.list[extension]
-								if(pkg.type != "theme"){
-									content +=`
-										<li name="${extension}">${extension}</li>
-									`
-								}
-							})
-							return content
-						})()}
+						${Object.keys(pluginsList).map(function(extension){
+							const pkg = pluginsList[extension]
+							if(pkg.type != "theme"){
+								return `
+									<li name="${extension}">${extension}</li>
+								`
+							}
+						}).join("")}
 					</ul>
 				</div>
 			</div>
