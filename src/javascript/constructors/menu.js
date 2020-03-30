@@ -1,6 +1,7 @@
 import { puffin } from '@mkenzo_8/puffin'
 import MenuComp  from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
+import { LanguageState, getTranslation } from 'LanguageConfig'
 
 const { remote } = window.require("electron")
 const { Menu:NativeMenu } = remote
@@ -29,7 +30,7 @@ function getDropmenu(list){
 									click="${!option.list?`$${index}`:''}" 
 									mouseenter="${option.list?`$${index}`:'$hideMenus'}"
 								>
-									${option.label}
+									<p lang-string="${option.label}">${option.label}</p>
 									${option.list?'<ArrowIcon/>':''}
 								</a>
 							</div>`
@@ -64,7 +65,7 @@ function getMenu(button,list,leftMargin){
 	}))
 	return puffin.element(`
 		<MenuComp class="${isSubmenu?'submenu':''}" submenu="${isSubmenu}" style="${isSubmenu?`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`:''}">
-			${isSubmenu?'':`<button mouseover="$hideMenus" click="$hideMenus">${button}</button>`}
+			${isSubmenu?'':`<button mouseover="$hideMenus" click="$hideMenus" lang-string="${button}">${button}</button>`}
 			${getDropmenu(list)}
 		</MenuComp>
 	`,{
@@ -77,6 +78,9 @@ function getMenu(button,list,leftMargin){
 			hideMenus(){
 				closeAllSubmenus(this.parentElement.parentElement)
 			}
+		},
+		addons:{
+			lang:puffin.lang(LanguageState)
 		}
 	})
 }

@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.64",
+	"version": "2.0.65",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -41,7 +41,7 @@
 		"AppPlatform": "./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
-		"@mkenzo_8/puffin": "^0.5.3",
+		"@mkenzo_8/puffin": "^0.5.5",
 		"@mkenzo_8/puffin-drac": "0.0.16",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",

@@ -6,7 +6,7 @@ import RunningConfig from '../utils/running.config'
 
 const NOTIFICATION_LIVE_TIME = 6000 //Notification will fade out in 6 seconds after appear
 const MAX_NOTIFICATIONS_LIVING = 3 //There can only be 3 notifications living at once
-//Hello :)
+
 function Notification({
 	title = 'Notification',
 	content = '',

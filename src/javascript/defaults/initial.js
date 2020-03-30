@@ -33,7 +33,7 @@ function init(){
 			button:'File',
 			list:[
 				{
-					label:'Open File',
+					label:'OpenFile',
 					action:()=>{
 						openFile().then(function(filePath){
 							RunningConfig.emit('loadFile',{
@@ -43,7 +43,7 @@ function init(){
 					}
 				},
 				{
-					label:'Open Folder',
+					label:'OpenFolder',
 					action:()=>{
 						openFolder().then(function(folderPath){
 							RunningConfig.emit('addFolderToRunningWorkspace',{
@@ -210,19 +210,19 @@ function init(){
 					label:'Zoom',
 					list:[
 						{
-							label:'Default zoom',
+							label:'DefaultZoom',
 							action:()=> {
 								StaticConfig.data.appZoom = 1
 							}
 						},
 						{
-							label:'Increase zoom',
+							label:'IncreaseZoom',
 							action:()=> {
 								StaticConfig.data.appZoom += 0.1
 							}
 						},
 						{
-							label:'Decrease zoom',
+							label:'DecreaseZoom',
 							action:()=> {
 								StaticConfig.data.appZoom -= 0.1
 							}

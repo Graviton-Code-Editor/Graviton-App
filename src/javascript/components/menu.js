@@ -57,6 +57,10 @@ const MenuComp = puffin.element(`
 			box-shadow:0px 2px 10px rgba(0,0,0,0.2);
 			z-index:1;
 		}
+		& > div p{
+			margin:0;
+			padding:0;
+		}
 		& > div svg{
 			right:15px;
 			width:8px;
