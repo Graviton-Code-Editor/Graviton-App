@@ -38,7 +38,6 @@ Also, changes on this source may not be released as an official build yet.
 * 📝 Multi line editing 
 * 📰 Live markdown preview
 
-**[Commit Changelog](CHANGELOG.md)**
 
 📣 Social media:
 ---
@@ -52,6 +51,7 @@ Also, changes on this source may not be released as an official build yet.
 
 * [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
 * [🛠 Building manual](BUILDING.md)
+* [📜 Changelog](CHANGELOG.md)**
 * [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477) 
 
 👽 Authors 
