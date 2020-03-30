@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200430 - 2 [2.0.64]
+- Improved: Parcel now builds using electron target
+
 #### 200430 - 1 [2.0.63]
 - New: integrated the plugins store
 

@@ -1,5 +1,4 @@
-import requirePath from './require'
-const path = requirePath("path")
+const path = window.require("path")
 const OS = eval('process.platform')
 //This will force MS-DOS directories to use double back slash, this also removes doubles quotes in case there are
 function normalizeDir(dir,use=false){

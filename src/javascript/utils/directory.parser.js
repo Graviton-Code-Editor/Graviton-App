@@ -1,6 +1,4 @@
-import requirePath from './require'
-
-const path = requirePath("path")
+const path = window.require("path")
 
 function parseDirectory(directory){
 	let nameFolder = path.basename(directory)

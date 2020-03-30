@@ -1,9 +1,8 @@
 import { puffin } from '@mkenzo_8/puffin'
 import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
-import requirePath from './require'
 
-let Config = {
+let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel:null,
 	focusedTab:null,
 	focusedEditor:null,
@@ -15,12 +14,14 @@ let Config = {
 	globalCommandPrompt:[],
 	notifications:[],
 	editorsRank:[
-		CodemirrorClient, //Default editor
+		CodemirrorClient,
 		ImageViewerClient
 	],
-	arguments:requirePath("electron").remote.getCurrentWindow().argv
+	arguments:window.require("electron").remote.getCurrentWindow().argv
 }
 
-const RunningConfig = new puffin.state(Config)
+const RunningConfig = new puffin.state(
+	DEFAULT_RUNTIME_CONFIGURATION
+)
 console.log(RunningConfig)
 export default RunningConfig

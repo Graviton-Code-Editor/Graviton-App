@@ -1,9 +1,8 @@
 import { puffin } from '@mkenzo_8/puffin'
 import MenuComp  from '../components/menu'
-import requirePath from '../utils/require'
 import ArrowIcon from '../components/icons/arrow'
 
-const { remote } = requirePath("electron")
+const { remote } = window.require("electron")
 const { Menu:NativeMenu } = remote
 let NativeMenuBar = new NativeMenu()
 

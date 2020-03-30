@@ -1,5 +1,4 @@
 import { puffin } from '@mkenzo_8/puffin'
-import requirePath from '../utils/require'
 import Item from '../components/explorer/item'
 import parseDirectory from '../utils/directory.parser'
 import normalizeDir from  '../utils/directory.normalizer'
@@ -9,10 +8,10 @@ import StaticConfig from 'StaticConfig'
 import Notification from './notification'
 import "babel-polyfill";
 
-const fs = requirePath('fs-extra')
-const simpleGit = requirePath("simple-git")
-const chokidar = requirePath('chokidar');
-const path = requirePath('path');
+const fs = window.require('fs-extra')
+const simpleGit = window.require("simple-git")
+const chokidar = window.require('chokidar');
+const path = window.require('path');
 
 function checkIfProjectIsGit(path){
 	if ( path.includes("wsl$") ) return; // Simple-git will throw error "Directory doesn't exist" no matter what.
@@ -198,7 +197,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 							}) 
 							const hotItem = puffin.element(itemComputed,{
 								components:{
-									Item:new Item({parentFolder:parsedFolderPath,explorerContainer:container.explorerContainer})
+									Item:Item({parentFolder:parsedFolderPath,explorerContainer:container.explorerContainer})
 								}
 							})
 							if( container.children[1] != null){ //Check if the folder is opened

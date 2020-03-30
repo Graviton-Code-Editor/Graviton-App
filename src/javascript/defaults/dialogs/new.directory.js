@@ -1,10 +1,9 @@
 import InputDialog from '../../constructors/dialog.input'
-import requirePath from '../../utils/require'
 import RunningConfig from 'RunningConfig'
 import normalizeDir from  '../../utils/directory.normalizer'
 
-const fs = requirePath("fs-extra")
-const path = requirePath("path")
+const fs = window.require("fs-extra")
+const path = window.require("path")
 
 function newDirectoryDialog({
 	isFolder,

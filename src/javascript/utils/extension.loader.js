@@ -4,7 +4,6 @@ import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import path from 'path'
-import requirePath from './require'
 import CodeMirror from 'codemirror'
 
 import Window from '../constructors/window'
@@ -16,16 +15,16 @@ import Notification from '../constructors/notification'
 import Tab from '../constructors/tab'
 import SideMenu from '../components/window/side.menu'
 
-const fs = requirePath("fs-extra")
+const fs = window.require("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
-const isDev = requirePath('electron-is-dev')
+const isDev = window.require('electron-is-dev')
 
 function getExtension(path){
 	return require(path)
 }
 
 function loadExtension(path){
-	return require(path).entry({
+	return window.require(path).entry({
 		StaticConfig,
 		RunningConfig,
 		Window,

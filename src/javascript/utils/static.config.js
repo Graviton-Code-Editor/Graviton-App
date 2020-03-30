@@ -1,7 +1,6 @@
 import { puffin } from '@mkenzo_8/puffin'
 import { getConfiguration } from './configurator'
-import requirePath from './require'
-const { webFrame } = requirePath('electron')
+const { webFrame } = window.require('electron')
 const cachedConfiguration = getConfiguration()
 
 function saveConfiguration(){

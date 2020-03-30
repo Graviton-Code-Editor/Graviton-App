@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.63",
+	"version": "2.0.64",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -12,13 +12,13 @@
 		"test:spectron": "mocha test --delay",
 		"start": "run-p script:build watch:parcel watch:electron ",
 		"script:build": "node scripts/build.js",
-		"watch:parcel": "parcel serve src/index.html --target browser --port 4321 --bundle-node-modules --out-dir dist_parcel",
+		"watch:parcel": "parcel serve src/index.html --target electron --bundle-node-modules --out-dir dist_parcel --public-url ./",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
 		"build": "npm run script:build && npm run build:parcel  && npm run build:electron",
 		"build:outpacked": "npm run build:parcel && npm run build:electron:outpacked",
 		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
 		"build:electron:outpacked": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",
-		"build:parcel": "parcel build src/index.html --target browser --bundle-node-modules --out-dir dist_parcel --public-url ./",
+		"build:parcel": "parcel build src/index.html --target electron --bundle-node-modules --out-dir dist_parcel --public-url ./",
 		"build:snap": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux snap",
 		"build:pacman": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux pacman",
 		"build:deb": "npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux deb",
@@ -41,7 +41,7 @@
 		"AppPlatform": "./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
-		"@mkenzo_8/puffin": "^0.4.9",
+		"@mkenzo_8/puffin": "^0.5.3",
 		"@mkenzo_8/puffin-drac": "0.0.16",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",

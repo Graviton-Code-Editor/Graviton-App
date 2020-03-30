@@ -3,8 +3,7 @@ import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 import Notification from './notification'
-import requirePath from '../utils/require'
-const path = requirePath("path")
+const path = window.require("path")
 
 function sortByRanking(language){
 	const selectedEditor = RunningConfig.data.editorsRank.filter(function(Client){

@@ -16,17 +16,16 @@ import About from './dialogs/about'
 import CommandPrompt from '../constructors/command.prompt'
 import Languages from '../../../languages/*.json'
 import StatusBarItem from '../constructors/status.bar.item'
-import requirePath from '../utils/require'
 import ThemeProvider from '../utils/themeprovider';
 import Plus from '../components/icons/plus'
 import Minus from '../components/icons/minus'
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
 
-const fs = requirePath("fs-extra")
-const { openExternal: openLink } = requirePath("electron").shell
-const { getCurrentWindow } = requirePath("electron").remote
-const isDev = requirePath("electron-is-dev")
+const fs = window.require("fs-extra")
+const { openExternal: openLink } = window.require("electron").shell
+const { getCurrentWindow } = window.require("electron").remote
+const isDev = window.require("electron-is-dev")
 
 function init(){
 	loadAutomatically()

@@ -4,11 +4,10 @@ import { puffin } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
-import requirePath from '../utils/require'
 import areYouSureDialog from '../defaults/dialogs/you.sure'
 import normalizeDir from '../utils/directory.normalizer'
 
-const fs = requirePath("fs-extra")
+const fs = window.require("fs-extra")
 
 function guessTabPosition(tab,tabsbar){
 	const res = Object.keys(tabsbar.children).filter((tabChildren,index)=>{

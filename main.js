@@ -42,7 +42,13 @@ app.on("ready", function() {
 	if( !isDev ) main.removeMenu()
 	mainWindowState.manage(main);
 	if (isDev) {
-		main.loadURL("http://localhost:4321/")
+		main.loadURL(
+			url.format({
+				pathname: path.join(__dirname,"dist_parcel", "index.html"),
+				protocol: "file:",
+				slashes: true
+			})
+		)
 		main.webContents.openDevTools();
 		main.argv = process.argv.splice(4)
 	} else {

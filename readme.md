@@ -16,53 +16,43 @@
 
 ![example screenshot](example.png)
 
-**-- NOTE --**
-Graviton is going through a full remake from the ground up. Version 1.3.0 source code is located in a different branch on this repository.
+**NOTE:**
+Graviton is going through a full remake from the ground up. Version 1.3.0 source code is located in the 1.3.0 branch on this repository.
 Also, changes on this source may not be released as an official build yet.
+**[1.3.0 Source Code](https://github.com/Graviton-Code-Editor/Graviton-App/tree/1.3.0)**
 
+**Highlights refer to the v2 version.**
 
-✨ Highlights:
+✨ Features:
 ---
-* 🧬 Git integration (plugin)
+* 🧬 Git integration 
+* 🛢 Workspaces
 * 💅 Modern UI
 * 🎨 Themes 
 * 📦 Plugins
-* 🖇  Infinite panels and tabs
-* 🕹  Built-in terminal 
+* 🌠 Autocomplete for some languages
 * 🗺 Built-in image previewer
-* 📰 Built-in font previewer
-* 🏭 A Plugin and Themes market 
+* 🏭 A Plugin and Themes store (WIP) 
 * 😇 More respectful on RAM than other alternatives 
 * 💆‍♀️  No telemetry
-* ✔  A lot of integrated programming languages 
 * 📝 Multi line editing 
-* 🎧 Zen mode 
-* ⛓  Code folding
-
-**NOTE**: As mentioned earlier, not all highlights are in new version.
+* 📰 Live markdown preview
 
 **[Commit Changelog](CHANGELOG.md)**
 
 📣 Social media:
 ---
 
-* [Telegram Channel](https://t.me/gravitoneditor)
-* [Discord Server](https://discord.gg/gg6CTYA)
-* [Twitter](https://twitter.com/gravitoneditor)
+* 📢 [Telegram Channel](https://t.me/gravitoneditor)
+* 💬 [Discord Server](https://discord.gg/gg6CTYA)
+* 💭 [Twitter](https://twitter.com/gravitoneditor)
 
-⚙ Contributing (working on) 
+🏗 Resources 
 ---
 
-**[Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)**
-
-**[Code of conduct](CODE_OF_CONDUCT.md)**
-
-Some ways to contribute to Graviton's project:
-
-- Translating to new language or improving the existing
-- Opening issues or help answering them
-- Proposing features
-- Donating
+* [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
+* [🛠 Building manual](BUILDING.md)
+* [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477) 
 
 👽 Authors 
 ---
@@ -82,29 +72,25 @@ Some ways to contribute to Graviton's project:
 
 🤩 Useful libraries 
 ---
-* [PuffinJS](https://github.com/PuffinJS/puffin)
-* [CodeMirror](https://codemirror.net/)
-* [OpenEmoji](https://openmoji.org)
+* [🐧 PuffinJS](https://github.com/PuffinJS/puffin)
+* [🎨 CodeMirror](https://codemirror.net/)
 
 🎁 Donating 
 ---
-- BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
-- Paypal: https://www.paypal.me/mkenzo8
+* BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
+* Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators:
-- [Saúl Blanco](https://github.com/Saul-BT)
-- Rôdeuse 
-- Alex Mayol
-- [Machou](http://GitHub.com/Machou)
-- Cristina Piva
+* [Saúl Blanco](https://github.com/Saul-BT)
+* Rôdeuse 
+* Alex Mayol
+* [Machou](http://GitHub.com/Machou)
+* Cristina Piva
 
 Thank you for the donations!
 
-And all people who helped me.
-
 💻🖥 Available platforms 
 ---
-
 **Windows**
 
    * `Executable (.exe, 64 & 32bits)` 
@@ -114,22 +100,13 @@ And all people who helped me.
    * `Appimage (.appimage)`
    * `Debian  (.deb)`
    * `CentOS (.rpm)`
+   * You can manually build for more platforms if you wish.
 
 **MacOS**
 
    * ` DMG file (.dmg)` 
 
 The current state is beta, check the releases page to download the latest version. 
-
-🏗 Building 
----
-Do you want to build Graviton from source?
-
-**Check [this](BUILDING.md)**
-
-😓 Known problems 
----
-- May not work on all Linux distributions, if it happens, please create an [issue](https://github.com/Graviton-Code-Editor/Graviton-App/issues/new)
 
 🧾 License 
 ---

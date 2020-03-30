@@ -1,4 +1,3 @@
-import requirePath from '../utils/require'
 import StaticConfig from 'StaticConfig'
 import Explorer from '../constructors/explorer'
 import RunningConfig from 'RunningConfig'
@@ -10,8 +9,8 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 import getFormat from './format.parser'
 import normalizeDir from  './directory.normalizer'
 
-const path = requirePath("path")
-const fs = requirePath("fs-extra")
+const path = window.require("path")
+const fs = window.require("fs-extra")
 
 function selectFolderDialog(){
 	return new Promise((resolve, reject) => {
@@ -120,7 +119,7 @@ RunningConfig.on('addFolderToRunningWorkspace',function({
 	workspacePath = RunningConfig.data.workspacePath
 }){
 	const folderDir = normalizeDir(folderPath)
-	new Explorer(folderDir,document.getElementById("sidepanel"),0,replaceOldExplorer)
+	Explorer(folderDir,document.getElementById("sidepanel"),0,replaceOldExplorer)
 	RunningConfig.data.workspaceConfig.folders.push({
 		name:parseDirectory(folderDir),
 		path:folderDir

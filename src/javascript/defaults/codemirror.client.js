@@ -2,7 +2,7 @@ import CodeMirror from 'codemirror'
 import { EditorClient } from '../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
 
-require ('../../../node_modules/codemirror/mode/**/*.js')
+import '../../../node_modules/codemirror/mode/**/*.js'
 
 import 'codemirror/addon/search/search'
 import 'codemirror/addon/selection/active-line'

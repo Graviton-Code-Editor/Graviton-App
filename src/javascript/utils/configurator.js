@@ -1,11 +1,10 @@
-import requirePath from './require'
 import path from 'path';
 
-const fs = requirePath('fs-extra')
-const electronStore = requirePath('electron-store')
-const getAppDataPath = requirePath('appdata-path')
+const fs = window.require('fs-extra')
+const electronStore = window.require('electron-store')
+const getAppDataPath = window.require('appdata-path')
 
-const defaultConfiguration = {
+const DEFAULT_STATIC_CONFIGURATION = {
 	config:{
 		'appTheme':'Arctic',
 		'appLanguage':'english',
@@ -78,12 +77,19 @@ function checkObject(object,subProperty,configurationStore,level){
 function initConfiguration(){
 	const configurationStore = new electronStore();
 	console.log(configurationStore)
-	checkObject(defaultConfiguration.config,null,configurationStore,0)
-	if(!fs.existsSync(defaultConfiguration.config.appConfigPath)){ //If .graviton2 doesn't exist, it creates it
-		fs.mkdirSync(defaultConfiguration.config.appConfigPath)
+	checkObject(DEFAULT_STATIC_CONFIGURATION.config,null,configurationStore,0)
+	
+	//If .graviton2 doesn't exist, it creates it
+	if(!fs.existsSync(
+		DEFAULT_STATIC_CONFIGURATION.config.appConfigPath)
+	  ){ 
+		fs.mkdirSync(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath)
 	}
-	if(!fs.existsSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))){ //If .graviton2/plugins doesn't exist, it creates it
-		fs.mkdirSync(path.join(defaultConfiguration.config.appConfigPath,'plugins'))
+	//If .graviton2/plugins doesn't exist, it creates it
+	if(!fs.existsSync(
+		path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath,'plugins')
+	)){ 
+		fs.mkdirSync(path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath,'plugins'))
 	}
 	return {
 		store:configurationStore

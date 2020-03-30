@@ -143,6 +143,7 @@
 		"PermissionExecuteJavaScript": "Executar codi JavaScript",
 		"Edit": "Editar",
 		"Undo": "Desfer",
-		"Redo": "Refer"
+		"Redo": "Refer",
+		"Store":"Botiga"
 	}
 }

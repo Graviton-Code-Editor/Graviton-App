@@ -1,6 +1,5 @@
 import { puffin } from '@mkenzo_8/puffin'
-import requirePath from '../../utils/require'
-const { remote } = requirePath('electron')
+const { remote } = window.require('electron')
 import AppPlatform from 'AppPlatform'
 
 if(AppPlatform == "win32"){

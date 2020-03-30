@@ -5,6 +5,8 @@ import StaticConfig from 'StaticConfig'
 import ExtensionsRegistry from 'ExtensionsRegistry'
 import SideMenu from '../../components/window/side.menu'
 import getList from '../store/api/get.list'
+import Languages from '../../../../languages/*.json'
+import { LanguageState, getTranslation } from 'LanguageConfig'
 import Card from '../store/components/card'
 import Loader from '../../components/loader'
 import CenteredLayout from '../../components/centered.layout'
@@ -13,7 +15,7 @@ function Store(){
 	const StorePage = puffin.element(`
 		<SideMenu default="home">
 			<div>
-				<H1>Store</H1>
+				<H1 lang-string="Store"></H1>
 				<label to="home">Home</label>
 				<label to="installed">Installed</label>
 			</div>
@@ -49,6 +51,9 @@ function Store(){
 				})
 				
 			}
+		},
+		addons:{
+			lang:puffin.lang(LanguageState)
 		}
 	}) 
 	const StoreWindow = new Window({

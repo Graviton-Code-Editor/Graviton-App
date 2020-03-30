@@ -7,9 +7,8 @@ import Welcome from './defaults/windows/welcome'
 import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
-import requirePath from './utils/require'
 import RunningConfig from 'RunningConfig'
-requirePath('v8-compile-cache')
+window.require('v8-compile-cache')
 
 import '../sass/main.scss'
 

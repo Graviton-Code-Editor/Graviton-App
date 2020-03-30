@@ -10,14 +10,13 @@ import ExtensionsRegistry from 'ExtensionsRegistry'
 import RunningConfig from 'RunningConfig'
 import Icons from '../../../../assets/icons/**.svg'
 import ArrowIcon from '../icons/arrow'
-import requirePath from '../../utils/require'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from  '../../utils/directory.normalizer'
 
-const fs = requirePath("fs-extra")
-const trash = requirePath("trash")
-const path = requirePath("path")
+const fs = window.require("fs-extra")
+const trash = window.require("trash")
+const path = window.require("path")
 
 function getMyStatus(fileDir,gitChanges,projectDir){
 	const filePath = normalizeDir(fileDir)
@@ -371,7 +370,7 @@ function Item({
 						if(isItemFolder){
 							const itemsContainer = target.children[1]
 							if(itemsContainer == null){
-								new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
+								Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
 								setStateOpen(target)
 							}else{
 								itemsContainer.remove()
@@ -442,7 +441,7 @@ function Item({
 
 function reload(target,gitChanges){
 	if(target.children[1] != null) target.children[1].remove()
-	new Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
+	Explorer(target.getAttribute("fullpath"),target,Number(target.getAttribute("level"))+1,gitChanges)
 	setStateOpen(target)
 }
 
