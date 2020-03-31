@@ -48,6 +48,11 @@ const DEFAULT_STATIC_CONFIGURATION = {
 					'Ctrl+Down',
 					'Ctrl+ScrollDown'
 				]
+			},
+			'CloseCurrentWindow':{
+				combos:[
+					'Esc'
+				]
 			}
 		},
 		'miscEnableLiveUpdateInManualConfig':true

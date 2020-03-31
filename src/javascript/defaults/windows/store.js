@@ -66,10 +66,12 @@ function Store(){
 function displayHome(container){
 	const loader = new Promise(async(resolve,reject)=>{
 		getList().then(list=>{
-			const lol =  list.map((pluginName)=>{
+			const cardsList =  list.map((pluginName)=>{
 				return `<Card isInstalled="${false}" name="${pluginName}"/>`
 			}).join("")
-			resolve(lol)
+			resolve(cardsList)
+		}).catch((a)=>{
+			resolve(`<p>An error ocurred, try later.</p>`)
 		})
 	})
 	loader.then((content)=>{

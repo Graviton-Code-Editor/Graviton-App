@@ -38,8 +38,26 @@ const CodemirrorClient = new EditorClient({
 				return { name: 'application/json' }
 			case 'css':
 				return { name: 'css' }
+			case 'php':
+				return { name: 'php' }
 			case 'd':
 				return { name: 'text/x-d' }
+			case 'rs':
+				return { name: 'rust' }
+			case 'rb':
+				return { name: 'ruby' }
+			case 'py':
+				return { name: 'python' }
+			case 'vue':
+				return { name: 'vue' }
+			case 'xml':
+				return { name: 'xml' }
+			case 'yaml':
+				return { name: 'yaml' }
+			case 'sql':
+				return { name: 'sql' }
+			case 'pug':
+				return { name: 'pug' }
 			case 'scss':
 			case 'sass':
 				return { name: 'text/x-sass' }

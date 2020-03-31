@@ -418,6 +418,10 @@ function init(){
 	RunningConfig.on('command.decreaseFontSize',({factor=2}={factor:2})=>{
 		StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-factor
 	})
+	RunningConfig.on('command.closeCurrentWindow',({factor=2}={factor:2})=>{
+		const windows = document.getElementById("windows").children
+		windows[windows.length-1].remove()
+	})
 	const appShortCuts = new Shortcuts ();
 	appShortCuts.add ([ 
 		...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut=>{ 
@@ -459,8 +463,14 @@ function init(){
 			return { 
 				shortcut:shortcut, handler: event => RunningConfig.emit('command.decreaseFontSize')
 			}
+		}),
+		...StaticConfig.data.appShortcuts.CloseCurrentWindow.combos.map(shortcut=>{ 
+			return { 
+				shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentWindow')
+			}
 		})
 	]);
+
 	RunningConfig.emit('appLoaded')
 	if(RunningConfig.data.arguments[0] != null && !isDev){
 		const dir = RunningConfig.data.arguments[0]

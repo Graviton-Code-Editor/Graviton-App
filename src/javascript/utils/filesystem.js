@@ -11,45 +11,46 @@ import normalizeDir from  './directory.normalizer'
 
 const path = window.require("path")
 const fs = window.require("fs-extra")
+const { remote } = window.require("electron")
 
 function selectFolderDialog(){
 	return new Promise((resolve, reject) => {
-		const { dialog , getCurrentWindow} = requirePath("electron").remote;
+		const { dialog , getCurrentWindow} = remote;
 		dialog
 			.showOpenDialog(getCurrentWindow(), {
 			properties: ["openDirectory"]
 		})
 			.then(result => {
-			if (result.canceled) return;
-			resolve(normalizeDir(result.filePaths[0]))
-		})
+				if (result.canceled) return;
+				resolve(normalizeDir(result.filePaths[0]))
+			})
 			.catch(err => {
-			reject(err)
-		});
+				reject(err)
+			});
 	})
 }
 
 function selectFileDialog(){
 	return new Promise((resolve, reject) => {
-		const { dialog , getCurrentWindow} = requirePath("electron").remote;
+		const { dialog , getCurrentWindow} = remote;
 		dialog
 			.showOpenDialog(getCurrentWindow(), {
 			properties: ["openFile"]
 		})
 			.then(result => {
-			if (result.canceled) return;
-			resolve(normalizeDir(result.filePaths[0]))
-		})
+				if (result.canceled) return;
+				resolve(normalizeDir(result.filePaths[0]))
+			})
 			.catch(err => {
-			reject(err)
-		});
+				reject(err)
+			});
 	})
 }
 
 function openFolder(){
 	return new Promise((resolve, reject) => {
 		selectFolderDialog().then(function(res){
-			if(!StaticConfig.data.appProjectsLog.filter((a)=>a.directory ==res)[0]){
+			if(!StaticConfig.data.appProjectsLog.find((a)=>a.directory ==res)){
 				StaticConfig.data.appProjectsLog.splice(0, 0, {
 					directory:res
 				})

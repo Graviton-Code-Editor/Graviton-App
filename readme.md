@@ -21,7 +21,7 @@ Graviton is going through a full remake from the ground up. Version 1.3.0 source
 Also, changes on this source may not be released as an official build yet.
 **[1.3.0 Source Code](https://github.com/Graviton-Code-Editor/Graviton-App/tree/1.3.0)**
 
-**Highlights refer to the v2 version.**
+**Features refer to the v2 version.**
 
 ✨ Features:
 ---
@@ -51,7 +51,7 @@ Also, changes on this source may not be released as an official build yet.
 
 * [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
 * [🛠 Building manual](BUILDING.md)
-* [📜 Changelog](CHANGELOG.md)**
+* [📜 Changelog](CHANGELOG.md)
 * [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477) 
 
 👽 Authors 

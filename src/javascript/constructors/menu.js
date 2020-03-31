@@ -19,27 +19,23 @@ function closeAllSubmenus(parent){
 function getDropmenu(list){
 	return `
 		<div>
-			${(function(){
-				let content = "";
-				list.map(function(option,index){
-					if(option.label !== undefined){
-						content += `
-							<div>
-								<a 
-									${option.hint != null?`title="${option.hint}"`:""} 
-									click="${!option.list?`$${index}`:''}" 
-									mouseenter="${option.list?`$${index}`:'$hideMenus'}"
-								>
-									<p lang-string="${option.label}">${option.label}</p>
-									${option.list?'<ArrowIcon/>':''}
-								</a>
-							</div>`
-					}else{
-						content += `<span/>`
-					}
-				})
-				return content;
-			})()}
+			${list.map(function(option,index){
+				if(option.label !== undefined){
+					return`
+						<div>
+							<a 
+								${option.hint != null?`title="${option.hint}"`:""} 
+								click="${!option.list?`$${index}`:''}" 
+								mouseenter="${option.list?`$${index}`:'$hideMenus'}"
+							>
+							<p lang-string="${option.label}">${option.label}</p>
+								${option.list?'<ArrowIcon/>':''}
+							</a>
+						</div>`
+				}else{
+					return `<span/>`
+				}
+			}).join("")}
 		</div>
 	`
 }
@@ -64,7 +60,7 @@ function getMenu(button,list,leftMargin){
 		}
 	}))
 	return puffin.element(`
-		<MenuComp class="${isSubmenu?'submenu':''}" submenu="${isSubmenu}" style="${isSubmenu?`position:absolute;margin-top:-10px;margin-left:${leftMargin}px;`:''}">
+		<MenuComp class="${isSubmenu?'submenu':''}" submenu="${isSubmenu}" style="${isSubmenu?`position:absolute;margin-top:-20px;margin-left:${leftMargin}px;`:''}">
 			${isSubmenu?'':`<button mouseover="$hideMenus" click="$hideMenus" lang-string="${button}">${button}</button>`}
 			${getDropmenu(list)}
 		</MenuComp>

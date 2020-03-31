@@ -14,12 +14,10 @@ const PLUGINS_DIR = path.join(appData(),'.graviton2','plugins')
 let main 
 
 app.on("ready", function() {
-	
 	let mainWindowState = windowStateKeeper({
 		defaultWidth: 800,
 		defaultHeight: 600
 	});
-
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
@@ -60,7 +58,6 @@ app.on("ready", function() {
 			})
 		)
 		main.argv = process.argv.splice(1)
-
 	}
 	main.on("ready-to-show", () => {
 		mainWindowState.manage(main);

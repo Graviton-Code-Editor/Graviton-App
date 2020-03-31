@@ -56,11 +56,6 @@ function Dialog({
 				if(component != null){
 					puffin.render(component,this.children[1].children[0])
 				}
-				window.addEventListener('keydown',(e)=>{
-					if(e.keyCode === 27){
-						closeDialog(DialogComp)
-					}
-				})
 			}
 		},
 		methods:computedMethods

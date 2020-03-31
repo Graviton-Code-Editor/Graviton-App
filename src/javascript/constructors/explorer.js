@@ -229,37 +229,31 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 	fs.readdir(parsedFolderPath).then(function(paths){
 		const explorerComponent = puffin.element(`
 			<div style="padding:0px 7px;">
-				${(function(){
-					let content = "";
-					paths.map(function(dir){ //Load folders 
-						const itemDirectory = normalizeDir(path.join(folderPath,dir))
-						if(fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
-							content += getItemComputed({
+				${paths.map(function(dir){ //Load folders 
+					const itemDirectory = normalizeDir (path.join(folderPath,dir) )
+					if( fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory() )
+						return getItemComputed({
+							projectPath:parent.getAttribute("parentFolder"),
+							classSelector:folderPath,
+							dirName: dir,
+							dirPath: itemDirectory,
+							level,
+							isFolder: true
+						}) 
+				}).join("")}
+				${paths.map(function(dir){ //Load files 
+					const itemDirectory = normalizeDir( path.join(folderPath,dir) )
+					if(!fs.lstatSync( path.join(parsedFolderPath,dir)).isDirectory() )
+						if(! dir.match("~") )
+							return getItemComputed({
 								projectPath:parent.getAttribute("parentFolder"),
 								classSelector:folderPath,
 								dirName: dir,
 								dirPath: itemDirectory,
 								level,
-								isFolder: true
+								isFolder: false
 							}) 
-						}
-					})
-					paths.map(function(dir){ //Load files 
-						const itemDirectory = normalizeDir(path.join(folderPath,dir))
-						if(!fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory()){
-							if(! dir.match("~") )
-								content += getItemComputed({
-									projectPath:parent.getAttribute("parentFolder"),
-									classSelector:folderPath,
-									dirName: dir,
-									dirPath: itemDirectory,
-									level,
-									isFolder: false
-								}) 
-						}
-					})
-			return content
-		})()}
+				}).join("")}
 			</div>
 		`,{
 			components:{

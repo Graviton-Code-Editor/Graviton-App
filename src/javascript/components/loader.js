@@ -5,8 +5,8 @@ const Loader = puffin.element(`
 		&{
 			animation: spin 1s linear infinite;
 			border:7px solid rgba(0,0,0,0);
-			border-top:7px solid white;
-			border-bottom:7px solid white;
+			border-top:7px solid var(--loaderBackground);
+			border-bottom:7px solid var(--loaderBackground);
 			border-radius: 50%;
 			width: 40px;
 			height: 40px;
@@ -14,8 +14,7 @@ const Loader = puffin.element(`
 			margin:0;
 			padding:0;
 		}
-	`}">
-	</div>
+	`}"/>
 `)
 
 export default Loader

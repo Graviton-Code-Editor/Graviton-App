@@ -95,7 +95,8 @@ const Night = {
 		panelBorder:'rgba(50,50,50)',
 		switchBackground:'rgb(60,60,60)',
 		switchIndicatorActivatedBackground:'rgb(255, 0, 72)',
-		switchIndicatorDesactivatedBackground:'rgb(220,200,200)'
+		switchIndicatorDesactivatedBackground:'rgb(220,200,200)',
+		loaderBackground:'white'
 	}
 }
 

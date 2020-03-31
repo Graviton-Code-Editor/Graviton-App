@@ -30,15 +30,6 @@ function Window({
 			WindowBody,
 			WindowBackground,
 			contentComponent
-		},
-		events:{
-			mounted(){
-				window.addEventListener('keydown',(e)=>{
-					if(e.keyCode === 27){
-						closeWindow(WindowComponent)
-					}
-				})
-			}
 		}
 	})
 	return {

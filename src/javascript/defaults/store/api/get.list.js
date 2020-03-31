@@ -9,7 +9,7 @@ function getList(){
 		}).then(async function (response) {
 			resolve(response.data.list)
 		}).catch((err)=>{
-			console.log(err)
+			reject(err)
 		})
 	})
 }
