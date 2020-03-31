@@ -2,7 +2,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import drac from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import path from 'path'
 import CodeMirror from 'codemirror'
 
@@ -19,11 +19,11 @@ const fs = window.require("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
 const isDev = window.require('electron-is-dev')
 
-function getExtension(path){
+function getPlugin(path){
 	return require(path)
 }
 
-function loadExtension(path){
+function loadPlugin(path){
 	return window.require(path).entry({
 		StaticConfig,
 		RunningConfig,
@@ -41,41 +41,37 @@ function loadExtension(path){
 	})
 }
 
-function loadAutomatically(){
+function registryAllPlugins(){
 	RunningConfig.on("appLoaded",function(){
 		fs.readdir(pluginsPath).then(function(paths){
 			paths.map(function(pluginName){
 				const pluginPath = path.join(pluginsPath,pluginName)
 				const pkgPluginPath = path.join(pluginPath,'package.json')
 				if(fs.existsSync(pkgPluginPath)){
-					const pluginPkg = getExtension(pkgPluginPath)
+					const pluginPkg = getPlugin(pkgPluginPath)
 					pluginPkg.PATH = pluginPath
-					ExtensionsRegistry.add(
+					PluginsRegistry.add(
 						pluginPkg
 					)
 				}
 			})
-			RunningConfig.emit('allExtensionsLoaded')
-			entryAllExtensions()
+			RunningConfig.emit('allPluginsLoaded')
+			loadAllPlugins()
 		})
 	})
 }
 
-function entryAllExtensions(){
-	Object.keys(ExtensionsRegistry.registry.data.list).map(function(pluginName){
-		const pluginPkg = ExtensionsRegistry.registry.data.list[pluginName]
+function loadAllPlugins(){
+	Object.keys(PluginsRegistry.registry.data.list).map(function(pluginName){
+		const pluginPkg = PluginsRegistry.registry.data.list[pluginName]
 		if(pluginPkg.main != undefined){
 			if( isDev && pluginPkg.mainDev && fs.existsSync(path.join(pluginPkg.PATH,pluginPkg.mainDev)) ){
-				loadExtension(path.join(pluginPkg.PATH,pluginPkg.mainDev)) //DEV version
+				loadPlugin(path.join(pluginPkg.PATH,pluginPkg.mainDev)) //DEV version
 			}else{
-				loadExtension(path.join(pluginPkg.PATH,pluginPkg.main)) //BUILT version
+				loadPlugin(path.join(pluginPkg.PATH,pluginPkg.main)) //BUILT version
 			}
 		}  
 	})   
 }
 
-export { loadExtension, loadAutomatically }
-
-/**
- * entry() ->  Initial extension's function, called when the plugin is executed
- */
+export { loadPlugin, registryAllPlugins }

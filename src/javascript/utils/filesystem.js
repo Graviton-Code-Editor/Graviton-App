@@ -5,47 +5,15 @@ import parseDirectory from './directory.parser'
 import InputDialog from '../constructors/dialog.input'
 import Tab from '../constructors/tab'
 import Editor from '../constructors/editor'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import getFormat from './format.parser'
 import normalizeDir from  './directory.normalizer'
+import selectFolderDialog from './dialogs/select.folder'
+import selectFileDialog from './dialogs/select.file'
 
 const path = window.require("path")
 const fs = window.require("fs-extra")
 const { remote } = window.require("electron")
-
-function selectFolderDialog(){
-	return new Promise((resolve, reject) => {
-		const { dialog , getCurrentWindow} = remote;
-		dialog
-			.showOpenDialog(getCurrentWindow(), {
-			properties: ["openDirectory"]
-		})
-			.then(result => {
-				if (result.canceled) return;
-				resolve(normalizeDir(result.filePaths[0]))
-			})
-			.catch(err => {
-				reject(err)
-			});
-	})
-}
-
-function selectFileDialog(){
-	return new Promise((resolve, reject) => {
-		const { dialog , getCurrentWindow} = remote;
-		dialog
-			.showOpenDialog(getCurrentWindow(), {
-			properties: ["openFile"]
-		})
-			.then(result => {
-				if (result.canceled) return;
-				resolve(normalizeDir(result.filePaths[0]))
-			})
-			.catch(err => {
-				reject(err)
-			});
-	})
-}
 
 function openFolder(){
 	return new Promise((resolve, reject) => {
@@ -105,7 +73,7 @@ RunningConfig.on('loadFile',function({
 		new Editor({
 			language:fileExtension,
 			value:data ,
-			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+			theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 			bodyElement,
 			tabElement,
 			tabState,

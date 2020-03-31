@@ -6,7 +6,7 @@ import Editor from '../../constructors/editor'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import areYouSureDialog from '../../defaults/dialogs/you.sure'
 import StaticConfig from 'StaticConfig'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import RunningConfig from 'RunningConfig'
 import Icons from '../../../../assets/icons/**.svg'
 import ArrowIcon from '../icons/arrow'
@@ -111,6 +111,7 @@ const ItemWrapper = puffin.style.css`
 		border-radius:12px;
 		font-size:12px;
 		padding:3px 5px;
+		padding-right:9px;
 		border:none;
 		margin:0px;
 		background:transparent;
@@ -389,7 +390,7 @@ function Item({
 									new Editor({
 										language:fileExtension,
 										value:data ,
-										theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+										theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 										bodyElement,
 										tabElement,
 										tabState,

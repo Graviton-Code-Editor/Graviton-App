@@ -2,7 +2,7 @@ import { puffin } from '@mkenzo_8/puffin'
 import Window from '../../constructors/window'
 import { Titles , RadioGroup, Text, Button } from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import SideMenu from '../../components/window/side.menu'
 import getList from '../store/api/get.list'
 import Languages from '../../../../languages/*.json'
@@ -25,9 +25,7 @@ function Store(){
 						<Loader/>
 					</CenteredLayout>
 				</div>
-				<div class="installed" href="installed">
-					
-				</div>
+				<div class="installed" href="installed"/>
 			</div>
 		</SideMenu>
 	`,{
@@ -87,13 +85,13 @@ function displayHome(container){
 }
 
 function displayInstalled(container){
-	const list = ExtensionsRegistry.registry.data.list
+	const list = PluginsRegistry.registry.data.list
 	
 	const Home = puffin.element(`
 		<div>
-			${Object.keys(list).map(function(extension){
+			${Object.keys(list).map(function(pluginName){
 				return `
-					<Card isInstalled="${true}" name="${extension}"/>
+					<Card isInstalled="${true}" name="${pluginName}"/>
 				`
 			})}
 		</div>

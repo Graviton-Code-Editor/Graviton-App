@@ -1,6 +1,6 @@
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 import Notification from './notification'
 const path = window.require("path")
@@ -106,7 +106,7 @@ function Editor({
 	const appThemeWatcher = StaticConfig.keyChanged('appTheme',function(){
 		Client.do('setTheme',{
 			instance:instance,
-			theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme
+			theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme
 		})
 	})
 	const editorTabSizeWatcher = StaticConfig.keyChanged('editorTabSize',function(value){

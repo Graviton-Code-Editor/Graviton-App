@@ -4,14 +4,14 @@ import {Titles , RadioGroup, Text, Card, Button} from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Languages from '../../../../languages/*.json'
 import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
 
 function Settings(){
-	const pluginsList = ExtensionsRegistry.registry.data.list
+	const pluginsList = PluginsRegistry.registry.data.list
 	const SettingsPage = puffin.element(`
 		<SideMenu default="customization">
 			<div>
@@ -26,12 +26,12 @@ function Settings(){
 					<div href="themes">
 						<H4 lang-string="Themes"/>
 							<RadioGroup radioSelected="$selectedTheme" direction="vertically" styled="false">
-								${Object.keys(pluginsList).map(function(extension){
-									const pkg = pluginsList[extension]
+								${Object.keys(pluginsList).map(function(pluginName){
+									const pkg = pluginsList[pluginName]
 									if(pkg.type == "theme"){
 										return `
-										<label styled="false" hidden-radio="true" name="${extension}" checked="${StaticConfig.data['app.theme'] == extension?'':'false'}">
-											<Card style="font-size:13px;">${extension}</Card>
+										<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data['app.theme'] == pluginName?'':'false'}">
+											<Card style="font-size:13px;">${pluginName}</Card>
 										</label>
 										`
 									}

@@ -1,6 +1,6 @@
 import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
-import ExtensionsRegistry from 'ExtensionsRegistry'
+import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
 
 function updateStaticConfigByKey(client,instance){
@@ -30,7 +30,7 @@ function configEditor(){
 	const {client,instance} = new Editor({
 		language:'json',
 		value:JSON.stringify(StaticConfig.data,null,3),
-		theme:ExtensionsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+		theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 		bodyElement,
 		tabElement,
 		tabState
