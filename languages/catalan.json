@@ -1,7 +1,7 @@
 {
 
 	"name": "català",
-	"locale": "cat-ES",
+	"locale": "cat",
 	"strings": {
 		"Help": "Ajuda",
 		"File": "Arxiu",

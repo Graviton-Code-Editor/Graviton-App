@@ -126,7 +126,7 @@ function init(){
 				},
 				{},
 				{
-					label:'Font Size',
+					label:'FontSize',
 					list:[
 						{
 							label:'Increase',
@@ -180,11 +180,11 @@ function init(){
 			button:'Tools',
 			list:[
 				{
-					label:'Open Settings',
+					label:'OpenSettings',
 					action:()=>Settings().launch()
 				},
 				{
-					label:'Open Store',
+					label:'OpenStore',
 					action:()=>Store().launch()
 				},
 				{},
@@ -249,7 +249,7 @@ function init(){
 						openLink('https://graviton.ml/')
 					}
 				},{
-					label:'Source code',
+					label:'SourceCode',
 					action:()=>{
 						openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
 					}

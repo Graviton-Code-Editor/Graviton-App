@@ -1,6 +1,6 @@
 {
 	"name": "español",
-	"locale": "es-ES",
+	"locale": "es",
 	"strings": {
 		"Help": "Ayuda",
 		"File": "Archivo",
