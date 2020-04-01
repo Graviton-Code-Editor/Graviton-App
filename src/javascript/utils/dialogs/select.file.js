@@ -1,4 +1,5 @@
 const { remote } = window.require("electron")
+import normalizeDir from  '../directory.normalizer'
 
 function selectFileDialog(){
 	return new Promise((resolve, reject) => {
