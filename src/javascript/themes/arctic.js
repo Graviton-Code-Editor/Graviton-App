@@ -2,6 +2,9 @@
 
 const Arctic = {
 	name:'Arctic',
+	id:'arctic',
+	version:'1.0.0',
+	author:'Marc Espín',
 	textTheme:'arctic',
 	type:'theme',
 	colorsScheme:{
@@ -61,7 +64,7 @@ const Arctic = {
 		radioCircleBackground:'white',
 		radioCircleBorder:'#CFCFCF',
 		radioCircleBorderHovering:'#5D9DFC',
-		windowBorder:'#5E5E5E',
+		windowBorder:'rgb(150,150,150)',
 		fileNotSavedIndicator:'black',
 		fileNotSavedIndicatorHovering:'#0066FF',
 		controlCloseButtonActiveBackground:'rgba(241,112,122)',

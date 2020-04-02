@@ -91,6 +91,7 @@ function initConfiguration(){
 		fs.mkdirSync(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath)
 	}
 	//If .graviton2/plugins doesn't exist, it creates it
+	console.log(path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath,'plugins'))
 	if(!fs.existsSync(
 		path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath,'plugins')
 	)){ 

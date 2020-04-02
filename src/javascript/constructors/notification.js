@@ -21,13 +21,9 @@ function Notification({
 			<Title>${title}</Title>
 			<Content>${content}</Content>
 			<div class="buttons">
-				${(()=>{
-					let content = ""
-					buttons.map(({label,action},index)=>{
-						content +=`<Button index="${index}" click="$clickedButton">${label}</Button>`
-					})
-					return content;
-				})()}
+				${buttons.map(({label,action},index)=>{
+					return `<Button index="${index}" click="$clickedButton">${label}</Button>`
+				}).join('')}
 			</div>
 		</NotificationBody>
 	`,{
@@ -40,7 +36,7 @@ function Notification({
 		},
 		components:{
 			NotificationBody,
-			Title:Titles.h3,
+			Title:Titles.h4,
 			Content:Text,
 			Cross,
 			Button

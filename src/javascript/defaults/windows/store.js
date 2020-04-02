@@ -1,15 +1,16 @@
 import { puffin } from '@mkenzo_8/puffin'
 import Window from '../../constructors/window'
 import { Titles , RadioGroup, Text, Button } from '@mkenzo_8/puffin-drac'
+import { LanguageState, getTranslation } from 'LanguageConfig'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import SideMenu from '../../components/window/side.menu'
 import getList from '../store/api/get.list'
 import Languages from '../../../../languages/*.json'
-import { LanguageState, getTranslation } from 'LanguageConfig'
 import Card from '../store/components/card'
 import Loader from '../../components/loader'
 import CenteredLayout from '../../components/centered.layout'
+import isPluginInstalled from '../store/utils/is.plugin.installed'
 
 function Store(){
 	const StorePage = puffin.element(`
@@ -64,8 +65,9 @@ function Store(){
 function displayHome(container){
 	const loader = new Promise(async(resolve,reject)=>{
 		getList().then(list=>{
-			const cardsList =  list.map((pluginName)=>{
-				return `<Card isInstalled="${false}" name="${pluginName}"/>`
+			const cardsList =  list.map((pluginId)=>{
+				const isInstalled = isPluginInstalled(pluginId)
+				return `<Card isInstalled="${isInstalled}" id="${pluginId}" displayName="${pluginId}"/>`
 			}).join("")
 			resolve(cardsList)
 		}).catch((a)=>{
@@ -86,12 +88,12 @@ function displayHome(container){
 
 function displayInstalled(container){
 	const list = PluginsRegistry.registry.data.list
-	
 	const Home = puffin.element(`
 		<div>
-			${Object.keys(list).map(function(pluginName){
+			${Object.keys(list).map(function(pluginId){
+				const pluginInfo = list[pluginId]
 				return `
-					<Card isInstalled="${true}" name="${pluginName}"/>
+					<Card isInstalled="${true}" id="${pluginInfo.id}" displayName="${pluginInfo.name}"/>
 				`
 			})}
 		</div>

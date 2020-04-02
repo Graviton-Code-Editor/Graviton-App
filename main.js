@@ -9,8 +9,6 @@ const fs = require('fs-extra');
 const axios = require( 'axios');
 const { ipcMain } = require('electron')
 
-const PLUGINS_DIR = path.join(appData(),'.graviton2','plugins')
-
 let main 
 
 app.on("ready", function() {
@@ -81,22 +79,22 @@ app.on("before-quit", () => {
 	app.removeAllListeners("close")
 })
 
-ipcMain.on('download-plugin', (event, {url,name}) => {
-	getZip(url,name).then(()=>{
+ipcMain.on('download-plugin', (event, { url, id, dist }) => {
+	getZip(url,id,dist).then(()=>{
 		event.reply('plugin-installed', true)
 	})
 })
 
-function getZip(url,pluginName){
+function getZip(url,pluginId,dist){
 	return new Promise((resolve,reject)=>{
 		axios({
 			method: 'get',
 			url,
 			responseType: 'stream'
 		}).then(async function (response) {
-			response.data.pipe(fs.createWriteStream(path.join(PLUGINS_DIR,`${pluginName}.zip`)))
-			createPluginFolder(pluginName)
-			extractZip(path.join(PLUGINS_DIR,`${pluginName}.zip`),pluginName).then(()=>{
+			response.data.pipe(fs.createWriteStream(path.join(dist,`${pluginId}.zip`)))
+			createPluginFolder(pluginId,dist)
+			extractZip(path.join(dist,`${pluginId}.zip`),pluginId,dist).then(()=>{
 				resolve()
 			})
 			
@@ -104,15 +102,15 @@ function getZip(url,pluginName){
 	})
 }
 
-function createPluginFolder(pluginName){
-	const pluginDirectory = path.join(PLUGINS_DIR,pluginName)
+function createPluginFolder(pluginId,dist){
+	const pluginDirectory = path.join(dist,pluginId)
 	if( !fs.existsSync(pluginDirectory) ){
 		fs.mkdirSync(pluginDirectory)
 	}
 }
 
-function extractZip(zipPath,pluginName){
-	const pluginDirectory = path.join(PLUGINS_DIR,pluginName)
+function extractZip(zipPath,pluginId,dist){
+	const pluginDirectory = path.join(dist,pluginId)
 	return new Promise((resolve,reject)=>{
 		fs.unlink(pluginDirectory, ()=>{
 			zip(zipPath, { dir: pluginDirectory })

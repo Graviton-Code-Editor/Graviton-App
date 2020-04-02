@@ -2,6 +2,9 @@
 
 const Night = {
 	name:'Night',
+	id:'night',
+	version:'1.0.0',
+	author:'Marc Espín',
 	textTheme:'night',
 	type:'theme',
 	colorsScheme:{

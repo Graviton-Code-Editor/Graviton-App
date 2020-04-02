@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200502 - 1 [2.0.68]
+- Improved: Store improvements
+
 #### 200430 - 2 [2.0.64]
 - Improved: Parcel now builds using electron target
 

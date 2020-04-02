@@ -1,9 +1,15 @@
 import { puffin } from '@mkenzo_8/puffin'
-import { Titles , Card} from '@mkenzo_8/puffin-drac'
-import Dialog from '../../../constructors/dialog'
+import { Titles , Card, Button, Text } from '@mkenzo_8/puffin-drac'
+import { LanguageState, getTranslation } from 'LanguageConfig'
+import Window from '../../../constructors/window'
 import Notification from '../../../constructors/notification'
 import Endpoints from '../api/api.endpoints.js'
 import axios from 'axios'
+import SideMenu from '../../../components/window/side.menu'
+import installPlugin from '../utils/install.plugin'
+import getPluginById from '../api/get.plugin'
+import getLocalPluginById from '../utils/get.local.plugin'
+import path from 'path'
 
 const StoreCard = ()=>{
 	return puffin.element(`
@@ -15,7 +21,7 @@ const StoreCard = ()=>{
 				height:100px;
 			}
 		`}">
-			<H5>{{name}}</H5>
+			<H5>{{displayName}}</H5>
 		</Card>
 	`,{
 		components:{
@@ -24,65 +30,88 @@ const StoreCard = ()=>{
 		},
 		props:[
 			{
-				name:'name',
+				name:'displayName',
 				value:'loading...'
 			},
+			"id",
 			"installed"
 		],
 		methods:{
-			clicked(){
-				const pluginName = this.getAttribute("name")
+			clicked: async function(){
+				const pluginId = this.getAttribute("id")
 				const isInstalled = eval(this.getAttribute("isinstalled"))
-				if( !isInstalled ){
-					const installDialog = new Dialog({
-						title:`Install ${pluginName} ?`,
-						buttons:[
-							{
-								label:'Cancel'
-							},
-							{
-								label:'Install',
-								action: async function(){
-									const pluginInfo = await getPlugin(pluginName)
-									installPlugin(pluginInfo).then(()=>{
-										new Notification({
-											title:`${pluginName} has been installed.`
-										})
-									})
-								}
-							}
-						]
-					})
-					installDialog.launch()
-				}
+				const pluginInfo = await getPluginById(pluginId) //Get Store's API info
+				const pluginLocalInfo = getLocalPluginById(pluginId) //Get installed version info
+				openWindow(pluginInfo,pluginLocalInfo,isInstalled)
 			}
 		}
 	})
 }
 
-function getPlugin(pluginName){
-	return new Promise((resolve,reject)=>{
-		axios({
-			method:'get',
-			url:`${Endpoints.Search}/${pluginName}`
-		}).then(async function (response) {
-			resolve(response.data.plugin)
-		}).catch((err)=>{
-			console.log(err)
-		})
+function openWindow({
+	name,
+	lastRelease,
+	version = 'Unknown',
+	id,
+	repository,
+	author = 'Unknown'
+},{
+	name:localName,
+	version:localVersion = 'Unknown',
+	id:localId,
+	author:localAuthor = 'Unknown'
+},
+isInstalled){
+	const pluginInfo = arguments[0]
+	const pluginLocalInfo = arguments[1]
+	const pluginInfoValid = Object.assign(pluginInfo,pluginLocalInfo)
+		
+	const component = puffin.element(`
+		<SideMenu default="about">
+			<div>
+				<H2>${pluginInfoValid.name}</H2>
+				<label to="about" lang-string="About"></label>
+			</div>
+			<div>
+				<div href="about">
+					<Text>
+						<b>Made by: ${pluginInfoValid.author}</b>
+					</Text>
+					<Text>Last version: ${version}</Text>
+					<Text>Installed version: ${localVersion}</Text>
+					${isInstalled?'':`<Button click="$install">Install</Button>`}
+				</div>
+			</div>
+		</SideMenu>
+	`,{
+		methods:{
+			install: function(){
+				installPlugin(pluginInfo).then(()=>{
+					pluginInstalledNotification(name)
+				})
+			}
+		},
+		components:{
+			H2:Titles.h2,
+			Button,
+			SideMenu,
+			Text
+		},
+		addons:{
+			lang:puffin.lang(LanguageState)
+		}
 	})
+	const pluginWindow = new Window({
+		component,
+		height:'55%',
+		width:'45%'
+	})
+	pluginWindow.launch()
 }
 
-function installPlugin(plugin){
-	return new Promise((resolve,reject)=>{
-		const { ipcRenderer } = requirePath('electron')
-		ipcRenderer.on('plugin-installed', (data)=>{
-			resolve(data)
-		})
-		ipcRenderer.send('download-plugin', {
-			url:plugin.lastRelease,
-			name:plugin.name
-		})
+function pluginInstalledNotification(pluginName){
+	new Notification({
+		title:`Installed ${pluginName}`
 	})
 }
 
