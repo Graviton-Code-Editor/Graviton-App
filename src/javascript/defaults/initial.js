@@ -19,7 +19,6 @@ import Plus from '../components/icons/plus'
 import Minus from '../components/icons/minus'
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
-import Panel from '../constructors/panel'
 import './shortcuts'
 
 const fs = window.require("fs-extra")

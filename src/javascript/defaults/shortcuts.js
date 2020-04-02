@@ -1,4 +1,5 @@
 import { Shortcuts } from 'shortcuts'
+import { Panel, removePanel } from '../constructors/panel'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import CommandPrompt from '../constructors/command.prompt'
@@ -9,7 +10,6 @@ import configEditor from './tabs/config.editor.js'
 import Settings from './windows/settings'
 import Welcome from "./windows/welcome";
 import Store from './windows/store'
-import Panel from '../constructors/panel'
 
 RunningConfig.on('command.saveCurrentFile',()=>{
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.props.state.emit('savedMe')
