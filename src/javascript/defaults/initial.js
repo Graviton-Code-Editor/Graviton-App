@@ -27,7 +27,6 @@ const { getCurrentWindow } = window.require("electron").remote
 const isDev = window.require("electron-is-dev")
 
 function init(){
-	registryAllPlugins()
 	new Menu({ //FILE
 			button:'File',
 			list:[
