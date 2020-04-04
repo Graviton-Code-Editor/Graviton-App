@@ -243,6 +243,11 @@ function init(){
 						openLink('https://graviton.ml/blog/')
 					}
 				},{
+					label:'Documentation',
+					action:()=>{
+						openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
+					}
+				},{
 					label:'Website',
 					action:()=>{
 						openLink('https://graviton.ml/')
