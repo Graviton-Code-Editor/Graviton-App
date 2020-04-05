@@ -57,24 +57,21 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 				label:'Set theme',
 				action:()=>{
 					const configuredTheme = StaticConfig.data.appTheme
+					const registry = PluginsRegistry.registry.data.list
 					new CommandPrompt({
 						showInput:true,
 						inputPlaceHolder:'Select a theme',
-						options:(function(){
-							const list = []
-							const registry = PluginsRegistry.registry.data.list
-							Object.keys(registry).filter(function(name){
-								const plugin = registry[name]
-								console.log(configuredTheme,name,configuredTheme==name)
-								if(plugin.type == "theme"){
-									list.push({
-										label:name,
-										selected:configuredTheme == name
-									})
+						options:[
+							...Object.keys(registry).map( name => {
+								const pluginInfo = registry[name]
+								if( pluginInfo.type == 'theme' ){
+									return {
+										label: name,
+										selected: configuredTheme === name
+									}
 								}
-							})
-							return list;
-						})(),
+							}).filter(Boolean)
+						],
 						onSelected(res){
 							StaticConfig.data.appTheme = res.label
 						},
@@ -90,20 +87,18 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 					new CommandPrompt({
 						showInput:true,
 						inputPlaceHolder:'Select a language',
-						options:(function(){
-							const list = []
-							Object.keys(Languages).filter(function(name){
-								list.push({
-									label:name,
-									selected:configuredLanguage == name
-								})
+						options:[
+							...Object.keys( Languages ).map( name => {
+								return {
+									label: name,
+									selected: configuredLanguage === name
+								}
 							})
-							return list;
-						})(),
-						onSelected(res){
+						],
+						onSelected( res ){
 							StaticConfig.data.appLanguage = res.label
 						},
-						onScrolled(res){
+						onScrolled( res ){
 							StaticConfig.data.appLanguage = res.label
 						}
 					})
@@ -122,27 +117,29 @@ RunningConfig.on('command.openCurrentPanelTabsIterator',()=>{
 			scrollOnTab:true,
 			closeOnKeyUp:true,
 			inputPlaceHolder:'Enter a command',
-			options:[...focusedPanelTabs.map((tab)=>{
-				return {
-					label:tab.fileName
-				}
-			})],
-			onSelected(res){
-				const toFocusTab = focusedPanelTabs.filter((tab)=>{
+			options:[
+				...focusedPanelTabs.map( tab =>{
+					return {
+						label:tab.fileName
+					}
+				})
+			],
+			onSelected( res ){
+				const toFocusTab = focusedPanelTabs.find((tab)=>{
 					return tab.fileName == res.label
-				})[0]
+				})
 				toFocusTab && toFocusTab.element.props.state.emit('focusedMe')
 			}
 		})
 	}
 })
-RunningConfig.on('command.increaseFontSize',({factor=2}={factor:2})=>{
-	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)+factor
+RunningConfig.on('command.increaseFontSize',({ factor=2 } = { factor:2 }) =>{
+	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) + factor
 })
-RunningConfig.on('command.decreaseFontSize',({factor=2}={factor:2})=>{
-	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize)-factor
+RunningConfig.on('command.decreaseFontSize',({ factor=2 } = { factor:2 }) =>{
+	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) - factor
 })
-RunningConfig.on('command.closeCurrentWindow',({factor=2}={factor:2})=>{
+RunningConfig.on('command.closeCurrentWindow',({ factor=2 } = { factor:2 }) =>{
 	const windows = document.getElementById("windows").children
 	windows[windows.length-1].remove()
 })
@@ -150,47 +147,56 @@ const appShortCuts = new Shortcuts ();
 appShortCuts.add ([ 
 	...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.saveCurrentFile')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.saveCurrentFile')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.NewPanel.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.newPanel')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.newPanel')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.CloseCurrentTab.combos.map(shortcut=>{
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentTab')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.closeCurrentTab')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.CloseCurrentPanel.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentPanel')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.closeCurrentPanel')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.OpenCommandPrompt.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.openCommandPrompt')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.openCommandPrompt')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.IterateCurrentPanelTabs.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.openCurrentPanelTabsIterator')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.openCurrentPanelTabsIterator')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.increaseFontSize')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.increaseFontSize')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.decreaseFontSize')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.decreaseFontSize')
 		}
 	}),
 	...StaticConfig.data.appShortcuts.CloseCurrentWindow.combos.map(shortcut=>{ 
 		return { 
-			shortcut:shortcut, handler: event => RunningConfig.emit('command.closeCurrentWindow')
+			shortcut:shortcut, 
+			handler: event => RunningConfig.emit('command.closeCurrentWindow')
 		}
 	})
 ]);

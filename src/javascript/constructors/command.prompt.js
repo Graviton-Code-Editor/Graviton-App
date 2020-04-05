@@ -187,9 +187,9 @@ function renderOptions({
 	
 	const optionsComp = puffin.element(`
 			<div>
-				${options.map(({selected,label},index)=>{
+				${options.map(({ selected, label }, index)=>{
 					if( selected ) hoveredDefault = index
-					return ` <a index="${index}" click="$onClicked">${label}</a> `
+					return ` <a click="$onClicked">${label}</a> `
 				}).join('')}
 			</div>
 		`,{
