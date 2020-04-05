@@ -40,14 +40,14 @@ function CommandPrompt({
 						if(scrollOnTab){
 							break;
 						}
-						selectOption(CommandPromptState.data.hoveredOption,{onSelected})
+						selectOption(CommandPromptState.data.hoveredOption,{options,onSelected})
 						closeCommandPrompt(CommandPromptComponent)
 					case 17:
 						if(!scrollOnTab){
 							 break;
 						 }
 					case 13:
-						selectOption(CommandPromptState.data.hoveredOption,{onSelected})
+						selectOption(CommandPromptState.data.hoveredOption,{options,onSelected})
 						closeCommandPrompt(CommandPromptComponent)
 						break;
 					case 38:
@@ -199,7 +199,7 @@ function renderOptions({
 		methods:{
 			onClicked(){
 				closeCommandPrompt(component)
-				selectOption(this,{onSelected})
+				selectOption(this,{options,onSelected})
 			}
 		}
 	})
@@ -212,9 +212,11 @@ function renderOptions({
 	hoverOption(state.data.hoveredOption,parent.children[0].children)
 }
 
-function selectOption(option,{onSelected}){
+function selectOption(option,{options,onSelected}){
 	if ( option != undefined ){
-		onSelected({
+		var optionObj = options.find(opt=>opt.label == option.textContent)
+		if (optionObj.action) optionObj.action()
+		if (onSelected) onSelected({
 			label:option.textContent
 		})
 	}

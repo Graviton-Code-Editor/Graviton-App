@@ -32,47 +32,30 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 		inputPlaceHolder:'Enter a command',
 		options:[
 			{
-				label:'Open Settings'
+				label:'Open Settings',
+				action:()=>Settings().launch()
 			},{
-				label:'Open Projects'
+				label:'Open Projects',
+				action:()=>Welcome().launch()
 			},{
-				label:'Open Workspaces'
-			},{
-				label:'Open Store'
-			},{
-				label:'Open About'
-			},{
-				label:'Open Manual Configuration'
-			},{
-				label:'Set theme'
-			},{
-				label:'Set Language'
-			},
-			...RunningConfig.data.globalCommandPrompt
-		],
-		onSelected(res){
-			switch(res.label){
-				case 'Open Settings':
-					Settings().launch()
-					break;
-				case 'Open Store':
-					Store().launch()
-					break;
-				case 'Open Projects':
-					Welcome().launch()
-					break;
-				case 'Open Workspaces':
+				label:'Open Workspaces',
+				action:()=>{
 					Welcome({
 						defaultPage : 'workspaces'
 					}).launch()
-					break;
-				case 'Open Manual Configuration':
-					configEditor()	
-					break;
-				case 'Open About':
-					About().launch()
-					break;
-				case 'Set theme':
+				}
+			},{
+				label:'Open Store',
+				action:()=>Store().launch()
+			},{
+				label:'Open About',
+				action:()=>About().launch()
+			},{
+				label:'Open Manual Configuration',
+				action:()=>configEditor()	
+			},{
+				label:'Set theme',
+				action:()=>{
 					const configuredTheme = StaticConfig.data.appTheme
 					new CommandPrompt({
 						showInput:true,
@@ -98,8 +81,10 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 							StaticConfig.data.appTheme = res.label
 						}
 					})
-					break;
-				case 'Set Language':
+				}
+			},{
+				label:'Set Language',
+				action:()=>{
 					const configuredLanguage = StaticConfig.data.language
 					new CommandPrompt({
 						showInput:true,
@@ -121,9 +106,10 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 							StaticConfig.data.appLanguage = res.label
 						}
 					})
-					break;
-			}
-		}
+				}
+			},
+			...RunningConfig.data.globalCommandPrompt
+		]
 	})
 })
 RunningConfig.on('command.openCurrentPanelTabsIterator',()=>{
