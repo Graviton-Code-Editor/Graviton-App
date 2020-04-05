@@ -65,6 +65,7 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 							const registry = PluginsRegistry.registry.data.list
 							Object.keys(registry).filter(function(name){
 								const plugin = registry[name]
+								console.log(configuredTheme,name,configuredTheme==name)
 								if(plugin.type == "theme"){
 									list.push({
 										label:name,

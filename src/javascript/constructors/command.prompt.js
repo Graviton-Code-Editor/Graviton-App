@@ -23,7 +23,7 @@ function CommandPrompt({
 			<div class="container">
 				${(function(){
 						return `<input style="${showInput?'':'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" keyup="$writing"/>`
-					})()}
+				})()}
 				<div/>
 			</div>
 		</CommandPromptBody>
@@ -127,7 +127,7 @@ function closeCommandPrompt(CommandPromptComponent){
 	CommandPromptComponent.node.remove()
 }
 
-function scrollOptions({state,scrollingDirection,onScrolled}){
+function scrollOptions({ state, scrollingDirection, onScrolled}){
 	const hoveredOption = state.data.hoveredOption
 	const allOptions = hoveredOption.parentElement.children
 	const hoveredOptionPosition = (function(){
@@ -155,7 +155,7 @@ function scrollOptions({state,scrollingDirection,onScrolled}){
 	hoverOption(state.data.hoveredOption,allOptions,onScrolled)   
 }
 
-function hoverOption(hoveredOption,allOptions,onScrolled=()=>{}){
+function hoverOption( hoveredOption, allOptions, onScrolled=()=>{} ){
 	for(let option of allOptions){
 		if(option == hoveredOption){
 			option.classList.add('active');
@@ -168,9 +168,7 @@ function hoverOption(hoveredOption,allOptions,onScrolled=()=>{}){
 	}
 }
 
-function filterOptions(search,{
-	options
-}){
+function filterOptions(search,{ options }){
 	return options.map(function(option){
 		if(option.label.match(new RegExp(search, "i"))) return option
 	}).filter(Boolean)
@@ -184,26 +182,24 @@ function renderOptions({
 	parent,
 	component
 }){
-	let content = ""
+	let content = ''
 	let hoveredDefault = 0;
-	options.map(({selected,label},index)=>{
-		content+=`
-			<a click="$onClicked">${label}</a>
-		`
-		if(selected) hoveredDefault = index
-	})
-
+	
 	const optionsComp = puffin.element(`
-			<div>${content}</div>
+			<div>
+				${options.map(({selected,label},index)=>{
+					if( selected ) hoveredDefault = index
+					return ` <a index="${index}" click="$onClicked">${label}</a> `
+				}).join('')}
+			</div>
 		`,{
 		methods:{
 			onClicked(){
 				closeCommandPrompt(component)
-				selectOption(this,{options,onSelected})
+				selectOption( this, { options, onSelected })
 			}
 		}
 	})
-
 	puffin.render(optionsComp,parent,{
 		removeContent:true
 	})
@@ -212,11 +208,15 @@ function renderOptions({
 	hoverOption(state.data.hoveredOption,parent.children[0].children)
 }
 
-function selectOption(option,{options,onSelected}){
-	if ( option != undefined ){
-		var optionObj = options.find(opt=>opt.label == option.textContent)
-		if (optionObj.action) optionObj.action()
-		if (onSelected) onSelected({
+const findOptionAction = ( options, option ) => {
+	 return options.find(opt => opt.label == option.textContent)
+}
+
+function selectOption( option, { options, onSelected }){
+	if ( option ){
+		const optionObj = findOptionAction( options, option)
+		if ( optionObj.action ) optionObj.action()
+		if ( onSelected ) onSelected({
 			label:option.textContent
 		})
 	}
