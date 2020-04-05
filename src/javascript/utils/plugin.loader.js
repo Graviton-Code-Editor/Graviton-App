@@ -23,55 +23,64 @@ function getPlugin(path){
 	return require(path)
 }
 
-function loadPlugin(path){
-	return window.require(path).entry({
-		StaticConfig,
-		RunningConfig,
-		Window,
-		puffin,
-		Menu,
-		Dialog,
-		StatusBarItem,
-		ContextMenu,
-		Notification,
-		CodeMirror,
-		Tab,
-		drac,
-		SideMenu
-	})
+function loadPlugin(path,pluginName){
+	try{
+		window.require(path).entry({
+			StaticConfig,
+			RunningConfig,
+			Window,
+			puffin,
+			Menu,
+			Dialog,
+			StatusBarItem,
+			ContextMenu,
+			Notification,
+			CodeMirror,
+			Tab,
+			drac,
+			SideMenu
+		})
+	}catch(err){
+		throwSilentError(`(${pluginName}) -> ${err}`)
+	}
 }
 
-function registryAllPlugins(){
-	RunningConfig.on("appLoaded",function(){
-		fs.readdir(pluginsPath).then(function(paths){
-			paths.map(function(pluginName){
-				const pluginPath = path.join(pluginsPath,pluginName)
-				const pkgPluginPath = path.join(pluginPath,'package.json')
-				if(fs.existsSync(pkgPluginPath)){
-					const pluginPkg = getPlugin(pkgPluginPath)
-					pluginPkg.PATH = pluginPath
-					PluginsRegistry.add(
-						pluginPkg
-					)
-				}
-			})
-			RunningConfig.emit('allPluginsLoaded')
-			loadAllPlugins()
+RunningConfig.on("appLoaded",function(){
+	fs.readdir(pluginsPath).then(function(paths){
+		paths.map(function(pluginName){
+			const pluginPath = path.join(pluginsPath,pluginName)
+			const pkgPluginPath = path.join(pluginPath,'package.json')
+			if(fs.existsSync(pkgPluginPath)){
+				const pluginPkg = getPlugin(pkgPluginPath)
+				pluginPkg.PATH = pluginPath
+				PluginsRegistry.add(
+					pluginPkg
+				)
+			}
 		})
+		RunningConfig.emit('allPluginsLoaded')
+		loadAllPlugins()
 	})
-}
+})
 
 function loadAllPlugins(){
 	Object.keys(PluginsRegistry.registry.data.list).map(function(pluginName){
 		const pluginPkg = PluginsRegistry.registry.data.list[pluginName]
 		if(pluginPkg.main != undefined){
+			let mainPath = null
 			if( isDev && pluginPkg.mainDev && fs.existsSync(path.join(pluginPkg.PATH,pluginPkg.mainDev)) ){
-				loadPlugin(path.join(pluginPkg.PATH,pluginPkg.mainDev)) //DEV version
+				mainPath = path.join(pluginPkg.PATH,pluginPkg.mainDev) //DEV version
 			}else{
-				loadPlugin(path.join(pluginPkg.PATH,pluginPkg.main)) //BUILT version
+				mainPath = path.join(pluginPkg.PATH,pluginPkg.main) //BUILT version
 			}
+			
+			loadPlugin(mainPath,pluginName)
 		}  
 	})   
 }
 
-export { loadPlugin, registryAllPlugins }
+function throwSilentError(message){
+	console.log(`%cERR::%c ${message}`,'color:rgb(255,35,35)','color:white')
+}
+
+export { loadPlugin }

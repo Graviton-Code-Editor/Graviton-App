@@ -27,7 +27,6 @@ const { getCurrentWindow } = window.require("electron").remote
 const isDev = window.require("electron-is-dev")
 
 function init(){
-	registryAllPlugins()
 	new Menu({ //FILE
 			button:'File',
 			list:[
@@ -242,6 +241,11 @@ function init(){
 					label:'Blog',
 					action:()=>{
 						openLink('https://graviton.ml/blog/')
+					}
+				},{
+					label:'Documentation',
+					action:()=>{
+						openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
 					}
 				},{
 					label:'Website',
