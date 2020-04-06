@@ -61,6 +61,7 @@ Also, changes on this source may not be released as an official build yet.
 * Marc Espín Sanz [Github](https://github.com/marc2332)
 
 #### Main Contributors:
+* pjtsearch [Github](https://github.com/pjtsearch)
 * David Niederweis [Github](https://github.com/DJN1)
 * LucasAlt [Github](https://github.com/LucasCtrl)
 * Max1Truc [Github](https://github.com/Max1Truc)
