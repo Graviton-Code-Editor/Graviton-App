@@ -16,7 +16,7 @@ const WindowBackground = puffin.element(`
 `,{
 	methods:{
 		closeMe(){
-			document.getElementById(this.props.window).remove()
+			this.parentElement.remove()
 		}
 	},
 	props:[

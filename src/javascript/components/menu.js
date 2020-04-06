@@ -60,11 +60,13 @@ const MenuComp = puffin.element(`
 		& > div p{
 			margin:0;
 			padding:0;
+			height:16px;
 		}
 		& > div svg{
 			right:15px;
 			width:8px;
-			position:absolute
+			position:absolute;
+			height:16px;
 		}
 		& > div a{
 			left:0;
@@ -76,6 +78,7 @@ const MenuComp = puffin.element(`
 			color:var(--menuOptionText);
 			cursor:pointer;
 			align-items:center;
+			padding-right:20px;
 		}
 		& > div a:hover{
 			background:var(--accentColor);

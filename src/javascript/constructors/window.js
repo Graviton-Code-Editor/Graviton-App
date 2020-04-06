@@ -8,9 +8,8 @@ function Window({
 	height = "75%",
 	width = "80%"
 }){
-	const randomID = Math.random()
 	const WindowComponent = puffin.element(`
-		<div win-title="${title}" id="${randomID}" class="window ${puffin.style.css`
+		<div win-title="${title}" class="window ${puffin.style.css`
 			&{
 				min-height:100%;
 				min-width:100%;
@@ -20,7 +19,7 @@ function Window({
 				transform:translate(-50%,-50%);
 			}
 		`}">
-			<WindowBackground window="${randomID}"/>
+			<WindowBackground/>
 			<WindowBody style="height:${height};width:${width};">
 				<contentComponent/>
 			</WindowBody>

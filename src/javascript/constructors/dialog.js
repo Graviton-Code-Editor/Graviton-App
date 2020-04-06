@@ -2,6 +2,7 @@ import DialogBody from '../components/dialog/dialog'
 import WindowBackground  from '../components/window/background'
 import {puffin} from '@mkenzo_8/puffin'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
+import Window from './window'
 
 function Dialog({
 	title = 'Title',
@@ -9,40 +10,27 @@ function Dialog({
 	component,
 	buttons = []
 }){
-	const randomSelector = Math.random()
-	const computedMethods = {...buttons.map(btn=>btn.action)}
+	const computedMethods = {...buttons.map(btn=>{
+		if ( btn.action ){
+			return btn.action
+		}else{
+			return function(){
+				dialogWindow.close()
+			}
+		}
+	})}
 	const DialogComp = puffin.element(`
-		<div id="${randomSelector}" class="window ${puffin.style.css`
-			&{
-				min-height:100%;
-				min-width:100%;
-				position:fixed;
-				top:50%;
-				left:50%;
-				transform:translate(-50%,-50%);
-				user-select:none;
-			}
-			& p{
-				line-height:30px;	
-			}
-		`}">
-			<WindowBackground window="${randomSelector}"/>
 			<DialogBody>
 				<div>
 					<H2>${title}</H2>
 					<Text>${content}</Text>
 				</div>
 				<div>
-					${(function(){
-						let content = "";
-						buttons.map(function(btn,index){
-							content += `<Button click="$${index}" onclick="document.getElementById('${randomSelector}').remove()">${btn.label}</Button>`
-						})
-						return content
-					})()}
+					${buttons.map(function(btn,index){
+						return `<Button index="${index}" click="$closeWindow">${btn.label}</Button>`
+					}).join("")}
 				</div>
 			</DialogBody>
-		</div>
 	`,{
 		components:{
 			DialogBody,
@@ -58,20 +46,22 @@ function Dialog({
 				}
 			}
 		},
-		methods:computedMethods
+		methods:{
+			closeWindow(){
+				computedMethods[Number(this.getAttribute("index"))]()
+				dialogWindow.close()
+			}
+		}
+	})
+	const dialogWindow = new Window({
+		component:DialogComp,
+		height:'200px',
+		width:'300px'
 	})
 	return {
-		launch:()=> launchDialog(DialogComp),
-		close:()=> closeDialog(DialogComp)
+		launch:()=> dialogWindow.launch(),
+		close:()=> dialogWindow.close()
 	}
-}
-
-function launchDialog(DialogComp){
-	puffin.render(DialogComp,document.getElementById("windows"))
-}
-
-function closeDialog(DialogComp){
-	DialogComp.node.remove()
 }
 
 export default Dialog
