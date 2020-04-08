@@ -55,24 +55,25 @@ function Tab({
 		}
 	})
 	const TabComp = puffin.element(`
-		<TabBody draggable="true" 
-		classSelector="${classSelector}" 
-		class="${classSelector}" 
-		dragstart="$startDrag" 
-		click="$focusTab" 
-		active="{{active}}" 
-		mouseover="$showCross" 
-		mouseleave="$hideCross"
-		dragenter="$dragEnter"
-		dragleave="$dragLeave"
-		dragover="$dragover"
-		drop="$onDropped"
+		<TabBody 
+			draggable="true" 
+			classSelector="${classSelector}" 
+			class="${classSelector}" 
+			dragstart="$startDrag" 
+			click="$focusTab" 
+			active="{{active}}" 
+			mouseover="$showCross" 
+			mouseleave="$hideCross"
+			dragenter="$dragEnter"
+			dragleave="$dragLeave"
+			dragover="$dragover"
+			drop="$onDropped"
 		>
 			<p drop="$onDropped" classSelector="${classSelector}">
-			${title}
+				${title}
 			</p>
-			<div drop="$onDropped"  classSelector="${classSelector}">
-				<Cross  drop="$onDropped" classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
+			<div drop="$onDropped" classSelector="${classSelector}">
+				<Cross drop="$onDropped" classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
 			</div>
 		</TabBody>
 `,{
@@ -115,6 +116,7 @@ function Tab({
 			},
 			focusTab(){
 				tabState.emit('focusedMe')
+				tabState.emit('focusedItem')
 			},
 			closeTab(e){
 				e.stopPropagation()
@@ -194,7 +196,7 @@ function Tab({
 						})
 					}
 				})
-				tabState.on('changePanel',(newPanel)=>{
+				tabState.on('changePanel',newPanel =>{
 					tabState.data.panel = newPanel
 					focusATab(this)
 				})
@@ -219,7 +221,7 @@ function Tab({
 				})
 				this.getPanelTabs = ()=>{
 					const tabs = this.parentElement.children
-					return Object.keys(tabs).map((tab)=>{
+					return Object.keys(tabs).map( tab =>{
 						return {
 							element:tabs[tab],
 							fileName:tabs[tab].children[0].textContent,
@@ -235,17 +237,11 @@ function Tab({
 				this.isSaved = true
 			}
 		},
-		props:["active"]
+		props:['active']
 	})
 	const TabEditorComp = puffin.element(`
 		<TabEditor>
-			${(()=>{
-				if(component){
-					return "<component/>"
-				}else{
-					return ""
-				}
-			})()}
+			${component?component:''}
 		</TabEditor>
 	`,{
 			components:{
@@ -268,7 +264,8 @@ function Tab({
 					target.props.state = tabState
 				}
 			}
-	})
+		}
+	)
 	puffin.render(TabComp,panel.children[0])
 	puffin.render(TabEditorComp,panel.children[1])
 	return {
@@ -290,7 +287,6 @@ function toggleTabStatus({
 	}){
 	if( newStatus ){
 		if(!tabElement.props.saved){
-			
 			saveFile(tabElement,()=>{
 				RunningConfig.emit('tabSaved',{
 					element:tabElement,
@@ -365,7 +361,7 @@ function focusATab(fromTab){
 		}
 	}else if( focusedTabPosition !== 0 && (fromTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length) ){
 		tabsBarChildren[fromTabPosition-1].props.state.emit('focusedMe')
-	}	
+	}
 }
 
 export default Tab

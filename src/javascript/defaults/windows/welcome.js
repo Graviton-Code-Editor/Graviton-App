@@ -16,7 +16,7 @@ import normalizeDir from '../../utils/directory.normalizer.js'
 
 function Welcome( { defaultPage = "projects" } = {  }){
     const WelcomePage = puffin.element(`
-		<SideMenu default="${defaultPage}">
+		<SideMenu default="${ defaultPage }">
 			<div>
 				<H1 lang-string="Welcome"/>
 				<label to="projects" lang-string="RecentProjects"></label>
@@ -26,45 +26,36 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			<div>
 				<CardsListContainer href="workspaces">
 					<div>
-						${(function(){
-							let content = "";
-							StaticConfig.data.appWorkspacesLog.map((workspacePath)=> {
-								const workspaceConfig = getWorkspaceConfig(workspacePath)
-								if( workspaceConfig != null ) {
+						${StaticConfig.data.appWorkspacesLog.map((workspacePath)=> {
+								const workspaceConfig = getWorkspaceConfig( workspacePath )
+								if( workspaceConfig ) {
 									const { name, folders = [] } = workspaceConfig
-									let listContent = "";
-									folders.map(({name,path})=>{
-										listContent += `<li>· ${parseDirectory(name)}</li>`
+									const listContent = folders.map(({ name, path })=>{
+										return `<li>· ${ parseDirectory( name ) }</li>`
 									})
-									content += `
-										<Card click="$openWorkspace" directory="${workspacePath}" contextmenu="$contextMenuWorkspace">
-											<b>${name}</b>
+									return `
+										<Card click="$openWorkspace" directory="${ workspacePath }" contextmenu="$contextMenuWorkspace">
+											<b>${ name }</b>
 											<ul>
-												${listContent}
+												${ listContent }
 											</ul>
 										</Card>
 									`
 								}
-							})
-							return content;
-						})()}
+						}).join('')}
 					</div>
 				</CardsListContainer>
 				<CardsListContainer href="projects">
 					<div>
-						${(function(){
-							let content = "";
-							StaticConfig.data.appProjectsLog.map(({ name, directory })=> {
-								const nameFolder = parseDirectory(directory)
-								content += `
-									<Card click="$openDirectory" directory="${normalizeDir(directory)}">
-										<b>${nameFolder}</b>
-										<p>${beautifyDir(normalizeDir(directory,true))}</p>
+						${StaticConfig.data.appProjectsLog.map(({ name, directory })=> {
+								const nameFolder = parseDirectory( directory )
+								return `
+									<Card click="$openDirectory" directory="${ normalizeDir( directory ) }">
+										<b>${ nameFolder }</b>
+										<p>${ beautifyDir( normalizeDir( directory , true) ) }</p>
 									</Card>
 									`
-							})
-							return content;
-						})()}
+						}).join('')}
 					</div>
 				<div class="${puffin.style.css`
 					&{

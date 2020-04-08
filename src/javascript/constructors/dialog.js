@@ -42,7 +42,7 @@ function Dialog({
 		events:{
 			mounted(){
 				if(component != null){
-					puffin.render(component,this.children[1].children[0])
+					puffin.render(component,this.children[0].children[1])
 				}
 			}
 		},

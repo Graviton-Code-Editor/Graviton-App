@@ -8,7 +8,8 @@ const PanelBody  = puffin.element(`
 				max-height:100%;
 				overflow:auto;
 			}
-		`}"/>
+		`}"
+	/>
 `)
 
 export default PanelBody

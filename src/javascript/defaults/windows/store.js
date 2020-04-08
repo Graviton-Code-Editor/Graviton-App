@@ -1,7 +1,7 @@
 import { puffin } from '@mkenzo_8/puffin'
-import Window from '../../constructors/window'
 import { Titles , RadioGroup, Text, Button } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
+import Window from '../../constructors/window'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import SideMenu from '../../components/window/side.menu'
@@ -40,10 +40,10 @@ function Store(){
 		},
 		events:{
 			mounted(){
-				const installedPage = this.getElementsByClassName("installed")[0]
-				const homePage = this.getElementsByClassName("home")[0]
+				const installedPage = this.getElementsByClassName('installed')[0]
+				const homePage = this.getElementsByClassName('home')[0]
 				
-				displayHome(homePage) //Display Home page by default
+				displayHome( homePage ) //Display Home page by default
 				
 				installedPage.addEventListener('loaded',()=>{
 					displayInstalled(installedPage)
@@ -52,7 +52,7 @@ function Store(){
 			}
 		},
 		addons:{
-			lang:puffin.lang(LanguageState)
+			lang:puffin.lang( LanguageState )
 		}
 	}) 
 	const StoreWindow = new Window({
@@ -63,30 +63,30 @@ function Store(){
 }
 
 function displayHome(container){
-	const loader = new Promise(async(resolve,reject)=>{
-		getList().then(list=>{
-			const cardsList =  list.map((pluginId)=>{
-				const isInstalled = isPluginInstalled(pluginId)
-				return `<Card isInstalled="${isInstalled}" id="${pluginId}" displayName="${pluginId}"/>`
-			}).join("")
-			resolve(cardsList)
-		}).catch((a)=>{
+	const loader = new Promise(async( resolve, reject )=>{
+		getList().then( list => {
+			const cardsList =  list.map( pluginId =>{
+				const isInstalled = isPluginInstalled( pluginId )
+				return `<Card isInstalled="${ isInstalled }" id="${ pluginId }" displayName="${ pluginId }"/>`
+			}).join('')
+			resolve( cardsList )
+		}).catch( err =>{
 			resolve(`<p>An error ocurred, try later.</p>`)
 		})
 	})
-	loader.then((content)=>{
-		const Home = puffin.element(`<div>${content}</div>`,{
+	loader.then( content =>{
+		const Home = puffin.element(`<div>${ content }</div>`,{
 			components:{
 				Card:Card()
 			}
 		})
-		puffin.render(Home,container,{
+		puffin.render( Home, container, {
 			removeContent:true
 		})
 	})
 }
 
-function displayInstalled(container){
+function displayInstalled( container ){
 	const list = PluginsRegistry.registry.data.list
 	const Home = puffin.element(`
 		<div>
@@ -95,14 +95,14 @@ function displayInstalled(container){
 				return `
 					<Card isInstalled="${true}" id="${pluginInfo.id}" displayName="${pluginInfo.name}"/>
 				`
-			})}
+			}).join('')}
 		</div>
 	`,{
 		components:{
 			Card:Card()
 		}
 	})
-	puffin.render(Home,container,{
+	puffin.render( Home, container, {
 		removeContent:true
 	})
 }

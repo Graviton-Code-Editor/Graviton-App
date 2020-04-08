@@ -34,8 +34,6 @@ const SideMenuSearcher = puffin.element(`
 	}
 })
 
-function filterBy(container,search){
-	container.searchBy(search)
-}
+const filterBy = ( container, search ) =>  container.searchBy(search)
 
 export default SideMenuSearcher

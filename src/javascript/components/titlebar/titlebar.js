@@ -42,17 +42,18 @@ const TitleBar = puffin.element(`
 				padding:9px;
 			}
 		`}">
-		${AppPlatform === "darwin"?'<Buttons/>':''}
-		${AppPlatform !== "darwin"?`<img draggable="false" src="${Logo}" class="logo"/>`:''} 
-		<div id="dropmenus" class="dropmenus"/>
-		<div class="title"/>
-		${AppPlatform === "win32"?'<Buttons/>':''}
+			${AppPlatform === 'darwin' ? '<Buttons/>' : '' }
+			${AppPlatform !== 'darwin' ? `<img draggable="false" src="${Logo}" class="logo"/>` : '' } 
+			<div id="dropmenus" class="dropmenus"/>
+			<div class="title"/>
+			${AppPlatform === "win32" ? '<Buttons/>' : '' }
 		</div>
 	</div>
 	`,{
-	components:{
-		Buttons
+		components:{
+			Buttons
+		}
 	}
-})
+ )
 
 export default TitleBar

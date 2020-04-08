@@ -73,29 +73,29 @@ const CodemirrorClient = new EditorClient({
 				}   
 		}
 	},
-	create({element,language, value, theme, CtrlPlusScroll}){
-		const CodemirrorEditor = CodeMirror(element,{
-			mode:language,
-			value:value,
-			lineNumbers:true,
-			htmlMode:true,
+	create({ element, language, value, theme, CtrlPlusScroll }){
+		const CodemirrorEditor = CodeMirror( element, {
+			mode: language,
+			value: value,
+			lineNumbers: true,
+			htmlMode: true,
 			styleActiveLine: { nonEmpty: true },
 			styleActiveSelected: true,
 			matchTags: { bothTags: true },
 			autoCloseTags: true,
 			autoCloseBrackets: true,
 			matchBrackets: true,
-			theme:theme,
-			indentWithTabs:true,
-			tabSize:StaticConfig.data.editorTabSize,
-			indentUnit:StaticConfig.data.editorTabSize,
-			undoDepth:500,
-			miniMap:false,
-			lineWrapping:StaticConfig.data.editorWrapLines
+			theme: theme,
+			indentWithTabs: true,
+			tabSize: StaticConfig.data.editorTabSize,
+			indentUnit: StaticConfig.data.editorTabSize,
+			undoDepth: 500,
+			miniMap: false,
+			lineWrapping: StaticConfig.data.editorWrapLines
 		})
-		CodemirrorEditor.on("keyup", function (cm, event) {
-			if(StaticConfig.data.editorAutocomplete){
-				if (!cm.state.completionActive && 
+		CodemirrorEditor.on('keyup', ( cm, event) => {
+			if( StaticConfig.data.editorAutocomplete ){
+				if ( !cm.state.completionActive && 
 					event.keyCode != 13 &&
 					event.keyCode != 8 && 
 					event.keyCode != 9  && 
@@ -116,7 +116,7 @@ const CodemirrorClient = new EditorClient({
 					event.keyCode  != 91 &&
 					event.keyCode  != 44
 				) {
-					CodeMirror.commands.autocomplete(cm, null, {completeSingle: false});
+					CodeMirror.commands.autocomplete( cm, null, { completeSingle: false });
 				}
 			}
 		});
@@ -150,78 +150,78 @@ const CodemirrorClient = new EditorClient({
 			instance : CodemirrorEditor
 		}
 	},
-	doRefresh({instance}){
+	doRefresh({ instance }){
 		setTimeout(function() {
 			instance.focus()
 			instance.refresh()
 		},1);
 	},
-	clicked({instance,action}){
+	clicked({ instance, action }){
 		instance.on('mousedown',action)
 	},
-	doIndent({instance}){
+	doIndent({ instance }){
 		const cursorPos = instance.getCursor()
 		instance.extendSelection({line:0,ch:0},{line:instance.lineCount()})
 		instance.execCommand('indentAuto')
 		instance.setCursor(cursorPos)
 		instance.refresh()
 	},
-	doChangeValue({instance,value}){
+	doChangeValue({ instance, value }){
 		instance.setValue(value)
 	},
-	onChanged({instance,action}){
+	onChanged({ instance, action }){
 		instance.on('change',()=>action(instance.getValue()))
 	},
-	executeUndo({instance,action}){
+	executeUndo({ instance, action }){
 		instance.execCommand('undo')
 	},
-	executeRedo({instance,action}){
+	executeRedo({ instance, action }){
 		instance.execCommand('redo')
 	},
-	onActive({instance,action}){
+	onActive({ instance, action }){
 		instance.on('cursorActivity',()=>action(instance))
 		instance.on('mousedown',()=>action(instance))
 	},
-	openFind({instance}){
+	openFind({ instance }){
 		instance.execCommand('find')
 	},
-	openReplace({instance}){
+	openReplace({ instance }){
 		instance.execCommand('replace')
 	},
-	setTheme({instance,theme}){
+	setTheme({ instance, theme }){
 		instance.setOption('theme',theme)
 	},
-	setTabSize({instance, tabSize}){
+	setTabSize({ instance, tabSize }){
 		instance.setOption('tabSize',tabSize)
 		instance.setOption('indentUnit',tabSize)
 		instance.refresh()
 	},
-	setFontSize({instance, element, fontSize}){
+	setFontSize({ instance, element, fontSize }){
 		element.getElementsByClassName("Codemirror")[0].style.fontSize = fontSize;
 		instance.refresh()
 		instance.scrollIntoView()
 	},
-	getCursorPosition({instance}){
+	getCursorPosition({ instance }){
 		const { line, ch } = instance.getCursor()
 		return {
 			line:line+1,
 			ch:ch+1
 		}
 	},
-	setCursorPosition({instance, line,ch}){
+	setCursorPosition({ instance, line ,ch }){
 		instance.setCursor({
 			line:line-1,
 			ch:ch-1
 		})
 	},
-	doFocus({instance}){
+	doFocus({ instance }){
 		instance.focus()
 	},
-	scrollToCursor({instance}){
+	scrollToCursor({ instance }){
 		instance.scrollIntoView()
 	},
-	setLinesWrapping({instance,status}){
-		instance.setOption('lineWrapping',status)
+	setLinesWrapping({ instance, status }){
+		instance.setOption('lineWrapping', status)
 		instance.refresh()
 		instance.scrollIntoView()
 	}

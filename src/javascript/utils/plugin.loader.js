@@ -14,6 +14,7 @@ import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
 import Tab from '../constructors/tab'
 import SideMenu from '../components/window/side.menu'
+import { EditorClient } from '../constructors/editorclient'
 
 const fs = window.require("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
@@ -38,7 +39,8 @@ function loadPlugin(path,pluginName){
 			CodeMirror,
 			Tab,
 			drac,
-			SideMenu
+			SideMenu,
+			EditorClient
 		})
 	}catch(err){
 		throwSilentError(`(${pluginName}) -> ${err}`)

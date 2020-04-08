@@ -2,7 +2,7 @@ import { puffin } from '@mkenzo_8/puffin'
 const { remote } = window.require('electron')
 import AppPlatform from 'AppPlatform'
 
-if(AppPlatform == "win32"){
+if( AppPlatform == "win32" ){
 	var Buttons = puffin.element(`
 		<div class="buttons ${puffin.style.css`
 				& rect{
@@ -142,10 +142,10 @@ if(AppPlatform == "win32"){
 
 function toggleMaximize(){
 	const electronWindow = remote.getCurrentWindow();
-	if (!electronWindow.isMaximized()) {
-		electronWindow.maximize();          
+	if ( electronWindow.isMaximized() ) {
+		  electronWindow.unmaximize();     
 	} else {
-		electronWindow.unmaximize();
+		electronWindow.maximize();   
 	}
 }
 

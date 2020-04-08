@@ -84,43 +84,33 @@ const SideMenu = puffin.element(`
 	events:{
 		mounted(target){
 			const defaultPage = target.getAttribute("default");
-			const buttons = (function(){
-				let list = [];
-				for(let button of target.children[0].children){
-					if(button.tagName == "LABEL"){
-						button.addEventListener('click',()=>{
-							moveToPage(button.getAttribute("to"),buttons,pages)
-						})
-						list.push(button)
-					}
-				}
-				return list
-			})()
-			const pages = (function(){
-				let list = [];
-				for(let page of target.children[1].children){
-					if(page.tagName == "DIV") { 
-						list.push(page)
-					}
-				}
-				return list
-			})()
-			const sections = (function(){
-				let list = []
-				pages.map(function(page){
-					Object.keys(page.children).map(function(index){
-						const section = page.children[index]
-						if(section.tagName == "DIV"){
-							list.push({
-								title:section.getAttribute("href"),
-								page:page.getAttribute("href"),
-								element:section
-							})
-						} 
+			const buttons = Object.keys(target.children[0].children).map( btn =>{
+				const button = target.children[0].children[btn]
+				if(button.tagName == "LABEL"){
+					button.addEventListener('click',()=>{
+						moveToPage(button.getAttribute("to"),buttons,pages)
 					})
+					return button
+				}
+			}).filter(Boolean)		
+			const pages = Object.keys(target.children[1].children).map( pg =>{
+				const page = target.children[1].children[pg]
+				if(page.tagName == "DIV") { 
+					return page
+				}
+			}).filter(Boolean)
+			const sections = pages.map( page => {
+				return Object.keys(page.children).map(function(index){
+					const section = page.children[index]
+					if(section.tagName == "DIV"){
+						 return {
+							title:section.getAttribute("href"),
+							page:page.getAttribute("href"),
+							element:section
+						}
+					} 
 				})
-				return list
-			})()
+			}).flat()
 			target.searchBy = function(search){
 				moveToSection(search,sections,buttons,pages)
 			}

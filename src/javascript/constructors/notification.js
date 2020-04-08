@@ -12,26 +12,29 @@ function Notification({
 	content = '',
 	buttons = []
 }){
-	const listedMethods = buttons.map(({action})=>action)
+	const listedMethods = buttons.map(({ action }) => action )
 	const NotificationComp = puffin.element(`
 		<NotificationBody>
 			<div>
 				<Cross click="$closeNotification"/>
 			</div>
-			<Title>${title}</Title>
-			<Content>${content}</Content>
+			<Title>${ title }</Title>
+			<Content>${ content }</Content>
 			<div class="buttons">
-				${buttons.map(({label,action},index)=>{
-					return `<Button index="${index}" click="$clickedButton">${label}</Button>`
+				${buttons.map(({ label, action }, index)=>{
+					return `<Button index="${ index }" click="$clickedButton">${ label }</Button>`
 				}).join('')}
 			</div>
 		</NotificationBody>
 	`,{
 		events:{
 			mounted(){
-				setTimeout(()=>{
-					this.remove()
-				},NOTIFICATION_LIVE_TIME)
+				setTimeout(
+					() => {
+						this.remove()
+					},
+					NOTIFICATION_LIVE_TIME
+				)
 			}	
 		},
 		components:{
@@ -43,15 +46,15 @@ function Notification({
 		},
 		methods:{
 			closeNotification(){
-				closeNotification(NotificationComp.node)
+				closeNotification( NotificationComp.node )
 			},
 			clickedButton(){
 				NotificationComp.node.remove()
-				listedMethods[this.getAttribute("index")]()
+				listedMethods[this.getAttribute('index')]()
 			}
 		}
 	})
-	puffin.render(NotificationComp, document.getElementById("notifications"))
+	puffin.render( NotificationComp, document.getElementById('notifications') )
 	RunningConfig.emit('notificationPushed',{
 		title,
 		content,
@@ -59,12 +62,12 @@ function Notification({
 	})
 }
 
-function closeNotification(NotificationElement){
+function closeNotification( NotificationElement ){
 	NotificationElement.remove()
 }
 
-RunningConfig.on('notificationPushed',(notificationDetails)=>{
-	RunningConfig.data.notifications.push(notificationDetails)
+RunningConfig.on('notificationPushed', notificationDetails => {
+	RunningConfig.data.notifications.push( notificationDetails )
 	if( RunningConfig.data.notifications.length > MAX_NOTIFICATIONS_LIVING ){
 		const { element } = RunningConfig.data.notifications[0]
 		RunningConfig.data.notifications.splice(0,1)

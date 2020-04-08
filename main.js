@@ -23,25 +23,25 @@ app.on("ready", function() {
 			nodeIntegration: true,
 			webSecurity:!isDev
 		},
-		frame: process.platform == "linux",
+		frame: process.platform == 'linux',
 		minHeight: 320,
 		minWidth: 320,
 		x:mainWindowState.x,
 		y:mainWindowState.y,
 		width:mainWindowState.width,
 		height:mainWindowState.height,
-		backgroundColor: "#191919",
-		title: "Graviton Editor",
+		backgroundColor: '#191919',
+		title: 'Graviton Editor',
 		show:false,
-		icon:path.join(__dirname,"assets", "building",process.platform,"icon.ico")
+		icon:path.join( __dirname, 'assets', 'building', process.platform, 'icon.ico')
 	})
 	if( !isDev ) main.removeMenu()
 	mainWindowState.manage(main);
 	if (isDev) {
 		main.loadURL(
 			url.format({
-				pathname: path.join(__dirname,"dist_parcel", "index.html"),
-				protocol: "file:",
+				pathname: path.join( __dirname, 'dist_parcel', 'index.html'),
+				protocol: 'file:',
 				slashes: true
 			})
 		)
@@ -50,20 +50,20 @@ app.on("ready", function() {
 	} else {
 		main.loadURL(
 			url.format({
-				pathname: path.join(__dirname,"dist_parcel", "index.html"),
-				protocol: "file:",
+				pathname: path.join(__dirname,'dist_parcel', 'index.html'),
+				protocol: 'file:',
 				slashes: true
 			})
 		)
 		main.argv = process.argv.splice(1)
 	}
-	main.on("ready-to-show", () => {
+	main.on('ready-to-show', () => {
 		mainWindowState.manage(main);
 		main.show()
 		main.focus()
 	})
 	if (
-		path.basename(__dirname) === "Graviton-App"
+		path.basename(__dirname) === 'Graviton-App'
 	) {
 		main.setMenuBarVisibility(true)
 	} else {
@@ -71,49 +71,48 @@ app.on("ready", function() {
 	}
 })
 
-app.on("window-all-closed", () => {
+app.on('window-all-closed', () => {
 	app.quit()
 })
 
-app.on("before-quit", () => {
-	app.removeAllListeners("close")
+app.on('before-quit', () => {
+	app.removeAllListeners('close')
 })
 
-ipcMain.on('download-plugin', (event, { url, id, dist }) => {
+ipcMain.on('download-plugin', ( event, { url, id, dist }) => {
 	getZip(url,id,dist).then(()=>{
 		event.reply('plugin-installed', true)
 	})
 })
 
-function getZip(url,pluginId,dist){
-	return new Promise((resolve,reject)=>{
+function getZip( url, pluginId, dist ){
+	return new Promise(( resolve, reject )=>{
 		axios({
 			method: 'get',
 			url,
 			responseType: 'stream'
-		}).then(async function (response) {
-			response.data.pipe(fs.createWriteStream(path.join(dist,`${pluginId}.zip`)))
-			createPluginFolder(pluginId,dist)
-			extractZip(path.join(dist,`${pluginId}.zip`),pluginId,dist).then(()=>{
+		}).then(async response => {
+			response.data.pipe( fs.createWriteStream( path.join( dist, `${pluginId}.zip` ) ) )
+			createPluginFolder( pluginId, dist )
+			extractZip( path.join( dist, `${pluginId}.zip` ), pluginId, dist ).then(()=>{
 				resolve()
 			})
-			
 		})
 	})
 }
 
-function createPluginFolder(pluginId,dist){
-	const pluginDirectory = path.join(dist,pluginId)
-	if( !fs.existsSync(pluginDirectory) ){
-		fs.mkdirSync(pluginDirectory)
+function createPluginFolder( pluginId, dist ){
+	const pluginDirectory = path.join( dist, pluginId )
+	if( !fs.existsSync( pluginDirectory ) ){
+		fs.mkdirSync( pluginDirectory )
 	}
 }
 
-function extractZip(zipPath,pluginId,dist){
-	const pluginDirectory = path.join(dist,pluginId)
-	return new Promise((resolve,reject)=>{
-		fs.unlink(pluginDirectory, ()=>{
-			zip(zipPath, { dir: pluginDirectory })
+function extractZip( zipPath, pluginId, dist ){
+	const pluginDirectory = path.join( dist, pluginId )
+	return new Promise(( resolve, reject )=>{
+		fs.unlink( pluginDirectory, ()=>{
+			zip( zipPath, { dir: pluginDirectory })
 			resolve()
 		})
 	})

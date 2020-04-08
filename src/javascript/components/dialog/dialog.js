@@ -29,8 +29,8 @@ const DialogBody = new puffin.element(`
 		}
 		& button {
 			max-height:auto;
-			padding:6px 11px;
-			font-size:12px;
+			padding:8px 11px;
+			font-size:13px;
 		}
     `}"/>
 `)

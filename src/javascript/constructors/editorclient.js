@@ -1,15 +1,15 @@
 let editorClients = []
 
 function EditorClient({
-	name="",
-},object){
+	name = '',
+}, object ){
 	return {
-		do(name,args){
-			if(object[name]!=null){
+		do( name, args ){
+			if( object[name] ){
 				return object[name](args)
 			}
 		}
 	}
 }
 
-export  { EditorClient, editorClients}
+export { EditorClient, editorClients }

@@ -4,22 +4,22 @@ const { webFrame } = window.require('electron')
 const cachedConfiguration = getConfiguration()
 
 function saveConfiguration(){
-	cachedConfiguration.store.set('config',StaticConfig.data)
+	cachedConfiguration.store.set('config', StaticConfig.data )
 }
 
 const StaticConfig = new puffin.state(
-	Object.assign({},cachedConfiguration.config)
+	Object.assign( {}, cachedConfiguration.config )
 )
 
-StaticConfig.changed(function(data){
+StaticConfig.changed( data => {
 	saveConfiguration()
 })
 
-StaticConfig.keyChanged('appZoom',(value)=> {
-	webFrame.setZoomFactor(value)
+StaticConfig.keyChanged('appZoom', value => {
+	webFrame.setZoomFactor( value )
 })
 
-StaticConfig.keyChanged('editorFSWatcher',(status)=>{
+StaticConfig.keyChanged('editorFSWatcher', status =>{
 	if( status ){
 		StaticConfig.emit('startWatchers')
 	}else{
@@ -27,8 +27,8 @@ StaticConfig.keyChanged('editorFSWatcher',(status)=>{
 	}
 })
 
-webFrame.setZoomFactor(StaticConfig.data.appZoom)
+webFrame.setZoomFactor( StaticConfig.data.appZoom )
 
-console.log(StaticConfig)
+console.log (StaticConfig )
 
 export default StaticConfig

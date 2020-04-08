@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200508 - 1 [2.0.70]
+- Fixed input dialog
+- Improved: now using fast-safe-stringify instead of JSON.stringify, because it doesn't work well sometimes
+- And made a massive refactoring
+
 #### 200502 - 1 [2.0.68]
 - Improved: Store improvements
 

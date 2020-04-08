@@ -37,9 +37,9 @@ function getStatus(path){
 }
 
 function createWatcher(dirPath,explorerState){
-	const folderPath = normalizeDir(dirPath)	
-	const gitWatcherPath = normalizeDir(path.join(folderPath,'.git','logs','HEAD'))
-	const projectWatcher = chokidar.watch(folderPath, {
+	const folderPath = normalizeDir( dirPath )	
+	const gitWatcherPath = normalizeDir(path.join( folderPath ,'.git','logs','HEAD'))
+	const projectWatcher = chokidar.watch( folderPath , {
 		ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
 		persistent: true,
 		interval: 250,
@@ -48,42 +48,42 @@ function createWatcher(dirPath,explorerState){
 	projectWatcher
 		.on('add', filePath => {
 			explorerState.emit('newFile',{
-				containerFolder:normalizeDir(path.dirname(filePath)),
+				containerFolder:normalizeDir(path.dirname( filePath )),
 				fileName:path.basename(filePath)
 			})
 		})
-		.on('change', async(fileDir) => {
-			const filePath = normalizeDir(fileDir)
+		.on('change', async fileDir => {
+			const filePath = normalizeDir( fileDir )
 			explorerState.emit('changedFile',{
 				filePath
 			})
 		})
 		.on('unlink', fileDir =>{
-			const filePath = normalizeDir(fileDir)
+			const filePath = normalizeDir( fileDir )
 			explorerState.emit('removedFile',{
 				filePath
 			})
 		})
 		.on('addDir', folderPath => {
 			explorerState.emit('newFolder',{
-				containerFolder:normalizeDir(path.dirname(folderPath)),
-				folderName:path.basename(folderPath)
+				containerFolder: normalizeDir(path.dirname( folderPath )),
+				folderName: path.basename(folderPath)
 			})
 		})
 		.on('unlinkDir', folderDir => {
-			const folderPath = normalizeDir(folderDir)
+			const folderPath = normalizeDir( folderDir )
 			explorerState.emit('removedFolder',{
 				folderPath
 			})
 		})
-	const gitWatcher = chokidar.watch(gitWatcherPath, {
+	const gitWatcher = chokidar.watch( gitWatcherPath, {
 		persistent: true,
 		interval: 400,
 		ignoreInitial: true
 	});
-	gitWatcher.on('change',async()=>{
+	gitWatcher.on('change',async () => {
 		RunningConfig.emit('gitStatusUpdated',{
-			gitChanges : await getStatus(folderPath),
+			gitChanges : await getStatus( folderPath ),
 			parentFolder:folderPath
 		})
 	})
@@ -95,10 +95,10 @@ function createWatcher(dirPath,explorerState){
 
 function getlastFolderPosition(container){
 	const items = container.children
-	return Object.keys(items).filter((index)=>{
+	return Object.keys(items).find((index)=>{
 		const item = items[index]
 		return item.getAttribute("isDirectory") == "false"?index:null
-	})[0]
+	})
 }
 
 async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitChanges=null){

@@ -21,9 +21,9 @@ const ImageViewerStyle = puffin.style.div`
 const ImageViewerClient = new EditorClient({
 	name:'codemirror',
 },{
-	getValue: (instance) => "",
-	getLangFromExt(extension){
-		switch(extension){
+	getValue: instance => '',
+	getLangFromExt( extension ){
+		switch( extension ){
 			/*
 			Every case refers to a supported image format.
 			*/
@@ -45,19 +45,19 @@ const ImageViewerClient = new EditorClient({
 	create({ element, directory }){
 		const ImageViewerComp = puffin.element(`
 			<ImageViewerStyle>
-				<img draggable="false" src="${directory}"/>
+				<img draggable="false" src="${ directory }"/>
 			</ImageViewerStyle>
 		`,{
 			components:{
 				ImageViewerStyle
 			}
 		})
-		puffin.render(ImageViewerComp,element)
+		puffin.render( ImageViewerComp, element)
 		return {
 			instance : {} //Returns empty object because there is no editor instance
 		}
 	},
-	getCursorPosition({instance}){
+	getCursorPosition({ instance }){
 		return {
 			line:0,
 			ch:0

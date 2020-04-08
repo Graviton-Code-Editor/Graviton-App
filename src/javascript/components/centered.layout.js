@@ -9,9 +9,6 @@ const CenteredLayout = puffin.element(`
 			align-items:center;
 			justify-content:center;
 		}
-		& > *{
-		
-		}
 	`}">
 	</div>
 `)

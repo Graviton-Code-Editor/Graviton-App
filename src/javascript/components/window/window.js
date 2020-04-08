@@ -1,9 +1,7 @@
 import { puffin } from '@mkenzo_8/puffin'
-import ThemeProvider from '../../utils/themeprovider'
 
 const WindowBody = puffin.element(`
 	<div class="${puffin.style.css`
-		${ThemeProvider}
 			&{
 				border:1px solid var(--windowBorder);
 				width:200px;
@@ -16,9 +14,7 @@ const WindowBody = puffin.element(`
 				height:auto;
 				display:flex;
 				animation:windowOpens ease-out 0.12s;
-			}
-			& * {
-				color:{{textColor}};
+				color: var(--textColor);
 			}
 		`}">
 	</div>

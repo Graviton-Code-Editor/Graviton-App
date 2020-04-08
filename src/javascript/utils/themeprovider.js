@@ -5,9 +5,9 @@ import PluginsRegistry from 'PluginsRegistry'
 
 let currentTheme = StaticConfig.data.theme;
 
-StaticConfig.keyChanged('appTheme',function( newTheme ){
-	if( currentTheme != newTheme ){
-		applyTheme(StaticConfig)
+StaticConfig.keyChanged('appTheme', newTheme => {
+	if( currentTheme !== newTheme ){
+		applyTheme( StaticConfig )
 		currentTheme = newTheme
 	}
 })
@@ -22,8 +22,6 @@ function applyTheme( state ){
 	ThemeProvider.triggerChange()
 }
 
-RunningConfig.on('allPluginsLoaded',function(){
-	applyTheme(StaticConfig)
-})
+RunningConfig.on('allPluginsLoaded', () => applyTheme(StaticConfig) )
 
 export default ThemeProvider

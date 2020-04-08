@@ -5,7 +5,7 @@ const registry = new puffin.state({
 	colorsSchemes:{}
 })
 
-function add(pkg){
+function add( pkg ){
 	registry.data.list[pkg.name] = pkg
 	registry.data.colorsSchemes[pkg.name] = pkg.colorsScheme
 }

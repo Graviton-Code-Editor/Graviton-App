@@ -3,27 +3,25 @@ import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
 function CommandPrompt({
-	name=Math.random(),
+	name = Math.random(),
 	showInput = true,
-	inputPlaceHolder = "",
-	options=[],
-	scrollOnTab=false,
+	inputPlaceHolder = '',
+	options = [],
+	scrollOnTab = false,
 	closeOnKeyUp = false,
 	onSelected = ()=>{},
 	onScrolled = ()=>{}
 }){
-	if(document.getElementById(name) != null) return; // Check if there are any command prompts already opened
+	if( document.getElementById(name) ) return; // Check if there are any command prompts already opened
 	let CommandPromptState = new puffin.state({
 		hoveredOption : null
 	})
 	const configArguments = arguments[0]
 	const CommandPromptComponent = puffin.element(`
-		<CommandPromptBody id="${name}" keydown="$scrolling">
-			<WindowBackground window="${name}"/>
+		<CommandPromptBody id="${ name }" keydown="$scrolling">
+			<WindowBackground window="${ name }"/>
 			<div class="container">
-				${(function(){
-						return `<input style="${showInput?'':'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" keyup="$writing"/>`
-				})()}
+				<input style="${ showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;' }" placeHolder="${ inputPlaceHolder }" keyup="$writing"/>
 				<div/>
 			</div>
 		</CommandPromptBody>
@@ -40,14 +38,14 @@ function CommandPrompt({
 						if(scrollOnTab){
 							break;
 						}
-						selectOption(CommandPromptState.data.hoveredOption,{options,onSelected})
+						selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
 						closeCommandPrompt(CommandPromptComponent)
 					case 17:
 						if(!scrollOnTab){
 							 break;
 						 }
 					case 13:
-						selectOption(CommandPromptState.data.hoveredOption,{options,onSelected})
+						selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
 						closeCommandPrompt(CommandPromptComponent)
 						break;
 					case 38:
@@ -62,9 +60,9 @@ function CommandPrompt({
 								}) 
 							},
 							{
-								parent:this.parentElement.children[1],
-								state:CommandPromptState,
-								component:CommandPromptComponent
+								parent: this.parentElement.children[1],
+								state: CommandPromptState,
+								component: CommandPromptComponent
 							}
 						)
 				}
@@ -73,13 +71,13 @@ function CommandPrompt({
 				switch(e.keyCode){
 					case 38:
 						scrollOptions({
-							state:CommandPromptState,
-							scrollingDirection:'up',
+							state: CommandPromptState,
+							scrollingDirection: 'up',
 							...configArguments
 						})
 						break;
 					case 9:
-						e.preventDefault();
+						e.preventDefault()
 						if( !scrollOnTab) {
 							
 							break;
@@ -87,8 +85,8 @@ function CommandPrompt({
 						
 					case 40:
 						scrollOptions({
-							state:CommandPromptState,
-							scrollingDirection:'down',
+							state: CommandPromptState,
+							scrollingDirection: 'down',
 							...configArguments
 						})
 						break;
@@ -104,33 +102,33 @@ function CommandPrompt({
 						...configArguments
 					},
 					{
-						parent:container,
-						state:CommandPromptState,
-						component:CommandPromptComponent
+						parent: container,
+						state: CommandPromptState,
+						component: CommandPromptComponent
 					}
 				)
-				window.addEventListener('keydown',(e)=>{
+				window.addEventListener('keydown',e => {
 					if(e.keyCode === 27){
 						closeCommandPrompt(CommandPromptComponent)
 					}
 				})
 				const input = target.children[1].children[0]
-					input.focus()
+				input.focus()
 			}
 		}
 	})
 
-	puffin.render(CommandPromptComponent,document.getElementById("windows"))
+	puffin.render( CommandPromptComponent, document.getElementById("windows") )
 }
 
-function closeCommandPrompt(CommandPromptComponent){
+function closeCommandPrompt( CommandPromptComponent ){
 	CommandPromptComponent.node.remove()
 }
 
 function scrollOptions({ state, scrollingDirection, onScrolled}){
 	const hoveredOption = state.data.hoveredOption
 	const allOptions = hoveredOption.parentElement.children
-	const hoveredOptionPosition = (function(){
+	const hoveredOptionPosition = (() => {
 		let index = 0;
 		for(let option of allOptions){
 			if(option == hoveredOption) break;
@@ -139,28 +137,28 @@ function scrollOptions({ state, scrollingDirection, onScrolled}){
 		return index
 	})()
 
-	if( scrollingDirection == "up" ){
-		if(hoveredOptionPosition != 0){
+	if( scrollingDirection === 'up' ){
+		if(hoveredOptionPosition !== 0){
 			state.data.hoveredOption = allOptions[hoveredOptionPosition-1]
 		}else{
 			state.data.hoveredOption = allOptions[allOptions.length-1]
 		} 
-	}else if( scrollingDirection == "down" ){
-		if( hoveredOptionPosition != allOptions.length -1 ){
+	}else if( scrollingDirection === 'down' ){
+		if( hoveredOptionPosition !== allOptions.length -1 ){
 			state.data.hoveredOption = allOptions[hoveredOptionPosition+1]
 		}else{
 			state.data.hoveredOption = allOptions[0]
 		}
 	}
-	hoverOption(state.data.hoveredOption,allOptions,onScrolled)   
+	hoverOption( state.data.hoveredOption, allOptions, onScrolled )   
 }
 
 function hoverOption( hoveredOption, allOptions, onScrolled=()=>{} ){
 	for(let option of allOptions){
-		if(option == hoveredOption){
+		if(option === hoveredOption){
 			option.classList.add('active');
 			onScrolled({
-				label:option.textContent
+				label: option.textContent
 			})
 		}else{
 			option.classList.remove('active');

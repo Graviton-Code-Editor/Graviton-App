@@ -2,10 +2,10 @@ import { puffin } from '@mkenzo_8/puffin'
 
 const resizeSelector = Math.random()
 
-function startResizing(event,resizerElement = document.getElementById(resizeSelector)){
+function startResizing( event, resizerElement = document.getElementById(resizeSelector) ){
 	const otherChildren = resizerElement.parentElement.children
 	let leftPanel = null;
-	Object.keys(otherChildren).forEach(function(index){
+	Object.keys(otherChildren).forEach( index => {
 		const child = otherChildren[index]
 		if (child.id == resizerElement.id) {
 			leftPanel = otherChildren[index-1]
@@ -15,8 +15,8 @@ function startResizing(event,resizerElement = document.getElementById(resizeSele
 }
 
 function stopResizing(){
-	window.removeEventListener("mousemove", startResizing, false);
-	window.removeEventListener("mouseup", stopResizing, false);
+	window.removeEventListener('mousemove', startResizing, false);
+	window.removeEventListener('mouseup', stopResizing, false);
 }
 
 const resizerComponent = puffin.element(`
@@ -26,17 +26,19 @@ const resizerComponent = puffin.element(`
 				user-select: none;
 				padding:3px;
 				cursor:e-resize;
-			}`}"/>
+			}
+		`}"
+	/>
 `,{
 	events:{
-		mounted(target){
-			target.id = resizeSelector
+		mounted(){
+			this.id = resizeSelector
 		}
 	},
 	methods:{
-		working(e){
-			window.addEventListener("mousemove",startResizing, false);
-			window.addEventListener("mouseup", stopResizing, false);
+		working(){
+			window.addEventListener('mousemove', startResizing, false);
+			window.addEventListener('mouseup', stopResizing, false);
 		}
 	}
 })

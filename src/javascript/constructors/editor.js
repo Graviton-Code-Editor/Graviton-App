@@ -6,15 +6,11 @@ import Notification from './notification'
 const path = window.require("path")
 
 function sortByRanking(language){
-	const selectedEditor = RunningConfig.data.editorsRank.filter(function(Client){
-		const { unknown=false } = Client.do('getLangFromExt',language)
+	const selectedEditor = RunningConfig.data.editorsRank.filter( Client => {
+		const { unknown = false } = Client.do('getLangFromExt',language)
 		if( !unknown ) return Client
 	})[0]
-	if( selectedEditor != null ) {
-		return selectedEditor
-	}else{
-		return RunningConfig.data.editorsRank[0]
-	}
+	 return selectedEditor || RunningConfig.data.editorsRank[0]
 }
 
 function Editor({
