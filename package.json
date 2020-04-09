@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.70",
+	"version": "2.0.71",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -55,6 +55,7 @@
 		"extract-zip": "^2.0.0",
 		"fast-safe-stringify": "^2.0.7",
 		"fs-extra": "^8.1.0",
+		"rimraf": "^3.0.2",
 		"shortcuts": "^1.2.0",
 		"simple-git": "^1.131.0",
 		"trash": "^6.1.1",

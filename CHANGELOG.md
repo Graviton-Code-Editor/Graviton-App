@@ -2,6 +2,9 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200509 - 1 [2.0.71]
+- Change: Arctic and Night theme are reserved plugins, so you cannot unninstall them
+
 #### 200508 - 1 [2.0.70]
 - Fixed input dialog
 - Improved: now using fast-safe-stringify instead of JSON.stringify, because it doesn't work well sometimes
