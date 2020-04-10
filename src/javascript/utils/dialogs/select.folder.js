@@ -1,6 +1,12 @@
 const { remote } = window.require("electron")
 import normalizeDir from  '../directory.normalizer'
 
+/** 
+ * Opens a native dialog
+ * to select folders
+ * @constructor
+ * @returns promise
+ */
 function selectFolderDialog(){
 	return new Promise((resolve, reject) => {
 		const { dialog , getCurrentWindow} = remote;
