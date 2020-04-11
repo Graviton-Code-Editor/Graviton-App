@@ -147,14 +147,14 @@ function Tab({
 				tabState.on('unfocusedMe',()=>{
 					RunningConfig.emit('aTabHasBeenUnfocused',{
 						tabElement:this,
-						directory:normalizeDir(directory)
+						directory:directory
 					})
 					this.props.active = false
 				})
 				tabState.on('destroyed',()=>{
 					RunningConfig.emit('aTabHasBeenClosed',{
 						tabElement:this,
-						directory:normalizeDir(directory)
+						directory:directory
 					})
 				})
 				tabState.on('savedMe',()=>{
@@ -162,11 +162,12 @@ function Tab({
 						toggleTabStatus({
 							tabElement:this,
 							newStatus:true,
-							tabEditor:TabEditorComp.node
+							tabEditor:TabEditorComp.node,
+							directory
 						})
 						RunningConfig.emit('aTabHasBeenSaved',{
 							tabElement:this,
-							path:normalizeDir(directory),
+							path:directory,
 							parentFolder
 						})
 					}
@@ -177,7 +178,8 @@ function Tab({
 						toggleTabStatus({
 							tabElement:this,
 							newStatus:true,
-							tabEditor:TabEditorComp.node
+							tabEditor:TabEditorComp.node,
+							directory
 						})
 					}
 				})
@@ -186,7 +188,8 @@ function Tab({
 						toggleTabStatus({
 							tabElement:this,
 							newStatus:false,
-							tabEditor:TabEditorComp.node
+							tabEditor:TabEditorComp.node,
+							directory
 						})
 						this.props.saved = false
 						RunningConfig.emit('aTabHasBeenUnSaved',{
@@ -283,11 +286,12 @@ function toggleCross(target,state){
 function toggleTabStatus({
 	tabElement,
 	tabEditor,
-	newStatus
-	}){
+	newStatus,
+	directory
+}){
 	if( newStatus ){
 		if(!tabElement.props.saved){
-			saveFile(tabElement,()=>{
+			saveFile(directory,()=>{
 				RunningConfig.emit('tabSaved',{
 					element:tabElement,
 					parentFolder:tabElement.props.state.data.parentFolder
@@ -323,13 +327,13 @@ function toggleTabStatus({
 	} 
 }
 
-function saveFile(tab,callback){
-	if( tab.directory ) {
+function saveFile(directory,callback){
+	if( directory ) {
 		const  { client, instance } = RunningConfig.data.focusedEditor
-		fs.writeFile(tab.directory, client.do('getValue',instance)).then(()=> {
+		fs.writeFile(directory, client.do('getValue',instance)).then(()=> {
 			callback()
 		}).catch((err)=>{
-			console.log(err)
+			console.error(err)
 		})
 	}else{
 		callback()

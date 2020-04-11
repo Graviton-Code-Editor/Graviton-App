@@ -226,7 +226,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			removeContent:replaceOldExplorer
 		})
 	}
-	fs.readdir(parsedFolderPath).then(function(paths){
+	fs.readdir(path.normalize(parsedFolderPath)).then( paths => {
 		const explorerComponent = puffin.element(`
 			<div style="padding:0px 7px;">
 				${paths.map(function(dir){ //Load folders 
@@ -271,7 +271,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			})
 		}
 	}).catch(err=>{
-		console.log(err)
+		console.error(err)
 		new Notification({
 			title:'Error',
 			content:err

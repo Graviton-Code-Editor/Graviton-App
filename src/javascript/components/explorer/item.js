@@ -283,7 +283,7 @@ function Item({
 					target.state = itemState
 					const gitChanges = target.parentElement.parentElement.gitChanges 
 					target.gitChanges = gitChanges
-					const itemDirectory = normalizeDir(target.getAttribute("fullpath"),true)
+					const itemDirectory = normalizeDir(target.getAttribute('fullpath'),true)
 					const explorerState = explorerContainer && explorerContainer.state || itemState
 					this.explorerContainer = explorerContainer || this
 					const fileExtension = isItemFolder?null:getFormat(target.getAttribute("fullpath"))
@@ -393,11 +393,11 @@ function Item({
 							const fileExtension = getFormat( itemPath )
 							const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 								title: basename,
-								directory: itemPath,
+								directory: itemDirectory,
 								parentFolder: target.getAttribute('parentFolder')
 							})
 							if( !isCancelled ){
-								fs.readFile( itemPath ,'UTF-8').then( data => {
+								fs.readFile( itemDirectory ,'UTF-8').then( data => {
 									new Editor({
 										language:fileExtension,
 										value:data ,
