@@ -219,7 +219,7 @@ RunningConfig.on('addLogWorkspace',({ path:workspaceDir })=>{
 	const matches = StaticConfig.data.appWorkspacesLog.find( workspace => {
 		return workspace == workspacePath 
 	})
-	if( !matches[0] ){
+	if( !matches ){
 		StaticConfig.data.appWorkspacesLog.push(workspacePath)
 		StaticConfig.triggerChange()
 	}
