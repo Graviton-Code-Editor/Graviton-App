@@ -49,8 +49,8 @@ function getMyStatus( fileDir, gitChanges, projectDir ){
 					const dirsLocal = normalizeDir( filePath ).split( path.sep )
 					dirsGit.filter( dirGit =>{
 						const dirLocal = dirsLocal[dirsLocal.length-1]
-						if(dirLocal === dirGit){
-							if(normalizeDir( path.resolve( projectPath, gitPath ) ).indexOf( normalizeDir(filePath) ) > -1){
+						if( dirLocal === dirGit ){
+							if( normalizeDir( path.resolve( projectPath, gitPath ) ).indexOf( normalizeDir(filePath) ) > -1){
 								return result = {
 									status:status
 								}
@@ -499,7 +499,7 @@ function setStateClosed( target ){
 
 function removeDirectoryOrFile( element ){
 	areYouSureDialog().then( () => {
-		trash([element.parentElement.getAttribute("fullpath")]).then( () => {
+		trash([normalizeDir(element.parentElement.getAttribute("fullpath"),true)]).then( () => {
 			element && element.state && element.state.emit('destroyed')
 		});        
 	}).catch( err => {

@@ -22,29 +22,30 @@ function newDirectoryDialog({
 }
 
 function createDirectory(value,isFolder,parentDirectory,container,explorerState){
-	const dir = path.join(parentDirectory,value)
-	if (!fs.existsSync(dir)){
+	const itemDirectory = normalizeDir(path.join(parentDirectory,value),true)
+	const itemFakeDirectory = normalizeDir(path.join(parentDirectory,value))
+	if (!fs.existsSync(itemDirectory)){
 		if(isFolder){
-			if (!fs.existsSync(dir)){
-				fs.mkdirSync(dir);
+			if (!fs.existsSync(itemDirectory)){
+				fs.mkdirSync(itemDirectory);
 				explorerState.emit('createItem',{
 					container:container,
 					containerFolder:normalizeDir(container.getAttribute("parentfolder")),
 					level:container.getAttribute("level"),
-					directory:dir,
-					directoryName:path.basename(dir),
+					directory:itemFakeDirectory,
+					directoryName:path.basename(itemFakeDirectory),
 					isFolder:true
 				})
 			}
 		}else{
-			fs.writeFile(dir, '', (err) => {
+			fs.writeFile(itemDirectory, '', (err) => {
 				if (err) throw err;
 				explorerState.emit('createItem',{
 					container:container,
 					containerFolder:normalizeDir(container.getAttribute("parentfolder")),
 					level:container.getAttribute("level"),
-					directory:dir,
-					directoryName:path.basename(dir),
+					directory:itemFakeDirectory,
+					directoryName:path.basename(itemFakeDirectory),
 					isFolder:false
 				})
 			}); 
