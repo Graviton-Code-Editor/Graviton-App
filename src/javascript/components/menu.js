@@ -88,12 +88,11 @@ const MenuComp = puffin.element(`
 			fill:var(--menuOptionHoveringText);
 		}
 		& span{
-			height:0.1px;
-			max-height:0.1px;
-			border-radius:25px;
+			height:2px;
+			border-radius:100px;
 			width:90%;
 			display:block;
-			border: 0.9px solid var(--menuDivider);
+			background:var(--menuDivider);
 			margin:5px auto;
 			box-sizing:border-box;
 		}

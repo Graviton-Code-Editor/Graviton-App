@@ -45,8 +45,8 @@ function getMyStatus( fileDir, gitChanges, projectDir ){
 						status:status
 					}
 				}else{
-					const dirsGit =  normalizeDir( gitPath ).split( path.sep )
-					const dirsLocal = normalizeDir( filePath ).split( path.sep )
+					const dirsGit =  normalizeDir( gitPath ).split( path.sep ).filter(Boolean)
+					const dirsLocal = normalizeDir( filePath ).split( path.sep ).filter(Boolean)
 					dirsGit.filter( dirGit =>{
 						const dirLocal = dirsLocal[dirsLocal.length-1]
 						if( dirLocal === dirGit ){
