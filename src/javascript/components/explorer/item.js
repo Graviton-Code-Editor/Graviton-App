@@ -150,19 +150,19 @@ const ItemWrapper = puffin.style.css`
 		min-width:0px;
 		padding:3px;
 	}
+	&[gitStatus="modified"] > button > span {
+		color:var(--explorerItemGitModifiedText);
+	}
+	&[gitStatus="not_added"] > button > span {
+		color:var(--explorerItemGitNotAddedText);
+	}
 	&[gitStatus="modified"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitModifiedIndicator);
 	}
-	&[gitStatus="modified"] > button > span {
-		color:var(--explorerItemGitModifiedIndicator);
-	}
 	&[gitStatus="not_added"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitNotAddedIndicator);
-	}
-	&[gitStatus="not_added"] > button > span {
-		color:var(--explorerItemGitNotAddedText);
 	}
 	&[isFolder="true"] > button > .gitStatus::after{	
 		content: attr(count) ;

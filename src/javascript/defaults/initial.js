@@ -13,13 +13,13 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import Languages from '../../../languages/*.json'
-import StatusBarItem from '../constructors/status.bar.item'
 import ThemeProvider from '../utils/themeprovider';
-import Plus from '../components/icons/plus'
-import Minus from '../components/icons/minus'
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
 import './shortcuts'
+import './status.bar.items/git'
+import './status.bar.items/zoom'
+
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -265,20 +265,6 @@ function init(){
 			]
 		})
 	new Panel() //Initial Panel
-	new StatusBarItem({
-		component:Plus,
-		position:'right',
-		action:()=>{
-			StaticConfig.data.appZoom += 0.1
-		}
-	})
-	new StatusBarItem({
-		component:Minus,
-		position:'right',
-		action:()=>{
-			StaticConfig.data.appZoom -= 0.1
-		}
-	})
 	PluginsRegistry.add(Arctic)    
 	PluginsRegistry.add(Night)  
 	

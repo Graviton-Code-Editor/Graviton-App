@@ -82,9 +82,12 @@ function createWatcher(dirPath,explorerState){
 		ignoreInitial: true
 	});
 	gitWatcher.on('change',async () => {
+		const gitChanges = await getStatus( folderPath )
 		RunningConfig.emit('gitStatusUpdated',{
-			gitChanges : await getStatus( folderPath ),
-			parentFolder:folderPath
+			gitChanges,
+			branch: gitChanges.current,
+			parentFolder: folderPath,
+			anyChanges: gitChanges.files.length > 0
 		})
 	})
 	return {
@@ -97,17 +100,27 @@ function getlastFolderPosition(container){
 	const items = container.children
 	return Object.keys(items).find((index)=>{
 		const item = items[index]
-		return item.getAttribute("isDirectory") == "false"?index:null
+		return item.getAttribute("isDirectory") == "false"? index : null
 	})
 }
 
-async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitChanges=null){
+
+async function Explorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null ){
 	const parsedFolderPath = normalizeDir(folderPath,true)
 	if(level == 0){
 		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
-		if( gitResult ) gitChanges = await getStatus(parsedFolderPath)
+		if( gitResult ) {
+			gitChanges = await getStatus(parsedFolderPath)
+			RunningConfig.emit('loadedGitRepo',{
+				gitChanges,
+				branch: gitChanges.current,
+				parentFolder: parsedFolderPath,
+				anyChanges: gitChanges.files.length > 0
+			})
+			
+		}
 		const itemComputed = getItemComputed({
-			projectPath:folderPath,
+			projectPath: folderPath,
 			folderPath,
 			dirName: parseDirectory(folderPath),
 			dirPath: normalizeDir(folderPath),
@@ -118,7 +131,10 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			itemComputed
 			 ,{
 				components:{
-					Item:Item({parentFolder:parsedFolderPath,explorerContainer:null})
+					Item:Item({
+						parentFolder: parsedFolderPath,
+						explorerContainer: null
+					})
 			},
 			events:{
 				mounted:async function(){
@@ -127,45 +143,48 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 					let gitWatcher = null;
 					explorerState.emit('doReload')
 					this.gitChanges = gitChanges
-					RunningConfig.on(['aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated','aFileHasBeenRemoved','aFolderHasBeenRemoved'],async ({parentFolder})=>{
+					RunningConfig.on(['aTabHasBeenSaved','aFileHasBeenCreated','aFolderHasBeenCreated','aFileHasBeenRemoved','aFolderHasBeenRemoved'],async ({parentFolder}) => {
 						if( gitResult && parentFolder == folderPath) {
+							const gitChanges =  await getStatus(folderPath)
 							RunningConfig.emit('gitStatusUpdated',{
-								gitChanges : await getStatus(folderPath),
-								parentFolder
+								gitChanges,
+								parentFolder,
+								branch:gitChanges.current,
+								anyChanges:gitChanges.files.length > 0
 							})
 						}
 					})
 					if( gitResult ){
 						explorerState.emit('gitMarkProjectContainer',{ //Force to mark as modified the project item
-							gitChanges : await getStatus(folderPath),
-							containerFolder:folderPath
+							gitChanges: await getStatus(folderPath),
+							containerFolder: folderPath
 						})
 					}
 					/*
 					* The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
 					* The Git watcher just watchs the commit message file.
 					*/
-					explorerState.on('stopedWatcher',()=>{
-						if( projectWatcher != null ){
+					explorerState.on('stopedWatcher',() => {
+						if( projectWatcher ){
 							projectWatcher.close();
 							projectWatcher = null;
 						}
-						if( gitWatcher != null ){
+						if( gitWatcher ){
 							gitWatcher.close();
 							gitWatcher = null;
 						}
 					})
-					explorerState.on('startedWatcher',()=>{
+					explorerState.on('startedWatcher',() => {
 						if( projectWatcher == null ){
 							const watchers = createWatcher(folderPath,explorerState)
 							projectWatcher = watchers.projectWatcher
 							gitWatcher = watchers.gitWatcher
 						}
 					})
-					StaticConfig.on('stopWatchers',()=>{
+					StaticConfig.on('stopWatchers',() => {
 						explorerState.emit('stopedWatcher')
 					})
-					StaticConfig.on('startWatchers',()=>{
+					StaticConfig.on('startWatchers',() => {
 						explorerState.emit('startedWatcher')
 					})
 					if( StaticConfig.data.enableFileSystemWatcher ){
@@ -188,11 +207,11 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 								})
 							}
 							const itemComputed = getItemComputed({
-								projectPath:parsedFolderPath,
-								classSelector:possibleClass,
+								projectPath: parsedFolderPath,
+								classSelector: possibleClass,
 								dirName: directoryName,
 								dirPath: directory,
-								level:Number(level)+1,
+								level: Number(level)+1,
 								isFolder
 							}) 
 							const hotItem = puffin.element(itemComputed,{
@@ -200,12 +219,12 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 									Item:Item({parentFolder:parsedFolderPath,explorerContainer:container.explorerContainer})
 								}
 							})
-							if( container.children[1] != null){ //Check if the folder is opened
-								if(isFolder){
+							if( container.children[1]){ //Check if the folder is opened
+								if( isFolder ){
 									const folderPosition = getlastFolderPosition(container.children[1])
 									puffin.render(hotItem,container.children[1],{
 										position:folderPosition
-									})						
+									})
 								}else{
 									puffin.render(hotItem,container.children[1])
 								}
@@ -215,7 +234,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 				}
 			}
 		})
-		if(replaceOldExplorer && parent.children[0] != null){
+		if( replaceOldExplorer && parent.children[0] ){
 			for( let otherExplorer of parent.children){
 				RunningConfig.emit('removeFolderFromRunningWorkspace',{
 					folderPath:otherExplorer.getAttribute("fullpath")
@@ -229,25 +248,25 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 	fs.readdir(path.normalize(parsedFolderPath)).then( paths => {
 		const explorerComponent = puffin.element(`
 			<div style="padding:0px 7px;">
-				${paths.map(function(dir){ //Load folders 
+				${paths.map( dir => { //Load folders 
 					const itemDirectory = normalizeDir (path.join(folderPath,dir) )
 					if( fs.lstatSync(path.join(parsedFolderPath,dir)).isDirectory() )
 						return getItemComputed({
-							projectPath:parent.getAttribute("parentFolder"),
-							classSelector:folderPath,
+							projectPath: parent.getAttribute("parentFolder"),
+							classSelector: folderPath,
 							dirName: dir,
 							dirPath: itemDirectory,
 							level,
 							isFolder: true
 						}) 
 				}).join("")}
-				${paths.map(function(dir){ //Load files 
+				${paths.map( dir => { //Load files 
 					const itemDirectory = normalizeDir( path.join(folderPath,dir) )
 					if(!fs.lstatSync( path.join(parsedFolderPath,dir)).isDirectory() )
 						if(! dir.match("~") )
 							return getItemComputed({
-								projectPath:parent.getAttribute("parentFolder"),
-								classSelector:folderPath,
+								projectPath: parent.getAttribute("parentFolder"),
+								classSelector: folderPath,
 								dirName: dir,
 								dirPath: itemDirectory,
 								level,
@@ -257,7 +276,10 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 			</div>
 		`,{
 			components:{
-				Item:Item({parentFolder:parsedFolderPath,explorerContainer:parent.explorerContainer})
+				Item:Item({
+					parentFolder: parsedFolderPath,
+					explorerContainer: parent.explorerContainer
+				})
 			},
 			events:{
 				mounted(){
@@ -270,7 +292,7 @@ async function Explorer(folderPath,parent,level = 0,replaceOldExplorer=true,gitC
 				removeContent:false
 			})
 		}
-	}).catch(err=>{
+	}).catch( err => {
 		console.error(err)
 		new Notification({
 			title:'Error',

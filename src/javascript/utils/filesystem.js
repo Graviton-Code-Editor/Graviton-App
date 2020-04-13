@@ -10,7 +10,6 @@ import getFormat from './format.parser'
 import normalizeDir from  './directory.normalizer'
 import selectFolderDialog from './dialogs/select.folder'
 import selectFileDialog from './dialogs/select.file'
-import safeStringify from 'fast-safe-stringify'
 
 const path = window.require('path')
 const fs = window.require('fs-extra')
@@ -132,9 +131,7 @@ RunningConfig.on('addFolderToRunningWorkspace',function({
 		name:parseDirectory(folderDir),
 		path:folderDir
 	})
-	if( workspacePath ) {
-		RunningConfig.emit('saveCurrentWorkspace')
-	}else{
+	if( !workspacePath ) {
 		RunningConfig.data.workspacePath = null
 	}
 });
@@ -152,6 +149,7 @@ RunningConfig.on('addFolderToRunningWorkspaceDialog',({ replaceOldExplorer = fal
 			replaceOldExplorer,
 			workspacePath : RunningConfig.data.workspacePath
 		})
+		if( RunningConfig.data.workspacePath ) RunningConfig.emit('saveCurrentWorkspace')
 	}).catch(err => {
 		console.log(err)
 	});
@@ -233,7 +231,11 @@ RunningConfig.on('addLogWorkspace',({ path:workspaceDir })=>{
  */
 function saveConfiguration( workspaceDir, workspaceConfig ){
 	const workspaceDirNormalized = normalizeDir(workspaceDir)
-	const workspaceConfiguration = safeStringify(workspaceConfig,null,2)
+	const workspaceConfiguration = JSON.stringify(
+		workspaceConfig,
+		null,
+		2
+	)
 	fs.writeFile( workspaceDirNormalized ,workspaceConfiguration,'UTF-8', ( err, data ) => {
 		if (err) throw err;
 		StaticConfig.triggerChange()

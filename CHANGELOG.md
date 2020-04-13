@@ -2,6 +2,11 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200513 - 1 [2.0.74]
+- Improved Night theme
+- New: added a git branch indicator in the status bar
+- Improved: Removed unnecessary dependency
+
 #### 200509 - 1 [2.0.71]
 - Change: Arctic and Night theme are reserved plugins, so you cannot unninstall them
 
