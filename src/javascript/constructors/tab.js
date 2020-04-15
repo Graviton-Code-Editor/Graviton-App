@@ -244,7 +244,7 @@ function Tab({
 	})
 	const TabEditorComp = puffin.element(`
 		<TabEditor>
-			${component?component:''}
+			${component?'<component/>':''}
 		</TabEditor>
 	`,{
 			components:{
