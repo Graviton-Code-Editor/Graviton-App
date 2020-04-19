@@ -1,7 +1,7 @@
 import DialogBody from '../components/dialog/dialog'
 import WindowBackground  from '../components/window/background'
-import {puffin} from '@mkenzo_8/puffin'
-import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
+import { element, style, render } from '@mkenzo_8/puffin'
+import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
 import Window from './window'
 
 function Dialog({
@@ -19,42 +19,41 @@ function Dialog({
 			}
 		}
 	})}
-	const DialogComp = puffin.element(`
-			<DialogBody>
-				<div>
-					<H2>${title}</H2>
-					<Text>${content}</Text>
-				</div>
-				<div>
-					${buttons.map(function(btn,index){
-						return `<Button index="${index}" click="$closeWindow">${btn.label}</Button>`
-					}).join("")}
-				</div>
-			</DialogBody>
-	`,{
+	function mounted(){
+		if( component ){
+			render(component,this.children[0].children[1])
+		}
+	}
+	const DialogComp = element({
 		components:{
 			DialogBody,
 			WindowBackground,
 			H2:Titles.h2,
-			Text,
-			Button
+			Text
 		},
-		events:{
-			mounted(){
-				if(component != null){
-					puffin.render(component,this.children[0].children[1])
-				}
-			}
-		},
-		methods:{
-			closeWindow(){
-				computedMethods[Number(this.getAttribute("index"))]()
-				dialogWindow.close()
-			}
-		}
-	})
+	})`
+		<DialogBody mounted="${mounted}">
+			<div>
+				<H2>${title}</H2>
+				<Text>${content}</Text>
+			</div>
+			<div>
+				${buttons.map(function(btn,index){
+					return element({
+						components:{
+							Button
+						}
+					})`<Button index="${index}" :click="${closeWindow}">${btn.label}</Button>`
+				})}
+			</div>
+		</DialogBody>
+	`
+	function closeWindow(){
+		computedMethods[Number(this.getAttribute("index"))]()
+		dialogWindow.close()
+	}
 	const dialogWindow = new Window({
-		component:DialogComp,
+		component:()=>DialogComp,
 		height:'200px',
 		width:'300px'
 	})

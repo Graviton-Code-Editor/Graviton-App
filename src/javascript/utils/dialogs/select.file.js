@@ -3,7 +3,7 @@ import normalizeDir from  '../directory.normalizer'
 
 /** 
  * Opens a native dialog
-  * to select files
+ * to select files
  * @constructor
  * @returns promise
  */

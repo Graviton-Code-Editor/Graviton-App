@@ -1,5 +1,5 @@
 //Renderer process
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
@@ -12,117 +12,26 @@ window.require('v8-compile-cache')
 
 import '../sass/main.scss'
 
-const ThemeWrapper = puffin.style.css`
-	${ThemeProvider}
-	html{
-		--puffinAccent:{{accentColor}};
-		--puffinTextColor:{{textColor}};
-		--puffinFont:mainFont;
-		--puffinButtonBackground:{{buttonBackground}};
-		--puffinCardBackground:{{cardBackground}};
-		--puffinRadioBackgroundHovering:{{radioBackgroundHovering}};
-		--puffinRadioCircleBackground:{{radioCircleBackground}};
-		--puffinRadioCircleBorder:{{radioCircleBorder}};
-		--puffinRadioCircleBorderHovering:{{radioCircleBorderHovering}};
-		--accentColor: {{accentColor}};
-		--textColor:{{textColor}};
-		--bodyBackground:{{bodyBackground}};
-		--titlebarBackground:{{titlebarBackground}};
-		--menuBackground:{{menuBackground}};
-		--menuButtonBackground:{{menuButtonBackground}};
-		--menuButtonHoveringBackground:{{menuButtonHoveringBackground}};
-		--menuButtonText:{{menuButtonText}};
-		--menuButtonHoveringText:{{menuButtonHoveringText}};
-		--menuOptionText:{{menuOptionText}};
-		--menuOptionHoveringText:{{menuOptionHoveringText}};
-		--menuDivider:{{menuDivider}};
-		--controlButtonsFill:{{controlButtonsFill}};
-		--controlButtonsHoverBackground:{{controlButtonsHoverBackground}};
-		--controlCloseButtonHoverBackground:{{controlCloseButtonHoverBackground}};
-		--controlCloseButtonHoverFill:{{controlCloseButtonHoverFill}};
-		--windowBackground:{{windowBackground}};
-		--contextmenuBackground:{{contextmenuBackground}};
-		--contextmenuButtonBackground:{{contextmenuButtonBackground}};
-		--contextmenuButtonText:{{contextmenuButtonText}};
-		--contextmenuButtonHoveringBackground:{{contextmenuButtonHoveringBackground}};
-		--contextmenuButtonHoveringText:{{contextmenuButtonHoveringText}};
-		--mainpanelBackground:{{mainpanelBackground}};
-		--tabsbarBackground:{{tabsbarBackground}};
-		--tabText:{{tabText}};
-		--tabBackground:{{tabBackground}};
-		--tabActiveText:{{tabActiveText}};
-		--tabActiveBackground:{{tabActiveBackground}};
-		--scrollbarBackground:{{scrollbarBackground}};
-		--scrollbarHoverBackground:{{scrollbarHoverBackground}};
-		--tabIconFill:{{tabIconFill}};
-		--tabIconHoverFill:{{tabIconHoverFill}};
-		--sidemenuBackground:{{sidemenuBackground}};
-		--sidemenuButtonBackground:{{sidemenuButtonBackground}};
-		--sidemenuButtonHoverBackground:{{sidemenuButtonHoverBackground}};
-		--sidemenuButtonActiveBackground:{{sidemenuButtonActiveBackground}};
-		--sidemenuButtonText:{{sidemenuButtonText}};
-		--sidemenuButtonActiveText:{{sidemenuButtonActiveText}};
-		--sidemenuSearcherBackground:{{sidemenuSearcherBackground}};
-		--sidemenuSearcherText:{{sidemenuSearcherText}};
-		--explorerItemText:{{explorerItemText}};
-		--explorerItemHoveringBackground:{{explorerItemHoveringBackground}};
-		--explorerItemSelectedBackground:{{explorerItemSelectedBackground}};
-		--explorerItemArrowBackground:{{explorerItemArrowBackground}};
-		--explorerItemGitModifiedText:{{explorerItemGitModifiedText}};
-		--explorerItemGitModifiedIndicator:{{explorerItemGitModifiedIndicator}};
-		--explorerItemGitNotAddedText:{{explorerItemGitNotAddedText}};
-		--explorerItemGitNotAddedIndicator:{{explorerItemGitNotAddedIndicator}};
-		--explorerItemGitIndicatorText:{{explorerItemGitIndicatorText}};
-		--windowBorder:{{windowBorder}};
-		--fileNotSavedIndicator:{{fileNotSavedIndicator}};
-		--fileNotSavedIndicatorHovering:{{fileNotSavedIndicatorHovering}};
-		--controlCloseButtonActiveBackground:{{controlCloseButtonActiveBackground}};
-		--controlCloseButtonActiveFill:{{controlCloseButtonActiveFill}};
-		--editorDialogBackground:{{editorDialogBackground}};
-		--editorDialogText:{{editorDialogText}};
-		--contextmenuDivider:{{contextmenuDivider}};
-		--statusbarBackground:{{statusbarBackground}};
-		--statusbarItemBackground:{{statusbarItemBackground}};
-		--statusbarItemHoveringBackground:{{statusbarItemHoveringBackground}};
-		--statusbarItemText:{{statusbarItemText}};
-		--statusbarItemHoveringText:{{statusbarItemHoveringText}};
-		--statusbarItemIconBackground:{{statusbarItemIconBackground}};
-		--inputBackground:{{inputBackground}};
-		--inputText:{{inputText}};
-		--splashScreenText:{{splashScreenText}};
-		--splashScreenBackground:{{splashScreenBackground}};
-		--commandPromptInputBackground:{{commandPromptInputBackground}};
-		--commandPromptInputText:{{commandPromptInputText}};
-		--commandPromptInputBorder:{{commandPromptInputBorder}};
-		--commandPromptBackground:{{commandPromptBackground}};
-		--commandPromptOptionBackground:{{commandPromptOptionBackground}};
-		--commandPromptOptionActiveBackground:{{commandPromptOptionActiveBackground}};
-		--commandPromptOptionText:{{commandPromptOptionText}};
-		--commandPromptOptionActiveText:{{commandPromptOptionActiveText}};
-		--notificationBackground:{{notificationBackground}};
-		--notificationTitleText:{{notificationTitleText}};
-		--notificationContentText:{{notificationContentText}};
-		--panelBorder:{{panelBorder}};
-		--statusbarBorder:{{statusbarBorder}};
-		--notificationButtonBackground:{{notificationButtonBackground}};
-		--switchBackground:{{switchBackground}};
-		--switchIndicatorActivatedBackground:{{switchIndicatorActivatedBackground}};
-		--switchIndicatorDesactivatedBackground:{{switchIndicatorDesactivatedBackground}};
-		--tabHoveringWhileDraggingBackground:{{tabHoveringWhileDraggingBackground}};
-		--loaderBackground:{{loaderBackground}};
-		--statusbarGitItemText:{{statusbarGitItemText}};
-		--statusbarGitItemModifiedText:{{statusbarGitItemModifiedText}};
-	}
+const ThemeWrapper = style`
+
 `
 
-const App = puffin.element(`
-    <div class="${ThemeWrapper} ${puffin.style.css`
+const App = element({
+	components:{
+		TitleBar,
+		SplashScreen,
+		StatusBar,
+		Resizer
+	},
+})`
+    <div mounted="${mounted}" class="${()=>ThemeWrapper} ${()=>style`
 		body{
 			padding:0px;
 			margin:0px;
 			max-width:100%;
 			max-height:100%;
 			overflow:hidden;
+			--puffinFont:mainFont;
 		}
 		@font-face {
 			font-family: mainFont;
@@ -241,30 +150,19 @@ const App = puffin.element(`
 			</div>
 			<StatusBar/>
 		</div>
-		
+		<Resizer/>
 		<div id="windows"/>
 		<div id="notifications"/>
 		<SplashScreen/>
 	</div>
-`,{
-	components:{
-		TitleBar,
-		SplashScreen,
-		Resizer,
-		StatusBar
-	},
-	events:{
-		mounted(){
-			init()
-			window.addEventListener("load",function(){
-				if(RunningConfig.data.arguments[0] == null){
-					Welcome().launch()
-				}
-			})
+`
+function mounted(){
+	init()
+	window.addEventListener("load",function(){
+		if(RunningConfig.data.arguments[0] == null){
+			Welcome().launch()
 		}
-	}
-})
+	})
+}
 
-puffin.render(App,document.getElementById("App"),{
-	removeContent:true
-})
+render(App,document.getElementById("App"))

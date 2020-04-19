@@ -17,11 +17,31 @@ const ThemeProvider = new puffin.state({
 	splashScreenBackground:'#191919'
 })
 
+const puffinThemingKeys = {
+	puffinAccent:'accentColor',
+	puffinTextColor:'textColor',
+	puffinButtonBackground:'buttonBackground',
+	puffinCardBackground: 'cardBackground',
+	puffinRadioBackgroundHovering: 'radioBackgroundHovering',
+	puffinRadioCircleBackground: 'radioCircleBackground',
+	puffinRadioCircleBorder: 'radioCircleBorder',
+	puffinRadioCircleBorderHovering: 'radioCircleBorderHovering'
+}
+
 function applyTheme( state ){
 	ThemeProvider.data = PluginsRegistry.registry.data.colorsSchemes[state.data.appTheme]
 	ThemeProvider.triggerChange()
+	Object.keys(puffinThemingKeys).forEach( key => {
+		const keyValue = puffinThemingKeys[key]
+		document.body.style.setProperty(`--${key}`,ThemeProvider.data[keyValue])
+	})
+	Object.keys(ThemeProvider.data).forEach( key => {
+		const keyValue = ThemeProvider.data[key]
+		document.body.style.setProperty(`--${key}`,keyValue)
+	})
+	
 }
-
+console.log(ThemeProvider)
 RunningConfig.on('allPluginsLoaded', () => applyTheme(StaticConfig) )
 
 export default ThemeProvider

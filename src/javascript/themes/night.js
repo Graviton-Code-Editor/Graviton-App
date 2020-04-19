@@ -28,7 +28,7 @@ const Night = {
 		contextmenuBackground:'#333333',
 		contextmenuButtonBackground:'#333333',
 		contextmenuButtonText:'white',
-		contextmenuButtonHoveringBackground:'rgb(255, 0, 72);',
+		contextmenuButtonHoveringBackground:'rgb(255, 0, 72)',
 		contextmenuButtonHoveringText:'white',
 		contextmenuDivider:'rgb(180,180,180)',
 		mainpanelBackground:'#191919',

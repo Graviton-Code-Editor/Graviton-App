@@ -1,6 +1,4 @@
 import Dialog from '../../constructors/dialog'
-import { puffin } from '@mkenzo_8/puffin'
-import { Text } from '@mkenzo_8/puffin-drac'
 
 function areYouSureDialog(){
 	return new Promise((resolve, reject) => {

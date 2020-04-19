@@ -1,6 +1,6 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const ContextMenuWrapper = puffin.style.div`
+const styleWrapper = style`
 		&{
 			background:var(--contextmenuBackground);
 			padding:5px;
@@ -33,6 +33,10 @@ const ContextMenuWrapper = puffin.style.div`
 			background:var(--contextmenuDivider);
 			margin:3px auto;
 		}
-	`;
+	`
+
+function ContextMenuWrapper(){
+	return element`<div class="${styleWrapper}"/>`
+}
 
 export default ContextMenuWrapper

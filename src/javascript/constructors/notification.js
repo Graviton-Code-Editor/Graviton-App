@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import NotificationBody from '../components/notification'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'
@@ -13,57 +13,51 @@ function Notification({
 	buttons = []
 }){
 	const listedMethods = buttons.map(({ action }) => action )
-	const NotificationComp = puffin.element(`
-		<NotificationBody>
-			<div>
-				<Cross click="$closeNotification"/>
-			</div>
-			<Title>${ title }</Title>
-			<Content>${ content }</Content>
-			<div class="buttons">
-				${buttons.map(({ label, action }, index)=>{
-					return `<Button index="${ index }" click="$clickedButton">${ label }</Button>`
-				}).join('')}
-			</div>
-		</NotificationBody>
-	`,{
-		events:{
-			mounted(){
-				setTimeout(
-					() => {
-						this.remove()
-					},
-					NOTIFICATION_LIVE_TIME
-				)
-			}	
-		},
+	function mounted(){
+		setTimeout(
+			() => {
+				this.remove()
+			},
+			NOTIFICATION_LIVE_TIME
+		)
+	}
+	const randomSelector = Math.random()
+	const NotificationComp = element({
 		components:{
 			NotificationBody,
 			Title:Titles.h4,
 			Content:Text,
 			Cross,
 			Button
-		},
-		methods:{
-			closeNotification(){
-				closeNotification( NotificationComp.node )
-			},
-			clickedButton(){
-				NotificationComp.node.remove()
-				listedMethods[this.getAttribute('index')]()
-			}
 		}
-	})
-	puffin.render( NotificationComp, document.getElementById('notifications') )
+	})`
+		<NotificationBody id="${randomSelector}" mounted="${mounted}">
+			<div>
+				<Cross :click="${closeNotification}"/>
+			</div>
+			<Title>${ title }</Title>
+			<Content>${ content }</Content>
+			<div class="buttons">
+				${buttons.map(({ label, action }, index)=>{
+					return element`<Button index="${ index }" :click="${clickedButton}">${ label }</Button>`
+				})}
+			</div>
+		</NotificationBody>
+	`
+	function closeNotification(){
+		NotificationNode.remove()
+	}
+	function clickedButton(){
+		closeNotification()
+		listedMethods[this.getAttribute('index')]()
+	}
+	render( NotificationComp, document.getElementById('notifications') )
+	const NotificationNode = document.getElementById( randomSelector )
 	RunningConfig.emit('notificationPushed',{
 		title,
 		content,
-		element:NotificationComp.node
+		element:NotificationNode
 	})
-}
-
-function closeNotification( NotificationElement ){
-	NotificationElement.remove()
 }
 
 RunningConfig.on('notificationPushed', notificationDetails => {

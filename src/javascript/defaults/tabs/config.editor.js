@@ -44,7 +44,7 @@ function configEditor(){
 	const appThemeWatcher = StaticConfig.keyChanged('appTheme',()=>{
 		updateKey(client,instance,StaticConfig,'appTheme')
 	})
-	const tabWatcher = tabElement.props.state.on('destroyed',()=>{
+	const tabWatcher = tabElement.state.on('destroyed',()=>{
 		tabWatcher.cancel()
 		editorFontSizeWatcher.cancel()
 		appZoomWatcher.cancel()
@@ -54,7 +54,7 @@ function configEditor(){
 	client.do('doFocus',{instance}) //Force an initial indentation
 	tabState.emit('savedMe') //Save the tab
 		
-	tabElement.props.state.on('savedMe',()=>{
+	tabElement.state.on('savedMe',()=>{
 		updateStaticConfigByKey(client,instance)
 	})
 }

@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { puffin, element, style } from '@mkenzo_8/puffin'
 import Explorer from '../../constructors/explorer'
 import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
@@ -97,7 +97,7 @@ function markStatus( target, status, count ){
 			}
 	}
 }
-const ItemWrapper = puffin.style.css`
+const ItemWrapper = style`
 	&{
 		background:transparent;
 		white-space:nowrap;
@@ -184,269 +184,273 @@ const ItemWrapper = puffin.style.css`
 		transition:0.1s;
 		border-radius:1px;
 	}
+	&[opened="true"] .arrow{
+		transform:rotate(90deg);
+	}
+	&[opened="false"] .arrow{
+		transform:rotate(0deg);
+	}
 `
 function Item({
 	parentFolder, //Directory parent
-	explorerContainer
+	explorerContainer,
+	id,
+	isFolder,
+	level,
+	dirName,
+	fullpath,
+	classSelector,
+	gitChanges,
+	hint
 }){
-	const ItemComp = puffin.element(`
-		<div selected="false" class="${ItemWrapper} ${puffin.style.css`
-			&[opened="true"] .arrow{
-				transform:rotate(90deg);
-			}
-			&[opened="false"] .arrow{
-				transform:rotate(0deg);
-			}
-		`}">
-			<button click="$openDirectory" contextmenu="$contextMenu" title="{{hint}}">
-				<ArrowIcon class="arrow"/>
-				<img class="icon"/>
-				<span originalName="{{dirName}}">{{dirName}}</span>
+	return element({
+		components:{
+			ArrowIcon
+		}
+	})`
+		<div id="${parentFolder}" fullpath="${fullpath}" isFolder="${isFolder}" parentFolder="${parentFolder}" mounted="${mounted}" selected="false" opened="false" class="${ItemWrapper} ${()=>classSelector}">
+			<button :click="${openDirectory}" :contextmenu="${contextMenu}" title="${hint}">
+				<ArrowIcon class="arrow" style="${isFolder ? '':'opacity:0;'}"></ArrowIcon>
+				<img class="icon" src="${ isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName,getFormat(fullpath))}"></img>
+				<span originalName="${dirName}">${dirName}</span>
 				<div class="gitStatus" count=""/>
 			</button>
 		</div>
-		`,{
-			props:[
-				'dirName',
-				'selected',
-				'fullpath',
-				'hint'
-			],
-			components:{
-				ArrowIcon
-			},
-			methods:{
-				openDirectory(){
-					this.parentElement.state.emit('clickItem')
-				},
-				contextMenu(e){
-					if(this.parentElement.getAttribute("isFolder") == "true"){
-						new ContextMenu({
-							list:[
-								{
-									label:"New folder",
-									action:()=>{
-										const itemContainer = this.parentElement
-										newDirectoryDialog({
-											isFolder:true,
-											parentDirectory:itemContainer.getAttribute("fullpath"),
-											container:itemContainer,
-											explorerState:document.getElementById(normalizeDir(itemContainer.getAttribute("parentFolder"))).state
-										})
-									}
-								},
-								{
-									label:"New file",
-									action:()=>{
-										const itemContainer = this.parentElement
-										newDirectoryDialog({
-											isFolder:false,
-											parentDirectory:itemContainer.getAttribute("fullpath"),
-											container:itemContainer,
-											explorerState:document.getElementById(normalizeDir(itemContainer.getAttribute("parentFolder"))).state
-										})
-									}
-								},
-								{},
-								{
-									label:"Remove folder",
-									action:()=>{
-										if(this.parentElement.getAttribute("level")!="0"){
-											removeDirectoryOrFile(this)
-										} 
-									}
-								}
-							],
-							parent:this,
-							event:e
-						})
-					}else{
-						new ContextMenu({
-							list:[
-								{
-									label:"Remove file",
-									action:()=>{
-										removeDirectoryOrFile(this)
-									}
-								}
-							],
-							parent:this,
-							event:e
-						})
+		`
+	function openDirectory(){
+		this.parentElement.state.emit('clickItem')
+	}
+	function contextMenu(e){
+		const projectExplorerState = document.getElementById( parentFolder ).state
+		if( isFolder ){
+			new ContextMenu({
+				list:[
+					{
+						label:"New folder",
+						action:()=>{
+							const itemContainer = this.parentElement
+							newDirectoryDialog({
+								isFolder: true,
+								parentDirectory: fullpath,
+								container: itemContainer,
+								explorerState: projectExplorerState
+							})
+						}
+					},
+					{
+						label:"New file",
+						action:()=>{
+							const itemContainer = this.parentElement
+							newDirectoryDialog({
+								isFolder: false,
+								parentDirectory: fullpath,
+								container: itemContainer,
+								explorerState: projectExplorerState
+							})
+						}
+					},
+					{},
+					{
+						label:"Remove folder",
+						action:()=>{
+							if( level != 0 ){
+								removeDirectoryOrFile(this)
+							} 
+						}
 					}
-				}
-			},
-			events:{
-				mounted(target){
-					const isItemFolder = target.getAttribute("isFolder") == "true"
-					const itemState = new puffin.state({})
-					target.state = itemState
-					const gitChanges = target.parentElement.parentElement.gitChanges 
-					target.gitChanges = gitChanges
-					const itemDirectory = normalizeDir(target.getAttribute('fullpath'),true)
-					const explorerState = explorerContainer && explorerContainer.state || itemState
-					this.explorerContainer = explorerContainer || this
-					const fileExtension = isItemFolder?null:getFormat(target.getAttribute("fullpath"))
-					const itemIcon = target.getElementsByClassName('icon')[0]
-					const itemArrow = target.getElementsByClassName('arrow')[0]
-					const gitStatus = target.getAttribute("git-status") ||true
-					const itemProjectDirectory = target.getAttribute("parentfolder")
-					target.style.paddingLeft = `${Number(target.getAttribute("level"))+6}px`
-					if( isItemFolder ){
-						setStateClosed( target ) //If it's a folder set it's icon to closed by default
-					}else{
-						setFileIcon( itemIcon, fileExtension )//If it's a file set it's icon 
-						itemArrow.style.opacity = 0 //Hide the folder icon
+				],
+				parent:this,
+				event:e
+			})
+		}else{
+			new ContextMenu({
+				list:[
+					{
+						label:"Remove file",
+						action:()=>{
+							removeDirectoryOrFile(this)
+						}
 					}
-					const gitResult = getMyStatus(
-						itemDirectory,
-						gitChanges,
-						itemProjectDirectory
+				],
+				parent:this,
+				event:e
+			})
+		}
+	}
+	function setItemState( target ){
+		if ( !target.state ) {
+			const itemState = new puffin.state({})
+			return target.state = itemState
+		}else{
+			return target.state
+		}
+	}
+	function mounted(){
+		const target = this
+		target.gitChanges = gitChanges
+		target.style.paddingLeft = `${Number(level)+6}px`
+		this.explorerContainer = explorerContainer || this
+		const itemState = setItemState(target)
+		const itemDirectory = normalizeDir(fullpath)
+		const explorerState = explorerContainer && explorerContainer.state || itemState
+		const fileExtension = isFolder? null : getFormat(fullpath)
+		const itemIcon = target.getElementsByClassName('icon')[0]
+		const itemArrow = target.getElementsByClassName('arrow')[0]
+		const gitStatus = target.getAttribute("git-status") || true
+		const itemParentFolder = path.dirname(itemDirectory)
+		const itemProjectDirectory = parentFolder
+		const gitResult = getMyStatus(
+			itemDirectory,
+			gitChanges,
+			itemProjectDirectory
+		)
+		markStatus( target, gitResult.status)
+		function markItem( gitChanges, isProjectcontainer = false ){
+			target.gitChanges = gitChanges
+			const newGitResult = getMyStatus(
+				itemDirectory,
+				gitChanges,
+				itemProjectDirectory
+			)
+			if( gitResult !== newGitResult ){
+				markStatus(
+					target,
+					newGitResult.status,
+					isProjectcontainer ? gitChanges.files.length : null
+				)
+			}
+		}
+		explorerState.on('gitMarkProjectContainer',({ containerFolder, gitChanges }) => {
+			if( isFolder  && containerFolder === itemDirectory  ){
+				markItem(gitChanges,true)
+			}
+		})
+		explorerState.on('newFile',({ containerFolder, fileName }) => {
+			if( isFolder  && containerFolder === itemDirectory  ){
+				explorerState.emit('createItem',{
+					container: this,
+					containerFolder,
+					level: level,
+					directory:path.join( containerFolder, fileName ),
+					directoryName: fileName,
+					isFolder: false
+				})
+			}
+		})
+		explorerState.on('removedFile',({ filePath }) => {
+			if( itemDirectory === filePath ){
+				this.state.emit('destroyed')
+				RunningConfig.emit('aFileHasBeenRemoved',{
+					parentFolder,
+					filePath
+				})
+			}
+		})
+		explorerState.on('newFolder',({ containerFolder, folderName }) => {
+			if( isFolder && containerFolder === itemDirectory  ){
+				explorerState.emit('createItem',{
+					container: this,
+					containerFolder,
+					level: level,
+					directory: path.join(containerFolder,folderName),
+					directoryName: folderName,
+					isFolder: true
+				})
+			}
+		})
+		explorerState.on('removedFolder',({ folderPath }) => {
+			if( itemDirectory === folderPath ){
+				this.remove()
+				RunningConfig.emit('aFolderHasBeenRemoved',{
+					folderPath,
+					parentFolder
+				})
+			}
+		})
+		explorerState.on('changedFile',async ({ filePath }) => {
+			if( itemDirectory === filePath ){
+				RunningConfig.emit('aFileHasBeenChanged',{
+					filePath,
+					newData:await fs.readFile(itemDirectory,'UTF-8')
+				})
+			}
+		})
+		itemState.on('clickItem',function(){
+			if( isFolder ){
+				const itemsContainer = target.children[1]
+				if( itemsContainer == null ){
+					Explorer(
+						fullpath,
+						target,
+						level+1 , 
+						gitChanges 
 					)
-					markStatus( target, gitResult.status)
-					function markItem( gitChanges, isProjectcontainer = false ){
-						target.gitChanges = gitChanges
-						const newGitResult = getMyStatus(
-							itemDirectory,
-							gitChanges,
-							itemProjectDirectory
-						)
-						if( gitResult !== newGitResult ) markStatus(
-							target,
-							newGitResult.status,
-							isProjectcontainer ? gitChanges.files.length : null
-						)
-					}
-					explorerState.on('gitMarkProjectContainer',({ containerFolder, gitChanges }) => {
-						if( isItemFolder  && containerFolder === itemDirectory  ){
-							markItem(gitChanges,true)
-						}
-					})
-					explorerState.on('newFile',({ containerFolder, fileName }) => {
-						if( isItemFolder  && containerFolder === itemDirectory  ){
-							explorerState.emit('createItem',{
-								container: this,
-								containerFolder,
-								level: this.getAttribute("level"),
-								directory:path.join( containerFolder, fileName ),
-								directoryName: fileName,
-								isFolder: false
-							})
-						}
-					})
-					explorerState.on('removedFile',({ filePath }) => {
-						if( itemDirectory === filePath ){
-							this.state.emit('destroyed')
-							RunningConfig.emit('aFileHasBeenRemoved',{
-								parentFolder,
-								filePath
-							})
-						}
-					})
-					explorerState.on('newFolder',({ containerFolder, folderName }) => {
-						if( isItemFolder && containerFolder === itemDirectory  ){
-							explorerState.emit('createItem',{
-								container: this,
-								containerFolder,
-								level: this.getAttribute("level"),
-								directory: path.join(containerFolder,folderName),
-								directoryName: folderName,
-								isFolder: true
-							})
-						}
-					})
-					explorerState.on('removedFolder',({ folderPath }) => {
-						if( itemDirectory === folderPath ){
-							this.remove()
-						}
-						RunningConfig.emit('aFolderHasBeenRemoved',{
-							folderPath,
-							parentFolder
+					setStateOpen( target )
+				}else{
+					itemsContainer.remove()
+					setStateClosed( target )
+				}
+			}else{
+				const itemPath = fullpath
+				const basename = path.basename( itemPath )
+				const fileExtension = getFormat( itemPath )
+				const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+					title: basename,
+					directory: itemDirectory,
+					parentFolder: target.getAttribute('parentFolder')
+				})
+				if( !isCancelled ){
+					fs.readFile( itemDirectory ,'UTF-8').then( data => {
+						new Editor({
+							language:fileExtension,
+							value:data ,
+							theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+							bodyElement,
+							tabElement,
+							tabState,
+							directory:itemDirectory
 						})
 					})
-					explorerState.on('changedFile',async ({ filePath }) => {
-						if( itemDirectory === filePath ){
-							RunningConfig.emit('aFileHasBeenChanged',{
-								filePath,
-								newData:await fs.readFile(itemDirectory,'UTF-8')
-							})
-						}
-					})
-					itemState.on('clickItem',function(){
-						if( isItemFolder ){
-							const itemsContainer = target.children[1]
-							if( itemsContainer == null ){
-								Explorer(
-									target.getAttribute("fullpath"),
-									target,
-									Number( target.getAttribute("level") ) + 1 , 
-									gitChanges 
-								)
-								setStateOpen( target )
-							}else{
-								itemsContainer.remove()
-								setStateClosed( target )
-							}
-						}else{
-							const itemPath = target.getAttribute('fullpath')
-							const basename = path.basename( itemPath )
-							const fileExtension = getFormat( itemPath )
-							const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
-								title: basename,
-								directory: itemDirectory,
-								parentFolder: target.getAttribute('parentFolder')
-							})
-							if( !isCancelled ){
-								fs.readFile( itemDirectory ,'UTF-8').then( data => {
-									new Editor({
-										language:fileExtension,
-										value:data ,
-										theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
-										bodyElement,
-										tabElement,
-										tabState,
-										directory:itemDirectory
-									})
-								})
-								target.setAttribute('selected', true)
-								tabState.on('focusedItem',()=> target.scrollIntoView() )
-							}
-						}
-					})
-					const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
-					if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute('selected', true )
-					const TabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused',({ directory }) => {
-						if( directory === itemDirectory ){
-							target.setAttribute('selected', true)
-						}
-					})
-					const TabUnfocusedWatcher = RunningConfig.on('aTabHasBeenUnfocused',({ directory }) => {
-						if( directory === itemDirectory ){
-							target.setAttribute('selected', false)
-						}
-					})
-					const TabClosedWatcher = RunningConfig.on('aTabHasBeenClosed',({ directory }) => {
-						if( directory === itemDirectory ){
-							target.setAttribute('selected', false)
-						}
-					})
-					itemState.on('doReload',() => reload(target,gitChanges) )
-					const GitWatcher = RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-						if(itemProjectDirectory === explorerParentfolder && this.children[0]){
-							markItem(gitChanges,itemDirectory==itemProjectDirectory)
-						}
-					})
-					itemState.on('destroyed',() => {
-						TabFocusedWatcher.cancel()
-						TabUnfocusedWatcher.cancel()
-						TabClosedWatcher.cancel()
-						GitWatcher.cancel()
-						this.remove()
-					})
+					target.setAttribute('selected', true)
+					tabState.on('focusedItem',()=> target.scrollIntoView() )
 				}
 			}
 		})
-		return ItemComp
+		const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
+		if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute('selected', true )
+		const TabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused',({ directory }) => {
+			if( directory === itemDirectory ){
+				target.setAttribute('selected', true)
+			}
+		})
+		const TabUnfocusedWatcher = RunningConfig.on('aTabHasBeenUnfocused',({ directory }) => {
+			if( directory === itemDirectory ){
+				target.setAttribute('selected', false)
+			}
+		})
+		const TabClosedWatcher = RunningConfig.on('aTabHasBeenClosed',({ directory }) => {
+			if( directory === itemDirectory ){
+				target.setAttribute('selected', false)
+			}
+		})
+		const GitWatcher = RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
+			if(itemProjectDirectory === explorerParentfolder && this.children[0]){
+				markItem(gitChanges,itemDirectory==itemProjectDirectory)
+			}
+		})
+		itemState.on('doReload',() => reload(target,gitChanges) )
+		itemState.on('destroyed',() => {
+			TabFocusedWatcher.cancel()
+			TabUnfocusedWatcher.cancel()
+			TabClosedWatcher.cancel()
+			GitWatcher.cancel()
+			this.remove()
+		})
+		if( level == 0) {
+			itemState.emit('clickItem')
+		}
+	}
+
 }
 
 function reload( target, gitChanges ){
@@ -460,24 +464,31 @@ function reload( target, gitChanges ){
 	setStateOpen( target )
 }
 
-function setFileIcon( target, extension ){
-	const fileName = target.parentElement.textContent
-	if( extension === ('png' || 'jpg' || 'ico') ){
-		return target.src = Icons.image
+function getFileIcon( fileName, fileExt ){
+	if( fileExt === ('png' || 'jpg' || 'ico') ){
+		return Icons.image
 	}
 	if( Icons[`file.${fileName}`] ){
-		return target.src = Icons[`file.${fileName}`] 
+		return Icons[`file.${fileName}`] 
 	}
-	if( Icons[`${extension}.lang`] ){
-		target.src = Icons[`${extension}.lang`] 
+	if( Icons[`${fileExt}.lang`] ){
+		return Icons[`${fileExt}.lang`] 
 	}else{
-		target.src = Icons['unknown.file'] 
+		return Icons['unknown.file'] 
 	}     
+}
+
+function getFolderClosedIcon( folderName ){
+	if( Icons[`folder.closed.${folderName}`] ) {
+		return Icons[`folder.closed.${folderName}`]
+	}else{
+		return Icons["folder.closed"]
+	}
 }
 
 function setStateOpen( target ){
 	const itemIcon = target.getElementsByClassName('icon')[0]
-	const folderName = target.textContent
+	const folderName = target.textContent.trim()
 	target.setAttribute('opened','true')
 	if( Icons[`folder.opened.${folderName}`]  ) {
 		itemIcon.src = Icons[`folder.opened.${folderName}`]
@@ -488,7 +499,7 @@ function setStateOpen( target ){
 
 function setStateClosed( target ){
 	const itemIcon = target.getElementsByClassName('icon')[0]
-	const folderName = target.textContent
+	const folderName = target.textContent.trim()
 	target.setAttribute('opened','false')
 	if( Icons[`folder.closed.${folderName}`] ) {
 		itemIcon.src = Icons[`folder.closed.${folderName}`]
@@ -499,8 +510,8 @@ function setStateClosed( target ){
 
 function removeDirectoryOrFile( element ){
 	areYouSureDialog().then( () => {
-		trash([normalizeDir(element.parentElement.getAttribute("fullpath"),true)]).then( () => {
-			element && element.state && element.state.emit('destroyed')
+		trash([normalizeDir(element.parentElement.getAttribute("fullpath"))]).then( () => {
+			element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
 		});        
 	}).catch( err => {
 		//Clicked "No", do nothing

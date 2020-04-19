@@ -1,24 +1,23 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const WindowBackground = puffin.element(`
-	<div click="$closeMe" keyup="$keyPresssed" class="${puffin.style.css`
-			&{
-				position:fixed;
-				top:0;
-				left:0;
-				min-height:100%;
-				min-width:100%;
-				background:black;
-				opacity:0.3;
-			}
-		`}">
-	</div>
-`,{
-	methods:{
-		closeMe(){
-			this.parentElement.remove()
-		}
-	}
-})
+function WindowBackground(){
+	return element`
+		<div :click="${closeMe}" keyup="$keyPresssed" class="${()=>style`
+				&{
+					position:fixed;
+					top:0;
+					left:0;
+					min-height:100%;
+					min-width:100%;
+					background:black;
+					opacity:0.3;
+				}
+			`}">
+		</div>
+	`
+	function closeMe(){
+		this.parentElement.remove()
+	}	
+}
 
 export default WindowBackground

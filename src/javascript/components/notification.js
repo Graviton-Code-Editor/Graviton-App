@@ -1,6 +1,6 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const NotificationBody = puffin.style.div`
+const styleWrapper = style`
 	&{
 		border-radius:5px;
 		min-width:300px;
@@ -36,5 +36,9 @@ const NotificationBody = puffin.style.div`
 		background:var(--notificationButtonBackground);
 	}
 `
+
+function NotificationBody(){
+	return element`<div class="${styleWrapper}"/>`
+}
 
 export default NotificationBody

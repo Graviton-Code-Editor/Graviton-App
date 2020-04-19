@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
 function moveToPage(page,buttons,pages){
 	pages.map(function(contentPage){
@@ -25,9 +25,46 @@ function moveToSection(search,sections,buttons,pages){
 		result.element.scrollIntoView( false )
 	}
 }
+function mounted(){
+	const target = this
+	const defaultPage = target.getAttribute("default");
+	const buttons = Object.keys(target.children[0].children).map( btn =>{
+		const button = target.children[0].children[btn]
+		if(button.tagName == "LABEL"){
+			button.addEventListener('click',()=>{
+				moveToPage(button.getAttribute("to"),buttons,pages)
+			})
+			return button
+		}
+	}).filter(Boolean)		
+	const pages = Object.keys(target.children[1].children).map( pg =>{
+		const page = target.children[1].children[pg]
+		if(page.tagName == "DIV") { 
+			return page
+		}
+	}).filter(Boolean)
+	const sections = pages.map( page => {
+		return Object.keys(page.children).map(function(index){
+			const section = page.children[index]
+			if(section.tagName == "DIV"){
+				return {
+					title:section.getAttribute("href"),
+					page:page.getAttribute("href"),
+					element:section
+				}
+			} 
+		})
+	}).flat()
+	target.searchBy = function(search){
+		moveToSection(search,sections,buttons,pages)
+	}
+	moveToPage(defaultPage,buttons,pages)
+}
 
-const SideMenu = puffin.element(`
-	<div class="${puffin.style.css`
+
+function SideMenu(){
+	return element`
+	<div mounted="${mounted}" class="${style`
 		& {
 			display:flex;
 			max-height:100%;
@@ -80,44 +117,8 @@ const SideMenu = puffin.element(`
 			flex:1;
 		}
 	`}"/>
-`,{
-	events:{
-		mounted(target){
-			const defaultPage = target.getAttribute("default");
-			const buttons = Object.keys(target.children[0].children).map( btn =>{
-				const button = target.children[0].children[btn]
-				if(button.tagName == "LABEL"){
-					button.addEventListener('click',()=>{
-						moveToPage(button.getAttribute("to"),buttons,pages)
-					})
-					return button
-				}
-			}).filter(Boolean)		
-			const pages = Object.keys(target.children[1].children).map( pg =>{
-				const page = target.children[1].children[pg]
-				if(page.tagName == "DIV") { 
-					return page
-				}
-			}).filter(Boolean)
-			const sections = pages.map( page => {
-				return Object.keys(page.children).map(function(index){
-					const section = page.children[index]
-					if(section.tagName == "DIV"){
-						 return {
-							title:section.getAttribute("href"),
-							page:page.getAttribute("href"),
-							element:section
-						}
-					} 
-				})
-			}).flat()
-			target.searchBy = function(search){
-				moveToSection(search,sections,buttons,pages)
-			}
-			moveToPage(defaultPage,buttons,pages)
-		}
-	}
-})
+	`
+}
 
 
 export default SideMenu

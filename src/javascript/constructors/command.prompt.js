@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { puffin, render,element, style } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
@@ -12,117 +12,113 @@ function CommandPrompt({
 	onSelected = ()=>{},
 	onScrolled = ()=>{}
 }){
+	name = `${name}_cp`
 	if( document.getElementById(name) ) return; // Check if there are any command prompts already opened
 	let CommandPromptState = new puffin.state({
 		hoveredOption : null
 	})
 	const configArguments = arguments[0]
-	const CommandPromptComponent = puffin.element(`
-		<CommandPromptBody id="${ name }" keydown="$scrolling">
-			<WindowBackground window="${ name }"/>
-			<div class="container">
-				<input style="${ showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;' }" placeHolder="${ inputPlaceHolder }" keyup="$writing"/>
-				<div/>
-			</div>
-		</CommandPromptBody>
-	`,{
+	const CommandPromptComponent = element({
 		components:{
 			CommandPromptBody,
 			WindowBackground
-		},
-		methods:{
-			writing(e){
-				e.preventDefault()
-				switch(e.keyCode){
-					case 9:
-						if(scrollOnTab){
-							break;
-						}
-						selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
-						closeCommandPrompt(CommandPromptComponent)
-					case 17:
-						if(!scrollOnTab){
-							 break;
-						 }
-					case 13:
-						selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
-						closeCommandPrompt(CommandPromptComponent)
-						break;
-					case 38:
-					case 40:
-						break;
-					default:
-						renderOptions(
-							{
-								...configArguments,
-								options:filterOptions(this.value,{
-									options
-								}) 
-							},
-							{
-								parent: this.parentElement.children[1],
-								state: CommandPromptState,
-								component: CommandPromptComponent
-							}
-						)
+		}
+	})`
+		<CommandPromptBody mounted="${mounted}" id="${ name }" :keydown="${scrolling}">
+			<WindowBackground window="${ name }"/>
+			<div class="container">
+				<input style="${ showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;' }" placeHolder="${ inputPlaceHolder }" :keyup="${writing}"/>
+				<div/>
+			</div>
+		</CommandPromptBody>
+	`
+	function writing(e){
+		e.preventDefault()
+		switch(e.keyCode){
+			case 9:
+				if(scrollOnTab){
+					break;
 				}
-			},
-			scrolling(e){
-				switch(e.keyCode){
-					case 38:
-						scrollOptions({
-							state: CommandPromptState,
-							scrollingDirection: 'up',
-							...configArguments
-						})
-						break;
-					case 9:
-						e.preventDefault()
-						if( !scrollOnTab) {
-							
-							break;
-						}
-						
-					case 40:
-						scrollOptions({
-							state: CommandPromptState,
-							scrollingDirection: 'down',
-							...configArguments
-						})
-						break;
+				selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
+				closeCommandPrompt(name)
+			case 17:
+				if(!scrollOnTab){
+					break;
 				}
-			}
-		},
-		events:{
-			mounted(target){
-				const container = target.children[1].children[1]
+			case 13:
+				selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
+				closeCommandPrompt(name)
+				break;
+			case 38:
+			case 40:
+				break;
+			default:
 				renderOptions(
 					{
-						options,
-						...configArguments
+						...configArguments,
+						options:filterOptions(this.value,{
+							options
+						}) 
 					},
 					{
-						parent: container,
+						parent: this.parentElement.children[1],
 						state: CommandPromptState,
-						component: CommandPromptComponent
+						name
 					}
 				)
-				window.addEventListener('keydown',e => {
-					if(e.keyCode === 27){
-						closeCommandPrompt(CommandPromptComponent)
-					}
-				})
-				const input = target.children[1].children[0]
-				input.focus()
-			}
 		}
-	})
-
-	puffin.render( CommandPromptComponent, document.getElementById("windows") )
+	}
+	function scrolling(e){
+		switch(e.keyCode){
+			case 38:
+				scrollOptions({
+					state: CommandPromptState,
+					scrollingDirection: 'up',
+					...configArguments
+				})
+				break;
+			case 9:
+				e.preventDefault()
+				if( !scrollOnTab) {
+					break;
+				}
+			case 40:
+				scrollOptions({
+					state: CommandPromptState,
+					scrollingDirection: 'down',
+					...configArguments
+				})
+				break;
+		}
+	}
+	function mounted(){
+		const target = this
+		const container = target.children[1].children[1]
+		renderOptions(
+			{
+				options,
+				...configArguments
+			},
+			{
+				parent: container,
+				state: CommandPromptState,
+				name
+			}
+		)
+		window.addEventListener('keydown',e => {
+			if(e.keyCode === 27){
+				closeCommandPrompt(name)
+			}
+		})
+		const input = target.children[1].children[0]
+		input.focus()
+	}
+	render( CommandPromptComponent, document.getElementById("windows") )
 }
 
 function closeCommandPrompt( CommandPromptComponent ){
-	CommandPromptComponent.node.remove()
+	if( document.getElementById(CommandPromptComponent) )
+		document.getElementById(CommandPromptComponent).remove()
 }
 
 function scrollOptions({ state, scrollingDirection, onScrolled}){
@@ -178,30 +174,25 @@ function renderOptions({
 },{
 	state,
 	parent,
-	component
+	name
 }){
 	let content = ''
 	let hoveredDefault = 0;
 	
-	const optionsComp = puffin.element(`
+	const optionsComp = element`
 			<div>
 				${options.map(({ selected, label }, index)=>{
 					if( selected ) hoveredDefault = index
-					return ` <a click="$onClicked">${label}</a> `
-				}).join('')}
+					return element`<a :click="${onClicked}">${label}</a> `
+				})}
 			</div>
-		`,{
-		methods:{
-			onClicked(){
-				closeCommandPrompt(component)
-				selectOption( this, { options, onSelected })
-			}
-		}
-	})
-	puffin.render(optionsComp,parent,{
-		removeContent:true
-	})
-
+		`
+	function onClicked(){
+		closeCommandPrompt(name)
+		selectOption( this, { options, onSelected })
+	}
+	parent.innerHTML = ''
+	render( optionsComp, parent )
 	state.data.hoveredOption = parent.children[0].children[hoveredDefault]
 	hoverOption(state.data.hoveredOption,parent.children[0].children)
 }

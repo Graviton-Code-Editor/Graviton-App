@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import MenuComp  from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState, getTranslation } from 'LanguageConfig'
@@ -16,79 +16,75 @@ function closeAllSubmenus(parent){
 	})
 }
 
-function getDropmenu(list){
-	return `
-		<div>
-			${list.map(function( option, index ){
-				if( option.label !== undefined ){
-					return`
-						<div>
-							<a 
-								${ option.hint != null ? `title="${option.hint}"` : '' } 
-								click="${ !option.list ? `$${index}` : '' }" 
-								mouseenter="${ option.list ? `$${index}` : '$hideMenus' }"
-							>
-							<p lang-string="${ option.label }">${ option.label }</p>
-								${ option.list ? '<ArrowIcon/>' : '' }
-							</a>
-						</div>`
-				}else{
-					return `<span/>`
-				}
-			}).join('')}
-		</div>
-	`
+function renderSubmenu(e,option){
+	closeAllSubmenus(e.target.parentElement.parentElement)
+	const subMenuComponent = getMenu(
+		null,
+		option.list,
+		e.target.clientWidth+10
+	)
+	render( subMenuComponent, e.target.parentElement )
 }
 
-function getMenu( button, list, leftMargin ){
-	const isSubmenu = button == null && list != null
-	const methodsToBind = Object.assign( {}, list.map( option => {
-		const isOptionASubmenu = option.action == null && option.list != null
-		if( isOptionASubmenu ){
-			return function(e){
-				closeAllSubmenus(e.target.parentElement.parentElement)
-				const subMenuComponent = getMenu(
-					null,
-					option.list,
-					e.target.clientWidth+10
-				)
-				puffin.render( subMenuComponent, e.target.parentElement )
+function getDropmenu(list){
+	function hideMenus(target){
+		closeAllSubmenus( target.parentElement.parentElement )
+	}
+	return list.map(function( option, index ){
+		if( option.label !== undefined ){
+			function triggerAction(e){
+				if( option.list ){
+					renderSubmenu(e,option)
+				} else {
+					hideMenus(this)
+				}
 			}
-
+			return element`
+			<div :click="${option.action}" >
+				<a :mouseenter="${triggerAction}" >
+					<p lang-string="${ option.label }">${ option.label }</p>
+					${ option.list ? ArrowIcon() : '' }
+				</a>
+			</div>`
 		}else{
-			return option.action
-		}
-	}))
-	return puffin.element(`
-		<MenuComp class="${ isSubmenu ? 'submenu' : '' }" submenu="${ isSubmenu }" style="${ isSubmenu ? `position:absolute;margin-top:-20px;margin-left:${ leftMargin }px;` : '' }">
-			${ isSubmenu ? '' : `<button mouseover="$hideMenus" click="$hideMenus" lang-string="${ button }">${ button }</button>`}
-			${ getDropmenu( list ) }
-		</MenuComp>
-	`,{
-		components:{
-			MenuComp,
-			ArrowIcon
-		},
-		methods:{
-			...methodsToBind,
-			hideMenus(){
-				closeAllSubmenus( this.parentElement.parentElement )
-			}
-		},
-		addons:{
-			lang:puffin.lang( LanguageState )
+			return element`<span/>`
 		}
 	})
 }
 
-function Menu({
-	button,
-	list
-}){
-	if(eval('process.platform') !== 'darwin'){
+const getDropmenuButton = ( isSubmenu, button ) => {
+	if( !isSubmenu ) {
+		return element`<button :mouseover="${hideMenus}" :click="${hideMenus}" lang-string="${ button }">${ button }</button>`
+	}
+	return element` `
+}
+
+function getMenu( button, list, leftMargin ){
+	const isSubmenu = button == null && list != null
+	return element({
+		components:{
+			MenuComp
+		}
+	})`
+		<MenuComp class="${ isSubmenu ? 'submenu' : '' }" data="${{isSubmenu}}" style="${ isSubmenu ? `position:absolute;margin-top:-20px;margin-left:${ leftMargin }px;` : '' }">
+			${ getDropmenuButton(isSubmenu,button) }
+			<div>${ getDropmenu( list ) }</div>
+		</MenuComp>
+	`
+}
+
+function hideMenus(){
+	closeAllSubmenus( this.parentElement.parentElement )
+}
+
+function Menu({ button,list }){
+	//This will ignore user's configured AppPlatform's and will use the real one
+	if( window.require('process') !== 'darwin' ){
+		// Render Graviton's menu bar only in Windows and Linux
 		const MenuComponent = getMenu(button,list)
-		puffin.render( MenuComponent, document.getElementById('dropmenus') )
+		render( MenuComponent, document.getElementById('dropmenus') )
 	}else{
+		// Display MacOS's native menu bar
 		appendToBar( 
 			createTemplate(
 				button,
@@ -105,7 +101,9 @@ function createTemplate( button, list ){
 		submenu: parseMenu(list)
 	})
 }
-
+/*
+* Convert Graviton's menu to electron's Menu constructor
+*/
 function parseMenu( list ){
 	return list.map( btn =>{
 		if( btn.label && btn.action ){

@@ -250,7 +250,7 @@ function init(){
 				},{
 					label:'Website',
 					action:()=>{
-						openLink('https://graviton.ml/')
+						openLink('https://graviton.netlify.app/')
 					}
 				},{
 					label:'SourceCode',

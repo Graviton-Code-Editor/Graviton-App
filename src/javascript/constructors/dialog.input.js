@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 import Dialog from './dialog'
 import Input from '../components/input'
 
@@ -8,34 +8,30 @@ function InputDialog({
 }){
 	return new Promise((resolve, reject) => {
 		const randomSelector = Math.random()
-		const component = puffin.element(`
-			<div>
-				<Input id="${ randomSelector }" placeHolder="${ placeHolder }" keyup="$onEnter"/>
-			</div>
-		`,{
-			methods:{
-				onEnter(e){
-					if( e.keyCode === 13 ){
-						e.preventDefault()
-						const inputValue = document.getElementById( randomSelector ).value
-						if( inputValue != '' ){
-							resolve(inputValue)
-						}else{
-							reject()
-						}
-						DialogInstance.close()
-					}
+		function onEnter(e){
+			if( e.keyCode === 13 ){
+				e.preventDefault()
+				const inputValue = this.value
+				if( inputValue != '' ){
+					resolve(inputValue)
+				}else{
+					reject()
 				}
-			},
-			events:{
-				mounted(){
-					this.children[0].focus()
-				}
-			},
+				DialogInstance.close()
+			}
+		}
+		function mounted(){
+			this.children[0].focus()
+		}
+		const component = element({
 			components:{
 				Input
 			}
-		})
+		})`
+			<div id="${ randomSelector }" mounted="${mounted}">
+				<Input placeHolder="${ placeHolder }" :keyup="${onEnter}"/>
+			</div>
+		`
 		const DialogInstance = new Dialog({
 			title,
 			component,
@@ -43,7 +39,7 @@ function InputDialog({
 				{
 					label:'Continue',
 					action(){
-						const inputValue = document.getElementById( randomSelector ).value
+						const inputValue = document.getElementById(randomSelector).children[0].value
 						if( inputValue != '' ){
 							resolve(inputValue)
 						}else{

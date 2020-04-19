@@ -12,14 +12,14 @@ import Welcome from "./windows/welcome";
 import Store from './windows/store'
 
 RunningConfig.on('command.saveCurrentFile',()=>{
-	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.props.state.emit('savedMe')
+	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
 })
 RunningConfig.on('command.newPanel',()=>{
 	new Panel()
 })
 RunningConfig.on('command.closeCurrentTab',()=>{
 	if( RunningConfig.data.focusedTab != null ) { //Check if there is any opened tab
-		RunningConfig.data.focusedTab.props.state.emit('close')
+		RunningConfig.data.focusedTab.state.emit('close')
 	}
 })
 RunningConfig.on('command.closeCurrentPanel',()=>{

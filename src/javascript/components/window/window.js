@@ -1,7 +1,8 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const WindowBody = puffin.element(`
-	<div class="${puffin.style.css`
+function WindowBody(){
+	return element`
+	<div class="${style`
 			&{
 				border:1px solid var(--windowBorder);
 				width:200px;
@@ -18,6 +19,6 @@ const WindowBody = puffin.element(`
 			}
 		`}">
 	</div>
-`)
+`}
 
 export default WindowBody

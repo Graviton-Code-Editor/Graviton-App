@@ -1,7 +1,6 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const CardsListContainer = puffin.style.div`
-	&{
+const listWrapper = style`&{
 		display:flex;
 		flex-direction:columns;
 		flex:1;
@@ -34,5 +33,10 @@ const CardsListContainer = puffin.style.div`
 		font-size:14px;
 	}
 `
+
+
+function CardsListContainer(){
+	return element`<div class="${listWrapper}"/>`
+}
 
 export default CardsListContainer

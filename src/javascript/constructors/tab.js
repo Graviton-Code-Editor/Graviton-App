@@ -1,6 +1,6 @@
 import TabBody from '../components/panel/tab'
 import TabEditor from '../components/panel/tab.editor'
-import { puffin } from '@mkenzo_8/puffin'
+import { puffin, element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
@@ -50,230 +50,218 @@ function Tab({
 	RunningConfig.on('isATabOpened',({directory:tabDir,id:tabID})=>{
 		if( ( tabDir && tabDir ==  directory )||( tabID && tabID ==  id )){
 			return {
-				tabElement:TabComp.node
+				tabElement:tabNode
 			}
 		}
 	})
-	const TabComp = puffin.element(`
-		<TabBody 
-			draggable="true" 
-			classSelector="${classSelector}" 
-			class="${classSelector}" 
-			dragstart="$startDrag" 
-			click="$focusTab" 
-			active="{{active}}" 
-			mouseover="$showCross" 
-			mouseleave="$hideCross"
-			dragenter="$dragEnter"
-			dragleave="$dragLeave"
-			dragover="$dragover"
-			drop="$onDropped"
-		>
-			<p drop="$onDropped" classSelector="${classSelector}">
-				${title}
-			</p>
-			<div drop="$onDropped" classSelector="${classSelector}">
-				<Cross drop="$onDropped" classSelector="${classSelector}" style="opacity:0;" click="$closeTab"/>
-			</div>
-		</TabBody>
-`,{
+	const TabComp = element({
 		components:{
 			TabBody,
 			Cross
-		},
-		methods:{
-			dragover(e){
-				e.preventDefault()	
-				TabComp.node.classList.add("dragging")
-			},
-			dragEnter(e){
-				e.preventDefault()
-			},
-			dragLeave(e){
-				e.preventDefault()
-				e.target.classList.remove("dragging")
-			},
-			onDropped(e){
-				e.preventDefault()
-				TabComp.node.classList.remove("dragging")
-			},
-			startDrag(e){
-				event.dataTransfer.setData("classSelector", classSelector)
-				const tabsBar = this.parentElement
-				const tabPosition  = guessTabPosition(this,tabsBar)
-				let classSelectorForNext = null
-				if( tabsBar.children.length == 1){
-					classSelectorForNext = null
-				}else if( tabPosition == 0){
-					classSelectorForNext = tabsBar.children[1].getAttribute("classSelector")
-				}else{
-					classSelectorForNext = tabsBar.children[tabPosition-1].getAttribute("classSelector")
-				}
-				event.dataTransfer.setData(
-					"classSelectorForNext", 
-					classSelectorForNext
-				)
-			},
-			focusTab(){
-				tabState.emit('focusedMe')
-				tabState.emit('focusedItem')
-			},
-			closeTab(e){
-				e.stopPropagation()
-				tabState.emit('close')
-			},
-			showCross(e){
-				toggleCross(this.children[1].children[0],1)
-			},
-			hideCross(e){
-				toggleCross(this.children[1].children[0],0)
-				e.target.classList.remove("dragging")
-			}
-		},
-		events:{
-			mounted(){
-				this.directory = directory
-				tabState.on('focusedMe',()=>{
-					RunningConfig.data.focusedTab = this
-					RunningConfig.data.focusedPanel = this.parentElement.parentElement
-					RunningConfig.emit('aTabHasBeenFocused',{
-						tabElement:this,
-						directory:normalizeDir(directory)
-					})
-					unfocusTabs(this)
-					this.props.active = true
-					this.scrollIntoView()
-				})
-				tabState.on('unfocusedMe',()=>{
-					RunningConfig.emit('aTabHasBeenUnfocused',{
-						tabElement:this,
-						directory:directory
-					})
-					this.props.active = false
-				})
-				tabState.on('destroyed',()=>{
-					RunningConfig.emit('aTabHasBeenClosed',{
-						tabElement:this,
-						directory:directory
-					})
-				})
-				tabState.on('savedMe',()=>{
-					if(!this.props.saved){
-						toggleTabStatus({
-							tabElement:this,
-							newStatus:true,
-							tabEditor:TabEditorComp.node,
-							directory
-						})
-						RunningConfig.emit('aTabHasBeenSaved',{
-							tabElement:this,
-							path:directory,
-							parentFolder
-						})
-					}
-				})
-				tabState.on('markAsSaved',()=>{
-					if( !this.props.saved ){
-						this.props.saved = true
-						toggleTabStatus({
-							tabElement:this,
-							newStatus:true,
-							tabEditor:TabEditorComp.node,
-							directory
-						})
-					}
-				})
-				tabState.on('unsavedMe',()=>{
-					if(this.props.saved){
-						toggleTabStatus({
-							tabElement:this,
-							newStatus:false,
-							tabEditor:TabEditorComp.node,
-							directory
-						})
-						this.props.saved = false
-						RunningConfig.emit('aTabHasBeenUnSaved',{
-							tabElement:this,
-							path:directory,
-							parentFolder
-						})
-					}
-				})
-				tabState.on('changePanel',newPanel =>{
-					tabState.data.panel = newPanel
-					focusATab(this)
-				})
-				tabState.on('close',()=>{
-					if(this.props.saved){
-						focusATab(this)
-						TabComp.node.remove()
-						TabEditorComp.node.remove(); 
-						tabState.emit('destroyed',{
-							tabElement:TabComp.node
-						})
-					}else{
-						new areYouSureDialog().then(()=>{
-							focusATab(TabComp.node)
-							TabComp.node.remove()
-							TabEditorComp.node.remove(); 
-							TabComp.node.props.state.emit('destroyed',{tabElement:TabComp.node})
-						}).catch(()=>{
-							// nothing, tab remains opened
-						})
-					}
-				})
-				this.getPanelTabs = ()=>{
-					const tabs = this.parentElement.children
-					return Object.keys(tabs).map( tab =>{
-						return {
-							element:tabs[tab],
-							fileName:tabs[tab].children[0].textContent,
-							filePath:tabs[tab].getAttribute("classselector")
-						}
-					})
-				}
-				unfocusTabs(this)
-				RunningConfig.data.focusedTab = this
-				this.props.active = tabState.data.active
-				this.props.saved = tabState.data.saved
-				this.props.state = tabState
-				this.isSaved = true
-			}
-		},
-		props:['active']
-	})
-	const TabEditorComp = puffin.element(`
-		<TabEditor>
-			${component?'<component/>':''}
-		</TabEditor>
-	`,{
-			components:{
-				TabEditor,
-				component
-			},
-			events:{
-				mounted(target){
-					tabState.on('focusedMe',()=>{
-						target.style.display = "flex"
-						target.props.state = tabState
-					})
-					tabState.on('unfocusedMe',()=>{
-						target.style.display = "none"
-						target.props.state = tabState
-					})
-					tabState.on('changePanel',(newPanel)=>{
-						newPanel.children[1].appendChild(target)
-					})
-					target.props.state = tabState
-				}
-			}
 		}
-	)
-	puffin.render(TabComp,panel.children[0])
-	puffin.render(TabEditorComp,panel.children[1])
+	})`
+		<TabBody mounted="${mounted}" active="${()=>tabState.data.active}"  draggable="true" classSelector="${classSelector}" class="${classSelector}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" 	:mouseleave="${hideCross}"	:dragenter="${dragEnter}"	:dragleave="${dragLeave}" :dragover="${dragover}":drop="${onDropped}">
+			<p :drop="${onDropped}"" classSelector="${classSelector}">
+				${title}
+			</p>
+			<div :drop="${onDropped}" classSelector="${classSelector}">
+				<Cross :drop="${onDropped}" classSelector="${classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
+			</div>
+		</TabBody>
+	`
+	function dragover(e){
+		e.preventDefault()	
+		tabNode.classList.add("dragging")
+	}
+	function dragEnter(e){
+		e.preventDefault()
+	}
+	function dragLeave(e){
+		e.preventDefault()
+		e.target.classList.remove("dragging")
+	}
+	function onDropped(e){
+		e.preventDefault()
+		tabNode.classList.remove("dragging")
+	}
+	function startDrag(e){
+		event.dataTransfer.setData("classSelector", classSelector)
+		const tabsBar = this.parentElement
+		const tabPosition  = guessTabPosition(this,tabsBar)
+		let classSelectorForNext = null
+		if( tabsBar.children.length == 1){
+			classSelectorForNext = null
+		}else if( tabPosition == 0){
+			classSelectorForNext = tabsBar.children[1].getAttribute("classSelector")
+		}else{
+			classSelectorForNext = tabsBar.children[tabPosition-1].getAttribute("classSelector")
+		}
+		event.dataTransfer.setData(
+			"classSelectorForNext", 
+			classSelectorForNext
+		)
+	}
+	function focusTab(){
+		tabState.emit('focusedMe')
+		tabState.emit('focusedItem')
+	}
+	function closeTab(e){
+		e.stopPropagation()
+		tabState.emit('close')
+	}
+	function focusTabshowCross(e){
+		toggleCross(this.children[1].children[0],1)
+	}
+	function showCross(e){
+		toggleCross(this.children[1].children[0],1)
+	}
+	function hideCross(e){
+		toggleCross(this.children[1].children[0],0)
+		e.target.classList.remove("dragging")
+	}
+	function mounted(){
+		this.directory = directory
+		tabState.keyChanged('active',()=>{
+			this.update()
+		})
+		tabState.on('focusedMe',()=>{
+			RunningConfig.data.focusedTab = this
+			RunningConfig.data.focusedPanel = this.parentElement.parentElement
+			RunningConfig.emit('aTabHasBeenFocused',{
+				tabElement:this,
+				directory:normalizeDir(directory)
+			})
+			unfocusTabs(this)
+			tabState.data.active = true
+			this.scrollIntoView()
+		})
+		tabState.on('unfocusedMe',()=>{
+			RunningConfig.emit('aTabHasBeenUnfocused',{
+				tabElement:this,
+				directory:directory
+			})
+			tabState.data.active = false
+		})
+		tabState.on('destroyed',()=>{
+			RunningConfig.emit('aTabHasBeenClosed',{
+				tabElement:this,
+				directory:directory
+			})
+		})
+		tabState.on('savedMe',()=>{
+			if( !tabState.data.saved ){
+				toggleTabStatus({
+					tabElement:this,
+					newStatus:true,
+					tabEditor:tabEditorNode,
+					directory
+				})
+				RunningConfig.emit('aTabHasBeenSaved',{
+					tabElement:this,
+					path:directory,
+					parentFolder
+				})
+			}
+		})
+		tabState.on('markAsSaved',()=>{
+			if( !tabState.data.saved ){
+				tabState.data.saved = true
+				toggleTabStatus({
+					tabElement:this,
+					newStatus:true,
+					tabEditor:tabEditorNode,
+					directory
+				})
+			}
+		})
+		tabState.on('unsavedMe',()=>{
+			if( tabState.data.saved ){
+				toggleTabStatus({
+					tabElement:this,
+					newStatus:false,
+					tabEditor:tabEditorNode,
+					directory
+				})
+				tabState.data.saved = false
+				RunningConfig.emit('aTabHasBeenUnSaved',{
+					tabElement:this,
+					path:directory,
+					parentFolder
+				})
+			}
+		})
+		tabState.on('changePanel',newPanel =>{
+			tabState.data.panel = newPanel
+			focusATab(this)
+		})
+		tabState.on('close',()=>{
+			if( tabState.data.saved ){
+				focusATab(this)
+				tabNode.remove()
+				tabEditorNode.remove(); 
+				tabState.emit('destroyed',{
+					tabElement:tabNode
+				})
+			}else{
+				new areYouSureDialog().then(()=>{
+					focusATab(tabNode)
+					tabNode.remove()
+					tabEditorNode.remove(); 
+					tabNode.state.emit('destroyed',{
+						tabElement:tabNode
+					})
+				}).catch(()=>{
+					// nothing, tab remains opened
+				})
+			}
+		})
+		this.getPanelTabs = ()=>{
+			const tabs = this.parentElement.children
+			return Object.keys(tabs).map( tab =>{
+				return {
+					element:tabs[tab],
+					fileName:tabs[tab].children[0].textContent,
+					filePath:tabs[tab].getAttribute("classselector")
+				}
+			})
+		}
+		unfocusTabs(this)
+		RunningConfig.data.focusedTab = this
+		this.state = tabState
+	}
+	const randomSelectorEditor = Math.random()
+	const TabEditorComp = element({
+		components:{
+			TabEditor,
+			component
+		}
+	})`
+		<TabEditor id="${randomSelectorEditor}" mounted="${mountedEditor}">
+			${component?component():''}
+		</TabEditor>
+	`
+	function mountedEditor(){
+		const target = this
+		tabState.on('focusedMe',()=>{
+			target.style.display = "flex"
+			target.state = tabState
+		})
+		tabState.on('unfocusedMe',()=>{
+			target.style.display = "none"
+			target.state = tabState
+		})
+		tabState.on('changePanel',(newPanel)=>{
+			newPanel.children[1].appendChild(target)
+		})
+		target.state = tabState
+	}
+	render(TabComp,panel.children[0])
+	render(TabEditorComp,panel.children[1])
+	const tabNode = document.getElementsByClassName(classSelector)[0]
+	const tabEditorNode = document.getElementById(randomSelectorEditor)
 	return {
-		tabElement:TabComp.node,
-		bodyElement:TabEditorComp.node,
+		tabElement:tabNode,
+		bodyElement:tabEditorNode,
 		tabState,
 		isCancelled:false
 	}
@@ -290,40 +278,36 @@ function toggleTabStatus({
 	directory
 }){
 	if( newStatus ){
-		if(!tabElement.props.saved){
+		if( !tabElement.state.data.saved ){
 			saveFile(directory,()=>{
 				RunningConfig.emit('tabSaved',{
 					element:tabElement,
-					parentFolder:tabElement.props.state.data.parentFolder
+					parentFolder:tabElement.state.data.parentFolder
 				})
 				tabElement.children[1].children[0].style.display = "block"
 				if( tabElement.children[1].children[1]!=null )
 					tabElement.children[1].children[1].remove()
-				tabElement.props.saved = true
+				tabElement.state.data.saved = true
 			})
 		}else{
 			tabElement.children[1].children[0].style.display = "block"
-			if( tabElement.children[1].children[1]!=null )
+			if( tabElement.children[1].children[1] )
 				tabElement.children[1].children[1].remove()
 		}
-	}else if(tabElement.props.saved){
-		tabElement.props.saved = false
+	}else if( tabElement.state.data.saved) {
+		tabElement.state.data.saved = false
 		tabElement.children[1].children[0].style.display = "none"
-		const comp = puffin.element(`
-			<UnSavedIcon click="$tryToClose"/>
-		`,{
+		const comp = element({
 			components:{
 				UnSavedIcon
-			},
-			methods:{
-				tryToClose(){
-					tabElement.props.state.emit('close')
-				}
 			}
-		})
-		puffin.render(comp,tabElement.children[1],{
-			removeContent:false
-		})
+		})`
+			<UnSavedIcon :click="${tryToClose}"></UnSavedIcon>
+		`
+		function tryToClose(){
+			tabElement.state.emit('close')
+		}
+		render(comp,tabElement.children[1])
 	} 
 }
 
@@ -346,7 +330,7 @@ function unfocusTabs(tab){
 	const tabsBarChildren = tabsBar.children;
 	for( let otherTab of tabsBarChildren){
 		if( otherTab != tab ) {
-			otherTab.props.state.emit('unfocusedMe')
+			otherTab.state.emit('unfocusedMe')
 		}
 	}
 }
@@ -358,13 +342,13 @@ function focusATab(fromTab){
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab,tabsBar)
 	if( focusedTabPosition === 0 ){
 		if( fromTabPosition < tabsBarChildren.length-1 ){
-			tabsBarChildren[fromTabPosition+1].props.state.emit('focusedMe')
+			tabsBarChildren[fromTabPosition+1].state.emit('focusedMe')
 		}else if( tabsBarChildren.length === 1 ){
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
 	}else if( focusedTabPosition !== 0 && (fromTabPosition  == focusedTabPosition ) || (focusedTabPosition == tabsBarChildren.length) ){
-		tabsBarChildren[fromTabPosition-1].props.state.emit('focusedMe')
+		tabsBarChildren[fromTabPosition-1].state.emit('focusedMe')
 	}
 }
 

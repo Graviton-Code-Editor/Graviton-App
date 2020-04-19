@@ -1,15 +1,17 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const PanelBody  = puffin.element(`
-	<div click="$focusPanel" class="${
-		puffin.style.css`
-			&{
-				flex:1;
-				max-height:100%;
-				overflow:auto;
-			}
-		`}"
-	/>
-`)
+const styleWrapper = style`
+	&{
+		flex:1;
+		max-height:100%;
+		overflow:auto;
+	}
+`
+
+function PanelBody(){
+	return element`
+		<div class="${styleWrapper}"/>
+	`
+}
 
 export default PanelBody

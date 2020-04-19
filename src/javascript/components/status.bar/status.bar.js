@@ -1,8 +1,9 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const PanelStatusBar = puffin.element(`
+function PanelStatusBar(){
+	return element`
 	<div id="statusBar" class="${
-		puffin.style.css`
+		style`
 			&{
 				border-top:1px solid var(--statusbarBorder);
 				min-height:25px;
@@ -28,6 +29,7 @@ const PanelStatusBar = puffin.element(`
 		<div/>
 		<div/>
 	</div>
-`)
+	`
+}
 
 export default PanelStatusBar

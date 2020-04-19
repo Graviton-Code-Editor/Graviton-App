@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import StatusBarItemBody from '../components/status.bar/status.bar.item'
 import RunningConfig from '../utils/running.config'
 
@@ -7,44 +7,52 @@ function StatusBarItem({
 	component,
 	action,
 	position,
-	hint=""
+	hint = ''
 }){
-	if( component != null ){
-		label = `<component/>`
-	} 
-	const ItemComponent = puffin.element(`
-		<StatusBarItemBody title="${hint}" click="$action">
-			${label}
-		</StatusBarItemBody>
-	`,{
-		methods:{
-			action
-		},
+	let elementNode;
+	const ItemComponent = element({
 		components:{
-			StatusBarItemBody,
-			component
+			StatusBarItemBody
 		}
-	})
-	if(document.getElementById('statusBar')!=null){
-		const side = document.getElementById('statusBar').children[position=='right'?1:0]
-		puffin.render(ItemComponent,side)
+	})`
+		<StatusBarItemBody title="${hint}" :click="${action}">
+			${component?component():''}
+		</StatusBarItemBody>
+	`
+	if( document.getElementById('statusBar') ){
+		const side = document.getElementById('statusBar').children[
+			position === 'right' ? 1 : 0 
+		]
+		elementNode = render(ItemComponent,side)
 	}else{
-		RunningConfig.on("appLoaded",()=>{
-			const side = document.getElementById('statusBar').children[position=='right'?1:0]
-			puffin.render(ItemComponent,side)
+		RunningConfig.on('appLoaded',()=>{
+			const side = document.getElementById('statusBar').children[
+				position === 'right' ? 1 : 0 
+			]
+			elementNode = render(ItemComponent,side)
 		})
 	}
 	return {
-		setHint:(value)=>setHint(ItemComponent.node,value),
-		setLabel:(value)=>setLabel(ItemComponent.node,value),
-		show:()=>ItemComponent.node.style.display = "block",
-		hide:()=>ItemComponent.node.style.display = "none",
-		isHidden:()=>ItemComponent.node.style.display == "none"
+		setHint(value){
+			setHint(elementNode,value)
+		},
+		setLabel(value){
+			setLabel(elementNode,value)
+		},
+		show(){
+			elementNode.style.display = "block"
+		},
+		hide(){
+			elementNode.style.display = "none"
+		},
+		isHidden(){
+			elementNode.style.display == "none"
+		}
 	}
 }
 
 function setHint(element,value){
-	element.setAttribute("title",value)
+	element.setAttribute('title',value)
 }
 
 function setLabel(element,value){

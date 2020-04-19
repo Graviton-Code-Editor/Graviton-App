@@ -78,9 +78,9 @@ function Editor({
 		instance:instance,
 		action: currentValue =>{
 			if( currentValue == editorValueSaved ){
-				tabElement.props.state.emit('markAsSaved')
+				tabElement.state.emit('markAsSaved')
 			}else{
-				tabElement.props.state.emit('unsavedMe')
+				tabElement.state.emit('unsavedMe')
 			}
 			
 		}
@@ -153,7 +153,7 @@ function Editor({
 	}
 	updateCursorPosition( Client , instance )
 	focusEditor( Client , instance )
-	const tabDestroyedWatcher = tabElement.props.state.on('destroyed',()=>{
+	const tabDestroyedWatcher = tabElement.state.on('destroyed',()=>{
 		fileWatcher.cancel()
 		appThemeWatcher.cancel()
 		editorTabSizeWatcher.cancel()

@@ -1,4 +1,5 @@
 import StatusBarItem from '../../constructors/status.bar.item'
+import RunningConfig from 'RunningConfig'
 
 const CursorPositionStatusBarItem = new StatusBarItem({
 	label:'Ln 0, Ch 0',
@@ -8,6 +9,8 @@ const CursorPositionStatusBarItem = new StatusBarItem({
 	}
 })
 
-CursorPositionStatusBarItem.hide() //Hide it by default and only show when there is an editor opened
+RunningConfig.on("appLoaded",()=>{
+	CursorPositionStatusBarItem.hide() //Hide it by default and only show when there is an editor opened
+})
 
 export default CursorPositionStatusBarItem

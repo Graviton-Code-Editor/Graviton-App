@@ -15,6 +15,7 @@ const path = window.require('path')
 const fs = window.require('fs-extra')
 const { remote } = window.require('electron')
 
+// Graviton workspace's filename
 const WORKSPACE_FILENAME = 'gv-workspace.json'
 
 /** 

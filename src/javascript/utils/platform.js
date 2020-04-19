@@ -1,5 +1,6 @@
 import StaticConfig from 'StaticConfig'
-let AppPlatform = null;
+let AppPlatform;
+
 if( StaticConfig.data.appPlatform === 'auto' ){
 	AppPlatform = window.require("electron").remote.process.platform
 }else{

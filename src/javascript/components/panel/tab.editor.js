@@ -1,22 +1,24 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
-const TabEditor  = puffin.element(`
-	<div class="${
-		puffin.style.css`
-			&{
-				min-height:100%;
-				max-height:100%;
-				display:flex;
-			}
-			& .CodeMirror {
-				min-height:100%;
-				flex:1;
-			}
-			& .CodeMirror-scroll{
-				overflow-x:hidden;
-			}
-		`}"
-	/>
-`)
+const styleWrapper = style`
+	&{
+		min-height:100%;
+		max-height:100%;
+		display:flex;
+	}
+	& .CodeMirror {
+		min-height:100%;
+		flex:1;
+	}
+	& .CodeMirror-scroll{
+		overflow-x:hidden;
+	}
+`
+
+function TabEditor(){
+	return element`
+		<div class="${styleWrapper}"/>
+	`	
+}
 
 export default TabEditor

@@ -1,7 +1,7 @@
 import { EditorClient } from '../constructors/editorclient'
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 
-const ImageViewerStyle = puffin.style.div`
+const styleWrapper = style`
 	&{
 		display:flex;
 		justify-content:center;
@@ -42,17 +42,13 @@ const ImageViewerClient = new EditorClient({
 				}   
 		}
 	},
-	create({ element, directory }){
-		const ImageViewerComp = puffin.element(`
-			<ImageViewerStyle>
+	create({ element:containerElement , directory }){
+		const ImageViewerComp = element`
+			<div class="${styleWrapper}">
 				<img draggable="false" src="${ directory }"/>
-			</ImageViewerStyle>
-		`,{
-			components:{
-				ImageViewerStyle
-			}
-		})
-		puffin.render( ImageViewerComp, element)
+			</div>
+		`
+		render( ImageViewerComp, containerElement)
 		return {
 			instance : {} //Returns empty object because there is no editor instance
 		}

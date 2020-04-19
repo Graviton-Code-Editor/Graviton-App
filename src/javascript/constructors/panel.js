@@ -1,5 +1,5 @@
 import PanelBody from '../components/panel/panel'
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ContextMenu from './contextmenu'
 
@@ -12,114 +12,115 @@ function guessTabPosition( tab, tabsbar ){
 	return Number( res )
 }
 
+const styleWrapper = style`
+	&{
+		flex:1;
+		min-width:1px;
+		overflow:hidden;
+		max-height:100%;
+		min-height:100%;
+		display:flex;
+		flex-direction:column;
+		border-left:1px solid var(--panelBorder);
+	}
+	& .tabsbar{
+		min-height:40px;
+		max-height:40px;
+		white-space:nowrap;
+		display:flex;
+		flex:1;
+		overflow-x:auto;
+		overflow-y:hidden;
+		background:var(--tabsbarBackground);
+	}
+	& .tabsbar:empty{
+		background:transparent;
+	}
+	& .tabsbar::-webkit-scrollbar {
+		height:4px;
+	}
+`
+
 function Panel(){
 	const randomSelector = Math.random()
-	const PanelComp = puffin.element(`
-		<div id="${randomSelector}" click="$focusPanel" contextmenu="$contextmenu" class="${
-			puffin.style.css`
-				&{
-					flex:1;
-					min-width:1px;
-					overflow:hidden;
-					max-height:100%;
-					min-height:100%;
-					display:flex;
-					flex-direction:column;
-					border-left:1px solid var(--panelBorder);
-				}
-				& .tabsbar{
-					min-height:40px;
-					max-height:40px;
-					white-space:nowrap;
-					display:flex;
-					flex:1;
-					overflow-x:auto;
-					overflow-y:hidden;
-					background:var(--tabsbarBackground);
-				}
-				& .tabsbar:empty{
-					background:transparent;
-				}
-				& .tabsbar::-webkit-scrollbar {
-					height:4px;
-				}
-			`}">    
-			<div dragover="$allowDrop" drop="$onTabDropped" class="tabsbar"/>
-			<PanelBody/>
-		</div>
-`,{
+	const PanelComp = element({
 		components:{
 			PanelBody
-		},
-		methods:{
-			allowDrop(e){
-				e.preventDefault();
-			},
-			onTabDropped(e){
-				const target = document.getElementsByClassName(
-					e.target.getAttribute('classSelector')
-				)[0] || e.target
-				const movingTab = document.getElementsByClassName(
-					e.dataTransfer.getData('classSelector')
-				)[0]
-				const nextOldTab = document.getElementsByClassName(
-					e.dataTransfer.getData('classSelectorForNext')
-				)[0]
-				let nextTab = null
-				let tabsBar = null
-				let oldPanel = movingTab.props.state.data.panel
-				let panel = null
-				let position = 0
-				if( target.classList.contains('tabsbar') ){
-					tabsBar = target
-					position = tabsBar.children.length-1
-					panel = tabsBar.parentElement
-				}else if( target.parentElement.classList.contains('tabsbar') ){ 
-					tabsBar=target.parentElement
-					panel = tabsBar.parentElement
-					const targetPosition = guessTabPosition( target, tabsBar )
-					const draggingTabPosition = guessTabPosition( movingTab, tabsBar )
-					if( targetPosition < draggingTabPosition ){
-						nextTab = tabsBar.children[targetPosition]
-					}else{
-						nextTab = tabsBar.children[targetPosition+1]
-					}
-				}
-				if( !tabsBar ) return //Something went wrong
-				if( position === tabsBar.children.length-1 ){
-					tabsBar.appendChild( movingTab ) //Drag targeting the tabs bar
-				}else{
-					tabsBar.insertBefore( movingTab, nextTab) //Drag between tabs
-				}
-				movingTab.props.state.emit('changePanel', panel) //Make dragged tab the active one in the new panel and also move the editor 
-				if( oldPanel !== panel && nextOldTab ) {
-					nextOldTab.props.state.emit('focusedMe') //Focus a tab in old panel
-				}
-				movingTab.props.state.emit('focusedMe', {}) //Focus the new tab
-			},
-			focusPanel(){
-				RunningConfig.data.focusedPanel = this
-			},
-			contextmenu(event){
-				new ContextMenu({
-					list:[
-						{
-							label:'Close',
-							action:()=>{
-								removePanel(this)
-							}
-						}
-					],
-					event,
-					parent:this.parentElement
-				})
+		}
+	})`
+		<div id="${randomSelector}" :click="${focusPanel}" :contextmenu="${contextmenu}" class="${styleWrapper}">    
+			<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
+			<PanelBody/>
+		</div>
+	`
+	function allowDrop(e){
+		e.preventDefault();
+	}
+	function onTabDropped(e){
+		const target = document.getElementsByClassName(
+			e.target.getAttribute('classSelector')
+		)[0] || e.target
+		const movingTab = document.getElementsByClassName(
+			e.dataTransfer.getData('classSelector')
+		)[0]
+		const nextOldTab = document.getElementsByClassName(
+			e.dataTransfer.getData('classSelectorForNext')
+		)[0]
+		let nextTab = null
+		let tabsBar = null
+		let oldPanel = movingTab.state.data.panel
+		let panel = null
+		let position = 0
+		if( target.classList.contains('tabsbar') ){
+			tabsBar = target
+			position = tabsBar.children.length-1
+			panel = tabsBar.parentElement
+		}else if( target.parentElement.classList.contains('tabsbar') ){ 
+			tabsBar=target.parentElement
+			panel = tabsBar.parentElement
+			const targetPosition = guessTabPosition( target, tabsBar )
+			const draggingTabPosition = guessTabPosition( movingTab, tabsBar )
+			if( targetPosition < draggingTabPosition ){
+				nextTab = tabsBar.children[targetPosition]
+			}else{
+				nextTab = tabsBar.children[targetPosition+1]
 			}
 		}
-	})
-	puffin.render( PanelComp, document.getElementById('mainpanel') )
+		if( !tabsBar ) return //Something went wrong
+		if( position === tabsBar.children.length-1 ){
+			tabsBar.appendChild( movingTab ) //Drag targeting the tabs bar
+		}else{
+			tabsBar.insertBefore( movingTab, nextTab) //Drag between tabs
+		}
+		movingTab.state.emit('changePanel', panel) //Make dragged tab the active one in the new panel and also move the editor 
+		if( oldPanel !== panel && nextOldTab ) {
+			nextOldTab.state.emit('focusedMe') //Focus a tab in old panel
+		}
+		movingTab.state.emit('focusedMe', {}) //Focus the new tab
+	}
+	function focusPanel(){
+		RunningConfig.data.focusedPanel = this
+	}
+	function contextmenu(event){
+		new ContextMenu({
+			list:[
+				{
+					label:'Close',
+					action:()=>{
+						removePanel(this)
+					}
+				}
+			],
+			event,
+			parent:this.parentElement
+		})
+	}
+	
+	render( PanelComp, document.getElementById('mainpanel') )
 	RunningConfig.data.focusedPanel = document.getElementById( randomSelector )
+	
 	return {
-		element:document.getElementById( randomSelector )
+		element: document.getElementById( randomSelector )
 	}
 }
 
@@ -170,7 +171,7 @@ function destroyTabs(panel){
 	const tabsBar = panel.children[0]
 	const panelTabs = tabsBar.childNodes
 	panelTabs.forEach(function(tab){
-		tab.props.state.emit('close')
+		tab.state.emit('close')
 	})
 }
 
@@ -178,8 +179,8 @@ function checkIfThereAreTabsUnSaved(panel){
 	const tabsBar = panel.children[0]
 	const panelTabs = tabsBar.childNodes
 	let allTabsAreSaved = true;
-	panelTabs.forEach(function(tab){
-		if(!tab.isSaved) return allTabsAreSaved = false
+	panelTabs.forEach( tab => {
+		if( !tab.state.data.saved ) return allTabsAreSaved = false
 	})
 	return allTabsAreSaved
 }

@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 import { Titles , Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Window from '../../../constructors/window'
@@ -10,11 +10,18 @@ import installPlugin from '../utils/install.plugin'
 import uninstallPlugin from '../utils/uninstall.plugin'
 import getPluginById from '../api/get.plugin'
 import getLocalPluginById from '../utils/get.local.plugin'
+import installButton from './install.button'
 import path from 'path'
 
-const StoreCard = () => {
-	return puffin.element(`
-		<Card click="$clicked" class="${puffin.style.css`
+function StoreCard(props){
+	const { pluginId, displayName, isInstalled } = props.data
+	return element({
+		components:{
+			Card,
+			H5: Titles.h5
+		}
+	})`
+		<Card :click="${clicked}" class="${style`
 			&{
 				min-width:140px;
 				max-width:140px;
@@ -22,34 +29,25 @@ const StoreCard = () => {
 				height:100px;
 			}
 		`}">
-			<H5>{{displayName}}</H5>
+			<H5>${displayName}</H5>
 		</Card>
-	`,{
-		components:{
-			Card,
-			H5: Titles.h5
-		},
-		props:[
-			{
-				name:'displayName',
-				value:'loading...'
-			},
-			'id',
-			'installed'
-		],
-		methods:{
-			clicked: async function(){
-				const pluginId = this.getAttribute('id')
-				const isInstalled = eval(this.getAttribute('isinstalled'))
-				const pluginInfo = await getPluginById(pluginId) //Get Store's API info
-				const pluginLocalInfo = getLocalPluginById(pluginId) //Get installed version info
-				openWindow(pluginInfo,pluginLocalInfo,isInstalled)
-			}
-		}
-	})
+	`
+	async function clicked(){
+		const pluginInfo = await getPluginById(pluginId) //Get Store's API info
+		const pluginLocalInfo = getLocalPluginById(pluginId) //Get installed version info
+		openWindow(pluginInfo,pluginLocalInfo,isInstalled)
+	}
 }
 
 const pluginReserved = pluginName => pluginName == 'Arctic' ||  pluginName == 'Night'
+
+const getPluginInfo = ( object, key) => {
+	if( object[key] ){
+		return object[key]
+	}else{
+		return 'Unknown'
+	}
+}
 
 function openWindow({
 	name,
@@ -68,55 +66,75 @@ function openWindow({
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign( pluginInfo, pluginLocalInfo )
-		
-	const component = puffin.element(`
+	
+	const component = element({
+		components:{
+			H2: Titles.h2,
+			SideMenu,
+			Text
+		}
+	})`
 		<SideMenu default="about">
 			<div>
-				<H2>${ pluginInfoValid.name }</H2>
-				<label to="about" lang-string="About"></label>
+				<H2>${ getPluginInfo(pluginInfoValid,'name') }</H2>
+				<label to="about" lang-string="About">About</label>
 			</div>
 			<div>
 				<div href="about">
-					<Text>
-						<b>Made by: ${ pluginInfoValid.author }</b>
-					</Text>
-					<Text>Last version: ${ version }</Text>
-					<Text>Installed version: ${ localVersion }</Text>
-					${ isInstalled ? '' : ` <Button click="$install">Install</Button>` }
-					${ !isInstalled || pluginReserved(pluginInfoValid.name) ? '' : `<Button click="$uninstall">Uninstall</Button>` }
+					<div style="overflow:auto; min-height:calc( 100% - 50px); max-height:calc( 100% - 50px)">
+						<Text>
+							<b>Made by: ${ getPluginInfo(pluginInfoValid,'author') }</b>
+						</Text>
+						<Text>Last version: ${ version }</Text>
+						<Text>Installed version: ${ localVersion }</Text>
+					</div>
+					<div style="min-height:50px;">
+						${ getInstallButton() }
+						${ getUninstallButton() }
+					</div>
 				</div>
 			</div>
 		</SideMenu>
-	`,{
-		methods:{
-			install(){
-				installPlugin( pluginInfo ).then(()=>{
-					pluginInstalledNotification( name )
-				})
-			},
-			uninstall(){
-				uninstallPlugin( pluginInfo ).then(()=>{
-					pluginUninstalledNotification( name )
-				})
-			}
-		},
-		components:{
-			H2: Titles.h2,
-			Button,
-			SideMenu,
-			Text
-		},
-		addons:{
-			lang:puffin.lang( LanguageState )
+	`
+	function getInstallButton(){
+		if( !isInstalled ){
+			return element({
+				components:{
+					installButton
+				}
+			})` <installButton :click="${install}">Install</installButton>`
 		}
-	})
+		return element`<p/>`
+	}
+	function getUninstallButton(){
+		if( !isInstalled || pluginReserved(pluginInfoValid.name) ){
+			return element`<p/>`
+		}else{
+			return element({
+				components:{
+					Button
+				}
+			})`<Button :click="${uninstall}">Uninstall</Button>`
+		}
+	}
+	function install(){
+		installPlugin( pluginInfo ).then(()=>{
+			pluginInstalledNotification( name )
+		})
+	}
+	function uninstall(){
+		uninstallPlugin( pluginInfo ).then(()=>{
+			pluginUninstalledNotification( name )
+		})
+	}
 	const pluginWindow = new Window({
-		component,
+		component:()=>component,
 		height: '55%',
 		width: '45%'
 	})
 	pluginWindow.launch()
 }
+
 
 function pluginInstalledNotification( pluginName ){
 	new Notification({

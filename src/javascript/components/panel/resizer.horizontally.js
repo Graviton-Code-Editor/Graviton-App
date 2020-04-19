@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
 const resizeSelector = Math.random()
 
@@ -14,33 +14,27 @@ function startResizing( event, resizerElement = document.getElementById(resizeSe
 	leftPanel.style.width = `${event.clientX - 25}px`
 }
 
+const styleWrapper = style`
+	&{
+		user-select: none;
+		padding:3px;
+		cursor:e-resize;
+	}
+`
+
 function stopResizing(){
 	window.removeEventListener('mousemove', startResizing, false);
 	window.removeEventListener('mouseup', stopResizing, false);
 }
 
-const resizerComponent = puffin.element(`
-	<div mousedown="$working" class="${
-		puffin.style.css`
-			&{
-				user-select: none;
-				padding:3px;
-				cursor:e-resize;
-			}
-		`}"
-	/>
-`,{
-	events:{
-		mounted(){
-			this.id = resizeSelector
-		}
-	},
-	methods:{
-		working(){
-			window.addEventListener('mousemove', startResizing, false);
-			window.addEventListener('mouseup', stopResizing, false);
-		}
-	}
-})
+function resizerComponent(){
+	return element`
+		<div id="${resizeSelector}" :mousedown="${working}" class="${styleWrapper}"/>
+	`
+}
 
+function working(){
+	window.addEventListener('mousemove', startResizing, false);
+	window.addEventListener('mouseup', stopResizing, false);
+}
 export default resizerComponent
