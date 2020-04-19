@@ -10,7 +10,7 @@ import installPlugin from '../utils/install.plugin'
 import uninstallPlugin from '../utils/uninstall.plugin'
 import getPluginById from '../api/get.plugin'
 import getLocalPluginById from '../utils/get.local.plugin'
-import installButton from './install.button'
+import storeButton from './button'
 import path from 'path'
 
 function StoreCard(props){
@@ -100,21 +100,21 @@ function openWindow({
 		if( !isInstalled ){
 			return element({
 				components:{
-					installButton
+					storeButton
 				}
-			})` <installButton :click="${install}">Install</installButton>`
+			})` <storeButton :click="${install}">Install</storeButton>`
 		}
-		return element`<p/>`
+		return element`<div/>`
 	}
 	function getUninstallButton(){
 		if( !isInstalled || pluginReserved(pluginInfoValid.name) ){
-			return element`<p/>`
+			return element`<div/>`
 		}else{
 			return element({
 				components:{
-					Button
+					storeButton
 				}
-			})`<Button :click="${uninstall}">Uninstall</Button>`
+			})`<storeButton :click="${uninstall}">Uninstall</storeButton>`
 		}
 	}
 	function install(){

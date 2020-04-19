@@ -1,6 +1,6 @@
 import Endpoints from './api.endpoints.js'
 import axios from 'axios'
-import throwEreror from '../utils/throw.error'
+import throwError from '../utils/throw.error'
 
 function getPluginById(pluginId){
 	return new Promise((resolve,reject)=>{
