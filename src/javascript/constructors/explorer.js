@@ -14,7 +14,10 @@ const chokidar = window.require('chokidar');
 const path = window.require('path');
 
 function checkIfProjectIsGit(path){
-	const simpleInstance = simpleGit(path)
+	const repoPath = normalizeDir(path,{
+		isWSL: true
+	})
+	const simpleInstance = simpleGit(repoPath)
 	return new Promise((resolve,reject)=>{
 		simpleInstance.checkIsRepo((err,res)=>{
 			if(!err) {

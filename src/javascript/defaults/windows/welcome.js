@@ -66,7 +66,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 							})`
 							<Card :click="${openDirectory}" directory="${ normalizeDir( directory ) }">
 								<b>${ nameFolder }</b>
-								<p>${ beautifyDir( normalizeDir( directory , true) ) }</p>
+								<p>${ beautifyDir( normalizeDir( directory) ) }</p>
 							</Card>
 							`
 						})}
