@@ -260,7 +260,9 @@ function init(){
 				},
 				{
 					label:'About',
-					action:About().launch
+					action(){
+						About().launch()
+					}
 				}
 			]
 		})
