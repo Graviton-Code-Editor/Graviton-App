@@ -2,7 +2,6 @@ import { element } from '@mkenzo_8/puffin'
 import { Titles, Card, Text } from '@mkenzo_8/puffin-drac'
 
 function ThemeCard( { themeInfo }){
-	console.log(themeInfo)
 	return element({
 		components:{
 			Card,

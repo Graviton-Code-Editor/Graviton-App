@@ -8,13 +8,12 @@ import ThemeProvider from 'ThemeProvider'
 import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
 import RunningConfig from 'RunningConfig'
+import StaticConfig from 'StaticConfig'
 window.require('v8-compile-cache')
 
 import '../sass/main.scss'
 
-const ThemeWrapper = style`
-
-`
+let blurViewApp = false
 
 const App = element({
 	components:{
@@ -24,7 +23,7 @@ const App = element({
 		Resizer
 	},
 })`
-    <div mounted="${mounted}" class="${()=>ThemeWrapper} ${()=>style`
+    <div mounted="${mountedApp}" class="${style`
 		body{
 			padding:0px;
 			margin:0px;
@@ -32,6 +31,7 @@ const App = element({
 			max-height:100%;
 			overflow:hidden;
 			--puffinFont:mainFont;
+			background: var(--bodyBackground);
 		}
 		@font-face {
 			font-family: mainFont;
@@ -141,7 +141,7 @@ const App = element({
 			cursor: ew-resize;
 		}
     `}">
-		<div>
+		<div mounted="${mountedAppView}" style="${()=> blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : ''}">
 			<TitleBar/>
 			<div id="body">
 				<div id="sidepanel"/>
@@ -155,7 +155,23 @@ const App = element({
 		<SplashScreen/>
 	</div>
 `
-function mounted(){
+function mountedAppView(){
+	RunningConfig.keyChanged('openedWindows', value =>{
+		if( value <= 0 ){
+			blurViewApp = false
+		} else {
+			blurViewApp = true
+		}
+		this.update()
+	})
+	StaticConfig.keyChanged('appBlurEffect', value =>{
+		if( blurViewApp ){
+			this.update()
+		}	
+	})
+}
+
+function mountedApp(){
 	init()
 	window.addEventListener("load",function(){
 		if(RunningConfig.data.arguments[0] == null){

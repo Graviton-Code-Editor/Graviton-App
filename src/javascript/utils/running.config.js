@@ -19,6 +19,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 		CodemirrorClient,
 		ImageViewerClient
 	],
+	openedWindows:0,
 	arguments: electronArguments
 }
 
