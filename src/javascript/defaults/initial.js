@@ -240,7 +240,7 @@ function init(){
 				{
 					label:'Blog',
 					action:()=>{
-						openLink('https://graviton.ml/blog/')
+						openLink('https://graviton.netlify.app/blog/')
 					}
 				},{
 					label:'Documentation',
