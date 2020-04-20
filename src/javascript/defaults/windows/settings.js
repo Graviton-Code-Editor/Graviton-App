@@ -1,4 +1,4 @@
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render,lang } from '@mkenzo_8/puffin'
 import { Titles , RadioGroup, Text, Card, Button } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Window from '../../constructors/window'
@@ -28,16 +28,16 @@ function Settings(){
 		})`
 			<SideMenu default="customization">
 				<div>
-					<H1 lang-string="Settings">Settings</H1>
+					<h1 lang-string="Settings" string="{{Settings}}"></h1>
 					<SideMenuSearcher/>
-					<label to="customization" lang-string="Customization">Customization</label>
-					<label to="languages" lang-string="Languages">Languages</label>
-					<label to="about" lang-string="About">About</label>
+					<label to="customization" lang-string="Customization" string="{{Customization}}"/>
+					<label to="languages" lang-string="Languages" string="{{Languages}}"/>
+					<label to="about" lang-string="About" string="{{About}}"/>
 				</div>
 				<div>
 					<div href="customization">
 						<div href="themes">
-							<H4 lang-string="Themes"/>
+							<H4 lang-string="Themes" string="{{Themes}}"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
 									${Object.keys(pluginsList).map(function(pluginName){
 										const pkg = pluginsList[pluginName]
@@ -70,8 +70,8 @@ function Settings(){
 					</div>
 					<div href="languages">
 						<div href="languages">
-							<H4 lang-string="Languages"></H4>
-							<RadioGroup>
+							<H4 lang-string="Languages" string="{{Languages}}"/>
+							<RadioGroup :radioSelected="${selectedLanguage}">
 								${Object.keys(Languages).map(function(lang){
 									return element`
 										<label name="${lang}" checked="${StaticConfig.data.appLanguage == lang?'true':'false'}">${lang}</label>
@@ -82,9 +82,9 @@ function Settings(){
 					</div>
 					<div href="about">
 						<div href="about">
-							<H4 lang-string="About"></H4>
+							<H4 lang-string="About" string="{{About}}"/>
 							<Text>Graviton is a modern looking code editor.</Text>
-							</div>
+						</div>
 					</div>
 				</div>
 			</SideMenu>

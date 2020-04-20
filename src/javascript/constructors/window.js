@@ -1,6 +1,7 @@
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render, lang } from '@mkenzo_8/puffin'
 import WindowBody  from '../components/window/window'
 import WindowBackground  from '../components/window/background'
+import { LanguageState, getTranslation } from 'LanguageConfig'
 
 const styleWrapper = style`
 	&{
@@ -25,7 +26,10 @@ function Window({
 			WindowBody,
 			WindowBackground,
 			contentComponent
-		}
+		},
+		addons:[
+			lang(LanguageState)
+		]
 	})`
 		<div id="${randomSelector}" win-title="${title}" class="window ${styleWrapper}">
 			<WindowBackground></WindowBackground>

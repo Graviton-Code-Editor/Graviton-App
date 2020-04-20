@@ -1,4 +1,4 @@
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render, lang } from '@mkenzo_8/puffin'
 import MenuComp  from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState, getTranslation } from 'LanguageConfig'
@@ -42,7 +42,7 @@ function getDropmenu(list){
 			return element`
 			<div :click="${option.action}" >
 				<a :mouseenter="${triggerAction}" >
-					<p lang-string="${ option.label }">${ option.label }</p>
+					<p lang-string="${ option.label }"></p>
 					${ option.list ? ArrowIcon() : '' }
 				</a>
 			</div>`
@@ -54,7 +54,7 @@ function getDropmenu(list){
 
 const getDropmenuButton = ( isSubmenu, button ) => {
 	if( !isSubmenu ) {
-		return element`<button :mouseover="${hideMenus}" :click="${hideMenus}" lang-string="${ button }">${ button }</button>`
+		return element`<button :mouseover="${hideMenus}" :click="${hideMenus}" lang-string="${ button }" string="{{${ button }}}"/>`
 	}
 	return element` `
 }
@@ -64,7 +64,10 @@ function getMenu( button, list, leftMargin ){
 	return element({
 		components:{
 			MenuComp
-		}
+		},
+		addons:[
+			lang(LanguageState)
+		]
 	})`
 		<MenuComp class="${ isSubmenu ? 'submenu' : '' }" data="${{isSubmenu}}" style="${ isSubmenu ? `position:absolute;margin-top:-20px;margin-left:${ leftMargin }px;` : '' }">
 			${ getDropmenuButton(isSubmenu,button) }

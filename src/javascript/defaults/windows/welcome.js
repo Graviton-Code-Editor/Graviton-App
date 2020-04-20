@@ -24,10 +24,10 @@ function Welcome( { defaultPage = "projects" } = {  }){
 	})`
 		<SideMenu default="${ defaultPage }">
 			<div>
-				<H1 lang-string="Welcome">Welcome</H1>
-				<label to="projects" lang-string="RecentProjects">Recent Projects</label>
+				<H1 lang-string="Welcome" string="{{Welcome}}"></H1>
+				<label to="projects" lang-string="RecentProjects" string="{{RecentProjects}}"></label>
 				<label to="workspaces">Recent workspaces</label>
-				<label to="create_project" lang-string="NewProject">New Project</label>
+				<label to="create_project" lang-string="NewProject" string="{{NewProject}}"></label>
 			</div>
 			<div>
 				<CardsListContainer href="workspaces">
