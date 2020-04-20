@@ -289,10 +289,10 @@ function Item({
 		const target = this
 		target.gitChanges = gitChanges
 		target.style.paddingLeft = `${Number(level)+6}px`
-		this.explorerContainer = explorerContainer || this
+		this.explorerContainer = explorerContainer && explorerContainer.explorerContainer || this
 		const itemState = setItemState(target)
 		const itemDirectory = normalizeDir(fullpath)
-		const explorerState = explorerContainer && explorerContainer.state || itemState
+		const explorerState = this.explorerContainer.state || itemState
 		const fileExtension = isFolder? null : getFormat(fullpath)
 		const itemIcon = target.getElementsByClassName('icon')[0]
 		const itemArrow = target.getElementsByClassName('arrow')[0]

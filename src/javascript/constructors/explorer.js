@@ -210,7 +210,8 @@ async function Explorer(folderPath, parent, level = 0, replaceOldExplorer = true
 						dirPath: directory,
 						level: Number(level)+1,
 						isFolder,
-						gitChanges
+						gitChanges,
+						explorerContainer:container
 					}) 
 					const hotItem = itemComputed
 					if( container.children[1]){ //Check if the folder is opened
@@ -238,8 +239,8 @@ async function Explorer(folderPath, parent, level = 0, replaceOldExplorer = true
 		if( replaceOldExplorer ) parent.innerHTML = ""
 		render(explorerContainer,parent)
 	}
-	if(level != 0){
-		fs.readdir(path.normalize(parsedFolderPath)).then( paths => {
+	if( level != 0 ){
+		fs.readdir(parsedFolderPath).then( paths => {
 			let dirs = paths.map( dir => { //Load folders 
 				const itemDirectory = normalizeDir (path.join(folderPath,dir) )
 				const container =  parent
@@ -313,17 +314,6 @@ function getItemComputed({
 		hint:beautifyDir(dirPath),
 		explorerContainer
 	})
-	
-	/*`
-		<Item 
-		${projectPath?`id="${normalizeDir(projectPath)}"`:''} 
-		class="${classSelector}" 
-		isFolder="${isFolder}" 
-		parentFolder="${projectPath}" 
-		dirName="${dirName}" 
-		hint="${beautifyDir(dirPath)}" 
-		fullpath="${dirPath}" 
-		level="${level}"/>` */
 }
 
 

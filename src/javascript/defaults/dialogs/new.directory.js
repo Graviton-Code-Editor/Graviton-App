@@ -22,14 +22,12 @@ function newDirectoryDialog({
 }
 
 function createDirectory(value,isFolder,parentDirectory,container,explorerState){
-	console.log(container,explorerState)
 	const itemDirectory = normalizeDir(path.join(parentDirectory,value),true)
 	const itemFakeDirectory = normalizeDir(path.join(parentDirectory,value))
 	if ( !fs.existsSync(itemDirectory) ){
 		if( isFolder ){
 			if ( !fs.existsSync(itemDirectory) ){
 				fs.mkdirSync(itemDirectory);
-				console.log(explorerState)
 				explorerState.emit('createItem',{
 					container:container,
 					containerFolder:normalizeDir(container.getAttribute("parentfolder")),
