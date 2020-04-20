@@ -2,8 +2,6 @@ import { element, style } from '@mkenzo_8/puffin'
 const { remote } = window.require('electron')
 import AppPlatform from 'AppPlatform'
 
-
-
 function Buttons(){
 	if( AppPlatform == "win32" ){
 		
@@ -24,12 +22,6 @@ function Buttons(){
 						left:0;
 						background:transparent;
 					}
-					& button:nth-child(3):active{
-						background:var(--controlCloseButtonActiveBackground);
-					}
-					& button:nth-child(3):active rect.fill{
-						fill:var(--controlCloseButtonActiveFill);
-					}
 					& button:hover{
 						background:var(--controlButtonsHoverBackground);
 					}
@@ -38,6 +30,12 @@ function Buttons(){
 					}
 					& button:nth-child(3):hover rect.fill{
 						fill:var(--controlCloseButtonHoverFill);
+					}
+					& button:nth-child(3):active{
+						background:var(--controlCloseButtonActiveBackground);
+					}
+					& button:nth-child(3):active rect.fill{
+						fill:var(--controlCloseButtonActiveFill);
 					}
 				`}">
 				<button title="Minimize" :click="${minimize}">
