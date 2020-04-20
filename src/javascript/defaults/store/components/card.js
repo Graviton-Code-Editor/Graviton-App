@@ -118,13 +118,13 @@ function openWindow({
 		}
 	}
 	function install(){
-		installPlugin( pluginInfo ).then(()=>{
-			pluginInstalledNotification( name )
+		installPlugin( pluginInfoValid ).then(()=>{
+			pluginInstalledNotification( pluginInfoValid.name )
 		})
 	}
 	function uninstall(){
-		uninstallPlugin( pluginInfo ).then(()=>{
-			pluginUninstalledNotification( name )
+		uninstallPlugin( pluginInfoValid ).then(()=>{
+			pluginUninstalledNotification( pluginInfoValid.name )
 		})
 	}
 	const pluginWindow = new Window({

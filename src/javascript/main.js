@@ -150,7 +150,6 @@ const App = element({
 			</div>
 			<StatusBar/>
 		</div>
-		<Resizer/>
 		<div id="windows"/>
 		<div id="notifications"/>
 		<SplashScreen/>
