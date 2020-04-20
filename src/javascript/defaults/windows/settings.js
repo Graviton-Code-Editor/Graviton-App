@@ -9,6 +9,7 @@ import PluginsRegistry from 'PluginsRegistry'
 import Languages from '../../../../languages/*.json'
 import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
+import ThemeCard from '../settings/components/theme.card'
 
 function Settings(){
 	const pluginsList = PluginsRegistry.registry.data.list
@@ -20,7 +21,6 @@ function Settings(){
 				H4:Titles.h4,
 				SideMenu,
 				Text,
-				Card,
 				Button,
 				Switch,
 				SideMenuSearcher
@@ -40,15 +40,15 @@ function Settings(){
 							<H4 lang-string="Themes" string="{{Themes}}"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
 									${Object.keys(pluginsList).map(function(pluginName){
-										const pkg = pluginsList[pluginName]
-										if(pkg.type == "theme"){
+										const pluginInfo = pluginsList[pluginName]
+										if(pluginInfo.type == "theme"){
 											return element({
 												components:{
-													Card
+													ThemeCard
 												}
 											})`
 											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data['app.theme'] == pluginName?'':'false'}">
-												<Card style="font-size:13px;">${pluginName}</Card>
+												<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"></ThemeCard>
 											</label>
 											`
 										}
