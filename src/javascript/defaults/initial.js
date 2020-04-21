@@ -1,6 +1,6 @@
 import { Panel, removePanel } from '../constructors/panel'
 import { registryAllPlugins } from '../utils/plugin.loader'
-import { puffin } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 import { openFolder, openFile } from '../utils/filesystem'
 import Menu from "../constructors/menu";
 import Settings from './windows/settings'
@@ -17,6 +17,7 @@ import ThemeProvider from '../utils/themeprovider';
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
+import Dialog from '../constructors/dialog'
 import './shortcuts'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
@@ -292,6 +293,30 @@ function init(){
 								}
 							]
 						})
+					}
+				},
+				{
+					label:'Dialog test',
+					action:()=>{
+						const testDialog = new Dialog({
+							title: 'Title',
+							content: 'Dialog body',
+							buttons:[
+								{
+									label:'Button 1',
+									action(){
+										console.log('Clicked button 1')
+									}
+								},
+								{
+									label:'Button 2',
+									action(){
+										console.log('Clicked button 2')
+									}
+								}
+							]
+						})
+						testDialog.launch()
 					}
 				}
 			]
