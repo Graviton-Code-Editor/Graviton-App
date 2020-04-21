@@ -21,7 +21,6 @@ function Notification({
 			NOTIFICATION_LIVE_TIME
 		)
 	}
-	const randomSelector = Math.random()
 	const NotificationComp = element({
 		components:{
 			NotificationBody,
@@ -30,9 +29,9 @@ function Notification({
 			Cross
 		}
 	})`
-		<NotificationBody id="${randomSelector}" mounted="${mounted}">
+		<NotificationBody mounted="${mounted}">
 			<div>
-				<Cross :click="${closeNotification}"/>
+				<Cross :click="${()=>closeNotification(NotificationNode)}"/>
 			</div>
 			<Title>${ title }</Title>
 			<Content>${ content }</Content>
@@ -47,20 +46,20 @@ function Notification({
 			</div>
 		</NotificationBody>
 	`
-	function closeNotification(){
-		NotificationNode.remove()
-	}
 	function clickedButton(){
-		closeNotification()
+		closeNotification(NotificationNode)
 		listedMethods[this.getAttribute('index')]()
 	}
-	render( NotificationComp, document.getElementById('notifications') )
-	const NotificationNode = document.getElementById( randomSelector )
+	const NotificationNode = render( NotificationComp, document.getElementById('notifications') )
 	RunningConfig.emit('notificationPushed',{
 		title,
 		content,
 		element:NotificationNode
 	})
+}
+
+function closeNotification(node){
+	node.remove()
 }
 
 RunningConfig.on('notificationPushed', notificationDetails => {

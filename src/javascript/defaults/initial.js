@@ -16,6 +16,7 @@ import Languages from '../../../languages/*.json'
 import ThemeProvider from '../utils/themeprovider';
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
+import Notification from '../constructors/notification'
 import './shortcuts'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
@@ -28,244 +29,274 @@ const isDev = window.require("electron-is-dev")
 
 function init(){
 	new Menu({ //FILE
-			button:'File',
-			list:[
-				{
-					label:'OpenFile',
-					action:()=>{
-						openFile().then(function(filePath){
-							RunningConfig.emit('loadFile',{
-								filePath
+		button:'File',
+		list:[
+			{
+				label:'OpenFile',
+				action:()=>{
+					openFile().then(function(filePath){
+						RunningConfig.emit('loadFile',{
+							filePath
+						})
+					})
+				}
+			},
+			{
+				label:'OpenFolder',
+				action:()=>{
+					openFolder().then(function(folderPath){
+						RunningConfig.emit('addFolderToRunningWorkspace',{
+							folderPath,
+							replaceOldExplorer:true,
+							workspacePath:null
+						})
+					})
+				}
+			},
+			{},
+			{
+				label:'Projects',
+				list:[
+					{
+						label:'Open Recents',
+						action:()=>{
+							Welcome().launch()
+						}
+					}
+				]
+			},
+			{
+				label:'Workspaces',
+				list:[
+					{
+						label:'Open Workspaces',
+						action:()=>{
+							Welcome({
+								defaultPage:'workspaces'
+							}).launch()
+						}
+					},
+					{},
+					{
+						label:'Open from File',
+						action:()=>{
+							RunningConfig.emit('openWorkspaceDialog')
+						}
+					},
+					{
+						label:'Add folder to workspace',
+						action:()=>{
+							RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
+								replaceOldExplorer:false
 							})
-						})
-					}
-				},
-				{
-					label:'OpenFolder',
-					action:()=>{
-						openFolder().then(function(folderPath){
-							RunningConfig.emit('addFolderToRunningWorkspace',{
-								folderPath,
-								replaceOldExplorer:true,
-								workspacePath:null
-							})
-						})
-					}
-				},
-				{},
-				{
-					label:'Projects',
-					list:[
-						{
-							label:'Open Recents',
-							action:()=>{
-								Welcome().launch()
-							}
 						}
-					]
-				},
-				{
-					label:'Workspaces',
-					list:[
-						{
-							label:'Open Workspaces',
-							action:()=>{
-								Welcome({
-									defaultPage:'workspaces'
-								}).launch()
-							}
-						},
-						{},
-						{
-							label:'Open from File',
-							action:()=>{
-								RunningConfig.emit('openWorkspaceDialog')
-							}
-						},
-						{
-							label:'Add folder to workspace',
-							action:()=>{
-								RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
-									replaceOldExplorer:false
-								})
-							}
-						},
-						{
-							label:'Save workspace',
-							action:()=>{
-								RunningConfig.emit('saveCurrentWorkspace')
-							}
+					},
+					{
+						label:'Save workspace',
+						action:()=>{
+							RunningConfig.emit('saveCurrentWorkspace')
 						}
-					]
+					}
+				]
+			}
+		]
+	})
+	new Menu({ //EDIT
+		button:'Edit',
+		list:[
+			{
+				label:'Undo',
+				action:()=>{
+					if( !RunningConfig.data.focusedEditor ) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					client.do('executeUndo',{
+						instance
+					})
 				}
-			]
-     })
-		new Menu({ //EDIT
-			button:'Edit',
-			list:[
-				{
-					label:'Undo',
-					action:()=>{
-						if( !RunningConfig.data.focusedEditor ) return
-						const { client, instance } = RunningConfig.data.focusedEditor
-						client.do('executeUndo',{
-							instance
-						})
-					}
-				},
-				{
-					label:'Redo',
-					action:()=>{
-						if( !RunningConfig.data.focusedEditor ) return
-						const { client, instance } = RunningConfig.data.focusedEditor
-						client.do('executeRedo',{
-							instance
-						})
-					}
-				},
-				{},
-				{
-					label:'FontSize',
-					list:[
-						{
-							label:'Increase',
-							action:()=>{
-								RunningConfig.emit('command.increaseFontSize')
-							}
-						},
-						{
-							label:'Decrease',
-							action:()=>{
-								RunningConfig.emit('command.decreaseFontSize')
-							}
-						}
-					]
-				},
-				{},
-				{
-					label:'Find',
-					action:()=>{
-						if( !RunningConfig.data.focusedEditor ) return
-						const { client, instance } = RunningConfig.data.focusedEditor
-						client.do('openFind',{
-							instance
-						})
-					}
-				},
-				{
-					label:'Replace',
-					action:()=>{
-						if( !RunningConfig.data.focusedEditor ) return
-						const { client, instance } = RunningConfig.data.focusedEditor
-						client.do('openReplace',{
-							instance
-						})
-					}
-				},
-				{},
-				{
-					label:'Format document',
-					action:()=>{
-						if( !RunningConfig.data.focusedEditor ) return
-						const { client, instance } = RunningConfig.data.focusedEditor
-						client.do('doIndent',{
-							instance
-						})
-					}
+			},
+			{
+				label:'Redo',
+				action:()=>{
+					if( !RunningConfig.data.focusedEditor ) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					client.do('executeRedo',{
+						instance
+					})
 				}
-			]
-		})
-		new Menu({ //TOOLS
-			button:'Tools',
-			list:[
-				{
-					label:'OpenSettings',
-					action:()=>Settings().launch()
-				},
-				{
-					label:'OpenStore',
-					action:()=>Store().launch()
-				},
-				{},
-				{
-					label:'Panels',
-					list:[
-						{
-							label:'New panel',
-							action:()=> RunningConfig.emit('command.newPanel')
-						},{
-							label:'Close current panel',
-							action:()=> RunningConfig.emit('command.closeCurrentPanel')
+			},
+			{},
+			{
+				label:'FontSize',
+				list:[
+					{
+						label:'Increase',
+						action:()=>{
+							RunningConfig.emit('command.increaseFontSize')
 						}
-					]
-				}
-			]
-		})
-		new Menu({ //Window
-			button:'Window',
-			list:[
-				{
-					label:'Zoom',
-					list:[
-						{
-							label:'DefaultZoom',
-							action:()=> {
-								StaticConfig.data.appZoom = 1
-							}
-						},
-						{
-							label:'IncreaseZoom',
-							action:()=> {
-								StaticConfig.data.appZoom += 0.1
-							}
-						},
-						{
-							label:'DecreaseZoom',
-							action:()=> {
-								StaticConfig.data.appZoom -= 0.1
-							}
+					},
+					{
+						label:'Decrease',
+						action:()=>{
+							RunningConfig.emit('command.decreaseFontSize')
 						}
-					]
-				},
-				{},
-				{
-					label:'Open dev tools',
-					action:()=>getCurrentWindow().toggleDevTools()
+					}
+				]
+			},
+			{},
+			{
+				label:'Find',
+				action:()=>{
+					if( !RunningConfig.data.focusedEditor ) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					client.do('openFind',{
+						instance
+					})
 				}
-			]
-		})
+			},
+			{
+				label:'Replace',
+				action:()=>{
+					if( !RunningConfig.data.focusedEditor ) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					client.do('openReplace',{
+						instance
+					})
+				}
+			},
+			{},
+			{
+				label:'Format document',
+				action:()=>{
+					if( !RunningConfig.data.focusedEditor ) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					client.do('doIndent',{
+						instance
+					})
+				}
+			}
+		]
+	})
+	new Menu({ //TOOLS
+		button:'Tools',
+		list:[
+			{
+				label:'OpenSettings',
+				action:()=>Settings().launch()
+			},
+			{
+				label:'OpenStore',
+				action:()=>Store().launch()
+			},
+			{},
+			{
+				label:'Panels',
+				list:[
+					{
+						label:'New panel',
+						action:()=> RunningConfig.emit('command.newPanel')
+					},{
+						label:'Close current panel',
+						action:()=> RunningConfig.emit('command.closeCurrentPanel')
+					}
+				]
+			}
+		]
+	})
+	new Menu({ //Window
+		button:'Window',
+		list:[
+			{
+				label:'Zoom',
+				list:[
+					{
+						label:'DefaultZoom',
+						action:()=> {
+							StaticConfig.data.appZoom = 1
+						}
+					},
+					{
+						label:'IncreaseZoom',
+						action:()=> {
+							StaticConfig.data.appZoom += 0.1
+						}
+					},
+					{
+						label:'DecreaseZoom',
+						action:()=> {
+							StaticConfig.data.appZoom -= 0.1
+						}
+					}
+				]
+			},
+			{},
+			{
+				label:'Open dev tools',
+				action:()=>getCurrentWindow().toggleDevTools()
+			}
+		]
+	})
+	new Menu({ //HELP
+		button:'Help',
+		list:[
+			{
+				label:'Blog',
+				action:()=>{
+					openLink('https://graviton.netlify.app/blog/')
+				}
+			},{
+				label:'Documentation',
+				action:()=>{
+					openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
+				}
+			},{
+				label:'Website',
+				action:()=>{
+					openLink('https://graviton.netlify.app/')
+				}
+			},{
+				label:'SourceCode',
+				action:()=>{
+					openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
+				}
+			},
+			{
+				label:'About',
+				action(){
+					About().launch()
+				}
+			}
+		]
+	})
+	if( isDev ) {
 		new Menu({ //HELP
-			button:'Help',
+			button:'Dev',
 			list:[
 				{
-					label:'Blog',
+					label:'Notification test',
 					action:()=>{
-						openLink('https://graviton.netlify.app/blog/')
-					}
-				},{
-					label:'Documentation',
-					action:()=>{
-						openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
-					}
-				},{
-					label:'Website',
-					action:()=>{
-						openLink('https://graviton.netlify.app/')
-					}
-				},{
-					label:'SourceCode',
-					action:()=>{
-						openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
-					}
-				},
-				{
-					label:'About',
-					action(){
-						About().launch()
+						new Notification({
+							title:'Notification',
+							content:'Notification body',
+							buttons:[
+								{
+									label:'Button 1',
+									action(){
+										console.log('Clicked button 1')
+									}
+								},
+								{
+									label:'Button 2',
+									action(){
+										console.log('Clicked button 2')
+									}
+								}
+							]
+						})
 					}
 				}
 			]
 		})
+	}
 	new Panel() //Initial Panel
 	PluginsRegistry.add(Arctic)    
 	PluginsRegistry.add(Night)  
