@@ -27,8 +27,7 @@ function Notification({
 			NotificationBody,
 			Title:Titles.h4,
 			Content:Text,
-			Cross,
-			Button
+			Cross
 		}
 	})`
 		<NotificationBody id="${randomSelector}" mounted="${mounted}">
@@ -39,7 +38,11 @@ function Notification({
 			<Content>${ content }</Content>
 			<div class="buttons">
 				${buttons.map(({ label, action }, index)=>{
-					return element`<Button index="${ index }" :click="${clickedButton}">${ label }</Button>`
+					return element({
+						components:{
+							Button
+						}
+					})`<Button index="${ index }" :click="${clickedButton}">${ label }</Button>`
 				})}
 			</div>
 		</NotificationBody>

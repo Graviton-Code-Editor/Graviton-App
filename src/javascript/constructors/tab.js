@@ -9,13 +9,12 @@ import normalizeDir from '../utils/directory.normalizer'
 
 const fs = window.require("fs-extra")
 
-function guessTabPosition(tab,tabsbar){
-	const res = Object.keys(tabsbar.children).filter((tabChildren,index)=>{
+function guessTabPosition(tab, tabsbar){
+	return Number(Object.keys(tabsbar.children).find((tabChildren,index) => {
 		if( tabsbar.children[tabChildren] == tab ){
 			return tabChildren
 		}
-	})[0]
-	return Number(res)
+	}))
 }
 
 function Tab({
@@ -34,7 +33,7 @@ function Tab({
 		/**
 		 *  Tab already exists so it won't be rendered again
 		*/
-		openedTabs[0].props.state.emit('focusedMe')
+		openedTabs[0].state.emit('focusedMe')
 		return {
 			isCancelled : true,
 			tabElement:openedTabs[0],
@@ -42,12 +41,12 @@ function Tab({
 		}
 	}
 	const tabState = new puffin.state({
-		active:true,
-		saved:true,
+		active: true,
+		saved: true,
 		parentFolder,
 		panel
 	})
-	RunningConfig.on('isATabOpened',({directory:tabDir,id:tabID})=>{
+	RunningConfig.on('isATabOpened',({directory:tabDir,id:tabID}) => {
 		if( ( tabDir && tabDir ==  directory )||( tabID && tabID ==  id )){
 			return {
 				tabElement:tabNode

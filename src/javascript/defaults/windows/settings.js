@@ -57,11 +57,11 @@ function Settings(){
 							</div>   
 						<div href="file watcher">
 							<H4>File Watcher</H4>
-							<Switch :toggled="${toggledFileWatcher}" status="${{"default":StaticConfig.data.editorFSWatcher}}" label="File watcher"></Switch>
+							<Switch :toggled="${toggledFileWatcher}" status="${{default:StaticConfig.data.editorFSWatcher}}" label="File watcher"></Switch>
 						</div>
 						<div href="autocomplete">
 							<H4>Autocomplete</H4>
-							<Switch :toggled="${toggledAutoComplete}" status="${{"default":StaticConfig.data.editorAutocomplete}}" label="Autocomplete"></Switch>
+							<Switch :toggled="${toggledAutoComplete}" status="${{default:StaticConfig.data.editorAutocomplete}}" label="Autocomplete"></Switch>
 						</div>
 						<div href="manual config">
 							<H4>Manual editing</H4>
@@ -104,14 +104,14 @@ function Settings(){
 		if( StaticConfig.data.appLanguage != newLanguage)
 			StaticConfig.data.appLanguage = newLanguage
 	}
-	function toggledFileWatcher(){
-		if( this.props.status != StaticConfig.data.editorFSWatcher ) {
-			StaticConfig.data.editorFSWatcher = this.props.status
+	function toggledFileWatcher(e){
+		if( e.detail.status !== StaticConfig.data.editorFSWatcher ) {
+			StaticConfig.data.editorFSWatcher = e.detail.status
 		}
 	}
-	function toggledAutoComplete(){
-		if( this.props.status != StaticConfig.data.editorAutocomplete ) {
-			StaticConfig.data.editorAutocomplete = this.props.status
+	function toggledAutoComplete(e){
+		if( e.detail.status !== StaticConfig.data.editorAutocomplete ) {
+			StaticConfig.data.editorAutocomplete = e.detail.status
 		}
 	}
 	const SettingsWindow = new Window({
