@@ -208,7 +208,7 @@ function Item({
 			ArrowIcon
 		}
 	})`
-		<div id="${parentFolder}" fullpath="${fullpath}" isFolder="${isFolder}" parentFolder="${parentFolder}" mounted="${mounted}" selected="false" opened="false" class="${ItemWrapper} ${()=>classSelector}">
+		<div level="${level}" id="${parentFolder}" fullpath="${fullpath}" isFolder="${isFolder}" parentFolder="${parentFolder}" mounted="${mounted}" selected="false" opened="false" class="${ItemWrapper} ${()=>classSelector}">
 			<button :click="${openDirectory}" :contextmenu="${contextMenu}" title="${hint}">
 				<ArrowIcon class="arrow" style="${isFolder ? '':'opacity:0;'}"></ArrowIcon>
 				<img class="icon" src="${ isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName,getFormat(fullpath))}"></img>
@@ -327,10 +327,11 @@ function Item({
 		})
 		explorerState.on('newFile',({ containerFolder, fileName }) => {
 			if( isFolder  && containerFolder === itemDirectory  ){
+				console.log(level,itemDirectory)
 				explorerState.emit('createItem',{
 					container: this,
 					containerFolder,
-					level: level,
+					level,
 					directory:path.join( containerFolder, fileName ),
 					directoryName: fileName,
 					isFolder: false
@@ -351,7 +352,7 @@ function Item({
 				explorerState.emit('createItem',{
 					container: this,
 					containerFolder,
-					level: level,
+					level,
 					directory: path.join(containerFolder,folderName),
 					directoryName: folderName,
 					isFolder: true
