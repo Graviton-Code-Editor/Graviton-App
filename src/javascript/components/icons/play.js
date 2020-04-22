@@ -2,7 +2,7 @@ import { element,style } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
 	& > path{
-		fill:white;
+		fill:var(--windowIconsFill);
 	}
 `
 

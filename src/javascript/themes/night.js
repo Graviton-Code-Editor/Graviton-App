@@ -25,6 +25,7 @@ const Night = {
 		controlCloseButtonHoverBackground:"rgba(232,17,35)",
 		controlCloseButtonHoverFill:"white",
 		windowBackground:'#222222',
+		windowIconsFill:'white',
 		contextmenuBackground:'#333333',
 		contextmenuButtonBackground:'#333333',
 		contextmenuButtonText:'white',

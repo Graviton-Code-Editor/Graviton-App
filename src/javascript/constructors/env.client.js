@@ -6,7 +6,7 @@ import Stop from '../components/icons/stop'
 const styleWrapper = style`
 	& {
 		position: absolute;
-		background: #222222;
+		background: var(--windowBackground);
 		width: 200px;
 		height: auto;
 		top:300px;
@@ -35,7 +35,7 @@ const styleWrapper = style`
 		background:transparent;
 	}
 	& .buttons > div:hover {
-		background: #191919;
+		background: var(--sidemenuBackground);
 		transition: .2s;
 	}
 	& .buttons > div > svg{
@@ -51,7 +51,7 @@ const styleWrapper = style`
 		display: flex;
 	}
 	& .dragger {
-		background: #191919;
+		background: var(--sidemenuBackground);
 		border-radius:5px;
 		padding: 8px 3px;
 		cursor: move;

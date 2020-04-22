@@ -25,6 +25,7 @@ const Arctic = {
 		controlCloseButtonHoverBackground:"rgba(232,17,35)",
 		controlCloseButtonHoverFill:"white",
 		windowBackground:'white',
+		windowIconsFill:'rgb(40,40,40)',
 		contextmenuBackground:'white',
 		contextmenuButtonBackground:'white',
 		contextmenuButtonText:'black',
