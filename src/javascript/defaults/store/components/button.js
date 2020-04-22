@@ -1,18 +1,12 @@
 import { element, style } from '@mkenzo_8/puffin'
 import { Button } from '@mkenzo_8/puffin-drac'
 
-const styleWrapper = style`
-	& {
-		width: calc( 100% - 10px);
-	}
-`
-
-function installButton(){
+function storeButton(){
 	return element({
 		components:{
 			Button
 		}
-	})`<Button class="${styleWrapper}"></Button>`
+	})`<Button style="width:calc(100% - 10px); "></Button>`
 }
 
-export default installButton
+export default storeButton
