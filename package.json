@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.76",
+	"version": "2.0.77",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.ml",
@@ -75,7 +75,7 @@
 	},
 	"build": {
 		"appId": "graviton-editor",
-		"artifactName": "${name}-${version}-${arch}-${platform}.${ext}",
+		"artifactName": "${name}Installer-${version}-${arch}-${platform}.${ext}",
 		"asar": true,
 		"files": [
 			"!**.cache",
