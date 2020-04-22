@@ -2,6 +2,7 @@ import PanelBody from '../components/panel/panel'
 import { element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ContextMenu from './contextmenu'
+import tabsUnsavedWarningDialog from '../defaults/dialogs/tabs.unsaved.warning'
 
 function guessTabPosition( tab, tabsbar ){
 	const res = Object.keys(tabsbar.children).find(( tabChildren, index ) => {
@@ -158,7 +159,7 @@ function focusOtherPanel( currentPanel ){
 }
 
 function removePanel( panelToRemove = RunningConfig.data.focusedPanel ){
-	if( checkIfThereAreTabsUnSaved(panelToRemove) ){
+	if( getUnsavedtabs(panelToRemove).length == 0 ){
 		const { oldPanel } = focusOtherPanel(panelToRemove)
 		if( oldPanel ) {
 			destroyTabs(oldPanel)
@@ -175,15 +176,32 @@ function destroyTabs(panel){
 	})
 }
 
-function checkIfThereAreTabsUnSaved(panel){
+function getUnsavedtabs(panel){
 	const tabsBar = panel.children[0]
-	const panelTabs = tabsBar.childNodes
-	let allTabsAreSaved = true;
-	panelTabs.forEach( tab => {
-		if( !tab.state.data.saved ) return allTabsAreSaved = false
+	const panelTabs = tabsBar.children
+	const unSavedTabs = Object.keys(panelTabs).filter( n => {
+		const tab = panelTabs[n]
+		return tab.state.data.saved == false
 	})
-	return allTabsAreSaved
+	return unSavedTabs
 }
+
+RunningConfig.on('checkAllTabsAreSaved',({ whenContinue =function(){} , whenIgnore=function(){}} = {})=>{
+	const panels = document.getElementById('mainpanel').children
+	const allUnsavedTabs = Object.keys(panels).map( n => {
+		const panel = panels[n]
+		return getUnsavedtabs(panel)
+	}).flat()
+	if( allUnsavedTabs.length != 0 ){
+		tabsUnsavedWarningDialog().then(()=>{
+			whenContinue()
+		}).catch(()=>{
+			whenIgnore()
+		})
+	}else{
+		whenContinue()
+	}
+})
 
 export { 
 	Panel,

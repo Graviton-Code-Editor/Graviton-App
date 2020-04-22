@@ -1,6 +1,7 @@
 import { element, style } from '@mkenzo_8/puffin'
 const { remote } = window.require('electron')
 import AppPlatform from 'AppPlatform'
+import RunningConfig from 'RunningConfig'
 
 function Buttons(){
 	if( AppPlatform == "win32" ){
@@ -139,8 +140,12 @@ function toggleMaximize(){
 }
 
 function close(){
-	const electronWindow = remote.getCurrentWindow();
-	electronWindow.close()
+	RunningConfig.emit('checkAllTabsAreSaved',{
+		whenContinue(){
+			const electronWindow = remote.getCurrentWindow();
+			electronWindow.close()
+		}
+	})
 }
 
 function minimize(){
