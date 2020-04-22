@@ -141,7 +141,8 @@ RunningConfig.on('command.decreaseFontSize',({ factor=2 } = { factor:2 }) =>{
 })
 RunningConfig.on('command.closeCurrentWindow',({ factor=2 } = { factor:2 }) =>{
 	const windows = document.getElementById("windows").children
-	windows[windows.length-1].props.methods.closeWindow()
+	const selectedWindow = windows[windows.length-1]
+	selectedWindow?.props?.methods?.closeWindow()
 })
 const appShortCuts = new Shortcuts ();
 appShortCuts.add ([ 
