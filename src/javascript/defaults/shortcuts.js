@@ -128,7 +128,7 @@ RunningConfig.on('command.openCurrentPanelTabsIterator',()=>{
 				const toFocusTab = focusedPanelTabs.find((tab)=>{
 					return tab.fileName == res.label
 				})
-				toFocusTab && toFocusTab.element.props.state.emit('focusedMe')
+				toFocusTab && toFocusTab.element.state.emit('focusedMe')
 			}
 		})
 	}
