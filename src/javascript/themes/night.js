@@ -62,6 +62,8 @@ const Night = {
 		explorerItemGitIndicatorText:'white',
 		cardBackground:'#191919',
 		buttonBackground:'#191919',
+		buttonImportantBackground:'rgb(255, 0, 72)',
+		buttonImportantText:'white',
 		radioBackgroundHovering:'rgb(60,60,60)',
 		radioCircleBackground:'#222222',
 		radioCircleBorder:'#666666',

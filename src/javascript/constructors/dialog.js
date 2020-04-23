@@ -38,12 +38,12 @@ function Dialog({
 				<Text>${content}</Text>
 			</div>
 			<div>
-				${buttons.map(function(btn,index){
+				${buttons.map( (btn,index) => {
 					return element({
 						components:{
 							Button
 						}
-					})`<Button index="${index}" :click="${closeWindow}">${btn.label}</Button>`
+					})`<Button important="${btn.important || false}" index="${index}" :click="${closeWindow}">${btn.label}</Button>`
 				})}
 			</div>
 		</DialogBody>

@@ -11,7 +11,8 @@ function About(){
 		`,
 		buttons:[
 			{
-				label:'accept'
+				label:'close',
+				important:false
 			}
 		]
 	})

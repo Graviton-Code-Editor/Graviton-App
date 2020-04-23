@@ -61,6 +61,8 @@ const Arctic = {
 		explorerItemGitIndicatorText:'white',
 		cardBackground:'rgb(238,238,238)',
 		buttonBackground:'rgb(238,238,238)',
+		buttonImportantBackground:'#0066FF',
+		buttonImportantText:'white',
 		radioBackgroundHovering:'#EFEFEF',
 		radioCircleBackground:'white',
 		radioCircleBorder:'#CFCFCF',
