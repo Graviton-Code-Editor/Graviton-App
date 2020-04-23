@@ -182,8 +182,10 @@ RunningConfig.on('setWorkspace',({ path: workspaceDir })=>{
 	if( workspace ){
 		RunningConfig.data.workspaceConfig = {
 			name: workspace.name,
-			folders:[]
+			folders:[],
+			settings: workspace.settings || {}
 		}
+		setWorkspaceSettings( RunningConfig.data.workspaceConfig.settings )
 		RunningConfig.data.workspacePath = workspacePath
 		document.getElementById('sidepanel').innerHTML = ''
 		workspace.folders.map( folder => {
@@ -193,6 +195,13 @@ RunningConfig.on('setWorkspace',({ path: workspaceDir })=>{
 		})
 	}
 })
+
+function setWorkspaceSettings( settings ){
+	Object.keys(settings).forEach( sett => {
+		RunningConfig.data.currentStaticConfig[sett] = settings[sett]
+		StaticConfig.data[sett] = settings[sett]
+	})
+}
 
 /** 
  * Open a native dialog,

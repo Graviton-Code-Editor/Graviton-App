@@ -41,7 +41,7 @@
 		"AppPlatform": "./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
-		"@mkenzo_8/puffin": "^0.7.3",
+		"@mkenzo_8/puffin": "^0.7.4",
 		"@mkenzo_8/puffin-drac": "0.1.1",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",

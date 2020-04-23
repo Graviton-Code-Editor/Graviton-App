@@ -20,7 +20,8 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 		ImageViewerClient
 	],
 	openedWindows:0,
-	arguments: electronArguments
+	arguments: electronArguments,
+	currentStaticConfig:{}
 }
 
 const RunningConfig = new puffin.state(
