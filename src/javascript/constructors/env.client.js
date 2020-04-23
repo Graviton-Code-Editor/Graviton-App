@@ -9,11 +9,12 @@ const styleWrapper = style`
 		background: var(--windowBackground);
 		width: 200px;
 		height: auto;
-		top:300px;
+		top:75px;
+		left: 75px;
 		user-select: none;
 		border-radius: 5px;
 		padding:5px;
-		box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
+		box-shadow: 0px 2px 8px rgba(0,0,0,0.2);
 	}
 	& h5 {
 		margin: 0;
