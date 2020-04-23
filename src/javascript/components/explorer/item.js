@@ -418,7 +418,7 @@ function Item({
 			}
 		})
 		const itemTabs = document.getElementsByClassName(`tab${itemDirectory}`)
-		if( itemTabs[0] && itemTabs[0].props.active ) target.setAttribute('selected', true )
+		if( itemTabs[0] && itemTabs[0].state.data.active ) target.setAttribute('selected', true )
 		const TabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused',({ directory }) => {
 			if( directory === itemDirectory ){
 				target.setAttribute('selected', true)

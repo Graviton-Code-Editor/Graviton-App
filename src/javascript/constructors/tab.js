@@ -59,7 +59,7 @@ function Tab({
 			Cross
 		}
 	})`
-		<TabBody mounted="${mounted}" active="${()=>tabState.data.active}"  draggable="true" classSelector="${classSelector}" class="${classSelector}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" 	:mouseleave="${hideCross}"	:dragenter="${dragEnter}"	:dragleave="${dragLeave}" :dragover="${dragover}":drop="${onDropped}">
+		<TabBody mounted="${mounted}" active="${()=>tabState.data.active}"  draggable="true" classSelector="${classSelector}" class="${classSelector}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :dragover="${dragover}":drop="${onDropped}">
 			<p :drop="${onDropped}"" classSelector="${classSelector}">
 				${title}
 			</p>
