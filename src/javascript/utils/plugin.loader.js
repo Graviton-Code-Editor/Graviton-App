@@ -21,13 +21,11 @@ const fs = window.require("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
 const isDev = window.require('electron-is-dev')
 
-function getPlugin(path){
-	return require(path)
-}
+const getPlugin = pluginPath => require(pluginPath)
 
-function loadPlugin(path,pluginName){
+function loadPlugin(pluginPath,pluginName){
 	try{
-		window.require(path).entry({
+		window.require(pluginPath).entry({
 			StaticConfig,
 			RunningConfig,
 			Window,
@@ -50,12 +48,13 @@ function loadPlugin(path,pluginName){
 }
 
 RunningConfig.on("appLoaded",function(){
-	fs.readdir(pluginsPath).then(function(paths){
-		paths.map(function(pluginName){
+	fs.readdir(pluginsPath).then( paths => {
+		paths.map( pluginName => {
 			const pluginPath = path.join(pluginsPath,pluginName)
 			const pkgPluginPath = path.join(pluginPath,'package.json')
-			if(fs.existsSync(pkgPluginPath)){
+			if( fs.existsSync(pkgPluginPath) ){
 				const pluginPkg = getPlugin(pkgPluginPath)
+				if( !pluginPkg.type ) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
 				pluginPkg.PATH = pluginPath
 				PluginsRegistry.add(
 					pluginPkg
@@ -68,16 +67,28 @@ RunningConfig.on("appLoaded",function(){
 })
 
 function loadAllPlugins(){
-	Object.keys(PluginsRegistry.registry.data.list).map(function(pluginName){
+	Object.keys(PluginsRegistry.registry.data.list).map( pluginName => {
 		const pluginPkg = PluginsRegistry.registry.data.list[pluginName]
-		if(pluginPkg.main != undefined){
-			let mainPath = null
-			if( isDev && pluginPkg.mainDev && fs.existsSync(path.join(pluginPkg.PATH,pluginPkg.mainDev)) ){
-				mainPath = path.join(pluginPkg.PATH,pluginPkg.mainDev) //DEV version
+		if( pluginPkg.main ){
+			let mainPath
+			if( isDev ) {
+				if( pluginPkg.mainDev && fs.existsSync(path.join(pluginPkg.PATH,pluginPkg.mainDev)) ){
+					mainPath = path.join(pluginPkg.PATH,pluginPkg.mainDev) //DEV version
+				}else{
+					mainPath = path.join(pluginPkg.PATH,pluginPkg.main) //BUILT version
+				}
 			}else{
-				mainPath = path.join(pluginPkg.PATH,pluginPkg.main) //BUILT version
+				if( pluginPkg.main && fs.existsSync(path.join(pluginPkg.PATH,pluginPkg.main)) ){
+					mainPath = path.join(pluginPkg.PATH,pluginPkg.main) //BUILT version
+				}else{
+					mainPath = path.join(pluginPkg.PATH,pluginPkg.mainDev) //DEV version
+				}
 			}
 			
+			/*
+			* In dev mode, the dev mode of the plugin has priority
+			* In production mode the built version has priority
+			*/
 			loadPlugin(mainPath,pluginName)
 		}  
 	})   
