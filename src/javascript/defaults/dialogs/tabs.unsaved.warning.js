@@ -7,11 +7,11 @@ function tabsUnsavedWarningDialog(){
 			content:'Be careful.',
 			buttons:[
 				{
-					label:'Ignore',
+					label:'Go back',
 					action:reject
 				},
 				{
-					label:'Continue',
+					label:'Ignore',
 					action:resolve
 				}
 			]
