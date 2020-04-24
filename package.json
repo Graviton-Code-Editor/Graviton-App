@@ -1,9 +1,9 @@
 {
 	"name": "graviton",
-	"version": "2.0.77",
+	"version": "2.0.78",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
-	"homepage": "https://graviton.ml",
+	"homepage": "https://graviton.netlify.app",
 	"author": "Marc Espín Sanz <mespinsanz@gmail.com>",
 	"license": "MIT",
 	"main": "main.js",

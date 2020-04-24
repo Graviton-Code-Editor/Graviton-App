@@ -16,8 +16,14 @@ function ContextMenu({
 		contextMenusCreated[0].remove()
 	}
 	const positions = {
-		x:event!= null?event.pageX:x,
-		y:event!= null?event.pageY:y,
+		x:event ?event.pageX:x,
+		y:event ?event.pageY:y,
+	}
+	if( positions.x >= window.innerWidth-150 ) {
+		positions.x = positions.x - 75
+	}
+	if( positions.x < 100 ) {
+		positions.x = event ?event.pageX : x
 	}
 	const ContextComponent = element({
 		components:{
@@ -48,7 +54,7 @@ function ContextMenu({
 			target.remove()
 		})
 		const calculatedHeight = positions.y - ( ( positions.y + target.clientHeight) - window.innerHeight ) - 5
-		if( positions.y + target.clientHeight> window.innerHeight ){
+		if( positions.y + target.clientHeight > window.innerHeight ){
 			target.style.top = calculatedHeight
 		}
 	}

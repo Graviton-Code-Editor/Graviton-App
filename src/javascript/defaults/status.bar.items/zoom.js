@@ -2,18 +2,37 @@ import StatusBarItem from '../../constructors/status.bar.item'
 import Plus from '../../components/icons/plus'
 import Minus from '../../components/icons/minus'
 import StaticConfig from 'StaticConfig'
+import ContextMenu from '../../constructors/contextmenu'
 
 new StatusBarItem({
 	component:Plus,
 	position:'right',
-	action:()=>{
+	action(){
 		StaticConfig.data.appZoom += 0.1
-	}
+	},
+	contextAction: showZoomContext
 })
+
 new StatusBarItem({
 	component:Minus,
 	position:'right',
-	action:()=>{
+	action(){
 		StaticConfig.data.appZoom -= 0.1
-	}
+	},
+	contextAction: showZoomContext
 })
+
+function showZoomContext(e){
+	new ContextMenu({
+		list:[
+			{
+				label: 'Default',
+				action(){
+					StaticConfig.data.appZoom = 1
+				}
+			}
+		],
+		event:e,
+		parent: document.body
+	})
+}

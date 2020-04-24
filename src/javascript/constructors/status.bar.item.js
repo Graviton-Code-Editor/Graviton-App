@@ -6,6 +6,7 @@ function StatusBarItem({
 	label,
 	component,
 	action,
+	contextAction,
 	position,
 	hint = ''
 }){
@@ -15,7 +16,7 @@ function StatusBarItem({
 			StatusBarItemBody
 		}
 	})`
-		<StatusBarItemBody title="${hint}" :click="${action}">
+		<StatusBarItemBody title="${hint}" :click="${action} :contextmenu="${contextAction}">
 			${component?component():''}
 		</StatusBarItemBody>
 	`
