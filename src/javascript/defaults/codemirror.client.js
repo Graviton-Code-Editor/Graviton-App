@@ -46,6 +46,7 @@ const CodemirrorClient = new EditorClient({
 				return { name: 'rust' }
 			case 'rb':
 				return { name: 'ruby' }
+			case 'pyw':
 			case 'py':
 				return { name: 'python' }
 			case 'vue':
