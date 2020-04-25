@@ -242,6 +242,23 @@ function init(){
 		button:'Help',
 		list:[
 			{
+				label:'Social',
+				list:[
+					{
+						label: 'Telegram',
+						action:()=>{
+							openLink('https://t.me/gravitoneditor')
+						}
+					},{
+						label:'Discord',
+						action:()=>{
+							openLink('https://discord.gg/DY9Svy')
+						}
+					}
+				]
+			},
+			{},
+			{
 				label:'Blog',
 				action:()=>{
 					openLink('https://graviton.netlify.app/blog/')
