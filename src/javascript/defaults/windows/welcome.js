@@ -78,7 +78,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 						padding-top:10px;
 					}
 				`}">
-					<Button c:lick="${openDirectoryFromWindow}">Open a folder</Button>
+					<Button :click="${openDirectoryFromWindow}">Open a folder</Button>
 				</div>
 				</CardsListContainer>
 				<CardsListContainer href="create_project">
