@@ -77,7 +77,7 @@ function openWindow({
 		<SideMenu default="about">
 			<div>
 				<H2>${ getPluginInfo(pluginInfoValid,'name') }</H2>
-				<label to="about" lang-string="About">About</label>
+				<label to="about" lang-string="About"/>
 			</div>
 			<div>
 				<div href="about">

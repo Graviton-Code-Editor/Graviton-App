@@ -5,10 +5,12 @@ import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
 import Window from './window'
 
 function Dialog({
-	title = 'Title',
-	content = "",
+	title = '',
+	content,
 	component,
-	buttons = []
+	buttons = [],
+	height = '200px',
+	width = '300px'
 }){
 	const computedMethods = {...buttons.map(btn=>{
 		if ( btn.action ){
@@ -19,11 +21,6 @@ function Dialog({
 			}
 		}
 	})}
-	function mounted(){
-		if( component ){
-			render(component,this.children[0].children[1])
-		}
-	}
 	const DialogComp = element({
 		components:{
 			DialogBody,
@@ -32,10 +29,10 @@ function Dialog({
 			Text
 		},
 	})`
-		<DialogBody mounted="${mounted}">
+		<DialogBody>
 			<div>
 				<H2>${title}</H2>
-				<Text>${content}</Text>
+				<Text>${content ? content : component}</Text>
 			</div>
 			<div>
 				${buttons.map( (btn,index) => {
@@ -54,8 +51,8 @@ function Dialog({
 	}
 	const dialogWindow = new Window({
 		component:()=>DialogComp,
-		height:'200px',
-		width:'300px'
+		height,
+		width
 	})
 	return {
 		launch:()=> dialogWindow.launch(),

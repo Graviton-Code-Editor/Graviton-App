@@ -10,7 +10,8 @@ const styleWrapper = style`
 		position: absolute;
 		display: flex;
 		flex-direction: column;
-		padding: 12px
+		padding: 12px;
+		user-select: none;
 	}
 	& p {
 		margin-top:15px;
