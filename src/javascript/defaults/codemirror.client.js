@@ -53,6 +53,8 @@ const CodemirrorClient = new EditorClient({
 				return { name: 'vue' }
 			case 'xml':
 				return { name: 'xml' }
+			case 'ejs':
+				return { name: 'application/x-ejs' }
 			case 'yaml':
 				return { name: 'yaml' }
 			case 'sql':
