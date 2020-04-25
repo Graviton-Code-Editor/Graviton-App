@@ -32,6 +32,9 @@ const listWrapper = style`&{
 		display:block;
 		font-size:14px;
 	}
+	& > div:nth-child(2){
+		padding-top:15px;
+	}
 `
 
 

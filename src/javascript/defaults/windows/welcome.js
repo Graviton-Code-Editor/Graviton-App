@@ -54,6 +54,9 @@ function Welcome( { defaultPage = "projects" } = {  }){
 							}
 						})}
 					</div>
+					<div>
+						<Button :click="${openWorkspaceFromWindow}">Open a workspace</Button>
+					</div>
 				</CardsListContainer>
 				<CardsListContainer href="projects">
 					<div>
@@ -71,15 +74,9 @@ function Welcome( { defaultPage = "projects" } = {  }){
 							`
 						})}
 					</div>
-				<div class="${style`
-					&{
-						display:flex;
-						justify-content:flex-end;
-						padding-top:10px;
-					}
-				`}">
-					<Button :click="${openDirectoryFromWindow}">Open a folder</Button>
-				</div>
+					<div>
+						<Button :click="${openDirectoryFromWindow}">Open a folder</Button>
+					</div>
 				</CardsListContainer>
 				<CardsListContainer href="create_project">
 					<b>Empty.</b>
@@ -131,7 +128,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 		WelcomeWindow.close()
 	}
 	function openDirectoryFromWindow(){
-		openFolder().then(function(folderPath){
+		openFolder().then(folderPath => {
 			RunningConfig.emit('addFolderToRunningWorkspace',{
 				folderPath,
 				replaceOldExplorer:true,
@@ -139,6 +136,9 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			})
 			WelcomeWindow.close()
 		})
+	}
+	function openWorkspaceFromWindow(){
+		RunningConfig.emit('openWorkspaceDialog')
 	}
 	const WelcomeWindow = new Window({
 		title:'welcome',
