@@ -10,6 +10,7 @@ const styleWrapper = style`
 		color:var(--statusbarItemText);
 		border:0px;
 		white-space:nowrap;
+		font-size: 13px;
 	}
 	&:hover{
 		background:var(--statusbarItemHoveringBackground);

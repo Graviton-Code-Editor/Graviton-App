@@ -17,7 +17,7 @@ function StatusBarItem({
 		}
 	})`
 		<StatusBarItemBody title="${hint}" :click="${action} :contextmenu="${contextAction}">
-			${component?component():''}
+			${component?component():label}
 		</StatusBarItemBody>
 	`
 	if( document.getElementById('statusBar') ){

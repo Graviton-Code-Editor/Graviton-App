@@ -19,8 +19,10 @@ import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
 import Dialog from '../constructors/dialog'
 import './shortcuts'
+import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
+
 
 
 const fs = window.require("fs-extra")
