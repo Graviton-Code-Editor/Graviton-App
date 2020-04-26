@@ -60,6 +60,7 @@ li.CodeMirror-hint-active {
 	z-index:0;
 	line-height:1.6em;
 	padding-right:20px;
+user-select:none;
 	pre {
 		padding: 0 4px;
 		-moz-border-radius: 0;
@@ -92,6 +93,7 @@ li.CodeMirror-hint-active {
 		display:flex;
 		align-items:center;
 		bottom:0.8em;
+		
 		.CodeMirror-linenumber {
 			flex:1;
 		}
