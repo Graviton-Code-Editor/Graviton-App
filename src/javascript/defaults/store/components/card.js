@@ -118,7 +118,7 @@ function openWindow({
 					</div>
 					<div class="buttons">
 						${ getUpdateButton() }
-						${ getUninstallButton() || getInstallButton() }
+						${ getUninstallButton() || getInstallButton() || element`<div/>` }
 					</div>
 				</div>
 			</div>
