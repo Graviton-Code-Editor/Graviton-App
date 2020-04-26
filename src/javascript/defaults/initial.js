@@ -242,6 +242,17 @@ function init(){
 		button:'Help',
 		list:[
 			{
+				label:'Contact',
+				list:[
+					{
+						label: 'Github',
+						action:()=>{
+							openLink('https://github.com/marc2332')
+						}
+					}
+				]
+			},
+			{
 				label:'Social',
 				list:[
 					{
