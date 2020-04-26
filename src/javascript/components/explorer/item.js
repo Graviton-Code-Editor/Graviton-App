@@ -14,9 +14,9 @@ import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from  '../../utils/directory.normalizer'
 
-const fs = window.require("fs-extra")
-const trash = window.require("trash")
-const path = window.require("path")
+const fs = window.require('fs-extra')
+const trash = window.require('trash')
+const path = window.require('path')
 
 function getMyStatus( fileDir, gitChanges, projectDir ){
 	const filePath = normalizeDir( fileDir )
@@ -220,14 +220,14 @@ function Item({
 	function openDirectory(){
 		this.parentElement.state.emit('clickItem')
 	}
-	function contextMenu(e){
+	function contextMenu( e ){
 		const projectExplorerState = document.getElementById( parentFolder ).state
 		if( isFolder ){
 			new ContextMenu({
 				list:[
 					{
-						label:"New folder",
-						action:()=>{
+						label: 'New folder',
+						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
 								isFolder: true,
@@ -238,8 +238,8 @@ function Item({
 						}
 					},
 					{
-						label:"New file",
-						action:()=>{
+						label: 'New file',
+						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
 								isFolder: false,
@@ -251,8 +251,8 @@ function Item({
 					},
 					{},
 					{
-						label:"Remove folder",
-						action:()=>{
+						label: 'Remove folder',
+						action: () => {
 							if( level != 0 ){
 								removeDirectoryOrFile(this)
 							} 
@@ -266,14 +266,14 @@ function Item({
 			new ContextMenu({
 				list:[
 					{
-						label:"Remove file",
-						action:()=>{
+						label: 'Remove file',
+						action: () => {
 							removeDirectoryOrFile(this)
 						}
 					}
 				],
-				parent:this,
-				event:e
+				parent: this,
+				event: e
 			})
 		}
 	}
@@ -288,15 +288,15 @@ function Item({
 	function mounted(){
 		const target = this
 		target.gitChanges = gitChanges
-		target.style.paddingLeft = `${Number(level)+6}px`
+		target.style.paddingLeft = `${ Number( level ) + 6 }px`
 		this.explorerContainer = explorerContainer && explorerContainer.explorerContainer || this
-		const itemState = setItemState(target)
-		const itemDirectory = normalizeDir(fullpath)
+		const itemState = setItemState( target )
+		const itemDirectory = normalizeDir( fullpath )
 		const explorerState = this.explorerContainer.state || itemState
 		const fileExtension = isFolder? null : getFormat(fullpath)
 		const itemIcon = target.getElementsByClassName('icon')[0]
 		const itemArrow = target.getElementsByClassName('arrow')[0]
-		const gitStatus = target.getAttribute("git-status") || true
+		const gitStatus = target.getAttribute('git-status') || true
 		const itemParentFolder = path.dirname(itemDirectory)
 		const itemProjectDirectory = parentFolder
 		const gitResult = getMyStatus(
@@ -327,12 +327,11 @@ function Item({
 		})
 		explorerState.on('newFile',({ containerFolder, fileName }) => {
 			if( isFolder  && containerFolder === itemDirectory  ){
-				console.log(level,itemDirectory)
 				explorerState.emit('createItem',{
 					container: this,
 					containerFolder,
 					level,
-					directory:path.join( containerFolder, fileName ),
+					directory: path.join( containerFolder, fileName ),
 					directoryName: fileName,
 					isFolder: false
 				})
@@ -372,7 +371,7 @@ function Item({
 			if( itemDirectory === filePath ){
 				RunningConfig.emit('aFileHasBeenChanged',{
 					filePath,
-					newData:await fs.readFile(itemDirectory,'UTF-8')
+					newData: await fs.readFile(itemDirectory,'UTF-8')
 				})
 			}
 		})
@@ -383,7 +382,7 @@ function Item({
 					Explorer(
 						fullpath,
 						target,
-						level+1 , 
+						level + 1 , 
 						gitChanges 
 					)
 					setStateOpen( target )
@@ -403,13 +402,13 @@ function Item({
 				if( !isCancelled ){
 					fs.readFile( itemDirectory ,'UTF-8').then( data => {
 						new Editor({
-							language:fileExtension,
-							value:data ,
-							theme:PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+							language: fileExtension,
+							value: data ,
+							theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 							bodyElement,
 							tabElement,
 							tabState,
-							directory:itemDirectory
+							directory: itemDirectory
 						})
 					})
 					target.setAttribute('selected', true)
@@ -434,8 +433,8 @@ function Item({
 				target.setAttribute('selected', false)
 			}
 		})
-		const GitWatcher = RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder:explorerParentfolder })=>{
-			if(itemProjectDirectory === explorerParentfolder && this.children[0]){
+		const GitWatcher = RunningConfig.on('gitStatusUpdated',({ gitChanges, parentFolder: explorerParentfolder })=>{
+			if( itemProjectDirectory === explorerParentfolder && this.children[0] ){
 				markItem(gitChanges,itemDirectory==itemProjectDirectory)
 			}
 		})
@@ -483,7 +482,7 @@ function getFolderClosedIcon( folderName ){
 	if( Icons[`folder.closed.${folderName}`] ) {
 		return Icons[`folder.closed.${folderName}`]
 	}else{
-		return Icons["folder.closed"]
+		return Icons['folder.closed']
 	}
 }
 
@@ -494,7 +493,7 @@ function setStateOpen( target ){
 	if( Icons[`folder.opened.${folderName}`]  ) {
 		itemIcon.src = Icons[`folder.opened.${folderName}`]
 	}else{
-		itemIcon.src = Icons["folder.opened"]
+		itemIcon.src = Icons['folder.opened']
 	}
 }
 
@@ -505,13 +504,13 @@ function setStateClosed( target ){
 	if( Icons[`folder.closed.${folderName}`] ) {
 		itemIcon.src = Icons[`folder.closed.${folderName}`]
 	}else{
-		itemIcon.src = Icons["folder.closed"]
+		itemIcon.src = Icons['folder.closed']
 	}
 }
 
 function removeDirectoryOrFile( element ){
 	areYouSureDialog().then( () => {
-		trash([normalizeDir(element.parentElement.getAttribute("fullpath"))]).then( () => {
+		trash([normalizeDir(element.parentElement.getAttribute('fullpath'))]).then( () => {
 			element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
 		});        
 	}).catch( err => {
