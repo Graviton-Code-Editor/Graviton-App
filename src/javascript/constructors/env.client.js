@@ -2,12 +2,14 @@ import { state, element, style, render } from '@mkenzo_8/puffin'
 import { Text, Titles } from '@mkenzo_8/puffin-drac'
 import Play from '../components/icons/play'
 import Stop from '../components/icons/stop'
+import Reload from '../components/icons/reload'
+import Close from '../components/icons/close'
 
 const styleWrapper = style`
 	& {
 		position: absolute;
 		background: var(--windowBackground);
-		width: 200px;
+		width: auto;
 		height: auto;
 		top:75px;
 		left: 75px;
@@ -40,7 +42,7 @@ const styleWrapper = style`
 		transition: .2s;
 	}
 	& .buttons > div > svg{
-		height:50%;
+		height:35%;
 		margin: 5px 2px;
 	}
 	& .buttons  > div > p{
@@ -54,7 +56,7 @@ const styleWrapper = style`
 	& .dragger {
 		background: var(--sidemenuBackground);
 		border-radius:5px;
-		padding: 8px 3px;
+		padding: 6px 3px;
 		cursor: move;
 		margin-bottom:4px;
 	}
@@ -83,13 +85,13 @@ function envClient({ name }){
 	
 	function barMoved(e){
 		if ( isClicked ){
-			node.style.top = e.pageY-20
-			node.style.left = e.pageX-110
+			node.style.top = e.pageY - 20
+			node.style.left = e.pageX - 110
 		}
 	}
 	
-	window.addEventListener("mousemove",barMoved)
-	window.addEventListener("mouseup",barUnClicked)
+	window.addEventListener('mousemove', barMoved)
+	window.addEventListener('mouseup', barUnClicked)
 	
 	let status = 'Stopped'
 	
@@ -98,7 +100,9 @@ function envClient({ name }){
 			Play,
 			Text,
 			Stop,
-			H5: Titles.h5
+			H5: Titles.h5,
+			Reload,
+			Close
 		}
 	})`
 		<div  class="${styleWrapper}">
@@ -114,6 +118,14 @@ function envClient({ name }){
 					<div :click="${onStop}">
 						<Stop/>
 						<Text>Stop</Text>
+					</div>
+					<div :click="${onReload}">
+						<Reload/>
+						<Text>Reload</Text>
+					</div>
+					<div :click="${onClose}">
+						<Close/>
+						<Text>Close</Text>
 					</div>
 				</div>
 			</div>
@@ -133,12 +145,21 @@ function envClient({ name }){
 	function onStop(){
 		status = 'Stopped'
 		node.children[2].children[0].update()
-		clientState.emit('stops')
+		clientState.emit('stop')
+	}
+	
+	function onReload(){
+		clientState.emit('reload')
+	}
+	
+	function onClose(){
+		onStop()
+		clientState.emit('destroy')
 	}
 	
 	clientState.on('destroy',()=>{
-		window.removeEventListener(barMoved)
-		window.removeEventListener(barUnClicked)
+		window.removeEventListener('mousemove', barMoved)
+		window.removeEventListener('mouseup', barUnClicked)
 		node.remove()
 	})
 	

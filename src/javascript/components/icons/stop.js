@@ -1,15 +1,16 @@
 import { element,style } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
-	& > rect{
+	& rect{
 		fill:var(--windowIconsFill);
 	}
 `
 
 function Stop(){
 	return element`
-		<svg class="${styleWrapper}" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<rect width="18" height="18" rx="5"/>
+		<svg class="${styleWrapper}"  width="12" height="17" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<rect width="4.61538" height="16.6154" rx="2.30769" fill="#C4C4C4"/>
+			<rect x="7.38462" width="4.61538" height="16.6154" rx="2.30769" fill="#C4C4C4"/>
 		</svg>
 	`
 }
