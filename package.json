@@ -55,6 +55,7 @@
 		"extract-zip": "^2.0.0",
 		"fs-extra": "^8.1.0",
 		"rimraf": "^3.0.2",
+		"semver": "^7.3.2",
 		"shortcuts": "^1.2.0",
 		"simple-git": "^1.131.0",
 		"trash": "^6.1.1",

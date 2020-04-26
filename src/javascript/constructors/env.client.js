@@ -153,8 +153,8 @@ function envClient({ name }){
 	}
 	
 	function onClose(){
-		onStop()
 		clientState.emit('destroy')
+		onStop()
 	}
 	
 	clientState.on('destroy',()=>{

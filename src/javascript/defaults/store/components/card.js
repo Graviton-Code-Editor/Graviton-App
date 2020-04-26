@@ -12,6 +12,7 @@ import getPluginById from '../api/get.plugin'
 import getLocalPluginById from '../utils/get.local.plugin'
 import storeButton from './button'
 import path from 'path'
+import semver from 'semver'
 
 function StoreCard(props){
 	const { pluginId, displayName, isInstalled } = props.data
@@ -49,6 +50,31 @@ const getPluginInfo = ( object, key) => {
 	}
 }
 
+function hasUpdate(pluginVersion, localPluginVersion){
+	if( semver.valid(pluginVersion) && semver.valid(localPluginVersion) ){
+		return semver.gt(pluginVersion, localPluginVersion)
+	}
+	return false
+}
+
+const styleWrapper = style`
+	& .content {
+		overflow: hidden;
+	}
+	& .content > div{
+		overflow:auto; 
+		min-height: calc( 100% - 100px);
+	}
+	& .content > .buttons{
+		max-height: 140px;
+		min-height: 50px;
+	}
+	& .content > .buttons *{
+		min-height: 36px;
+	}
+`
+
+
 function openWindow({
 	name,
 	lastRelease,
@@ -65,7 +91,9 @@ function openWindow({
 	
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
-	const pluginInfoValid = Object.assign( pluginInfo, pluginLocalInfo )
+	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo )
+	
+	const newUpdate = hasUpdate(version,localVersion)
 	
 	const component = element({
 		components:{
@@ -79,23 +107,33 @@ function openWindow({
 				<H2>${ getPluginInfo(pluginInfoValid,'name') }</H2>
 				<label to="about" lang-string="About"/>
 			</div>
-			<div>
-				<div href="about">
-					<div style="overflow:auto; min-height:calc( 100% - 50px); max-height:calc( 100% - 50px)">
+			<div class="${styleWrapper}">
+				<div href="about" class="content">
+					<div>
 						<Text>
 							<b>Made by: ${ getPluginInfo(pluginInfoValid,'author') }</b>
 						</Text>
 						<Text>Last version: ${ version }</Text>
 						<Text>Installed version: ${ localVersion }</Text>
 					</div>
-					<div style="min-height:50px;">
-						${ getInstallButton() }
-						${ getUninstallButton() }
+					<div class="buttons">
+						${ getUpdateButton() }
+						${ getUninstallButton() || getInstallButton() }
 					</div>
 				</div>
 			</div>
 		</SideMenu>
 	`
+	function getUpdateButton(){
+		if( newUpdate ){
+			return element({
+				components:{
+					storeButton
+				}
+			})` <storeButton :click="${install}">Update</storeButton>`
+		}
+		return element`<div/>`
+	}
 	function getInstallButton(){
 		if( !isInstalled ){
 			return element({
@@ -104,18 +142,23 @@ function openWindow({
 				}
 			})` <storeButton :click="${install}">Install</storeButton>`
 		}
-		return element`<div/>`
+		return null
 	}
 	function getUninstallButton(){
-		if( !isInstalled || pluginReserved(pluginInfoValid.name) ){
-			return element`<div/>`
-		}else{
+		if( isInstalled && !pluginReserved(pluginInfoValid.name) ){
 			return element({
 				components:{
 					storeButton
 				}
 			})`<storeButton :click="${uninstall}">Uninstall</storeButton>`
+		}else{
+			return null
 		}
+	}
+	function update(){
+		installPlugin( pluginInfoValid ).then(()=>{
+			pluginUpdatedNotification( pluginInfoValid.name )
+		})
 	}
 	function install(){
 		installPlugin( pluginInfoValid ).then(()=>{
@@ -128,23 +171,28 @@ function openWindow({
 		})
 	}
 	const pluginWindow = new Window({
-		component:()=>component,
+		component: () => component,
 		height: '55%',
 		width: '45%'
 	})
 	pluginWindow.launch()
 }
 
+function pluginUpdatedNotification( pluginName ){
+	new Notification({
+		title: `Updated ${ pluginName }`
+	})
+}
 
 function pluginInstalledNotification( pluginName ){
 	new Notification({
-		title:`Installed ${ pluginName }`
+		title: `Installed ${ pluginName }`
 	})
 }
 
 function pluginUninstalledNotification( pluginName ){
 	new Notification({
-		title:`Uninstalled ${ pluginName }`
+		title: `Uninstalled ${ pluginName }`
 	})
 }
 
