@@ -98,12 +98,27 @@ function markStatus( target, status, count ){
 	}
 }
 const ItemWrapper = style`
+	@keyframes appear{
+		from {
+			margin-left: -2px;
+			opacity: 0.6;
+		}
+		to {
+			margin-left: 0;
+			opacity: 1;
+		}
+	}
 	&{
+		animation: appear 0.1s ease-out;
 		background:transparent;
 		white-space:nowrap;
 		padding:0px;
 		user-select:none;
 		margin-top:1px;
+	}
+	& > button:active{
+		transition: 0.1s;
+		transform: scale(0.97);
 	}
 	& > button{
 		transition:0.07s;

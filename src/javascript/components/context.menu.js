@@ -1,14 +1,23 @@
 import { element, style } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
+		@keyframes popup{
+			from {
+				transform: scale(0.9)
+			}
+			to {
+				transform: scale(1)
+			}
+		}
 		&{
-			background:var(--contextmenuBackground);
-			padding:5px;
-			position:fixed;
-			color:white;
-			border-radius:5px;
-			box-shadow:0px 0px 3px rgba(0,0,0,0.2);
-			display:block;
+			animation: popup 0.05s ease-out;
+			background: var(--contextmenuBackground);
+			padding: 5px;
+			position: fixed;
+			color: white;
+			border-radius: 5px;
+			box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+			display: block;
 		}
 		& > button{
 			background:var(--contextmenuButtonBackground);
