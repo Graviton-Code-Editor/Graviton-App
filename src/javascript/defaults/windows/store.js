@@ -26,9 +26,9 @@ function Store(){
 		<div mounted="${mounted}" style="min-width:100%;">
 			<SideMenu default="home" style="min-height:100%;">
 				<div>
-					<H1 lang-string="Store">Store</H1>
+					<H1 lang-string="Store"></H1>
 					<label to="home">Home</label>
-					<label to="installed">Installed</label>
+					<label lang-string="Installed"></label>
 				</div>
 				<div>
 					<div class="home" href="home">
