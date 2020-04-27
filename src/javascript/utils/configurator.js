@@ -56,7 +56,8 @@ const DEFAULT_STATIC_CONFIGURATION = {
 			}
 		},
 		'miscEnableLiveUpdateInManualConfig':true,
-		'appBlurEffect':10
+		'appBlurEffect':10,
+		'appCheckUpdatesInStartup': true
 	}
 }
 

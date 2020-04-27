@@ -22,8 +22,7 @@ import './shortcuts'
 import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
-
-
+import gravitonHasUpdate from './store/utils/app.update'
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -290,6 +289,17 @@ function init(){
 					openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
 				}
 			},
+			{},
+			{
+				label:'Check for updates',
+				action(){
+					checkForUpdates(()=>{
+						new Notification({
+							title: 'No updates found'
+						})
+					})
+				}
+			},
 			{
 				label:'About',
 				action(){
@@ -357,13 +367,16 @@ function init(){
 	PluginsRegistry.add(Night)  
 	
 	RunningConfig.emit('appLoaded')
-	if(RunningConfig.data.arguments[0] != null && !isDev){
+	
+	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
+	
+	if( RunningConfig.data.arguments[0] && !isDev ){
 		const dir = RunningConfig.data.arguments[0]
 		if( fs.lstatSync(dir).isDirectory() ){
 			RunningConfig.emit('addFolderToRunningWorkspace',{
-				folderPath:RunningConfig.data.arguments[0],
-				replaceOldExplorer:true,
-				workspacePath:null
+				folderPath: RunningConfig.data.arguments[0],
+				replaceOldExplorer: true,
+				workspacePath: null
 			})
 		}else{
 			RunningConfig.emit('loadFile',{
@@ -371,6 +384,32 @@ function init(){
 			})
 		}
 	}
+}
+
+function checkForUpdates( ifNoUpdate ){
+	gravitonHasUpdate().then( ({ res, version}) => {
+		if( res ){
+			new Notification({
+				title: 'Update available',
+				content: `Version ${version} is available`,
+				buttons:[
+					{
+						label: 'Update',
+						action(){
+							openLink('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
+						}
+					},
+					{
+						label: 'Ignore'
+					}
+				]
+			})
+		}else{
+			ifNoUpdate && ifNoUpdate()
+		}
+	}).catch( err => {
+		console.log('Couldnt feth updates.')
+	})
 }
 
 export default init
