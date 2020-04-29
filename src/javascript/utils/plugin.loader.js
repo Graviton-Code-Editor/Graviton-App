@@ -16,6 +16,7 @@ import Tab from '../constructors/tab'
 import SideMenu from '../components/window/side.menu'
 import { EditorClient } from '../constructors/editorclient'
 import envClient from '../constructors/env.client'
+import SidePanel from '../constructors/side.panel'
 
 const fs = window.require("fs-extra")
 const pluginsPath = path.join(StaticConfig.data.appConfigPath,'plugins')
@@ -40,7 +41,8 @@ function loadPlugin(pluginPath,pluginName){
 			drac,
 			SideMenu,
 			EditorClient,
-			envClient
+			envClient,
+			SidePanel
 		})
 	}catch(err){
 		throwSilentError(`(${pluginName}) -> ${err}`)

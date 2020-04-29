@@ -57,7 +57,9 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		},
 		'miscEnableLiveUpdateInManualConfig':true,
 		'appBlurEffect':10,
-		'appCheckUpdatesInStartup': true
+		'appCheckUpdatesInStartup': true,
+		'appEnableSidebar': true,
+		'appEnableExplorerItemsAnimations': true
 	}
 }
 

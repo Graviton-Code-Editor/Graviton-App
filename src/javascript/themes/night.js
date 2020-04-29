@@ -104,7 +104,12 @@ const Night = {
 		switchBackground:'rgb(60,60,60)',
 		switchIndicatorActivatedBackground:'rgb(255, 0, 72)',
 		switchIndicatorDesactivatedBackground:'rgb(220,200,200)',
-		loaderBackground:'white'
+		loaderBackground:'white',
+		sidebarIconsFill: 'rgb(210,210,210)',
+		sidebarIconBackground: 'transparent',
+		sidebarIconHoveringBackground: 'rgb(40,40,40)',
+		sidebarIconActiveBackground: 'rgb(50,50,50)',
+		sidebarBackground: '#191919'
 	}
 }
 

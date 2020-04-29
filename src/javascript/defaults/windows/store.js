@@ -28,7 +28,7 @@ function Store(){
 				<div>
 					<H1 lang-string="Store"></H1>
 					<label to="home">Home</label>
-					<label lang-string="Installed"></label>
+					<label to="installed" lang-string="Installed"></label>
 				</div>
 				<div>
 					<div class="home" href="home">
@@ -36,7 +36,7 @@ function Store(){
 							<Loader/>
 						</CenteredLayout>
 					</div>
-					<div class="installed" href="installed"/>
+					<div class="installed" :loaded="${displayInstalled(e.target)}" href="installed"/>
 				</div>
 			</SideMenu>
 		</div>
@@ -46,10 +46,6 @@ function Store(){
 		const homePage = this.getElementsByClassName('home')[0]
 
 		displayHome( homePage ) //Display Home page by default
-
-		installedPage.addEventListener('loaded',()=>{
-			displayInstalled(installedPage)
-		})
 
 	}
 	const StoreWindow = new Window({
@@ -105,6 +101,7 @@ function displayInstalled( container ){
 		</div>
 	`
 	container.innerHTML = ''
+	console.log(Home, container)////
 	render( Home, container)
 }
 

@@ -13,6 +13,7 @@ import getLocalPluginById from '../utils/get.local.plugin'
 import storeButton from './button'
 import path from 'path'
 import semver from 'semver'
+import packageJSON from '../../../../../package.json'
 
 function StoreCard(props){
 	const { pluginId, displayName, isInstalled } = props.data
@@ -81,7 +82,8 @@ function openWindow({
 	version = 'Unknown',
 	id,
 	repository,
-	author = 'Unknown'
+	author = 'Unknown',
+	target = packageJSON.version
 },{
 	name: localName,
 	version: localVersion = 'Unknown',
@@ -135,7 +137,7 @@ function openWindow({
 		return element`<div/>`
 	}
 	function getInstallButton(){
-		if( !isInstalled ){
+		if( !isInstalled && semver.gte(packageJSON.version,target) ){
 			return element({
 				components:{
 					storeButton

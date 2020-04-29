@@ -1,5 +1,5 @@
 import StaticConfig from 'StaticConfig'
-import Explorer from '../constructors/explorer'
+import FilesExplorer from '../constructors/files.explorer'
 import RunningConfig from 'RunningConfig'
 import parseDirectory from './directory.parser'
 import InputDialog from '../constructors/dialog.input'
@@ -127,7 +127,7 @@ RunningConfig.on('addFolderToRunningWorkspace',function({
 	workspacePath = RunningConfig.data.workspacePath
 }){
 	const folderDir = normalizeDir( folderPath )
-	Explorer( folderDir, document.getElementById('sidepanel'),0,replaceOldExplorer )
+	FilesExplorer( folderDir, document.getElementById('explorer-panel'),0,replaceOldExplorer )
 	RunningConfig.data.workspaceConfig.folders.push({
 		name:parseDirectory(folderDir),
 		path:folderDir
@@ -187,7 +187,7 @@ RunningConfig.on('setWorkspace',({ path: workspaceDir })=>{
 		}
 		setWorkspaceSettings( RunningConfig.data.workspaceConfig.settings )
 		RunningConfig.data.workspacePath = workspacePath
-		document.getElementById('sidepanel').innerHTML = ''
+		document.getElementById('explorer-panel').innerHTML = ''
 		workspace.folders.map( folder => {
 			RunningConfig.emit('addFolderToRunningWorkspace',{
 				folderPath:folder.path

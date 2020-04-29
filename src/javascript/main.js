@@ -9,6 +9,7 @@ import Resizer from './components/panel/resizer.horizontally'
 import StatusBar from './components/status.bar/status.bar'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
+import ContextMenu from './constructors/contextmenu'
 window.require('v8-compile-cache')
 
 import '../sass/main.scss'
@@ -50,18 +51,30 @@ const App = element({
 		#body{
 			display:flex;
 			flex-direction:columns;
-			height:calc(100% - 65px);
+			height:calc(100% - 68px);
 			background:var(--bodyBackground);
+		}
+		#sidebar{
+			background: gray;
+			padding:4px;
+			width:50px;
+			overflow:auto;
+			float: left;
+			left: 0;
+			border-top-right-radius: 5px;
+			border-right:1px solid var(--panelBorder);
+			border-top:1px solid var(--panelBorder);
+			background:var(--sidebarBackground);
 		}
 		#sidepanel{
 			background:var(--bodyBackground);
-			padding:10px;
 			min-width:50px;
 			width:35%;
 			max-height:100%;
 			overflow:auto;
 			float: left;
 			left: 0;
+			padding: 10px;
 		}
 		#mainpanel{
 			min-width:50px;
@@ -144,6 +157,7 @@ const App = element({
 		<div mounted="${mountedAppView}" style="${()=> blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : ''}">
 			<TitleBar/>
 			<div id="body">
+				<div id="sidebar" :contextmenu="${sidebarContext}" style="${()=>StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;width:10px;'}"/>
 				<div id="sidepanel"/>
 				<Resizer/>
 				<div id="mainpanel"/>          
@@ -167,8 +181,41 @@ function mountedAppView(){
 	StaticConfig.keyChanged('appBlurEffect', value =>{
 		if( blurViewApp ){
 			this.update()
-		}	
+		}
 	})
+	StaticConfig.keyChanged('appEnableSidebar', value =>{
+		document.getElementById('sidebar').update()
+	})
+}
+
+function sidebarContext(e){
+	if( StaticConfig.data.appEnableSidebar ){
+		new ContextMenu({
+			list:[
+				{
+					label: 'Hide',
+					action(){
+						StaticConfig.data.appEnableSidebar = false
+					}
+				}
+			],
+			parent:document.body,
+			event:e
+		})
+	}else{
+		new ContextMenu({
+			list:[
+				{
+					label: 'Show',
+					action(){
+						StaticConfig.data.appEnableSidebar = true
+					}
+				}
+			],
+			parent:document.body,
+			event:e
+		})
+	}
 }
 
 function mountedApp(){

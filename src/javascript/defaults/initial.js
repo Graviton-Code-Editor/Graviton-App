@@ -23,6 +23,11 @@ import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
 import gravitonHasUpdate from './store/utils/app.update'
+import Explorer from '../constructors/explorer'
+import SidePanel from '../constructors/side.panel'
+import Play from '../components/icons/play'
+import './side.panels/files.explorer'
+import './side.panels/env.explorer'
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -365,7 +370,7 @@ function init(){
 	new Panel() //Initial Panel
 	PluginsRegistry.add(Arctic)    
 	PluginsRegistry.add(Night)  
-	
+		
 	RunningConfig.emit('appLoaded')
 	
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()

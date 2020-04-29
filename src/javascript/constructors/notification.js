@@ -24,8 +24,8 @@ function Notification({
 	const NotificationComp = element({
 		components:{
 			NotificationBody,
-			Title:Titles.h4,
-			Content:Text,
+			Title: Titles.h5,
+			Content: Text,
 			Cross
 		}
 	})`

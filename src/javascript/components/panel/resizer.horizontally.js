@@ -11,7 +11,7 @@ function startResizing( event, resizerElement = document.getElementById(resizeSe
 			leftPanel = otherChildren[index-1]
 		}
 	})
-	leftPanel.style.width = `${event.clientX - 25}px`
+	leftPanel.style.width = `${event.clientX - 85}px`
 }
 
 const styleWrapper = style`

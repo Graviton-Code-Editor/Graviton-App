@@ -104,7 +104,12 @@ const Arctic = {
 		switchBackground:'rgb(220,220,220)',
 		switchIndicatorActivatedBackground:'#0066FF',
 		switchIndicatorDesactivatedBackground:'rgba(150,150,150,0.8)',
-		loaderBackground:'black'
+		loaderBackground:'black',
+		sidebarIconsFill: 'rgb(50,50,50)',
+		sidebarIconBackground: 'transparent',
+		sidebarIconHoveringBackground: 'rgb(180,180,180)',
+		sidebarIconActiveBackground: 'rgb(210,210,210)',
+		sidebarBackground: 'white'
 	}
 }
 

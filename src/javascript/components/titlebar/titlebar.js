@@ -11,6 +11,7 @@ const styleWrapper = style`
 		max-height:40px;
 		overflow:hidden;
 		min-height:40px;
+		margin-bottom: 3px;
 	}
 	& *{
 		user-select:none;
