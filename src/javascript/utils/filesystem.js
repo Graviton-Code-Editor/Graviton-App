@@ -180,6 +180,9 @@ RunningConfig.on('setWorkspace',({ path: workspaceDir })=>{
 	const workspacePath = normalizeDir( workspaceDir )
 	const workspace = getWorkspaceConfig( workspacePath )
 	if( workspace ){
+		RunningConfig.data.workspaceConfig.folders.map(({ path },index) => {
+			RunningConfig.emit('removeFolderFromRunningWorkspace',{ folderPath : path})
+		})
 		RunningConfig.data.workspaceConfig = {
 			name: workspace.name,
 			folders:[],

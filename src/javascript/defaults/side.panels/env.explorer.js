@@ -26,7 +26,12 @@ RunningConfig.on('appLoaded',()=>{
 						items: getKeysToItems(info, folderPath) 
 					}]
 				})
-				render(envExplorer, panelNode.children[0])
+				const explorerNode = render(envExplorer, panelNode.children[0])
+				RunningConfig.on('removeFolderFromRunningWorkspace',({ folderPath:removedFolderPath }) => {
+					if( folderPath == removedFolderPath ){
+						explorerNode.remove()
+					}
+				});
 			break;
 		}
 	})
