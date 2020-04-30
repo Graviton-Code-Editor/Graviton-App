@@ -36,7 +36,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 							const workspaceConfig = getWorkspaceConfig( workspacePath )
 							if( workspaceConfig ) {
 								const { name, folders = [] } = workspaceConfig
-								const listContent = folders.map(({ name, path })=>{
+								const listContent = folders.map(({ name, path }) => {
 									return element`<li>· ${ parseDirectory( name ) }</li>`
 								})
 								return element({
@@ -60,7 +60,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 				</CardsListContainer>
 				<CardsListContainer href="projects">
 					<div>
-						${StaticConfig.data.appProjectsLog.map(({ name, directory })=> {
+						${StaticConfig.data.appProjectsLog.map(({ name, directory }) => {
 							const nameFolder = parseDirectory( directory )
 							return element({
 								components:{
@@ -84,16 +84,16 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			</div>
 		</SideMenu>
     `
-	function contextMenuWorkspace(event){
+	function contextMenuWorkspace( event ){
 		new ContextMenu({
 			list:[
 				{
 					label:'Rename',
 					action:()=>{
 						RunningConfig.emit('renameWorkspaceDialog',{
-							path:this.getAttribute("directory"),
-							name:this.children[0].textContent,
-							onFinished:(newName)=>{
+							path: this.getAttribute('directory'),
+							name: this.children[0].textContent,
+							onFinished: newName => {
 								this.children[0].textContent = newName
 							}
 						}) 
@@ -103,27 +103,27 @@ function Welcome( { defaultPage = "projects" } = {  }){
 					label:'Remove from here',
 					action:()=>{
 						RunningConfig.emit('removeWorkspaceFromLog',{
-							path:this.getAttribute("directory")
+							path: this.getAttribute('directory')
 						})
 						this.remove()
 					}
 				}
 			],
 			event,
-			parent:this
+			parent: this
 		})
 	}
 	function openWorkspace(){
 		RunningConfig.emit('setWorkspace',{
-			path:this.getAttribute("directory")
+			path: this.getAttribute('directory')
 		})
 		WelcomeWindow.close()
 	}
 	function openDirectory(){
 		RunningConfig.emit('addFolderToRunningWorkspace',{
-			folderPath:normalizeDir(this.getAttribute("directory")),
-			replaceOldExplorer:true,
-			workspacePath:null
+			folderPath: normalizeDir(this.getAttribute('directory')),
+			replaceOldExplorer: true,
+			workspacePath: null
 		})
 		WelcomeWindow.close()
 	}
@@ -131,8 +131,8 @@ function Welcome( { defaultPage = "projects" } = {  }){
 		openFolder().then(folderPath => {
 			RunningConfig.emit('addFolderToRunningWorkspace',{
 				folderPath,
-				replaceOldExplorer:true,
-				workspacePath:null
+				replaceOldExplorer: true,
+				workspacePath: null
 			})
 			WelcomeWindow.close()
 		})
@@ -141,12 +141,11 @@ function Welcome( { defaultPage = "projects" } = {  }){
 		RunningConfig.emit('openWorkspaceDialog')
 	}
 	const WelcomeWindow = new Window({
-		title:'welcome',
-		component:()=>WelcomePage,
-		height:'400px',
-		width:'600px'
+		title: 'welcome',
+		component:() => WelcomePage,
+		height: '400px',
+		width: '600px'
 	})
-
 	return WelcomeWindow
 }
 

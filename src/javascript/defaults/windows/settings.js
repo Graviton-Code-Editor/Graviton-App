@@ -39,9 +39,9 @@ function Settings(){
 						<div href="themes">
 							<H4 lang-string="Themes" string="{{Themes}}"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
-									${Object.keys(pluginsList).map(function(pluginName){
+									${Object.keys(pluginsList).map( pluginName => {
 										const pluginInfo = pluginsList[pluginName]
-										if(pluginInfo.type == "theme"){
+										if( pluginInfo.type === 'theme' ){
 											return element({
 												components:{
 													ThemeCard
@@ -72,11 +72,11 @@ function Settings(){
 						<div href="languages">
 							<H4 lang-string="Languages" string="{{Languages}}"/>
 							<RadioGroup :radioSelected="${selectedLanguage}">
-								${Object.keys(Languages).map(function(lang){
+								${Object.keys(Languages).map( lang => {
 									return element`
-										<label name="${lang}" checked="${StaticConfig.data.appLanguage == lang?'true':'false'}">${lang}</label>
+										<label name="${lang}" checked="${ StaticConfig.data.appLanguage === lang }">${lang}</label>
 									`
-								})}	
+								})}
 							</RadioGroup>
 						</div>
 					</div>
@@ -91,16 +91,16 @@ function Settings(){
 		`
 	}
 	function configeditor(){
-		configEditor()	
+		configEditor()
 		SettingsWindow.close()
 	}
 	function selectedTheme(e){
-		const newTheme = e.detail.target.getAttribute("name")
+		const newTheme = e.detail.target.getAttribute('name')
 		if( StaticConfig.data.appTheme != newTheme)
 			StaticConfig.data.appTheme = newTheme
 	}
 	function selectedLanguage(e){
-		const newLanguage = e.detail.target.getAttribute("name")
+		const newLanguage = e.detail.target.getAttribute('name')
 		if( StaticConfig.data.appLanguage != newLanguage)
 			StaticConfig.data.appLanguage = newLanguage
 	}
@@ -115,8 +115,8 @@ function Settings(){
 		}
 	}
 	const SettingsWindow = new Window({
-		title:'settings',
-		component:SettingsPage
+		title: 'settings',
+		component: SettingsPage
 	})
 	return SettingsWindow
 }

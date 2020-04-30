@@ -42,14 +42,11 @@ function Store(){
 		</div>
 	`
 	function mounted(){
-		const installedPage = this.getElementsByClassName('installed')[0]
 		const homePage = this.getElementsByClassName('home')[0]
-
 		displayHome( homePage ) //Display Home page by default
-
 	}
 	const StoreWindow = new Window({
-		title:'store',
+		title: 'store',
 		component:() => StorePage
 	})
 	return StoreWindow
