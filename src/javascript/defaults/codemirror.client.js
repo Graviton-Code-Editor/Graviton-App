@@ -49,6 +49,8 @@ const CodemirrorClient = new EditorClient({
 			case 'pyw':
 			case 'py':
 				return { name: 'python' }
+			case 'java':
+				return { name: 'text/x-java' }
 			case 'vue':
 				return { name: 'vue' }
 			case 'xml':
