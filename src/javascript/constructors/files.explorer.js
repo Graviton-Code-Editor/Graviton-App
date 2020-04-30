@@ -232,9 +232,12 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		const explorerContainer = element`<div mounted="${mounted}">${itemComputed}</div>`
 		if( replaceOldExplorer && parent.children[0] ){
 			for( let otherExplorer of parent.children[0].children ){
-				RunningConfig.emit('removeFolderFromRunningWorkspace',{
-					folderPath:otherExplorer.getAttribute("fullpath")
-				})
+				const explorerPath = otherExplorer.getAttribute('fullpath')
+				if( explorerPath ){
+					RunningConfig.emit('removeFolderFromRunningWorkspace',{
+						folderPath: explorerPath
+					})
+				}
 			}
 		}
 		if( replaceOldExplorer ) parent.innerHTML = ""

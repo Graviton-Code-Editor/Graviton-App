@@ -7,11 +7,11 @@ function areYouSureDialog(){
 			content:'Be careful.',
 			buttons:[
 				{
-					label:'No',
+					label:'misc.No',
 					action:reject
 				},
 				{
-					label:'Yes',
+					label:'misc.Yes',
 					action:resolve
 				}
 			]

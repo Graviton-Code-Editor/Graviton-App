@@ -134,7 +134,7 @@ function init(){
 			},
 			{},
 			{
-				label:'menus.Edit.FontSize',
+				label:'menus.Edit.FontSize.FontSize',
 				list:[
 					{
 						label:'menus.Edit.FontSize.Increase',

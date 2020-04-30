@@ -18,6 +18,9 @@ const styleWrapper = style`
 		justify-content: center;
 		min-height: 100%;
 	}
+	&[hasFiles="true"] .link{
+		display: none;
+	}
 	& .link{
 		text-decoration: underline;
 		cursor: pointer;

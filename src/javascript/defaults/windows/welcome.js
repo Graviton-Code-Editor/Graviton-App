@@ -24,10 +24,10 @@ function Welcome( { defaultPage = "projects" } = {  }){
 	})`
 		<SideMenu default="${ defaultPage }">
 			<div>
-				<H1 lang-string="Welcome" string="{{Welcome}}"></H1>
-				<label to="projects" lang-string="RecentProjects" string="{{RecentProjects}}"></label>
-				<label to="workspaces">Recent workspaces</label>
-				<label to="create_project" lang-string="NewProject" string="{{NewProject}}"></label>
+				<H1 lang-string="windows.Welcome.Welcome"/>
+				<label to="projects" lang-string="windows.Welcome.RecentProjects"/>
+				<label to="workspaces" lang-string="windows.Welcome.RecentWorkspaces"/>
+				<label to="create_project" lang-string="windows.Welcome.NewProject"/>
 			</div>
 			<div>
 				<CardsListContainer href="workspaces">
@@ -55,7 +55,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 						})}
 					</div>
 					<div>
-						<Button :click="${openWorkspaceFromWindow}">Open a workspace</Button>
+						<Button :click="${openWorkspaceFromWindow}" lang-string="windows.Welcome.OpenWorkspace"/>
 					</div>
 				</CardsListContainer>
 				<CardsListContainer href="projects">
@@ -75,7 +75,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 						})}
 					</div>
 					<div>
-						<Button :click="${openDirectoryFromWindow}">Open a folder</Button>
+						<Button :click="${openDirectoryFromWindow}" lang-string="windows.Welcome.OpenFolder/>
 					</div>
 				</CardsListContainer>
 				<CardsListContainer href="create_project">

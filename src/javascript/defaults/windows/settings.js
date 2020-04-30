@@ -28,16 +28,16 @@ function Settings(){
 		})`
 			<SideMenu default="customization">
 				<div>
-					<h1 lang-string="Settings" string="{{Settings}}"></h1>
+					<h1 lang-string="windows.Settings.Settings"/>
 					<SideMenuSearcher/>
-					<label to="customization" lang-string="Customization" string="{{Customization}}"/>
-					<label to="languages" lang-string="Languages" string="{{Languages}}"/>
-					<label to="about" lang-string="About" string="{{About}}"/>
+					<label to="customization" lang-string="windows.Settings.Customization.Customization"/>
+					<label to="languages" lang-string="windows.Settings.Languages"/>
+					<label to="about" lang-string="windows.Settings.About"/>
 				</div>
 				<div>
 					<div href="customization">
 						<div href="themes">
-							<H4 lang-string="Themes" string="{{Themes}}"/>
+							<H4 lang-string="windows.Settings.Customization.Themes"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
 									${Object.keys(pluginsList).map( pluginName => {
 										const pluginInfo = pluginsList[pluginName]
@@ -54,9 +54,9 @@ function Settings(){
 										}
 									}).filter(Boolean)}
 								</RadioGroup>
-							</div>   
+						</div>   
 						<div href="file watcher">
-							<H4>File Watcher</H4>
+							<H4 lang-string="windows.Settings.Customization.FileWatcher"/>
 							<Switch :toggled="${toggledFileWatcher}" status="${{default:StaticConfig.data.editorFSWatcher}}" label="File watcher"></Switch>
 						</div>
 						<div href="autocomplete">
@@ -70,7 +70,6 @@ function Settings(){
 					</div>
 					<div href="languages">
 						<div href="languages">
-							<H4 lang-string="Languages" string="{{Languages}}"/>
 							<RadioGroup :radioSelected="${selectedLanguage}">
 								${Object.keys(Languages).map( lang => {
 									return element`
@@ -82,7 +81,7 @@ function Settings(){
 					</div>
 					<div href="about">
 						<div href="about">
-							<H4 lang-string="About" string="{{About}}"/>
+							<H4 lang-string="windows.Settings.About"/>
 							<Text>Graviton is a modern looking code editor.</Text>
 						</div>
 					</div>

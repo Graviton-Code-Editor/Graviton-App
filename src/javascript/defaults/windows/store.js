@@ -26,9 +26,9 @@ function Store(){
 		<div mounted="${mounted}" style="min-width:100%;">
 			<SideMenu default="home" style="min-height:100%;">
 				<div>
-					<H1 lang-string="Store"></H1>
-					<label to="home">Home</label>
-					<label to="installed" lang-string="Installed"></label>
+					<H1 lang-string="windows.Store.Store"/>
+					<label to="home" lang-string="windows.Store.Home.Home"/>
+					<label to="installed" lang-string="windows.Store.Installed.Installed"/>
 				</div>
 				<div>
 					<div class="home" href="home">

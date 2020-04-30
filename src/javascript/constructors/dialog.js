@@ -1,8 +1,9 @@
 import DialogBody from '../components/dialog/dialog'
 import WindowBackground  from '../components/window/background'
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render, lang } from '@mkenzo_8/puffin'
 import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
 import Window from './window'
+import { LanguageState } from '../utils/lang.config'
 
 function Dialog({
 	title = '',
@@ -28,6 +29,9 @@ function Dialog({
 			H2:Titles.h2,
 			Text
 		},
+		addons:[
+			lang(LanguageState)
+		]
 	})`
 		<DialogBody>
 			<div>
@@ -40,7 +44,7 @@ function Dialog({
 						components:{
 							Button
 						}
-					})`<Button important="${btn.important || false}" index="${index}" :click="${closeWindow}">${btn.label}</Button>`
+					})`<Button important="${btn.important || false}" index="${index}" :click="${closeWindow}" lang-string="${btn.label}"/>`
 				})}
 			</div>
 		</DialogBody>

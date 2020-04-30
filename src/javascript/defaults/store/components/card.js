@@ -107,16 +107,16 @@ function openWindow({
 		<SideMenu default="about">
 			<div>
 				<H2>${ getPluginInfo(pluginInfoValid,'name') }</H2>
-				<label to="about" lang-string="About"/>
+				<label to="about" lang-string="misc.About"/>
 			</div>
 			<div class="${styleWrapper}">
 				<div href="about" class="content">
 					<div>
 						<Text>
-							<b>Made by: ${ getPluginInfo(pluginInfoValid,'author') }</b>
+							<b lang-string="misc.Author" string="{{misc.Author}}: ${ getPluginInfo(pluginInfoValid,'author') }"/>
 						</Text>
-						<Text>Last version: ${ version }</Text>
-						<Text>Installed version: ${ localVersion }</Text>
+						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${version}"/>
+						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
 					</div>
 					<div class="buttons">
 						${ getUpdateButton() }
@@ -132,7 +132,7 @@ function openWindow({
 				components:{
 					storeButton
 				}
-			})` <storeButton :click="${install}">Update</storeButton>`
+			})` <storeButton :click="${install}" lang-string="windows.Store.Update"/>`
 		}
 		return element`<div/>`
 	}
@@ -142,7 +142,7 @@ function openWindow({
 				components:{
 					storeButton
 				}
-			})` <storeButton :click="${install}">Install</storeButton>`
+			})` <storeButton :click="${install}" lang-string="windows.Store.Install"/>`
 		}
 		return null
 	}
@@ -152,7 +152,7 @@ function openWindow({
 				components:{
 					storeButton
 				}
-			})`<storeButton :click="${uninstall}">Uninstall</storeButton>`
+			})`<storeButton :click="${uninstall}" lang-string="windows.Store.Uninstall"/>`
 		}else{
 			return null
 		}
