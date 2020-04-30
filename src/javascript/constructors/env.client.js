@@ -71,7 +71,7 @@ const styleWrapper = style`
 	}
 `
 
-function envClient({ name }){
+function EnvClient({ name }){
 	
 	let isClicked = false
 	
@@ -166,4 +166,4 @@ function envClient({ name }){
 	return clientState
 }
 
-export default envClient
+export default EnvClient

@@ -1,4 +1,5 @@
 import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { LanguageState } from 'LanguageConfig'
 
 const styleWrapper = style`
 	& {
@@ -25,6 +26,7 @@ const styleWrapperPanel = style`
 	& {
 		display: none;
 		max-height: 100%;
+		overflow: auto;
 	}
 `
 
@@ -37,7 +39,11 @@ function SidePanel({
 			${icon()}
 		</div>`
 	
-	const panelContainer = element`
+	const panelContainer = element({
+		addons:[
+			lang(LanguageState)
+		]
+	})`
 		<div class="${styleWrapperPanel}">
 			${panel()}
 		</div>`

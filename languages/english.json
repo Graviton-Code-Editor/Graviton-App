@@ -88,6 +88,11 @@
 		"Show":"Show",
 		"Select":"Select",
 		"By":"By",
-		"Suggestions":"Suggestions"
+		"Suggestions":"Suggestions",
+		"OpenProjects":"Open Projects",
+		"OpenWorkspaces":"Open Workspaces",
+		"OpenWorkspaceFromFile":"Open Workspace from file",
+		"AddFolderToWorkspace":"Add Folder To Workspace",
+		"SaveWorkspace":"Save Workspace"
 	}
 }

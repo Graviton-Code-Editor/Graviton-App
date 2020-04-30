@@ -76,7 +76,7 @@ const ItemWrapper = style`
 		margin-right:4px;
 		position:relative;
 	}
-	&[animated="true"]{
+	&[animated="true"] .arrow{
 		transition:0.1s;
 	}
 	& .arrow{

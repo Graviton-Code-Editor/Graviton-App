@@ -127,7 +127,8 @@ RunningConfig.on('addFolderToRunningWorkspace',function({
 	workspacePath = RunningConfig.data.workspacePath
 }){
 	const folderDir = normalizeDir( folderPath )
-	FilesExplorer( folderDir, document.getElementById('explorer-panel'),0,replaceOldExplorer )
+	const explorerPanel = document.getElementById('explorer_panel')
+	FilesExplorer( folderDir, explorerPanel,0,replaceOldExplorer )
 	RunningConfig.data.workspaceConfig.folders.push({
 		name:parseDirectory(folderDir),
 		path:folderDir
@@ -190,7 +191,8 @@ RunningConfig.on('setWorkspace',({ path: workspaceDir })=>{
 		}
 		setWorkspaceSettings( RunningConfig.data.workspaceConfig.settings )
 		RunningConfig.data.workspacePath = workspacePath
-		document.getElementById('explorer-panel').innerHTML = ''
+		const explorerPanel = document.getElementById('explorer_panel')
+		explorerPanel.innerHTML = ''
 		workspace.folders.map( folder => {
 			RunningConfig.emit('addFolderToRunningWorkspace',{
 				folderPath:folder.path

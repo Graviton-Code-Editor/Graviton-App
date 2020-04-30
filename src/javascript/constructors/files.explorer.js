@@ -112,6 +112,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 	
 	// Create project's explorer item
 	if(level == 0){
+		parent.setAttribute('hasFiles',true)
 		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
 		if( gitResult ) {
 			gitChanges = await getStatus(parsedFolderPath)

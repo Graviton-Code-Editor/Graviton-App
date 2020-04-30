@@ -28,6 +28,7 @@ import SidePanel from '../constructors/side.panel'
 import Play from '../components/icons/play'
 import './side.panels/files.explorer'
 import './side.panels/env.explorer'
+import EnvClient from '../constructors/env.client'
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -65,7 +66,7 @@ function init(){
 				label:'Projects',
 				list:[
 					{
-						label:'Open Recents',
+						label:'OpenProjects',
 						action:()=>{
 							Welcome().launch()
 						}
@@ -76,7 +77,7 @@ function init(){
 				label:'Workspaces',
 				list:[
 					{
-						label:'Open Workspaces',
+						label:'OpenWorkspaces',
 						action:()=>{
 							Welcome({
 								defaultPage:'workspaces'
@@ -91,7 +92,7 @@ function init(){
 						}
 					},
 					{
-						label:'Add folder to workspace',
+						label:'AddFolderToWorkspace',
 						action:()=>{
 							RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
 								replaceOldExplorer:false
@@ -99,7 +100,7 @@ function init(){
 						}
 					},
 					{
-						label:'Save workspace',
+						label:'SaveWorkspace',
 						action:()=>{
 							RunningConfig.emit('saveCurrentWorkspace')
 						}
@@ -362,6 +363,13 @@ function init(){
 							]
 						})
 						testDialog.launch()
+					}
+				},{
+					label: 'Env client test',
+					action(){
+						new EnvClient({
+							name:'Test'
+						})
 					}
 				}
 			]

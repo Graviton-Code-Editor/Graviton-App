@@ -15,7 +15,7 @@ import Notification from '../constructors/notification'
 import Tab from '../constructors/tab'
 import SideMenu from '../components/window/side.menu'
 import { EditorClient } from '../constructors/editorclient'
-import envClient from '../constructors/env.client'
+import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
 
 const fs = window.require("fs-extra")
@@ -41,7 +41,7 @@ function loadPlugin(pluginPath,pluginName){
 			drac,
 			SideMenu,
 			EditorClient,
-			envClient,
+			EnvClient,
 			SidePanel
 		})
 	}catch(err){

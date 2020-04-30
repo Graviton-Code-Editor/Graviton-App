@@ -3,10 +3,10 @@ import RunningConfig from 'RunningConfig'
 import { element, render } from '@mkenzo_8/puffin'
 import EnvOutlined from '../../components/icons/env.outlined'
 import Explorer from '../../constructors/explorer'
-const fs = window.require('fs')
 const { join, basename } = window.require('path')
 import EnvClient from '../../constructors/env.client'
 import Notification from '../../constructors/notification'
+import detectEnv from '../../utils/detect.env'
 
 RunningConfig.on('appLoaded',()=>{
 	const { display, panelNode } = new SidePanel({
@@ -37,18 +37,6 @@ RunningConfig.on('appLoaded',()=>{
 	})
 })
 
-function detectEnv( folder ){
-	if( fs.existsSync( join(folder,'package.json') ) ){
-		return {
-			env: 'node',
-			info: require( join(folder,'package.json'))
-		}
-	}
-	return {
-		env: null,
-		info:{}
-	}
-}
 
 function getKeysToItems(keys, folder, fromKey ){
 	return Object.keys(keys).map( key => {
