@@ -14,15 +14,15 @@
 				"Workspaces":{
 					"Workspaces":"Workspaces",
 					"OpenWorkspaces":"Open Workspaces",
-					"OpenFromFile":"Open Workspace from file",
+					"OpenFromFile":"Open from file",
 					"AddFolderToWorkspace":"Add Folder To Workspace",
 					"SaveWorkspace":"Save Workspace"
 				}
 			},
 			"Edit": {
 				"Edit":"Edit",
-				"Undo": "Undo",
-				"Redo": "Redo",
+				"Undo":"Undo",
+				"Redo":"Redo",
 				"FontSize":{
 					"FontSize":"Font Size",
 					"Increase":"Increase",
@@ -47,9 +47,9 @@
 				"Window":"Window",
 				"Zoom":{
 					"Zoom":"Zoom",
-					"DefaultZoom":"Default zoom",
-					"IncreaseZoom":"Increase zoom",
-					"DecreaseZoom":"Decrease zoom"
+					"DefaultZoom":"Default",
+					"IncreaseZoom":"Increase",
+					"DecreaseZoom":"Decrease"
 				},
 				"OpenDevTools":"Open dev tools"
 			},
@@ -71,7 +71,7 @@
 				"Customization": {
 					"Customization":"Customization",
 					"Themes":"Themes",
-					"FileWatcher":"FileWatcher"
+					"FileWatcher":"Files Watcher"
 				},
 				"Languages":"Languages",
 				"About":"About"
@@ -84,9 +84,9 @@
 				"Installed":{
 					"Installed":"Installed"
 				},
-				"Install": "Install",
+				"Install":"Install",
 				"Update":"Update",
-				"Uninstall": "Uninstall"
+				"Uninstall":"Uninstall"
 			},
 			"Welcome":{
 				"Welcome":"Welcome",
