@@ -36,7 +36,7 @@ function Store(){
 							<Loader/>
 						</CenteredLayout>
 					</div>
-					<div class="installed" :loaded="${displayInstalled(e.target)}" href="installed"/>
+					<div class="installed" :loaded="${(e)=> displayInstalled(e.target)}" href="installed"/>
 				</div>
 			</SideMenu>
 		</div>
@@ -101,7 +101,6 @@ function displayInstalled( container ){
 		</div>
 	`
 	container.innerHTML = ''
-	console.log(Home, container)////
 	render( Home, container)
 }
 
