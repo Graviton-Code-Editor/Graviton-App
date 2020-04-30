@@ -57,7 +57,8 @@ const App = element({
 		#sidebar{
 			background: gray;
 			padding:4px;
-			width:50px;
+			min-width:50px;
+			max-width:50px;
 			overflow:auto;
 			float: left;
 			left: 0;
