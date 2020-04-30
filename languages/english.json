@@ -115,7 +115,9 @@
 			"Exit": "Exit",
 			"Tip": "Tip",
 			"Yes":"Yes",
-			"No":"No"
+			"No":"No",
+			"Close":"Close",
+			"Ignore":"Ignore"
 		}
 	}
 }

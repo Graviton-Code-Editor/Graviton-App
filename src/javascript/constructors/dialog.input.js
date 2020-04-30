@@ -37,7 +37,7 @@ function InputDialog({
 			component,
 			buttons:[
 				{
-					label:'Continue',
+					label:'misc.Continue',
 					action(){
 						const inputValue = document.getElementById(randomSelector).children[0].value
 						if( inputValue != '' ){

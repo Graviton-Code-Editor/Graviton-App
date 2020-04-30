@@ -38,9 +38,7 @@ const aboutContent = element({
 				Build date: ${buildJSON.date}
 			</span> 
 			<br/>
-			<span>
-				Author: Marc Espín Sanz
-			</span>
+			<span lang-string="misc.Author" string="{{misc.Author}}: Marc Espín Sanz"/>
 			<br/>
 		</div>
 	</div>
@@ -50,10 +48,10 @@ function About(){
 	const DialogInstance = new Dialog({
 		height: '240px',
 		width: '275px',
-		component:aboutContent,
+		component: aboutContent,
 		buttons:[
 			{
-				label:'close',
+				label:'misc.Close',
 				important:false
 			}
 		]
