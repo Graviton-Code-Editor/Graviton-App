@@ -1,19 +1,70 @@
 {
 	"name": "english",
 	"locale": "en",
-	"strings": {
-		"Help": "Help",
-		"File": "File",
-		"OpenFolder": "Open folder",
-		"OpenFile": "Open file",
-		"Save": "Save",
-		"SaveAs": "Save as",
+	"translations": {
+		"menus":{
+			"File": {
+				"File":"File",
+				"OpenFolder": "Open folder",
+				"OpenFile": "Open file",
+				"Projects":{
+					"Projects":"Projects",
+					"OpenProjects":"Open Projects",
+				},
+				"Workspaces":{
+					"Workspaces":"Workspaces",
+					"OpenWorkspaces":"Open Workspaces",
+					"OpenFromFile":"Open Workspace from file",
+					"AddFolderToWorkspace":"Add Folder To Workspace",
+					"SaveWorkspace":"Save Workspace"
+				}
+			},
+			"Edit": {
+				"Edit":"Edit",
+				"Undo": "Undo",
+				"Redo": "Redo",
+				"FontSize": "Font Size",
+				"Find":"Find",
+				"Replace": "Replace",
+				"FormatDocument":"Format document"
+				
+			},
+			"Tools": {
+				"Tools":"Tools",
+				"OpenSettings":"Open Settings",
+				"OpenStore":"Open Store",
+				"Panels":{
+					"Panels":"Panels",
+					"NewPanel":"New Panel",
+					"CloseCurrentPanel":"Close current panel"
+				}
+			},
+			"Window": {
+				"Window":"Window",
+				"Zoom":{
+					"Zoom":"Zoom",
+					"DefaultZoom":"Default zoom",
+					"IncreaseZoom":"Increase zoom",
+					"DecreaseZoom":"Decrease zoom"
+				},
+				"OpenDevTools":"Open dev tools"
+			},
+			"Help": {
+				"Help":"Help",
+				"Contact":"Contact",
+				"Social":"Social",
+				"Blog":"Blog",
+				"Documentation":"Documentation",
+				"Website":"Website",
+				"SourceCode":"Source code",
+				"CheckForUpdates":"Check for updates",
+				"About":"About"
+			},
+		},
 		"Plugins": "Plugins",
-		"Tools": "Tools",
 		"Issues": "Issues",
 		"Developers": "Developers",
 		"OpenDeveloperTools": "Open dev tools",
-		"OpenSettings":"Open Settings",
 		"OpenStore":"Open Store",
 		"Panels":"Panels",
 		"About": "About",
@@ -38,7 +89,6 @@
 		"Finish": "Finish",
 		"Cancel": "Cancel",
 		"Editor": "Editor",
-		"FontSize": "Font Size",
 		"Version": "Version",
 		"Accept": "Accept",
 		"Close": "Close",
@@ -62,10 +112,7 @@
 		"IncreaseZoom": "Increase zoom",
 		"DecreaseZoom": "Decrease zoom",
 		"DefaultZoom": "Default zoom",
-		"Search": "Search",
-		"Replace": "Replace",
 		"JumpToLine": "Jump to line",
-		"Window": "Window",
 		"Fullscreen": "Fullscreen",
 		"HideMenus": "Hide menus",
 		"Tip": "Tip",
@@ -80,19 +127,11 @@
 		"NewFile": "New file",
 		"Report": "Report",
 		"Clear": "Clear",
-		"Edit": "Edit",
-		"Undo": "Undo",
-		"Redo": "Redo",
 		"NoRecentProjects":"No recent projects.",
 		"Hide":"Hide",
 		"Show":"Show",
 		"Select":"Select",
 		"By":"By",
 		"Suggestions":"Suggestions",
-		"OpenProjects":"Open Projects",
-		"OpenWorkspaces":"Open Workspaces",
-		"OpenWorkspaceFromFile":"Open Workspace from file",
-		"AddFolderToWorkspace":"Add Folder To Workspace",
-		"SaveWorkspace":"Save Workspace"
 	}
 }

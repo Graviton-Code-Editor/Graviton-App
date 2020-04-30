@@ -1,7 +1,7 @@
 {
   "name": "עברית",
   "locale": "he",
-  "strings": {
+  "translations": {
     "Help": "עזרה",
     "File": "קובץ",
     "OpenFolder": "פתח תיקייה",

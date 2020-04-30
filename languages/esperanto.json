@@ -1,7 +1,7 @@
 {
 	"name": "esperanto",
 	"locale": "eo",
-	"strings": {
+	"translations": {
 		"Help": "Helpi",
 		"File": "Dosieron",
 		"OpenFolder": "Malfermu dosierujon",

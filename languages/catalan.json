@@ -2,7 +2,7 @@
 
 	"name": "català",
 	"locale": "cat",
-	"strings": {
+	"translations": {
 		"Help": "Ajuda",
 		"File": "Arxiu",
 		"OpenFolder": "Obrir carpeta",

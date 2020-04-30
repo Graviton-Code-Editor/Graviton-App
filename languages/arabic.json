@@ -1,7 +1,7 @@
 {
 	"name": "العربية",
 	"locale": "ar",
-	"strings": {
+	"translations": {
 		"Help": "مساعدة",
 		"File": "ملف",
 		"OpenFolder": "فتح مجلد",

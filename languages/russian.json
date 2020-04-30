@@ -1,7 +1,7 @@
 {
     "name": "russian",
     "locale": "ru",
-    "strings": {
+    "translations": {
       "Help": "Помощь",
       "File": "Файл",
       "OpenFolder": "Открыть папку",

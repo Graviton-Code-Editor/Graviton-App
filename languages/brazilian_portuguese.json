@@ -1,7 +1,7 @@
 {
 "name": "português brasileiro",
 "locale": "pt_BR",
-"strings": {
+"translations": {
 	"Help": "Ajuda",
 	"File": "Arquivo",
 	"OpenFolder": "Abrir pasta",

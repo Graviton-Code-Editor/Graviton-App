@@ -37,10 +37,10 @@ const isDev = window.require("electron-is-dev")
 
 function init(){
 	new Menu({ //FILE
-		button:'File',
+		button:'menus.File.File',
 		list:[
 			{
-				label:'OpenFile',
+				label:'menus.File.OpenFile',
 				action:()=>{
 					openFile().then(function(filePath){
 						RunningConfig.emit('loadFile',{
@@ -50,7 +50,7 @@ function init(){
 				}
 			},
 			{
-				label:'OpenFolder',
+				label:'menus.File.OpenFolder',
 				action:()=>{
 					openFolder().then(function(folderPath){
 						RunningConfig.emit('addFolderToRunningWorkspace',{
@@ -63,10 +63,10 @@ function init(){
 			},
 			{},
 			{
-				label:'Projects',
+				label:'menus.File.Projects.Projects',
 				list:[
 					{
-						label:'OpenProjects',
+						label:'menus.File.Projects.OpenProjects',
 						action:()=>{
 							Welcome().launch()
 						}
@@ -74,10 +74,10 @@ function init(){
 				]
 			},
 			{
-				label:'Workspaces',
+				label:'menus.File.Workspaces.Workspaces',
 				list:[
 					{
-						label:'OpenWorkspaces',
+						label:'menus.File.Workspaces.OpenWorkspaces',
 						action:()=>{
 							Welcome({
 								defaultPage:'workspaces'
@@ -86,13 +86,13 @@ function init(){
 					},
 					{},
 					{
-						label:'Open from File',
+						label:'menus.File.Workspaces.OpenFromFile',
 						action:()=>{
 							RunningConfig.emit('openWorkspaceDialog')
 						}
 					},
 					{
-						label:'AddFolderToWorkspace',
+						label:'menus.File.Workspaces.AddFolderToWorkspace',
 						action:()=>{
 							RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
 								replaceOldExplorer:false
@@ -100,7 +100,7 @@ function init(){
 						}
 					},
 					{
-						label:'SaveWorkspace',
+						label:'menus.File.Workspaces.SaveWorkspace',
 						action:()=>{
 							RunningConfig.emit('saveCurrentWorkspace')
 						}
@@ -110,10 +110,10 @@ function init(){
 		]
 	})
 	new Menu({ //EDIT
-		button:'Edit',
+		button:'menus.Edit.Edit',
 		list:[
 			{
-				label:'Undo',
+				label:'menus.Edit.Undo',
 				action:()=>{
 					if( !RunningConfig.data.focusedEditor ) return
 					const { client, instance } = RunningConfig.data.focusedEditor
@@ -123,7 +123,7 @@ function init(){
 				}
 			},
 			{
-				label:'Redo',
+				label:'menus.Edit.Redo',
 				action:()=>{
 					if( !RunningConfig.data.focusedEditor ) return
 					const { client, instance } = RunningConfig.data.focusedEditor
@@ -134,16 +134,16 @@ function init(){
 			},
 			{},
 			{
-				label:'FontSize',
+				label:'menus.Edit.FontSize',
 				list:[
 					{
-						label:'Increase',
+						label:'menus.Edit.FontSize.Increase',
 						action:()=>{
 							RunningConfig.emit('command.increaseFontSize')
 						}
 					},
 					{
-						label:'Decrease',
+						label:'menus.Edit.FontSize.Decrease',
 						action:()=>{
 							RunningConfig.emit('command.decreaseFontSize')
 						}
@@ -152,7 +152,7 @@ function init(){
 			},
 			{},
 			{
-				label:'Find',
+				label:'menus.Edit.Find',
 				action:()=>{
 					if( !RunningConfig.data.focusedEditor ) return
 					const { client, instance } = RunningConfig.data.focusedEditor
@@ -162,7 +162,7 @@ function init(){
 				}
 			},
 			{
-				label:'Replace',
+				label:'menus.Edit.Replace',
 				action:()=>{
 					if( !RunningConfig.data.focusedEditor ) return
 					const { client, instance } = RunningConfig.data.focusedEditor
@@ -173,7 +173,7 @@ function init(){
 			},
 			{},
 			{
-				label:'Format document',
+				label:'menus.Edit.FormatDocument',
 				action:()=>{
 					if( !RunningConfig.data.focusedEditor ) return
 					const { client, instance } = RunningConfig.data.focusedEditor
@@ -185,19 +185,19 @@ function init(){
 		]
 	})
 	new Menu({ //TOOLS
-		button:'Tools',
+		button:'menus.Tools.Tools',
 		list:[
 			{
-				label:'OpenSettings',
+				label:'menus.Tools.OpenSettings',
 				action:()=>Settings().launch()
 			},
 			{
-				label:'OpenStore',
+				label:'menus.Tools.OpenStore',
 				action:()=>Store().launch()
 			},
 			{},
 			{
-				label:'Panels',
+				label:'menus.Tools.Panels.Panels',
 				list:[
 					{
 						label:'New panel',
@@ -211,25 +211,25 @@ function init(){
 		]
 	})
 	new Menu({ //Window
-		button:'Window',
+		button:'menus.Window.Window',
 		list:[
 			{
-				label:'Zoom',
+				label:'menus.Window.Zoom.Zoom',
 				list:[
 					{
-						label:'DefaultZoom',
+						label:'menus.Window.Zoom.DefaultZoom',
 						action:()=> {
 							StaticConfig.data.appZoom = 1
 						}
 					},
 					{
-						label:'IncreaseZoom',
+						label:'menus.Window.Zoom.IncreaseZoom',
 						action:()=> {
 							StaticConfig.data.appZoom += 0.1
 						}
 					},
 					{
-						label:'DecreaseZoom',
+						label:'menus.Window.Zoom.DecreaseZoom',
 						action:()=> {
 							StaticConfig.data.appZoom -= 0.1
 						}
@@ -238,16 +238,16 @@ function init(){
 			},
 			{},
 			{
-				label:'Open dev tools',
+				label:'menus.Window.OpenDevTools',
 				action:()=>getCurrentWindow().toggleDevTools()
 			}
 		]
 	})
 	new Menu({ //HELP
-		button:'Help',
+		button:'menus.Help.Help',
 		list:[
 			{
-				label:'Contact',
+				label:'menus.Help.Contact',
 				list:[
 					{
 						label: 'Github',
@@ -258,7 +258,7 @@ function init(){
 				]
 			},
 			{
-				label:'Social',
+				label:'menus.Help.Social',
 				list:[
 					{
 						label: 'Telegram',
@@ -275,29 +275,29 @@ function init(){
 			},
 			{},
 			{
-				label:'Blog',
+				label:'menus.Help.Blog',
 				action:()=>{
 					openLink('https://graviton.netlify.app/blog/')
 				}
 			},{
-				label:'Documentation',
+				label:'menus.Help.Documentation',
 				action:()=>{
 					openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
 				}
 			},{
-				label:'Website',
+				label:'menus.Help.Website',
 				action:()=>{
 					openLink('https://graviton.netlify.app/')
 				}
 			},{
-				label:'SourceCode',
+				label:'menus.Help.SourceCode',
 				action:()=>{
 					openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
 				}
 			},
 			{},
 			{
-				label:'Check for updates',
+				label:'menus.Help.CheckForUpdates',
 				action(){
 					checkForUpdates(()=>{
 						new Notification({
@@ -307,7 +307,7 @@ function init(){
 				}
 			},
 			{
-				label:'About',
+				label:'menus.Help.About',
 				action(){
 					About().launch()
 				}

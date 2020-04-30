@@ -1,7 +1,7 @@
 {
 	"name": "magyar",
 	"locale": "hu",
-	"strings": {
+	"translations": {
 		"Help": "Súgó",
 		"File": "Fájl",
 		"OpenFolder": "Könyvtár megnyitása",

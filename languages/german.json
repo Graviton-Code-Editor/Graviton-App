@@ -1,7 +1,7 @@
 {
   "name": "german",
   "locale": "de",
-  "strings": {
+  "translations": {
     "Help": "Hilfe",
     "File": "Datei",
     "OpenFolder": "Ordner Öffnen",
