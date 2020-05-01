@@ -61,62 +61,63 @@ function mounted(){
 	moveToPage(defaultPage,buttons,pages)
 }
 
+const styleWrapper = style`
+	& {
+		display:flex;
+		max-height:100%;
+		flex:1;
+		overflow:hidden;
+		user-select:none;
+	}
+	& > div:nth-child(1){
+		background:var(--sidemenuBackground);
+		min-height:100%;
+		min-width:180px;
+		max-width:180px;
+		display:flex;
+		flex-direction:column;
+		padding:20px;
+		overflow:auto;
+		box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+	}
+	& > div:nth-child(1) > h1 {
+		overflow-x:hidden;
+		text-overflow:ellipsis;
+	}
+	& > div:nth-child(1) > label {
+		transition:0.04s;
+		display:block;
+		white-space:prewrap;
+		padding:7px 9px;
+		border-radius:6px;
+		background:var(--sidemenuButtonBackground);
+		color:var(--sidemenuButtonText);
+		margin:1px 0px;
+		font-size:13px;
+	}
+	& > div:nth-child(1) > label:hover:not(.active) {
+		transition:0.04s;
+		background:var(--sidemenuButtonHoverBackground);
+	}
+	& > div:nth-child(1) > label.active {
+		background:var(--sidemenuButtonActiveBackground);
+		color:var(--sidemenuButtonActiveText);
+	}
+	& > div:nth-child(2){
+		background:transparent;
+		min-height:auto;
+		max-height:100%;
+		width:auto;
+		height:auto;
+		overflow:auto;
+		padding:15px;
+		flex:1;
+	}
+`
 
 function SideMenu(){
 	return element`
-	<div mounted="${mounted}" class="${style`
-		& {
-			display:flex;
-			max-height:100%;
-			flex:1;
-			overflow:hidden;
-			user-select:none;
-		}
-		& > div:nth-child(1){
-			background:var(--sidemenuBackground);
-			min-height:100%;
-			min-width:180px;
-			max-width:180px;
-			display:flex;
-			flex-direction:column;
-			padding:20px;
-			overflow:auto;
-			box-shadow:0px 0px 10px rgba(0,0,0,0.2);
-		}
-		& > div:nth-child(1) > h1 {
-			overflow-x:hidden;
-			text-overflow:ellipsis;
-		}
-		& > div:nth-child(1) > label {
-			transition:0.04s;
-			display:block;
-			white-space:prewrap;
-			padding:7px 9px;
-			border-radius:6px;
-			background:var(--sidemenuButtonBackground);
-			color:var(--sidemenuButtonText);
-			margin:1px 0px;
-			font-size:13px;
-		}
-		& > div:nth-child(1) > label:hover:not(.active) {
-			transition:0.04s;
-			background:var(--sidemenuButtonHoverBackground);
-		}
-		& > div:nth-child(1) > label.active {
-			background:var(--sidemenuButtonActiveBackground);
-			color:var(--sidemenuButtonActiveText);
-		}
-		& > div:nth-child(2){
-			background:transparent;
-			min-height:auto;
-			max-height:100%;
-			width:auto;
-			height:auto;
-			overflow:auto;
-			padding:15px;
-			flex:1;
-		}
-	`}"/>
+		<div mounted="${mounted}" class="${styleWrapper}"/>
 	`
 }
 

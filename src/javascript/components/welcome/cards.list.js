@@ -1,6 +1,7 @@
 import { element, style } from '@mkenzo_8/puffin'
 
-const listWrapper = style`&{
+const listWrapper = style`
+	&{
 		display:flex;
 		flex-direction:columns;
 		flex:1;
