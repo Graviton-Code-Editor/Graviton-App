@@ -29,6 +29,7 @@ import Play from '../components/icons/play'
 import './side.panels/files.explorer'
 import './side.panels/env.explorer'
 import EnvClient from '../constructors/env.client'
+import packageJSON from '../../../package.json'
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -274,6 +275,19 @@ function init(){
 				]
 			},
 			{},
+			{
+				label:'menus.Help.Contributors',
+				list:(()=>{
+					return packageJSON.contributors.map( ({ name , url}) => {
+						return {
+							label: name,
+							action(){
+								openLink(url)
+							}
+						}
+					})
+				})()
+			},
 			{
 				label:'menus.Help.Blog',
 				action:()=>{

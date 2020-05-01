@@ -7,6 +7,28 @@
 	"author": "Marc Espín Sanz <mespinsanz@gmail.com>",
 	"license": "MIT",
 	"main": "main.js",
+	"contributors":[
+		{
+			"name":"pjtsearch",
+			"url":"https://github.com/pjtsearch"
+		},
+		{
+			"name":"David Niederweis",
+			"url":"https://github.com/DJN1"
+		},
+		{
+			"name":"LucasAlt",
+			"url":"https://github.com/LucasCtrl"
+		},
+		{
+			"name":"Max1Truc",
+			"url":"https://github.com/Max1Truc"
+		},
+		{
+			"name":"Marco Galli",
+			"url":"https://github.com/Gaarco"
+		}
+	],
 	"scripts": {
 		"test": "run-p watch:parcel test:spectron ",
 		"test:spectron": "mocha test --delay",

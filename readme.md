@@ -65,6 +65,7 @@ Also, changes on this source may not be released as an official build yet.
 * David Niederweis [Github](https://github.com/DJN1)
 * LucasAlt [Github](https://github.com/LucasCtrl)
 * Max1Truc [Github](https://github.com/Max1Truc)
+* Marco Galli [Github](https://github.com/Gaarco)
 
 #### Credits:
 * Miguel Ranger for first autocomplete version
