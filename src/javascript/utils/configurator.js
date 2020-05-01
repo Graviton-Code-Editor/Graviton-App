@@ -59,7 +59,8 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		'appBlurEffect':10,
 		'appCheckUpdatesInStartup': true,
 		'appEnableSidebar': true,
-		'appEnableExplorerItemsAnimations': true
+		'appEnableExplorerItemsAnimations': true,
+		'appOpenWelcomeInStartup': true
 	}
 }
 

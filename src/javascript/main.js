@@ -221,8 +221,8 @@ function sidebarContext(e){
 
 function mountedApp(){
 	init()
-	window.addEventListener("load",function(){
-		if(RunningConfig.data.arguments[0] == null){
+	window.addEventListener('load',function(){
+		if( RunningConfig.data.arguments[0] == null && StaticConfig.data.appOpenWelcomeInStartup ){
 			Welcome().launch()
 		}
 	})
