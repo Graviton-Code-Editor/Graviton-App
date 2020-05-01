@@ -37,9 +37,9 @@ RunningConfig.on('appLoaded',()=>{
 	})`
 		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
 			<div>
-				<Text class="link" :click="${openFolderDialog}" lang-string="OpenFolder"></Text>
-				<Text class="link" :click="${openProjects}" lang-string="OpenProjects"></Text>
-				<Text class="link" :click="${openWorkspaces}" lang-string="OpenWorkspaces"></Text>
+				<Text class="link" :click="${openFolderDialog}" lang-string="menus.File.OpenFolder"></Text>
+				<Text class="link" :click="${openProjects}" lang-string="menus.File.Projects.OpenProjects"></Text>
+				<Text class="link" :click="${openWorkspaces}" lang-string="menus.File.Workspaces.OpenWorkspaces"></Text>
 			</div>
 		</div>`
 	
