@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.82",
+	"version": "2.0.83",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
@@ -63,7 +63,7 @@
 		"AppPlatform": "./src/javascript/utils/platform.js"
 	},
 	"dependencies": {
-		"@mkenzo_8/puffin": "^0.7.7",
+		"@mkenzo_8/puffin": "^0.7.8",
 		"@mkenzo_8/puffin-drac": "0.1.1",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",

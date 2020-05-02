@@ -13,7 +13,7 @@ const StaticConfig = new puffin.state(
 )
 
 StaticConfig.changed( (a,b) => {
-	if( !RunningConfig.data.currentStaticConfig.hasOwnProperty(b) ){
+	if( !RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug ){
 		saveConfiguration()
 	}
 })

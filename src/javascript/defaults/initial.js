@@ -22,6 +22,7 @@ import './shortcuts'
 import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
+import './status.bar.items/debug'
 import gravitonHasUpdate from './store/utils/app.update'
 import Explorer from '../constructors/explorer'
 import SidePanel from '../constructors/side.panel'
@@ -30,6 +31,7 @@ import './side.panels/files.explorer'
 import './side.panels/env.explorer'
 import EnvClient from '../constructors/env.client'
 import packageJSON from '../../../package.json'
+import openDebugClient from './debug.window'
 
 const fs = window.require("fs-extra")
 const { openExternal: openLink } = window.require("electron").shell
@@ -239,6 +241,16 @@ function init(){
 			},
 			{},
 			{
+				label:'Extensions',
+				list:[
+					{
+						label:'Debug window',
+						action:()=> openDebugClient()
+					}
+				]
+			},
+			{},
+			{
 				label:'menus.Window.OpenDevTools',
 				action:()=>getCurrentWindow().toggleDevTools()
 			}
@@ -397,18 +409,20 @@ function init(){
 	
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
 	
-	if( RunningConfig.data.arguments[0] && !isDev ){
-		const dir = RunningConfig.data.arguments[0]
-		if( fs.lstatSync(dir).isDirectory() ){
-			RunningConfig.emit('addFolderToRunningWorkspace',{
-				folderPath: RunningConfig.data.arguments[0],
-				replaceOldExplorer: true,
-				workspacePath: null
-			})
-		}else{
-			RunningConfig.emit('loadFile',{
-				filePath:RunningConfig.data.arguments[0]
-			})
+	if(  RunningConfig.data.isDebug === false  ){
+		if( RunningConfig.data.arguments[0] && !isDev ){
+			const dir = RunningConfig.data.arguments[0]
+			if( fs.lstatSync(dir).isDirectory() ){
+				RunningConfig.emit('addFolderToRunningWorkspace',{
+					folderPath: RunningConfig.data.arguments[0],
+					replaceOldExplorer: true,
+					workspacePath: null
+				})
+			}else{
+				RunningConfig.emit('loadFile',{
+					filePath:RunningConfig.data.arguments[0]
+				})
+			}
 		}
 	}
 }

@@ -57,6 +57,7 @@ app.on("ready", function() {
 		)
 		main.argv = process.argv.splice(1)
 	}
+	main.isDebug = false
 	main.on('ready-to-show', () => {
 		mainWindowState.manage(main);
 		main.show()

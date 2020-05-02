@@ -8,6 +8,7 @@ function StatusBarItem({
 	action,
 	contextAction,
 	position,
+	important = false,
 	hint = ''
 }){
 	let elementNode;
@@ -16,8 +17,8 @@ function StatusBarItem({
 			StatusBarItemBody
 		}
 	})`
-		<StatusBarItemBody title="${hint}" :click="${action} :contextmenu="${contextAction}">
-			${component?component():label}
+		<StatusBarItemBody important="${important}" title="${hint}" :click="${action} :contextmenu="${contextAction}">
+			${component ? component() : label}
 		</StatusBarItemBody>
 	`
 	if( document.getElementById('statusBar') ){

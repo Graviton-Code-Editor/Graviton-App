@@ -9,7 +9,7 @@ function gravitonHasUpdate(){
 			method: 'get',
 			url: Endpoints.API
 		}).then(async function (response) {
-			const gravitonVersion = response.data['graviton-version']
+			const gravitonVersion = response.data['gravitonVersion']
 
 			if( semver.gt(gravitonVersion, packageJSON.version ) ){
 				resolve({

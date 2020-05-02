@@ -137,7 +137,7 @@ function openWindow({
 		return element`<div/>`
 	}
 	function getInstallButton(){
-		if( !isInstalled && semver.gte(packageJSON.version,target) ){
+		if( !isInstalled &&  verifyTarget(packageJSON.version,target) ){
 			return element({
 				components:{
 					storeButton
@@ -178,6 +178,10 @@ function openWindow({
 		width: '45%'
 	})
 	pluginWindow.launch()
+}
+
+function verifyTarget( must, is){
+	return semver.gte(must,is)
 }
 
 function pluginUpdatedNotification( pluginName ){

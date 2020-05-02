@@ -12,7 +12,6 @@ function PanelStatusBar(){
 				box-sizing:border-box;
 				display:flex;
 				box-sizing:border-box;
-				padding-top:1px;
 				user-select:none;
 			}
 			& > div{

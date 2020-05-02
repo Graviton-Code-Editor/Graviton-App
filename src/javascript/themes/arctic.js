@@ -79,6 +79,8 @@ const Arctic = {
 		statusbarBorder:'white',
 		statusbarItemBackground:'transparent',
 		statusbarItemHoveringBackground:'rgb(255,255,255,0.1)',
+		statusbarItemImportantBackground:'#FFAB09',
+		statusbarItemImportantText:'black',
 		statusbarItemText:'white',
 		statusbarItemHoveringText:'white',
 		statusbarItemIconBackground:'white',

@@ -79,6 +79,8 @@ const Night = {
 		statusbarBorder:'rgba(150,150,150)',
 		statusbarItemBackground:'transparent',
 		statusbarItemHoveringBackground:'rgb(60,60,60)',
+		statusbarItemImportantBackground:'rgb(255, 0, 72)',
+		statusbarItemImportantText:'white',
 		statusbarItemText:'white',
 		statusbarItemHoveringText:'white',
 		statusbarItemIconBackground:'white',

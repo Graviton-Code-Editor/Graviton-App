@@ -2,13 +2,15 @@ import { puffin } from '@mkenzo_8/puffin'
 import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 
-const electronArguments = window.require("electron").remote.getCurrentWindow().argv
+const electronArguments = window.require('electron').remote.getCurrentWindow().argv || []
+const isDebug = window.require('electron').remote.getCurrentWindow().isDebug ?? true
 
 let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel: null,
 	focusedTab: null,
 	focusedEditor: null,
 	workspacePath: null,
+	isDebug,
 	workspaceConfig:{
 		name: null,
 		folders: [],

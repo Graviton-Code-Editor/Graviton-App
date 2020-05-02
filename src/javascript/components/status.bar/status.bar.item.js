@@ -16,6 +16,10 @@ const styleWrapper = style`
 		background:var(--statusbarItemHoveringBackground);
 		color:var(--statusbarItemHoveringText);
 	}
+	&[important="true"]{
+		background: var(--statusbarItemImportantBackground);
+		color: var(--statusbarItemImportantText);
+	}
 `
 
 function StatusBarItemBody(){
