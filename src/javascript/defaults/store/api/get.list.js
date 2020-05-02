@@ -7,7 +7,7 @@ function getList(){
 			method:'get',
 			url:Endpoints.List
 		}).then(async function (response) {
-			resolve(response.data.list)
+			resolve(response.data.plugins)
 		}).catch((err)=>{
 			reject(err)
 		})
