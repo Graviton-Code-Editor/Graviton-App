@@ -28,7 +28,7 @@
 					"Increase": "Augmenter",
 					"Decrease": "Réduire"
 				},
-				"Find": "Trouver",
+				"Find": "Chercher",
 				"Replace": "Remplacer",
 				"FormatDocument": "Formatter le document"
 				
@@ -61,7 +61,7 @@
 				"Documentation": "Documentation",
 				"Website": "Site web",
 				"SourceCode": "Code source",
-				"CheckForUpdates": "Rechercher les mises à jours",
+				"CheckForUpdates": "Rechercher des mises à jours",
 				"About": "À propos"
 			},
 		},
@@ -99,7 +99,7 @@
 		},
 		"misc": {
 			"LastVersion": "Dernière version",
-			"InstalledVersion": "Version installé",
+			"InstalledVersion": "Version installée",
 			"About": "À propos",
 			"Skip": "Passer",
 			"Finish": "Terminer",
