@@ -83,6 +83,7 @@ Also, changes on this source may not be released as an official build yet.
 * Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators:
+* [Malok](https://github.com/malokdev)
 * [Saúl Blanco](https://github.com/Saul-BT)
 * Rôdeuse 
 * Alex Mayol
