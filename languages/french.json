@@ -2,98 +2,122 @@
 	"name": "french",
 	"locale": "fr",
 	"translations": {
-		"Help": "Aide",
-		"File": "Fichier",
-		"OpenFolder": "Ouvrir un dossier",
-		"OpenFile": "Ouvrir un fichier",
-		"Save": "Enregistrer",
-		"SaveAs": "Enregistrer sous",
-		"Plugins": "Plugins",
-		"Tools": "Outils",
-		"Issues": "Problèmes",
-		"Developers": "Développeurs",
-		"OpenDeveloperTools": "Outils de développement",
-		"OpenSettings": "Ouvrir les paramètres",
-		"OpenStore": "Ouvrir le magasin",
-		"Panels": "Panneaux",
-		"About": "À propos",
-		"Donate": "Donner",
-		"Settings": "Paramètres",
-		"Templates": "Modèles",
-		"NewProject": "Nouveau projet",
-		"Customization": "Personnalisation",
-		"SourceCode": "Code source",
-		"Advanced": "Avancé",
-		"FactoryReset": "Réinitialisation",
-		"Languages": "Langues",
-		"Zoom": "Zoom",
-		"Themes": "Thèmes",
-		"MadeBy": "Fait par : ",
-		"Warn": "Attention",
-		"Continue": "Continuer",
-		"Yes": "Oui",
-		"No": "Non",
-		"Skip": "Passer",
-		"Back": "Retour",
-		"Finish": "Finir",
-		"Cancel": "Annuler",
-		"Editor": "Éditeur",
-		"FontSize": "Taille de police",
-		"Version": "Version",
-		"Accept": "Accepter",
-		"Close": "Fermer",
-		"More": "Plus",
-		"Website": "Site internet",
-		"Changelog": "Changelog",
-		"Documentation":"Documentation",
-		"Copy": "Copier",
-		"Paste": "Coller",
-		"OS": "OS",
-		"Highlighting": "Surligner",
-		"Welcome": "Bienvenue",
-		"RecentProjects": "Projets récents",
-		"Notes": "Notes",
-		"Author": "Auteur",
-		"SendToTrash": "Envoyer dans la corbeille",
-		"Exit": "Quitter",
-		"openTerminal": "Ouvrir le terminal",
-		"hideTerminal": "Cacher le terminal",
-		"closeTerminal": "Fermer le terminal",
-		"IncreaseZoom": "Augmenter le zoom",
-		"DecreaseZoom": "Réduire le zoom",
-		"DefaultZoom": "Zoom par défaut",
-		"Search": "Recherche",
-		"Replace": "Remplacer",
-		"JumpToLine": "Aller à la ligne",
-		"Window": "Fenêtre",
-		"Fullscreen": "Plein écran",
-		"HideMenus": "Cacher les menus",
-		"Tip": "Astuce",
-		"GoBack": "Retour",
-		"Store": "Magasin",
-		"Installed": "Installé",
-		"Install": "Installer",
-		"Uninstall": "Désinstaller",
-		"All": "Tout",
-		"Stars": "Stars",
-		"NewFolder": "Nouveau dossier",
-		"NewFile": "Nouveau fichier",
-		"Report": "Signaler",
-		"Clear": "Vider",
-		"Edit": "Editer",
-		"Undo": "Annuler",
-		"Redo": "Refaire",
-		"NoRecentProjects": "Pas de projets récents",
-		"Hide": "Cacher",
-		"Show": "Montrer",
-		"Select": "Selectionner",
-		"By": "Par",
-		"Suggestions": "Suggestions",
-		"OpenProjects": "Projets ouverts",
-		"OpenWorkspaces": "Espaces de travail ouverts",
-		"OpenWorkspaceFromFile": "Ouvrir un espace de travail à partir d'un fichier",
-		"AddFolderToWorkspace": "Ajouter un dossier à l'espace de travail",
-		"SaveWorkspace": "Sauvegarder l'espace de travail"
+		"menus": {
+			"File": {
+				"File": "Fichier",
+				"OpenFolder": "Ouvrir un dossier",
+				"OpenFile": "Ouvrir un fichier",
+				"Projects": {
+					"Projects": "Projets",
+					"OpenProjects": "Projets ouverts",
+				},
+				"Workspaces": {
+					"Workspaces": "Espaces de travail",
+					"OpenWorkspaces": "Espaces de travail ouverts",
+					"OpenFromFile": "Ouvrir depuis un fichier",
+					"AddFolderToWorkspace": "Ajouter un dossier à l'espace de travail",
+					"SaveWorkspace": "Enregistrer l'espace de travail"
+				}
+			},
+			"Edit": {
+				"Edit": "Éditer",
+				"Undo": "Annuler",
+				"Redo": "Refaire",
+				"FontSize": {
+					"FontSize": "Taille de police",
+					"Increase": "Augmenter",
+					"Decrease": "Réduire"
+				},
+				"Find": "Chercher",
+				"Replace": "Remplacer",
+				"FormatDocument": "Formatter le document"
+				
+			},
+			"Tools": {
+				"Tools": "Outils",
+				"OpenSettings": "Ouvrir les paramètres",
+				"OpenStore": "Ouvrir le magasin",
+				"Panels": {
+					"Panels": "Panneaux",
+					"NewPanel": "Nouveau panneau",
+					"CloseCurrentPanel": "Fermer le panneau actuel"
+				}
+			},
+			"Window": {
+				"Window": "Fenêtre",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Zoom par défaut",
+					"IncreaseZoom": "Augmenter le zoom",
+					"DecreaseZoom": "Réduire le zoom"
+				},
+				"OpenDevTools": "Outils de développement"
+			},
+			"Help": {
+				"Help": "Aide",
+				"Contact": "Contact",
+				"Social": "Social",
+				"Blog": "Blog",
+				"Documentation": "Documentation",
+				"Website": "Site web",
+				"SourceCode": "Code source",
+				"CheckForUpdates": "Rechercher des mises à jours",
+				"About": "À propos"
+			},
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Paramètres",
+				"Customization": {
+					"Customization": "Personnalisation",
+					"Themes": "Thèmes",
+					"FileWatcher": "Suivi des fichiers"
+				},
+				"Languages": "Langues",
+				"About": "À propos"
+			},
+			"Store": {
+				"Store": "Magasin",
+				"Home": {
+					"Home": "Accueil"
+				},
+				"Installed": {
+					"Installed": "Installé"
+				},
+				"Install": "Installer",
+				"Update": "Mettre à jour",
+				"Uninstall": "Désinstaller"
+			},
+			"Welcome": {
+				"Welcome": "Bienvenue",
+				"RecentProjects": "Projets récents",
+				"RecentWorkspaces": "Espaces de travail récents",
+				"NewProject": "Nouveau projet",
+				"OpenWorkspace": "Ouvrir un espace de travail",
+				"OpenFolder": "Ouvrir un dossier"
+			}
+		},
+		"misc": {
+			"LastVersion": "Dernière version",
+			"InstalledVersion": "Version installée",
+			"About": "À propos",
+			"Skip": "Passer",
+			"Finish": "Terminer",
+			"Continue": "Continuer",
+			"GoBack": "Retour",
+			"Accept": "Accepter",
+			"Cancel": "Annuler",
+			"version": "Version",
+			"More": "Plus",
+			"Copy": "Copier",
+			"Paste": "Coller",
+			"Author": "Auteur",
+			"Exit": "Quitter",
+			"Tip": "Astuce",
+			"Yes": "Oui",
+			"No": "Non",
+			"Close": "Fermer",
+			"Ignore": "Ignorer"
+		}
 	}
 }
-
