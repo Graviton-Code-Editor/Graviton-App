@@ -3,7 +3,8 @@ import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 
 const electronArguments = window.require('electron').remote.getCurrentWindow().argv || []
-const isDebug = window.require('electron').remote.getCurrentWindow().isDebug ?? true
+let isDebug = window.require('electron').remote.getCurrentWindow().isDebug 
+if( isDebug == null ) isDebug = true
 
 let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel: null,
