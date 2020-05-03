@@ -51,6 +51,10 @@
 					"IncreaseZoom":"Increase",
 					"DecreaseZoom":"Decrease"
 				},
+				"Debug":{
+					"Debug":"Debug",
+					"OpenDebugWindow":"Open debug window"
+				},
 				"OpenDevTools":"Open dev tools"
 			},
 			"Help": {
@@ -119,6 +123,12 @@
 			"No":"No",
 			"Close":"Close",
 			"Ignore":"Ignore"
+		},
+		"notifications":{
+			"appLanguageChanged":{
+				"appLanguageChanged":"App's language changed.",
+				"restartMessage":"Restart the app to fully apply the changes."
+			}
 		}
 	}
 }

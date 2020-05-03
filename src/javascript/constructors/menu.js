@@ -1,11 +1,14 @@
 import { element, style, render, lang } from '@mkenzo_8/puffin'
 import MenuComp  from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
-import { LanguageState, getTranslation } from 'LanguageConfig'
+import { LanguageState } from 'LanguageConfig'
+
 
 const { remote } = window.require("electron")
 const { Menu:NativeMenu } = remote
 const NativeMenuBar = new NativeMenu()
+
+const isDarwin = window.require('process') !== 'darwin'
 
 function closeAllSubmenus(parent){
 	const subMenusOpened = Object.keys(parent.getElementsByClassName("submenu")).map((ele)=>{
@@ -82,7 +85,7 @@ function hideMenus(){
 
 function Menu({ button,list }){
 	//This will ignore user's configured AppPlatform's and will use the real one
-	if( window.require('process') !== 'darwin' ){
+	if( isDarwin ){
 		// Render Graviton's menu bar only in Windows and Linux
 		const MenuComponent = getMenu(button,list)
 		render( MenuComponent, document.getElementById('dropmenus') )
@@ -100,7 +103,7 @@ function Menu({ button,list }){
 function createTemplate( button, list ){
 	const { MenuItem } = remote
 	return new MenuItem({
-		label: button,
+		label: lang.getTranslation(button,LanguageState),
 		submenu: parseMenu(list)
 	})
 }
@@ -111,12 +114,12 @@ function parseMenu( list ){
 	return list.map( btn =>{
 		if( btn.label && btn.action ){
 			return {
-				label: btn.label,
+				label: lang.getTranslation(btn.label,LanguageState),
 				click: btn.action
 			} 
 		} else if( btn.label && btn.list ){
 			return {
-				label: btn.label,
+				label: lang.getTranslation(btn.label,LanguageState),
 				submenu: parseMenu( btn.list )
 			} 
 		} else{

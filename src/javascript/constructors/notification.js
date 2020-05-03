@@ -1,8 +1,11 @@
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render, lang } from '@mkenzo_8/puffin'
 import NotificationBody from '../components/notification'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'
 import RunningConfig from '../utils/running.config'
+import { LanguageState } from '../utils/lang.config'
+
+console.log(LanguageState)
 
 const NOTIFICATION_LIVE_TIME = 6000 //Notification will fade out in 6 seconds after appear
 const MAX_NOTIFICATIONS_LIVING = 3 //There can only be 3 notifications living at once
@@ -27,29 +30,32 @@ function Notification({
 			Title: Titles.h5,
 			Content: Text,
 			Cross
-		}
+		},
+		addons:[
+			lang(LanguageState)
+		]
 	})`
 		<NotificationBody mounted="${mounted}">
 			<div>
 				<Cross :click="${()=>closeNotification(NotificationNode)}"/>
 			</div>
-			<Title>${ title }</Title>
-			<Content>${ content }</Content>
+			<Title lang-string="${title}"/>
+			<Content lang-string="${content}"/>
 			<div class="buttons">
 				${buttons.map(({ label, action }, index)=>{
+					function clickedButton(){
+						closeNotification(NotificationNode)
+						action()
+					}
 					return element({
 						components:{
 							Button
 						}
-					})`<Button index="${ index }" :click="${clickedButton}">${ label }</Button>`
+					})`<Button :click="${clickedButton}" lang-string="${label}"/>`
 				})}
 			</div>
 		</NotificationBody>
 	`
-	function clickedButton(){
-		closeNotification(NotificationNode)
-		listedMethods[this.getAttribute('index')]()
-	}
 	const NotificationNode = render( NotificationComp, document.getElementById('notifications') )
 	RunningConfig.emit('notificationPushed',{
 		title,

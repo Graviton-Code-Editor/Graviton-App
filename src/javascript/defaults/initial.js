@@ -203,10 +203,10 @@ function init(){
 				label:'menus.Tools.Panels.Panels',
 				list:[
 					{
-						label:'New panel',
+						label:'menus.Tools.Panels.NewPanel',
 						action:()=> RunningConfig.emit('command.newPanel')
 					},{
-						label:'Close current panel',
+						label:'menus.Tools.Panels.CloseCurrentPanel',
 						action:()=> RunningConfig.emit('command.closeCurrentPanel')
 					}
 				]
@@ -241,10 +241,10 @@ function init(){
 			},
 			{},
 			{
-				label:'Extensions',
+				label:'menus.Window.Debug.Debug',
 				list:[
 					{
-						label:'Debug window',
+						label:'menus.Window.Debug.OpenDebugWindow',
 						action:()=> openDebugClient()
 					}
 				]
