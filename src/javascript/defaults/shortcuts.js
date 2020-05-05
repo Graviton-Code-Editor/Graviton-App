@@ -54,7 +54,7 @@ RunningConfig.on('command.openCommandPrompt',()=>{
 				label:'Open Manual Configuration',
 				action:()=>configEditor()	
 			},{
-				label:'Set theme',
+				label:'Set Theme',
 				action:()=>{
 					const configuredTheme = StaticConfig.data.appTheme
 					const registry = PluginsRegistry.registry.data.list

@@ -75,11 +75,18 @@
 				"Settings":"Settings",
 				"Customization": {
 					"Customization":"Customization",
-					"Themes":"Themes",
-					"FileWatcher":"Files Watcher"
+					"Themes":"Themes"
+				},
+				"Advanced": {
+					"Advanced":"Advanced",
+					"FileWatcher":"Files Watcher",
+					"Autocomplete":"Autocomplete"
 				},
 				"Languages":"Languages",
-				"About":"About"
+				"About":{
+					"About":"About",
+					"GravitonDescription":"Graviton is a cross platform editor."
+				}
 			},
 			"Store":{
 				"Store":"Store",

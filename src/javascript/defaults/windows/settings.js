@@ -17,8 +17,8 @@ function Settings(){
 		return element({
 			components:{
 				RadioGroup,
-				H1:Titles.h1,
-				H4:Titles.h4,
+				H1: Titles.h1,
+				H4: Titles.h4,
 				SideMenu,
 				Text,
 				Button,
@@ -31,8 +31,9 @@ function Settings(){
 					<h1 lang-string="windows.Settings.Settings"/>
 					<SideMenuSearcher/>
 					<label to="customization" lang-string="windows.Settings.Customization.Customization"/>
+					<label to="advanced" lang-string="windows.Settings.Advanced.Advanced"/>
 					<label to="languages" lang-string="windows.Settings.Languages"/>
-					<label to="about" lang-string="windows.Settings.About"/>
+					<label to="about" lang-string="windows.Settings.About.About"/>
 				</div>
 				<div>
 					<div href="customization">
@@ -55,13 +56,19 @@ function Settings(){
 									}).filter(Boolean)}
 								</RadioGroup>
 						</div>   
+					</div>
+					<div href="advanced">
 						<div href="file watcher">
-							<H4 lang-string="windows.Settings.Customization.FileWatcher"/>
+							<H4 lang-string="windows.Settings.Advanced.FileWatcher"/>
 							<Switch :toggled="${toggledFileWatcher}" status="${{default:StaticConfig.data.editorFSWatcher}}" label="File watcher"></Switch>
 						</div>
 						<div href="autocomplete">
-							<H4>Autocomplete</H4>
+							<H4 lang-string="windows.Settings.Advanced.Autocomplete"/>
 							<Switch :toggled="${toggledAutoComplete}" status="${{default:StaticConfig.data.editorAutocomplete}}" label="Autocomplete"></Switch>
+						</div>
+						<div href="wrap lines">
+							<H4>Wrap lines</H4>
+							<Switch :toggled="${toggledWrapLines}" status="${{default:StaticConfig.data.editorWrapLines}}" label="Wrap lines"></Switch>
 						</div>
 						<div href="manual config">
 							<H4>Manual editing</H4>
@@ -81,8 +88,8 @@ function Settings(){
 					</div>
 					<div href="about">
 						<div href="about">
-							<H4 lang-string="windows.Settings.About"/>
-							<Text>Graviton is a modern looking code editor.</Text>
+							<H4 lang-string="windows.Settings.About.About"/>
+							<Text lang-string="windows.Settings.About.GravitonDescription"/>
 						</div>
 					</div>
 				</div>
@@ -106,6 +113,11 @@ function Settings(){
 	function toggledFileWatcher(e){
 		if( e.detail.status !== StaticConfig.data.editorFSWatcher ) {
 			StaticConfig.data.editorFSWatcher = e.detail.status
+		}
+	}
+	function toggledWrapLines(e){
+		if( e.detail.status !== StaticConfig.data.editorWrapLines ) {
+			StaticConfig.data.editorWrapLines = e.detail.status
 		}
 	}
 	function toggledAutoComplete(e){

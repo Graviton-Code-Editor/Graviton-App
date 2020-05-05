@@ -11,6 +11,7 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import ContextMenu from './constructors/contextmenu'
 import AppBody from './components/app'
+const isDev = window.require('electron-is-dev')
 window.require('v8-compile-cache')
 
 import '../sass/main.scss'
@@ -94,7 +95,8 @@ function sidebarContext(e){
 function mountedApp(){
 	init()
 	window.addEventListener('load',function(){
-		if( RunningConfig.data.arguments[0] == null && StaticConfig.data.appOpenWelcomeInStartup ){
+		console.log()
+		if( ((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && StaticConfig.data.appOpenWelcomeInStartup ){
 			Welcome().launch()
 		}
 	})

@@ -79,7 +79,7 @@ function Welcome( { defaultPage = "projects" } = {  }){
 					</div>
 				</CardsListContainer>
 				<CardsListContainer href="create_project">
-					<b>Empty.</b>
+					<b>Work in progress.</b>
 				</CardsListContainer>
 			</div>
 		</SideMenu>
