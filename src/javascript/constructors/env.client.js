@@ -136,26 +136,30 @@ function EnvClient({ name }) {
 	const clientState = new state(arguments[0])
 
 	function onStart() {
-		status = 'Started'
-		node.children[2].children[0].update()
 		clientState.emit('start')
 	}
-
 	function onStop() {
-		status = 'Stopped'
-		node.children[2].children[0].update()
 		clientState.emit('stop')
 	}
-
 	function onReload() {
 		clientState.emit('reload')
 	}
-
 	function onClose() {
 		clientState.emit('destroy')
 		onStop()
 	}
-
+	clientState.on('start', () => {
+		status = 'Started'
+		node.children[2].children[0].update()
+	})
+	clientState.on('stop', () => {
+		status = 'Stopped'
+		node.children[2].children[0].update()
+	})
+	clientState.on('destroy', () => {
+		status = 'Started'
+		onStop()
+	}) //
 	clientState.on('destroy', () => {
 		window.removeEventListener('mousemove', barMoved)
 		window.removeEventListener('mouseup', barUnClicked)

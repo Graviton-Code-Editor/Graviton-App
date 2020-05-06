@@ -75,6 +75,15 @@ function executeScript(folder, script) {
 				content: data,
 			})
 		})
+		scriptProcess.stdout.on('data', data => {
+			new Notification({
+				title: script,
+				content: data,
+			})
+		})
+		scriptProcess.on('close', data => {
+			scriptEnvClient.emit('stop')
+		})
 	})
 	scriptEnvClient.on('stop', () => {
 		scriptProcess && scriptProcess.kill()
