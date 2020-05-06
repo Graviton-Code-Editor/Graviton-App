@@ -56,16 +56,17 @@ function displayHome(container) {
 	const loader = new Promise(async (resolve, reject) => {
 		getList()
 			.then(list => {
-				const cardsList = list.map(pluginId => {
-					const isInstalled = isPluginInstalled(pluginId)
+				const cardsList = list.map(({ id, name, description }) => {
+					const isInstalled = isPluginInstalled(id)
 					return element({
 						components: {
 							StoreCard,
 						},
 					})`<StoreCard data="${{
 						isInstalled,
-						pluginId,
-						displayName: pluginId,
+						pluginId: id,
+						description,
+						displayName: name,
 					}}"/>`
 				})
 				resolve(cardsList)
@@ -92,6 +93,7 @@ function displayInstalled(container) {
 					isInstalled: true,
 					pluginId: pluginInfo.id,
 					displayName: pluginInfo.name,
+					description: pluginInfo.description,
 				}
 				return element({
 					components: {

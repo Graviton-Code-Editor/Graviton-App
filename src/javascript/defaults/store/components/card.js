@@ -16,22 +16,33 @@ import semver from 'semver'
 import packageJSON from '../../../../../package.json'
 
 function StoreCard(props) {
-	const { pluginId, displayName, isInstalled } = props.data
+	const { pluginId, displayName, isInstalled, description = '' } = props.data
 	return element({
 		components: {
 			Card,
 			H5: Titles.h5,
+			Text,
 		},
 	})`
 		<Card :click="${clicked}" class="${style`
 			&{
-				min-width:140px;
-				max-width:140px;
-				width:140px;
-				height:100px;
+				min-width:160px;
+				width:150px;
+				height:90px;
+				overflow: auto;
+			}
+			& h5 {
+				margin: 3px;
+			}
+			& h5, & p {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				font-size: 13px;
 			}
 		`}">
 			<H5>${displayName}</H5>
+			<Text>${description}</Text>
 		</Card>
 	`
 	async function clicked() {
