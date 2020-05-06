@@ -126,6 +126,9 @@ RunningConfig.on('loadFile', ({ filePath }) => {
  * @param {string} workspacePath - Path to the current loaded workspace
  */
 RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }) {
+	if (replaceOldExplorer) {
+		removeAllExplorerFolders()
+	}
 	const folderDir = normalizeDir(folderPath)
 	const explorerPanel = document.getElementById('explorer_panel')
 	FilesExplorer(folderDir, explorerPanel, 0, replaceOldExplorer)
@@ -173,6 +176,14 @@ RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
 	})
 })
 
+function removeAllExplorerFolders() {
+	;[...RunningConfig.data.workspaceConfig.folders].forEach(({ path }, index) => {
+		RunningConfig.emit('removeFolderFromRunningWorkspace', {
+			folderPath: path,
+		})
+	})
+}
+
 /**
  * Open a workspace, even
  * if there was already one
@@ -183,11 +194,7 @@ RunningConfig.on('setWorkspace', ({ path: workspaceDir }) => {
 	const workspacePath = normalizeDir(workspaceDir)
 	const workspace = getWorkspaceConfig(workspacePath)
 	if (workspace) {
-		RunningConfig.data.workspaceConfig.folders.map(({ path }, index) => {
-			RunningConfig.emit('removeFolderFromRunningWorkspace', {
-				folderPath: path,
-			})
-		})
+		removeAllExplorerFolders()
 		RunningConfig.data.workspaceConfig = {
 			name: workspace.name,
 			folders: [],
