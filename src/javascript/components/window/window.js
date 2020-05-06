@@ -17,7 +17,7 @@ const styleWrapper = style`
 	}
 `
 
-function WindowBody(){
+function WindowBody() {
 	return element`
 	<div class="${styleWrapper}"/>`
 }

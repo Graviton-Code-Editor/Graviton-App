@@ -10,7 +10,7 @@ const styleWrapper = style`
 	}
 `
 
-function CenteredLayout (){
+function CenteredLayout() {
 	return element`<div class="${styleWrapper}"></div>`
 }
 

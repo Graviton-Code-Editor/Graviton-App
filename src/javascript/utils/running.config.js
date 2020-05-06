@@ -3,8 +3,8 @@ import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 
 const electronArguments = window.require('electron').remote.getCurrentWindow().argv || []
-let isDebug = window.require('electron').remote.getCurrentWindow().isDebug 
-if( isDebug == null ) isDebug = true
+let isDebug = window.require('electron').remote.getCurrentWindow().isDebug
+if (isDebug == null) isDebug = true
 
 let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel: null,
@@ -12,24 +12,19 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedEditor: null,
 	workspacePath: null,
 	isDebug,
-	workspaceConfig:{
+	workspaceConfig: {
 		name: null,
 		folders: [],
 	},
 	globalCommandPrompt: [],
 	notifications: [],
-	editorsRank: [
-		CodemirrorClient,
-		ImageViewerClient
-	],
-	openedWindows:0,
+	editorsRank: [CodemirrorClient, ImageViewerClient],
+	openedWindows: 0,
 	arguments: electronArguments,
-	currentStaticConfig:{}
+	currentStaticConfig: {},
 }
 
-const RunningConfig = new puffin.state(
-	DEFAULT_RUNTIME_CONFIGURATION
-)
+const RunningConfig = new puffin.state(DEFAULT_RUNTIME_CONFIGURATION)
 
 console.log(RunningConfig)
 

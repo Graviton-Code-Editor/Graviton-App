@@ -8,7 +8,7 @@ const styleWrapper = style`
 	}
 `
 
-function PanelBody(){
+function PanelBody() {
 	return element`
 		<div class="${styleWrapper}"/>
 	`

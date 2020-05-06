@@ -1,5 +1,5 @@
-import { element, style, render,lang } from '@mkenzo_8/puffin'
-import { Titles , RadioGroup, Text, Card, Button } from '@mkenzo_8/puffin-drac'
+import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { Titles, RadioGroup, Text, Card, Button } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Window from '../../constructors/window'
 import StaticConfig from 'StaticConfig'
@@ -11,11 +11,11 @@ import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
 import ThemeCard from '../settings/components/theme.card'
 
-function Settings(){
+function Settings() {
 	const pluginsList = PluginsRegistry.registry.data.list
-	function SettingsPage(){
+	function SettingsPage() {
 		return element({
-			components:{
+			components: {
 				RadioGroup,
 				H1: Titles.h1,
 				H4: Titles.h4,
@@ -23,8 +23,8 @@ function Settings(){
 				Text,
 				Button,
 				Switch,
-				SideMenuSearcher
-			}
+				SideMenuSearcher,
+			},
 		})`
 			<SideMenu default="customization">
 				<div>
@@ -40,35 +40,43 @@ function Settings(){
 						<div href="themes">
 							<H4 lang-string="windows.Settings.Customization.Themes"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
-									${Object.keys(pluginsList).map( pluginName => {
-										const pluginInfo = pluginsList[pluginName]
-										if( pluginInfo.type === 'theme' ){
-											return element({
-												components:{
-													ThemeCard
-												}
-											})`
-											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data['app.theme'] == pluginName?'':'false'}">
+									${Object.keys(pluginsList)
+										.map(pluginName => {
+											const pluginInfo = pluginsList[pluginName]
+											if (pluginInfo.type === 'theme') {
+												return element({
+													components: {
+														ThemeCard,
+													},
+												})`
+											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data['app.theme'] == pluginName ? '' : 'false'}">
 												<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"></ThemeCard>
 											</label>
 											`
-										}
-									}).filter(Boolean)}
+											}
+										})
+										.filter(Boolean)}
 								</RadioGroup>
 						</div>   
 					</div>
 					<div href="advanced">
 						<div href="file watcher">
 							<H4 lang-string="windows.Settings.Advanced.FileWatcher"/>
-							<Switch :toggled="${toggledFileWatcher}" status="${{default:StaticConfig.data.editorFSWatcher}}" label="File watcher"></Switch>
+							<Switch :toggled="${toggledFileWatcher}" status="${{
+			default: StaticConfig.data.editorFSWatcher,
+		}}" label="File watcher"></Switch>
 						</div>
 						<div href="autocomplete">
 							<H4 lang-string="windows.Settings.Advanced.Autocomplete"/>
-							<Switch :toggled="${toggledAutoComplete}" status="${{default:StaticConfig.data.editorAutocomplete}}" label="Autocomplete"></Switch>
+							<Switch :toggled="${toggledAutoComplete}" status="${{
+			default: StaticConfig.data.editorAutocomplete,
+		}}" label="Autocomplete"></Switch>
 						</div>
 						<div href="wrap lines">
 							<H4>Wrap lines</H4>
-							<Switch :toggled="${toggledWrapLines}" status="${{default:StaticConfig.data.editorWrapLines}}" label="Wrap lines"></Switch>
+							<Switch :toggled="${toggledWrapLines}" status="${{
+			default: StaticConfig.data.editorWrapLines,
+		}}" label="Wrap lines"></Switch>
 						</div>
 						<div href="manual config">
 							<H4>Manual editing</H4>
@@ -78,9 +86,9 @@ function Settings(){
 					<div href="languages">
 						<div href="languages">
 							<RadioGroup :radioSelected="${selectedLanguage}">
-								${Object.keys(Languages).map( lang => {
+								${Object.keys(Languages).map(lang => {
 									return element`
-										<label name="${lang}" checked="${ StaticConfig.data.appLanguage === lang }">${lang}</label>
+										<label name="${lang}" checked="${StaticConfig.data.appLanguage === lang}">${lang}</label>
 									`
 								})}
 							</RadioGroup>
@@ -96,38 +104,36 @@ function Settings(){
 			</SideMenu>
 		`
 	}
-	function configeditor(){
+	function configeditor() {
 		configEditor()
 		SettingsWindow.close()
 	}
-	function selectedTheme(e){
+	function selectedTheme(e) {
 		const newTheme = e.detail.target.getAttribute('name')
-		if( StaticConfig.data.appTheme != newTheme)
-			StaticConfig.data.appTheme = newTheme
+		if (StaticConfig.data.appTheme != newTheme) StaticConfig.data.appTheme = newTheme
 	}
-	function selectedLanguage(e){
+	function selectedLanguage(e) {
 		const newLanguage = e.detail.target.getAttribute('name')
-		if( StaticConfig.data.appLanguage != newLanguage)
-			StaticConfig.data.appLanguage = newLanguage
+		if (StaticConfig.data.appLanguage != newLanguage) StaticConfig.data.appLanguage = newLanguage
 	}
-	function toggledFileWatcher(e){
-		if( e.detail.status !== StaticConfig.data.editorFSWatcher ) {
+	function toggledFileWatcher(e) {
+		if (e.detail.status !== StaticConfig.data.editorFSWatcher) {
 			StaticConfig.data.editorFSWatcher = e.detail.status
 		}
 	}
-	function toggledWrapLines(e){
-		if( e.detail.status !== StaticConfig.data.editorWrapLines ) {
+	function toggledWrapLines(e) {
+		if (e.detail.status !== StaticConfig.data.editorWrapLines) {
 			StaticConfig.data.editorWrapLines = e.detail.status
 		}
 	}
-	function toggledAutoComplete(e){
-		if( e.detail.status !== StaticConfig.data.editorAutocomplete ) {
+	function toggledAutoComplete(e) {
+		if (e.detail.status !== StaticConfig.data.editorAutocomplete) {
 			StaticConfig.data.editorAutocomplete = e.detail.status
 		}
 	}
 	const SettingsWindow = new Window({
 		title: 'settings',
-		component: SettingsPage
+		component: SettingsPage,
 	})
 	return SettingsWindow
 }

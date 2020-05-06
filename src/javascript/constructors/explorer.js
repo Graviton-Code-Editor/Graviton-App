@@ -2,12 +2,10 @@ import { puffin, element, render, style } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Item from '../components/explorer/item'
 
-function Explorer({
-	items
-}){
+function Explorer({ items }) {
 	return element`
 		<div>
-			${items.map( item => {
+			${items.map(item => {
 				return Item(item)
 			})}
 		</div>

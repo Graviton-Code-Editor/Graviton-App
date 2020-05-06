@@ -2,13 +2,13 @@ import StatusBarItem from '../../constructors/status.bar.item'
 import RunningConfig from 'RunningConfig'
 import { element } from '@mkenzo_8/puffin'
 
-if( RunningConfig.data.isDebug ){
+if (RunningConfig.data.isDebug) {
 	const DebugModeStatusBarItem = new StatusBarItem({
-		label:'Debug',
+		label: 'Debug',
 		position: 'left',
-		important: true
+		important: true,
 	})
-	RunningConfig.on('appLoaded',()=>{
-		DebugModeStatusBarItem.show() 
+	RunningConfig.on('appLoaded', () => {
+		DebugModeStatusBarItem.show()
 	})
 }

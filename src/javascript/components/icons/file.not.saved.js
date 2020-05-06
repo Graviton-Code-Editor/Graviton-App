@@ -15,11 +15,10 @@ const styleWrapper = style`
 	}
 `
 
-function UnSavedIcon(){
+function UnSavedIcon() {
 	return element`
 		<div class="${styleWrapper}"/>
 	`
 }
-
 
 export default UnSavedIcon

@@ -8,6 +8,7 @@ import Welcome from '../../defaults/windows/welcome'
 const styleWrapper = style`
 	& {
 		min-width:75px;
+		user-select: none;
 	}
 	& > div {
 		text-align: center;
@@ -28,12 +29,11 @@ const styleWrapper = style`
 	}
 `
 
-
-RunningConfig.on('appLoaded',()=>{
-	const explorer = ()=> element({
-		components:{
-			Text
-		}
+RunningConfig.on('appLoaded', () => {
+	const explorer = () => element({
+		components: {
+			Text,
+		},
 	})`
 		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
 			<div>
@@ -42,28 +42,28 @@ RunningConfig.on('appLoaded',()=>{
 				<Text class="link" :click="${openWorkspaces}" lang-string="menus.File.Workspaces.OpenWorkspaces"/>
 			</div>
 		</div>`
-	
+
 	const { display } = new SidePanel({
 		icon: FolderOutlined,
-		panel: explorer
+		panel: explorer,
 	})
 	display()
 })
 
-function openProjects(){
+function openProjects() {
 	Welcome({
-		defaultPage: 'projects'
+		defaultPage: 'projects',
 	}).launch()
 }
 
-function openWorkspaces(){
+function openWorkspaces() {
 	Welcome({
-		defaultPage: 'workspaces'
+		defaultPage: 'workspaces',
 	}).launch()
 }
 
-function openFolderDialog(){
-	RunningConfig.emit('addFolderToRunningWorkspaceDialog',{
-		replaceOldExplorer: true
+function openFolderDialog() {
+	RunningConfig.emit('addFolderToRunningWorkspaceDialog', {
+		replaceOldExplorer: true,
 	})
 }

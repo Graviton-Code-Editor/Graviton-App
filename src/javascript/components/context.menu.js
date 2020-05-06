@@ -44,7 +44,7 @@ const styleWrapper = style`
 	}
 `
 
-function ContextMenuWrapper(){
+function ContextMenuWrapper() {
 	return element`<div class="${styleWrapper}"/>`
 }
 

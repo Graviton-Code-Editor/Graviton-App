@@ -71,7 +71,7 @@ const styleWrapper = style`
 	}
 `
 
-function CommandPromptBody(){
+function CommandPromptBody() {
 	return element`<div class="${styleWrapper}"/>`
 }
 

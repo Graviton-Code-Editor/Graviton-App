@@ -1,13 +1,13 @@
 import { element } from '@mkenzo_8/puffin'
 import { Titles, Card, Text } from '@mkenzo_8/puffin-drac'
 
-function ThemeCard( { themeInfo }){
+function ThemeCard({ themeInfo }) {
 	return element({
-		components:{
+		components: {
 			Card,
-			H3:Titles.h3,
-			Text
-		}
+			H3: Titles.h3,
+			Text,
+		},
 	})`
 	<Card>
 		<H3>${themeInfo.name}</H3>

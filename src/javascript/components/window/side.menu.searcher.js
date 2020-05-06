@@ -1,6 +1,5 @@
 import { element, style } from '@mkenzo_8/puffin'
 
-
 const styleWrapper = style`
 	&{
 		transition:0.3s;
@@ -22,20 +21,20 @@ const styleWrapper = style`
 	}
 `
 
-function SideMenuSearcher(){
+function SideMenuSearcher() {
 	return element`
 		<input  mounted="${mounted} :keyup="${writing}" placeHolder="Search" class="${styleWrapper}"/>
 	`
 }
 
-function writing(){
-	filterBy(this.parentElement.parentElement,this.value)
+function writing() {
+	filterBy(this.parentElement.parentElement, this.value)
 }
 
-function mounted(){
+function mounted() {
 	this.focus()
 }
 
-const filterBy = ( container, search ) =>  container.searchBy(search)
+const filterBy = (container, search) => container.searchBy(search)
 
 export default SideMenuSearcher

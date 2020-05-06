@@ -1,26 +1,26 @@
-const { remote } = window.require("electron")
-import normalizeDir from  '../directory.normalizer'
+const { remote } = window.require('electron')
+import normalizeDir from '../directory.normalizer'
 
-/** 
+/**
  * Opens a native dialog
  * to select folders
  * @constructor
  * @returns promise
  */
-function selectFolderDialog(){
+function selectFolderDialog() {
 	return new Promise((resolve, reject) => {
-		const { dialog , getCurrentWindow} = remote;
+		const { dialog, getCurrentWindow } = remote
 		dialog
 			.showOpenDialog(getCurrentWindow(), {
-			properties: ["openDirectory"]
-		})
+				properties: ['openDirectory'],
+			})
 			.then(result => {
-				if (result.canceled) return;
+				if (result.canceled) return
 				resolve(normalizeDir(result.filePaths[0]))
 			})
 			.catch(err => {
 				reject(err)
-			});
+			})
 	})
 }
 

@@ -3,9 +3,8 @@ const { remote } = window.require('electron')
 import AppPlatform from 'AppPlatform'
 import RunningConfig from 'RunningConfig'
 
-function Buttons(){
-	if( AppPlatform == "win32" ){
-		
+function Buttons() {
+	if (AppPlatform == 'win32') {
 		return element`	<div class="buttons ${style`
 					& rect{
 						stroke:var(--controlButtonsFill);
@@ -57,9 +56,8 @@ function Buttons(){
 				</button>
 			</div>
 		`
-		}else{
-			
-			return element`<div class="buttons ${style`
+	} else {
+		return element`<div class="buttons ${style`
 						& {
 							margin:0px
 							min-height:40px;
@@ -130,26 +128,26 @@ function Buttons(){
 	}
 }
 
-function toggleMaximize(){
-	const electronWindow = remote.getCurrentWindow();
-	if ( electronWindow.isMaximized() ) {
-		  electronWindow.unmaximize();     
+function toggleMaximize() {
+	const electronWindow = remote.getCurrentWindow()
+	if (electronWindow.isMaximized()) {
+		electronWindow.unmaximize()
 	} else {
-		electronWindow.maximize();   
+		electronWindow.maximize()
 	}
 }
 
-function close(){
-	RunningConfig.emit('checkAllTabsAreSaved',{
-		whenContinue(){
-			const electronWindow = remote.getCurrentWindow();
+function close() {
+	RunningConfig.emit('checkAllTabsAreSaved', {
+		whenContinue() {
+			const electronWindow = remote.getCurrentWindow()
 			electronWindow.close()
-		}
+		},
 	})
 }
 
-function minimize(){
-	const electronWindow = remote.getCurrentWindow();
+function minimize() {
+	const electronWindow = remote.getCurrentWindow()
 	electronWindow.minimize()
 }
 

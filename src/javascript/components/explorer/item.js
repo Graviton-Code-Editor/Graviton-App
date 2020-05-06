@@ -95,90 +95,88 @@ const ItemWrapper = style`
 	}
 `
 
-
-function Item({ label, items, mounted, icon, action, contextAction, decorator = {} }){
+function Item({ label, items, mounted, icon, action, contextAction, decorator = {} }) {
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
-	
+
 	return element({
-		components:{
-			ArrowIcon
-		}
+		components: {
+			ArrowIcon,
+		},
 	})`
-		<div itemIsOpened="${()=>itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
+		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${
+		StaticConfig.data.appEnableExplorerItemsAnimations
+	}">
 			<button :click="${onClick}" :contextmenu="${onContextMenu}">
-				<ArrowIcon class="arrow" style="${items ? '':'opacity:0;'}"/>
-				<img class="icon" src="${Icons[icon] ? Icons[icon]: Icons['unknown.file']}"></img>
+				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
+				<img class="icon" src="${Icons[icon] ? Icons[icon] : Icons['unknown.file']}"></img>
 				<span>${label}</span>
-				<span class="decorator" style="background: ${()=>decoratorBackground}">${()=>decoratorLabel}</span>
+				<span class="decorator" style="background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
 			</button>
 			<div/>
 		</div>
 	`
-	function itemMounted(){
-		if( mounted ){
+	function itemMounted() {
+		if (mounted) {
 			mounted(getMethods(this))
 		}
 	}
-	function getMethods(item){
+	function getMethods(item) {
 		return {
-			setIcon( newIcon ){
-				setIcon( newIcon, item)
+			setIcon(newIcon) {
+				setIcon(newIcon, item)
 			},
-			setItems( newItems ){
-				setItems( newItems, item)
+			setItems(newItems) {
+				setItems(newItems, item)
 			},
-			setDecorator( newDecorator ){
-				setDecorator( newDecorator, item)
-			}
+			setDecorator(newDecorator) {
+				setDecorator(newDecorator, item)
+			},
 		}
 	}
-	function setIcon(){
+	function setIcon() {
 		const iconImg = this.getElementsByClassName('icon')[0]
-		iconImg.src = Icons[icon] ? Icons[icon]: Icons['unknown.file']
+		iconImg.src = Icons[icon] ? Icons[icon] : Icons['unknown.file']
 	}
-	function setDecorator({
-		label,
-		background
-	},item){
-		if( label ) decoratorLabel = label
-		if( background ) decoratorBackground = background
-		const decorator	 = item.getElementsByClassName('decorator')[0]
+	function setDecorator({ label, background }, item) {
+		if (label) decoratorLabel = label
+		if (background) decoratorBackground = background
+		const decorator = item.getElementsByClassName('decorator')[0]
 		decorator.update()
 	}
-	function setItems( newItems, item ){
+	function setItems(newItems, item) {
 		items = newItems
-		const itemExplorer =  Explorer({
-			items
+		const itemExplorer = Explorer({
+			items,
 		})
-		item.children[1].innerHTML = ""
-		render( itemExplorer, item.children[1])
+		item.children[1].innerHTML = ''
+		render(itemExplorer, item.children[1])
 		itemIsOpened = true
 		item.update()
 	}
-	function onContextMenu(e){
-		if( contextAction ){
-			contextAction.bind(this)(e,getMethods(this))
+	function onContextMenu(e) {
+		if (contextAction) {
+			contextAction.bind(this)(e, getMethods(this))
 		}
 	}
-	function onClick(e){
+	function onClick(e) {
 		e.isOpened = itemIsOpened
-		if( items ) {
-			if( itemIsOpened ){
-				this.parentElement.children[1].innerHTML = ""
+		if (items) {
+			if (itemIsOpened) {
+				this.parentElement.children[1].innerHTML = ''
 				itemIsOpened = false
-			}else if( items.length != 0 ){
-				const itemExplorer =  Explorer({
-					items
+			} else if (items.length != 0) {
+				const itemExplorer = Explorer({
+					items,
 				})
-				this.parentElement.children[1].innerHTML = ""
-				render( itemExplorer, this.parentElement.children[1])
+				this.parentElement.children[1].innerHTML = ''
+				render(itemExplorer, this.parentElement.children[1])
 				itemIsOpened = true
 			}
 		}
-		if( action ) {
-			action.bind(this)(e,getMethods(this.parentElement))
+		if (action) {
+			action.bind(this)(e, getMethods(this.parentElement))
 		}
 		this.parentElement.update()
 	}

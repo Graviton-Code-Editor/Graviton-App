@@ -18,47 +18,58 @@ const styleWrapper = style`
 	}
 `
 
-const ImageViewerClient = new EditorClient({
-	name:'codemirror',
-},{
-	getValue: instance => '',
-	getLangFromExt( extension ){
-		switch( extension ){
-			/*
+const ImageViewerClient = new EditorClient(
+	{
+		name: 'codemirror',
+	},
+	{
+		getValue: instance => '',
+		getLangFromExt(extension) {
+			switch (extension) {
+				/*
 			Every case refers to a supported image format.
 			*/
-			case 'ico':
-				return { name: 'ico' }
-			case 'svg':
-				return { name: 'svg' }
-			case 'png':
-				return { name: 'png' }
-			case 'jpg':
-				return { name: 'jpg' }
-			default:
-				return { 
-					name: extension,
-					unknown:true
-				}   
-		}
-	},
-	create({ element:containerElement , directory }){
-		const ImageViewerComp = element`
+				case 'ico':
+					return {
+						name: 'ico',
+					}
+				case 'svg':
+					return {
+						name: 'svg',
+					}
+				case 'png':
+					return {
+						name: 'png',
+					}
+				case 'jpg':
+					return {
+						name: 'jpg',
+					}
+				default:
+					return {
+						name: extension,
+						unknown: true,
+					}
+			}
+		},
+		create({ element: containerElement, directory }) {
+			const ImageViewerComp = element`
 			<div class="${styleWrapper}">
-				<img draggable="false" src="${ directory }"/>
+				<img draggable="false" src="${directory}"/>
 			</div>
 		`
-		render( ImageViewerComp, containerElement)
-		return {
-			instance : {} //Returns empty object because there is no editor instance
-		}
-	},
-	getCursorPosition({ instance }){
-		return {
-			line:0,
-			ch:0
-		}
+			render(ImageViewerComp, containerElement)
+			return {
+				instance: {}, //Returns empty object because there is no editor instance
+			}
+		},
+		getCursorPosition({ instance }) {
+			return {
+				line: 0,
+				ch: 0,
+			}
+		},
 	}
-})
+)
 
 export default ImageViewerClient

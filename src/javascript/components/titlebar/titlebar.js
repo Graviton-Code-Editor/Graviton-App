@@ -43,32 +43,32 @@ const styleWrapper = style`
 	}
 `
 
-function getMacButtons(){
-	if( AppPlatform == "darwin" ){
+function getMacButtons() {
+	if (AppPlatform == 'darwin') {
 		return Buttons()
-	}else{
+	} else {
 		return element`<div/>`
 	}
 }
 
-function getButtons(){
-	if( AppPlatform == "win32" ){
+function getButtons() {
+	if (AppPlatform == 'win32') {
 		return Buttons()
-	}else{
+	} else {
 		return element`<div/>`
 	}
 }
 
-function TitleBar(){
+function TitleBar() {
 	return element({
-		components:{
-			Buttons
-		}
+		components: {
+			Buttons,
+		},
 	})`
 	<div>
 		<div class="${styleWrapper}">
 			${getMacButtons()}
-			${AppPlatform !== 'darwin' ? element`<img class="logo" draggable="false" src="${()=>Logo}" />` : '' }
+			${AppPlatform !== 'darwin' ? element`<img class="logo" draggable="false" src="${() => Logo}" />` : ''}
 			<div id="dropmenus" class="dropmenus"/>
 			<div class="title"/>
 			${getButtons()}

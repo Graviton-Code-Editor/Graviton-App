@@ -54,9 +54,9 @@ const styleWrapper = style`
 	}
 `
 
-function TabBody(){
+function TabBody() {
 	return element`
 		<div class="${styleWrapper}"/>
-	`	
+	`
 }
 export default TabBody

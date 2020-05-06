@@ -22,7 +22,7 @@ const styleWrapper = style`
 	}
 `
 
-function StatusBarItemBody(){
+function StatusBarItemBody() {
 	return element`
 		<button class="${styleWrapper}"/>
 	`

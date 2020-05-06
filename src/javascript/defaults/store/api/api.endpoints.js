@@ -5,5 +5,5 @@ const List = `${API}/plugins`
 export default {
 	API,
 	Search,
-	List
+	List,
 }

@@ -1,37 +1,30 @@
 import DialogBody from '../components/dialog/dialog'
-import WindowBackground  from '../components/window/background'
+import WindowBackground from '../components/window/background'
 import { element, style, render, lang } from '@mkenzo_8/puffin'
 import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
 import Window from './window'
 import { LanguageState } from '../utils/lang.config'
 
-function Dialog({
-	title = '',
-	content,
-	component,
-	buttons = [],
-	height = '200px',
-	width = '300px'
-}){
-	const computedMethods = {...buttons.map(btn=>{
-		if ( btn.action ){
-			return btn.action
-		}else{
-			return function(){
-				dialogWindow.close()
+function Dialog({ title = '', content, component, buttons = [], height = '200px', width = '300px' }) {
+	const computedMethods = {
+		...buttons.map(btn => {
+			if (btn.action) {
+				return btn.action
+			} else {
+				return function () {
+					dialogWindow.close()
+				}
 			}
-		}
-	})}
+		}),
+	}
 	const DialogComp = element({
-		components:{
+		components: {
 			DialogBody,
 			WindowBackground,
-			H2:Titles.h2,
-			Text
+			H2: Titles.h2,
+			Text,
 		},
-		addons:[
-			lang(LanguageState)
-		]
+		addons: [lang(LanguageState)],
 	})`
 		<DialogBody>
 			<div>
@@ -39,28 +32,28 @@ function Dialog({
 				<Text>${content ? content : component}</Text>
 			</div>
 			<div>
-				${buttons.map( (btn,index) => {
+				${buttons.map((btn, index) => {
 					return element({
-						components:{
-							Button
-						}
+						components: {
+							Button,
+						},
 					})`<Button important="${btn.important || false}" index="${index}" :click="${closeWindow}" lang-string="${btn.label}"/>`
 				})}
 			</div>
 		</DialogBody>
 	`
-	function closeWindow(){
-		computedMethods[Number(this.getAttribute("index"))]()
+	function closeWindow() {
+		computedMethods[Number(this.getAttribute('index'))]()
 		dialogWindow.close()
 	}
 	const dialogWindow = new Window({
-		component:()=>DialogComp,
+		component: () => DialogComp,
 		height,
-		width
+		width,
 	})
 	return {
-		launch:()=> dialogWindow.launch(),
-		close:()=> dialogWindow.close()
+		launch: () => dialogWindow.launch(),
+		close: () => dialogWindow.close(),
 	}
 }
 

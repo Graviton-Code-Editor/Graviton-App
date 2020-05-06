@@ -17,17 +17,17 @@ const styleWrapper = style`
 	}
 `
 
-function SplashScreen(){
-	function mounted(){
-		window.addEventListener("load",()=>{
-			console.log("%c 🎉 Loaded successfully. ", "color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;")
+function SplashScreen() {
+	function mounted() {
+		window.addEventListener('load', () => {
+			console.log('%c 🎉 Loaded successfully. ', 'color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;')
 			this.remove()
 		})
 	}
 	return element({
-		components:{
-			Text
-		}
+		components: {
+			Text,
+		},
 	})`
 		<div mounted="${mounted}" class="${styleWrapper}"">
 			<Text>Graviton</Text>

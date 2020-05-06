@@ -3,7 +3,7 @@ import { getWorkspaceConfig } from '../../utils/filesystem'
 import { Button } from '@mkenzo_8/puffin-drac'
 import { openFolder } from '../../utils/filesystem'
 import { LanguageState } from 'LanguageConfig'
-import { Card , Titles } from '@mkenzo_8/puffin-drac'
+import { Card, Titles } from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
 import parseDirectory from '../../utils/directory.parser'
 import RunningConfig from 'RunningConfig'
@@ -14,15 +14,15 @@ import Window from '../../constructors/window'
 import beautifyDir from '../../utils/directory.beautifier.js'
 import normalizeDir from '../../utils/directory.normalizer.js'
 
-function Welcome( { defaultPage = "projects" } = {  }){
-    const WelcomePage = element({
-		components:{
+function Welcome({ defaultPage = 'projects' } = {}) {
+	const WelcomePage = element({
+		components: {
 			SideMenu,
 			CardsListContainer,
-			Button
+			Button,
 		},
 	})`
-		<SideMenu default="${ defaultPage }">
+		<SideMenu default="${defaultPage}">
 			<div>
 				<H1 lang-string="windows.Welcome.Welcome"/>
 				<label to="projects" lang-string="windows.Welcome.RecentProjects"/>
@@ -32,22 +32,22 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			<div>
 				<CardsListContainer href="workspaces">
 					<div>
-						${StaticConfig.data.appWorkspacesLog.map( workspacePath => {
-							const workspaceConfig = getWorkspaceConfig( workspacePath )
-							if( workspaceConfig ) {
+						${StaticConfig.data.appWorkspacesLog.map(workspacePath => {
+							const workspaceConfig = getWorkspaceConfig(workspacePath)
+							if (workspaceConfig) {
 								const { name, folders = [] } = workspaceConfig
 								const listContent = folders.map(({ name, path }) => {
-									return element`<li>· ${ parseDirectory( name ) }</li>`
+									return element`<li>· ${parseDirectory(name)}</li>`
 								})
 								return element({
-									components:{
-										Card
-									}
+									components: {
+										Card,
+									},
 								})`
-								<Card :click="${openWorkspace}" directory="${ workspacePath }" :contextmenu="${contextMenuWorkspace}">
-									<b>${ name }</b>
+								<Card :click="${openWorkspace}" directory="${workspacePath}" :contextmenu="${contextMenuWorkspace}">
+									<b>${name}</b>
 									<ul>
-										${ listContent }
+										${listContent}
 									</ul>
 								</Card>
 								`
@@ -61,15 +61,15 @@ function Welcome( { defaultPage = "projects" } = {  }){
 				<CardsListContainer href="projects">
 					<div>
 						${StaticConfig.data.appProjectsLog.map(({ name, directory }) => {
-							const nameFolder = parseDirectory( directory )
+							const nameFolder = parseDirectory(directory)
 							return element({
-								components:{
-									Card
-								}
+								components: {
+									Card,
+								},
 							})`
-							<Card :click="${openDirectory}" directory="${ normalizeDir( directory ) }">
-								<b>${ nameFolder }</b>
-								<p>${ beautifyDir( normalizeDir( directory) ) }</p>
+							<Card :click="${openDirectory}" directory="${normalizeDir(directory)}">
+								<b>${nameFolder}</b>
+								<p>${beautifyDir(normalizeDir(directory))}</p>
 							</Card>
 							`
 						})}
@@ -84,67 +84,67 @@ function Welcome( { defaultPage = "projects" } = {  }){
 			</div>
 		</SideMenu>
     `
-	function contextMenuWorkspace( event ){
+	function contextMenuWorkspace(event) {
 		new ContextMenu({
-			list:[
+			list: [
 				{
-					label:'Rename',
-					action:()=>{
-						RunningConfig.emit('renameWorkspaceDialog',{
+					label: 'Rename',
+					action: () => {
+						RunningConfig.emit('renameWorkspaceDialog', {
 							path: this.getAttribute('directory'),
 							name: this.children[0].textContent,
 							onFinished: newName => {
 								this.children[0].textContent = newName
-							}
-						}) 
-					}
+							},
+						})
+					},
 				},
 				{
-					label:'Remove from here',
-					action:()=>{
-						RunningConfig.emit('removeWorkspaceFromLog',{
-							path: this.getAttribute('directory')
+					label: 'Remove from here',
+					action: () => {
+						RunningConfig.emit('removeWorkspaceFromLog', {
+							path: this.getAttribute('directory'),
 						})
 						this.remove()
-					}
-				}
+					},
+				},
 			],
 			event,
-			parent: this
+			parent: this,
 		})
 	}
-	function openWorkspace(){
-		RunningConfig.emit('setWorkspace',{
-			path: this.getAttribute('directory')
+	function openWorkspace() {
+		RunningConfig.emit('setWorkspace', {
+			path: this.getAttribute('directory'),
 		})
 		WelcomeWindow.close()
 	}
-	function openDirectory(){
-		RunningConfig.emit('addFolderToRunningWorkspace',{
+	function openDirectory() {
+		RunningConfig.emit('addFolderToRunningWorkspace', {
 			folderPath: normalizeDir(this.getAttribute('directory')),
 			replaceOldExplorer: true,
-			workspacePath: null
+			workspacePath: null,
 		})
 		WelcomeWindow.close()
 	}
-	function openDirectoryFromWindow(){
+	function openDirectoryFromWindow() {
 		openFolder().then(folderPath => {
-			RunningConfig.emit('addFolderToRunningWorkspace',{
+			RunningConfig.emit('addFolderToRunningWorkspace', {
 				folderPath,
 				replaceOldExplorer: true,
-				workspacePath: null
+				workspacePath: null,
 			})
 			WelcomeWindow.close()
 		})
 	}
-	function openWorkspaceFromWindow(){
+	function openWorkspaceFromWindow() {
 		RunningConfig.emit('openWorkspaceDialog')
 	}
 	const WelcomeWindow = new Window({
 		title: 'welcome',
-		component:() => WelcomePage,
+		component: () => WelcomePage,
 		height: '400px',
-		width: '600px'
+		width: '600px',
 	})
 	return WelcomeWindow
 }

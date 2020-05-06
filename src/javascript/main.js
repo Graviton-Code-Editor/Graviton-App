@@ -19,19 +19,19 @@ import '../sass/main.scss'
 let blurViewApp = false
 
 const App = element({
-	components:{
+	components: {
 		TitleBar,
 		SplashScreen,
 		StatusBar,
 		Resizer,
-		AppBody
+		AppBody,
 	},
 })`
     <AppBody mounted="${mountedApp}">
-		<div mounted="${mountedAppView}" style="${()=> blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : ''}">
+		<div mounted="${mountedAppView}" style="${() => (blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : '')}">
 			<TitleBar/>
 			<div id="body">
-				<div id="sidebar" :contextmenu="${sidebarContext}" style="${()=>StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;width:10px;'}"/>
+				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() => (StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;width:10px;')}"/>
 				<div id="sidepanel"/>
 				<Resizer/>
 				<div id="mainpanel"/>          
@@ -43,63 +43,63 @@ const App = element({
 		<SplashScreen/>
 	</AppBody>
 `
-function mountedAppView(){
-	RunningConfig.keyChanged('openedWindows', value =>{
-		if( value <= 0 ){
+function mountedAppView() {
+	RunningConfig.keyChanged('openedWindows', value => {
+		if (value <= 0) {
 			blurViewApp = false
 		} else {
 			blurViewApp = true
 		}
 		this.update()
 	})
-	StaticConfig.keyChanged('appBlurEffect', value =>{
-		if( blurViewApp ){
+	StaticConfig.keyChanged('appBlurEffect', value => {
+		if (blurViewApp) {
 			this.update()
 		}
 	})
-	StaticConfig.keyChanged('appEnableSidebar', value =>{
+	StaticConfig.keyChanged('appEnableSidebar', value => {
 		document.getElementById('sidebar').update()
 	})
 }
 
-function sidebarContext(e){
-	if( StaticConfig.data.appEnableSidebar ){
+function sidebarContext(e) {
+	if (StaticConfig.data.appEnableSidebar) {
 		new ContextMenu({
-			list:[
+			list: [
 				{
 					label: 'Hide',
-					action(){
+					action() {
 						StaticConfig.data.appEnableSidebar = false
-					}
-				}
+					},
+				},
 			],
-			parent:document.body,
-			event:e
+			parent: document.body,
+			event: e,
 		})
-	}else{
+	} else {
 		new ContextMenu({
-			list:[
+			list: [
 				{
 					label: 'Show',
-					action(){
+					action() {
 						StaticConfig.data.appEnableSidebar = true
-					}
-				}
+					},
+				},
 			],
-			parent:document.body,
-			event:e
+			parent: document.body,
+			event: e,
 		})
 	}
 }
 
-function mountedApp(){
+function mountedApp() {
 	init()
-	window.addEventListener('load',function(){
+	window.addEventListener('load', function () {
 		console.log()
-		if( ((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && StaticConfig.data.appOpenWelcomeInStartup ){
+		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
 			Welcome().launch()
 		}
 	})
 }
 
-render(App,document.getElementById("App"))
+render(App, document.getElementById('App'))

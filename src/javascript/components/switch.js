@@ -44,35 +44,34 @@ const styleWrapper = style`
 	}
 `
 
-function Switch(props){
+function Switch(props) {
 	let status = props.status.default
 	return element`
-		<div :click="${toggled}" mounted="${mounted}" status="${()=>status}" class="${styleWrapper}">
+		<div :click="${toggled}" mounted="${mounted}" status="${() => status}" class="${styleWrapper}">
 			<div class="wrapper">
 				<div class="indicator"/>
 			</div>
 			<label/>
 		</div>
 	`
-	function mounted(){
-		this.children[1].innerText = this.getAttribute("label")
+	function mounted() {
+		this.children[1].innerText = this.getAttribute('label')
 		this.props.status = status
 	}
-	function toggled(){
+	function toggled() {
 		//Invert the the status
-		status = (!status == true)
+		status = !status == true
 		//Update the status prop
 		this.update()
 		//Create the toggled event
-		const toggledEvent = new CustomEvent('toggled', { 
-			detail:{
-				status
-			}
-		});
+		const toggledEvent = new CustomEvent('toggled', {
+			detail: {
+				status,
+			},
+		})
 		//Trigger the toggled event
 		this.dispatchEvent(toggledEvent)
 	}
 }
-
 
 export default Switch

@@ -5,34 +5,34 @@ import StaticConfig from 'StaticConfig'
 import ContextMenu from '../../constructors/contextmenu'
 
 new StatusBarItem({
-	component:Plus,
-	position:'right',
-	action(){
+	component: Plus,
+	position: 'right',
+	action() {
 		StaticConfig.data.appZoom += 0.1
 	},
-	contextAction: showZoomContext
+	contextAction: showZoomContext,
 })
 
 new StatusBarItem({
-	component:Minus,
-	position:'right',
-	action(){
+	component: Minus,
+	position: 'right',
+	action() {
 		StaticConfig.data.appZoom -= 0.1
 	},
-	contextAction: showZoomContext
+	contextAction: showZoomContext,
 })
 
-function showZoomContext(e){
+function showZoomContext(e) {
 	new ContextMenu({
-		list:[
+		list: [
 			{
 				label: 'Default',
-				action(){
+				action() {
 					StaticConfig.data.appZoom = 1
-				}
-			}
+				},
+			},
 		],
-		event:e,
-		parent: document.body
+		event: e,
+		parent: document.body,
 	})
 }

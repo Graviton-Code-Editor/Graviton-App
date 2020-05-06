@@ -15,7 +15,7 @@ const styleWrapper = style`
 	}
 `
 
-function Loader(){
+function Loader() {
 	return element`<div class="${styleWrapper}"></div>`
 }
 

@@ -10,7 +10,7 @@ const styleWrapper = style`
 	}
 `
 
-function Input(){
+function Input() {
 	return element`<input class="${styleWrapper}"></input>`
 }
 

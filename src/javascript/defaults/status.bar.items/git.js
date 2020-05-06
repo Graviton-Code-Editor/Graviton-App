@@ -11,31 +11,31 @@ const styleWrapper = style`
 	}
 `
 
-function branchIndicator(){
+function branchIndicator() {
 	let data = {
-		branch: ''
+		branch: '',
 	}
 	return element`
-		<span mounted="${mounted}" class="${styleWrapper}">${()=>data.branch}</span>
+		<span mounted="${mounted}" class="${styleWrapper}">${() => data.branch}</span>
 	`
-	function mounted(){
-		RunningConfig.on('loadedGitRepo',({ branch, anyChanges,parentFolder })=>{
+	function mounted() {
+		RunningConfig.on('loadedGitRepo', ({ branch, anyChanges, parentFolder }) => {
 			data.branch = branch
 			this.update()
 			branchIndicatorItem.show()
-			if( anyChanges ) {
+			if (anyChanges) {
 				this.classList.add('active')
-			}else{
+			} else {
 				this.classList.remove('active')
 			}
 		})
-		RunningConfig.on('gitStatusUpdated',({ branch, anyChanges, parentFolder })=>{
+		RunningConfig.on('gitStatusUpdated', ({ branch, anyChanges, parentFolder }) => {
 			data.branch = branch
 			this.update()
 			branchIndicatorItem.show()
-			if( anyChanges ) {
+			if (anyChanges) {
 				this.classList.add('active')
-			}else{
+			} else {
 				this.classList.remove('active')
 			}
 		})
@@ -44,12 +44,9 @@ function branchIndicator(){
 
 const branchIndicatorItem = new StatusBarItem({
 	component: branchIndicator,
-	position: 'right'
+	position: 'right',
 })
 
-
-RunningConfig.on("appLoaded",()=>{
+RunningConfig.on('appLoaded', () => {
 	branchIndicatorItem.hide()
 })
-
-

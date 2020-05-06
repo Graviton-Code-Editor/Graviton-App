@@ -1,9 +1,9 @@
 import Notification from '../../../constructors/notification'
 
-function throwError(message){
+function throwError(message) {
 	new Notification({
-		title:'Error',
-		content:message
+		title: 'Error',
+		content: message,
 	})
 }
 

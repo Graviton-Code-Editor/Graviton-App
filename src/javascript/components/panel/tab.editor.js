@@ -15,10 +15,10 @@ const styleWrapper = style`
 	}
 `
 
-function TabEditor(){
+function TabEditor() {
 	return element`
 		<div class="${styleWrapper}"/>
-	`	
+	`
 }
 
 export default TabEditor

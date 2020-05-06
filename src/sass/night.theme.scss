@@ -8,8 +8,8 @@
 	border: none;
 }
 .cm-s-night {
-	pre{
-		color:gray;
+	pre {
+		color: gray;
 	}
 	.CodeMirror-gutters {
 		background-color: transparent !important;
@@ -27,10 +27,10 @@
 		border-left: solid thin #f8f8f0;
 	}
 	.CodeMirror-activeline .CodeMirror-linenumber {
-		color:white;
+		color: white;
 	}
 	.CodeMirror-linenumber {
-		color: #6D8A88;
+		color: #6d8a88;
 	}
 	.CodeMirror-selected {
 		background: rgba(255, 255, 255, 0.1);
@@ -38,15 +38,15 @@
 	}
 	.CodeMirror-line {
 		&::selection {
-			background: rgba(255, 255, 255, 0.10);
+			background: rgba(255, 255, 255, 0.1);
 		}
-		>span {
+		> span {
 			&::selection {
-				background: rgba(255, 255, 255, 0.10);
+				background: rgba(255, 255, 255, 0.1);
 			}
-			>span {
+			> span {
 				&::selection {
-					background: rgba(255, 255, 255, 0.10);
+					background: rgba(255, 255, 255, 0.1);
 				}
 			}
 		}
@@ -55,29 +55,29 @@
 		color: #858a99;
 	}
 	span.cm-string {
-		color: #A5E572;
+		color: #a5e572;
 	}
 	span.cm-string-2 {
-		color: #A5E572;
+		color: #a5e572;
 	}
 	span.cm-number {
 		color: #bd93f9;
 	}
 	span.cm-variable {
-		color: #FDBD5D;
+		color: #fdbd5d;
 	}
 	span.cm-variable-2 {
 		color: white;
 	}
 	span.cm-def {
-		color: #FF6666;
+		color: #ff6666;
 	}
 	span.cm-operator {
 		color: rgb(241, 187, 37);
 	}
 	span.cm-keyword {
-		color: #9969FF;
-        font-style:italic;
+		color: #9969ff;
+		font-style: italic;
 	}
 	span.cm-atom {
 		color: #bd93f9;
@@ -89,16 +89,16 @@
 		color: rgb(241, 187, 37);
 	}
 	span.cm-attribute {
-		color: #67FF8D;
+		color: #67ff8d;
 	}
 	span.cm-qualifier {
-		color: #67FF8D;
+		color: #67ff8d;
 	}
 	span.cm-property {
-		color: #69A5FF;
+		color: #69a5ff;
 	}
 	span.cm-builtin {
-		color: #67FF8D;
+		color: #67ff8d;
 	}
 	.cm-builtin {
 		color: rgb(19, 193, 247);
@@ -113,19 +113,19 @@
 		color: #ffb86c;
 	}
 	.CodeMirror-activeline-background {
-		background: rgba(255,255,255,0.1);
+		background: rgba(255, 255, 255, 0.1);
 	}
 	.CodeMirror-matchingbracket {
-		outline:0;
-		background: rgba(255,255,255,0.2);
-		color: inherit ;
+		outline: 0;
+		background: rgba(255, 255, 255, 0.2);
+		color: inherit;
 	}
 	.highlight {
 		color: orange;
 	}
 	.CodeMirror-foldmarker {
 		color: white;
-		text-shadow: 0px 1px 4px rgba(255,255,255,0.4);
+		text-shadow: 0px 1px 4px rgba(255, 255, 255, 0.4);
 	}
 	.CodeMirror-foldgutter-open {
 		&:after {
@@ -161,5 +161,4 @@
 	.cm-strikethrough {
 		text-decoration: line-through;
 	}
-	
 }

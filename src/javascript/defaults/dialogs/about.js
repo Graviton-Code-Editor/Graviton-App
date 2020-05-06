@@ -22,9 +22,9 @@ const styleWrapper = style`
 `
 
 const aboutContent = element({
-	components:{
-		Text
-	}
+	components: {
+		Text,
+	},
 })`
 	<div class="${styleWrapper}">
 		<img width="175px" draggable="false" src="${GravitonLargeLogo}"/> 
@@ -44,17 +44,17 @@ const aboutContent = element({
 	</div>
 `
 
-function About(){
+function About() {
 	const DialogInstance = new Dialog({
 		height: '240px',
 		width: '275px',
 		component: aboutContent,
-		buttons:[
+		buttons: [
 			{
-				label:'misc.Close',
-				important:false
-			}
-		]
+				label: 'misc.Close',
+				important: false,
+			},
+		],
 	})
 	return DialogInstance
 }

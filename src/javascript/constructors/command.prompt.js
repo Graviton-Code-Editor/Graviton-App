@@ -1,4 +1,4 @@
-import { puffin, render,element, style } from '@mkenzo_8/puffin'
+import { puffin, render, element, style } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
@@ -9,205 +9,209 @@ function CommandPrompt({
 	options = [],
 	scrollOnTab = false,
 	closeOnKeyUp = false,
-	onSelected = ()=>{},
-	onScrolled = ()=>{}
-}){
+	onSelected = () => {},
+	onScrolled = () => {},
+}) {
 	name = `${name}_cp`
-	if( document.getElementById(name) ) return; // Check if there are any command prompts already opened
+	if (document.getElementById(name)) return // Check if there are any command prompts already opened
 	let CommandPromptState = new puffin.state({
-		hoveredOption : null
+		hoveredOption: null,
 	})
 	const configArguments = arguments[0]
 	const CommandPromptComponent = element({
-		components:{
+		components: {
 			CommandPromptBody,
-			WindowBackground
-		}
+			WindowBackground,
+		},
 	})`
-		<CommandPromptBody mounted="${mounted}" id="${ name }" :keydown="${scrolling}">
-			<WindowBackground window="${ name }"/>
+		<CommandPromptBody mounted="${mounted}" id="${name}" :keydown="${scrolling}">
+			<WindowBackground window="${name}"/>
 			<div class="container">
-				<input style="${ showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;' }" placeHolder="${ inputPlaceHolder }" :keyup="${writing}"/>
+				<input style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
 				<div/>
 			</div>
 		</CommandPromptBody>
 	`
-	function writing(e){
+	function writing(e) {
 		e.preventDefault()
-		switch(e.keyCode){
+		switch (e.keyCode) {
 			case 9:
-				if(scrollOnTab){
-					break;
+				if (scrollOnTab) {
+					break
 				}
-				selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
+				selectOption(CommandPromptState.data.hoveredOption, {
+					options,
+					onSelected,
+				})
 				closeCommandPrompt(name)
 			case 17:
-				if(!scrollOnTab){
-					break;
+				if (!scrollOnTab) {
+					break
 				}
 			case 13:
-				selectOption(CommandPromptState.data.hoveredOption,{ options, onSelected })
+				selectOption(CommandPromptState.data.hoveredOption, {
+					options,
+					onSelected,
+				})
 				closeCommandPrompt(name)
-				break;
+				break
 			case 38:
 			case 40:
-				break;
+				break
 			default:
 				renderOptions(
 					{
 						...configArguments,
-						options:filterOptions(this.value,{
-							options
-						}) 
+						options: filterOptions(this.value, {
+							options,
+						}),
 					},
 					{
 						parent: this.parentElement.children[1],
 						state: CommandPromptState,
-						name
+						name,
 					}
 				)
 		}
 	}
-	function scrolling(e){
-		switch(e.keyCode){
+	function scrolling(e) {
+		switch (e.keyCode) {
 			case 38:
 				scrollOptions({
 					state: CommandPromptState,
 					scrollingDirection: 'up',
-					...configArguments
+					...configArguments,
 				})
-				break;
+				break
 			case 9:
 				e.preventDefault()
-				if( !scrollOnTab) {
-					break;
+				if (!scrollOnTab) {
+					break
 				}
 			case 40:
 				scrollOptions({
 					state: CommandPromptState,
 					scrollingDirection: 'down',
-					...configArguments
+					...configArguments,
 				})
-				break;
+				break
 		}
 	}
-	function mounted(){
+	function mounted() {
 		const target = this
 		const container = target.children[1].children[1]
 		renderOptions(
 			{
 				options,
-				...configArguments
+				...configArguments,
 			},
 			{
 				parent: container,
 				state: CommandPromptState,
-				name
+				name,
 			}
 		)
-		window.addEventListener('keydown',e => {
-			if(e.keyCode === 27){
+		window.addEventListener('keydown', e => {
+			if (e.keyCode === 27) {
 				closeCommandPrompt(name)
 			}
 		})
 		const input = target.children[1].children[0]
 		input.focus()
 	}
-	render( CommandPromptComponent, document.getElementById("windows") )
+	render(CommandPromptComponent, document.getElementById('windows'))
 }
 
-function closeCommandPrompt( CommandPromptComponent ){
-	if( document.getElementById(CommandPromptComponent) )
-		document.getElementById(CommandPromptComponent).remove()
+function closeCommandPrompt(CommandPromptComponent) {
+	if (document.getElementById(CommandPromptComponent)) document.getElementById(CommandPromptComponent).remove()
 }
 
-function scrollOptions({ state, scrollingDirection, onScrolled}){
+function scrollOptions({ state, scrollingDirection, onScrolled }) {
 	const hoveredOption = state.data.hoveredOption
 	const allOptions = hoveredOption.parentElement.children
 	const hoveredOptionPosition = (() => {
-		let index = 0;
-		for(let option of allOptions){
-			if(option == hoveredOption) break;
+		let index = 0
+		for (let option of allOptions) {
+			if (option == hoveredOption) break
 			index++
 		}
 		return index
 	})()
 
-	if( scrollingDirection === 'up' ){
-		if(hoveredOptionPosition !== 0){
-			state.data.hoveredOption = allOptions[hoveredOptionPosition-1]
-		}else{
-			state.data.hoveredOption = allOptions[allOptions.length-1]
-		} 
-	}else if( scrollingDirection === 'down' ){
-		if( hoveredOptionPosition !== allOptions.length -1 ){
-			state.data.hoveredOption = allOptions[hoveredOptionPosition+1]
-		}else{
+	if (scrollingDirection === 'up') {
+		if (hoveredOptionPosition !== 0) {
+			state.data.hoveredOption = allOptions[hoveredOptionPosition - 1]
+		} else {
+			state.data.hoveredOption = allOptions[allOptions.length - 1]
+		}
+	} else if (scrollingDirection === 'down') {
+		if (hoveredOptionPosition !== allOptions.length - 1) {
+			state.data.hoveredOption = allOptions[hoveredOptionPosition + 1]
+		} else {
 			state.data.hoveredOption = allOptions[0]
 		}
 	}
-	hoverOption( state.data.hoveredOption, allOptions, onScrolled )   
+	hoverOption(state.data.hoveredOption, allOptions, onScrolled)
 }
 
-function hoverOption( hoveredOption, allOptions, onScrolled=()=>{} ){
-	for(let option of allOptions){
-		if(option === hoveredOption){
-			option.classList.add('active');
+function hoverOption(hoveredOption, allOptions, onScrolled = () => {}) {
+	for (let option of allOptions) {
+		if (option === hoveredOption) {
+			option.classList.add('active')
 			onScrolled({
-				label: option.textContent
+				label: option.textContent,
 			})
-		}else{
-			option.classList.remove('active');
+		} else {
+			option.classList.remove('active')
 		}
 	}
 }
 
-function filterOptions(search,{ options }){
-	return options.map(function(option){
-		if(option.label.match(new RegExp(search, "i"))) return option
-	}).filter(Boolean)
+function filterOptions(search, { options }) {
+	return options
+		.map(function (option) {
+			if (option.label.match(new RegExp(search, 'i'))) return option
+		})
+		.filter(Boolean)
 }
 
-function renderOptions({
-	options,
-	onSelected
-},{
-	state,
-	parent,
-	name
-}){
+function renderOptions({ options, onSelected }, { state, parent, name }) {
 	let content = ''
-	let hoveredDefault = 0;
-	
+	let hoveredDefault = 0
+
 	const optionsComp = element`
 			<div>
-				${options.map(({ selected, label }, index)=>{
-					if( selected ) hoveredDefault = index
+				${options.map(({ selected, label }, index) => {
+					if (selected) hoveredDefault = index
 					return element`<a :click="${onClicked}">${label}</a> `
 				})}
 			</div>
 		`
-	function onClicked(){
+	function onClicked() {
 		closeCommandPrompt(name)
-		selectOption( this, { options, onSelected })
+		selectOption(this, {
+			options,
+			onSelected,
+		})
 	}
 	parent.innerHTML = ''
-	render( optionsComp, parent )
+	render(optionsComp, parent)
 	state.data.hoveredOption = parent.children[0].children[hoveredDefault]
-	hoverOption(state.data.hoveredOption,parent.children[0].children)
+	hoverOption(state.data.hoveredOption, parent.children[0].children)
 }
 
-const findOptionAction = ( options, option ) => {
-	 return options.find(opt => opt.label == option.textContent)
+const findOptionAction = (options, option) => {
+	return options.find(opt => opt.label == option.textContent)
 }
 
-function selectOption( option, { options, onSelected }){
-	if ( option ){
-		const optionObj = findOptionAction( options, option)
-		if ( optionObj.action ) optionObj.action()
-		if ( onSelected ) onSelected({
-			label:option.textContent
-		})
+function selectOption(option, { options, onSelected }) {
+	if (option) {
+		const optionObj = findOptionAction(options, option)
+		if (optionObj.action) optionObj.action()
+		if (onSelected)
+			onSelected({
+				label: option.textContent,
+			})
 	}
 }
 

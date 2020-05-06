@@ -38,8 +38,7 @@ const listWrapper = style`
 	}
 `
 
-
-function CardsListContainer(){
+function CardsListContainer() {
 	return element`<div class="${listWrapper}"/>`
 }
 

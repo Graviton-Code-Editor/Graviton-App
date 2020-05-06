@@ -39,7 +39,7 @@ const styleWrapper = style`
 	}
 `
 
-function NotificationBody(){
+function NotificationBody() {
 	return element`<div class="${styleWrapper}"/>`
 }
 

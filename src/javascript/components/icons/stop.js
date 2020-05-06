@@ -1,4 +1,4 @@
-import { element,style } from '@mkenzo_8/puffin'
+import { element, style } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
 	& rect{
@@ -6,7 +6,7 @@ const styleWrapper = style`
 	}
 `
 
-function Stop(){
+function Stop() {
 	return element`
 		<svg class="${styleWrapper}"  width="12" height="17" viewBox="0 0 12 17" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="4.61538" height="16.6154" rx="2.30769" fill="#C4C4C4"/>

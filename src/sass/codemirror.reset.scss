@@ -1,34 +1,34 @@
 .CodeMirror-hints {
-  position: absolute;
-  z-index: 10;
-  overflow: hidden;
-  list-style: none;
-  margin: 0;
-  padding: 2px;
-  box-shadow: 2px 3px 5px rgba(0,0,0,.2);
-  border-radius: 3px;
-  border: 1px solid silver;
-  background: var(--contextmenuBackground);
-  font-size: 90%;
-  font-family: monospace;
-  max-height: 20em;
-  overflow-y: auto;
-  border-radius:5px;
+	position: absolute;
+	z-index: 10;
+	overflow: hidden;
+	list-style: none;
+	margin: 0;
+	padding: 2px;
+	box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+	border: 1px solid silver;
+	background: var(--contextmenuBackground);
+	font-size: 90%;
+	font-family: monospace;
+	max-height: 20em;
+	overflow-y: auto;
+	border-radius: 5px;
 }
 
 .CodeMirror-hint {
-  margin: 0;
-  padding: 6px 8px;
-  border-radius: 4px;
-  white-space: pre;
-  color: var(--contextmenuButtonText);
-  cursor: pointer;
-  margin:2px;
+	margin: 0;
+	padding: 6px 8px;
+	border-radius: 4px;
+	white-space: pre;
+	color: var(--contextmenuButtonText);
+	cursor: pointer;
+	margin: 2px;
 }
 
 li.CodeMirror-hint-active {
-  background: var(--accentColor);
-  color: var(--contextmenuButtonHoveringText);
+	background: var(--accentColor);
+	color: var(--contextmenuButtonHoveringText);
 }
 
 @keyframes blink {
@@ -57,10 +57,10 @@ li.CodeMirror-hint-active {
 	direction: ltr;
 	position: relative;
 	overflow: hidden;
-	z-index:0;
-	line-height:1.6em;
-	padding-right:20px;
-user-select:none;
+	z-index: 0;
+	line-height: 1.6em;
+	padding-right: 20px;
+	user-select: none;
 	pre {
 		padding: 0 4px;
 		-moz-border-radius: 0;
@@ -83,19 +83,19 @@ user-select:none;
 	div.CodeMirror-secondarycursor {
 		border-left: 1px solid silver;
 	}
-	.CodeMirror-linebackground{
-		left:-100vh;
-		right:-2em;
-		min-width:100vh;
-		margin:0 auto;
+	.CodeMirror-linebackground {
+		left: -100vh;
+		right: -2em;
+		min-width: 100vh;
+		margin: 0 auto;
 	}
-	.CodeMirror-gutter-wrapper{
-		display:flex;
-		align-items:center;
-		bottom:0.8em;
-		
+	.CodeMirror-gutter-wrapper {
+		display: flex;
+		align-items: center;
+		bottom: 0.8em;
+
 		.CodeMirror-linenumber {
-			flex:1;
+			flex: 1;
 		}
 	}
 }
@@ -116,14 +116,13 @@ user-select:none;
 	box-sizing: content-box;
 }
 .CodeMirror-linenumber {
-	padding: 0 2.2rem ;
+	padding: 0 2.2rem;
 	min-width: 20px;
 	text-align: right;
 	color: #999;
 	white-space: nowrap;
 	-moz-box-sizing: content-box;
 	box-sizing: content-box;
-
 }
 .CodeMirror-guttermarker {
 	color: black;
@@ -421,11 +420,11 @@ div.CodeMirror-dragcursors {
 	&::selection {
 		background: #d7d4f0;
 	}
-	>span {
+	> span {
 		&::selection {
 			background: #d7d4f0;
 		}
-		>span {
+		> span {
 			&::selection {
 				background: #d7d4f0;
 			}
@@ -450,7 +449,7 @@ div.CodeMirror-dragcursors {
 }
 .cm-tab-wrap-hack {
 	&:after {
-		content: "";
+		content: '';
 	}
 }
 span.CodeMirror-selectedtext {
@@ -460,7 +459,7 @@ span.CodeMirror-selectedtext {
 	animation: show_down linear 0.1s;
 	position: absolute;
 	margin: 5px;
-	right:10px;
+	right: 10px;
 	width: 125px;
 	display: block;
 	padding: 15px;
@@ -470,33 +469,33 @@ span.CodeMirror-selectedtext {
 	z-index: 5;
 	overflow: hidden;
 	color: var(--editorDialogText);
-	box-shadow:0px 2px 5px rgba(0,0,0,0.2);
-	font-size:13px;
+	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	font-size: 13px;
 	input {
 		border: none;
 		outline: none;
 		background: transparent;
-		border:2px solid rgba(225,225,225);
+		border: 2px solid rgba(225, 225, 225);
 		border-radius: 5px;
 		min-width: 2em;
-		margin:3px 0px;
-		padding:3px 7px;
+		margin: 3px 0px;
+		padding: 3px 7px;
 	}
-	.CodeMirror-search-label{
-		line-height:20px;
-		bottom:100px !important;
+	.CodeMirror-search-label {
+		line-height: 20px;
+		bottom: 100px !important;
 	}
-	.CodeMirror-search-hint{
+	.CodeMirror-search-hint {
 		display: none;
 	}
-	*{
+	* {
 		font-family: mainFont !important;
-		color:inherit;
+		color: inherit;
 	}
-	button{
-		padding:5px;
-		border:0;
-		background:var(--buttonBackground);
+	button {
+		padding: 5px;
+		border: 0;
+		background: var(--buttonBackground);
 	}
 }
 .CodeMirror-dialog-top {
@@ -517,35 +516,29 @@ span.CodeMirror-selectedtext {
 
 .cm-header-1 {
 	font-size: 3.4em;
-	line-height:1.55em;
+	line-height: 1.55em;
 }
 
 .cm-header-2 {
 	font-size: 2.4em;
-	line-height:1.45em;
+	line-height: 1.45em;
 }
 
 .cm-header-3 {
 	font-size: 1.8em;
-	line-height:1.4em;
+	line-height: 1.4em;
 }
 .cm-header-4 {
 	font-size: 1.45em;
-	line-height:1.3em;
+	line-height: 1.3em;
 }
 
 .cm-header-5 {
 	font-size: 1.2em;
-	line-height:1.2em;
+	line-height: 1.2em;
 }
 
 .cm-header-6 {
-	font-size:  1.05em;
+	font-size: 1.05em;
 	line-height: inherit;
 }
-
-
-
-
-
-

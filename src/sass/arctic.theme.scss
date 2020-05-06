@@ -4,15 +4,15 @@
 */
 
 .cm-s-arctic.CodeMirror {
-	color: rgb(70,70,70);
+	color: rgb(70, 70, 70);
 	background-color: transparent;
 }
 .cm-s-arctic {
 	.cm-tab {
 		border-left: 1px solid rgb(195, 195, 195);
 	}
-	pre{
-		color:rgb(20,20,20);
+	pre {
+		color: rgb(20, 20, 20);
 	}
 	div.CodeMirror-selected {
 		background: rgba(78, 153, 252, 0.281);
@@ -22,11 +22,11 @@
 		&::selection {
 			background: #cfc;
 		}
-		>span {
+		> span {
 			&::selection {
 				background: #cfc;
 			}
-			>span {
+			> span {
 				&::selection {
 					background: #cfc;
 				}
@@ -56,16 +56,16 @@
 		border-left: 2px solid #222;
 	}
 	.cm-keyword {
-		color: #6262FF;
+		color: #6262ff;
 	}
 	.cm-atom {
-		color: #F90;
+		color: #f90;
 	}
 	.cm-number {
 		color: #ca7841;
 	}
 	.cm-def {
-		color: #8DA6CE;
+		color: #8da6ce;
 	}
 	span.cm-variable-2 {
 		color: #690;
@@ -108,7 +108,7 @@
 		color: #000;
 	}
 	.cm-builtin {
-		color: #9B7536;
+		color: #9b7536;
 	}
 	.cm-tag {
 		color: #997643;
@@ -117,10 +117,10 @@
 		color: #ff8800;
 	}
 	.cm-header {
-		color: #FF6400;
+		color: #ff6400;
 	}
 	.cm-hr {
-		color: #AEAEAE;
+		color: #aeaeae;
 	}
 	.cm-link {
 		color: #ad9361;
@@ -141,7 +141,7 @@
 	}
 	.CodeMirror-foldmarker {
 		color: black;
-		text-shadow: 0px 1px 4px rgba(0,0,0,0.4);
+		text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
 	}
 	.CodeMirror-foldgutter-open {
 		&:after {

@@ -1,5 +1,5 @@
 import { element, style, render } from '@mkenzo_8/puffin'
-import { Titles , RadioGroup, Text, Button } from '@mkenzo_8/puffin-drac'
+import { Titles, RadioGroup, Text, Button } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import Window from '../../constructors/window'
 import StaticConfig from 'StaticConfig'
@@ -12,16 +12,16 @@ import Loader from '../../components/loader'
 import CenteredLayout from '../../components/centered.layout'
 import isPluginInstalled from '../store/utils/is.plugin.installed'
 
-function Store(){
+function Store() {
 	const StorePage = element({
-		components:{
-			H1:Titles.h1,
-			H4:Titles.h4,
+		components: {
+			H1: Titles.h1,
+			H4: Titles.h4,
 			SideMenu,
 			Text,
 			Loader,
-			CenteredLayout
-		}
+			CenteredLayout,
+		},
 	})`
 		<div mounted="${mounted}" style="min-width:100%;">
 			<SideMenu default="home" style="min-height:100%;">
@@ -36,61 +36,67 @@ function Store(){
 							<Loader/>
 						</CenteredLayout>
 					</div>
-					<div class="installed" :loaded="${(e)=> displayInstalled(e.target)}" href="installed"/>
+					<div class="installed" :loaded="${e => displayInstalled(e.target)}" href="installed"/>
 				</div>
 			</SideMenu>
 		</div>
 	`
-	function mounted(){
+	function mounted() {
 		const homePage = this.getElementsByClassName('home')[0]
-		displayHome( homePage ) //Display Home page by default
+		displayHome(homePage) //Display Home page by default
 	}
 	const StoreWindow = new Window({
 		title: 'store',
-		component:() => StorePage
+		component: () => StorePage,
 	})
 	return StoreWindow
 }
 
-function displayHome(container){
-	const loader = new Promise(async ( resolve, reject )=>{
-		getList().then( list => {
-			const cardsList = list.map( pluginId => {
-				const isInstalled = isPluginInstalled( pluginId )
-				return element({
-					components:{
-						StoreCard
-					}
-				})`<StoreCard data="${{isInstalled,pluginId,displayName:pluginId}}"/>`
+function displayHome(container) {
+	const loader = new Promise(async (resolve, reject) => {
+		getList()
+			.then(list => {
+				const cardsList = list.map(pluginId => {
+					const isInstalled = isPluginInstalled(pluginId)
+					return element({
+						components: {
+							StoreCard,
+						},
+					})`<StoreCard data="${{
+						isInstalled,
+						pluginId,
+						displayName: pluginId,
+					}}"/>`
+				})
+				resolve(cardsList)
 			})
-			resolve( cardsList )
-		}).catch( err =>{
-			const errorComp = element`<p>An error ocurred, try later.</p>`
-			resolve(errorComp)
-		})
+			.catch(err => {
+				const errorComp = element`<p>An error ocurred, try later.</p>`
+				resolve(errorComp)
+			})
 	})
-	loader.then( contentComp =>{
-		const Home = element`<div>${ contentComp }</div>`
+	loader.then(contentComp => {
+		const Home = element`<div>${contentComp}</div>`
 		container.innerHTML = ''
-		render( Home, container)
+		render(Home, container)
 	})
 }
 
-function displayInstalled( container ){
+function displayInstalled(container) {
 	const list = PluginsRegistry.registry.data.list
 	const Home = element`
 		<div>
-			${Object.keys(list).map( pluginId => {
+			${Object.keys(list).map(pluginId => {
 				const pluginInfo = list[pluginId]
 				const pluginData = {
 					isInstalled: true,
 					pluginId: pluginInfo.id,
-					displayName: pluginInfo.name
+					displayName: pluginInfo.name,
 				}
 				return element({
-					components:{
-						StoreCard
-					}
+					components: {
+						StoreCard,
+					},
 				})`
 					<StoreCard data="${pluginData}"/>
 				`
@@ -98,7 +104,7 @@ function displayInstalled( container ){
 		</div>
 	`
 	container.innerHTML = ''
-	render( Home, container)
+	render(Home, container)
 }
 
 export default Store

@@ -1,64 +1,69 @@
 import { element, style } from '@mkenzo_8/puffin'
 
-function moveToPage(page,buttons,pages){
-	pages.map(function(contentPage){
+function moveToPage(page, buttons, pages) {
+	pages.map(function (contentPage) {
 		contentPage.style.display = 'none'
-		if(contentPage.getAttribute("href") == page){
+		if (contentPage.getAttribute('href') == page) {
 			contentPage.style.display = 'block'
 			const loadedEvent = new CustomEvent('loaded', {})
 			contentPage.dispatchEvent(loadedEvent)
 		}
 	})
-	buttons.map(function(buttonPage){
+	buttons.map(function (buttonPage) {
 		buttonPage.classList.remove('active')
-		if(buttonPage.getAttribute("to") == page){
+		if (buttonPage.getAttribute('to') == page) {
 			buttonPage.classList.add('active')
 		}
 	})
 }
 
-
-function moveToSection(search,sections,buttons,pages){
-	const result = sections.filter(section=>section.title && section.title.match(new RegExp(search,'i')))[0];
-	if(result != null){
-		moveToPage(result.page,buttons,pages)
-		result.element.scrollIntoView( false )
+function moveToSection(search, sections, buttons, pages) {
+	const result = sections.filter(section => section.title && section.title.match(new RegExp(search, 'i')))[0]
+	if (result != null) {
+		moveToPage(result.page, buttons, pages)
+		result.element.scrollIntoView(false)
 	}
 }
-function mounted(){
+function mounted() {
 	const target = this
-	const defaultPage = target.getAttribute("default");
-	const buttons = Object.keys(target.children[0].children).map( btn =>{
-		const button = target.children[0].children[btn]
-		if(button.tagName == "LABEL"){
-			button.addEventListener('click',()=>{
-				moveToPage(button.getAttribute("to"),buttons,pages)
-			})
-			return button
-		}
-	}).filter(Boolean)		
-	const pages = Object.keys(target.children[1].children).map( pg =>{
-		const page = target.children[1].children[pg]
-		if(page.tagName == "DIV") { 
-			return page
-		}
-	}).filter(Boolean)
-	const sections = pages.map( page => {
-		return Object.keys(page.children).map(function(index){
-			const section = page.children[index]
-			if(section.tagName == "DIV"){
-				return {
-					title:section.getAttribute("href"),
-					page:page.getAttribute("href"),
-					element:section
-				}
-			} 
+	const defaultPage = target.getAttribute('default')
+	const buttons = Object.keys(target.children[0].children)
+		.map(btn => {
+			const button = target.children[0].children[btn]
+			if (button.tagName == 'LABEL') {
+				button.addEventListener('click', () => {
+					moveToPage(button.getAttribute('to'), buttons, pages)
+				})
+				return button
+			}
 		})
-	}).flat()
-	target.searchBy = function(search){
-		moveToSection(search,sections,buttons,pages)
+		.filter(Boolean)
+	const pages = Object.keys(target.children[1].children)
+		.map(pg => {
+			const page = target.children[1].children[pg]
+			if (page.tagName == 'DIV') {
+				return page
+			}
+		})
+		.filter(Boolean)
+	const sections = pages
+		.map(page => {
+			return Object.keys(page.children).map(function (index) {
+				const section = page.children[index]
+				if (section.tagName == 'DIV') {
+					return {
+						title: section.getAttribute('href'),
+						page: page.getAttribute('href'),
+						element: section,
+					}
+				}
+			})
+		})
+		.flat()
+	target.searchBy = function (search) {
+		moveToSection(search, sections, buttons, pages)
 	}
-	moveToPage(defaultPage,buttons,pages)
+	moveToPage(defaultPage, buttons, pages)
 }
 
 const styleWrapper = style`
@@ -115,11 +120,10 @@ const styleWrapper = style`
 	}
 `
 
-function SideMenu(){
+function SideMenu() {
 	return element`
 		<div mounted="${mounted}" class="${styleWrapper}"/>
 	`
 }
-
 
 export default SideMenu

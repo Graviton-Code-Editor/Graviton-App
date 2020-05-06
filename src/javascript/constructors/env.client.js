@@ -71,39 +71,38 @@ const styleWrapper = style`
 	}
 `
 
-function EnvClient({ name }){
-	
+function EnvClient({ name }) {
 	let isClicked = false
-	
-	function barClicked(e){
+
+	function barClicked(e) {
 		isClicked = true
 	}
-	
-	function barUnClicked(e){
+
+	function barUnClicked(e) {
 		isClicked = false
 	}
-	
-	function barMoved(e){
-		if ( isClicked ){
+
+	function barMoved(e) {
+		if (isClicked) {
 			node.style.top = e.pageY - 20
 			node.style.left = e.pageX - 110
 		}
 	}
-	
+
 	window.addEventListener('mousemove', barMoved)
 	window.addEventListener('mouseup', barUnClicked)
-	
+
 	let status = 'Stopped'
-	
+
 	const fwindow = element({
-		components:{
+		components: {
 			Play,
 			Text,
 			Stop,
 			H5: Titles.h5,
 			Reload,
-			Close
-		}
+			Close,
+		},
 	})`
 		<div  class="${styleWrapper}">
 			<div :mousedown="${barClicked}"class="dragger">
@@ -129,40 +128,40 @@ function EnvClient({ name }){
 					</div>
 				</div>
 			</div>
-			<Text class="status" >Status: <span status="${()=>status}">${()=>status}</span></Text>
+			<Text class="status" >Status: <span status="${() => status}">${() => status}</span></Text>
 		</div>
 	`
-	const node = render(fwindow,document.getElementById("windows"))
-	
+	const node = render(fwindow, document.getElementById('windows'))
+
 	const clientState = new state(arguments[0])
-	
-	function onStart(){
+
+	function onStart() {
 		status = 'Started'
 		node.children[2].children[0].update()
 		clientState.emit('start')
 	}
-	
-	function onStop(){
+
+	function onStop() {
 		status = 'Stopped'
 		node.children[2].children[0].update()
 		clientState.emit('stop')
 	}
-	
-	function onReload(){
+
+	function onReload() {
 		clientState.emit('reload')
 	}
-	
-	function onClose(){
+
+	function onClose() {
 		clientState.emit('destroy')
 		onStop()
 	}
-	
-	clientState.on('destroy',()=>{
+
+	clientState.on('destroy', () => {
 		window.removeEventListener('mousemove', barMoved)
 		window.removeEventListener('mouseup', barUnClicked)
 		node.remove()
 	})
-	
+
 	return clientState
 }
 

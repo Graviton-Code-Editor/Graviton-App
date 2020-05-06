@@ -132,7 +132,7 @@ const styleWrapper = style`
 		}
     `
 
-function AppBody(){
+function AppBody() {
 	return element`<div class="${styleWrapper}"/>`
 }
 

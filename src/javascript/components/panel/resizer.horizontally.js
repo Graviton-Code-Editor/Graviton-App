@@ -2,13 +2,13 @@ import { element, style } from '@mkenzo_8/puffin'
 
 const resizeSelector = Math.random()
 
-function startResizing( event, resizerElement = document.getElementById(resizeSelector) ){
+function startResizing(event, resizerElement = document.getElementById(resizeSelector)) {
 	const otherChildren = resizerElement.parentElement.children
-	let leftPanel = null;
-	Object.keys(otherChildren).forEach( index => {
+	let leftPanel = null
+	Object.keys(otherChildren).forEach(index => {
 		const child = otherChildren[index]
 		if (child.id == resizerElement.id) {
-			leftPanel = otherChildren[index-1]
+			leftPanel = otherChildren[index - 1]
 		}
 	})
 	leftPanel.style.width = `${event.clientX - 85}px`
@@ -22,19 +22,19 @@ const styleWrapper = style`
 	}
 `
 
-function stopResizing(){
-	window.removeEventListener('mousemove', startResizing, false);
-	window.removeEventListener('mouseup', stopResizing, false);
+function stopResizing() {
+	window.removeEventListener('mousemove', startResizing, false)
+	window.removeEventListener('mouseup', stopResizing, false)
 }
 
-function resizerComponent(){
+function resizerComponent() {
 	return element`
 		<div id="${resizeSelector}" :mousedown="${working}" class="${styleWrapper}"/>
 	`
 }
 
-function working(){
-	window.addEventListener('mousemove', startResizing, false);
-	window.addEventListener('mouseup', stopResizing, false);
+function working() {
+	window.addEventListener('mousemove', startResizing, false)
+	window.addEventListener('mouseup', stopResizing, false)
 }
 export default resizerComponent

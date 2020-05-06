@@ -1,11 +1,11 @@
 import { element, style } from '@mkenzo_8/puffin'
 import { Button } from '@mkenzo_8/puffin-drac'
 
-function storeButton(){
+function storeButton() {
 	return element({
-		components:{
-			Button
-		}
+		components: {
+			Button,
+		},
 	})`<Button style="width:calc(100% - 10px); "></Button>`
 }
 

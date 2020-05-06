@@ -4,9 +4,9 @@ import normalizeDir from '../../../utils/directory.normalizer'
 
 const rimraf = window.require('rimraf')
 
-function uninstallPlugin({ PATH }){
-	return new Promise( ( resolve, reject) => {
-		rimraf(PATH, (a,b) => {
+function uninstallPlugin({ PATH }) {
+	return new Promise((resolve, reject) => {
+		rimraf(PATH, (a, b) => {
 			resolve()
 		})
 	})

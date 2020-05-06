@@ -6,13 +6,13 @@ const getMessage = tabSize => `Tab size: ${tabSize}`
 
 const TabSizeStatusBarItem = new StatusBarItem({
 	label: getMessage(StaticConfig.data.editorTabSize),
-	position: 'right'
+	position: 'right',
 })
 
-StaticConfig.keyChanged('editorTabSize',()=>{
-	TabSizeStatusBarItem.setLabel( getMessage(StaticConfig.data.editorTabSize) )
+StaticConfig.keyChanged('editorTabSize', () => {
+	TabSizeStatusBarItem.setLabel(getMessage(StaticConfig.data.editorTabSize))
 })
 
-RunningConfig.on("appLoaded",()=>{
-	TabSizeStatusBarItem.show() 
+RunningConfig.on('appLoaded', () => {
+	TabSizeStatusBarItem.show()
 })

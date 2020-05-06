@@ -1,9 +1,8 @@
 import { element, style } from '@mkenzo_8/puffin'
 
-function PanelStatusBar(){
+function PanelStatusBar() {
 	return element`
-	<div id="statusBar" class="${
-		style`
+	<div id="statusBar" class="${style`
 			&{
 				border-top:1px solid var(--statusbarBorder);
 				min-height:25px;
