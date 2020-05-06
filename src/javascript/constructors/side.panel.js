@@ -30,9 +30,9 @@ const styleWrapperPanel = style`
 	}
 `
 
-function SidePanel({ icon, panel }) {
+function SidePanel({ icon, panel, hint = '' }) {
 	const panelIcon = element`
-		<div :click=${display} class="${styleWrapper}">
+		<div title="${hint}" :click=${display} class="${styleWrapper}">
 			${icon()}
 		</div>`
 
