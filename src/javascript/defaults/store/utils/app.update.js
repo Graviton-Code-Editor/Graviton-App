@@ -11,7 +11,6 @@ function gravitonHasUpdate() {
 		})
 			.then(async function (response) {
 				const gravitonVersion = response.data['gravitonVersion']
-
 				if (semver.gt(gravitonVersion, packageJSON.version)) {
 					resolve({
 						res: true,

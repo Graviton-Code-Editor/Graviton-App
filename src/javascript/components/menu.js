@@ -33,9 +33,7 @@ function mounted() {
 	window.addEventListener('click', function (e) {
 		e.stopPropagation()
 		if (
-			((e.target.tagName == 'A' || e.target.tagName == 'BUTTON') &&
-				e.target.parentElement.classList.contains('dropmenu') &&
-				e.target.parentElement.id == target.id) == false &&
+			((e.target.tagName == 'A' || e.target.tagName == 'BUTTON') && e.target.parentElement.classList.contains('dropmenu') && e.target.parentElement.id == target.id) == false &&
 			(e.target.classList.contains('dropmenu') && e.target.id == target.id) == false &&
 			target.getAttribute('showed') == 'true'
 		) {

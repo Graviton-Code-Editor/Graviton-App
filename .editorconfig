@@ -3,4 +3,4 @@ root = true
 [*.{js,html,sass}]
 charset = utf-8
 indent_style = tab
-indent_size = 4
+indent_size = 2

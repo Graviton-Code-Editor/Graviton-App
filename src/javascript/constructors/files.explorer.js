@@ -139,20 +139,17 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 			let projectWatcher = false
 			let gitWatcher = false
 			explorerState.emit('doReload')
-			RunningConfig.on(
-				['aTabHasBeenSaved', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'],
-				async ({ parentFolder }) => {
-					if (gitResult && parentFolder == folderPath) {
-						const gitChanges = await getStatus(folderPath)
-						RunningConfig.emit('gitStatusUpdated', {
-							gitChanges,
-							parentFolder,
-							branch: gitChanges.current,
-							anyChanges: gitChanges.files.length > 0,
-						})
-					}
+			RunningConfig.on(['aTabHasBeenSaved', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
+				if (gitResult && parentFolder == folderPath) {
+					const gitChanges = await getStatus(folderPath)
+					RunningConfig.emit('gitStatusUpdated', {
+						gitChanges,
+						parentFolder,
+						branch: gitChanges.current,
+						anyChanges: gitChanges.files.length > 0,
+					})
 				}
-			)
+			})
 			if (gitResult) {
 				explorerState.emit('gitMarkProjectContainer', {
 					//Force to mark as modified the project item

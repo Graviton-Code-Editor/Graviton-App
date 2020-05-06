@@ -80,7 +80,9 @@
 				"Advanced": {
 					"Advanced":"Advanced",
 					"FileWatcher":"Files Watcher",
-					"Autocomplete":"Autocomplete"
+					"Autocomplete":"Autocomplete",
+					"WrapLines":"Wrap lines",
+					"Indentation":"Indentation"
 				},
 				"Languages":"Languages",
 				"About":{

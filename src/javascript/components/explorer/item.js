@@ -105,9 +105,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 			ArrowIcon,
 		},
 	})`
-		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${
-		StaticConfig.data.appEnableExplorerItemsAnimations
-	}">
+		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
 			<button :click="${onClick}" :contextmenu="${onContextMenu}">
 				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
 				<img class="icon" src="${Icons[icon] ? Icons[icon] : Icons['unknown.file']}"></img>

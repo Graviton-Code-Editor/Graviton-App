@@ -49,8 +49,8 @@ function Settings() {
 														ThemeCard,
 													},
 												})`
-											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data['app.theme'] == pluginName ? '' : 'false'}">
-												<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"></ThemeCard>
+											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data.apptheme == pluginName}">
+												<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"/>
 											</label>
 											`
 											}
@@ -62,21 +62,22 @@ function Settings() {
 					<div href="advanced">
 						<div href="file watcher">
 							<H4 lang-string="windows.Settings.Advanced.FileWatcher"/>
-							<Switch :toggled="${toggledFileWatcher}" status="${{
-			default: StaticConfig.data.editorFSWatcher,
-		}}" label="File watcher"></Switch>
+							<Switch :toggled="${toggledFileWatcher}" status="${{ default: StaticConfig.data.editorFSWatcher }}" label="File watcher"></Switch>
 						</div>
 						<div href="autocomplete">
 							<H4 lang-string="windows.Settings.Advanced.Autocomplete"/>
-							<Switch :toggled="${toggledAutoComplete}" status="${{
-			default: StaticConfig.data.editorAutocomplete,
-		}}" label="Autocomplete"></Switch>
+							<Switch :toggled="${toggledAutoComplete}" status="${{ default: StaticConfig.data.editorAutocomplete }}" label="Autocomplete"></Switch>
 						</div>
 						<div href="wrap lines">
-							<H4>Wrap lines</H4>
-							<Switch :toggled="${toggledWrapLines}" status="${{
-			default: StaticConfig.data.editorWrapLines,
-		}}" label="Wrap lines"></Switch>
+							<H4 lang-string="windows.Settings.Advanced.WrapLines"/>
+							<Switch :toggled="${toggledWrapLines}" status="${{ default: StaticConfig.data.editorWrapLines }}" label="Wrap lines"></Switch>
+						</div>
+						<div href="indentation">
+							<H4 lang-string="windows.Settings.Advanced.Indentation"/>
+							<RadioGroup :radioSelected="${selectedIndentation}">
+								<label measure="tab" checked="${StaticConfig.data.editorIndentation == 'tab'}">Tab</label>
+								<label measure="space" checked="${StaticConfig.data.editorIndentation == 'space'}">Space</label>
+							</RadioGroup>
 						</div>
 						<div href="manual config">
 							<H4>Manual editing</H4>
@@ -107,6 +108,10 @@ function Settings() {
 	function configeditor() {
 		configEditor()
 		SettingsWindow.close()
+	}
+	function selectedIndentation(e) {
+		const newIdentation = e.detail.target.getAttribute('measure')
+		if (StaticConfig.data.editorIndentation != newIdentation) StaticConfig.data.editorIndentation = newIdentation
 	}
 	function selectedTheme(e) {
 		const newTheme = e.detail.target.getAttribute('name')

@@ -125,11 +125,7 @@ RunningConfig.on('loadFile', ({ filePath }) => {
  * @param {boolean} replaceOldExplorer - Add it as one more, or close the previous one
  * @param {string} workspacePath - Path to the current loaded workspace
  */
-RunningConfig.on('addFolderToRunningWorkspace', function ({
-	folderPath,
-	replaceOldExplorer = false,
-	workspacePath = RunningConfig.data.workspacePath,
-}) {
+RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }) {
 	const folderDir = normalizeDir(folderPath)
 	const explorerPanel = document.getElementById('explorer_panel')
 	FilesExplorer(folderDir, explorerPanel, 0, replaceOldExplorer)

@@ -440,6 +440,7 @@ function init() {
 }
 
 function checkForUpdates(ifNoUpdate) {
+	if (isDev) return
 	gravitonHasUpdate()
 		.then(({ res, version }) => {
 			if (res) {
@@ -463,7 +464,7 @@ function checkForUpdates(ifNoUpdate) {
 			}
 		})
 		.catch(err => {
-			console.log('Couldnt feth updates.')
+			console.log('Couldnt fetch updates.')
 		})
 }
 
