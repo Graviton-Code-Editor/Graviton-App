@@ -46,7 +46,7 @@ RunningConfig.on('appLoaded', () => {
 	const { display } = new SidePanel({
 		icon: FolderOutlined,
 		panel: explorer,
-		hint: 'Files explorer'
+		hint: 'Files explorer',
 	})
 	display()
 })

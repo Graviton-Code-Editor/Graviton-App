@@ -37,13 +37,13 @@ function getDropmenu(list) {
 					hideMenus(this)
 				}
 			}
-			const dropmenuOption = option.list ? 
-				element({
-					components:{
-						ArrowIcon
-					}
-				})`<p lang-string="${option.label}"></p><ArrowIcon/>` :
-				element`<p lang-string="${option.label}"/>`
+			const dropmenuOption = option.list
+				? element({
+						components: {
+							ArrowIcon,
+						},
+				  })`<p lang-string="${option.label}"></p><ArrowIcon/>`
+				: element`<p lang-string="${option.label}"/>`
 			return element`
 			<div :click="${option.action}" >
 				<a :mouseenter="${triggerAction}" >

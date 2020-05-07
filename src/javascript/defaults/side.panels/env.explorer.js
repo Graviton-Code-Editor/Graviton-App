@@ -12,7 +12,7 @@ RunningConfig.on('appLoaded', () => {
 	const { display, panelNode } = new SidePanel({
 		icon: EnvOutlined,
 		panel: () => element`<div/>`,
-		hint: 'Project inspector'
+		hint: 'Project inspector',
 	})
 
 	RunningConfig.on('addFolderToRunningWorkspace', ({ folderPath }) => {
