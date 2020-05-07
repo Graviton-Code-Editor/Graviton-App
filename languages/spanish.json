@@ -69,7 +69,7 @@
 			"Settings":{
 				"Settings":"Ajustes",
 				"Customization": {
-					"Customization":"Personalizació",
+					"Customization":"Personalización",
 					"Themes":"Temas",
 					"FileWatcher":"Observador de archivos"
 				},
@@ -86,7 +86,7 @@
 				},
 				"Install":"Instalar",
 				"Update":"Actualizar",
-				"Uninstall":"desinstalar"
+				"Uninstall":"Desinstalar"
 			},
 			"Welcome":{
 				"Welcome":"Bienvenida",
