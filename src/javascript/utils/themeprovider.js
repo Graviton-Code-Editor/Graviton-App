@@ -40,7 +40,7 @@ function applyTheme(state) {
 	})
 	Object.keys(ThemeProvider.data).forEach(key => {
 		const keyValue = ThemeProvider.data[key]
-		const valueInTheme =keyValue || getFallBackProp(key)
+		const valueInTheme = keyValue || getFallBackProp(key)
 		document.body.style.setProperty(`--${key}`, valueInTheme)
 	})
 }
