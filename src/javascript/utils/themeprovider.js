@@ -28,19 +28,24 @@ const puffinThemingKeys = {
 	puffinRadioCircleBorderHovering: 'radioCircleBorderHovering',
 }
 
+const getFallBackProp = prop => PluginsRegistry.registry.data.list.Night.colorsScheme[prop]
+
 function applyTheme(state) {
 	ThemeProvider.data = PluginsRegistry.registry.data.colorsSchemes[state.data.appTheme]
 	ThemeProvider.triggerChange()
 	Object.keys(puffinThemingKeys).forEach(key => {
 		const keyValue = puffinThemingKeys[key]
-		document.body.style.setProperty(`--${key}`, ThemeProvider.data[keyValue])
+		const valueInTheme = ThemeProvider.data[keyValue] || getFallBackProp(key)
+		document.body.style.setProperty(`--${key}`, valueInTheme)
 	})
 	Object.keys(ThemeProvider.data).forEach(key => {
 		const keyValue = ThemeProvider.data[key]
-		document.body.style.setProperty(`--${key}`, keyValue)
+		const valueInTheme =keyValue || getFallBackProp(key)
+		document.body.style.setProperty(`--${key}`, valueInTheme)
 	})
 }
 console.log(ThemeProvider)
+
 RunningConfig.on('allPluginsLoaded', () => applyTheme(StaticConfig))
 
 export default ThemeProvider
