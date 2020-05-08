@@ -2,7 +2,7 @@ import { element, style } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
 	& *{
-		stroke: var(--sidebarIconsFill);
+		stroke: var(--iconFill);
 	}
 `
 

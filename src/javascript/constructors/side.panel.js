@@ -9,13 +9,16 @@ const styleWrapper = style`
 		justify-content: center;
 		background: var(--sidebarIconBackground);
 		border-radius: 5px;
+		--iconFill: var(--sidebarIconsFill)
 	}
 	&:hover:not(.active) {
 		transition: 0.1s;
-		background: var(--sidebarIconHoveringBackground)
+		background: var(--sidebarIconHoveringBackground);
+		--iconFill: var(--sidebarIconsHoveringFill)
 	}
 	&.active {
 		background: var(--sidebarIconActiveBackground);
+		--iconFill: var(--sidebarIconsActiveFill)
 	}
 	& svg {
 		width: 20px;
