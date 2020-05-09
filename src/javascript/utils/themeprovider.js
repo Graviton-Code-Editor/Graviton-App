@@ -6,7 +6,7 @@ import PluginsRegistry from 'PluginsRegistry'
 let currentTheme = StaticConfig.data.appTheme
 
 StaticConfig.keyChanged('appTheme', newTheme => {
-	 if (currentTheme !== newTheme) {
+	if (currentTheme !== newTheme) {
 		applyTheme(StaticConfig)
 		currentTheme = newTheme
 	}
@@ -47,7 +47,7 @@ function applyTheme(state) {
 console.log(ThemeProvider)
 
 RunningConfig.on('allPluginsLoaded', () => {
-	if( !PluginsRegistry.registry.data[StaticConfig.data.appTheme] ){
+	if (!PluginsRegistry.registry.data[StaticConfig.data.appTheme]) {
 		StaticConfig.data.appTheme = 'Night'
 	}
 	applyTheme(StaticConfig)
