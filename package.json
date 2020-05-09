@@ -49,7 +49,7 @@
 		"build:p5p": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux p5p",
 		"build:rpm": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"build:AppImage": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage",
-		"lint": "prettier --write ./src"
+		"lint": "prettier --write *.{js,scss,md,html}"
 	},
 	"staticFiles": {
 		"staticPath": "assets",
@@ -61,7 +61,7 @@
 		}
 	},
 	"lint-staged": {
-		"-A": ["npm run lint"]
+		"*.{js,scss,md,html}": ["prettier --write"]
 	},
 	"alias": {
 		"ThemeProvider": "./src/javascript/utils/themeprovider.js",
