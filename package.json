@@ -57,11 +57,11 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npm run lint"
+			"pre-commit": "lint-staged"
 		}
 	},
-	"lint-stage": {
-		"": ["./node_modules/prettier/bin-prettier", "git add"]
+	"lint-staged": {
+		"-A": ["npm run lint", "git add"]
 	},
 	"alias": {
 		"ThemeProvider": "./src/javascript/utils/themeprovider.js",
