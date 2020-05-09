@@ -61,7 +61,7 @@
 		}
 	},
 	"lint-staged": {
-		"-A": ["npm run lint", "git add"]
+		"-A": ["npm run lint"]
 	},
 	"alias": {
 		"ThemeProvider": "./src/javascript/utils/themeprovider.js",
