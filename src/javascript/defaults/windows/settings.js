@@ -62,18 +62,18 @@ function Settings() {
 					<div href="advanced">
 						<div href="file watcher">
 							<H4 lang-string="windows.Settings.Advanced.FileWatcher"/>
-							<Switch :toggled="${toggledFileWatcher}" status="${{ default: StaticConfig.data.editorFSWatcher }}" label="File watcher"></Switch>
+							<Switch :toggled="${toggledFileWatcher}" data="${{ default: StaticConfig.data.editorFSWatcher, label: 'windows.Settings.Advanced.FileWatcher' }}"/>
 						</div>
 						<div href="autocomplete">
 							<H4 lang-string="windows.Settings.Advanced.Autocomplete"/>
-							<Switch :toggled="${toggledAutoComplete}" status="${{ default: StaticConfig.data.editorAutocomplete }}" label="Autocomplete"></Switch>
+							<Switch :toggled="${toggledAutoComplete}" data="${{ default: StaticConfig.data.editorAutocomplete, label: 'windows.Settings.Advanced.Autocomplete' }}"/>
 						</div>
 						<div href="wrap lines">
 							<H4 lang-string="windows.Settings.Advanced.WrapLines"/>
-							<Switch :toggled="${toggledWrapLines}" status="${{ default: StaticConfig.data.editorWrapLines }}" label="Wrap lines"></Switch>
+							<Switch :toggled="${toggledWrapLines}" data="${{ default: StaticConfig.data.editorWrapLines, label: 'windows.Settings.Advanced.WrapLines' }}"/>
 						</div>
 						<div href="indentation">
-							<H4 lang-string="windows.Settings.Advanced.Indentation"/>
+							<H4 lang-string="windows.Settings.Advanced.Indentation.Indentation"/>
 							<RadioGroup :radioSelected="${selectedIndentation}">
 								<label measure="tab" checked="${StaticConfig.data.editorIndentation == 'tab'}">Tab</label>
 								<label measure="space" checked="${StaticConfig.data.editorIndentation == 'space'}">Space</label>

@@ -35,7 +35,7 @@ const styleWrapper = style`
 		left:0;
 		position:relative;
 	}
-	& label {
+	& span {
 		margin-left:10px;
 		margin-top:2px;
 		overflow:hidden;
@@ -44,29 +44,28 @@ const styleWrapper = style`
 	}
 `
 
-function Switch(props) {
-	let status = props.status.default
+function Switch({ data }) {
+	let { default: defaultStatus, label } = data
 	return element`
-		<div :click="${toggled}" mounted="${mounted}" status="${() => status}" class="${styleWrapper}">
+		<div :click="${toggled}" mounted="${mounted}" status="${() => defaultStatus}" class="${styleWrapper}">
 			<div class="wrapper">
 				<div class="indicator"/>
 			</div>
-			<label/>
+			<span lang-string="${label}"/>
 		</div>
 	`
 	function mounted() {
-		this.children[1].innerText = this.getAttribute('label')
-		this.props.status = status
+		this.props.status = defaultStatus
 	}
 	function toggled() {
 		//Invert the the status
-		status = !status == true
+		defaultStatus = !defaultStatus == true
 		//Update the status prop
 		this.update()
 		//Create the toggled event
 		const toggledEvent = new CustomEvent('toggled', {
 			detail: {
-				status,
+				status: defaultStatus,
 			},
 		})
 		//Trigger the toggled event

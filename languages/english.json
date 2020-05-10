@@ -2,141 +2,144 @@
 	"name": "english",
 	"locale": "en",
 	"translations": {
-		"menus":{
+		"menus": {
 			"File": {
-				"File":"File",
+				"File": "File",
 				"OpenFolder": "Open folder",
 				"OpenFile": "Open file",
-				"Projects":{
-					"Projects":"Projects",
-					"OpenProjects":"Open Projects",
+				"Projects": {
+					"Projects": "Projects",
+					"OpenProjects": "Open Projects"
 				},
-				"Workspaces":{
-					"Workspaces":"Workspaces",
-					"OpenWorkspaces":"Open Workspaces",
-					"OpenFromFile":"Open from file",
-					"AddFolderToWorkspace":"Add Folder To Workspace",
-					"SaveWorkspace":"Save Workspace"
+				"Workspaces": {
+					"Workspaces": "Workspaces",
+					"OpenWorkspaces": "Open Workspaces",
+					"OpenFromFile": "Open from file",
+					"AddFolderToWorkspace": "Add Folder To Workspace",
+					"SaveWorkspace": "Save Workspace"
 				}
 			},
 			"Edit": {
-				"Edit":"Edit",
-				"Undo":"Undo",
-				"Redo":"Redo",
-				"FontSize":{
-					"FontSize":"Font Size",
-					"Increase":"Increase",
-					"Decrease":"Decrease"
+				"Edit": "Edit",
+				"Undo": "Undo",
+				"Redo": "Redo",
+				"FontSize": {
+					"FontSize": "Font Size",
+					"Increase": "Increase",
+					"Decrease": "Decrease"
 				},
-				"Find":"Find",
+				"Find": "Find",
 				"Replace": "Replace",
-				"FormatDocument":"Format document"
-				
+				"FormatDocument": "Format document"
 			},
 			"Tools": {
-				"Tools":"Tools",
-				"OpenSettings":"Open Settings",
-				"OpenStore":"Open Store",
-				"Panels":{
-					"Panels":"Panels",
-					"NewPanel":"New Panel",
-					"CloseCurrentPanel":"Close current panel"
+				"Tools": "Tools",
+				"OpenSettings": "Open Settings",
+				"OpenStore": "Open Store",
+				"Panels": {
+					"Panels": "Panels",
+					"NewPanel": "New Panel",
+					"CloseCurrentPanel": "Close current panel"
 				}
 			},
 			"Window": {
-				"Window":"Window",
-				"Zoom":{
-					"Zoom":"Zoom",
-					"DefaultZoom":"Default",
-					"IncreaseZoom":"Increase",
-					"DecreaseZoom":"Decrease"
+				"Window": "Window",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Default",
+					"IncreaseZoom": "Increase",
+					"DecreaseZoom": "Decrease"
 				},
-				"Debug":{
-					"Debug":"Debug",
-					"OpenDebugWindow":"Open debug window"
+				"Debug": {
+					"Debug": "Debug",
+					"OpenDebugWindow": "Open debug window"
 				},
-				"OpenDevTools":"Open dev tools"
+				"OpenDevTools": "Open dev tools"
 			},
 			"Help": {
-				"Help":"Help",
-				"Contact":"Contact",
-				"Social":"Social",
-				"Contributors":"Contributors",
-				"Blog":"Blog",
-				"Documentation":"Documentation",
-				"Website":"Website",
-				"SourceCode":"Source code",
-				"CheckForUpdates":"Check for updates",
-				"About":"About"
-			},
-		},
-		"windows":{
-			"Settings":{
-				"Settings":"Settings",
-				"Customization": {
-					"Customization":"Customization",
-					"Themes":"Themes"
-				},
-				"Advanced": {
-					"Advanced":"Advanced",
-					"FileWatcher":"Files Watcher",
-					"Autocomplete":"Autocomplete",
-					"WrapLines":"Wrap lines",
-					"Indentation":"Indentation"
-				},
-				"Languages":"Languages",
-				"About":{
-					"About":"About",
-					"GravitonDescription":"Graviton is a cross platform editor."
-				}
-			},
-			"Store":{
-				"Store":"Store",
-				"Home":{
-					"Home":"Home"
-				},
-				"Installed":{
-					"Installed":"Installed"
-				},
-				"Install":"Install",
-				"Update":"Update",
-				"Uninstall":"Uninstall"
-			},
-			"Welcome":{
-				"Welcome":"Welcome",
-				"RecentProjects":"Recent projects",
-				"RecentWorkspaces":"Recent workspaces",
-				"NewProject":"New project",
-				"OpenWorkspace":"Open a workspace",
-				"OpenFolder":"Open a folder"
+				"Help": "Help",
+				"Contact": "Contact",
+				"Social": "Social",
+				"Contributors": "Contributors",
+				"Blog": "Blog",
+				"Documentation": "Documentation",
+				"Website": "Website",
+				"SourceCode": "Source code",
+				"CheckForUpdates": "Check for updates",
+				"About": "About"
 			}
 		},
-		"misc":{
-			"LastVersion":"Last version",
-			"InstalledVersion":"Installed version",
-			"About":"About",
-			"Skip":"Skip",
-			"Finish":"Finish",
-			"Continue":"Continue",
-			"GoBack":"Go back",
-			"Accept":"Accept",
-			"Cancel":"Cancel",
-			"version":"version",
-			"More":"More",
-			"Copy":"Copy",
-			"Paste":"Paste",
+		"windows": {
+			"Settings": {
+				"Settings": "Settings",
+				"Customization": {
+					"Customization": "Customization",
+					"Themes": "Themes"
+				},
+				"Advanced": {
+					"Advanced": "Advanced",
+					"FileWatcher": "Files Watcher",
+					"Autocomplete": "Autocomplete",
+					"WrapLines": "Wrap lines",
+					"Indentation": {
+						"Indentation": "Indentation",
+						"Space": "Space",
+						"Tab": "Tab"
+					}
+				},
+				"Languages": "Languages",
+				"About": {
+					"About": "About",
+					"GravitonDescription": "Graviton is a cross platform editor."
+				}
+			},
+			"Store": {
+				"Store": "Store",
+				"Home": {
+					"Home": "Home"
+				},
+				"Installed": {
+					"Installed": "Installed"
+				},
+				"Install": "Install",
+				"Update": "Update",
+				"Uninstall": "Uninstall"
+			},
+			"Welcome": {
+				"Welcome": "Welcome",
+				"RecentProjects": "Recent projects",
+				"RecentWorkspaces": "Recent workspaces",
+				"NewProject": "New project",
+				"OpenWorkspace": "Open a workspace",
+				"OpenFolder": "Open a folder"
+			}
+		},
+		"misc": {
+			"LastVersion": "Last version",
+			"InstalledVersion": "Installed version",
+			"About": "About",
+			"Skip": "Skip",
+			"Finish": "Finish",
+			"Continue": "Continue",
+			"GoBack": "Go back",
+			"Accept": "Accept",
+			"Cancel": "Cancel",
+			"version": "version",
+			"More": "More",
+			"Copy": "Copy",
+			"Paste": "Paste",
 			"Author": "Author",
 			"Exit": "Exit",
 			"Tip": "Tip",
-			"Yes":"Yes",
-			"No":"No",
-			"Close":"Close",
-			"Ignore":"Ignore"
+			"Yes": "Yes",
+			"No": "No",
+			"Close": "Close",
+			"Ignore": "Ignore"
 		},
-		"notifications":{
-			"appLanguageChanged":{
-				"appLanguageChanged":"App's language changed.",
-				"restartMessage":"Restart the app to fully apply the changes."
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "App's language changed.",
+				"restartMessage": "Restart the app to fully apply the changes."
 			}
 		}
 	}
