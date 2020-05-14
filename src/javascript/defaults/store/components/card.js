@@ -62,6 +62,14 @@ const getPluginInfo = (object, key) => {
 	}
 }
 
+function getCompatiblePugin(gravitonVersion, releases) {
+	if (!releases) return false
+	return releases.find(rel => {
+		if (rel.target === gravitonVersion) {
+			return rel
+		}
+	})
+}
 function hasUpdate(pluginVersion, localPluginVersion) {
 	if (semver.valid(pluginVersion) && semver.valid(localPluginVersion)) {
 		return semver.gt(pluginVersion, localPluginVersion)
@@ -84,18 +92,29 @@ const styleWrapper = style`
 	& .content > .buttons *{
 		min-height: 36px;
 	}
+	& .error {
+		margin-top: 7px;
+		text-decoration: underline;
+	}
 `
 
-function openWindow(
-	{ name, lastRelease, version = 'Unknown', id, repository, author = 'Unknown', target = packageJSON.version },
-	{ name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' },
-	isInstalled
-) {
+function openWindow({ name, releases, id, repository, author = 'Unknown' }, { name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' }, isInstalled) {
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo)
 
-	const newUpdate = hasUpdate(version, localVersion)
+	const pluginCompatibleVersion = getCompatiblePugin(packageJSON.version, pluginInfoValid.releases)
+
+	const isPluginReserved = pluginReserved(pluginInfoValid.name)
+
+	if (!isPluginReserved && pluginInfoValid.releases && pluginCompatibleVersion) {
+		var { version: lastReleaseVersion, target: lastReleaseTarget } = pluginCompatibleVersion
+	} else {
+		var lastReleaseVersion = 'Unknown'
+		var lastReleaseTarget = 'Unknown'
+	}
+
+	const newUpdate = hasUpdate(lastReleaseVersion, localVersion)
 
 	const component = element({
 		components: {
@@ -115,8 +134,9 @@ function openWindow(
 						<Text>
 							<b lang-string="misc.Author" string="{{misc.Author}}: ${getPluginInfo(pluginInfoValid, 'author')}"/>
 						</Text>
-						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${version}"/>
+						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${lastReleaseVersion}"/>
 						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
+						${(!isPluginReserved && !pluginCompatibleVersion && getNoCompatibleversion()) || element`<div/>`}
 					</div>
 					<div class="buttons">
 						${getUpdateButton()}
@@ -126,6 +146,13 @@ function openWindow(
 			</div>
 		</SideMenu>
 	`
+	function getNoCompatibleversion() {
+		return element({
+			components: {
+				Text,
+			},
+		})` <Text class="error">Any version targets your Graviton.</Text>`
+	}
 	function getUpdateButton() {
 		if (newUpdate) {
 			return element({
@@ -137,7 +164,7 @@ function openWindow(
 		return element`<div/>`
 	}
 	function getInstallButton() {
-		if (!isInstalled && verifyTarget(packageJSON.version, target)) {
+		if (!isInstalled && verifyTarget(packageJSON.version, lastReleaseTarget)) {
 			return element({
 				components: {
 					storeButton,
@@ -163,7 +190,10 @@ function openWindow(
 		})
 	}
 	function install() {
-		installPlugin(pluginInfoValid).then(() => {
+		installPlugin({
+			id: pluginInfoValid.id,
+			release: pluginInfoValid.releases[0].url,
+		}).then(() => {
 			pluginInstalledNotification(pluginInfoValid.name)
 		})
 	}
@@ -181,7 +211,10 @@ function openWindow(
 }
 
 function verifyTarget(must, is) {
-	return semver.gte(must, is)
+	if (semver.valid(must) && semver.valid(is)) {
+		return semver.gte(must, is)
+	}
+	return false
 }
 
 function pluginUpdatedNotification(pluginName) {
