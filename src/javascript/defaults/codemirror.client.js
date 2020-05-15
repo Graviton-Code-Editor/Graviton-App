@@ -111,6 +111,14 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'gfm',
 					}
+				case 'tsx':
+					return {
+						name: 'text/typescript-jsx',
+					}
+				case 'ts':
+					return {
+						name: 'text/typescript',
+					}
 				default:
 					return {
 						name: extension,
