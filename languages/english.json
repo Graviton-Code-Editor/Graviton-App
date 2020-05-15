@@ -103,7 +103,8 @@
 				},
 				"Install": "Install",
 				"Update": "Update",
-				"Uninstall": "Uninstall"
+				"Uninstall": "Uninstall",
+				"AnyCompatibleVersion": "Any compatible version."
 			},
 			"Welcome": {
 				"Welcome": "Welcome",
