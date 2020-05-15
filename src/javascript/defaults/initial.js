@@ -288,7 +288,7 @@ function init() {
 					{
 						label: 'Discord',
 						action: () => {
-							openLink('https://discord.gg/DY9Svy')
+							openLink('https://discord.gg/cChzuMp')
 						},
 					},
 				],

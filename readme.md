@@ -23,96 +23,96 @@ Also, changes on this source may not be released as an official build yet.
 
 **Features refer to the v2 version.**
 
-✨ Features:
----
-* 🧬 Git integration 
-* 🛢 Workspaces
-* 💅 Modern UI
-* 🎨 Themes 
-* 📦 Plugins
-* 🌠 Autocomplete for some languages
-* 🗺 Built-in image previewer
-* 🏭 A Plugin and Themes store (WIP) 
-* 😇 More respectful on RAM than other alternatives 
-* 💆‍♀️  No telemetry
-* 📝 Multi line editing 
-* 📰 Live markdown preview
+## ✨ Features:
 
+- 🧬 Git integration
+- 🛢 Workspaces
+- 💅 Modern UI
+- 🎨 Themes
+- 📦 Plugins
+- 🌠 Autocomplete for some languages
+- 🗺 Built-in image previewer
+- 🏭 A Plugin and Themes store (WIP)
+- 😇 More respectful on RAM than other alternatives
+- 💆‍♀️ No telemetry
+- 📝 Multi line editing
+- 📰 Live markdown preview
 
-📣 Social media:
----
+## 📣 Social media:
 
-* 📢 [Telegram Channel](https://t.me/gravitoneditor)
-* 💬 [Discord Server](https://discord.gg/gg6CTYA)
-* 💭 [Twitter](https://twitter.com/gravitoneditor)
+- 📢 [Telegram Channel](https://t.me/gravitoneditor)
+- 💬 [Discord Server](https://discord.gg/cChzuMp)
+- 💭 [Twitter](https://twitter.com/gravitoneditor)
 
-🏗 Resources 
----
+## 🏗 Resources
 
-* [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
-* [🛠 Building manual](BUILDING.md)
-* [📜 Changelog](CHANGELOG.md)
-* [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477) 
+- [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
+- [🛠 Building manual](BUILDING.md)
+- [📜 Changelog](CHANGELOG.md)
+- [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
 
-👽 Authors 
----
+## 👽 Authors
 
 #### Main Developer:
-* Marc Espín Sanz [Github](https://github.com/marc2332)
+
+- Marc Espín Sanz [Github](https://github.com/marc2332)
 
 #### Main Contributors:
-* pjtsearch [Github](https://github.com/pjtsearch)
-* David Niederweis [Github](https://github.com/DJN1)
-* LucasAlt [Github](https://github.com/LucasCtrl)
-* Max1Truc [Github](https://github.com/Max1Truc)
-* Marco Galli [Github](https://github.com/Gaarco)
+
+- pjtsearch [Github](https://github.com/pjtsearch)
+- David Niederweis [Github](https://github.com/DJN1)
+- LucasAlt [Github](https://github.com/LucasCtrl)
+- Max1Truc [Github](https://github.com/Max1Truc)
+- Marco Galli [Github](https://github.com/Gaarco)
 
 #### Credits:
-* Miguel Ranger for first autocomplete version
-* Old logo by Saúl Blanco
-* Advices from León Alvarez
 
-🤩 Useful libraries 
----
-* [🐧 PuffinJS](https://github.com/PuffinJS/puffin)
-* [🎨 CodeMirror](https://codemirror.net/)
+- Miguel Ranger for first autocomplete version
+- Old logo by Saúl Blanco
+- Advices from León Alvarez
 
-🎁 Donating 
----
-* BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
-* Paypal: https://www.paypal.me/mkenzo8
+## 🤩 Useful libraries
+
+- [🐧 PuffinJS](https://github.com/PuffinJS/puffin)
+- [🎨 CodeMirror](https://codemirror.net/)
+
+## 🎁 Donating
+
+- BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
+- Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators:
-* [Malok](https://github.com/malokdev)
-* [Saúl Blanco](https://github.com/Saul-BT)
-* Rôdeuse 
-* Alex Mayol
-* [Machou](http://GitHub.com/Machou)
-* Cristina Piva
+
+- [Malok](https://github.com/malokdev)
+- [Saúl Blanco](https://github.com/Saul-BT)
+- Rôdeuse
+- Alex Mayol
+- [Machou](http://GitHub.com/Machou)
+- Cristina Piva
 
 Thank you for the donations!
 
-💻🖥 Available platforms 
----
+## 💻🖥 Available platforms
+
 **Windows**
 
-   * `Executable (.exe, 64 & 32bits)` 
+- `Executable (.exe, 64 & 32bits)`
 
 **Linux**
 
-   * `Appimage (.appimage)`
-   * `Debian  (.deb)`
-   * `CentOS (.rpm)`
-   * You can manually build for more platforms if you wish.
+- `Appimage (.appimage)`
+- `Debian (.deb)`
+- `CentOS (.rpm)`
+- You can manually build for more platforms if you wish.
 
 **MacOS**
 
-   * ` DMG file (.dmg)` 
+- `DMG file (.dmg)`
 
-The current state is beta, check the releases page to download the latest version. 
+The current state is beta, check the releases page to download the latest version.
 
-🧾 License 
----
+## 🧾 License
+
 MIT License
 
 Copyright (c) Marc Espín Sanz
