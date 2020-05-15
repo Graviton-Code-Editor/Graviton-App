@@ -15,7 +15,7 @@ function openDebugClient() {
 				nativeWindowOpen: true,
 				nodeIntegrationInWorker: true,
 				nodeIntegration: true,
-				webSecurity: !isDev,
+				webSecurity: true,
 			},
 			frame: window.process.platform == 'linux',
 			minHeight: 320,

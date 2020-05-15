@@ -1,9 +1,10 @@
 import Endpoints from './api.endpoints.js'
 import axios from 'axios'
 import throwError from '../utils/throw.error'
+import RunningConfig from 'RunningConfig'
 
 function notFoundError() {
-	throwError('Cannot find this plugin in the Store.')
+	if (!RunningConfig.data.isDebug) throwError('Cannot find this plugin in the Store.')
 }
 
 function getPluginById(pluginId) {

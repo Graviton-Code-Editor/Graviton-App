@@ -23,7 +23,7 @@ const getPluginInfo = (object, key) => {
 function getCompatiblePugin(gravitonVersion, releases) {
 	if (!releases) return false
 	return releases.find(rel => {
-		if (rel.target === gravitonVersion) {
+		if (gravitonVersion.match(new RegExp(rel.target)) && semver.gt(gravitonVersion, rel.minTarget)) {
 			return rel
 		}
 	})
@@ -73,7 +73,7 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 	}
 
 	const newUpdate = hasUpdate(lastReleaseVersion, localVersion)
-
+	const haveRelease = lastReleaseVersion !== 'Unknown'
 	const component = element({
 		components: {
 			H2: Titles.h2,
@@ -117,12 +117,12 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 				components: {
 					storeButton,
 				},
-			})` <storeButton :click="${install}" lang-string="windows.Store.Update"/>`
+			})` <storeButton :click="${update}" lang-string="windows.Store.Update"/>`
 		}
 		return element`<div/>`
 	}
 	function getInstallButton() {
-		if (!isInstalled && verifyTarget(packageJSON.version, lastReleaseTarget)) {
+		if (!isInstalled && haveRelease) {
 			return element({
 				components: {
 					storeButton,
@@ -143,7 +143,10 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 		}
 	}
 	function update() {
-		installPlugin(pluginInfoValid).then(() => {
+		installPlugin({
+			id: pluginInfoValid.id,
+			release: pluginInfoValid.releases[0].url,
+		}).then(() => {
 			pluginUpdatedNotification(pluginInfoValid.name)
 		})
 	}
