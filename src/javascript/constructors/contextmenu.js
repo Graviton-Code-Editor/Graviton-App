@@ -31,7 +31,7 @@ function ContextMenu({ list, parent, event, x, y }) {
 				if (option.label) {
 					return element`<button :click="${option.action}">${option.label}</button>`
 				} else {
-					return element`<span/>`
+					return element`<div class="sep"/>`
 				}
 			})}
 		</ContextMenuWrapper>

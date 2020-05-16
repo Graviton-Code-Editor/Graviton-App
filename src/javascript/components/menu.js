@@ -126,8 +126,8 @@ const styleWrapper = style`
 	& > div a:hover svg path{
 		fill:var(--menuOptionHoveringText);
 	}
-	& span{
-		height:2px;
+	& div.sep{
+		height:1px;
 		border-radius:100px;
 		width:90%;
 		display:block;

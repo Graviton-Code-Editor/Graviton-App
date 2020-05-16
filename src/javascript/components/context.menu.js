@@ -34,13 +34,14 @@ const styleWrapper = style`
 		background:var(--contextmenuButtonHoveringBackground);
 		color:var(--contextmenuButtonHoveringText);
 	}
-	& >  span{
-		height:1.5px;
+	& >  div.sep{
+		height:1px;
 		border-radius:25px;
 		width:95%;
 		display:block;
 		background:var(--contextmenuDivider);
 		margin:3px auto;
+		box-sizing:border-box;
 	}
 `
 

@@ -51,7 +51,7 @@ function getDropmenu(list) {
 				</a>
 			</div>`
 		} else {
-			return element`<span/>`
+			return element`<div class="sep"/>`
 		}
 	})
 }
