@@ -270,6 +270,13 @@ function Item({
 							}
 						},
 					},
+					{},
+					{
+						label: 'Open location',
+						action: () => {
+							openLocation(fullpath)
+						},
+					},
 				],
 				parent: this,
 				event: e,
@@ -281,6 +288,13 @@ function Item({
 						label: 'Remove file',
 						action: () => {
 							removeDirectoryOrFile(this)
+						},
+					},
+					{},
+					{
+						label: 'Open location',
+						action: () => {
+							openLocation(parentFolder)
 						},
 					},
 				],
@@ -506,6 +520,11 @@ function removeDirectoryOrFile(element) {
 		.catch(err => {
 			//Clicked "No", do nothing
 		})
+}
+
+function openLocation(location) {
+	const { shell } = window.require('electron')
+	shell.openItem(location)
 }
 
 export default Item
