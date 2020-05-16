@@ -1,17 +1,46 @@
 const fs = window.require('fs')
 const { join } = window.require('path')
+import RunningConfig from 'RunningConfig'
+
+RunningConfig.data.envs.push({
+	name: 'NPM',
+	filter(dir) {
+		if (fs.existsSync(join(dir, 'package.json'))) {
+			return window.require(join(dir, 'package.json'))
+		}
+		return false
+	},
+})
 
 function detectEnv(folder) {
-	if (fs.existsSync(join(folder, 'package.json'))) {
-		return {
-			env: 'node',
-			info: require(join(folder, 'package.json')),
+	return new Promise(resolve => {
+		const Envs = RunningConfig.data.envs
+
+		for (const { name, filter } of Envs) {
+			const pass = filter(folder)
+			if (pass instanceof Promise) {
+				pass
+					.then(data => {
+						if (data) {
+							resolve({
+								env: name,
+								info: data,
+							})
+						}
+					})
+					.catch(() => {
+						//Continue searching
+					})
+			} else {
+				if (pass) {
+					resolve({
+						env: name,
+						info: pass,
+					})
+				}
+			}
 		}
-	}
-	return {
-		env: null,
-		info: {},
-	}
+	})
 }
 
 export default detectEnv

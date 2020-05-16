@@ -22,6 +22,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	openedWindows: 0,
 	arguments: electronArguments,
 	currentStaticConfig: {},
+	envs: [],
 }
 
 const RunningConfig = new puffin.state(DEFAULT_RUNTIME_CONFIGURATION)

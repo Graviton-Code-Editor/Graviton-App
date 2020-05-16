@@ -15,26 +15,24 @@ RunningConfig.on('appLoaded', () => {
 		hint: 'Project inspector',
 	})
 
-	RunningConfig.on('addFolderToRunningWorkspace', ({ folderPath }) => {
-		const { env, info } = detectEnv(folderPath)
+	RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+		const { env, info } = await detectEnv(folderPath)
 
-		switch (env) {
-			case 'node':
-				const envExplorer = new Explorer({
-					items: [
-						{
-							label: basename(folderPath),
-							items: getKeysToItems(info, folderPath),
-						},
-					],
-				})
-				const explorerNode = render(envExplorer, panelNode.children[0])
-				RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath: removedFolderPath }) => {
-					if (folderPath == removedFolderPath) {
-						explorerNode.remove()
-					}
-				})
-				break
+		if (env && info) {
+			const envExplorer = new Explorer({
+				items: [
+					{
+						label: basename(folderPath),
+						items: getKeysToItems(info, folderPath),
+					},
+				],
+			})
+			const explorerNode = render(envExplorer, panelNode.children[0])
+			RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath: removedFolderPath }) => {
+				if (folderPath == removedFolderPath) {
+					explorerNode.remove()
+				}
+			})
 		}
 	})
 })
