@@ -16,7 +16,7 @@ function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolde
 		},
 	})`
 		<CommandPromptBody mounted="${mounted}" id="${name}" :keydown="${scrolling}">
-			<WindowBackground window="${name}"/>
+			<WindowBackground window="${name}" closeWindow=${() => closeCommandPrompt(name)}/>
 			<div class="container">
 				<input style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
 				<div/>
@@ -119,16 +119,8 @@ function closeCommandPrompt(CommandPromptComponent) {
 
 function scrollOptions({ state, scrollingDirection, onScrolled }) {
 	const hoveredOption = state.data.hoveredOption
-	const allOptions = hoveredOption.parentElement.children
-	const hoveredOptionPosition = (() => {
-		let index = 0
-		for (let option of allOptions) {
-			if (option == hoveredOption) break
-			index++
-		}
-		return index
-	})()
-
+	const allOptions = [...hoveredOption.parentElement.children]
+	const hoveredOptionPosition = allOptions.indexOf(hoveredOption)
 	if (scrollingDirection === 'up') {
 		if (hoveredOptionPosition !== 0) {
 			state.data.hoveredOption = allOptions[hoveredOptionPosition - 1]
@@ -146,7 +138,7 @@ function scrollOptions({ state, scrollingDirection, onScrolled }) {
 }
 
 function hoverOption(hoveredOption, allOptions, onScrolled = () => {}) {
-	for (let option of allOptions) {
+	allOptions.forEach(option => {
 		if (option === hoveredOption) {
 			option.classList.add('active')
 			onScrolled({
@@ -155,7 +147,7 @@ function hoverOption(hoveredOption, allOptions, onScrolled = () => {}) {
 		} else {
 			option.classList.remove('active')
 		}
-	}
+	})
 }
 
 function filterOptions(search, { options }) {
@@ -188,7 +180,7 @@ function renderOptions({ options, onSelected }, { state, parent, name }) {
 	parent.innerHTML = ''
 	render(optionsComp, parent)
 	state.data.hoveredOption = parent.children[0].children[hoveredDefault]
-	hoverOption(state.data.hoveredOption, parent.children[0].children)
+	hoverOption(state.data.hoveredOption, [...parent.children[0].children])
 }
 
 const findOptionAction = (options, option) => {

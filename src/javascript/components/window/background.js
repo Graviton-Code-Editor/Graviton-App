@@ -14,11 +14,8 @@ const styleWrapper = style`
 
 function WindowBackground({ closeWindow }) {
 	return element`
-		<div :click="${closeMe}" class="${styleWrapper}"/>
+		<div :click="${closeWindow}" class="${styleWrapper}"/>
 	`
-	function closeMe() {
-		closeWindow()
-	}
 }
 
 export default WindowBackground
