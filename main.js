@@ -23,7 +23,7 @@ app.on('ready', function () {
 			nodeIntegration: true,
 			webSecurity: !isDev,
 		},
-		frame: process.platform == 'linux',
+		frame: process.platform !== 'win32',
 		minHeight: 320,
 		minWidth: 320,
 		x: mainWindowState.x,

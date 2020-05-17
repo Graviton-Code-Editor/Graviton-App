@@ -4,6 +4,12 @@ import Logo from '../../../../assets/logo.svg'
 import AppPlatform from 'AppPlatform'
 
 const styleWrapper = style`
+	.app-container[os="darwin"] &, .app-container[os="linux"] & {
+		min-height:0px;
+		max-height:0px;
+		height:0px;
+		background: red;
+	}
 	&{
 		padding:0px;
 		display:flex;
@@ -43,14 +49,6 @@ const styleWrapper = style`
 	}
 `
 
-function getMacButtons() {
-	if (AppPlatform == 'darwin') {
-		return Buttons()
-	} else {
-		return element`<div/>`
-	}
-}
-
 function getButtons() {
 	if (AppPlatform == 'win32') {
 		return Buttons()
@@ -65,14 +63,11 @@ function TitleBar() {
 			Buttons,
 		},
 	})`
-	<div>
-		<div class="${styleWrapper}">
-			${getMacButtons()}
-			${AppPlatform !== 'darwin' ? element`<img class="logo" draggable="false" src="${() => Logo}" />` : ''}
-			<div id="dropmenus" class="dropmenus"/>
-			<div class="title"/>
-			${getButtons()}
-		</div>
+	<div class="${styleWrapper}">
+		${AppPlatform === 'win32' ? element`<img class="logo" draggable="false" src="${() => Logo}" />` : ''}
+		<div id="dropmenus" class="dropmenus"/>
+		<div class="title"/>
+		${getButtons()}
 	</div>
 	`
 }

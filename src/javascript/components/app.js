@@ -27,8 +27,11 @@ const styleWrapper = style`
 		#body{
 			display:flex;
 			flex-direction:columns;
-			height:calc(100% - 68px);
 			background:var(--bodyBackground);
+			height:calc(100% - 68px);
+		}
+		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
+			height: 100%;
 		}
 		#sidebar{
 			background: gray;

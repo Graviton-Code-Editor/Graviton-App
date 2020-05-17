@@ -7,7 +7,7 @@ const { remote } = window.require('electron')
 const { Menu: NativeMenu } = remote
 const NativeMenuBar = new NativeMenu()
 
-const isDarwin = window.require('process') !== 'darwin'
+const isWindows = window.require('process').platform === 'win32'
 
 function closeAllSubmenus(parent) {
 	const subMenusOpened = Object.keys(parent.getElementsByClassName('submenu')).map(ele => {
@@ -86,12 +86,12 @@ function hideMenus() {
 
 function Menu({ button, list }) {
 	//This will ignore user's configured AppPlatform's and will use the real one
-	if (isDarwin) {
+	if (isWindows) {
 		// Render Graviton's menu bar only in Windows and Linux
 		const MenuComponent = getMenu(button, list)
 		render(MenuComponent, document.getElementById('dropmenus'))
 	} else {
-		// Display MacOS's native menu bar
+		// Display native menu bar
 		appendToBar(createTemplate(button, list))
 	}
 }

@@ -12,6 +12,7 @@ import StaticConfig from 'StaticConfig'
 import ContextMenu from './constructors/contextmenu'
 import AppBody from './components/app'
 const isDev = window.require('electron-is-dev')
+import AppPlatform from 'AppPlatform'
 window.require('v8-compile-cache')
 
 import '../sass/main.scss'
@@ -27,7 +28,7 @@ const App = element({
 		AppBody,
 	},
 })`
-    <AppBody mounted="${mountedApp}">
+    <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}">
 		<div mounted="${mountedAppView}" style="${() => (blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : '')}">
 			<TitleBar/>
 			<div id="body">
