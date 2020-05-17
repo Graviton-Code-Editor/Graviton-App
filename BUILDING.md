@@ -4,100 +4,81 @@ Prerequisites:
 - NodeJS 
 - Git
 
-Instructions to build Graviton from the source:
+Instructions to build Graviton from source code:
 
-## 1 - Downloading the source
+## 1 - Clone the source
 
 Clone the git repository:
-> $ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git
+```shell
+git clone https://github.com/Graviton-Code-Editor/Graviton-App.git --depth 1
+```
 
 There are 2 different branches:
 * Master: daily source (default).
 * Stable: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
+* 1.3.0: it refers to the old Graviton source code.
 
-## 2 - Installing the dependencies
+## 2 - Install dependencies
 
 Go inside the folder:
-> $ cd Graviton-App
-
-### Windows
-
-Run as admin:
-> $ npm --global --production install windows-build-tools
-
-Install the project dependencies:
-> $ npm install
-
-Rebuild some dependencies with:
-> $ npm run rebuild
-
-### Linux
-
-(Tested on Ubuntu)
-
-You must have Python 2.7 installed.
+```shell
+cd Graviton-App
+```
 
 Install the dependencies:
-> $ npm install
+```shell
+npm install
+```
 
-Rebuild some dependencies with:
-> $ npm run rebuild
+## 3 - Developing (optional)
 
-### MacOS
+In case you just want to test it in dev mode, run:
+```shell
+npm start
+```
 
-You must have Python 2.7 installed.
+If graviton throws some error on the developer tools's console or it just shows an empty dark screen, try refreshing the window ( Ctrl+R ), this happens because Parcel hasn't not bundled yet.
+This won't happen when building.
 
-Install the dependencies:
-> $ npm install
+## 4 - Building the installer
 
-Rebuild some dependencies with:
-> $ npm run rebuild
+For Windows, Linux(deb,AppImage,rpm) and MacOS:
+```shell
+npm run build 
+```
 
-## 3 - Building 
+You can override the default platforms from the package.json.
 
-### Testing
+#### Building another linux installers
 
-In case you just wanna test it, run to compile SASS source:
-> $ npm run compile:sass
+If you want to build a specific linux package for your distro you can run: 
+```shell
+npm run build:your_extension
+```
 
-And then:
-> $ npm start
+For example, if you are an Arch Linux user, run:
+```shell
+npm run build:pacman
+```
 
-### Windows
+ Here is the list of the supported extensions:
+ * snap
+ * pacman
+ * deb
+ * apk
+ * freebsd 
+ * p5p 
+ * rpm
+ * AppImage
 
-- From a Windows machine:
+Please keep in mind that not all the distros can build some packages. Anyway, Ubuntu can build a Debian package and an AppImage installer out of the box.
 
-> $ npm run build 
+#### Building an out-packed
 
-- From a Windows or Linux machine for 32-bits Windows:
+In case you want to test Graviton in a production build but don't want to create an installer, you can build an outpacked version, this builds faster than an installer.
 
-> $ npm run build:win32
+Run:
+```shell
+npm run build
+```
 
-- From a Linux machine with Wine: 
-
->  $ npm run build:win 
-
-### Linux
-
-- From a Linux machine: 
-
->  $ npm run build 
-
-This will build an AppImage, Debian and RPM packages by default. You can change that on the package.json.
-
-If you want to build an specific package for your distribution, try this command (it might not be added yet):
-
->  $ npm run build:packageExtensionHere
-
-For example if you want to build this for your Ubuntu machine type this:
-
->  $ npm run build:deb
-
-You might need some dependencies to build it.
-
-   
-### MacOS
-
-- From MacOS: 
-
->  $ npm run build 
