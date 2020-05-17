@@ -47,7 +47,7 @@ function applyTheme(state) {
 console.log(ThemeProvider)
 
 RunningConfig.on('allPluginsLoaded', () => {
-	if (!PluginsRegistry.registry.data[StaticConfig.data.appTheme]) {
+	if (!PluginsRegistry.registry.data.list[StaticConfig.data.appTheme]) {
 		StaticConfig.data.appTheme = 'Night'
 	}
 	applyTheme(StaticConfig)

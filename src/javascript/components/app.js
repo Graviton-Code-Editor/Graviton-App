@@ -31,7 +31,7 @@ const styleWrapper = style`
 			height:calc(100% - 68px);
 		}
 		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
-			height: 100%;
+			height: calc(100% - 28px);
 		}
 		#sidebar{
 			background: gray;
