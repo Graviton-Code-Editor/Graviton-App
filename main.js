@@ -33,7 +33,7 @@ app.on('ready', function () {
 		backgroundColor: '#191919',
 		title: 'Graviton Editor',
 		show: false,
-		icon: path.join(__dirname, 'assets', 'building', process.platform, 'icon.ico'),
+		icon: getAppIcon(),
 		scrollBounce: true,
 	})
 	if (!isDev) main.removeMenu()
@@ -70,6 +70,17 @@ app.on('ready', function () {
 		main.setMenuBarVisibility(false)
 	}
 })
+
+function getAppIcon() {
+	switch (process.platform) {
+		case 'win32':
+			return path.join(__dirname, 'assets', 'building', 'win32', 'icon.ico')
+		case 'linux':
+			return path.join(__dirname, 'assets', 'building', 'win32', '512x512.png')
+		case 'darwin':
+			return path.join(__dirname, 'assets', 'building', 'win32', 'icon.png')
+	}
+}
 
 app.on('window-all-closed', () => {
 	app.quit()
