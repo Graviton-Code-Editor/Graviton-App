@@ -1,0 +1,141 @@
+{
+	"name": "deutsch",
+	"locale": "de",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "Datei",
+				"OpenFolder": "Ordner Öffnen",
+				"OpenFile": "Datei Öffnen",
+				"Projects": {
+					"Projects": "Projekte",
+					"OpenProjects": "Projekte Öffnen"
+				},
+				"Workspaces": {
+					"Workspaces": "Arbeitsplätze",
+					"OpenWorkspaces": "Arbeitsplätze Öffnen",
+					"OpenFromFile": "Von Datei Öffnen",
+					"AddFolderToWorkspace": "Ordner zu Arbeitsplatz hinzufügen",
+					"SaveWorkspace": "Arbeitsplatz Speichern"
+				}
+			},
+			"Edit": {
+				"Edit": "Bearbeiten",
+				"Undo": "Rückgängig machen",
+				"Redo": "Wiederholen",
+				"FontSize": {
+					"FontSize": "Schriftgröße",
+					"Increase": "Vergrößern",
+					"Decrease": "Verkleinern"
+				},
+				"Find": "Suchen",
+				"Replace": "Ersetzen",
+				"FormatDocument": "Dokument Formatieren"
+			},
+			"Tools": {
+				"Tools": "Tools",
+				"OpenSettings": "Einstellungen Öffnen",
+				"OpenStore": "Store Öffnen",
+				"Panels": {
+					"Panels": "Panels",
+					"NewPanel": "Neues Panel",
+					"CloseCurrentPanel": "Aktuelles Panel Schließen"
+				}
+			},
+			"Window": {
+				"Window": "Fenster",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Standart",
+					"IncreaseZoom": "Vergrößern",
+					"DecreaseZoom": "Verkleinern"
+				},
+				"Debug": {
+					"Debug": "Debug",
+					"OpenDebugWindow": "Debug Fenster Öffnen"
+				},
+				"OpenDevTools": "Dev Tools Öffnen"
+			},
+			"Help": {
+				"Help": "Hilfe",
+				"Contact": "Kontact",
+				"Social": "Social",
+				"Contributors": "Contributors",
+				"Blog": "Blog",
+				"Documentation": "Dokumentation",
+				"Website": "Website",
+				"SourceCode": "Source code",
+				"CheckForUpdates": "Auf Updates überprüfen",
+				"About": "About"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Einstellungen",
+				"Customization": {
+					"Customization": "Personalisierung",
+					"Themes": "Themen"
+				},
+				"Advanced": {
+					"Advanced": "Erweitert",
+					"FileWatcher": "Datei Beobachter",
+					"Autocomplete": "Autocomplete",
+					"WrapLines": "Zeilen Umbrechen",
+					"Indentation": {
+						"Indentation": "Einzug",
+						"Space": "Leerzeichen",
+						"Tab": "Tabulator"
+					}
+				},
+				"Languages": "Sprachen",
+				"About": {
+					"About": "About",
+					"GravitonDescription": "Graviton ist ein plattformübergreifender Editor."
+				}
+			},
+			"Store": {
+				"Store": "Store",
+				"Home": {
+					"Home": "Home"
+				},
+				"Installed": {
+					"Installed": "Installiert"
+				},
+				"Install": "Installieren",
+				"Update": "Aktualisieren",
+				"Uninstall": "Deinstallieren",
+				"AnyCompatibleVersion": "Jede kompatible Version."
+			},
+			"Welcome": {
+				"Welcome": "Willkommen",
+				"RecentProjects": "Zuletzt geöffnete Projekte",
+				"RecentWorkspaces": "Zuletzt geöffnete Arbeitsplätze",
+				"NewProject": "Neues Projekt",
+				"OpenWorkspace": "Arbeitsplatz Öffnen",
+				"OpenFolder": "Ordner Öffnen"
+			}
+		},
+		"misc": {
+			"LastVersion": "Letzte Version",
+			"InstalledVersion": "Installierte Version",
+			"About": "About",
+			"Skip": "Überspringen",
+			"Finish": "Beenden",
+			"Continue": "Fortsetzen",
+			"GoBack": "Zurück",
+			"Accept": "Akzeptieren",
+			"Cancel": "Abbrechen",
+			"version": "Version",
+			"More": "Mehr",
+			"Copy": "Kopieren",
+			"Paste": "Einfügen",
+			"Author": "Author",
+			"Exit": "Beenden",
+			"Tip": "Trinkgeld",
+			"Yes": "Ja",
+			"No": "Nein",
+			"Close": "Schließen",
+			"Ignore": "Ignorieren"
+		}
+	}
+}
