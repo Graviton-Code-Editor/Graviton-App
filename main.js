@@ -91,9 +91,11 @@ app.on('before-quit', () => {
 })
 
 ipcMain.on('download-plugin', (event, { url, id, dist }) => {
-	getZip(url, id, dist).then(() => {
-		event.reply('plugin-installed', true)
-	})
+	getZip(url, id, dist)
+		.then(() => {
+			event.reply('plugin-installed', true)
+		})
+		.catch(err => console.log(err))
 })
 
 function getZip(url, pluginId, dist) {
@@ -105,9 +107,11 @@ function getZip(url, pluginId, dist) {
 		}).then(async response => {
 			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`)))
 			createPluginFolder(pluginId, dist)
-			extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist).then(() => {
-				resolve()
-			})
+			extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist)
+				.then(() => {
+					resolve()
+				})
+				.catch(err => console.log(err))
 		})
 	})
 }
@@ -122,10 +126,17 @@ function createPluginFolder(pluginId, dist) {
 function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
 	return new Promise((resolve, reject) => {
-		fs.unlink(pluginDirectory, () => {
-			zip(zipPath, { dir: pluginDirectory })
-			resolve()
-		})
+		fs.unlink(pluginDirectory)
+			.then(() => {
+				//Nothing
+			})
+			.catch(err => console.log(err))
+			.finally(() => {
+				setTimeout(() => {
+					zip(zipPath, { dir: pluginDirectory })
+					resolve()
+				}, 100)
+			})
 	})
 }
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true')
