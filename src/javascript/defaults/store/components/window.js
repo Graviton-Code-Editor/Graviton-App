@@ -92,6 +92,9 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 						<Text>
 							<b lang-string="misc.Author" string="{{misc.Author}}: ${getPluginInfo(pluginInfoValid, 'author')}"/>
 						</Text>
+						<Text>
+							${getPluginInfo(pluginInfoValid, 'description')}
+						</Text>
 						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${lastReleaseVersion}"/>
 						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
 						${(!isPluginReserved && !pluginCompatibleVersion && getNoCompatibleversion()) || element`<div/>`}
