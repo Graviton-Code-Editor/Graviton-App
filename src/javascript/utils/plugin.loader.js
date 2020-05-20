@@ -17,6 +17,7 @@ import SideMenu from '../components/window/side.menu'
 import { EditorClient } from '../constructors/editorclient'
 import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
+import Explorer from '../constructors/explorer'
 
 const fs = window.require('fs-extra')
 const pluginsPath = path.join(StaticConfig.data.appConfigPath, 'plugins')
@@ -43,6 +44,7 @@ function loadPlugin(pluginPath, pluginName) {
 			EditorClient,
 			EnvClient,
 			SidePanel,
+			Explorer,
 		})
 	} catch (err) {
 		throwSilentError(`(${pluginName}) -> ${err}`)
