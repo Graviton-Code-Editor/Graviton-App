@@ -88,8 +88,9 @@ function Settings() {
 						<div href="languages">
 							<RadioGroup :radioSelected="${selectedLanguage}">
 								${Object.keys(Languages).map(lang => {
+									const languageName = Languages[lang].name
 									return element`
-										<label name="${lang}" checked="${StaticConfig.data.appLanguage === lang}">${lang}</label>
+										<label name="${lang}" checked="${StaticConfig.data.appLanguage === lang}">${languageName}</label>
 									`
 								})}
 							</RadioGroup>

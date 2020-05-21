@@ -1,123 +1,122 @@
 {
-	"name": "español",
+	"name": "Español",
 	"locale": "es",
 	"translations": {
-		"menus":{
+		"menus": {
 			"File": {
-				"File":"Archivo",
+				"File": "Archivo",
 				"OpenFolder": "Abrir carpeta",
 				"OpenFile": "Abrir archivo",
-				"Projects":{
-					"Projects":"Proyectos",
-					"OpenProjects":"Abrir proyectos",
+				"Projects": {
+					"Projects": "Proyectos",
+					"OpenProjects": "Abrir proyectos"
 				},
-				"Workspaces":{
-					"Workspaces":"Espacios de trabajo",
-					"OpenWorkspaces":"Abrir espacios de trabajo",
-					"OpenFromFile":"Abrir desde archivo",
-					"AddFolderToWorkspace":"Añadir carpeta al espacio de trabajo",
-					"SaveWorkspace":"Guardar espacio de trabajo"
+				"Workspaces": {
+					"Workspaces": "Espacios de trabajo",
+					"OpenWorkspaces": "Abrir espacios de trabajo",
+					"OpenFromFile": "Abrir desde archivo",
+					"AddFolderToWorkspace": "Añadir carpeta al espacio de trabajo",
+					"SaveWorkspace": "Guardar espacio de trabajo"
 				}
 			},
 			"Edit": {
-				"Edit":"Editar",
-				"Undo":"Deshacer",
-				"Redo":"Rehacer",
-				"FontSize":{
-					"FontSize":"Tamaño de fuente",
-					"Increase":"Incrementar",
-					"Decrease":"Disminuir"
+				"Edit": "Editar",
+				"Undo": "Deshacer",
+				"Redo": "Rehacer",
+				"FontSize": {
+					"FontSize": "Tamaño de fuente",
+					"Increase": "Incrementar",
+					"Decrease": "Disminuir"
 				},
-				"Find":"Encontrar",
-				"Replace":"Reemplazar",
-				"FormatDocument":"Formatear documento"
-
+				"Find": "Encontrar",
+				"Replace": "Reemplazar",
+				"FormatDocument": "Formatear documento"
 			},
 			"Tools": {
-				"Tools":"Herramientas",
-				"OpenSettings":"Abrir Ajustes",
-				"OpenStore":"Abrir Tienda",
-				"Panels":{
-					"Panels":"Paneles",
-					"NewPanel":"Nuevo Panel",
-					"CloseCurrentPanel":"Cerrar panel seleccionado"
+				"Tools": "Herramientas",
+				"OpenSettings": "Abrir Ajustes",
+				"OpenStore": "Abrir Tienda",
+				"Panels": {
+					"Panels": "Paneles",
+					"NewPanel": "Nuevo Panel",
+					"CloseCurrentPanel": "Cerrar panel seleccionado"
 				}
 			},
 			"Window": {
-				"Window":"Ventana",
-				"Zoom":{
-					"Zoom":"Zoom",
-					"DefaultZoom":"Por defecto",
-					"IncreaseZoom":"Incrementar",
-					"DecreaseZoom":"Disminuir"
+				"Window": "Ventana",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Por defecto",
+					"IncreaseZoom": "Incrementar",
+					"DecreaseZoom": "Disminuir"
 				},
-				"OpenDevTools":"Herramientas de desarrolllador"
+				"OpenDevTools": "Herramientas de desarrolllador"
 			},
 			"Help": {
-				"Help":"Ayuda",
-				"Contact":"Contactar",
-				"Social":"Social",
-				"Blog":"Blog",
-				"Documentation":"Documentación",
-				"Website":"Página web",
-				"SourceCode":"Código fuente",
-				"CheckForUpdates":"Comprobar actualizaciones",
-				"About":"Acerca de"
-			},
-		},
-		"windows":{
-			"Settings":{
-				"Settings":"Ajustes",
-				"Customization": {
-					"Customization":"Personalización",
-					"Themes":"Temas",
-					"FileWatcher":"Observador de archivos"
-				},
-				"Languages":"Lenguajes",
-				"About":"Acerca de"
-			},
-			"Store":{
-				"Store":"Tienda",
-				"Home":{
-					"Home":"Inicio"
-				},
-				"Installed":{
-					"Installed":"Instalado"
-				},
-				"Install":"Instalar",
-				"Update":"Actualizar",
-				"Uninstall":"Desinstalar"
-			},
-			"Welcome":{
-				"Welcome":"Bienvenida",
-				"RecentProjects":"Proyectos recientes",
-				"RecentWorkspaces":"Espacios de trabajo",
-				"NewProject":"Nuevo proyecto",
-				"OpenWorkspace":"Abrir un espacio de trabajo",
-				"OpenFolder":"Abrir una carpeta"
+				"Help": "Ayuda",
+				"Contact": "Contactar",
+				"Social": "Social",
+				"Blog": "Blog",
+				"Documentation": "Documentación",
+				"Website": "Página web",
+				"SourceCode": "Código fuente",
+				"CheckForUpdates": "Comprobar actualizaciones",
+				"About": "Acerca de"
 			}
 		},
-		"misc":{
-			"LastVersion":"Última versión",
-			"InstalledVersion":"Versión instalada",
-			"About":"Acerca de ",
-			"Skip":"Saltar",
-			"Finish":"Finalizar",
-			"Continue":"Continuar",
-			"GoBack":"Ir atrás",
-			"Accept":"Acceptar",
-			"Cancel":"Cancelar",
-			"version":"versión",
-			"More":"Más",
-			"Copy":"Copiar",
-			"Paste":"Pegar",
+		"windows": {
+			"Settings": {
+				"Settings": "Ajustes",
+				"Customization": {
+					"Customization": "Personalización",
+					"Themes": "Temas",
+					"FileWatcher": "Observador de archivos"
+				},
+				"Languages": "Lenguajes",
+				"About": "Acerca de"
+			},
+			"Store": {
+				"Store": "Tienda",
+				"Home": {
+					"Home": "Inicio"
+				},
+				"Installed": {
+					"Installed": "Instalado"
+				},
+				"Install": "Instalar",
+				"Update": "Actualizar",
+				"Uninstall": "Desinstalar"
+			},
+			"Welcome": {
+				"Welcome": "Bienvenida",
+				"RecentProjects": "Proyectos recientes",
+				"RecentWorkspaces": "Espacios de trabajo",
+				"NewProject": "Nuevo proyecto",
+				"OpenWorkspace": "Abrir un espacio de trabajo",
+				"OpenFolder": "Abrir una carpeta"
+			}
+		},
+		"misc": {
+			"LastVersion": "Última versión",
+			"InstalledVersion": "Versión instalada",
+			"About": "Acerca de ",
+			"Skip": "Saltar",
+			"Finish": "Finalizar",
+			"Continue": "Continuar",
+			"GoBack": "Ir atrás",
+			"Accept": "Acceptar",
+			"Cancel": "Cancelar",
+			"version": "versión",
+			"More": "Más",
+			"Copy": "Copiar",
+			"Paste": "Pegar",
 			"Author": "Autor",
 			"Exit": "Salir",
 			"Tip": "Consejo",
-			"Yes":"Si",
-			"No":"No",
-			"Close":"Cerrar",
-			"Ignore":"Ignorar"
+			"Yes": "Si",
+			"No": "No",
+			"Close": "Cerrar",
+			"Ignore": "Ignorar"
 		}
 	}
 }

@@ -1,5 +1,5 @@
 {
-	"name": "french",
+	"name": "French",
 	"locale": "fr",
 	"translations": {
 		"menus": {
@@ -9,7 +9,7 @@
 				"OpenFile": "Ouvrir un fichier",
 				"Projects": {
 					"Projects": "Projets",
-					"OpenProjects": "Projets ouverts",
+					"OpenProjects": "Projets ouverts"
 				},
 				"Workspaces": {
 					"Workspaces": "Espaces de travail",
@@ -31,7 +31,6 @@
 				"Find": "Chercher",
 				"Replace": "Remplacer",
 				"FormatDocument": "Formatter le document"
-				
 			},
 			"Tools": {
 				"Tools": "Outils",
@@ -63,7 +62,7 @@
 				"SourceCode": "Code source",
 				"CheckForUpdates": "Rechercher des mises à jours",
 				"About": "À propos"
-			},
+			}
 		},
 		"windows": {
 			"Settings": {
