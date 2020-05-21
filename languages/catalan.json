@@ -1,124 +1,122 @@
 {
-
 	"name": "català",
 	"locale": "cat",
 	"translations": {
-		"menus":{
+		"menus": {
 			"File": {
-				"File":"Arxiu",
+				"File": "Arxiu",
 				"OpenFolder": "Obrir carpeta",
 				"OpenFile": "Obrir fitxer",
-				"Projects":{
-					"Projects":"Projectes",
-					"OpenProjects":"Obrir projectes",
+				"Projects": {
+					"Projects": "Projectes",
+					"OpenProjects": "Obrir projectes"
 				},
-				"Workspaces":{
-					"Workspaces":"Espais de treball",
-					"OpenWorkspaces":"Obrir espais de treball",
-					"OpenFromFile":"Abrir desde archivo",
-					"AddFolderToWorkspace":"Añadir carpeta al espacio de trabajo",
-					"SaveWorkspace":"Desar espais de treball"
+				"Workspaces": {
+					"Workspaces": "Espais de treball",
+					"OpenWorkspaces": "Obrir espais de treball",
+					"OpenFromFile": "Obrir desde arxiu",
+					"AddFolderToWorkspace": "Afegir carpeta al espai de treball",
+					"SaveWorkspace": "Desar espais de treball"
 				}
 			},
 			"Edit": {
-				"Edit":"Editar",
-				"Undo":"Des-fer",
-				"Redo":"Re-fer",
-				"FontSize":{
-					"FontSize":"Mida de la font",
-					"Increase":"Incrementar",
-					"Decrease":"Disminuir"
+				"Edit": "Editar",
+				"Undo": "Des-fer",
+				"Redo": "Re-fer",
+				"FontSize": {
+					"FontSize": "Mida de la font",
+					"Increase": "Incrementar",
+					"Decrease": "Disminuir"
 				},
-				"Find":"Trobar",
-				"Replace":"Reemplaçar",
-				"FormatDocument":"Formatejar el document"
-
+				"Find": "Trobar",
+				"Replace": "Reemplaçar",
+				"FormatDocument": "Formatejar el document"
 			},
 			"Tools": {
-				"Tools":"Eines",
-				"OpenSettings":"Obrir Configuració",
-				"OpenStore":"Obrir Botiga",
-				"Panels":{
-					"Panels":"Panells",
-					"NewPanel":"Nou panell",
-					"CloseCurrentPanel":"Tancar panell sel·leccionat"
+				"Tools": "Eines",
+				"OpenSettings": "Obrir Configuració",
+				"OpenStore": "Obrir Botiga",
+				"Panels": {
+					"Panels": "Panells",
+					"NewPanel": "Nou panell",
+					"CloseCurrentPanel": "Tancar panell sel·leccionat"
 				}
 			},
 			"Window": {
-				"Window":"Finestra",
-				"Zoom":{
-					"Zoom":"Zoom",
-					"DefaultZoom":"Per defecte",
-					"IncreaseZoom":"Incrementar",
-					"DecreaseZoom":"Disminuir"
+				"Window": "Finestra",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Per defecte",
+					"IncreaseZoom": "Incrementar",
+					"DecreaseZoom": "Disminuir"
 				},
-				"OpenDevTools":"Eienes de desenvolupador"
+				"OpenDevTools": "Eienes de desenvolupador"
 			},
 			"Help": {
-				"Help":"Ajuda",
-				"Contact":"Contactar",
-				"Social":"Social",
-				"Blog":"Blog",
-				"Documentation":"Documentació",
-				"Website":"Pàgina web",
-				"SourceCode":"Codi font",
-				"CheckForUpdates":"Comprovar actualizacions",
-				"About":"Sobre"
-			},
-		},
-		"windows":{
-			"Settings":{
-				"Settings":"Configuració",
-				"Customization": {
-					"Customization":"Personalizació",
-					"Themes":"Temas",
-					"FileWatcher":"Observador d'arxius"
-				},
-				"Languages":"Llengües",
-				"About":"Sobre"
-			},
-			"Store":{
-				"Store":"Botiga",
-				"Home":{
-					"Home":"Inici"
-				},
-				"Installed":{
-					"Installed":"Instalat"
-				},
-				"Install":"Instalar",
-				"Update":"Actualitzar",
-				"Uninstall":"Desinstalar"
-			},
-			"Welcome":{
-				"Welcome":"Benvinguda",
-				"RecentProjects":"Projectes recents",
-				"RecentWorkspaces":"Espais de treball",
-				"NewProject":"Nou projecte",
-				"OpenWorkspace":"Obrir un espai de treball",
-				"OpenFolder":"Obrir una carpeta"
+				"Help": "Ajuda",
+				"Contact": "Contactar",
+				"Social": "Social",
+				"Blog": "Blog",
+				"Documentation": "Documentació",
+				"Website": "Pàgina web",
+				"SourceCode": "Codi font",
+				"CheckForUpdates": "Comprovar actualizacions",
+				"About": "Sobre"
 			}
 		},
-		"misc":{
-			"LastVersion":"Última versió",
-			"InstalledVersion":"Versió instalada",
-			"About":"Sobre ",
-			"Skip":"Saltar",
-			"Finish":"Finalitzar",
-			"Continue":"Continuar",
-			"GoBack":"Enrere",
-			"Accept":"Acceptar",
-			"Cancel":"Cancelar",
-			"version":"versió",
-			"More":"Més",
-			"Copy":"Copiar",
-			"Paste":"Enganxar",
+		"windows": {
+			"Settings": {
+				"Settings": "Configuració",
+				"Customization": {
+					"Customization": "Personalització",
+					"Themes": "Temes",
+					"FileWatcher": "Observador d'arxius"
+				},
+				"Languages": "Llengües",
+				"About": "Sobre"
+			},
+			"Store": {
+				"Store": "Botiga",
+				"Home": {
+					"Home": "Inici"
+				},
+				"Installed": {
+					"Installed": "Instalat"
+				},
+				"Install": "Instalar",
+				"Update": "Actualitzar",
+				"Uninstall": "Desinstalar"
+			},
+			"Welcome": {
+				"Welcome": "Benvinguda",
+				"RecentProjects": "Projectes recents",
+				"RecentWorkspaces": "Espais de treball",
+				"NewProject": "Nou projecte",
+				"OpenWorkspace": "Obrir un espai de treball",
+				"OpenFolder": "Obrir una carpeta"
+			}
+		},
+		"misc": {
+			"LastVersion": "Última versió",
+			"InstalledVersion": "Versió instalada",
+			"About": "Sobre ",
+			"Skip": "Saltar",
+			"Finish": "Finalitzar",
+			"Continue": "Continuar",
+			"GoBack": "Enrere",
+			"Accept": "Acceptar",
+			"Cancel": "Cancelar",
+			"version": "versió",
+			"More": "Més",
+			"Copy": "Copiar",
+			"Paste": "Enganxar",
 			"Author": "Autor",
 			"Exit": "Sortir",
 			"Tip": "Consell",
-			"Yes":"Si",
-			"No":"No",
-			"Close":"Tancar",
-			"Ignore":"Ignorar"
+			"Yes": "Si",
+			"No": "No",
+			"Close": "Tancar",
+			"Ignore": "Ignorar"
 		}
 	}
 }
