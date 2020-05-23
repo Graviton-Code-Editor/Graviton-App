@@ -25,30 +25,67 @@ const isDev = window.require('electron-is-dev')
 
 const getPlugin = pluginPath => require(pluginPath)
 
-function loadPlugin(pluginPath, pluginName) {
-	try {
-		window.require(pluginPath).entry({
-			StaticConfig,
-			RunningConfig,
-			Window,
-			puffin,
-			Menu,
-			Dialog,
-			StatusBarItem,
-			ContextMenu,
-			Notification,
-			CodeMirror,
-			Tab,
-			drac,
-			SideMenu,
-			EditorClient,
-			EnvClient,
-			SidePanel,
-			Explorer,
-		})
-	} catch (err) {
-		throwSilentError(`(${pluginName}) -> ${err}`)
+function loadMainFile({ mainDev, main, name, type, PATH }) {
+	if (main) {
+		let mainPath
+		if (isDev) {
+			if (mainDev && fs.existsSync(path.join(PATH, mainDev))) {
+				mainPath = path.join(PATH, mainDev) //DEV version
+			} else {
+				mainPath = path.join(PATH, main) //BUILT version
+			}
+		} else {
+			if (main && fs.existsSync(path.join(PATH, main))) {
+				mainPath = path.join(PATH, main) //BUILT version
+			} else {
+				mainPath = path.join(PATH, mainDev) //DEV version
+			}
+		}
+
+		/*
+		 * In dev mode, the dev mode of the plugin has priority
+		 * In production mode the built version has priority
+		 */
+		if (type === 'plugin') {
+			try {
+				window.require(mainPath).entry({
+					StaticConfig,
+					RunningConfig,
+					Window,
+					puffin,
+					Menu,
+					Dialog,
+					StatusBarItem,
+					ContextMenu,
+					Notification,
+					CodeMirror,
+					Tab,
+					drac,
+					SideMenu,
+					EditorClient,
+					EnvClient,
+					SidePanel,
+					Explorer,
+				})
+			} catch (err) {
+				throwSilentError(`(${name}) -> ${err}`)
+			}
+		}
 	}
+}
+
+function loadCodeMirror({ type, fileTheme, PATH }) {
+	if (type === 'theme' && fileTheme) {
+		const style = document.createElement('link')
+		style.rel = 'stylesheet'
+		style.href = path.join(PATH, fileTheme)
+		document.head.appendChild(style)
+	}
+}
+
+function loadPlugin(pluginPkg) {
+	loadMainFile(pluginPkg)
+	loadCodeMirror(pluginPkg)
 }
 
 RunningConfig.on('appLoaded', function () {
@@ -71,32 +108,12 @@ RunningConfig.on('appLoaded', function () {
 function loadAllPlugins() {
 	Object.keys(PluginsRegistry.registry.data.list).map(pluginName => {
 		const pluginPkg = PluginsRegistry.registry.data.list[pluginName]
-		if (pluginPkg.main) {
-			let mainPath
-			if (isDev) {
-				if (pluginPkg.mainDev && fs.existsSync(path.join(pluginPkg.PATH, pluginPkg.mainDev))) {
-					mainPath = path.join(pluginPkg.PATH, pluginPkg.mainDev) //DEV version
-				} else {
-					mainPath = path.join(pluginPkg.PATH, pluginPkg.main) //BUILT version
-				}
-			} else {
-				if (pluginPkg.main && fs.existsSync(path.join(pluginPkg.PATH, pluginPkg.main))) {
-					mainPath = path.join(pluginPkg.PATH, pluginPkg.main) //BUILT version
-				} else {
-					mainPath = path.join(pluginPkg.PATH, pluginPkg.mainDev) //DEV version
-				}
-			}
-
-			/*
-			 * In dev mode, the dev mode of the plugin has priority
-			 * In production mode the built version has priority
-			 */
-			loadPlugin(mainPath, pluginName)
-		}
+		loadPlugin(pluginPkg)
 	})
 }
 
 function throwSilentError(message) {
+	throw message
 	console.log(`%cERR::%c ${message}`, 'color:rgb(255,35,35)', 'color:white')
 }
 

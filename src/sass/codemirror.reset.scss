@@ -182,7 +182,7 @@ li.CodeMirror-hint-active {
 }
 .cm-s-default {
 	.cm-header {
-		color: blue;
+		color: white;
 	}
 	.cm-quote {
 		color: #090;
@@ -273,7 +273,7 @@ li.CodeMirror-hint-active {
 	border-bottom: 2px solid;
 }
 .CodeMirror-matchingbracket {
-	outline: 1px solid red;
+	outline: 1px solid gray;
 }
 .CodeMirror-matchingtag {
 	background: rgba(255, 150, 0, 0.3);

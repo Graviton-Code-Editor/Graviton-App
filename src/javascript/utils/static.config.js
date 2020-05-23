@@ -11,7 +11,6 @@ function saveConfiguration() {
 const StaticConfig = new puffin.state(Object.assign({}, cachedConfiguration.config))
 
 StaticConfig.changed((a, b) => {
-	console.log(!RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug)
 	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug) {
 		saveConfiguration()
 	}
