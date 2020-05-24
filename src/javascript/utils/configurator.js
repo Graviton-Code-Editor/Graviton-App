@@ -17,6 +17,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		editorAutocomplete: true,
 		editorIndentation: 'tab',
 		editorTabSize: 4,
+		editorFontFamily: 'JetBrainsMono',
 		editorWrapLines: false,
 		appPlatform: 'auto',
 		appShortcuts: {

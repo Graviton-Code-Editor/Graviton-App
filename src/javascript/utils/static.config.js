@@ -28,7 +28,16 @@ StaticConfig.keyChanged('editorFSWatcher', status => {
 	}
 })
 
+StaticConfig.keyChanged('editorFontFamily', value => {
+	setFontFamily(value)
+})
+
+function setFontFamily(value) {
+	document.body.style.setProperty('--codeFont', value)
+}
+
 webFrame.setZoomFactor(StaticConfig.data.appZoom)
+setFontFamily(StaticConfig.data.editorFontFamily)
 
 console.log(StaticConfig)
 

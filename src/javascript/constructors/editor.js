@@ -115,6 +115,11 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 			fontSize: value,
 		})
 	})
+	const editorFontFamilyWatcher = StaticConfig.keyChanged('editorFontFamily', value => {
+		Client.do('refresh', {
+			instance: instance,
+		})
+	})
 	const focusedEditorWatcher = RunningConfig.keyChanged('focusedEditor', editor => {
 		if (editor) {
 			CursorPositionStatusBarItem.show()
@@ -159,6 +164,7 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		focusedEditorWatcher.cancel()
 		tabDestroyedWatcher.cancel()
 		tabSavedWatcher.cancel()
+		editorFontFamilyWatcher.cancel()
 	})
 	return {
 		client: Client,

@@ -9,20 +9,21 @@ const styleWrapper = style`
 			overflow:hidden;
 			--puffinFont:mainFont;
 			background: var(--bodyBackground);
+			--codeFont: JetBrainsMono;
 		}
 		@font-face {
 			font-family: mainFont;
 			src: url(Inter-Regular.woff2) format("woff2") ;
 		}
 		@font-face {
-			font-family: codeFont;
+			font-family: JetBrainsMono;
 			src: url(JetBrainsMono-Regular.woff2) format("woff2") ;
 		}
 		* {
 			font-family: mainFont;
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
-			font-family:codeFont;
+			font-family:var(--codeFont);
 		}
 		#body{
 			display:flex;
