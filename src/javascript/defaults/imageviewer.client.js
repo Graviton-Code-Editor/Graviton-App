@@ -25,10 +25,10 @@ const ImageViewerClient = new EditorClient(
 	{
 		getValue: instance => '',
 		getLangFromExt(extension) {
-			switch (extension) {
-				/*
+			/*
 			Every case refers to a supported image format.
 			*/
+			switch (extension) {
 				case 'ico':
 					return {
 						name: 'ico',
@@ -54,10 +54,10 @@ const ImageViewerClient = new EditorClient(
 		},
 		create({ element: containerElement, directory }) {
 			const ImageViewerComp = element`
-			<div class="${styleWrapper}">
-				<img draggable="false" src="${directory}"/>
-			</div>
-		`
+				<div class="${styleWrapper}">
+					<img draggable="false" src="${directory}"/>
+				</div>
+			`
 			render(ImageViewerComp, containerElement)
 			return {
 				instance: {}, //Returns empty object because there is no editor instance

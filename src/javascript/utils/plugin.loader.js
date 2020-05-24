@@ -28,7 +28,7 @@ const getPlugin = pluginPath => require(pluginPath)
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
 		let mainPath
-		if (isDev) {
+		if (isDev || RunningConfig.data.isDebug) {
 			if (mainDev && fs.existsSync(path.join(PATH, mainDev))) {
 				mainPath = path.join(PATH, mainDev) //DEV version
 			} else {
@@ -41,11 +41,6 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 				mainPath = path.join(PATH, mainDev) //DEV version
 			}
 		}
-
-		/*
-		 * In dev mode, the dev mode of the plugin has priority
-		 * In production mode the built version has priority
-		 */
 		if (type === 'plugin') {
 			try {
 				window.require(mainPath).entry({
@@ -113,7 +108,6 @@ function loadAllPlugins() {
 }
 
 function throwSilentError(message) {
-	throw message
 	console.log(`%cERR::%c ${message}`, 'color:rgb(255,35,35)', 'color:white')
 }
 

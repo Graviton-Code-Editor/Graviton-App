@@ -18,7 +18,7 @@ RunningConfig.on('command.newPanel', () => {
 	new Panel()
 })
 RunningConfig.on('command.closeCurrentTab', () => {
-	if (RunningConfig.data.focusedTab != null) {
+	if (RunningConfig.data.focusedTab) {
 		//Check if there is any opened tab
 		RunningConfig.data.focusedTab.state.emit('close')
 	}

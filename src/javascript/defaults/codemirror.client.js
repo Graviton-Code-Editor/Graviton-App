@@ -97,6 +97,18 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'pug',
 					}
+				case 'cpp':
+					return {
+						name: 'text/x-c++src',
+					}
+				case 'c':
+					return {
+						name: 'text/x-csrc',
+					}
+				case 'java':
+					return {
+						name: 'text/x-java',
+					}
 				case 'scss':
 				case 'sass':
 					return {
