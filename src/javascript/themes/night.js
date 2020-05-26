@@ -16,6 +16,7 @@ const Night = {
 		menuButtonBackground: 'transparent',
 		menuButtonHoveringBackground: '#333333',
 		menuButtonText: 'white',
+		menuOptionHoveringBackground: 'rgb(255, 0, 72)',
 		menuButtonHoveringText: 'white',
 		menuOptionText: 'white',
 		menuOptionHoveringText: 'white',

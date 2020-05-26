@@ -18,6 +18,7 @@ const Arctic = {
 		menuButtonText: 'black',
 		menuButtonHoveringText: 'black',
 		menuOptionText: 'black',
+		menuOptionHoveringBackground: '#0066FF',
 		menuOptionHoveringText: 'white',
 		menuDivider: 'rgb(212,212,212)',
 		controlButtonsFill: 'black',

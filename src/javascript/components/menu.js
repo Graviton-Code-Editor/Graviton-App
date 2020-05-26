@@ -120,7 +120,7 @@ const styleWrapper = style`
 		padding-right:25px;
 	}
 	& > div a:hover{
-		background:var(--accentColor);
+		background:var(--menuOptionHoveringBackground);
 		color:var(--menuOptionHoveringText);
 	}
 	& > div a:hover svg path{
