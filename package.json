@@ -115,6 +115,7 @@
 		"appId": "graviton-editor",
 		"artifactName": "${name}Installer-${version}-${arch}-${platform}.${ext}",
 		"asar": true,
+		"icon": "assets/building/darwin/icon.png",
 		"files": [
 			"!**.cache",
 			"!**.git",
@@ -124,7 +125,6 @@
 			"!**test"
 		],
 		"dmg": {
-			"icon": "assets/building/darwin/icon.png",
 			"contents": [
 				{
 					"x": 240,
