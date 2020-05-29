@@ -85,61 +85,62 @@
 						"Indentation": "Indentação",
 						"Space": "Espaço",
 						"Tab": "Tab"
+					},
+					"Languages": "Idiomas",
+					"About": {
+						"About": "Sobe",
+						"GravitonDescription": "Graviton é um editor multi plataforma."
+					}
 				},
-				"Languages": "Idiomas",
-				"About": {
-					"About": "Sobe",
-					"GravitonDescription": "Graviton é um editor multi plataforma."
+				"Store": {
+					"Store": "Loja",
+					"Home": {
+						"Home": "Inicio"
+					},
+					"Installed": {
+						"Installed": "Instalado"
+					},
+					"Install": "Instalar",
+					"Update": "Atualizar",
+					"Uninstall": "Desinstalar",
+					"AnyCompatibleVersion": "Qualquer versão compatível."
+				},
+				"Welcome": {
+					"Welcome": "Bem-vindo",
+					"RecentProjects": "Projetos recentes",
+					"RecentWorkspaces": "workspaces recentes",
+					"NewProject": "Novo projeto",
+					"OpenWorkspace": "Abrir uma workspace",
+					"OpenFolder": "Abrir uma pasta"
 				}
 			},
-			"Store": {
-				"Store": "Loja",
-				"Home": {
-					"Home": "Inicio"
-				},
-				"Installed": {
-					"Installed": "Instalado"
-				},
-				"Install": "Instalar",
-				"Update": "Atualizar",
-				"Uninstall": "Desinstalar",
-				"AnyCompatibleVersion": "Qualquer versão compatível."
+			"misc": {
+				"LastVersion": "Ultima versão",
+				"InstalledVersion": "Versão instalada",
+				"About": "Sobre",
+				"Skip": "Pular",
+				"Finish": "Finalizado",
+				"Continue": "Continuar",
+				"GoBack": "Voltar",
+				"Accept": "Aceitar",
+				"Cancel": "Cancelar",
+				"version": "Versão",
+				"More": "Mais",
+				"Copy": "Copiar",
+				"Paste": "Colar",
+				"Author": "Autor",
+				"Exit": "Sair",
+				"Tip": "Dica",
+				"Yes": "Sim",
+				"No": "Não",
+				"Close": "Fechar",
+				"Ignore": "Ignorar"
 			},
-			"Welcome": {
-				"Welcome": "Bem-vindo",
-				"RecentProjects": "Projetos recentes",
-				"RecentWorkspaces": "workspaces recentes",
-				"NewProject": "Novo projeto",
-				"OpenWorkspace": "Abrir uma workspace",
-				"OpenFolder": "Abrir uma pasta"
-			}
-		},
-		"misc": {
-			"LastVersion": "Ultima versão",
-			"InstalledVersion": "Versão instalada",
-			"About": "Sobre",
-			"Skip": "Pular",
-			"Finish": "Finalizado",
-			"Continue": "Continuar",
-			"GoBack": "Voltar",
-			"Accept": "Aceitar",
-			"Cancel": "Cancelar",
-			"version": "Versão",
-			"More": "Mais",
-			"Copy": "Copiar",
-			"Paste": "Colar",
-			"Author": "Autor",
-			"Exit": "Sair",
-			"Tip": "Dica",
-			"Yes": "Sim",
-			"No": "Não",
-			"Close": "Fechar",
-			"Ignore": "Ignorar"
-		},
-		"notifications": {
-			"appLanguageChanged": {
-				"appLanguageChanged": "O idioma do aplicativo foi alterado.",
-				"restartMessage": "Reinicie o aplicativo para aplicar totalmente as alterações."
+			"notifications": {
+				"appLanguageChanged": {
+					"appLanguageChanged": "O idioma do aplicativo foi alterado.",
+					"restartMessage": "Reinicie o aplicativo para aplicar totalmente as alterações."
+				}
 			}
 		}
 	}
