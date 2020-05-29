@@ -41,6 +41,7 @@ const styleWrapper = style`
 		max-width:auto;
 		width:auto;
 		display:flex;
+		height: 33px;
 	}
 	.logo {
 		width:22px;
