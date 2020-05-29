@@ -79,7 +79,12 @@
 				"Advanced": {
 					"Advanced": "Avançado",
 					"FileWatcher": "Observador de arquivos",
-					"Autocomplete": "Autocomplete"
+					"Autocomplete": "Autocomplete",
+					"WrapLines": "Quebra de linha automática",
+					"Indentation": {
+						"Indentation": "Indentação",
+						"Space": "Espaço",
+						"Tab": "Tab"
 				},
 				"Languages": "Idiomas",
 				"About": {
@@ -97,7 +102,8 @@
 				},
 				"Install": "Instalar",
 				"Update": "Atualizar",
-				"Uninstall": "Desinstalar"
+				"Uninstall": "Desinstalar",
+				"AnyCompatibleVersion": "Qualquer versão compatível."
 			},
 			"Welcome": {
 				"Welcome": "Bem-vindo",
