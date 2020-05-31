@@ -1,9 +1,10 @@
 import { element, style } from '@mkenzo_8/puffin'
 import { Text } from '@mkenzo_8/puffin-drac'
+import largeLogo from '../../../assets/large_logo.svg'
 
 const styleWrapper = style`
 	&{
-		background:var(--splashScreenBackground);
+		background:var(--splashScreenBackground, #191919);
 		color:var(--splashScreenText);
 		position:fixed;
 		top:0;
@@ -14,6 +15,10 @@ const styleWrapper = style`
 		justify-content:center;
 		align-items:center;
 		font-size:20px;
+	}
+	& img {
+		width: 20%;
+		max-width: 200px;
 	}
 `
 
@@ -30,7 +35,7 @@ function SplashScreen() {
 		},
 	})`
 		<div mounted="${mounted}" class="${styleWrapper}"">
-			<Text>Graviton</Text>
+			<img src="${largeLogo}"/>
 		</div>
 	`
 }
