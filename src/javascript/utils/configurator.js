@@ -77,15 +77,15 @@ function initConfiguration() {
 	const configurationStore = new electronStore()
 	console.log(configurationStore)
 	checkObject(DEFAULT_STATIC_CONFIGURATION.config, null, configurationStore, 0)
-
+	console.log(configurationStore.get('config').appConfigPath)
 	//If .graviton2 doesn't exist, it creates it
-	if (!fs.existsSync(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath)) {
-		fs.mkdirSync(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath)
+	if (!fs.existsSync(configurationStore.get('config').appConfigPath)) {
+		fs.mkdirSync(configurationStore.get('config').appConfigPath)
 	}
 	//If .graviton2/plugins doesn't exist, it creates it
-	console.log(path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath, 'plugins'))
-	if (!fs.existsSync(path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath, 'plugins'))) {
-		fs.mkdirSync(path.join(DEFAULT_STATIC_CONFIGURATION.config.appConfigPath, 'plugins'))
+	console.log(path.join(configurationStore.get('config').appConfigPath, 'plugins'))
+	if (!fs.existsSync(path.join(configurationStore.get('config').appConfigPath, 'plugins'))) {
+		fs.mkdirSync(path.join(configurationStore.get('config').appConfigPath, 'plugins'))
 	}
 	return {
 		store: configurationStore,
