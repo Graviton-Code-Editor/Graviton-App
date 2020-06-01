@@ -76,9 +76,9 @@ function getAppIcon() {
 		case 'win32':
 			return path.join(__dirname, 'assets', 'building', 'win32', 'icon.ico')
 		case 'linux':
-			return path.join(__dirname, 'assets', 'building', 'win32', '512x512.png')
+			return path.join(__dirname, 'assets', 'building', 'linux', '512x512.png')
 		case 'darwin':
-			return path.join(__dirname, 'assets', 'building', 'win32', 'icon.png')
+			return path.join(__dirname, 'assets', 'building', 'darwin', 'icon.png')
 	}
 }
 
