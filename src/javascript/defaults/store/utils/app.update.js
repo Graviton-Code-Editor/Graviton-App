@@ -2,6 +2,7 @@ import Endpoints from '../api/api.endpoints'
 import axios from 'axios'
 import packageJSON from '../../../../../package.json'
 import semver from 'semver'
+const isDev = window.require('electron-is-dev')
 
 function gravitonHasUpdate() {
 	return new Promise((resolve, reject) => {
@@ -10,7 +11,8 @@ function gravitonHasUpdate() {
 			url: Endpoints.API,
 		})
 			.then(async function (response) {
-				const gravitonVersion = response.data['gravitonVersion']
+				const { betaVersion, stableVersion } = response.data.graviton
+				let gravitonVersion = betaVersion
 				if (semver.gt(gravitonVersion, packageJSON.version)) {
 					resolve({
 						res: true,
