@@ -34,8 +34,8 @@
 			},
 			"Tools": {
 				"Tools": "Herramientas",
-				"OpenSettings": "Abrir Ajustes",
-				"OpenStore": "Abrir Tienda",
+				"OpenSettings": "Ajustes",
+				"OpenStore": "Tienda",
 				"Panels": {
 					"Panels": "Paneles",
 					"NewPanel": "Nuevo Panel",

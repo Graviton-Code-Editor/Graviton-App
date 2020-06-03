@@ -34,8 +34,8 @@
 			},
 			"Tools": {
 				"Tools": "Eines",
-				"OpenSettings": "Obrir Configuració",
-				"OpenStore": "Obrir Botiga",
+				"OpenSettings": "Configuració",
+				"OpenStore": "Botiga",
 				"Panels": {
 					"Panels": "Panells",
 					"NewPanel": "Nou panell",
