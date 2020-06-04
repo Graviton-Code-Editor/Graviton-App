@@ -63,7 +63,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 					Explorer,
 				})
 			} catch (err) {
-				throwSilentError(`(${name}) -> ${err}`)
+				throwError(`(${name}) -> ${err}`, err)
 			}
 		}
 	}
@@ -107,8 +107,12 @@ function loadAllPlugins() {
 	})
 }
 
-function throwSilentError(message) {
-	console.log(`%cERR::%c ${message}`, 'color:rgb(255,35,35)', 'color:white')
+function throwError(message, err) {
+	if (RunningConfig.data.isDebug || isDev) {
+		throw Error(err)
+	} else {
+		console.log(`%cERR::%c ${message}`, 'color:rgb(255,35,35)', 'color:white')
+	}
 }
 
 export { loadPlugin }
