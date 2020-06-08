@@ -144,7 +144,7 @@
 			]
 		},
 		"win": {
-			"icon": "assets/building/darwin/icon.png",
+			"icon": "assets/building/win32/logo2.ico",
 			"target": [
 				{
 					"target": "nsis"
