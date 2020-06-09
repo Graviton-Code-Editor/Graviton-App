@@ -54,6 +54,11 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		appEnableSidebar: true,
 		appEnableExplorerItemsAnimations: true,
 		appOpenWelcomeInStartup: true,
+		appCache: {
+			store: {
+				plugins: [],
+			},
+		},
 	},
 }
 

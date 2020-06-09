@@ -13,7 +13,7 @@ function updateStaticConfigByKey(client, instance) {
 function updateKey(client, instance, state, key) {
 	if (!StaticConfig.data.miscEnableLiveUpdateInManualConfig) return
 	const newConfig = JSON.parse(client.do('getValue', instance))
-	if (newConfig[key] != state.data[key]) {
+	if (newConfig[key] != state.data[key] && key !== 'appCache') {
 		const initialCursor = client.do('getCursorPosition', { instance })
 		newConfig[key] = state.data[key]
 		client.do('doChangeValue', {
@@ -35,9 +35,11 @@ function configEditor() {
 		title: 'Configuration',
 	})
 	if (isCancelled) return //Cancels the tab opening
+	const clonedStaticConfig = { ...StaticConfig.data }
+	delete clonedStaticConfig.appCache
 	const { client, instance } = new Editor({
 		language: 'json',
-		value: JSON.stringify(StaticConfig.data, null, 3),
+		value: JSON.stringify(clonedStaticConfig, null, 3),
 		theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 		bodyElement,
 		tabElement,
