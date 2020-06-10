@@ -179,6 +179,10 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 	}
 	updateCursorPosition(Client, instance)
 	focusEditor(Client, instance)
+	tabState.emit('editorCreated', {
+		client: Client,
+		instance,
+	})
 	const tabDestroyedWatcher = tabElement.state.on('destroyed', () => {
 		fileWatcher.cancel()
 		appThemeWatcher.cancel()

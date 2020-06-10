@@ -115,6 +115,8 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 	}
 	function mounted() {
 		this.directory = directory
+		let client
+		let instance
 		tabState.keyChanged('active', () => {
 			this.update()
 		})
@@ -124,6 +126,8 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			RunningConfig.emit('aTabHasBeenFocused', {
 				tabElement: this,
 				directory: normalizeDir(directory),
+				client,
+				instance,
 			})
 			unfocusTabs(this)
 			tabState.data.active = true
@@ -221,7 +225,15 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				}
 			})
 		}
-		tabState.emit('focusedMe')
+		if (isEditor) {
+			tabState.on('editorCreated', ({ client: newClient, instance: newInstance }) => {
+				client = newClient
+				instance = newInstance
+				tabState.emit('focusedMe', {})
+			})
+		} else {
+			tabState.emit('focusedMe', {})
+		}
 		this.state = tabState
 	}
 	const randomSelectorEditor = Math.random()
