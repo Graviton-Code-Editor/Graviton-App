@@ -1,6 +1,6 @@
 import TabBody from '../components/panel/tab'
 import TabEditor from '../components/panel/tab.editor'
-import { element, style, render } from '@mkenzo_8/puffin'
+import { state, element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'

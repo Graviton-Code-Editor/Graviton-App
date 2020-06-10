@@ -49,9 +49,9 @@ function Panel() {
 			PanelBody,
 		},
 	})`
-		<div id="${randomSelector}" :click="${focusPanel}" :contextmenu="${contextmenu}" class="${styleWrapper}">    
+		<div id="${randomSelector}" :click="${focusPanel}"  class="${styleWrapper}">    
 			<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
-			<PanelBody/>
+			<PanelBody :contextmenu="${contextmenu}"/>
 		</div>
 	`
 	function allowDrop(e) {
@@ -100,7 +100,7 @@ function Panel() {
 		new ContextMenu({
 			list: [
 				{
-					label: 'Close',
+					label: 'misc.Close',
 					action: () => {
 						removePanel(this)
 					},

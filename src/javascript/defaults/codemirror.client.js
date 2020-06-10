@@ -223,6 +223,9 @@ const CodemirrorClient = new EditorClient(
 				instance: CodemirrorEditor,
 			}
 		},
+		getSelection({ instance }) {
+			return instance.getSelection()
+		},
 		setIndentation({ instance, indentation }) {
 			instance.setOption('indentWithTabs', StaticConfig.data.editorIndentation == 'tab')
 		},
@@ -231,6 +234,9 @@ const CodemirrorClient = new EditorClient(
 				instance.focus()
 				instance.refresh()
 			}, 1)
+		},
+		rightclicked({ instance, action }) {
+			instance.on('contextmenu', action)
 		},
 		clicked({ instance, action }) {
 			instance.on('mousedown', action)

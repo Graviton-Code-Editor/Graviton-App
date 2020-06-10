@@ -1,6 +1,7 @@
-import { element, render } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ContextMenuWrapper from '../components/context.menu'
+import { LanguageState } from '../utils/lang.config'
 
 function ContextMenu({ list, parent, event, x, y }) {
 	const randomSelector = Math.random()
@@ -25,11 +26,12 @@ function ContextMenu({ list, parent, event, x, y }) {
 		components: {
 			ContextMenuWrapper,
 		},
+		addons: [lang(LanguageState)],
 	})`
 		<ContextMenuWrapper mounted="${mounted}" id="${randomSelector}" class="contextMenu" style="top:${() => positions.y}px; left:${() => positions.x}px;">
 			${list.map((option, index) => {
 				if (option.label) {
-					return element`<button :click="${option.action}">${option.label}</button>`
+					return element`<button :click="${option.action}" lang-string="${option.label}"/>`
 				} else {
 					return element`<div class="sep"/>`
 				}

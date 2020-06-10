@@ -3,7 +3,10 @@ import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 import Notification from './notification'
+import ContextMenu from './contextmenu'
 const path = window.require('path')
+import { element } from '@mkenzo_8/puffin'
+import copy from 'copy-to-clipboard'
 
 function sortByRanking(language) {
 	const selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
@@ -25,7 +28,6 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		CtrlPlusScroll: direction => {
 			const ScrollUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+ScrollUp')
 			const ScrollDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+ScrollDown')
-
 			if (direction == 'up' && ScrollUpShortcutEnabled) {
 				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) + 2
 			} else if (ScrollDownShortcutEnabled) {
@@ -61,6 +63,28 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 				})
 			}
 		}
+	})
+	Client.do('rightclicked', {
+		instance,
+		action(cm, e) {
+			e.stopPropagation()
+			new ContextMenu({
+				parent: document.body,
+				list: [
+					{
+						label: 'misc.Copy',
+						action: () => {
+							const selectedText = Client.do('getSelection', {
+								instance,
+								action: () => RunningConfig.emit('hideAllFloatingComps'),
+							})
+							copy(selectedText)
+						},
+					},
+				],
+				event: e,
+			})
+		},
 	})
 	Client.do('clicked', {
 		instance,
