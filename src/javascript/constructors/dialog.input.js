@@ -20,7 +20,7 @@ function InputDialog({ title, placeHolder = '' }) {
 		function mounted() {
 			this.children[0].focus()
 		}
-		const component = element({
+		const component = () => element({
 			components: {
 				Input,
 			},

@@ -29,7 +29,7 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 		<DialogBody>
 			<div>
 				<H2>${title}</H2>
-				<Text>${content ? content : component}</Text>
+				<Text>${content ? content : component()}</Text>
 			</div>
 			<div>
 				${buttons.map((btn, index) => {

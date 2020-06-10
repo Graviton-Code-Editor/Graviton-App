@@ -19,7 +19,7 @@ function guessTabPosition(tab, tabsbar) {
 	)
 }
 
-function Tab({ title, isEditor, directory = '', parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
+function Tab({ title, isEditor = false, directory = '', parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
 	const classSelector = `tab${directory ? directory : id}`
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if (openedTabs.length >= 1) {
@@ -31,6 +31,8 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 			isCancelled: true,
 			tabElement: openedTabs[0],
 			tabState: openedTabs[0].props.state,
+			directory,
+			isEditor,
 		}
 	}
 	const tabState = new state({
@@ -38,6 +40,7 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 		saved: true,
 		parentFolder,
 		panel,
+		directory,
 	})
 	RunningConfig.on('isATabOpened', ({ directory: tabDir, id: tabID }) => {
 		if ((tabDir && tabDir == directory) || (tabID && tabID == id)) {
@@ -218,8 +221,7 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 				}
 			})
 		}
-		unfocusTabs(this)
-		RunningConfig.data.focusedTab = this
+		tabState.emit('focusedMe')
 		this.state = tabState
 	}
 	const randomSelectorEditor = Math.random()

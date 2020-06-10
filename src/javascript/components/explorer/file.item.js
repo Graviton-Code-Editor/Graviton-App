@@ -403,6 +403,7 @@ function Item({
 				const basename = path.basename(itemPath)
 				const fileExtension = getFormat(itemPath)
 				const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+					isEditor: true,
 					title: basename,
 					directory: itemDirectory,
 					parentFolder: target.getAttribute('parentFolder'),
