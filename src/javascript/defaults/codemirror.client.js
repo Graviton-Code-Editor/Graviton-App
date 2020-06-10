@@ -223,6 +223,12 @@ const CodemirrorClient = new EditorClient(
 				instance: CodemirrorEditor,
 			}
 		},
+		getMode({ instance }) {
+			return instance.getOption('mode')
+		},
+		getLinesCount({ instance }) {
+			return instance.lineCount()
+		},
 		getSelection({ instance }) {
 			return instance.getSelection()
 		},
