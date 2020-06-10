@@ -1,11 +1,11 @@
-import { puffin, render, element, style } from '@mkenzo_8/puffin'
+import { state, render, element, style } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
 function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolder = '', options = [], scrollOnTab = false, closeOnKeyUp = false, onSelected = () => {}, onScrolled = () => {} }) {
 	name = `${name}_cp`
 	if (document.getElementById(name)) return // Check if there are any command prompts already opened
-	let CommandPromptState = new puffin.state({
+	let CommandPromptState = new state({
 		hoveredOption: null,
 	})
 	const configArguments = arguments[0]

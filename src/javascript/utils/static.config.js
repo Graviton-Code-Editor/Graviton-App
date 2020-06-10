@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { state } from '@mkenzo_8/puffin'
 import { getConfiguration } from './configurator'
 const { webFrame } = window.require('electron')
 const cachedConfiguration = getConfiguration()
@@ -8,7 +8,7 @@ function saveConfiguration() {
 	cachedConfiguration.store.set('config', StaticConfig.data)
 }
 
-const StaticConfig = new puffin.state(Object.assign({}, cachedConfiguration.config))
+const StaticConfig = new state(Object.assign({}, cachedConfiguration.config))
 
 StaticConfig.changed((a, b) => {
 	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug) {

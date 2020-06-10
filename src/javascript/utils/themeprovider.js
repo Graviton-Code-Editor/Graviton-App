@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { state } from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
@@ -12,7 +12,7 @@ StaticConfig.keyChanged('appTheme', newTheme => {
 	}
 })
 
-const ThemeProvider = new puffin.state({
+const ThemeProvider = new state({
 	splashScreenText: 'white',
 	splashScreenBackground: '#191919',
 })

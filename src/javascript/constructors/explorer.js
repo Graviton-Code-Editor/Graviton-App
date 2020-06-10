@@ -1,4 +1,4 @@
-import { puffin, element, render, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Item from '../components/explorer/item'
 

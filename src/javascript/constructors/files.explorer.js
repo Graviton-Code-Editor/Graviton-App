@@ -1,4 +1,4 @@
-import { puffin, element, render, style } from '@mkenzo_8/puffin'
+import { element, render, style, state } from '@mkenzo_8/puffin'
 import FileItem from '../components/explorer/file.item'
 import parseDirectory from '../utils/directory.parser'
 import normalizeDir from '../utils/directory.normalizer'
@@ -100,10 +100,12 @@ function createWatcher(dirPath, explorerState) {
 
 function getlastFolderPosition(container) {
 	const items = container.children
-	return Object.keys(items).find(index => {
-		const item = items[index]
-		return item.getAttribute('isDirectory') == 'false' ? index : null
-	})
+	return Number(
+		Object.keys(items).find(index => {
+			const item = items[index]
+			return item.getAttribute('isFolder') == 'false' ? index : null
+		})
+	)
 }
 
 async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null) {
@@ -134,7 +136,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		async function mounted() {
 			const target = this.children[0]
 			target.gitChanges = gitChanges
-			const explorerState = target.state || new puffin.state({})
+			const explorerState = target.state || new state({})
 			target.state = explorerState
 			let projectWatcher = false
 			let gitWatcher = false
@@ -216,15 +218,13 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					})
 					const hotItem = itemComputed
 					if (container.children[1]) {
-						//Check if the folder is opened
-						return render(hotItem, container.children[1])
 						if (isFolder) {
 							const folderPosition = getlastFolderPosition(container.children[1])
-							puffin.render(hotItem, container.children[1], {
+							render(hotItem, container.children[1], {
 								position: folderPosition,
 							})
 						} else {
-							puffin.render(hotItem, container.children[1])
+							render(hotItem, container.children[1])
 						}
 					}
 				}

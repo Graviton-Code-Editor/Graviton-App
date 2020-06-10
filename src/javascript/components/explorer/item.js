@@ -1,4 +1,4 @@
-import { puffin, element, render, style } from '@mkenzo_8/puffin'
+import { element, render, style } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Icons from '../../../../assets/icons/**.svg'
 import ArrowIcon from '../icons/arrow'

@@ -1,4 +1,4 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { state } from '@mkenzo_8/puffin'
 import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 
@@ -25,7 +25,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	envs: [],
 }
 
-const RunningConfig = new puffin.state(DEFAULT_RUNTIME_CONFIGURATION)
+const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
 console.log(RunningConfig)
 

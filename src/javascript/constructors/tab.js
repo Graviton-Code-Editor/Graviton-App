@@ -1,6 +1,6 @@
 import TabBody from '../components/panel/tab'
 import TabEditor from '../components/panel/tab.editor'
-import { puffin, element, style, render } from '@mkenzo_8/puffin'
+import { element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
@@ -33,7 +33,7 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 			tabState: openedTabs[0].props.state,
 		}
 	}
-	const tabState = new puffin.state({
+	const tabState = new state({
 		active: true,
 		saved: true,
 		parentFolder,

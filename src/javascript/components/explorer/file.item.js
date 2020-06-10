@@ -1,4 +1,4 @@
-import { puffin, element, style } from '@mkenzo_8/puffin'
+import { state, element, style } from '@mkenzo_8/puffin'
 import FilesExplorer from '../../constructors/files.explorer'
 import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
@@ -305,7 +305,7 @@ function Item({
 	}
 	function setItemState(target) {
 		if (!target.state) {
-			const itemState = new puffin.state({})
+			const itemState = new state({})
 			return (target.state = itemState)
 		} else {
 			return target.state
