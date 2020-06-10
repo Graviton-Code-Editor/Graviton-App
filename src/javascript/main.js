@@ -32,7 +32,7 @@ const App = element({
 		<div mounted="${mountedAppView}" style="${() => (blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : '')}">
 			<TitleBar/>
 			<div id="body">
-				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() => (StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;width:10px;')}"/>
+				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() => (StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;min-width:10px;width:10px;')}"/>
 				<div id="sidepanel"/>
 				<Resizer/>
 				<div id="mainpanel"/>          
