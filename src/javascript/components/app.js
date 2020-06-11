@@ -122,7 +122,7 @@ const styleWrapper = style`
 		}
 		html * ::-webkit-scrollbar-thumb:hover {
 			transition: 0.1s;
-			background: var(--scrollbarHoverBackground);
+			background: var(--scrollbarHoveringBackground);
 		}
 		html * ::-webkit-scrollbar-corner {
 			visibility: hidden !important;
