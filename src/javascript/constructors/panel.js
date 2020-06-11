@@ -102,7 +102,7 @@ function Panel() {
 				{
 					label: 'misc.Close',
 					action: () => {
-						removePanel(this)
+						removePanel(this.parentElement)
 					},
 				},
 			],
