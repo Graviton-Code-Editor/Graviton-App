@@ -22,13 +22,13 @@ function Buttons() {
 		background:transparent;
 	}
 	& button:hover{
-		background:var(--controlButtonsHoverBackground);
+		background:var(--controlButtonsHoveringBackground);
 	}
 	& button:nth-child(3):hover{
-		background:var(--controlCloseButtonHoverBackground);
+		background:var(--controlCloseButtonHoveringBackground);
 	}
 	& button:nth-child(3):hover rect.fill{
-		fill:var(--controlCloseButtonHoverFill);
+		fill:var(--controlCloseButtonHoveringFill);
 	}
 	& button:nth-child(3):active{
 		background:var(--controlCloseButtonActiveBackground);

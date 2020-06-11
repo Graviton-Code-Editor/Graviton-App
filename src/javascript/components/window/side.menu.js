@@ -102,7 +102,7 @@ const styleWrapper = style`
 	}
 	& > div:nth-child(1) > label:hover:not(.active) {
 		transition:0.04s;
-		background:var(--sidemenuButtonHoverBackground);
+		background:var(--sidemenuButtonHoveringBackground);
 	}
 	& > div:nth-child(1) > label.active {
 		background:var(--sidemenuButtonActiveBackground);

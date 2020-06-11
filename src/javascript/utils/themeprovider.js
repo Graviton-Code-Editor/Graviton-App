@@ -28,20 +28,21 @@ const puffinThemingKeys = {
 	puffinRadioCircleBorderHovering: 'radioCircleBorderHovering',
 }
 
-const getFallBackProp = prop => PluginsRegistry.registry.data.list.Night.colorsScheme[prop]
+const getFallBackProp = prop => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
 
 function applyTheme(state) {
 	ThemeProvider.data = PluginsRegistry.registry.data.colorsSchemes[state.data.appTheme]
+	const themeSchema = PluginsRegistry.registry.data.colorsSchemes.Night
 	ThemeProvider.triggerChange()
 	Object.keys(puffinThemingKeys).forEach(key => {
 		const keyValue = puffinThemingKeys[key]
-		const valueInTheme = ThemeProvider.data[keyValue] || getFallBackProp(key)
+		const valueInTheme = getProperty(keyValue, ThemeProvider.data) || getFallBackProp(key)
 		document.body.style.setProperty(`--${key}`, valueInTheme)
 	})
-	Object.keys(ThemeProvider.data).forEach(key => {
-		const keyValue = ThemeProvider.data[key]
+	Object.keys(themeSchema).forEach(key => {
+		const keyValue = getProperty(key, ThemeProvider.data)
 		const valueInTheme = keyValue || getFallBackProp(key)
-		document.body.style.setProperty(`--${key}`, valueInTheme)
+		setProperty(key, valueInTheme, key)
 	})
 }
 console.log(ThemeProvider)
@@ -53,4 +54,49 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-export default ThemeProvider
+function getProperty(key, keys) {
+	let lastKey
+	let lastKeyValue
+	let res
+	if (!keys[key]) {
+		key
+			.replace(/([a-z](?=[A-Z]))/g, '$1 ')
+			.split(' ')
+			.forEach((k, i, total) => {
+				if (i == 0) {
+					lastKey = k
+					if (!keys[lastKey]) keys[lastKey] = {}
+					lastKeyValue = keys
+				} else {
+					if (i == total.length - 1) {
+						res = lastKeyValue[lastKey][k]
+					} else {
+						if (!lastKeyValue[lastKey][k]) lastKeyValue[lastKey][k] = {}
+						lastKeyValue = lastKeyValue[lastKey]
+						lastKey = k
+					}
+				}
+			})
+	} else {
+		res = keys[key]
+	}
+	return res
+}
+
+const setProperty = (key, keyValue, name = '') => {
+	if (typeof keyValue === 'object') {
+		Object.keys(keyValue).map(subKey => {
+			const subKeyValue = keyValue[subKey]
+			const newName = `${name}${subKey}`
+			if (typeof subKeyValue === 'string') {
+				document.body.style.setProperty(`--${newName}`, subKeyValue)
+			} else {
+				setProperty(subKey, subKeyValue, newName)
+			}
+		})
+	} else {
+		document.body.style.setProperty(`--${key}`, keyValue)
+	}
+}
+
+export { ThemeProvider, getProperty }
