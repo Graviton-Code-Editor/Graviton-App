@@ -129,7 +129,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				client,
 				instance,
 			})
-			unfocusTabs(this)
+			if (!tabState.data.active) unfocusTabs(this)
 			tabState.data.active = true
 			this.scrollIntoView()
 		})
@@ -225,6 +225,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				}
 			})
 		}
+		unfocusTabs(this)
 		if (isEditor) {
 			tabState.on('editorCreated', ({ client: newClient, instance: newInstance }) => {
 				client = newClient
