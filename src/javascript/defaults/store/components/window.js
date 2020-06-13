@@ -23,7 +23,7 @@ const getPluginInfo = (object, key) => {
 function getCompatiblePugin(gravitonVersion, releases) {
 	if (!releases) return false
 	return releases.find(rel => {
-		if (gravitonVersion.match(new RegExp(rel.target)) && semver.gt(gravitonVersion, rel.minTarget)) {
+		if (gravitonVersion.match(new RegExp(rel.target)) && semver.gte(gravitonVersion, rel.minTarget)) {
 			return rel
 		}
 	})
