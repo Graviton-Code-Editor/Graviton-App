@@ -8,8 +8,8 @@ const styleWrapper = style`
 		& rect{
 			fill:var(--tabIconFill);
 		}
-			&:hover rect{
-			fill:var(--tabIconHoverFill);
+		&:hover rect{
+			fill:var(--tabIconHoveringFill);
 		}
 	`
 
