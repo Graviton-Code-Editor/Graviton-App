@@ -128,6 +128,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				directory: normalizeDir(directory),
 				client,
 				instance,
+				parentFolder,
 			})
 			if (!tabState.data.active) unfocusTabs(this)
 			tabState.data.active = true
@@ -136,14 +137,20 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 		tabState.on('unfocusedMe', () => {
 			RunningConfig.emit('aTabHasBeenUnfocused', {
 				tabElement: this,
-				directory: directory,
+				directory: normalizeDir(directory),
+				client,
+				instance,
+				parentFolder,
 			})
 			tabState.data.active = false
 		})
 		tabState.on('destroyed', () => {
 			RunningConfig.emit('aTabHasBeenClosed', {
 				tabElement: this,
-				directory: directory,
+				directory: normalizeDir(directory),
+				client,
+				instance,
+				parentFolder,
 			})
 		})
 		tabState.on('savedMe', () => {
@@ -156,7 +163,9 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				})
 				RunningConfig.emit('aTabHasBeenSaved', {
 					tabElement: this,
-					path: directory,
+					directory: normalizeDir(directory),
+					client,
+					instance,
 					parentFolder,
 				})
 			}
@@ -183,7 +192,9 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				tabState.data.saved = false
 				RunningConfig.emit('aTabHasBeenUnSaved', {
 					tabElement: this,
-					path: directory,
+					directory: normalizeDir(directory),
+					client,
+					instance,
 					parentFolder,
 				})
 			}
