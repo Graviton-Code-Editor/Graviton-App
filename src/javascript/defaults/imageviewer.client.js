@@ -20,7 +20,7 @@ const styleWrapper = style`
 
 const ImageViewerClient = new EditorClient(
 	{
-		name: 'codemirror',
+		name: 'imageviewer',
 	},
 	{
 		getValue: instance => '',

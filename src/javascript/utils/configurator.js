@@ -59,6 +59,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 				plugins: [],
 			},
 		},
+		editorsClients: [],
 	},
 }
 

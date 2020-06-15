@@ -1,7 +1,8 @@
 let editorClients = []
 
-function EditorClient({ name = '' }, object) {
+function EditorClient({ name = 'unknown' }, object) {
 	return {
+		name,
 		do(name, args) {
 			if (object[name]) {
 				return object[name](args)

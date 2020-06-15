@@ -8,16 +8,28 @@ const path = window.require('path')
 import { element } from '@mkenzo_8/puffin'
 import copy from 'copy-to-clipboard'
 
-function sortByRanking(language) {
-	const selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
-		const { unknown = false } = Client.do('getLangFromExt', language)
-		if (!unknown) return Client
+function getEditorClient(language) {
+	let selectedEditor
+	selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
+		return StaticConfig.data.editorsClients.filter(({ extension, editor, regex }) => {
+			let extensionMatches
+			if (regex) {
+				extensionMatches = language.match(new RegExp(extension)) || []
+			}
+			return Client.name === editor && regex && extensionMatches[0]
+		})[0]
 	})[0]
+	if (!selectedEditor) {
+		selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
+			const { unknown = false } = Client.do('getLangFromExt', language)
+			if (!unknown) return Client
+		})[0]
+	}
 	return selectedEditor || RunningConfig.data.editorsRank[0]
 }
 
 function Editor({ bodyElement, tabElement, value, language, tabState, theme, directory }) {
-	const Client = sortByRanking(language)
+	const Client = getEditorClient(language)
 	let editorValueSaved = value
 	const { instance } = Client.do('create', {
 		element: bodyElement,

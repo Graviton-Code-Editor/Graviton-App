@@ -77,6 +77,7 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'vue',
 					}
+				case 'svg':
 				case 'xml':
 					return {
 						name: 'xml',
