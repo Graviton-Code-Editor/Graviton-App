@@ -8,8 +8,8 @@ import StaticConfig from 'StaticConfig'
 const ItemWrapper = style`
 	@keyframes appearItem{
 		from {
-			opacity: 0;
-			margin-left: 5px;	
+			opacity: 0.3;
+			margin-left: 5px;
 		}
 		to {
 			margin-left: 10px;

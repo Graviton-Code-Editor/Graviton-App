@@ -121,7 +121,6 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			this.update()
 		})
 		tabState.on('focusedMe', () => {
-			console.log('works', tabState.data.active)
 			RunningConfig.data.focusedTab = this
 			RunningConfig.data.focusedPanel = this.parentElement.parentElement
 			RunningConfig.emit('aTabHasBeenFocused', {

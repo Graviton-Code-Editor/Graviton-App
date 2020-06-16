@@ -6,13 +6,14 @@ import StaticConfig from 'StaticConfig'
 function updateStaticConfigByKey(client, instance) {
 	const newConfig = JSON.parse(client.do('getValue', instance))
 	Object.keys(StaticConfig.data).map(key => {
-		StaticConfig.data[key] = newConfig[key]
+		if (StaticConfig.data[key] !== newConfig[key]) StaticConfig.data[key] = newConfig[key]
 	})
 }
 
 function updateKey(client, instance, state, key) {
 	if (!StaticConfig.data.miscEnableLiveUpdateInManualConfig) return
 	const newConfig = JSON.parse(client.do('getValue', instance))
+	console.log(newConfig[key], state.data[key])
 	if (newConfig[key] != state.data[key] && key !== 'appCache') {
 		const initialCursor = client.do('getCursorPosition', { instance })
 		newConfig[key] = state.data[key]
