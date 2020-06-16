@@ -43,7 +43,8 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 		</DialogBody>
 	`
 	function closeWindow() {
-		computedMethods[Number(this.getAttribute('index'))]()
+		const buttonIndex = Number(this.props.index)
+		computedMethods[buttonIndex]()
 		dialogWindow.close()
 	}
 	const dialogWindow = new Window({
