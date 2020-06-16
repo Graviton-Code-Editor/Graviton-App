@@ -111,18 +111,17 @@ function getlastFolderPosition(container) {
 }
 
 async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null) {
-	const parsedFolderPath = normalizeDir(folderPath, true)
-
+	console.log(folderPath)
 	// Create project's explorer item
 	if (level == 0) {
 		parent.setAttribute('hasFiles', true)
-		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
+		let gitResult = await checkIfProjectIsGit(folderPath)
 		if (gitResult) {
-			gitChanges = await getStatus(parsedFolderPath)
+			gitChanges = await getStatus(folderPath)
 			RunningConfig.emit('loadedGitRepo', {
 				gitChanges,
 				branch: gitChanges.current,
-				parentFolder: parsedFolderPath,
+				parentFolder: folderPath,
 				anyChanges: gitChanges.files.length > 0,
 			})
 		}
@@ -199,17 +198,17 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					//Might have been already created by watcher
 					if (isFolder) {
 						RunningConfig.emit('aFolderHasBeenCreated', {
-							parentFolder: parsedFolderPath,
+							parentFolder: folderPath,
 							path: directory,
 						})
 					} else {
 						RunningConfig.emit('aFileHasBeenCreated', {
-							parentFolder: parsedFolderPath,
+							parentFolder: folderPath,
 							path: directory,
 						})
 					}
 					const itemComputed = getItemComputed({
-						projectPath: parsedFolderPath,
+						projectPath: folderPath,
 						classSelector: possibleClass,
 						dirName: directoryName,
 						dirPath: directory,
@@ -247,14 +246,14 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		render(explorerContainer, parent)
 	}
 	if (level != 0) {
-		fs.readdir(parsedFolderPath)
+		fs.readdir(folderPath)
 			.then(paths => {
 				let dirs = paths
 					.map(dir => {
 						//Load folders
 						const itemDirectory = normalizeDir(path.join(folderPath, dir))
 						const container = parent
-						if (fs.lstatSync(path.join(parsedFolderPath, dir)).isDirectory())
+						if (fs.lstatSync(path.join(folderPath, dir)).isDirectory())
 							return getItemComputed({
 								projectPath: container.getAttribute('parentFolder'),
 								classSelector: getClassByDir(folderPath),
@@ -274,7 +273,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 							//Load files
 							const itemDirectory = normalizeDir(path.join(folderPath, dir))
 							const container = parent
-							if (!fs.lstatSync(path.join(parsedFolderPath, dir)).isDirectory())
+							if (!fs.lstatSync(path.join(folderPath, dir)).isDirectory())
 								if (!dir.match('~'))
 									return getItemComputed({
 										projectPath: container.getAttribute('parentFolder'),
