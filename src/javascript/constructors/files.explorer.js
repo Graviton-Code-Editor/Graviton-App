@@ -173,7 +173,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 			})
 			explorerState.on('startedWatcher', () => {
 				if (!projectWatcher) {
-					const watchers = createWatcher(folderPath, explorerState)
+					const watchers = createWatcher(folderPath, explorerState, gitResult)
 					projectWatcher = watchers.projectWatcher
 					gitWatcher = watchers.gitWatcher
 				}

@@ -126,17 +126,8 @@ function createPluginFolder(pluginId, dist) {
 function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
 	return new Promise((resolve, reject) => {
-		fs.unlink(pluginDirectory)
-			.then(() => {
-				//Nothing
-			})
-			.catch(err => console.log(err))
-			.finally(() => {
-				setTimeout(() => {
-					zip(zipPath, { dir: pluginDirectory })
-					resolve()
-				}, 100)
-			})
+		zip(zipPath, { dir: pluginDirectory })
+		resolve()
 	})
 }
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true')
