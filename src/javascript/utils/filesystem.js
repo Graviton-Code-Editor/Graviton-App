@@ -129,9 +129,7 @@ RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceO
 	if (replaceOldExplorer) {
 		removeAllExplorerFolders()
 	}
-	console.log(folderPath)
 	const folderDir = normalizeDir(folderPath)
-	console.log(folderDir)
 	const explorerPanel = document.getElementById('explorer_panel')
 	FilesExplorer(folderDir, explorerPanel, 0, replaceOldExplorer)
 	RunningConfig.data.workspaceConfig.folders.push({

@@ -14,18 +14,14 @@ const chokidar = window.require('chokidar')
 const path = window.require('path')
 
 function checkIfProjectIsGit(path) {
-	console.log(path)
 	const repoPath = normalizeDir(path)
-	console.log(repoPath)
 	const simpleInstance = simpleGit(repoPath)
-	console.log(simpleInstance)
 	return new Promise((resolve, reject) => {
 		simpleInstance.checkIsRepo((err, res) => {
-			console.log(err, res)
 			if (!err) {
 				resolve(res)
 			} else {
-				reject(err)
+				resolve(false)
 			}
 		})
 	})
@@ -40,7 +36,7 @@ function getStatus(path) {
 	})
 }
 
-function createWatcher(dirPath, explorerState) {
+function createWatcher(dirPath, explorerState, isGitRepo) {
 	const folderPath = normalizeDir(dirPath)
 	const gitWatcherPath = normalizeDir(path.join(folderPath, '.git', 'logs', 'HEAD'))
 	const projectWatcher = chokidar.watch(folderPath, {
@@ -80,20 +76,23 @@ function createWatcher(dirPath, explorerState) {
 				folderPath,
 			})
 		})
-	const gitWatcher = chokidar.watch(gitWatcherPath, {
-		persistent: true,
-		interval: 400,
-		ignoreInitial: true,
-	})
-	gitWatcher.on('change', async () => {
-		const gitChanges = await getStatus(folderPath)
-		RunningConfig.emit('gitStatusUpdated', {
-			gitChanges,
-			branch: gitChanges.current,
-			parentFolder: folderPath,
-			anyChanges: gitChanges.files.length > 0,
+	let gitWatcher
+	if (isGitRepo) {
+		gitWatcher = chokidar.watch(gitWatcherPath, {
+			persistent: true,
+			interval: 400,
+			ignoreInitial: true,
 		})
-	})
+		gitWatcher.on('change', async () => {
+			const gitChanges = await getStatus(folderPath)
+			RunningConfig.emit('gitStatusUpdated', {
+				gitChanges,
+				branch: gitChanges.current,
+				parentFolder: folderPath,
+				anyChanges: gitChanges.files.length > 0,
+			})
+		})
+	}
 	return {
 		projectWatcher,
 		gitWatcher,
@@ -111,8 +110,6 @@ function getlastFolderPosition(container) {
 }
 
 async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null) {
-	console.log(folderPath)
-	// Create project's explorer item
 	if (level == 0) {
 		parent.setAttribute('hasFiles', true)
 		let gitResult = await checkIfProjectIsGit(folderPath)

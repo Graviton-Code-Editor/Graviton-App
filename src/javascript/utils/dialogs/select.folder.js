@@ -16,7 +16,6 @@ function selectFolderDialog() {
 			})
 			.then(result => {
 				if (result.canceled) return
-				console.log(result.filePaths[0], normalizeDir(result.filePaths[0]))
 				resolve(normalizeDir(result.filePaths[0]))
 			})
 			.catch(err => {
