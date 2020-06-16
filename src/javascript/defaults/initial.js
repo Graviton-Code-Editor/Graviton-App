@@ -217,6 +217,38 @@ function init() {
 		],
 	})
 	new Menu({
+		//VIEW
+		button: 'menus.View.View',
+		list: [
+			{
+				label: StaticConfig.data.appEnableSidebar ? 'menus.View.HideSidebar' : 'menus.View.ShowSidebar',
+				mounted({ setLabel }) {
+					StaticConfig.keyChanged('appEnableSidebar', value => {
+						if (value) {
+							setLabel('menus.View.HideSidebar')
+						} else {
+							setLabel('menus.View.ShowSidebar')
+						}
+					})
+				},
+				action: () => (StaticConfig.data.appEnableSidebar = !StaticConfig.data.appEnableSidebar),
+			},
+			{
+				label: StaticConfig.data.appEnableSidepanel ? 'menus.View.HideSidepanel' : 'menus.View.ShowSidepanel',
+				mounted({ setLabel }) {
+					StaticConfig.keyChanged('appEnableSidepanel', value => {
+						if (value) {
+							setLabel('menus.View.HideSidepanel')
+						} else {
+							setLabel('menus.View.ShowSidepanel')
+						}
+					})
+				},
+				action: () => (StaticConfig.data.appEnableSidepanel = !StaticConfig.data.appEnableSidepanel),
+			},
+		],
+	})
+	new Menu({
 		//Window
 		button: 'menus.Window.Window',
 		list: [

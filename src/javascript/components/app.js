@@ -64,10 +64,12 @@ const styleWrapper = style`
 			min-width:50px;
 			width:300px;
 			flex:1;
-			border-left:1px solid var(--panelBorder);
 			border-top:1px solid var(--panelBorder);
-			border-top-left-radius:5px;
 			background:var(--mainpanelBackground);
+		}
+		#mainpanel[blocked=false]{
+			border-left:1px solid var(--panelBorder);
+			border-top-left-radius:5px;
 		}
 		#mainpanel > div:nth-child(1){
 			border-top-left-radius:5px;

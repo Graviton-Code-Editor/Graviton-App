@@ -32,10 +32,15 @@ const App = element({
 		<div mounted="${mountedAppView}" style="${() => (blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : '')}">
 			<TitleBar/>
 			<div id="body">
-				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() => (StaticConfig.data.appEnableSidebar ? 'opacity:1' : 'opacity:0;min-width:10px;width:10px;')}"/>
-				<div id="sidepanel"/>
+				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() =>
+	StaticConfig.data.appEnableSidebar
+		? 'opacity:1; margin-right: 1px;'
+		: StaticConfig.data.appEnableSidepanel
+		? 'opacity:0;min-width:20px;width:20px;'
+		: 'opacity:0;min-width:0;width:0; margin:0; padding:0; border:0;'}"/>
+				<div id="sidepanel" style="${StaticConfig.data.appEnableSidepanel ? 'opacity:1' : 'opacity:0;min-width:0px;width:0px; padding:0;margin:0;'}"/>
 				<Resizer/>
-				<div id="mainpanel"/>          
+				<div id="mainpanel" blocked="${() => !StaticConfig.data.appEnableSidepanel && !StaticConfig.data.appEnableSidebar}" />          
 			</div>
 			<StatusBar/>
 		</div>
@@ -60,37 +65,56 @@ function mountedAppView() {
 	})
 	StaticConfig.keyChanged('appEnableSidebar', value => {
 		document.getElementById('sidebar').update()
+		document.getElementById('mainpanel').update()
+	})
+	StaticConfig.keyChanged('appEnableSidepanel', value => {
+		document.getElementById('sidebar').update()
+		document.getElementById('mainpanel').update()
+		if (!value) {
+			document.getElementById('sidepanel').style = 'opacity:0;min-width:0px;width:0px; padding:0;margin:0;'
+		} else {
+			document.getElementById('sidepanel').style = 'opacity: 1'
+		}
 	})
 }
 
 function sidebarContext(e) {
+	let list = []
 	if (StaticConfig.data.appEnableSidebar) {
-		new ContextMenu({
-			list: [
-				{
-					label: 'Hide',
-					action() {
-						StaticConfig.data.appEnableSidebar = false
-					},
-				},
-			],
-			parent: document.body,
-			event: e,
+		list.push({
+			label: 'menus.View.HideSidebar',
+			action() {
+				StaticConfig.data.appEnableSidebar = false
+			},
 		})
 	} else {
-		new ContextMenu({
-			list: [
-				{
-					label: 'Show',
-					action() {
-						StaticConfig.data.appEnableSidebar = true
-					},
-				},
-			],
-			parent: document.body,
-			event: e,
+		list.push({
+			label: 'menus.View.ShowSidebar',
+			action() {
+				StaticConfig.data.appEnableSidebar = true
+			},
 		})
 	}
+	if (StaticConfig.data.appEnableSidepanel) {
+		list.push({
+			label: 'menus.View.HideSidepanel',
+			action() {
+				StaticConfig.data.appEnableSidepanel = false
+			},
+		})
+	} else {
+		list.push({
+			label: 'menus.View.ShowSidepanel',
+			action() {
+				StaticConfig.data.appEnableSidepanel = true
+			},
+		})
+	}
+	new ContextMenu({
+		list,
+		parent: document.body,
+		event: e,
+	})
 }
 
 function mountedApp() {

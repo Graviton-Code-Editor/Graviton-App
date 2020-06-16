@@ -42,6 +42,13 @@
 					"CloseCurrentPanel": "Close current panel"
 				}
 			},
+			"View": {
+				"View": "View",
+				"ShowSidebar": "Show sidebar",
+				"ShowSidepanel": "Show sidepanel",
+				"HideSidebar": "Hide sidebar",
+				"HideSidepanel": "Hide sidepanel"
+			},
 			"Window": {
 				"Window": "Window",
 				"Zoom": {

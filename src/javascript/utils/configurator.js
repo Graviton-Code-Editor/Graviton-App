@@ -52,6 +52,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		appBlurEffect: 10,
 		appCheckUpdatesInStartup: true,
 		appEnableSidebar: true,
+		appEnableSidepanel: true,
 		appEnableExplorerItemsAnimations: true,
 		appOpenWelcomeInStartup: true,
 		appCache: {

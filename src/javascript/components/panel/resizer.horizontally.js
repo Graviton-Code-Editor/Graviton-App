@@ -1,8 +1,12 @@
 import { element, style } from '@mkenzo_8/puffin'
+import StaticConfig from 'StaticConfig'
 
 const resizeSelector = Math.random()
 
+let resizerBlocked = !StaticConfig.data.appEnableSidepanel
+
 function startResizing(event, resizerElement = document.getElementById(resizeSelector)) {
+	if (resizerBlocked) return
 	const otherChildren = resizerElement.parentElement.children
 	let leftPanel = null
 	Object.keys(otherChildren).forEach(index => {
@@ -17,8 +21,10 @@ function startResizing(event, resizerElement = document.getElementById(resizeSel
 const styleWrapper = style`
 	&{
 		user-select: none;
-		padding:3px;
 		cursor:e-resize;
+	}
+	&[blocked=false]{
+		padding:3px;
 	}
 `
 
@@ -27,9 +33,17 @@ function stopResizing() {
 	window.removeEventListener('mouseup', stopResizing, false)
 }
 
+function resizerMounted() {
+	StaticConfig.keyChanged('appEnableSidepanel', value => {
+		resizerBlocked = !value
+		if (!value) this.style.width = '0'
+		this.update()
+	})
+}
+
 function resizerComponent() {
 	return element`
-		<div id="${resizeSelector}" :mousedown="${working}" class="${styleWrapper}"/>
+		<div blocked="${() => resizerBlocked}" mounted="${resizerMounted}" id="${resizeSelector}" :mousedown="${working}" class="${styleWrapper}"/>
 	`
 }
 

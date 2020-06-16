@@ -24,12 +24,18 @@ function renderSubmenu(e, option) {
 	render(subMenuComponent, e.target.parentElement)
 }
 
+function setLabel(element, label) {
+	element.innerText = lang.getTranslation(label, LanguageState)
+}
+
 function getDropmenu(list) {
 	function hideMenus(target) {
 		closeAllSubmenus(target.parentElement.parentElement)
 	}
 	return list.map(function (option, index) {
 		if (option.label !== undefined) {
+			let computedLabel = option.label
+			if (typeof option.label === 'function') computedLabel = option.label()
 			function triggerAction(e) {
 				if (option.list) {
 					renderSubmenu(e, option)
@@ -37,16 +43,26 @@ function getDropmenu(list) {
 					hideMenus(this)
 				}
 			}
-			const dropmenuOption = option.list
-				? element({
-						components: {
-							ArrowIcon,
-						},
-				  })`<p lang-string="${option.label}"></p><ArrowIcon/>`
-				: element`<p lang-string="${option.label}"/>`
+			let dropmenuOption
+			if (option.list) {
+				dropmenuOption = element({
+					components: {
+						ArrowIcon,
+					},
+				})`<p lang-string="${computedLabel}"></p><ArrowIcon/>`
+			} else {
+				dropmenuOption = element`<p lang-string="${computedLabel}"/>`
+			}
+			function optionMounted() {
+				if (option.mounted) {
+					option.mounted({
+						setLabel: txt => setLabel(this, txt),
+					})
+				}
+			}
 			return element`
 			<div :click="${option.action}" >
-				<a :mouseenter="${triggerAction}" >
+				<a mounted="${optionMounted}" :mouseenter="${triggerAction}" >
 					${dropmenuOption}
 				</a>
 			</div>`
