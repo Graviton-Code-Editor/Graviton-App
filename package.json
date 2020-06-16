@@ -75,7 +75,7 @@
 	},
 	"dependencies": {
 		"@mkenzo_8/puffin": "^0.9.9",
-		"@mkenzo_8/puffin-drac": "0.1.1",
+		"@mkenzo_8/puffin-drac": "0.1.3",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",
 		"chokidar": "^3.3.1",
