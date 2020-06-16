@@ -177,6 +177,7 @@ const Arctic = {
 				Border: '#CFCFCF',
 			},
 		},
+		radioCircleBorderHovering: '#5D9DFC',
 		file: {
 			Not: {
 				Saved: {
