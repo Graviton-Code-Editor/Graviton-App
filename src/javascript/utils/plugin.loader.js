@@ -1,4 +1,4 @@
-import puffin from '@mkenzo_8/puffin'
+import * as puffin from '@mkenzo_8/puffin'
 import drac from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'

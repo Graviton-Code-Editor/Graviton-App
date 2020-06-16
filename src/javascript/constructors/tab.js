@@ -205,12 +205,12 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 		})
 		tabState.on('close', () => {
 			if (tabState.data.saved) {
-				focusATab(this)
-				tabNode.remove()
-				tabEditorNode.remove()
 				tabState.emit('destroyed', {
 					tabElement: tabNode,
 				})
+				focusATab(this)
+				tabNode.remove()
+				tabEditorNode.remove()
 			} else {
 				new areYouSureDialog()
 					.then(() => {
@@ -255,10 +255,13 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			component,
 		},
 	})`
-		<TabEditor id="${randomSelectorEditor}" mounted="${mountedEditor}">
+		<TabEditor :click="${focusEditor}" id="${randomSelectorEditor}" mounted="${mountedEditor}">
 			${component ? component() : ''}
 		</TabEditor>
 	`
+	function focusEditor() {
+		tabState.emit('focusedMe')
+	}
 	function mountedEditor() {
 		const target = this
 		tabState.on('focusedMe', () => {
