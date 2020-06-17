@@ -3,7 +3,7 @@ const path = require('path')
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
 const windowStateKeeper = require('electron-window-state')
-const zip = require('extract-zip')
+const AdmZip = require('adm-zip')
 const appData = require('appdata-path')
 const fs = require('fs-extra')
 const axios = require('axios')
@@ -105,13 +105,16 @@ function getZip(url, pluginId, dist) {
 			url,
 			responseType: 'stream',
 		}).then(async response => {
-			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`)))
-			createPluginFolder(pluginId, dist)
-			extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist)
-				.then(() => {
-					resolve()
-				})
-				.catch(err => console.log(err))
+			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`))).on('close', () => {
+				//Finished download the plugins's zip
+				createPluginFolder(pluginId, dist)
+				extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist)
+					.then(() => {
+						//Finished unzipping the plugin
+						resolve()
+					})
+					.catch(err => console.log(err))
+			})
 		})
 	})
 }
@@ -126,7 +129,8 @@ function createPluginFolder(pluginId, dist) {
 function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
 	return new Promise((resolve, reject) => {
-		zip(zipPath, { dir: pluginDirectory })
+		const zip = new AdmZip(zipPath)
+		zip.extractAllTo(pluginDirectory, true)
 		resolve()
 	})
 }
