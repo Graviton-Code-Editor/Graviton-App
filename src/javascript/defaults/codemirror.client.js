@@ -164,34 +164,11 @@ const CodemirrorClient = new EditorClient(
 				indentWithTabs: StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
 			})
-			CodemirrorEditor.on('keyup', (cm, event) => {
+			CodemirrorEditor.on('change', (cm, event) => {
 				if (StaticConfig.data.editorAutocomplete) {
-					if (
-						!cm.state.completionActive &&
-						event.keyCode != 13 &&
-						event.keyCode != 8 &&
-						event.keyCode != 9 &&
-						event.keyCode != 222 &&
-						event.keyCode != 38 &&
-						event.keyCode != 40 &&
-						event.keyCode != 39 &&
-						event.keyCode != 37 &&
-						event.keyCode != 17 &&
-						event.keyCode != 18 &&
-						event.keyCode != 188 &&
-						event.keyCode != 27 &&
-						event.keyCode != 46 &&
-						event.keyCode > 31 &&
-						(event.keyCode < 48 || event.keyCode > 57) &&
-						event.keyCode != 32 &&
-						event.ctrlKey == false &&
-						event.keyCode != 91 &&
-						event.keyCode != 44
-					) {
-						CodeMirror.commands.autocomplete(cm, null, {
-							completeSingle: false,
-						})
-					}
+					CodeMirror.commands.autocomplete(cm, null, {
+						completeSingle: false,
+					})
 				}
 			})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
