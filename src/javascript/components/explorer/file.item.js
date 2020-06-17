@@ -13,6 +13,7 @@ import ArrowIcon from '../icons/arrow'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
+import Notification from '../../constructors/notification'
 
 const fs = window.require('fs-extra')
 const trash = window.require('trash')
@@ -514,9 +515,16 @@ function setStateClosed(target) {
 function removeDirectoryOrFile(element) {
 	areYouSureDialog()
 		.then(() => {
-			trash([normalizeDir(element.parentElement.getAttribute('fullpath'))]).then(() => {
-				element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
-			})
+			trash([normalizeDir(element.parentElement.getAttribute('fullpath'))])
+				.then(() => {
+					element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
+				})
+				.catch(err => {
+					new Notification({
+						title: `Error`,
+						content: `Couldn't remove ${element.children[2].getAttribute('originalName')}.`,
+					})
+				})
 		})
 		.catch(err => {
 			//Clicked "No", do nothing

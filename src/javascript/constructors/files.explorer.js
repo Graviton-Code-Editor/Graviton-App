@@ -184,9 +184,6 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 			StaticConfig.on('startWatchers', () => {
 				explorerState.emit('startedWatcher')
 			})
-			if (StaticConfig.data.enableFileSystemWatcher) {
-				explorerState.emit('startedWatcher')
-			}
 			if (StaticConfig.data.editorFSWatcher) explorerState.emit('startedWatcher')
 			explorerState.on('createItem', ({ container, containerFolder, directory, directoryName, level, isFolder = false }) => {
 				if (container === null) return //Folder is not opened
