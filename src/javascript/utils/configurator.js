@@ -32,6 +32,9 @@ const DEFAULT_STATIC_CONFIGURATION = {
 			CloseCurrentPanel: {
 				combos: ['Ctrl+L'],
 			},
+			OpenEditorCommandPrompt: {
+				combos: ['Ctrl+I'],
+			},
 			OpenCommandPrompt: {
 				combos: ['Ctrl+P'],
 			},

@@ -118,6 +118,55 @@ RunningConfig.on('command.openCommandPrompt', () => {
 		],
 	})
 })
+
+const focusCurrentEditor = () => RunningConfig.data.focusedEditor.client.do('doFocus', { instance: RunningConfig.data.focusedEditor.instance })
+const currentEditorExists = () => RunningConfig.data.focusedEditor !== null
+
+RunningConfig.on('command.openEditorCommandPrompt', () => {
+	new CommandPrompt({
+		name: 'editor',
+		showInput: true,
+		inputPlaceHolder: 'Enter a command',
+		options: [
+			{
+				label: 'Save',
+				action: () => {
+					if (!currentEditorExists()) return
+					focusCurrentEditor()
+					RunningConfig.emit('command.saveCurrentFile')
+				},
+			},
+			{
+				label: 'Close',
+				action: () => {
+					if (!currentEditorExists()) return
+					focusCurrentEditor()
+					RunningConfig.emit('command.closeCurrentTab')
+				},
+			},
+			{
+				label: 'Go to line',
+				action: () => {
+					if (!currentEditorExists()) return
+					new CommandPrompt({
+						name: 'test',
+						showInput: true,
+						inputPlaceHolder: '',
+						options: [],
+						onCompleted: data => {
+							RunningConfig.data.focusedEditor.client.do('setCursorPosition', {
+								instance: RunningConfig.data.focusedEditor.instance,
+								line: Number(data),
+								char: 1,
+							})
+							focusCurrentEditor()
+						},
+					})
+				},
+			},
+		],
+	})
+})
 RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 	if (RunningConfig.data.focusedTab) {
 		const focusedPanelTabs = RunningConfig.data.focusedTab.getPanelTabs()
@@ -178,6 +227,12 @@ appShortCuts.add([
 		return {
 			shortcut: shortcut,
 			handler: event => RunningConfig.emit('command.closeCurrentPanel'),
+		}
+	}),
+	...StaticConfig.data.appShortcuts.OpenEditorCommandPrompt.combos.map(shortcut => {
+		return {
+			shortcut: shortcut,
+			handler: event => RunningConfig.emit('command.openEditorCommandPrompt'),
 		}
 	}),
 	...StaticConfig.data.appShortcuts.OpenCommandPrompt.combos.map(shortcut => {

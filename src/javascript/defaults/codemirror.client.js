@@ -302,10 +302,10 @@ const CodemirrorClient = new EditorClient(
 				ch: ch + 1,
 			}
 		},
-		setCursorPosition({ instance, line, ch }) {
+		setCursorPosition({ instance, line = 1, ch = 1 }) {
 			instance.setCursor({
-				line: line - 1,
-				ch: ch - 1,
+				line: Number(line) - 1,
+				ch: Number(ch) - 1,
 			})
 		},
 		doFocus({ instance }) {
