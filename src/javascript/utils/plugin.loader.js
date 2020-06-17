@@ -5,6 +5,7 @@ import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import path from 'path'
 import CodeMirror from 'codemirror'
+import CommandPrompt from '../constructors/command.prompt'
 
 import Window from '../constructors/window'
 import Menu from '../constructors/menu'
@@ -61,6 +62,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 					EnvClient,
 					SidePanel,
 					Explorer,
+					CommandPrompt,
 				})
 			} catch (err) {
 				throwError(`(${name}) -> ${err}`, err)
