@@ -164,8 +164,21 @@ const CodemirrorClient = new EditorClient(
 				indentWithTabs: StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
 			})
-			CodemirrorEditor.on('change', (cm, event) => {
-				if (StaticConfig.data.editorAutocomplete) {
+			CodemirrorEditor.on('keyup', (cm, event, a) => {
+				if (
+					StaticConfig.data.editorAutocomplete &&
+					event.metaKey === false &&
+					event.altKey === false &&
+					event.shiftKey === false &&
+					event.ctrlKey === false &&
+					event.keyCode > 32 &&
+					event.keyCode < 126 &&
+					event.keyCode !== 37 &&
+					event.keyCode !== 39 &&
+					event.keyCode !== 38 &&
+					event.keyCode !== 40 &&
+					event.keyCode !== 44
+				) {
 					CodeMirror.commands.autocomplete(cm, null, {
 						completeSingle: false,
 					})
