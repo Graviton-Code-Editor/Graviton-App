@@ -6,8 +6,8 @@ import PluginsRegistry from 'PluginsRegistry'
 import path from 'path'
 import CodeMirror from 'codemirror'
 import CommandPrompt from '../constructors/command.prompt'
-
 import Window from '../constructors/window'
+import Editor from '../constructors/editor'
 import Menu from '../constructors/menu'
 import Dialog from '../constructors/dialog'
 import StatusBarItem from '../constructors/status.bar.item'
@@ -63,6 +63,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 					SidePanel,
 					Explorer,
 					CommandPrompt,
+					Editor,
 				})
 			} catch (err) {
 				throwError(`(${name}) -> ${err}`, err)
