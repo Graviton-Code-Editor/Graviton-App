@@ -183,6 +183,7 @@
 				}
 			}
 		},
+		"fileNotSavedIndicatorHovering": "#0066FF",
 		"editor": {
 			"Dialog": {
 				"Background": "white",
