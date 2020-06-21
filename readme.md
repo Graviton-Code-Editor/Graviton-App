@@ -1,7 +1,7 @@
 <p align="center">
-   <img align="center" src="https://graviton.netlify.app/assets/graviton-logo.png"  width="256" height="64.5"/>
-   <br>
-   <a href="https://graviton.netlify.app">graviton.netlify.app</a>
+	<img align="center" src="https://graviton.netlify.app/assets/graviton-logo.png"  width="256" height="64.5"/>
+	<br>
+	<a href="https://graviton.netlify.app">graviton.netlify.app</a>
 </p>
 
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2FGraviton-Code-Editor%2FGraviton-App%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/Graviton-Code-Editor/Graviton-App/goto?ref=master)
@@ -23,9 +23,10 @@ Also, changes on this source may not be released as an official build yet.
 
 **Features refer to the v2 version.**
 
-## ✨ Features:
+## ✨ Features
 
 - 🧬 Git integration
+- 🟢 NodeJS integration
 - 🛢 Workspaces
 - 💅 Modern UI
 - 🎨 Themes
@@ -38,7 +39,14 @@ Also, changes on this source may not be released as an official build yet.
 - 📝 Multi line editing
 - 📰 Live markdown preview
 
-## 📣 Social media:
+## 🤖 Plugins
+
+- 📣 [Discord RPC](https://github.com/FreeAoi/Graviton-RPC)
+- 🦀 [Cargo](https://github.com/marc2332/cargo-graviton)
+- 🦕 [Deno](https://github.com/marc2332/deno-graviton)
+- 🕊 [Flutter](https://github.com/Graviton-Code-Editor/flutter-plugin)
+
+## 📣 Social media
 
 - 📢 [Telegram Channel](https://t.me/gravitoneditor)
 - 💬 [Discord Server](https://discord.gg/cChzuMp)
@@ -46,18 +54,18 @@ Also, changes on this source may not be released as an official build yet.
 
 ## 🏗 Resources
 
-- [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
-- [🛠 Building manual](BUILDING.md)
+- [🤓 Documentation for plugins](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
+- [🛠 Building from source](BUILDING.md)
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
 
 ## 👽 Authors
 
-#### Main Developer:
+#### Main Developer
 
 - Marc Espín Sanz [Github](https://github.com/marc2332)
 
-#### Main Contributors:
+#### Main Contributors
 
 - pjtsearch [Github](https://github.com/pjtsearch)
 - David Niederweis [Github](https://github.com/DJN1)
@@ -65,7 +73,7 @@ Also, changes on this source may not be released as an official build yet.
 - Max1Truc [Github](https://github.com/Max1Truc)
 - Marco Galli [Github](https://github.com/Gaarco)
 
-#### Credits:
+#### Credits
 
 - Miguel Ranger for first autocomplete version
 - Old logo by Saúl Blanco
@@ -81,7 +89,7 @@ Also, changes on this source may not be released as an official build yet.
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
 - Paypal: https://www.paypal.me/mkenzo8
 
-### Donators:
+### Donators
 
 - [Malok](https://github.com/malokdev)
 - [Saúl Blanco](https://github.com/Saul-BT)
