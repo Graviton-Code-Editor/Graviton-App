@@ -100,10 +100,10 @@ const CodemirrorClient = new EditorClient(
 					}
 				case 'hpp':
 				case 'cpp':
+				case 'h':
 					return {
 						name: 'text/x-c++src',
 					}
-				case 'h':
 				case 'c':
 					return {
 						name: 'text/x-csrc',
