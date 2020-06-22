@@ -38,7 +38,11 @@ function openDebugClient() {
 		debugWindow && debugWindow.reload()
 	})
 	debugClient.on('stop', () => {
-		debugWindow && debugWindow.close()
+		try {
+			debugWindow && debugWindow.close()
+		} catch {
+			return
+		}
 	})
 }
 
