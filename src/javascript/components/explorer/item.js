@@ -1,6 +1,6 @@
 import { element, render, style } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
-import Icons from '../../../../assets/icons/**.svg'
+import Icons from '../../../../assets/icons/*.svg'
 import ArrowIcon from '../icons/arrow'
 import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
@@ -99,7 +99,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
-
+	console.log(Icons, icon)
 	return element({
 		components: {
 			ArrowIcon,
@@ -133,8 +133,8 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 			},
 		}
 	}
-	function setIcon() {
-		const iconImg = this.getElementsByClassName('icon')[0]
+	function setIcon(icon, item) {
+		const iconImg = item.getElementsByClassName('icon')[0]
 		iconImg.src = Icons[icon] ? Icons[icon] : Icons['unknown.file']
 	}
 	function setDecorator({ label, background }, item) {
