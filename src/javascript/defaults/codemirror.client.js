@@ -176,10 +176,13 @@ const CodemirrorClient = new EditorClient(
 					preview: false,
 				},
 			})
+
 			CodemirrorEditor.on('keyup', (cm, event, a) => {
+				let __Cursor = cm.getDoc().getCursor()
+				let __Token = cm.getTokenAt(__Cursor)
 				if (
-					language.name !== 'htmlmixed' &&
 					StaticConfig.data.editorAutocomplete &&
+					__Token.type &&
 					event.metaKey === false &&
 					event.altKey === false &&
 					event.shiftKey === false &&

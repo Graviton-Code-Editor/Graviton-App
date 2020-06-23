@@ -99,7 +99,6 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
-	console.log(icon)
 	return element({
 		components: {
 			ArrowIcon,
