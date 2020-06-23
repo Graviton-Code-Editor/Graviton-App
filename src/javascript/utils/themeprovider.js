@@ -26,6 +26,8 @@ const puffinThemingKeys = {
 	puffinRadioCircleBackground: 'radioCircleBackground',
 	puffinRadioCircleBorder: 'radioCircleBorder',
 	puffinRadioCircleBorderHovering: 'radioCircleBorderHovering',
+	puffinInputBackground: 'inputBackground',
+	puffinInputBorder: 'inputBorder',
 }
 
 const getFallBackProp = prop => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)

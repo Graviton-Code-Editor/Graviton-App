@@ -108,9 +108,10 @@ function Menu({ button, list }) {
 		appendToNativeBar(nativeMenu)
 	}
 }
-
+console.log(lang.getTranslation, LanguageState)
 function createNativeMenu(button, list) {
 	const { MenuItem } = remote
+
 	return new MenuItem({
 		label: lang.getTranslation(button, LanguageState),
 		submenu: convertToElectronInterface(list),

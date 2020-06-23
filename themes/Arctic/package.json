@@ -124,7 +124,8 @@
 			},
 			"Searcher": {
 				"Background": "white",
-				"Text": "black"
+				"Text": "black",
+				"Border": "#CFCFCF"
 			}
 		},
 		"explorer": {
@@ -219,7 +220,8 @@
 		},
 		"input": {
 			"Background": "transparent",
-			"Text": "black"
+			"Text": "black",
+			"Border": "#CFCFCF"
 		},
 		"splash": {
 			"Screen": {

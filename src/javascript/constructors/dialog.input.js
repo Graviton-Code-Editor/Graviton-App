@@ -1,6 +1,6 @@
 import { element, style } from '@mkenzo_8/puffin'
 import Dialog from './dialog'
-import Input from '../components/input'
+import { Input } from '@mkenzo_8/puffin-drac'
 
 function InputDialog({ title, placeHolder = '' }) {
 	return new Promise((resolve, reject) => {

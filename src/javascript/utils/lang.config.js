@@ -2,9 +2,9 @@ import { lang, state } from '@mkenzo_8/puffin'
 import Languages from '../../../languages/*.json'
 import StaticConfig from 'StaticConfig'
 import Notification from '../constructors/notification'
-const isDarwin = window.require('process') === 'darwin'
+const isNotWindows = window.require('process') !== 'win32'
 
-if (isDarwin) {
+if (isNotWindows) {
 	StaticConfig.keyChanged('appLanguage', () => {
 		new Notification({
 			title: 'notifications.appLanguageChanged.appLanguageChanged',
