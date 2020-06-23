@@ -1,4 +1,5 @@
 import CodeMirror from 'codemirror'
+import emmet from '@emmetio/codemirror-plugin'
 import { EditorClient } from '../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
 
@@ -142,6 +143,7 @@ const CodemirrorClient = new EditorClient(
 			}
 		},
 		create({ element, language, value, theme, CtrlPlusScroll }) {
+			if (language.name == 'htmlmixed') emmet(CodeMirror)
 			const CodemirrorEditor = CodeMirror(element, {
 				mode: language,
 				value: value,
@@ -165,9 +167,18 @@ const CodemirrorClient = new EditorClient(
 				miniMap: false,
 				indentWithTabs: StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
+				extraKeys: {
+					Tab: 'emmetExpandAbbreviation',
+					Esc: 'emmetResetAbbreviation',
+					Enter: 'emmetInsertLineBreak',
+				},
+				emmet: {
+					preview: false,
+				},
 			})
 			CodemirrorEditor.on('keyup', (cm, event, a) => {
 				if (
+					language.name !== 'htmlmixed' &&
 					StaticConfig.data.editorAutocomplete &&
 					event.metaKey === false &&
 					event.altKey === false &&
