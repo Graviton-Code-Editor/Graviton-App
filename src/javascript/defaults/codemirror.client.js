@@ -178,11 +178,11 @@ const CodemirrorClient = new EditorClient(
 			})
 
 			CodemirrorEditor.on('keyup', (cm, event, a) => {
-				let __Cursor = cm.getDoc().getCursor()
-				let __Token = cm.getTokenAt(__Cursor)
+				const cmCursor = cm.getDoc().getCursor()
+				const cmToken = cm.getTokenAt(cmCursor)
 				if (
 					StaticConfig.data.editorAutocomplete &&
-					__Token.type &&
+					cmToken.type &&
 					event.metaKey === false &&
 					event.altKey === false &&
 					event.shiftKey === false &&
