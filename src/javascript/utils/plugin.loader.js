@@ -43,30 +43,35 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 			}
 		}
 		if (type === 'plugin') {
-			try {
-				window.require(mainPath).entry({
-					StaticConfig,
-					RunningConfig,
-					Window,
-					puffin,
-					Menu,
-					Dialog,
-					StatusBarItem,
-					ContextMenu,
-					Notification,
-					CodeMirror,
-					Tab,
-					drac,
-					SideMenu,
-					EditorClient,
-					EnvClient,
-					SidePanel,
-					Explorer,
-					CommandPrompt,
-					Editor,
-				})
-			} catch (err) {
-				throwError(`(${name}) -> ${err}`, err)
+			const parameters = {
+				StaticConfig,
+				RunningConfig,
+				Window,
+				puffin,
+				Menu,
+				Dialog,
+				StatusBarItem,
+				ContextMenu,
+				Notification,
+				CodeMirror,
+				Tab,
+				drac,
+				SideMenu,
+				EditorClient,
+				EnvClient,
+				SidePanel,
+				Explorer,
+				CommandPrompt,
+				Editor,
+			}
+			if (!isDev) {
+				try {
+					window.require(mainPath).entry(parameters)
+				} catch (err) {
+					throwError(`(${name}) -> ${err}`, err)
+				}
+			} else {
+				window.require(mainPath).entry(parameters)
 			}
 		}
 	}
