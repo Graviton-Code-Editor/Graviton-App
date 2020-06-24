@@ -308,6 +308,21 @@ const CodemirrorClient = new EditorClient(
 				ch: ch + 1,
 			}
 		},
+		setBookmark({ instance, line, ch, element }) {
+			const bookmark = instance.setBookmark(
+				{
+					line,
+					ch,
+				},
+				{
+					widget: element,
+				}
+			)
+			const clear = () => bookmark.clear()
+			return {
+				clear,
+			}
+		},
 		setCursorPosition({ instance, line = 1, ch = 1 }) {
 			instance.setCursor({
 				line: Number(line) - 1,
