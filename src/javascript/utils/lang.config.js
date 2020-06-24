@@ -2,7 +2,7 @@ import { lang, state } from '@mkenzo_8/puffin'
 import Languages from '../../../languages/*.json'
 import StaticConfig from 'StaticConfig'
 import Notification from '../constructors/notification'
-const isNotWindows = window.require('process') !== 'win32'
+const isNotWindows = window.require('process').platform !== 'win32'
 
 if (isNotWindows) {
 	StaticConfig.keyChanged('appLanguage', () => {
