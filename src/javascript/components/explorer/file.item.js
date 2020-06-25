@@ -5,6 +5,7 @@ import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import areYouSureDialog from '../../defaults/dialogs/you.sure'
+import InputDialog from '../../constructors/dialog.input'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import RunningConfig from 'RunningConfig'
@@ -239,7 +240,7 @@ function Item({
 			new ContextMenu({
 				list: [
 					{
-						label: 'New folder',
+						label: 'misc.NewFolder',
 						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
@@ -251,7 +252,7 @@ function Item({
 						},
 					},
 					{
-						label: 'New file',
+						label: 'misc.NewFile',
 						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
@@ -264,16 +265,29 @@ function Item({
 					},
 					{},
 					{
-						label: 'Remove folder',
+						label: 'misc.Rename',
+						action: () => {
+							const itemContainer = this.parentElement.parentElement.parentElement
+							renameDirectoryOrFile(this, {
+								container: itemContainer,
+								explorerState: projectExplorerState,
+								isFolder: true,
+							})
+						},
+					},
+					{},
+					{
+						label: 'misc.Remove',
 						action: () => {
 							if (level != 0) {
 								removeDirectoryOrFile(this)
 							}
 						},
 					},
+					,
 					{},
 					{
-						label: 'Open location',
+						label: 'misc.OpenLocation',
 						action: () => {
 							openLocation(fullpath)
 						},
@@ -286,14 +300,26 @@ function Item({
 			new ContextMenu({
 				list: [
 					{
-						label: 'Remove file',
+						label: 'misc.Rename',
+						action: () => {
+							const itemContainer = this.parentElement.parentElement.parentElement
+							renameDirectoryOrFile(this, {
+								container: itemContainer,
+								explorerState: projectExplorerState,
+								isFolder: false,
+							})
+						},
+					},
+					{},
+					{
+						label: 'misc.Remove',
 						action: () => {
 							removeDirectoryOrFile(this)
 						},
 					},
 					{},
 					{
-						label: 'Open location',
+						label: 'misc.OpenLocation',
 						action: () => {
 							openLocation(parentFolder)
 						},
@@ -512,10 +538,39 @@ function setStateClosed(target) {
 	}
 }
 
+function renameDirectoryOrFile(element, { container, explorerState, isFolder }) {
+	const directoryPath = element.parentElement.getAttribute('fullpath')
+	const folderPath = path.dirname(directoryPath)
+	InputDialog({
+		title: 'Rename',
+		placeHolder: path.basename(directoryPath),
+	})
+		.then(newName => {
+			const newPath = normalizeDir(path.join(folderPath, newName))
+			fs.rename(directoryPath, newPath)
+				.then(() => {
+					element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
+					explorerState.emit('createItem', {
+						container,
+						containerFolder: folderPath,
+						level: container.getAttribute('level'),
+						directory: newPath,
+						directoryName: path.basename(newPath),
+						isFolder,
+					})
+				})
+				.catch(err => console.log(err))
+		})
+		.catch(err => {
+			//Clicked "No", do nothing
+		})
+}
+
 function removeDirectoryOrFile(element) {
+	const directoryPath = element.parentElement.getAttribute('fullpath')
 	areYouSureDialog()
 		.then(() => {
-			trash([normalizeDir(element.parentElement.getAttribute('fullpath'))])
+			trash([normalizeDir(directoryPath)])
 				.then(() => {
 					element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
 				})
