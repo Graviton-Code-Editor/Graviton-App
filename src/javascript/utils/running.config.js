@@ -23,6 +23,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	arguments: electronArguments,
 	currentStaticConfig: {},
 	envs: [],
+	projectServices: [],
 }
 
 const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
