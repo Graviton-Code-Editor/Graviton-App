@@ -273,7 +273,13 @@ const CodemirrorClient = new EditorClient(
 			instance.on('change', (cm, changeObj) => action(instance.getValue(), changeObj))
 		},
 		replaceRange({ instance, from, to, text }) {
-			instance.replaceRange(text, from, to)
+			instance.replaceRange(text, from, to, '+move')
+		},
+		getRange({ instance, from, to }) {
+			return instance.getRange(from, to)
+		},
+		getLine({ instance, line }) {
+			return instance.getLine(line)
 		},
 		executeUndo({ instance, action }) {
 			instance.execCommand('undo')

@@ -57,6 +57,11 @@ function ContextMenu({ list, parent, event, x, y }) {
 		}
 	}
 	render(ContextComponent, document.body)
+	return {
+		close: () => {
+			document.getElementById(randomSelector).remove()
+		},
+	}
 }
 
 export default ContextMenu

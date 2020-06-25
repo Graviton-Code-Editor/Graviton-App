@@ -243,9 +243,23 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				client = newClient
 				instance = newInstance
 				tabState.emit('focusedMe', {})
+				RunningConfig.emit('aTabHasBeenCreated', {
+					tabElement: this,
+					directory: normalizeDir(directory),
+					client,
+					instance,
+					parentFolder,
+				})
 			})
 		} else {
 			tabState.emit('focusedMe', {})
+			RunningConfig.emit('aTabHasBeenCreated', {
+				tabElement: this,
+				directory: normalizeDir(directory),
+				client: null,
+				instance: null,
+				parentFolder,
+			})
 		}
 		this.state = tabState
 	}
