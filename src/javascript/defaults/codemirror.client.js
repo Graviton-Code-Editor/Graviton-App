@@ -74,9 +74,10 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'text/x-java',
 					}
+				case 'svelte':
 				case 'vue':
 					return {
-						name: 'vue',
+						name: 'text/x-vue',
 					}
 				case 'svg':
 				case 'xml':
