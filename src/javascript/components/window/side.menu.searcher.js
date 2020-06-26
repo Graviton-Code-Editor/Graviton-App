@@ -3,7 +3,7 @@ import { Input } from '@mkenzo_8/puffin-drac'
 
 const styleWrapper = style`
 	&{
-		--inputBackground: var(--sidemenuSearcherBackground);
+		--puffinInputBackground: var(--sidemenuSearcherBackground);
 		--textColor: var(--sidemenuSearcherText);
 		--inputBorder: var(--sidemenuSearcherBorder);
 		margin: 10px 0px;
