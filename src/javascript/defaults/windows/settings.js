@@ -38,7 +38,8 @@ function Settings() {
 				<div>
 					<div href="customization">
 						<div href="themes">
-							<H4 lang-string="windows.Settings.Customization.Themes"/>
+							<div style="overflow:auto; height: auto; padding: 3px 0;">
+								<H4 lang-string="windows.Settings.Customization.Themes"/>
 								<RadioGroup :radioSelected="${selectedTheme}" direction="vertically" styled="false">
 									${Object.keys(pluginsList)
 										.map(pluginName => {
@@ -57,6 +58,7 @@ function Settings() {
 										})
 										.filter(Boolean)}
 								</RadioGroup>
+							</div>
 						</div>   
 					</div>
 					<div href="advanced">
