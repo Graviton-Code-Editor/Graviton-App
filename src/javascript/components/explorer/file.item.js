@@ -15,6 +15,7 @@ import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
+import copy from 'copy-to-clipboard'
 
 const fs = window.require('fs-extra')
 const trash = window.require('trash')
@@ -284,8 +285,13 @@ function Item({
 							}
 						},
 					},
-					,
 					{},
+					{
+						label: 'misc.CopyPath',
+						action: () => {
+							copy(fullpath)
+						},
+					},
 					{
 						label: 'misc.OpenLocation',
 						action: () => {
@@ -318,6 +324,12 @@ function Item({
 						},
 					},
 					{},
+					{
+						label: 'misc.CopyPath',
+						action: () => {
+							copy(fullpath)
+						},
+					},
 					{
 						label: 'misc.OpenLocation',
 						action: () => {
