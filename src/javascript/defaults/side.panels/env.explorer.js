@@ -23,6 +23,9 @@ RunningConfig.on('appLoaded', () => {
 				items: [
 					{
 						label: basename(folderPath),
+						decorator: {
+							label: env,
+						},
 						items: getKeysToItems(info, folderPath),
 					},
 				],

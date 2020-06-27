@@ -3,7 +3,7 @@ const { join } = window.require('path')
 import RunningConfig from 'RunningConfig'
 
 RunningConfig.data.envs.push({
-	name: 'NPM',
+	name: 'Node',
 	filter(dir) {
 		if (fs.existsSync(join(dir, 'package.json'))) {
 			return window.require(join(dir, 'package.json'))
@@ -14,9 +14,8 @@ RunningConfig.data.envs.push({
 
 function detectEnv(folder) {
 	return new Promise(resolve => {
-		const Envs = RunningConfig.data.envs
-
-		for (const { name, filter } of Envs) {
+		const registeredEnvs = RunningConfig.data.envs
+		for (const { name, filter } of registeredEnvs) {
 			const pass = filter(folder)
 			if (pass instanceof Promise) {
 				pass
