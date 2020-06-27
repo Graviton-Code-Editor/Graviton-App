@@ -118,6 +118,10 @@ const styleWrapper = style`
 		padding:15px;
 		flex:1;
 	}
+	& > div:nth-child(2) > div > div > h4{
+		margin-bottom: 2px;
+		font-size: 14px;
+	}
 `
 
 function SideMenu() {
