@@ -63,12 +63,13 @@ const ItemWrapper = style`
 	& .decorator {
 		display: block;
 		position:relative;
-		border-radius:50px;
+		border-radius:20px;
 		margin: auto 2px;
 		margin-left:6px;
 		font-size:9px;
-		min-width:10px;
-		padding:1px 3px;
+		min-width:4px;
+		padding: 4px 6px;
+		min-height: 8px;
 	}
 	& .icon{
 		height:20px;
