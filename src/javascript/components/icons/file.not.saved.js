@@ -11,7 +11,7 @@ const styleWrapper = style`
 		margin-left:14px;
 	}
 	&:hover{
-		background:var(--fileNotSavedIndicatorHovering);
+		background:var(--fileNotSavedHoveringIndicator);
 	}
 `
 

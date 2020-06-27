@@ -173,18 +173,22 @@
 			},
 			"Circle": {
 				"Background": "white",
-				"Border": "#CFCFCF"
-			}
-		},
-		"radioCircleBorderHovering": "#5D9DFC",
-		"file": {
-			"Not": {
-				"Saved": {
-					"Indicator": "black"
+				"Border": "#CFCFCF",
+				"Hovering": {
+					"Border": "#5D9DFC"
 				}
 			}
 		},
-		"fileNotSavedIndicatorHovering": "#0066FF",
+		"file": {
+			"Not": {
+				"Saved": {
+					"Indicator": "black",
+					"Hovering": {
+						"Indicator": "#0066FF"
+					}
+				}
+			}
+		},
 		"editor": {
 			"Dialog": {
 				"Background": "white",

@@ -22,10 +22,10 @@ const puffinThemingKeys = {
 	puffinTextColor: 'textColor',
 	puffinButtonBackground: 'buttonBackground',
 	puffinCardBackground: 'cardBackground',
-	puffinRadioBackgroundHovering: 'radioBackgroundHovering',
+	puffinRadioBackgroundHovering: 'radioHoveringBackground',
 	puffinRadioCircleBackground: 'radioCircleBackground',
 	puffinRadioCircleBorder: 'radioCircleBorder',
-	puffinRadioCircleBorderHovering: 'radioCircleBorderHovering',
+	puffinRadioCircleBorderHovering: 'radioCircleHoveringBorder',
 	puffinInputBackground: 'inputBackground',
 	puffinInputBorder: 'inputBorder',
 }
