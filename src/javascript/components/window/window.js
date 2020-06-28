@@ -7,13 +7,14 @@ const styleWrapper = style`
 		max-width: 80%;
 		max-height: 75%;
 		background: var(--windowBackground);
-		border-radius: 7px;
+		border-radius: 12px;
 		overflow:auto;
 		position:absolute;
 		height:auto;
 		display:flex;
 		animation:windowOpens ease-out 0.12s;
 		color: var(--textColor);
+		box-shadow: 0px 3px 20px 3px rgba(0,0,0,0.05);
 	}
 `
 

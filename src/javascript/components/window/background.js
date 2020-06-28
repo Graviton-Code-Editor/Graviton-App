@@ -8,7 +8,7 @@ const styleWrapper = style`
 		min-height:100%;
 		min-width:100%;
 		background:black;
-		opacity:0.3;
+		opacity:0.2;
 	}
 `
 

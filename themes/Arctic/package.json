@@ -62,7 +62,7 @@
 			"Icons": {
 				"Fill": "rgb(40,40,40)"
 			},
-			"Border": "rgb(150,150,150)"
+			"Border": "rgb(170,170,170)"
 		},
 		"contextmenu": {
 			"Background": "white",

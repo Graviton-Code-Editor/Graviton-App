@@ -68,7 +68,6 @@ function mountedAppView() {
 		document.getElementById('mainpanel').update()
 	})
 	StaticConfig.keyChanged('appEnableSidepanel', value => {
-		console.log(value)
 		document.getElementById('sidebar').update()
 		document.getElementById('mainpanel').update()
 		if (!value) {

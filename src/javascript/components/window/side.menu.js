@@ -88,6 +88,10 @@ const styleWrapper = style`
 	& > div:nth-child(1) > h1 {
 		overflow-x:hidden;
 		text-overflow:ellipsis;
+		text-align: center;
+		font-size: 25px;
+		margin: 20px 0;
+		margin-bottom: 27px;
 	}
 	& > div:nth-child(1) > label {
 		transition:0.04s;
