@@ -3,7 +3,7 @@ const { join } = window.require('path')
 import RunningConfig from 'RunningConfig'
 
 RunningConfig.data.envs.push({
-	name: 'Node',
+	name: 'npm',
 	filter(dir) {
 		if (fs.existsSync(join(dir, 'package.json'))) {
 			return window.require(join(dir, 'package.json'))
