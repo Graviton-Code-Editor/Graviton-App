@@ -45,7 +45,7 @@ function setIconpack(value) {
 				RunningConfig.data.iconpack[`${iconItem}.lang`] = path.join(pluginPath, icon)
 				break
 			case 'filename':
-				RunningConfig.data.iconpack[`file.${iconItem}A`] = path.join(pluginPath, icon)
+				RunningConfig.data.iconpack[`file.${iconItem}`] = path.join(pluginPath, icon)
 				break
 			case 'foldername':
 				RunningConfig.data.iconpack[`folder.closed.${iconItem}`] = path.join(pluginPath, icon)
