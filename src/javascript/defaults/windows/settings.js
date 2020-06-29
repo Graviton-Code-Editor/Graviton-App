@@ -10,6 +10,7 @@ import Languages from '../../../../languages/*.json'
 import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
 import ThemeCard from '../settings/components/theme.card'
+import IconpackCard from '../settings/components/iconpack.card'
 
 function Settings() {
 	const pluginsList = PluginsRegistry.registry.data.list
@@ -50,16 +51,39 @@ function Settings() {
 														ThemeCard,
 													},
 												})`
-											<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data.apptheme == pluginName}">
-												<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"/>
-											</label>
-											`
+												<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data.appTheme == pluginName}">
+													<ThemeCard style="font-size:13px;" themeInfo="${pluginInfo}"/>
+												</label>
+												`
 											}
 										})
 										.filter(Boolean)}
 								</RadioGroup>
 							</div>
-						</div>   
+						</div>  
+						<div href="iconpacks">
+							<div style="overflow:auto; height: auto; padding: 3px 0;">
+								<H4 lang-string="windows.Settings.Customization.Iconpacks"/>
+								<RadioGroup :radioSelected="${selectedIconpack}" direction="vertically" styled="false">
+									${Object.keys(pluginsList)
+										.map(pluginName => {
+											const pluginInfo = pluginsList[pluginName]
+											if (pluginInfo.type === 'iconpack') {
+												return element({
+													components: {
+														IconpackCard,
+													},
+												})`
+												<label styled="false" hidden-radio="true" name="${pluginName}" checked="${StaticConfig.data.appIconpack == pluginName}">
+													<IconpackCard style="font-size:13px;" iconpackInfo="${pluginInfo}"/>
+												</label>
+												`
+											}
+										})
+										.filter(Boolean)}
+								</RadioGroup>
+							</div>
+						</div>
 					</div>
 					<div href="advanced">
 						<div href="file watcher">
@@ -119,6 +143,10 @@ function Settings() {
 	function selectedTheme(e) {
 		const newTheme = e.detail.target.getAttribute('name')
 		if (StaticConfig.data.appTheme != newTheme) StaticConfig.data.appTheme = newTheme
+	}
+	function selectedIconpack(e) {
+		const newIconpack = e.detail.target.getAttribute('name')
+		if (StaticConfig.data.appIconpack != newIconpack) StaticConfig.data.appIconpack = newIconpack
 	}
 	function selectedLanguage(e) {
 		const newLanguage = e.detail.target.getAttribute('name')

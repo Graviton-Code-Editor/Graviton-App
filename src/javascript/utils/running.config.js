@@ -11,6 +11,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedTab: null,
 	focusedEditor: null,
 	workspacePath: null,
+	iconpack: {},
 	isDebug,
 	workspaceConfig: {
 		name: null,

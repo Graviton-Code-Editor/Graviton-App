@@ -57,6 +57,9 @@ const styleWrapper = style`
 			left: 0;
 			padding: 10px;
 		}
+		#sidepanel > div{
+			height: 100%;
+		}
 		#mainpanel{
 			min-width:50px;
 			display:flex;

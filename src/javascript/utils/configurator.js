@@ -6,6 +6,7 @@ const getAppDataPath = window.require('appdata-path')
 const DEFAULT_STATIC_CONFIGURATION = {
 	config: {
 		appTheme: 'Arctic',
+		appIconpack: 'Graviton',
 		appLanguage: 'english',
 		editorFontSize: '16',
 		appProjectsLog: [],

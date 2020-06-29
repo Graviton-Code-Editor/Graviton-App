@@ -1,0 +1,44 @@
+{
+	"name": "Graviton",
+	"id": "graviton-iconpack",
+	"description": "Default Graviton's iconpack",
+	"version": "1.0.0",
+	"author": "Marc Espín Sanz",
+	"type": "iconpack",
+	"icons": {
+		"js": {
+			"icon": "./icons/js.lang.svg"
+		},
+		"json": {
+			"icon": "./icons/json.lang.svg"
+		},
+		"jsx": {
+			"icon": "./icons/jsx.lang.svg"
+		},
+		"md": {
+			"icon": "./icons/md.lang.svg"
+		},
+		"folder": {
+			"icon": "./icons/folder.closed.svg",
+			"openedIcon": "./icons/folder.opened.svg",
+			"type": "basicfolder"
+		},
+		"image": {
+			"icon": "./icons/image.svg",
+			"type": "basicimage"
+		},
+		"file": {
+			"icon": "./icons/unknown.file.svg",
+			"type": "basicfile"
+		},
+		"package.json": {
+			"icon": "./icons/file.package.json.svg",
+			"type": "filename"
+		},
+		"node_modules": {
+			"icon": "./icons/folder.closed.node_modules.svg",
+			"openedIcon": "./icons/folder.openeds.node_modules.svg",
+			"type": "foldername"
+		}
+	}
+}

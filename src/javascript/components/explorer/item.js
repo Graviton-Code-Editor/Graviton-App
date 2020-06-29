@@ -100,6 +100,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
+	let configuredIcon = icon
 	return element({
 		components: {
 			ArrowIcon,
@@ -108,7 +109,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
 			<button :click="${onClick}" :contextmenu="${onContextMenu}">
 				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
-				<img class="icon" src="${Icons[icon] ? Icons[icon] : Icons['unknown.file']}"></img>
+				<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"></img>
 				<span>${label}</span>
 				<span class="decorator" style="background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
 			</button>
@@ -119,11 +120,15 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 		if (mounted) {
 			mounted(getMethods(this))
 		}
+		RunningConfig.on('updatedIconpack', () => {
+			setIcon(configuredIcon, this)
+		})
 	}
 	function getMethods(item) {
 		return {
 			setIcon(newIcon) {
 				setIcon(newIcon, item)
+				configuredIcon = newIcon
 			},
 			setItems(newItems) {
 				setItems(newItems, item)
@@ -135,7 +140,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 	}
 	function setIcon(icon, item) {
 		const iconImg = item.getElementsByClassName('icon')[0]
-		iconImg.src = Icons[icon] ? Icons[icon] : Icons['unknown.file']
+		iconImg.src = RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']
 	}
 	function setDecorator({ label, background }, item) {
 		if (label) decoratorLabel = label

@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.90",
+	"version": "2.0.91",
 	"description": "Minimalist looking code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
@@ -56,7 +56,10 @@
 		"lint": "prettier --write *.{js,scss,md,html,json}"
 	},
 	"staticFiles": {
-		"staticPath": "assets",
+		"staticPath": [
+			"assets",
+			"iconpacks"
+		],
 		"watcherGlob": "**"
 	},
 	"husky": {

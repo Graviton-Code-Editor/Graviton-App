@@ -2,6 +2,7 @@ import { Panel, removePanel } from '../constructors/panel'
 import { registryAllPlugins } from '../utils/plugin.loader'
 import { element, style } from '@mkenzo_8/puffin'
 import { openFolder, openFile } from '../utils/filesystem'
+import path from 'path'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
@@ -9,6 +10,7 @@ import Welcome from './windows/welcome'
 import PluginsRegistry from 'PluginsRegistry'
 import Arctic from '../../../themes/Arctic/package.json'
 import Night from '../../../themes/Night/package.json'
+import GravitonIconpack from '../../../iconpacks/Graviton/package.json'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
@@ -448,6 +450,10 @@ function init() {
 	new Panel() //Initial Panel
 	PluginsRegistry.add(Arctic)
 	PluginsRegistry.add(Night)
+	PluginsRegistry.add({
+		PATH: path.join(__dirname, './Graviton'),
+		...GravitonIconpack,
+	})
 
 	RunningConfig.emit('appLoaded')
 

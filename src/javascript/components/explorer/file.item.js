@@ -9,7 +9,6 @@ import InputDialog from '../../constructors/dialog.input'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import RunningConfig from 'RunningConfig'
-import Icons from '../../../../assets/icons/**.svg'
 import ArrowIcon from '../icons/arrow'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
@@ -494,6 +493,14 @@ function Item({
 			GitWatcher.cancel()
 			this.remove()
 		})
+		RunningConfig.on('updatedIconpack', () => {
+			const node = this.children[0].children[1]
+			if (this.getAttribute('opened') === 'true') {
+				setStateOpen(this)
+			} else {
+				node.src = isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName, getFormat(fullpath))
+			}
+		})
 		if (level == 0) {
 			itemState.emit('clickItem')
 		}
@@ -508,23 +515,23 @@ function reload(target, gitChanges) {
 
 function getFileIcon(fileName, fileExt) {
 	if (fileExt === ('png' || 'jpg' || 'ico')) {
-		return Icons.image
+		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
 	}
-	if (Icons[`file.${fileName}`]) {
-		return Icons[`file.${fileName}`]
+	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
+		return RunningConfig.data.iconpack[`file.${fileName}`]
 	}
-	if (Icons[`${fileExt}.lang`]) {
-		return Icons[`${fileExt}.lang`]
+	if (RunningConfig.data.iconpack[`${fileExt}.lang`]) {
+		return RunningConfig.data.iconpack[`${fileExt}.lang`]
 	} else {
-		return Icons['unknown.file']
+		return RunningConfig.data.iconpack['unknown.file']
 	}
 }
 
 function getFolderClosedIcon(folderName) {
-	if (Icons[`folder.closed.${folderName}`]) {
-		return Icons[`folder.closed.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.closed.${folderName}`]) {
+		return RunningConfig.data.iconpack[`folder.closed.${folderName}`]
 	} else {
-		return Icons['folder.closed']
+		return RunningConfig.data.iconpack['folder.closed']
 	}
 }
 
@@ -532,10 +539,10 @@ function setStateOpen(target) {
 	const itemIcon = target.getElementsByClassName('icon')[0]
 	const folderName = target.textContent.trim()
 	target.setAttribute('opened', 'true')
-	if (Icons[`folder.opened.${folderName}`]) {
-		itemIcon.src = Icons[`folder.opened.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.opened.${folderName}`]) {
+		itemIcon.src = RunningConfig.data.iconpack[`folder.opened.${folderName}`]
 	} else {
-		itemIcon.src = Icons['folder.opened']
+		itemIcon.src = RunningConfig.data.iconpack['folder.opened']
 	}
 }
 
@@ -543,10 +550,10 @@ function setStateClosed(target) {
 	const itemIcon = target.getElementsByClassName('icon')[0]
 	const folderName = target.textContent.trim()
 	target.setAttribute('opened', 'false')
-	if (Icons[`folder.closed.${folderName}`]) {
-		itemIcon.src = Icons[`folder.closed.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.closed.${folderName}`]) {
+		itemIcon.src = RunningConfig.data.iconpack[`folder.closed.${folderName}`]
 	} else {
-		itemIcon.src = Icons['folder.closed']
+		itemIcon.src = RunningConfig.data.iconpack['folder.closed']
 	}
 }
 
