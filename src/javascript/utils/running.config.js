@@ -1,6 +1,7 @@
 import { state } from '@mkenzo_8/puffin'
 import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
+const isDev = window.require('electron-is-dev')
 
 const electronArguments = window.require('electron').remote.getCurrentWindow().argv || []
 let isDebug = window.require('electron').remote.getCurrentWindow().isDebug
@@ -13,6 +14,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	workspacePath: null,
 	iconpack: {},
 	isDebug,
+	isDev,
 	workspaceConfig: {
 		name: null,
 		folders: [],
