@@ -150,7 +150,6 @@ RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceO
 RunningConfig.on('addFolderToRunningWorkspaceDialog', ({ replaceOldExplorer = false }) => {
 	selectFolderDialog()
 		.then(folderPath => {
-			console.log(folderPath)
 			RunningConfig.emit('addFolderToRunningWorkspace', {
 				folderPath,
 				replaceOldExplorer,
@@ -178,7 +177,7 @@ RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
 })
 
 function removeAllExplorerFolders() {
-	;[...RunningConfig.data.workspaceConfig.folders].forEach(({ path }, index) => {
+	;[...RunningConfig.data.workspaceConfig.folders].map(({ path }, index) => {
 		RunningConfig.emit('removeFolderFromRunningWorkspace', {
 			folderPath: path,
 		})
@@ -203,8 +202,6 @@ RunningConfig.on('setWorkspace', ({ path: workspaceDir }) => {
 		}
 		setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 		RunningConfig.data.workspacePath = workspacePath
-		const explorerPanel = document.getElementById('explorer_panel')
-		explorerPanel.innerHTML = ''
 		workspace.folders.map(folder => {
 			RunningConfig.emit('addFolderToRunningWorkspace', {
 				folderPath: folder.path,

@@ -371,12 +371,12 @@ function Item({
 				markStatus(target, newGitResult.status, isProjectcontainer ? gitChanges.files.length : null)
 			}
 		}
-		explorerState.on('gitMarkProjectContainer', ({ containerFolder, gitChanges }) => {
+		const GitMarkWatcher = explorerState.on('gitMarkProjectContainer', ({ containerFolder, gitChanges }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				markItem(gitChanges, true)
 			}
 		})
-		explorerState.on('newFile', ({ containerFolder, fileName }) => {
+		const NewFileWatcher = explorerState.on('newFile', ({ containerFolder, fileName }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				explorerState.emit('createItem', {
 					container: this,
@@ -388,7 +388,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('removedFile', ({ filePath }) => {
+		const RemovedFileWatcher = explorerState.on('removedFile', ({ filePath }) => {
 			if (itemDirectory === filePath) {
 				this.state.emit('destroyed')
 				RunningConfig.emit('aFileHasBeenRemoved', {
@@ -397,7 +397,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('newFolder', ({ containerFolder, folderName }) => {
+		const NewFolderWatcher = explorerState.on('newFolder', ({ containerFolder, folderName }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				explorerState.emit('createItem', {
 					container: this,
@@ -409,7 +409,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('removedFolder', ({ folderPath }) => {
+		const RemovedFolderWatcher = explorerState.on('removedFolder', ({ folderPath }) => {
 			if (itemDirectory === folderPath) {
 				this.remove()
 				RunningConfig.emit('aFolderHasBeenRemoved', {
@@ -418,7 +418,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('changedFile', async ({ filePath }) => {
+		const ChangedFileWatcher = explorerState.on('changedFile', async ({ filePath }) => {
 			if (itemDirectory === filePath) {
 				RunningConfig.emit('aFileHasBeenChanged', {
 					filePath,
@@ -426,7 +426,7 @@ function Item({
 				})
 			}
 		})
-		itemState.on('clickItem', function () {
+		const ItemClickedWatcher = itemState.on('clickItem', function () {
 			if (isFolder) {
 				const itemsContainer = target.children[1]
 				if (itemsContainer == null) {
@@ -435,6 +435,7 @@ function Item({
 				} else {
 					itemsContainer.remove()
 					setStateClosed(target)
+					explorerState.emit('closedFolder', fullpath)
 				}
 			} else {
 				const itemPath = fullpath
@@ -485,21 +486,45 @@ function Item({
 				markItem(gitChanges, itemDirectory == itemProjectDirectory)
 			}
 		})
-		itemState.on('doReload', () => reload(target, gitChanges))
-		itemState.on('destroyed', () => {
-			TabFocusedWatcher.cancel()
-			TabUnfocusedWatcher.cancel()
-			TabClosedWatcher.cancel()
-			GitWatcher.cancel()
-			this.remove()
-		})
-		RunningConfig.on('updatedIconpack', () => {
+		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
 			const node = this.children[0].children[1]
 			if (this.getAttribute('opened') === 'true') {
 				setStateOpen(this)
 			} else {
 				node.src = isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName, getFormat(fullpath))
 			}
+		})
+		let removedProjectFolderWatcher
+		if (level == 0) {
+			removedProjectFolderWatcher = RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
+				if (folderPath == itemDirectory) {
+					explorerState.emit('closedFolder', fullpath)
+					itemState.emit('destroyed')
+				}
+			})
+		}
+		const reloadItemWatcher = itemState.on('doReload', () => reload(target, gitChanges))
+		const closedFolderWatcher = explorerState.on('closedFolder', folderPath => {
+			if (itemDirectory.includes(folderPath) && itemDirectory !== folderPath) {
+				itemState.emit('destroyed')
+			}
+		})
+		itemState.on('destroyed', () => {
+			removedProjectFolderWatcher && removedProjectFolderWatcher.cancel()
+			reloadItemWatcher.cancel()
+			TabFocusedWatcher.cancel()
+			TabUnfocusedWatcher.cancel()
+			TabClosedWatcher.cancel()
+			GitWatcher.cancel()
+			GitMarkWatcher.cancel()
+			NewFileWatcher.cancel()
+			RemovedFileWatcher.cancel()
+			NewFolderWatcher.cancel()
+			RemovedFolderWatcher.cancel()
+			ChangedFileWatcher.cancel()
+			ItemClickedWatcher.cancel()
+			closedFolderWatcher.cancel()
+			this.remove()
 		})
 		if (level == 0) {
 			itemState.emit('clickItem')

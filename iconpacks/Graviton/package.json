@@ -37,7 +37,7 @@
 		},
 		"node_modules": {
 			"icon": "./icons/folder.closed.node_modules.svg",
-			"openedIcon": "./icons/folder.openeds.node_modules.svg",
+			"openedIcon": "./icons/folder.opened.node_modules.svg",
 			"type": "foldername"
 		}
 	}
