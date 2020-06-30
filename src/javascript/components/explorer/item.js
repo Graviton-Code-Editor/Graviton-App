@@ -96,7 +96,7 @@ const ItemWrapper = style`
 	}
 `
 
-function Item({ label, items, mounted, icon, action, contextAction, decorator = {} }) {
+function Item({ label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }) {
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
@@ -109,7 +109,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
 			<button :click="${onClick}" :contextmenu="${onContextMenu}">
 				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
-				<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"></img>
+				${iconComp ? iconComp() : element`<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"/>`}
 				<span>${label}</span>
 				<span class="decorator" style="background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
 			</button>
