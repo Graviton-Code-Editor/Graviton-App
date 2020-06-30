@@ -45,7 +45,11 @@
 			"View": {
 				"View": "View",
 				"ToggleSidebar": "Toggle sidebar",
-				"ToggleSidepanel": "Toggle sidepanel"
+				"ToggleSidepanel": "Toggle sidepanel",
+				"ShowSidebar": "Show sidebar",
+				"ShowSidepanel": "Show sidepanel",
+				"HideSidebar": "Hide sidebar",
+				"HideSidepanel": "Hide sidepanel"
 			},
 			"Window": {
 				"Window": "Window",
