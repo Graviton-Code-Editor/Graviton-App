@@ -224,29 +224,11 @@ function init() {
 		button: 'menus.View.View',
 		list: [
 			{
-				label: StaticConfig.data.appEnableSidebar ? 'menus.View.HideSidebar' : 'menus.View.ShowSidebar',
-				mounted({ setLabel }) {
-					StaticConfig.keyChanged('appEnableSidebar', value => {
-						if (value) {
-							setLabel('menus.View.HideSidebar')
-						} else {
-							setLabel('menus.View.ShowSidebar')
-						}
-					})
-				},
+				label: 'menus.View.ToggleSidebar',
 				action: () => (StaticConfig.data.appEnableSidebar = !StaticConfig.data.appEnableSidebar),
 			},
 			{
-				label: StaticConfig.data.appEnableSidepanel ? 'menus.View.HideSidepanel' : 'menus.View.ShowSidepanel',
-				mounted({ setLabel }) {
-					StaticConfig.keyChanged('appEnableSidepanel', value => {
-						if (value) {
-							setLabel('menus.View.HideSidepanel')
-						} else {
-							setLabel('menus.View.ShowSidepanel')
-						}
-					})
-				},
+				label: 'menus.View.ToggleSidepanel',
 				action: () => (StaticConfig.data.appEnableSidepanel = !StaticConfig.data.appEnableSidepanel),
 			},
 		],

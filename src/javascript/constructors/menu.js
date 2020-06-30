@@ -25,8 +25,6 @@ function renderSubmenu(e, option) {
 	render(subMenuComponent, submenuContainer)
 }
 
-const setLabel = (element, label) => (element.innerText = lang.getTranslation(label, LanguageState))
-
 const hideMenus = target => closeAllSubmenus(target.parentElement.parentElement)
 
 function getDropmenu(list) {
@@ -51,19 +49,12 @@ function getDropmenu(list) {
 			} else {
 				dropmenuOption = element`<p lang-string="${computedLabel}"/>`
 			}
-			function optionMounted() {
-				if (option.mounted) {
-					option.mounted({
-						setLabel: txt => setLabel(this, txt),
-					})
-				}
-			}
 			return element`
-			<div :click="${option.action}" >
-				<a mounted="${optionMounted}" :mouseenter="${triggerAction}" >
-					${dropmenuOption}
-				</a>
-			</div>`
+				<div :click="${option.action}" >
+					<a :mouseenter="${triggerAction}" >
+						${dropmenuOption}
+					</a>
+				</div>`
 		} else {
 			return element`<div class="sep"/>`
 		}
