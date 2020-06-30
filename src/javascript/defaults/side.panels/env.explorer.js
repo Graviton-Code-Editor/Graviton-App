@@ -3,7 +3,7 @@ import RunningConfig from 'RunningConfig'
 import { element, render } from '@mkenzo_8/puffin'
 import EnvOutlined from '../../components/icons/env.outlined'
 import Explorer from '../../constructors/explorer'
-const { join, basename } = window.require('path')
+const { basename } = window.require('path')
 import EnvClient from '../../constructors/env.client'
 import Notification from '../../constructors/notification'
 import detectEnv from '../../utils/detect.env'
@@ -14,10 +14,8 @@ RunningConfig.on('appLoaded', () => {
 		panel: () => element`<div/>`,
 		hint: 'Project inspector',
 	})
-
 	RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
-		const { env, info } = await detectEnv(folderPath)
-
+		const { env, prefix, info } = await detectEnv(folderPath)
 		if (env && info) {
 			const envExplorer = new Explorer({
 				items: [
@@ -26,7 +24,7 @@ RunningConfig.on('appLoaded', () => {
 						decorator: {
 							label: env,
 						},
-						items: getKeysToItems(info, folderPath),
+						items: getKeysToItems(info, folderPath, '', prefix),
 					},
 				],
 			})
@@ -40,32 +38,32 @@ RunningConfig.on('appLoaded', () => {
 	})
 })
 
-function getKeysToItems(keys, folder, fromKey) {
+function getKeysToItems(keys, folder, fromKey, prefix = '') {
 	return Object.keys(keys).map(key => {
 		const item = {
 			label: key,
 		}
 		if (fromKey == 'scripts') {
 			item.action = () => {
-				executeScript(folder, key)
+				executeScript(prefix, folder, key)
 			}
 		}
 		if (typeof keys[key] == 'object') {
-			item.items = getKeysToItems(keys[key], folder, key)
+			item.items = getKeysToItems(keys[key], folder, key, prefix)
 		}
 		return item
 	})
 }
 
-function executeScript(folder, script) {
-	const { execFile } = window.require('child_process')
+function executeScript(prefix, folder, script) {
+	const { exec } = window.require('child_process')
 
 	const scriptEnvClient = new EnvClient({
 		name: script,
 	})
 	let scriptProcess
 	scriptEnvClient.on('start', () => {
-		scriptProcess = execFile('npm run', [script], {
+		scriptProcess = exec(`${prefix} ${script}`, {
 			stdio: 'inherit',
 			shell: true,
 			detached: true,

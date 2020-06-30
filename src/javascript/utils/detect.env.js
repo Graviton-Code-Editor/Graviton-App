@@ -1,21 +1,10 @@
-const fs = window.require('fs')
-const { join } = window.require('path')
+import { join } from 'path'
 import RunningConfig from 'RunningConfig'
-
-RunningConfig.data.envs.push({
-	name: 'npm',
-	filter(dir) {
-		if (fs.existsSync(join(dir, 'package.json'))) {
-			return window.require(join(dir, 'package.json'))
-		}
-		return false
-	},
-})
 
 function detectEnv(folder) {
 	return new Promise(resolve => {
 		const registeredEnvs = RunningConfig.data.envs
-		for (const { name, filter } of registeredEnvs) {
+		for (const { name, prefix, filter } of registeredEnvs) {
 			const pass = filter(folder)
 			if (pass instanceof Promise) {
 				pass
@@ -23,6 +12,7 @@ function detectEnv(folder) {
 						if (data) {
 							resolve({
 								env: name,
+								prefix,
 								info: data,
 							})
 						}
@@ -34,6 +24,7 @@ function detectEnv(folder) {
 				if (pass) {
 					resolve({
 						env: name,
+						prefix,
 						info: pass,
 					})
 				}
