@@ -93,23 +93,30 @@ RunningConfig.on('command.openCommandPrompt', () => {
 			{
 				label: 'Set Language',
 				action: () => {
+					const getSelectedLang = res => {
+						return Object.keys(Languages).find(lang => {
+							const languageName = Languages[lang].name
+							if (languageName === res) return lang
+						})
+					}
 					const configuredLanguage = StaticConfig.data.language
 					new CommandPrompt({
 						showInput: true,
 						inputPlaceHolder: 'Select a language',
 						options: [
-							...Object.keys(Languages).map(name => {
+							...Object.keys(Languages).map(lang => {
+								const languageName = Languages[lang].name
 								return {
-									label: name,
-									selected: configuredLanguage === name,
+									label: languageName,
+									selected: configuredLanguage === languageName,
 								}
 							}),
 						],
 						onSelected(res) {
-							StaticConfig.data.appLanguage = res.label
+							StaticConfig.data.appLanguage = getSelectedLang(res.label)
 						},
 						onScrolled(res) {
-							StaticConfig.data.appLanguage = res.label
+							StaticConfig.data.appLanguage = getSelectedLang(res.label)
 						},
 					})
 				},
