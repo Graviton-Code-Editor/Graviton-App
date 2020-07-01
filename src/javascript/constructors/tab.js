@@ -233,7 +233,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				return {
 					element: tabs[tab],
 					fileName: tabs[tab].children[0].textContent,
-					filePath: tabs[tab].getAttribute('classselector'),
+					filePath: tabs[tab].state.data.directory,
 				}
 			})
 		}

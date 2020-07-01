@@ -45,7 +45,6 @@ function CommandPrompt({
 					options,
 					onSelected,
 					onCompleted,
-					command,
 				})
 				closeCommandPrompt(name)
 			case 17:
@@ -57,7 +56,6 @@ function CommandPrompt({
 					options,
 					onSelected,
 					onCompleted,
-					command,
 				})
 				closeCommandPrompt(name)
 				break
@@ -158,6 +156,7 @@ function hoverOption(hoveredOption, allOptions, onScrolled = () => {}) {
 			option.classList.add('active')
 			onScrolled({
 				label: option.textContent,
+				data: option.props.data,
 			})
 		} else {
 			option.classList.remove('active')
@@ -179,9 +178,9 @@ function renderOptions({ options, onSelected, onCompleted }, { state, parent, na
 
 	const optionsComp = element`
 			<div>
-				${options.map(({ selected, label }, index) => {
+				${options.map(({ selected, label, data }, index) => {
 					if (selected) hoveredDefault = index
-					return element`<a :click="${onClicked}">${label}</a> `
+					return element`<a :click="${onClicked}" data="${data}">${label}</a> `
 				})}
 			</div>
 		`
@@ -191,7 +190,6 @@ function renderOptions({ options, onSelected, onCompleted }, { state, parent, na
 			options,
 			onSelected,
 			onCompleted,
-			command,
 		})
 	}
 	parent.innerHTML = ''
@@ -211,6 +209,7 @@ function selectOption(option, { options, onSelected, onCompleted, command }) {
 		if (onSelected)
 			onSelected({
 				label: option.textContent,
+				data: option.props.data,
 			})
 	}
 	if (onCompleted) onCompleted(command)

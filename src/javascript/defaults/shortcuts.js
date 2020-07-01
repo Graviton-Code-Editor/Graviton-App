@@ -93,12 +93,6 @@ RunningConfig.on('command.openCommandPrompt', () => {
 			{
 				label: 'Set Language',
 				action: () => {
-					const getSelectedLang = res => {
-						return Object.keys(Languages).find(lang => {
-							const languageName = Languages[lang].name
-							if (languageName === res) return lang
-						})
-					}
 					const configuredLanguage = StaticConfig.data.language
 					new CommandPrompt({
 						showInput: true,
@@ -107,16 +101,17 @@ RunningConfig.on('command.openCommandPrompt', () => {
 							...Object.keys(Languages).map(lang => {
 								const languageName = Languages[lang].name
 								return {
+									data: lang,
 									label: languageName,
 									selected: configuredLanguage === languageName,
 								}
 							}),
 						],
 						onSelected(res) {
-							StaticConfig.data.appLanguage = getSelectedLang(res.label)
+							StaticConfig.data.appLanguage = res.data
 						},
 						onScrolled(res) {
-							StaticConfig.data.appLanguage = getSelectedLang(res.label)
+							StaticConfig.data.appLanguage = res.data
 						},
 					})
 				},
@@ -156,7 +151,7 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 				action: () => {
 					if (!currentEditorExists()) return
 					new CommandPrompt({
-						name: 'test',
+						name: 'go_to_line',
 						showInput: true,
 						inputPlaceHolder: '',
 						options: [],
@@ -186,13 +181,14 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 			options: [
 				...focusedPanelTabs.map(tab => {
 					return {
+						data: tab.filePath,
 						label: tab.fileName,
 					}
 				}),
 			],
 			onSelected(res) {
 				const toFocusTab = focusedPanelTabs.find(tab => {
-					return tab.fileName == res.label
+					return tab.filePath == res.data
 				})
 				toFocusTab && toFocusTab.element.state.emit('focusedMe')
 			},
