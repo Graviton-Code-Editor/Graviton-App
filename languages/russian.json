@@ -13,10 +13,10 @@
 				},
 				"Workspaces": {
 					"Workspaces": "Рабочие зоны",
-					"OpenWorkspaces": "Открытые рабочие зоны",
+					"OpenWorkspaces": "Открытые рабочие области",
 					"OpenFromFile": "Открыть из файла",
-					"AddFolderToWorkspace": "Добавить папку в рабочую зону",
-					"SaveWorkspace": "Сохранить рабочую зону"
+					"AddFolderToWorkspace": "Добавить папку в рабочую область",
+					"SaveWorkspace": "Сохранить рабочую область"
 				}
 			},
 			"Edit": {
@@ -64,7 +64,7 @@
 				"OpenDevTools": "Открыть консоль разработчика"
 			},
 			"Help": {
-				"Help": "Помошь",
+				"Help": "Помощь",
 				"Contact": "Контакты",
 				"Social": "Социальные сети",
 				"Contributors": "Авторы",
@@ -72,7 +72,7 @@
 				"Documentation": "Документация",
 				"Website": "Веб-сайт",
 				"SourceCode": "Исходный код",
-				"CheckForUpdates": "Проверить обновления",
+				"CheckForUpdates": "Проверить наличие обновлений",
 				"About": "О программе"
 			}
 		},
@@ -85,7 +85,7 @@
 				},
 				"Advanced": {
 					"Advanced": "Продвинутые настройки",
-					"FileWatcher": "Files Watcher",
+					"FileWatcher": "Просмотр файлов",
 					"Autocomplete": "Автозаполнение",
 					"WrapLines": "Перенос строк",
 					"Indentation": {
@@ -97,7 +97,7 @@
 				"Languages": "Языки",
 				"About": {
 					"About": "О программе",
-					"GravitonDescription": "Graviton это кросс-платформенный редактор кода."
+					"GravitonDescription": "Graviton - это кроссплатформенный редактор кода."
 				}
 			},
 			"Store": {
@@ -116,9 +116,9 @@
 			"Welcome": {
 				"Welcome": "Добро пожаловать",
 				"RecentProjects": "Недавние проекты",
-				"RecentWorkspaces": "Недавние пространства",
+				"RecentWorkspaces": "Недавние рабочие области",
 				"NewProject": "Новый проект",
-				"OpenWorkspace": "Открыть пространство",
+				"OpenWorkspace": "Открыть рабочую область",
 				"OpenFolder": "Открыть папку"
 			}
 		},
@@ -138,13 +138,13 @@
 			"Copy": "Копировать",
 			"Rename": "Переименовать",
 			"Remove": "Удалить",
-			"OpenLocation": "Открыть местонахождение",
+			"OpenLocation": "Открыть расположение",
 			"NewFile": "Новый файл",
 			"NewFolder": "Новая папка",
 			"Paste": "Вставить",
 			"Author": "Автор",
 			"Exit": "Выход",
-			"Tip": "Tip",
+			"Tip": "Подсказка",
 			"Yes": "Да",
 			"No": "Нет",
 			"Close": "Закрыть",
