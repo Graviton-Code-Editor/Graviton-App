@@ -120,9 +120,11 @@ function Item({ label, items, mounted, icon, iconComp, action, contextAction, de
 		if (mounted) {
 			mounted(getMethods(this))
 		}
-		RunningConfig.on('updatedIconpack', () => {
-			setIcon(configuredIcon, this)
-		})
+		if (iconComp) {
+			RunningConfig.on('updatedIconpack', () => {
+				setIcon(configuredIcon, this)
+			})
+		}
 	}
 	function getMethods(item) {
 		return {

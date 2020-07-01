@@ -2,12 +2,21 @@ import { element, style, render, lang } from '@mkenzo_8/puffin'
 import MenuComp from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState } from 'LanguageConfig'
+import StaticConfig from 'StaticConfig'
 
 const { remote } = window.require('electron')
 const { Menu: NativeMenu } = remote
-const NativeMenuBar = new NativeMenu()
+let NativeMenuBar = new NativeMenu()
 
 const isWindows = window.require('process').platform === 'win32'
+
+const createdMenus = []
+
+StaticConfig.keyChanged('appLanguage', () => {
+	NativeMenuBar.destroy()
+	NativeMenuBar = new NativeMenu()
+	createdMenus.map(m => Menu(m, true))
+})
 
 function closeAllSubmenus(parent) {
 	const subMenusOpened = Object.keys(parent.getElementsByClassName('submenu')).map(i => {
@@ -86,9 +95,9 @@ function getMenuComponent(button, list, leftMargin) {
 	`
 }
 
-function Menu({ button, list }) {
+function Menu({ button, list }, fromEvent = false) {
 	//This will ignore user's configured AppPlatform and will use the real one
-	if (isWindows) {
+	if (isWindows && !fromEvent) {
 		// Render Graviton's menu bar only in Windows
 		const menuComponent = getMenuComponent(button, list)
 		const dropmenusContainer = document.getElementById('dropmenus')
@@ -97,9 +106,14 @@ function Menu({ button, list }) {
 		// Display native menu bar in MacOS and GNU/Linux distros
 		const nativeMenu = createNativeMenu(button, list)
 		appendToNativeBar(nativeMenu)
+		if (!fromEvent)
+			createdMenus.push({
+				button,
+				list,
+			})
 	}
 }
-console.log(lang.getTranslation, LanguageState)
+
 function createNativeMenu(button, list) {
 	const { MenuItem } = remote
 
