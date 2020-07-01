@@ -19,6 +19,7 @@ import { EditorClient } from '../constructors/editorclient'
 import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
 import Explorer from '../constructors/explorer'
+import throwError from './throw.error'
 
 const fs = window.require('fs-extra')
 const pluginsPath = path.join(StaticConfig.data.appConfigPath, 'plugins')
@@ -113,14 +114,6 @@ function loadAllPlugins() {
 		const pluginPkg = PluginsRegistry.registry.data.list[pluginName]
 		loadPlugin(pluginPkg)
 	})
-}
-
-function throwError(message, err) {
-	if (RunningConfig.data.isDebug || isDev) {
-		throw Error(err)
-	} else {
-		console.log(`%cERR::%c ${message}`, 'color:rgb(255,35,35)', 'color:white')
-	}
 }
 
 export { loadPlugin }

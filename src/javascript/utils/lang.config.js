@@ -2,28 +2,36 @@ import { lang, state } from '@mkenzo_8/puffin'
 import Languages from '../../../languages/*.json'
 import StaticConfig from 'StaticConfig'
 import Notification from '../constructors/notification'
-const isNotWindows = window.require('process').platform !== 'win32'
+import throwError from './throw.error'
 
-if (isNotWindows) {
-	StaticConfig.keyChanged('appLanguage', () => {
-		new Notification({
-			title: 'notifications.appLanguageChanged.appLanguageChanged',
-			content: 'notifications.appLanguageChanged.restartMessage',
-		})
-	})
+let initialTranslations = {}
+
+if (Languages[StaticConfig.data.appLanguage]) {
+	const data = Languages[StaticConfig.data.appLanguage].translations
+	initialTranslations = data
+} else {
+	initialTranslations = Languages.english.translations
+	throwError(`Couldnt find language by name ${StaticConfig.data.appLanguage}`, StaticConfig.data.appLanguage)
 }
 
-let data = Languages[StaticConfig.data.appLanguage].translations
-
 const LanguageState = new state({
-	translations: data,
+	translations: initialTranslations,
 	fallbackTranslations: Languages.english.translations,
 })
 
-StaticConfig.keyChanged('appLanguage', newLanguage => {
-	LanguageState.data.translations = Languages[newLanguage].translations
-})
+const setFallback = notFoundLang => {
+	StaticConfig.data.appLanguage = 'english'
+	LanguageState.data.translations = Languages[StaticConfig.data.appLanguage].translations
+	throwError(`Couldnt find language by name ${notFoundLang}`, StaticConfig.data.appLanguage)
+}
 
-console.log(LanguageState)
+StaticConfig.keyChanged('appLanguage', newLanguage => {
+	if (Languages[newLanguage]) {
+		LanguageState.data.translations = Languages[newLanguage].translations
+	} else {
+		//Fallback to english if the configured language is not found
+		setFallback(newLanguage)
+	}
+})
 
 export { LanguageState }
