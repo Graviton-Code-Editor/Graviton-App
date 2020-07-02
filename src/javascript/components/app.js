@@ -32,7 +32,10 @@ const styleWrapper = style`
 			height:calc(100% - 68px);
 		}
 		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
-			height: calc(100% - 28px);
+			height: calc(100% - 25px);
+		}
+		.app-container[os="win32"] #sidebar{
+			border-top-right-radius: 5px;
 		}
 		#sidebar{
 			background: gray;
@@ -42,7 +45,7 @@ const styleWrapper = style`
 			overflow:auto;
 			float: left;
 			left: 0;
-			border-top-right-radius: 5px;
+			border-top-right-radius: 0px;
 			border-right:1px solid var(--panelBorder);
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
@@ -70,9 +73,11 @@ const styleWrapper = style`
 			border-top:1px solid var(--panelBorder);
 			background:var(--mainpanelBackground);
 		}
-		#mainpanel[blocked=false]{
-			border-left:1px solid var(--panelBorder);
+		.app-container[os="win32"] #mainpanel[blocked=false]{
 			border-top-left-radius:5px;
+		}
+		#mainpanel {
+			border-left:1px solid var(--panelBorder);
 		}
 		#mainpanel > div:nth-child(1){
 			border-top-left-radius:5px;

@@ -64,7 +64,7 @@ function TitleBar() {
 			Buttons,
 		},
 	})`
-	<div class="${styleWrapper}">
+	<div class="${styleWrapper}" style="${AppPlatform !== 'win32' ? 'margin:0;' : ''}">
 		${AppPlatform === 'win32' ? element`<img class="logo" draggable="false" src="${() => Logo}" />` : ''}
 		<div id="dropmenus" class="dropmenus"/>
 		<div class="title"/>
