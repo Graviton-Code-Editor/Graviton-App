@@ -74,7 +74,7 @@ app.on('ready', function () {
 function getAppIcon() {
 	switch (process.platform) {
 		case 'win32':
-			return path.join(__dirname, 'assets', 'building', 'win32', 'logo2.ico')
+			return path.join(__dirname, 'assets', 'building', 'win32', 'logo.ico')
 		case 'linux':
 			return path.join(__dirname, 'assets', 'building', 'linux', '512x512.png')
 		case 'darwin':
