@@ -22,6 +22,7 @@ import 'codemirror/addon/hint/html-hint'
 const CodemirrorClient = new EditorClient(
 	{
 		name: 'codemirror',
+		type: 'editor',
 	},
 	{
 		getValue: instance => instance.getValue(),

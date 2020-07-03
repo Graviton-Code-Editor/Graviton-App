@@ -1,6 +1,6 @@
 let editorClients = []
 
-function EditorClient({ name = 'unknown' }, object) {
+function EditorClient({ name = 'unknown', type }, object) {
 	return {
 		name,
 		do(name, args) {
@@ -8,6 +8,7 @@ function EditorClient({ name = 'unknown' }, object) {
 				return object[name](args)
 			}
 		},
+		type,
 	}
 }
 

@@ -21,6 +21,7 @@ const styleWrapper = style`
 const ImageViewerClient = new EditorClient(
 	{
 		name: 'imageviewer',
+		type: 'viewer',
 	},
 	{
 		getValue: instance => '',
@@ -52,7 +53,7 @@ const ImageViewerClient = new EditorClient(
 					}
 			}
 		},
-		create({ element: containerElement, directory }) {
+		create({ element: containerElement, directory, language }) {
 			const ImageViewerComp = element`
 				<div class="${styleWrapper}">
 					<img draggable="false" src="${directory}"/>
@@ -60,7 +61,14 @@ const ImageViewerClient = new EditorClient(
 			`
 			render(ImageViewerComp, containerElement)
 			return {
-				instance: {}, //Returns empty object because there is no editor instance
+				instance: {
+					mode: language.name,
+				},
+			}
+		},
+		getMode({ instance }) {
+			return {
+				name: instance.mode,
 			}
 		},
 		getCursorPosition({ instance }) {
