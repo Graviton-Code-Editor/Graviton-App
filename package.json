@@ -122,7 +122,7 @@
 	},
 	"build": {
 		"appId": "graviton-editor",
-		"artifactName": "${name}Installer-${version}-${arch}-${platform}.${ext}",
+		"artifactName": "${name}Editor_Installer_${version}_${os}.${ext}",
 		"asar": true,
 		"icon": "assets/building/darwin/icon.png",
 		"files": [
