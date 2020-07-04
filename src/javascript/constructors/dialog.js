@@ -55,6 +55,7 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 	return {
 		launch: () => dialogWindow.launch(),
 		close: () => dialogWindow.close(),
+		...dialogWindow,
 	}
 }
 

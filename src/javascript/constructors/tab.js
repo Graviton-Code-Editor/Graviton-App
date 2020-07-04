@@ -204,6 +204,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			tabState.data.active = false
 			focusATab(this)
 		})
+		let closeDialogOpened = false
 		tabState.on('close', () => {
 			if (tabState.data.saved) {
 				tabState.emit('destroyed', {
@@ -213,18 +214,24 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				tabNode.remove()
 				tabEditorNode.remove()
 			} else {
-				new areYouSureDialog()
-					.then(() => {
-						focusATab(tabNode)
-						tabNode.remove()
-						tabEditorNode.remove()
-						tabNode.state.emit('destroyed', {
-							tabElement: tabNode,
+				if (!closeDialogOpened) {
+					closeDialogOpened = true
+					new areYouSureDialog()
+						.then(() => {
+							focusATab(tabNode)
+							tabNode.remove()
+							tabEditorNode.remove()
+							tabNode.state.emit('destroyed', {
+								tabElement: tabNode,
+							})
 						})
-					})
-					.catch(() => {
-						// nothing, tab remains opened
-					})
+						.catch(() => {
+							// nothing, tab remains opened
+						})
+						.finally(() => {
+							closeDialogOpened = false
+						})
+				}
 			}
 		})
 		this.getPanelTabs = () => {

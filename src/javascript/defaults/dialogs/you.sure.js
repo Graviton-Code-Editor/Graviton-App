@@ -17,6 +17,9 @@ function areYouSureDialog() {
 			],
 		})
 		DialogInstance.launch()
+		DialogInstance.on('closed', () => {
+			reject()
+		})
 	})
 }
 
