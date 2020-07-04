@@ -91,6 +91,34 @@ RunningConfig.on('command.openCommandPrompt', () => {
 				},
 			},
 			{
+				label: 'Set zoom',
+				action: () => {
+					new CommandPrompt({
+						showInput: false,
+						options: [
+							{
+								label: 'Default',
+								action() {
+									StaticConfig.data.appZoom = 1
+								},
+							},
+							{
+								label: 'Increase',
+								action() {
+									StaticConfig.data.appZoom += 0.1
+								},
+							},
+							{
+								label: 'Decrease',
+								action() {
+									StaticConfig.data.appZoom -= 0.1
+								},
+							},
+						],
+					})
+				},
+			},
+			{
 				label: 'Set Language',
 				action: () => {
 					const configuredLanguage = StaticConfig.data.language
