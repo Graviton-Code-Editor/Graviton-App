@@ -30,18 +30,11 @@ const getPlugin = pluginPath => require(pluginPath)
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
 		let mainPath
-		if (isDev || RunningConfig.data.isDebug) {
-			if (mainDev && fs.existsSync(path.join(PATH, mainDev))) {
-				mainPath = path.join(PATH, mainDev) //DEV version
-			} else {
-				mainPath = path.join(PATH, main) //BUILT version
-			}
+		const mainDevExists = fs.existsSync(path.join(PATH, mainDev))
+		if (mainDev && mainDevExists) {
+			mainPath = path.join(PATH, mainDev) //DEV version
 		} else {
-			if (main && fs.existsSync(path.join(PATH, main))) {
-				mainPath = path.join(PATH, main) //BUILT version
-			} else {
-				mainPath = path.join(PATH, mainDev) //DEV version
-			}
+			mainPath = path.join(PATH, main) //BUILT version
 		}
 		if (type === 'plugin') {
 			const parameters = {
