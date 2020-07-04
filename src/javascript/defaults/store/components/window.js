@@ -10,8 +10,6 @@ import Window from '../../../constructors/window'
 import storeButton from './button'
 import Notification from '../../../constructors/notification'
 
-const pluginReserved = pluginName => pluginName == 'Arctic' || pluginName == 'Night'
-
 const getPluginInfo = (object, key) => {
 	if (object[key]) {
 		return object[key]
@@ -56,22 +54,22 @@ const styleWrapper = style`
 	}
 `
 
-function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' }, isInstalled) {
+function pluginWindow(
+	{ name, releases, id, repository, author = 'Unknown' },
+	{ name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' },
+	isInstalled,
+	isReserved
+) {
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo)
-
 	const pluginCompatibleVersion = getCompatiblePugin(packageJSON.version, pluginInfoValid.releases)
-
-	const isPluginReserved = pluginReserved(pluginInfoValid.name)
-
-	if (!isPluginReserved && pluginInfoValid.releases && pluginCompatibleVersion) {
+	if (!isReserved && pluginInfoValid.releases && pluginCompatibleVersion) {
 		var { version: lastReleaseVersion, target: lastReleaseTarget } = pluginCompatibleVersion
 	} else {
 		var lastReleaseVersion = 'Unknown'
 		var lastReleaseTarget = 'Unknown'
 	}
-
 	const newUpdate = hasUpdate(lastReleaseVersion, localVersion)
 	const haveRelease = lastReleaseVersion !== 'Unknown'
 	const component = element({
@@ -97,7 +95,7 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 						</Text>
 						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${lastReleaseVersion}"/>
 						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
-						${(!isPluginReserved && !pluginCompatibleVersion && getNoCompatibleversion()) || element`<div/>`}
+						${(!isReserved && !pluginCompatibleVersion && getNoCompatibleversion()) || element`<div/>`}
 					</div>
 					<div class="buttons">
 						${getUpdateButton()}
@@ -135,7 +133,7 @@ function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { 
 		return null
 	}
 	function getUninstallButton() {
-		if (isInstalled && !pluginReserved(pluginInfoValid.name)) {
+		if (isInstalled && !isReserved) {
 			return element({
 				components: {
 					storeButton,

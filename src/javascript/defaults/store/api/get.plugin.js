@@ -7,7 +7,7 @@ import StaticConfig from 'StaticConfig'
 const PLUGIN_CACHE_LIVETIME = 21600 // 6 hours
 
 function notFoundError() {
-	if (!RunningConfig.data.isDebug) throwError('Cannot find this plugin in the Store.')
+	if (!RunningConfig.data.isDev) throwError('Cannot find this plugin in the Store.')
 }
 
 function getPluginById(pluginId) {
@@ -33,10 +33,8 @@ function getPluginById(pluginId) {
 						addPluginToCache(response.data.plugin)
 					}
 				})
-				.catch(a => {
-					console.error(a)
-					return
-					const { status } = response
+				.catch(axiosResponse => {
+					const { status } = axiosResponse.response
 					if (status === 404) {
 						//Throw not found error but still resolve
 						notFoundError()

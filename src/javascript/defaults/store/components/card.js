@@ -23,8 +23,10 @@ const CardStyle = style`
 	}
 `
 
+const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID == 'night-theme'
+
 function StoreCard(props) {
-	const { pluginId, displayName, isInstalled, description = '' } = props.data
+	const { pluginID, displayName, isInstalled, description = '' } = props.data
 	return element({
 		components: {
 			Card,
@@ -38,9 +40,14 @@ function StoreCard(props) {
 		</Card>
 	`
 	async function clicked() {
-		const pluginInfo = await getPluginById(pluginId) //Get Store's API info
-		const pluginLocalInfo = getLocalPluginById(pluginId) //Get installed version info
-		new pluginWindow(pluginInfo, pluginLocalInfo, isInstalled)
+		const isReserved = pluginReserved(pluginID)
+		let pluginInfo = {}
+		if (!isReserved) {
+			//Prevent to search for Arctic and Night themes
+			pluginInfo = await getPluginById(pluginID) //Get Store's API info
+		}
+		const pluginLocalInfo = getLocalPluginById(pluginID) //Get installed version info
+		new pluginWindow(pluginInfo, pluginLocalInfo, isInstalled, isReserved)
 	}
 }
 
