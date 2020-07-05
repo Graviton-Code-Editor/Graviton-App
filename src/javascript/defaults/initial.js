@@ -442,9 +442,9 @@ function init() {
 
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
 
-	if (RunningConfig.data.isDebug === false) {
-		if (RunningConfig.data.arguments[0] && !isDev) {
-			const dir = RunningConfig.data.arguments[0]
+	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !isDev) {
+		const dir = RunningConfig.data.arguments[0]
+		if (fs.existsSync(dir)) {
 			if (fs.lstatSync(dir).isDirectory()) {
 				RunningConfig.emit('addFolderToRunningWorkspace', {
 					folderPath: RunningConfig.data.arguments[0],
