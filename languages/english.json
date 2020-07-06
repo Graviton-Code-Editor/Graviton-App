@@ -1,5 +1,5 @@
 {
-	"name": "english",
+	"name": "English",
 	"locale": "en",
 	"translations": {
 		"menus": {
@@ -34,13 +34,22 @@
 			},
 			"Tools": {
 				"Tools": "Tools",
-				"OpenSettings": "Open Settings",
-				"OpenStore": "Open Store",
+				"OpenSettings": "Settings",
+				"OpenStore": "Store",
 				"Panels": {
 					"Panels": "Panels",
 					"NewPanel": "New Panel",
 					"CloseCurrentPanel": "Close current panel"
 				}
+			},
+			"View": {
+				"View": "View",
+				"ToggleSidebar": "Toggle sidebar",
+				"ToggleSidepanel": "Toggle sidepanel",
+				"ShowSidebar": "Show sidebar",
+				"ShowSidepanel": "Show sidepanel",
+				"HideSidebar": "Hide sidebar",
+				"HideSidepanel": "Hide sidepanel"
 			},
 			"Window": {
 				"Window": "Window",
@@ -74,7 +83,8 @@
 				"Settings": "Settings",
 				"Customization": {
 					"Customization": "Customization",
-					"Themes": "Themes"
+					"Themes": "Themes",
+					"Iconpacks": "Iconpack"
 				},
 				"Advanced": {
 					"Advanced": "Advanced",
@@ -126,8 +136,14 @@
 			"Accept": "Accept",
 			"Cancel": "Cancel",
 			"version": "version",
+			"CopyPath": "Copy path",
 			"More": "More",
 			"Copy": "Copy",
+			"Rename": "Rename",
+			"Remove": "Remove",
+			"OpenLocation": "Open location",
+			"NewFile": "New file",
+			"NewFolder": "New folder",
 			"Paste": "Paste",
 			"Author": "Author",
 			"Exit": "Exit",

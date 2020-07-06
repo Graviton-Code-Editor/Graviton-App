@@ -20,15 +20,16 @@ const styleWrapper = style`
 
 const ImageViewerClient = new EditorClient(
 	{
-		name: 'codemirror',
+		name: 'imageviewer',
+		type: 'viewer',
 	},
 	{
 		getValue: instance => '',
 		getLangFromExt(extension) {
-			switch (extension) {
-				/*
+			/*
 			Every case refers to a supported image format.
 			*/
+			switch (extension) {
 				case 'ico':
 					return {
 						name: 'ico',
@@ -52,15 +53,22 @@ const ImageViewerClient = new EditorClient(
 					}
 			}
 		},
-		create({ element: containerElement, directory }) {
+		create({ element: containerElement, directory, language }) {
 			const ImageViewerComp = element`
-			<div class="${styleWrapper}">
-				<img draggable="false" src="${directory}"/>
-			</div>
-		`
+				<div class="${styleWrapper}">
+					<img draggable="false" src="${directory}"/>
+				</div>
+			`
 			render(ImageViewerComp, containerElement)
 			return {
-				instance: {}, //Returns empty object because there is no editor instance
+				instance: {
+					mode: language.name,
+				},
+			}
+		},
+		getMode({ instance }) {
+			return {
+				name: instance.mode,
 			}
 		},
 		getCursorPosition({ instance }) {

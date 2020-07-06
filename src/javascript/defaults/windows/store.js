@@ -64,7 +64,7 @@ function displayHome(container) {
 						},
 					})`<StoreCard data="${{
 						isInstalled,
-						pluginId: id,
+						pluginID: id,
 						description,
 						displayName: name,
 					}}"/>`
@@ -91,7 +91,7 @@ function displayInstalled(container) {
 				const pluginInfo = list[pluginId]
 				const pluginData = {
 					isInstalled: true,
-					pluginId: pluginInfo.id,
+					pluginID: pluginInfo.id,
 					displayName: pluginInfo.name,
 					description: pluginInfo.description,
 				}

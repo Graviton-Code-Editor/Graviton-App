@@ -1,6 +1,6 @@
-import { puffin } from '@mkenzo_8/puffin'
+import { state } from '@mkenzo_8/puffin'
 
-const registry = new puffin.state({
+const registry = new state({
 	list: {},
 	colorsSchemes: {},
 })

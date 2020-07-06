@@ -21,7 +21,7 @@ const styleWrapper = style`
 
 `
 
-const aboutContent = element({
+const aboutContent = () => element({
 	components: {
 		Text,
 	},

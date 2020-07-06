@@ -29,7 +29,7 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 		<DialogBody>
 			<div>
 				<H2>${title}</H2>
-				<Text>${content ? content : component}</Text>
+				<Text>${content ? content : component()}</Text>
 			</div>
 			<div>
 				${buttons.map((btn, index) => {
@@ -43,7 +43,8 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 		</DialogBody>
 	`
 	function closeWindow() {
-		computedMethods[Number(this.getAttribute('index'))]()
+		const buttonIndex = Number(this.props.index)
+		computedMethods[buttonIndex]()
 		dialogWindow.close()
 	}
 	const dialogWindow = new Window({
@@ -54,6 +55,7 @@ function Dialog({ title = '', content, component, buttons = [], height = '200px'
 	return {
 		launch: () => dialogWindow.launch(),
 		close: () => dialogWindow.close(),
+		...dialogWindow,
 	}
 }
 

@@ -1,4 +1,4 @@
-import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { element, style, render, lang, state } from '@mkenzo_8/puffin'
 import WindowBody from '../components/window/window'
 import WindowBackground from '../components/window/background'
 import { LanguageState, getTranslation } from 'LanguageConfig'
@@ -17,6 +17,7 @@ const styleWrapper = style`
 
 function Window({ title = '', component: contentComponent, height = '75%', width = '80%' }) {
 	const randomSelector = Math.random()
+	const windowState = new state({})
 	const WindowComponent = element({
 		components: {
 			WindowBody,
@@ -37,11 +38,13 @@ function Window({ title = '', component: contentComponent, height = '75%', width
 	function launchWindow() {
 		RunningConfig.data.openedWindows = RunningConfig.data.openedWindows + 1
 		render(WindowComponent, document.getElementById('windows'))
+		windowState.emit('launched')
 	}
 	function closeWindow() {
 		if (document.getElementById(randomSelector)) {
 			RunningConfig.data.openedWindows = RunningConfig.data.openedWindows - 1
 			document.getElementById(randomSelector).remove()
+			windowState.emit('closed')
 		}
 	}
 	return {
@@ -49,6 +52,7 @@ function Window({ title = '', component: contentComponent, height = '75%', width
 			launchWindow(WindowComponent)
 		},
 		close: () => closeWindow(WindowComponent),
+		...windowState,
 	}
 }
 

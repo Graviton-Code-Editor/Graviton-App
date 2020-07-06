@@ -18,7 +18,7 @@ RunningConfig.on('command.newPanel', () => {
 	new Panel()
 })
 RunningConfig.on('command.closeCurrentTab', () => {
-	if (RunningConfig.data.focusedTab != null) {
+	if (RunningConfig.data.focusedTab) {
 		//Check if there is any opened tab
 		RunningConfig.data.focusedTab.state.emit('close')
 	}
@@ -91,6 +91,34 @@ RunningConfig.on('command.openCommandPrompt', () => {
 				},
 			},
 			{
+				label: 'Set zoom',
+				action: () => {
+					new CommandPrompt({
+						showInput: false,
+						options: [
+							{
+								label: 'Default',
+								action() {
+									StaticConfig.data.appZoom = 1
+								},
+							},
+							{
+								label: 'Increase',
+								action() {
+									StaticConfig.data.appZoom += 0.1
+								},
+							},
+							{
+								label: 'Decrease',
+								action() {
+									StaticConfig.data.appZoom -= 0.1
+								},
+							},
+						],
+					})
+				},
+			},
+			{
 				label: 'Set Language',
 				action: () => {
 					const configuredLanguage = StaticConfig.data.language
@@ -98,23 +126,74 @@ RunningConfig.on('command.openCommandPrompt', () => {
 						showInput: true,
 						inputPlaceHolder: 'Select a language',
 						options: [
-							...Object.keys(Languages).map(name => {
+							...Object.keys(Languages).map(lang => {
+								const languageName = Languages[lang].name
 								return {
-									label: name,
-									selected: configuredLanguage === name,
+									data: lang,
+									label: languageName,
+									selected: configuredLanguage === languageName,
 								}
 							}),
 						],
 						onSelected(res) {
-							StaticConfig.data.appLanguage = res.label
+							StaticConfig.data.appLanguage = res.data
 						},
 						onScrolled(res) {
-							StaticConfig.data.appLanguage = res.label
+							StaticConfig.data.appLanguage = res.data
 						},
 					})
 				},
 			},
 			...RunningConfig.data.globalCommandPrompt,
+		],
+	})
+})
+
+const focusCurrentEditor = () => RunningConfig.data.focusedEditor.client.do('doFocus', { instance: RunningConfig.data.focusedEditor.instance })
+const currentEditorExists = () => RunningConfig.data.focusedEditor !== null
+
+RunningConfig.on('command.openEditorCommandPrompt', () => {
+	new CommandPrompt({
+		name: 'editor',
+		showInput: true,
+		inputPlaceHolder: 'Enter a command',
+		options: [
+			{
+				label: 'Save',
+				action: () => {
+					if (!currentEditorExists()) return
+					focusCurrentEditor()
+					RunningConfig.emit('command.saveCurrentFile')
+				},
+			},
+			{
+				label: 'Close',
+				action: () => {
+					if (!currentEditorExists()) return
+					focusCurrentEditor()
+					RunningConfig.emit('command.closeCurrentTab')
+				},
+			},
+			{
+				label: 'Go to line',
+				action: () => {
+					if (!currentEditorExists()) return
+					new CommandPrompt({
+						name: 'go_to_line',
+						showInput: true,
+						inputPlaceHolder: '',
+						options: [],
+						onCompleted: data => {
+							RunningConfig.data.focusedEditor.client.do('setCursorPosition', {
+								instance: RunningConfig.data.focusedEditor.instance,
+								line: Number(data),
+								char: 1,
+							})
+							focusCurrentEditor()
+						},
+					})
+				},
+			},
 		],
 	})
 })
@@ -130,13 +209,14 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 			options: [
 				...focusedPanelTabs.map(tab => {
 					return {
+						data: tab.filePath,
 						label: tab.fileName,
 					}
 				}),
 			],
 			onSelected(res) {
 				const toFocusTab = focusedPanelTabs.find(tab => {
-					return tab.fileName == res.label
+					return tab.filePath == res.data
 				})
 				toFocusTab && toFocusTab.element.state.emit('focusedMe')
 			},
@@ -178,6 +258,12 @@ appShortCuts.add([
 		return {
 			shortcut: shortcut,
 			handler: event => RunningConfig.emit('command.closeCurrentPanel'),
+		}
+	}),
+	...StaticConfig.data.appShortcuts.OpenEditorCommandPrompt.combos.map(shortcut => {
+		return {
+			shortcut: shortcut,
+			handler: event => RunningConfig.emit('command.openEditorCommandPrompt'),
 		}
 	}),
 	...StaticConfig.data.appShortcuts.OpenCommandPrompt.combos.map(shortcut => {

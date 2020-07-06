@@ -9,20 +9,21 @@ const styleWrapper = style`
 			overflow:hidden;
 			--puffinFont:mainFont;
 			background: var(--bodyBackground);
+			--codeFont: JetBrainsMono;
 		}
 		@font-face {
 			font-family: mainFont;
 			src: url(Inter-Regular.woff2) format("woff2") ;
 		}
 		@font-face {
-			font-family: codeFont;
+			font-family: JetBrainsMono;
 			src: url(JetBrainsMono-Regular.woff2) format("woff2") ;
 		}
 		* {
 			font-family: mainFont;
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
-			font-family:codeFont;
+			font-family:var(--codeFont);
 		}
 		#body{
 			display:flex;
@@ -31,7 +32,10 @@ const styleWrapper = style`
 			height:calc(100% - 68px);
 		}
 		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
-			height: calc(100% - 28px);
+			height: calc(100% - 25px);
+		}
+		.app-container[os="win32"] #sidebar{
+			border-top-right-radius: 5px;
 		}
 		#sidebar{
 			background: gray;
@@ -41,7 +45,7 @@ const styleWrapper = style`
 			overflow:auto;
 			float: left;
 			left: 0;
-			border-top-right-radius: 5px;
+			border-top-right-radius: 0px;
 			border-right:1px solid var(--panelBorder);
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
@@ -56,6 +60,9 @@ const styleWrapper = style`
 			left: 0;
 			padding: 10px;
 		}
+		#sidepanel > div{
+			height: 100%;
+		}
 		#mainpanel{
 			min-width:50px;
 			display:flex;
@@ -63,10 +70,14 @@ const styleWrapper = style`
 			min-width:50px;
 			width:300px;
 			flex:1;
-			border-left:1px solid var(--panelBorder);
 			border-top:1px solid var(--panelBorder);
-			border-top-left-radius:5px;
 			background:var(--mainpanelBackground);
+		}
+		.app-container[os="win32"] #mainpanel[blocked=false]{
+			border-top-left-radius:5px;
+		}
+		#mainpanel {
+			border-left:1px solid var(--panelBorder);
 		}
 		#mainpanel > div:nth-child(1){
 			border-top-left-radius:5px;
@@ -121,7 +132,7 @@ const styleWrapper = style`
 		}
 		html * ::-webkit-scrollbar-thumb:hover {
 			transition: 0.1s;
-			background: var(--scrollbarHoverBackground);
+			background: var(--scrollbarHoveringBackground);
 		}
 		html * ::-webkit-scrollbar-corner {
 			visibility: hidden !important;

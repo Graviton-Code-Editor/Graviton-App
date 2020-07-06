@@ -33,15 +33,16 @@ function openDebugClient() {
 				slashes: true,
 			})
 		)
-		debugWindow.emit('something', {
-			msg: 'works!',
-		})
 	})
 	debugClient.on('reload', () => {
 		debugWindow && debugWindow.reload()
 	})
 	debugClient.on('stop', () => {
-		debugWindow && debugWindow.close()
+		try {
+			debugWindow && debugWindow.close()
+		} catch {
+			return
+		}
 	})
 }
 

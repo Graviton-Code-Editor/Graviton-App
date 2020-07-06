@@ -1,6 +1,6 @@
-import { puffin, element, render, style } from '@mkenzo_8/puffin'
+import { element, render, style } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
-import Icons from '../../../../assets/icons/**.svg'
+import Icons from '../../../../assets/icons/*.svg'
 import ArrowIcon from '../icons/arrow'
 import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
@@ -8,8 +8,8 @@ import StaticConfig from 'StaticConfig'
 const ItemWrapper = style`
 	@keyframes appearItem{
 		from {
-			opacity: 0;
-			margin-left: 5px;	
+			opacity: 0.3;
+			margin-left: 5px;
 		}
 		to {
 			margin-left: 10px;
@@ -63,12 +63,13 @@ const ItemWrapper = style`
 	& .decorator {
 		display: block;
 		position:relative;
-		border-radius:50px;
+		border-radius:20px;
 		margin: auto 2px;
 		margin-left:6px;
 		font-size:9px;
-		min-width:10px;
-		padding:1px 3px;
+		min-width:4px;
+		padding: 4px 6px;
+		min-height: 8px;
 	}
 	& .icon{
 		height:20px;
@@ -95,11 +96,11 @@ const ItemWrapper = style`
 	}
 `
 
-function Item({ label, items, mounted, icon, action, contextAction, decorator = {} }) {
+function Item({ label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }) {
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
-
+	let configuredIcon = icon
 	return element({
 		components: {
 			ArrowIcon,
@@ -108,7 +109,7 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
 			<button :click="${onClick}" :contextmenu="${onContextMenu}">
 				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
-				<img class="icon" src="${Icons[icon] ? Icons[icon] : Icons['unknown.file']}"></img>
+				${iconComp ? iconComp() : element`<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"/>`}
 				<span>${label}</span>
 				<span class="decorator" style="background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
 			</button>
@@ -119,11 +120,17 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 		if (mounted) {
 			mounted(getMethods(this))
 		}
+		if (iconComp) {
+			RunningConfig.on('updatedIconpack', () => {
+				setIcon(configuredIcon, this)
+			})
+		}
 	}
 	function getMethods(item) {
 		return {
 			setIcon(newIcon) {
 				setIcon(newIcon, item)
+				configuredIcon = newIcon
 			},
 			setItems(newItems) {
 				setItems(newItems, item)
@@ -133,9 +140,9 @@ function Item({ label, items, mounted, icon, action, contextAction, decorator = 
 			},
 		}
 	}
-	function setIcon() {
-		const iconImg = this.getElementsByClassName('icon')[0]
-		iconImg.src = Icons[icon] ? Icons[icon] : Icons['unknown.file']
+	function setIcon(icon, item) {
+		const iconImg = item.getElementsByClassName('icon')[0]
+		iconImg.src = RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']
 	}
 	function setDecorator({ label, background }, item) {
 		if (label) decoratorLabel = label

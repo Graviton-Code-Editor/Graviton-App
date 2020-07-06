@@ -88,6 +88,10 @@ const styleWrapper = style`
 	& > div:nth-child(1) > h1 {
 		overflow-x:hidden;
 		text-overflow:ellipsis;
+		text-align: center;
+		font-size: 25px;
+		margin: 20px 0;
+		margin-bottom: 27px;
 	}
 	& > div:nth-child(1) > label {
 		transition:0.04s;
@@ -102,7 +106,7 @@ const styleWrapper = style`
 	}
 	& > div:nth-child(1) > label:hover:not(.active) {
 		transition:0.04s;
-		background:var(--sidemenuButtonHoverBackground);
+		background:var(--sidemenuButtonHoveringBackground);
 	}
 	& > div:nth-child(1) > label.active {
 		background:var(--sidemenuButtonActiveBackground);
@@ -117,6 +121,10 @@ const styleWrapper = style`
 		overflow:auto;
 		padding:15px;
 		flex:1;
+	}
+	& > div:nth-child(2) > div > div > h4{
+		margin-bottom: 2px;
+		font-size: 14px;
 	}
 `
 

@@ -3,7 +3,7 @@ const path = require('path')
 const { app, BrowserWindow } = require('electron')
 const isDev = require('electron-is-dev')
 const windowStateKeeper = require('electron-window-state')
-const zip = require('extract-zip')
+const AdmZip = require('adm-zip')
 const appData = require('appdata-path')
 const fs = require('fs-extra')
 const axios = require('axios')
@@ -33,7 +33,7 @@ app.on('ready', function () {
 		backgroundColor: '#191919',
 		title: 'Graviton Editor',
 		show: false,
-		icon: path.join(__dirname, 'assets', 'building', process.platform, 'icon.ico'),
+		icon: getAppIcon(),
 		scrollBounce: true,
 	})
 	if (!isDev) main.removeMenu()
@@ -71,6 +71,17 @@ app.on('ready', function () {
 	}
 })
 
+function getAppIcon() {
+	switch (process.platform) {
+		case 'win32':
+			return path.join(__dirname, 'assets', 'building', 'win32', 'logo.ico')
+		case 'linux':
+			return path.join(__dirname, 'assets', 'building', 'linux', '512x512.png')
+		case 'darwin':
+			return path.join(__dirname, 'assets', 'building', 'darwin', 'icon.png')
+	}
+}
+
 app.on('window-all-closed', () => {
 	app.quit()
 })
@@ -80,9 +91,11 @@ app.on('before-quit', () => {
 })
 
 ipcMain.on('download-plugin', (event, { url, id, dist }) => {
-	getZip(url, id, dist).then(() => {
-		event.reply('plugin-installed', true)
-	})
+	getZip(url, id, dist)
+		.then(() => {
+			event.reply('plugin-installed', true)
+		})
+		.catch(err => console.log(err))
 })
 
 function getZip(url, pluginId, dist) {
@@ -92,10 +105,15 @@ function getZip(url, pluginId, dist) {
 			url,
 			responseType: 'stream',
 		}).then(async response => {
-			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`)))
-			createPluginFolder(pluginId, dist)
-			extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist).then(() => {
-				resolve()
+			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`))).on('close', () => {
+				//Finished download the plugins's zip
+				createPluginFolder(pluginId, dist)
+				extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist)
+					.then(() => {
+						//Finished unzipping the plugin
+						resolve()
+					})
+					.catch(err => console.log(err))
 			})
 		})
 	})
@@ -111,10 +129,9 @@ function createPluginFolder(pluginId, dist) {
 function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
 	return new Promise((resolve, reject) => {
-		fs.unlink(pluginDirectory, () => {
-			zip(zipPath, { dir: pluginDirectory })
-			resolve()
-		})
+		const zip = new AdmZip(zipPath)
+		zip.extractAllTo(pluginDirectory, true)
+		resolve()
 	})
 }
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true')

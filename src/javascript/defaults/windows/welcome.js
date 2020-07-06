@@ -79,7 +79,20 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 					</div>
 				</CardsListContainer>
 				<CardsListContainer href="create_project">
-					<b>Work in progress.</b>
+					<div>
+						${RunningConfig.data.projectServices.map(({ name, description, onExecuted }) => {
+							return element({
+								components: {
+									Card,
+								},
+							})`
+								<Card :click="${onExecuted}" :click="${createProject}">
+									<b>${name}</b>
+									<p>${description}</p>
+								</Card>
+							`
+						})}
+					</div>
 				</CardsListContainer>
 			</div>
 		</SideMenu>
@@ -125,6 +138,9 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 			replaceOldExplorer: true,
 			workspacePath: null,
 		})
+		WelcomeWindow.close()
+	}
+	function createProject() {
 		WelcomeWindow.close()
 	}
 	function openDirectoryFromWindow() {

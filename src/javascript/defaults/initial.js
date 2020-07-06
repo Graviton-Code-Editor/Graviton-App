@@ -2,36 +2,39 @@ import { Panel, removePanel } from '../constructors/panel'
 import { registryAllPlugins } from '../utils/plugin.loader'
 import { element, style } from '@mkenzo_8/puffin'
 import { openFolder, openFile } from '../utils/filesystem'
+import path from 'path'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
 import Welcome from './windows/welcome'
 import PluginsRegistry from 'PluginsRegistry'
-import Arctic from '../themes/arctic'
-import Night from '../themes/night'
+import Arctic from '../../../themes/Arctic/package.json'
+import Night from '../../../themes/Night/package.json'
+import GravitonIconpack from '../../../iconpacks/Graviton/package.json'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import Languages from '../../../languages/*.json'
-import ThemeProvider from '../utils/themeprovider'
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
 import Dialog from '../constructors/dialog'
+import gravitonHasUpdate from './store/utils/app.update'
+import Explorer from '../constructors/explorer'
+import SidePanel from '../constructors/side.panel'
+import Play from '../components/icons/play'
+import EnvClient from '../constructors/env.client'
+import packageJSON from '../../../package.json'
+import openDebugClient from './debug.window'
+import './environment.inspectors/npm'
+import './project.services/node'
+import './side.panels/files.explorer'
+import './side.panels/env.explorer'
 import './shortcuts'
 import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
 import './status.bar.items/debug'
-import gravitonHasUpdate from './store/utils/app.update'
-import Explorer from '../constructors/explorer'
-import SidePanel from '../constructors/side.panel'
-import Play from '../components/icons/play'
-import './side.panels/files.explorer'
-import './side.panels/env.explorer'
-import EnvClient from '../constructors/env.client'
-import packageJSON from '../../../package.json'
-import openDebugClient from './debug.window'
 
 const fs = window.require('fs-extra')
 const { openExternal: openLink } = window.require('electron').shell
@@ -218,6 +221,20 @@ function init() {
 		],
 	})
 	new Menu({
+		//VIEW
+		button: 'menus.View.View',
+		list: [
+			{
+				label: 'menus.View.ToggleSidebar',
+				action: () => (StaticConfig.data.appEnableSidebar = !StaticConfig.data.appEnableSidebar),
+			},
+			{
+				label: 'menus.View.ToggleSidepanel',
+				action: () => (StaticConfig.data.appEnableSidepanel = !StaticConfig.data.appEnableSidepanel),
+			},
+		],
+	})
+	new Menu({
 		//Window
 		button: 'menus.Window.Window',
 		list: [
@@ -288,7 +305,7 @@ function init() {
 					{
 						label: 'Discord',
 						action: () => {
-							openLink('https://discord.gg/cChzuMp')
+							openLink('https://discord.gg/gg6CTYA')
 						},
 					},
 				],
@@ -416,14 +433,18 @@ function init() {
 	new Panel() //Initial Panel
 	PluginsRegistry.add(Arctic)
 	PluginsRegistry.add(Night)
+	PluginsRegistry.add({
+		PATH: path.join(__dirname, './Graviton'),
+		...GravitonIconpack,
+	})
 
 	RunningConfig.emit('appLoaded')
 
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
 
-	if (RunningConfig.data.isDebug === false) {
-		if (RunningConfig.data.arguments[0] && !isDev) {
-			const dir = RunningConfig.data.arguments[0]
+	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !isDev) {
+		const dir = RunningConfig.data.arguments[0]
+		if (fs.existsSync(dir)) {
 			if (fs.lstatSync(dir).isDirectory()) {
 				RunningConfig.emit('addFolderToRunningWorkspace', {
 					folderPath: RunningConfig.data.arguments[0],

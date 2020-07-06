@@ -1,6 +1,6 @@
 import TabBody from '../components/panel/tab'
 import TabEditor from '../components/panel/tab.editor'
-import { puffin, element, style, render } from '@mkenzo_8/puffin'
+import { state, element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
@@ -19,7 +19,7 @@ function guessTabPosition(tab, tabsbar) {
 	)
 }
 
-function Tab({ title, isEditor, directory = '', parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
+function Tab({ title, isEditor = false, directory = '', parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
 	const classSelector = `tab${directory ? directory : id}`
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if (openedTabs.length >= 1) {
@@ -31,13 +31,16 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 			isCancelled: true,
 			tabElement: openedTabs[0],
 			tabState: openedTabs[0].props.state,
+			directory,
+			isEditor,
 		}
 	}
-	const tabState = new puffin.state({
+	const tabState = new state({
 		active: true,
 		saved: true,
 		parentFolder,
 		panel,
+		directory,
 	})
 	RunningConfig.on('isATabOpened', ({ directory: tabDir, id: tabID }) => {
 		if ((tabDir && tabDir == directory) || (tabID && tabID == id)) {
@@ -112,6 +115,8 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 	}
 	function mounted() {
 		this.directory = directory
+		let client
+		let instance
 		tabState.keyChanged('active', () => {
 			this.update()
 		})
@@ -121,22 +126,31 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 			RunningConfig.emit('aTabHasBeenFocused', {
 				tabElement: this,
 				directory: normalizeDir(directory),
+				client,
+				instance,
+				parentFolder,
 			})
-			unfocusTabs(this)
+			if (!tabState.data.active) unfocusTabs(this)
 			tabState.data.active = true
 			this.scrollIntoView()
 		})
 		tabState.on('unfocusedMe', () => {
 			RunningConfig.emit('aTabHasBeenUnfocused', {
 				tabElement: this,
-				directory: directory,
+				directory: normalizeDir(directory),
+				client,
+				instance,
+				parentFolder,
 			})
 			tabState.data.active = false
 		})
 		tabState.on('destroyed', () => {
 			RunningConfig.emit('aTabHasBeenClosed', {
 				tabElement: this,
-				directory: directory,
+				directory: normalizeDir(directory),
+				client,
+				instance,
+				parentFolder,
 			})
 		})
 		tabState.on('savedMe', () => {
@@ -149,7 +163,9 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 				})
 				RunningConfig.emit('aTabHasBeenSaved', {
 					tabElement: this,
-					path: directory,
+					directory: normalizeDir(directory),
+					client,
+					instance,
 					parentFolder,
 				})
 			}
@@ -176,36 +192,46 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 				tabState.data.saved = false
 				RunningConfig.emit('aTabHasBeenUnSaved', {
 					tabElement: this,
-					path: directory,
+					directory: normalizeDir(directory),
+					client,
+					instance,
 					parentFolder,
 				})
 			}
 		})
 		tabState.on('changePanel', newPanel => {
 			tabState.data.panel = newPanel
+			tabState.data.active = false
 			focusATab(this)
 		})
+		let closeDialogOpened = false
 		tabState.on('close', () => {
 			if (tabState.data.saved) {
-				focusATab(this)
-				tabNode.remove()
-				tabEditorNode.remove()
 				tabState.emit('destroyed', {
 					tabElement: tabNode,
 				})
+				focusATab(this)
+				tabNode.remove()
+				tabEditorNode.remove()
 			} else {
-				new areYouSureDialog()
-					.then(() => {
-						focusATab(tabNode)
-						tabNode.remove()
-						tabEditorNode.remove()
-						tabNode.state.emit('destroyed', {
-							tabElement: tabNode,
+				if (!closeDialogOpened) {
+					closeDialogOpened = true
+					new areYouSureDialog()
+						.then(() => {
+							focusATab(tabNode)
+							tabNode.remove()
+							tabEditorNode.remove()
+							tabNode.state.emit('destroyed', {
+								tabElement: tabNode,
+							})
 						})
-					})
-					.catch(() => {
-						// nothing, tab remains opened
-					})
+						.catch(() => {
+							// nothing, tab remains opened
+						})
+						.finally(() => {
+							closeDialogOpened = false
+						})
+				}
 			}
 		})
 		this.getPanelTabs = () => {
@@ -214,12 +240,34 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 				return {
 					element: tabs[tab],
 					fileName: tabs[tab].children[0].textContent,
-					filePath: tabs[tab].getAttribute('classselector'),
+					filePath: tabs[tab].state.data.directory,
 				}
 			})
 		}
 		unfocusTabs(this)
-		RunningConfig.data.focusedTab = this
+		if (isEditor) {
+			tabState.on('editorCreated', ({ client: newClient, instance: newInstance }) => {
+				client = newClient
+				instance = newInstance
+				tabState.emit('focusedMe', {})
+				RunningConfig.emit('aTabHasBeenCreated', {
+					tabElement: this,
+					directory: normalizeDir(directory),
+					client,
+					instance,
+					parentFolder,
+				})
+			})
+		} else {
+			tabState.emit('focusedMe', {})
+			RunningConfig.emit('aTabHasBeenCreated', {
+				tabElement: this,
+				directory: normalizeDir(directory),
+				client: null,
+				instance: null,
+				parentFolder,
+			})
+		}
 		this.state = tabState
 	}
 	const randomSelectorEditor = Math.random()
@@ -229,10 +277,13 @@ function Tab({ title, isEditor, directory = '', parentFolder, component, panel =
 			component,
 		},
 	})`
-		<TabEditor id="${randomSelectorEditor}" mounted="${mountedEditor}">
+		<TabEditor :click="${focusEditor}" id="${randomSelectorEditor}" mounted="${mountedEditor}">
 			${component ? component() : ''}
 		</TabEditor>
 	`
+	function focusEditor() {
+		tabState.emit('focusedMe')
+	}
 	function mountedEditor() {
 		const target = this
 		tabState.on('focusedMe', () => {

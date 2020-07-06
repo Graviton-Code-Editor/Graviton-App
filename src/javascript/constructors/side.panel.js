@@ -3,13 +3,17 @@ import { LanguageState } from 'LanguageConfig'
 
 const styleWrapper = style`
 	& {
-		padding: 13px 1px;
+		padding:0px;
 		margin: 1px auto;
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		background: var(--sidebarIconBackground);
 		border-radius: 5px;
-		--iconFill: var(--sidebarIconsFill)
+		overflow: hidden;
+		min-height: 50px;
+		max-height: 50px;
+		--iconFill: var(--sidebarIconsFill);
 	}
 	&:hover:not(.active) {
 		transition: 0.1s;

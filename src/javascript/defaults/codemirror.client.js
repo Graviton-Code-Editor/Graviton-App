@@ -1,4 +1,5 @@
 import CodeMirror from 'codemirror'
+import emmet from '@emmetio/codemirror-plugin'
 import { EditorClient } from '../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
 
@@ -21,6 +22,7 @@ import 'codemirror/addon/hint/html-hint'
 const CodemirrorClient = new EditorClient(
 	{
 		name: 'codemirror',
+		type: 'editor',
 	},
 	{
 		getValue: instance => instance.getValue(),
@@ -73,10 +75,12 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'text/x-java',
 					}
+				case 'svelte':
 				case 'vue':
 					return {
-						name: 'vue',
+						name: 'text/x-vue',
 					}
+				case 'svg':
 				case 'xml':
 					return {
 						name: 'xml',
@@ -96,6 +100,20 @@ const CodemirrorClient = new EditorClient(
 				case 'pug':
 					return {
 						name: 'pug',
+					}
+				case 'hpp':
+				case 'cpp':
+				case 'h':
+					return {
+						name: 'text/x-c++src',
+					}
+				case 'c':
+					return {
+						name: 'text/x-csrc',
+					}
+				case 'java':
+					return {
+						name: 'text/x-java',
 					}
 				case 'scss':
 				case 'sass':
@@ -127,6 +145,7 @@ const CodemirrorClient = new EditorClient(
 			}
 		},
 		create({ element, language, value, theme, CtrlPlusScroll }) {
+			if (language.name == 'htmlmixed') emmet(CodeMirror)
 			const CodemirrorEditor = CodeMirror(element, {
 				mode: language,
 				value: value,
@@ -150,35 +169,37 @@ const CodemirrorClient = new EditorClient(
 				miniMap: false,
 				indentWithTabs: StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
+				extraKeys: {
+					Tab: 'emmetExpandAbbreviation',
+					Esc: 'emmetResetAbbreviation',
+					Enter: 'emmetInsertLineBreak',
+				},
+				emmet: {
+					preview: false,
+				},
 			})
-			CodemirrorEditor.on('keyup', (cm, event) => {
-				if (StaticConfig.data.editorAutocomplete) {
-					if (
-						!cm.state.completionActive &&
-						event.keyCode != 13 &&
-						event.keyCode != 8 &&
-						event.keyCode != 9 &&
-						event.keyCode != 222 &&
-						event.keyCode != 38 &&
-						event.keyCode != 40 &&
-						event.keyCode != 39 &&
-						event.keyCode != 37 &&
-						event.keyCode != 17 &&
-						event.keyCode != 18 &&
-						event.keyCode != 188 &&
-						event.keyCode != 27 &&
-						event.keyCode != 46 &&
-						event.keyCode > 31 &&
-						(event.keyCode < 48 || event.keyCode > 57) &&
-						event.keyCode != 32 &&
-						event.ctrlKey == false &&
-						event.keyCode != 91 &&
-						event.keyCode != 44
-					) {
-						CodeMirror.commands.autocomplete(cm, null, {
-							completeSingle: false,
-						})
-					}
+
+			CodemirrorEditor.on('keyup', (cm, event, a) => {
+				const cmCursor = cm.getDoc().getCursor()
+				const cmToken = cm.getTokenAt(cmCursor)
+				if (
+					StaticConfig.data.editorAutocomplete &&
+					cmToken.type &&
+					event.metaKey === false &&
+					event.altKey === false &&
+					event.shiftKey === false &&
+					event.ctrlKey === false &&
+					event.keyCode > 32 &&
+					event.keyCode < 126 &&
+					event.keyCode !== 37 &&
+					event.keyCode !== 39 &&
+					event.keyCode !== 38 &&
+					event.keyCode !== 40 &&
+					event.keyCode !== 44
+				) {
+					CodeMirror.commands.autocomplete(cm, null, {
+						completeSingle: false,
+					})
 				}
 			})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
@@ -211,6 +232,15 @@ const CodemirrorClient = new EditorClient(
 				instance: CodemirrorEditor,
 			}
 		},
+		getMode({ instance }) {
+			return instance.getOption('mode')
+		},
+		getLinesCount({ instance }) {
+			return instance.lineCount()
+		},
+		getSelection({ instance }) {
+			return instance.getSelection()
+		},
 		setIndentation({ instance, indentation }) {
 			instance.setOption('indentWithTabs', StaticConfig.data.editorIndentation == 'tab')
 		},
@@ -219,6 +249,9 @@ const CodemirrorClient = new EditorClient(
 				instance.focus()
 				instance.refresh()
 			}, 1)
+		},
+		rightclicked({ instance, action }) {
+			instance.on('contextmenu', action)
 		},
 		clicked({ instance, action }) {
 			instance.on('mousedown', action)
@@ -239,7 +272,16 @@ const CodemirrorClient = new EditorClient(
 			instance.setValue(value)
 		},
 		onChanged({ instance, action }) {
-			instance.on('change', () => action(instance.getValue()))
+			instance.on('change', (cm, changeObj) => action(instance.getValue(), changeObj))
+		},
+		replaceRange({ instance, from, to, text }) {
+			instance.replaceRange(text, from, to, '+move')
+		},
+		getRange({ instance, from, to }) {
+			return instance.getRange(from, to)
+		},
+		getLine({ instance, line }) {
+			return instance.getLine(line)
 		},
 		executeUndo({ instance, action }) {
 			instance.execCommand('undo')
@@ -277,10 +319,25 @@ const CodemirrorClient = new EditorClient(
 				ch: ch + 1,
 			}
 		},
-		setCursorPosition({ instance, line, ch }) {
+		setBookmark({ instance, line, ch, element }) {
+			const bookmark = instance.setBookmark(
+				{
+					line,
+					ch,
+				},
+				{
+					widget: element,
+				}
+			)
+			const clear = () => bookmark.clear()
+			return {
+				clear,
+			}
+		},
+		setCursorPosition({ instance, line = 1, ch = 1 }) {
 			instance.setCursor({
-				line: line - 1,
-				ch: ch - 1,
+				line: Number(line) - 1,
+				ch: Number(ch) - 1,
 			})
 		},
 		doFocus({ instance }) {

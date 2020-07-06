@@ -20,7 +20,6 @@ function newDirectoryDialog({ isFolder, parentDirectory, container, explorerStat
 
 function createDirectory(value, isFolder, parentDirectory, container, explorerState) {
 	const itemDirectory = normalizeDir(path.join(parentDirectory, value), true)
-	const itemFakeDirectory = normalizeDir(path.join(parentDirectory, value))
 	if (!fs.existsSync(itemDirectory)) {
 		if (isFolder) {
 			if (!fs.existsSync(itemDirectory)) {
@@ -29,8 +28,8 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 					container: container,
 					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
 					level: container.getAttribute('level'),
-					directory: itemFakeDirectory,
-					directoryName: path.basename(itemFakeDirectory),
+					directory: itemDirectory,
+					directoryName: path.basename(itemDirectory),
 					isFolder: true,
 				})
 			}
@@ -41,8 +40,8 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 					container: container,
 					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
 					level: container.getAttribute('level'),
-					directory: itemFakeDirectory,
-					directoryName: path.basename(itemFakeDirectory),
+					directory: itemDirectory,
+					directoryName: path.basename(itemDirectory),
 					isFolder: false,
 				})
 			})

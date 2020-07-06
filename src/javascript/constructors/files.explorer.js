@@ -1,4 +1,4 @@
-import { puffin, element, render, style } from '@mkenzo_8/puffin'
+import { element, render, style, state } from '@mkenzo_8/puffin'
 import FileItem from '../components/explorer/file.item'
 import parseDirectory from '../utils/directory.parser'
 import normalizeDir from '../utils/directory.normalizer'
@@ -14,16 +14,14 @@ const chokidar = window.require('chokidar')
 const path = window.require('path')
 
 function checkIfProjectIsGit(path) {
-	const repoPath = normalizeDir(path, {
-		isWSL: true,
-	})
+	const repoPath = normalizeDir(path)
 	const simpleInstance = simpleGit(repoPath)
 	return new Promise((resolve, reject) => {
 		simpleInstance.checkIsRepo((err, res) => {
 			if (!err) {
 				resolve(res)
 			} else {
-				reject(err)
+				resolve(false)
 			}
 		})
 	})
@@ -38,7 +36,7 @@ function getStatus(path) {
 	})
 }
 
-function createWatcher(dirPath, explorerState) {
+function createWatcher(dirPath, explorerState, isGitRepo) {
 	const folderPath = normalizeDir(dirPath)
 	const gitWatcherPath = normalizeDir(path.join(folderPath, '.git', 'logs', 'HEAD'))
 	const projectWatcher = chokidar.watch(folderPath, {
@@ -78,20 +76,23 @@ function createWatcher(dirPath, explorerState) {
 				folderPath,
 			})
 		})
-	const gitWatcher = chokidar.watch(gitWatcherPath, {
-		persistent: true,
-		interval: 400,
-		ignoreInitial: true,
-	})
-	gitWatcher.on('change', async () => {
-		const gitChanges = await getStatus(folderPath)
-		RunningConfig.emit('gitStatusUpdated', {
-			gitChanges,
-			branch: gitChanges.current,
-			parentFolder: folderPath,
-			anyChanges: gitChanges.files.length > 0,
+	let gitWatcher
+	if (isGitRepo) {
+		gitWatcher = chokidar.watch(gitWatcherPath, {
+			persistent: true,
+			interval: 400,
+			ignoreInitial: true,
 		})
-	})
+		gitWatcher.on('change', async () => {
+			const gitChanges = await getStatus(folderPath)
+			RunningConfig.emit('gitStatusUpdated', {
+				gitChanges,
+				branch: gitChanges.current,
+				parentFolder: folderPath,
+				anyChanges: gitChanges.files.length > 0,
+			})
+		})
+	}
 	return {
 		projectWatcher,
 		gitWatcher,
@@ -100,25 +101,24 @@ function createWatcher(dirPath, explorerState) {
 
 function getlastFolderPosition(container) {
 	const items = container.children
-	return Object.keys(items).find(index => {
-		const item = items[index]
-		return item.getAttribute('isDirectory') == 'false' ? index : null
-	})
+	return Number(
+		Object.keys(items).find(index => {
+			const item = items[index]
+			return item.getAttribute('isFolder') == 'false' ? index : null
+		})
+	)
 }
 
 async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null) {
-	const parsedFolderPath = normalizeDir(folderPath, true)
-
-	// Create project's explorer item
 	if (level == 0) {
 		parent.setAttribute('hasFiles', true)
-		let gitResult = await checkIfProjectIsGit(parsedFolderPath)
+		let gitResult = await checkIfProjectIsGit(folderPath)
 		if (gitResult) {
-			gitChanges = await getStatus(parsedFolderPath)
+			gitChanges = await getStatus(folderPath)
 			RunningConfig.emit('loadedGitRepo', {
 				gitChanges,
 				branch: gitChanges.current,
-				parentFolder: parsedFolderPath,
+				parentFolder: folderPath,
 				anyChanges: gitChanges.files.length > 0,
 			})
 		}
@@ -134,7 +134,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		async function mounted() {
 			const target = this.children[0]
 			target.gitChanges = gitChanges
-			const explorerState = target.state || new puffin.state({})
+			const explorerState = target.state || new state({})
 			target.state = explorerState
 			let projectWatcher = false
 			let gitWatcher = false
@@ -173,7 +173,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 			})
 			explorerState.on('startedWatcher', () => {
 				if (!projectWatcher) {
-					const watchers = createWatcher(folderPath, explorerState)
+					const watchers = createWatcher(folderPath, explorerState, gitResult)
 					projectWatcher = watchers.projectWatcher
 					gitWatcher = watchers.gitWatcher
 				}
@@ -184,9 +184,6 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 			StaticConfig.on('startWatchers', () => {
 				explorerState.emit('startedWatcher')
 			})
-			if (StaticConfig.data.enableFileSystemWatcher) {
-				explorerState.emit('startedWatcher')
-			}
 			if (StaticConfig.data.editorFSWatcher) explorerState.emit('startedWatcher')
 			explorerState.on('createItem', ({ container, containerFolder, directory, directoryName, level, isFolder = false }) => {
 				if (container === null) return //Folder is not opened
@@ -195,17 +192,17 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					//Might have been already created by watcher
 					if (isFolder) {
 						RunningConfig.emit('aFolderHasBeenCreated', {
-							parentFolder: parsedFolderPath,
+							parentFolder: folderPath,
 							path: directory,
 						})
 					} else {
 						RunningConfig.emit('aFileHasBeenCreated', {
-							parentFolder: parsedFolderPath,
+							parentFolder: folderPath,
 							path: directory,
 						})
 					}
 					const itemComputed = getItemComputed({
-						projectPath: parsedFolderPath,
+						projectPath: folderPath,
 						classSelector: possibleClass,
 						dirName: directoryName,
 						dirPath: directory,
@@ -216,15 +213,13 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					})
 					const hotItem = itemComputed
 					if (container.children[1]) {
-						//Check if the folder is opened
-						return render(hotItem, container.children[1])
 						if (isFolder) {
 							const folderPosition = getlastFolderPosition(container.children[1])
-							puffin.render(hotItem, container.children[1], {
+							render(hotItem, container.children[1], {
 								position: folderPosition,
 							})
 						} else {
-							puffin.render(hotItem, container.children[1])
+							render(hotItem, container.children[1])
 						}
 					}
 				}
@@ -245,14 +240,14 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		render(explorerContainer, parent)
 	}
 	if (level != 0) {
-		fs.readdir(parsedFolderPath)
+		fs.readdir(folderPath)
 			.then(paths => {
 				let dirs = paths
 					.map(dir => {
 						//Load folders
 						const itemDirectory = normalizeDir(path.join(folderPath, dir))
 						const container = parent
-						if (fs.lstatSync(path.join(parsedFolderPath, dir)).isDirectory())
+						if (fs.lstatSync(path.join(folderPath, dir)).isDirectory())
 							return getItemComputed({
 								projectPath: container.getAttribute('parentFolder'),
 								classSelector: getClassByDir(folderPath),
@@ -272,7 +267,7 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 							//Load files
 							const itemDirectory = normalizeDir(path.join(folderPath, dir))
 							const container = parent
-							if (!fs.lstatSync(path.join(parsedFolderPath, dir)).isDirectory())
+							if (!fs.lstatSync(path.join(folderPath, dir)).isDirectory())
 								if (!dir.match('~'))
 									return getItemComputed({
 										projectPath: container.getAttribute('parentFolder'),

@@ -1,18 +1,20 @@
-import { puffin, element, style } from '@mkenzo_8/puffin'
+import { state, element, style } from '@mkenzo_8/puffin'
 import FilesExplorer from '../../constructors/files.explorer'
 import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
 import areYouSureDialog from '../../defaults/dialogs/you.sure'
+import InputDialog from '../../constructors/dialog.input'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import RunningConfig from 'RunningConfig'
-import Icons from '../../../../assets/icons/**.svg'
 import ArrowIcon from '../icons/arrow'
 import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
+import Notification from '../../constructors/notification'
+import copy from 'copy-to-clipboard'
 
 const fs = window.require('fs-extra')
 const trash = window.require('trash')
@@ -238,7 +240,7 @@ function Item({
 			new ContextMenu({
 				list: [
 					{
-						label: 'New folder',
+						label: 'misc.NewFolder',
 						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
@@ -250,7 +252,7 @@ function Item({
 						},
 					},
 					{
-						label: 'New file',
+						label: 'misc.NewFile',
 						action: () => {
 							const itemContainer = this.parentElement
 							newDirectoryDialog({
@@ -263,7 +265,19 @@ function Item({
 					},
 					{},
 					{
-						label: 'Remove folder',
+						label: 'misc.Rename',
+						action: () => {
+							const itemContainer = this.parentElement.parentElement.parentElement
+							renameDirectoryOrFile(this, {
+								container: itemContainer,
+								explorerState: projectExplorerState,
+								isFolder: true,
+							})
+						},
+					},
+					{},
+					{
+						label: 'misc.Remove',
 						action: () => {
 							if (level != 0) {
 								removeDirectoryOrFile(this)
@@ -272,7 +286,13 @@ function Item({
 					},
 					{},
 					{
-						label: 'Open location',
+						label: 'misc.CopyPath',
+						action: () => {
+							copy(fullpath)
+						},
+					},
+					{
+						label: 'misc.OpenLocation',
 						action: () => {
 							openLocation(fullpath)
 						},
@@ -285,14 +305,32 @@ function Item({
 			new ContextMenu({
 				list: [
 					{
-						label: 'Remove file',
+						label: 'misc.Rename',
+						action: () => {
+							const itemContainer = this.parentElement.parentElement.parentElement
+							renameDirectoryOrFile(this, {
+								container: itemContainer,
+								explorerState: projectExplorerState,
+								isFolder: false,
+							})
+						},
+					},
+					{},
+					{
+						label: 'misc.Remove',
 						action: () => {
 							removeDirectoryOrFile(this)
 						},
 					},
 					{},
 					{
-						label: 'Open location',
+						label: 'misc.CopyPath',
+						action: () => {
+							copy(fullpath)
+						},
+					},
+					{
+						label: 'misc.OpenLocation',
 						action: () => {
 							openLocation(parentFolder)
 						},
@@ -305,7 +343,7 @@ function Item({
 	}
 	function setItemState(target) {
 		if (!target.state) {
-			const itemState = new puffin.state({})
+			const itemState = new state({})
 			return (target.state = itemState)
 		} else {
 			return target.state
@@ -333,12 +371,12 @@ function Item({
 				markStatus(target, newGitResult.status, isProjectcontainer ? gitChanges.files.length : null)
 			}
 		}
-		explorerState.on('gitMarkProjectContainer', ({ containerFolder, gitChanges }) => {
+		const GitMarkWatcher = explorerState.on('gitMarkProjectContainer', ({ containerFolder, gitChanges }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				markItem(gitChanges, true)
 			}
 		})
-		explorerState.on('newFile', ({ containerFolder, fileName }) => {
+		const NewFileWatcher = explorerState.on('newFile', ({ containerFolder, fileName }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				explorerState.emit('createItem', {
 					container: this,
@@ -350,7 +388,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('removedFile', ({ filePath }) => {
+		const RemovedFileWatcher = explorerState.on('removedFile', ({ filePath }) => {
 			if (itemDirectory === filePath) {
 				this.state.emit('destroyed')
 				RunningConfig.emit('aFileHasBeenRemoved', {
@@ -359,7 +397,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('newFolder', ({ containerFolder, folderName }) => {
+		const NewFolderWatcher = explorerState.on('newFolder', ({ containerFolder, folderName }) => {
 			if (isFolder && containerFolder === itemDirectory) {
 				explorerState.emit('createItem', {
 					container: this,
@@ -371,7 +409,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('removedFolder', ({ folderPath }) => {
+		const RemovedFolderWatcher = explorerState.on('removedFolder', ({ folderPath }) => {
 			if (itemDirectory === folderPath) {
 				this.remove()
 				RunningConfig.emit('aFolderHasBeenRemoved', {
@@ -380,7 +418,7 @@ function Item({
 				})
 			}
 		})
-		explorerState.on('changedFile', async ({ filePath }) => {
+		const ChangedFileWatcher = explorerState.on('changedFile', async ({ filePath }) => {
 			if (itemDirectory === filePath) {
 				RunningConfig.emit('aFileHasBeenChanged', {
 					filePath,
@@ -388,7 +426,7 @@ function Item({
 				})
 			}
 		})
-		itemState.on('clickItem', function () {
+		const ItemClickedWatcher = itemState.on('clickItem', function () {
 			if (isFolder) {
 				const itemsContainer = target.children[1]
 				if (itemsContainer == null) {
@@ -397,12 +435,14 @@ function Item({
 				} else {
 					itemsContainer.remove()
 					setStateClosed(target)
+					explorerState.emit('closedFolder', fullpath)
 				}
 			} else {
 				const itemPath = fullpath
 				const basename = path.basename(itemPath)
 				const fileExtension = getFormat(itemPath)
 				const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+					isEditor: true,
 					title: basename,
 					directory: itemDirectory,
 					parentFolder: target.getAttribute('parentFolder'),
@@ -446,12 +486,44 @@ function Item({
 				markItem(gitChanges, itemDirectory == itemProjectDirectory)
 			}
 		})
-		itemState.on('doReload', () => reload(target, gitChanges))
+		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
+			const node = this.children[0].children[1]
+			if (this.getAttribute('opened') === 'true') {
+				setStateOpen(this)
+			} else {
+				node.src = isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName, getFormat(fullpath))
+			}
+		})
+		let removedProjectFolderWatcher
+		if (level == 0) {
+			removedProjectFolderWatcher = RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
+				if (folderPath == itemDirectory) {
+					explorerState.emit('closedFolder', fullpath)
+					itemState.emit('destroyed')
+				}
+			})
+		}
+		const reloadItemWatcher = itemState.on('doReload', () => reload(target, gitChanges))
+		const closedFolderWatcher = explorerState.on('closedFolder', folderPath => {
+			if (itemDirectory.includes(folderPath) && itemDirectory !== folderPath) {
+				itemState.emit('destroyed')
+			}
+		})
 		itemState.on('destroyed', () => {
+			removedProjectFolderWatcher && removedProjectFolderWatcher.cancel()
+			reloadItemWatcher.cancel()
 			TabFocusedWatcher.cancel()
 			TabUnfocusedWatcher.cancel()
 			TabClosedWatcher.cancel()
 			GitWatcher.cancel()
+			GitMarkWatcher.cancel()
+			NewFileWatcher.cancel()
+			RemovedFileWatcher.cancel()
+			NewFolderWatcher.cancel()
+			RemovedFolderWatcher.cancel()
+			ChangedFileWatcher.cancel()
+			ItemClickedWatcher.cancel()
+			closedFolderWatcher.cancel()
 			this.remove()
 		})
 		if (level == 0) {
@@ -468,23 +540,23 @@ function reload(target, gitChanges) {
 
 function getFileIcon(fileName, fileExt) {
 	if (fileExt === ('png' || 'jpg' || 'ico')) {
-		return Icons.image
+		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
 	}
-	if (Icons[`file.${fileName}`]) {
-		return Icons[`file.${fileName}`]
+	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
+		return RunningConfig.data.iconpack[`file.${fileName}`]
 	}
-	if (Icons[`${fileExt}.lang`]) {
-		return Icons[`${fileExt}.lang`]
+	if (RunningConfig.data.iconpack[`${fileExt}.lang`]) {
+		return RunningConfig.data.iconpack[`${fileExt}.lang`]
 	} else {
-		return Icons['unknown.file']
+		return RunningConfig.data.iconpack['unknown.file']
 	}
 }
 
 function getFolderClosedIcon(folderName) {
-	if (Icons[`folder.closed.${folderName}`]) {
-		return Icons[`folder.closed.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.closed.${folderName}`]) {
+		return RunningConfig.data.iconpack[`folder.closed.${folderName}`]
 	} else {
-		return Icons['folder.closed']
+		return RunningConfig.data.iconpack['folder.closed']
 	}
 }
 
@@ -492,10 +564,10 @@ function setStateOpen(target) {
 	const itemIcon = target.getElementsByClassName('icon')[0]
 	const folderName = target.textContent.trim()
 	target.setAttribute('opened', 'true')
-	if (Icons[`folder.opened.${folderName}`]) {
-		itemIcon.src = Icons[`folder.opened.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.opened.${folderName}`]) {
+		itemIcon.src = RunningConfig.data.iconpack[`folder.opened.${folderName}`]
 	} else {
-		itemIcon.src = Icons['folder.opened']
+		itemIcon.src = RunningConfig.data.iconpack['folder.opened']
 	}
 }
 
@@ -503,19 +575,55 @@ function setStateClosed(target) {
 	const itemIcon = target.getElementsByClassName('icon')[0]
 	const folderName = target.textContent.trim()
 	target.setAttribute('opened', 'false')
-	if (Icons[`folder.closed.${folderName}`]) {
-		itemIcon.src = Icons[`folder.closed.${folderName}`]
+	if (RunningConfig.data.iconpack[`folder.closed.${folderName}`]) {
+		itemIcon.src = RunningConfig.data.iconpack[`folder.closed.${folderName}`]
 	} else {
-		itemIcon.src = Icons['folder.closed']
+		itemIcon.src = RunningConfig.data.iconpack['folder.closed']
 	}
 }
 
+function renameDirectoryOrFile(element, { container, explorerState, isFolder }) {
+	const directoryPath = element.parentElement.getAttribute('fullpath')
+	const folderPath = path.dirname(directoryPath)
+	InputDialog({
+		title: 'Rename',
+		placeHolder: path.basename(directoryPath),
+	})
+		.then(newName => {
+			const newPath = normalizeDir(path.join(folderPath, newName))
+			fs.rename(directoryPath, newPath)
+				.then(() => {
+					element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
+					explorerState.emit('createItem', {
+						container,
+						containerFolder: folderPath,
+						level: container.getAttribute('level'),
+						directory: newPath,
+						directoryName: path.basename(newPath),
+						isFolder,
+					})
+				})
+				.catch(err => console.log(err))
+		})
+		.catch(err => {
+			//Clicked "No", do nothing
+		})
+}
+
 function removeDirectoryOrFile(element) {
+	const directoryPath = element.parentElement.getAttribute('fullpath')
 	areYouSureDialog()
 		.then(() => {
-			trash([normalizeDir(element.parentElement.getAttribute('fullpath'))]).then(() => {
-				element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
-			})
+			trash([normalizeDir(directoryPath)])
+				.then(() => {
+					element.parentElement && element.parentElement.state && element.parentElement.state.emit('destroyed')
+				})
+				.catch(err => {
+					new Notification({
+						title: `Error`,
+						content: `Couldn't remove ${element.children[2].getAttribute('originalName')}.`,
+					})
+				})
 		})
 		.catch(err => {
 			//Clicked "No", do nothing

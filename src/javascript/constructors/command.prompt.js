@@ -1,11 +1,21 @@
-import { puffin, render, element, style } from '@mkenzo_8/puffin'
+import { state, render, element, style } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
-function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolder = '', options = [], scrollOnTab = false, closeOnKeyUp = false, onSelected = () => {}, onScrolled = () => {} }) {
+function CommandPrompt({
+	name = Math.random(),
+	showInput = true,
+	inputPlaceHolder = '',
+	options = [],
+	scrollOnTab = false,
+	closeOnKeyUp = false,
+	onCompleted = () => {},
+	onSelected = () => {},
+	onScrolled = () => {},
+}) {
 	name = `${name}_cp`
 	if (document.getElementById(name)) return // Check if there are any command prompts already opened
-	let CommandPromptState = new puffin.state({
+	let CommandPromptState = new state({
 		hoveredOption: null,
 	})
 	const configArguments = arguments[0]
@@ -25,6 +35,7 @@ function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolde
 	`
 	function writing(e) {
 		e.preventDefault()
+		const command = this.value
 		switch (e.keyCode) {
 			case 9:
 				if (scrollOnTab) {
@@ -33,6 +44,7 @@ function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolde
 				selectOption(CommandPromptState.data.hoveredOption, {
 					options,
 					onSelected,
+					onCompleted,
 				})
 				closeCommandPrompt(name)
 			case 17:
@@ -43,6 +55,7 @@ function CommandPrompt({ name = Math.random(), showInput = true, inputPlaceHolde
 				selectOption(CommandPromptState.data.hoveredOption, {
 					options,
 					onSelected,
+					onCompleted,
 				})
 				closeCommandPrompt(name)
 				break
@@ -143,6 +156,7 @@ function hoverOption(hoveredOption, allOptions, onScrolled = () => {}) {
 			option.classList.add('active')
 			onScrolled({
 				label: option.textContent,
+				data: option.props.data,
 			})
 		} else {
 			option.classList.remove('active')
@@ -158,15 +172,15 @@ function filterOptions(search, { options }) {
 		.filter(Boolean)
 }
 
-function renderOptions({ options, onSelected }, { state, parent, name }) {
+function renderOptions({ options, onSelected, onCompleted }, { state, parent, name }) {
 	let content = ''
 	let hoveredDefault = 0
 
 	const optionsComp = element`
 			<div>
-				${options.map(({ selected, label }, index) => {
+				${options.map(({ selected, label, data }, index) => {
 					if (selected) hoveredDefault = index
-					return element`<a :click="${onClicked}">${label}</a> `
+					return element`<a :click="${onClicked}" data="${data}">${label}</a> `
 				})}
 			</div>
 		`
@@ -175,6 +189,7 @@ function renderOptions({ options, onSelected }, { state, parent, name }) {
 		selectOption(this, {
 			options,
 			onSelected,
+			onCompleted,
 		})
 	}
 	parent.innerHTML = ''
@@ -187,15 +202,17 @@ const findOptionAction = (options, option) => {
 	return options.find(opt => opt.label == option.textContent)
 }
 
-function selectOption(option, { options, onSelected }) {
+function selectOption(option, { options, onSelected, onCompleted, command }) {
 	if (option) {
 		const optionObj = findOptionAction(options, option)
 		if (optionObj.action) optionObj.action()
 		if (onSelected)
 			onSelected({
 				label: option.textContent,
+				data: option.props.data,
 			})
 	}
+	if (onCompleted) onCompleted(command)
 }
 
 export default CommandPrompt

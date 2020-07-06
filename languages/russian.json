@@ -1,0 +1,160 @@
+{
+	"name": "Russian",
+	"locale": "ru",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "Файл",
+				"OpenFolder": "Открыть папку",
+				"OpenFile": "Открыть файл",
+				"Projects": {
+					"Projects": "Проекты",
+					"OpenProjects": "Открытые проекты"
+				},
+				"Workspaces": {
+					"Workspaces": "Рабочие зоны",
+					"OpenWorkspaces": "Открытые рабочие области",
+					"OpenFromFile": "Открыть из файла",
+					"AddFolderToWorkspace": "Добавить папку в рабочую область",
+					"SaveWorkspace": "Сохранить рабочую область"
+				}
+			},
+			"Edit": {
+				"Edit": "Правка",
+				"Undo": "Отменить",
+				"Redo": "Вернуть",
+				"FontSize": {
+					"FontSize": "Размер шрифта",
+					"Increase": "Увеличить",
+					"Decrease": "Уменьшить"
+				},
+				"Find": "Найти",
+				"Replace": "Заменить",
+				"FormatDocument": "Форматировать документ"
+			},
+			"Tools": {
+				"Tools": "Инструменты",
+				"OpenSettings": "Параметры",
+				"OpenStore": "Магазин",
+				"Panels": {
+					"Panels": "Панели",
+					"NewPanel": "Новая панель",
+					"CloseCurrentPanel": "Закрыть текущую панель"
+				}
+			},
+			"View": {
+				"View": "Вид",
+				"ShowSidebar": "Показать сайдбар",
+				"ShowSidepanel": "Показать боковую панель",
+				"HideSidebar": "Скрыть сайдбар",
+				"HideSidepanel": "Скрыть боковую панель"
+			},
+			"Window": {
+				"Window": "Окно",
+				"Zoom": {
+					"Zoom": "Масштаб",
+					"DefaultZoom": "Обычный",
+					"IncreaseZoom": "Увеличить",
+					"DecreaseZoom": "Уменьшить"
+				},
+				"Debug": {
+					"Debug": "Отладка",
+					"OpenDebugWindow": "Открыть окно отладки"
+				},
+				"OpenDevTools": "Открыть консоль разработчика"
+			},
+			"Help": {
+				"Help": "Помощь",
+				"Contact": "Контакты",
+				"Social": "Социальные сети",
+				"Contributors": "Авторы",
+				"Blog": "Блог",
+				"Documentation": "Документация",
+				"Website": "Веб-сайт",
+				"SourceCode": "Исходный код",
+				"CheckForUpdates": "Проверить наличие обновлений",
+				"About": "О программе"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Параметры",
+				"Customization": {
+					"Customization": "Персонализация",
+					"Themes": "Темы"
+				},
+				"Advanced": {
+					"Advanced": "Продвинутые настройки",
+					"FileWatcher": "Просмотр файлов",
+					"Autocomplete": "Автозаполнение",
+					"WrapLines": "Перенос строк",
+					"Indentation": {
+						"Indentation": "Отступы",
+						"Space": "Пробел",
+						"Tab": "Табуляция"
+					}
+				},
+				"Languages": "Языки",
+				"About": {
+					"About": "О программе",
+					"GravitonDescription": "Graviton - это кроссплатформенный редактор кода."
+				}
+			},
+			"Store": {
+				"Store": "Магазин",
+				"Home": {
+					"Home": "Главная"
+				},
+				"Installed": {
+					"Installed": "Установлено"
+				},
+				"Install": "Установить",
+				"Update": "Обновить",
+				"Uninstall": "Удалить",
+				"AnyCompatibleVersion": "Любая совместимая версия."
+			},
+			"Welcome": {
+				"Welcome": "Добро пожаловать",
+				"RecentProjects": "Недавние проекты",
+				"RecentWorkspaces": "Недавние рабочие области",
+				"NewProject": "Новый проект",
+				"OpenWorkspace": "Открыть рабочую область",
+				"OpenFolder": "Открыть папку"
+			}
+		},
+		"misc": {
+			"LastVersion": "Последняя версия",
+			"InstalledVersion": "Установленная версия",
+			"About": "О программе",
+			"Skip": "Пропустить",
+			"Finish": "Завершить",
+			"Continue": "Продолжить",
+			"GoBack": "Назад",
+			"Accept": "Принять",
+			"Cancel": "Отменить",
+			"version": "версия",
+			"CopyPath": "Скопировать путь",
+			"More": "Больше",
+			"Copy": "Копировать",
+			"Rename": "Переименовать",
+			"Remove": "Удалить",
+			"OpenLocation": "Открыть расположение",
+			"NewFile": "Новый файл",
+			"NewFolder": "Новая папка",
+			"Paste": "Вставить",
+			"Author": "Автор",
+			"Exit": "Выход",
+			"Tip": "Подсказка",
+			"Yes": "Да",
+			"No": "Нет",
+			"Close": "Закрыть",
+			"Ignore": "Оставить как есть"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "Язык приложения изменён.",
+				"restartMessage": "Перезапустите приложение, чтобы изменения вступили в силу."
+			}
+		}
+	}
+}

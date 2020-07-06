@@ -3,18 +3,33 @@ import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 import Notification from './notification'
+import ContextMenu from './contextmenu'
 const path = window.require('path')
+import { element } from '@mkenzo_8/puffin'
+import copy from 'copy-to-clipboard'
 
-function sortByRanking(language) {
-	const selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
-		const { unknown = false } = Client.do('getLangFromExt', language)
-		if (!unknown) return Client
+function getEditorClient(language) {
+	let selectedEditor
+	selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
+		return StaticConfig.data.editorsClients.filter(({ extension, editor, regex }) => {
+			let extensionMatches
+			if (regex) {
+				extensionMatches = language.match(new RegExp(extension)) || []
+			}
+			return Client.name === editor && regex && extensionMatches[0]
+		})[0]
 	})[0]
+	if (!selectedEditor) {
+		selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
+			const { unknown = false } = Client.do('getLangFromExt', language)
+			if (!unknown) return Client
+		})[0]
+	}
 	return selectedEditor || RunningConfig.data.editorsRank[0]
 }
 
 function Editor({ bodyElement, tabElement, value, language, tabState, theme, directory }) {
-	const Client = sortByRanking(language)
+	const Client = getEditorClient(language)
 	let editorValueSaved = value
 	const { instance } = Client.do('create', {
 		element: bodyElement,
@@ -25,7 +40,6 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		CtrlPlusScroll: direction => {
 			const ScrollUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+ScrollUp')
 			const ScrollDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+ScrollDown')
-
 			if (direction == 'up' && ScrollUpShortcutEnabled) {
 				StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) + 2
 			} else if (ScrollDownShortcutEnabled) {
@@ -61,6 +75,28 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 				})
 			}
 		}
+	})
+	Client.do('rightclicked', {
+		instance,
+		action(cm, e) {
+			e.stopPropagation()
+			new ContextMenu({
+				parent: document.body,
+				list: [
+					{
+						label: 'misc.Copy',
+						action: () => {
+							const selectedText = Client.do('getSelection', {
+								instance,
+								action: () => RunningConfig.emit('hideAllFloatingComps'),
+							})
+							copy(selectedText)
+						},
+					},
+				],
+				event: e,
+			})
+		},
 	})
 	Client.do('clicked', {
 		instance,
@@ -115,6 +151,11 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 			fontSize: value,
 		})
 	})
+	const editorFontFamilyWatcher = StaticConfig.keyChanged('editorFontFamily', value => {
+		Client.do('refresh', {
+			instance: instance,
+		})
+	})
 	const focusedEditorWatcher = RunningConfig.keyChanged('focusedEditor', editor => {
 		if (editor) {
 			CursorPositionStatusBarItem.show()
@@ -150,6 +191,10 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 	}
 	updateCursorPosition(Client, instance)
 	focusEditor(Client, instance)
+	tabState.emit('editorCreated', {
+		client: Client,
+		instance,
+	})
 	const tabDestroyedWatcher = tabElement.state.on('destroyed', () => {
 		fileWatcher.cancel()
 		appThemeWatcher.cancel()
@@ -159,6 +204,7 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		focusedEditorWatcher.cancel()
 		tabDestroyedWatcher.cancel()
 		tabSavedWatcher.cancel()
+		editorFontFamilyWatcher.cancel()
 	})
 	return {
 		client: Client,
