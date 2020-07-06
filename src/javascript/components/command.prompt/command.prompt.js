@@ -27,6 +27,7 @@ const styleWrapper = style`
 	& .container{
 		flex:1;
 		position:absolute;
+		overflow: hidden;
 		top:100px;
 		max-height:80%;
 		max-width:175px;
@@ -46,6 +47,7 @@ const styleWrapper = style`
 		background:inherit;
 		margin-top:5px;
 		max-width:100%;
+		overflow: auto;
 	}
 	& .container > div > div{
 		min-width:auto;
