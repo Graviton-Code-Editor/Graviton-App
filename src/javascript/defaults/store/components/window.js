@@ -63,12 +63,14 @@ function pluginWindow(
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo)
-	const pluginCompatibleVersion = getCompatiblePugin(packageJSON.version, pluginInfoValid.releases)
-	if (!isReserved && pluginInfoValid.releases && pluginCompatibleVersion) {
-		var { version: lastReleaseVersion, target: lastReleaseTarget } = pluginCompatibleVersion
-	} else {
-		var lastReleaseVersion = 'Unknown'
-		var lastReleaseTarget = 'Unknown'
+	const pluginCompatibleRelease = getCompatiblePugin(packageJSON.version, pluginInfoValid.releases)
+
+	let lastReleaseVersion = 'Unknown'
+	let lastReleaseTarget = 'Unknown'
+
+	if (!isReserved && pluginInfoValid.releases && pluginCompatibleRelease) {
+		lastReleaseVersion = pluginCompatibleRelease.version
+		lastReleaseTarget = pluginCompatibleRelease.target
 	}
 	const newUpdate = hasUpdate(lastReleaseVersion, localVersion)
 	const haveRelease = lastReleaseVersion !== 'Unknown'
@@ -95,7 +97,7 @@ function pluginWindow(
 						</Text>
 						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${lastReleaseVersion}"/>
 						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
-						${(!isReserved && !pluginCompatibleVersion && getNoCompatibleversion()) || element`<div/>`}
+						${(!isReserved && !pluginCompatibleRelease && getNoCompatibleversion()) || element`<div/>`}
 					</div>
 					<div class="buttons">
 						${getUpdateButton()}
@@ -146,7 +148,7 @@ function pluginWindow(
 	function update() {
 		installPlugin({
 			id: pluginInfoValid.id,
-			release: pluginInfoValid.releases[0].url,
+			release: pluginCompatibleRelease.url,
 		}).then(() => {
 			pluginUpdatedNotification(pluginInfoValid.name)
 		})
@@ -154,7 +156,7 @@ function pluginWindow(
 	function install() {
 		installPlugin({
 			id: pluginInfoValid.id,
-			release: pluginInfoValid.releases[0].url,
+			release: pluginCompatibleRelease.url,
 		}).then(() => {
 			pluginInstalledNotification(pluginInfoValid.name)
 		})

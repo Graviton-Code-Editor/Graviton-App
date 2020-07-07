@@ -10,15 +10,15 @@ function notFoundError() {
 	if (!RunningConfig.data.isDev) throwError('Cannot find this plugin in the Store.')
 }
 
+const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID == 'night-theme'
+
 function getPluginById(pluginId) {
 	return new Promise((resolve, reject) => {
 		if (!pluginId) {
 			notFoundError()
 			return resolve({})
 		}
-		if (pluginId == 'arctic' || pluginId == 'night') {
-			return resolve({})
-		}
+		if (pluginReserved(pluginId)) return resolve({})
 		const cachedPlugin = pluginExistsInCache(pluginId)
 		if (cachedPlugin) {
 			resolve(cachedPlugin)

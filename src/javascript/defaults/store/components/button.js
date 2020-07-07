@@ -6,7 +6,7 @@ function storeButton() {
 		components: {
 			Button,
 		},
-	})`<Button style="width:calc(100% - 10px); "></Button>`
+	})`<Button style="width:calc(100% - 10px)"/>`
 }
 
 export default storeButton
