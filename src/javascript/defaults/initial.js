@@ -39,7 +39,6 @@ import './status.bar.items/debug'
 const fs = window.require('fs-extra')
 const { openExternal: openLink } = window.require('electron').shell
 const { getCurrentWindow } = window.require('electron').remote
-const isDev = window.require('electron-is-dev')
 
 function init() {
 	new Menu({
@@ -367,7 +366,7 @@ function init() {
 			},
 		],
 	})
-	if (isDev) {
+	if (RunningConfig.data.isDev) {
 		new Menu({
 			//HELP
 			button: 'Dev',
@@ -442,7 +441,7 @@ function init() {
 
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
 
-	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !isDev) {
+	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !RunningConfig.data.isDev) {
 		const dir = RunningConfig.data.arguments[0]
 		if (fs.existsSync(dir)) {
 			if (fs.lstatSync(dir).isDirectory()) {
@@ -461,7 +460,7 @@ function init() {
 }
 
 function checkForUpdates(ifNoUpdate) {
-	if (isDev) return
+	if (RunningConfig.data.isDev) return
 	gravitonHasUpdate()
 		.then(({ res, version }) => {
 			if (res) {
@@ -470,13 +469,13 @@ function checkForUpdates(ifNoUpdate) {
 					content: `Version ${version} is available`,
 					buttons: [
 						{
-							label: 'Update',
+							label: 'misc.Update',
 							action() {
 								openLink('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
 							},
 						},
 						{
-							label: 'Ignore',
+							label: 'misc.Ignore',
 						},
 					],
 				})

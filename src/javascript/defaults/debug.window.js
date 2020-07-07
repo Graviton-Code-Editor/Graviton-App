@@ -1,12 +1,11 @@
 import EnvClient from '../constructors/env.client'
 const { BrowserWindow } = window.require('electron').remote
-const isDev = window.require('electron-is-dev')
 const url = window.require('url')
 const path = window.require('path')
 
 function openDebugClient() {
 	const debugClient = new EnvClient({
-		name: 'Debug',
+		name: 'Debug Window',
 	})
 	let debugWindow
 	debugClient.on('start', () => {
@@ -17,7 +16,7 @@ function openDebugClient() {
 				nodeIntegration: true,
 				webSecurity: true,
 			},
-			frame: window.process.platform == 'linux',
+			frame: process.platform !== 'win32',
 			minHeight: 320,
 			minWidth: 320,
 			width: 600,

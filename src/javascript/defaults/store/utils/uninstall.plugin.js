@@ -6,7 +6,7 @@ const rimraf = window.require('rimraf')
 
 function uninstallPlugin({ PATH }) {
 	return new Promise((resolve, reject) => {
-		rimraf(PATH, (a, b) => {
+		rimraf(PATH, () => {
 			resolve()
 		})
 	})
