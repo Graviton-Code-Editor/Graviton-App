@@ -4,6 +4,15 @@ import StaticConfig from 'StaticConfig'
 const resizeSelector = Math.random()
 
 let resizerBlocked = !StaticConfig.data.appEnableSidepanel
+let resizerOffset = StaticConfig.data.appEnableSidebar ? 85 : 55
+
+StaticConfig.keyChanged('appEnableSidebar', status => {
+	if (status) {
+		resizerOffset = 85
+	} else {
+		resizerOffset = 55
+	}
+})
 
 function startResizing(event, resizerElement = document.getElementById(resizeSelector)) {
 	if (resizerBlocked) return
@@ -15,7 +24,7 @@ function startResizing(event, resizerElement = document.getElementById(resizeSel
 			leftPanel = otherChildren[index - 1]
 		}
 	})
-	leftPanel.style.width = `${event.clientX - 85}px`
+	leftPanel.style.width = `${event.clientX - resizerOffset}px`
 }
 
 const styleWrapper = style`
