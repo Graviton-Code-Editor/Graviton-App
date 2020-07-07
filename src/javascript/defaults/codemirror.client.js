@@ -42,6 +42,10 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'javascript',
 					}
+				case 'jsx':
+					return {
+						name: 'text/jsx',
+					}
 				case 'json':
 					return {
 						name: 'application/json',
