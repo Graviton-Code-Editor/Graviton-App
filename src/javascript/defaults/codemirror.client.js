@@ -38,11 +38,8 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'htmlmixed',
 					}
-				case 'js':
-					return {
-						name: 'javascript',
-					}
 				case 'jsx':
+				case 'js':
 					return {
 						name: 'text/jsx',
 					}
