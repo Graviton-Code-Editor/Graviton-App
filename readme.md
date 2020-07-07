@@ -17,11 +17,7 @@
 ![example screenshot](example.png)
 
 **NOTE:**
-Graviton is going through a full remake from the ground up. Version 1.3.0 source code is located in the 1.3.0 branch on this repository.
-Also, changes on this source may not be released as an official build yet.
-**[1.3.0 Source Code](https://github.com/Graviton-Code-Editor/Graviton-App/tree/1.3.0)**
-
-**Features refer to the v2 version.**
+Changes on this source may not be released as an official build yet.
 
 ## ✨ Features
 

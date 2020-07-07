@@ -13,35 +13,6 @@ function guessTabPosition(tab, tabsbar) {
 	return Number(res)
 }
 
-const styleWrapper = style`
-	&{
-		flex:1;
-		min-width:1px;
-		overflow:hidden;
-		max-height:100%;
-		min-height:100%;
-		display:flex;
-		flex-direction:column;
-		border-left:1px solid var(--panelBorder);
-	}
-	& .tabsbar{
-		min-height:40px;
-		max-height:40px;
-		white-space:nowrap;
-		display:flex;
-		flex:1;
-		overflow-x:auto;
-		overflow-y:hidden;
-		background:var(--tabsbarBackground);
-	}
-	& .tabsbar:empty{
-		background:transparent;
-	}
-	& .tabsbar::-webkit-scrollbar {
-		height:4px;
-	}
-`
-
 function Panel() {
 	const randomSelector = Math.random()
 	const PanelComp = element({
@@ -49,10 +20,10 @@ function Panel() {
 			PanelBody,
 		},
 	})`
-		<div id="${randomSelector}" :click="${focusPanel}"  class="${styleWrapper}">    
+		<PanelBody id="${randomSelector}" :click="${focusPanel}">    
 			<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
-			<PanelBody :contextmenu="${contextmenu}"/>
-		</div>
+			<div :contextmenu="${contextmenu}"/>
+		</PanelBody>
 	`
 	function allowDrop(e) {
 		e.preventDefault()

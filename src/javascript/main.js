@@ -29,18 +29,13 @@ const App = element({
 	},
 })`
     <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}">
-		<div mounted="${mountedAppView}" style="${() => (blurViewApp ? `filter:blur(${StaticConfig.data.appBlurEffect}px);` : '')}">
+		<div mounted="${mountedAppView}" style="${handleAppviewState}">
 			<TitleBar/>
 			<div id="body">
-				<div id="sidebar" :contextmenu="${sidebarContext}" style="${() =>
-	StaticConfig.data.appEnableSidebar
-		? 'opacity:1; margin-right: 1px;'
-		: StaticConfig.data.appEnableSidepanel
-		? 'opacity:0;min-width:20px;width:20px;'
-		: 'opacity:0;min-width:0;width:0; margin:0; padding:0; border:0;'}"/>
-				<div id="sidepanel" style="${StaticConfig.data.appEnableSidepanel ? 'opacity:1' : 'opacity:0;min-width:0px;width:0px; padding:0;margin:0;'}"/>
+				<div id="sidebar" :contextmenu="${sidebarContext}" style="${handleSidebarState}"/>
+				<div id="sidepanel" style="${handlesidePanelState}"/>
 				<Resizer/>
-				<div id="mainpanel" blocked="${() => !StaticConfig.data.appEnableSidepanel && !StaticConfig.data.appEnableSidebar}" />          
+				<div id="mainpanel" blocked="${handleMainpanelState}" />          
 			</div>
 			<StatusBar/>
 		</div>
@@ -49,6 +44,36 @@ const App = element({
 		<SplashScreen/>
 	</AppBody>
 `
+function handleAppviewState() {
+	if (blurViewApp) {
+		return `filter: blur(${StaticConfig.data.appBlurEffect}px);`
+	} else {
+		return ''
+	}
+}
+
+function handlesidePanelState() {
+	if (StaticConfig.data.appEnableSidepanel) {
+		return 'opacity:1'
+	} else {
+		return 'opacity:0;min-width:0px;width:0px; padding:0;margin:0;'
+	}
+}
+
+function handleMainpanelState() {
+	return !StaticConfig.data.appEnableSidepanel && !StaticConfig.data.appEnableSidebar
+}
+
+function handleSidebarState() {
+	if (StaticConfig.data.appEnableSidebar) {
+		return 'opacity:1; margin-right: 1px;'
+	} else if (StaticConfig.data.appEnableSidepanel) {
+		return 'opacity:0;min-width:20px;width:20px;'
+	} else {
+		return 'opacity:0;min-width:0;width:0; margin:0; padding:0; border:0;'
+	}
+}
+
 function mountedAppView() {
 	RunningConfig.keyChanged('openedWindows', value => {
 		if (value <= 0) {

@@ -25,40 +25,41 @@ function toggleMenuStatus(element) {
 	}
 }
 function mounted() {
-	const target = this
-	target.id = Math.random()
-	const isSubmenu = target.props.data.isSubmenu
-	const itemsContainer = target.children[1] ? target.children[1] : target.children[0]
+	const { id, props, children, parentElement } = this
+	const isSubmenu = props.data.isSubmenu
+	const itemsContainer = children[1] ? children[1] : children[0]
 	if (!isSubmenu) itemsContainer.style.display = 'none'
-	window.addEventListener('click', function (e) {
+	window.addEventListener('click', e => {
 		e.stopPropagation()
 		if (
-			((e.target.tagName == 'A' || e.target.tagName == 'BUTTON') && e.target.parentElement.classList.contains('dropmenu') && e.target.parentElement.id == target.id) == false &&
-			(e.target.classList.contains('dropmenu') && e.target.id == target.id) == false &&
-			target.getAttribute('showed') == 'true'
+			((e.target.tagName === 'A' || e.target.tagName === 'BUTTON') && e.target.parentElement.classList.contains('dropmenu') && e.target.parentElement.id === id) == false &&
+			(e.target.classList.contains('dropmenu') && e.target.id === id) == false &&
+			this.getAttribute('showed') === 'true'
 		) {
 			RunningConfig.emit('hideAllFloatingComps')
 		}
 	})
 	RunningConfig.on('hideAllFloatingComps', () => {
 		itemsContainer.style.display = 'none'
-		target.children[0].classList.remove('active')
-		target.setAttribute('showed', 'false')
-		target.parentElement && target.parentElement.setAttribute('anyDropmenuOpened', 'false')
+		children[0].classList.remove('active')
+		parentElement && parentElement.setAttribute('anyDropmenuOpened', 'false')
+		this.setAttribute('showed', 'false')
 		if (isSubmenu) {
-			target.remove()
+			this.remove()
 		}
 	})
 }
+
 function onMenuClicked() {
 	toggleMenuStatus(this)
 }
+
 function onMenuHovering() {
 	if (!this.parentElement) return
-	if (this.getAttribute('showed') == 'true') {
+	if (this.getAttribute('showed') === 'true') {
 		this.parentElement.setAttribute('anyDropmenuOpened', 'true')
 	}
-	if (this.parentElement.getAttribute('anyDropmenuOpened') == 'true') {
+	if (this.parentElement.getAttribute('anyDropmenuOpened') === 'true') {
 		hideAllMenus(this)
 		toggleMenuStatus(this)
 	}
@@ -139,7 +140,7 @@ const styleWrapper = style`
 
 function MenuComp() {
 	return element`
-		<div mounted="${mounted} :click="${onMenuClicked}" :mousemove="${onMenuHovering}" showed="false" class="${styleWrapper} dropmenu"/>
+		<div id="${Math.random()}" mounted="${mounted} :click="${onMenuClicked}" :mousemove="${onMenuHovering}" showed="false" class="${styleWrapper} dropmenu"/>
 	`
 }
 

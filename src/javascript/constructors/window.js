@@ -18,6 +18,9 @@ const styleWrapper = style`
 function Window({ title = '', component: contentComponent, height = '75%', width = '80%' }) {
 	const randomSelector = Math.random()
 	const windowState = new state({})
+	const methodsProp = {
+		closeWindow,
+	}
 	const WindowComponent = element({
 		components: {
 			WindowBody,
@@ -26,9 +29,7 @@ function Window({ title = '', component: contentComponent, height = '75%', width
 		},
 		addons: [lang(LanguageState)],
 	})`
-		<div id="${randomSelector}" win-title="${title}" class="window ${styleWrapper}" methods="${{
-		closeWindow,
-	}}">
+		<div id="${randomSelector}" win-title="${title}" class="window ${styleWrapper}" methods="${methodsProp}">
 			<WindowBackground  closeWindow=${closeWindow}/>
 			<WindowBody style="height:${() => height};width:${() => width};">
 				<contentComponent/>
