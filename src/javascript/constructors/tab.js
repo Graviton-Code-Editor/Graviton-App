@@ -6,8 +6,10 @@ import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
 import areYouSureDialog from '../defaults/dialogs/you.sure'
 import normalizeDir from '../utils/directory.normalizer'
+import getFormat from '../utils/format.parser'
 
 const fs = window.require('fs-extra')
+const path = window.require('path')
 
 function guessTabPosition(tab, tabsbar) {
 	return Number(
@@ -19,7 +21,23 @@ function guessTabPosition(tab, tabsbar) {
 	)
 }
 
-function Tab({ title, isEditor = false, directory = '', parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
+function getFileIcon(fileName, fileExt) {
+	if (fileExt === ('png' || 'jpg' || 'ico')) {
+		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
+	}
+	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
+		return RunningConfig.data.iconpack[`file.${fileName}`]
+	}
+	if (RunningConfig.data.iconpack[`${fileExt}.lang`]) {
+		return RunningConfig.data.iconpack[`${fileExt}.lang`]
+	} else {
+		return RunningConfig.data.iconpack['unknown.file']
+	}
+}
+
+function Tab({ title, isEditor = false, directory, parentFolder, component, panel = RunningConfig.data.focusedPanel, id }) {
+	const itemIconSource = isEditor ? getFileIcon(path.basename(directory), getFormat(directory)) : null
+	const tabDirectory = isEditor ? normalizeDir(directory) : ''
 	const classSelector = `tab${directory ? directory : id}`
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if (openedTabs.length >= 1) {
@@ -58,11 +76,12 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 		<TabBody mounted="${mounted}" active="${() =>
 		tabState.data
 			.active}"  draggable="true" classSelector="${classSelector}" class="${classSelector}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :dragover="${dragover}":drop="${onDropped}">
-			<p :drop="${onDropped}"" classSelector="${classSelector}">
+			${itemIconSource ? element`<img class="tab-icon" src="${itemIconSource}"/>` : element`<div/>`}
+			<p :drop="${onDropped}" classSelector="${classSelector}">
 				${title}
 			</p>
-			<div :drop="${onDropped}" classSelector="${classSelector}">
-				<Cross :drop="${onDropped}" classSelector="${classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
+			<div class="tab-button" :drop="${onDropped}" classSelector="${classSelector}">
+				<Cross class="tab-cross" :drop="${onDropped}" classSelector="${classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
 			</div>
 		</TabBody>
 	`
@@ -104,17 +123,17 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 		tabState.emit('close')
 	}
 	function focusTabshowCross(e) {
-		toggleCross(this.children[1].children[0], 1)
+		toggleCross(this.getElementsByClassName('tab-cross')[0], 1)
 	}
 	function showCross(e) {
-		toggleCross(this.children[1].children[0], 1)
+		toggleCross(this.getElementsByClassName('tab-cross')[0], 1)
 	}
 	function hideCross(e) {
-		toggleCross(this.children[1].children[0], 0)
+		toggleCross(this.getElementsByClassName('tab-cross')[0], 0)
 		e.target.classList.remove('dragging')
 	}
 	function mounted() {
-		this.directory = directory
+		this.directory = tabDirectory
 		let client
 		let instance
 		tabState.keyChanged('active', () => {
@@ -125,7 +144,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			RunningConfig.data.focusedPanel = this.parentElement.parentElement
 			RunningConfig.emit('aTabHasBeenFocused', {
 				tabElement: this,
-				directory: normalizeDir(directory),
+				directory: tabDirectory,
 				client,
 				instance,
 				parentFolder,
@@ -137,20 +156,23 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 		tabState.on('unfocusedMe', () => {
 			RunningConfig.emit('aTabHasBeenUnfocused', {
 				tabElement: this,
-				directory: normalizeDir(directory),
+				directory: tabDirectory,
 				client,
 				instance,
 				parentFolder,
+				isEditor,
 			})
 			tabState.data.active = false
 		})
 		tabState.on('destroyed', () => {
+			IconpackWatcher.cancel()
 			RunningConfig.emit('aTabHasBeenClosed', {
 				tabElement: this,
-				directory: normalizeDir(directory),
+				directory: tabDirectory,
 				client,
 				instance,
 				parentFolder,
+				isEditor,
 			})
 		})
 		tabState.on('savedMe', () => {
@@ -159,14 +181,15 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 					tabElement: this,
 					newStatus: true,
 					tabEditor: tabEditorNode,
-					directory,
+					directory: tabDirectory,
 				})
 				RunningConfig.emit('aTabHasBeenSaved', {
 					tabElement: this,
-					directory: normalizeDir(directory),
+					directory: tabDirectory,
 					client,
 					instance,
 					parentFolder,
+					isEditor,
 				})
 			}
 		})
@@ -177,7 +200,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 					tabElement: this,
 					newStatus: true,
 					tabEditor: tabEditorNode,
-					directory,
+					directory: tabDirectory,
 				})
 			}
 		})
@@ -187,15 +210,16 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 					tabElement: this,
 					newStatus: false,
 					tabEditor: tabEditorNode,
-					directory,
+					directory: tabDirectory,
 				})
 				tabState.data.saved = false
 				RunningConfig.emit('aTabHasBeenUnSaved', {
 					tabElement: this,
-					directory: normalizeDir(directory),
+					directory: tabDirectory,
 					client,
 					instance,
 					parentFolder,
+					isEditor,
 				})
 			}
 		})
@@ -252,7 +276,7 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 				tabState.emit('focusedMe', {})
 				RunningConfig.emit('aTabHasBeenCreated', {
 					tabElement: this,
-					directory: normalizeDir(directory),
+					directory: tabDirectory,
 					client,
 					instance,
 					parentFolder,
@@ -262,12 +286,20 @@ function Tab({ title, isEditor = false, directory = '', parentFolder, component,
 			tabState.emit('focusedMe', {})
 			RunningConfig.emit('aTabHasBeenCreated', {
 				tabElement: this,
-				directory: normalizeDir(directory),
+				directory: tabDirectory,
 				client: null,
 				instance: null,
 				parentFolder,
 			})
 		}
+		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
+			if (tabDirectory) {
+				const iconNode = this.getElementsByClassName('tab-icon')
+				if (iconNode[0]) {
+					iconNode[0].src = getFileIcon(path.basename(tabDirectory), getFormat(tabDirectory))
+				}
+			}
+		})
 		this.state = tabState
 	}
 	const randomSelectorEditor = Math.random()
@@ -316,6 +348,8 @@ function toggleCross(target, state) {
 }
 
 function toggleTabStatus({ tabElement, tabEditor, newStatus, directory }) {
+	const tabCrossIcon = tabElement.getElementsByClassName('tab-cross')[0]
+	const tabSaveIcon = tabElement.getElementsByClassName('tab-save')[0]
 	if (newStatus) {
 		if (!tabElement.state.data.saved) {
 			saveFile(directory, () => {
@@ -323,17 +357,17 @@ function toggleTabStatus({ tabElement, tabEditor, newStatus, directory }) {
 					element: tabElement,
 					parentFolder: tabElement.state.data.parentFolder,
 				})
-				tabElement.children[1].children[0].style.display = 'block'
-				if (tabElement.children[1].children[1] != null) tabElement.children[1].children[1].remove()
+				tabCrossIcon.style.display = 'block'
+				if (tabSaveIcon) tabSaveIcon.remove()
 				tabElement.state.data.saved = true
 			})
 		} else {
-			tabElement.children[1].children[0].style.display = 'block'
-			if (tabElement.children[1].children[1]) tabElement.children[1].children[1].remove()
+			tabCrossIcon.style.display = 'block'
+			if (tabSaveIcon) tabSaveIcon.remove()
 		}
 	} else if (tabElement.state.data.saved) {
 		tabElement.state.data.saved = false
-		tabElement.children[1].children[0].style.display = 'none'
+		tabCrossIcon.style.display = 'none'
 		const comp = element({
 			components: {
 				UnSavedIcon,
@@ -344,7 +378,7 @@ function toggleTabStatus({ tabElement, tabEditor, newStatus, directory }) {
 		function tryToClose() {
 			tabElement.state.emit('close')
 		}
-		render(comp, tabElement.children[1])
+		render(comp, tabElement.children[2])
 	}
 }
 

@@ -17,7 +17,7 @@ const styleWrapper = style`
 
 function UnSavedIcon() {
 	return element`
-		<div class="${styleWrapper}"/>
+		<div class="tab-save ${styleWrapper}"/>
 	`
 }
 

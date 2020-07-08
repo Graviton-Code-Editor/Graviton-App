@@ -216,6 +216,7 @@ function Item({
 	gitChanges,
 	hint,
 }) {
+	const itemIconSource = isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName, getFormat(fullpath))
 	return element({
 		components: {
 			ArrowIcon,
@@ -225,7 +226,7 @@ function Item({
 		classSelector}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
 			<button :click="${openDirectory}" :contextmenu="${contextMenu}" title="${hint}">
 				<ArrowIcon class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
-				<img class="icon" src="${isFolder ? getFolderClosedIcon(dirName) : getFileIcon(dirName, getFormat(fullpath))}"></img>
+				<img class="icon" src="${itemIconSource}"></img>
 				<span originalName="${dirName}">${dirName}</span>
 				<div class="gitStatus" count=""/>
 			</button>

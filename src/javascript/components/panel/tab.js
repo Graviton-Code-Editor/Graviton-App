@@ -17,6 +17,10 @@ const styleWrapper = style`
 	&:active{
 		transform:scale(0.98);
 	}
+	& img{
+		height: 20px;
+		margin-right: 10px;
+	}
 	& p{
 		margin:0;
 		font-size:13px;
@@ -26,7 +30,7 @@ const styleWrapper = style`
 		overflow:hidden;
 		text-overflow:ellipsis;
 	}
-	& > div{
+	& .tab-button{
 		padding-left:auto;
 		min-height:12px;
 		min-width:12px;
@@ -36,7 +40,7 @@ const styleWrapper = style`
 		justify-content:flex-end;
 		margin-right:7px;
 	}
-	& > div > svg{
+	& .tab-button > svg{
 		max-height:18px;
 		max-width:18px;
 		padding:0;
