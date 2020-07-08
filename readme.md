@@ -22,18 +22,17 @@ Changes on this source may not be released as an official build yet.
 ## ✨ Features
 
 - 🧬 Git integration
-- 🟢 NodeJS integration
+- 🟢 NPM scripts integration
 - 🛢 Workspaces
 - 💅 Modern UI
 - 🎨 Themes
 - 📦 Plugins
 - 🌠 Autocomplete for some languages
 - 🗺 Built-in image previewer
-- 🏭 A Plugin and Themes store (WIP)
+- 🏭 A Plugin and Themes store
 - 😇 More respectful on RAM than other alternatives
 - 💆‍♀️ No telemetry
 - 📝 Multi line editing
-- 📰 Live markdown preview
 
 ## 🤖 Plugins
 
@@ -61,7 +60,7 @@ Changes on this source may not be released as an official build yet.
 
 - Marc Espín Sanz [Github](https://github.com/marc2332)
 
-#### Main Contributors
+#### Contributors
 
 - pjtsearch [Github](https://github.com/pjtsearch)
 - David Niederweis [Github](https://github.com/DJN1)
@@ -75,9 +74,10 @@ Changes on this source may not be released as an official build yet.
 - Old logo by Saúl Blanco
 - Advices from León Alvarez
 
-## 🤩 Useful libraries
+## 🤩 Modules used
 
 - [🐧 PuffinJS](https://github.com/PuffinJS/puffin)
+- [:electron: ElectronJS](https://www.electronjs.org/)
 - [🎨 CodeMirror](https://codemirror.net/)
 
 ## 🎁 Donating
@@ -100,7 +100,7 @@ Thank you for the donations!
 
 **Windows**
 
-- `Executable (.exe, 64 & 32bits)`
+- `Executable (.exe, 64bits)`
 
 **Linux**
 
