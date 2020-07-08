@@ -90,6 +90,11 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'application/x-ejs',
 					}
+				case 'lua':
+					return {
+						name: 'text/x-lua',
+					}
+				case 'ymlf':
 				case 'yaml':
 					return {
 						name: 'yaml',
@@ -117,6 +122,9 @@ const CodemirrorClient = new EditorClient(
 						name: 'text/x-java',
 					}
 				case 'scss':
+					return {
+						name: 'text/x-scss',
+					}
 				case 'sass':
 					return {
 						name: 'text/x-sass',
@@ -137,6 +145,18 @@ const CodemirrorClient = new EditorClient(
 				case 'ts':
 					return {
 						name: 'text/typescript',
+					}
+				case 'sh':
+					return {
+						name: 'text/x-sh',
+					}
+				case 'less':
+					return {
+						name: 'text/x-less',
+					}
+				case 'fs':
+					return {
+						name: 'text/x-fsharp',
 					}
 				default:
 					return {
