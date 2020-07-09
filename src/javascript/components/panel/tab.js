@@ -29,6 +29,7 @@ const styleWrapper = style`
 		max-width:100px;
 		overflow:hidden;
 		text-overflow:ellipsis;
+		flex: 3;
 	}
 	& .tab-button{
 		padding-left:auto;

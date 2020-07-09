@@ -208,6 +208,7 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 			inputPlaceHolder: 'Enter a command',
 			options: [
 				...focusedPanelTabs.map(tab => {
+					console.log(tab)
 					return {
 						data: tab.filePath,
 						label: tab.fileName,

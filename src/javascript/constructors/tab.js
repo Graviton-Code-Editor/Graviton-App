@@ -263,7 +263,7 @@ function Tab({ title, isEditor = false, directory, parentFolder, component, pane
 			return Object.keys(tabs).map(tab => {
 				return {
 					element: tabs[tab],
-					fileName: tabs[tab].children[0].textContent,
+					fileName: path.basename(tabs[tab].state.data.directory),
 					filePath: tabs[tab].state.data.directory,
 				}
 			})
