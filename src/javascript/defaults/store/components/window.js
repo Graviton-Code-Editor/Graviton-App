@@ -9,6 +9,7 @@ import uninstallPlugin from '../utils/uninstall.plugin'
 import Window from '../../../constructors/window'
 import storeButton from './button'
 import Notification from '../../../constructors/notification'
+import getCompatibleRelease from '../utils/get.compatible.release'
 
 const getPluginInfo = (object, key) => {
 	if (object[key]) {
@@ -18,14 +19,6 @@ const getPluginInfo = (object, key) => {
 	}
 }
 
-function getCompatiblePugin(gravitonVersion, releases) {
-	if (!releases) return false
-	return releases.find(rel => {
-		if (gravitonVersion.match(new RegExp(rel.target)) && semver.gte(gravitonVersion, rel.minTarget)) {
-			return rel
-		}
-	})
-}
 function hasUpdate(pluginVersion, localPluginVersion) {
 	if (semver.valid(pluginVersion) && semver.valid(localPluginVersion)) {
 		return semver.gt(pluginVersion, localPluginVersion)
@@ -63,7 +56,7 @@ function pluginWindow(
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo)
-	const pluginCompatibleRelease = getCompatiblePugin(packageJSON.version, pluginInfoValid.releases)
+	const pluginCompatibleRelease = getCompatibleRelease(packageJSON.version, pluginInfoValid.releases)
 
 	let lastReleaseVersion = 'Unknown'
 	let lastReleaseTarget = 'Unknown'
