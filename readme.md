@@ -19,27 +19,16 @@
 **NOTE:**
 Changes on this source may not be released as an official build yet.
 
-## Table of contents
-
-1. ✨ Features
-2. 📣 Community
-3. 🏗 Resources
-4. 👽 Contributors
-5. 🎁 Donating
-6. 🖥 Available platforms
-7. 🧾 License
-
 ## ✨ Features
 
 - 🧬 Git integration
+- ✍🏻 Intellisense and autocompletion
 - 🟢 NPM scripts integration
 - 🛢 Workspaces
 - 💅 Modern UI
 - 🎨 Themes
 - 📦 Plugins
-- 🌠 Autocomplete for some languages
 - 🗺 Built-in image previewer
-- 🏭 A Plugin and Themes store
 - 😇 More respectful on RAM than other alternatives
 - 💆‍♀️ No telemetry
 - 📝 Multi line editing
@@ -52,7 +41,7 @@ Changes on this source may not be released as an official build yet.
 
 ## 🏗 Resources
 
-- [🤓 Documentation for plugins](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
+- [🤓 Documentation](https://github.com/Graviton-Code-Editor/Graviton-App/wiki)
 - [🛠 Building from source](BUILDING.md)
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
