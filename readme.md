@@ -19,6 +19,16 @@
 **NOTE:**
 Changes on this source may not be released as an official build yet.
 
+## Table of contents
+
+1. ✨ Features
+2. 📣 Community
+3. 🏗 Resources
+4. 👽 Contributors
+5. 🎁 Donating
+6. 🖥 Available platforms
+7. 🧾 License
+
 ## ✨ Features
 
 - 🧬 Git integration
@@ -34,14 +44,7 @@ Changes on this source may not be released as an official build yet.
 - 💆‍♀️ No telemetry
 - 📝 Multi line editing
 
-## 🤖 Plugins
-
-- 📣 [Discord RPC](https://github.com/FreeAoi/Graviton-RPC)
-- 🦀 [Cargo](https://github.com/marc2332/cargo-graviton)
-- 🦕 [Deno](https://github.com/marc2332/deno-graviton)
-- 🕊 [Flutter](https://github.com/Graviton-Code-Editor/flutter-plugin)
-
-## 📣 Social media
+## 📣 Community
 
 - 📢 [Telegram Channel](https://t.me/gravitoneditor)
 - 💬 [Discord Server](https://discord.gg/cChzuMp)
@@ -54,9 +57,9 @@ Changes on this source may not be released as an official build yet.
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
 
-## 👽 Authors
+## 👽 Contributors
 
-#### Main Developer
+#### Main Author
 
 - Marc Espín Sanz [Github](https://github.com/marc2332)
 
@@ -74,12 +77,6 @@ Changes on this source may not be released as an official build yet.
 - Old logo by Saúl Blanco
 - Advices from León Alvarez
 
-## 🤩 Modules used
-
-- [🐧 PuffinJS](https://github.com/PuffinJS/puffin)
-- [:electron: ElectronJS](https://www.electronjs.org/)
-- [🎨 CodeMirror](https://codemirror.net/)
-
 ## 🎁 Donating
 
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
@@ -96,7 +93,7 @@ Changes on this source may not be released as an official build yet.
 
 Thank you for the donations!
 
-## 💻🖥 Available platforms
+## 🖥 Available platforms
 
 **Windows**
 
