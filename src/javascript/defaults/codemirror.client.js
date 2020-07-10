@@ -2,6 +2,11 @@ import CodeMirror from 'codemirror'
 import emmet from '@emmetio/codemirror-plugin'
 import { EditorClient } from '../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
+import RunningConfig from 'RunningConfig'
+
+import 'lsp-codemirror/lib/codemirror-lsp.css'
+
+import { LspWsConnection, CodeMirrorAdapter } from 'lsp-codemirror'
 
 import '../../../node_modules/codemirror/mode/**/*.js'
 
@@ -18,6 +23,8 @@ import 'codemirror/addon/hint/css-hint'
 import 'codemirror/addon/hint/sql-hint'
 import 'codemirror/addon/hint/xml-hint'
 import 'codemirror/addon/hint/html-hint'
+
+const path = window.require('path')
 
 const CodemirrorClient = new EditorClient(
 	{
@@ -39,8 +46,13 @@ const CodemirrorClient = new EditorClient(
 						name: 'htmlmixed',
 					}
 				case 'jsx':
+					return {
+						fancy: 'jsx',
+						name: 'text/jsx',
+					}
 				case 'js':
 					return {
+						fancy: 'javascript',
 						name: 'text/jsx',
 					}
 				case 'json':
@@ -165,7 +177,7 @@ const CodemirrorClient = new EditorClient(
 					}
 			}
 		},
-		create({ element, language, value, theme, CtrlPlusScroll }) {
+		create({ element, language, value, theme, CtrlPlusScroll, directory }) {
 			if (language.name == 'htmlmixed') emmet(CodeMirror)
 			const CodemirrorEditor = CodeMirror(element, {
 				mode: language,
@@ -216,7 +228,8 @@ const CodemirrorClient = new EditorClient(
 					event.keyCode !== 39 &&
 					event.keyCode !== 38 &&
 					event.keyCode !== 40 &&
-					event.keyCode !== 44
+					event.keyCode !== 44 &&
+					true === false
 				) {
 					CodeMirror.commands.autocomplete(cm, null, {
 						completeSingle: false,
@@ -249,6 +262,28 @@ const CodemirrorClient = new EditorClient(
 				}
 			})
 			CodemirrorEditor.refresh()
+
+			if (language.fancy === 'javascript') {
+				const fileUri = directory.replace(/\\/gm, '/')
+				const folderUrl = path.dirname(fileUri)
+
+				const jsConnection = new LspWsConnection({
+					serverUri: 'ws://localhost:3000/javascript',
+					mode: 'javascript',
+					rootUri: `file:///${folderUrl}`,
+					documentUri: `file:///${fileUri}`,
+					documentText: () => CodemirrorEditor.getValue(),
+				}).connect(new WebSocket('ws://localhost:3000/javascript'))
+
+				const javascriptAdapter = new CodeMirrorAdapter(
+					jsConnection,
+					{
+						quickSuggestionsDelay: 25,
+					},
+					CodemirrorEditor
+				)
+			}
+
 			return {
 				instance: CodemirrorEditor,
 			}

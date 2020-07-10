@@ -7,6 +7,13 @@ const electronArguments = window.require('electron').remote.getCurrentWindow().a
 let isDebug = window.require('electron').remote.getCurrentWindow().isDebug
 if (isDebug == null) isDebug = true
 
+const nodeJSONRPC = window.require('node-jsonrpc-lsp')
+
+const lspServer = new nodeJSONRPC({
+	port: 3000,
+	languageServers: {},
+})
+
 let DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel: null,
 	focusedTab: null,
@@ -27,9 +34,14 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	currentStaticConfig: {},
 	envs: [],
 	projectServices: [],
+	languageServers: [],
 }
 
 const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
+
+RunningConfig.on('registerLanguageServer', ({ name, args }) => {
+	lspServer.addLanguageServer(name, args)
+})
 
 console.log(RunningConfig)
 
