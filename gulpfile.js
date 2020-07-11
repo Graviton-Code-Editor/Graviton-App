@@ -4,18 +4,33 @@ const { series } = require('gulp')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
 const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
+const { exec } = require('child_process')
 
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
-async function removePluginsDist(cb) {
-	return await new Promise(async (resolve, reject) => {
-		if (fs.existsSync(pluginDistFolder)) {
-			rimraf(pluginDistFolder, () => {
-				resolve()
+async function updatePluginsDependencies(cb) {
+	const pluginsFolders = await fs.readdir(pluginsSourceFolder)
+	pluginsFolders.forEach(async (pluginName, i) => {
+		const pluginDir = path.join(pluginsSourceFolder, pluginName)
+		const proc = exec(`cd ${pluginDir} && npm install`)
+		await new Promise(res => {
+			proc.on('close', () => {
+				res()
 			})
+		})
+		if (pluginsFolders.length - 1 === i) {
+			cb()
 		}
 	})
+}
+
+async function removePluginsDist(cb) {
+	if (fs.existsSync(pluginDistFolder)) {
+		rimraf(pluginDistFolder, () => {
+			cb()
+		})
+	}
 }
 
 function createPluginsFolder(cb) {
@@ -26,7 +41,9 @@ function createPluginsFolder(cb) {
 }
 
 function createPluginFolder(pluginName) {
-	fs.mkdirSync(path.join(pluginDistFolder, pluginName))
+	if (!fs.existsSync(path.join(pluginDistFolder, pluginName))) {
+		fs.mkdirSync(path.join(pluginDistFolder, pluginName))
+	}
 }
 
 async function pluginsWebpack() {
@@ -82,4 +99,4 @@ async function pluginsTasks() {
 	})
 }
 
-exports.default = series(removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks)
+exports.default = series(updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks)
