@@ -193,6 +193,10 @@
 			"Dialog": {
 				"Background": "white",
 				"Text": "black"
+			},
+			"Tooltip": {
+				"Background": "white",
+				"Text": "black"
 			}
 		},
 		"statusbar": {

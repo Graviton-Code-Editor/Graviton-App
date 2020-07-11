@@ -3,7 +3,6 @@ import * as drac from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
-import path from 'path'
 import CodeMirror from 'codemirror'
 import CommandPrompt from '../constructors/command.prompt'
 import Window from '../constructors/window'
@@ -21,8 +20,8 @@ import SidePanel from '../constructors/side.panel'
 import Explorer from '../constructors/explorer'
 import throwError from './throw.error'
 
+const path = window.require('path')
 const fs = window.require('fs-extra')
-const pluginsPath = path.join(StaticConfig.data.appConfigPath, 'plugins')
 const isDev = window.require('electron-is-dev')
 
 const getPlugin = pluginPath => require(pluginPath)
@@ -85,21 +84,31 @@ function loadPlugin(pluginPkg) {
 	loadCodeMirror(pluginPkg)
 }
 
-RunningConfig.on('appLoaded', function () {
-	fs.readdir(pluginsPath).then(paths => {
-		paths.map(pluginName => {
-			const pluginPath = path.join(pluginsPath, pluginName)
-			const pkgPluginPath = path.join(pluginPath, 'package.json')
-			if (fs.existsSync(pkgPluginPath)) {
-				const pluginPkg = getPlugin(pkgPluginPath)
-				if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
-				pluginPkg.PATH = pluginPath
-				PluginsRegistry.add(pluginPkg)
-			}
+const registerPluginsIn = where => {
+	return new Promise((resolve, reject) => {
+		fs.readdir(where).then(paths => {
+			paths.map(pluginName => {
+				const pluginPath = path.join(where, pluginName)
+				const pkgPluginPath = path.join(pluginPath, 'package.json')
+				if (fs.existsSync(pkgPluginPath)) {
+					const pluginPkg = getPlugin(pkgPluginPath)
+					if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
+					pluginPkg.PATH = pluginPath
+					PluginsRegistry.add(pluginPkg)
+				}
+			})
+			resolve()
 		})
-		RunningConfig.emit('allPluginsLoaded')
-		loadAllPlugins()
 	})
+}
+
+RunningConfig.on('appLoaded', async function () {
+	const pluginsPath = path.join(StaticConfig.data.appConfigPath, 'plugins')
+	await registerPluginsIn(pluginsPath)
+	const pluginsDist = isDev ? path.resolve(__dirname, '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', 'pluginsDist')
+	await registerPluginsIn(pluginsDist)
+	RunningConfig.emit('allPluginsLoaded')
+	loadAllPlugins()
 })
 
 function loadAllPlugins() {

@@ -211,31 +211,6 @@ const CodemirrorClient = new EditorClient(
 					preview: false,
 				},
 			})
-
-			CodemirrorEditor.on('keyup', (cm, event, a) => {
-				const cmCursor = cm.getDoc().getCursor()
-				const cmToken = cm.getTokenAt(cmCursor)
-				if (
-					StaticConfig.data.editorAutocomplete &&
-					cmToken.type &&
-					event.metaKey === false &&
-					event.altKey === false &&
-					event.shiftKey === false &&
-					event.ctrlKey === false &&
-					event.keyCode > 32 &&
-					event.keyCode < 126 &&
-					event.keyCode !== 37 &&
-					event.keyCode !== 39 &&
-					event.keyCode !== 38 &&
-					event.keyCode !== 40 &&
-					event.keyCode !== 44 &&
-					true === false
-				) {
-					CodeMirror.commands.autocomplete(cm, null, {
-						completeSingle: false,
-					})
-				}
-			})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
 			const CtrlDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+Down')
@@ -266,14 +241,14 @@ const CodemirrorClient = new EditorClient(
 			if (language.fancy === 'javascript') {
 				const fileUri = directory.replace(/\\/gm, '/')
 				const folderUrl = path.dirname(fileUri)
-
+				console.log(`ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`)
 				const jsConnection = new LspWsConnection({
-					serverUri: 'ws://localhost:3000/javascript',
+					serverUri: `ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`,
 					mode: 'javascript',
 					rootUri: `file:///${folderUrl}`,
 					documentUri: `file:///${fileUri}`,
 					documentText: () => CodemirrorEditor.getValue(),
-				}).connect(new WebSocket('ws://localhost:3000/javascript'))
+				}).connect(new WebSocket(`ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`))
 
 				const javascriptAdapter = new CodeMirrorAdapter(
 					jsConnection,

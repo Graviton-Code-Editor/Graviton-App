@@ -1,0 +1,13 @@
+{
+	"name": "js-ts-langserver",
+	"id": "js-ts-langserver",
+	"author": "Marc Espín Sanz",
+	"version": "1.0.0",
+	"description": "JavaScript and TypeScript language server support",
+	"main": "index.js",
+	"mainSrc": "index.js",
+	"mainDev": "dist/index.js",
+	"dependencies": {
+		"javascript-typescript-langserver": "^2.11.3"
+	}
+}

@@ -542,3 +542,8 @@ span.CodeMirror-selectedtext {
 	font-size: 1.05em;
 	line-height: inherit;
 }
+
+.CodeMirror-lsp-tooltip {
+	background: var(--editorTooltipBackground) !important;
+	color: var(--editorTooltipText);
+}

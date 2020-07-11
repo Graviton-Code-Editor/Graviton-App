@@ -10,7 +10,7 @@ if (isDebug == null) isDebug = true
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 
 const lspServer = new nodeJSONRPC({
-	port: 3000,
+	port: isDev ? 2020 : 2089,
 	languageServers: {},
 })
 
@@ -40,6 +40,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
 RunningConfig.on('registerLanguageServer', ({ name, args }) => {
+	console.log(name, args)
 	lspServer.addLanguageServer(name, args)
 })
 

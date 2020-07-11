@@ -23,7 +23,7 @@ const CardStyle = style`
 	}
 `
 
-const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID == 'night-theme'
+const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver'
 
 function StoreCard(props) {
 	const { pluginID, displayName, isInstalled, description = '' } = props.data

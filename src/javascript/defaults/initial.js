@@ -436,11 +436,6 @@ function init() {
 		PATH: path.join(__dirname, './Graviton'),
 		...GravitonIconpack,
 	})
-	console.log(path.join(__dirname, '..', './node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'))
-	RunningConfig.emit('registerLanguageServer', {
-		name: 'javascript',
-		args: ['node', path.join(__dirname, '..', './node_modules/javascript-typescript-langserver/lib/language-server-stdio.js')],
-	})
 
 	RunningConfig.emit('appLoaded')
 

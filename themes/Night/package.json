@@ -75,6 +75,8 @@
 		"controlCloseButtonActiveFill": "black",
 		"editorDialogBackground": "#333333",
 		"editorDialogText": "white",
+		"editorTooltipBackground": "rgb(45,45,45)",
+		"editorTooltipText": "white",
 		"statusbarBackground": "#191919",
 		"statusbarBorder": "rgba(150,150,150)",
 		"statusbarItemBackground": "transparent",

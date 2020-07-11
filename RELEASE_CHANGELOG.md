@@ -1,5 +1,7 @@
 ### 🔝 Important changes
 
+- LSP integration
+
 ### ✔ Changes
 
 - Added: Tabs show file's icon
