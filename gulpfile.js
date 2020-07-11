@@ -8,7 +8,7 @@ const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
-function removePluginsDist(cb) {
+async function removePluginsDist(cb) {
 	return new Promise(async (resolve, reject) => {
 		if (fs.existsSync(pluginDistFolder)) {
 			rimraf(pluginDistFolder, () => {
@@ -29,7 +29,7 @@ function createPluginFolder(pluginName) {
 	fs.mkdirSync(path.join(pluginDistFolder, pluginName))
 }
 
-function pluginsWebpack() {
+async function pluginsWebpack() {
 	return new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach((pluginName, i) => {
@@ -43,7 +43,7 @@ function pluginsWebpack() {
 	})
 }
 
-function pluginsSDK() {
+async function pluginsSDK() {
 	return new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
@@ -64,7 +64,7 @@ function pluginsSDK() {
 	})
 }
 
-function pluginsTasks() {
+async function pluginsTasks() {
 	return new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
