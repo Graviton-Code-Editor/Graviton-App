@@ -9,7 +9,7 @@ const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
 async function removePluginsDist(cb) {
-	return new Promise(async (resolve, reject) => {
+	return await new Promise(async (resolve, reject) => {
 		if (fs.existsSync(pluginDistFolder)) {
 			rimraf(pluginDistFolder, () => {
 				resolve()
@@ -30,7 +30,7 @@ function createPluginFolder(pluginName) {
 }
 
 async function pluginsWebpack() {
-	return new Promise(async (resolve, reject) => {
+	return await new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach((pluginName, i) => {
 			createPluginFolder(pluginName)
@@ -44,7 +44,7 @@ async function pluginsWebpack() {
 }
 
 async function pluginsSDK() {
-	return new Promise(async (resolve, reject) => {
+	return await new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const bundleConfig = {
@@ -65,7 +65,7 @@ async function pluginsSDK() {
 }
 
 async function pluginsTasks() {
-	return new Promise(async (resolve, reject) => {
+	return await new Promise(async (resolve, reject) => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const distFolder = path.join(pluginDistFolder, pluginName)
