@@ -9,11 +9,13 @@ const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
 function removePluginsDist(cb) {
-	if (fs.existsSync(pluginDistFolder)) {
-		rimraf(pluginDistFolder, () => {
-			cb()
-		})
-	}
+	return new Promise(async (resolve, reject) => {
+		if (fs.existsSync(pluginDistFolder)) {
+			rimraf(pluginDistFolder, () => {
+				resolve()
+			})
+		}
+	})
 }
 
 function createPluginsFolder(cb) {

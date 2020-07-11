@@ -34,11 +34,11 @@
 		}
 	],
 	"scripts": {
-		"build:extensions": "gulp",
+		"build:plugins": "gulp",
 		"test": "run-p watch:parcel test:spectron ",
 		"test:spectron": "mocha test --delay",
 		"start": "run-p script:build watch:parcel watch:electron ",
-		"script:build": "node scripts/build.js && npm run build:extensions",
+		"script:build": "node scripts/build.js && npm run build:plugins",
 		"watch:parcel": "parcel serve src/index.html --target electron --bundle-node-modules --out-dir dist_parcel --public-url ./",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
 		"build": "npm run script:build && npm run build:parcel  && npm run build:electron",
