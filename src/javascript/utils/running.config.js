@@ -39,9 +39,10 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 
 const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
-RunningConfig.on('registerLanguageServer', ({ name, args }) => {
-	console.log(name, args)
-	lspServer.addLanguageServer(name, args)
+RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
+	modes.forEach(name => {
+		lspServer.addLanguageServer(name, args)
+	})
 })
 
 console.log(RunningConfig)

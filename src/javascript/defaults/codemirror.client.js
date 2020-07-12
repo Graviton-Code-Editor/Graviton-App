@@ -156,6 +156,7 @@ const CodemirrorClient = new EditorClient(
 					}
 				case 'ts':
 					return {
+						fancy: 'typescript',
 						name: 'text/typescript',
 					}
 				case 'sh':
@@ -237,23 +238,30 @@ const CodemirrorClient = new EditorClient(
 				}
 			})
 			CodemirrorEditor.refresh()
-
-			if (language.fancy === 'javascript') {
-				const fileUri = directory.replace(/\\/gm, '/')
-				const folderUrl = path.dirname(fileUri)
-				console.log(`ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`)
-				const jsConnection = new LspWsConnection({
-					serverUri: `ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`,
-					mode: 'javascript',
+			const fileUri = directory.replace(/\\/gm, '/')
+			const folderUrl = path.dirname(fileUri)
+			let lspServer
+			switch (language.fancy) {
+				case 'typescript':
+					lspServer = `ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/typescript`
+					break
+				case 'javascript':
+					lspServer = `ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`
+					break
+			}
+			if (lspServer) {
+				const lspConnection = new LspWsConnection({
+					serverUri: lspServer,
+					mode: language.fancy,
 					rootUri: `file:///${folderUrl}`,
 					documentUri: `file:///${fileUri}`,
 					documentText: () => CodemirrorEditor.getValue(),
-				}).connect(new WebSocket(`ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`))
+				}).connect(new WebSocket(lspServer))
 
-				const javascriptAdapter = new CodeMirrorAdapter(
-					jsConnection,
+				const lspadapter = new CodeMirrorAdapter(
+					lspConnection,
 					{
-						quickSuggestionsDelay: 25,
+						quickSuggestionsDelay: 40,
 					},
 					CodemirrorEditor
 				)
