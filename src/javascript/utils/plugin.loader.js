@@ -107,8 +107,8 @@ RunningConfig.on('appLoaded', async function () {
 	await registerPluginsIn(pluginsPath)
 	const pluginsDist = isDev ? path.resolve(__dirname, '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', 'pluginsDist')
 	await registerPluginsIn(pluginsDist)
-	RunningConfig.emit('allPluginsLoaded')
 	loadAllPlugins()
+	RunningConfig.emit('allPluginsLoaded')
 })
 
 function loadAllPlugins() {

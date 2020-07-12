@@ -143,8 +143,8 @@ function sidebarContext(e) {
 }
 
 function mountedApp() {
-	init()
 	window.addEventListener('load', function () {
+		init()
 		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
 			Welcome().launch()
 		}

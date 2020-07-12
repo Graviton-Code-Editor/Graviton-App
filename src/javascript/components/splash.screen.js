@@ -25,11 +25,9 @@ const styleWrapper = style`
 
 function SplashScreen() {
 	function mounted() {
-		window.addEventListener('load', () => {
-			RunningConfig.on('allPluginsLoaded', () => {
-				console.log('%c 🎉 Loaded successfully. ', 'color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;')
-				this.remove()
-			})
+		RunningConfig.on('allPluginsLoaded', () => {
+			console.log('%c 🎉 Loaded successfully. ', 'color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;')
+			this.remove()
 		})
 	}
 	return element({
