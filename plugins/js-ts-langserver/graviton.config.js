@@ -12,7 +12,6 @@ module.exports.tasks = [
 const copy = (from, to) => {
 	return new Promise((res, rej) => {
 		ncp(from, to, err => {
-			console.log(err)
 			res()
 		})
 	})

@@ -11,16 +11,13 @@ const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
 async function updatePluginsDependencies(cb) {
 	const pluginsFolders = await fs.readdir(pluginsSourceFolder)
-	pluginsFolders.forEach(async (pluginName, i) => {
+	pluginsFolders.forEach((pluginName, i) => {
 		const pluginDir = path.join(pluginsSourceFolder, pluginName)
 		const proc = exec(`cd ${pluginDir} && npm install`)
-		await new Promise(res => {
-			proc.on('close', () => {
-				res()
-			})
-		})
 		if (pluginsFolders.length - 1 === i) {
-			cb()
+			proc.on('close', () => {
+				cb()
+			})
 		}
 	})
 }
@@ -87,8 +84,8 @@ async function pluginsTasks() {
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const distFolder = path.join(pluginDistFolder, pluginName)
 			const { tasks } = require(path.join(pluginsSourceFolder, pluginName, 'graviton.config.js'))
-			tasks.forEach(task => {
-				task({
+			tasks.forEach(async task => {
+				await task({
 					distFolder,
 				})
 			})
