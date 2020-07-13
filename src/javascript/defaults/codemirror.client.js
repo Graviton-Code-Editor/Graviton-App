@@ -214,6 +214,7 @@ const CodemirrorClient = new EditorClient(
 				emmet: {
 					preview: false,
 				},
+				gutters: ['CodeMirror-lsp'],
 			})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
