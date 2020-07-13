@@ -15,8 +15,10 @@ function updatePluginsDependencies(cb) {
 			const pluginDir = path.join(pluginsSourceFolder, pluginName)
 			const proc = spawn('npm', ['install'], {
 				cwd: pluginDir,
+				stdio: 'inherit',
+				shell: true,
 			})
-			proc.stdout.on('data', a => {
+			proc.on('close', a => {
 				if (pluginsFolders.length - 1 === i) {
 					cb()
 				}
