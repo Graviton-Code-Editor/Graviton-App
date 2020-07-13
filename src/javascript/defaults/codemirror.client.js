@@ -43,6 +43,7 @@ const CodemirrorClient = new EditorClient(
 				*/
 				case 'html':
 					return {
+						fancy: 'html',
 						name: 'htmlmixed',
 					}
 				case 'jsx':
@@ -57,6 +58,7 @@ const CodemirrorClient = new EditorClient(
 					}
 				case 'json':
 					return {
+						fancy: 'json',
 						name: 'application/json',
 					}
 				case 'css':
@@ -73,6 +75,7 @@ const CodemirrorClient = new EditorClient(
 					}
 				case 'rs':
 					return {
+						fancy: 'rust',
 						name: 'rust',
 					}
 				case 'rb':
@@ -237,9 +240,7 @@ const CodemirrorClient = new EditorClient(
 					CtrlPlusScroll('up')
 				}
 			})
-			CodemirrorEditor.refresh()
-			const fileUri = directory.replace(/\\/gm, '/')
-			const folderUrl = path.dirname(fileUri)
+			//CodemirrorEditor.refresh()
 			let lspServer
 			switch (language.fancy) {
 				case 'typescript':
@@ -249,23 +250,36 @@ const CodemirrorClient = new EditorClient(
 					lspServer = `ws://localhost:${RunningConfig.data.isDev ? 2020 : 2089}/javascript`
 					break
 			}
-			if (lspServer) {
-				const lspConnection = new LspWsConnection({
-					serverUri: lspServer,
-					mode: language.fancy,
-					rootUri: `file:///${folderUrl}`,
-					documentUri: `file:///${fileUri}`,
-					documentText: () => CodemirrorEditor.getValue(),
-				}).connect(new WebSocket(lspServer))
-
-				const lspadapter = new CodeMirrorAdapter(
-					lspConnection,
-					{
-						quickSuggestionsDelay: 40,
-					},
-					CodemirrorEditor
-				)
+			let lspAdapter
+			let lspConnection
+			if (lspServer && StaticConfig.data.editorAutocomplete) {
+				const lspClient = createLspClient({
+					lspServer,
+					language,
+					directory,
+					CodemirrorEditor,
+				})
+				lspAdapter = lspClient.lspAdapter
+				lspConnection = lspClient.lspConnection
 			}
+
+			StaticConfig.keyChanged('editorAutocomplete', value => {
+				if (value) {
+					const lspClient = createLspClient({
+						lspServer,
+						language,
+						directory,
+						CodemirrorEditor,
+					})
+					lspAdapter = lspClient.lspAdapter
+					lspConnection = lspClient.lspConnection
+				} else {
+					lspAdapter.remove()
+					lspConnection.close()
+					lspAdapter = null
+					lspConnection = null
+				}
+			})
 
 			return {
 				instance: CodemirrorEditor,
@@ -392,5 +406,30 @@ const CodemirrorClient = new EditorClient(
 		},
 	}
 )
+
+function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
+	const fileUri = directory.replace(/\\/gm, '/')
+	const folderUrl = path.dirname(fileUri)
+	const lspConnection = new LspWsConnection({
+		serverUri: lspServer,
+		mode: language.fancy,
+		rootUri: `file:///${folderUrl}`,
+		documentUri: `file:///${fileUri}`,
+		documentText: () => CodemirrorEditor.getValue(),
+	}).connect(new WebSocket(lspServer))
+
+	const lspAdapter = new CodeMirrorAdapter(
+		lspConnection,
+		{
+			quickSuggestionsDelay: 40,
+		},
+		CodemirrorEditor
+	)
+
+	return {
+		lspConnection,
+		lspAdapter,
+	}
+}
 
 export default CodemirrorClient
