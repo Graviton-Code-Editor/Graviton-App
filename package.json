@@ -106,7 +106,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.8.4",
-		"@gveditor/sdk": "^0.1.9",
+		"@gveditor/sdk": "^0.2.0",
 		"babel-core": "^6.26.3",
 		"babel-polyfill": "^6.26.0",
 		"babel-preset-es2015": "^6.24.1",

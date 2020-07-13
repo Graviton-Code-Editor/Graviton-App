@@ -4,21 +4,24 @@ const { series } = require('gulp')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
 const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
-const { exec } = require('child_process')
+const { spawn } = require('child_process')
 
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
 
-async function updatePluginsDependencies(cb) {
-	const pluginsFolders = await fs.readdir(pluginsSourceFolder)
-	pluginsFolders.forEach((pluginName, i) => {
-		const pluginDir = path.join(pluginsSourceFolder, pluginName)
-		const proc = exec(`cd ${pluginDir} && npm install`)
-		if (pluginsFolders.length - 1 === i) {
-			proc.on('close', () => {
-				cb()
+function updatePluginsDependencies(cb) {
+	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {
+		pluginsFolders.forEach((pluginName, i) => {
+			const pluginDir = path.join(pluginsSourceFolder, pluginName)
+			const proc = spawn('npm', ['install'], {
+				cwd: pluginDir,
 			})
-		}
+			proc.stdout.on('data', a => {
+				if (pluginsFolders.length - 1 === i) {
+					cb()
+				}
+			})
+		})
 	})
 }
 
@@ -48,7 +51,7 @@ async function pluginsWebpack() {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach((pluginName, i) => {
 			createPluginFolder(pluginName)
-			webpack(require(path.join(pluginsSourceFolder, pluginName, 'webpack.config.js')), async function (a, b) {
+			webpack(require(path.join(pluginsSourceFolder, pluginName, 'webpack.config.js')), function () {
 				if (pluginsFolders.length - 1 === i) {
 					resolve()
 				}
@@ -84,8 +87,8 @@ async function pluginsTasks() {
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const distFolder = path.join(pluginDistFolder, pluginName)
 			const { tasks } = require(path.join(pluginsSourceFolder, pluginName, 'graviton.config.js'))
-			tasks.forEach(async task => {
-				await task({
+			tasks.forEach(task => {
+				task({
 					distFolder,
 				})
 			})
