@@ -7,3 +7,4 @@ plugins/**/node_modules
 .cache/**/node_modules
 dist/**/node_modules
 pluginsDist
+dist_ui

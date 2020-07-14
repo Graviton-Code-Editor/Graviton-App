@@ -1,11 +1,12 @@
 import { state } from '@mkenzo_8/puffin'
+import PuffinState from '../types/puffin.state.ts'
 
-const registry = new state({
+const registry: PuffinState = new state({
 	list: {},
 	colorsSchemes: {},
 })
 
-function add(pkg) {
+function add(pkg): void {
 	registry.data.list[pkg.name] = pkg
 	registry.data.colorsSchemes[pkg.name] = pkg.colorsScheme
 }

@@ -1,4 +1,5 @@
 import { state } from '@mkenzo_8/puffin'
+import PuffinState from '../types/puffin.state.ts'
 import CodemirrorClient from '../defaults/codemirror.client'
 import ImageViewerClient from '../defaults/imageviewer.client'
 const isDev = window.require('electron-is-dev')
@@ -37,7 +38,7 @@ let DEFAULT_RUNTIME_CONFIGURATION = {
 	languageServers: [],
 }
 
-const RunningConfig = new state(DEFAULT_RUNTIME_CONFIGURATION)
+const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
 RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
 	modes.forEach(name => {

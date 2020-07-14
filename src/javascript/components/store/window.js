@@ -1,15 +1,15 @@
 import semver from 'semver'
-import packageJSON from '../../../../../package.json'
+import packageJSON from '../../../../package.json'
 import { element, style } from '@mkenzo_8/puffin'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
-import SideMenu from '../../../components/window/side.menu'
-import installPlugin from '../utils/install.plugin'
-import uninstallPlugin from '../utils/uninstall.plugin'
-import Window from '../../../constructors/window'
+import SideMenu from '../window/side.menu'
+import installPlugin from '../../defaults/store/utils/install.plugin'
+import uninstallPlugin from '../../defaults/store/utils/uninstall.plugin'
+import Window from '../../constructors/window'
 import storeButton from './button'
-import Notification from '../../../constructors/notification'
-import getCompatibleRelease from '../utils/get.compatible.release'
+import Notification from '../../constructors/notification'
+import getCompatibleRelease from '../../defaults/store/utils/get.compatible.release'
 
 const getPluginInfo = (object, key) => {
 	if (object[key]) {

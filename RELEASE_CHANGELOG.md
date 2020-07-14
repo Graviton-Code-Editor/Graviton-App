@@ -16,3 +16,5 @@
 - Fixed command prompt's size when it's overflowing
 
 ### 🤓 Core
+
+- Using webpack instead of parcel

@@ -4,13 +4,14 @@ const { webFrame } = window.require('electron')
 const cachedConfiguration = getConfiguration()
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
-import path from 'path'
+const path = require('path')
+import PuffinState from '../types/puffin.state.ts'
 
 function saveConfiguration() {
 	cachedConfiguration.store.set('config', StaticConfig.data)
 }
 
-const StaticConfig = new state(Object.assign({}, cachedConfiguration.config))
+const StaticConfig: PuffinState = new state(Object.assign({}, cachedConfiguration.config))
 
 StaticConfig.changed((a, b) => {
 	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug) {

@@ -1,7 +1,7 @@
 import { Panel, removePanel } from '../constructors/panel'
 import { registryAllPlugins } from '../utils/plugin.loader'
 import { element, style } from '@mkenzo_8/puffin'
-import { openFolder, openFile } from '../utils/filesystem'
+import { openFolder, openFile } from '../utils/filesystem.ts'
 import path from 'path'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
@@ -14,7 +14,7 @@ import GravitonIconpack from '../../../iconpacks/Graviton/package.json'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
-import Languages from '../../../languages/*.json'
+import Languages from '../collections/languages.js'
 import configEditor from './tabs/config.editor.js'
 import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
@@ -35,6 +35,10 @@ import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
 import './status.bar.items/debug'
+
+import '../collections/codemirror'
+
+import '../../../node_modules/codemirror/mode/javascript/javascript'
 
 const fs = window.require('fs-extra')
 const { openExternal: openLink } = window.require('electron').shell
@@ -433,7 +437,7 @@ function init() {
 	PluginsRegistry.add(Arctic)
 	PluginsRegistry.add(Night)
 	PluginsRegistry.add({
-		PATH: path.join(__dirname, './Graviton'),
+		PATH: path.join(__dirname, '../../../Graviton'),
 		...GravitonIconpack,
 	})
 

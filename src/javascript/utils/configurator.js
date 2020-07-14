@@ -90,12 +90,12 @@ function initConfiguration() {
 	const gravitonConfigPath = configurationStore.get('config').appConfigPath
 	const gravitonPluginsPath = path.join(gravitonConfigPath, 'plugins')
 
-	//If .graviton2 doesn't exist, it creates it
+	//If .graviton2 doesn't exist, create it
 	if (!fs.existsSync(gravitonConfigPath)) {
 		fs.mkdirSync(gravitonConfigPath)
 	}
 
-	//If .graviton2/plugins doesn't exist, it creates it
+	//If .graviton2/plugins doesn't exist, create it
 	if (!fs.existsSync(gravitonPluginsPath)) {
 		fs.mkdirSync(gravitonPluginsPath)
 	}

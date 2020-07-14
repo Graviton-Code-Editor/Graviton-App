@@ -15,8 +15,14 @@ const path = window.require('path')
 const fs = window.require('fs-extra')
 const { remote } = window.require('electron')
 
-// Graviton workspace's filename
-const WORKSPACE_FILENAME = 'gv-workspace.json'
+import { WorkspaceFilename } from 'Constants'
+
+import { 
+	AddFolderInWorkspace, 
+	AddFolderInWorkspaceFromDialog,
+	SetWorkspace,
+	RemoveWorkspace
+} from '../types/workspace.ts'
 
 /**
  * Opens a native dialog,
@@ -75,12 +81,12 @@ function openFile() {
 function getWorkspaceConfig(path) {
 	let error = false
 	try {
-		require(normalizeDir(path))
+		window.require(normalizeDir(path))
 	} catch {
 		error = true
 	}
 	if (!error) {
-		return require(normalizeDir(path))
+		return window.require(normalizeDir(path))
 	} else {
 		return null
 	}
@@ -125,7 +131,11 @@ RunningConfig.on('loadFile', ({ filePath }) => {
  * @param {boolean} replaceOldExplorer - Add it as one more, or close the previous one
  * @param {string} workspacePath - Path to the current loaded workspace
  */
-RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }) {
+RunningConfig.on('addFolderToRunningWorkspace', ({ 
+	folderPath, 
+	replaceOldExplorer = false, 
+	workspacePath = RunningConfig.data.workspacePath 
+}: AddFolderInWorkspace) =>{
 	if (replaceOldExplorer) {
 		removeAllExplorerFolders()
 	}
@@ -147,7 +157,9 @@ RunningConfig.on('addFolderToRunningWorkspace', function ({ folderPath, replaceO
  * to add to the current workspace
  * @param {boolean} replaceOldExplorer - Add it as one more, or close the previous one
  */
-RunningConfig.on('addFolderToRunningWorkspaceDialog', ({ replaceOldExplorer = false }) => {
+RunningConfig.on('addFolderToRunningWorkspaceDialog', ({ 
+	replaceOldExplorer = false 
+}: AddFolderInWorkspaceFromDialog) => {
 	selectFolderDialog()
 		.then(folderPath => {
 			RunningConfig.emit('addFolderToRunningWorkspace', {
@@ -190,9 +202,9 @@ function removeAllExplorerFolders() {
  * opened
  * @param {string} workspaceDir - Workspace's path
  */
-RunningConfig.on('setWorkspace', ({ path: workspaceDir }) => {
-	const workspacePath = normalizeDir(workspaceDir)
-	const workspace = getWorkspaceConfig(workspacePath)
+RunningConfig.on('setWorkspace', ({ workspacePath }: SetWorkspace) => {
+	const workspacePathNormalized = normalizeDir(workspacePath)
+	const workspace = getWorkspaceConfig(workspacePathNormalized)
 	if (workspace) {
 		removeAllExplorerFolders()
 		RunningConfig.data.workspaceConfig = {
@@ -201,7 +213,7 @@ RunningConfig.on('setWorkspace', ({ path: workspaceDir }) => {
 			settings: workspace.settings || {},
 		}
 		setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
-		RunningConfig.data.workspacePath = workspacePath
+		RunningConfig.data.workspacePath = workspacePathNormalized
 		workspace.folders.map(folder => {
 			RunningConfig.emit('addFolderToRunningWorkspace', {
 				folderPath: folder.path,
@@ -226,8 +238,12 @@ function setWorkspaceSettings(settings) {
 RunningConfig.on('openWorkspaceDialog', () => {
 	selectFileDialog()
 		.then(path => {
-			RunningConfig.emit('addLogWorkspace', { path })
-			RunningConfig.emit('setWorkspace', { path })
+			RunningConfig.emit('addLogWorkspace', { 
+				workspacePath: path
+			})
+			RunningConfig.emit('setWorkspace', { 
+				workspacePath: path
+			})
 		})
 		.catch(err => {
 			console.log(err)
@@ -238,13 +254,13 @@ RunningConfig.on('openWorkspaceDialog', () => {
  * Add a workspace to the log
  * @param {string} workspaceDir - Workspace's path
  */
-RunningConfig.on('addLogWorkspace', ({ path: workspaceDir }) => {
-	const workspacePath = normalizeDir(workspaceDir)
+RunningConfig.on('addLogWorkspace', ({ workspacePath }) => {
+	const workspacePathNormalized = normalizeDir(workspacePath)
 	const matches = StaticConfig.data.appWorkspacesLog.find(workspace => {
-		return workspace == workspacePath
+		return workspace == workspacePathNormalized
 	})
 	if (!matches) {
-		StaticConfig.data.appWorkspacesLog.push(workspacePath)
+		StaticConfig.data.appWorkspacesLog.push(workspacePathNormalized)
 		StaticConfig.triggerChange()
 	}
 })
@@ -255,10 +271,10 @@ RunningConfig.on('addLogWorkspace', ({ path: workspaceDir }) => {
  * @param {string} workspaceDir - Workspace's path
  * @param {string} workspaceConfig - Workspace's configuration object
  */
-function saveConfiguration(workspaceDir, workspaceConfig) {
-	const workspaceDirNormalized = normalizeDir(workspaceDir)
+function saveConfiguration(workspacePath, workspaceConfig) {
+	const workspacePathNormalized = normalizeDir(workspacePath)
 	const workspaceConfiguration = JSON.stringify(workspaceConfig, null, 2)
-	fs.writeFile(workspaceDirNormalized, workspaceConfiguration, 'UTF-8', (err, data) => {
+	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', (err, data) => {
 		if (err) throw err
 		StaticConfig.triggerChange()
 	})
@@ -281,7 +297,7 @@ RunningConfig.on('saveCurrentWorkspace', function () {
 				title: 'Name your workspace',
 				placeHolder: 'My workspace',
 			}).then(name => {
-				const resultWorkspace = path.join(res, WORKSPACE_FILENAME)
+				const resultWorkspace = path.join(res, WorkspaceFilename)
 				RunningConfig.data.workspacePath = resultWorkspace
 				RunningConfig.data.workspaceConfig.name = name
 				saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
@@ -297,10 +313,10 @@ RunningConfig.on('saveCurrentWorkspace', function () {
  * Remove a workspace from the log
  * @param {string} workspaceDir - Workspace's path
  */
-RunningConfig.on('removeWorkspaceFromLog', ({ path: workspaceDir }) => {
+RunningConfig.on('removeWorkspaceFromLog', ({ workspacePath }: RemoveWorkspace) => {
 	const workspacesList = StaticConfig.data.appWorkspacesLog
 	const workspaceConf = workspacesList.find(path => {
-		return path == workspaceDir
+		return path == workspacePath
 	})
 	const workspaceIndex = workspacesList.indexOf(workspaceConf)
 	StaticConfig.data.appWorkspacesLog.splice(workspaceIndex, 1)
@@ -312,11 +328,11 @@ RunningConfig.on('removeWorkspaceFromLog', ({ path: workspaceDir }) => {
  * @param {string} workspaceDir - Workspace's path
  * @param {string} name - New workspace's name
  */
-RunningConfig.on('renameWorkspace', ({ path: workspaceDir, name = '' }) => {
-	const workspaceConfig = getWorkspaceConfig(normalizeDir(workspaceDir))
+RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
+	const workspaceConfig = getWorkspaceConfig(normalizeDir(workspacePath))
 	if (workspaceConfig) {
 		workspaceConfig.name = name
-		saveConfiguration(workspaceDir, workspaceConfig)
+		saveConfiguration(workspacePath, workspaceConfig)
 	}
 })
 
@@ -328,15 +344,15 @@ RunningConfig.on('renameWorkspace', ({ path: workspaceDir, name = '' }) => {
  * @param {string} name - Current workspace's name
  * @param {function} onFinished - A callback
  */
-RunningConfig.on('renameWorkspaceDialog', ({ path: workspaceDir, name = 'My other workspace', onFinished = () => {} }) => {
-	const workspacePath = normalizeDir(workspaceDir)
+RunningConfig.on('renameWorkspaceDialog', ({ workspacePath, name = 'My other workspace', onFinished = (x) => {} }) => {
+	const workspacePathNormalized = normalizeDir(workspacePath)
 	new InputDialog({
 		title: 'Rename your workspace',
 		placeHolder: name,
 	})
 		.then(name => {
 			RunningConfig.emit('renameWorkspace', {
-				path: workspacePath,
+				workspacePath: workspacePathNormalized,
 				name,
 			})
 			onFinished(name)

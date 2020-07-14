@@ -6,7 +6,6 @@ import beautifyDir from '../utils/directory.beautifier'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
-import 'babel-polyfill'
 
 const fs = window.require('fs-extra')
 const simpleGit = window.require('simple-git')

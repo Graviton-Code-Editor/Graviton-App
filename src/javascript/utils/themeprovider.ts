@@ -2,6 +2,7 @@ import { state } from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
+import PuffinState from '../types/puffin.state.ts'
 
 let currentTheme = StaticConfig.data.appTheme
 
@@ -12,7 +13,7 @@ StaticConfig.keyChanged('appTheme', newTheme => {
 	}
 })
 
-const ThemeProvider = new state({
+const ThemeProvider: PuffinState = new state({
 	splashScreenText: 'white',
 	splashScreenBackground: '#191919',
 })
@@ -56,7 +57,7 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-function getProperty(key, keys) {
+function getProperty(key, keys): string {
 	let lastKey
 	let lastKeyValue
 	let res

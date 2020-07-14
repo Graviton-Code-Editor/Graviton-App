@@ -36,22 +36,16 @@ app.on('ready', function () {
 		icon: getAppIcon(),
 		scrollBounce: true,
 	})
-	if (!isDev) main.removeMenu()
 	mainWindowState.manage(main)
 	if (isDev) {
-		main.loadURL(
-			url.format({
-				pathname: path.join(__dirname, 'dist_parcel', 'index.html'),
-				protocol: 'file:',
-				slashes: true,
-			})
-		)
-		main.webContents.openDevTools()
+		main.loadURL('http://localhost:9000')
 		main.argv = process.argv.splice(4)
+		main.webContents.openDevTools()
 	} else {
+		main.removeMenu()
 		main.loadURL(
 			url.format({
-				pathname: path.join(__dirname, 'dist_parcel', 'index.html'),
+				pathname: path.join(__dirname, 'dist_ui', 'index.html'),
 				protocol: 'file:',
 				slashes: true,
 			})

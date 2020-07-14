@@ -1,6 +1,6 @@
 import { element, style, render } from '@mkenzo_8/puffin'
 import StatusBarItemBody from '../components/status.bar/status.bar.item'
-import RunningConfig from '../utils/running.config'
+import RunningConfig from 'RunningConfig'
 
 function StatusBarItem({ label, component, action, contextAction, position, important = false, hint = '' }) {
 	let elementNode

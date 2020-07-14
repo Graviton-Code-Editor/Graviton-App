@@ -1,0 +1,93 @@
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+
+module.exports = {
+	mode: 'production',
+	entry: {
+		index: './src/javascript/main.ts',
+	},
+	plugins: [
+		new HtmlWebpackPlugin({
+			title: 'Graviton',
+			filename: path.resolve(__dirname, 'dist_ui', 'index.html'),
+			templateContent: `
+				<html>
+					<meta charset="UTF-8" />
+					<body>
+						<div id="App"></div>
+					</body>
+				</html>
+			`,
+		}),
+		new CopyPlugin({
+			patterns: [
+				{ from: path.resolve(__dirname, 'assets'), to: path.resolve(__dirname, 'dist_ui') },
+				{ from: path.resolve(__dirname, 'iconpacks'), to: path.resolve(__dirname, 'dist_ui') },
+			],
+		}),
+	],
+	node: {
+		__dirname: true,
+	},
+	module: {
+		rules: [
+			{
+				test: /\.s[ac]ss$/i,
+				use: [
+					// Creates `style` nodes from JS strings
+					'style-loader',
+					// Translates CSS into CommonJS
+					'css-loader',
+					// Compiles Sass to CSS
+					'sass-loader',
+				],
+			},
+			{
+				test: /\.css$/i,
+				use: ['style-loader', 'css-loader'],
+			},
+			{
+				test: /\.(png|jpe?g|svg)$/i,
+				use: [
+					'file-loader',
+					{
+						loader: 'image-webpack-loader',
+						options: {
+							bypassOnDebug: true, // webpack@1.x
+							disable: true, // webpack@2.x and newer
+						},
+					},
+				],
+			},
+			{
+				test: /\.tsx?$/,
+				loader: 'ts-loader',
+			},
+		],
+	},
+	resolve: {
+		extensions: ['.js', '.ts'],
+		alias: {
+			ThemeProvider: path.resolve(__dirname, './src/javascript/utils/themeprovider.ts'),
+			StaticConfig: path.resolve(__dirname, './src/javascript/utils/static.config.ts'),
+			RunningConfig: path.resolve(__dirname, './src/javascript/utils/running.config.ts'),
+			PluginsRegistry: path.resolve(__dirname, './src/javascript/utils/plugins.registry.ts'),
+			LanguageConfig: path.resolve(__dirname, './src/javascript/utils/lang.config.ts'),
+			AppPlatform: path.resolve(__dirname, './src/javascript/utils/platform.ts'),
+			Constants: path.resolve(__dirname, './src/javascript/defaults/constants.ts'),
+		},
+	},
+	target: 'electron-renderer',
+	output: {
+		filename: 'main.js',
+		path: path.resolve(__dirname, 'dist_ui'),
+		libraryTarget: 'umd',
+		library: 'graviton',
+	},
+	devServer: {
+		contentBase: path.join(__dirname, 'dist_ui'),
+		compress: true,
+		port: 9000,
+	},
+}

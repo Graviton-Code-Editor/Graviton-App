@@ -1,8 +1,8 @@
 import { element, style } from '@mkenzo_8/puffin'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
-import getPluginById from '../api/get.plugin'
-import getLocalPluginById from '../utils/get.local.plugin'
+import getPluginById from '../../defaults/store/api/get.plugin'
+import getLocalPluginById from '../../defaults/store/utils/get.local.plugin'
 import pluginWindow from './window'
 
 const CardStyle = style`

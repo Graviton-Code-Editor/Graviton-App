@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"sourceMap": true
+	},
+	"include": ["src/**/*"],
+	"target": "es6",
+	"module": "commonjs",
+	"noImplicitAny": false,
+	"compilerOptions": {
+		"moduleResolution": "node"
+	}
+}

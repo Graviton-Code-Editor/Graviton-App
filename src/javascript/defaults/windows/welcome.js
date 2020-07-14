@@ -1,7 +1,6 @@
 import { element, render, style } from '@mkenzo_8/puffin'
-import { getWorkspaceConfig } from '../../utils/filesystem'
+import { getWorkspaceConfig, openFolder } from '../../utils/filesystem.ts'
 import { Button } from '@mkenzo_8/puffin-drac'
-import { openFolder } from '../../utils/filesystem'
 import { LanguageState } from 'LanguageConfig'
 import { Card, Titles } from '@mkenzo_8/puffin-drac'
 import SideMenu from '../../components/window/side.menu'
@@ -104,7 +103,7 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 					label: 'Rename',
 					action: () => {
 						RunningConfig.emit('renameWorkspaceDialog', {
-							path: this.getAttribute('directory'),
+							workspacePath: this.getAttribute('directory'),
 							name: this.children[0].textContent,
 							onFinished: newName => {
 								this.children[0].textContent = newName
@@ -116,7 +115,7 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 					label: 'Remove from here',
 					action: () => {
 						RunningConfig.emit('removeWorkspaceFromLog', {
-							path: this.getAttribute('directory'),
+							workspacePath: this.getAttribute('directory'),
 						})
 						this.remove()
 					},
@@ -128,7 +127,7 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 	}
 	function openWorkspace() {
 		RunningConfig.emit('setWorkspace', {
-			path: this.getAttribute('directory'),
+			workspacePath: this.getAttribute('directory'),
 		})
 		WelcomeWindow.close()
 	}

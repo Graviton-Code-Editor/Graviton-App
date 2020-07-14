@@ -2,7 +2,7 @@ import { element, style, render, lang } from '@mkenzo_8/puffin'
 import NotificationBody from '../components/notification'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'
-import RunningConfig from '../utils/running.config'
+import RunningConfig from 'RunningConfig'
 import { LanguageState } from '../utils/lang.config'
 
 const NOTIFICATION_LIVE_TIME = 6000 //Notification will fade out in 6 seconds after appear

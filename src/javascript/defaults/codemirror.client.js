@@ -8,8 +8,6 @@ import 'lsp-codemirror/lib/codemirror-lsp.css'
 
 import { LspWsConnection, CodeMirrorAdapter } from 'lsp-codemirror'
 
-import '../../../node_modules/codemirror/mode/**/*.js'
-
 import 'codemirror/addon/search/search'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/addon/edit/matchbrackets'
@@ -87,10 +85,6 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'python',
 					}
-				case 'java':
-					return {
-						name: 'text/x-java',
-					}
 				case 'svelte':
 				case 'vue':
 					return {
@@ -109,7 +103,7 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'text/x-lua',
 					}
-				case 'ymlf':
+				case 'yml':
 				case 'yaml':
 					return {
 						name: 'yaml',

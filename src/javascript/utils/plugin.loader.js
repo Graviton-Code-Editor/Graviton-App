@@ -24,7 +24,10 @@ const path = window.require('path')
 const fs = window.require('fs-extra')
 const isDev = window.require('electron-is-dev')
 
-const getPlugin = pluginPath => require(pluginPath)
+const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', '..', 'resources', 'pluginsDist')
+const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
+
+const getPlugin = pluginPath => window.require(pluginPath)
 
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
@@ -103,10 +106,8 @@ const registerPluginsIn = where => {
 }
 
 RunningConfig.on('appLoaded', async function () {
-	const pluginsPath = path.join(StaticConfig.data.appConfigPath, 'plugins')
-	await registerPluginsIn(pluginsPath)
-	const pluginsDist = isDev ? path.resolve(__dirname, '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', 'pluginsDist')
-	await registerPluginsIn(pluginsDist)
+	await registerPluginsIn(pluginsIternalDir)
+	await registerPluginsIn(pluginsExternalDir)
 	loadAllPlugins()
 	RunningConfig.emit('allPluginsLoaded')
 })

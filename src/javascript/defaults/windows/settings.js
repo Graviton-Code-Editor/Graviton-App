@@ -6,11 +6,11 @@ import StaticConfig from 'StaticConfig'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
 import PluginsRegistry from 'PluginsRegistry'
-import Languages from '../../../../languages/*.json'
+import Languages from '../../collections/languages.js'
 import Switch from '../../components/switch'
 import configEditor from '../tabs/config.editor.js'
-import ThemeCard from '../settings/components/theme.card'
-import IconpackCard from '../settings/components/iconpack.card'
+import ThemeCard from '../../components/settings/theme.card'
+import IconpackCard from '../../components/settings/iconpack.card'
 
 function Settings() {
 	const pluginsList = PluginsRegistry.registry.data.list
