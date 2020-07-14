@@ -105,15 +105,13 @@ function getZip(url, pluginId, dist) {
 			url,
 			responseType: 'stream',
 		}).then(async response => {
-			console.log(response, path.join(dist, `${pluginId}.zip`))
-			response.data.pipe(fs.createWriteStream(path.join(dist, `${pluginId}.zip`))).on('close', (a, b) => {
+			const zipPath = path.join(dist, `${pluginId}.zip`)
+			response.data.pipe(fs.createWriteStream(zipPath)).on('close', (a, b) => {
 				//Finished download the plugins's zip
-				console.log(a, b, dist)
 				createPluginFolder(pluginId, dist)
-				extractZip(path.join(dist, `${pluginId}.zip`), pluginId, dist)
-					.then((a, b) => {
+				extractZip(zipPath, pluginId, dist)
+					.then(() => {
 						//Finished unzipping the plugin
-						console.log(a, b)
 						resolve()
 					})
 					.catch(err => console.log(err))
@@ -133,7 +131,6 @@ function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
 	return new Promise((resolve, reject) => {
 		const zip = new AdmZip(zipPath)
-		console.log(zipPath, pluginDirectory)
 		zip.extractAllTo(pluginDirectory, true)
 		resolve()
 	})

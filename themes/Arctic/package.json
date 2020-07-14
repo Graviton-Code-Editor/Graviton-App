@@ -1,6 +1,7 @@
 {
 	"name": "Arctic",
 	"id": "arctic-theme",
+	"description": "Default light theme for Graviton.",
 	"version": "1.0.0",
 	"author": "Marc Espín Sanz",
 	"textTheme": "arctic",
@@ -168,8 +169,8 @@
 			}
 		},
 		"radio": {
-			"Background": {
-				"Hovering": "#EFEFEF"
+			"Hovering": {
+				"Background": "#EFEFEF"
 			},
 			"Circle": {
 				"Background": "white",

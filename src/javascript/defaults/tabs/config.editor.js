@@ -13,7 +13,6 @@ function updateStaticConfigByKey(client, instance) {
 function updateKey(client, instance, state, key) {
 	if (!StaticConfig.data.miscEnableLiveUpdateInManualConfig) return
 	const newConfig = JSON.parse(client.do('getValue', instance))
-	console.log(newConfig[key], state.data[key])
 	if (newConfig[key] != state.data[key] && key !== 'appCache') {
 		const initialCursor = client.do('getCursorPosition', { instance })
 		newConfig[key] = state.data[key]
@@ -64,7 +63,6 @@ function configEditor() {
 	client.do('doIndent', { instance }) //Force an initial indentation
 	client.do('doFocus', { instance }) //Force an initial indentation
 	tabState.emit('savedMe') //Save the tab
-
 	tabElement.state.on('savedMe', () => {
 		updateStaticConfigByKey(client, instance)
 	})

@@ -1,6 +1,7 @@
 {
 	"name": "Night",
 	"id": "night-theme",
+	"description": "Default dark theme for Graviton.",
 	"version": "1.0.0",
 	"author": "Marc Espín Sanz",
 	"textTheme": "night",
