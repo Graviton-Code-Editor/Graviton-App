@@ -28,7 +28,7 @@ function checkIfProjectIsGit(path) {
 function getStatus(path) {
 	const simpleInstance = simpleGit(path)
 	return new Promise(resolve => {
-		simpleInstance.status(() => {
+		simpleInstance.status((err, res) => {
 			resolve(res)
 		})
 	})
