@@ -14,6 +14,8 @@
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 [![Discord Server](https://discordapp.com/api/guilds/536130219057086514/widget.png)](https://discord.gg/gg6CTYA)
 
+Graviton is a open source, cross-platform, minimalist-looking code editor.
+
 ![example screenshot](example.png)
 
 **NOTE:**

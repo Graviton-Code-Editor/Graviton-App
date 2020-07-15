@@ -1,7 +1,7 @@
 import path from 'path'
-const fs = window.require('fs-extra')
-const electronStore = window.require('electron-store')
-const getAppDataPath = window.require('appdata-path')
+import fs from 'fs-extra'
+import electronStore from 'electron-store'
+import getAppDataPath from 'appdata-path'
 
 const DEFAULT_STATIC_CONFIGURATION = {
 	config: {

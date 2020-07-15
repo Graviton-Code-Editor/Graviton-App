@@ -8,3 +8,4 @@ plugins/**/node_modules
 dist/**/node_modules
 pluginsDist
 dist_ui
+npm-debug.log

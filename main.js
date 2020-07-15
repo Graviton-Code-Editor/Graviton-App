@@ -48,7 +48,7 @@ app.on('ready', function () {
 				pathname: path.join(__dirname, 'dist_ui', 'index.html'),
 				protocol: 'file:',
 				slashes: true,
-			})
+			}),
 		)
 		main.argv = process.argv.splice(1)
 	}

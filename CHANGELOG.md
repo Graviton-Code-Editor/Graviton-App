@@ -2,51 +2,69 @@
 
 This file contains "important" commits, small ones will probably not be added.
 
+#### 200714 - 1 [2.0.95]
+
+- Started using webpack
+- Started using TypeScript
+
 #### 200513 - 1 [2.0.74]
+
 - Improved Night theme
 - New: added a git branch indicator in the status bar
 - Improved: Removed unnecessary dependency
 
 #### 200509 - 1 [2.0.71]
+
 - Change: Arctic and Night theme are reserved plugins, so you cannot unninstall them
 
 #### 200508 - 1 [2.0.70]
+
 - Fixed input dialog
 - Improved: now using fast-safe-stringify instead of JSON.stringify, because it doesn't work well sometimes
 - And made a massive refactoring
 
 #### 200502 - 1 [2.0.68]
+
 - Improved: Store improvements
 
 #### 200430 - 2 [2.0.64]
+
 - Improved: Parcel now builds using electron target
 
 #### 200430 - 1 [2.0.63]
+
 - New: integrated the plugins store
 
 #### 200327 - 1 [2.0.61]
+
 - New: you can now change the font size shortcuts
 
 #### 200325 - 3 [2.0.59]
+
 - Fixed: codemirror dialog text had an automatic line height
 - General bug and fixes
 
 #### 200325 - 2 [2.0.58]
+
 - Improved: created a build script which builds a build.json with build information ( just now only the build's date )
 
 #### 200325 - 1 [2.0.58]
+
 - New: You can now create submenus
 - Fixed: when closing a panel the tabs were not executing it's destroy event
 
 #### 200324 - 2 [2.0.56]
+
 - Fixed: test wasn't working properly with more than one graviton instance opened
 - Fixed: Centered the images viewer
 
 #### 200323 - 2 [2.0.54]
+
 - Improved: better themes
 - New: you can now customize the shortcuts via the manual configurator
 
 #### 200323 - 1 [2.0.53]
+
 - New: added a configuration keyword to enable line wrapping, editorWrapLines
 - Fixed: better tabs behavior when closing
 - Improved: better editors behavior
@@ -54,6 +72,7 @@ This file contains "important" commits, small ones will probably not be added.
 - New: added mdx as markdown format
 
 #### 200322 - 1 [2.0.52]
+
 - Improved: better tabs behavior
 - Improved: while changing the font-size it will scroll to the cursor
 - Fixed: you couldn't change the language or theme from the command prompt
@@ -61,71 +80,87 @@ This file contains "important" commits, small ones will probably not be added.
 - New: live markdown rendering by default
 
 #### 200321 - 1 [2.0.51]
+
 - New: Added a mainDev keyword (optional) to use dev version of plugins when running graviton on dev version
-- Improved: behavior of items in the explorer panel 
+- Improved: behavior of items in the explorer panel
 - New: Added JSX file icon
 
 #### 200319 - 1 [2.0.50]
+
 - New: event watchers no longer used will be now cancelled
 - New: appZoom also updates on the manual configuration editor
 - Improved: better tab behavior
 
 #### 200318 - 2 [2.0.49]
+
 - Improved: tabs bar and menu bar has now an small scroll bar
 - New: Every project container now has an small git-changed files counter
 - Fixed: IMP key won't trigger autocomplete
 - Improved: formatted with tabs a lot of files for a better reading
 
 #### 200318 - 1 [2.0.49]
+
 - Fixed: Zoom wasn't applied at startup
 - Improved: You can now open a WSL file system from graviton
 
 #### 200317 - 2 [2.0.48]
+
 - Improved: Forced to use double back slash on Windows so libraries such as chokidar work on production
 
 #### 200317 - 1 [2.0.47]
+
 - New: you can now toggle the editor's autocomplete from settings
 - Improved: Faster selection in the editor, a lot faster
 
 #### 200315 - 2 [2.0.45]
+
 - New: Added a button to edit the app's configuration directly right from a file
 
 #### 200315 - 1 [2.0.44]
+
 - Fixed: bug when closing a tab in a not focused panel
 - New: Press Ctrl+Tab to fast switch between tabs
 - Fixed: Couldn't open a command prompt with showInput with false
 
 #### 200313 - 3 [2.0.42]
+
 - Improved: Arctic theme now has a colorized status bar
 - Fixed: there were some global styles in the title bar button component
 - Unable to close dropmenus and context menus when clicking a codemirror instance
 - Fixed: unable to open dev tools from the 'Window' menu
 
 #### 200313 - 2 [2.0.42]
-- Fixed: notification constructor was always expecting a buttons object 
+
+- Fixed: notification constructor was always expecting a buttons object
 - New: Theme radios are now cards in Settings > Themes
 
 #### 200313 - 1 [2.0.42]
+
 - New: Added file associations for HTML, CSS and JS so you can open them directly into Graviton
 - New: Added the open file dialog on menu "File"
 
 #### 200312 - 1 [2.0.41]
+
 - New: Added a switch to toggle File Watcher
 - New: Switch component
 
 #### 200311 - 1 [2.0.39]
+
 - New: added a key to StaticConfig so you can disable the codemirror autocomplete
 - New: file content changed notification
 
 #### 200310 - 2 [2.0.38]
+
 - Improved: better files watcher code
 - Added a plugins section in settings (WIP)
 
 #### 200310 - 2 [2.0.37]
+
 - Add: Fixed a bug when dragging tabs between panels
 - Add: Integrated a filesystem watcher, it currently adds and remove folders and files (WIP)
 
 #### 200308 - 1 [2.0.36]
+
 - Fixed: tab size was smaller when it was unsaved
 - Improved: night theme
 - Fixed: was acting weirdly when closing tabs
@@ -135,100 +170,123 @@ This file contains "important" commits, small ones will probably not be added.
 - Fixed: improved git integration
 
 #### 200307 - 3 [2.0.34]
+
 - New: autocompletion for JavaScript, CSS, SQL and XML-like languages
 
 #### 200307 - 2 [2.0.33]
+
 - Improved: using CSS3 variables for theming
 
 #### 200307 - 1 [2.0.33]
+
 - Added open folder dialog from the "File" Menu
 - Git status updates whenever you change,remove, add folders and files
 
 #### 200305 - 1 [2.0.32]
+
 - Fixed: error when pressing enter with any option selected in the prompt menu
 - New: Ctrl+T shortcut to tclose the current tab
 - Fixed: some bugs when closing tabs
 - Improved: readme
 
 #### 200303 - 1 [2.0.31]
+
 - New: you can now reorder tabs or even drag them to different panels
 
 #### 200301 - 1 [2.0.30]
+
 - New: Image viewer (svg, png and jpg for now)
 
 #### 200227 - 1 [2.0.25]
+
 - New: languages switching right from the command prompt
 - Fixed: there were some issues when switching between languages
 - New: windows opening animation
 - Improve: design of side menu labels, and command prompt input
 
 #### 200227 - 1 [2.0.25]
+
 - New: Git support, see modified files right from the explorer
 
 #### 200226 - 1 [2.0.24]
+
 - New: Notification construcotr
 
 #### 200225 - 1 [2.0.23]
+
 - New: Added matchtags, matchbrackets, closetags, closebrackets codemirror addons
 - Improved: editor themes
 - Fixed: bug when opening external folders with a workspace already opened
 
 #### 200224 - 1 [2.0.22]
+
 - Improved: increase editor line height for better readbility
 - New: you can now rename your workspaces
 - Improved: rewritten all workspaces code ( more stable, but still WIP)
 
 #### 200223 - 2 [2.0.21]
+
 - Improved: settings searcher
 - New: created a InputDialog constructor
 - New: workspaces
 
 #### 200223 - 1 [2.0.20]
+
 - Fixed: useless theme refreshing at startup
 - New: you can now add new options to the global command prompt
 
 #### 200222 - 1 [2.0.19]
+
 - New: Added a command prompt (WIP)
 
 #### 200222 - 1 [2.0.18]
+
 - New: Search box in settings
 - Improved: code refactoring
 - New: context menu for panels, so you can close them
 
 #### 200221 - 1 [2.0.17]
+
 - Fixed: opening projects from welcome page wasn't automatically closing the window
 - Improved: Dialogs with inputs styling
 
 #### 200220 - 1 [2.0.16]
+
 - Fixed: tab switching wasn't working properly
 - New: Ctrl+N creates a new panel and Ctrl+L closes the focused panel(only if all tabs are saved)
 - Fixed: Welcome wasn't updating it's text when switcing languages
 
 #### 200219 - 2 [2.0.15]
+
 - Improved: opened folder icon in explorer panel
 
 #### 200219 - 1 [2.0.15]
+
 - Improved: refactored some code
 - New: Arrow indicator left to folders in the explorer panel
 - Fixed: Opening a new folder will add it to top of recent projects
 
 #### 200218 - 2 [2.0.14]
+
 - New: tabSaved event on RunningConfig, emmited when any tab is saved
 - New: New property in RunningConfig state for current opened folders
 - New: enabled active line addon for codemirror
 - New: direct x and y positions for ContextMenu constructor instead of passing a DOM event
 
 #### 200218 - 1 [2.0.14]
+
 - Improved: code refactoring
 - Fixed: you could open the same file more than once
 
 #### 200217 - 2 [2.0.13]
+
 - New: file icon for unknown files
 - New: Cursor position label on status bar
 - New: status bar (bottom bar)
 - New: You can now change the editor font size using Ctrl+Scrolling
 
 #### 200217 - 1 [2.0.12]
+
 - Fixed: parcel was building to the wrong directory
 - Fixed: when creating a folder on an empty folder from the explorer panel it wasn't showing at first, you had to close and open
 - New: opened folder is also an item in the explorer panel
@@ -237,16 +295,19 @@ This file contains "important" commits, small ones will probably not be added.
 - New: Remove directory and file option for context menu in explorer panel
 - New: New file in context menu for directories
 - New: ESC key closes dialogs
-    
+
 #### 200216 - 2 [2.0.11]
+
 - Improved: Better land addon support
 - Improved: Dark theme support
 - Improved: SideMenu component
 
 #### 200216 - 1 [2.0.11]
+
 - New: puffin lang addon implementation (WIP)
 
 #### 200215 - 1 [2.0.10]
+
 - Fixed: wrong alignment when opening directories in the explorer panel
 - Fixed: MacOS had native titlebar
 - New: you can now change the editor font size
@@ -254,22 +315,27 @@ This file contains "important" commits, small ones will probably not be added.
 - Improved: Night theme
 
 #### 200214 - 1 [2.0.09]
+
 - New: you can now minimize, toggle mazimize or close the window
 - New: there is now a default created directory folder for extensions(including themes)
 
 #### 200213 - 1 [2.0.08]
+
 - Improved: Windows close button
 - Added: current theme also changes text highlighting theme
 - Improved: better plugin loader code
 
 #### 200209 - 2 [2.0.07]
+
 - Added: native MacOS menu bar
 
 #### 200209 - 1 [2.0.06]
+
 - Imrpoved: You can now save files
 - Added: global Ctrl+S keyshortcut to save the focused file
 
 #### 200208 - 1 [2.0.05]
+
 - Improved: Folder(closed & opened) icons
 - Added: JavaScript file icon
 - Added: ESC keybind to close current window or dialog
@@ -277,30 +343,35 @@ This file contains "important" commits, small ones will probably not be added.
 - Added: right click a folder in the explorer to create a folder inside it
 
 #### 200207 - 1 [2.0.04]
+
 - Improved: MacOS custom title bar (WIP)
 - Fixed: You could open as many times the same or even a different project in the explorer
 - Improved: Drac components support (Better Dark theme)
 - Changed: Version showed in About dialog is taken from the package.json when building
 
 #### 200202 - 1 [2.0.01]
-* Better looking tabs
-* Added About menu with About dialog
-* Added dialog constructor
-* Added custom height and width for Window constructor
-* Added a Side menu puffin component (used now in Welcome and Settings)
+
+- Better looking tabs
+- Added About menu with About dialog
+- Added dialog constructor
+- Added custom height and width for Window constructor
+- Added a Side menu puffin component (used now in Welcome and Settings)
 
 #### 200201 - 1 [2.0.01]
-* General improvements
-* Started working on a Night theme variant
-* A cross is showed on hovering a tab, you can click it to close the tab
+
+- General improvements
+- Started working on a Night theme variant
+- A cross is showed on hovering a tab, you can click it to close the tab
 
 #### 200131 - 1 [2.0.01]
-* Other improvements
-* Created Tab constructor                   
-* Better EditorClient API
-* All Codemirror modes are loaded by default
+
+- Other improvements
+- Created Tab constructor
+- Better EditorClient API
+- All Codemirror modes are loaded by default
 
 #### 200130 - 1 [2.0.0]
+
 - Added Codemirror as dependency
 - Added 2 old themes and 1 codemirror reset
 - Improved some file names
@@ -308,50 +379,60 @@ This file contains "important" commits, small ones will probably not be added.
 - Started working on tabs (WIP)
 
 #### 200129 - 1 [2.0.0]
+
 - First commit with new source
 
 #### 200119 - 1 [1.2.0]
+
 - Fixed some bugs when closing ,loading and opening screens
 - Couldn't boot in MacOS cause of a shortcuts bug
 - Added a setTheme method to the editorClient API
 
 #### 200110 - 1 [1.2.0]
+
 - Updated: PuffinJS to v0.1.27
 - Fixed: context menus ( right click ) background wasn't been well applied
 
 #### 200105 - 1 [1.2.0]
+
 - Created a "Switch tab" commander, binded in 'Ctrl + Tab'
 - Fully adapted the CSS variables fallback system
 
 #### 200104 - 1 [1.2.0]
+
 - Better SASS management
 - Some refactorization
 - Renamed some CSS variables (compatibility for old variables is in on work)
 - Introduced unfocusedText CSS property, a gray color (used for tabs in not-focused screens)
 
 #### 200101 - 1 [1.2.0]
+
 - Some refactorization
 - Added blur event to Codemirror client
 - Fixed: after language is changed some parts of the app weren't updating properly
 
 #### 191231 - 1 [1.2.0]
+
 - Fixed: plugins with javascript and CSS code were identified as themes
-- Better SASS source structure organization 
+- Better SASS source structure organization
 - Command "go to line" now highlights the line
 - Better integration for external editors
 - Fixed: dialogs buttons weren't working properly
 
 #### 191230 - 1 [1.2.0]
-- Fixed: shortcuts weren't created on start 
+
+- Fixed: shortcuts weren't created on start
 - Allow to use a different editor instead of Codemirror
 
 #### 191229 - 1 [1.2.0]
+
 - Using PuffinJS to render the dialogs
 - Added "New project" and "Open About" commands to Command Launcher
 - Keybinds cards are now reactive
 - Added "Cool plugins" section on readme
 
 #### 191228 - 2 [1.2.0]
+
 - Splitted some Sass code
 - Renamed some strings to match new "Hide menus" keybind
 - Renamed word "Remove" to "Send to trash" since it's now sent to trash
@@ -359,31 +440,38 @@ This file contains "important" commits, small ones will probably not be added.
 - Included sass compling on Graviton building
 
 #### 191228 - 1 [1.2.0]
+
 - Removed files and directories now will be moved to trash intead of direct deletion
 - Better radio design
 - Better SASS integration
 
 #### 191227 - 1 [1.2.0]
+
 - New: now using SASS (SCSS)
 - Command Launcher now supports TAB as Enter key
 - Added a "Go to line" command for files
 
 #### 191226 - 2 [1.2.0]
+
 - New ESC keybinding to close all opened windows, dialogs etc
 - Started working on a command launcher
 - Fixed: using setTheme() method cause bugs on the themes list on Settings > Customization
 
 #### 191226 - 1 [1.2.0]
+
 - Added key bindings configuration on Settings > Editor
 
 #### 191224 - 2 [1.2.0]
+
 - Fixed: openFile method wasn't well imported
 - Fixed: screenshoots of not-installed plugins weren't showed on the market
 
 #### 191224 - 1 [1.2.0]
+
 - graviton.getPlugin() now returns an isInstalled methods for non-market plugins
 
 #### 191215 - 1 [1.2.0]
+
 - Removed "New Project" old window
 - Fixed Codemirror dialog input's font size, it wasn't scaling properly
 - Updated PuffinJS to v1.0.1 (dependency)
@@ -391,36 +479,44 @@ This file contains "important" commits, small ones will probably not be added.
 - Added a suggestions page on Setup
 
 #### 191214 - 1 [1.2.0]
+
 - Small code updates
 - Theme cards now show all 3 accent colors
 - Updated to Puffin v0.1.0
 
 #### 191212 - 1 [1.2.0]
+
 - Fixed, errors on Markets werent displayed correctly
 - Now, cache's date is also showed on Market > Settings
 
 #### 191209 - 1 [1.2.0]
+
 - Improved Market
 
 #### 191207 - 1 [1.2.0]
+
 - Better source management
 - Dropmenu's buttons now also shows it's hint right to the text
 
 #### 191206 - 1 [1.2.0]
+
 - Added more events to the centralized file
 - Fixed: update icon on Plugins cards on Market wasn't showing
 - Fixed: installed version on Plugins window on market was wrong
 
 #### 191205 - 1 [1.2.0]
-- Fetch Market's data from the 1.2.0 branch 
+
+- Fetch Market's data from the 1.2.0 branch
 - Better messages when installing/unninstalling/updating extensions on market (english)
 
 #### 191203 - 1 [1.2.0]
+
 - Fixed a bug when switching between tabs after closing an screen
 - Fixed build script
 - Fixed switches: sometimes didn't work properly
 
 #### 191130 - 1 [1.2.0]
+
 - Integrated "traffic lights" buttons for MacOS
 - Better buttons across the UI
 - You can now pass a puffin component as content in Window constructor
@@ -429,84 +525,104 @@ This file contains "important" commits, small ones will probably not be added.
 - You can now build Windows on full screen
 
 #### 191129 - 1 [1.2.0]
+
 - Fixed, Market cards weren't rendering properly
 - Improved some code
 
 #### 191128 - 1 [1.2.0]
+
 - Fixed spanish string
 - Little improvements over the panel resizer
 
 #### 191126 - 1 [1.2.0]
+
 - Added a language load event
 - Fixed, dialogs didn't have opening animations
 
 #### 191124 - 1 [1.2.0]
+
 - Polished Settings page
 - Custom tabs couldn't be dragged
-- Fixed, an error was thrown when enabling or disabling the NPM panel while having a non-NodeJS project opened 
+- Fixed, an error was thrown when enabling or disabling the NPM panel while having a non-NodeJS project opened
 - Using puffin to render tabs
 - IDs for custom tabs is now optional
 - Danger buttons now have red border
 
 #### 191121 - 1 [1.2.0]
+
 - Polished Themes card
 - Better opening windows and dialogs animation
 
 #### 191114 - 1 [1.2.0]
+
 - Started using PuffinJS for UI components
 
 #### 191112 - 1 [1.2.0]
+
 - Explorer panels are now hidden by default
 - Added an inner shadow on loader bars
 
 #### 191106 - 1 [1.2.0]
+
 - Fixed: Sanitizing posible HTML code on plugins package.json's keywords
 
 #### 191031 - 1 [1.2.0]
+
 - Replaced requestJS for node-fetch
 - Only load required dependencies on start
 - Theme's custom highlighting will be loaded when it's applied
 
 #### 191028 - 1 [1.2.0]
+
 - Made some components on settings look better
 - Updated Node-Abi manually so node-pty can be rebuild
 
 #### 191027 - 1 [1.2.0]
+
 - Fixed: A notification for devs was throwed after finishing the setup process on production
 - Added: right-click a panel resizer and it will show up a contextual menu to hide or show a panel
 
 #### 191026 - 1 [1.2.0]
+
 - Changed: You can now multiselected more than 1 file to open
 - Changed: Native dialogs are now attached to the window, so they cannot duplicate
 - Fixed: couldn't open new folders or save file with different names
 
 #### 191023 - 1 [1.2.0]
+
 - Improved: better plugin process bar loader
 
 #### 191020 - 1 [1.2.0]
+
 - Added a NPM Scripts panel for NodeJS projects.
 - New Component, the panel, which allows you to create panels on the explorer panel
 
 #### 191018 - 1 [1.2.0]
+
 - Better regex for autocompletate
 
 #### 191016 - 1 [1.2.0]
+
 - Couldn't reload directories with spaces on it's path
 
 #### 191014 - 1 [1.2.0]
+
 - Moved the close button of plugins page to the right
 - Added a sad face on welcome page if there isn't any project on recents.
 
 #### 191013 - 3 [1.2.0]
+
 - Improved: recent projects list on welcome page now has a minium height.
 - Fixed: Couldn't click the first button on any top-bar menu.
 
 #### 191013 - 2 [1.2.0]
+
 - Settings redesign
 - Fixed: a blank page was showing when clicking the title on a Graviton-Navbar component
 - Restructured the About dialog to better compatibility with FluentMod
 
 #### 191013 - 1 [1.2.0]
+
 - Prevent from dragging plugin's logos from the market
 
 #### 191012 - 1 [1.2.0]
