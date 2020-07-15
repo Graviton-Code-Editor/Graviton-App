@@ -18,9 +18,6 @@ const styleWrapper = style`
 	}
 `
 
-function WindowBody() {
-	return element`
-	<div class="${styleWrapper}"/>`
-}
+const WindowBody = () => element`<div class="${styleWrapper}"/>`
 
 export default WindowBody

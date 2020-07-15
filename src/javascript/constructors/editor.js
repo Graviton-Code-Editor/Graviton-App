@@ -4,7 +4,7 @@ import PluginsRegistry from 'PluginsRegistry'
 import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.position'
 import Notification from './notification'
 import ContextMenu from './contextmenu'
-const path = window.require('path')
+import path from 'path'
 import { element } from '@mkenzo_8/puffin'
 import copy from 'copy-to-clipboard'
 

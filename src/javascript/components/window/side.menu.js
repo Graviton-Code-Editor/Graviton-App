@@ -24,7 +24,7 @@ function moveToSection(search, sections, buttons, pages) {
 		result.element.scrollIntoView(false)
 	}
 }
-function mounted() {
+function mounted(a) {
 	const target = this
 	const defaultPage = target.getAttribute('default')
 	const buttons = Object.keys(target.children[0].children)

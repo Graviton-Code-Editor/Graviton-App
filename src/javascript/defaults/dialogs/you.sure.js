@@ -3,6 +3,7 @@ import Dialog from '../../constructors/dialog'
 function areYouSureDialog() {
 	return new Promise((resolve, reject) => {
 		const DialogInstance = new Dialog({
+			id: 'are_you_sure',
 			title: 'Are you sure?',
 			content: 'Be careful.',
 			buttons: [

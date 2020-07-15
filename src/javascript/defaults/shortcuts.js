@@ -230,10 +230,11 @@ RunningConfig.on('command.increaseFontSize', ({ factor = 2 } = { factor: 2 }) =>
 RunningConfig.on('command.decreaseFontSize', ({ factor = 2 } = { factor: 2 }) => {
 	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) - factor
 })
-RunningConfig.on('command.closeCurrentWindow', ({ factor = 2 } = { factor: 2 }) => {
+RunningConfig.on('command.closeCurrentWindow', () => {
 	const windows = document.getElementById('windows').children
 	const selectedWindow = windows[windows.length - 1]
-	if (windows.length > 0 && selectedWindow.props.methods) selectedWindow.props.methods.closeWindow()
+	const { methods } = selectedWindow.props
+	if (windows.length > 0 && methods.closeWindow) methods.closeWindow()
 })
 const appShortCuts = new Shortcuts()
 appShortCuts.add([

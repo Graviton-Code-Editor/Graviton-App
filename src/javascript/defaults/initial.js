@@ -26,6 +26,9 @@ import Play from '../components/icons/play'
 import EnvClient from '../constructors/env.client'
 import packageJSON from '../../../package.json'
 import openDebugClient from './debug.window'
+import fs from 'fs-extra'
+import { openExternal as openLink } from 'electron'
+import { getCurrentWindow } from 'electron'
 import './environment.inspectors/npm'
 import './project.services/node'
 import './side.panels/files.explorer'
@@ -35,14 +38,7 @@ import './status.bar.items/tab.size'
 import './status.bar.items/git'
 import './status.bar.items/zoom'
 import './status.bar.items/debug'
-
 import '../collections/codemirror'
-
-import '../../../node_modules/codemirror/mode/javascript/javascript'
-
-const fs = window.require('fs-extra')
-const { openExternal: openLink } = window.require('electron').shell
-const { getCurrentWindow } = window.require('electron').remote
 
 function init() {
 	new Menu({
@@ -195,6 +191,7 @@ function init() {
 			},
 		],
 	})
+	console.log(Settings)
 	new Menu({
 		//TOOLS
 		button: 'menus.Tools.Tools',

@@ -19,15 +19,15 @@ import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
 import Explorer from '../constructors/explorer'
 import throwError from './throw.error'
+import path from 'path'
+import fs from 'fs-extra'
+import isDev from 'electron-is-dev'	
+import {
+	pluginsIternalDir,
+	pluginsExternalDir
+} from 'Constants'
 
-const path = window.require('path')
-const fs = window.require('fs-extra')
-const isDev = window.require('electron-is-dev')
-
-const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', '..', 'resources', 'pluginsDist')
-const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
-
-const getPlugin = pluginPath => window.require(pluginPath)
+const getPlugin = (pluginPath: string) => window.require(pluginPath)
 
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
@@ -91,8 +91,8 @@ const registerPluginsIn = where => {
 	return new Promise((resolve, reject) => {
 		fs.readdir(where).then(paths => {
 			paths.map(pluginName => {
-				const pluginPath = path.join(where, pluginName)
-				const pkgPluginPath = path.join(pluginPath, 'package.json')
+				const pluginPath: string = path.join(where, pluginName)
+				const pkgPluginPath: string = path.join(pluginPath, 'package.json')
 				if (fs.existsSync(pkgPluginPath)) {
 					const pluginPkg = getPlugin(pkgPluginPath)
 					if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified

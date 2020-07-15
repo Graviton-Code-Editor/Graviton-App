@@ -36,8 +36,9 @@
 	"scripts": {
 		"start": "run-p script:build watch:webpack watch:electron",
 		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
-		"build": "npm run script:build && webpack  && npm run build:electron",
+		"build": "npm run script:build && npm run build:webpack  && npm run build:electron",
 		"build:plugins": "gulp",
+		"build:webpack": "webpack",
 		"watch:webpack": "webpack-dev-server",
 		"test": "run-p watch:parcel test:spectron ",
 		"test:spectron": "mocha test --delay",
@@ -123,7 +124,8 @@
 		"typescript": "^3.9.6",
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12",
-		"webpack-dev-server": "^3.11.0"
+		"webpack-dev-server": "^3.11.0",
+		"webpack-messages": "^2.0.4"
 	},
 	"build": {
 		"appId": "graviton-editor",

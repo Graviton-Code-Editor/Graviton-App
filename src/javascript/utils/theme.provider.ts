@@ -2,7 +2,7 @@ import { state } from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
-import PuffinState from '../types/puffin.state.ts'
+import PuffinState from '../types/puffin.state'
 
 let currentTheme = StaticConfig.data.appTheme
 
@@ -34,8 +34,8 @@ const puffinThemingKeys = {
 const getFallBackProp = prop => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
 
 function applyTheme(state) {
+	const themeSchema = PluginsRegistry.registry.data.colorsSchemes.Night //Use Night theme as schema
 	ThemeProvider.data = PluginsRegistry.registry.data.colorsSchemes[state.data.appTheme]
-	const themeSchema = PluginsRegistry.registry.data.colorsSchemes.Night
 	ThemeProvider.triggerChange()
 	Object.keys(puffinThemingKeys).forEach(key => {
 		const keyValue = puffinThemingKeys[key]
@@ -57,7 +57,7 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-function getProperty(key, keys): string {
+function getProperty(key, keys): string{
 	let lastKey
 	let lastKeyValue
 	let res
@@ -86,7 +86,7 @@ function getProperty(key, keys): string {
 	return res
 }
 
-const setProperty = (key, keyValue, name = '') => {
+function setProperty(key, keyValue, name = ''): void{
 	if (typeof keyValue === 'object') {
 		Object.keys(keyValue).map(subKey => {
 			const subKeyValue = keyValue[subKey]

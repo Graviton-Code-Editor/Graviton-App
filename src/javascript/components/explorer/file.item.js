@@ -15,10 +15,9 @@ import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
 import copy from 'copy-to-clipboard'
-
-const fs = window.require('fs-extra')
-const trash = window.require('trash')
-const path = window.require('path')
+import fs from 'fs-extra'
+import trash from 'trash'
+import path from 'path'
 
 function getMyStatus(fileDir, gitChanges, projectDir) {
 	const filePath = normalizeDir(fileDir)

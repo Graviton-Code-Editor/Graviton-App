@@ -43,8 +43,7 @@ In case you just want to test it in dev mode, run:
 npm start
 ```
 
-If graviton throws some error on the developer tools's console or it just shows an empty dark screen, try refreshing the window ( Ctrl+R ), this happens because Parcel hasn't not bundled yet.
-This won't happen when building.
+If shows an empty dark screen just wait.
 
 ## 4 - Building the installer
 

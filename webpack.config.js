@@ -1,13 +1,21 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const WebpackMessages = require('webpack-messages')
 
 module.exports = {
 	mode: 'production',
+	optimization: {
+		minimize: true,
+	},
 	entry: {
 		index: './src/javascript/main.ts',
 	},
 	plugins: [
+		new WebpackMessages({
+			name: 'Graviton bundle',
+			logger: str => console.log(`--> ${str}`),
+		}),
 		new HtmlWebpackPlugin({
 			title: 'Graviton',
 			filename: path.resolve(__dirname, 'dist_ui', 'index.html'),
@@ -34,14 +42,7 @@ module.exports = {
 		rules: [
 			{
 				test: /\.s[ac]ss$/i,
-				use: [
-					// Creates `style` nodes from JS strings
-					'style-loader',
-					// Translates CSS into CommonJS
-					'css-loader',
-					// Compiles Sass to CSS
-					'sass-loader',
-				],
+				use: ['style-loader', 'css-loader', 'sass-loader'],
 			},
 			{
 				test: /\.css$/i,
@@ -54,8 +55,7 @@ module.exports = {
 					{
 						loader: 'image-webpack-loader',
 						options: {
-							bypassOnDebug: true, // webpack@1.x
-							disable: true, // webpack@2.x and newer
+							disable: true,
 						},
 					},
 				],
@@ -69,7 +69,7 @@ module.exports = {
 	resolve: {
 		extensions: ['.js', '.ts'],
 		alias: {
-			ThemeProvider: path.resolve(__dirname, './src/javascript/utils/themeprovider.ts'),
+			ThemeProvider: path.resolve(__dirname, './src/javascript/utils/theme.provider.ts'),
 			StaticConfig: path.resolve(__dirname, './src/javascript/utils/static.config.ts'),
 			RunningConfig: path.resolve(__dirname, './src/javascript/utils/running.config.ts'),
 			PluginsRegistry: path.resolve(__dirname, './src/javascript/utils/plugins.registry.ts'),
@@ -82,12 +82,11 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: path.resolve(__dirname, 'dist_ui'),
-		libraryTarget: 'umd',
-		library: 'graviton',
 	},
 	devServer: {
 		contentBase: path.join(__dirname, 'dist_ui'),
 		compress: true,
 		port: 9000,
+		stats: 'errors-only',
 	},
 }
