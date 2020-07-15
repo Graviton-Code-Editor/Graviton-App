@@ -62,6 +62,9 @@ class Dialog {
 			width,
 		})
 	}
+	public on(event: string, callback: () => void): void{
+		this.WindowInstance.on(event,callback)
+	}
 	public launch() {
 		this.WindowInstance.launch()
 	}

@@ -1,4 +1,4 @@
-import { EditorClient } from '../constructors/editorclient'
+import { EditorClient } from '../../constructors/editorclient'
 import { element, style, render } from '@mkenzo_8/puffin'
 
 const styleWrapper = style`
@@ -25,7 +25,7 @@ const ImageViewerClient = new EditorClient(
 	},
 	{
 		getValue: instance => '',
-		getLangFromExt(extension) {
+		getLangFromExt({ extension }) {
 			/*
 			Every case refers to a supported image format.
 			*/

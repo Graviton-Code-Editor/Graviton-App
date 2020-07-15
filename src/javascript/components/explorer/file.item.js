@@ -4,7 +4,7 @@ import ContextMenu from '../../constructors/contextmenu'
 import Tab from '../../constructors/tab'
 import Editor from '../../constructors/editor'
 import newDirectoryDialog from '../../defaults/dialogs/new.directory'
-import areYouSureDialog from '../../defaults/dialogs/you.sure'
+import WarningDialog from '../../utils/dialogs/warning'
 import InputDialog from '../../constructors/dialog.input'
 import StaticConfig from 'StaticConfig'
 import PluginsRegistry from 'PluginsRegistry'
@@ -16,7 +16,7 @@ import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
 import copy from 'copy-to-clipboard'
 import fs from 'fs-extra'
-import trash from 'trash'
+const trash = window.require('trash')
 import path from 'path'
 
 function getMyStatus(fileDir, gitChanges, projectDir) {
@@ -612,7 +612,7 @@ function renameDirectoryOrFile(element, { container, explorerState, isFolder }) 
 
 function removeDirectoryOrFile(element) {
 	const directoryPath = element.parentElement.getAttribute('fullpath')
-	areYouSureDialog()
+	new WarningDialog()
 		.then(() => {
 			trash([normalizeDir(directoryPath)])
 				.then(() => {

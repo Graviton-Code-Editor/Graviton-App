@@ -1,6 +1,6 @@
 import CodeMirror from 'codemirror'
 import emmet from '@emmetio/codemirror-plugin'
-import { EditorClient } from '../constructors/editorclient'
+import { EditorClient } from '../../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 
@@ -31,7 +31,7 @@ const CodemirrorClient = new EditorClient(
 	},
 	{
 		getValue: instance => instance.getValue(),
-		getLangFromExt(extension) {
+		getLangFromExt({ extension }) {
 			switch (extension) {
 				/*
 				Every case refers to a programming language's file format, 
@@ -198,7 +198,6 @@ const CodemirrorClient = new EditorClient(
 				autoCloseBrackets: true,
 				matchBrackets: true,
 				theme: theme,
-				indentWithTabs: true,
 				tabSize: StaticConfig.data.editorTabSize,
 				indentUnit: StaticConfig.data.editorTabSize,
 				undoDepth: 500,
@@ -412,7 +411,7 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const folderUrl = path.dirname(fileUri)
 	const lspConnection = new LspWsConnection({
 		serverUri: lspServer,
-		mode: language.fancy,
+		languageId: language.fancy,
 		rootUri: `file:///${folderUrl}`,
 		documentUri: `file:///${fileUri}`,
 		documentText: () => CodemirrorEditor.getValue(),
@@ -421,7 +420,7 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const lspAdapter = new CodeMirrorAdapter(
 		lspConnection,
 		{
-			quickSuggestionsDelay: 40,
+			quickSuggestionsDelay: 40
 		},
 		CodemirrorEditor,
 	)

@@ -4,7 +4,7 @@ import { state, element, style, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
 import UnSavedIcon from '../components/icons/file.not.saved'
-import areYouSureDialog from '../defaults/dialogs/you.sure'
+import WarningDialog from '../utils/dialogs/warning'
 import normalizeDir from '../utils/directory.normalizer'
 import getFormat from '../utils/format.parser'
 
@@ -17,7 +17,7 @@ function guessTabPosition(tab, tabsbar) {
 			if (tabsbar.children[tabChildren] == tab) {
 				return tabChildren
 			}
-		})
+		}),
 	)
 }
 
@@ -240,7 +240,7 @@ function Tab({ title, isEditor = false, directory, parentFolder, component, pane
 			} else {
 				if (!closeDialogOpened) {
 					closeDialogOpened = true
-					new areYouSureDialog()
+					new WarningDialog()
 						.then(() => {
 							focusATab(tabNode)
 							tabNode.remove()

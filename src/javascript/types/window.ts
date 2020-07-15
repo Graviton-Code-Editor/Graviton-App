@@ -8,7 +8,8 @@ interface WindowOptions {
 
 interface WindowInstance {
 	launch: () => void,
-	close:  () => void
+	close:  () => void,
+	on: (string, any ) => void
 }
 
 export  {

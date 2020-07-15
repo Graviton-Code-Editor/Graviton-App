@@ -1,7 +1,7 @@
 import { state } from '@mkenzo_8/puffin'
 import PuffinState from '../types/puffin.state.ts'
-import CodemirrorClient from '../defaults/codemirror.client'
-import ImageViewerClient from '../defaults/imageviewer.client'
+import CodemirrorClient from '../defaults/editor.clients/codemirror'
+import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 const isDev = window.require('electron-is-dev')
 
 const electronArguments = window.require('electron').remote.getCurrentWindow().argv || []

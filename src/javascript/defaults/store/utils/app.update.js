@@ -1,4 +1,4 @@
-import Endpoints from '../api/api.endpoints'
+import { APEndpoint } from 'Constants'
 import axios from 'axios'
 import packageJSON from '../../../../../package.json'
 import semver from 'semver'
@@ -8,7 +8,7 @@ function gravitonHasUpdate() {
 	return new Promise((resolve, reject) => {
 		axios({
 			method: 'get',
-			url: Endpoints.API,
+			url: APEndpoint,
 		})
 			.then(async function (response) {
 				const { betaVersion, stableVersion } = response.data.graviton

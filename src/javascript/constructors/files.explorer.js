@@ -6,11 +6,10 @@ import beautifyDir from '../utils/directory.beautifier'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
-
-const fs = window.require('fs-extra')
-const simpleGit = window.require('simple-git')
+import fs from 'fs-extra'
+import simpleGit from 'simple-git'
+import path from 'path'
 const chokidar = window.require('chokidar')
-const path = window.require('path')
 
 function checkIfProjectIsGit(path) {
 	const repoPath = normalizeDir(path)
@@ -28,8 +27,8 @@ function checkIfProjectIsGit(path) {
 
 function getStatus(path) {
 	const simpleInstance = simpleGit(path)
-	return new Promise((resolve, reject) => {
-		simpleInstance.status((err, res) => {
+	return new Promise(resolve => {
+		simpleInstance.status(() => {
 			resolve(res)
 		})
 	})
@@ -104,12 +103,12 @@ function getlastFolderPosition(container) {
 		Object.keys(items).find(index => {
 			const item = items[index]
 			return item.getAttribute('isFolder') == 'false' ? index : null
-		})
+		}),
 	)
 }
 
 async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer = true, gitChanges = null) {
-	if (level == 0) {
+	if (level === 0) {
 		parent.setAttribute('hasFiles', true)
 		let gitResult = await checkIfProjectIsGit(folderPath)
 		if (gitResult) {
@@ -237,20 +236,19 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 		}
 		if (replaceOldExplorer) parent.innerHTML = ''
 		render(explorerContainer, parent)
-	}
-	if (level != 0) {
+	} else {
 		fs.readdir(folderPath)
 			.then(paths => {
 				let dirs = paths
-					.map(dir => {
+					.map(itemPath => {
 						//Load folders
-						const itemDirectory = normalizeDir(path.join(folderPath, dir))
+						const itemDirectory = normalizeDir(path.join(folderPath, itemPath))
 						const container = parent
-						if (fs.lstatSync(path.join(folderPath, dir)).isDirectory())
+						if (fs.lstatSync(path.join(folderPath, itemPath)).isDirectory())
 							return getItemComputed({
 								projectPath: container.getAttribute('parentFolder'),
 								classSelector: getClassByDir(folderPath),
-								dirName: dir,
+								dirName: itemPath,
 								dirPath: itemDirectory,
 								level,
 								isFolder: true,
@@ -262,16 +260,16 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 				dirs = [
 					...dirs,
 					paths
-						.map(dir => {
+						.map(itemPath => {
 							//Load files
-							const itemDirectory = normalizeDir(path.join(folderPath, dir))
+							const itemDirectory = normalizeDir(path.join(folderPath, itemPath))
 							const container = parent
-							if (!fs.lstatSync(path.join(folderPath, dir)).isDirectory())
-								if (!dir.match('~'))
+							if (!fs.lstatSync(path.join(folderPath, itemPath)).isDirectory())
+								if (!itemPath.match('~'))
 									return getItemComputed({
 										projectPath: container.getAttribute('parentFolder'),
 										classSelector: getClassByDir(folderPath),
-										dirName: dir,
+										dirName: itemPath,
 										dirPath: itemDirectory,
 										level,
 										isFolder: false,
@@ -282,10 +280,10 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 						.filter(Boolean),
 				].flat()
 				const explorerComponent = element`
-				<div style="padding:0px 7px;">
-					${dirs}
-				</div>
-			`
+					<div style="padding:0px 7px;">
+						${dirs}
+					</div>
+				`
 				render(explorerComponent, parent)
 			})
 			.catch(err => {

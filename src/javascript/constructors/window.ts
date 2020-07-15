@@ -45,7 +45,7 @@ class Window{
 		</WindowContainer>
 		`
 	}
-	public on(event: string, callback: void){
+	public on(event: string, callback: () => void ): void{
 		this.WindowState.on(event,callback)
 	}
 	public launch(): void {

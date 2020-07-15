@@ -1,11 +1,11 @@
 import Dialog from '../../constructors/dialog'
 
-function areYouSureDialog() {
+function WarningDialog() {
 	return new Promise((resolve, reject) => {
 		const DialogInstance = new Dialog({
-			id: 'are_you_sure',
+			id: 'warning_dialog',
 			title: 'Are you sure?',
-			content: 'Be careful.',
+			content: 'Proceed with caution.',
 			buttons: [
 				{
 					label: 'misc.No',
@@ -24,4 +24,4 @@ function areYouSureDialog() {
 	})
 }
 
-export default areYouSureDialog
+export default WarningDialog

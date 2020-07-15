@@ -1,4 +1,4 @@
-import Endpoints from './api.endpoints.js'
+import { APIPluginsEndpoint } from 'Constants'
 import axios from 'axios'
 import throwError from '../utils/throw.error'
 import RunningConfig from 'RunningConfig'
@@ -25,7 +25,7 @@ function getPluginById(pluginId) {
 		} else {
 			axios({
 				method: 'get',
-				url: `${Endpoints.Search}/${pluginId}`,
+				url: `${APIPluginsEndpoint}/${pluginId}`,
 			})
 				.then(async function (response) {
 					resolve(response.data.plugin || {})

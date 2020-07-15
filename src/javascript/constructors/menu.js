@@ -3,13 +3,11 @@ import MenuComp from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState } from 'LanguageConfig'
 import StaticConfig from 'StaticConfig'
-
-const { remote } = window.require('electron')
+import { remote } from 'electron'
 const { Menu: NativeMenu } = remote
+const isWindows = process.platform === 'win32'
+
 let NativeMenuBar = new NativeMenu()
-
-const isWindows = window.require('process').platform === 'win32'
-
 const createdMenus = []
 
 StaticConfig.keyChanged('appLanguage', () => {
@@ -72,7 +70,9 @@ function getDropmenu(list) {
 
 const getDropmenuButton = (isSubmenu, button) => {
 	if (!isSubmenu) {
-		return element`<button :mouseover="${e => hideMenus(e.target)}" :click="${e => hideMenus(e.target)}" lang-string="${button}" string="{{${button}}}"/>`
+		return element`
+			<button :mouseover="${e => hideMenus(e.target)}" :click="${e => hideMenus(e.target)}" lang-string="${button}" string="{{${button}}}"/>
+		`
 	}
 	return element` `
 }
@@ -96,7 +96,6 @@ function getMenuComponent(button, list, leftMargin) {
 }
 
 function Menu({ button, list }, fromEvent = false) {
-	//This will ignore user's configured AppPlatform and will use the real one
 	if (isWindows && !fromEvent) {
 		// Render Graviton's menu bar only in Windows
 		const menuComponent = getMenuComponent(button, list)
@@ -106,17 +105,17 @@ function Menu({ button, list }, fromEvent = false) {
 		// Display native menu bar in MacOS and GNU/Linux distros
 		const nativeMenu = createNativeMenu(button, list)
 		appendToNativeBar(nativeMenu)
-		if (!fromEvent)
+		if (!fromEvent) {
 			createdMenus.push({
 				button,
 				list,
 			})
+		}
 	}
 }
 
 function createNativeMenu(button, list) {
 	const { MenuItem } = remote
-
 	return new MenuItem({
 		label: lang.getTranslation(button, LanguageState),
 		submenu: convertToElectronInterface(list),

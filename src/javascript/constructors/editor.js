@@ -10,20 +10,22 @@ import copy from 'copy-to-clipboard'
 
 function getEditorClient(language) {
 	let selectedEditor
-	selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
-		return StaticConfig.data.editorsClients.filter(({ extension, editor, regex }) => {
+	selectedEditor = RunningConfig.data.editorsRank.find(Client => {
+		return StaticConfig.data.editorsClients.find(({ extension, editor, regex }) => {
 			let extensionMatches
 			if (regex) {
 				extensionMatches = language.match(new RegExp(extension)) || []
 			}
 			return Client.name === editor && regex && extensionMatches[0]
-		})[0]
-	})[0]
+		})
+	})
 	if (!selectedEditor) {
-		selectedEditor = RunningConfig.data.editorsRank.filter(Client => {
-			const { unknown = false } = Client.do('getLangFromExt', language)
+		selectedEditor = RunningConfig.data.editorsRank.find(Client => {
+			const { unknown = false } = Client.do('getLangFromExt', {
+				extension: language,
+			})
 			if (!unknown) return Client
-		})[0]
+		})
 	}
 	return selectedEditor || RunningConfig.data.editorsRank[0]
 }
@@ -33,7 +35,7 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 	let editorValueSaved = value
 	const { instance } = Client.do('create', {
 		element: bodyElement,
-		language: Client.do('getLangFromExt', language),
+		language: Client.do('getLangFromExt', { extension: language }),
 		value,
 		theme,
 		directory,

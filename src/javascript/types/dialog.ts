@@ -1,6 +1,6 @@
 interface DialogButton {
 	label: string,
-	important: boolean,
+	important?: boolean,
 	action: object
 }
 
@@ -9,8 +9,8 @@ interface DialogOptions {
 	content?: string,
 	buttons: DialogButton[],
 	component?: any,
-	height: string,
-	width: string,
+	height?: string,
+	width?: string,
 	id?: string
 }
 

@@ -1,11 +1,11 @@
-import Endpoints from './api.endpoints.js'
+import { APIPluginsEndpoint } from 'Constants'
 import axios from 'axios'
 
 function getList() {
 	return new Promise((resolve, reject) => {
 		axios({
 			method: 'get',
-			url: Endpoints.List,
+			url: APIPluginsEndpoint,
 		})
 			.then(async function (response) {
 				resolve(response.data.plugins)
