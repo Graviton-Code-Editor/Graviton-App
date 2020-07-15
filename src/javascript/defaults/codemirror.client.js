@@ -168,6 +168,11 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'text/x-fsharp',
 					}
+				case 'slim':
+					return {
+						fancy: 'Slim',
+						name: 'application/x-slim',
+					}
 				default:
 					return {
 						name: extension,
@@ -310,7 +315,7 @@ const CodemirrorClient = new EditorClient(
 				{ line: 0, ch: 0 },
 				{
 					line: instance.lineCount(),
-				}
+				},
 			)
 			instance.execCommand('indentAuto')
 			instance.setCursor(cursorPos)
@@ -375,7 +380,7 @@ const CodemirrorClient = new EditorClient(
 				},
 				{
 					widget: element,
-				}
+				},
 			)
 			const clear = () => bookmark.clear()
 			return {
@@ -399,7 +404,7 @@ const CodemirrorClient = new EditorClient(
 			instance.refresh()
 			instance.scrollIntoView()
 		},
-	}
+	},
 )
 
 function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
@@ -418,7 +423,7 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 		{
 			quickSuggestionsDelay: 40,
 		},
-		CodemirrorEditor
+		CodemirrorEditor,
 	)
 
 	return {
