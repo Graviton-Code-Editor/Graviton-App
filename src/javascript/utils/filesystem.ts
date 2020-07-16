@@ -17,12 +17,7 @@ const { remote } = window.require('electron')
 
 import { WorkspaceFilename } from 'Constants'
 
-import { 
-	AddFolderInWorkspace, 
-	AddFolderInWorkspaceFromDialog,
-	SetWorkspace,
-	RemoveWorkspace
-} from '../types/workspace.ts'
+import { AddFolderInWorkspace, AddFolderInWorkspaceFromDialog, SetWorkspace, RemoveWorkspace } from '../types/workspace.ts'
 
 /**
  * Opens a native dialog,
@@ -78,7 +73,7 @@ function openFile() {
  * @param {string} path - The workspace's configuration file
  * @returns workspace's config
  */
-function getWorkspaceConfig(path) {
+function getWorkspaceConfig(path): any {
 	let error = false
 	try {
 		window.require(normalizeDir(path))
@@ -131,11 +126,7 @@ RunningConfig.on('loadFile', ({ filePath }) => {
  * @param {boolean} replaceOldExplorer - Add it as one more, or close the previous one
  * @param {string} workspacePath - Path to the current loaded workspace
  */
-RunningConfig.on('addFolderToRunningWorkspace', ({ 
-	folderPath, 
-	replaceOldExplorer = false, 
-	workspacePath = RunningConfig.data.workspacePath 
-}: AddFolderInWorkspace) =>{
+RunningConfig.on('addFolderToRunningWorkspace', ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }: AddFolderInWorkspace) => {
 	if (replaceOldExplorer) {
 		removeAllExplorerFolders()
 	}
@@ -157,9 +148,7 @@ RunningConfig.on('addFolderToRunningWorkspace', ({
  * to add to the current workspace
  * @param {boolean} replaceOldExplorer - Add it as one more, or close the previous one
  */
-RunningConfig.on('addFolderToRunningWorkspaceDialog', ({ 
-	replaceOldExplorer = false 
-}: AddFolderInWorkspaceFromDialog) => {
+RunningConfig.on('addFolderToRunningWorkspaceDialog', ({ replaceOldExplorer = false }: AddFolderInWorkspaceFromDialog) => {
 	selectFolderDialog()
 		.then(folderPath => {
 			RunningConfig.emit('addFolderToRunningWorkspace', {
@@ -238,11 +227,11 @@ function setWorkspaceSettings(settings) {
 RunningConfig.on('openWorkspaceDialog', () => {
 	selectFileDialog()
 		.then(path => {
-			RunningConfig.emit('addLogWorkspace', { 
-				workspacePath: path
+			RunningConfig.emit('addLogWorkspace', {
+				workspacePath: path,
 			})
-			RunningConfig.emit('setWorkspace', { 
-				workspacePath: path
+			RunningConfig.emit('setWorkspace', {
+				workspacePath: path,
 			})
 		})
 		.catch(err => {
@@ -344,7 +333,7 @@ RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
  * @param {string} name - Current workspace's name
  * @param {function} onFinished - A callback
  */
-RunningConfig.on('renameWorkspaceDialog', ({ workspacePath, name = 'My other workspace', onFinished = (x) => {} }) => {
+RunningConfig.on('renameWorkspaceDialog', ({ workspacePath, name = 'My other workspace', onFinished = x => {} }) => {
 	const workspacePathNormalized = normalizeDir(workspacePath)
 	new InputDialog({
 		title: 'Rename your workspace',

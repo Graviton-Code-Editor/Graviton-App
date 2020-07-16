@@ -1,19 +1,17 @@
 interface DialogButton {
-	label: string,
-	important?: boolean,
+	label: string
+	important?: boolean
 	action: object
 }
 
 interface DialogOptions {
-	title: string,
-	content?: string,
-	buttons: DialogButton[],
-	component?: any,
-	height?: string,
-	width?: string,
+	title: string
+	content?: string
+	buttons: DialogButton[]
+	component?: any
+	height?: string
+	width?: string
 	id?: string
 }
 
-export {
-	DialogOptions
-}
+export { DialogButton, DialogOptions }

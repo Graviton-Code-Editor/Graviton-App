@@ -1,5 +1,6 @@
 import EnvClient from '../constructors/env.client'
 const { BrowserWindow } = window.require('electron').remote
+import isDev from 'electron-is-dev'
 const url = window.require('url')
 const path = window.require('path')
 
@@ -25,13 +26,18 @@ function openDebugClient() {
 			title: 'Graviton Editor',
 			show: true,
 		})
-		debugWindow.loadURL(
-			url.format({
-				pathname: path.join(__dirname, 'index.html'),
-				protocol: 'file:',
-				slashes: true,
-			})
-		)
+		if (isDev) {
+			debugWindow.loadURL('http://localhost:9000')
+		} else {
+			debugWindow.loadURL(
+				url.format({
+					pathname: path.join(__dirname, 'dist_ui', 'index.html'),
+					protocol: 'file:',
+					slashes: true,
+				}),
+			)
+		}
+		debugWindow.isDebug = true
 	})
 	debugClient.on('reload', () => {
 		debugWindow && debugWindow.reload()

@@ -239,7 +239,10 @@ const CodemirrorClient = new EditorClient(
 					CtrlPlusScroll('up')
 				}
 			})
-			//CodemirrorEditor.refresh()
+			CodemirrorEditor.on('keyup', (cm, event: KeyboardEvent) => {
+				event.preventDefault()
+			})
+			CodemirrorEditor.refresh()
 			let lspServer
 			switch (language.fancy) {
 				case 'typescript':
@@ -420,7 +423,7 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const lspAdapter = new CodeMirrorAdapter(
 		lspConnection,
 		{
-			quickSuggestionsDelay: 40
+			quickSuggestionsDelay: 40,
 		},
 		CodemirrorEditor,
 	)

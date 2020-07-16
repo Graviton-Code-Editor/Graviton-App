@@ -9,5 +9,7 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"esModuleInterop": true
-	}
+	},
+	"root": ".",
+	"exclude": ["node_modules", "plugins", "pluginsDist"]
 }

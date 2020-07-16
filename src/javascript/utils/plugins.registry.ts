@@ -1,5 +1,5 @@
 import { state } from '@mkenzo_8/puffin'
-import PuffinState from '../types/puffin.state.ts'
+import PuffinState from '../types/puffin.state'
 
 const registry: PuffinState = new state({
 	list: {},

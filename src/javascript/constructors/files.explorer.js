@@ -120,25 +120,25 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 				anyChanges: gitChanges.files.length > 0,
 			})
 		}
+		const possibleClass = getClassByDir(normalizeDir(folderPath))
 		const itemComputed = getItemComputed({
 			projectPath: folderPath,
 			folderPath,
-			dirName: parseDirectory(folderPath),
+			classSelector: possibleClass,
 			dirPath: normalizeDir(folderPath),
 			level: 0,
 			isFolder: true,
 			gitChanges,
 		})
 		async function mounted() {
-			const target = this.children[0]
-			target.gitChanges = gitChanges
+			const target = this
 			const explorerState = target.state || new state({})
-			target.state = explorerState
 			let projectWatcher = false
 			let gitWatcher = false
-			explorerState.emit('doReload')
+			target.state = explorerState
+			target.gitChanges = gitChanges
 			RunningConfig.on(['aTabHasBeenSaved', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
-				if (gitResult && parentFolder == folderPath) {
+				if (gitResult && parentFolder === folderPath) {
 					const gitChanges = await getStatus(folderPath)
 					RunningConfig.emit('gitStatusUpdated', {
 						gitChanges,
@@ -148,13 +148,6 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					})
 				}
 			})
-			if (gitResult) {
-				explorerState.emit('gitMarkProjectContainer', {
-					//Force to mark as modified the project item
-					gitChanges: await getStatus(folderPath),
-					containerFolder: folderPath,
-				})
-			}
 			/*
 			 * The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
 			 * The Git watcher just watchs the commit message file.
@@ -183,11 +176,12 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 				explorerState.emit('startedWatcher')
 			})
 			if (StaticConfig.data.editorFSWatcher) explorerState.emit('startedWatcher')
-			explorerState.on('createItem', ({ container, containerFolder, directory, directoryName, level, isFolder = false }) => {
+			explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
 				if (container === null) return //Folder is not opened
 				const possibleClass = getClassByDir(normalizeDir(directory))
 				if (document.getElementsByClassName(possibleClass)[0] == null) {
 					//Might have been already created by watcher
+					console.log(isFolder)
 					if (isFolder) {
 						RunningConfig.emit('aFolderHasBeenCreated', {
 							parentFolder: folderPath,
@@ -202,7 +196,6 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 					const itemComputed = getItemComputed({
 						projectPath: folderPath,
 						classSelector: possibleClass,
-						dirName: directoryName,
 						dirPath: directory,
 						level: Number(level) + 1,
 						isFolder,
@@ -223,7 +216,11 @@ async function FilesExplorer(folderPath, parent, level = 0, replaceOldExplorer =
 				}
 			})
 		}
-		const explorerContainer = element`<div mounted="${mounted}">${itemComputed}</div>`
+		const explorerContainer = element({
+			components: {
+				itemComputed: () => itemComputed,
+			},
+		})`<itemComputed mounted="${mounted}"/>`
 		if (replaceOldExplorer && parent.children[0]) {
 			for (let otherExplorer of parent.children[0].children) {
 				const explorerPath = otherExplorer.getAttribute('fullpath')
@@ -300,13 +297,11 @@ function getClassByDir(dir) {
 	return dir.replace(/ /gm, '')
 }
 
-function getItemComputed({ classSelector = '', projectPath, dirName, dirPath, level, isFolder, gitChanges, explorerContainer }) {
-	return FileItem({
-		id: projectPath ? normalizeDir(projectPath) : '',
-		parentFolder: projectPath,
+function getItemComputed({ classSelector = '', projectPath, dirPath, level, isFolder, gitChanges, explorerContainer }) {
+	return new FileItem({
+		projectPath,
 		isFolder,
 		level,
-		dirName,
 		fullpath: dirPath,
 		classSelector,
 		gitChanges,

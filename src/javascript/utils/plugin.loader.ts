@@ -21,11 +21,8 @@ import Explorer from '../constructors/explorer'
 import throwError from './throw.error'
 import path from 'path'
 import fs from 'fs-extra'
-import isDev from 'electron-is-dev'	
-import {
-	pluginsIternalDir,
-	pluginsExternalDir
-} from 'Constants'
+import isDev from 'electron-is-dev'
+import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 
@@ -62,12 +59,14 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 			}
 			if (!isDev) {
 				try {
-					window.require(mainPath).entry(parameters)
+					const { entry }: any = window.require(mainPath)
+					entry(parameters)
 				} catch (err) {
 					throwError(`(${name}) -> ${err}`, err)
 				}
 			} else {
-				window.require(mainPath).entry(parameters)
+				const { entry }: any = window.require(mainPath)
+				entry(parameters)
 			}
 		}
 	}

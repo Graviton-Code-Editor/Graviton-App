@@ -10,18 +10,22 @@ import PuffinElement from '../types/puffin.element'
 import PuffinState from '../types/puffin.state'
 import { WindowOptions } from '../types/window'
 
-class Window{
-	private WindowComponent: object;
-	private WindowElement: PuffinElement;
-	private WindowState: PuffinState;
-	constructor({ 
-		title = '', 
-		component: externalComponent,
-		height = '75%', 
-		width = '80%',
-		id = ''
-	}: WindowOptions){
-		if(document.getElementById(id)){
+class Window {
+	private WindowComponent: object
+	private WindowElement: PuffinElement
+	private WindowState: PuffinState
+	/**
+	 *  Initializes a Graviton window.
+	 *
+	 *  @param {string} title - Title for window.
+	 *  @param {PuffinComponent} component - Puffin component to inject in window's body.
+	 *  @param {string} height - Custom window's height.
+	 *  @param {string} width - Custom window's width.
+	 *  @param {string} id - Assign the window an unique identifier.
+	 *
+	 */
+	constructor({ title = '', component: externalComponent, height = '75%', width = '80%', id = '' }: WindowOptions) {
+		if (document.getElementById(id)) {
 			return
 		}
 		const closeWindowExternally = this.close.bind(this)
@@ -31,11 +35,9 @@ class Window{
 				WindowBody,
 				WindowBackground,
 				externalComponent,
-				WindowContainer
+				WindowContainer,
 			},
-			addons: [
-				lang(LanguageState)
-			],
+			addons: [lang(LanguageState)],
 		})`
 		<WindowContainer id="${id}" win-title="${title}" class="window" closeWindowExternally="${closeWindowExternally}">
 			<WindowBackground closeWindow=${closeWindowExternally}/>
@@ -45,16 +47,29 @@ class Window{
 		</WindowContainer>
 		`
 	}
-	public on(event: string, callback: () => void ): void{
-		this.WindowState.on(event,callback)
+	/**
+	 * Bind events to the window's state manager.
+	 *
+	 * @param {string} event - Event's name.
+	 * @param {function} callback - Function to be executed when the event is emitted.
+	 *
+	 */
+	public on(event: string, callback: () => void): void {
+		this.WindowState.on(event, callback)
 	}
+	/**
+	 * Open the window.
+	 */
 	public launch(): void {
-		const windowsContainer = (<PuffinElement>document.getElementById('windows'))
+		const windowsContainer = <PuffinElement>document.getElementById('windows')
 		this.WindowElement = createElement(this.WindowComponent)
 		windowsContainer.appendChild(this.WindowElement)
 		RunningConfig.data.openedWindows = RunningConfig.data.openedWindows + 1
 		this.WindowState.emit('launched')
 	}
+	/**
+	 * Close the window.
+	 */
 	public close(): void {
 		if (this.WindowElement) {
 			this.WindowElement.remove()

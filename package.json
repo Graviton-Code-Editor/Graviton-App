@@ -35,8 +35,8 @@
 	],
 	"scripts": {
 		"start": "run-p script:build watch:webpack watch:electron",
-		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
 		"build": "npm run script:build && npm run build:webpack  && npm run build:electron",
+		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
 		"build:plugins": "gulp",
 		"build:webpack": "webpack --mode=production",
 		"watch:webpack": "webpack-dev-server --mode=development",
@@ -54,7 +54,7 @@
 		"build:p5p": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux p5p",
 		"build:rpm": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"build:AppImage": "npm run script:build && npm run build:parcel && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage",
-		"lint": "prettier --write *.{js,scss,md,html,json}"
+		"lint": "prettier --write *.{ts,js,scss,md,html,json}"
 	},
 	"staticFiles": {
 		"staticPath": [
@@ -69,7 +69,7 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,scss,md,html,json}": [
+		"*.{ts,js,scss,md,html,json}": [
 			"prettier --write"
 		]
 	},
@@ -123,7 +123,8 @@
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12",
 		"webpack-dev-server": "^3.11.0",
-		"webpack-messages": "^2.0.4"
+		"webpack-messages": "^2.0.4",
+		"webpack-node-externals": "^2.5.0"
 	},
 	"build": {
 		"appId": "graviton-editor",

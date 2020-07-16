@@ -5,39 +5,19 @@ import { LanguageState } from '../utils/lang.config'
 import Window from './window'
 import DialogBody from '../components/dialog/dialog'
 
-import { DialogOptions } from '../types/dialog'
+import { DialogOptions, DialogButton } from '../types/dialog'
 import { WindowInstance } from '../types/window'
 
 class Dialog {
-	private WindowInstance: WindowInstance;
-	private DialogComponent: object;
-	private ButtonsActions: object[];
-	constructor({ 
-		title = '', 
-		content,
-		component, 
-		buttons = [], 
-		height = '200px', 
-		width = '300px', 
-		id = '' 
-	}: DialogOptions){
-		this.ButtonsActions = {
-			...buttons.map(btn => {
-				if (btn.action) {
-					return btn.action
-				} else {
-					return function () {
-						this.WindowInstance.close()
-					}
-				}
-			}),
-		}
+	private WindowInstance: WindowInstance
+	private DialogComponent: object
+	constructor({ title = '', content, component, buttons = [], height = '200px', width = '300px', id = '' }: DialogOptions) {
 		this.DialogComponent = element({
 			components: {
 				DialogBody,
 				H2: Titles.h2,
 				Text,
-			}
+			},
 		})`
 			<DialogBody>
 				<div>
@@ -50,7 +30,7 @@ class Dialog {
 							components: {
 								Button,
 							},
-						})`<Button important="${btn.important || false}" index="${index}" :click="${() => this.close(btn.action)}" lang-string="${btn.label}"/>`
+						})`<Button important="${btn.important || false}" index="${index}" :click="${() => this.closeFromButton.bind(this)(btn.action)}" lang-string="${btn.label}"/>`
 					})}
 				</div>
 			</DialogBody>
@@ -62,18 +42,18 @@ class Dialog {
 			width,
 		})
 	}
-	public on(event: string, callback: () => void): void{
-		this.WindowInstance.on(event,callback)
+	public on(event: any, callback: any): any {
+		this.WindowInstance.on(event, callback)
 	}
-	public launch() {
+	public launch(): any {
 		this.WindowInstance.launch()
 	}
-	private closeWindow(){
+	public close(): any {
 		this.WindowInstance.close()
 	}
-	public close(buttonAction) {
-		buttonAction()
-		this.closeWindow()
+	private closeFromButton(buttonAction: () => void): any {
+		if (buttonAction) buttonAction()
+		this.close()
 	}
 }
 
