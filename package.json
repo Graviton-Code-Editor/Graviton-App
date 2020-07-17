@@ -93,7 +93,7 @@
 		"rimraf": "^3.0.2",
 		"semver": "^7.3.2",
 		"shortcuts": "^1.5.0",
-		"simple-git": "^2.11.0",
+		"simple-git": "^2.13.2",
 		"trash": "^6.1.1",
 		"v8-compile-cache": "^2.1.1"
 	},

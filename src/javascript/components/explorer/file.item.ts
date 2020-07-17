@@ -57,12 +57,12 @@ class Item {
 	 * @param hint {string} - Item's text on hovering.
 	 *
 	 */
-	constructor({ projectPath, explorerContainer, isFolder, level, fullpath, classSelector, gitChanges, hint }) {
+	constructor({ projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
 		const self = this
 
 		this.isFolder = isFolder
-		this.itemPath = normalizeDir(fullpath)
-		this.itemName = path.basename(fullpath)
+		this.itemPath = normalizeDir(fullPath)
+		this.itemName = path.basename(fullPath)
 		this.itemFolder = normalizeDir(path.dirname(path.normalize(this.itemPath)))
 		this.itemLevel = level
 		this.itemExtension = this.isFolder ? null : getFormat(this.itemPath)
@@ -80,7 +80,7 @@ class Item {
 		})`
 			<FileItem class="${classSelector} level="${level}" id="${
 			level === 0 ? projectPath : ''
-		}" fullpath="${fullpath}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
+		}" fullpath="${fullPath}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
 			StaticConfig.data.appEnableExplorerItemsAnimations
 		}">
 				<button :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
@@ -109,7 +109,6 @@ class Item {
 			self.explorerState = self.explorerContainer.state || self.itemState
 			self.itemIconElement = target.getElementsByClassName('icon')[0]
 			self.itemArrowElement = target.getElementsByClassName('arrow')[0]
-
 			self._addEventsListeners()
 			self._setGitChanges(gitChanges, null)
 			self._markItem(gitChanges)
@@ -133,7 +132,7 @@ class Item {
 		if (this.isFolder) {
 			const itemsContainer = this.itemElement.children[1]
 			if (itemsContainer == null) {
-				FilesExplorer(this.itemPath, this.itemElement, this.itemLevel + 1, this.projectGitData)
+				new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData)
 				this._setOpenedIcon()
 			} else {
 				itemsContainer.remove()
@@ -336,7 +335,7 @@ class Item {
 	 */
 	private _forceOpen(): void {
 		this._removeItemsContainer()
-		FilesExplorer(this.itemPath, this.itemElement, this.itemLevel + 1, this.projectGitData)
+		new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData)
 		this._setOpenedIcon()
 	}
 	/**
@@ -437,6 +436,7 @@ class Item {
 		const filePath = this.itemPath
 		const projectPath = this.projectPath
 		const supportedGitStatuses = ['not_added', 'modified']
+
 		let result = 'unknown'
 		if (gitChanges) {
 			if (filePath === projectPath) {

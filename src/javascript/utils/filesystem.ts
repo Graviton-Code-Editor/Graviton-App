@@ -132,7 +132,7 @@ RunningConfig.on('addFolderToRunningWorkspace', ({ folderPath, replaceOldExplore
 	}
 	const folderDir = normalizeDir(folderPath)
 	const explorerPanel = document.getElementById('explorer_panel')
-	FilesExplorer(folderDir, explorerPanel, 0, replaceOldExplorer)
+	new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer)
 	RunningConfig.data.workspaceConfig.folders.push({
 		name: parseDirectory(folderDir),
 		path: folderDir,
