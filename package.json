@@ -87,6 +87,7 @@
 		"electron-store": "^5.2.0",
 		"electron-window-state": "^5.0.3",
 		"fs-extra": "^9.0.1",
+		"lodash": "^4.17.19",
 		"lsp-codemirror": "^0.1.6",
 		"node-jsonrpc-lsp": "^0.1.1",
 		"rimraf": "^3.0.2",
