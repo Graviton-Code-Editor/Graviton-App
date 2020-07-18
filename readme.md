@@ -48,26 +48,6 @@ Changes on this source may not be released as an official build yet.
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
 
-## 👽 Contributors
-
-#### Main Author
-
-- Marc Espín Sanz [Github](https://github.com/marc2332)
-
-#### Contributors
-
-- pjtsearch [Github](https://github.com/pjtsearch)
-- David Niederweis [Github](https://github.com/DJN1)
-- LucasAlt [Github](https://github.com/LucasCtrl)
-- Max1Truc [Github](https://github.com/Max1Truc)
-- Marco Galli [Github](https://github.com/Gaarco)
-
-#### Credits
-
-- Miguel Ranger for first autocomplete version
-- Old logo by Saúl Blanco
-- Advices from León Alvarez
-
 ## 🎁 Donating
 
 - BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
@@ -110,3 +90,40 @@ MIT License
 Copyright (c) Marc Espín Sanz
 
 [Full license](LICENSE.md)
+
+## 👽 Contributors
+
+[//]: contributor-faces
+
+<a href="https://github.com/marc2332"><img src="https://avatars3.githubusercontent.com/u/38158676?v=4" title="marc2332" width="80" height="80"></a>
+<a href="https://github.com/DJN1"><img src="https://avatars2.githubusercontent.com/u/34351129?v=4" title="DJN1" width="80" height="80"></a>
+<a href="https://github.com/LucasCtrl"><img src="https://avatars1.githubusercontent.com/u/19686996?v=4" title="LucasCtrl" width="80" height="80"></a>
+<a href="https://github.com/Max1Truc"><img src="https://avatars1.githubusercontent.com/u/26603929?v=4" title="Max1Truc" width="80" height="80"></a>
+<a href="https://github.com/Cri16228"><img src="https://avatars3.githubusercontent.com/u/11902233?v=4" title="Cri16228" width="80" height="80"></a>
+<a href="https://github.com/mIcHyAmRaNe"><img src="https://avatars0.githubusercontent.com/u/17873513?v=4" title="mIcHyAmRaNe" width="80" height="80"></a>
+<a href="https://github.com/Exedust"><img src="https://avatars1.githubusercontent.com/u/57815297?v=4" title="Exedust" width="80" height="80"></a>
+<a href="https://github.com/seniorglez"><img src="https://avatars2.githubusercontent.com/u/44611837?v=4" title="seniorglez" width="80" height="80"></a>
+<a href="https://github.com/RoughTomato"><img src="https://avatars2.githubusercontent.com/u/5015644?v=4" title="RoughTomato" width="80" height="80"></a>
+<a href="https://github.com/HiroshiKawata"><img src="https://avatars2.githubusercontent.com/u/51838462?v=4" title="HiroshiKawata" width="80" height="80"></a>
+<a href="https://github.com/Machou"><img src="https://avatars1.githubusercontent.com/u/1043650?v=4" title="Machou" width="80" height="80"></a>
+<a href="https://github.com/ShashankaNataraj"><img src="https://avatars3.githubusercontent.com/u/650317?v=4" title="ShashankaNataraj" width="80" height="80"></a>
+<a href="https://github.com/apps/dependabot"><img src="https://avatars0.githubusercontent.com/in/29110?v=4" title="dependabot[bot]" width="80" height="80"></a>
+<a href="https://github.com/Suburbanno"><img src="https://avatars1.githubusercontent.com/u/13632826?v=4" title="Suburbanno" width="80" height="80"></a>
+<a href="https://github.com/0xflotus"><img src="https://avatars3.githubusercontent.com/u/26602940?v=4" title="0xflotus" width="80" height="80"></a>
+<a href="https://github.com/dominicrann61"><img src="https://avatars3.githubusercontent.com/u/47290014?v=4" title="dominicrann61" width="80" height="80"></a>
+<a href="https://github.com/FreeAoi"><img src="https://avatars1.githubusercontent.com/u/45021001?v=4" title="FreeAoi" width="80" height="80"></a>
+<a href="https://github.com/ItsMrCrowe"><img src="https://avatars3.githubusercontent.com/u/36272396?v=4" title="ItsMrCrowe" width="80" height="80"></a>
+<a href="https://github.com/coder26-cmd"><img src="https://avatars1.githubusercontent.com/u/59140695?v=4" title="coder26-cmd" width="80" height="80"></a>
+<a href="https://github.com/liberodark"><img src="https://avatars1.githubusercontent.com/u/4238928?v=4" title="liberodark" width="80" height="80"></a>
+<a href="https://github.com/RatsWar"><img src="https://avatars1.githubusercontent.com/u/36457467?v=4" title="RatsWar" width="80" height="80"></a>
+<a href="https://github.com/Tewort"><img src="https://avatars3.githubusercontent.com/u/32545979?v=4" title="Tewort" width="80" height="80"></a>
+<a href="https://github.com/UMR1352"><img src="https://avatars3.githubusercontent.com/u/31142849?v=4" title="UMR1352" width="80" height="80"></a>
+<a href="https://github.com/JANUS-IANVS"><img src="https://avatars3.githubusercontent.com/u/67259928?v=4" title="JANUS-IANVS" width="80" height="80"></a>
+<a href="https://github.com/Gaarco"><img src="https://avatars0.githubusercontent.com/u/9869590?v=4" title="Gaarco" width="80" height="80"></a>
+<a href="https://github.com/Nundir"><img src="https://avatars1.githubusercontent.com/u/1781547?v=4" title="Nundir" width="80" height="80"></a>
+<a href="https://github.com/namanarora00"><img src="https://avatars0.githubusercontent.com/u/36225548?v=4" title="namanarora00" width="80" height="80"></a>
+<a href="https://github.com/Petrozilia"><img src="https://avatars3.githubusercontent.com/u/39630177?v=4" title="Petrozilia" width="80" height="80"></a>
+<a href="https://github.com/s3bastianeljas"><img src="https://avatars1.githubusercontent.com/u/42433902?v=4" title="s3bastianeljas" width="80" height="80"></a>
+<a href="https://github.com/leiks"><img src="https://avatars1.githubusercontent.com/u/62721369?v=4" title="leiks" width="80" height="80"></a>
+
+[//]: contributor-faces

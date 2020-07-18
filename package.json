@@ -34,6 +34,7 @@
 		}
 	],
 	"scripts": {
+		"readme:contributors": "contributor-faces .",
 		"start": "run-p script:build watch:webpack watch:electron",
 		"build": "npm run script:build && npm run build:webpack  && npm run build:electron",
 		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
@@ -99,6 +100,7 @@
 	},
 	"devDependencies": {
 		"@gveditor/sdk": "^0.2.0",
+		"contributor-faces": "^1.0.3",
 		"copy-webpack-plugin": "^6.0.3",
 		"css-loader": "^3.6.0",
 		"electron": "^8.3.4",
