@@ -291,7 +291,7 @@ RunningConfig.on('saveCurrentWorkspace', function () {
 				RunningConfig.data.workspaceConfig.name = name
 				saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
 				RunningConfig.emit('addLogWorkspace', {
-					path: resultWorkspace,
+					workspacePath: resultWorkspace,
 				})
 			})
 		})
