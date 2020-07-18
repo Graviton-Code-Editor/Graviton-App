@@ -484,7 +484,7 @@ function checkForUpdates(ifNoUpdate) {
 			}
 		})
 		.catch(err => {
-			console.log('Couldnt fetch updates.')
+			console.log('Couldnt fetch updates.', err)
 		})
 }
 
