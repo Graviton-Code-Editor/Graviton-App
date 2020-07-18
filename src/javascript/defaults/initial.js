@@ -27,8 +27,8 @@ import EnvClient from '../constructors/env.client'
 import packageJSON from '../../../package.json'
 import openDebugClient from './debug.window'
 import fs from 'fs-extra'
-import { openExternal as openLink } from 'electron'
-import { getCurrentWindow } from 'electron'
+const { openExternal: openLink } = window.require('electron').shell
+const { getCurrentWindow } = window.require('electron').remote
 import './environment.inspectors/npm'
 import './project.services/node'
 import './side.panels/files.explorer'
@@ -191,7 +191,6 @@ function init() {
 			},
 		],
 	})
-	console.log(Settings)
 	new Menu({
 		//TOOLS
 		button: 'menus.Tools.Tools',
