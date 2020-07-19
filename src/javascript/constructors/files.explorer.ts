@@ -196,7 +196,7 @@ class FilesExplorer {
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
 		this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
-			if (container === null) return //Folder is not opened
+			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
 				//Might have been already created by watcher
@@ -221,15 +221,13 @@ class FilesExplorer {
 					explorerContainer: container,
 				})
 				const hotItem = itemComputed
-				if (container.children[1]) {
-					if (isFolder) {
-						const folderPosition = getlastFolderPosition(container.children[1])
-						render(hotItem, container.children[1], {
-							position: folderPosition,
-						})
-					} else {
-						render(hotItem, container.children[1])
-					}
+				if (isFolder) {
+					const folderPosition = getlastFolderPosition(container.children[1])
+					render(hotItem, container.children[1], {
+						position: folderPosition,
+					})
+				} else {
+					render(hotItem, container.children[1])
 				}
 			}
 		})
@@ -307,7 +305,7 @@ class FilesExplorer {
 							if (fs.lstatSync(path.join(this.folderPath, itemPath)).isDirectory())
 								return getItemComputed({
 									projectPath: this.projectPath,
-									classSelector: getClassByDir(this.folderPath),
+									classSelector: getClassByDir(itemDirectory),
 									fullPath: itemDirectory,
 									level: this.level,
 									isFolder: true,
@@ -326,7 +324,7 @@ class FilesExplorer {
 									if (!itemPath.match('~'))
 										return getItemComputed({
 											projectPath: this.projectPath,
-											classSelector: getClassByDir(this.folderPath),
+											classSelector: getClassByDir(itemDirectory),
 											fullPath: itemDirectory,
 											level: this.level,
 											isFolder: false,

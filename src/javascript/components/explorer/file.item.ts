@@ -24,11 +24,12 @@ import PuffinElement from '../../types/puffin.element'
 import PuffinState from '../../types/puffin.state'
 
 class Item {
-	private itemPath: string
+	private itemClass: string
+	public itemPath: string
 	private itemName: string
 	private itemElement: any
 	private itemLevel: number
-	private itemFolder: string
+	public itemFolder: string
 	private itemState: PuffinState
 	private itemIconElement: HTMLImageElement
 	private itemArrowElement: HTMLImageElement
@@ -66,11 +67,15 @@ class Item {
 		this.itemFolder = normalizeDir(path.dirname(path.normalize(this.itemPath)))
 		this.itemLevel = level
 		this.itemExtension = this.isFolder ? null : getFormat(this.itemPath)
+		this.itemClass = classSelector
 
 		this.projectPath = projectPath
 
 		const clickListener = this._clickListener.bind(this)
 		const contextListener = this._contextListener.bind(this)
+		const draggingListener = this._draggingListener.bind(this)
+		const dragginInListener = this._draggingInListener.bind(this)
+		const dragDroppedListener = this._dragDroppedListener.bind(this)
 
 		return element({
 			components: {
@@ -80,14 +85,14 @@ class Item {
 		})`
 			<FileItem class="${classSelector} level="${level}" id="${
 			level === 0 ? projectPath : ''
-		}" fullpath="${fullPath}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
+		}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
 			StaticConfig.data.appEnableExplorerItemsAnimations
-		}">
-				<button :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
-					<ArrowIcon class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
-					<img class="icon" src="${this._getIconSource()}"></img>
-					<span originalName="${this.itemName}">${this.itemName}</span>
-					<div class="gitStatus" count=""/>
+		}" :drop="${dragDroppedListener}" >
+				<button draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}"  :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+					<ArrowIcon itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
+					<img itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
+					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
+					<div itemClass="${classSelector}" class="gitStatus" count=""/>
 				</button>
 			</FileItem>
 		`
@@ -102,6 +107,8 @@ class Item {
 		}
 		function mounted() {
 			const target = this
+
+			target.instance = self
 
 			self.itemElement = target
 			self.explorerContainer = explorerContainer || this
@@ -122,6 +129,42 @@ class Item {
 	}
 	private _getIconSource(): string {
 		return this.isFolder ? getFolderClosedIcon(this.itemName) : getFileIcon(this.itemName, getFormat(this.itemPath))
+	}
+	public _draggingListener(ev): void {
+		ev.stopPropagation()
+		ev.dataTransfer.setData('class', this.itemClass)
+	}
+	public _draggingStarted(ev): void {
+		ev.stopPropagation()
+		ev.dataTransfer.setData('class', this.itemClass)
+	}
+	public _draggingInListener(ev): void {
+		ev.stopPropagation()
+		ev.preventDefault()
+	}
+	public _dragDroppedListener(ev): void {
+		ev.stopImmediatePropagation()
+		ev.preventDefault()
+		const destinationItem: any = document.getElementsByClassName((ev.target as any).getAttribute('itemClass'))[0]
+		const incomingItemClass = ev.dataTransfer.getData('class')
+		const incomingItem: any = document.getElementsByClassName(incomingItemClass)[0]
+		const oldItemPath = incomingItem.instance.itemPath
+		const newItemPath = path.join(destinationItem.instance.itemPath, incomingItem.instance.itemName)
+
+		if (oldItemPath === newItemPath) return
+
+		fs.rename(oldItemPath, newItemPath)
+			.then(() => {
+				incomingItem.instance.itemState.emit('destroyed')
+				this.explorerState.emit('createItem', {
+					container: destinationItem,
+					containerFolder: destinationItem.instance.itemFolder,
+					level: destinationItem.instance.itemLevel,
+					directory: newItemPath,
+					isFolder: incomingItem.instance.isFolder,
+				})
+			})
+			.catch((err: string) => console.error(err))
 	}
 	/*
 	 *
