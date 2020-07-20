@@ -570,6 +570,7 @@ class Item {
 			if (this.itemPath === filePath) {
 				RunningConfig.emit('aFileHasBeenChanged', {
 					filePath,
+					parentFolder: this.itemFolder,
 					newData: await fs.readFile(this.itemPath, 'UTF-8'),
 				})
 			}
