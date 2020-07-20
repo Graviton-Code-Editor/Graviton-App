@@ -1,4 +1,4 @@
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, render } from '@mkenzo_8/puffin'
 import StatusBarItemBody from '../components/status.bar/status.bar.item'
 import RunningConfig from 'RunningConfig'
 

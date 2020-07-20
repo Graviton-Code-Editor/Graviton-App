@@ -1,5 +1,6 @@
 //Renderer process
-import { element, style, render } from '@mkenzo_8/puffin'
+import { element, render } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
@@ -91,13 +92,13 @@ function mountedAppView(): void {
 		}
 	})
 	StaticConfig.keyChanged('appEnableSidebar', value => {
-		const sideBar =  (<PuffinElement>document.getElementById('sidebar'))
+		const sideBar = <PuffinElement>document.getElementById('sidebar')
 		sideBar.update()
 	})
 	StaticConfig.keyChanged('appEnableSidepanel', value => {
-		const sidePanel = (<PuffinElement>document.getElementById('sidepanel'))
-		const sideBar =  (<PuffinElement>document.getElementById('sidebar'))
-		const mainPanel =  (<PuffinElement>document.getElementById('mainpanel'))
+		const sidePanel = <PuffinElement>document.getElementById('sidepanel')
+		const sideBar = <PuffinElement>document.getElementById('sidebar')
+		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
 		if (!value) {
 			sidePanel.style.opacity = '0'
 			sidePanel.style.minWidth = '0'

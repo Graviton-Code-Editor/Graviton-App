@@ -1,4 +1,4 @@
-import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
 import NotificationBody from '../components/notification'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'

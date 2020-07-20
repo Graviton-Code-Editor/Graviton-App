@@ -1,4 +1,4 @@
-import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
 import MenuComp from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState } from 'LanguageConfig'

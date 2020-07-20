@@ -1,4 +1,4 @@
-import { element, render, style, state } from '@mkenzo_8/puffin'
+import { element, render, state } from '@mkenzo_8/puffin'
 import FileItem from '../components/explorer/file.item'
 import parseDirectory from '../utils/directory.parser'
 import normalizeDir from '../utils/directory.normalizer'

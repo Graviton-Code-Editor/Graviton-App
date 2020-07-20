@@ -1,4 +1,5 @@
-import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { LanguageState } from 'LanguageConfig'
 
 const styleWrapper = style`

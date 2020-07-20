@@ -1,4 +1,5 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { Text } from '@mkenzo_8/puffin-drac'
 import largeLogo from '../../../assets/large_logo.svg'
 import RunningConfig from 'RunningConfig'

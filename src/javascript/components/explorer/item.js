@@ -1,8 +1,9 @@
-import { element, render, style } from '@mkenzo_8/puffin'
+import { element, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ArrowIcon from '../icons/arrow'
 import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
+import { css as style } from 'emotion'
 
 const ItemWrapper = style`
 	@keyframes appearItem{

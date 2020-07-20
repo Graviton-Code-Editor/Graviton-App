@@ -1,4 +1,4 @@
-import { state, render, element, style } from '@mkenzo_8/puffin'
+import { state, render, element } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
@@ -74,7 +74,7 @@ function CommandPrompt({
 						parent: this.parentElement.children[1],
 						state: CommandPromptState,
 						name,
-					}
+					},
 				)
 		}
 	}
@@ -113,7 +113,7 @@ function CommandPrompt({
 				parent: container,
 				state: CommandPromptState,
 				name,
-			}
+			},
 		)
 		window.addEventListener('keydown', e => {
 			if (e.keyCode === 27) {

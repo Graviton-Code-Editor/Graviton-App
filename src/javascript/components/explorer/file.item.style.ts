@@ -1,4 +1,5 @@
-import { state, element, style } from '@mkenzo_8/puffin'
+import { state, element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 
 const ItemWrapper = style`
 	&[animated="true"]{

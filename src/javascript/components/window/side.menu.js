@@ -1,4 +1,5 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 
 function moveToPage(page, buttons, pages) {
 	pages.map(function (contentPage) {

@@ -1,4 +1,4 @@
-import { element, style, createElement, lang, state } from '@mkenzo_8/puffin'
+import { element, createElement, lang, state } from '@mkenzo_8/puffin'
 import { LanguageState } from 'LanguageConfig'
 import RunningConfig from 'RunningConfig'
 

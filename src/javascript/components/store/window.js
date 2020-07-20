@@ -1,6 +1,7 @@
 import semver from 'semver'
 import packageJSON from '../../../../package.json'
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import SideMenu from '../window/side.menu'
@@ -51,7 +52,7 @@ function pluginWindow(
 	{ name, releases, id, repository, author = 'Unknown' },
 	{ name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' },
 	isInstalled,
-	isReserved
+	isReserved,
 ) {
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]

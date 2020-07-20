@@ -1,4 +1,5 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import getPluginById from '../../defaults/store/api/get.plugin'

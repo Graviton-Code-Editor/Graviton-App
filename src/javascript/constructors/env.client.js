@@ -1,4 +1,5 @@
-import { state, element, style, render } from '@mkenzo_8/puffin'
+import { state, element, render } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { Text, Titles } from '@mkenzo_8/puffin-drac'
 import Play from '../components/icons/play'
 import Stop from '../components/icons/stop'

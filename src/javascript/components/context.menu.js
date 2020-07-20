@@ -1,4 +1,5 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 
 const styleWrapper = style`
 	@keyframes popup{

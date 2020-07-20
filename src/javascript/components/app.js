@@ -1,23 +1,12 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 
 const styleWrapper = style`
-		body{
-			padding:0px;
-			margin:0px;
-			max-width:100%;
-			max-height:100%;
-			overflow:hidden;
-			--puffinFont:mainFont;
-			background: var(--bodyBackground);
-			--codeFont: JetBrainsMono;
-		}
-		@font-face {
-			font-family: mainFont;
-			src: url(Inter-Regular.woff2) format("woff2") ;
-		}
-		@font-face {
-			font-family: JetBrainsMono;
-			src: url(JetBrainsMono-Regular.woff2) format("woff2") ;
+		#body{
+			display:flex;
+			flex-direction:columns;
+			background:var(--bodyBackground);
+			height:calc(100% - 68px);
 		}
 		* {
 			font-family: mainFont;
@@ -25,17 +14,16 @@ const styleWrapper = style`
 		.CodeMirror *:not(.CodeMirror-dialog) {
 			font-family:var(--codeFont);
 		}
-		#body{
-			display:flex;
-			flex-direction:columns;
-			background:var(--bodyBackground);
-			height:calc(100% - 68px);
-		}
 		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
 			height: calc(100% - 25px);
 		}
-		.app-container[os="win32"] #sidebar{
-			border-top-right-radius: 5px;
+		.app-container[os="win32"] {
+			& #sidebar {
+				border-top-right-radius: 5px;
+			}
+			#mainpanel[blocked=false]{
+				border-top-left-radius:5px;
+			}
 		}
 		#sidebar{
 			background: gray;
@@ -59,9 +47,9 @@ const styleWrapper = style`
 			float: left;
 			left: 0;
 			padding: 10px;
-		}
-		#sidepanel > div{
-			height: 100%;
+			& > div{
+				height: 100%;
+			}
 		}
 		#mainpanel{
 			min-width:50px;
@@ -73,18 +61,15 @@ const styleWrapper = style`
 			border-top:1px solid var(--panelBorder);
 			background:var(--mainpanelBackground);
 		}
-		.app-container[os="win32"] #mainpanel[blocked=false]{
-			border-top-left-radius:5px;
-		}
 		#mainpanel {
 			border-left:1px solid var(--panelBorder);
-		}
-		#mainpanel > div:nth-child(1){
-			border-top-left-radius:5px;
-			border-left:transparent;
-		}
-		#mainpanel .tabsbar > div:nth-last-child(1){
-			border-top-right-radius:5px;
+			&  .tabsbar > div:nth-last-child(1){
+				border-top-right-radius:5px;
+			}
+			& > div:nth-child(1){
+				border-top-left-radius:5px;
+				border-left:transparent;
+			}
 		}
 		#windows{
 			position:absolute;
@@ -92,14 +77,14 @@ const styleWrapper = style`
 			height:0;
 			width:0;
 			display:flex;
-		}
-		#windows > div.window {
-			display:flex;
-			align-items:center;
-			justify-content:center;
-		}
-		#windows > div.window > div {
-			flex:1;
+			& > div.window {
+				display:flex;
+				align-items:center;
+				justify-content:center;
+			}
+			& > div.window > div {
+				flex:1;
+			}
 		}
 		#notifications{
 			position:absolute;
@@ -108,41 +93,6 @@ const styleWrapper = style`
 			display:flex;
 			flex-direction:column;
 			overflow:hidden;
-		}
-		* {
-			outline: 0;
-			text-rendering: optimizeLegibility !important;
-			-webkit-font-smoothing: subpixel-antialiased !important;
-			-webkit-box-sizing: default !important;
-			box-sizing: default !important;
-		}
-		html *::-webkit-scrollbar {
-			transition: 0.1s;
-			width: 10px;
-			height: 10px;
-			background: transparent;
-		}
-		html * ::-webkit-scrollbar-track {
-			background: transparent;
-		}
-		html * ::-webkit-scrollbar-thumb {
-			border-radius: 0.2rem;
-			transition: 0.1s;
-			background: var(--scrollbarBackground);
-		}
-		html * ::-webkit-scrollbar-thumb:hover {
-			transition: 0.1s;
-			background: var(--scrollbarHoveringBackground);
-		}
-		html * ::-webkit-scrollbar-corner {
-			visibility: hidden !important;
-			opacity: 0 !important;
-			height: 0 !important;
-			width: 0 !important;
-			display: none !important;
-		}
-		html * ::-webkit-resizer {
-			cursor: ew-resize;
 		}
     `
 

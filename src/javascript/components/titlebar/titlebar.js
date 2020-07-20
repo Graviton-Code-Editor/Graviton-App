@@ -1,4 +1,5 @@
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
 import AppPlatform from 'AppPlatform'
@@ -65,7 +66,7 @@ function TitleBar() {
 		},
 	})`
 	<div class="${styleWrapper}" style="${AppPlatform !== 'win32' ? 'margin:0;' : ''}">
-		${AppPlatform === 'win32' ? element`<img class="logo" draggable="false" src="${() => Logo}" />` : ''}
+		${AppPlatform === 'win32' ? element`<img class="logo" draggable="false" src="${Logo}" />` : ''}
 		<div id="dropmenus" class="dropmenus"/>
 		<div class="title"/>
 		${getButtons()}
