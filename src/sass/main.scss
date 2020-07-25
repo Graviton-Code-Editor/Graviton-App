@@ -12,6 +12,14 @@ body {
 	--puffinFont: mainFont;
 	background: var(--bodyBackground);
 	--codeFont: JetBrainsMono;
+	* {
+		outline: 0;
+		text-rendering: optimizeLegibility !important;
+		-webkit-font-smoothing: subpixel-antialiased !important;
+		-webkit-box-sizing: default !important;
+		box-sizing: default !important;
+		font-family: var(--puffinFont);
+	}
 }
 @font-face {
 	font-family: mainFont;
@@ -22,13 +30,6 @@ body {
 	src: url(../../assets/JetBrainsMono-Regular.woff2) format('woff2');
 }
 
-* {
-	outline: 0;
-	text-rendering: optimizeLegibility !important;
-	-webkit-font-smoothing: subpixel-antialiased !important;
-	-webkit-box-sizing: default !important;
-	box-sizing: default !important;
-}
 html {
 	*::-webkit-scrollbar {
 		transition: 0.1s;
