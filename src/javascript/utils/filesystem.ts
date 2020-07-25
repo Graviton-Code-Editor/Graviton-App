@@ -67,7 +67,6 @@ RunningConfig.on('removeProjectFromLog', ({ projectPath }) => {
 		return directory == projectPath
 	})
 	const projectIndex = projectsList.indexOf(project)
-	console.log(projectPath, projectsList, project, projectIndex)
 	StaticConfig.data.appProjectsLog.splice(projectIndex, 1)
 	StaticConfig.triggerChange()
 })

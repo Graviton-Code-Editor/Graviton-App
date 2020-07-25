@@ -8,7 +8,7 @@ import StaticConfig from 'StaticConfig'
 import Notification from './notification'
 import fs from 'fs-extra'
 import simpleGit from 'simple-git'
-import path from 'path'
+const path = window.require('path')
 const chokidar = window.require('chokidar')
 
 import { StatusResult } from 'simple-git'
@@ -37,7 +37,7 @@ class FilesExplorer {
 	 *
 	 */
 	constructor(folderPath: string, projectPath: string, container: HTMLElement, level: number = 0, replaceOldExplorer: boolean = true, gitChanges: StatusResult = null) {
-		this.folderPath = folderPath
+		this.folderPath = normalizeDir(folderPath)
 		this.container = container
 		this.level = level
 		this.replaceOldExplorer = replaceOldExplorer
@@ -156,12 +156,12 @@ class FilesExplorer {
 	 *
 	 */
 	private _addListeners() {
-		RunningConfig.on(['aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
-			if (this.isGitRepo && parentFolder === this.folderPath) {
+		RunningConfig.on(['aTabHasBeenSaved', 'aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
+			if (this.isGitRepo && parentFolder.includes(this.projectPath)) {
 				const gitChanges = await this._getGitChanges()
 				RunningConfig.emit('gitStatusUpdated', {
 					gitChanges,
-					parentFolder,
+					parentFolder: this.projectPath,
 					branch: this.gitChanges.current,
 					anyChanges: this.gitChanges.files.length > 0,
 				})

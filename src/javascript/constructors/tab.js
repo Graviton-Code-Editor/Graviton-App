@@ -39,7 +39,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 	const itemIconSource = isEditor ? getFileIcon(path.basename(directory), getFormat(directory)) : null
 	const tabDirectory = isEditor ? normalizeDir(directory) : ''
 	const classSelector = `tab${directory ? directory : id}`
-	const parentFolder = isEditor ? path.dirname(directory) : ''
+	const parentFolder = isEditor ? path.dirname(tabDirectory) : ''
 	const openedTabs = document.getElementsByClassName(classSelector)
 	if (openedTabs.length >= 1) {
 		/**
