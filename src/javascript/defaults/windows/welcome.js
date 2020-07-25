@@ -66,7 +66,7 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 									Card,
 								},
 							})`
-							<Card :click="${openDirectory}" directory="${normalizeDir(directory)}">
+							<Card :contextmenu="${contextMenuProject}" :click="${openDirectory}" directory="${normalizeDir(directory)}">
 								<b>${nameFolder}</b>
 								<p>${beautifyDir(normalizeDir(directory))}</p>
 							</Card>
@@ -96,6 +96,23 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 			</div>
 		</SideMenu>
     `
+	function contextMenuProject(event) {
+		new ContextMenu({
+			list: [
+				{
+					label: 'Remove from here',
+					action: () => {
+						RunningConfig.emit('removeProjectFromLog', {
+							projectPath: this.getAttribute('directory'),
+						})
+						this.remove()
+					},
+				},
+			],
+			event,
+			parent: this,
+		})
+	}
 	function contextMenuWorkspace(event) {
 		new ContextMenu({
 			list: [
@@ -149,11 +166,12 @@ function Welcome({ defaultPage = 'projects' } = {}) {
 				replaceOldExplorer: true,
 				workspacePath: null,
 			})
-			WelcomeWindow.close()
 		})
+		WelcomeWindow.close()
 	}
 	function openWorkspaceFromWindow() {
 		RunningConfig.emit('openWorkspaceDialog')
+		WelcomeWindow.close()
 	}
 	const WelcomeWindow = new Window({
 		title: 'welcome',

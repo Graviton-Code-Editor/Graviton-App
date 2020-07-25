@@ -30,21 +30,47 @@ import { AddFolderInWorkspace, AddFolderInWorkspaceFromDialog, SetWorkspace, Rem
 function openFolder() {
 	return new Promise((resolve, reject) => {
 		selectFolderDialog()
-			.then(res => {
-				if (!StaticConfig.data.appProjectsLog.find(p => p.directory === res)) {
-					StaticConfig.data.appProjectsLog.splice(0, 0, {
-						directory: res,
-					})
-					StaticConfig.data.appProjectsLog.join()
-				}
-				StaticConfig.triggerChange()
-				resolve(res)
+			.then(projectPath => {
+				RunningConfig.emit('addProjectToLog', { projectPath })
+				resolve(projectPath)
 			})
 			.catch(err => {
 				reject(err)
 			})
 	})
 }
+
+/**
+ * Add a project to the log
+ * @param {string} projectPath - Project's path
+ */
+RunningConfig.on('addProjectToLog', ({ projectPath }) => {
+	const projectPathNormalized = normalizeDir(projectPath)
+	const matches = StaticConfig.data.appProjectsLog.find(({ directory }) => {
+		return directory === projectPathNormalized
+	})
+	if (!matches) {
+		StaticConfig.data.appProjectsLog.splice(0, 0, {
+			directory: projectPathNormalized,
+		})
+		StaticConfig.triggerChange()
+	}
+})
+
+/**
+ * Remove a Project from the log
+ * @param {string} projectPath - Project's path
+ */
+RunningConfig.on('removeProjectFromLog', ({ projectPath }) => {
+	const projectsList = StaticConfig.data.appProjectsLog
+	const project = projectsList.find(({ directory }) => {
+		return directory == projectPath
+	})
+	const projectIndex = projectsList.indexOf(project)
+	console.log(projectPath, projectsList, project, projectIndex)
+	StaticConfig.data.appProjectsLog.splice(projectIndex, 1)
+	StaticConfig.triggerChange()
+})
 
 /**
  * Opens a native dialog,
@@ -227,7 +253,7 @@ function setWorkspaceSettings(settings) {
 RunningConfig.on('openWorkspaceDialog', () => {
 	selectFileDialog()
 		.then(path => {
-			RunningConfig.emit('addLogWorkspace', {
+			RunningConfig.emit('addWorkspaceToLog', {
 				workspacePath: path,
 			})
 			RunningConfig.emit('setWorkspace', {
@@ -243,7 +269,7 @@ RunningConfig.on('openWorkspaceDialog', () => {
  * Add a workspace to the log
  * @param {string} workspaceDir - Workspace's path
  */
-RunningConfig.on('addLogWorkspace', ({ workspacePath }) => {
+RunningConfig.on('addWorkspaceToLog', ({ workspacePath }) => {
 	const workspacePathNormalized = normalizeDir(workspacePath)
 	const matches = StaticConfig.data.appWorkspacesLog.find(workspace => {
 		return workspace == workspacePathNormalized
@@ -290,7 +316,7 @@ RunningConfig.on('saveCurrentWorkspace', function () {
 				RunningConfig.data.workspacePath = resultWorkspace
 				RunningConfig.data.workspaceConfig.name = name
 				saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
-				RunningConfig.emit('addLogWorkspace', {
+				RunningConfig.emit('addWorkspaceToLog', {
 					workspacePath: resultWorkspace,
 				})
 			})
@@ -300,7 +326,7 @@ RunningConfig.on('saveCurrentWorkspace', function () {
 
 /**
  * Remove a workspace from the log
- * @param {string} workspaceDir - Workspace's path
+ * @param {string} workspacePath - Workspace's path
  */
 RunningConfig.on('removeWorkspaceFromLog', ({ workspacePath }: RemoveWorkspace) => {
 	const workspacesList = StaticConfig.data.appWorkspacesLog
@@ -314,7 +340,7 @@ RunningConfig.on('removeWorkspaceFromLog', ({ workspacePath }: RemoveWorkspace) 
 
 /**
  * Rename a workspace
- * @param {string} workspaceDir - Workspace's path
+ * @param {string} workspacePath - Workspace's path
  * @param {string} name - New workspace's name
  */
 RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
@@ -329,7 +355,7 @@ RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
  * Open a Graviton dialog
  * so user can type the
  * new workspace's name
- * @param {string} workspaceDir - Workspace's path
+ * @param {string} workspacePath - Workspace's path
  * @param {string} name - Current workspace's name
  * @param {function} onFinished - A callback
  */
