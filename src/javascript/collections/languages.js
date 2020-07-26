@@ -6,6 +6,7 @@ import german from '../../../languages/german.json'
 import italian from '../../../languages/italian.json'
 import russian from '../../../languages/russian.json'
 import spanish from '../../../languages/spanish.json'
+import polish from '../../../languages/polish.json'
 
 export default {
 	english,
@@ -16,4 +17,5 @@ export default {
 	italian,
 	russian,
 	spanish,
+	polish,
 }
