@@ -1,0 +1,163 @@
+{
+	"name": "Polski",
+	"locale": "pl",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "Plik",
+				"OpenFolder": "Otwórz folder",
+				"OpenFile": "Otwórz plik",
+				"Projects": {
+					"Projects": "Projekty",
+					"OpenProjects": "Otwórz projekty"
+				},
+				"Workspaces": {
+					"Workspaces": "Obszary robocze",
+					"OpenWorkspaces": "Otwórz obszar roboczy",
+					"OpenFromFile": "Otwórz z pliku",
+					"AddFolderToWorkspace": "Dodaj folder do obszaru roboczego",
+					"SaveWorkspace": "Zapisz obszar roboczy"
+				}
+			},
+			"Edit": {
+				"Edit": "Edytuj",
+				"Undo": "Cofnij",
+				"Redo": "Ponów",
+				"FontSize": {
+					"FontSize": "Rozmiar czcionki",
+					"Increase": "Zmniejsz",
+					"Decrease": "Zwiększ"
+				},
+				"Find": "Znajdź",
+				"Replace": "Zamień",
+				"FormatDocument": "Formatuj dokument"
+			},
+			"Tools": {
+				"Tools": "Narzędzia",
+				"OpenSettings": "Ustawienia",
+				"OpenStore": "Sklep",
+				"Panels": {
+					"Panels": "Panele",
+					"NewPanel": "Nowy panel",
+					"CloseCurrentPanel": "Zamknij obecny panel"
+				}
+			},
+			"View": {
+				"View": "Widok",
+				"ToggleSidebar": "Przełącz pasek boczny",
+				"ToggleSidepanel": "Przełącz panel boczny",
+				"ShowSidebar": "Pokaż pasek boczny",
+				"ShowSidepanel": "Pokaż panel boczny",
+				"HideSidebar": "Ukryj pasek boczny",
+				"HideSidepanel": "Ukryj panel boczny"
+			},
+			"Window": {
+				"Window": "Okno",
+				"Zoom": {
+					"Zoom": "Powiększ",
+					"DefaultZoom": "Domyślnie",
+					"IncreaseZoom": "Zwiększ",
+					"DecreaseZoom": "Zmniejsz"
+				},
+				"Debug": {
+					"Debug": "Debuguj",
+					"OpenDebugWindow": "Otwórz okno debugowania"
+				},
+				"OpenDevTools": "Otwórz narzędzia deweloperskie"
+			},
+			"Help": {
+				"Help": "Pomoc",
+				"Contact": "Kontak",
+				"Social": "Social media",
+				"Contributors": "Kontrybutorzy",
+				"Blog": "Blog",
+				"Documentation": "Dokumentacja",
+				"Website": "Strona internetowa",
+				"SourceCode": "Kod źródłowy",
+				"CheckForUpdates": "Sprawdź aktualizacje",
+				"About": "O"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Ustawienia",
+				"Customization": {
+					"Customization": "Dostosowywanie",
+					"Themes": "Motywy",
+					"Iconpacks": "Paczki ikon"
+				},
+				"Advanced": {
+					"Advanced": "Zaawansowane",
+					"FileWatcher": "Obserwator plików",
+					"Autocomplete": "Autouzupełnianie",
+					"WrapLines": "Zawijaj linie",
+					"Indentation": {
+						"Indentation": "Wcięcie",
+						"Space": "Spacja",
+						"Tab": "Tab"
+					}
+				},
+				"Languages": "Języki",
+				"About": {
+					"About": "O",
+					"GravitonDescription": "Graviton jest multi-platformowym edytorem kodu."
+				}
+			},
+			"Store": {
+				"Store": "Sklep",
+				"Home": {
+					"Home": "Strona główna"
+				},
+				"Installed": {
+					"Installed": "Zainstalowane"
+				},
+				"Install": "Zainstaluj",
+				"Update": "Zaktualizuj",
+				"Uninstall": "Odinstaluj",
+				"AnyCompatibleVersion": "Dowolna zgodna wersja."
+			},
+			"Welcome": {
+				"Welcome": "Witaj",
+				"RecentProjects": "Ostatnie projekty",
+				"RecentWorkspaces": "Ostatnie obszary robocze",
+				"NewProject": "Nowy projekt",
+				"OpenWorkspace": "Otwórz obszar roboczy",
+				"OpenFolder": "Otwórz folder"
+			}
+		},
+		"misc": {
+			"LastVersion": "Ostatnia wersja",
+			"InstalledVersion": "Zainstalowana wersja",
+			"About": "O",
+			"Skip": "Pomiń",
+			"Finish": "Koniec",
+			"Continue": "Kontynuuj",
+			"GoBack": "Wróć",
+			"Accept": "Akceptuj",
+			"Cancel": "Anuluj",
+			"version": "wersja",
+			"CopyPath": "Kopiuj ścieżkę",
+			"More": "Więcej",
+			"Copy": "Kopiuj",
+			"Rename": "Zmień nazwę",
+			"Remove": "Usuń",
+			"OpenLocation": "Otwórz lokalizację",
+			"NewFile": "Nowy plik",
+			"NewFolder": "Nowy folder",
+			"Paste": "Wklej",
+			"Author": "Autor",
+			"Exit": "Wyjdź",
+			"Tip": "Wskazówka",
+			"Yes": "Tak",
+			"No": "Nie",
+			"Close": "Zamknij",
+			"Ignore": "Ignoruj"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "Język aplikacji zmieniony.",
+				"restartMessage": "Zrestartuj aplikację aby zmiany zostały w pełni wprowadzone."
+			}
+		}
+	}
+}
