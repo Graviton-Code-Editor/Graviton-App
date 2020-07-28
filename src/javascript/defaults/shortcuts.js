@@ -10,6 +10,7 @@ import configEditor from './tabs/config.editor.js'
 import Settings from './windows/settings'
 import Welcome from './windows/welcome'
 import Store from './windows/store'
+import path from 'path'
 
 RunningConfig.on('command.saveCurrentFile', () => {
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
@@ -149,6 +150,24 @@ RunningConfig.on('command.openCommandPrompt', () => {
 	})
 })
 
+RunningConfig.on('command.openExplorerCommandPrompt', () => {
+	const currentTab = RunningConfig.data.focusedTab
+	const currentTabState = (currentTab && currentTab.state.data) || false
+	const currentFileFolder = (currentTabState && currentTabState.parentFolder && path.normalize(currentTabState.parentFolder)) || ''
+	new CommandPrompt({
+		name: 'explorer',
+		showInput: true,
+		inputDefaultText: currentFileFolder,
+		inputPlaceHolder: "Enter a file's path",
+		options: [],
+		onCompleted(filePath) {
+			RunningConfig.emit('loadFile', {
+				filePath,
+			})
+		},
+	})
+})
+
 const focusCurrentEditor = () => RunningConfig.data.focusedEditor.client.do('doFocus', { instance: RunningConfig.data.focusedEditor.instance })
 const currentEditorExists = () => RunningConfig.data.focusedEditor !== null
 
@@ -232,6 +251,7 @@ RunningConfig.on('command.decreaseFontSize', ({ factor = 2 } = { factor: 2 }) =>
 RunningConfig.on('command.closeCurrentWindow', () => {
 	const windows = document.getElementById('windows').children
 	const selectedWindow = windows[windows.length - 1]
+	if (!selectedWindow) return
 	const { methods } = selectedWindow.props
 	if (windows.length == 0 || !methods) return
 	if (methods.closeWindow) methods.closeWindow()
@@ -266,6 +286,12 @@ appShortCuts.add([
 		return {
 			shortcut: shortcut,
 			handler: event => RunningConfig.emit('command.openEditorCommandPrompt'),
+		}
+	}),
+	...StaticConfig.data.appShortcuts.OpenExplorerCommandPrompt.combos.map(shortcut => {
+		return {
+			shortcut: shortcut,
+			handler: event => RunningConfig.emit('command.openExplorerCommandPrompt'),
 		}
 	}),
 	...StaticConfig.data.appShortcuts.OpenCommandPrompt.combos.map(shortcut => {

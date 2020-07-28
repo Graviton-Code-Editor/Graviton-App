@@ -121,12 +121,11 @@ function getWorkspaceConfig(path): any {
 RunningConfig.on('loadFile', ({ filePath }) => {
 	const fileDir = normalizeDir(filePath)
 	const basename = path.basename(fileDir)
-	const fileFolderPath = path.parse(fileDir).dir
 	const fileExtension = getFormat(fileDir)
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title: basename,
 		directory: fileDir,
-		parentFolder: fileFolderPath,
+		isEditor: true,
 	})
 	if (isCancelled) return //Cancels the tab opening
 	fs.readFile(fileDir, 'UTF-8').then(data => {

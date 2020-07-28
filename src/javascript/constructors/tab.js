@@ -60,6 +60,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 		parentFolder,
 		panel,
 		directory,
+		isEditor,
 	})
 	RunningConfig.on('isATabOpened', ({ directory: tabDir, id: tabID }) => {
 		if ((tabDir && tabDir == directory) || (tabID && tabID == id)) {

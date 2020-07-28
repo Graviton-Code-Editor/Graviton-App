@@ -6,6 +6,7 @@ function CommandPrompt({
 	name = Math.random(),
 	showInput = true,
 	inputPlaceHolder = '',
+	inputDefaultText = '',
 	options = [],
 	scrollOnTab = false,
 	closeOnKeyUp = false,
@@ -28,7 +29,7 @@ function CommandPrompt({
 		<CommandPromptBody mounted="${mounted}" id="${name}" :keydown="${scrolling}">
 			<WindowBackground window="${name}" closeWindow=${() => closeCommandPrompt(name)}/>
 			<div class="container">
-				<input style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
+				<input value="${inputDefaultText}" style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
 				<div/>
 			</div>
 		</CommandPromptBody>
@@ -45,6 +46,7 @@ function CommandPrompt({
 					options,
 					onSelected,
 					onCompleted,
+					command,
 				})
 				closeCommandPrompt(name)
 			case 17:
@@ -56,6 +58,7 @@ function CommandPrompt({
 					options,
 					onSelected,
 					onCompleted,
+					command,
 				})
 				closeCommandPrompt(name)
 				break
@@ -121,6 +124,7 @@ function CommandPrompt({
 			}
 		})
 		const input = target.children[1].children[0]
+		input.selectionStart = input.selectionEnd = input.value.length
 		input.focus()
 	}
 	render(CommandPromptComponent, document.getElementById('windows'))

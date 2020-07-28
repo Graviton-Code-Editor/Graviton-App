@@ -36,6 +36,9 @@ const DEFAULT_STATIC_CONFIGURATION = {
 			OpenEditorCommandPrompt: {
 				combos: ['Ctrl+I'],
 			},
+			OpenExplorerCommandPrompt: {
+				combos: ['Ctrl+O'],
+			},
 			OpenCommandPrompt: {
 				combos: ['Ctrl+P'],
 			},
