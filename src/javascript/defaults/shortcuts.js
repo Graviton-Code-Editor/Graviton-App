@@ -233,7 +233,8 @@ RunningConfig.on('command.closeCurrentWindow', () => {
 	const windows = document.getElementById('windows').children
 	const selectedWindow = windows[windows.length - 1]
 	const { methods } = selectedWindow.props
-	if (windows.length > 0 && methods.closeWindow) methods.closeWindow()
+	if (windows.length == 0 || !methods) return
+	if (methods.closeWindow) methods.closeWindow()
 })
 const appShortCuts = new Shortcuts()
 appShortCuts.add([
