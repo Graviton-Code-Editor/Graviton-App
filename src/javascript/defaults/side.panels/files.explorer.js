@@ -25,7 +25,7 @@ const styleWrapper = style`
 	& .link{
 		text-decoration: underline;
 		cursor: pointer;
-		font-size: 13px;
+		font-size: 12px;
 	}
 `
 

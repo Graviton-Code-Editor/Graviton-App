@@ -14,12 +14,13 @@ const styleWrapper = style`
 		padding: 12px;
 		user-select: none;
 	}
-	& p {
-		margin-top:15px;
-	}
 	& > div:nth-child(1){
 		min-height: auto;	
 		flex: 1;
+		& > p {
+			margin-top:15px;
+			font-size: 13px;
+		}
 	}
 	& > div:nth-child(2){
 		min-height: auto;

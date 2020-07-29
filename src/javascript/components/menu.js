@@ -78,7 +78,7 @@ const styleWrapper = style`
 		color:var(--menuButtonText);
 		border:none;
 		outline:0;
-		font-size:13px;
+		font-size:12px;
 	}
 	& > button:hover{
 		min-height:100%;
@@ -111,8 +111,8 @@ const styleWrapper = style`
 	& > div a{
 		left:0;
 		display:flex;
-		font-size:13px;
-		padding:7px 8px;
+		font-size:12px;
+		padding:6px 7px;
 		min-width:100px;
 		width: auto;
 		border-radius:5px;
