@@ -93,7 +93,9 @@ function mountedAppView(): void {
 	})
 	StaticConfig.keyChanged('appEnableSidebar', value => {
 		const sideBar = <PuffinElement>document.getElementById('sidebar')
+		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
 		sideBar.update()
+		mainPanel.update()
 	})
 	StaticConfig.keyChanged('appEnableSidepanel', value => {
 		const sidePanel = <PuffinElement>document.getElementById('sidepanel')

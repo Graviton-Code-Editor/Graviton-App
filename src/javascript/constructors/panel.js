@@ -68,18 +68,20 @@ function Panel() {
 		RunningConfig.data.focusedPanel = this
 	}
 	function contextmenu(event) {
-		new ContextMenu({
-			list: [
-				{
-					label: 'misc.Close',
-					action: () => {
-						removePanel(this.parentElement)
+		if (!this.children[0]) {
+			new ContextMenu({
+				list: [
+					{
+						label: 'misc.Close',
+						action: () => {
+							removePanel(this.parentElement)
+						},
 					},
-				},
-			],
-			event,
-			parent: this.parentElement,
-		})
+				],
+				event,
+				parent: this.parentElement,
+			})
+		}
 	}
 
 	render(PanelComp, document.getElementById('mainpanel'))

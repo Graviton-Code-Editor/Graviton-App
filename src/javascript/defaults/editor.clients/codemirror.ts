@@ -1,8 +1,12 @@
 import CodeMirror from 'codemirror'
 import emmet from '@emmetio/codemirror-plugin'
+import { state } from '@mkenzo_8/puffin'
 import { EditorClient } from '../../constructors/editorclient'
+import ContextMenu from '../../constructors/contextmenu'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
+import normalizeDir from '../../utils/directory.normalizer'
+import beautifyDir from '../../utils/directory.beautifier'
 
 import 'lsp-codemirror/lib/codemirror-lsp.css'
 
@@ -214,6 +218,7 @@ const CodemirrorClient = new EditorClient(
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
+			CodemirrorEditor.pstate = new state({})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
 			const CtrlDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+Down')
@@ -406,6 +411,9 @@ const CodemirrorClient = new EditorClient(
 			instance.refresh()
 			instance.scrollIntoView()
 		},
+		displayContextMenu({ instance, action }) {
+			instance.pstate.on('displayContextMenu', action)
+		},
 	},
 )
 
@@ -415,8 +423,8 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const lspConnection = new LspWsConnection({
 		serverUri: lspServer,
 		languageId: language.fancy,
-		rootUri: `file:///${folderUrl}`,
-		documentUri: `file:///${fileUri}`,
+		rootUri: `file:///${folderUrl.replace(/\/\//gm, '/')}`,
+		documentUri: `file:///${fileUri.replace(/\/\//gm, '/')}`,
 		documentText: () => CodemirrorEditor.getValue(),
 	}).connect(new WebSocket(lspServer))
 
@@ -424,6 +432,9 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 		lspConnection,
 		{
 			quickSuggestionsDelay: 40,
+			contextMenuProvider(event, buttons) {
+				CodemirrorEditor.pstate.emit('displayContextMenu', { event, buttons })
+			},
 		},
 		CodemirrorEditor,
 	)

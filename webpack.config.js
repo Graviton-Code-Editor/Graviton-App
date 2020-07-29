@@ -13,7 +13,7 @@ module.exports = {
 	},
 	plugins: [
 		new WebpackMessages({
-			name: 'Graviton bundle',
+			name: 'Graviton',
 			logger: str => console.log(`--> ${str}`),
 		}),
 		new HtmlWebpackPlugin({

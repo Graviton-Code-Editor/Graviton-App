@@ -78,10 +78,32 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 			}
 		}
 	})
+	Client.do('displayContextMenu', {
+		instance,
+		action({ event, buttons }) {
+			new ContextMenu({
+				parent: document.body,
+				list: [
+					...buttons,
+					{},
+					{
+						label: 'misc.Copy',
+						action: () => {
+							const selectedText = Client.do('getSelection', {
+								instance,
+								action: () => RunningConfig.emit('hideAllFloatingComps'),
+							})
+							copy(selectedText)
+						},
+					},
+				],
+				event,
+			})
+		},
+	})
 	Client.do('rightclicked', {
 		instance,
 		action(cm, e) {
-			e.stopPropagation()
 			new ContextMenu({
 				parent: document.body,
 				list: [

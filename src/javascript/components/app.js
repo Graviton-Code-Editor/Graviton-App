@@ -33,8 +33,8 @@ const styleWrapper = style`
 			overflow:auto;
 			float: left;
 			left: 0;
-			border-top-right-radius: 0px;
 			border-right:1px solid var(--panelBorder);
+			border-top-right-radius: 8px;
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
 		}
@@ -59,7 +59,11 @@ const styleWrapper = style`
 			width:300px;
 			flex:1;
 			border-top:1px solid var(--panelBorder);
+			border-top-left-radius: 8px;
 			background:var(--mainpanelBackground);
+			&[blocked="true"]{
+				border-top-left-radius: 0px;
+			}
 		}
 		#mainpanel {
 			border-left:1px solid var(--panelBorder);
@@ -67,7 +71,7 @@ const styleWrapper = style`
 				border-top-right-radius:5px;
 			}
 			& > div:nth-child(1){
-				border-top-left-radius:5px;
+				border-top-left-radius:8px;
 				border-left:transparent;
 			}
 		}
