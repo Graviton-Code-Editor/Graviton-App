@@ -9,7 +9,8 @@
 		"target": "es5",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"lib": ["es2019", "dom"]
+		"lib": ["es2019", "dom"],
+		"resolveJsonModule": true
 	},
 	"root": ".",
 	"exclude": ["node_modules", "plugins", "pluginsDist"]

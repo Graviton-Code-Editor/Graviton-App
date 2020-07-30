@@ -197,7 +197,6 @@ class FilesExplorer {
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
 		this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
-			console.log(container)
 			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
