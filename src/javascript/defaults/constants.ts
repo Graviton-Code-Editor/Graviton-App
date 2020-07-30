@@ -2,18 +2,10 @@ import isDev from 'electron-is-dev'
 import path from 'path'
 import StaticConfig from 'StaticConfig'
 
-const APIEndpoint = 'https://graviton-api.herokuapp.com'
-const APIPluginsEndpoint = `${APIEndpoint}/plugins`
+export const APIEndpoint = 'https://graviton-api.herokuapp.com'
+export const APIPluginsEndpoint = `${APIEndpoint}/plugins`
 
-const WorkspaceFilename = 'gv-workspace.json'
+export const WorkspaceFilename = 'graviton.wp.json'
 
-const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', '..', 'resources', 'pluginsDist')
-const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
-
-export  {
-	WorkspaceFilename,
-	pluginsIternalDir,
-	pluginsExternalDir,
-	APIEndpoint,
-	APIPluginsEndpoint
-}
+export const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', '..', 'resources', 'pluginsDist')
+export const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')

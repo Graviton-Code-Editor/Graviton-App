@@ -10,6 +10,7 @@ import fs from 'fs-extra'
 import simpleGit from 'simple-git'
 const path = window.require('path')
 const chokidar = window.require('chokidar')
+import anymatch from 'anymatch'
 
 import { StatusResult } from 'simple-git'
 import { ExplorerItem } from '../types/explorer'
@@ -92,7 +93,7 @@ class FilesExplorer {
 	private createWatcher() {
 		const gitWatcherPath = normalizeDir(path.join(this.folderPath, '.git', 'logs', 'HEAD'))
 		const projectWatcher = chokidar.watch(this.folderPath, {
-			ignored: /(.git)|(node_modules)|(dist)|(.cache)/g,
+			ignored: anymatch(['**/.git/**', '**/node_modules/**', '**/dist/**', '**/.cache/**', ...StaticConfig.data.editorExcludedDirs]),
 			persistent: true,
 			interval: 250,
 			ignoreInitial: true,
@@ -196,6 +197,7 @@ class FilesExplorer {
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
 		this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
+			console.log(container)
 			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {

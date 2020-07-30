@@ -68,6 +68,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 			},
 		},
 		editorsClients: [],
+		editorExcludedDirs: [],
 	},
 }
 

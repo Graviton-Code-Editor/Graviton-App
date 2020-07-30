@@ -549,7 +549,7 @@ class Item {
 		const NewFolderListener = this.explorerState.on('newFolder', ({ containerFolder, folderName }) => {
 			if (this.isFolder && containerFolder === this.itemPath) {
 				this.explorerState.emit('createItem', {
-					container: this,
+					container: this.itemElement,
 					containerFolder,
 					level: this.itemLevel,
 					directory: path.join(containerFolder, folderName),

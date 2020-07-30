@@ -25,7 +25,7 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 			if (!fs.existsSync(itemDirectory)) {
 				fs.mkdirSync(itemDirectory)
 				explorerState.emit('createItem', {
-					container: container,
+					container,
 					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
 					level: container.getAttribute('level'),
 					directory: itemDirectory,
@@ -37,7 +37,7 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 			fs.writeFile(itemDirectory, '', err => {
 				if (err) throw err
 				explorerState.emit('createItem', {
-					container: container,
+					container,
 					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
 					level: container.getAttribute('level'),
 					directory: itemDirectory,
