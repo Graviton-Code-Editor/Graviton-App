@@ -183,7 +183,7 @@ class CommandPrompt {
 			})
 			const input = this.children[1].children[0]
 			input.selectionStart = input.selectionEnd = input.value.length
-			input.focus()
+			setTimeout(() => input.focus(), 1)
 		}
 		render(CommandPromptComponent, document.getElementById('windows'))
 	}

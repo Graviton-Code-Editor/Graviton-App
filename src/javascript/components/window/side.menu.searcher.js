@@ -17,7 +17,7 @@ function SideMenuSearcher() {
 			Input,
 		},
 	})`
-		<Input autofocus="true" mounted="${mounted} :keyup="${writing}" placeHolder="Search" class="${styleWrapper}"/>
+		<Input mounted="${mounted} :keyup="${writing}" placeHolder="Search" class="${styleWrapper}"/>
 	`
 }
 
@@ -26,7 +26,7 @@ function writing() {
 }
 
 function mounted() {
-	this.focus()
+	setTimeout(() => this.focus(), 1)
 }
 
 const filterBy = (container, search) => container.searchBy(search)

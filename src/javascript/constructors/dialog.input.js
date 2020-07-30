@@ -17,13 +17,16 @@ function InputDialog({ title, placeHolder = '' }) {
 				DialogInstance.close()
 			}
 		}
+		function inputMounted() {
+			setTimeout(() => this.focus(), 1)
+		}
 		const component = () => element({
 			components: {
 				Input,
 			},
 		})`
 			<div id="${randomSelector}">
-				<Input autofocus="true" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
+				<Input mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
 			</div>
 		`
 		const DialogInstance = new Dialog({
