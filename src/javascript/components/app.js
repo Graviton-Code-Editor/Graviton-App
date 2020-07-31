@@ -14,10 +14,10 @@ const styleWrapper = style`
 		.CodeMirror *:not(.CodeMirror-dialog) {
 			font-family:var(--codeFont);
 		}
-		.app-container[os="darwin"] #body, .app-container[os="linux"] #body{
+		&[os="darwin"] #body, &[os="linux"] #body{
 			height: calc(100% - 25px);
 		}
-		.app-container[os="win32"] {
+		&[os="win32"] {
 			& #sidebar {
 				border-top-right-radius: 5px;
 			}
