@@ -24,7 +24,7 @@ class Window {
 	 *  @param {string} id - Assign the window an unique identifier.
 	 *
 	 */
-	constructor({ title = '', component: externalComponent, height = '75%', width = '80%', id = '' }: WindowOptions) {
+	constructor({ title = '', component: externalComponent, minHeight = 'auto', minWidth = 'auto', height = '75%', width = '80%', id = '' }: WindowOptions) {
 		if (document.getElementById(id)) {
 			return
 		}
@@ -41,7 +41,7 @@ class Window {
 		})`
 		<WindowContainer id="${id}" win-title="${title}" class="window" closeWindowExternally="${closeWindowExternally}">
 			<WindowBackground closeWindow=${closeWindowExternally}/>
-				<WindowBody style="height:${() => height};width:${() => width};">
+				<WindowBody style="minWidth:${() => minWidth};minHeight:${() => minHeight};height:${() => height};width:${() => width};">
 				<externalComponent/>
 			</WindowBody>
 		</WindowContainer>

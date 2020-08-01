@@ -162,8 +162,10 @@ function pluginWindow(
 	}
 	const pluginWindow = new Window({
 		component: () => component,
-		height: '55%',
-		width: '45%',
+		minWidth: '300px',
+		minHeight: '250px',
+		height: '65%',
+		width: '70%',
 	})
 	pluginWindow.launch()
 }
