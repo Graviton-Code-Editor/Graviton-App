@@ -12,6 +12,8 @@ const path = window.require('path')
 const chokidar = window.require('chokidar')
 import anymatch from 'anymatch'
 
+import { filesWatcherExcludedDirs } from 'Constants'
+
 import { StatusResult } from 'simple-git'
 import { ExplorerItem } from '../types/explorer'
 import PuffinState from '../types/puffin.state'
@@ -91,9 +93,11 @@ class FilesExplorer {
 	 *
 	 */
 	private createWatcher() {
+		const ignored = new RegExp([...filesWatcherExcludedDirs, ...StaticConfig.data.editorExcludedDirs].map(x => `(${x})`).join('|'), 'g')
+
 		const gitWatcherPath = normalizeDir(path.join(this.folderPath, '.git', 'logs', 'HEAD'))
 		const projectWatcher = chokidar.watch(this.folderPath, {
-			ignored: anymatch(['**/.git/**', '**/node_modules/**', '**/dist/**', '**/.cache/**', ...StaticConfig.data.editorExcludedDirs]),
+			ignored,
 			persistent: true,
 			interval: 250,
 			ignoreInitial: true,

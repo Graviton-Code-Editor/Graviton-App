@@ -79,7 +79,6 @@
 		"@mkenzo_8/puffin": "^1.0.5",
 		"@mkenzo_8/puffin-drac": "^0.1.6",
 		"adm-zip": "^0.4.14",
-		"anymatch": "^3.1.1",
 		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",
 		"chokidar": "^3.4.0",
@@ -101,7 +100,7 @@
 		"v8-compile-cache": "^2.1.1"
 	},
 	"devDependencies": {
-		"@gveditor/sdk": "^0.2.0",
+		"@gveditor/sdk": "^0.2.2",
 		"contributor-faces": "^1.0.3",
 		"copy-webpack-plugin": "^6.0.3",
 		"css-loader": "^3.6.0",

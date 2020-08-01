@@ -9,3 +9,5 @@ export const WorkspaceFilename = 'graviton.wp.json'
 
 export const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.resolve(__dirname, '..', '..', '..', 'resources', 'pluginsDist')
 export const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
+
+export const filesWatcherExcludedDirs = ['.git', 'dist', 'node_modules', '.cache']
