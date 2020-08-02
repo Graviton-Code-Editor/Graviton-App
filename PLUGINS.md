@@ -6,7 +6,7 @@ Method 1:
 
 Method 2:
 
-- Download the plugin's release and move it to the .graviton/plugins
+- Download the plugin's release and move it to the .graviton2/plugins
 
 Method 3:
 

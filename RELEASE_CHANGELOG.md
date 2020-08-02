@@ -4,6 +4,9 @@
 
 ### ✔ Changes
 
+- UI tweaks
+- New workspaces file name (graviton.wp.json)
+- Remove projects from the log
 - Added: Tabs show file's icon
 - Added support for new languages:
   - F#
@@ -17,4 +20,6 @@
 
 ### 🤓 Core
 
+- Using Emotion instead of PuffinStyle
+- Slowly moving from JavaScript to TypeScript
 - Using webpack instead of parcel

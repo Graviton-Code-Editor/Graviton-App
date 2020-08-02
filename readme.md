@@ -16,6 +16,8 @@
 
 Graviton is a open source, cross-platform, minimalist-looking code editor.
 
+You can download it from the [releases](https://github.com/Graviton-Code-Editor/Graviton-App/releases) page
+
 ![example screenshot](example.png)
 
 **NOTE:**
