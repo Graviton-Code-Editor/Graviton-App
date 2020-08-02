@@ -35,12 +35,13 @@ function getFileIcon(fileName, fileExt) {
 	}
 }
 
-function Tab({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id }) {
+function Tab({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath: tabProject }) {
 	const itemIconSource = isEditor ? getFileIcon(path.basename(directory), getFormat(directory)) : null
 	const tabDirectory = isEditor ? normalizeDir(directory) : ''
 	const classSelector = `tab${directory ? directory : id}`
 	const parentFolder = isEditor ? path.dirname(tabDirectory) : ''
 	const openedTabs = document.getElementsByClassName(classSelector)
+	const projectPath = tabProject || parentFolder
 	if (openedTabs.length >= 1) {
 		/**
 		 *  Tab already exists so it won't be rendered again
@@ -150,6 +151,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 				client,
 				instance,
 				parentFolder,
+				projectPath,
 			})
 			if (!tabState.data.active) unfocusTabs(this)
 			tabState.data.active = true
@@ -163,6 +165,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 				instance,
 				parentFolder,
 				isEditor,
+				projectPath,
 			})
 			tabState.data.active = false
 		})
@@ -175,6 +178,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 				instance,
 				parentFolder,
 				isEditor,
+				projectPath,
 			})
 		})
 		tabState.on('savedMe', () => {
@@ -192,6 +196,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 					instance,
 					parentFolder,
 					isEditor,
+					projectPath,
 				})
 			}
 		})
@@ -222,6 +227,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 					instance,
 					parentFolder,
 					isEditor,
+					projectPath,
 				})
 			}
 		})
@@ -282,6 +288,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 					client,
 					instance,
 					parentFolder,
+					projectPath,
 				})
 			})
 		} else {
@@ -292,6 +299,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 				client: null,
 				instance: null,
 				parentFolder,
+				projectPath,
 			})
 		}
 		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {

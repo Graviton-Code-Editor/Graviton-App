@@ -188,6 +188,7 @@ class Item {
 				isEditor: true,
 				title: basename,
 				directory: this.itemPath,
+				projectPath: this.projectPath,
 			})
 			if (!isCancelled) {
 				fs.readFile(this.itemPath, 'UTF-8').then(data => {
