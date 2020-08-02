@@ -1,10 +1,10 @@
 import { lang, state } from '@mkenzo_8/puffin'
-import Languages from '../collections/languages.js'
+import Languages from '../collections/languages'
 import StaticConfig from 'StaticConfig'
 import Notification from '../constructors/notification'
 import throwError from './throw.error'
 import PuffinState from '../types/puffin.state.ts'
-import "regenerator-runtime/runtime";
+import 'regenerator-runtime/runtime'
 
 let initialTranslations = {}
 
@@ -30,7 +30,8 @@ function setFallback(notFoundLang: string): void {
 StaticConfig.keyChanged('appLanguage', (newLanguage: string) => {
 	if (Languages[newLanguage]) {
 		LanguageState.data.translations = Languages[newLanguage].translations
-	} else { //Fallback to english if the configured language is not found
+	} else {
+		//Fallback to english if the configured language is not found
 		setFallback(newLanguage)
 	}
 })
