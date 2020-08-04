@@ -14,7 +14,8 @@
 	pre {
 		color: rgb(20, 20, 20);
 	}
-	div.CodeMirror-selected {
+	div.CodeMirror-selected,
+	.CodeMirror-lsp-highlight {
 		background: rgba(78, 153, 252, 0.281);
 		border-radius: 3px;
 	}

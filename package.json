@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.95",
+	"version": "2.0.96",
 	"description": "A code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
@@ -90,7 +90,7 @@
 		"emotion": "^10.0.27",
 		"fs-extra": "^9.0.1",
 		"lodash": "^4.17.19",
-		"lsp-codemirror": "^0.1.8",
+		"lsp-codemirror": "^0.1.9",
 		"node-jsonrpc-lsp": "^0.1.1",
 		"rimraf": "^3.0.2",
 		"semver": "^7.3.2",

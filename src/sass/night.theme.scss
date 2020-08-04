@@ -13,7 +13,6 @@
 	}
 	.CodeMirror-gutters {
 		background-color: transparent !important;
-		color: #f8f8f2 !important;
 		border: none;
 		color: #282a36;
 	}
@@ -34,6 +33,9 @@
 	}
 	.CodeMirror-linenumber {
 		color: #6d8a88;
+	}
+	.CodeMirror-lsp-highlight {
+		background: rgba(241, 187, 37, 0.2);
 	}
 	.CodeMirror-selected {
 		background: rgba(255, 255, 255, 0.1);
