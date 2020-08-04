@@ -33,6 +33,7 @@ function updateKey(client, instance, state, key) {
 function configEditor() {
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title: 'Configuration',
+		isEditor: true,
 	})
 	if (isCancelled) return //Cancels the tab opening
 	const clonedStaticConfig = { ...StaticConfig.data }

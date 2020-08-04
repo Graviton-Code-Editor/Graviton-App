@@ -36,10 +36,10 @@ function getFileIcon(fileName, fileExt) {
 }
 
 function Tab({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath: tabProject }) {
-	const itemIconSource = isEditor ? getFileIcon(path.basename(directory), getFormat(directory)) : null
-	const tabDirectory = isEditor ? normalizeDir(directory) : ''
+	const itemIconSource = isEditor && directory ? getFileIcon(path.basename(directory), getFormat(directory)) : null
+	const tabDirectory = isEditor && directory ? normalizeDir(directory) : ''
 	const classSelector = `tab${directory ? directory : id}`
-	const parentFolder = isEditor ? path.dirname(tabDirectory) : ''
+	const parentFolder = isEditor && directory ? path.dirname(tabDirectory) : ''
 	const openedTabs = document.getElementsByClassName(classSelector)
 	const projectPath = tabProject || parentFolder
 	if (openedTabs.length >= 1) {
@@ -345,6 +345,7 @@ function Tab({ title, isEditor = false, directory, component, panel = RunningCon
 	render(TabEditorComp, panel.children[1])
 	const tabNode = document.getElementsByClassName(classSelector)[0]
 	const tabEditorNode = document.getElementById(randomSelectorEditor)
+	tabState.data.tabEditorElement = tabEditorNode
 	return {
 		tabElement: tabNode,
 		bodyElement: tabEditorNode,

@@ -350,8 +350,7 @@ const CodemirrorClient = new EditorClient(
 			instance.execCommand('redo')
 		},
 		onActive({ instance, action }) {
-			instance.on('cursorActivity', () => action(instance))
-			instance.on('mousedown', () => action(instance))
+			instance.on('cursorActivity', action)
 		},
 		openFind({ instance }) {
 			instance.execCommand('find')
