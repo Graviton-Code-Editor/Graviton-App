@@ -1,46 +1,27 @@
 import { Panel, removePanel } from '../constructors/panel'
-import { registryAllPlugins } from '../utils/plugin.loader'
-import { element, style } from '@mkenzo_8/puffin'
 import { openFolder, openFile } from '../utils/filesystem.ts'
-import path from 'path'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
 import Welcome from './windows/welcome'
-import PluginsRegistry from 'PluginsRegistry'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
-import Languages from '../collections/languages'
-import configEditor from './tabs/config.editor.js'
-import ContextMenu from '../constructors/contextmenu'
 import Notification from '../constructors/notification'
 import Dialog from '../constructors/dialog'
-import gravitonHasUpdate from './store/utils/app.update'
-import Explorer from '../constructors/explorer'
 import SidePanel from '../constructors/side.panel'
 import Play from '../components/icons/play'
 import EnvClient from '../constructors/env.client'
-import packageJSON from '../../../package.json'
 import openDebugClient from './debug.window'
-import { Arctic, Night } from '../collections/themes'
-import { GravitonIconpack } from '../collections/iconpacks'
-import fs from 'fs-extra'
+import packageJSON from '../../../package.json'
 const { openExternal: openLink } = window.require('electron').shell
 const { getCurrentWindow } = window.require('electron').remote
-import './environment.inspectors/npm'
-import './project.services/node'
-import './side.panels/files.explorer'
-import './side.panels/env.explorer'
-import './shortcuts'
-import './status.bar.items/tab.size'
-import './status.bar.items/git'
-import './status.bar.items/zoom'
-import './status.bar.items/debug'
-import '../collections/codemirror'
-import '../collections/plugins'
+import checkForUpdates from '../utils/check.updates'
 
-function init() {
+/*
+ * This creates the default Graviton Menus in the top bar
+ */
+function createMenus() {
 	new Menu({
 		//FILE
 		button: 'menus.File.File',
@@ -273,7 +254,7 @@ function init() {
 			{},
 			{
 				label: 'menus.Window.OpenDevTools',
-				action: () => getCurrentWindow().toggleDevTools(),
+				action: () => (getCurrentWindow() as any).toggleDevTools(),
 			},
 		],
 	})
@@ -429,63 +410,6 @@ function init() {
 			],
 		})
 	}
-	new Panel() //Initial Panel
-	PluginsRegistry.add(Arctic)
-	PluginsRegistry.add(Night)
-	PluginsRegistry.add({
-		PATH: path.join(__dirname, '../../../Graviton'),
-		...GravitonIconpack,
-	})
-
-	RunningConfig.emit('appLoaded')
-
-	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
-
-	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !RunningConfig.data.isDev) {
-		const dir = RunningConfig.data.arguments[0]
-		if (fs.existsSync(dir)) {
-			if (fs.lstatSync(dir).isDirectory()) {
-				RunningConfig.emit('addFolderToRunningWorkspace', {
-					folderPath: RunningConfig.data.arguments[0],
-					replaceOldExplorer: true,
-					workspacePath: null,
-				})
-			} else {
-				RunningConfig.emit('loadFile', {
-					filePath: RunningConfig.data.arguments[0],
-				})
-			}
-		}
-	}
 }
 
-function checkForUpdates(ifNoUpdate) {
-	if (RunningConfig.data.isDev) return
-	gravitonHasUpdate()
-		.then(({ res, version }) => {
-			if (res) {
-				new Notification({
-					title: 'Update available',
-					content: `Version ${version} is available`,
-					buttons: [
-						{
-							label: 'misc.Update',
-							action() {
-								openLink('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
-							},
-						},
-						{
-							label: 'misc.Ignore',
-						},
-					],
-				})
-			} else {
-				ifNoUpdate && ifNoUpdate()
-			}
-		})
-		.catch(err => {
-			console.log('Couldnt fetch updates.', err)
-		})
-}
-
-export default init
+export default createMenus
