@@ -5,10 +5,12 @@ const styleWrapper = style`
 	&{
 		min-height:100%;
 		min-width:100%;
-		position:fixed;
-		top:50%;
-		left:50%;
-		transform:translate(-50%,-50%);
+		top:0;
+		left:0;
+		position: fixed;
+		display:flex;
+		align-items:center;
+		justify-content:center;
 	}
 `
 

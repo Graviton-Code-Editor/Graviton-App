@@ -419,6 +419,7 @@ const CodemirrorClient = new EditorClient(
 function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const fileUri = directory.replace(/\\/gm, '/')
 	const folderUrl = path.dirname(fileUri)
+	console.log(folderUrl.replace(/\/\//gm, '/'), fileUri.replace(/\/\//gm, '/'))
 	const lspConnection = new LspWsConnection({
 		serverUri: lspServer,
 		languageId: language.fancy,

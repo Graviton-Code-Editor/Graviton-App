@@ -6,43 +6,43 @@ import RunningConfig from 'RunningConfig'
 
 function Buttons() {
 	const WindowsStyle = style`
-	& rect{
-		stroke:var(--controlButtonsFill);
-	}
-	& rect.fill{
-		fill:var(--controlButtonsFill);
-	}
-	& button{
-		border:0;
-		margin:0;
-		flex-align:right;
-		min-height:33px;
-		padding:0px 13px;
-		outline:0;
-		left:0;
-		background:transparent;
-	}
-	& button:hover{
-		background:var(--controlButtonsHoveringBackground);
-	}
-	& button:nth-child(3):hover{
-		background:var(--controlCloseButtonHoveringBackground);
-	}
-	& button:nth-child(3):hover rect.fill{
-		fill:var(--controlCloseButtonHoveringFill);
-	}
-	& button:nth-child(3):active{
-		background:var(--controlCloseButtonActiveBackground);
-	}
-	& button:nth-child(3):active rect.fill{
-		fill:var(--controlCloseButtonActiveFill);
-	}
+		& rect{
+			stroke:var(--controlButtonsFill);
+		}
+		& rect.fill{
+			fill:var(--controlButtonsFill);
+		}
+		& button{
+			border:0;
+			margin:0;
+			flex-align:right;
+			min-height:33px;
+			padding:0px 13px;
+			outline:0;
+			left:0;
+			background:transparent;
+		}
+		& button:hover{
+			background:var(--controlButtonsHoveringBackground);
+		}
+		& button:nth-child(3):hover{
+			background:var(--controlCloseButtonHoveringBackground);
+		}
+		& button:nth-child(3):hover rect.fill{
+			fill:var(--controlCloseButtonHoveringFill);
+		}
+		& button:nth-child(3):active{
+			background:var(--controlCloseButtonActiveBackground);
+		}
+		& button:nth-child(3):active rect.fill{
+			fill:var(--controlCloseButtonActiveFill);
+		}
 	`
 	return element`
 		<div class="buttons ${WindowsStyle}">
 			<button title="Minimize" :click="${minimize}">
 				<svg xmlns:xlink="http://www.w3.org/1999/xlink" style="isolation:isolate" viewBox="0 0 24 24" width="24" height="24">
-					<rect x="7" y="11.5" width="10" height="0.8" transform="matrix(1,0,0,1,0,0)" />
+					<rect x="7" y="11.5" width="10" height="0.2" />
 				</svg>
 			</button>
 			<button title="Maximize" :click="${toggleMaximize}">

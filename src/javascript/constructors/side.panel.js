@@ -5,7 +5,7 @@ import { LanguageState } from 'LanguageConfig'
 const styleWrapper = style`
 	& {
 		padding:0px;
-		margin: 1px auto;
+		margin-bottom: 2px;
 		display: flex;
 		justify-content: center;
 		align-items: center;

@@ -17,28 +17,20 @@ const styleWrapper = style`
 		&[os="darwin"] #body, &[os="linux"] #body{
 			height: calc(100% - 25px);
 		}
-		&[os="win32"] {
-			& #sidebar {
-				border-top-right-radius: 5px;
-			}
-			#mainpanel[blocked=false]{
-				border-top-left-radius:5px;
-			}
-		}
 		#sidebar{
-			background: gray;
-			padding:4px;
+			padding:5px;
 			min-width:50px;
 			max-width:50px;
 			overflow:auto;
 			float: left;
 			left: 0;
 			border-right:1px solid var(--panelBorder);
-			border-top-right-radius: 8px;
+			border-top-right-radius:  8px;
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
 		}
 		#sidepanel{
+			border-top-right-radius:  8px;
 			background:var(--bodyBackground);
 			min-width:50px;
 			width:35%;
@@ -81,14 +73,6 @@ const styleWrapper = style`
 			height:0;
 			width:0;
 			display:flex;
-			& > div.window {
-				display:flex;
-				align-items:center;
-				justify-content:center;
-			}
-			& > div.window > div {
-				flex:1;
-			}
 		}
 		#notifications{
 			position:absolute;

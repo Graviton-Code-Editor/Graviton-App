@@ -49,7 +49,7 @@ const App = element({
 
 function handleAppviewState() {
 	if (blurViewApp) {
-		return `filter: blur(${StaticConfig.data.appBlurEffect}px);`
+		return `filter: blur(${StaticConfig.data.appBlurEffect}px); transition: 0s;`
 	} else {
 		return ''
 	}

@@ -5,8 +5,8 @@ const styleWrapper = style`
 	&{
 		border:1px solid var(--windowBorder);
 		width:200px;
-		max-width: 80%;
-		max-height: 75%;
+		max-width: 95%;
+		max-height: 95%;
 		background: var(--windowBackground);
 		border-radius: 12px;
 		overflow:auto;
