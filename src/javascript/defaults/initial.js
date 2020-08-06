@@ -38,6 +38,7 @@ import './status.bar.items/git'
 import './status.bar.items/zoom'
 import './status.bar.items/debug'
 import '../collections/codemirror'
+import '../collections/plugins'
 
 function init() {
 	new Menu({

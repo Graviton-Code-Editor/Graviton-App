@@ -5,17 +5,17 @@ import StaticConfig from 'StaticConfig'
 
 function updateStaticConfigByKey(client, instance) {
 	const newConfig = JSON.parse(client.do('getValue', instance))
-	Object.keys(StaticConfig.data).map(key => {
+	Object.keys(newConfig).map(key => {
 		if (StaticConfig.data[key] !== newConfig[key]) StaticConfig.data[key] = newConfig[key]
 	})
 }
 
-function updateKey(client, instance, state, key) {
+function updateKey(client, instance, key) {
 	if (!StaticConfig.data.miscEnableLiveUpdateInManualConfig) return
 	const newConfig = JSON.parse(client.do('getValue', instance))
-	if (newConfig[key] != state.data[key] && key !== 'appCache') {
+	if (newConfig[key] != StaticConfig.data[key] && key !== 'appCache') {
 		const initialCursor = client.do('getCursorPosition', { instance })
-		newConfig[key] = state.data[key]
+		newConfig[key] = StaticConfig.data[key]
 		client.do('doChangeValue', {
 			instance,
 			value: JSON.stringify(newConfig, null, 2),
@@ -47,13 +47,13 @@ function configEditor() {
 		tabState,
 	})
 	const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize', () => {
-		updateKey(client, instance, StaticConfig, 'editorFontSize')
+		updateKey(client, instance, 'editorFontSize')
 	})
 	const appZoomWatcher = StaticConfig.keyChanged('appZoom', () => {
-		updateKey(client, instance, StaticConfig, 'appZoom')
+		updateKey(client, tabElement, 'appZoom')
 	})
 	const appThemeWatcher = StaticConfig.keyChanged('appTheme', () => {
-		updateKey(client, instance, StaticConfig, 'appTheme')
+		updateKey(client, instance, 'appTheme')
 	})
 	const tabWatcher = tabElement.state.on('destroyed', () => {
 		tabWatcher.cancel()

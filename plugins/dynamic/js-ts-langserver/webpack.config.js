@@ -8,7 +8,7 @@ module.exports = {
 		__dirname: false,
 	},
 	output: {
-		path: path.resolve(__dirname, '..', '..', 'pluginsDist', path.basename(__dirname)),
+		path: path.resolve(__dirname, '..', '..', '..', 'pluginsDist', path.basename(__dirname)),
 		filename: 'server.js',
 		libraryTarget: 'commonjs',
 	},

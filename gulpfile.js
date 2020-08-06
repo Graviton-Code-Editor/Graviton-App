@@ -6,8 +6,9 @@ const rimraf = require('rimraf')
 const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
 const { spawn } = require('child_process')
 
-const pluginsSourceFolder = path.resolve(__dirname, 'plugins')
+const pluginsSourceFolder = path.resolve(__dirname, 'plugins', 'dynamic')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
+console.log(pluginDistFolder)
 
 function updatePluginsDependencies(cb) {
 	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {

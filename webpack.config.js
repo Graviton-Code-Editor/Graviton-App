@@ -83,6 +83,7 @@ module.exports = {
 			LanguageConfig: path.resolve(__dirname, './src/javascript/utils/lang.config.ts'),
 			AppPlatform: path.resolve(__dirname, './src/javascript/utils/platform.ts'),
 			Constants: path.resolve(__dirname, './src/javascript/defaults/constants.ts'),
+			StaticPlugins: path.resolve(__dirname, './plugins/static'),
 		},
 	},
 	target: 'electron-renderer',
