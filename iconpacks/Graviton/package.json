@@ -6,6 +6,9 @@
 	"author": "Marc Espín Sanz",
 	"type": "iconpack",
 	"icons": {
+		"cpp": { 
+			"icon":"./icons/file_type_cpp.svg"
+		},
 		"ts": {
 			"icon": "./icons/ts.lang.svg"
 		},
