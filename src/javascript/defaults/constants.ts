@@ -11,3 +11,6 @@ export const pluginsIternalDir = isDev ? path.resolve(__dirname, '..', '..', '..
 export const pluginsExternalDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
 
 export const filesWatcherExcludedDirs = ['.git', 'dist', 'node_modules', '.cache']
+
+export const NotificationsLiveTime = 6000
+export const NotificationsMaxCount = 3

@@ -5,15 +5,14 @@ import Cross from '../components/icons/cross'
 import RunningConfig from 'RunningConfig'
 import { LanguageState } from '../utils/lang.config'
 
-const NOTIFICATION_LIVE_TIME = 6000 //Notification will fade out in 6 seconds after appear
-const MAX_NOTIFICATIONS_LIVING = 3 //There can only be 3 notifications living at once
+import { NotificationsLiveTime, NotificationsMaxCount } from 'Constants'
 
 function Notification({ title = 'Notification', content = '', buttons = [] }) {
 	const listedMethods = buttons.map(({ action }) => action)
 	function mounted() {
 		setTimeout(() => {
 			this.remove()
-		}, NOTIFICATION_LIVE_TIME)
+		}, NotificationsLiveTime)
 	}
 	const NotificationComp = element({
 		components: {
@@ -59,7 +58,7 @@ function closeNotification(node) {
 
 RunningConfig.on('notificationPushed', notificationDetails => {
 	RunningConfig.data.notifications.push(notificationDetails)
-	if (RunningConfig.data.notifications.length > MAX_NOTIFICATIONS_LIVING) {
+	if (RunningConfig.data.notifications.length > NotificationsMaxCount) {
 		const { element } = RunningConfig.data.notifications[0]
 		RunningConfig.data.notifications.splice(0, 1)
 		RunningConfig.emit('notificationRemoved', { element })
