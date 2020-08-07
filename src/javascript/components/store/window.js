@@ -70,14 +70,14 @@ function pluginWindow(
 	const haveRelease = lastReleaseVersion !== 'Unknown'
 	const component = element({
 		components: {
-			H2: Titles.h2,
+			H1: Titles.h1,
 			SideMenu,
 			Text,
 		},
 	})`
 		<SideMenu default="about">
 			<div>
-				<H2>${getPluginInfo(pluginInfoValid, 'name')}</H2>
+				<H1>${getPluginInfo(pluginInfoValid, 'name')}</H1>
 				<label to="about" lang-string="misc.About"/>
 			</div>
 			<div class="${styleWrapper}">
