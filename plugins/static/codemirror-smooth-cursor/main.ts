@@ -10,29 +10,29 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance }) => {
 	if (!isCM || !isEnabled()) return
 
 	const cursor = createElement(element`
-		<div tabindex="-1" style="pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: 0.1s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
+		<div tabindex="-1" style="pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: 0.12s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
 	`)
 
 	tabElement.state.data.bodyElement.appendChild(cursor)
 
 	instance.on('cursorActivity', () => {
-		setTimeout(refreshCursor, 1)
+		refreshCursor()
 	})
 
 	instance.on('scroll', () => {
-		setTimeout(refreshCursor, 1)
+		refreshCursor()
 	})
 
 	instance.on('change', () => {
-		setTimeout(refreshCursor, 1)
+		refreshCursor()
 	})
 
 	instance.on('viewportChange', () => {
-		setTimeout(refreshCursor, 1)
+		refreshCursor()
 	})
 
 	StaticConfig.keyChanged('editorFontSize', () => {
-		setTimeout(refreshCursor, 1)
+		refreshCursor()
 	})
 
 	function refreshCursor() {
@@ -43,10 +43,10 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance }) => {
 		cursor.style.display = 'block'
 		const cursorElement = instance.getWrapperElement().getElementsByClassName('CodeMirror-cursor')[0]
 		if (!cursorElement) return
-		const { x, y } = cursorElement.getBoundingClientRect()
+		const { top: cursorY, left: cursorX } = instance.cursorCoords(true, 'page')
 		const { clientHeight } = cursorElement
-		cursor.style.top = y
-		cursor.style.left = x
+		cursor.style.top = cursorY
+		cursor.style.left = cursorX
 		cursor.style.height = clientHeight
 		cursor.style.width = StaticConfig.data.editorFontSize / 1.6
 	}
