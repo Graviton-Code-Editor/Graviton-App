@@ -89,8 +89,8 @@ class Item {
 			StaticConfig.data.appEnableExplorerItemsAnimations
 		}" :drop="${dragDroppedListener}" >
 				<button draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}"  :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
-					<ArrowIcon itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
-					<img itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
+					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
+					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
 					<div itemClass="${classSelector}" class="gitStatus" count=""/>
 				</button>
@@ -149,9 +149,10 @@ class Item {
 		const incomingItemClass = ev.dataTransfer.getData('class')
 		const incomingItem: any = document.getElementsByClassName(incomingItemClass)[0]
 		const oldItemPath = incomingItem.instance.itemPath
-		const newItemPath = path.join(destinationItem.instance.itemPath, incomingItem.instance.itemName)
+		const newItemPath = normalizeDir(path.join(destinationItem.instance.itemPath, incomingItem.instance.itemName))
+		const newItemDirectory = normalizeDir(path.dirname(path.join(destinationItem.instance.itemPath, incomingItem.instance.itemName)))
 
-		if (oldItemPath === newItemPath) return
+		if (oldItemPath === newItemPath || newItemDirectory === oldItemPath) return
 
 		fs.rename(oldItemPath, newItemPath)
 			.then(() => {
