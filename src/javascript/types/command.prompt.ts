@@ -9,6 +9,7 @@ interface CommandPromptOptions {
 	onCompleted?: (x) => void
 	onSelected?: (x) => void
 	onScrolled?: (x) => void
+	defaultOption: number
 }
 
 export { CommandPromptOptions }

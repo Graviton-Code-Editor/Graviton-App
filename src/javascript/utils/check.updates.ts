@@ -3,7 +3,7 @@ const { openExternal: openLink } = window.require('electron').shell
 import RunningConfig from 'RunningConfig'
 import Notification from '../constructors/notification'
 
-function checkForUpdates(ifNoUpdate?: any) {
+function checkForUpdates(ifNoUpdate?: any): any {
 	if (RunningConfig.data.isDev && !ifNoUpdate) return
 	gravitonHasUpdate()
 		.then(({ res, version }) => {

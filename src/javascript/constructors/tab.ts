@@ -58,6 +58,7 @@ class Tab {
 			panel,
 			directory: this.directory,
 			isEditor: this.isEditor,
+			title,
 		})
 		RunningConfig.on('isATabOpened', ({ directory: tabDir, id: tabID }) => {
 			if ((tabDir && tabDir == directory) || (tabID && tabID == id)) {

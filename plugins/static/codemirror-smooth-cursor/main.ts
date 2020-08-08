@@ -4,7 +4,8 @@ import { element, createElement } from '@mkenzo_8/puffin'
 
 const isEnabled = () => StaticConfig.data.editorEnableCSC || false
 
-RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance }) => {
+RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor }) => {
+	if (!isEditor) return
 	const isCM = client.name === 'codemirror'
 
 	if (!isCM || !isEnabled()) return

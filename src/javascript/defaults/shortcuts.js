@@ -216,26 +216,57 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 		],
 	})
 })
+
+let openedTabsList = []
+
+RunningConfig.on('aTabHasBeenCreated', ({ tabElement }) => {
+	console.log(tabElement.state.data.title)
+	openedTabsList.push({
+		element: tabElement,
+		title: tabElement.state.data.title,
+	})
+})
+
+RunningConfig.on('aTabHasBeenClosed', ({ tabElement }) => {
+	openedTabsList.splice(getTabIndex(tabElement), 1)
+})
+
+const getTabIndex = element => {
+	let i = null
+	openedTabsList.find((tab, index) => {
+		if (tab.element == element) i = index
+	})
+	return i
+}
+
 RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 	if (RunningConfig.data.focusedTab) {
-		const focusedPanelTabs = RunningConfig.data.focusedTab.getPanelTabs()
+		const focusedTabData = {
+			element: RunningConfig.data.focusedTab,
+			title: RunningConfig.data.focusedTab.state.data.title,
+		}
+
+		const focusedTabIndex = getTabIndex(RunningConfig.data.focusedTab)
+		openedTabsList.splice(focusedTabIndex, 1)
+		openedTabsList.unshift(focusedTabData)
+
 		new CommandPrompt({
 			name: 'tab_switcher',
 			showInput: false,
 			scrollOnTab: true,
 			closeOnKeyUp: true,
-			inputPlaceHolder: 'Enter a command',
+			defaultOption: openedTabsList.length > 1 ? 1 : 0,
 			options: [
-				...focusedPanelTabs.map(tab => {
+				...openedTabsList.map(tab => {
 					return {
-						data: tab.filePath,
-						label: tab.fileName,
+						data: tab.element,
+						label: tab.title,
 					}
 				}),
 			],
 			onSelected(res) {
-				const toFocusTab = focusedPanelTabs.find(tab => {
-					return tab.filePath == res.data
+				const toFocusTab = openedTabsList.find(tab => {
+					return tab.element == res.data
 				})
 				toFocusTab && toFocusTab.element.state.emit('focusedMe')
 			},

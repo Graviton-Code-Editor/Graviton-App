@@ -1,5 +1,5 @@
 import { element } from '@mkenzo_8/puffin'
-import Dialog from './dialog'
+import Dialog from '../../constructors/dialog'
 import { Input } from '@mkenzo_8/puffin-drac'
 
 function InputDialog({ title, placeHolder = '' }) {

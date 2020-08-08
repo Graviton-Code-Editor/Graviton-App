@@ -1,4 +1,4 @@
-import InputDialog from '../../constructors/dialog.input'
+import InputDialog from '../../utils/dialogs/dialog.input'
 import RunningConfig from 'RunningConfig'
 import normalizeDir from '../../utils/directory.normalizer'
 
