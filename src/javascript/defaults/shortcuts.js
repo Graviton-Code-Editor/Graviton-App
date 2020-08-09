@@ -220,7 +220,6 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 let openedTabsList = []
 
 RunningConfig.on('aTabHasBeenCreated', ({ tabElement }) => {
-	console.log(tabElement.state.data.title)
 	openedTabsList.push({
 		element: tabElement,
 		title: tabElement.state.data.title,

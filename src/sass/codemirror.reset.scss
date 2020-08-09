@@ -1,3 +1,13 @@
+.CodeMirror-lsp-guttermarker {
+	width: 1em;
+	height: 1em;
+	max-height: 15px;
+	max-width: 15px;
+	margin: 2px 0.6em;
+	border-radius: 50%;
+	background-color: #d23131;
+}
+
 .CodeMirror-hints {
 	position: absolute;
 	z-index: 10;
