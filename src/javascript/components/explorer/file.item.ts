@@ -635,8 +635,12 @@ class Item {
 }
 
 function getFileIcon(fileName, fileExt) {
+	const filetype = fileName.split('.').slice(1).join('.')
 	if (fileExt === ('png' || 'jpg' || 'ico')) {
 		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
+	}
+	if (RunningConfig.data.iconpack[`${filetype}.type`]) {
+		return RunningConfig.data.iconpack[`${filetype}.type`]
 	}
 	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
 		return RunningConfig.data.iconpack[`file.${fileName}`]
