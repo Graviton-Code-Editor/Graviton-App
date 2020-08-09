@@ -32,6 +32,8 @@ import './status.bar.items/debug'
 import '../collections/codemirror'
 import '../collections/plugins'
 
+const { remote } = require('electron')
+
 export default function init(): void {
 	createMenus()
 
@@ -48,20 +50,22 @@ export default function init(): void {
 
 	StaticConfig.data.appCheckUpdatesInStartup && checkForUpdates()
 
-	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0] && !RunningConfig.data.isDev) {
-		const dir = RunningConfig.data.arguments[0]
-		if (fs.existsSync(dir)) {
-			if (fs.lstatSync(dir).isDirectory()) {
-				RunningConfig.emit('addFolderToRunningWorkspace', {
-					folderPath: RunningConfig.data.arguments[0],
-					replaceOldExplorer: true,
-					workspacePath: null,
-				})
-			} else {
-				RunningConfig.emit('loadFile', {
-					filePath: RunningConfig.data.arguments[0],
-				})
+	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0]) {
+		RunningConfig.data.arguments.map(argv => {
+			const dir = path.resolve(remote.process.cwd(), RunningConfig.data.arguments[0])
+			if (fs.existsSync(argv)) {
+				if (fs.lstatSync(dir).isDirectory()) {
+					RunningConfig.emit('addFolderToRunningWorkspace', {
+						folderPath: dir,
+						replaceOldExplorer: true,
+						workspacePath: null,
+					})
+				} else {
+					RunningConfig.emit('loadFile', {
+						filePath: dir,
+					})
+				}
 			}
-		}
+		})
 	}
 }

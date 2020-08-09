@@ -16,6 +16,7 @@ function openDebugClient() {
 				nodeIntegrationInWorker: true,
 				nodeIntegration: true,
 				webSecurity: true,
+				additionalArguments: ['--mode', 'debug'],
 			},
 			frame: process.platform !== 'win32',
 			minHeight: 320,
@@ -37,7 +38,6 @@ function openDebugClient() {
 				}),
 			)
 		}
-		debugWindow.isDebug = true
 	})
 	debugClient.on('reload', () => {
 		debugWindow && debugWindow.reload()

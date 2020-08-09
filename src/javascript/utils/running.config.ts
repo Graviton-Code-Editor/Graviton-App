@@ -4,12 +4,13 @@ import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import isDev from 'electron-is-dev'
 import { remote } from 'electron'
+import minimist from 'minimist'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 
 const electronWindow: any = remote.getCurrentWindow()
-const electronArguments = electronWindow.argv || []
-let windowDebugMode = electronWindow.isDebug
-if (windowDebugMode == null) windowDebugMode = true
+const electronArguments = remote.process.argv.slice(2) || []
+const parsedElectronArguments = minimist(electronArguments)
+const parsedRendererArguments = minimist(process.argv.slice(5))
 
 const lspServer = new nodeJSONRPC({
 	port: isDev ? 2020 : 2089,
@@ -22,7 +23,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedEditor: null,
 	workspacePath: null,
 	iconpack: {},
-	isDebug: windowDebugMode,
+	isDebug: parsedRendererArguments.mode === 'debug',
 	isDev,
 	workspaceConfig: {
 		name: null,
@@ -33,6 +34,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	editorsRank: [CodemirrorClient, ImageViewerClient],
 	openedWindows: 0,
 	arguments: electronArguments,
+	parsedArguments: parsedElectronArguments,
 	currentStaticConfig: {},
 	envs: [],
 	projectServices: [],

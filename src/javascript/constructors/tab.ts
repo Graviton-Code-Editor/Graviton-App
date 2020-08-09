@@ -216,9 +216,9 @@ class Tab {
 	_addListeners() {
 		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
 			if (this.directory) {
-				const iconNode = this.tabElement.getElementsByClassName('tab-icon')[0]
-				if (iconNode[0]) {
-					iconNode[0].src = getFileIcon(path.basename(this.directory), getFormat(this.directory))
+				const iconNode = this.tabElement.getElementsByClassName('tab-icon')[0] as any
+				if (iconNode) {
+					iconNode.src = getFileIcon(path.basename(this.directory), getFormat(this.directory))
 				}
 			}
 		})
