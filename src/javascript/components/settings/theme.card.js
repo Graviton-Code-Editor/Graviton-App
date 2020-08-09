@@ -11,7 +11,7 @@ function ThemeCard({ themeInfo }) {
 		},
 	})`
 	<Card>
-		<H3>${themeInfo.name}</H3>
+		<H3 style="margin-left: 0;">${themeInfo.name}</H3>
 		<Text>Author: ${themeInfo.author}</Text>
 		<svg height="50" width="50">
 			<circle cx="15" cy="25" stroke-width="2" stroke="${getProperty('textColor', themeInfo.colorsScheme)}" fill="${getProperty('accentColor', themeInfo.colorsScheme)}" r="10"></circle>
