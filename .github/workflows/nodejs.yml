@@ -24,7 +24,7 @@ jobs:
         npm run build:webpack
     - name: Running unit tests
       run: |
-        npm t
+        npm run test:mocha
     - name : Building
       run: |
         npm run build:electron 
