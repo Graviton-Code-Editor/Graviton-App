@@ -23,8 +23,8 @@ jobs:
         npm run build:webpack
     - name: Running unit tests
       uses: GabrielBB/xvfb-action@v1.2
-      run: |
-        npm run test:mocha
+      with:
+        run: npm run test:mocha
     - name : Building
       run: |
         npm run build:electron 
