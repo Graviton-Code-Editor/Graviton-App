@@ -25,6 +25,7 @@ import isDev from 'electron-is-dev'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
+const isTesting: boolean = require('electron').remote.process.env.NODE_ENV === 'test'
 
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
@@ -106,7 +107,7 @@ const registerPluginsIn = where => {
 
 RunningConfig.on('appLoaded', async function () {
 	await registerPluginsIn(pluginsIternalDir)
-	await registerPluginsIn(pluginsExternalDir)
+	if (!isTesting) await registerPluginsIn(pluginsExternalDir)
 	loadAllPlugins()
 	RunningConfig.emit('allPluginsLoaded')
 })

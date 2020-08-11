@@ -88,6 +88,4 @@ function setFontFamily(value) {
 webFrame.setZoomFactor(StaticConfig.data.appZoom)
 setFontFamily(StaticConfig.data.editorFontFamily)
 
-console.log(StaticConfig)
-
 export default StaticConfig

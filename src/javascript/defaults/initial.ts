@@ -31,6 +31,7 @@ import './status.bar.items/zoom'
 import './status.bar.items/debug'
 import '../collections/codemirror'
 import '../collections/plugins'
+import '../utils/test'
 
 const { remote } = require('electron')
 
@@ -53,7 +54,7 @@ export default function init(): void {
 	if (RunningConfig.data.isDebug === false && RunningConfig.data.arguments[0]) {
 		RunningConfig.data.arguments.map(argv => {
 			const dir = path.resolve(remote.process.cwd(), RunningConfig.data.arguments[0])
-			if (fs.existsSync(argv)) {
+			if (fs.existsSync(dir)) {
 				if (fs.lstatSync(dir).isDirectory()) {
 					RunningConfig.emit('addFolderToRunningWorkspace', {
 						folderPath: dir,

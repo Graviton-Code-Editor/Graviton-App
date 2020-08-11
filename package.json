@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.0.96",
+	"version": "2.0.97",
 	"description": "A code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
@@ -41,8 +41,9 @@
 		"build:plugins": "gulp",
 		"build:webpack": "webpack --mode=production",
 		"watch:webpack": "webpack-dev-server --mode=development",
-		"test": "run-p watch:webpack test:spectron ",
-		"test:spectron": "mocha test --delay",
+		"test": "npm run build:webpack && npm run test:mocha ",
+		"test:interactive": "cross-env NODE_ENV=test electron-mocha --renderer --index dist_ui/index.html --interactive",
+		"test:mocha": "cross-env NODE_ENV=test electron-mocha --renderer --index dist_ui/index.html --reporter list",
 		"script:build": "node scripts/build.js && npm run build:plugins",
 		"watch:electron": "electron main.js Graviton --no-sandbox",
 		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
@@ -76,7 +77,7 @@
 	},
 	"dependencies": {
 		"@emmetio/codemirror-plugin": "^1.1.3",
-		"@mkenzo_8/puffin": "^1.0.6",
+		"@mkenzo_8/puffin": "^1.0.7",
 		"@mkenzo_8/puffin-drac": "^0.1.6",
 		"adm-zip": "^0.4.14",
 		"appdata-path": "^1.0.0",
@@ -91,22 +92,25 @@
 		"fs-extra": "^9.0.1",
 		"lodash": "^4.17.19",
 		"lsp-codemirror": "^0.1.9",
+		"minimist": "^1.2.5",
 		"node-jsonrpc-lsp": "^0.1.1",
 		"rimraf": "^3.0.2",
 		"semver": "^7.3.2",
 		"shortcuts": "^1.5.0",
 		"simple-git": "^2.13.2",
 		"trash": "^6.1.1",
-		"v8-compile-cache": "^2.1.1",
-		"minimist": "^1.2.5"
+		"v8-compile-cache": "^2.1.1"
 	},
 	"devDependencies": {
 		"@gveditor/sdk": "^0.2.2",
+		"chai": "^4.2.0",
 		"contributor-faces": "^1.0.3",
 		"copy-webpack-plugin": "^6.0.3",
+		"cross-env": "^7.0.2",
 		"css-loader": "^3.6.0",
 		"electron": "^8.3.4",
 		"electron-builder": "^22.6.0",
+		"electron-mocha-fork": "^9.0.1",
 		"file-loader": "^6.0.0",
 		"gulp": "^4.0.2",
 		"html-webpack-plugin": "^4.3.0",
@@ -128,7 +132,8 @@
 		"webpack-cli": "^3.3.12",
 		"webpack-dev-server": "^3.11.0",
 		"webpack-messages": "^2.0.4",
-		"webpack-node-externals": "^2.5.0"
+		"webpack-node-externals": "^2.5.0",
+		"webpackbar": "^4.0.0"
 	},
 	"build": {
 		"appId": "graviton-editor",

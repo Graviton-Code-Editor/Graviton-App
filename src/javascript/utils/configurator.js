@@ -89,7 +89,7 @@ function checkObject(object, subProperty, configurationStore, level) {
 
 function initConfiguration() {
 	const configurationStore = new electronStore()
-	console.log(configurationStore)
+	if (require('electron').remote.process.env.NODE_ENV !== 'test') console.log(configurationStore)
 	checkObject(DEFAULT_STATIC_CONFIGURATION.config, null, configurationStore, 0)
 	const gravitonConfigPath = configurationStore.get('config').appConfigPath
 	const gravitonPluginsPath = path.join(gravitonConfigPath, 'plugins')

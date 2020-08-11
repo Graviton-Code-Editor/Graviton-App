@@ -2,6 +2,7 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const WebpackMessages = require('webpack-messages')
+const WebpackBar = require('webpackbar')
 
 module.exports = {
 	mode: 'production',
@@ -12,6 +13,9 @@ module.exports = {
 		index: './src/javascript/main.ts',
 	},
 	plugins: [
+		new WebpackBar({
+			name: 'User interface',
+		}),
 		new WebpackMessages({
 			name: 'Graviton',
 			logger: str => console.log(`[webpack] --> ${str}`),

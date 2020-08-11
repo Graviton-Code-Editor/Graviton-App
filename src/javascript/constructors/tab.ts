@@ -162,6 +162,7 @@ class Tab {
 						instance: newInstance,
 						parentFolder: self.parentFolder,
 						projectPath: self.projectPath,
+						isEditor: self.isEditor,
 					})
 				})
 			} else {
@@ -173,6 +174,7 @@ class Tab {
 					instance: null,
 					parentFolder: self.parentFolder,
 					projectPath: self.projectPath,
+					isEditor: self.isEditor,
 				})
 			}
 		}

@@ -48,7 +48,6 @@ function applyTheme(state) {
 		setProperty(key, valueInTheme, key)
 	})
 }
-console.log(ThemeProvider)
 
 RunningConfig.on('allPluginsLoaded', () => {
 	if (!PluginsRegistry.registry.data.list[StaticConfig.data.appTheme]) {
@@ -57,7 +56,7 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-function getProperty(key, keys): string{
+function getProperty(key, keys): string {
 	let lastKey
 	let lastKeyValue
 	let res
@@ -86,7 +85,7 @@ function getProperty(key, keys): string{
 	return res
 }
 
-function setProperty(key, keyValue, name = ''): void{
+function setProperty(key, keyValue, name = ''): void {
 	if (typeof keyValue === 'object') {
 		Object.keys(keyValue).map(subKey => {
 			const subKeyValue = keyValue[subKey]

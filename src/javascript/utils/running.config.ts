@@ -49,6 +49,4 @@ RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
 	})
 })
 
-console.log(RunningConfig)
-
 export default RunningConfig
