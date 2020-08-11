@@ -26,7 +26,7 @@ const styleWrapper = style`
 
 function SplashScreen() {
 	function mounted() {
-		RunningConfig.on('allPluginsLoaded', () => {
+		RunningConfig.once('allPluginsLoaded', () => {
 			console.log('%c 🎉 Loaded successfully. ', 'color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;')
 			this.remove()
 		})

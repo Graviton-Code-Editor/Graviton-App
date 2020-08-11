@@ -616,7 +616,7 @@ class Item {
 				this.itemState.emit('destroyed')
 			}
 		})
-		this.itemState.on('destroyed', () => {
+		this.itemState.once('destroyed', () => {
 			removedProjectFolderListener && removedProjectFolderListener.cancel()
 			reloadItemListener.cancel()
 			TabFocusedListener.cancel()

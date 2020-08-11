@@ -13,8 +13,8 @@ function saveConfiguration() {
 
 const StaticConfig: PuffinState = new state(Object.assign({}, cachedConfiguration.config))
 
-StaticConfig.changed((a, b) => {
-	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(b) && !RunningConfig.data.isDebug) {
+StaticConfig.changed((data, keyName) => {
+	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(keyName) && !RunningConfig.data.isDebug) {
 		saveConfiguration()
 	}
 })

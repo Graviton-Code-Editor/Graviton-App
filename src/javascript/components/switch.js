@@ -46,7 +46,7 @@ const styleWrapper = style`
 `
 
 function Switch({ data }) {
-	let { default: defaultStatus, label } = data
+	const { default: defaultStatus, label } = data
 	return element`
 		<div :click="${toggled}" mounted="${mounted}" status="${() => defaultStatus}" class="${styleWrapper}">
 			<div class="wrapper">

@@ -369,7 +369,7 @@ const CodemirrorClient = new EditorClient(
 		setFontSize({ instance, element, fontSize }) {
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = fontSize
 			instance.refresh()
-			//instance.scrollIntoView()
+			instance.scrollIntoView()
 		},
 		getCursorPosition({ instance }) {
 			const { line, ch } = instance.getCursor()

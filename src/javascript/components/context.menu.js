@@ -30,6 +30,7 @@ const styleWrapper = style`
 		display:block;
 		width:100%;
 		text-align:left;
+		font-size: 12px;
 	}
 	& >  button:hover{
 		background:var(--contextmenuButtonHoveringBackground);

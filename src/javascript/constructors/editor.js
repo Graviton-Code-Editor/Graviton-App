@@ -219,14 +219,13 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		client: Client,
 		instance,
 	})
-	const tabDestroyedWatcher = tabElement.state.on('destroyed', () => {
+	tabElement.state.once('destroyed', () => {
 		fileWatcher.cancel()
 		appThemeWatcher.cancel()
 		editorTabSizeWatcher.cancel()
 		editorFontSizeWatcher.cancel()
 		tabFocusedWatcher.cancel()
 		focusedEditorWatcher.cancel()
-		tabDestroyedWatcher.cancel()
 		tabSavedWatcher.cancel()
 		editorFontFamilyWatcher.cancel()
 	})
