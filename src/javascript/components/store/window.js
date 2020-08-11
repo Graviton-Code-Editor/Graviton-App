@@ -5,7 +5,7 @@ import { css as style } from 'emotion'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState, getTranslation } from 'LanguageConfig'
 import SideMenu from '../window/side.menu'
-import installPlugin from '../../defaults/store/utils/install.plugin'
+import { installPluginFromURL } from '../../defaults/store/utils/install.plugin'
 import uninstallPlugin from '../../defaults/store/utils/uninstall.plugin'
 import Window from '../../constructors/window'
 import storeButton from './button'
@@ -140,7 +140,7 @@ function pluginWindow(
 		}
 	}
 	function update() {
-		installPlugin({
+		installPluginFromURL({
 			id: pluginInfoValid.id,
 			release: pluginCompatibleRelease.url,
 		}).then(() => {
@@ -148,7 +148,7 @@ function pluginWindow(
 		})
 	}
 	function install() {
-		installPlugin({
+		installPluginFromURL({
 			id: pluginInfoValid.id,
 			release: pluginCompatibleRelease.url,
 		}).then(() => {

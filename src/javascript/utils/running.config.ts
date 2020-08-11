@@ -8,9 +8,9 @@ import minimist from 'minimist'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 
 const electronWindow: any = remote.getCurrentWindow()
-const electronArguments = remote.process.argv.slice(2) || []
+const electronArguments = isDev ? remote.process.argv.slice(2) : remote.process.argv.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)
-const parsedRendererArguments = minimist(process.argv.slice(5))
+const parsedRendererArguments = isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
 
 const lspServer = new nodeJSONRPC({
 	port: isDev ? 2020 : 2089,

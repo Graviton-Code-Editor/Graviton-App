@@ -189,6 +189,10 @@
 			{
 				"ext": "css",
 				"role": "Editor"
+			},
+			{
+				"ext": "gvp",
+				"role": "Editor"
 			}
 		]
 	}

@@ -90,6 +90,14 @@ ipcMain.on('download-plugin', (event, { url, id, dist }) => {
 		.catch(err => console.log(err))
 })
 
+ipcMain.on('install-gvp', (event, { path: gvpPath, name, dist }) => {
+	extractZip(gvpPath, name, dist)
+		.then(() => {
+			event.reply('gvp-installed', true)
+		})
+		.catch(err => console.log(err))
+})
+
 function getZip(url, pluginId, dist) {
 	return new Promise((resolve, reject) => {
 		axios({

@@ -2,9 +2,10 @@ import path from 'path'
 import StaticConfig from 'StaticConfig'
 const { ipcRenderer } = window.require('electron')
 
-function installPlugin({ id, release }) {
+const pluginsDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
+
+export function installPluginFromURL({ id, release }) {
 	return new Promise((resolve, reject) => {
-		const pluginsDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
 		ipcRenderer.on('plugin-installed', data => {
 			resolve(data)
 		})
@@ -16,4 +17,15 @@ function installPlugin({ id, release }) {
 	})
 }
 
-export default installPlugin
+export function installPluginFromGVP({ path, name }) {
+	return new Promise((resolve, reject) => {
+		ipcRenderer.on('gvp-installed', data => {
+			resolve(data)
+		})
+		ipcRenderer.send('install-gvp', {
+			path,
+			name,
+			dist: pluginsDir,
+		})
+	})
+}

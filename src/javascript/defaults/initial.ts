@@ -20,6 +20,8 @@ import { GravitonIconpack } from '../collections/iconpacks'
 import fs from 'fs-extra'
 const { openExternal: openLink } = window.require('electron').shell
 import createMenus from './menus'
+import getFormat from '../utils/format.parser'
+import { installPluginFromGVP } from './store/utils/install.plugin'
 import './environment.inspectors/npm'
 import './project.services/node'
 import './side.panels/files.explorer'
@@ -62,9 +64,27 @@ export default function init(): void {
 						workspacePath: null,
 					})
 				} else {
-					RunningConfig.emit('loadFile', {
-						filePath: dir,
-					})
+					const fileFormat = getFormat(dir)
+					const pluginName = path.parse(dir).name
+					if (fileFormat === 'gvp') {
+						new Notification({
+							title: `Store`,
+							content: `Installing ${pluginName}`,
+						})
+						installPluginFromGVP({
+							path: dir,
+							name: pluginName,
+						}).then(() => {
+							new Notification({
+								title: `Store`,
+								content: `Installed ${pluginName}`,
+							})
+						})
+					} else {
+						RunningConfig.emit('loadFile', {
+							filePath: dir,
+						})
+					}
 				}
 			}
 		})
