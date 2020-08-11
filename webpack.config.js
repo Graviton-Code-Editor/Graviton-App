@@ -91,6 +91,8 @@ module.exports = {
 			Types: path.resolve(__dirname, './src/javascript/types'),
 			Constructors: path.resolve(__dirname, './src/javascript/constructors'),
 			Components: path.resolve(__dirname, './src/javascript/components'),
+			Assets: path.resolve(__dirname, './assets'),
+			Root: __dirname,
 		},
 	},
 	target: 'electron-renderer',

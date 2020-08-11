@@ -8,12 +8,8 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import Notification from '../constructors/notification'
-import Dialog from '../constructors/dialog'
-import SidePanel from '../constructors/side.panel'
-import Play from '../components/icons/play'
-import EnvClient from '../constructors/env.client'
 import openDebugClient from './debug.window'
-import packageJSON from '../../../package.json'
+import packageJSON from 'Root/package.json'
 const { openExternal: openLink } = window.require('electron').shell
 const { getCurrentWindow } = window.require('electron').remote
 import checkForUpdates from '../utils/check.updates'
@@ -347,69 +343,6 @@ function createMenus() {
 			},
 		],
 	})
-	if (RunningConfig.data.isDev) {
-		new Menu({
-			//HELP
-			button: 'Dev',
-			list: [
-				{
-					label: 'Notification test',
-					action: () => {
-						new Notification({
-							title: 'Notification',
-							content: 'Notification body',
-							buttons: [
-								{
-									label: 'Button 1',
-									action() {
-										console.log('Clicked button 1')
-									},
-								},
-								{
-									label: 'Button 2',
-									action() {
-										console.log('Clicked button 2')
-									},
-								},
-							],
-						})
-					},
-				},
-				{
-					label: 'Dialog test',
-					action: () => {
-						const testDialog = new Dialog({
-							title: 'Title',
-							content: 'Dialog body',
-							buttons: [
-								{
-									label: 'Button 1',
-									action() {
-										console.log('Clicked button 1')
-									},
-								},
-								{
-									label: 'Button 2',
-									action() {
-										console.log('Clicked button 2')
-									},
-								},
-							],
-						})
-						testDialog.launch()
-					},
-				},
-				{
-					label: 'Env client test',
-					action() {
-						new EnvClient({
-							name: 'Test',
-						})
-					},
-				},
-			],
-		})
-	}
 }
 
 export default createMenus
