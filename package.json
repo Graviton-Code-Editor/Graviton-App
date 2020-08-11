@@ -124,7 +124,6 @@
 		"sass": "^1.26.10",
 		"sass-loader": "^9.0.2",
 		"shebang-loader": "0.0.1",
-		"spectron": "^10.0.1",
 		"style-loader": "^1.2.1",
 		"ts-loader": "^8.0.0",
 		"typescript": "^3.9.6",
