@@ -18,12 +18,16 @@ jobs:
     - name: Installing dependencies
       run: |
         npm i
+    - name: Building UI
+      run: |
+        npm run script:build
+        npm run build:webpack
     - name: Running unit tests
       run: |
         npm t
     - name : Building
       run: |
-        npm run build 
+        npm run build:electron 
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
