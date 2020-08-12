@@ -2,6 +2,7 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Window from 'Constructors/window'
 import Dialog from 'Constructors/dialog'
+import Notification from 'Constructors/notification'
 import * as puffin from '@mkenzo_8/puffin'
 
 if (require('electron').remote.process.env.NODE_ENV !== 'test') {
@@ -15,7 +16,9 @@ if (require('electron').remote.process.env.NODE_ENV !== 'test') {
 		Window,
 		Dialog,
 		puffin,
+		Notification,
 	}
+	console.log(Notification)
 	RunningConfig.on('allPluginsLoaded', () => {
 		setTimeout(function () {
 			RunningConfig.emit('test.bootedUp', {})

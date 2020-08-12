@@ -1,5 +1,5 @@
 const { remote } = require('electron')
-const { RunningConfig, StaticConfig, Dialog, Window, puffin } = window.test
+const { RunningConfig, StaticConfig, Dialog, Window, puffin, Notification } = window.test
 const { expect } = require('chai')
 
 describe('Main process', function () {
@@ -82,6 +82,20 @@ describe('Constructors', function () {
 			expect(dialogHTML).to.include('Hello Earth')
 
 			return dialogElement
+		})
+	})
+	describe('Notification', function () {
+		it('With [title, content]', function () {
+			new Notification({
+				title: 'Title',
+				content: 'And content',
+			})
+			const notificationElement = document.getElementById('notifications').children[0]
+			const notificationHTML = notificationElement.innerHTML
+			expect(notificationHTML).to.include('Title')
+			expect(notificationHTML).to.include('And content')
+
+			return notificationElement
 		})
 	})
 })
