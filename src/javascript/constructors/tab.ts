@@ -8,26 +8,26 @@ import WarningDialog from '../utils/dialogs/warning'
 import normalizeDir from '../utils/directory.normalizer'
 import getFormat from '../utils/format.parser'
 import PuffinElement from '../types/puffin.element'
-import PuffinState from '../types/puffin.state'
+import { PuffinState } from '../types/puffin.state'
 import { TabOptions } from '../types/tab'
 
 const fs = window.require('fs-extra')
 const path = window.require('path')
 
 class Tab {
-	tabElement: PuffinElement
-	bodyElement: PuffinElement
-	tabState: PuffinState
-	isCancelled: boolean
-	isEditor: boolean
-	panel: PuffinElement
-	directory: string
-	itemIconSource: any
-	classSelector: string
-	parentFolder: string
-	projectPath: any
-	client: any
-	instance: any
+	public tabElement: PuffinElement
+	public bodyElement: PuffinElement
+	public tabState: PuffinState
+	public isCancelled: boolean
+	public isEditor: boolean
+	public panel: PuffinElement
+	public directory: string
+	public itemIconSource: any
+	public classSelector: string
+	public parentFolder: string
+	public projectPath: any
+	public client: any
+	public instance: any
 
 	constructor({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath }: TabOptions) {
 		this.itemIconSource = isEditor && directory ? getFileIcon(path.basename(directory), getFormat(directory)) : null

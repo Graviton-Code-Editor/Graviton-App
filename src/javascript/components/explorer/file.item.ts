@@ -21,7 +21,7 @@ import path from 'path'
 const trash = window.require('trash')
 
 import PuffinElement from '../../types/puffin.element'
-import PuffinState from '../../types/puffin.state'
+import { PuffinState } from '../../types/puffin.state'
 
 class Item {
 	private itemClass: string

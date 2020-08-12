@@ -16,7 +16,7 @@ import { filesWatcherExcludedDirs } from 'Constants'
 
 import { StatusResult } from 'simple-git'
 import { ExplorerItem } from '../types/explorer'
-import PuffinState from '../types/puffin.state'
+import { PuffinState } from 'Types/puffin.state'
 import PuffinElement from '../types/puffin.element'
 
 class FilesExplorer {
@@ -176,7 +176,7 @@ class FilesExplorer {
 		 * The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
 		 * The Git watcher just watchs the commit message file.
 		 */
-		this.explorerState.on('stopedWatcher', () => {
+		const stopedWatcherListener = this.explorerState.on('stopedWatcher', () => {
 			if (this.filesWatcher) {
 				this.filesWatcher.close()
 				this.filesWatcher = null
@@ -186,21 +186,21 @@ class FilesExplorer {
 				this.gitWatcher = null
 			}
 		})
-		this.explorerState.on('startedWatcher', () => {
+		const startedWatcherListener = this.explorerState.on('startedWatcher', () => {
 			if (!this.filesWatcher) {
 				const watchers = this.createWatcher()
 				this.filesWatcher = watchers.projectWatcher
 				this.gitWatcher = watchers.gitWatcher
 			}
 		})
-		StaticConfig.on('stopWatchers', () => {
+		const stopWatchersListener = StaticConfig.on('stopWatchers', () => {
 			this.explorerState.emit('stopedWatcher')
 		})
-		StaticConfig.on('startWatchers', () => {
+		const startWatchersListener = StaticConfig.on('startWatchers', () => {
 			this.explorerState.emit('startedWatcher')
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
-		this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
+		const createItemListener = this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
 			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
@@ -235,6 +235,12 @@ class FilesExplorer {
 					render(hotItem, container.children[1])
 				}
 			}
+		})
+		this.explorerState.once('destroyed', () => {
+			stopedWatcherListener.cancel()
+			startedWatcherListener.cancel()
+			stopWatchersListener.cancel()
+			startWatchersListener.cancel()
 		})
 	}
 	/*

@@ -1,5 +1,5 @@
 import { state } from '@mkenzo_8/puffin'
-import PuffinState from '../types/puffin.state'
+import { PuffinState } from 'Types/puffin.state'
 import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import isDev from 'electron-is-dev'

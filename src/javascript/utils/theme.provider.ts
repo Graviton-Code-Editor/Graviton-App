@@ -2,7 +2,7 @@ import { state } from '@mkenzo_8/puffin'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
-import PuffinState from '../types/puffin.state'
+import { PuffinState } from 'Types/puffin.state'
 
 let currentTheme = StaticConfig.data.appTheme
 

@@ -7,7 +7,7 @@ import WindowBackground from '../components/window/background'
 import WindowContainer from '../components/window/container'
 
 import PuffinElement from '../types/puffin.element'
-import PuffinState from '../types/puffin.state'
+import { PuffinState, PuffinEventInstance } from '../types/puffin.state'
 import { WindowOptions } from '../types/window'
 
 class Window {
@@ -54,8 +54,8 @@ class Window {
 	 * @param {function} callback - Function to be executed when the event is emitted.
 	 *
 	 */
-	public on(event: string, callback: () => void): void {
-		this.WindowState.on(event, callback)
+	public on(event: string, callback: () => void): PuffinEventInstance {
+		return this.WindowState.on(event, callback)
 	}
 	/**
 	 * Open the window.

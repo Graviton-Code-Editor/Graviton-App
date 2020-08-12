@@ -5,7 +5,7 @@ const cachedConfiguration = getConfiguration()
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
 const path = require('path')
-import PuffinState from '../types/puffin.state'
+import { PuffinState } from 'Types/puffin.state'
 
 function saveConfiguration() {
 	cachedConfiguration.store.set('config', StaticConfig.data)

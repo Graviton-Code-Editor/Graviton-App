@@ -1,12 +1,12 @@
 import { element } from '@mkenzo_8/puffin'
 import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
 import { LanguageState } from '../utils/lang.config'
-
 import Window from './window'
 import DialogBody from '../components/dialog/dialog'
 
 import { DialogOptions, DialogButton } from '../types/dialog'
 import { WindowInstance } from '../types/window'
+import { PuffinState, PuffinEventInstance } from 'Types/puffin.state'
 
 class Dialog {
 	private WindowInstance: WindowInstance
@@ -42,8 +42,8 @@ class Dialog {
 			width,
 		})
 	}
-	public on(event: any, callback: any): any {
-		this.WindowInstance.on(event, callback)
+	public on(event: any, callback: () => void): PuffinEventInstance {
+		return this.WindowInstance.on(event, callback)
 	}
 	public launch(): any {
 		this.WindowInstance.launch()

@@ -2,8 +2,8 @@ import { state, render, element } from '@mkenzo_8/puffin'
 import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
-import PuffinState from '../types/puffin.state'
-import { CommandPromptOptions } from '../types/command.prompt'
+import { PuffinState } from 'Types/puffin.state'
+import { CommandPromptOptions } from 'Types/command.prompt'
 
 class CommandPrompt {
 	private CPName: String

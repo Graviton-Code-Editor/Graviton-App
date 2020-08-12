@@ -219,7 +219,7 @@ function Editor({ bodyElement, tabElement, value, language, tabState, theme, dir
 		client: Client,
 		instance,
 	})
-	tabElement.state.once('destroyed', () => {
+	tabState.once('destroyed', () => {
 		fileWatcher.cancel()
 		appThemeWatcher.cancel()
 		editorTabSizeWatcher.cancel()
