@@ -288,6 +288,8 @@ const CodemirrorClient = new EditorClient(
 				}
 			})
 
+			handleCMAutocomplete(CodemirrorEditor, language)
+
 			return {
 				instance: CodemirrorEditor,
 			}
@@ -441,6 +443,22 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	return {
 		lspConnection,
 		lspAdapter,
+	}
+}
+
+function handleCMAutocomplete(CodemirrorEditor, { fancy }): void {
+	if (fancy === 'html') {
+		CodemirrorEditor.on('change', function (cm, change) {
+			const location = CodemirrorEditor.getDoc().getCursor('end')
+			const code = CodemirrorEditor.getValue()
+			const line = CodemirrorEditor.getLine(location.line)
+			const typedCharacter = line[location.ch - 1]
+			if (typedCharacter == '<') {
+				CodeMirror.commands.autocomplete(CodemirrorEditor, null, {
+					completeSingle: false,
+				})
+			}
+		})
 	}
 }
 
