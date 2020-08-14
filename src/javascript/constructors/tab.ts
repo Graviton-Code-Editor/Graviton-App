@@ -10,6 +10,7 @@ import getFormat from '../utils/format.parser'
 import PuffinElement from '../types/puffin.element'
 import { PuffinState } from '../types/puffin.state'
 import { TabOptions } from '../types/tab'
+console.log(state)
 
 const fs = window.require('fs-extra')
 const path = window.require('path')

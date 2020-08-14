@@ -92,7 +92,7 @@ class Editor implements EditorOptions {
 			}
 		})
 
-		const appThemeWatcher = StaticConfig.keyChanged('appTheme', function () {
+		const appThemeWatcher = StaticConfig.keyChanged('appTheme', () => {
 			this.client.do('setTheme', {
 				instance: this.instance,
 				theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
@@ -121,13 +121,6 @@ class Editor implements EditorOptions {
 			this.client.do('refresh', {
 				instance: this.instance,
 			})
-		})
-		const focusedEditorWatcher = RunningConfig.keyChanged('focusedEditor', editor => {
-			if (editor) {
-				CursorPositionStatusBarItem.show()
-			} else {
-				CursorPositionStatusBarItem.hide()
-			}
 		})
 		const editorWrapLinesWatcher = StaticConfig.keyChanged('editorWrapLines', value => {
 			if (value) {
@@ -164,7 +157,6 @@ class Editor implements EditorOptions {
 			editorTabSizeWatcher.cancel()
 			editorFontSizeWatcher.cancel()
 			tabFocusedWatcher.cancel()
-			focusedEditorWatcher.cancel()
 			tabSavedWatcher.cancel()
 			editorFontFamilyWatcher.cancel()
 		})
