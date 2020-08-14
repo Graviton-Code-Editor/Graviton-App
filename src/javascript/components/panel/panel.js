@@ -28,7 +28,7 @@ const styleWrapper = style`
 	& .tabsbar::-webkit-scrollbar {
 		height:4px;
 	}
-	& > div:nth-child(2){
+	& > div:nth-child(2)[client="codemirror"]{
 		flex:1;
 		height: 100%;
 		max-height:100%;
