@@ -79,7 +79,7 @@ class Editor implements EditorOptions {
 						buttons: [
 							{
 								label: 'Update',
-								action() {
+								action: () => {
 									this.client.do('doChangeValue', {
 										instance: this.instance,
 										value: newData,
@@ -231,7 +231,7 @@ class Editor implements EditorOptions {
 		this.client.do('onActive', {
 			instance: this.instance,
 			action: instance => {
-				if (this.instance.parentElement) {
+				if (this.tabElement.parentElement) {
 					if (RunningConfig.data.focusedEditor == null || RunningConfig.data.focusedEditor.instance != this.instance) this.focusEditor()
 					if (RunningConfig.data.focusedPanel != this.tabState.data.panel) RunningConfig.data.focusedPanel = this.tabState.data.panel
 					if (RunningConfig.data.focusedTab != this.tabElement) RunningConfig.data.focusedTab = this.tabElement
