@@ -18,18 +18,19 @@ export default function WorkspacesPage({ closeWindow }): PuffinComponent {
 	})`
 		<CardsListContainer href="workspaces">
 			<div>
-				${StaticConfig.data.appWorkspacesLog.map(workspacePath => {
-					const workspaceConfig = getWorkspaceConfig(workspacePath)
-					if (workspaceConfig) {
-						const { name, folders = [] } = workspaceConfig
-						const listContent = folders.map(({ name, path }) => {
-							return element`<li>· ${parseDirectory(name)}</li>`
-						})
-						return element({
-							components: {
-								Card,
-							},
-						})`
+				${StaticConfig.data.appWorkspacesLog
+					.map(workspacePath => {
+						const workspaceConfig = getWorkspaceConfig(workspacePath)
+						if (workspaceConfig) {
+							const { name, folders = [] } = workspaceConfig
+							const listContent = folders.map(({ name, path }) => {
+								return element`<li>· ${parseDirectory(name)}</li>`
+							})
+							return element({
+								components: {
+									Card,
+								},
+							})`
 							<Card :click="${openWorkspace}" directory="${workspacePath}" :contextmenu="${contextMenuWorkspace}">
 								<b>${name}</b>
 								<ul>
@@ -37,8 +38,9 @@ export default function WorkspacesPage({ closeWindow }): PuffinComponent {
 								</ul>
 							</Card>
 						`
-					}
-				})}
+						}
+					})
+					.filter(Boolean)}
 			</div>
 			<div>
 				<Button :click="${openWorkspaceFromWindow}" lang-string="windows.Welcome.OpenWorkspace"/>
