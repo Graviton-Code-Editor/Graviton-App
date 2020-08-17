@@ -32,8 +32,3 @@ jobs:
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    - name : Release artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        path: dist/*
-      
