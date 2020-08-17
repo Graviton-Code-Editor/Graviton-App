@@ -5,10 +5,10 @@ const webpack = require('webpack')
 const rimraf = require('rimraf')
 const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
 const { spawn } = require('child_process')
+const { ncp } = require('ncp')
 
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins', 'dynamic')
 const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
-console.log(pluginDistFolder)
 
 function updatePluginsDependencies(cb) {
 	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {
@@ -19,7 +19,7 @@ function updatePluginsDependencies(cb) {
 				stdio: 'inherit',
 				shell: true,
 			})
-			proc.on('close', a => {
+			proc.on('close', () => {
 				if (pluginsFolders.length - 1 === i) {
 					cb()
 				}
@@ -50,7 +50,7 @@ function createPluginFolder(pluginName) {
 }
 
 async function pluginsWebpack() {
-	return await new Promise(async (resolve, reject) => {
+	return await new Promise(async resolve => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach((pluginName, i) => {
 			createPluginFolder(pluginName)
@@ -64,7 +64,7 @@ async function pluginsWebpack() {
 }
 
 async function pluginsSDK() {
-	return await new Promise(async (resolve, reject) => {
+	return await new Promise(async resolve => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const bundleConfig = {
@@ -85,7 +85,7 @@ async function pluginsSDK() {
 }
 
 async function pluginsTasks() {
-	return await new Promise(async (resolve, reject) => {
+	return await new Promise(async resolve => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const distFolder = path.join(pluginDistFolder, pluginName)
@@ -102,4 +102,12 @@ async function pluginsTasks() {
 	})
 }
 
-exports.default = series(updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks)
+async function copyLSPCMIcons() {
+	return await new Promise(async resolve => {
+		ncp(path.join(__dirname, 'node_modules/lsp-codemirror/lib/icons'), path.join(__dirname, 'dist_ui', 'icons'), () => {
+			resolve()
+		})
+	})
+}
+
+exports.default = series(updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons)

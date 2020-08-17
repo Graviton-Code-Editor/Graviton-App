@@ -3,11 +3,11 @@
 	"id": "js-ts-langserver",
 	"author": "Marc Espín Sanz",
 	"version": "1.0.0",
-	"description": "JavaScript and TypeScript language server support",
+	"description": "JavaScript and TypeScript LSP support.",
 	"main": "index.js",
-	"mainSrc": "index.js",
-	"mainDev": "dist/index.js",
+	"mainSrc": "src/index.js",
+	"mainDev": "index.js",
 	"dependencies": {
-		"javascript-typescript-langserver": "^2.11.3"
+		"typescript-language-server": "^0.4.0"
 	}
 }

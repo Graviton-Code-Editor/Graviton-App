@@ -11,7 +11,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	if (!isCM || !isEnabled()) return
 
 	const cursor = createElement(element`
-		<div tabindex="-1" style="pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: 0.12s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
+		<div tabindex="-1" style="pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: ease-out 0.1s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
 	`)
 
 	tabElement.state.data.bodyElement.appendChild(cursor)

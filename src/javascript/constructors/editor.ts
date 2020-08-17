@@ -31,7 +31,7 @@ class Editor implements EditorOptions {
 		this.tabState = tabState
 		this.filePath = directory
 
-		bodyElement.parentElement.setAttribute('client', this.client.name)
+		bodyElement.setAttribute('client', this.client.name)
 		this.instance = this.client.do('create', {
 			element: bodyElement,
 			language: this.client.do('getLangFromExt', { extension: language }),

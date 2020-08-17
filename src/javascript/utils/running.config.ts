@@ -11,11 +11,7 @@ const electronWindow: any = remote.getCurrentWindow()
 const electronArguments = isDev ? remote.process.argv.slice(2) : remote.process.argv.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)
 const parsedRendererArguments = isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
-
-const lspServer = new nodeJSONRPC({
-	port: isDev ? 2020 : 2089,
-	languageServers: {},
-})
+const LSPPort = isDev ? 2020 : 2089
 
 const DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedPanel: null,
@@ -39,13 +35,20 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	envs: [],
 	projectServices: [],
 	languageServers: [],
+	LSPPort,
 }
 
 const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
-RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
-	modes.forEach(name => {
-		lspServer.addLanguageServer(name, args)
+RunningConfig.on('appLoaded', () => {
+	const lspServer = new nodeJSONRPC({
+		port: LSPPort,
+		languageServers: {},
+	})
+	RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
+		modes.forEach((name: string) => {
+			lspServer.addLanguageServer(name, args)
+		})
 	})
 })
 
