@@ -29,6 +29,10 @@ jobs:
     - name : Building
       run: |
         npm run build:electron 
+    - name : Release artifacts
+    - uses: actions/download-artifact@v2
+      with:
+        path: dist
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
