@@ -16,6 +16,7 @@ import AppPlatform from 'AppPlatform'
 import '../sass/main.scss'
 
 import PuffinElement from './types/puffin.element'
+import { ContextMenuButton } from 'Types/contextmenu'
 
 window.require('v8-compile-cache')
 
@@ -118,7 +119,7 @@ function mountedAppView(): void {
 }
 
 function sidebarContext(ev: MouseEvent): void {
-	let list: Object[] = []
+	let list: ContextMenuButton[] = []
 	if (StaticConfig.data.appEnableSidebar) {
 		list.push({
 			label: 'menus.View.HideSidebar',

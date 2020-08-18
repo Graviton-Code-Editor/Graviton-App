@@ -299,7 +299,7 @@ class Item {
 					{
 						label: 'misc.OpenLocation',
 						action: () => {
-							openLocation(this.itemPath)
+							openLocation(this.itemFolder)
 						},
 					},
 				],
