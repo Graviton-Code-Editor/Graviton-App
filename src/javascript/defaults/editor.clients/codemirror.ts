@@ -302,7 +302,7 @@ const CodemirrorClient = new EditorClient(
 			return instance.getSelection()
 		},
 		setIndentation({ instance, indentation }) {
-			instance.setOption('indentWithTabs', indentation)
+			instance.setOption('indentWithTabs', indentation === 'tab')
 		},
 		doRefresh({ instance }) {
 			setTimeout(function () {
