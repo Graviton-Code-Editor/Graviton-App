@@ -8,6 +8,7 @@
 	"mainSrc": "src/index.js",
 	"mainDev": "index.js",
 	"dependencies": {
+		"typescript": "^3.9.7",
 		"typescript-language-server": "^0.4.0"
 	}
 }
