@@ -175,6 +175,11 @@ const CodemirrorClient = new EditorClient(
 						fancy: 'Slim',
 						name: 'application/x-slim',
 					}
+				case 'go':
+					return {
+						fancy: 'Go',
+						name: 'text/x-go',
+					}
 				default:
 					return {
 						name: extension,
