@@ -102,7 +102,7 @@
 		"v8-compile-cache": "^2.1.1"
 	},
 	"devDependencies": {
-		"@gveditor/sdk": "^0.2.2",
+		"@gveditor/sdk": "^0.2.3",
 		"chai": "^4.2.0",
 		"contributor-faces": "^1.0.3",
 		"copy-webpack-plugin": "^6.0.3",
