@@ -1,5 +1,4 @@
-import { Panel, removePanel } from '../constructors/panel'
-import { openFolder, openFile } from '../utils/filesystem.ts'
+import { openFolder, openFile } from '../utils/filesystem'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
@@ -13,11 +12,15 @@ import packageJSON from 'Root/package.json'
 const { openExternal: openLink } = window.require('electron').shell
 const { getCurrentWindow } = window.require('electron').remote
 import checkForUpdates from '../utils/check.updates'
+import AppPlatform from 'AppPlatform'
 
 /*
  * This creates the default Graviton Menus in the top bar
  */
 function createMenus() {
+	if (AppPlatform === 'darwin') {
+		getHelpMenu('Graviton')
+	}
 	new Menu({
 		//FILE
 		button: 'menus.File.File',
@@ -254,9 +257,15 @@ function createMenus() {
 			},
 		],
 	})
+	if (AppPlatform !== 'darwin') {
+		getHelpMenu('menus.Help.Help')
+	}
+}
+
+function getHelpMenu(button) {
 	new Menu({
 		//HELP
-		button: 'menus.Help.Help',
+		button,
 		list: [
 			{
 				label: 'menus.Help.Contact',
