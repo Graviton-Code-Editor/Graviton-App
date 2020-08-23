@@ -11,6 +11,7 @@ import Settings from './windows/settings'
 import Welcome from './windows/welcome'
 import Store from './windows/store'
 import path from 'path'
+const { remote } = window.require('electron')
 
 RunningConfig.on('command.saveCurrentFile', () => {
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
@@ -286,6 +287,16 @@ RunningConfig.on('command.closeCurrentWindow', () => {
 	if (windows.length == 0 || !methods) return
 	if (methods.closeWindow) methods.closeWindow()
 })
+
+RunningConfig.on('command.closeApp', () => {
+	RunningConfig.emit('checkAllTabsAreSaved', {
+		whenContinue() {
+			const electronWindow = remote.getCurrentWindow()
+			electronWindow.close()
+		},
+	})
+})
+
 const appShortCuts = new Shortcuts()
 appShortCuts.add([
 	...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut => {
@@ -352,6 +363,12 @@ appShortCuts.add([
 		return {
 			shortcut: shortcut,
 			handler: event => RunningConfig.emit('command.closeCurrentWindow'),
+		}
+	}),
+	...StaticConfig.data.appShortcuts.CloseApp.combos.map(shortcut => {
+		return {
+			shortcut: shortcut,
+			handler: event => RunningConfig.emit('command.closeApp'),
 		}
 	}),
 ])
