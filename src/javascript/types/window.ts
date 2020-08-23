@@ -13,7 +13,7 @@ interface WindowOptions {
 interface WindowInstance {
 	launch: () => void
 	close: () => void
-	on: (string, any) => PuffinEventInstance
+	on: (eventName: string, eventData: any) => PuffinEventInstance
 }
 
 export { WindowOptions, WindowInstance }

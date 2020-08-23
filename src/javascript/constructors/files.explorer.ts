@@ -208,12 +208,12 @@ class FilesExplorer {
 				if (isFolder) {
 					RunningConfig.emit('aFolderHasBeenCreated', {
 						parentFolder: this.folderPath,
-						path: directory,
+						folderPath: directory,
 					})
 				} else {
 					RunningConfig.emit('aFileHasBeenCreated', {
 						parentFolder: this.folderPath,
-						path: directory,
+						filePath: directory,
 					})
 				}
 				const itemComputed = getItemComputed({

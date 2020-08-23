@@ -562,7 +562,7 @@ class Item {
 		const RemovedFolderListener = this.explorerState.on('removedFolder', ({ folderPath }) => {
 			if (this.itemPath === folderPath) {
 				this.itemState.emit('destroyed')
-				RunningConfig.emit('aFolderHasBeenremoved', {
+				RunningConfig.emit('aFolderHasBeenRemoved', {
 					parentFolder: this.itemFolder,
 					folderPath: this.itemPath,
 				})
