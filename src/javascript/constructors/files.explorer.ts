@@ -6,8 +6,6 @@ import beautifyDir from '../utils/directory.beautifier'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
-import fs from 'fs-extra'
-import simpleGit from 'simple-git'
 const path = window.require('path')
 const chokidar = window.require('chokidar')
 import anymatch from 'anymatch'
@@ -34,18 +32,20 @@ class FilesExplorer {
 	private gitWatcher: any
 	private filesWatcher: any
 	private projectPath: string
+	private explorerProvider: any
 	/*
 	 *
 	 * Create a FilesExplorer instance
 	 *
 	 */
-	constructor(folderPath: string, projectPath: string, container: HTMLElement, level: number = 0, replaceOldExplorer: boolean = true, gitChanges: StatusResult = null) {
+	constructor(folderPath: string, projectPath: string, container: HTMLElement, level: number = 0, replaceOldExplorer: boolean = true, gitChanges: StatusResult = null, { provider }) {
 		this.folderPath = normalizeDir(folderPath)
 		this.container = container
 		this.level = level
 		this.replaceOldExplorer = replaceOldExplorer
 		this.gitChanges = gitChanges
 		this.projectPath = projectPath
+		this.explorerProvider = provider
 
 		this.enableGitWatcher = false
 		this.enableFilesWatcher = false
@@ -66,10 +66,8 @@ class FilesExplorer {
 	 *
 	 */
 	private _isGitRepo() {
-		const repoPath = normalizeDir(this.folderPath)
-		const simpleInstance = simpleGit(repoPath)
 		return new (Promise as any)((resolve, reject) => {
-			simpleInstance.checkIsRepo().then((res: boolean) => {
+			this.explorerProvider.isGitRepo(this.folderPath).then((res: boolean) => {
 				resolve(res)
 			})
 		})
@@ -80,9 +78,8 @@ class FilesExplorer {
 	 *
 	 */
 	private _getGitChanges() {
-		const simpleInstance = simpleGit(this.folderPath)
 		return new Promise(resolve => {
-			simpleInstance.status((err, res) => {
+			this.explorerProvider.getGitStatus(this.folderPath).status((err, res) => {
 				resolve(res)
 			})
 		})
@@ -217,6 +214,7 @@ class FilesExplorer {
 					})
 				}
 				const itemComputed = getItemComputed({
+					explorerProvider: this.explorerProvider,
 					projectPath: this.projectPath,
 					classSelector: possibleClass,
 					fullPath: directory,
@@ -283,6 +281,7 @@ class FilesExplorer {
 				})
 			}
 			const itemComputed = getItemComputed({
+				explorerProvider: this.explorerProvider,
 				projectPath: this.projectPath,
 				classSelector: this.classSelector,
 				fullPath: normalizeDir(this.folderPath),
@@ -307,14 +306,16 @@ class FilesExplorer {
 
 			render(explorerContainer, this.container)
 		} else {
-			fs.readdir(this.folderPath)
+			this.explorerProvider
+				.listDir(this.folderPath)
 				.then((paths: any[]) => {
 					let dirs: any[] = paths
 						.map(itemPath => {
 							//Load folders
 							const itemDirectory = normalizeDir(path.join(this.folderPath, itemPath))
-							if (fs.lstatSync(path.join(this.folderPath, itemPath)).isDirectory())
+							if (this.explorerProvider.info(path.join(this.folderPath, itemPath)).isDirectory())
 								return getItemComputed({
+									explorerProvider: this.explorerProvider,
 									projectPath: this.projectPath,
 									classSelector: getClassByDir(itemDirectory),
 									fullPath: itemDirectory,
@@ -331,9 +332,10 @@ class FilesExplorer {
 							.map(itemPath => {
 								//Load files
 								const itemDirectory = normalizeDir(path.join(this.folderPath, itemPath))
-								if (!fs.lstatSync(path.join(this.folderPath, itemPath)).isDirectory())
+								if (!this.explorerProvider.info(path.join(this.folderPath, itemPath)).isDirectory())
 									if (!itemPath.match('~'))
 										return getItemComputed({
+											explorerProvider: this.explorerProvider,
 											projectPath: this.projectPath,
 											classSelector: getClassByDir(itemDirectory),
 											fullPath: itemDirectory,
@@ -352,7 +354,7 @@ class FilesExplorer {
 					`
 					render(explorerComponent, this.container)
 				})
-				.catch(err => {
+				.catch((err: string) => {
 					console.error(err)
 					new Notification({
 						title: 'Error',
@@ -367,7 +369,7 @@ function getClassByDir(dir) {
 	return dir.replace(/ /gm, '')
 }
 
-function getItemComputed({ classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
+function getItemComputed({ explorerProvider, classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
 	return new FileItem({
 		projectPath,
 		isFolder,
@@ -377,6 +379,7 @@ function getItemComputed({ classSelector = '', projectPath, fullPath, level, isF
 		gitChanges,
 		hint: beautifyDir(fullPath),
 		explorerContainer,
+		explorerProvider,
 	})
 }
 

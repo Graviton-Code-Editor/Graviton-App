@@ -18,6 +18,7 @@ import { EditorClient } from '../constructors/editorclient'
 import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
 import Explorer from '../constructors/explorer'
+import FilesExplorer from '../constructors/files.explorer'
 import throwError from './throw.error'
 import path from 'path'
 import fs from 'fs-extra'
@@ -57,6 +58,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 				Explorer,
 				CommandPrompt,
 				Editor,
+				FilesExplorer,
 			}
 			if (!isDev) {
 				try {

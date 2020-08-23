@@ -1,11 +1,9 @@
 {
-	"compilerOptions": {
-		"sourceMap": true
-	},
 	"include": ["src/**/*"],
 	"module": "commonjs",
 	"noImplicitAny": false,
 	"compilerOptions": {
+		"sourceMap": true,
 		"target": "es5",
 		"moduleResolution": "node",
 		"esModuleInterop": true,

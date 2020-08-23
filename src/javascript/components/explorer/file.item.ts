@@ -14,9 +14,9 @@ import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
+import LocalExplorer from '../../defaults/local.explorer'
 import FileItem from './file.item.style'
 import copy from 'copy-to-clipboard'
-import fs from 'fs-extra'
 import path from 'path'
 const trash = window.require('trash')
 
@@ -42,23 +42,10 @@ class Item {
 	private projectGitData: any
 
 	private explorerContainer: any
+	private explorerProvider: any
 	private explorerState: any
 
-	/**
-	 *
-	 * Create a explorer item
-	 *
-	 * @param projectPath {string} - Project's folder path.
-	 * @param explorerContainer {HTMLElement} - Element container of the item.
-	 * @param isFolder {boolean} - If the item is a folder or not.
-	 * @param level {string} - Level of the item, counting from the project folder.
-	 * @param fullpath {string} - Item's path.
-	 * @param classSelector {string} - Unique class selector for the item.
-	 * @param gitChanges {object} - Current git changes.
-	 * @param hint {string} - Item's text on hovering.
-	 *
-	 */
-	constructor({ projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
+	constructor({ explorerProvider, projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
 		const self = this
 
 		this.isFolder = isFolder
@@ -68,6 +55,7 @@ class Item {
 		this.itemLevel = level
 		this.itemExtension = this.isFolder ? null : getFormat(this.itemPath)
 		this.itemClass = classSelector
+		this.explorerProvider = explorerProvider
 
 		this.projectPath = projectPath
 
@@ -130,19 +118,19 @@ class Item {
 	private _getIconSource(): string {
 		return this.isFolder ? getFolderClosedIcon(this.itemName) : getFileIcon(this.itemName, getFormat(this.itemPath))
 	}
-	public _draggingListener(ev): void {
+	public _draggingListener(ev: DragEvent): void {
 		ev.stopPropagation()
 		ev.dataTransfer.setData('class', this.itemClass)
 	}
-	public _draggingStarted(ev): void {
+	public _draggingStarted(ev: DragEvent): void {
 		ev.stopPropagation()
 		ev.dataTransfer.setData('class', this.itemClass)
 	}
-	public _draggingInListener(ev): void {
+	public _draggingInListener(ev: DragEvent): void {
 		ev.stopPropagation()
 		ev.preventDefault()
 	}
-	public _dragDroppedListener(ev): void {
+	public _dragDroppedListener(ev: DragEvent): void {
 		ev.stopImmediatePropagation()
 		ev.preventDefault()
 		const destinationItem: any = document.getElementsByClassName((ev.target as any).getAttribute('itemClass'))[0]
@@ -154,7 +142,8 @@ class Item {
 
 		if (oldItemPath === newItemPath || newItemDirectory === oldItemPath) return
 
-		fs.rename(oldItemPath, newItemPath)
+		this.explorerProvider
+			.renamedir(oldItemPath, newItemPath)
 			.then(() => {
 				incomingItem.instance.itemState.emit('destroyed')
 				this.explorerState.emit('createItem', {
@@ -176,7 +165,9 @@ class Item {
 		if (this.isFolder) {
 			const itemsContainer = this.itemElement.children[1]
 			if (itemsContainer == null) {
-				new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData)
+				new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData, {
+					provider: LocalExplorer,
+				})
 				this._setOpenedIcon()
 			} else {
 				itemsContainer.remove()
@@ -192,7 +183,7 @@ class Item {
 				projectPath: this.projectPath,
 			})
 			if (!isCancelled) {
-				fs.readFile(this.itemPath, 'UTF-8').then(data => {
+				this.explorerProvider.readFile(this.itemPath).then((data: string) => {
 					const fileExtension = getFormat(this.itemPath)
 					new Editor({
 						language: fileExtension,
@@ -320,7 +311,8 @@ class Item {
 		})
 			.then(newName => {
 				const newPath = normalizeDir(path.join(this.itemFolder, newName))
-				fs.rename(this.itemPath, newPath)
+				this.explorerProvider
+					.renameDir(this.itemPath, newPath)
 					.then(() => {
 						this.itemState.emit('destroyed')
 						this.explorerState.emit('createItem', {
@@ -331,9 +323,9 @@ class Item {
 							isFolder: this.isFolder,
 						})
 					})
-					.catch(err => console.log(err))
+					.catch((err: string) => console.log(err))
 			})
-			.catch(err => {
+			.catch(() => {
 				//Clicked "No", do nothing
 			})
 	}
@@ -354,14 +346,14 @@ class Item {
 							filePath: this.itemPath,
 						})
 					})
-					.catch(err => {
+					.catch(() => {
 						new Notification({
 							title: `Error`,
 							content: `Couldn't remove ${path.basename(directoryPath)}.`,
 						})
 					})
 			})
-			.catch(err => {
+			.catch(() => {
 				//Clicked "No", do nothing
 			})
 	}
@@ -380,7 +372,9 @@ class Item {
 	 */
 	private _forceOpen(): void {
 		this._removeItemsContainer()
-		new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData)
+		new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData, {
+			provider: LocalExplorer,
+		})
 		this._setOpenedIcon()
 	}
 	/**
@@ -573,7 +567,7 @@ class Item {
 				RunningConfig.emit('aFileHasBeenChanged', {
 					filePath,
 					parentFolder: this.itemFolder,
-					newData: await fs.readFile(this.itemPath, 'UTF-8'),
+					newData: await this.explorerProvider.readFile(this.itemPath),
 				})
 			}
 		})

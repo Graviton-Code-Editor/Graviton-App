@@ -10,6 +10,7 @@ import getFormat from './format.parser'
 import normalizeDir from './directory.normalizer'
 import selectFolderDialog from './dialogs/select.folder'
 import selectFileDialog from './dialogs/select.file'
+import LocalExplorer from '../defaults/local.explorer'
 
 const path = window.require('path')
 const fs = window.require('fs-extra')
@@ -156,7 +157,9 @@ RunningConfig.on('addFolderToRunningWorkspace', ({ folderPath, replaceOldExplore
 	}
 	const folderDir = normalizeDir(folderPath)
 	const explorerPanel = document.getElementById('explorer_panel')
-	new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer)
+	new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer, null, {
+		provider: LocalExplorer,
+	})
 	RunningConfig.data.workspaceConfig.folders.push({
 		name: parseDirectory(folderDir),
 		path: folderDir,
