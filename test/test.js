@@ -28,14 +28,13 @@ describe('Constructors', function () {
 		})
 		it('With [component] ', function () {
 			cached_win = new Window({
-				id: 'test_window',
 				component() {
 					return puffin.element`<p>Hello Word</p>`
 				},
 			})
 			cached_win.launch()
 
-			const windowElement = document.getElementById('test_window')
+			const windowElement = cached_win.WindowElement
 			const windowHTML = windowElement.innerHTML
 
 			expect(windowHTML).to.include('<p>Hello Word</p>')
@@ -44,7 +43,6 @@ describe('Constructors', function () {
 		})
 		it('With [component, height, width, minHeight, minWidth] ', function () {
 			cached_win = new Window({
-				id: 'test_window',
 				height: '200px',
 				width: '250px',
 				minHeight: '200px',
@@ -55,7 +53,7 @@ describe('Constructors', function () {
 			})
 			cached_win.launch()
 
-			const windowElement = document.getElementById('test_window').children[1]
+			const windowElement = cached_win.WindowElement.children[1]
 			const { clientWidth, clientHeight } = windowElement
 
 			expect(clientWidth).to.equal(250)
@@ -71,12 +69,11 @@ describe('Constructors', function () {
 		})
 		it('With [content] ', function () {
 			cached_dialog = new Dialog({
-				id: 'test_dialog',
 				content: 'Hello Earth',
 			})
 			cached_dialog.launch()
 
-			const dialogElement = document.getElementById('test_dialog')
+			const dialogElement = cached_dialog.WindowInstance.WindowElement
 			const dialogHTML = dialogElement.innerHTML
 
 			expect(dialogHTML).to.include('Hello Earth')
