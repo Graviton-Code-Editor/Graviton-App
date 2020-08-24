@@ -6,7 +6,7 @@ Method 1:
 
 Method 2:
 
-- Download the plugin's release and move it to the .graviton2/plugins
+- Download the plugin's release and move it to the .graviton2/plugins, and then export inside a folder with the plugin's name.
 
 Method 3:
 

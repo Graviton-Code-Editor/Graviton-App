@@ -5,9 +5,7 @@ Prerequisites:
 - NodeJS
 - Git
 
-Instructions to build Graviton from source code:
-
-## 1 - Clone the source
+## Getting the source
 
 Clone the git repository:
 
@@ -15,13 +13,13 @@ Clone the git repository:
 git clone https://github.com/Graviton-Code-Editor/Graviton-App.git --depth 1
 ```
 
-There are 2 different branches:
+**Important**: There are 3 different branches:
 
-- Master: daily source (default).
-- Stable: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
-- 1.3.0: it refers to the old Graviton source code.
+- `master`: daily source (default).
+- `stable`: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
+- `1.3.0`: it refers to the old Graviton source code.
 
-## 2 - Install dependencies
+## Installing dependencies
 
 Go inside the folder:
 
@@ -35,9 +33,9 @@ Install the dependencies:
 npm install
 ```
 
-## 3 - Developing (optional)
+## Developing (optional)
 
-In case you just want to test it in dev mode, run:
+In case you just want to test it in development mode, run:
 
 ```shell
 npm start
@@ -45,7 +43,7 @@ npm start
 
 If shows an empty dark screen just wait.
 
-## 4 - Building the installer
+## Building the installer
 
 For Windows, Linux(deb,AppImage,rpm) and MacOS:
 
@@ -69,7 +67,7 @@ For example, if you are an Arch Linux user, run:
 npm run build:pacman
 ```
 
-Here is the list of the supported extensions:
+Here is the list of the supported packages:
 
 - snap
 - pacman
@@ -80,9 +78,9 @@ Here is the list of the supported extensions:
 - rpm
 - AppImage
 
-Please keep in mind that not all the distros can build some packages. Anyway, Ubuntu can build a Debian package and an AppImage installer out of the box.
+Please keep in mind that any distribution can build for every platform. For example, you can build for AppImage and Deb in Debian-based distros, like Ubuntu.
 
-#### Building an out-packed
+#### Building out-packed
 
 In case you want to test Graviton in a production build but don't want to create an installer, you can build an outpacked version, this builds faster than an installer.
 

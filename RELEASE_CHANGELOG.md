@@ -1,11 +1,13 @@
 ### 🔝 Important changes
 
 - LSP integration
+- Improved Workspaces
+- Iconpacks support
 
 ### ✔ Changes
 
+- Menu bar now has a more MacOS-like behavior in MacOS
 - UI tweaks
-- New workspaces file name (graviton.wp.json)
 - Remove projects from the log
 - Added: Tabs show file's icon
 - Added support for new languages:
@@ -13,6 +15,8 @@
   - Lua
   - Shell
   - Less
+  - Golang
+- Added an smooth cursor plugin built-in
 
 ### 😁 Fixes
 
@@ -23,3 +27,4 @@
 - Using Emotion instead of PuffinStyle
 - Slowly moving from JavaScript to TypeScript
 - Using webpack instead of parcel
+- Added Unit tests
