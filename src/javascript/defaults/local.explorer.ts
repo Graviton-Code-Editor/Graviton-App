@@ -1,11 +1,22 @@
 const fs = require('fs-extra')
 import simpleGit from 'simple-git'
 import normalizeDir from '../utils/directory.normalizer'
+import { join } from 'path'
 
 const LocalExplorer = {
 	name: 'Local',
 	listDir: async function (path: string) {
-		return fs.readdir(path)
+		return new Promise(async res => {
+			const items = await fs.readdir(path)
+			res(
+				items.map((item: string) => {
+					return {
+						name: item,
+						isFolder: fs.lstatSync(join(path, item)).isDirectory(),
+					}
+				}),
+			)
+		})
 	},
 	readFile: async function (path: string) {
 		return fs.readFile(path, 'UTF-8')

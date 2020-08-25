@@ -21,6 +21,7 @@ RunningConfig.on('appLoaded', () => {
 				items: [
 					{
 						label: basename(folderPath),
+						icon: 'file.package.json',
 						decorator: {
 							label: env,
 						},
@@ -40,6 +41,8 @@ RunningConfig.on('appLoaded', () => {
 
 function getKeysToItems(keys, folder, fromKey, prefix = '') {
 	return Object.keys(keys).map(key => {
+		const keyValue = keys[key]
+
 		const item = {
 			label: key,
 		}
@@ -48,8 +51,16 @@ function getKeysToItems(keys, folder, fromKey, prefix = '') {
 				executeScript(prefix, folder, key)
 			}
 		}
-		if (typeof keys[key] == 'object') {
-			item.items = getKeysToItems(keys[key], folder, key, prefix)
+		if (typeof keyValue == 'object') {
+			if (keyValue.icon === undefined && keyValue.value === undefined) {
+				item.items = getKeysToItems(keyValue, folder, key, prefix)
+			} else {
+				if (typeof keyValue.value == 'object') {
+					item.items = getKeysToItems(keyValue.value, folder, key, prefix)
+				} else {
+					item.label = keyValue.value
+				}
+			}
 		}
 		return item
 	})

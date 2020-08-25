@@ -14,7 +14,6 @@ import parseDirectory from '../../utils/directory.parser'
 import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
-import LocalExplorer from '../../defaults/local.explorer'
 import FileItem from './file.item.style'
 import copy from 'copy-to-clipboard'
 import path from 'path'
@@ -56,7 +55,6 @@ class Item {
 		this.itemExtension = this.isFolder ? null : getFormat(this.itemPath)
 		this.itemClass = classSelector
 		this.explorerProvider = explorerProvider
-
 		this.projectPath = projectPath
 
 		const clickListener = this._clickListener.bind(this)
@@ -166,7 +164,7 @@ class Item {
 			const itemsContainer = this.itemElement.children[1]
 			if (itemsContainer == null) {
 				new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData, {
-					provider: LocalExplorer,
+					provider: this.explorerProvider,
 				})
 				this._setOpenedIcon()
 			} else {
@@ -373,7 +371,7 @@ class Item {
 	private _forceOpen(): void {
 		this._removeItemsContainer()
 		new FilesExplorer(this.itemPath, this.projectPath, this.itemElement, this.itemLevel + 1, false, this.projectGitData, {
-			provider: LocalExplorer,
+			provider: this.explorerProvider,
 		})
 		this._setOpenedIcon()
 	}

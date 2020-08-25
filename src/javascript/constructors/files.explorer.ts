@@ -310,10 +310,10 @@ class FilesExplorer {
 				.listDir(this.folderPath)
 				.then((paths: any[]) => {
 					let dirs: any[] = paths
-						.map(itemPath => {
+						.map(({ name, isFolder }) => {
 							//Load folders
-							const itemDirectory = normalizeDir(path.join(this.folderPath, itemPath))
-							if (this.explorerProvider.info(path.join(this.folderPath, itemPath)).isDirectory())
+							const itemDirectory = normalizeDir(path.join(this.folderPath, name))
+							if (isFolder)
 								return getItemComputed({
 									explorerProvider: this.explorerProvider,
 									projectPath: this.projectPath,
@@ -329,11 +329,11 @@ class FilesExplorer {
 					dirs = [
 						...dirs,
 						paths
-							.map(itemPath => {
+							.map(({ name, isFolder }) => {
 								//Load files
-								const itemDirectory = normalizeDir(path.join(this.folderPath, itemPath))
-								if (!this.explorerProvider.info(path.join(this.folderPath, itemPath)).isDirectory())
-									if (!itemPath.match('~'))
+								const itemDirectory = normalizeDir(path.join(this.folderPath, name))
+								if (!isFolder)
+									if (!name.match('~'))
 										return getItemComputed({
 											explorerProvider: this.explorerProvider,
 											projectPath: this.projectPath,
