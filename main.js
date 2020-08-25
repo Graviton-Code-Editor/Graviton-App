@@ -1,6 +1,6 @@
 const url = require('url')
 const path = require('path')
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, protocol } = require('electron')
 const isDev = require('electron-is-dev')
 const windowStateKeeper = require('electron-window-state')
 const AdmZip = require('adm-zip')
@@ -12,6 +12,11 @@ const { ipcMain } = require('electron')
 let main
 
 app.on('ready', function () {
+	protocol.registerFileProtocol('file', (request, callback) => {
+		const pathname = request.url.replace('file:///', '')
+		callback(pathname)
+	})
+
 	let mainWindowState = windowStateKeeper({
 		defaultWidth: 800,
 		defaultHeight: 600,
@@ -23,6 +28,7 @@ app.on('ready', function () {
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true,
 			webSecurity: !isDev,
+			enableRemoteModule: true,
 		},
 		frame: process.platform !== 'win32',
 		minHeight: 320,
@@ -136,3 +142,4 @@ function extractZip(zipPath, pluginId, dist) {
 	})
 }
 app.commandLine.appendSwitch('disable-smooth-scrolling', 'true')
+app.allowRendererProcessReuse = false

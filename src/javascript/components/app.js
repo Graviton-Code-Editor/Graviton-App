@@ -9,10 +9,10 @@ const styleWrapper = style`
 			height:calc(100% - 68px);
 		}
 		* {
-			font-family: mainFont;
+			font-family: mainfont, Apple Color Emoji,Segoe UI,Segoe UI Emoji,Segoe UI Symbol !important;
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
-			font-family:var(--codeFont);
+			font-family:var(--codeFont) !important;
 		}
 		&[os="darwin"] #body, &[os="linux"] #body{
 			height: calc(100% - 25px);

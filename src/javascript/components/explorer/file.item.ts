@@ -654,7 +654,7 @@ function getFolderClosedIcon(folderName) {
 
 function openLocation(location) {
 	const { shell } = window.require('electron')
-	shell.openItem(location)
+	shell.openPath(location)
 }
 
 export default Item
