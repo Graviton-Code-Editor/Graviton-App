@@ -23,7 +23,7 @@ const styleWrapper = style`
 		max-width:100%;
 		display:block;
 		white-space:prewrap;
-		font-size:13px;
+		font-size:12px;
 	}
 	& .container{
 		flex:1;
@@ -59,7 +59,7 @@ const styleWrapper = style`
 	& a{
 		overflow:hidden;
 		text-overflow:ellipsis;
-		font-size:14px;
+		font-size:12px;
 		white-space:nowrap;
 		display:block;
 		padding:7px 8px;
@@ -67,10 +67,11 @@ const styleWrapper = style`
 		color:var(--commandPromptOptionText);
 		border-radius:5px;
 		margin:1px 0px;
-	}
-	&  a.active{
-		background:var(--commandPromptOptionActiveBackground);
-		color:var(--commandPromptOptionActiveText);
+		&.active, &:hover{
+			cursor: pointer;
+			background:var(--commandPromptOptionActiveBackground);
+			color:var(--commandPromptOptionActiveText);
+		}
 	}
 `
 

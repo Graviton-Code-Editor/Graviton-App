@@ -3,7 +3,7 @@
 	"module": "commonjs",
 	"noImplicitAny": false,
 	"compilerOptions": {
-		"sourceMap": true,
+		"sourceMap": false,
 		"target": "es5",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
@@ -11,5 +11,5 @@
 		"resolveJsonModule": true
 	},
 	"root": ".",
-	"exclude": ["node_modules", "plugins", "pluginsDist"]
+	"exclude": ["node_modules", "plugins", "pluginsDist", "dist", "dist_ui", "assets", "iconpacks", "scripts", "test", "themes", "languages"]
 }

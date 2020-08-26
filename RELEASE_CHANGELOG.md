@@ -9,7 +9,7 @@
 - Menu bar now has a more MacOS-like behavior in MacOS
 - UI tweaks
 - Remove projects from the log
-- Added: Tabs show file's icon
+- Tabs show file's icon
 - Added support for new languages:
   - F#
   - Lua
@@ -17,6 +17,9 @@
   - Less
   - Golang
 - Added an smooth cursor plugin built-in
+- Improved NPM inspector
+- New shortcuts:
+  - Ctrl+Q: closes the app
 
 ### 😁 Fixes
 
@@ -28,3 +31,4 @@
 - Slowly moving from JavaScript to TypeScript
 - Using webpack instead of parcel
 - Added Unit tests
+- Updated to Electron v10
