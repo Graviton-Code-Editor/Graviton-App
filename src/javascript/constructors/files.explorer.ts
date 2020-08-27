@@ -100,37 +100,37 @@ class FilesExplorer {
 			ignoreInitial: true,
 		})
 		projectWatcher
-			.on('add', filePath => {
+			.on('add', (filePath: string) => {
 				this.explorerState.emit('newFile', {
 					containerFolder: normalizeDir(path.dirname(filePath)),
 					fileName: path.basename(filePath),
 				})
 			})
-			.on('change', async fileDir => {
+			.on('change', async (fileDir: string) => {
 				const filePath = normalizeDir(fileDir)
 				this.explorerState.emit('changedFile', {
 					filePath,
 				})
 			})
-			.on('unlink', fileDir => {
+			.on('unlink', (fileDir: string) => {
 				const filePath = normalizeDir(fileDir)
 				this.explorerState.emit('removedFile', {
 					filePath,
 				})
 			})
-			.on('addDir', folderPath => {
+			.on('addDir', (folderPath: string) => {
 				this.explorerState.emit('newFolder', {
 					containerFolder: normalizeDir(path.dirname(folderPath)),
 					folderName: path.basename(folderPath),
 				})
 			})
-			.on('unlinkDir', folderDir => {
+			.on('unlinkDir', (folderDir: string) => {
 				const folderPath = normalizeDir(folderDir)
 				this.explorerState.emit('removedFolder', {
 					folderPath,
 				})
 			})
-		let gitWatcher
+		let gitWatcher: any
 		if (this.isGitRepo) {
 			gitWatcher = chokidar.watch(gitWatcherPath, {
 				persistent: true,
@@ -197,7 +197,7 @@ class FilesExplorer {
 			this.explorerState.emit('startedWatcher')
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
-		const createItemListener = this.explorerState.on('createItem', ({ container, containerFolder, directory, level, isFolder = false }) => {
+		const createItemListener = this.explorerState.on('createItem', ({ container, directory, level, isFolder = false }) => {
 			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
@@ -239,6 +239,7 @@ class FilesExplorer {
 			startedWatcherListener.cancel()
 			stopWatchersListener.cancel()
 			startWatchersListener.cancel()
+			createItemListener.cancel()
 		})
 	}
 	/*
@@ -308,8 +309,8 @@ class FilesExplorer {
 		} else {
 			this.explorerProvider
 				.listDir(this.folderPath)
-				.then((paths: any[]) => {
-					let dirs: any[] = paths
+				.then((paths: Array<any>) => {
+					let dirs: Array<any> = paths
 						.map(({ name, isFolder }) => {
 							//Load folders
 							const itemDirectory = normalizeDir(path.join(this.folderPath, name))
@@ -365,7 +366,7 @@ class FilesExplorer {
 	}
 }
 
-function getClassByDir(dir) {
+function getClassByDir(dir: string) {
 	return dir.replace(/ /gm, '')
 }
 
@@ -383,7 +384,7 @@ function getItemComputed({ explorerProvider, classSelector = '', projectPath, fu
 	})
 }
 
-function getlastFolderPosition(container) {
+function getlastFolderPosition(container: HTMLElement) {
 	const items = container.children
 	return Number(
 		Object.keys(items).find(index => {

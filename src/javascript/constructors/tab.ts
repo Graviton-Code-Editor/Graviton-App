@@ -10,7 +10,6 @@ import getFormat from '../utils/format.parser'
 import PuffinElement from '../types/puffin.element'
 import { PuffinState } from '../types/puffin.state'
 import { TabOptions } from '../types/tab'
-console.log(state)
 
 const fs = window.require('fs-extra')
 const path = window.require('path')
@@ -118,14 +117,14 @@ class Tab {
 			self.tabState.emit('focusedMe')
 			self.tabState.emit('focusedItem')
 		}
-		function closeTab(e): void {
+		function closeTab(e: MouseEvent): void {
 			e.stopPropagation()
 			self.tabState.emit('close')
 		}
-		function focusTabshowCross(e): void {
+		function focusTabshowCross(): void {
 			self._toggleCross(this.getElementsByClassName('tab-cross')[0], 1)
 		}
-		function showCross(e): void {
+		function showCross(): void {
 			self._toggleCross(this.getElementsByClassName('tab-cross')[0], 1)
 		}
 		function hideCross(e): void {
@@ -179,14 +178,13 @@ class Tab {
 				})
 			}
 		}
-		const randomSelectorEditor = `${Math.random()}`
 		const TabEditorComp = element({
 			components: {
 				TabEditor,
 				component,
 			},
 		})`
-			<TabEditor :click="${focusEditor}" id="${randomSelectorEditor}" mounted="${mountedEditor}">
+			<TabEditor :click="${focusEditor}" mounted="${mountedEditor}">
 				${component ? component() : ''}
 			</TabEditor>
 		`
@@ -210,13 +208,10 @@ class Tab {
 			target.state = self.tabState
 		}
 		render(TabComp, panel.children[0])
-		render(TabEditorComp, panel.children[1])
-		const tabNode = document.getElementsByClassName(self.classSelector)[0]
-		const tabEditorNode = document.getElementById(randomSelectorEditor)
-		self.tabState.data.bodyElement = tabEditorNode
+		self.tabState.data.bodyElement = render(TabEditorComp, panel.children[1])
 	}
 
-	_addListeners(): void {
+	private _addListeners(): void {
 		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
 			if (this.directory) {
 				const iconNode = this.tabElement.getElementsByClassName('tab-icon')[0] as any
@@ -335,6 +330,7 @@ class Tab {
 			unsavedMeListener.cancel()
 			changedPanelListener.cancel()
 			IconpackWatcher.cancel()
+			closedListener.cancel()
 			RunningConfig.emit('aTabHasBeenClosed', {
 				tabElement: this.tabElement,
 				directory: this.directory,
@@ -347,11 +343,11 @@ class Tab {
 		})
 	}
 
-	_toggleCross(target, state): void {
-		target.style.opacity = state
+	private _toggleCross(target: HTMLElement, state: number): void {
+		target.style.opacity = state.toString()
 	}
 
-	_toggleTabStatus(newStatus): void {
+	private _toggleTabStatus(newStatus: boolean): void {
 		const tabCrossIcon = <PuffinElement>this.tabElement.getElementsByClassName('tab-cross')[0]
 		const tabSaveIcon = this.tabElement.getElementsByClassName('tab-save')[0]
 		if (newStatus) {
@@ -389,14 +385,14 @@ class Tab {
 	}
 }
 
-function saveFile(directory, callback): void {
+function saveFile(directory: string, callback: () => void): void {
 	if (directory) {
 		const { client, instance } = RunningConfig.data.focusedEditor
 		fs.writeFile(directory, client.do('getValue', instance))
 			.then(() => {
 				callback()
 			})
-			.catch(err => {
+			.catch((err: string) => {
 				console.error(err)
 			})
 	} else {
@@ -414,26 +410,26 @@ function unfocusTabs(tab): void {
 	}
 }
 
-function focusATab(fromTab): void {
+function focusATab(fromTab: PuffinElement): void {
 	const tabsBar = fromTab.parentElement
 	const tabsBarChildren = tabsBar.children
 	const fromTabPosition = guessTabPosition(fromTab, tabsBar)
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab, tabsBar)
 	if (focusedTabPosition === 0) {
 		if (fromTabPosition < tabsBarChildren.length - 1) {
-			tabsBarChildren[fromTabPosition + 1].state.emit('focusedMe')
+			;(tabsBarChildren[fromTabPosition + 1] as PuffinElement).state.emit('focusedMe')
 		} else if (tabsBarChildren.length === 1) {
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
 		}
 	} else if ((focusedTabPosition !== 0 && fromTabPosition == focusedTabPosition) || focusedTabPosition == tabsBarChildren.length) {
-		tabsBarChildren[fromTabPosition - 1].state.emit('focusedMe')
+		;(tabsBarChildren[fromTabPosition - 1] as PuffinElement).state.emit('focusedMe')
 	}
 }
 
-function guessTabPosition(tab, tabsbar): number {
+function guessTabPosition(tab: HTMLElement, tabsbar: HTMLElement): number {
 	return Number(
-		Object.keys(tabsbar.children).find((tabChildren, index) => {
+		Object.keys(tabsbar.children).find(tabChildren => {
 			if (tabsbar.children[tabChildren] == tab) {
 				return tabChildren
 			}
@@ -441,7 +437,7 @@ function guessTabPosition(tab, tabsbar): number {
 	)
 }
 
-function getFileIcon(fileName, fileExt): void {
+function getFileIcon(fileName: string, fileExt: string): void {
 	if (fileExt === ('png' || 'jpg' || 'ico')) {
 		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
 	}

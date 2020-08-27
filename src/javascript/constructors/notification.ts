@@ -6,16 +6,17 @@ import RunningConfig from 'RunningConfig'
 import { LanguageState } from '../utils/lang.config'
 
 import { NotificationsLiveTime, NotificationsMaxCount } from 'Constants'
-import { NotificationOptions } from 'Types/notification'
+import { NotificationOptions, NotificationDetails } from 'Types/notification'
 
 class Notification {
+	public NotificationElement: HTMLElement
 	constructor({ title = 'Notification', content = '', buttons = [] }: NotificationOptions) {
-		const listedMethods = buttons.map(({ action }) => action)
 		function mounted() {
 			setTimeout(() => {
 				this.remove()
 			}, NotificationsLiveTime)
 		}
+
 		const NotificationComp = element({
 			components: {
 				NotificationBody,
@@ -27,14 +28,14 @@ class Notification {
 		})`
 			<NotificationBody mounted="${mounted}">
 				<div>
-					<Cross :click="${() => closeNotification(NotificationNode)}"/>
+					<Cross :click="${() => closeNotification(this.NotificationElement)}"/>
 				</div>
 				<Title lang-string="${title}"/>
 				<Content lang-string="${content}"/>
 				<div class="buttons">
-					${buttons.map(({ label, action }, index) => {
-						function clickedButton() {
-							closeNotification(NotificationNode)
+					${buttons.map(({ label, action }) => {
+						const clickedButton = () => {
+							closeNotification(this.NotificationElement)
 							action()
 						}
 						return element({
@@ -46,27 +47,31 @@ class Notification {
 				</div>
 			</NotificationBody>
 			`
-		const NotificationNode = render(NotificationComp, document.getElementById('notifications'))
-		RunningConfig.emit('notificationPushed', {
+		this.NotificationElement = render(NotificationComp, document.getElementById('notifications'))
+
+		this.emit({
 			title,
 			content,
-			element: NotificationNode,
+			element: this.NotificationElement,
 		})
 	}
+	public remove() {
+		this.NotificationElement.remove()
+	}
+	private emit(notificationDetails: NotificationDetails) {
+		RunningConfig.data.notifications.push(notificationDetails)
+		if (RunningConfig.data.notifications.length > NotificationsMaxCount) {
+			const { element } = RunningConfig.data.notifications[0]
+			RunningConfig.data.notifications.splice(0, 1)
+			RunningConfig.emit('ANotificationHasBeenCleared', { element })
+			closeNotification(element)
+		}
+		RunningConfig.emit('ANotificationHasBeenEmitted', notificationDetails)
+	}
 }
 
-function closeNotification(node) {
+function closeNotification(node: HTMLElement) {
 	node.remove()
 }
-
-RunningConfig.on('notificationPushed', notificationDetails => {
-	RunningConfig.data.notifications.push(notificationDetails)
-	if (RunningConfig.data.notifications.length > NotificationsMaxCount) {
-		const { element } = RunningConfig.data.notifications[0]
-		RunningConfig.data.notifications.splice(0, 1)
-		RunningConfig.emit('notificationRemoved', { element })
-		closeNotification(element)
-	}
-})
 
 export default Notification

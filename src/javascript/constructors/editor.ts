@@ -11,7 +11,7 @@ import copy from 'copy-to-clipboard'
 import { EditorOptions } from 'Types/editor'
 import { EditorClient } from 'Types/editorclient'
 import PuffinElement from 'Types/puffin.element'
-import { PuffinState } from 'Types/puffin.state'
+import { PuffinEventInstance, PuffinState } from 'Types/puffin.state'
 
 class Editor implements EditorOptions {
 	public client: EditorClient
@@ -52,7 +52,7 @@ class Editor implements EditorOptions {
 		this.addListeners()
 		this.addClientsListeners()
 	}
-	private handleCtrlPlusScroll(direction): void {
+	private handleCtrlPlusScroll(direction: string): void {
 		const ScrollUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+ScrollUp')
 		const ScrollDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+ScrollDown')
 		if (direction === 'up' && ScrollUpShortcutEnabled) {
@@ -98,31 +98,31 @@ class Editor implements EditorOptions {
 				theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
 			})
 		})
-		const editorIndentationWatcher = StaticConfig.keyChanged('editorIndentation', value => {
+		const editorIndentationWatcher = StaticConfig.keyChanged('editorIndentation', (value: string) => {
 			this.client.do('setIndentation', {
 				instance: this.instance,
 				indentation: value,
 			})
 		})
-		const editorTabSizeWatcher = StaticConfig.keyChanged('editorTabSize', value => {
+		const editorTabSizeWatcher = StaticConfig.keyChanged('editorTabSize', (value: number) => {
 			this.client.do('setTabSize', {
 				instance: this.instance,
 				tabSize: value,
 			})
 		})
-		const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize', value => {
+		const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize', (value: number) => {
 			this.client.do('setFontSize', {
 				instance: this.instance,
 				element: this.bodyElement,
 				fontSize: value,
 			})
 		})
-		const editorFontFamilyWatcher = StaticConfig.keyChanged('editorFontFamily', value => {
+		const editorFontFamilyWatcher = StaticConfig.keyChanged('editorFontFamily', () => {
 			this.client.do('refresh', {
 				instance: this.instance,
 			})
 		})
-		const editorWrapLinesWatcher = StaticConfig.keyChanged('editorWrapLines', value => {
+		const editorWrapLinesWatcher = StaticConfig.keyChanged('editorWrapLines', (value: boolean) => {
 			if (value) {
 				this.client.do('setLinesWrapping', {
 					instance: this.instance,
@@ -152,6 +152,7 @@ class Editor implements EditorOptions {
 		})
 
 		this.tabState.once('destroyed', () => {
+			editorIndentationWatcher.cancel()
 			fileWatcher.cancel()
 			appThemeWatcher.cancel()
 			editorTabSizeWatcher.cancel()
@@ -159,6 +160,7 @@ class Editor implements EditorOptions {
 			tabFocusedWatcher.cancel()
 			tabSavedWatcher.cancel()
 			editorFontFamilyWatcher.cancel()
+			editorWrapLinesWatcher.cancel()
 		})
 	}
 	private addClientsListeners(): void {
@@ -187,7 +189,7 @@ class Editor implements EditorOptions {
 		})
 		this.client.do('rightclicked', {
 			instance: this.instance,
-			action(cm, e) {
+			action(cm, e: MouseEvent) {
 				new ContextMenu({
 					parent: document.body,
 					list: [
@@ -212,7 +214,7 @@ class Editor implements EditorOptions {
 		})
 		this.client.do('onChanged', {
 			instance: this.instance,
-			action: currentValue => {
+			action: (currentValue: string) => {
 				if (currentValue == this.savedFileContent) {
 					this.tabElement.state.emit('markAsSaved')
 				} else {
@@ -236,10 +238,10 @@ class Editor implements EditorOptions {
 		})
 	}
 	private getEditorClient(): EditorClient {
-		let finalEditorClient
-		finalEditorClient = RunningConfig.data.editorsRank.find(Client => {
+		let finalEditorClient: EditorClient
+		finalEditorClient = RunningConfig.data.editorsRank.find((Client: EditorClient) => {
 			return StaticConfig.data.editorsClients.find(({ extension, editor, regex }) => {
-				let extensionMatches
+				let extensionMatches: string[]
 				if (regex) {
 					extensionMatches = this.language.match(new RegExp(extension)) || []
 				}
@@ -247,7 +249,7 @@ class Editor implements EditorOptions {
 			})
 		})
 		if (!finalEditorClient) {
-			finalEditorClient = RunningConfig.data.editorsRank.find(Client => {
+			finalEditorClient = RunningConfig.data.editorsRank.find((Client: EditorClient) => {
 				const { unknown = false } = Client.do('getLangFromExt', {
 					extension: this.language,
 				})

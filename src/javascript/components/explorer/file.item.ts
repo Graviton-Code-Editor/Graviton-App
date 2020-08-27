@@ -410,7 +410,7 @@ class Item {
 	 * Set the new git changes to the DOM element and the class instance.
 	 *
 	 */
-	private _setGitChanges(data, status) {
+	private _setGitChanges(data: any, status: string) {
 		this.itemGitStatus = status
 		this.itemElement.gitChanges = data
 		this.projectGitData = data
@@ -420,7 +420,7 @@ class Item {
 	 * Set the new git status to the item's DOM element.
 	 *
 	 */
-	private _markStatus(status, count?) {
+	private _markStatus(status: string, count?: number) {
 		const spanText = this.itemElement.children[0].children[2]
 		const statusIndicator = this.itemElement.children[0].children[3]
 		const isDirectory = this.isFolder
@@ -469,7 +469,7 @@ class Item {
 	 *
 	 * @beta
 	 */
-	private _getGitStatus(gitChanges) {
+	private _getGitStatus(gitChanges: any) {
 		const filePath = this.itemPath
 		const projectPath = this.projectPath
 		const supportedGitStatuses = ['not_added', 'modified']
@@ -485,13 +485,13 @@ class Item {
 				}
 			}
 			supportedGitStatuses.map(status => {
-				gitChanges[status].filter(gitPath => {
+				gitChanges[status].filter((gitPath: string) => {
 					if (normalizeDir(path.resolve(projectPath, gitPath)) == normalizeDir(filePath)) {
 						return (result = status)
 					} else {
 						const dirsGit = normalizeDir(gitPath).split(path.sep).filter(Boolean)
 						const dirsLocal = normalizeDir(filePath).split(path.sep).filter(Boolean)
-						dirsGit.filter(dirGit => {
+						dirsGit.filter((dirGit: string) => {
 							const dirLocal = dirsLocal[dirsLocal.length - 1]
 							if (dirLocal === dirGit) {
 								if (normalizeDir(path.resolve(projectPath, gitPath)).indexOf(normalizeDir(filePath)) > -1) {
@@ -593,7 +593,7 @@ class Item {
 				this.itemIconElement.src = this._getIconSource()
 			}
 		})
-		let removedProjectFolderListener
+		let removedProjectFolderListener: any
 		if (this.itemLevel == 0) {
 			removedProjectFolderListener = RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
 				if (folderPath == this.itemPath) {
@@ -603,7 +603,7 @@ class Item {
 			})
 		}
 		const reloadItemListener = this.itemState.on('forceOpen', () => this._forceOpen())
-		const closedFolderListener = this.explorerState.on('closedFolder', folderPath => {
+		const closedFolderListener = this.explorerState.on('closedFolder', (folderPath: string) => {
 			if (this.itemPath.includes(folderPath) && this.itemPath !== folderPath) {
 				this.itemState.emit('destroyed')
 			}
@@ -621,12 +621,13 @@ class Item {
 			RemovedFolderListener.cancel()
 			ChangedFileListener.cancel()
 			closedFolderListener.cancel()
+			IconpackListener.cancel()
 			this.itemElement.remove()
 		})
 	}
 }
 
-function getFileIcon(fileName, fileExt) {
+function getFileIcon(fileName: string, fileExt: string) {
 	const filetype = fileName.split('.').slice(1).join('.')
 	if (fileExt === ('png' || 'jpg' || 'ico')) {
 		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
@@ -644,7 +645,7 @@ function getFileIcon(fileName, fileExt) {
 	}
 }
 
-function getFolderClosedIcon(folderName) {
+function getFolderClosedIcon(folderName: string) {
 	if (RunningConfig.data.iconpack[`folder.closed.${folderName}`]) {
 		return RunningConfig.data.iconpack[`folder.closed.${folderName}`]
 	} else {
@@ -652,7 +653,7 @@ function getFolderClosedIcon(folderName) {
 	}
 }
 
-function openLocation(location) {
+function openLocation(location: string) {
 	const { shell } = window.require('electron')
 	shell.openPath(location)
 }
