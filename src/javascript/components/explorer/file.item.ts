@@ -141,7 +141,7 @@ class Item {
 		if (oldItemPath === newItemPath || newItemDirectory === oldItemPath) return
 
 		this.explorerProvider
-			.renamedir(oldItemPath, newItemPath)
+			.renameDir(oldItemPath, newItemPath)
 			.then(() => {
 				incomingItem.instance.itemState.emit('destroyed')
 				this.explorerState.emit('createItem', {
