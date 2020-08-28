@@ -7,7 +7,6 @@ import SideMenu from '../../components/window/side.menu'
 import getList from '../store/api/get.list'
 import StoreCard from '../../components/store/card'
 import Loader from '../../components/loader'
-import CenteredLayout from '../../components/centered.layout'
 
 import HomePage from '../store/pages/home'
 import InstalledPage from '../store/pages/installed'

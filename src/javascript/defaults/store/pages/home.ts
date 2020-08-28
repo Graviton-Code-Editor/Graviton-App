@@ -4,7 +4,7 @@ import { LanguageState } from 'LanguageConfig'
 import Window from 'Constructors/window'
 import getList from '../api/get.list'
 import Loader from '../../../components/loader'
-import CenteredLayout from '../../../components/centered.layout'
+import CenteredLayout from '../../../components/store/centered.layout'
 import isPluginInstalled from '../utils/is.plugin.installed'
 import StoreCard from '../../../components/store/card'
 

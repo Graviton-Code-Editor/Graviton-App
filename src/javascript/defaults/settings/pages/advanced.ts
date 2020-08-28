@@ -2,7 +2,7 @@ import { element } from '@mkenzo_8/puffin'
 import { Titles, RadioGroup, Button } from '@mkenzo_8/puffin-drac'
 import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
-import configEditor from '../../tabs/config.editor.js'
+import configEditor from '../../tabs/config.editor'
 import Switch from '../../../components/switch'
 
 import ThemeCard from '../../../components/settings/theme.card'

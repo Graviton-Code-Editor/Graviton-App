@@ -24,7 +24,7 @@ const styleWrapper = style`
 	}
 `
 
-function SplashScreen() {
+export default function SplashScreen() {
 	function mounted() {
 		RunningConfig.once('allPluginsLoaded', () => {
 			console.log('%c 🎉 Loaded successfully. ', 'color:black; border-radius:10px; background:pink; padding:3px 8px; margin:5px 0px;')
@@ -41,5 +41,3 @@ function SplashScreen() {
 		</div>
 	`
 }
-
-export default SplashScreen
