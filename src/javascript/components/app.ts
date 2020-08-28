@@ -8,11 +8,11 @@ const styleWrapper = style`
 			background:var(--bodyBackground);
 			height:calc(100% - 68px);
 		}
-		* {
-			font-family: mainfont, Apple Color Emoji,Segoe UI,Segoe UI Emoji,Segoe UI Symbol !important;
-		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
 			font-family:var(--codeFont) !important;
+		}
+		* , .CodeMirror .CodeMirror-dialog * {
+			font-family: mainfont, Apple Color Emoji,Segoe UI,Segoe UI Emoji,Segoe UI Symbol !important;
 		}
 		&[os="darwin"] #body, &[os="linux"] #body{
 			height: calc(100% - 25px);
