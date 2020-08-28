@@ -63,10 +63,10 @@ class Notification {
 		if (RunningConfig.data.notifications.length > NotificationsMaxCount) {
 			const { element } = RunningConfig.data.notifications[0]
 			RunningConfig.data.notifications.splice(0, 1)
-			RunningConfig.emit('ANotificationHasBeenCleared', { element })
+			RunningConfig.emit('aNotificationHasBeenCleared', { element })
 			closeNotification(element)
 		}
-		RunningConfig.emit('ANotificationHasBeenEmitted', notificationDetails)
+		RunningConfig.emit('aNotificationHasBeenEmitted', notificationDetails)
 	}
 }
 
