@@ -154,7 +154,7 @@ class Tab {
 				self.tabState.on('editorCreated', ({ client: newClient, instance: newInstance }) => {
 					self.client = newClient
 					self.instance = newInstance
-					self.tabState.emit('focusedMe', {})
+					self.tabState.emit('focusedMe', { justCreated: true })
 					RunningConfig.emit('aTabHasBeenCreated', {
 						tabElement: self.tabElement,
 						directory: self.directory,
@@ -166,7 +166,7 @@ class Tab {
 					})
 				})
 			} else {
-				self.tabState.emit('focusedMe', {})
+				self.tabState.emit('focusedMe', { justCreated: true })
 				RunningConfig.emit('aTabHasBeenCreated', {
 					tabElement: self.tabElement,
 					directory: self.directory,
@@ -223,7 +223,7 @@ class Tab {
 		const wentActiveListener = this.tabState.keyChanged('active', () => {
 			this.tabElement.update()
 		})
-		const focusedMeListener = this.tabState.on('focusedMe', () => {
+		const focusedMeListener = this.tabState.on('focusedMe', ({ justCreated = false } = {}) => {
 			RunningConfig.data.focusedTab = this.tabElement
 			RunningConfig.data.focusedPanel = this.tabElement.parentElement.parentElement
 			RunningConfig.emit('aTabHasBeenFocused', {
@@ -234,10 +234,11 @@ class Tab {
 				parentFolder: this.parentFolder,
 				isEditor: this.isEditor,
 				projectPath: this.projectPath,
+				justCreated,
 			})
 			if (!this.tabState.data.active) unfocusTabs(this.tabElement)
 			this.tabState.data.active = true
-			this.tabElement.scrollIntoView()
+			this.tabElement.scrollIntoView({ block: 'center' })
 		})
 		const unFocusedMeListener = this.tabState.on('unfocusedMe', () => {
 			RunningConfig.emit('aTabHasBeenUnfocused', {

@@ -8,18 +8,17 @@ import { css as style } from 'emotion'
 const ItemWrapper = style`
 	@keyframes appearItem{
 		from {
-			opacity: 0.3;
-			margin-left: 5px;
+			opacity: 0.35;
+			transform: translateX(-10px);
 		}
 		to {
+			transform: translateX(0px);
 			margin-left: 10px;
 			opacity: 1;
 		}
 	}
-	&[animated="true"]{
-		animation: appearItem 0.1s ease-out;
-	}
 	&{
+		animation: appearItem 0.07s ease-out;
 		background:transparent;
 		white-space:nowrap;
 		padding:0px;
@@ -27,12 +26,8 @@ const ItemWrapper = style`
 		margin-top:1px;
 		margin-left: 10px;
 	}
-	&[animated="true"] > button:active{
-		transition: 0.1s;
-		transform: scale(0.97);
-	}
-	&[animated="true"] button{
-		transition:0.07s;
+	& button{
+		transition:0.015s;
 	}
 	& > button{
 		margin:0;

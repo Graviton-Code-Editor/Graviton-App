@@ -2,9 +2,6 @@ import { state, element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
 
 const ItemWrapper = style`
-	&[animated="true"]{
-		animation: appearItem 0.1s ease-out;
-	}
 	&{
 		background:transparent;
 		white-space:nowrap;
@@ -12,13 +9,12 @@ const ItemWrapper = style`
 		user-select:none;
 		margin-top:1px;
 		margin-left: 10px;
+		&[animated="true"]{
+			animation: appearItem 0.07s ease-out;
+		}
 	}
-	&[animated="true"] > button:active{
-		transition: 0.1s;
-		transform: scale(0.97);
-	}
-	&[animated="true"] button{
-		transition:0.07s;
+	& button{
+		transition:0.015s;
 	}
 	& > button{
 		margin:0;
@@ -35,15 +31,15 @@ const ItemWrapper = style`
 		align-items: center;
 		justify-content: center;
 		color:var(--explorerItemText);
-	}
-	& button:hover{
-		background:var(--explorerItemHoveringBackground);
-		border-radius:5px;
-	}
-	& [selected=true] button{
-		transition:0.07s;
-		background:var(--explorerItemSelectedBackground);
-		border-radius:5px;
+		&:hover{
+			background:var(--explorerItemHoveringBackground);
+			border-radius:5px;
+		}
+		&[selected=true]{
+			transition:0.07s;
+			background:var(--explorerItemSelectedBackground);
+			border-radius:5px;
+		}
 	}
 	& > button > *{
 		align-items: center;
@@ -89,7 +85,7 @@ const ItemWrapper = style`
 		position:relative;
 	}
 	&[animated="true"] .arrow{
-		transition:0.1s;
+		transition:0.07s;
 	}
 	& .arrow{
 		height:8px;

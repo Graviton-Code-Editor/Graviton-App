@@ -194,7 +194,6 @@ class Item {
 					})
 				})
 				this.itemElement.setAttribute('selected', true)
-				tabState.on('focusedItem', () => this.itemElement.scrollIntoView())
 			}
 		}
 	}
@@ -571,9 +570,10 @@ class Item {
 		})
 		const itemTabs = document.getElementsByClassName(`tab${this.itemPath}`)
 		if (<PuffinElement>itemTabs[0] && (<PuffinElement>itemTabs[0]).state.data.active) this.itemElement.setAttribute('selected', true)
-		const TabFocusedListener = RunningConfig.on('aTabHasBeenFocused', ({ directory }) => {
-			if (directory === this.itemPath) {
+		const TabFocusedListener = RunningConfig.on('aTabHasBeenFocused', ({ directory, justCreated }) => {
+			if (directory === this.itemPath && !justCreated) {
 				this.itemElement.setAttribute('selected', true)
+				this.itemElement.scrollIntoView({ block: 'center' })
 			}
 		})
 		const TabUnfocusedListener = RunningConfig.on('aTabHasBeenUnfocused', ({ directory }) => {
