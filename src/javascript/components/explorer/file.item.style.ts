@@ -35,11 +35,12 @@ const ItemWrapper = style`
 			background:var(--explorerItemHoveringBackground);
 			border-radius:5px;
 		}
-		&[selected=true]{
-			transition:0.07s;
-			background:var(--explorerItemSelectedBackground);
-			border-radius:5px;
-		}
+		
+	}
+	&[selected=true] > button{
+		transition:0.07s;
+		background:var(--explorerItemSelectedBackground);
+		border-radius:5px;
 	}
 	& > button > *{
 		align-items: center;
