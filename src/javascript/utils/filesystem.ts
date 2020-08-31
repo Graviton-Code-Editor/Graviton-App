@@ -293,10 +293,10 @@ RunningConfig.on('addWorkspaceToLog', ({ workspacePath }) => {
  * @param {string} workspaceDir - Workspace's path
  * @param {string} workspaceConfig - Workspace's configuration object
  */
-function saveConfiguration(workspacePath, workspaceConfig) {
+function saveConfiguration(workspacePath: string, workspaceConfig: any) {
 	const workspacePathNormalized = normalizeDir(workspacePath)
 	const workspaceConfiguration = JSON.stringify(workspaceConfig, null, 2)
-	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', (err, data) => {
+	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', (err: string) => {
 		if (err) throw err
 		StaticConfig.triggerChange()
 	})
@@ -314,11 +314,11 @@ RunningConfig.on('saveCurrentWorkspace', function () {
 	if (RunningConfig.data.workspacePath) {
 		saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
 	} else {
-		selectFolderDialog().then(res => {
-			new InputDialog({
+		selectFolderDialog().then((res: string) => {
+			InputDialog({
 				title: 'Name your workspace',
 				placeHolder: 'My workspace',
-			}).then(name => {
+			}).then((name: string) => {
 				const resultWorkspace = path.join(res, WorkspaceFilename)
 				RunningConfig.data.workspacePath = resultWorkspace
 				RunningConfig.data.workspaceConfig.name = name
@@ -337,7 +337,7 @@ RunningConfig.on('saveCurrentWorkspace', function () {
  */
 RunningConfig.on('removeWorkspaceFromLog', ({ workspacePath }: RemoveWorkspace) => {
 	const workspacesList = StaticConfig.data.appWorkspacesLog
-	const workspaceConf = workspacesList.find(path => {
+	const workspaceConf = workspacesList.find((path: string) => {
 		return path == workspacePath
 	})
 	const workspaceIndex = workspacesList.indexOf(workspaceConf)
@@ -366,20 +366,20 @@ RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
  * @param {string} name - Current workspace's name
  * @param {function} onFinished - A callback
  */
-RunningConfig.on('renameWorkspaceDialog', ({ workspacePath, name = 'My other workspace', onFinished = x => {} }) => {
+RunningConfig.on('renameWorkspaceDialog', function ({ workspacePath, name = 'My other workspace', onFinished }: { workspacePath: string; name: string; onFinished?: (x: string) => void }) {
 	const workspacePathNormalized = normalizeDir(workspacePath)
-	new InputDialog({
+	InputDialog({
 		title: 'Rename your workspace',
 		placeHolder: name,
 	})
-		.then(name => {
+		.then((name: string) => {
 			RunningConfig.emit('renameWorkspace', {
 				workspacePath: workspacePathNormalized,
 				name,
 			})
-			onFinished(name)
+			if (onFinished) onFinished(name)
 		})
-		.catch(err => {
+		.catch((err: string) => {
 			console.log(err)
 		})
 })
