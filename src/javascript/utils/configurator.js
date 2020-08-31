@@ -23,34 +23,34 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		appPlatform: 'auto',
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: ['CmdOrCtrl+S'],
+				combos: ['Ctrl+S'],
 			},
 			NewPanel: {
-				combos: ['CmdOrCtrl+N'],
+				combos: ['Ctrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: ['CmdOrCtrl+T'],
+				combos: ['Ctrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: ['CmdOrCtrl+L'],
+				combos: ['Ctrl+L'],
 			},
 			OpenEditorCommandPrompt: {
-				combos: ['CmdOrCtrl+I'],
+				combos: ['Ctrl+I'],
 			},
 			OpenExplorerCommandPrompt: {
-				combos: ['CmdOrCtrl+O'],
+				combos: ['Ctrl+O'],
 			},
 			OpenCommandPrompt: {
-				combos: ['CmdOrCtrl+P'],
+				combos: ['Ctrl+P'],
 			},
 			IterateCurrentPanelTabs: {
-				combos: ['CmdOrCtrl+Tab'],
+				combos: ['Ctrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: ['CmdOrCtrl+Up', 'CmdOrCtrl+ScrollUp'],
+				combos: ['Ctrl+Up', 'Ctrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: ['CmdOrCtrl+Down', 'CmdOrCtrl+ScrollDown'],
+				combos: ['Ctrl+Down', 'Ctrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
@@ -77,7 +77,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 }
 
 if (AppPlatform === 'darwin') {
-	DEFAULT_STATIC_CONFIGURATION.data.config.appShortcuts.CloseApp.combos.push('CmdOrCtrl+Q')
+	DEFAULT_STATIC_CONFIGURATION.data.config.appShortcuts.CloseApp.combos.push('Ctrl+Q')
 }
 
 function checkObject(object, subProperty, configurationStore, level) {

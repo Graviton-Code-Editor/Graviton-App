@@ -224,6 +224,7 @@ class Tab {
 			this.tabElement.update()
 		})
 		const focusedMeListener = this.tabState.on('focusedMe', ({ justCreated = false } = {}) => {
+			if (this.tabState.data.active) return
 			RunningConfig.data.focusedTab = this.tabElement
 			RunningConfig.data.focusedPanel = this.tabElement.parentElement.parentElement
 			RunningConfig.emit('aTabHasBeenFocused', {
