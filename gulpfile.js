@@ -3,7 +3,7 @@ const path = require('path')
 const { series } = require('gulp')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
-const { bundleSource, copyPackageToDist } = require('@gveditor/sdk')
+const { Bundler } = require('@gveditor/sdk')
 const { spawn } = require('child_process')
 const { ncp } = require('ncp')
 
@@ -67,16 +67,14 @@ async function pluginsSDK() {
 	return await new Promise(async resolve => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
-			const bundleConfig = {
-				entryProject: path.join(pluginsSourceFolder, pluginName, 'package.json'),
-				distDir: path.join(pluginDistFolder, pluginName),
-			}
-			await bundleSource(bundleConfig)
-			const copyConfig = {
-				entryProject: path.join(pluginsSourceFolder, pluginName, 'package.json'),
-				dirFolder: path.join(pluginDistFolder, pluginName),
-			}
-			await copyPackageToDist(copyConfig)
+			const bundle = new Bundler({
+				projectPath: path.join(pluginsSourceFolder, pluginName),
+				distPath: path.join(pluginDistFolder, pluginName),
+			})
+			await bundle.bundle().then(err => {
+				if (err) console.log(err)
+			})
+			await bundle.copyAssets()
 			if (pluginsFolders.length - 1 === i) {
 				resolve()
 			}

@@ -4,7 +4,6 @@ import StaticConfig from 'StaticConfig'
 import Notification from '../constructors/notification'
 import throwError from './throw.error'
 import { PuffinState } from 'Types/puffin.state'
-import 'regenerator-runtime/runtime'
 
 let initialTranslations = {}
 

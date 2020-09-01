@@ -5,10 +5,10 @@
 	"version": "1.0.0",
 	"description": "JavaScript and TypeScript LSP support.",
 	"main": "index.js",
-	"mainSrc": "src/index.js",
+	"mainSrc": "src/index.ts",
 	"mainDev": "index.js",
 	"dependencies": {
-		"typescript": "^3.9.7",
+		"typescript": "^4.0.2",
 		"typescript-language-server": "^0.4.0"
 	}
 }
