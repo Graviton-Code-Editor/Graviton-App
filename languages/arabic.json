@@ -1,0 +1,163 @@
+{
+    "name": "Arabic(العربية)",
+    "locale": "ar",
+    "translations": {
+        "menus": {
+            "File": {
+                "File": "ملف",
+                "OpenFolder": "فتح مجلد",
+                "OpenFile": "فتح ملف",
+                "Projects": {
+                    "Projects": "المشاريع",
+                    "OpenProjects": "فتح المشاريع"
+                },
+                "Workspaces": {
+                    "Workspaces": "مساحة العمل",
+                    "OpenWorkspaces": "فتح مساحة العمل",
+                    "OpenFromFile": "فتح من ملف",
+                    "AddFolderToWorkspace": "إضافة مجلد إلى مساحة العمل",
+                    "SaveWorkspace": "حفظ مساحة العمل"
+                }
+            },
+            "Edit": {
+                "Edit": "تحرير",
+                "Undo": "تراجع",
+                "Redo": "إلغاء التراجع",
+                "FontSize": {
+                    "FontSize": "حجم الخط",
+                    "Increase": "تكبير",
+                    "Decrease": "تصغير"
+                },
+                "Find": "بحث",
+                "Replace": "إستبدال",
+                "FormatDocument": "تنسيق المستند"
+            },
+            "Tools": {
+                "Tools": "أدوات",
+                "OpenSettings": "الإعدادات",
+                "OpenStore": "المتجر",
+                "Panels": {
+                    "Panels": "الألواح",
+                    "NewPanel": "لوح جديد",
+                    "CloseCurrentPanel": "إغلاق اللوح الحالي"
+                }
+            },
+            "View": {
+                "View": "عرض",
+                "ToggleSidebar": "عرض/إخفاء الشريط الجانبي",
+                "ToggleSidepanel": "عرض/إخفاء اللوح الجانبي",
+                "ShowSidebar": "عرض الشريط الجانبي",
+                "ShowSidepanel": "عرض اللوح الجانبي",
+                "HideSidebar": "إخفاء الشريط الجانبي",
+                "HideSidepanel": "إخفاء اللوح الجانبي"
+            },
+            "Window": {
+                "Window": "النافذة",
+                "Zoom": {
+                    "Zoom": "تكبير",
+                    "DefaultZoom": "الحجم الافتراضي",
+                    "IncreaseZoom": "تكبير",
+                    "DecreaseZoom": "تصغير"
+                },
+                "Debug": {
+                    "Debug": "تصحيح",
+                    "OpenDebugWindow": "فتح نافذة التصحيح"
+                },
+                "OpenDevTools": "فتح أدوات المطور"
+            },
+            "Help": {
+                "Help": "المساعدة",
+                "Contact": "التواصل",
+                "Social": " التواص الاجتماعي",
+                "Contributors": "المساهمون",
+                "Blog": "مدونة",
+                "Documentation": "مستندات",
+                "Website": "الموقع",
+                "SourceCode": "مصدر الكود",
+                "CheckForUpdates": "البحث عن التحديثات",
+                "About": "عن"
+            }
+        },
+        "windows": {
+            "Settings": {
+                "Settings": "الإعدادات",
+                "Customization": {
+                    "Customization": "التعديل",
+                    "Themes": "تنسيق اللون",
+                    "Iconpacks": "حزمة الرموز"
+                },
+                "Advanced": {
+                    "Advanced": "المتقدمة",
+                    "FileWatcher": "معرض الملفات",
+                    "Autocomplete": "الإكمال التلقائي",
+                    "WrapLines": "تنسيق الأسطر",
+                    "Indentation": {
+                        "Indentation": "المسافة الفارغة",
+                        "Space": "مسافة",
+                        "Tab": "Tab"
+                    }
+                },
+                "Languages": "اللغات",
+                "About": {
+                    "About": "عن",
+                    "GravitonDescription": "Graviton محرر على جميع أنظمة التشغيل"
+                }
+            },
+            "Store": {
+                "Store": "المتجر",
+                "Home": {
+                    "Home": "الرئيسية"
+                },
+                "Installed": {
+                    "Installed": "مثبتة"
+                },
+                "Install": "تحميل",
+                "Update": "تحديث",
+                "Uninstall": "إزالة",
+                "AnyCompatibleVersion": "أي إصدار متوافق"
+            },
+            "Welcome": {
+                "Welcome": "مرحبا",
+                "RecentProjects": "المشاريع الأخيرة",
+                "RecentWorkspaces": "مساحات العمل الأخيرة",
+                "NewProject": "مشروع جديد",
+                "OpenWorkspace": "فتح مساحة عمل",
+                "OpenFolder": "فتح مجلد"
+            }
+        },
+        "misc": {
+            "LastVersion": "الإصدار الأخير",
+            "InstalledVersion": "الإصدار المثبت",
+            "About": "عن",
+            "Skip": "تخطي",
+            "Finish": "إنهاء",
+            "Continue": "استمرار",
+            "GoBack": "الرجوع",
+            "Accept": "موافق",
+            "Cancel": "غير موافق",
+            "version": "الإصدار",
+            "CopyPath": "نسخ المسار",
+            "More": "أكثر",
+            "Copy": "نسخ",
+            "Rename": "إعادة التسمية",
+            "Remove": "حذف",
+            "OpenLocation": "فتح مكان",
+            "NewFile": "ملف جديد",
+            "NewFolder": "مجلد جديد",
+            "Paste": "نسخ",
+            "Author": "المؤلف",
+            "Exit": "الخروج",
+            "Tip": "تلميحة",
+            "Yes": "نعم",
+            "No": "لا",
+            "Close": "إغلاق",
+            "Ignore": "تجاهل"
+        },
+        "notifications": {
+            "appLanguageChanged": {
+                "appLanguageChanged": "تم تغيير لغة البرنامج",
+                "restartMessage": "أعد تشغيل البرنامج لكي يتم التغيرات"
+            }
+        }
+    }
+}
