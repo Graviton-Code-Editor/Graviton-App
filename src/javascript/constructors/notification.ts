@@ -5,16 +5,18 @@ import Cross from '../components/icons/cross'
 import RunningConfig from 'RunningConfig'
 import { LanguageState } from '../utils/lang.config'
 
-import { NotificationsLiveTime, NotificationsMaxCount } from 'Constants'
+import { NotificationsLifeTime, NotificationsMaxCount } from 'Constants'
 import { NotificationOptions, NotificationDetails } from 'Types/notification'
 
 class Notification {
 	public NotificationElement: HTMLElement
-	constructor({ title = 'Notification', content = '', buttons = [] }: NotificationOptions) {
+	constructor({ title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
 		function mounted() {
-			setTimeout(() => {
-				this.remove()
-			}, NotificationsLiveTime)
+			if (lifeTime != Infinity) {
+				setTimeout(() => {
+					this.remove()
+				}, lifeTime)
+			}
 		}
 
 		const NotificationComp = element({
