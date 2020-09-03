@@ -7,7 +7,7 @@ const styleWrapper = style`
 		--puffinInputBackground: var(--sidemenuSearcherBackground);
 		--textColor: var(--sidemenuSearcherText);
 		--inputBorder: var(--sidemenuSearcherBorder);
-		margin: 10px 0px;
+		margin: 4px 3px !important;
 	}
 `
 

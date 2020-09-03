@@ -15,15 +15,16 @@ const styleWrapper = style`
 	& input{
 		background:var(--commandPromptInputBackground);
 		color:var(--sidemenuSearcherText);
-		border:2px solid var(--commandPromptInputBorder);
-		padding:7px;
+		border: none;
+		padding:8px;
 		margin:0 auto;
-		border-radius:7px;
-		margin:0;
+		border-radius:5px;
+		min-width: 100%;
 		max-width:100%;
 		display:block;
 		white-space:prewrap;
 		font-size:12px;
+		box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
 	}
 	& .container{
 		flex:1;
