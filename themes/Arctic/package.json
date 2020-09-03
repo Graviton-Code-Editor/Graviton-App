@@ -242,8 +242,7 @@
 			"Prompt": {
 				"Input": {
 					"Background": "white",
-					"Text": "black",
-					"Border": "#0066FF"
+					"Text": "black"
 				},
 				"Background": "rgb(238,238,238)",
 				"Option": {

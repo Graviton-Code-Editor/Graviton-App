@@ -6,7 +6,7 @@ import { PuffinState } from 'Types/puffin.state'
 import { CommandPromptOptions } from 'Types/command.prompt'
 
 class CommandPrompt {
-	private CPName: String
+	private CPName: string
 	private CPCompletedEvent: (x) => void
 	private CPSelectedEvent: (x) => void
 	private CPScrolledEvent: (x) => void
@@ -15,6 +15,7 @@ class CommandPrompt {
 	private CPOptionsElement: HTMLElement
 	private CPInputValue: String
 	private CPDefaultOption: number
+	private CPElement: HTMLElement
 
 	private _selectOption(option) {
 		if (option) {
@@ -117,8 +118,6 @@ class CommandPrompt {
 		this.CPInputValue = ''
 		this.CPDefaultOption = defaultOption
 
-		const configArguments = arguments[0]
-
 		const CommandPromptComponent = element({
 			components: {
 				CommandPromptBody,
@@ -126,14 +125,14 @@ class CommandPrompt {
 			},
 		})`
 		<CommandPromptBody mounted="${mounted}" id="${finalName}" :keydown="${scrolling}">
-			<WindowBackground window="${finalName}" closeWindow=${() => closeCommandPrompt(name)}/>
+			<WindowBackground window="${finalName}" closeWindow=${() => this.closeCP()}/>
 			<div class="container">
 				<input value="${inputDefaultText}" style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
 				<div/>
 			</div>
 		</CommandPromptBody>
 		`
-		function writing(e) {
+		function writing(e: KeyboardEvent) {
 			e.preventDefault()
 			const command = this.value
 			self.CPInputValue = command
@@ -143,14 +142,14 @@ class CommandPrompt {
 						break
 					}
 					self._selectOption(self.CPState.data.hoveredOption)
-					closeCommandPrompt(finalName)
+					self.closeCP()
 				case 17:
 					if (!scrollOnTab) {
 						break
 					}
 				case 13:
 					self._selectOption(self.CPState.data.hoveredOption)
-					closeCommandPrompt(finalName)
+					self.closeCP()
 					break
 				case 27:
 				case 38:
@@ -160,7 +159,7 @@ class CommandPrompt {
 					self._renderOptions(filterOptions(this.value, options))
 			}
 		}
-		function scrolling(e) {
+		function scrolling(e: KeyboardEvent) {
 			switch (e.keyCode) {
 				case 38:
 					self._scrollOptions('up')
@@ -181,22 +180,25 @@ class CommandPrompt {
 			self._renderOptions(self.CPOptions)
 			window.addEventListener('keydown', e => {
 				if (e.keyCode === 27) {
-					closeCommandPrompt(finalName)
+					self.closeCP()
 				}
 			})
 			const input = this.children[1].children[0]
 			input.selectionStart = input.selectionEnd = input.value.length
 			setTimeout(() => input.focus(), 1)
 		}
-		render(CommandPromptComponent, document.getElementById('windows'))
+		this.CPElement = render(CommandPromptComponent, document.getElementById('windows'))
+	}
+	private closeCP() {
+		if (this.CPElement) this.CPElement.remove()
 	}
 }
 
-function closeCommandPrompt(CommandPromptComponent) {
-	if (document.getElementById(CommandPromptComponent)) document.getElementById(CommandPromptComponent).remove()
+function closeCommandPrompt(CommandPromptID: string) {
+	if (document.getElementById(CommandPromptID)) document.getElementById(CommandPromptID).remove()
 }
 
-function filterOptions(search, options) {
+function filterOptions(search: string, options: Array<{ label: string }>) {
 	return options
 		.map(function (option) {
 			if (option.label.match(new RegExp(search, 'i'))) return option
@@ -204,7 +206,7 @@ function filterOptions(search, options) {
 		.filter(Boolean)
 }
 
-const findOptionAction = (options, option) => {
+const findOptionAction = (options: Array<{ label: string; action: () => void }>, option: { textContent: string }) => {
 	return options.find(opt => opt.label == option.textContent)
 }
 

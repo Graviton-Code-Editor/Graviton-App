@@ -54,7 +54,7 @@ const styleWrapper = style`
 	& .container > div > div{
 		min-width:auto;
 		flex:1;
-		background:inherit;
+		background:transparent;
 		max-width:100%;
 	}
 	& a{
