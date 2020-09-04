@@ -254,14 +254,11 @@ const CodemirrorClient = new EditorClient(
 			let lspServer: string
 			let lspAdapter
 			let lspConnection
-			switch (language.fancy) {
-				case 'typescript':
-					lspServer = `ws://localhost:${RunningConfig.data.LSPPort}/typescript`
-					break
-				case 'javascript':
-					lspServer = `ws://localhost:${RunningConfig.data.LSPPort}/javascript`
-					break
-			}
+			Object.keys(RunningConfig.data.LSPServers).forEach(server => {
+				if (server == language.fancy) {
+					lspServer = `ws://localhost:${RunningConfig.data.LSPPort}/${server}`
+				}
+			})
 			if (lspServer && StaticConfig.data.editorAutocomplete) {
 				const lspClient = createLspClient({
 					lspServer,

@@ -36,6 +36,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	projectServices: [],
 	languageServers: [],
 	LSPPort,
+	LSPServers: {},
 }
 
 const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
@@ -47,6 +48,10 @@ RunningConfig.on('appLoaded', () => {
 	})
 	RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
 		modes.forEach((name: string) => {
+			if (!RunningConfig.data.LSPServers[name]) RunningConfig.data.LSPServers[name] = []
+			RunningConfig.data.LSPServers[name].push({
+				server: args,
+			})
 			lspServer.addLanguageServer(name, args)
 		})
 	})
