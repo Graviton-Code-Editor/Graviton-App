@@ -7,7 +7,6 @@ import { remote } from 'electron'
 import minimist from 'minimist'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 
-const electronWindow: any = remote.getCurrentWindow()
 const electronArguments = isDev ? remote.process.argv.slice(2) : remote.process.argv.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)
 const parsedRendererArguments = isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
@@ -54,6 +53,14 @@ RunningConfig.on('appLoaded', () => {
 			})
 			lspServer.addLanguageServer(name, args)
 		})
+	})
+})
+
+RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filter }) {
+	RunningConfig.data.envs.push({
+		name,
+		prefix,
+		filter,
 	})
 })
 

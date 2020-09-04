@@ -9,7 +9,7 @@ import Notification from '../../constructors/notification'
 import detectEnv from '../../utils/detect.env'
 
 RunningConfig.on('appLoaded', () => {
-	const { display, panelNode } = new SidePanel({
+	const { panelNode } = new SidePanel({
 		icon: EnvOutlined,
 		panel: () => element`<div/>`,
 		hint: 'Project inspector',
@@ -92,7 +92,7 @@ function executeScript(prefix, folder, script) {
 				content: data,
 			})
 		})
-		scriptProcess.on('close', data => {
+		scriptProcess.on('close', () => {
 			scriptEnvClient.emit('stop')
 		})
 	})
