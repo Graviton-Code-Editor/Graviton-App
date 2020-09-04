@@ -604,7 +604,7 @@ class Item {
 		}
 		const reloadItemListener = this.itemState.on('forceOpen', () => this._forceOpen())
 		const closedFolderListener = this.explorerState.on('closedFolder', (folderPath: string) => {
-			if (this.itemPath.includes(folderPath) && this.itemPath !== folderPath) {
+			if (this.itemFolder == folderPath && this.itemPath !== folderPath) {
 				this.itemState.emit('destroyed')
 			}
 		})
