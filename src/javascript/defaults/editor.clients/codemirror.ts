@@ -177,7 +177,7 @@ const CodemirrorClient = new EditorClient(
 					}
 				case 'go':
 					return {
-						fancy: 'Go',
+						fancy: 'go',
 						name: 'text/x-go',
 					}
 				default:
