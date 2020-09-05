@@ -8,7 +8,7 @@ import russian from '../../../languages/russian.json'
 import spanish from '../../../languages/spanish.json'
 import polish from '../../../languages/polish.json'
 import arabic from '../../../languages/arabic.json'
-import turkish from '../../../languages/arabic.json'
+import turkish from '../../../languages/turkish.json'
 
 export default {
 	english,
