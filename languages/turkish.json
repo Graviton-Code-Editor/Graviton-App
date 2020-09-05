@@ -1,0 +1,163 @@
+{
+	"name": "Türkçe",
+	"locale": "tr",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "Dosya",
+				"OpenFolder": "Klasör Aç",
+				"OpenFile": "Dosya Aç",
+				"Projects": {
+					"Projects": "Projeler",
+					"OpenProjects": "Projeler Ekranını Aç"
+				},
+				"Workspaces": {
+					"Workspaces": "Çalışma Alanları",
+					"OpenWorkspaces": "Çalışma Alanları Ekranını Aç",
+					"OpenFromFile": "Dosyadan Aç",
+					"AddFolderToWorkspace": "Çalışma Alanına Klasör Ekle",
+					"SaveWorkspace": "Çalışma Alanını Kaydet"
+				}
+			},
+			"Edit": {
+				"Edit": "Düzen",
+				"Undo": "Geri Al",
+				"Redo": "İleri Al",
+				"FontSize": {
+					"FontSize": "Yazı Tipi Boyutu",
+					"Increase": "Arttır",
+					"Decrease": "Azalt"
+				},
+				"Find": "Bul",
+				"Replace": "Değiştir",
+				"FormatDocument": "Belgeyi Biçimlendir"
+			},
+			"Tools": {
+				"Tools": "Araçlar",
+				"OpenSettings": "Ayarlar",
+				"OpenStore": "Mağaza",
+				"Panels": {
+					"Panels": "Paneller",
+					"NewPanel": "Yeni Panel",
+					"CloseCurrentPanel": "Kullanımdaki Paneli Kapat"
+				}
+			},
+			"View": {
+				"View": "Görünüm",
+				"ToggleSidebar": "Kenar Çubuğunu Aç/Kapa",
+				"ToggleSidepanel": "Kenar Panelini Aç/Kapa",
+				"ShowSidebar": "Show sidebar",
+				"ShowSidepanel": "Show sidepanel",
+				"HideSidebar": "Hide sidebar",
+				"HideSidepanel": "Hide sidepanel"
+			},
+			"Window": {
+				"Window": "Pencere",
+				"Zoom": {
+					"Zoom": "Yakınlaştırma",
+					"DefaultZoom": "Varsayılan",
+					"IncreaseZoom": "Arttır",
+					"DecreaseZoom": "Azalt"
+				},
+				"Debug": {
+					"Debug": "Hata Ayıklama",
+					"OpenDebugWindow": "Hata Ayıklama Penceresini Aç"
+				},
+				"OpenDevTools": "Geliştirici Araçlarını Aç"
+			},
+			"Help": {
+				"Help": "Yardım",
+				"Contact": "İletişim",
+				"Social": "Sosyal Medya",
+				"Contributors": "Emeği Geçenler",
+				"Blog": "Blog",
+				"Documentation": "Dökümantasyon",
+				"Website": "İnternet Sitesi",
+				"SourceCode": "Kaynak Kodu",
+				"CheckForUpdates": "Güncellemeleri Kontrol Et",
+				"About": "Hakkında"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Ayarlar",
+				"Customization": {
+					"Customization": "Kişiselleştirme",
+					"Themes": "Temalar",
+					"Iconpacks": "Simge Paketi"
+				},
+				"Advanced": {
+					"Advanced": "Gelişmiş",
+					"FileWatcher": "Dosya Değişiklik İzleyicisi",
+					"Autocomplete": "Otomatik Tamamlayıcı",
+					"WrapLines": "Satır Kaydırma",
+					"Indentation": {
+						"Indentation": "Girinti Biçimi",
+						"Space": "Boşluk",
+						"Tab": "Tab"
+					}
+				},
+				"Languages": "Diller",
+				"About": {
+					"About": "Hakkında",
+					"GravitonDescription": "Graviton, çok platformlu bir metin düzenleyicisidir."
+				}
+			},
+			"Store": {
+				"Store": "Mağaza",
+				"Home": {
+					"Home": "Ana Sayfa"
+				},
+				"Installed": {
+					"Installed": "Kurulu"
+				},
+				"Install": "Yükle",
+				"Update": "Güncelle",
+				"Uninstall": "Kaldır",
+				"AnyCompatibleVersion": "Herhangi bir uyumlu sürüm."
+			},
+			"Welcome": {
+				"Welcome": "Hoş Geldiniz",
+				"RecentProjects": "Son Projeler",
+				"RecentWorkspaces": "Son Çalışma Alanları",
+				"NewProject": "Yeni Proje",
+				"OpenWorkspace": "Bir Çalışma Alanı Aç",
+				"OpenFolder": "Bir Klasör Aç"
+			}
+		},
+		"misc": {
+			"LastVersion": "Son Sürüm",
+			"InstalledVersion": "Kurulu Sürüm",
+			"About": "Hakkında",
+			"Skip": "Geç",
+			"Finish": "Sonlandır",
+			"Continue": "Devam Et",
+			"GoBack": "Geri git",
+			"Accept": "Kabul Et",
+			"Cancel": "İptal Et",
+			"version": "Sürüm",
+			"CopyPath": "Yolu Kopyala",
+			"More": "Daha Fazla",
+			"Copy": "Kopyala",
+			"Rename": "Yeniden Adlandır",
+			"Remove": "Kaldır",
+			"OpenLocation": "Konumu Aç",
+			"NewFile": "Yeni Dosya",
+			"NewFolder": "Yeni Klasör",
+			"Paste": "Yapıştır",
+			"Author": "Yapımcı",
+			"Exit": "Çıkış",
+			"Tip": "Tüyo",
+			"Yes": "Evet",
+			"No": "Hayır",
+			"Close": "Kapat",
+			"Ignore": "Yoksay"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "Uygulamanın dili değişti.",
+				"restartMessage": "Değişikliklerin tamamen uygulanması için uygulamayı yeniden başlatın."
+			}
+		}
+	}
+}
