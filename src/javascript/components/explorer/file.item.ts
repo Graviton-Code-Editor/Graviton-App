@@ -34,6 +34,7 @@ class Item {
 	private itemArrowElement: HTMLImageElement
 	private itemGitStatus: string
 	private itemExtension: string
+	private itemDecorator: any
 
 	private isFolder: boolean
 
@@ -44,7 +45,7 @@ class Item {
 	private explorerProvider: any
 	private explorerState: any
 
-	constructor({ explorerProvider, projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
+	constructor({ decorator, explorerProvider, projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
 		const self = this
 
 		this.isFolder = isFolder
@@ -56,6 +57,7 @@ class Item {
 		this.itemClass = classSelector
 		this.explorerProvider = explorerProvider
 		this.projectPath = projectPath
+		this.itemDecorator = decorator
 
 		const clickListener = this._clickListener.bind(this)
 		const contextListener = this._contextListener.bind(this)
@@ -78,7 +80,15 @@ class Item {
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
-					<div itemClass="${classSelector}" class="gitStatus" count=""/>
+					<div itemClass="${classSelector}" class="decorator gitStatus" count=""/>
+					<div itemClass="${classSelector}" class="decorator" >${() => {
+			if (this.itemDecorator) {
+				return element`
+								<p>${decorator.text}</p>
+							`
+			}
+			return element`<div/>`
+		}}</div>
 				</button>
 			</FileItem>
 		`

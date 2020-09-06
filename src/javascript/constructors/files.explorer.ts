@@ -290,6 +290,7 @@ class FilesExplorer {
 				isFolder: true,
 				gitChanges: this.gitChanges,
 				explorerContainer: null,
+				decorator: this.explorerProvider.decorator,
 			})
 			const mounted = function () {
 				this.gitChanges = self.gitChanges
@@ -370,7 +371,7 @@ function getClassByDir(dir: string) {
 	return dir.replace(/ /gm, '')
 }
 
-function getItemComputed({ explorerProvider, classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
+function getItemComputed({ decorator = null, explorerProvider, classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
 	return new FileItem({
 		projectPath,
 		isFolder,
@@ -381,6 +382,7 @@ function getItemComputed({ explorerProvider, classSelector = '', projectPath, fu
 		hint: beautifyDir(fullPath),
 		explorerContainer,
 		explorerProvider,
+		decorator,
 	})
 }
 

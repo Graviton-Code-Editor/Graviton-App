@@ -39,6 +39,7 @@ const LocalExplorer = {
 		const simpleInstance = simpleGit(path)
 		return simpleInstance.status()
 	},
+	decorator: null,
 }
 
 export default LocalExplorer

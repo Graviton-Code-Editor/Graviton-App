@@ -47,8 +47,7 @@ const ItemWrapper = style`
 		display:flex;
 		color:var(--explorerItemText);
 	}
-	& .gitStatus {
-		display:none;
+	& .decorator {
 		position:relative;
 		border-radius:50px;
 		margin: auto 2px;
@@ -56,6 +55,9 @@ const ItemWrapper = style`
 		font-size:9px;
 		min-width:10px;
 		padding:1px 3px;
+	}
+	& .gitStatus {
+		display:none;
 	}
 	& .gitStatus[count=""]{
 		min-width:0px;
