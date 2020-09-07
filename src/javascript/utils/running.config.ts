@@ -6,6 +6,7 @@ import isDev from 'electron-is-dev'
 import { remote } from 'electron'
 import minimist from 'minimist'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
+import isGitInstalled from './is.git.installed'
 
 const electronArguments = isDev ? remote.process.argv.slice(2) : remote.process.argv.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)
@@ -36,7 +37,14 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	languageServers: [],
 	LSPPort,
 	LSPServers: {},
+	isGitInstalled: false,
 }
+
+isGitInstalled().then(res => {
+	if (res !== RunningConfig.data.isGitInstalled) {
+		RunningConfig.data.isGitInstalled = res
+	}
+})
 
 const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
 

@@ -2,6 +2,7 @@ const fs = require('fs-extra')
 import simpleGit from 'simple-git'
 import normalizeDir from '../utils/directory.normalizer'
 import { join } from 'path'
+import RunningConfig from 'RunningConfig'
 
 const LocalExplorer = {
 	name: 'Local',
@@ -31,6 +32,7 @@ const LocalExplorer = {
 		return fs.lstatSync(path)
 	},
 	isGitRepo: async function (path: string) {
+		if (!RunningConfig.data.isGitInstalled) return false
 		const repoPath = normalizeDir(path)
 		const simpleInstance = simpleGit(repoPath)
 		return simpleInstance.checkIsRepo()
