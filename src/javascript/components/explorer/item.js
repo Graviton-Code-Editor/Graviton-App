@@ -137,7 +137,10 @@ function Item({ label, items, mounted, icon, iconComp, action, contextAction, de
 	}
 	function setIcon(icon, item) {
 		const iconImg = item.getElementsByClassName('icon')[0]
-		iconImg.src = RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']
+		// Icon might not exist because there is a component icon
+		if (iconImg) {
+			iconImg.src = RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']
+		}
 	}
 	function setDecorator({ label, background }, item) {
 		if (label) decoratorLabel = label
