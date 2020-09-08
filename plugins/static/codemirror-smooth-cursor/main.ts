@@ -11,7 +11,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	if (!isCM || !isEnabled()) return
 
 	const cursor = createElement(element`
-		<div tabindex="-1" style="pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: ease-out 0.1s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
+		<div tabindex="-1" style="top:0;left:0;pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: ease-out 0.1s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
 	`)
 
 	tabElement.state.data.bodyElement.appendChild(cursor)
@@ -46,8 +46,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 		if (!cursorElement) return
 		const { top: cursorY, left: cursorX } = instance.cursorCoords(true, 'page')
 		const { clientHeight } = cursorElement
-		cursor.style.top = cursorY
-		cursor.style.left = cursorX
+		cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`
 		cursor.style.height = clientHeight
 		cursor.style.width = StaticConfig.data.editorFontSize / 1.6
 	}
