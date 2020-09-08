@@ -4,6 +4,7 @@ import { element, style } from '@mkenzo_8/puffin'
 import { Text } from '@mkenzo_8/puffin-drac'
 import FolderOutlined from '../../components/icons/folder.outlined'
 import Welcome from '../../defaults/windows/welcome'
+import { openFolder } from '../../utils/filesystem'
 
 const styleWrapper = style`
 	& {
@@ -64,7 +65,11 @@ function openWorkspaces() {
 }
 
 function openFolderDialog() {
-	RunningConfig.emit('addFolderToRunningWorkspaceDialog', {
-		replaceOldExplorer: true,
+	openFolder().then(function (folderPath) {
+		RunningConfig.emit('addFolderToRunningWorkspace', {
+			folderPath,
+			replaceOldExplorer: true,
+			workspacePath: null,
+		})
 	})
 }
