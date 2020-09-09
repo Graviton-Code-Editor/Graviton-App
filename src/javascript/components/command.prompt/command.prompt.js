@@ -32,6 +32,7 @@ const styleWrapper = style`
 		overflow: hidden;
 		top:100px;
 		max-height:80%;
+		min-width:175px;
 		max-width:175px;
 		margin:0 auto;
 		justify-content:center;
