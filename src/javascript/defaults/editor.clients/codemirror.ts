@@ -69,6 +69,11 @@ const CodemirrorClient = new EditorClient(
 					return {
 						name: 'php',
 					}
+				case 'dart':
+					return {
+						fancy: 'dart',
+						name: 'dart',
+					}
 				case 'd':
 					return {
 						name: 'text/x-d',
