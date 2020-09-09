@@ -1,5 +1,5 @@
 {
-	"name": "Português brasileiro",
+	"name": "Português Brasileiro",
 	"locale": "pt-BR",
 	"translations": {
 		"menus": {
@@ -42,6 +42,15 @@
 					"CloseCurrentPanel": "Fechar o painel atual"
 				}
 			},
+			"View": {
+				"View": "Ver",
+				"ToggleSidebar": "Alternar barra lateral",
+				"ToggleSidepanel": "Alternar painel lateral",
+				"ShowSidebar": "Mostrar barra lateral",
+				"ShowSidepanel": "Mostrar painel lateral",
+				"HideSidebar": "Esconder barra lateral",
+				"HideSidepanel": "Esconder painel lateral"
+			},
 			"Window": {
 				"Window": "Janela",
 				"Zoom": {
@@ -74,7 +83,8 @@
 				"Settings": "Configurações",
 				"Customization": {
 					"Customization": "Customização",
-					"Themes": "Temas"
+					"Themes": "Temas",
+					"Iconpacks": "Pacote de ícones"
 				},
 				"Advanced": {
 					"Advanced": "Avançado",
@@ -85,62 +95,68 @@
 						"Indentation": "Indentação",
 						"Space": "Espaço",
 						"Tab": "Tab"
-					},
-					"Languages": "Idiomas",
-					"About": {
-						"About": "Sobe",
-						"GravitonDescription": "Graviton é um editor multi plataforma."
 					}
 				},
-				"Store": {
-					"Store": "Loja",
-					"Home": {
-						"Home": "Inicio"
-					},
-					"Installed": {
-						"Installed": "Instalado"
-					},
-					"Install": "Instalar",
-					"Update": "Atualizar",
-					"Uninstall": "Desinstalar",
-					"AnyCompatibleVersion": "Qualquer versão compatível."
+				"Languages": "Idiomas",
+				"About": {
+					"About": "Sobre",
+					"GravitonDescription": "Graviton é um editor multi plataforma."
+				}
+			},
+			"Store": {
+				"Store": "Loja",
+				"Home": {
+					"Home": "Inicio"
 				},
-				"Welcome": {
-					"Welcome": "Bem-vindo",
-					"RecentProjects": "Projetos recentes",
-					"RecentWorkspaces": "workspaces recentes",
-					"NewProject": "Novo projeto",
-					"OpenWorkspace": "Abrir uma workspace",
-					"OpenFolder": "Abrir uma pasta"
-				}
+				"Installed": {
+					"Installed": "Instalado"
+				},
+				"Install": "Instalar",
+				"Update": "Atualizar",
+				"Uninstall": "Desinstalar",
+				"AnyCompatibleVersion": "Qualquer versão compatível."
 			},
-			"misc": {
-				"LastVersion": "Ultima versão",
-				"InstalledVersion": "Versão instalada",
-				"About": "Sobre",
-				"Skip": "Pular",
-				"Finish": "Finalizado",
-				"Continue": "Continuar",
-				"GoBack": "Voltar",
-				"Accept": "Aceitar",
-				"Cancel": "Cancelar",
-				"version": "Versão",
-				"More": "Mais",
-				"Copy": "Copiar",
-				"Paste": "Colar",
-				"Author": "Autor",
-				"Exit": "Sair",
-				"Tip": "Dica",
-				"Yes": "Sim",
-				"No": "Não",
-				"Close": "Fechar",
-				"Ignore": "Ignorar"
-			},
-			"notifications": {
-				"appLanguageChanged": {
-					"appLanguageChanged": "O idioma do aplicativo foi alterado.",
-					"restartMessage": "Reinicie o aplicativo para aplicar totalmente as alterações."
-				}
+			"Welcome": {
+				"Welcome": "Bem-vindo",
+				"RecentProjects": "Projetos recentes",
+				"RecentWorkspaces": "workspaces recentes",
+				"NewProject": "Novo projeto",
+				"OpenWorkspace": "Abrir uma workspace",
+				"OpenFolder": "Abrir uma pasta"
+			}
+		},
+		"misc": {
+			"LastVersion": "Ultima versão",
+			"InstalledVersion": "Versão instalada",
+			"About": "Sobre",
+			"Skip": "Pular",
+			"Finish": "Finalizado",
+			"Continue": "Continuar",
+			"GoBack": "Voltar",
+			"Accept": "Aceitar",
+			"Cancel": "Cancelar",
+			"version": "Versão",
+			"CopyPath": "Copiar caminho",
+			"More": "Mais",
+			"Copy": "Copiar",
+			"Rename": "Renomear",
+			"Remove": "Remover",
+			"OpenLocation": "Abrir local",
+			"NewFile": "Novo arquivo",
+			"NewFolder": "Nova pasta",
+			"Paste": "Colar",
+			"Author": "Autor",
+			"Exit": "Sair",
+			"Tip": "Dica",
+			"Yes": "Sim",
+			"No": "Não",
+			"Close": "Fechar",
+			"Ignore": "Ignorar"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "O idioma do aplicativo foi alterado.",
+				"restartMessage": "Reinicie o aplicativo para aplicar totalmente as alterações."
 			}
 		}
 	}
