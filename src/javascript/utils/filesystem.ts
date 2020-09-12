@@ -236,10 +236,12 @@ RunningConfig.on('setWorkspace', ({ workspacePath }: SetWorkspace) => {
 		}
 		setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 		RunningConfig.data.workspacePath = workspacePathNormalized
-		workspace.folders.map(folder => {
-			RunningConfig.emit('addFolderToRunningWorkspace', {
-				folderPath: folder.path,
-			})
+		workspace.folders.map(async folder => {
+			if (await fs.exists(folder.path)) {
+				RunningConfig.emit('addFolderToRunningWorkspace', {
+					folderPath: normalizeDir(folder.path),
+				})
+			}
 		})
 	}
 })
