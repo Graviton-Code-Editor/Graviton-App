@@ -32,3 +32,10 @@ jobs:
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    - name : Building for RPM
+      if: ${{ runner.os == 'Linux' }}
+      run: |
+        npm run build:electron:rpm
+      env:
+        CI: true
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}

@@ -56,6 +56,7 @@
 		"build:p5p": "npm run script:build && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux p5p",
 		"build:rpm": "npm run script:build && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"build:AppImage": "npm run script:build && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage",
+		"build:electron:rpm": "npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"lint": "prettier --write *.{ts,js,scss,md,html,json}"
 	},
 	"staticFiles": {
@@ -166,8 +167,7 @@
 			"category": "Development",
 			"target": [
 				"AppImage",
-				"deb",
-				"rpm"
+				"deb"
 			]
 		},
 		"win": {
