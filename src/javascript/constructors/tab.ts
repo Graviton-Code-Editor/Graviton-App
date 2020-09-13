@@ -59,6 +59,7 @@ class Tab {
 			directory: this.directory,
 			isEditor: this.isEditor,
 			title,
+			instance: this,
 		})
 		RunningConfig.on('isATabOpened', ({ directory: tabDir, id: tabID }) => {
 			if ((tabDir && tabDir == directory) || (tabID && tabID == id)) {
