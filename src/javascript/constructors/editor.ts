@@ -166,7 +166,7 @@ class Editor implements EditorOptions {
 	private addClientsListeners(): void {
 		this.client.do('displayContextMenu', {
 			instance: this.instance,
-			action({ event, buttons }) {
+			action: ({ event, buttons }) => {
 				new ContextMenu({
 					parent: document.body,
 					list: [
@@ -189,7 +189,7 @@ class Editor implements EditorOptions {
 		})
 		this.client.do('rightclicked', {
 			instance: this.instance,
-			action(cm, e: MouseEvent) {
+			action: (cm, e: MouseEvent) => {
 				new ContextMenu({
 					parent: document.body,
 					list: [
