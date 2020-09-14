@@ -38,6 +38,15 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 			mainPath = path.join(PATH, main) //BUILT version
 		}
 		if (type === 'plugin') {
+			class PluginNotification extends Notification {
+				constructor(params) {
+					super({
+						...params,
+						author: name,
+					})
+				}
+			}
+
 			const parameters = {
 				StaticConfig,
 				RunningConfig,
@@ -47,7 +56,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 				Dialog,
 				StatusBarItem,
 				ContextMenu,
-				Notification,
+				Notification: PluginNotification,
 				CodeMirror,
 				Tab,
 				drac,

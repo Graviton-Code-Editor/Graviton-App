@@ -38,6 +38,15 @@ const styleWrapper = style`
 		padding:8px 10px;
 		background:var(--notificationButtonBackground);
 	}
+	& div:nth-child(2){
+		display: flex;
+		& > span {
+			font-size: 11px;
+			margin: auto 5px;
+			padding-bottom:2px;
+			color: var(--textColor)
+		}
+	}
 `
 
 function NotificationBody() {

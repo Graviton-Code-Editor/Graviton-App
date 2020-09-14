@@ -10,7 +10,7 @@ import { NotificationOptions, NotificationDetails } from 'Types/notification'
 
 class Notification {
 	public NotificationElement: HTMLElement
-	constructor({ title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
+	constructor({ author, title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
 		function mounted() {
 			if (lifeTime != Infinity) {
 				setTimeout(() => {
@@ -32,7 +32,10 @@ class Notification {
 				<div>
 					<Cross :click="${() => closeNotification(this.NotificationElement)}"/>
 				</div>
-				<Title lang-string="${title}"/>
+				<div>
+					<Title lang-string="${title}"/>
+					${author ? element`<span>From: ${author}</span>` : element`<div/>`}
+				</div>
 				<Content lang-string="${content}"/>
 				<div class="buttons">
 					${buttons.map(({ label, action }) => {
@@ -75,5 +78,7 @@ class Notification {
 function closeNotification(node: HTMLElement) {
 	node.remove()
 }
+
+console.log(Notification)
 
 export default Notification

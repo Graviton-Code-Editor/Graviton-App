@@ -10,6 +10,7 @@ export interface NotificationOptions {
 	content?: string
 	buttons?: NotificationButton[]
 	lifeTime?: number | typeof Infinity
+	author?: string
 }
 
 export interface NotificationDetails {
