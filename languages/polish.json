@@ -25,8 +25,8 @@
 				"Redo": "Ponów",
 				"FontSize": {
 					"FontSize": "Rozmiar czcionki",
-					"Increase": "Zmniejsz",
-					"Decrease": "Zwiększ"
+					"Increase": "Zwiększ",
+					"Decrease": "Zmniejsz"
 				},
 				"Find": "Znajdź",
 				"Replace": "Zamień",
@@ -69,7 +69,7 @@
 				"Help": "Pomoc",
 				"Contact": "Kontakt",
 				"Social": "Social media",
-				"Contributors": "Kontrybutorzy",
+				"Contributors": "Deweloperzy",
 				"Blog": "Blog",
 				"Documentation": "Dokumentacja",
 				"Website": "Strona internetowa",
@@ -114,7 +114,7 @@
 				"Install": "Zainstaluj",
 				"Update": "Zaktualizuj",
 				"Uninstall": "Odinstaluj",
-				"AnyCompatibleVersion": "Dowolna zgodna wersja."
+				"AnyCompatibleVersion": "Dowolna zgodna wersja"
 			},
 			"Welcome": {
 				"Welcome": "Witaj",
