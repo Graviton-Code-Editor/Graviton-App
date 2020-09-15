@@ -3,8 +3,8 @@ import Dialog from '../../constructors/dialog'
 function tabsUnsavedWarningDialog() {
 	return new Promise((resolve, reject) => {
 		const DialogInstance = new Dialog({
-			title: 'There are unsaved files.',
-			content: 'Progress might be lost.',
+			title: 'dialogs.tabsUnsavedWarning.title',
+			content: 'dialogs.tabsUnsavedWarning.content',
 			buttons: [
 				{
 					label: 'misc.GoBack',

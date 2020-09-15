@@ -158,6 +158,12 @@
 				"appLanguageChanged": "App's language changed.",
 				"restartMessage": "Restart the app to fully apply the changes."
 			}
+		},
+		"dialogs": {
+			"tabsUnsavedWarning": {
+				"title": "There are unsaved files.",
+				"content": "Progress might be lost."
+			}
 		}
 	}
 }
