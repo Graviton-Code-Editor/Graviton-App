@@ -51,6 +51,11 @@ const CodemirrorClient = new EditorClient(
 						fancy: 'jsx',
 						name: 'text/jsx',
 					}
+				case 'gjs':
+					return {
+						fancy: 'javascript',
+						name: 'text/javascript',
+					}
 				case 'js':
 					return {
 						fancy: 'javascript',
