@@ -151,7 +151,8 @@
 			"Yes": "Yes",
 			"No": "No",
 			"Close": "Close",
-			"Ignore": "Ignore"
+			"Ignore": "Ignore",
+			"BuildDate": "Build date"
 		},
 		"notifications": {
 			"appLanguageChanged": {

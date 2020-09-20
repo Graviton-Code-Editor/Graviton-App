@@ -34,9 +34,7 @@ const aboutContent = () => element({
 				Graviton v${packageJSON.version}
 			</span> 
 			<br/>
-			<span>
-				Build date: ${buildJSON.date}
-			</span> 
+			<span lang-string="misc.BuildDate" string="{{misc.BuildDate}}: ${buildJSON.date}"/>
 			<br/>
 			<span lang-string="misc.Author" string="{{misc.Author}}: Marc Espín Sanz"/>
 			<br/>
