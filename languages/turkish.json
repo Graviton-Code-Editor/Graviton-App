@@ -46,10 +46,10 @@
 				"View": "Görünüm",
 				"ToggleSidebar": "Kenar Çubuğunu Aç/Kapa",
 				"ToggleSidepanel": "Kenar Panelini Aç/Kapa",
-				"ShowSidebar": "Show sidebar",
-				"ShowSidepanel": "Show sidepanel",
-				"HideSidebar": "Hide sidebar",
-				"HideSidepanel": "Hide sidepanel"
+				"ShowSidebar": "Kenar Çubuğunu Göster",
+				"ShowSidepanel": "Kenar Panelini Göster",
+				"HideSidebar": "Kenar Çubuğunu Gizle",
+				"HideSidepanel": "Kenar Panelini Gizle"
 			},
 			"Window": {
 				"Window": "Pencere",
