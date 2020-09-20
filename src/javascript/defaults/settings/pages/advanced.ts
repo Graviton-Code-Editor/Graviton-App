@@ -3,6 +3,7 @@ import { Titles, RadioGroup, Button } from '@mkenzo_8/puffin-drac'
 import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
 import configEditor from '../../tabs/config.editor'
+import restartConfigDialog from '../../dialogs/restart_config'
 import Switch from '../../../components/switch'
 
 import ThemeCard from '../../../components/settings/theme.card'
@@ -42,14 +43,23 @@ export default function AdvancedPage({ closeWindow }): PuffinComponent {
 				</RadioGroup>
 			</div>
 			<div href="manual config">
-				<H4>Manual editing</H4>
-				<Button :click="${configeditor}">Edit configuration</Button>
+				<H4 lang-string="windows.Settings.Advanced.ManualConfig.ManualConfig"/>
+				<Button :click="${configeditor}" lang-string="windows.Settings.Advanced.ManualConfig.EditConfiguration"/>
 			</div>
-		</div>	
+			<div href="restart config">
+				<H4 lang-string="windows.Settings.Advanced.RestartConfig.RestartConfig"/>
+				<Button :click="${restartconfig}" lang-string="windows.Settings.Advanced.RestartConfig.RestartConfig"/>
+			</div>
+		</div>
 	`
 
 	function configeditor() {
 		configEditor()
+		closeWindow()
+	}
+
+	function restartconfig() {
+		restartConfigDialog()
 		closeWindow()
 	}
 }

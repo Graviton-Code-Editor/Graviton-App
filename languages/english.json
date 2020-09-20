@@ -91,10 +91,17 @@
 					"FileWatcher": "Files Watcher",
 					"Autocomplete": "Autocomplete",
 					"WrapLines": "Wrap lines",
+					"ManualConfig": {
+						"ManualConfig": "Manual config",
+						"EditConfiguration": "Edit configuration"
+					},
 					"Indentation": {
 						"Indentation": "Indentation",
 						"Space": "Space",
 						"Tab": "Tab"
+					},
+					"RestartConfig": {
+						"RestartConfig": "Restart configuration"
 					}
 				},
 				"Languages": "Languages",
@@ -164,6 +171,10 @@
 			"tabsUnsavedWarning": {
 				"title": "There are unsaved files.",
 				"content": "Progress might be lost."
+			},
+			"restartConfig": {
+				"title": "Restart configuration",
+				"content": "Click continue to restart your  configuration."
 			}
 		}
 	}

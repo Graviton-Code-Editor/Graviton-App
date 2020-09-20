@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import electronStore from 'electron-store'
 import getAppDataPath from 'appdata-path'
 import AppPlatform from 'AppPlatform'
+import StaticConfig from 'StaticConfig'
 
 const DEFAULT_STATIC_CONFIGURATION = {
 	config: {
@@ -123,4 +124,10 @@ function getConfiguration() {
 	}
 }
 
-export { initConfiguration, getConfiguration }
+function restartConfiguration() {
+	Object.keys(StaticConfig.data).forEach(key => {
+		StaticConfig.data[key] = DEFAULT_STATIC_CONFIGURATION.config[key]
+	})
+}
+
+export { restartConfiguration, initConfiguration, getConfiguration }
