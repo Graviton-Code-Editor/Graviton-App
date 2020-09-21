@@ -7,7 +7,7 @@
 
 ### ✔ Changes
 
-- Menu bar is now nativge in MacOS and GNU/Linux distributions
+- Menu bar is now native in MacOS and GNU/Linux distributions
 - General UI improvements
 - Remove projects from the log
 - Tabs show file's icon
