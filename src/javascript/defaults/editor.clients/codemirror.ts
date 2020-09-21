@@ -26,6 +26,10 @@ import 'codemirror/addon/hint/html-hint'
 
 const path = window.require('path')
 
+/*
+	This is the editor client used to edit plain text files
+*/
+
 const CodemirrorClient = new EditorClient(
 	{
 		name: 'codemirror',

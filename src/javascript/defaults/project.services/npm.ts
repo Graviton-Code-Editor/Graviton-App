@@ -2,30 +2,47 @@ import RunningConfig from 'RunningConfig'
 const { spawn } = window.require('child_process')
 import selectFolderDialog from '../../utils/dialogs/select.folder'
 import Notification from '../../constructors/notification'
+import * as path from 'path'
 
 RunningConfig.data.projectServices.push({
-	name: 'NodeJS',
-	description: 'Create basic project',
+	name: 'NPM',
+	description: 'Create basic NPM project',
 	onExecuted,
 })
 
+const isNPMNameValid = name => !name.match(/([ ]|[A-Z])/gm)
+
 function onExecuted() {
-	selectFolderDialog().then(location => {
-		let cmdPath
+	selectFolderDialog().then((location: string) => {
+		const folderName = path.basename(location)
+		const validNPMName = isNPMNameValid(folderName)
+
+		if (!validNPMName) {
+			return new Notification({
+				title: 'NPM Project',
+				content: `Selected folder's name is not valid`,
+			})
+		}
+
+		let cmdPath: string = ''
+
 		if (window.process.platform === 'win32') {
 			cmdPath = 'npm.cmd'
 		} else {
 			cmdPath = 'npm'
 		}
+
 		const npmInit = spawn(cmdPath, ['init', '--force'], {
 			cwd: location,
 		})
-		npmInit.on('close', code => {
+
+		npmInit.on('close', (code: number) => {
 			if (code === 0) {
 				new Notification({
-					title: 'NodeJS Project',
+					title: 'NPM Project',
 					content: 'Successfully created.',
 				})
+
 				RunningConfig.emit('addFolderToRunningWorkspace', {
 					folderPath: location,
 					replaceOldExplorer: true,
@@ -33,7 +50,7 @@ function onExecuted() {
 				})
 			} else {
 				new Notification({
-					title: 'NodeJS Project',
+					title: 'NPM Project',
 					content: 'Something went wrong',
 				})
 			}

@@ -17,8 +17,6 @@ import Notification from '../../constructors/notification'
 import FileItem from './file.item.style'
 import copy from 'copy-to-clipboard'
 import path from 'path'
-const trash = window.require('trash')
-
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'
 
@@ -345,6 +343,7 @@ class Item {
 		const directoryPath = this.itemPath
 		WarningDialog()
 			.then(() => {
+				const trash = window.require('trash')
 				trash([normalizeDir(directoryPath)])
 					.then(() => {
 						this.itemState.emit('destroyed')

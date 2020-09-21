@@ -18,6 +18,10 @@ const styleWrapper = style`
 	}
 `
 
+/*
+	This is the editor client used to view images
+*/
+
 const ImageViewerClient = new EditorClient(
 	{
 		name: 'imageviewer',
@@ -77,7 +81,7 @@ const ImageViewerClient = new EditorClient(
 				ch: 0,
 			}
 		},
-	}
+	},
 )
 
 export default ImageViewerClient

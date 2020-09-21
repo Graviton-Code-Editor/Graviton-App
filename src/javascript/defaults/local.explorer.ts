@@ -4,6 +4,11 @@ import normalizeDir from '../utils/directory.normalizer'
 import { join } from 'path'
 import RunningConfig from 'RunningConfig'
 
+/*
+	This provides a tiny later between the GUI and the filesystem.
+	This is used to access, read and mofify the local filesystem.
+*/
+
 const LocalExplorer = {
 	name: 'Local',
 	listDir: async function (path: string) {
