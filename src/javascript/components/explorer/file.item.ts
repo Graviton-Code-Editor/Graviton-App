@@ -15,7 +15,7 @@ import getFormat from '../../utils/format.parser'
 import normalizeDir from '../../utils/directory.normalizer'
 import Notification from '../../constructors/notification'
 import FileItem from './file.item.style'
-import copy from 'copy-to-clipboard'
+import { clipboard } from 'electron'
 import path from 'path'
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'
@@ -256,7 +256,7 @@ class Item {
 					{
 						label: 'misc.CopyPath',
 						action: () => {
-							copy(this.itemPath)
+							clipboard.writeText(this.itemPath)
 						},
 					},
 					{
@@ -289,7 +289,7 @@ class Item {
 					{
 						label: 'misc.CopyPath',
 						action: () => {
-							copy(this.itemPath)
+							clipboard.writeText(this.itemPath)
 						},
 					},
 					{

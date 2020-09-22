@@ -6,7 +6,7 @@ import Notification from './notification'
 import ContextMenu from './contextmenu'
 import path from 'path'
 import { element } from '@mkenzo_8/puffin'
-import copy from 'copy-to-clipboard'
+import { clipboard } from 'electron'
 
 import { EditorOptions } from 'Types/editor'
 import { EditorClient } from 'Types/editorclient'
@@ -179,7 +179,7 @@ class Editor implements EditorOptions {
 									instance: this.instance,
 									action: () => RunningConfig.emit('hideAllFloatingComps'),
 								})
-								copy(selectedText)
+								clipboard.writeText(selectedText)
 							},
 						},
 					],
@@ -200,7 +200,7 @@ class Editor implements EditorOptions {
 									instance: this.instance,
 									action: () => RunningConfig.emit('hideAllFloatingComps'),
 								})
-								copy(selectedText)
+								clipboard.writeText(selectedText)
 							},
 						},
 					],
