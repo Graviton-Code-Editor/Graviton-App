@@ -45,20 +45,26 @@ If shows an empty dark screen just wait.
 
 ## Building the installer
 
-For Windows, Linux(deb,AppImage,rpm) and MacOS:
+Default outputs:
+
+- Windows: 64 bits
+- Linux: Deb and AppImage
+- MacOS: DMG
+
+Run:
 
 ```shell
 npm run build
 ```
 
-You can override the default platforms from the package.json.
+You can override the default outputs in the package.json, or just skip to the next section.
 
-#### Building another linux installers
+#### Building specific Linux installers
 
-If you want to build a specific linux package for your distro you can run:
+If you want to build a specific linux Installer for your distro you can run:
 
 ```shell
-npm run build:your_extension
+npm run build:whatever_package
 ```
 
 For example, if you are an Arch Linux user, run:
