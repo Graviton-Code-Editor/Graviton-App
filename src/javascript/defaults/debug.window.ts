@@ -15,7 +15,7 @@ function openDebugClient() {
 				nativeWindowOpen: true,
 				nodeIntegrationInWorker: true,
 				nodeIntegration: true,
-				webSecurity: !isDev,
+				webSecurity: false,
 				enableRemoteModule: true,
 				additionalArguments: ['--mode', 'debug'],
 			},
@@ -33,7 +33,7 @@ function openDebugClient() {
 		} else {
 			debugWindow.loadURL(
 				url.format({
-					pathname: path.join(__dirname, '..', '..', '..', 'dist_ui', 'index.html'),
+					pathname: path.join(process.resourcesPath, 'app.asar', 'dist_ui', 'index.html'),
 					protocol: 'file:',
 					slashes: true,
 				}),
