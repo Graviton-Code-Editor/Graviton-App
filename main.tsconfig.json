@@ -1,4 +1,5 @@
 {
+	"files": ["./app/main.ts"],
 	"module": "commonjs",
 	"noImplicitAny": false,
 	"compilerOptions": {
@@ -6,7 +7,7 @@
 		"target": "es5",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"lib": ["es2019", "dom"],
+		"lib": ["es2019"],
 		"resolveJsonModule": true
 	},
 	"root": ".",

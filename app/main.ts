@@ -7,7 +7,7 @@ const AdmZip = require('adm-zip')
 const fs = require('fs-extra')
 const axios = require('axios')
 const { ipcMain } = require('electron')
-
+//f sdfdsfdsffdssdfsd
 let main
 
 app.on('ready', function () {
@@ -28,6 +28,7 @@ app.on('ready', function () {
 			nodeIntegration: true,
 			webSecurity: !isDev,
 			enableRemoteModule: true,
+			scrollBounce: true,
 		},
 		frame: process.platform !== 'win32',
 		minHeight: 320,
@@ -40,7 +41,6 @@ app.on('ready', function () {
 		title: 'Graviton Editor',
 		show: false,
 		icon: getAppIcon(),
-		scrollBounce: true,
 	})
 	mainWindowState.manage(main)
 	if (isDev) {
@@ -50,7 +50,7 @@ app.on('ready', function () {
 		main.removeMenu()
 		main.loadURL(
 			url.format({
-				pathname: path.join(__dirname, 'dist_ui', 'index.html'),
+				pathname: path.join(__dirname, '..', 'dist_ui', 'index.html'),
 				protocol: 'file:',
 				slashes: true,
 			}),
@@ -61,7 +61,7 @@ app.on('ready', function () {
 		main.show()
 		main.focus()
 	})
-	if (path.basename(__dirname) === 'Graviton-App') {
+	if (path.basename(path.join(__dirname, '..')) === 'Graviton-App') {
 		main.setMenuBarVisibility(true)
 	} else {
 		main.setMenuBarVisibility(false)
@@ -71,11 +71,11 @@ app.on('ready', function () {
 function getAppIcon() {
 	switch (process.platform) {
 		case 'win32':
-			return path.join(__dirname, 'assets', 'building', 'win32', 'logo.ico')
+			return path.join(__dirname, '..', 'assets', 'building', 'win32', 'logo.ico')
 		case 'linux':
-			return path.join(__dirname, 'assets', 'building', 'linux', '512x512.png')
+			return path.join(__dirname, '..', 'assets', 'building', 'linux', '512x512.png')
 		case 'darwin':
-			return path.join(__dirname, 'assets', 'building', 'darwin', 'icon.png')
+			return path.join(__dirname, '..', 'assets', 'building', 'darwin', 'icon.png')
 	}
 }
 
