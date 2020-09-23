@@ -35,7 +35,9 @@ const ItemWrapper = style`
 			background:var(--explorerItemHoveringBackground);
 			border-radius:5px;
 		}
-		
+		&[ishidden="true"]{
+			opacity: 0.6;
+		}
 	}
 	&[selected=true] > button{
 		transition:0.07s;

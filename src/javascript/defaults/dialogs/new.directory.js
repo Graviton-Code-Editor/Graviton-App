@@ -31,6 +31,7 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 					directory: itemDirectory,
 					directoryName: path.basename(itemDirectory),
 					isFolder: true,
+					isHidden: false,
 				})
 			}
 		} else {
@@ -43,6 +44,7 @@ function createDirectory(value, isFolder, parentDirectory, container, explorerSt
 					directory: itemDirectory,
 					directoryName: path.basename(itemDirectory),
 					isFolder: false,
+					isHidden: false,
 				})
 			})
 		}

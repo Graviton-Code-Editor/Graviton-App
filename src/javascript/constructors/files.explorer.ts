@@ -197,7 +197,7 @@ class FilesExplorer {
 			this.explorerState.emit('startedWatcher')
 		})
 		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
-		const createItemListener = this.explorerState.on('createItem', ({ container, directory, level, isFolder = false }) => {
+		const createItemListener = this.explorerState.on('createItem', ({ container, directory, level, isFolder = false, isHidden }) => {
 			if (container.children[1] == null) return //Folder is not opened
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
@@ -222,6 +222,7 @@ class FilesExplorer {
 					isFolder,
 					gitChanges: this.itemElement.gitChanges,
 					explorerContainer: container,
+					isHidden,
 				})
 				const hotItem = itemComputed
 				if (isFolder) {
@@ -291,6 +292,7 @@ class FilesExplorer {
 				gitChanges: this.gitChanges,
 				explorerContainer: null,
 				decorator: this.explorerProvider.decorator,
+				isHidden: false,
 			})
 			const mounted = function () {
 				this.gitChanges = self.gitChanges
@@ -312,7 +314,7 @@ class FilesExplorer {
 				.listDir(this.folderPath)
 				.then((paths: Array<any>) => {
 					let dirs: Array<any> = paths
-						.map(({ name, isFolder }) => {
+						.map(({ name, isFolder, isHidden }) => {
 							//Load folders
 							const itemDirectory = normalizeDir(path.join(this.folderPath, name))
 							if (isFolder)
@@ -325,13 +327,14 @@ class FilesExplorer {
 									isFolder: true,
 									gitChanges: this.gitChanges,
 									explorerContainer: this.container,
+									isHidden,
 								})
 						})
 						.filter(Boolean)
 					dirs = [
 						...dirs,
 						paths
-							.map(({ name, isFolder }) => {
+							.map(({ name, isFolder, isHidden }) => {
 								//Load files
 								const itemDirectory = normalizeDir(path.join(this.folderPath, name))
 								if (!isFolder)
@@ -345,6 +348,7 @@ class FilesExplorer {
 											isFolder: false,
 											gitChanges: this.gitChanges,
 											explorerContainer: this.container,
+											isHidden,
 										})
 							})
 							.filter(Boolean),
@@ -371,7 +375,7 @@ function getClassByDir(dir: string) {
 	return dir.replace(/ /gm, '')
 }
 
-function getItemComputed({ decorator = null, explorerProvider, classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
+function getItemComputed({ isHidden, decorator = null, explorerProvider, classSelector = '', projectPath, fullPath, level, isFolder, gitChanges, explorerContainer }) {
 	return new FileItem({
 		projectPath,
 		isFolder,
@@ -383,6 +387,7 @@ function getItemComputed({ decorator = null, explorerProvider, classSelector = '
 		explorerContainer,
 		explorerProvider,
 		decorator,
+		isHidden,
 	})
 }
 

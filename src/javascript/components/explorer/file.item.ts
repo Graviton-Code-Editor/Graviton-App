@@ -33,6 +33,7 @@ class Item {
 	private itemGitStatus: string
 	private itemExtension: string
 	private itemDecorator: any
+	private itemIsHidden: boolean
 
 	private isFolder: boolean
 
@@ -43,7 +44,7 @@ class Item {
 	private explorerProvider: any
 	private explorerState: any
 
-	constructor({ decorator, explorerProvider, projectPath, explorerContainer, isFolder, level, fullPath, classSelector, gitChanges, hint }) {
+	constructor({ decorator, explorerProvider, projectPath, explorerContainer, isFolder, isHidden, level, fullPath, classSelector, gitChanges, hint }) {
 		const self = this
 
 		this.isFolder = isFolder
@@ -57,6 +58,7 @@ class Item {
 		this.explorerProvider = explorerProvider
 		this.projectPath = projectPath
 		this.itemDecorator = decorator
+		this.itemIsHidden = isHidden || false
 
 		const clickListener = this._clickListener.bind(this)
 		const contextListener = this._contextListener.bind(this)
@@ -75,22 +77,27 @@ class Item {
 		}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
 			StaticConfig.data.appEnableExplorerItemsAnimations
 		}" :drop="${dragDroppedListener}" >
-				<button draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}"  :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+				<button ishidden="${
+					this.itemIsHidden
+				}" draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}"  :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
 					<div itemClass="${classSelector}" class="decorator gitStatus" count=""/>
-					<div itemClass="${classSelector}" class="decorator" >${() => {
-			if (this.itemDecorator) {
-				return element`
-								<p>${decorator.text}</p>
-							`
-			}
-			return element`<div/>`
-		}}</div>
+					<div itemClass="${classSelector}" class="decorator" >${handleTextDecorator}</div>
 				</button>
 			</FileItem>
 		`
+
+		function handleTextDecorator() {
+			if (this.itemDecorator) {
+				return element`
+					<p>${decorator.text}</p>
+				`
+			}
+			return element`<div/>`
+		}
+
 		function createItemState(target) {
 			if (!target.state) {
 				const itemState = new state({})

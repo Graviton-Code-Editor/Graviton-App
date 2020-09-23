@@ -3,6 +3,7 @@ import simpleGit from 'simple-git'
 import normalizeDir from '../utils/directory.normalizer'
 import { join } from 'path'
 import RunningConfig from 'RunningConfig'
+import StaticConfig from 'StaticConfig'
 
 /*
 	This provides a tiny later between the GUI and the filesystem.
@@ -14,23 +15,50 @@ const LocalExplorer = {
 	listDir: async function (path: string) {
 		return new Promise(async res => {
 			const items = await fs.readdir(path)
+			const makeTransparentHiddenItems = StaticConfig.data.editorMakeTransparentHiddenItems
 			res(
-				items
-					.map((item: string) => {
-						let error = null
-						try {
-							var isDirectory = fs.lstatSync(join(path, item)).isDirectory()
-						} catch (err) {
-							error = err
-						}
-						if (!error) {
-							return {
-								name: item,
-								isFolder: isDirectory,
+				await Promise.all(
+					items
+						.map(async (item: string) => {
+							let error = null
+							let isFolder = false
+							let dir = join(path, item)
+							try {
+								isFolder = await new Promise(res => {
+									fs.lstat(join(path, item), (err: string, result: any) => {
+										if (err) {
+											res(false)
+										} else {
+											res(result.isDirectory())
+										}
+									})
+								})
+							} catch (err) {
+								error = err
 							}
-						}
-					})
-					.filter(Boolean),
+							if (!error) {
+								let isHidden = false
+								if (makeTransparentHiddenItems === true && item[0] === '.') {
+									isHidden = await new Promise(res => {
+										const hidefile = window.require('hidefile')
+										hidefile.isHidden(dir, (err: string, result: boolean) => {
+											if (err) {
+												res(false)
+											} else {
+												res(result)
+											}
+										})
+									})
+								}
+								return {
+									name: item,
+									isFolder,
+									isHidden,
+								}
+							}
+						})
+						.filter(Boolean),
+				),
 			)
 		})
 	},
