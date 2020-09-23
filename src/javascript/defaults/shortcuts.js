@@ -224,6 +224,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement }) => {
 	openedTabsList.push({
 		element: tabElement,
 		title: tabElement.state.data.title,
+		icon: tabElement.children[0].src,
 	})
 })
 
@@ -244,6 +245,7 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 		const focusedTabData = {
 			element: RunningConfig.data.focusedTab,
 			title: RunningConfig.data.focusedTab.state.data.title,
+			icon: RunningConfig.data.focusedTab.children[0].src,
 		}
 
 		const focusedTabIndex = getTabIndex(RunningConfig.data.focusedTab)
@@ -259,6 +261,7 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 			options: [
 				...openedTabsList.map(tab => {
 					return {
+						icon: tab.icon,
 						data: tab.element,
 						label: tab.title,
 					}

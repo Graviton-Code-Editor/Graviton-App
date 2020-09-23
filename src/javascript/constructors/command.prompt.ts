@@ -32,14 +32,16 @@ class CommandPrompt {
 
 	private _renderOptions(options) {
 		const self = this
-		let content = ''
 		let hoveredDefault = this.CPDefaultOption
 
 		const optionsComp = element`
 			<div>
-				${options.map(({ selected, label, data }, index) => {
+				${options.map(({ selected, label, data, icon }, index) => {
 					if (selected) hoveredDefault = index
-					return element`<a :click="${onClicked}" data="${data}">${label}</a> `
+					return element`<a :click="${onClicked}" data="${data}">
+						${icon ? element`<img src="${icon}"/>` : ''} 
+						<span>${label}</span>
+					</a> `
 				})}
 			</div>
 		`
@@ -206,8 +208,8 @@ function filterOptions(search: string, options: Array<{ label: string }>) {
 		.filter(Boolean)
 }
 
-const findOptionAction = (options: Array<{ label: string; action: () => void }>, option: { textContent: string }) => {
-	return options.find(opt => opt.label == option.textContent)
+const findOptionAction = (options: Array<{ label: string; action: () => void }>, option: HTMLElement) => {
+	return options.find(opt => opt.label == option.lastChild.textContent)
 }
 
 export default CommandPrompt

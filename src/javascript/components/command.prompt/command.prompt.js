@@ -63,12 +63,17 @@ const styleWrapper = style`
 		text-overflow:ellipsis;
 		font-size:12px;
 		white-space:nowrap;
-		display:block;
+		display: flex;
+		align-items: center;
 		padding:7px 8px;
 		background:var(--commandPromptOptionBackground);
 		color:var(--commandPromptOptionText);
 		border-radius:5px;
 		margin:1px 0px;
+		& > img {
+			height: 20px;
+			margin-right: 5px;
+		}
 		&.active, &:hover{
 			cursor: pointer;
 			background:var(--commandPromptOptionActiveBackground);
