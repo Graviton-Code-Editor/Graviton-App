@@ -230,6 +230,7 @@ class Item {
 								parentDirectory: this.itemPath,
 								container: this.itemElement,
 								explorerState: this.explorerState,
+								explorerProvider: this.explorerProvider,
 							})
 						},
 					},
@@ -241,6 +242,7 @@ class Item {
 								parentDirectory: this.itemPath,
 								container: this.itemElement,
 								explorerState: this.explorerState,
+								explorerProvider: this.explorerProvider,
 							})
 						},
 					},

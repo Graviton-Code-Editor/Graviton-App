@@ -71,6 +71,12 @@ const LocalExplorer = {
 	renameDir: function (oldPath: string, newPath: string) {
 		return fs.rename(oldPath, newPath)
 	},
+	mkdir: function (path: string) {
+		return fs.mkdir(path)
+	},
+	exists: function (path: string) {
+		return fs.exists(path)
+	},
 	info: function (path: string) {
 		return fs.lstatSync(path)
 	},
