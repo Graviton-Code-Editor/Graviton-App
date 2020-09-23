@@ -54,6 +54,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 
 const isCursorVisible = cm => {
 	const { top, right, bottom, left } = cm.getWrapperElement().getBoundingClientRect()
+	const gutterSize = cm.getGutterElement().offsetWidth
 	const { top: cursorY, left: cursorX } = cm.cursorCoords(true, 'page')
-	return cursorY > top && cursorY < bottom && cursorX > left && cursorX < right
+	return cursorY > top && cursorY < bottom && cursorX > left + gutterSize && cursorX < right
 }
