@@ -202,7 +202,7 @@ const CodemirrorClient = new EditorClient(
 			}
 		},
 		create({ element, language, value, theme, CtrlPlusScroll, directory }) {
-			if (language.name == 'htmlmixed') emmet(CodeMirror)
+			emmet(CodeMirror)
 			const CodemirrorEditor = CodeMirror(element, {
 				mode: language,
 				value: value,
@@ -232,6 +232,9 @@ const CodemirrorClient = new EditorClient(
 				},
 				emmet: {
 					preview: false,
+					mark: true,
+					markTagPairs: true,
+					previewOpenTag: false,
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
