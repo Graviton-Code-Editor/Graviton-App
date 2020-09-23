@@ -15,12 +15,22 @@ const LocalExplorer = {
 		return new Promise(async res => {
 			const items = await fs.readdir(path)
 			res(
-				items.map((item: string) => {
-					return {
-						name: item,
-						isFolder: fs.lstatSync(join(path, item)).isDirectory(),
-					}
-				}),
+				items
+					.map((item: string) => {
+						let error = null
+						try {
+							var isDirectory = fs.lstatSync(join(path, item)).isDirectory()
+						} catch (err) {
+							error = err
+						}
+						if (!error) {
+							return {
+								name: item,
+								isFolder: isDirectory,
+							}
+						}
+					})
+					.filter(Boolean),
 			)
 		})
 	},

@@ -49,6 +49,7 @@ class Item {
 		this.isFolder = isFolder
 		this.itemPath = normalizeDir(fullPath)
 		this.itemName = path.basename(fullPath)
+		if (this.itemName === '') this.itemName = fullPath
 		this.itemFolder = normalizeDir(path.dirname(path.normalize(this.itemPath)))
 		this.itemLevel = level
 		this.itemExtension = this.isFolder ? null : getFormat(this.itemPath)
