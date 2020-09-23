@@ -1,9 +1,9 @@
 import path from 'path'
 import fs from 'fs-extra'
 import electronStore from 'electron-store'
-import getAppDataPath from 'appdata-path'
 import AppPlatform from 'AppPlatform'
 import StaticConfig from 'StaticConfig'
+const { remote } = require('electron')
 
 const DEFAULT_STATIC_CONFIGURATION = {
 	config: {
@@ -12,7 +12,7 @@ const DEFAULT_STATIC_CONFIGURATION = {
 		appLanguage: 'english',
 		editorFontSize: '16',
 		appProjectsLog: [],
-		appConfigPath: path.join(getAppDataPath(), '.graviton2'),
+		appConfigPath: path.join(remote.app.getPath('appData'), '.graviton2'),
 		appWorkspacesLog: [],
 		appZoom: 1,
 		editorFSWatcher: true,

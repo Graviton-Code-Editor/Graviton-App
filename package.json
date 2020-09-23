@@ -81,7 +81,6 @@
 		"@mkenzo_8/puffin": "^1.1.1",
 		"@mkenzo_8/puffin-drac": "^0.1.7",
 		"adm-zip": "^0.4.14",
-		"appdata-path": "^1.0.0",
 		"axios": "^0.19.2",
 		"chokidar": "^3.4.2",
 		"codemirror": "^5.56.0",
