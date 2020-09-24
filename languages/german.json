@@ -136,6 +136,22 @@
 			"No": "Nein",
 			"Close": "Schließen",
 			"Ignore": "Ignorieren"
+		},
+		"notifications" : {
+			"appLanguageChanged": {
+				"appLanguageChanged": "Die Sprache der App hat sich geändert.",
+				"restartMessage": "Neustarten sie die App um die Sprache zu aktualisieren."
+			}
+		},
+		"dialogs" : {
+			"tabsUnsavedWarning" : {
+				"title": "Ungespeicherte Dateien sind vorhanden.",
+				"content" : "Sie könnten Fortschritt verlieren."
+			},
+			"restartConfig": {
+				"title": "Neustart Einstellungen",
+				"content": "Klicken sie auf Fortfahren um die Einstellungen zu aktualisieren."
+			}
 		}
 	}
 }
