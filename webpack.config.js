@@ -12,18 +12,18 @@ module.exports = [
 			minimize: true,
 		},
 		entry: {
-			index: './src/javascript/main.ts',
+			index: './src/interface/main.ts',
 		},
 		plugins: [
 			new WebpackBar({
-				name: 'Renderer Process',
+				name: 'Interface',
 			}),
 			new WebpackMessages({
-				name: 'Graviton interface',
+				name: 'Interface',
 				logger: str => console.log(`[webpack] --> ${str}`),
 			}),
 			new HtmlWebpackPlugin({
-				title: 'Graviton',
+				title: 'Graviton Editor',
 				filename: path.resolve(__dirname, 'dist_ui', 'index.html'),
 				templateContent: `
 					<html>
@@ -82,17 +82,17 @@ module.exports = [
 		resolve: {
 			extensions: ['.js', '.ts'],
 			alias: {
-				ThemeProvider: path.resolve(__dirname, './src/javascript/utils/theme.provider.ts'),
-				StaticConfig: path.resolve(__dirname, './src/javascript/utils/static.config.ts'),
-				RunningConfig: path.resolve(__dirname, './src/javascript/utils/running.config.ts'),
-				PluginsRegistry: path.resolve(__dirname, './src/javascript/utils/plugins.registry.ts'),
-				LanguageConfig: path.resolve(__dirname, './src/javascript/utils/lang.config.ts'),
-				AppPlatform: path.resolve(__dirname, './src/javascript/utils/platform.ts'),
-				Constants: path.resolve(__dirname, './src/javascript/defaults/constants.ts'),
+				ThemeProvider: path.resolve(__dirname, './src/interface/utils/theme.provider.ts'),
+				StaticConfig: path.resolve(__dirname, './src/interface/utils/static.config.ts'),
+				RunningConfig: path.resolve(__dirname, './src/interface/utils/running.config.ts'),
+				PluginsRegistry: path.resolve(__dirname, './src/interface/utils/plugins.registry.ts'),
+				LanguageConfig: path.resolve(__dirname, './src/interface/utils/lang.config.ts'),
+				AppPlatform: path.resolve(__dirname, './src/interface/utils/platform.ts'),
+				Constants: path.resolve(__dirname, './src/interface/defaults/constants.ts'),
 				StaticPlugins: path.resolve(__dirname, './plugins/static'),
-				Types: path.resolve(__dirname, './src/javascript/types'),
-				Constructors: path.resolve(__dirname, './src/javascript/constructors'),
-				Components: path.resolve(__dirname, './src/javascript/components'),
+				Types: path.resolve(__dirname, './src/interface/types'),
+				Constructors: path.resolve(__dirname, './src/interface/constructors'),
+				Components: path.resolve(__dirname, './src/interface/components'),
 				Assets: path.resolve(__dirname, './assets'),
 				Root: __dirname,
 			},
@@ -116,14 +116,14 @@ module.exports = [
 			minimize: true,
 		},
 		entry: {
-			index: path.resolve(__dirname, 'app', 'main.ts'),
+			index: path.resolve(__dirname, 'src', 'app', 'main.ts'),
 		},
 		plugins: [
 			new WebpackBar({
-				name: 'Main Process',
+				name: 'App',
 			}),
 			new WebpackMessages({
-				name: 'Graviton Main',
+				name: 'App',
 				logger: str => console.log(`[webpack] --> ${str}`),
 			}),
 		],

@@ -13,7 +13,7 @@ import ContextMenu from './constructors/contextmenu'
 import AppBody from './components/app'
 const isDev = window.require('electron-is-dev')
 import AppPlatform from 'AppPlatform'
-import '../sass/main.scss'
+import '../styles/main.scss'
 
 import PuffinElement from './types/puffin.element'
 import { ContextMenuButton } from 'Types/contextmenu'
