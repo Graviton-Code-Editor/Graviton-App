@@ -48,48 +48,61 @@ const CodemirrorClient = new EditorClient(
 				case 'html':
 					return {
 						fancy: 'html',
+						mode: 'html',
 						name: 'htmlmixed',
 					}
 				case 'jsx':
 					return {
 						fancy: 'jsx',
+						mode: 'javascript',
 						name: 'text/jsx',
 					}
 				case 'gjs':
 					return {
-						fancy: 'javascript',
+						fancy: 'gjs',
+						mode: 'javascript',
 						name: 'text/javascript',
 					}
 				case 'js':
 					return {
 						fancy: 'javascript',
+						mode: 'javascript',
 						name: 'text/jsx',
 					}
 				case 'json':
 					return {
 						fancy: 'json',
+						mode: 'json',
 						name: 'application/json',
 					}
 				case 'css':
 					return {
+						fancy: 'cs',
+						mode: 'css',
 						name: 'css',
 					}
 				case 'php':
 					return {
+						fancy: 'php',
+						mode: 'php',
 						name: 'php',
 					}
 				case 'dart':
 					return {
 						fancy: 'dart',
+						mode: 'dart',
 						name: 'dart',
 					}
 				case 'd':
 					return {
+						fancy: 'd',
+						mode: 'd',
 						name: 'text/x-d',
 					}
 				case 'rs':
 					return {
 						fancy: 'rust',
+						mode: 'rust',
 						name: 'rust',
 					}
 				case 'rb':
@@ -99,99 +112,145 @@ const CodemirrorClient = new EditorClient(
 				case 'pyw':
 				case 'py':
 					return {
+						fancy: 'python',
+						mode: 'python',
 						name: 'python',
 					}
 				case 'svelte':
+					return {
+						fancy: 'svelte',
+						mode: 'svelte',
+						name: 'text/x-vue',
+					}
 				case 'vue':
 					return {
+						fancy: 'vue',
+						mode: 'vue',
 						name: 'text/x-vue',
 					}
 				case 'svg':
 				case 'xml':
 					return {
+						fancy: 'xml',
+						mode: 'xml',
 						name: 'xml',
 					}
 				case 'ejs':
 					return {
+						fancy: 'ejs',
+						mode: 'javascript',
 						name: 'application/x-ejs',
 					}
 				case 'lua':
 					return {
+						fancy: 'lua',
+						mode: 'lua',
 						name: 'text/x-lua',
 					}
 				case 'yml':
 				case 'yaml':
 					return {
+						fancy: 'yaml',
+						mode: 'yaml',
 						name: 'yaml',
 					}
 				case 'sql':
 					return {
+						fancy: 'sql',
+						mode: 'sql',
 						name: 'sql',
 					}
 				case 'pug':
 					return {
+						fancy: 'pug',
+						mode: 'pug',
 						name: 'pug',
 					}
 				case 'hpp':
 				case 'cpp':
 				case 'h':
 					return {
+						fancy: 'cpp',
+						mode: 'cpp',
 						name: 'text/x-c++src',
 					}
 				case 'c':
 					return {
+						fancy: 'c',
+						mode: 'c',
 						name: 'text/x-csrc',
 					}
 				case 'java':
 					return {
+						fancy: 'java',
+						mode: 'java',
 						name: 'text/x-java',
 					}
 				case 'scss':
 					return {
+						fancy: 'sass',
+						mode: 'sass',
 						name: 'text/x-scss',
 					}
 				case 'sass':
 					return {
+						fancy: 'sass',
+						mode: 'sass',
 						name: 'text/x-sass',
 					}
 				case 'php':
 					return {
+						fancy: 'php',
+						mode: 'php',
 						name: 'application/x-httpd-php',
 					}
 				case 'md':
 				case 'mdx':
 					return {
+						fancy: 'markdown',
+						mode: 'markdown',
 						name: 'gfm',
 					}
 				case 'tsx':
 					return {
+						fancy: 'tsx',
+						mode: 'typescript',
 						name: 'text/typescript-jsx',
 					}
 				case 'ts':
 					return {
 						fancy: 'typescript',
+						mode: 'typescript',
 						name: 'text/typescript',
 					}
 				case 'sh':
 					return {
+						fancy: 'shell',
+						mode: 'shell',
 						name: 'text/x-sh',
 					}
 				case 'less':
 					return {
+						fancy: 'less',
+						mode: 'less',
 						name: 'text/x-less',
 					}
 				case 'fs':
 					return {
+						fancy: 'fs',
+						mode: 'fs',
 						name: 'text/x-fsharp',
 					}
 				case 'slim':
 					return {
-						fancy: 'Slim',
+						fancy: 'slim',
+						mode: 'slim',
 						name: 'application/x-slim',
 					}
 				case 'go':
 					return {
-						fancy: 'go',
+						fancy: 'golang',
+						mode: 'go',
 						name: 'text/x-go',
 					}
 				default:
@@ -235,6 +294,13 @@ const CodemirrorClient = new EditorClient(
 					mark: true,
 					markTagPairs: true,
 					previewOpenTag: false,
+					config: {
+						markup: {
+							snippets: {
+								'foo': 'ul.nav>li'
+							}
+						}
+					}
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
@@ -272,7 +338,7 @@ const CodemirrorClient = new EditorClient(
 			let lspAdapter
 			let lspConnection
 			Object.keys(RunningConfig.data.LSPServers).forEach(server => {
-				if (server == language.fancy) {
+				if (server == language.mode) {
 					lspServer = `ws://localhost:${RunningConfig.data.LSPPort}/${server}`
 				}
 			})
