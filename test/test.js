@@ -83,16 +83,36 @@ describe('Constructors', function () {
 	})
 	describe('Notification', function () {
 		it('With [title, content]', function () {
-			new Notification({
+			const { NotificationElement } = new Notification({
 				title: 'Title',
 				content: 'And content',
 			})
-			const notificationElement = document.getElementById('notifications').children[0]
-			const notificationHTML = notificationElement.innerHTML
+			const notificationHTML = NotificationElement.innerHTML
 			expect(notificationHTML).to.include('Title')
 			expect(notificationHTML).to.include('And content')
 
-			return notificationElement
+			return NotificationElement
+		})
+		it('With [title, content, buttons]', function () {
+			let test1
+			const { NotificationElement } = new Notification({
+				title: 'Title',
+				content: 'And content',
+				buttons: [
+					{
+						label: 'Button 1',
+						action() {
+							test1 = true
+						},
+					},
+				],
+			})
+			const notificationButton = NotificationElement.getElementsByTagName('BUTTON')[0]
+			expect(notificationButton.innerText).to.be.equal('BUTTON 1')
+			notificationButton.click()
+			expect(test1).equal(true)
+
+			return NotificationElement
 		})
 	})
 })

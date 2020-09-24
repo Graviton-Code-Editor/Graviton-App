@@ -108,6 +108,7 @@
 		"chai": "^4.2.0",
 		"contributor-faces": "^1.0.3",
 		"copy-webpack-plugin": "^6.0.3",
+		"cross-env": "^7.0.2",
 		"css-loader": "^3.6.0",
 		"electron": "^10.0.0",
 		"electron-builder": "^22.6.0",
