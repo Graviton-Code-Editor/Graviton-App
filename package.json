@@ -103,7 +103,7 @@
 		"v8-compile-cache": "^2.1.1"
 	},
 	"devDependencies": {
-		"@gveditor/sdk": "^0.4.3",
+		"@gveditor/sdk": "^0.4.4",
 		"bl": "^1.2.3",
 		"chai": "^4.2.0",
 		"contributor-faces": "^1.0.3",
