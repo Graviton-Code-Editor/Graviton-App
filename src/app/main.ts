@@ -50,7 +50,7 @@ app.on('ready', function () {
 		main.removeMenu()
 		main.loadURL(
 			url.format({
-				pathname: path.join(__dirname, '..', '..', 'dist_ui', 'index.html'),
+				pathname: path.join(__dirname, '..', 'dist_ui', 'index.html'),
 				protocol: 'file:',
 				slashes: true,
 			}),
