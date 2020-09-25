@@ -3,18 +3,15 @@ import MenuComp from '../components/menu'
 import ArrowIcon from '../components/icons/arrow'
 import { LanguageState } from 'LanguageConfig'
 import StaticConfig from 'StaticConfig'
-const { remote } = window.require('electron')
-const { Menu: NativeMenu } = remote
+import { ipcRenderer } from 'electron'
 
 const isWindows = process.platform === 'win32'
-const createdMenus = []
-let NativeMenuBar
 
-if (!isWindows) {
-	NativeMenuBar = new NativeMenu()
+const createdMenus = []
+
+if (isWindows) {
 	StaticConfig.keyChanged('appLanguage', () => {
-		NativeMenuBar.destroy()
-		NativeMenuBar = new NativeMenu()
+		ipcRenderer.send('destroy-menus', {})
 		createdMenus.map(m => new Menu(m, true))
 	})
 }
@@ -130,9 +127,11 @@ class Menu {
 	private convertToElectronInterface(list) {
 		return list.map(btn => {
 			if (btn.label && btn.action) {
+				const id = Math.random()
+				ipcRenderer.on(`menu_${id}`, btn.action)
 				return {
 					label: lang.getTranslation(btn.label, LanguageState),
-					click: btn.action,
+					action: id,
 				}
 			} else if (btn.label && btn.list) {
 				return {
@@ -148,16 +147,15 @@ class Menu {
 	}
 
 	private createNativeMenu(button, list) {
-		const { MenuItem } = remote
-		return new MenuItem({
+		return {
 			label: lang.getTranslation(button, LanguageState),
 			submenu: this.convertToElectronInterface(list),
-		})
+		}
 	}
 
 	private appendToNativeBar(item) {
-		NativeMenuBar.append(item)
-		NativeMenu.setApplicationMenu(NativeMenuBar)
+		console.log(item)
+		ipcRenderer.send('newMenuItem', item)
 	}
 }
 

@@ -5,6 +5,7 @@ import isDev from 'electron-is-dev'
 import windowStateKeeper from 'electron-window-state'
 
 import './plugins_handler'
+import MenusHandler from './menus_handler'
 
 let main
 
@@ -40,6 +41,7 @@ app.on('ready', function () {
 		show: false,
 		icon: getAppIcon(),
 	})
+
 	mainWindowState.manage(main)
 	if (isDev) {
 		main.loadURL('http://localhost:9000')
@@ -54,6 +56,7 @@ app.on('ready', function () {
 			}),
 		)
 	}
+
 	main.on('ready-to-show', () => {
 		mainWindowState.manage(main)
 		main.show()
@@ -64,6 +67,8 @@ app.on('ready', function () {
 	} else {
 		main.setMenuBarVisibility(false)
 	}
+
+	MenusHandler(main)
 })
 
 function getAppIcon() {
