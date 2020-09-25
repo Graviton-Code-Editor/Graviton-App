@@ -93,7 +93,7 @@ function loadCodeMirror({ type, fileTheme, PATH }) {
 	}
 }
 
-function loadPlugin(pluginPkg) {
+async function loadPlugin(pluginPkg) {
 	loadMainFile(pluginPkg)
 	loadCodeMirror(pluginPkg)
 }
@@ -119,8 +119,8 @@ const registerPluginsIn = where => {
 RunningConfig.on('appLoaded', async function () {
 	await registerPluginsIn(pluginsIternalDir)
 	if (!isTesting) await registerPluginsIn(pluginsExternalDir)
-	loadAllPlugins()
 	RunningConfig.emit('allPluginsLoaded')
+	loadAllPlugins()
 })
 
 function loadAllPlugins() {
