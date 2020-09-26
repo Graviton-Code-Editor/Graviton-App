@@ -4,7 +4,7 @@ export default window => {
 	const isWindows = process.platform === 'win32'
 	let NativeMenuBar = null
 
-	if (isWindows) {
+	if (!isWindows) {
 		NativeMenuBar = new Menu()
 	}
 
