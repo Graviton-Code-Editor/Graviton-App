@@ -8,8 +8,11 @@ import { CommandPromptOptions } from 'Types/command.prompt'
 class CommandPrompt {
 	private CPName: string
 	private CPCompletedEvent: (x) => void
-	private CPSelectedEvent: (x) => void
-	private CPScrolledEvent: (x) => void
+	private CPSelectedEvent: (a, b) => void
+	private CPScrolledEvent: (a, b) => void
+	private CPWritingEvent: (a, b) => void
+	private CPTabPressedEvent: (a, b) => void
+	private CPCloseOnTab: boolean
 	private CPState: PuffinState
 	private CPOptions: any[]
 	private CPOptionsElement: HTMLElement
@@ -17,17 +20,182 @@ class CommandPrompt {
 	private CPDefaultOption: number
 	private CPElement: HTMLElement
 
+	constructor({
+		name = Math.random(),
+		showInput = true,
+		inputPlaceHolder = '',
+		inputDefaultText = '',
+		options = [],
+		scrollOnTab = false,
+		closeOnTab = true,
+		closeOnKeyUp = false,
+		onCompleted = x => {},
+		onSelected = x => {},
+		onScrolled = x => {},
+		onWriting = (a, b) => {},
+		onTabPressed = (a, b) => {},
+		defaultOption = 0,
+	}: CommandPromptOptions) {
+		const finalName = `${name}_cp`
+		if (document.getElementById(finalName)) return // Check if there are any command prompts already opened
+
+		const self = this
+
+		this.CPName = finalName
+		this.CPCompletedEvent = onCompleted
+		this.CPSelectedEvent = onSelected
+		this.CPScrolledEvent = onScrolled
+		this.CPWritingEvent = onWriting
+		this.CPTabPressedEvent = onTabPressed
+		this.CPState = new state({
+			hoveredOption: null,
+		})
+		this.CPCloseOnTab = closeOnTab
+		this.CPOptions = options
+		this.CPInputValue = ''
+		this.CPDefaultOption = defaultOption
+
+		const CommandPromptComponent = element({
+			components: {
+				CommandPromptBody,
+				WindowBackground,
+			},
+		})`
+		<CommandPromptBody mounted="${mounted}" id="${finalName}" :keydown="${scrolling}">
+			<WindowBackground window="${finalName}" closeWindow=${() => this.closeCP()}/>
+			<div class="container">
+				<input value="${inputDefaultText}" style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keydown="${keydown}" :keyup="${writing}"/>
+				<div/>
+			</div>
+		</CommandPromptBody>
+		`
+		function keydown(e: KeyboardEvent) {
+			switch (e.key) {
+				case 'ArrowUp':
+					e.preventDefault()
+			}
+		}
+
+		function writing(e: KeyboardEvent) {
+			e.preventDefault()
+			const command = this.value
+			self.CPInputValue = command
+			switch (e.keyCode) {
+				case 9:
+					self.CPTabPressedEvent(
+						{
+							value: command,
+							option: self.CPState.data.hoveredOption.lastChild.textContent,
+						},
+						self._hooks(),
+					)
+
+					if (scrollOnTab) {
+						break
+					}
+					if (self.CPCloseOnTab) {
+						self._selectOption(self.CPState.data.hoveredOption)
+						self.closeCP()
+					}
+
+				case 17:
+					if (!scrollOnTab) {
+						break
+					}
+				case 13:
+					self._selectOption(self.CPState.data.hoveredOption)
+					self.closeCP()
+					break
+
+				case 27:
+				case 38:
+				case 40:
+					self._focusInput()
+					break
+				default:
+					self._renderOptions(filterOptions(this.value, options))
+					self.CPWritingEvent(
+						{
+							value: command,
+						},
+						self._hooks(),
+					)
+			}
+		}
+		function scrolling(e: KeyboardEvent) {
+			switch (e.keyCode) {
+				case 38:
+					self._scrollOptions('up')
+					break
+				case 9:
+					e.preventDefault()
+					if (!scrollOnTab) {
+						break
+					}
+				case 40:
+					self._scrollOptions('down')
+					break
+			}
+		}
+		function mounted() {
+			const container = this.children[1].children[1]
+			self.CPOptionsElement = container
+			self._renderOptions(self.CPOptions)
+			window.addEventListener('keydown', e => {
+				if (e.keyCode === 27) {
+					self.closeCP()
+				}
+			})
+			const input = this.children[1].children[0]
+			input.selectionStart = input.selectionEnd = input.value.length
+			setTimeout(() => input.focus(), 1)
+		}
+		this.CPElement = render(CommandPromptComponent, document.getElementById('windows'))
+	}
+
 	private _selectOption(option) {
 		if (option) {
 			const optionObj = findOptionAction(this.CPOptions, option)
 			if (optionObj.action) optionObj.action()
 			if (this.CPSelectedEvent)
-				this.CPSelectedEvent({
-					label: option.lastChild.textContent,
-					data: option.props.data,
-				})
+				this.CPSelectedEvent(
+					{
+						label: option.lastChild.textContent,
+						data: option.props.data,
+					},
+					this._hooks(),
+				)
 		}
 		if (this.CPCompletedEvent) this.CPCompletedEvent(this.CPInputValue)
+	}
+
+	private _focusInput() {
+		const input: any = this.CPElement.children[1].children[0]
+		input.blur()
+		input.focus()
+		setTimeout(() => {
+			input.setSelectionRange(input.value.length, input.value.length)
+		}, 1)
+	}
+
+	private _hooks() {
+		return {
+			setOptions: (options: any[]) => {
+				this.CPOptions = options
+				this._renderOptions(options)
+			},
+			setValue: (value: string) => {
+				this.CPInputValue = value
+				const input: any = this.CPElement.children[1].children[0]
+				input.value = value
+				this._focusInput()
+			},
+			refreshOptions: () => {
+				const input: any = this.CPElement.children[1].children[0]
+
+				this._renderOptions(filterOptions(input.value, this.CPOptions))
+			},
+		}
 	}
 
 	private _renderOptions(options) {
@@ -61,10 +229,13 @@ class CommandPrompt {
 		allOptions.forEach(option => {
 			if (option === hoveredOption) {
 				option.classList.add('active')
-				this.CPScrolledEvent({
-					label: option.lastChild.textContent,
-					data: option.props.data,
-				})
+				this.CPScrolledEvent(
+					{
+						label: option.lastChild.textContent,
+						data: option.props.data,
+					},
+					this._hooks(),
+				)
 			} else {
 				option.classList.remove('active')
 			}
@@ -91,106 +262,6 @@ class CommandPrompt {
 		this._hoverOption(this.CPState.data.hoveredOption)
 	}
 
-	constructor({
-		name = Math.random(),
-		showInput = true,
-		inputPlaceHolder = '',
-		inputDefaultText = '',
-		options = [],
-		scrollOnTab = false,
-		closeOnKeyUp = false,
-		onCompleted = x => {},
-		onSelected = x => {},
-		onScrolled = x => {},
-		defaultOption = 0,
-	}: CommandPromptOptions) {
-		const finalName = `${name}_cp`
-		if (document.getElementById(finalName)) return // Check if there are any command prompts already opened
-
-		const self = this
-
-		this.CPName = finalName
-		this.CPCompletedEvent = onCompleted
-		this.CPSelectedEvent = onSelected
-		this.CPScrolledEvent = onScrolled
-		this.CPState = new state({
-			hoveredOption: null,
-		})
-		this.CPOptions = options
-		this.CPInputValue = ''
-		this.CPDefaultOption = defaultOption
-
-		const CommandPromptComponent = element({
-			components: {
-				CommandPromptBody,
-				WindowBackground,
-			},
-		})`
-		<CommandPromptBody mounted="${mounted}" id="${finalName}" :keydown="${scrolling}">
-			<WindowBackground window="${finalName}" closeWindow=${() => this.closeCP()}/>
-			<div class="container">
-				<input value="${inputDefaultText}" style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keyup="${writing}"/>
-				<div/>
-			</div>
-		</CommandPromptBody>
-		`
-		function writing(e: KeyboardEvent) {
-			e.preventDefault()
-			const command = this.value
-			self.CPInputValue = command
-			switch (e.keyCode) {
-				case 9:
-					if (scrollOnTab) {
-						break
-					}
-					self._selectOption(self.CPState.data.hoveredOption)
-					self.closeCP()
-				case 17:
-					if (!scrollOnTab) {
-						break
-					}
-				case 13:
-					self._selectOption(self.CPState.data.hoveredOption)
-					self.closeCP()
-					break
-				case 27:
-				case 38:
-				case 40:
-					break
-				default:
-					self._renderOptions(filterOptions(this.value, options))
-			}
-		}
-		function scrolling(e: KeyboardEvent) {
-			switch (e.keyCode) {
-				case 38:
-					self._scrollOptions('up')
-					break
-				case 9:
-					e.preventDefault()
-					if (!scrollOnTab) {
-						break
-					}
-				case 40:
-					self._scrollOptions('down')
-					break
-			}
-		}
-		function mounted() {
-			const container = this.children[1].children[1]
-			self.CPOptionsElement = container
-			self._renderOptions(self.CPOptions)
-			window.addEventListener('keydown', e => {
-				if (e.keyCode === 27) {
-					self.closeCP()
-				}
-			})
-			const input = this.children[1].children[0]
-			input.selectionStart = input.selectionEnd = input.value.length
-			setTimeout(() => input.focus(), 1)
-		}
-		this.CPElement = render(CommandPromptComponent, document.getElementById('windows'))
-	}
 	private closeCP() {
 		if (this.CPElement) this.CPElement.remove()
 	}

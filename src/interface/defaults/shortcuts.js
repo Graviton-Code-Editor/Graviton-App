@@ -12,6 +12,7 @@ import Welcome from './windows/welcome'
 import Store from './windows/store'
 import path from 'path'
 const { remote } = window.require('electron')
+import fs from 'fs-extra'
 
 RunningConfig.on('command.saveCurrentFile', () => {
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
@@ -154,17 +155,82 @@ RunningConfig.on('command.openCommandPrompt', () => {
 RunningConfig.on('command.openExplorerCommandPrompt', () => {
 	const currentTab = RunningConfig.data.focusedTab
 	const currentTabState = (currentTab && currentTab.state.data) || false
-	const currentFileFolder = (currentTabState && currentTabState.parentFolder && path.normalize(currentTabState.parentFolder)) || ''
+	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || ''
+
+	const showOptions = async (itemPath, setOptions) => {
+		const fileName = path.basename(itemPath)
+
+		const itemExists = await fs.exists(itemPath)
+		if (itemExists) {
+			const itemData = await fs.lstat(itemPath)
+			const isFolder = itemData.isDirectory()
+			if (isFolder) {
+				const items = await fs.readdir(itemPath)
+
+				setOptions(
+					items.map(label => {
+						return {
+							label,
+							action() {
+								//
+							},
+						}
+					}),
+				)
+			}
+		} else {
+			const parentFolder = path.dirname(itemPath)
+			const parentFolderItems = await fs.readdir(parentFolder)
+
+			setOptions(
+				parentFolderItems
+					.map(label => {
+						if (label.match(fileName)) {
+							return {
+								label,
+								action() {
+									//
+								},
+							}
+						}
+					})
+					.filter(Boolean),
+			)
+		}
+	}
+
 	new CommandPrompt({
 		name: 'explorer',
 		showInput: true,
 		inputDefaultText: currentFileFolder,
 		inputPlaceHolder: "Enter a file's path",
 		options: [],
-		onCompleted(filePath) {
-			RunningConfig.emit('loadFile', {
-				filePath,
-			})
+		closeOnTab: false,
+		onTabPressed: async ({ option, value: itemPath }, { setValue, setOptions }) => {
+			const itemExists = await fs.exists(itemPath)
+			let newItemPath
+
+			if (itemExists) {
+				newItemPath = path.join(itemPath, option, '/')
+			} else {
+				const parentFolder = path.dirname(itemPath)
+				newItemPath = path.join(parentFolder, option, '/')
+			}
+
+			setValue(newItemPath)
+			showOptions(newItemPath, setOptions)
+		},
+		onWriting: async ({ value: itemPath }, { setOptions }) => {
+			showOptions(itemPath, setOptions)
+		},
+		onCompleted: async filePath => {
+			const fileExists = await fs.exists(filePath)
+
+			if (fileExists) {
+				RunningConfig.emit('loadFile', {
+					filePath,
+				})
+			}
 		},
 	})
 })

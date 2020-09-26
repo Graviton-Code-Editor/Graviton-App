@@ -6,9 +6,12 @@ interface CommandPromptOptions {
 	options: any[]
 	scrollOnTab?: boolean
 	closeOnKeyUp?: boolean
+	closeOnTab?: boolean
 	onCompleted?: (x) => void
-	onSelected?: (x) => void
-	onScrolled?: (x) => void
+	onSelected?: (a, b) => void
+	onWriting?: (a, b) => void
+	onScrolled?: (a, b) => void
+	onTabPressed?: (a, b) => void
 	defaultOption: number
 }
 
