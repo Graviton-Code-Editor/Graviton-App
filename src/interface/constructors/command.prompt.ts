@@ -3,10 +3,9 @@ import CommandPromptBody from '../components/command.prompt/command.prompt'
 import WindowBackground from '../components/window/background'
 
 import { PuffinState } from 'Types/puffin.state'
-import { CommandPromptOptions } from 'Types/command.prompt'
+import { CommandPromptOptions, CommandPromptOption } from 'Types/command.prompt'
 
 class CommandPrompt {
-	private CPName: string
 	private CPCompletedEvent: (x) => void
 	private CPSelectedEvent: (a, b) => void
 	private CPScrolledEvent: (a, b) => void
@@ -14,7 +13,7 @@ class CommandPrompt {
 	private CPTabPressedEvent: (a, b) => void
 	private CPCloseOnTab: boolean
 	private CPState: PuffinState
-	private CPOptions: any[]
+	private CPOptions: CommandPromptOption[]
 	private CPOptionsElement: HTMLElement
 	private CPInputValue: String
 	private CPDefaultOption: number
@@ -41,7 +40,6 @@ class CommandPrompt {
 
 		const self = this
 
-		this.CPName = finalName
 		this.CPCompletedEvent = onCompleted
 		this.CPSelectedEvent = onSelected
 		this.CPScrolledEvent = onScrolled
@@ -138,19 +136,21 @@ class CommandPrompt {
 			}
 		}
 		function mounted() {
+			self.CPElement = this
 			const container = this.children[1].children[1]
 			self.CPOptionsElement = container
 			self._renderOptions(self.CPOptions)
+
 			window.addEventListener('keydown', e => {
+				//Close command prompt  when pressing ESC
 				if (e.keyCode === 27) {
 					self.closeCP()
 				}
 			})
-			const input = this.children[1].children[0]
-			input.selectionStart = input.selectionEnd = input.value.length
-			setTimeout(() => input.focus(), 1)
+
+			self._focusInput()
 		}
-		this.CPElement = render(CommandPromptComponent, document.getElementById('windows'))
+		render(CommandPromptComponent, document.getElementById('windows'))
 	}
 
 	private _selectOption(option) {
@@ -168,19 +168,24 @@ class CommandPrompt {
 		}
 		if (this.CPCompletedEvent) this.CPCompletedEvent(this.CPInputValue)
 	}
-
+	/*
+	 * Focus input
+	 */
 	private _focusInput() {
 		const input: any = this.CPElement.children[1].children[0]
 		input.blur()
 		input.focus()
+
 		setTimeout(() => {
-			input.setSelectionRange(input.value.length, input.value.length)
+			input.selectionStart = input.selectionEnd = input.value.length
 		}, 1)
 	}
-
+	/*
+	/* Hooks to be used in events like onWritting, or onScrolling
+	*/
 	private _hooks() {
 		return {
-			setOptions: (options: any[]) => {
+			setOptions: (options: CommandPromptOption[]) => {
 				this.CPOptions = options
 				this._renderOptions(options)
 			},
@@ -188,6 +193,7 @@ class CommandPrompt {
 				this.CPInputValue = value
 				const input: any = this.CPElement.children[1].children[0]
 				input.value = value
+
 				this._focusInput()
 			},
 			refreshOptions: () => {
@@ -197,7 +203,9 @@ class CommandPrompt {
 			},
 		}
 	}
-
+	/*
+	 * Render options to the command prompt list
+	 */
 	private _renderOptions(options) {
 		const self = this
 		let hoveredDefault = this.CPDefaultOption
@@ -214,7 +222,7 @@ class CommandPrompt {
 			</div>
 		`
 		function onClicked() {
-			closeCommandPrompt(self.CPName)
+			self.closeCP()
 			self._selectOption(this)
 		}
 		this.CPOptionsElement.innerHTML = ''
@@ -222,7 +230,9 @@ class CommandPrompt {
 		this.CPState.data.hoveredOption = this.CPOptionsElement.children[0].children[hoveredDefault]
 		this._hoverOption(this.CPState.data.hoveredOption)
 	}
-
+	/*
+	 * Select X option
+	 */
 	private _hoverOption(hoveredOption) {
 		if (!hoveredOption) return
 		const allOptions = [...hoveredOption.parentElement.children]
@@ -241,7 +251,9 @@ class CommandPrompt {
 			}
 		})
 	}
-
+	/*
+	 * Scroll 1 option down / up
+	 */
 	private _scrollOptions(scrollingDirection) {
 		const hoveredOption = this.CPState.data.hoveredOption
 		const allOptions = [...hoveredOption.parentElement.children]
@@ -261,17 +273,15 @@ class CommandPrompt {
 		}
 		this._hoverOption(this.CPState.data.hoveredOption)
 	}
-
+	/*
+	 * Close the command prompt
+	 */
 	private closeCP() {
 		if (this.CPElement) this.CPElement.remove()
 	}
 }
 
-function closeCommandPrompt(CommandPromptID: string) {
-	if (document.getElementById(CommandPromptID)) document.getElementById(CommandPromptID).remove()
-}
-
-function filterOptions(search: string, options: Array<{ label: string }>) {
+function filterOptions(search: string, options: CommandPromptOption[]) {
 	return options
 		.map(function (option) {
 			if (option.label.match(new RegExp(search, 'i'))) return option
@@ -279,7 +289,7 @@ function filterOptions(search: string, options: Array<{ label: string }>) {
 		.filter(Boolean)
 }
 
-const findOptionAction = (options: Array<{ label: string; action: () => void }>, option: HTMLElement) => {
+const findOptionAction = (options: CommandPromptOption[], option: HTMLElement) => {
 	return options.find(opt => opt.label == option.lastChild.textContent)
 }
 

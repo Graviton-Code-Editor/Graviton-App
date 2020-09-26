@@ -1,9 +1,9 @@
-interface CommandPromptOptions {
+export interface CommandPromptOptions {
 	name?: String | number
 	showInput?: boolean
 	inputPlaceHolder?: String
 	inputDefaultText?: String
-	options: any[]
+	options: CommandPromptOption[]
 	scrollOnTab?: boolean
 	closeOnKeyUp?: boolean
 	closeOnTab?: boolean
@@ -15,4 +15,7 @@ interface CommandPromptOptions {
 	defaultOption: number
 }
 
-export { CommandPromptOptions }
+export interface CommandPromptOption {
+	label: string
+	action: () => void
+}

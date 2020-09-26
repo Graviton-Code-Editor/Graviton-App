@@ -158,6 +158,8 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || ''
 
 	const showOptions = async (itemPath, setOptions) => {
+		if (itemPath === '') return []
+
 		const fileName = path.basename(itemPath)
 
 		const itemExists = await fs.exists(itemPath)
