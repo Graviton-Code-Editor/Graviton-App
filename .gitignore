@@ -12,3 +12,5 @@ npm-debug.log
 dist_main
 .DS_Store
 .idea/
+.vscode
+.vs
