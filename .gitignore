@@ -10,3 +10,5 @@ pluginsDist
 dist_ui
 npm-debug.log
 dist_main
+.DS_Store
+.idea/
