@@ -5,6 +5,7 @@ import isDev from 'electron-is-dev'
 import windowStateKeeper from 'electron-window-state'
 
 import './plugins_handler'
+import './store_handler'
 import MenusHandler from './menus_handler'
 
 let main
@@ -28,6 +29,7 @@ app.on('ready', function () {
 			webSecurity: !isDev,
 			enableRemoteModule: true,
 			scrollBounce: true,
+			preload: path.join(__dirname, 'preload.js'),
 		},
 		frame: process.platform !== 'win32',
 		minHeight: 320,

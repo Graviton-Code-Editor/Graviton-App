@@ -152,4 +152,45 @@ module.exports = [
 			libraryTarget: 'commonjs',
 		},
 	},
+	{
+		name: 'preload',
+		mode: process.env.NODE_ENV,
+		optimization: {
+			minimize: true,
+		},
+		entry: {
+			index: path.resolve(__dirname, 'src', 'app', 'preload.ts'),
+		},
+		plugins: [
+			new WebpackBar({
+				name: 'Preload',
+			}),
+			new WebpackMessages({
+				name: 'Preload',
+				logger: str => console.log(`[webpack] --> ${str}`),
+			}),
+		],
+		resolve: {
+			extensions: ['.js', '.ts'],
+		},
+		module: {
+			rules: [
+				{
+					test: /\.tsx?$/,
+					loader: 'ts-loader',
+					options: {
+						configFile: path.resolve(__dirname, './preload.tsconfig.json'),
+					},
+					exclude: [path.resolve(__dirname, './node_modules')],
+				},
+			],
+		},
+		target: 'electron-main',
+		externals: ['fs', 'electron', 'path'],
+		output: {
+			filename: 'preload.js',
+			path: path.resolve(__dirname, 'dist_main'),
+			libraryTarget: 'commonjs',
+		},
+	},
 ]

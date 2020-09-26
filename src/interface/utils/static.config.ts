@@ -1,17 +1,20 @@
 import { state } from '@mkenzo_8/puffin'
-import { getConfiguration } from './configurator'
-const { webFrame } = window.require('electron')
-const cachedConfiguration = getConfiguration()
+import { getConfiguration, updateConfiguration } from './configurator'
 import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
-const path = require('path')
+import * as path from 'path'
 import { PuffinState } from 'Types/puffin.state'
+import { webFrame } from 'electron'
 
 function saveConfiguration() {
-	cachedConfiguration.store.set('config', StaticConfig.data)
+	let config = {}
+	Object.keys(StaticConfig.data).forEach(key => {
+		config[key] = StaticConfig.data[key]
+	})
+	updateConfiguration(config)
 }
 
-const StaticConfig: PuffinState = new state(Object.assign({}, cachedConfiguration.config))
+const StaticConfig: PuffinState = new state(Object.assign({}, getConfiguration()))
 
 StaticConfig.changed((data, keyName) => {
 	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(keyName) && !RunningConfig.data.isDebug) {

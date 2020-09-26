@@ -79,6 +79,4 @@ function closeNotification(node: HTMLElement) {
 	node.remove()
 }
 
-console.log(Notification)
-
 export default Notification

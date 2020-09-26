@@ -23,7 +23,7 @@ class CommandPrompt {
 			if (optionObj.action) optionObj.action()
 			if (this.CPSelectedEvent)
 				this.CPSelectedEvent({
-					label: option.textContent,
+					label: option.lastChild.textContent,
 					data: option.props.data,
 				})
 		}
@@ -62,7 +62,7 @@ class CommandPrompt {
 			if (option === hoveredOption) {
 				option.classList.add('active')
 				this.CPScrolledEvent({
-					label: option.textContent,
+					label: option.lastChild.textContent,
 					data: option.props.data,
 				})
 			} else {

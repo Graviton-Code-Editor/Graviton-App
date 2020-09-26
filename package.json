@@ -40,7 +40,7 @@
 		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
 		"build:tasks": "gulp",
 		"build:webpack": "webpack --mode=production",
-		"build:webpack:main": "webpack --mode=development --config-name main",
+		"build:webpack:main": "webpack --mode=development --config-name preload && webpack --mode=development --config-name main",
 		"watch:webpack:renderer": "webpack-dev-server --mode=development --config-name renderer",
 		"test": "npm run build:webpack && npm run test:mocha ",
 		"test:interactive": "cross-env NODE_ENV=test electron-mocha --renderer --index dist_ui/index.html --interactive",
