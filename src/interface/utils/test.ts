@@ -18,7 +18,6 @@ if (require('electron').remote.process.env.NODE_ENV !== 'test') {
 		puffin,
 		Notification,
 	}
-	console.log(Notification)
 	RunningConfig.on('allPluginsLoaded', () => {
 		setTimeout(function () {
 			RunningConfig.emit('test.bootedUp', {})

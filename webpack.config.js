@@ -186,11 +186,52 @@ module.exports = [
 			],
 		},
 		target: 'electron-main',
-		externals: ['fs', 'electron', 'path'],
+		externals: ['fs-extra', 'electron', 'path'],
 		output: {
 			filename: 'preload.js',
 			path: path.resolve(__dirname, 'dist_main'),
-			libraryTarget: 'commonjs',
+			libraryTarget: 'umd',
+		},
+	},
+	{
+		name: 'testing',
+		mode: process.env.NODE_ENV,
+		optimization: {
+			minimize: true,
+		},
+		entry: {
+			index: path.resolve(__dirname, 'src', 'app', 'store_handler.ts'),
+		},
+		plugins: [
+			new WebpackBar({
+				name: 'testing',
+			}),
+			new WebpackMessages({
+				name: 'testing',
+				logger: str => console.log(`[webpack] --> ${str}`),
+			}),
+		],
+		resolve: {
+			extensions: ['.ts'],
+		},
+		module: {
+			rules: [
+				{
+					test: /\.tsx?$/,
+					loader: 'ts-loader',
+					options: {
+						configFile: path.resolve(__dirname, 'test', './test.tsconfig.json'),
+					},
+					exclude: [path.resolve(__dirname, './node_modules')],
+				},
+			],
+		},
+		target: 'electron-main',
+		externals: ['fs', 'electron', 'path'],
+		output: {
+			filename: 'test.js',
+			path: path.resolve(__dirname, 'dist_test'),
+			libraryTarget: 'umd',
 		},
 	},
 ]

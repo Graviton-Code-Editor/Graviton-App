@@ -9,12 +9,12 @@ const isWindows = process.platform === 'win32'
 
 const createdMenus = []
 
-if (isWindows) {
-	StaticConfig.keyChanged('appLanguage', () => {
+StaticConfig.keyChanged('appLanguage', () => {
+	if (!isWindows) {
 		ipcRenderer.send('destroy-menus', {})
-		createdMenus.map(m => new Menu(m, true))
-	})
-}
+	}
+	createdMenus.map(m => new Menu(m, true))
+})
 
 class Menu {
 	private MenuButton: String
@@ -154,7 +154,6 @@ class Menu {
 	}
 
 	private appendToNativeBar(item) {
-		console.log(item)
 		ipcRenderer.send('newMenuItem', item)
 	}
 }

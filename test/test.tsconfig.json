@@ -1,13 +1,12 @@
 {
-	"files": ["./src/app/preload.ts"],
-	"module": "umd",
+	"files": ["../src/app/store_handler.ts"],
 	"noImplicitAny": false,
 	"compilerOptions": {
 		"sourceMap": false,
 		"target": "es5",
 		"moduleResolution": "node",
 		"esModuleInterop": true,
-		"lib": ["es2019", "DOM"],
+		"lib": ["es2019"],
 		"resolveJsonModule": true
 	},
 	"root": ".",

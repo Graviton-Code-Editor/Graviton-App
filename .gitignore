@@ -14,3 +14,4 @@ dist_main
 .idea/
 .vscode
 .vs
+dist_test
