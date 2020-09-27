@@ -9,6 +9,5 @@
 		"lib": ["es2019"],
 		"resolveJsonModule": true
 	},
-	"root": ".",
-	"exclude": ["node_modules", "plugins", "pluginsDist", "dist", "dist_ui", "assets", "iconpacks", "scripts", "test", "themes", "languages"]
+	"root": "../"
 }

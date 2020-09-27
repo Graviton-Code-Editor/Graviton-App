@@ -212,7 +212,7 @@ module.exports = [
 			}),
 		],
 		resolve: {
-			extensions: ['.ts'],
+			extensions: ['.js', '.ts'],
 		},
 		module: {
 			rules: [
