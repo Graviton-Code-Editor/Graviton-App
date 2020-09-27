@@ -1,5 +1,5 @@
 {
-	"files": ["./app/main.ts"],
+	"files": ["./src/app/main.ts"],
 	"module": "commonjs",
 	"noImplicitAny": false,
 	"compilerOptions": {
