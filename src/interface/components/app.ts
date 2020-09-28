@@ -45,10 +45,10 @@ const styleWrapper = style`
 		}
 		#mainpanel{
 			min-width:50px;
-			display:flex;
-			flex-direction:columns;
+			flex-direction:column;
 			min-width:50px;
 			width:300px;
+			display: flex;
 			flex:1;
 			border-top:1px solid var(--panelBorder);
 			border-top-left-radius: 8px;
@@ -56,15 +56,25 @@ const styleWrapper = style`
 			&[blocked="true"]{
 				border-top-left-radius: 0px;
 			}
+			& > div {
+				width: 100%;
+			}
+			& #panels_stack{
+				display:flex;
+				min-height: 5%;
+				height:  100%;
+				max-height: 100%;
+				flex-direction:columns;
+				& > div:nth-child(1) {
+					border-top-left-radius:8px;
+					border-left:transparent;
+				}
+			}
 		}
 		#mainpanel {
 			border-left:1px solid var(--panelBorder);
 			&  .tabsbar > div:nth-last-child(1){
 				border-top-right-radius:5px;
-			}
-			& > div:nth-child(1){
-				border-top-left-radius:8px;
-				border-left:transparent;
 			}
 		}
 		#windows{

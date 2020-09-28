@@ -211,6 +211,11 @@ function createMenus() {
 				label: 'menus.View.ToggleSidepanel',
 				action: () => (StaticConfig.data.appEnableSidepanel = !StaticConfig.data.appEnableSidepanel),
 			},
+			{},
+			{
+				label: 'menus.View.ToggleTerminal',
+				action: () => (StaticConfig.data.appShowTerminal = !StaticConfig.data.appShowTerminal),
+			}
 		],
 	})
 	new Menu({

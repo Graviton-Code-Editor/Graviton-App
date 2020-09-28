@@ -98,6 +98,9 @@ module.exports = [
 			},
 		},
 		target: 'electron-renderer',
+		externals:[
+			'node-pty'
+		],
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_ui'),

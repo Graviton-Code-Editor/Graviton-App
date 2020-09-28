@@ -7,6 +7,10 @@
 	"textTheme": "arctic",
 	"type": "theme",
 	"colorsScheme": {
+		"terminal":{
+			"Background": "white",
+			"Foreground": "black"
+		},
 		"accent": {
 			"Color": "#0066FF"
 		},

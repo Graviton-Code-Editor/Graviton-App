@@ -12,13 +12,16 @@ body {
 	--puffinFont: mainFont;
 	background: var(--bodyBackground);
 	--codeFont: JetBrainsMono;
-	* {
+	*:not(.xterm) {
 		outline: 0;
 		text-rendering: optimizeLegibility !important;
 		-webkit-font-smoothing: subpixel-antialiased !important;
 		-webkit-box-sizing: default !important;
 		box-sizing: default !important;
 		font-family: var(--puffinFont);
+	}
+	.xterm * {
+		font-family: var(----codeFont) !important;
 	}
 }
 @font-face {

@@ -84,7 +84,7 @@ function Panel() {
 		}
 	}
 
-	render(PanelComp, document.getElementById('mainpanel'))
+	render(PanelComp, document.getElementById('panels_stack'))
 	RunningConfig.data.focusedPanel = document.getElementById(randomSelector)
 
 	return {
@@ -154,7 +154,7 @@ function getUnsavedtabs(panel) {
 }
 
 RunningConfig.on('checkAllTabsAreSaved', ({ whenContinue = function () {}, whenIgnore = function () {} } = {}) => {
-	const panels = document.getElementById('mainpanel').children
+	const panels = document.getElementById('panels_stack').children
 	const allUnsavedTabs = Object.keys(panels)
 		.map(n => {
 			const panel = panels[n]

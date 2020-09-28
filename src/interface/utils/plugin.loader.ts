@@ -24,7 +24,7 @@ import path from 'path'
 import fs from 'fs-extra'
 import isDev from 'electron-is-dev'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
-
+console.log(PluginsRegistry)
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = require('electron').remote.process.env.NODE_ENV === 'test'
 

@@ -5,7 +5,7 @@ import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
-import Resizer from './components/panel/resizer.horizontally'
+import Resizer from './components/resizer'
 import StatusBar from './components/status.bar/status.bar'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
@@ -13,6 +13,7 @@ import ContextMenu from './constructors/contextmenu'
 import AppBody from './components/app'
 const isDev = window.require('electron-is-dev')
 import AppPlatform from 'AppPlatform'
+import MainBox from './components/mainbox'
 import '../styles/main.scss'
 
 import PuffinElement from './types/puffin.element'
@@ -29,6 +30,7 @@ const App = element({
 		StatusBar,
 		Resizer,
 		AppBody,
+		MainBox
 	},
 })`
     <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}">
@@ -37,8 +39,12 @@ const App = element({
 			<div id="body">
 				<div id="sidebar" :contextmenu="${sidebarContext}" style="${handleSidebarState}"/>
 				<div id="sidepanel" style="${handlesidePanelState}"/>
-				<Resizer/>
-				<div id="mainpanel" blocked="${handleMainpanelState}" />          
+				<Resizer direction="horizontally"/>
+				<div id="mainpanel" blocked="${handleMainpanelState}">
+					<div id="panels_stack"></div>
+					<Resizer direction="vertically"/>
+					<MainBox/>
+				</div>
 			</div>
 			<StatusBar/>
 		</div>

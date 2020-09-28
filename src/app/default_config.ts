@@ -75,6 +75,7 @@ export default app => {
 			editorsClients: [],
 			editorExcludedDirs: [],
 			editorMakeTransparentHiddenItems: false,
+			appShowTerminal: false
 		},
 	}
 

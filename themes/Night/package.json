@@ -7,6 +7,8 @@
 	"textTheme": "night",
 	"type": "theme",
 	"colorsScheme": {
+		"terminalBackground": "#191919",
+		"terminalForeground": "white",
 		"accentColor": "rgb(255, 0, 72)",
 		"textColor": "white",
 		"bodyBackground": "#222222",
