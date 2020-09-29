@@ -133,7 +133,7 @@ function XtermTerminal() {
 	function createProcess() {
 		const pty = window.require('node-pty')
 		return pty.spawn(xtermState.data.shell, [], {
-			cwd: 'C:/',
+			cwd: process.env.HOMEPATH,
 			env: process.env,
 		})
 	}
