@@ -5,11 +5,11 @@ import Terminal from './terminal'
 
 const MainBoxStyle = style`
 	position: relative;
-	min-height: 50px;
+	min-height: 100px;
 	max-height: calc(100% - 2px);
 	bottom: 0;
-	height: 100%;
 	flex: 1;
+	border-top: 1px solid var(--panelBorder);
 `
 
 export default function MainBox() {

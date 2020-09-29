@@ -11,6 +11,8 @@ import ButtonIcon from './button_icon'
 
 import '../../../node_modules/xterm/css/xterm.css'
 
+let sessionsCount = 0
+
 const styled = style`
 	box-shadow: inset 0 -1px 10px rgba(0,0,0,0.25);
 	max-width: 100%;
@@ -22,9 +24,22 @@ const styled = style`
 	overflow: hidden;
 	& p{
 		color: var(--textColor);
+		font-size: 13px;
+	}
+	& select {
+		padding: 7px 5px;
+		background: transparent;
+		border:0;
+		color: var(--textColor);
+		border-bottom: 2px solid var(--textColor);
+		& option {
+			color: var(--contextmenuButtonText);
+			background: var(--contextmenuButtonBackground);
+		}
 	}
 	& .bar {
-		height: 40px;
+		height: 30px;
+		padding: 5px;
 		display: flex;
 
 		& button {
@@ -35,7 +50,8 @@ const styled = style`
 		& select {
 			flex: 1;
 			min-width: 35px;
-			max-width: 70px;
+			width: auto;
+			max-width: 100px;
 		}
 		& div{
 			flex: 1;
@@ -86,16 +102,17 @@ const TerminalState = new state({
 
 const getConfig = () => {
 	return {
-		fontFamily: 'JetBrainsMono',
+		fontFamily: 'Cascadia Code',
 		theme: {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
-		fontSize: 12,
+		fontSize: 11,
 		lineHeight: 1.3,
 		letterSpacing: -2,
+		windowsMode: process.platform === 'win32',
 	}
 }
 
@@ -111,15 +128,19 @@ export default function TerminalComp() {
 	})`
 		<div mounted="${mountedTerminal}" class="${styled}">
 			<TerminalBar/>
-			<div id="terms_stack"/>
+			<div id="terms_stack">
+				<p>Press the + to create a session</p>
+			</div>
 		</div>
 	`
 }
 
 function XtermTerminal() {
+	sessionsCount++
+
 	const xtermState = new state({
 		shell: null,
-		name: Math.random(),
+		name: `Session ${sessionsCount}`,
 	})
 
 	TerminalState.data.terminals.push({
@@ -239,7 +260,9 @@ function TerminalBar() {
 	}
 
 	function createTerminal() {
-		render(XtermTerminal(), document.getElementById('terms_stack'))
+		const container = document.getElementById('terms_stack')
+		if (container.innerText !== '') container.innerText = ''
+		render(XtermTerminal(), container)
 	}
 
 	return element({

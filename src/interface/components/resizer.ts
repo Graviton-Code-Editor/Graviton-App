@@ -39,7 +39,7 @@ export default function resizerComponent() {
 function working() {
 	const resizerElement = this
 	const direction = resizerElement.getAttribute('direction')
-	let resizerOffset = direction === 'horizontally' ? (StaticConfig.data.appEnableSidebar ? 85 : 55) : 55
+	let resizerOffset = direction === 'horizontally' ? (StaticConfig.data.appEnableSidebar ? 85 : 55) : 45
 
 	if (direction === 'horizontally') {
 		StaticConfig.keyChanged('appEnableSidebar', status => {
