@@ -2,7 +2,7 @@
 
 Prerequisites:
 
-- NodeJS
+- NodeJS (LTS version)
 - Git
 
 ## Getting the source
