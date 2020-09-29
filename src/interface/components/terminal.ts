@@ -6,6 +6,8 @@ import { FitAddon } from 'xterm-addon-fit'
 import { getProperty, ThemeProvider } from 'ThemeProvider'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
+import AddTermIcon from './icons/add_term'
+import ButtonIcon from './button_icon'
 
 import '../../../node_modules/xterm/css/xterm.css'
 
@@ -23,6 +25,23 @@ const styled = style`
 	}
 	& .bar {
 		height: 40px;
+		display: flex;
+
+		& button {
+			flex: 1;
+			min-width: 40px;
+			max-width: 40px;
+		}
+		& select {
+			flex: 1;
+			min-width: 35px;
+			max-width: 70px;
+		}
+		& div{
+			flex: 1;
+			min-width: 0px;
+			max-width: 100%;
+		}
 	}
 	& .terminal_container{
 		overflow: auto;
@@ -83,12 +102,16 @@ const getConfig = () => {
 
 export default function TerminalComp(){
 		
+	function mountedTerminal(){
+		this.state = TerminalState
+	}
+	
 	return element({
 		components:{
 			TerminalBar
 		}
 	})`
-		<div class="${styled}">
+		<div mounted="${mountedTerminal}" class="${styled}">
 			<TerminalBar/>
 			<div id="terms_stack"/>
 		</div>
@@ -163,6 +186,10 @@ function XtermTerminal(){
 			window.addEventListener('resize', () => {
 				fit.fit()
 			})
+
+			TerminalState.on('resize', () => {
+				fit.fit()
+			})
 			
 			setTimeout(() => {
 				xtermInstance.refresh(0,0)
@@ -224,14 +251,19 @@ function TerminalBar(){
 	
 	return element({
 		components:{
-			Button
+			Button,
+			AddTermIcon,
+			ButtonIcon
 		}
 	})`
 		<div class="bar">
 			<select :change="${onChange}" mounted="${mountedSelect}">
 				${() => TerminalState.data.terminals.map(({ name }) => element`<option selected="${name === TerminalState.data.terminal}">${name}</option>`)}
 			</select>
-			<Button :click="${createTerminal}">create</Button>
+			<div/>
+			<ButtonIcon :click="${createTerminal}">
+				<AddTermIcon/>
+			</ButtonIcon>
 		</div>
 	`
 }

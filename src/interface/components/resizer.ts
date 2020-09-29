@@ -61,11 +61,15 @@ function working() {
 
 		if (resizerElement.getAttribute('blocked') === 'true') return
 		const otherChildren = resizerElement.parentElement.children
+		
 		let leftPanel = null
+		let rigthPanel = null
+		
 		Object.keys(otherChildren).forEach((el, index: number) => {
 			const child = otherChildren[index]
 			if (child == resizerElement) {
 				leftPanel = otherChildren[index - 1]
+				rigthPanel = otherChildren[index + 1]
 			}
 		})
 
@@ -75,6 +79,13 @@ function working() {
 			leftPanel.style.height = `${event.clientY - resizerOffset}px`
 		}
 		
+		const resizedEvent = new CustomEvent('resized', {
+			detail: {},
+		})
+
+		leftPanel.dispatchEvent(resizedEvent)
+		rigthPanel.dispatchEvent(resizedEvent)
+			
 	}
 
 	function stopResizing() {

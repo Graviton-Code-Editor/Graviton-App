@@ -29,12 +29,17 @@ export default function MainBox(){
 		})
 	}
 	
+	function resized(){
+		//Send the resize event to the Terminal State
+		this.lastChild.state.emit('resize') 
+	}
+	
 	return element({
 		components:{
 			Terminal
 		}
 	})`
-		<div mounted="${mounted}" class="${MainBoxStyle}">
+		<div :resized="${resized}" mounted="${mounted}" class="${MainBoxStyle}">
 			<Terminal/>
 		</div>
 	`
