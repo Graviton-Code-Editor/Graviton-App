@@ -12,32 +12,31 @@ const MainBoxStyle = style`
 	flex: 1;
 `
 
-export default function MainBox(){
-	
-	function mounted(){
-		if(StaticConfig.data.appShowTerminal){
+export default function MainBox() {
+	function mounted() {
+		if (StaticConfig.data.appShowTerminal) {
 			this.firstChild.style.display = 'block'
-		}else{
+		} else {
 			this.firstChild.style.display = 'none'
 		}
 		StaticConfig.keyChanged('appShowTerminal', (show: boolean) => {
-			if(show){
+			if (show) {
 				this.firstChild.style.display = 'block'
-			}else{
+			} else {
 				this.firstChild.style.display = 'none'
 			}
 		})
 	}
-	
-	function resized(){
+
+	function resized() {
 		//Send the resize event to the Terminal State
-		this.lastChild.state.emit('resize') 
+		this.lastChild.state.emit('resize')
 	}
-	
+
 	return element({
-		components:{
-			Terminal
-		}
+		components: {
+			Terminal,
+		},
 	})`
 		<div :resized="${resized}" mounted="${mounted}" class="${MainBoxStyle}">
 			<Terminal/>

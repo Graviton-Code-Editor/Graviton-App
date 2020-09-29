@@ -72,44 +72,42 @@ const styled = style`
 
 const shells: any = {}
 
-if(process.platform === 'win32'){
+if (process.platform === 'win32') {
 	shells.cmd = process.env['COMSPEC']
-}else {
+} else {
 	shells.bash = process.env['SHELL']
 }
-
 
 const TerminalState = new state({
 	shells,
 	terminals: [],
-	terminal: null
+	terminal: null,
 })
-
 
 const getConfig = () => {
 	return {
 		fontFamily: 'JetBrainsMono',
-		theme:{
+		theme: {
 			background: getProp('terminalBackground'),
-			foreground: getProp('terminalForeground')
+			foreground: getProp('terminalForeground'),
 		},
-		cursorStyle: ('bar') as 'bar',
+		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
 		fontSize: 12,
-		lineHeight: 1.3
+		lineHeight: 1.3,
+		letterSpacing: -2,
 	}
 }
 
-export default function TerminalComp(){
-		
-	function mountedTerminal(){
+export default function TerminalComp() {
+	function mountedTerminal() {
 		this.state = TerminalState
 	}
-	
+
 	return element({
-		components:{
-			TerminalBar
-		}
+		components: {
+			TerminalBar,
+		},
 	})`
 		<div mounted="${mountedTerminal}" class="${styled}">
 			<TerminalBar/>
@@ -118,28 +116,28 @@ export default function TerminalComp(){
 	`
 }
 
-function XtermTerminal(){
+function XtermTerminal() {
 	const xtermState = new state({
 		shell: null,
-		name: Math.random()
+		name: Math.random(),
 	})
-	
+
 	TerminalState.data.terminals.push({
-		name: xtermState.data.name
+		name: xtermState.data.name,
 	})
-	
+
 	TerminalState.data.terminal = xtermState.data.name
-	
+
 	TerminalState.emit('newTerminal')
-		
-	function createProcess(){
+
+	function createProcess() {
 		const pty = window.require('node-pty')
 		return pty.spawn(xtermState.data.shell, [], {
 			cwd: 'C:/',
-			env: process.env
+			env: process.env,
 		})
 	}
-	
+
 	const refreshOptions = term => {
 		const newConfig = getConfig()
 
@@ -147,42 +145,41 @@ function XtermTerminal(){
 			term.setOption(key, newConfig[key])
 		})
 	}
-	
-	function bindTheme(term){
+
+	function bindTheme(term) {
 		StaticConfig.keyChanged('appTheme', () => {
 			refreshOptions(term)
 		})
 	}
-	
-	async function mounted(){
-		
-		TerminalState.keyChanged('terminal', (name) => {
-			if(name != xtermState.data.name){
+
+	async function mounted() {
+		TerminalState.keyChanged('terminal', name => {
+			if (name != xtermState.data.name) {
 				this.style.display = 'none'
-			}else{
+			} else {
 				this.style.display = 'block'
 			}
 		})
-		
+
 		await xtermState.on('shellSelected')
-		
+
 		setTimeout(() => {
 			const spawnProcess = createProcess()
 			const xtermInstance = new Terminal(getConfig())
 			const fit = new FitAddon()
-			
+
 			bindTheme(xtermInstance)
 			xtermInstance.loadAddon(fit)
 			xtermInstance.open(this)
-			
-			xtermInstance.onData((data) => {
+
+			xtermInstance.onData(data => {
 				spawnProcess.write(data)
 			})
-			
+
 			spawnProcess.on('data', function (data: any) {
 				xtermInstance.write(data)
 			})
-			
+
 			window.addEventListener('resize', () => {
 				fit.fit()
 			})
@@ -190,30 +187,28 @@ function XtermTerminal(){
 			TerminalState.on('resize', () => {
 				fit.fit()
 			})
-			
+
 			setTimeout(() => {
-				xtermInstance.refresh(0,0)
+				xtermInstance.refresh(0, 0)
 				xtermInstance.focus()
 				fit.fit()
-			},1)
-			
+			}, 1)
+
 			setTimeout(() => {
 				refreshOptions(xtermInstance)
-			},800)
-		},300)
-		
+			}, 800)
+		}, 300)
 	}
-	
-	function onChange(){
+
+	function onChange() {
 		const selectedOption = this.options[this.selectedIndex].innerText
-		
-		xtermState.data.shell = shells[selectedOption];
-		
+
+		xtermState.data.shell = shells[selectedOption]
+
 		this.parentElement.parentElement.remove()
 		xtermState.emit('shellSelected')
-		
 	}
-	
+
 	return element`
 		<div class="terminal_container" mounted="${mounted}">
 			<div class="shell_selector">
@@ -231,30 +226,28 @@ function XtermTerminal(){
 	`
 }
 
-
-function TerminalBar(){
-	
-	function onChange(){
+function TerminalBar() {
+	function onChange() {
 		const selectedOption = this.options[this.selectedIndex].innerText
 		TerminalState.data.terminal = selectedOption
 	}
-	
-	function mountedSelect(){
-		TerminalState.on('newTerminal',() => {
+
+	function mountedSelect() {
+		TerminalState.on('newTerminal', () => {
 			this.update()
 		})
 	}
-	
-	function createTerminal(){
+
+	function createTerminal() {
 		render(XtermTerminal(), document.getElementById('terms_stack'))
 	}
-	
+
 	return element({
-		components:{
+		components: {
 			Button,
 			AddTermIcon,
-			ButtonIcon
-		}
+			ButtonIcon,
+		},
 	})`
 		<div class="bar">
 			<select :change="${onChange}" mounted="${mountedSelect}">
@@ -268,6 +261,6 @@ function TerminalBar(){
 	`
 }
 
-function getProp(prop){
+function getProp(prop) {
 	return getProperty(prop, ThemeProvider.data)
 }
