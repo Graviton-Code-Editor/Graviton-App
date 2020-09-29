@@ -4,6 +4,7 @@ Prerequisites:
 
 - NodeJS (LTS version)
 - Git
+- **❗ IMPORTANT ❗** -> https://www.npmjs.com/package/node-gyp#installation
 
 ## Getting the source
 
@@ -19,7 +20,7 @@ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git --depth 1
 - `stable`: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
 - `1.3.0`: it refers to the old Graviton source code.
 
-## Installing dependencies
+## Setuping
 
 Go inside the folder:
 
