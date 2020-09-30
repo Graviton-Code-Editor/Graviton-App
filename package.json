@@ -59,7 +59,7 @@
 		"build:AppImage": "npm run script:build && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage",
 		"build:electron:rpm": "npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"lint": "prettier --write *.{ts,js,scss,md,html,json}",
-		"rebuild": "electron-rebuild node-pty",
+		"rebuild": "electron-builder install-app-deps ",
 		"postinstall": "npm run rebuild"
 	},
 	"staticFiles": {
@@ -118,7 +118,6 @@
 		"electron": "^10.0.0",
 		"electron-builder": "^22.6.0",
 		"electron-mocha-fork": "^9.2.0",
-		"electron-rebuild": "^2.0.3",
 		"elexus": "^1.0.0",
 		"file-loader": "^6.0.0",
 		"gulp": "^4.0.2",

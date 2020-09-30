@@ -5,7 +5,7 @@ import Dialog from 'Constructors/dialog'
 import Notification from 'Constructors/notification'
 import * as puffin from '@mkenzo_8/puffin'
 
-if (require('electron').remote.process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test') {
 	console.log(RunningConfig)
 	console.log(StaticConfig)
 } else {

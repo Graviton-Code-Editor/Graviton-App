@@ -15,15 +15,15 @@ const MainBoxStyle = style`
 export default function MainBox() {
 	function mounted() {
 		if (StaticConfig.data.appShowTerminal) {
-			this.firstChild.style.display = 'block'
+			this.style.display = 'block'
 		} else {
-			this.firstChild.style.display = 'none'
+			this.style.display = 'none'
 		}
 		StaticConfig.keyChanged('appShowTerminal', (show: boolean) => {
 			if (show) {
-				this.firstChild.style.display = 'block'
+				this.style.display = 'block'
 			} else {
-				this.firstChild.style.display = 'none'
+				this.style.display = 'none'
 			}
 		})
 	}

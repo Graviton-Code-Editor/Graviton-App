@@ -2,18 +2,24 @@ import { state } from '@mkenzo_8/puffin'
 import { PuffinState } from 'Types/puffin.state'
 import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
-import isDev from 'electron-is-dev'
 import { remote } from 'electron'
 import minimist from 'minimist'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 import isGitInstalled from './is.git.installed'
 
-const electronArguments = isDev ? remote.process.argv.slice(2) : remote.process.argv.slice(1) || []
+const CustomWindow: any = window
+
+const { isDev, processArguments } = CustomWindow.runtime
+
+CustomWindow.runtime = null
+
+const electronArguments = isDev ? processArguments.slice(2) : processArguments.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)
 const parsedRendererArguments = isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
 const LSPPort = isDev ? 2020 : 2089
 
 const DEFAULT_RUNTIME_CONFIGURATION = {
+	windowID: parsedRendererArguments.windowID,
 	focusedPanel: null,
 	focusedTab: null,
 	focusedEditor: null,

@@ -1,6 +1,4 @@
-const { remote } = window.require('electron')
-const { dialog, getCurrentWindow } = remote
-import normalizeDir from '../directory.normalizer'
+import { ipcRenderer } from 'electron'
 
 /**
  * Opens a native dialog
@@ -9,15 +7,11 @@ import normalizeDir from '../directory.normalizer'
  * @returns promise
  */
 function selectFileDialog() {
-	return new Promise((resolve, reject) => {
-		dialog
-			.showOpenDialog(getCurrentWindow(), {
-				properties: ['openFile'],
-			})
-			.then(result => {
-				if (result.canceled) return
-				const filePath = normalizeDir(result.filePaths[0])
-				resolve(filePath)
+	return new Promise(async (resolve, reject) => {
+		ipcRenderer
+			.invoke('open-folder')
+			.then(path => {
+				resolve(path)
 			})
 			.catch(err => {
 				reject(err)

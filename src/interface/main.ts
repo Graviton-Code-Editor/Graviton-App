@@ -11,7 +11,6 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import ContextMenu from './constructors/contextmenu'
 import AppBody from './components/app'
-const isDev = window.require('electron-is-dev')
 import AppPlatform from 'AppPlatform'
 import MainBox from './components/mainbox'
 import '../styles/main.scss'
@@ -30,7 +29,7 @@ const App = element({
 		StatusBar,
 		Resizer,
 		AppBody,
-		MainBox
+		MainBox,
 	},
 })`
     <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}">
@@ -166,7 +165,7 @@ function sidebarContext(ev: MouseEvent): void {
 function mountedApp(): void {
 	window.addEventListener('load', function () {
 		init()
-		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
+		if (((!RunningConfig.data.isDev && RunningConfig.data.arguments[0] == null) || RunningConfig.data.isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
 			Welcome().launch()
 		}
 	})

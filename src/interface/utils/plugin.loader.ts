@@ -22,11 +22,10 @@ import FilesExplorer from '../constructors/files.explorer'
 import throwError from './throw.error'
 import path from 'path'
 import fs from 'fs-extra'
-import isDev from 'electron-is-dev'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
-console.log(PluginsRegistry)
+
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
-const isTesting: boolean = require('electron').remote.process.env.NODE_ENV === 'test'
+const isTesting: boolean = process.env.NODE_ENV === 'test'
 
 function loadMainFile({ mainDev, main, name, type, PATH }) {
 	if (main) {
@@ -69,7 +68,7 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 				Editor,
 				FilesExplorer,
 			}
-			if (!isDev) {
+			if (!RunningConfig.data.isDev) {
 				try {
 					const { entry }: any = window.require(mainPath)
 					entry(parameters)

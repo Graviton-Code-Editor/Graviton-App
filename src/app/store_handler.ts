@@ -2,6 +2,7 @@ import Store from 'electron-store'
 import { ipcMain, app } from 'electron'
 import * as path from 'path'
 import getDefaultConfiguration from './default_config'
+import * as isDev from 'electron-is-dev'
 
 const AppStore = new Store()
 const defaultConfig = getDefaultConfiguration(app)
@@ -17,6 +18,10 @@ ipcMain.handle('get-config', () => {
 
 ipcMain.handle('get-default-config', () => {
 	return defaultConfig
+})
+
+ipcMain.handle('is-dev', () => {
+	return isDev
 })
 
 function checkObject(object, subProperty, configurationStore, level) {

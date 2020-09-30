@@ -98,9 +98,7 @@ module.exports = [
 			},
 		},
 		target: 'electron-renderer',
-		externals:[
-			'node-pty'
-		],
+		externals: ['node-pty'],
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_ui'),
@@ -144,7 +142,7 @@ module.exports = [
 					options: {
 						configFile: path.resolve(__dirname, './main.tsconfig.json'),
 					},
-					exclude: [path.resolve(__dirname, './node_modules'), path.resolve(__dirname, './src')],
+					exclude: [path.resolve(__dirname, './node_modules')],
 				},
 			],
 		},

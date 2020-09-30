@@ -2,7 +2,6 @@ import { APIEndpoint } from 'Constants'
 import axios from 'axios'
 import packageJSON from '../../../../../package.json'
 import semver from 'semver'
-const isDev = window.require('electron-is-dev')
 
 function gravitonHasUpdate() {
 	return new Promise((resolve, reject) => {

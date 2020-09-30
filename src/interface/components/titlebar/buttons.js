@@ -1,6 +1,6 @@
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
-const { remote } = window.require('electron')
+import { ipcRenderer } from 'electron'
 import AppPlatform from 'AppPlatform'
 import RunningConfig from 'RunningConfig'
 
@@ -61,26 +61,19 @@ function Buttons() {
 }
 
 function toggleMaximize() {
-	const electronWindow = remote.getCurrentWindow()
-	if (electronWindow.isMaximized()) {
-		electronWindow.unmaximize()
-	} else {
-		electronWindow.maximize()
-	}
+	ipcRenderer.send('maximize-window', RunningConfig.data.windowID)
 }
 
 function close() {
 	RunningConfig.emit('checkAllTabsAreSaved', {
 		whenContinue() {
-			const electronWindow = remote.getCurrentWindow()
-			electronWindow.close()
+			ipcRenderer.send('close-window', RunningConfig.data.windowID)
 		},
 	})
 }
 
 function minimize() {
-	const electronWindow = remote.getCurrentWindow()
-	electronWindow.minimize()
+	ipcRenderer.send('minimize-window', RunningConfig.data.windowID)
 }
 
 export default Buttons

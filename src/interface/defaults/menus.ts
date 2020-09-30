@@ -10,9 +10,9 @@ import Notification from '../constructors/notification'
 import openDebugClient from './debug.window'
 import packageJSON from 'Root/package.json'
 const { openExternal: openLink } = window.require('electron').shell
-const { getCurrentWindow } = window.require('electron').remote
 import checkForUpdates from '../utils/check.updates'
 import AppPlatform from 'AppPlatform'
+import { ipcRenderer } from 'electron'
 
 /*
  * This creates the default Graviton Menus in the top bar
@@ -215,7 +215,7 @@ function createMenus() {
 			{
 				label: 'menus.View.ToggleTerminal',
 				action: () => (StaticConfig.data.appShowTerminal = !StaticConfig.data.appShowTerminal),
-			}
+			},
 		],
 	})
 	new Menu({
@@ -258,7 +258,7 @@ function createMenus() {
 			{},
 			{
 				label: 'menus.Window.OpenDevTools',
-				action: () => (getCurrentWindow() as any).toggleDevTools(),
+				action: () => ipcRenderer.invoke('toggle-devtools'),
 			},
 		],
 	})

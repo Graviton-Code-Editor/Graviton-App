@@ -6,6 +6,8 @@ import windowStateKeeper from 'electron-window-state'
 
 import './plugins_handler'
 import './store_handler'
+import './debug_window'
+import WindowHandler from './window'
 import MenusHandler from './menus_handler'
 
 let main
@@ -21,15 +23,18 @@ app.on('ready', function () {
 		defaultHeight: 600,
 	})
 
+	const windowID = Math.random()
+
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
 			nodeIntegrationInWorker: true,
 			nodeIntegration: true,
 			webSecurity: !isDev,
-			enableRemoteModule: true,
+			enableRemoteModule: false,
 			scrollBounce: true,
 			preload: path.join(__dirname, 'preload.js'),
+			additionalArguments: ['--windowID', windowID.toString()],
 		},
 		frame: process.platform !== 'win32',
 		minHeight: 320,
@@ -70,6 +75,9 @@ app.on('ready', function () {
 		main.setMenuBarVisibility(false)
 	}
 
+	main.windowID = windowID
+
+	WindowHandler(main)
 	MenusHandler(main)
 })
 
