@@ -3,6 +3,8 @@ import { Button } from '@mkenzo_8/puffin-drac'
 import { css as style } from 'emotion'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
+import * as XtermWebfont from 'xterm-webfont'
+import { WebglAddon } from 'xterm-addon-webgl'
 import { getProperty, ThemeProvider } from 'ThemeProvider'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
@@ -102,15 +104,15 @@ const TerminalState = new state({
 
 const getConfig = () => {
 	return {
-		fontFamily: 'Cascadia Code',
+		fontFamily: 'JetBrainsMono',
 		theme: {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
-		fontSize: 11,
-		lineHeight: 1.3,
+		fontSize: 13,
+		lineHeight: 1.4,
 		letterSpacing: -2,
 		windowsMode: process.platform === 'win32',
 	}
@@ -190,8 +192,13 @@ function XtermTerminal() {
 			const fit = new FitAddon()
 
 			bindTheme(xtermInstance)
+
 			xtermInstance.loadAddon(fit)
+			xtermInstance.loadAddon(new XtermWebfont())
+
 			xtermInstance.open(this)
+
+			xtermInstance.loadAddon(new WebglAddon())
 
 			xtermInstance.onData(data => {
 				spawnProcess.write(data)
@@ -213,11 +220,8 @@ function XtermTerminal() {
 				xtermInstance.refresh(0, 0)
 				xtermInstance.focus()
 				fit.fit()
-			}, 1)
-
-			setTimeout(() => {
 				refreshOptions(xtermInstance)
-			}, 800)
+			}, 500)
 		}, 300)
 	}
 
