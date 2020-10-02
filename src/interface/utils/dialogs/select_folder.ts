@@ -1,12 +1,12 @@
 import { ipcRenderer } from 'electron'
 
 /**
- * Opens a native dialog
- * to select folders
+ * Opens a native dialog to select a folder
  * @constructor
  * @returns promise
  */
-function selectFolderDialog() {
+
+export default function selectFolderDialog() {
 	return new Promise(async (resolve, reject) => {
 		ipcRenderer
 			.invoke('open-folder')
@@ -18,5 +18,3 @@ function selectFolderDialog() {
 			})
 	})
 }
-
-export default selectFolderDialog

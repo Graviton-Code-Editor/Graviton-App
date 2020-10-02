@@ -1,7 +1,7 @@
 import { element } from '@mkenzo_8/puffin'
 import { getWorkspaceConfig } from '../../../utils/filesystem'
 import { Card, Button } from '@mkenzo_8/puffin-drac'
-import parseDirectory from '../../../utils/directory.parser'
+import parseDirectory from '../../../utils/directory_parser'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import CardsListContainer from '../../../components/welcome/cards.list'

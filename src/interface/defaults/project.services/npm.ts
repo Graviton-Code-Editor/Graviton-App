@@ -1,6 +1,6 @@
 import RunningConfig from 'RunningConfig'
-const { spawn } = window.require('child_process')
-import selectFolderDialog from '../../utils/dialogs/select.folder'
+import { spawn } from 'child_process'
+import selectFolderDialog from '../../utils/dialogs/select_folder'
 import Notification from '../../constructors/notification'
 import * as path from 'path'
 

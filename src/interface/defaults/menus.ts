@@ -1,4 +1,3 @@
-import { openFolder, openFile } from '../utils/filesystem'
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
@@ -9,10 +8,11 @@ import About from './dialogs/about'
 import Notification from '../constructors/notification'
 import openDebugClient from './debug.window'
 import packageJSON from 'Root/package.json'
-const { openExternal: openLink } = window.require('electron').shell
 import checkForUpdates from '../utils/check.updates'
 import AppPlatform from 'AppPlatform'
-import { ipcRenderer } from 'electron'
+import { openFolder, openFile } from '../utils/filesystem'
+import { ipcRenderer, shell } from 'electron'
+const { openExternal: openLink } = shell
 
 /*
  * This creates the default Graviton Menus in the top bar

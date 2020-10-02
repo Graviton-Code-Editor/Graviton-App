@@ -1,6 +1,6 @@
-import path from 'path'
+import * as path from 'path'
 import StaticConfig from 'StaticConfig'
-import normalizeDir from '../../../utils/directory.normalizer'
+import normalizeDir from '../../../utils/directory_normalizer'
 
 const rimraf = window.require('rimraf')
 

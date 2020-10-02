@@ -1,13 +1,13 @@
 import { element } from '@mkenzo_8/puffin'
 import { openFolder } from '../../../utils/filesystem'
 import { Card, Button } from '@mkenzo_8/puffin-drac'
-import parseDirectory from '../../../utils/directory.parser'
+import parseDirectory from '../../../utils/directory_parser'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import CardsListContainer from '../../../components/welcome/cards.list'
 import ContextMenu from '../../../constructors/contextmenu'
-import beautifyDir from '../../../utils/directory.beautifier'
-import normalizeDir from '../../../utils/directory.normalizer'
+import beautifyDir from '../../../utils/directory_beautifier'
+import normalizeDir from '../../../utils/directory_normalizer'
 
 import { PuffinComponent } from 'Types/puffin.component'
 

@@ -1,15 +1,15 @@
 import { ipcRenderer } from 'electron'
 
 /**
- * Opens a native dialog
- * to select files
+ * Opens a native dialog to select a file
  * @constructor
  * @returns promise
  */
-function selectFileDialog() {
+
+export default function selectFileDialog() {
 	return new Promise(async (resolve, reject) => {
 		ipcRenderer
-			.invoke('open-folder')
+			.invoke('open-file')
 			.then(path => {
 				resolve(path)
 			})
@@ -18,5 +18,3 @@ function selectFileDialog() {
 			})
 	})
 }
-
-export default selectFileDialog

@@ -1,20 +1,18 @@
 import StaticConfig from 'StaticConfig'
 import FilesExplorer from '../constructors/files.explorer'
 import RunningConfig from 'RunningConfig'
-import parseDirectory from './directory.parser'
+import parseDirectory from './directory_parser'
 import InputDialog from '../utils/dialogs/dialog.input'
 import Tab from '../constructors/tab'
 import Editor from '../constructors/editor'
 import PluginsRegistry from 'PluginsRegistry'
-import getFormat from './format.parser'
-import normalizeDir from './directory.normalizer'
-import selectFolderDialog from './dialogs/select.folder'
-import selectFileDialog from './dialogs/select.file'
+import getFormat from './format_parser'
+import normalizeDir from './directory_normalizer'
+import selectFolderDialog from './dialogs/select_folder'
+import selectFileDialog from './dialogs/select_file'
 import LocalExplorer from '../defaults/local.explorer'
-
-const path = window.require('path')
-const fs = window.require('fs-extra')
-const { remote } = window.require('electron')
+import * as path from 'path'
+import * as fs from 'fs-extra'
 
 import { WorkspaceFilename } from 'Constants'
 
@@ -236,12 +234,14 @@ RunningConfig.on('setWorkspace', ({ workspacePath }: SetWorkspace) => {
 		}
 		setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 		RunningConfig.data.workspacePath = workspacePathNormalized
-		workspace.folders.map(async folder => {
-			if (await fs.exists(folder.path)) {
-				RunningConfig.emit('addFolderToRunningWorkspace', {
-					folderPath: normalizeDir(folder.path),
-				})
-			}
+		workspace.folders.forEach(async folder => {
+			fs.stat(folder.path, (err, stats) => {
+				if (!err) {
+					RunningConfig.emit('addFolderToRunningWorkspace', {
+						folderPath: normalizeDir(folder.path),
+					})
+				}
+			})
 		})
 	}
 })
@@ -298,7 +298,7 @@ RunningConfig.on('addWorkspaceToLog', ({ workspacePath }) => {
 function saveConfiguration(workspacePath: string, workspaceConfig: any) {
 	const workspacePathNormalized = normalizeDir(workspacePath)
 	const workspaceConfiguration = JSON.stringify(workspaceConfig, null, 2)
-	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', (err: string) => {
+	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', err => {
 		if (err) throw err
 		StaticConfig.triggerChange()
 	})

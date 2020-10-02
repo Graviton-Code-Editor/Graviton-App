@@ -107,16 +107,6 @@ function mountedAppView(): void {
 		const sidePanel = <PuffinElement>document.getElementById('sidepanel')
 		const sideBar = <PuffinElement>document.getElementById('sidebar')
 		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
-		if (!value) {
-			sidePanel.style.opacity = '0'
-			sidePanel.style.minWidth = '0'
-			sidePanel.style.width = '0'
-			sidePanel.style.padding = '0'
-			sidePanel.style.margin = '0'
-		} else {
-			sidePanel.style.width = '50%'
-			sidePanel.style.opacity = '1'
-		}
 		sidePanel.update()
 		sideBar.update()
 		mainPanel.update()

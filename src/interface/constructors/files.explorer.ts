@@ -1,14 +1,13 @@
 import { element, render, state } from '@mkenzo_8/puffin'
 import FileItem from '../components/explorer/file.item'
-import parseDirectory from '../utils/directory.parser'
-import normalizeDir from '../utils/directory.normalizer'
-import beautifyDir from '../utils/directory.beautifier'
+import parseDirectory from '../utils/directory_parser'
+import normalizeDir from '../utils/directory_normalizer'
+import beautifyDir from '../utils/directory_beautifier'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
-const path = window.require('path')
+import * as path from 'path'
 const chokidar = window.require('chokidar')
-import anymatch from 'anymatch'
 
 import { filesWatcherExcludedDirs } from 'Constants'
 

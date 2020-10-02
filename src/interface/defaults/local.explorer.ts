@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 import simpleGit from 'simple-git'
-import normalizeDir from '../utils/directory.normalizer'
+import normalizeDir from '../utils/directory_normalizer'
 import { join } from 'path'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
