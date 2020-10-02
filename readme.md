@@ -75,8 +75,8 @@ Thank you for the donations!
 **Linux**
 
 - `Appimage (.appimage)`
-- `Debian (.deb)`
-- `CentOS (.rpm)`
+- `Debian package (.deb)`
+- `RPM (.rpm)`
 - You can manually build for more platforms if you wish.
 
 **MacOS**
