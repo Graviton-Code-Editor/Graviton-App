@@ -1,6 +1,10 @@
-const { exec } = window.require('child_process')
+import { exec } from 'child_process'
 
-export default () => {
+/*
+ * Check if git is installed
+ */
+
+export default function isGitInstalled(): Promise<boolean> {
 	return new Promise(res => {
 		exec('git', {}, (err: any, stdout: string) => {
 			if (stdout.includes('usage: git')) {

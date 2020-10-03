@@ -2,10 +2,9 @@ import { state } from '@mkenzo_8/puffin'
 import { PuffinState } from 'Types/puffin.state'
 import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
-import { remote } from 'electron'
 import minimist from 'minimist'
+import isGitInstalled from './is_git_installed'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
-import isGitInstalled from './is.git.installed'
 
 const CustomWindow: any = window
 

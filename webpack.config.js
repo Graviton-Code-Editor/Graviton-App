@@ -98,7 +98,7 @@ module.exports = [
 			},
 		},
 		target: 'electron-renderer',
-		externals: ['node-pty'],
+		externals: ['node-pty', 'node-jsonrpc-lsp'],
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_ui'),

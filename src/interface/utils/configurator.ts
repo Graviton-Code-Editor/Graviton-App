@@ -1,19 +1,19 @@
-import path from 'path'
-import fs from 'fs-extra'
 import { ipcRenderer } from 'electron'
 import StaticConfig from 'StaticConfig'
 
-let InitialAppConfig = window.AppConfig
-let DefaultAppConfig = window.DefaultAppConfig
+const CustomWindow: any = window
 
-window.AppConfig = null
-window.DefaultAppConfig = null
+let InitialAppConfig = CustomWindow.AppConfig
+let DefaultAppConfig = CustomWindow.DefaultAppConfig
+
+CustomWindow.AppConfig = null
+CustomWindow.DefaultAppConfig = null
 
 function getConfiguration() {
 	return InitialAppConfig
 }
 
-function updateConfiguration(config) {
+function updateConfiguration(config: any) {
 	ipcRenderer.send('update-config', config)
 }
 

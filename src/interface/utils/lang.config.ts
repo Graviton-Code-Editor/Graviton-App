@@ -1,8 +1,7 @@
-import { lang, state } from '@mkenzo_8/puffin'
+import { state } from '@mkenzo_8/puffin'
 import Languages from '../collections/languages'
 import StaticConfig from 'StaticConfig'
-import Notification from '../constructors/notification'
-import throwError from './throw.error'
+import throwError from './throw_error'
 import { PuffinState } from 'Types/puffin.state'
 
 let initialTranslations = {}

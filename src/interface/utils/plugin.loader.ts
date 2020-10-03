@@ -19,9 +19,9 @@ import EnvClient from '../constructors/env.client'
 import SidePanel from '../constructors/side.panel'
 import Explorer from '../constructors/explorer'
 import FilesExplorer from '../constructors/files.explorer'
-import throwError from './throw.error'
-import path from 'path'
-import fs from 'fs-extra'
+import throwError from './throw_error'
+import * as path from 'path'
+import * as fs from 'fs-extra'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)

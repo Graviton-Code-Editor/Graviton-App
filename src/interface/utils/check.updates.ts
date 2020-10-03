@@ -1,5 +1,6 @@
 import gravitonHasUpdate from '../defaults/store/utils/app.update'
-const { openExternal: openLink } = window.require('electron').shell
+import { shell } from 'electron'
+const { openExternal: openLink } = shell
 import RunningConfig from 'RunningConfig'
 import Notification from '../constructors/notification'
 

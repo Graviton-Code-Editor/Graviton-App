@@ -6,7 +6,7 @@ import { PuffinState } from 'Types/puffin.state'
 
 let currentTheme = StaticConfig.data.appTheme
 
-StaticConfig.keyChanged('appTheme', newTheme => {
+StaticConfig.keyChanged('appTheme', (newTheme: string) => {
 	if (currentTheme !== newTheme) {
 		applyTheme(StaticConfig)
 		currentTheme = newTheme
@@ -31,9 +31,9 @@ const puffinThemingKeys = {
 	puffinInputBorder: 'inputBorder',
 }
 
-const getFallBackProp = prop => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
+const getFallBackProp = (prop: string) => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
 
-function applyTheme(state) {
+function applyTheme(state: PuffinState) {
 	const themeSchema = PluginsRegistry.registry.data.colorsSchemes.Night //Use Night theme as schema
 	ThemeProvider.data = PluginsRegistry.registry.data.colorsSchemes[state.data.appTheme]
 	ThemeProvider.triggerChange()
@@ -56,15 +56,15 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-function getProperty(key, keys): string {
-	let lastKey
-	let lastKeyValue
-	let res
+function getProperty(key: string, keys: string[]): string {
+	let lastKey: string
+	let lastKeyValue: string[]
+	let res: string
 	if (!keys[key]) {
 		key
 			.replace(/([a-z](?=[A-Z]))/g, '$1 ')
 			.split(' ')
-			.forEach((k, i, total) => {
+			.forEach((k: string, i: number, total: string[]) => {
 				if (i == 0) {
 					lastKey = k
 					if (!keys[lastKey]) keys[lastKey] = {}
@@ -85,7 +85,7 @@ function getProperty(key, keys): string {
 	return res
 }
 
-function setProperty(key, keyValue, name = ''): void {
+function setProperty(key: string, keyValue: string, name = ''): void {
 	if (typeof keyValue === 'object') {
 		Object.keys(keyValue).map(subKey => {
 			const subKeyValue = keyValue[subKey]
