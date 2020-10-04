@@ -209,18 +209,30 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 		options: [],
 		closeOnTab: false,
 		onTabPressed: async ({ option, value: itemPath }, { setValue, setOptions }) => {
-			const itemExists = await fs.exists(itemPath)
 			let newItemPath
+			fs.lstat(itemPath)
+				.then(async () => {
+					newItemPath = path.join(itemPath, option)
+					const info = await fs.lstat(newItemPath)
 
-			if (itemExists) {
-				newItemPath = path.join(itemPath, option, '/')
-			} else {
-				const parentFolder = path.dirname(itemPath)
-				newItemPath = path.join(parentFolder, option, '/')
-			}
+					if (info.isDirectory()) {
+						newItemPath = path.join(newItemPath, '/')
+					}
+				})
+				.catch(async () => {
+					const parentFolder = path.dirname(itemPath)
+					newItemPath = path.join(parentFolder, option)
 
-			setValue(newItemPath)
-			showOptions(newItemPath, setOptions)
+					const info = await fs.lstat(newItemPath)
+
+					if (info.isDirectory()) {
+						newItemPath = path.join(newItemPath, '/')
+					}
+				})
+				.finally(() => {
+					setValue(newItemPath)
+					showOptions(newItemPath, setOptions)
+				})
 		},
 		onWriting: async ({ value: itemPath }, { setOptions }) => {
 			showOptions(itemPath, setOptions)
@@ -368,6 +380,13 @@ RunningConfig.on('command.closeApp', () => {
 	})
 })
 
+RunningConfig.on('command.focusExplorerPanel', () => {
+	if (RunningConfig.data.focusedExplorerItem) {
+		//If there is focused item
+		RunningConfig.data.focusedExplorerItem.firstChild.focus()
+	}
+})
+
 const appShortCuts = new Shortcuts()
 appShortCuts.add([
 	...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut => {
@@ -440,6 +459,12 @@ appShortCuts.add([
 		return {
 			shortcut: shortcut,
 			handler: event => RunningConfig.emit('command.closeApp'),
+		}
+	}),
+	...StaticConfig.data.appShortcuts.FocusExplorerPanel.combos.map(shortcut => {
+		return {
+			shortcut: shortcut,
+			handler: event => RunningConfig.emit('command.focusExplorerPanel'),
 		}
 	}),
 ])

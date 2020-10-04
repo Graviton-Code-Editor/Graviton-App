@@ -590,18 +590,23 @@ class Item {
 		const itemTabs = document.getElementsByClassName(`tab${this.itemPath}`)
 		if (<PuffinElement>itemTabs[0] && (<PuffinElement>itemTabs[0]).state.data.active) this.itemElement.setAttribute('selected', true)
 		const TabFocusedListener = RunningConfig.on('aTabHasBeenFocused', ({ directory, justCreated }) => {
-			if (directory === this.itemPath && !justCreated) {
+			if (directory === this.itemPath) {
+				RunningConfig.data.focusedExplorerItem = this.itemElement
 				this.itemElement.setAttribute('selected', true)
-				this.itemElement.scrollIntoView({ block: 'center' })
+				if (!justCreated) {
+					this.itemElement.scrollIntoView({ block: 'center' })
+				}
 			}
 		})
 		const TabUnfocusedListener = RunningConfig.on('aTabHasBeenUnfocused', ({ directory }) => {
 			if (directory === this.itemPath) {
+				RunningConfig.data.focusedExplorerItem = null
 				this.itemElement.setAttribute('selected', false)
 			}
 		})
 		const TabClosedListener = RunningConfig.on('aTabHasBeenClosed', ({ directory }) => {
 			if (directory === this.itemPath) {
+				RunningConfig.data.focusedExplorerItem = null
 				this.itemElement.setAttribute('selected', false)
 			}
 		})

@@ -59,6 +59,9 @@ export default app => {
 				CloseApp: {
 					combos: [],
 				},
+				FocusExplorerPanel: {
+					combos: ['Ctrl+E'],
+				},
 			},
 			miscEnableLiveUpdateInManualConfig: true,
 			appBlurEffect: 10,
@@ -75,7 +78,7 @@ export default app => {
 			editorsClients: [],
 			editorExcludedDirs: [],
 			editorMakeTransparentHiddenItems: false,
-			appShowTerminal: false
+			appShowTerminal: false,
 		},
 	}
 

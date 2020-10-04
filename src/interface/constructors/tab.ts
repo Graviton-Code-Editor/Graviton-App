@@ -228,6 +228,7 @@ class Tab {
 			if (this.tabState.data.active && justCreated === false) return
 			RunningConfig.data.focusedTab = this.tabElement
 			RunningConfig.data.focusedPanel = this.tabElement.parentElement.parentElement
+			if (!this.tabState.data.active) unfocusTabs(this.tabElement)
 			RunningConfig.emit('aTabHasBeenFocused', {
 				tabElement: this.tabElement,
 				directory: this.directory,
@@ -238,7 +239,6 @@ class Tab {
 				projectPath: this.projectPath,
 				justCreated,
 			})
-			if (!this.tabState.data.active) unfocusTabs(this.tabElement)
 			this.tabState.data.active = true
 			this.tabElement.scrollIntoView({ block: 'center' })
 		})

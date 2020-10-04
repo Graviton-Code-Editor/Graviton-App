@@ -297,10 +297,10 @@ const CodemirrorClient = new EditorClient(
 					config: {
 						markup: {
 							snippets: {
-								'foo': 'ul.nav>li'
-							}
-						}
-					}
+								foo: 'ul.nav>li',
+							},
+						},
+					},
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
@@ -497,6 +497,12 @@ const CodemirrorClient = new EditorClient(
 		},
 		displayContextMenu({ instance, action }) {
 			instance.pstate.on('displayContextMenu', action)
+		},
+		blur({ instance }) {
+			console.log(instance)
+			setTimeout(() => {
+				instance.getInputField().blur()
+			}, 1)
 		},
 	},
 )

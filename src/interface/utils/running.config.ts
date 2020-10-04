@@ -43,6 +43,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	LSPPort,
 	LSPServers: {},
 	isGitInstalled: false,
+	focusedExplorerItem: null,
 }
 
 isGitInstalled().then(res => {

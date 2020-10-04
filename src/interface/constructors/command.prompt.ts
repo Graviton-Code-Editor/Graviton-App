@@ -174,10 +174,10 @@ class CommandPrompt {
 	private _focusInput() {
 		const input: any = this.CPElement.children[1].children[0]
 		input.blur()
-		input.focus()
 
 		setTimeout(() => {
 			input.selectionStart = input.selectionEnd = input.value.length
+			input.focus()
 		}, 1)
 	}
 	/*

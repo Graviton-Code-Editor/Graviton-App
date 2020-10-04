@@ -31,7 +31,7 @@ const ItemWrapper = style`
 		align-items: center;
 		justify-content: center;
 		color:var(--explorerItemText);
-		&:hover{
+		&:hover, &:focus{
 			background:var(--explorerItemHoveringBackground);
 			border-radius:5px;
 		}
