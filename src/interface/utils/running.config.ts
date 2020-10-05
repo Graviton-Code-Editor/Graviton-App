@@ -5,12 +5,19 @@ import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import minimist from 'minimist'
 import isGitInstalled from './is_git_installed'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
+import electronLog from 'electron-log'
 
+// Get runtime information
 const CustomWindow: any = window
-
 const { isDev, processArguments } = CustomWindow.runtime
-
 CustomWindow.runtime = null
+
+// Create logger
+if (!isDev) {
+	const logger = electronLog.create('graviton')
+	logger.transports.file.fileName = 'graviton.log'
+	Object.assign(console, logger.functions)
+}
 
 const electronArguments = isDev ? processArguments.slice(2) : processArguments.slice(1) || []
 const parsedElectronArguments = minimist(electronArguments)

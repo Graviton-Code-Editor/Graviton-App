@@ -99,19 +99,29 @@ async function loadPlugin(pluginPkg) {
 
 const registerPluginsIn = where => {
 	return new Promise((resolve, reject) => {
-		fs.readdir(where).then(paths => {
-			paths.map(pluginName => {
-				const pluginPath: string = path.join(where, pluginName)
-				const pkgPluginPath: string = path.join(pluginPath, 'package.json')
-				if (fs.existsSync(pkgPluginPath)) {
-					const pluginPkg = getPlugin(pkgPluginPath)
-					if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
-					pluginPkg.PATH = pluginPath
-					PluginsRegistry.add(pluginPkg)
-				}
+		fs.readdir(where)
+			.then(paths => {
+				paths.map(pluginName => {
+					const pluginPath: string = path.join(where, pluginName)
+					const pkgPluginPath: string = path.join(pluginPath, 'package.json')
+					if (fs.existsSync(pkgPluginPath)) {
+						const pluginPkg = getPlugin(pkgPluginPath)
+						if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
+						pluginPkg.PATH = pluginPath
+						PluginsRegistry.add(pluginPkg)
+					}
+				})
+				resolve()
 			})
-			resolve()
-		})
+			.catch(err => {
+				console.error(err)
+				new Notification({
+					author: 'Graviton',
+					title: 'Error',
+					content: `Couldn't load some plugins.`,
+				})
+				resolve()
+			})
 	})
 }
 

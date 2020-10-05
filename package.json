@@ -88,6 +88,7 @@
 		"chokidar": "^3.4.2",
 		"codemirror": "^5.56.0",
 		"electron-is-dev": "^1.2.0",
+		"electron-log": "^4.2.4",
 		"electron-store": "^6.0.0",
 		"electron-window-state": "^5.0.3",
 		"emotion": "^10.0.27",
