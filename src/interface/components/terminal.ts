@@ -108,6 +108,7 @@ const getConfig = () => {
 		theme: {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
+			selection: getProp('terminalSelection'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,

@@ -1,6 +1,7 @@
 import SidePanel from '../../constructors/side.panel'
 import RunningConfig from 'RunningConfig'
-import { element, style } from '@mkenzo_8/puffin'
+import { element } from '@mkenzo_8/puffin'
+import { css as style } from 'emotion'
 import { Text } from '@mkenzo_8/puffin-drac'
 import FolderOutlined from '../../components/icons/folder.outlined'
 import Welcome from '../../defaults/windows/welcome'
@@ -24,9 +25,26 @@ const styleWrapper = style`
 		display: none;
 	}
 	& .link{
-		text-decoration: underline;
+		display: block;
+		border: 0;
+		background:transparent;
+		padding: 1px;
 		cursor: pointer;
-		font-size: 12px;
+		border-radius: 10px;
+		margin: 1px auto;
+		&:focus{
+			transition: 0.05s;
+			background: var(--textFocusedBackground);
+		}
+		&:hover > p{
+			text-decoration: underline;
+		}
+		& > p{
+			margin: 0px;
+			font-size: 13px;
+			text-decoration: none;
+			text-align: center;
+		}
 	}
 `
 
@@ -38,9 +56,15 @@ RunningConfig.on('appLoaded', () => {
 	})`
 		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
 			<div>
-				<Text class="link" :click="${openFolderDialog}" lang-string="menus.File.OpenFolder"/>
-				<Text class="link" :click="${openProjects}" lang-string="menus.File.Projects.OpenProjects"/>
-				<Text class="link" :click="${openWorkspaces}" lang-string="menus.File.Workspaces.OpenWorkspaces"/>
+				<button class="link" :click="${openFolderDialog}">
+						<Text lang-string="menus.File.OpenFolder"/>
+				</button>
+				<button class="link" :click="${openProjects}"> 
+						<Text lang-string="menus.File.Projects.OpenProjects"/>
+				</button>
+				<button class="link" :click="${openWorkspaces}"> 
+					<Text lang-string="menus.File.Workspaces.OpenWorkspaces"/>
+				</button>
 			</div>
 		</div>`
 

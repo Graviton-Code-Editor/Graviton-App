@@ -105,14 +105,14 @@ const styleWrapper = style`
 		color:var(--sidemenuButtonText);
 		margin:1px 0px;
 		font-size:13px;
-	}
-	& > div:nth-child(1) > label:hover:not(.active) {
-		transition:0.04s;
-		background:var(--sidemenuButtonHoveringBackground);
-	}
-	& > div:nth-child(1) > label.active {
-		background:var(--sidemenuButtonActiveBackground);
-		color:var(--sidemenuButtonActiveText);
+		&:hover:not(.active) {
+			transition:0.04s;
+			background:var(--sidemenuButtonHoveringBackground);
+		}
+		&.active {
+			background:var(--sidemenuButtonActiveBackground);
+			color:var(--sidemenuButtonActiveText);
+		}
 	}
 	& > div:nth-child(2){
 		background:transparent;

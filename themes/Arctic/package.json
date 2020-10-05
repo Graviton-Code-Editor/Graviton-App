@@ -7,15 +7,19 @@
 	"textTheme": "arctic",
 	"type": "theme",
 	"colorsScheme": {
-		"terminal":{
+		"terminal": {
 			"Background": "white",
-			"Foreground": "black"
+			"Foreground": "black",
+			"Selection": "rgb(180,180,180,0.6)"
 		},
 		"accent": {
 			"Color": "#0066FF"
 		},
 		"text": {
-			"Color": "black"
+			"Color": "black",
+			"Focused": {
+				"Background": "rgba(150,150,150,0.4)"
+			}
 		},
 		"body": {
 			"Background": "rgb(238,238,238)"

@@ -382,8 +382,10 @@ RunningConfig.on('command.closeApp', () => {
 
 RunningConfig.on('command.focusExplorerPanel', () => {
 	if (RunningConfig.data.focusedExplorerItem) {
-		//If there is focused item
+		//If there is a focused item
 		RunningConfig.data.focusedExplorerItem.firstChild.focus()
+	} else {
+		document.getElementById('explorer_panel').firstChild.firstChild.focus()
 	}
 })
 
