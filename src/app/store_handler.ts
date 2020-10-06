@@ -11,6 +11,10 @@ ipcMain.on('update-config', (e, config) => {
 	AppStore.set('config', config)
 })
 
+ipcMain.handle('get-process-arguments', () => {
+	return process.argv
+})
+
 ipcMain.handle('get-config', () => {
 	checkObject(defaultConfig.config, null, AppStore, 0)
 	return AppStore.get('config')

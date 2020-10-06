@@ -22,10 +22,6 @@ export default window => {
 		if (window.windowID === windowID) window.minimize()
 	})
 
-	ipcMain.handle('get-process-arguments', () => {
-		return process.argv
-	})
-
 	ipcMain.handle('open-folder', async () => {
 		return new Promise(res => {
 			dialog
