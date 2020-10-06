@@ -4,7 +4,6 @@ import { css as style } from 'emotion'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import * as XtermWebfont from 'xterm-webfont'
-import { WebglAddon } from 'xterm-addon-webgl'
 import { getProperty, ThemeProvider } from 'ThemeProvider'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
@@ -198,8 +197,6 @@ function XtermTerminal() {
 			xtermInstance.loadAddon(new XtermWebfont())
 
 			xtermInstance.open(this)
-
-			xtermInstance.loadAddon(new WebglAddon())
 
 			xtermInstance.onData(data => {
 				spawnProcess.write(data)
