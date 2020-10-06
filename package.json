@@ -120,7 +120,7 @@
 		"copy-webpack-plugin": "^6.0.3",
 		"cross-env": "^7.0.2",
 		"css-loader": "^3.6.0",
-		"electron": "^10.0.1",
+		"electron": "^10.1.2",
 		"electron-builder": "^22.6.0",
 		"electron-mocha-fork": "^9.2.0",
 		"elexus": "^1.0.0",
