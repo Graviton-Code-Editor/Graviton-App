@@ -15,3 +15,12 @@
 		transform: rotate(360deg);
 	}
 }
+
+@keyframes notificationOpens {
+	0% {
+		transform: scale(0.98) translateY(10px);
+	}
+	100% {
+		transform: scale(1) translateY(0px);
+	}
+}

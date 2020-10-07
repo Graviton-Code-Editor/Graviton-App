@@ -3,6 +3,8 @@ import { css as style } from 'emotion'
 
 const styleWrapper = style`
 	&{
+		transition: 0.1s;
+		animation: notificationOpens ease-out 0.12s;
 		border-radius:5px;
 		min-width:300px;
 		max-width:300px;
@@ -12,13 +14,22 @@ const styleWrapper = style`
 		padding:8px;
 		margin:5px 7px;
 	}
-	&  svg{
-		height:18px;
-		width:18px;
-		padding:0px;
-		margin:0px;
-		position:absolute;
-		right:15px;
+	& div:nth-child(1){
+		display: flex;
+		width: 100%;
+		position: relative;
+		justify-content: flex-end;
+		height: 0;
+		& > svg{
+			height:18px;
+			width:18px;
+			padding:0px;
+			margin:0px;
+			position:absolute;
+			right: 5px;
+			top: 2px;
+			position: relative;
+		}
 	}
 	& > h5{
 		color:var(--notificationTitleText);
@@ -28,6 +39,7 @@ const styleWrapper = style`
 		width:225px;
 		white-space:nowrap;
 		margin-bottom: 2px;
+		user-select: none;
 	}
 	& > p{
 		font-size:13px;
