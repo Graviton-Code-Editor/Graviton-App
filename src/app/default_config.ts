@@ -79,6 +79,7 @@ export default app => {
 			editorExcludedDirs: [],
 			editorMakeTransparentHiddenItems: false,
 			appShowTerminal: false,
+			experimentalEditorLSP: false,
 		},
 	}
 

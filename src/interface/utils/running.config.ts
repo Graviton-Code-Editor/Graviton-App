@@ -6,6 +6,7 @@ import minimist from 'minimist'
 import isGitInstalled from './is_git_installed'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 import electronLog from 'electron-log'
+import StaticConfig from 'StaticConfig'
 
 // Get runtime information
 const CustomWindow: any = window
@@ -62,19 +63,22 @@ isGitInstalled().then(res => {
 const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
 RunningConfig.on('appLoaded', () => {
-	const lspServer = new nodeJSONRPC({
-		port: LSPPort,
-		languageServers: {},
-	})
-	RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
-		modes.forEach((name: string) => {
-			if (!RunningConfig.data.LSPServers[name]) RunningConfig.data.LSPServers[name] = []
-			RunningConfig.data.LSPServers[name].push({
-				server: args,
-			})
-			lspServer.addLanguageServer(name, args)
+	if (StaticConfig.data.experimentalEditorLSP) {
+		//Experimental
+		const lspServer = new nodeJSONRPC({
+			port: LSPPort,
+			languageServers: {},
 		})
-	})
+		RunningConfig.on('registerLanguageServer', ({ modes, args }) => {
+			modes.forEach((name: string) => {
+				if (!RunningConfig.data.LSPServers[name]) RunningConfig.data.LSPServers[name] = []
+				RunningConfig.data.LSPServers[name].push({
+					server: args,
+				})
+				lspServer.addLanguageServer(name, args)
+			})
+		})
+	}
 })
 
 RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filter }) {
