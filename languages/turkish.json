@@ -9,28 +9,28 @@
 				"OpenFile": "Dosya Aç",
 				"Projects": {
 					"Projects": "Projeler",
-					"OpenProjects": "Projeler Ekranını Aç"
+					"OpenProjects": "Projeleri Göster"
 				},
 				"Workspaces": {
 					"Workspaces": "Çalışma Alanları",
-					"OpenWorkspaces": "Çalışma Alanları Ekranını Aç",
+					"OpenWorkspaces": "Çalışma Alanlarını Göster",
 					"OpenFromFile": "Dosyadan Aç",
-					"AddFolderToWorkspace": "Çalışma Alanına Klasör Ekle",
+					"AddFolderToWorkspace": "Çalışma Alanına Dosya Ekle",
 					"SaveWorkspace": "Çalışma Alanını Kaydet"
 				}
 			},
 			"Edit": {
-				"Edit": "Düzen",
+				"Edit": "Düzenle",
 				"Undo": "Geri Al",
 				"Redo": "İleri Al",
 				"FontSize": {
 					"FontSize": "Yazı Tipi Boyutu",
-					"Increase": "Arttır",
-					"Decrease": "Azalt"
+					"Increase": "Boyutu Arttır",
+					"Decrease": "Boyutu Düşür"
 				},
 				"Find": "Bul",
-				"Replace": "Değiştir",
-				"FormatDocument": "Belgeyi Biçimlendir"
+				"Replace": "Yerleştir",
+				"FormatDocument": "Dosyayı Biçimlendir"
 			},
 			"Tools": {
 				"Tools": "Araçlar",
@@ -39,13 +39,13 @@
 				"Panels": {
 					"Panels": "Paneller",
 					"NewPanel": "Yeni Panel",
-					"CloseCurrentPanel": "Kullanımdaki Paneli Kapat"
+					"CloseCurrentPanel": "Paneli Kapat"
 				}
 			},
 			"View": {
 				"View": "Görünüm",
-				"ToggleSidebar": "Kenar Çubuğunu Aç/Kapa",
-				"ToggleSidepanel": "Kenar Panelini Aç/Kapa",
+				"ToggleSidebar": "Kenar Çubuğunu Gizle/Göster",
+				"ToggleSidepanel": "Kenar Panelini Gizle/Göster",
 				"ShowSidebar": "Kenar Çubuğunu Göster",
 				"ShowSidepanel": "Kenar Panelini Göster",
 				"HideSidebar": "Kenar Çubuğunu Gizle",
@@ -54,14 +54,14 @@
 			"Window": {
 				"Window": "Pencere",
 				"Zoom": {
-					"Zoom": "Yakınlaştırma",
-					"DefaultZoom": "Varsayılan",
-					"IncreaseZoom": "Arttır",
-					"DecreaseZoom": "Azalt"
+					"Zoom": "Yakınlaştır",
+					"DefaultZoom": "Normal",
+					"IncreaseZoom": "Yakınlaştır",
+					"DecreaseZoom": "Uzaklaştır"
 				},
 				"Debug": {
 					"Debug": "Hata Ayıklama",
-					"OpenDebugWindow": "Hata Ayıklama Penceresini Aç"
+					"OpenDebugWindow": "Hata Ayıklama Penceresi Aç"
 				},
 				"OpenDevTools": "Geliştirici Araçlarını Aç"
 			},
@@ -71,7 +71,7 @@
 				"Social": "Sosyal Medya",
 				"Contributors": "Emeği Geçenler",
 				"Blog": "Blog",
-				"Documentation": "Dökümantasyon",
+				"Documentation": "Dokümantasyon",
 				"Website": "İnternet Sitesi",
 				"SourceCode": "Kaynak Kodu",
 				"CheckForUpdates": "Güncellemeleri Kontrol Et",
@@ -82,17 +82,17 @@
 			"Settings": {
 				"Settings": "Ayarlar",
 				"Customization": {
-					"Customization": "Kişiselleştirme",
+					"Customization": "Özelleştirme",
 					"Themes": "Temalar",
-					"Iconpacks": "Simge Paketi"
+					"Iconpacks": "İkonlar"
 				},
 				"Advanced": {
 					"Advanced": "Gelişmiş",
-					"FileWatcher": "Dosya Değişiklik İzleyicisi",
+					"FileWatcher": "Dosya İzleyici",
 					"Autocomplete": "Otomatik Tamamlayıcı",
-					"WrapLines": "Satır Kaydırma",
+					"WrapLines": "Satırları Kaydır",
 					"Indentation": {
-						"Indentation": "Girinti Biçimi",
+						"Indentation": "Girinti Oluşturma",
 						"Space": "Boşluk",
 						"Tab": "Tab"
 					}
@@ -109,34 +109,34 @@
 					"Home": "Ana Sayfa"
 				},
 				"Installed": {
-					"Installed": "Kurulu"
+					"Installed": "Yüklü"
 				},
 				"Install": "Yükle",
 				"Update": "Güncelle",
 				"Uninstall": "Kaldır",
-				"AnyCompatibleVersion": "Herhangi bir uyumlu sürüm."
+				"AnyCompatibleVersion": "Herhangi Bir Uyumlu Sürüm"
 			},
 			"Welcome": {
-				"Welcome": "Hoş Geldiniz",
+				"Welcome": "Hoşgeldin",
 				"RecentProjects": "Son Projeler",
 				"RecentWorkspaces": "Son Çalışma Alanları",
 				"NewProject": "Yeni Proje",
-				"OpenWorkspace": "Bir Çalışma Alanı Aç",
-				"OpenFolder": "Bir Klasör Aç"
+				"OpenWorkspace": "Çalışma Alanı Aç",
+				"OpenFolder": "Klasör Aç"
 			}
 		},
 		"misc": {
 			"LastVersion": "Son Sürüm",
-			"InstalledVersion": "Kurulu Sürüm",
+			"InstalledVersion": "Yüklü Sürüm",
 			"About": "Hakkında",
 			"Skip": "Geç",
-			"Finish": "Sonlandır",
+			"Finish": "Bitir",
 			"Continue": "Devam Et",
-			"GoBack": "Geri git",
+			"GoBack": "Geri",
 			"Accept": "Kabul Et",
 			"Cancel": "İptal Et",
 			"version": "Sürüm",
-			"CopyPath": "Yolu Kopyala",
+			"CopyPath": "Konumu Kopyala",
 			"More": "Daha Fazla",
 			"Copy": "Kopyala",
 			"Rename": "Yeniden Adlandır",
@@ -147,7 +147,7 @@
 			"Paste": "Yapıştır",
 			"Author": "Yapımcı",
 			"Exit": "Çıkış",
-			"Tip": "Tüyo",
+			"Tip": "İpucu",
 			"Yes": "Evet",
 			"No": "Hayır",
 			"Close": "Kapat",
@@ -155,8 +155,8 @@
 		},
 		"notifications": {
 			"appLanguageChanged": {
-				"appLanguageChanged": "Uygulamanın dili değişti.",
-				"restartMessage": "Değişikliklerin tamamen uygulanması için uygulamayı yeniden başlatın."
+				"appLanguageChanged": "Graviton'un dili başarıyla değiştirildi!",
+				"restartMessage": "Değişiklerin uygulanması için Graviton'u yeniden başlatın!"
 			}
 		}
 	}
