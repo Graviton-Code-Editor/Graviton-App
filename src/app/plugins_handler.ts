@@ -4,20 +4,24 @@ import * as path from 'path'
 import * as fs from 'fs-extra'
 import AdmZip from 'adm-zip'
 
-ipcMain.on('download-plugin', (event, { url, id, dist }) => {
-	getZip(url, id, dist)
-		.then(() => {
-			event.reply('plugin-installed', true)
-		})
-		.catch(err => console.log(err))
+ipcMain.handle('install-plugin', (event, { url, id, dist }) => {
+	return new Promise(res => {
+		getZip(url, id, dist)
+			.then(() => {
+				res(true)
+			})
+			.catch(err => console.log(err))
+	})
 })
 
-ipcMain.on('install-gvp', (event, { path: gvpPath, name, dist }) => {
-	extractZip(gvpPath, name, dist)
-		.then(() => {
-			event.reply('gvp-installed', true)
-		})
-		.catch(err => console.log(err))
+ipcMain.handle('install-gvp', (event, { path: gvpPath, name, dist }) => {
+	return new Promise(res => {
+		extractZip(gvpPath, name, dist)
+			.then(() => {
+				res(true)
+			})
+			.catch(err => console.log(err))
+	})
 })
 
 function getZip(url, pluginId, dist) {

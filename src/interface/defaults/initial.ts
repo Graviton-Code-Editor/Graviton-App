@@ -13,7 +13,8 @@ import { GravitonIconpack } from '../collections/iconpacks'
 import * as fs from 'fs-extra'
 import createMenus from './menus'
 import getFormat from '../utils/format_parser'
-import { installPluginFromGVP } from './store/utils/install.plugin'
+import queryString from 'query-string'
+import { installPluginFromGVP, installPluginFromURL } from './store/utils/install.plugin'
 import './environment.inspectors/npm'
 import './project.services/npm'
 import './side.panels/files.explorer'
@@ -75,6 +76,20 @@ export default function init(): void {
 							filePath: dir,
 						})
 					}
+				}
+			} else {
+				const isGravitonURL = argv.includes('graviton:install?')
+				if (isGravitonURL) {
+					const { id, url } = queryString.parse(argv)
+					installPluginFromURL({
+						id,
+						release: url,
+					}).then((a, b) => {
+						new Notification({
+							author: 'Graviton',
+							title: `Installed ${id}`,
+						})
+					})
 				}
 			}
 		})

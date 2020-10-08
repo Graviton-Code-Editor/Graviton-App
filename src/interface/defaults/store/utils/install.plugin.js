@@ -6,26 +6,28 @@ const pluginsDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
 
 export function installPluginFromURL({ id, release }) {
 	return new Promise((resolve, reject) => {
-		ipcRenderer.on('plugin-installed', data => {
-			resolve(data)
-		})
-		ipcRenderer.send('download-plugin', {
-			url: release,
-			id: id,
-			dist: pluginsDir,
-		})
+		ipcRenderer
+			.invoke('install-plugin', {
+				url: release,
+				id: id,
+				dist: pluginsDir,
+			})
+			.then(data => {
+				resolve(data)
+			})
 	})
 }
 
 export function installPluginFromGVP({ path, name }) {
 	return new Promise((resolve, reject) => {
-		ipcRenderer.on('gvp-installed', data => {
-			resolve(data)
-		})
-		ipcRenderer.send('install-gvp', {
-			path,
-			name,
-			dist: pluginsDir,
-		})
+		ipcRenderer
+			.invoke('install-gvp', {
+				path,
+				name,
+				dist: pluginsDir,
+			})
+			.then(data => {
+				resolve(data)
+			})
 	})
 }

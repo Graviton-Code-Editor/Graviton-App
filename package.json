@@ -100,6 +100,7 @@
 		"minimist": "^1.2.5",
 		"node-jsonrpc-lsp": "^0.1.1",
 		"node-pty": "^0.9.0",
+		"query-string": "^6.13.5",
 		"rimraf": "^3.0.2",
 		"semver": "^7.3.2",
 		"shortcuts": "^1.6.1",
@@ -205,6 +206,15 @@
 			{
 				"ext": "gvp",
 				"role": "Editor"
+			}
+		],
+		"protocols": [
+			{
+				"name": "graviton",
+				"schemes": [
+					"graviton"
+				],
+				"role": "Viewer"
 			}
 		]
 	}

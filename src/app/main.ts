@@ -12,6 +12,8 @@ import MenusHandler from './menus_handler'
 
 let main
 
+app.setAsDefaultProtocolClient('graviton')
+
 app.on('ready', function () {
 	protocol.registerFileProtocol('file', (request, callback) => {
 		const pathname = request.url.replace('file:///', '')
