@@ -46,7 +46,6 @@ class Item {
 
 	constructor({ decorator, explorerProvider, projectPath, explorerContainer, isFolder, isHidden, level, fullPath, classSelector, gitChanges, hint }) {
 		const self = this
-
 		this.isFolder = isFolder
 		this.itemPath = normalizeDir(fullPath)
 		this.itemName = path.basename(fullPath)
@@ -89,9 +88,9 @@ class Item {
 		`
 
 		function handleTextDecorator() {
-			if (this.itemDecorator) {
+			if (self.itemDecorator) {
 				return element`
-					<p>${decorator.text}</p>
+					<p>${self.itemDecorator.text}</p>
 				`
 			}
 			return element`<div/>`
