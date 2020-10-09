@@ -11,10 +11,12 @@ import { NotificationOptions, NotificationDetails } from 'Types/notification'
 class Notification {
 	public NotificationElement: HTMLElement
 	constructor({ author, title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
+		const self = this
 		function mounted() {
+			this.instance = self
 			if (lifeTime != Infinity) {
 				setTimeout(() => {
-					this.remove()
+					self.remove()
 				}, lifeTime)
 			}
 		}
@@ -30,7 +32,7 @@ class Notification {
 		})`
 			<NotificationBody mounted="${mounted}">
 				<div>
-					<Cross :click="${() => closeNotification(this.NotificationElement)}"/>
+					<Cross :click="${() => this.remove()}"/>
 				</div>
 				<div>
 					<Title lang-string="${title}"/>
@@ -40,7 +42,7 @@ class Notification {
 				<div class="buttons">
 					${buttons.map(({ label, action }) => {
 						const clickedButton = () => {
-							closeNotification(this.NotificationElement)
+							this.remove()
 							action()
 						}
 						return element({
@@ -58,25 +60,27 @@ class Notification {
 			title,
 			content,
 			element: this.NotificationElement,
+			instance: this,
 		})
 	}
 	public remove() {
-		this.NotificationElement.remove()
+		this.NotificationElement.classList.add('closing')
+		setTimeout(() => {
+			this.NotificationElement.remove()
+		}, 135)
 	}
 	private emit(notificationDetails: NotificationDetails) {
 		RunningConfig.data.notifications.push(notificationDetails)
 		if (RunningConfig.data.notifications.length > NotificationsMaxCount) {
-			const { element } = RunningConfig.data.notifications[0]
+			const { instance, element } = RunningConfig.data.notifications[0]
 			RunningConfig.data.notifications.splice(0, 1)
-			RunningConfig.emit('aNotificationHasBeenCleared', { element })
-			closeNotification(element)
+			RunningConfig.emit('aNotificationHasBeenCleared', {
+				element,
+			})
+			instance.remove()
 		}
 		RunningConfig.emit('aNotificationHasBeenEmitted', notificationDetails)
 	}
-}
-
-function closeNotification(node: HTMLElement) {
-	node.remove()
 }
 
 export default Notification

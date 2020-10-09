@@ -2,17 +2,18 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
 
 const styleWrapper = style`
-	&{
-		transition: 0.1s;
-		animation: notificationOpens ease-out 0.12s;
-		border-radius:5px;
-		min-width:300px;
-		max-width:300px;
-		min-height:80px;
-		background:var(--notificationBackground);
-		box-shadow:0px 1px 7px rgba(0,0,0,0.17);
-		padding:8px;
-		margin:5px 7px;
+	transition: 0.1s;
+	animation: notificationOpens ease-out 0.12s;
+	border-radius:5px;
+	min-width:300px;
+	max-width:300px;
+	min-height:80px;
+	background:var(--notificationBackground);
+	box-shadow:0px 1px 7px rgba(0,0,0,0.17);
+	padding:8px;
+	margin:5px 7px;
+	&.closing {
+		animation: notificationCloses ease-out 0.135s;
 	}
 	& div:nth-child(1){
 		display: flex;

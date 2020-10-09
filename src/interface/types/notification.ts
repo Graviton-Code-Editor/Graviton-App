@@ -17,4 +17,5 @@ export interface NotificationDetails {
 	title: string
 	content?: string
 	element: PuffinElement
+	instance: any
 }

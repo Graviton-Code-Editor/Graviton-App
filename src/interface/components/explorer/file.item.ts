@@ -66,25 +66,24 @@ class Item {
 		const dragginInListener = this._draggingInListener.bind(this)
 		const dragDroppedListener = this._dragDroppedListener.bind(this)
 
+		const animateItem = StaticConfig.data.appEnableExplorerItemsAnimations
+		const IDItem = level === 0 ? projectPath : ''
+
 		return element({
 			components: {
 				FileItem,
 				ArrowIcon,
 			},
 		})`
-			<FileItem class="${classSelector} level="${level}" id="${
-			level === 0 ? projectPath : ''
-		}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${
-			StaticConfig.data.appEnableExplorerItemsAnimations
-		}" :drop="${dragDroppedListener}" >
+			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
-				}" draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}"  :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
-					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"></ArrowIcon>
-					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"></img>
+				}" draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"/>
+					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"/>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
 					<div itemClass="${classSelector}" class="decorator gitStatus" count=""/>
-					<div itemClass="${classSelector}" class="decorator" >${handleTextDecorator}</div>
+					<div itemClass="${classSelector}" class="decorator">${handleTextDecorator}</div>
 				</button>
 			</FileItem>
 		`
