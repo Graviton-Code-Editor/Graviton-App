@@ -6,14 +6,20 @@ const registry: PuffinState = new state({
 	colorsSchemes: {},
 })
 
-function add(pkg): void {
-	registry.data.list[pkg.name] = pkg
-	registry.data.colorsSchemes[pkg.name] = pkg.colorsScheme
+function add(pluginPackage): void {
+	registry.data.list[pluginPackage.name] = pluginPackage
+	registry.data.colorsSchemes[pluginPackage.name] = pluginPackage.colorsScheme
+}
+
+function remove(pluginName): void {
+	delete registry.data.list[pluginName]
+	delete registry.data.colorsSchemes[pluginName]
 }
 
 const PluginsRegistry = {
 	registry,
 	add,
+	remove,
 }
 
 export default PluginsRegistry

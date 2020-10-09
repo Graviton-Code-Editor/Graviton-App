@@ -103,13 +103,7 @@ const registerPluginsIn = where => {
 			.then(paths => {
 				paths.map(pluginName => {
 					const pluginPath: string = path.join(where, pluginName)
-					const pkgPluginPath: string = path.join(pluginPath, 'package.json')
-					if (fs.existsSync(pkgPluginPath)) {
-						const pluginPkg = getPlugin(pkgPluginPath)
-						if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
-						pluginPkg.PATH = pluginPath
-						PluginsRegistry.add(pluginPkg)
-					}
+					addPluginToRegistry(pluginPath)
 				})
 				resolve()
 			})
@@ -124,6 +118,31 @@ const registerPluginsIn = where => {
 			})
 	})
 }
+
+/*
+ * Add a plugin to the runtime plugins registry
+ */
+export function addPluginToRegistry(pluginPath) {
+	const pkgPluginPath: string = path.join(pluginPath, 'package.json')
+	if (fs.existsSync(pkgPluginPath)) {
+		const pluginPkg = getPlugin(pkgPluginPath)
+		if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
+		pluginPkg.PATH = pluginPath
+		PluginsRegistry.add(pluginPkg)
+		return pluginPkg
+	}
+}
+
+/*
+ * Unload a plugin from the runtime plugins registry
+ */
+export function unloadPluginFromRegistry(name) {
+	PluginsRegistry.remove(name)
+}
+
+/*
+ * Load built-in and installed plugins when the app is loaded
+ */
 
 RunningConfig.on('appLoaded', async function () {
 	await registerPluginsIn(pluginsIternalDir)

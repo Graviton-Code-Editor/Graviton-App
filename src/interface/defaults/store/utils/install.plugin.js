@@ -1,8 +1,8 @@
 import path from 'path'
 import StaticConfig from 'StaticConfig'
+import { addPluginToRegistry, loadPlugin } from '../../../utils/plugin.loader'
+import { pluginsExternalDir } from 'Constants'
 const { ipcRenderer } = window.require('electron')
-
-const pluginsDir = path.join(StaticConfig.data.appConfigPath, 'plugins')
 
 export function installPluginFromURL({ id, release }) {
 	return new Promise((resolve, reject) => {
@@ -10,9 +10,12 @@ export function installPluginFromURL({ id, release }) {
 			.invoke('install-plugin', {
 				url: release,
 				id: id,
-				dist: pluginsDir,
+				dist: pluginsExternalDir,
 			})
 			.then(data => {
+				const pluginPath = path.join(pluginsExternalDir, id)
+				const pluginPkg = addPluginToRegistry(pluginPath)
+				loadPlugin(pluginPkg)
 				resolve(data)
 			})
 	})
@@ -24,7 +27,7 @@ export function installPluginFromGVP({ path, name }) {
 			.invoke('install-gvp', {
 				path,
 				name,
-				dist: pluginsDir,
+				dist: pluginsExternalDir,
 			})
 			.then(data => {
 				resolve(data)
