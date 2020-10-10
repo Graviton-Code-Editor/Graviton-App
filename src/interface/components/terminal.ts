@@ -113,7 +113,6 @@ const getConfig = () => {
 		cursorBlink: true,
 		fontSize: 13,
 		lineHeight: 1.4,
-		letterSpacing: -2,
 		windowsMode: process.platform === 'win32',
 	}
 }
