@@ -61,13 +61,12 @@ const styled = style`
 		}
 	}
 	& .terminal_container{
-		overflow: auto;
 		max-width: 100%;
 		margin: 0;
 		position: relative;
 		width: auto;
-		max-height: calc(100% - 40px);
-		min-height: calc(100% - 40px);
+		min-height: calc( 100% - 50px);
+		max-height: calc( 100% - 50px);
 	}
 	& .xterm {
 		padding: 0px;
@@ -89,11 +88,9 @@ const styled = style`
 
 const shells: any = {}
 
-if (process.platform === 'win32') {
-	shells.cmd = process.env['COMSPEC']
-} else {
-	shells.bash = process.env['SHELL']
-}
+RunningConfig.on('registerTerminalClient', ({ name, onCreated }) => {
+	shells[name] = onCreated
+})
 
 const TerminalState = new state({
 	shells,
@@ -108,10 +105,11 @@ const getConfig = () => {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
 			selection: getProp('terminalSelection'),
+			cursor: getProp('terminalCursor')
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
-		fontSize: 13,
+		fontSize: 14,
 		lineHeight: 1.4,
 		windowsMode: process.platform === 'win32',
 	}
@@ -152,13 +150,7 @@ function XtermTerminal() {
 
 	TerminalState.emit('newTerminal')
 
-	function createProcess() {
-		const pty = window.require('node-pty')
-		return pty.spawn(xtermState.data.shell, [], {
-			cwd: process.env.HOMEPATH,
-			env: process.env,
-		})
-	}
+	
 
 	const refreshOptions = term => {
 		const newConfig = getConfig()
@@ -186,7 +178,7 @@ function XtermTerminal() {
 		await xtermState.on('shellSelected')
 
 		setTimeout(() => {
-			const spawnProcess = createProcess()
+			const terminalClient = xtermState.data.shell(xtermState)
 			const xtermInstance = new Terminal(getConfig())
 			const fit = new FitAddon()
 
@@ -195,15 +187,15 @@ function XtermTerminal() {
 			xtermInstance.loadAddon(fit)
 			xtermInstance.loadAddon(new XtermWebfont())
 
-			xtermInstance.open(this)
-
-			xtermInstance.onData(data => {
-				spawnProcess.write(data)
+			xtermInstance.onData((data) => {
+				xtermState.emit('data', data)
 			})
-
-			spawnProcess.on('data', function (data: any) {
+			
+			xtermState.on('write', (data) => {
 				xtermInstance.write(data)
 			})
+			
+			xtermInstance.open(this)
 
 			window.addEventListener('resize', () => {
 				fit.fit()
@@ -218,8 +210,8 @@ function XtermTerminal() {
 				xtermInstance.focus()
 				fit.fit()
 				refreshOptions(xtermInstance)
-			}, 500)
-		}, 300)
+			}, 75)
+		}, 1)
 	}
 
 	function onChange() {
