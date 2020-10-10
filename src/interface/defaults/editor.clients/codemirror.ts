@@ -364,8 +364,8 @@ const CodemirrorClient = new EditorClient(
 					lspAdapter = lspClient.lspAdapter
 					lspConnection = lspClient.lspConnection
 				} else {
-					lspAdapter.remove()
-					lspConnection.close()
+					if (lspAdapter) lspAdapter.remove()
+					if (lspConnection) lspConnection.close()
 					lspAdapter = null
 					lspConnection = null
 				}

@@ -20,7 +20,7 @@ const styleWrapper = style`
 	}
 `
 
-function IconpackCard({ iconpackInfo }) {
+function IconpackCard({ info }) {
 	return element({
 		components: {
 			Card,
@@ -29,11 +29,11 @@ function IconpackCard({ iconpackInfo }) {
 		},
 	})`
 	<Card class="${styleWrapper}">
-		<H3>${iconpackInfo.name}</H3>
+		<H3>${info.name}</H3>
 		<div>
-			<img src="${getIconPath(iconpackInfo.name, 'folder')}"/>
-			<img src="${getIconPath(iconpackInfo.name, 'js')}"/>
-			<img src="${getIconPath(iconpackInfo.name, 'md')}"/>
+			<img src="${getIconPath(info.name, 'folder')}"/>
+			<img src="${getIconPath(info.name, 'js')}"/>
+			<img src="${getIconPath(info.name, 'md')}"/>
 		</div>
 	</Card>`
 }

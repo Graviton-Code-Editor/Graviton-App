@@ -11,7 +11,8 @@ if (Languages[StaticConfig.data.appLanguage]) {
 	initialTranslations = data
 } else {
 	initialTranslations = Languages.english.translations
-	throwError(`Couldnt find language by name ${StaticConfig.data.appLanguage}`, StaticConfig.data.appLanguage)
+	const err = `Couldnt find language by name ${StaticConfig.data.appLanguage}`
+	throwError(err, err)
 }
 
 const LanguageState: PuffinState = new state({
@@ -22,7 +23,8 @@ const LanguageState: PuffinState = new state({
 function setFallback(notFoundLang: string): void {
 	StaticConfig.data.appLanguage = 'english'
 	LanguageState.data.translations = Languages[StaticConfig.data.appLanguage].translations
-	throwError(`Couldnt find language by name ${notFoundLang}`, StaticConfig.data.appLanguage)
+	const err = `Couldnt find language by name ${notFoundLang}`
+	throwError(err, err)
 }
 
 StaticConfig.keyChanged('appLanguage', (newLanguage: string) => {
