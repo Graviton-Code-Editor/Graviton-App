@@ -70,6 +70,10 @@ RunningConfig.once('appLoaded', () => {
 				state.on('data', data => {
 					spawnProcess.write(data)
 				})
+
+				return {
+					accessories: RunningConfig.data.localTerminalAccessories,
+				}
 			},
 		})
 	}
