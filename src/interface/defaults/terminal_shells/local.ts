@@ -30,29 +30,6 @@ RunningConfig.once('appLoaded', () => {
 				}
 			},
 		})
-		RunningConfig.emit('registerTerminalShell', {
-			name: 'funny',
-			onCreated(state) {
-				state.on('data', data => {
-					state.emit('write', Math.random().toString())
-				})
-
-				return {
-					accessories: [
-						{
-							component() {
-								return element`<span> hello! </span>`
-							},
-						},
-						{
-							component() {
-								return element`<span> hello! </span>`
-							},
-						},
-					],
-				}
-			},
-		})
 	} else {
 		// Linux's configured terminal ($SHELL) Client for Terminal
 		RunningConfig.emit('registerTerminalShell', {
