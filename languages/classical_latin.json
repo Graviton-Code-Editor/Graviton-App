@@ -1,0 +1,122 @@
+{
+	"name": "Lingua Latina",
+	"locale": "la",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "tabularium",
+				"OpenFolder": "Aperire carpetam",
+				"OpenFile": "Aperire tabularium",
+				"Projects": {
+					"Projects": "Proiecta",
+					"OpenProjects": "Aperire proiecta"
+				},
+				"Workspaces": {
+					"Workspaces": "Loci laboris",
+					"OpenWorkspaces": "Aperire locos laboris",
+					"OpenFromFile": "Aperire a tabulario",
+					"AddFolderToWorkspace": "Addere carpetam ad locum labori",
+					"SaveWorkspace": "Servare locum laboris"
+				}
+			},
+			"Edit": {
+				"Edit": "Mutare",
+				"Undo": "Desfacere",
+				"Redo": "Refacere",
+				"FontSize": {
+					"FontSize": "Magnitudo fontis",
+					"Increase": "Augere",
+					"Decrease": "Deminuere"
+				},
+				"Find": "Invenire",
+				"Replace": "Substitere",
+				"FormatDocument": "Dare forman tabulam"
+			},
+			"Tools": {
+				"Tools": "Instumenta",
+				"OpenSettings": "Variationes",
+				"OpenStore": "Taberna",
+				"Panels": {
+					"Panels": "Divisiones",
+					"NewPanel": "Nova divisio",
+					"CloseCurrentPanel": "Claudere istam divisionem"
+				}
+			},
+			"Window": {
+				"Window": "Fenestra",
+				"Zoom": {
+					"Zoom": "Zoom",
+					"DefaultZoom": "Sine mandato",
+					"IncreaseZoom": "Augere",
+					"DecreaseZoom": "Deminuere"
+				},
+				"OpenDevTools": "Instrumenta creatoris"
+			},
+			"Help": {
+				"Help": "Auxilium",
+				"Contact": "Cognosce nos",
+				"Social": "Epistulae",
+				"Blog": "Blog",
+				"Documentation": "Documenta",
+				"Website": "Situs redis",
+				"SourceCode": "Codes fontis",
+				"CheckForUpdates": "observare innovationes",
+				"About": "De "
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Variationes",
+				"Customization": {
+					"Customization": "Impersonnationes",
+					"Themes": "Ornamenta",
+					"FileWatcher": "Vigilans tabulariorum"
+				},
+				"Languages": "Linguas",
+				"About": "De "
+			},
+			"Store": {
+				"Store": "Taberna",
+				"Home": {
+					"Home": "Domus"
+				},
+				"Installed": {
+					"Installed": "Collocatum"
+				},
+				"Install": "Collocare",
+				"Update": "innovare",
+				"Uninstall": "Discollocare"
+			},
+			"Welcome": {
+				"Welcome": "Benevenitus",
+				"RecentProjects": "Proiecta recenta",
+				"RecentWorkspaces": "Loci laboris recenti",
+				"NewProject": "Novum proiectum",
+				"OpenWorkspace": "Aperire locos laboris",
+				"OpenFolder": "Aperire carpetam"
+			}
+		},
+		"misc": {
+			"LastVersion": "Finale exemplum",
+			"InstalledVersion": "Exeplum collocatum",
+			"About": "De ",
+			"Skip": "Salire",
+			"Finish": "Terminare",
+			"Continue": "Continuare",
+			"GoBack": "Ire retro",
+			"Accept": "Aceptare",
+			"Cancel": "Renuntiare",
+			"version": "Exemplum",
+			"More": "Plus",
+			"Copy": "Effingere",
+			"Paste": "Figgere",
+			"Author": "Creator",
+			"Exit": "Exire",
+			"Tip": "Recomendatio",
+			"Yes": "Certe",
+			"No": "Non",
+			"Close": "Claudere",
+			"Ignore": "Non audire"
+		}
+	}
+}
