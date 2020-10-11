@@ -50,7 +50,7 @@
 				"ShowSidepanel": "Show Sidepanel",
 				"HideSidebar": "Hide Sidebar",
 				"HideSidepanel": "Hide Sidepanel",
-				"ToggleTerminal":"Toggle Terminal"
+				"ToggleTerminal": "Toggle Terminal"
 			},
 			"Window": {
 				"Window": "Window",
@@ -122,7 +122,7 @@
 				"Install": "Install",
 				"Update": "Update",
 				"Uninstall": "Uninstall",
-				"AnyCompatibleVersion": "Any compatible version."
+				"AnyCompatibleVersion": "There isn't any compatible version."
 			},
 			"Welcome": {
 				"Welcome": "Welcome",
@@ -175,7 +175,7 @@
 			},
 			"restartConfig": {
 				"title": "Restart configuration",
-				"content": "Click continue to restart your  configuration."
+				"content": "Click continue to restart your configuration."
 			}
 		}
 	}
