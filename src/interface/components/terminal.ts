@@ -105,7 +105,7 @@ const getConfig = () => {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
 			selection: getProp('terminalSelection'),
-			cursor: getProp('terminalCursor')
+			cursor: getProp('terminalCursor'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
@@ -150,8 +150,6 @@ function XtermTerminal() {
 
 	TerminalState.emit('newTerminal')
 
-	
-
 	const refreshOptions = term => {
 		const newConfig = getConfig()
 
@@ -187,14 +185,14 @@ function XtermTerminal() {
 			xtermInstance.loadAddon(fit)
 			xtermInstance.loadAddon(new XtermWebfont())
 
-			xtermInstance.onData((data) => {
+			xtermInstance.onData(data => {
 				xtermState.emit('data', data)
 			})
-			
-			xtermState.on('write', (data) => {
+
+			xtermState.on('write', data => {
 				xtermInstance.write(data)
 			})
-			
+
 			xtermInstance.open(this)
 
 			window.addEventListener('resize', () => {

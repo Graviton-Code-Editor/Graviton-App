@@ -63,9 +63,9 @@ function handleAppviewState() {
 
 function handlesidePanelState(): string {
 	if (StaticConfig.data.appEnableSidepanel) {
-		return 'opacity:1'
+		return 'display: block'
 	} else {
-		return 'opacity:0; min-width:0px; width:0px; padding:0; margin:0;'
+		return 'display: none; min-width:0px; width:0px; padding:0; margin:0;'
 	}
 }
 
@@ -107,6 +107,11 @@ function mountedAppView(): void {
 		const sidePanel = <PuffinElement>document.getElementById('sidepanel')
 		const sideBar = <PuffinElement>document.getElementById('sidebar')
 		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
+		if (value) {
+			sidePanel.style.display = 'block'
+		} else {
+			sidePanel.style.display = 'none'
+		}
 		sidePanel.update()
 		sideBar.update()
 		mainPanel.update()

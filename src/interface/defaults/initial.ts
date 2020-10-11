@@ -27,7 +27,7 @@ import './status.bar.items/debug'
 import '../collections/codemirror'
 import '../collections/plugins'
 import '../utils/test'
-import './terminal_clients/local'//
+import './terminal_clients/local' //
 
 export default function init(): void {
 	createMenus()

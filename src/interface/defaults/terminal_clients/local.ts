@@ -13,34 +13,33 @@ RunningConfig.once('appLoaded', () => {
 		// CMD Client for Terminal
 		RunningConfig.emit('registerTerminalClient', {
 			name: 'cmd',
-			onCreated(state){
+			onCreated(state) {
 				const spawnProcess = createProcess(process.env['COMSPEC'])
 
 				spawnProcess.on('data', function (data: any) {
 					state.emit('write', data)
 				})
 
-				state.on('data', (data) => {
+				state.on('data', data => {
 					spawnProcess.write(data)
 				})
-			}
+			},
 		})
-	}else{
-		// Linux's configured terminal ($SHELL) Client for Terminal 
+	} else {
+		// Linux's configured terminal ($SHELL) Client for Terminal
 		RunningConfig.emit('registerTerminalClient', {
 			name: process.env['SHELL'],
-			onCreated(state){
+			onCreated(state) {
 				const spawnProcess = createProcess(process.env['SHELL'])
 
 				spawnProcess.on('data', function (data: any) {
 					state.emit('write', data)
 				})
 
-				state.on('data', (data) => {
+				state.on('data', data => {
 					spawnProcess.write(data)
 				})
-			}
+			},
 		})
 	}
 })
-
