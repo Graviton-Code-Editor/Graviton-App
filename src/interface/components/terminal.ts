@@ -59,15 +59,26 @@ const styled = style`
 			min-width: 0px;
 			max-width: 100%;
 		}
+		& #terminal_accessories{
+			display: flex;
+			justify-content: center;
+			& > div {
+				display: flex;
+				text-align: center;
+				justify-content: center;
+				font-size: 13px;
+				color: var(--textColor);
+				align-items: center;
+			}
+		}
 	}
 	& .terminal_container{
-		overflow: auto;
 		max-width: 100%;
 		margin: 0;
 		position: relative;
 		width: auto;
-		max-height: calc(100% - 40px);
-		min-height: calc(100% - 40px);
+		min-height: calc( 100% - 50px);
+		max-height: calc( 100% - 50px);
 	}
 	& .xterm {
 		padding: 0px;
@@ -87,18 +98,14 @@ const styled = style`
 	}
 `
 
-const shells: any = {}
+RunningConfig.on('registerTerminalShell', ({ name, onCreated }) => {
+	RunningConfig.data.terminalShells[name] = onCreated
+})
 
-if (process.platform === 'win32') {
-	shells.cmd = process.env['COMSPEC']
-} else {
-	shells.bash = process.env['SHELL']
-}
-
-const TerminalState = new state({
-	shells,
-	terminals: [],
-	terminal: null,
+RunningConfig.on('addLocalTerminalAccessory', ({ component }) => {
+	RunningConfig.data.localTerminalAccessories.push({
+		component,
+	})
 })
 
 const getConfig = () => {
@@ -108,26 +115,23 @@ const getConfig = () => {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
 			selection: getProp('terminalSelection'),
+			cursor: getProp('terminalCursor'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
-		fontSize: 13,
+		fontSize: 14,
 		lineHeight: 1.4,
 		windowsMode: process.platform === 'win32',
 	}
 }
 
 export default function TerminalComp() {
-	function mountedTerminal() {
-		this.state = TerminalState
-	}
-
 	return element({
 		components: {
 			TerminalBar,
 		},
 	})`
-		<div mounted="${mountedTerminal}" class="${styled}">
+		<div class="${styled}">
 			<TerminalBar/>
 			<div id="terms_stack">
 				<p>Press the + to create a session</p>
@@ -144,21 +148,13 @@ function XtermTerminal() {
 		name: `Session ${sessionsCount}`,
 	})
 
-	TerminalState.data.terminals.push({
+	RunningConfig.data.openedTerminals.push({
 		name: xtermState.data.name,
 	})
 
-	TerminalState.data.terminal = xtermState.data.name
+	RunningConfig.data.focusedTerminal = xtermState.data.name
 
-	TerminalState.emit('newTerminal')
-
-	function createProcess() {
-		const pty = window.require('node-pty')
-		return pty.spawn(xtermState.data.shell, [], {
-			cwd: process.env.HOMEPATH,
-			env: process.env,
-		})
-	}
+	RunningConfig.emit('aTerminalHasBeenCreated')
 
 	const refreshOptions = term => {
 		const newConfig = getConfig()
@@ -175,18 +171,44 @@ function XtermTerminal() {
 	}
 
 	async function mounted() {
-		TerminalState.keyChanged('terminal', name => {
+		RunningConfig.keyChanged('focusedTerminal', name => {
 			if (name != xtermState.data.name) {
 				this.style.display = 'none'
 			} else {
 				this.style.display = 'block'
+				xtermState.data
 			}
 		})
 
 		await xtermState.on('shellSelected')
 
 		setTimeout(() => {
-			const spawnProcess = createProcess()
+			const terminalClient = xtermState.data.shell(xtermState)
+
+			function mountedAccs() {
+				RunningConfig.keyChanged('focusedTerminal', name => {
+					if (name != xtermState.data.name) {
+						this.style.display = 'none'
+					} else {
+						this.style.display = 'block'
+						xtermInstance.focus()
+					}
+				})
+			}
+			if (terminalClient) {
+				if (terminalClient.accessories) {
+					const accessoriesContainer = element`
+						<div mounted="${mountedAccs}">
+							${terminalClient.accessories.map(acc => {
+								return acc.component(xtermState)
+							})}
+						</div>
+					`
+
+					render(accessoriesContainer, document.getElementById('terminal_accessories'))
+				}
+			}
+
 			const xtermInstance = new Terminal(getConfig())
 			const fit = new FitAddon()
 
@@ -195,21 +217,29 @@ function XtermTerminal() {
 			xtermInstance.loadAddon(fit)
 			xtermInstance.loadAddon(new XtermWebfont())
 
-			xtermInstance.open(this)
-
 			xtermInstance.onData(data => {
-				spawnProcess.write(data)
+				xtermState.emit('data', data)
 			})
 
-			spawnProcess.on('data', function (data: any) {
+			xtermState.on('write', data => {
 				xtermInstance.write(data)
 			})
+
+			xtermState.on('breakLine', () => {
+				xtermInstance.writeln('')
+			})
+
+			xtermInstance.onKey(e => {
+				xtermState.emit('keyPressed', e.key)
+			})
+
+			xtermInstance.open(this)
 
 			window.addEventListener('resize', () => {
 				fit.fit()
 			})
 
-			TerminalState.on('resize', () => {
+			RunningConfig.on('mainBoxHasBeenResized', () => {
 				fit.fit()
 			})
 
@@ -218,14 +248,14 @@ function XtermTerminal() {
 				xtermInstance.focus()
 				fit.fit()
 				refreshOptions(xtermInstance)
-			}, 500)
-		}, 300)
+			}, 400)
+		}, 200)
 	}
 
 	function onChange() {
 		const selectedOption = this.options[this.selectedIndex].innerText
 
-		xtermState.data.shell = shells[selectedOption]
+		xtermState.data.shell = RunningConfig.data.terminalShells[selectedOption]
 
 		this.parentElement.parentElement.remove()
 		xtermState.emit('shellSelected')
@@ -238,7 +268,7 @@ function XtermTerminal() {
 					<p>Select a shell</p>
 					<select :change="${onChange}">
 						<option></option>
-						${Object.keys(shells).map(shell => {
+						${Object.keys(RunningConfig.data.terminalShells).map(shell => {
 							return element`<option>${shell}</option>`
 						})}
 					</select>
@@ -250,12 +280,14 @@ function XtermTerminal() {
 
 function TerminalBar() {
 	function onChange() {
+		// Selected a Terminal Shell
 		const selectedOption = this.options[this.selectedIndex].innerText
-		TerminalState.data.terminal = selectedOption
+		RunningConfig.data.focusedTerminal = selectedOption
 	}
 
 	function mountedSelect() {
-		TerminalState.on('newTerminal', () => {
+		RunningConfig.on('aTerminalHasBeenCreated', () => {
+			//Terminal was created
 			this.update()
 		})
 	}
@@ -275,9 +307,9 @@ function TerminalBar() {
 	})`
 		<div class="bar">
 			<select :change="${onChange}" mounted="${mountedSelect}">
-				${() => TerminalState.data.terminals.map(({ name }) => element`<option selected="${name === TerminalState.data.terminal}">${name}</option>`)}
+				${() => RunningConfig.data.openedTerminals.map(({ name }) => element`<option selected="${name === RunningConfig.data.focusedTerminal}">${name}</option>`)}
 			</select>
-			<div/>
+			<div id="terminal_accessories"/>
 			<ButtonIcon :click="${createTerminal}">
 				<AddTermIcon/>
 			</ButtonIcon>

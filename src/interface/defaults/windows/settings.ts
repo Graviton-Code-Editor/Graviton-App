@@ -4,10 +4,12 @@ import Window from '../../constructors/window'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
 
-import CustomizationPage from '../settings/pages/customization'
-import AdvancedPage from '../settings/pages/advanced'
-import LanguagesPage from '../settings/pages/languages'
-import AboutPage from '../settings/pages/about'
+import CustomizationScheme from '../settings/pages/customization'
+import AdvancedScheme from '../settings/pages/advanced'
+import LanguagesScheme from '../settings/pages/languages'
+import AboutScheme from '../settings/pages/about'
+
+import getScheme from '../../utils/get_scheme'
 
 import { WindowInstance } from 'Types/window'
 
@@ -23,10 +25,6 @@ export default function Settings(): WindowInstance {
 				H1: Titles.h1,
 				SideMenu,
 				SideMenuSearcher,
-				CustomizationPage,
-				AdvancedPage,
-				LanguagesPage,
-				AboutPage,
 			},
 		})`
 			<SideMenu default="customization">
@@ -39,10 +37,22 @@ export default function Settings(): WindowInstance {
 					<label to="about" lang-string="windows.Settings.About.About"/>
 				</div>
 				<div>
-					<CustomizationPage/>
-					<AdvancedPage closeWindow="${() => SettingsWindow.close()}"/>
-					<LanguagesPage/>
-					<AboutPage/>
+					<div href="customization">
+						${getScheme(CustomizationScheme())}
+					</div>
+					<div href="advanced">
+						${getScheme(
+							AdvancedScheme({
+								closeWindow: () => SettingsWindow.close(),
+							}),
+						)}
+					</div>
+					<div href="languages">
+						${getScheme(LanguagesScheme())}
+					</div>
+					<div href="about">
+						${getScheme(AboutScheme())}
+					</div>
 				</div>
 			</SideMenu>
 		`

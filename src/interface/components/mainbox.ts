@@ -1,6 +1,7 @@
 import { element, render } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
 import StaticConfig from 'StaticConfig'
+import RunningConfig from 'RunningConfig'
 import Terminal from './terminal'
 
 const MainBoxStyle = style`
@@ -30,7 +31,7 @@ export default function MainBox() {
 
 	function resized() {
 		//Send the resize event to the Terminal State
-		this.lastChild.state.emit('resize')
+		RunningConfig.emit('mainBoxHasBeenResized')
 	}
 
 	return element({

@@ -1,86 +1,97 @@
-import { element } from '@mkenzo_8/puffin'
-import { Titles, RadioGroup, Button } from '@mkenzo_8/puffin-drac'
-import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
 import configEditor from '../../tabs/config.editor'
 import restartConfigDialog from '../../dialogs/restart_config'
-import Switch from '../../../components/switch'
 
-import ThemeCard from '../../../components/settings/theme.card'
-import IconpackCard from '../../../components/settings/iconpack.card'
-
-import { PuffinComponent } from 'Types/puffin.component'
-
-export default function AdvancedPage({ closeWindow }): PuffinComponent {
-	const pluginsList = PluginsRegistry.registry.data.list
-
-	return element({
-		components: {
-			RadioGroup,
-			H4: Titles.h4,
-			Switch,
-			Button,
-		},
-	})`
-		<div href="advanced">
-			<div href="file watcher">
-				<H4 lang-string="windows.Settings.Advanced.FileWatcher"/>
-				<Switch :toggled="${toggledFileWatcher}" data="${{ default: StaticConfig.data.editorFSWatcher, label: 'windows.Settings.Advanced.FileWatcher' }}"/>
-			</div>
-			<div href="autocomplete">
-				<H4 lang-string="windows.Settings.Advanced.Autocomplete"/>
-				<Switch :toggled="${toggledAutoComplete}" data="${{ default: StaticConfig.data.editorAutocomplete, label: 'windows.Settings.Advanced.Autocomplete' }}"/>
-			</div>
-			<div href="wrap lines">
-				<H4 lang-string="windows.Settings.Advanced.WrapLines"/>
-				<Switch :toggled="${toggledWrapLines}" data="${{ default: StaticConfig.data.editorWrapLines, label: 'windows.Settings.Advanced.WrapLines' }}"/>
-			</div>
-			<div href="indentation">
-				<H4 lang-string="windows.Settings.Advanced.Indentation.Indentation"/>
-				<RadioGroup :radioSelected="${selectedIndentation}">
-					<label measure="tab" checked="${StaticConfig.data.editorIndentation == 'tab'}">Tab</label>
-					<label measure="space" checked="${StaticConfig.data.editorIndentation == 'space'}">Space</label>
-				</RadioGroup>
-			</div>
-			<div href="manual config">
-				<H4 lang-string="windows.Settings.Advanced.ManualConfig.ManualConfig"/>
-				<Button :click="${configeditor}" lang-string="windows.Settings.Advanced.ManualConfig.EditConfiguration"/>
-			</div>
-			<div href="restart config">
-				<H4 lang-string="windows.Settings.Advanced.RestartConfig.RestartConfig"/>
-				<Button :click="${restartconfig}" lang-string="windows.Settings.Advanced.RestartConfig.RestartConfig"/>
-			</div>
-		</div>
-	`
-
-	function configeditor() {
-		configEditor()
-		closeWindow()
+export default function Advanced({ closeWindow }) {
+	return {
+		file_watcher: [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.FileWatcher',
+			},
+			{
+				type: 'switch',
+				key: 'editorFSWatcher',
+				label: 'windows.Settings.Advanced.FileWatcher',
+			},
+		],
+		autocomplete: [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.Autocomplete',
+			},
+			{
+				type: 'switch',
+				key: 'editorAutocomplete',
+				label: 'windows.Settings.Advanced.Autocomplete',
+			},
+		],
+		'wrap lines': [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.WrapLines',
+			},
+			{
+				type: 'switch',
+				key: 'editorWrapLines',
+				label: 'windows.Settings.Advanced.WrapLines',
+			},
+		],
+		indentation: [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.Indentation.Indentation',
+			},
+			{
+				type: 'radioGroup',
+				key: 'editorIndentation',
+				radios: [
+					{
+						checked: true,
+						label: 'Tab',
+					},
+					'Space',
+				],
+			},
+		],
+		'experimental lsp': [
+			{
+				type: 'title',
+				label: 'Experimental LSP',
+			},
+			{
+				type: 'switch',
+				key: 'experimentalEditorLSP',
+				label: 'Enable LSP',
+			},
+		],
+		'manual config': [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.ManualConfig.ManualConfig',
+			},
+			{
+				type: 'button',
+				label: 'windows.Settings.Advanced.ManualConfig.EditConfiguration',
+				onClick() {
+					configEditor()
+					closeWindow()
+				},
+			},
+		],
+		'restart config': [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.RestartConfig.RestartConfig',
+			},
+			{
+				type: 'button',
+				label: 'windows.Settings.Advanced.RestartConfig.RestartConfig',
+				onClick() {
+					restartConfigDialog()
+					closeWindow()
+				},
+			},
+		],
 	}
-
-	function restartconfig() {
-		restartConfigDialog()
-		closeWindow()
-	}
-}
-
-function toggledFileWatcher(e) {
-	if (e.detail.status !== StaticConfig.data.editorFSWatcher) {
-		StaticConfig.data.editorFSWatcher = e.detail.status
-	}
-}
-function toggledWrapLines(e) {
-	if (e.detail.status !== StaticConfig.data.editorWrapLines) {
-		StaticConfig.data.editorWrapLines = e.detail.status
-	}
-}
-function toggledAutoComplete(e) {
-	if (e.detail.status !== StaticConfig.data.editorAutocomplete) {
-		StaticConfig.data.editorAutocomplete = e.detail.status
-	}
-}
-
-function selectedIndentation(e) {
-	const newIdentation = e.detail.target.getAttribute('measure')
-	if (StaticConfig.data.editorIndentation != newIdentation) StaticConfig.data.editorIndentation = newIdentation
 }

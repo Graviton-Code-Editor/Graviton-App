@@ -6,7 +6,9 @@ import StaticConfig from 'StaticConfig'
 function updateStaticConfigByKey(client, instance) {
 	const newConfig = JSON.parse(client.do('getValue', instance))
 	Object.keys(newConfig).map(key => {
-		if (StaticConfig.data[key] !== newConfig[key]) StaticConfig.data[key] = newConfig[key]
+		if (JSON.stringify(StaticConfig.data[key]) != JSON.stringify(newConfig[key])) {
+			StaticConfig.data[key] = newConfig[key]
+		}
 	})
 }
 
@@ -46,26 +48,18 @@ function configEditor() {
 		tabElement,
 		tabState,
 	})
-	const editorFontSizeWatcher = StaticConfig.keyChanged('editorFontSize', () => {
-		updateKey(client, instance, 'editorFontSize')
+	const anySettingChanged = StaticConfig.changed((data, keyChanged) => {
+		updateKey(client, instance, keyChanged)
 	})
-	const appZoomWatcher = StaticConfig.keyChanged('appZoom', () => {
-		updateKey(client, tabElement, 'appZoom')
+	const tabSavedWatcher = tabElement.state.on('savedMe', () => {
+		updateStaticConfigByKey(client, instance)
 	})
-	const appThemeWatcher = StaticConfig.keyChanged('appTheme', () => {
-		updateKey(client, instance, 'appTheme')
-	})
-	const tabWatcher = tabElement.state.on('destroyed', () => {
-		tabWatcher.cancel()
-		editorFontSizeWatcher.cancel()
-		appZoomWatcher.cancel()
-		appThemeWatcher.cancel()
+	tabElement.state.once('destroyed', () => {
+		anySettingChanged.cancel()
+		tabSavedWatcher.cancel()
 	})
 	client.do('doIndent', { instance }) //Force an initial indentation
 	client.do('doFocus', { instance }) //Force an initial indentation
 	tabState.emit('savedMe') //Save the tab
-	tabElement.state.on('savedMe', () => {
-		updateStaticConfigByKey(client, instance)
-	})
 }
 export default configEditor

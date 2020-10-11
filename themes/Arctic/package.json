@@ -10,7 +10,8 @@
 		"terminal": {
 			"Background": "white",
 			"Foreground": "black",
-			"Selection": "rgb(180,180,180,0.6)"
+			"Selection": "rgb(180,180,180,0.6)",
+			"Cursor": "black"
 		},
 		"accent": {
 			"Color": "#0066FF"
