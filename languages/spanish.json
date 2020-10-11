@@ -42,6 +42,16 @@
 					"CloseCurrentPanel": "Cerrar panel seleccionado"
 				}
 			},
+			"View": {
+				"View": "Vista",
+				"ToggleSidebar": "Mostrar/Ocultar Barra lateral",
+				"ToggleSidepanel": "Mostrar/Ocultar Panel lateral",
+				"ShowSidebar": "Mostrar barra lateral",
+				"ShowSidepanel": "Mostrar Panel lateral",
+				"HideSidebar": "Ocultar Barra lateral",
+				"HideSidepanel": "Ocultar Panel lateral",
+				"ToggleTerminal": "Mostrar/Ocultar Terminal"
+			},
 			"Window": {
 				"Window": "Ventana",
 				"Zoom": {
@@ -50,12 +60,17 @@
 					"IncreaseZoom": "Incrementar",
 					"DecreaseZoom": "Disminuir"
 				},
+				"Debug": {
+					"Debug": "Depurar",
+					"OpenDebugWindow": "Abrir ventana de depuración"
+				},
 				"OpenDevTools": "Herramientas de desarrolllador"
 			},
 			"Help": {
 				"Help": "Ayuda",
 				"Contact": "Contactar",
 				"Social": "Social",
+				"Contributors": "Colaboradores",
 				"Blog": "Blog",
 				"Documentation": "Documentación",
 				"Website": "Página web",
@@ -70,10 +85,31 @@
 				"Customization": {
 					"Customization": "Personalización",
 					"Themes": "Temas",
-					"FileWatcher": "Observador de archivos"
+					"Iconpacks": "Paquetes de iconos"
+				},
+				"Advanced": {
+					"Advanced": "Avanzado",
+					"FileWatcher": "Observador de archivos",
+					"Autocomplete": "Auto-completado",
+					"WrapLines": "Ajustar líneas",
+					"ManualConfig": {
+						"ManualConfig": "Configuración manual",
+						"EditConfiguration": "Editar configuración"
+					},
+					"Indentation": {
+						"Indentation": "Indentación",
+						"Space": "Espacio",
+						"Tab": "Tabulación"
+					},
+					"RestartConfig": {
+						"RestartConfig": "Reiniciar configuración"
+					}
 				},
 				"Languages": "Lenguajes",
-				"About": "Acerca de"
+				"About": {
+					"About": "Acerca de",
+					"GravitonDescription": "Graviton es un editor multiplataforma."
+				}
 			},
 			"Store": {
 				"Store": "Tienda",
@@ -85,7 +121,8 @@
 				},
 				"Install": "Instalar",
 				"Update": "Actualizar",
-				"Uninstall": "Desinstalar"
+				"Uninstall": "Desinstalar",
+				"AnyCompatibleVersion": "No hay versiones compatibles."
 			},
 			"Welcome": {
 				"Welcome": "Bienvenida",
@@ -104,19 +141,42 @@
 			"Finish": "Finalizar",
 			"Continue": "Continuar",
 			"GoBack": "Ir atrás",
-			"Accept": "Acceptar",
+			"Accept": "Aceptar",
 			"Cancel": "Cancelar",
 			"version": "versión",
+			"CopyPath": "Copiar ruta",
 			"More": "Más",
 			"Copy": "Copiar",
+			"Rename": "Renombrar",
+			"Remove": "Eliminar",
+			"OpenLocation": "Abrir Ubicación",
+			"NewFile": "Nuevo archivo",
+			"NewFolder": "Nueva carpeta",
 			"Paste": "Pegar",
 			"Author": "Autor",
 			"Exit": "Salir",
 			"Tip": "Consejo",
-			"Yes": "Si",
+			"Yes": "Sí",
 			"No": "No",
 			"Close": "Cerrar",
-			"Ignore": "Ignorar"
+			"Ignore": "Ignorar",
+			"BuildDate": "Fecha de compilación"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "El idioma de la aplicación se ha cambiado.",
+				"restartMessage": "Reinicia la aplicación para aplicar completamente los cambios."
+			}
+		},
+		"dialogs": {
+			"tabsUnsavedWarning": {
+				"title": "Hay archivos sin guardar.",
+				"content": "Los cambios pueden perderse."
+			},
+			"restartConfig": {
+				"title": "Reiniciar configuración",
+				"content": "Haz click en 'continuar' para reiniciar tu configuración."
+			}
 		}
 	}
 }
