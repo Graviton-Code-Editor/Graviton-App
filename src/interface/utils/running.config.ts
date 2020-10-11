@@ -52,6 +52,10 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	LSPServers: {},
 	isGitInstalled: false,
 	focusedExplorerItem: null,
+	terminalShells: [],
+	openedTerminals: [],
+	focusedTerminal: null,
+	localTerminalAccessories: [],
 }
 
 isGitInstalled().then(res => {
