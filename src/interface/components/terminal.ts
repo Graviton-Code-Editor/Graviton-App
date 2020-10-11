@@ -225,6 +225,14 @@ function XtermTerminal() {
 				xtermInstance.write(data)
 			})
 
+			xtermState.on('breakLine', () => {
+				xtermInstance.writeln('')
+			})
+
+			xtermInstance.onKey(e => {
+				xtermState.emit('keyPressed', e.key)
+			})
+
 			xtermInstance.open(this)
 
 			window.addEventListener('resize', () => {

@@ -1,4 +1,5 @@
 import RunningConfig from 'RunningConfig'
+import * as fs from 'fs-extra'
 import { element } from '@mkenzo_8/puffin'
 
 function createProcess(bin) {
@@ -30,6 +31,31 @@ RunningConfig.once('appLoaded', () => {
 				}
 			},
 		})
+		const WSLPath = 'C:/Windows/System32/wsl.exe'
+		fs.lstat(WSLPath)
+			.then(() => {
+				RunningConfig.emit('registerTerminalShell', {
+					name: 'wsl',
+					onCreated(state) {
+						const spawnProcess = createProcess(WSLPath)
+
+						spawnProcess.on('data', function (data: any) {
+							state.emit('write', data)
+						})
+
+						state.on('data', data => {
+							spawnProcess.write(data)
+						})
+
+						return {
+							accessories: RunningConfig.data.localTerminalAccessories,
+						}
+					},
+				})
+			})
+			.catch(() => {
+				// WSL is not enabled
+			})
 	} else {
 		// Linux's configured terminal ($SHELL) Client for Terminal
 		RunningConfig.emit('registerTerminalShell', {
