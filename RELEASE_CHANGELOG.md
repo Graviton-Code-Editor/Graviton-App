@@ -1,6 +1,7 @@
 ### 🔝 Important changes
 
-- LSP integration
+- LSP integration (experimental)
+- Built-in Terminal
 - Improved Workspaces
 - Iconpacks support
 - New translated languages
@@ -9,7 +10,7 @@
 
 - Menu bar is now native in MacOS and GNU/Linux distributions
 - General UI improvements
-- Remove projects from the log
+- Ability to remove projects from the log
 - Tabs show file's icon
 - Added support for new languages:
   - F#
@@ -17,12 +18,15 @@
   - Shell
   - Less
   - Golang
+  - and many more
 - Added an smooth cursor plugin built-in
 - Improved NPM inspector
 - New shortcuts:
   - Ctrl+Q: closes the app (Only in MacOS by default)
-- Notifications sent by plugins will not indicate who were they sent from
-- Smoother animations when opening windows, dialogs, or items in the explorer panel
+  - Ctrl+O: Open files easily
+  - Ctrl+E: Focus the explorer panel
+- Notifications sent by plugins will now indicate it's author
+- Smoother animations when opening windows, dialogs, notifications, or items in the explorer panel
 - Improved NPM Project Inspector
 
 ### 😁 Fixes
@@ -38,3 +42,4 @@
 - Added Unit tests
 - Updated to Electron v10
 - Added a ExplorerProvider API, which could allow Graviton to access, read and modify other FileSystems rather than the local of the machine.
+- Added a Terminal Clients API, to easily create new terminals
