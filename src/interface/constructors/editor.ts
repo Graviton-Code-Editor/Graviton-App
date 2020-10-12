@@ -180,6 +180,7 @@ class Editor implements EditorOptions {
 									action: () => RunningConfig.emit('hideAllFloatingComps'),
 								})
 								clipboard.writeText(selectedText)
+								RunningConfig.emit('writeToClipboard', selectedText)
 							},
 						},
 					],
@@ -201,6 +202,7 @@ class Editor implements EditorOptions {
 									action: () => RunningConfig.emit('hideAllFloatingComps'),
 								})
 								clipboard.writeText(selectedText)
+								RunningConfig.emit('writeToClipboard', selectedText)
 							},
 						},
 					],

@@ -7,6 +7,7 @@ import isGitInstalled from './is_git_installed'
 const nodeJSONRPC = window.require('node-jsonrpc-lsp')
 import electronLog from 'electron-log'
 import StaticConfig from 'StaticConfig'
+import { clipboard } from 'electron'
 
 // Get runtime information
 const CustomWindow: any = window
@@ -83,6 +84,17 @@ RunningConfig.on('appLoaded', () => {
 			})
 		})
 	}
+})
+
+RunningConfig.on('writeToClipboard', function (text) {
+	clipboard.writeText(text)
+	RunningConfig.emit('clipboardHasBeenWritten', {
+		text,
+	})
+})
+
+RunningConfig.on('writeToClipboardSilently', function (text) {
+	clipboard.writeText(text)
 })
 
 RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filter }) {

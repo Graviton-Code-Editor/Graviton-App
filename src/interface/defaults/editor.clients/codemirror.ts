@@ -304,6 +304,13 @@ const CodemirrorClient = new EditorClient(
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
+			CodemirrorEditor.on('keydown', (cm, ev) => {
+				if (ev.code === 'KeyC' && ev.ctrlKey) {
+					RunningConfig.emit('clipboardHasBeenWritten', {
+						text: CodemirrorEditor.getSelection(),
+					})
+				}
+			})
 			CodemirrorEditor.pstate = new state({})
 			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
