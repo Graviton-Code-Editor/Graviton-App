@@ -5,7 +5,7 @@ import isDev from 'electron-is-dev'
 import windowStateKeeper from 'electron-window-state'
 
 import './plugins_handler'
-import './store_handler'
+import Store from './store_handler'
 import './debug_window'
 import WindowHandler from './window'
 import MenusHandler from './menus_handler'
@@ -38,7 +38,7 @@ app.on('ready', function () {
 			preload: path.join(__dirname, 'preload.js'),
 			additionalArguments: ['--windowID', windowID.toString()],
 		},
-		frame: process.platform !== 'win32',
+		frame: (Store.get('config') as any).appPlatform !== 'win32',
 		minHeight: 320,
 		minWidth: 320,
 		x: mainWindowState.x,

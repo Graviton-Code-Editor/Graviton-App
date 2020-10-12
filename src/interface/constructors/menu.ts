@@ -4,13 +4,12 @@ import ArrowIcon from '../components/icons/arrow'
 import { LanguageState } from 'LanguageConfig'
 import StaticConfig from 'StaticConfig'
 import { ipcRenderer } from 'electron'
-
-const isWindows = process.platform === 'win32'
+import AppPlatform from 'AppPlatform'
 
 const createdMenus = []
 
 StaticConfig.keyChanged('appLanguage', () => {
-	if (!isWindows) {
+	if (AppPlatform !== 'win32') {
 		ipcRenderer.send('destroy-menus', {})
 	}
 	createdMenus.map(m => new Menu(m, true))
@@ -23,7 +22,7 @@ class Menu {
 		this.MenuButton = button
 		this.MenuList = list
 
-		if (isWindows && !fromEvent) {
+		if (AppPlatform === 'win32' && !fromEvent) {
 			// Render Graviton's menu bar only in Windows
 			const menuComponent = this.getMenuComponent(button, this.MenuList)
 			const dropmenusContainer = document.getElementById('dropmenus')

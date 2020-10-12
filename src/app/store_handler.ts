@@ -42,3 +42,5 @@ function checkObject(object, subProperty, configurationStore, level) {
 		}
 	})
 }
+
+export default AppStore
