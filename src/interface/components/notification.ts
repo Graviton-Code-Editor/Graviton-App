@@ -45,6 +45,8 @@ const styleWrapper = style`
 	& > p{
 		font-size:13px;
 		color:var(--notificationContentText);
+		text-overflow: ellipsis;
+		overflow: hidden;
 	}
 	& button {
 		font-size:12px;
