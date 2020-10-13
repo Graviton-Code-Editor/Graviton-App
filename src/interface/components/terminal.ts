@@ -9,6 +9,7 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import AddTermIcon from './icons/add_term'
 import ButtonIcon from './button_icon'
+import CrossIcon from './icons/cross'
 
 import '../../../node_modules/xterm/css/xterm.css'
 
@@ -125,16 +126,28 @@ const getConfig = () => {
 	}
 }
 
+const DefaultText = () => element`<p>Press the + to create a session</p>`
+
 export default function TerminalComp() {
+	function TerminalMounted() {
+		DefaultText
+		RunningConfig.on('aTerminalHasBeenClosed', () => {
+			if (RunningConfig.data.openedTerminals.length === 0) {
+				render(DefaultText(), this)
+			}
+		})
+	}
+
 	return element({
 		components: {
 			TerminalBar,
+			DefaultText,
 		},
 	})`
 		<div class="${styled}">
 			<TerminalBar/>
-			<div id="terms_stack">
-				<p>Press the + to create a session</p>
+			<div id="terms_stack" mounted="${TerminalMounted}">
+				<DefaultText/>
 			</div>
 		</div>
 	`
@@ -150,6 +163,7 @@ function XtermTerminal() {
 
 	RunningConfig.data.openedTerminals.push({
 		name: xtermState.data.name,
+		state: xtermState,
 	})
 
 	RunningConfig.data.focusedTerminal = xtermState.data.name
@@ -182,74 +196,97 @@ function XtermTerminal() {
 
 		await xtermState.on('shellSelected')
 
-		setTimeout(() => {
-			const terminalClient = xtermState.data.shell(xtermState)
+		const terminalClient = xtermState.data.shell(xtermState)
 
-			function mountedAccs() {
-				RunningConfig.keyChanged('focusedTerminal', name => {
-					if (name != xtermState.data.name) {
-						this.style.display = 'none'
-					} else {
-						this.style.display = 'block'
-						xtermInstance.focus()
-					}
-				})
-			}
-			if (terminalClient) {
-				if (terminalClient.accessories) {
-					const accessoriesContainer = element`
-						<div mounted="${mountedAccs}">
-							${terminalClient.accessories.map(acc => {
-								return acc.component(xtermState)
-							})}
-						</div>
-					`
-
-					render(accessoriesContainer, document.getElementById('terminal_accessories'))
+		function mountedAccs() {
+			const focusedTerminalWatcher = RunningConfig.keyChanged('focusedTerminal', name => {
+				if (name != xtermState.data.name) {
+					this.style.display = 'none'
+				} else {
+					this.style.display = 'block'
+					xtermInstance.focus()
 				}
+			})
+			xtermState.once('close', () => {
+				this.remove()
+				focusedTerminalWatcher.cancel()
+			})
+		}
+		if (terminalClient) {
+			if (terminalClient.accessories) {
+				const accessoriesContainer = element`
+					<div mounted="${mountedAccs}">
+						${terminalClient.accessories.map(acc => {
+							return acc.component(xtermState)
+						})}
+					</div>
+					`
+				render(accessoriesContainer, document.getElementById('terminal_accessories'))
+			}
+		}
+
+		const xtermInstance = new Terminal(getConfig())
+		const fit = new FitAddon()
+
+		bindTheme(xtermInstance)
+
+		xtermInstance.loadAddon(fit)
+		xtermInstance.loadAddon(new XtermWebfont())
+
+		xtermInstance.onData(data => {
+			// Emit the data event when the terminal is being written
+			xtermState.emit('data', data)
+		})
+
+		xtermState.on('write', data => {
+			// Write to the terminal when the shell sends an output
+			xtermInstance.write(data)
+		})
+
+		xtermState.on('breakLine', () => {
+			//Break the line on the xterm
+			xtermInstance.writeln('')
+		})
+
+		xtermInstance.onKey(e => {
+			// Emit the keyPressed event
+			xtermState.emit('keyPressed', e.key)
+		})
+
+		const resizingWatchers = RunningConfig.on(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
+			// Force resizing when the sidepanel of the mainbox gets resized
+			fit.fit()
+		})
+
+		xtermState.once('close', () => {
+			// When the terminal needs to be closed
+			this.remove()
+			const openedTerms = RunningConfig.data.openedTerminals
+			const index = getTerminalIndex(xtermState.data.name)
+
+			if (openedTerms.length === 1) {
+				RunningConfig.data.focusedTerminal = null
+			} else if (openedTerms[index - 1]) {
+				RunningConfig.data.focusedTerminal = openedTerms[index - 1].name
+			} else {
+				RunningConfig.data.focusedTerminal = openedTerms[index + 1].name
 			}
 
-			const xtermInstance = new Terminal(getConfig())
-			const fit = new FitAddon()
+			resizingWatchers.cancel()
 
-			bindTheme(xtermInstance)
+			RunningConfig.data.openedTerminals.splice(index, 1)
+			RunningConfig.emit('aTerminalHasBeenClosed', { name })
+		})
 
-			xtermInstance.loadAddon(fit)
-			xtermInstance.loadAddon(new XtermWebfont())
+		await (xtermInstance as any).loadWebfontAndOpen(this)
 
-			xtermInstance.onData(data => {
-				xtermState.emit('data', data)
-			})
+		window.addEventListener('resize', () => {
+			fit.fit()
+		})
 
-			xtermState.on('write', data => {
-				xtermInstance.write(data)
-			})
-
-			xtermState.on('breakLine', () => {
-				xtermInstance.writeln('')
-			})
-
-			xtermInstance.onKey(e => {
-				xtermState.emit('keyPressed', e.key)
-			})
-
-			xtermInstance.open(this)
-
-			window.addEventListener('resize', () => {
-				fit.fit()
-			})
-
-			RunningConfig.on('mainBoxHasBeenResized', () => {
-				fit.fit()
-			})
-
-			setTimeout(() => {
-				xtermInstance.refresh(0, 0)
-				xtermInstance.focus()
-				fit.fit()
-				refreshOptions(xtermInstance)
-			}, 400)
-		}, 200)
+		xtermInstance.refresh(0, 0)
+		xtermInstance.focus()
+		fit.fit()
 	}
 
 	function onChange() {
@@ -286,7 +323,7 @@ function TerminalBar() {
 	}
 
 	function mountedSelect() {
-		RunningConfig.on('aTerminalHasBeenCreated', () => {
+		RunningConfig.on(['aTerminalHasBeenCreated', 'aTerminalHasBeenClosed'], () => {
 			//Terminal was created
 			this.update()
 		})
@@ -298,23 +335,45 @@ function TerminalBar() {
 		render(XtermTerminal(), container)
 	}
 
+	function closeTerminal() {
+		const focusedTerminal = RunningConfig.data.focusedTerminal
+		;[...RunningConfig.data.openedTerminals].find(({ name, state }) => {
+			if (name === focusedTerminal) {
+				state.emit('close')
+				return
+			}
+		})
+	}
+
 	return element({
 		components: {
 			Button,
 			AddTermIcon,
 			ButtonIcon,
+			CrossIcon,
 		},
 	})`
 		<div class="bar">
 			<select :change="${onChange}" mounted="${mountedSelect}">
 				${() => RunningConfig.data.openedTerminals.map(({ name }) => element`<option selected="${name === RunningConfig.data.focusedTerminal}">${name}</option>`)}
 			</select>
+			<ButtonIcon :click="${closeTerminal}">
+				<CrossIcon/>
+			</ButtonIcon>
 			<div id="terminal_accessories"/>
 			<ButtonIcon :click="${createTerminal}">
 				<AddTermIcon/>
 			</ButtonIcon>
 		</div>
 	`
+}
+
+function getTerminalIndex(name) {
+	let index = null
+	RunningConfig.data.openedTerminals.forEach((term, i) => {
+		if (term.name === name) index = i
+	})
+	return index
 }
 
 function getProp(prop) {

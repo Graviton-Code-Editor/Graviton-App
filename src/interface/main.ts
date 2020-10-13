@@ -37,7 +37,7 @@ const App = element({
 			<TitleBar/>
 			<div id="body">
 				<div id="sidebar" :contextmenu="${sidebarContext}" style="${handleSidebarState}"/>
-				<div id="sidepanel" style="${handlesidePanelState}"/>
+				<div id="sidepanel" :resized="${sidePanelResized}" style="${handlesidePanelState}"/>
 				<Resizer direction="horizontally"/>
 				<div id="mainpanel" blocked="${handleMainpanelState}">
 					<div id="panels_stack"></div>
@@ -52,6 +52,10 @@ const App = element({
 		<SplashScreen/>
 	</AppBody>
 `
+
+function sidePanelResized() {
+	RunningConfig.emit('sidePanelHasBeenResized')
+}
 
 function handleAppviewState() {
 	if (blurViewApp) {

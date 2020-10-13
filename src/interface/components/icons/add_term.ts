@@ -5,6 +5,9 @@ const styleWrapper = style`
 	& rect{
 		fill:var(--windowIconsFill);
 	}
+	&:hover rect{
+		fill:var(--tabIconHoveringFill);
+	}
 `
 
 function AddTermIcon() {
