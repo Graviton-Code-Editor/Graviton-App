@@ -53,6 +53,12 @@ const App = element({
 	</AppBody>
 `
 
+StaticConfig.keyChanged('appShowTerminal', (value: boolean) => {
+	if (!value) {
+		document.getElementById('panels_stack').style.height = '100%'
+	}
+})
+
 function sidePanelResized() {
 	RunningConfig.emit('sidePanelHasBeenResized')
 }
