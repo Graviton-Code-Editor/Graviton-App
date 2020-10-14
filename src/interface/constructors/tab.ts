@@ -29,13 +29,16 @@ class Tab {
 	public client: any
 	public instance: any
 
-	constructor({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath }: TabOptions) {
+	private explorerProvider: any
+
+	constructor({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath, explorerProvider }: TabOptions) {
 		this.itemIconSource = isEditor && directory ? getFileIcon(path.basename(directory), getFormat(directory)) : null
 		this.directory = isEditor && directory ? normalizeDir(directory) : ''
 		this.classSelector = `tab${directory ? directory : id}`
 		this.parentFolder = isEditor && directory ? path.dirname(this.directory) : ''
 		this.projectPath = projectPath || this.parentFolder
 		this.isEditor = isEditor
+		this.explorerProvider = explorerProvider
 
 		const self = this
 
@@ -355,7 +358,7 @@ class Tab {
 		const tabSaveIcon = this.tabElement.getElementsByClassName('tab-save')[0]
 		if (newStatus) {
 			if (!this.tabElement.state.data.saved) {
-				saveFile(this.directory, () => {
+				this.saveTab(() => {
 					RunningConfig.emit('tabSaved', {
 						element: this.tabElement,
 						parentFolder: this.tabElement.state.data.parentFolder,
@@ -386,20 +389,20 @@ class Tab {
 			render(comp, this.tabElement.children[2])
 		}
 	}
-}
-
-function saveFile(directory: string, callback: () => void): void {
-	if (directory) {
-		const { client, instance } = RunningConfig.data.focusedEditor
-		fs.writeFile(directory, client.do('getValue', instance))
-			.then(() => {
-				callback()
-			})
-			.catch((err: string) => {
-				console.error(err)
-			})
-	} else {
-		callback()
+	private saveTab(callback) {
+		if (this.directory) {
+			const { client, instance } = this
+			this.explorerProvider
+				.writeFile(this.directory, client.do('getValue', instance))
+				.then(() => {
+					callback()
+				})
+				.catch((err: string) => {
+					console.error(err)
+				})
+		} else {
+			callback()
+		}
 	}
 }
 

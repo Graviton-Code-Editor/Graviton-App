@@ -6,4 +6,5 @@ export interface TabOptions {
 	panel?: any
 	id?: string
 	projectPath?: number
+	explorerProvider: any
 }

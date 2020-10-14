@@ -125,6 +125,7 @@ RunningConfig.on('loadFile', ({ filePath }) => {
 		title: basename,
 		directory: fileDir,
 		isEditor: true,
+		explorerProvider: LocalExplorer,
 	})
 	if (isCancelled) return //Cancels the tab opening
 	fs.readFile(fileDir, 'UTF-8').then(data => {

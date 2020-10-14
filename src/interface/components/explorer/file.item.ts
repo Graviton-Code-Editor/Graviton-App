@@ -193,6 +193,7 @@ class Item {
 				title: basename,
 				directory: this.itemPath,
 				projectPath: this.projectPath,
+				explorerProvider: this.explorerProvider,
 			})
 			if (!isCancelled) {
 				this.explorerProvider.readFile(this.itemPath).then((data: string) => {
