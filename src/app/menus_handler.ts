@@ -2,7 +2,8 @@ import { ipcMain, MenuItem, Menu } from 'electron'
 import Store from './store_handler'
 
 export default window => {
-	const isWindows = (Store.get('config') as any).appPlatform === 'win32'
+	const OS = (Store.get('config') as any).appPlatform
+	const isWindows = OS === 'win32' || (OS === 'auto' && process.platform === 'win32')
 	let NativeMenuBar = null
 
 	if (!isWindows) {

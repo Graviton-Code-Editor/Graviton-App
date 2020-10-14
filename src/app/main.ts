@@ -27,6 +27,9 @@ app.on('ready', function () {
 
 	const windowID = Math.random()
 
+	const OS = (Store.get('config') as any).appPlatform
+	const isWindows = OS === 'win32' || (OS === 'auto' && process.platform === 'win32')
+
 	main = new BrowserWindow({
 		webPreferences: {
 			nativeWindowOpen: true,
@@ -38,7 +41,7 @@ app.on('ready', function () {
 			preload: path.join(__dirname, 'preload.js'),
 			additionalArguments: ['--windowID', windowID.toString()],
 		},
-		frame: (Store.get('config') as any).appPlatform !== 'win32',
+		frame: !isWindows,
 		minHeight: 320,
 		minWidth: 320,
 		x: mainWindowState.x,
