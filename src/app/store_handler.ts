@@ -4,8 +4,11 @@ import * as path from 'path'
 import getDefaultConfiguration from './default_config'
 import isDev from 'electron-is-dev'
 
-const AppStore = new Store()
 const defaultConfig = getDefaultConfiguration(app)
+
+const AppStore = new Store({
+	defaults: defaultConfig,
+})
 
 ipcMain.on('update-config', (e, config) => {
 	AppStore.set('config', config)
