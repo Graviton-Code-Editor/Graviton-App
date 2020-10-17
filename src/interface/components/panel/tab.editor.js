@@ -6,6 +6,7 @@ const styleWrapper = style`
 		min-height:100%;
 		max-height:100%;
 		display:flex;
+		flex-direction: row;
 	}
 	& .CodeMirror {
 		min-height:100%;

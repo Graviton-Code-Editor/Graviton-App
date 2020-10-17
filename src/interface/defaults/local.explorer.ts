@@ -90,6 +90,19 @@ const LocalExplorer = {
 		const simpleInstance = simpleGit(path)
 		return simpleInstance.status()
 	},
+	getGitFileLastCommit(projectPath: string, path) {
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.log([path])
+	},
+	getGitFileContentByObject(projectPath, object, path) {
+		const computedPath = path.replace(/\\/gm,'/')
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.show([`${object}:${computedPath}`])
+	},
+	getGitLastCommit(repoPath) {
+		const simpleInstance = simpleGit(repoPath)
+		return simpleInstance.log(['--name-status', 'HEAD^..HEAD'])
+	},
 	decorator: null,
 }
 

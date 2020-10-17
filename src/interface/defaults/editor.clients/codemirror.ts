@@ -10,7 +10,17 @@ import 'lsp-codemirror/lib/icons/rect.svg'
 
 import { LspWsConnection, CodeMirrorAdapter } from 'lsp-codemirror'
 
+
+let t: any = window
+
+t.diff_match_patch = require('diff-match-patch')
+t.DIFF_EQUAL = 0;
+t.DIFF_INSERT = 1
+t.DIFF_DELETE  = -1
+
+import 'diff-match-patch'
 import 'codemirror/addon/search/search'
+import 'codemirror/addon/merge/merge'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/addon/edit/matchbrackets'
 import 'codemirror/addon/edit/matchtags'
@@ -260,11 +270,29 @@ const CodemirrorClient = new EditorClient(
 					}
 			}
 		},
-		create({ element, language, value, theme, CtrlPlusScroll, directory }) {
+		create({ element, language, value, theme, CtrlPlusScroll, directory, options }) {
+			
+			let way = CodeMirror
+			let ops = {}
+			
+			if(options){
+				if(options.merge){
+					way = CodeMirror.MergeView
+					ops = {
+						origRight: options.mirror,
+						orig: value,
+						highlightDifferences: true,
+						conntect: 'align',
+					}
+				}
+			}
+			
 			emmet(CodeMirror)
-			const CodemirrorEditor = CodeMirror(element, {
+			let CodemirrorEditor = way(element, {
 				mode: language,
 				value: value,
+				...ops,
+				collpse: false,
 				lineNumbers: true,
 				htmlMode: true,
 				styleActiveLine: {
@@ -304,6 +332,41 @@ const CodemirrorClient = new EditorClient(
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
+			
+			function fixLines(){
+				for(const child of (document.getElementsByClassName('CodeMirror-merge-r-inserted') as any)){
+					const dad = child.parentElement.parentElement
+					dad.classList.add('CodeMirror-merge-line-inserted')
+				}
+				for(const child of (document.getElementsByClassName('CodeMirror-merge-r-deleted') as any)){
+					const dad = child.parentElement.parentElement
+					dad.classList.add('CodeMirror-merge-line-deleted')
+					
+				}
+			}
+			
+			setTimeout(() => {
+				//Wait for lines to be renderer
+				fixLines()
+			},150)
+			
+			if(options){
+				if(options.merge) {
+					// Reassign CodemirroEditor to the CM instance
+					CodemirrorEditor = CodemirrorEditor.edit
+					
+					//Update lines on changes
+					CodemirrorEditor.on('changes', () => {
+						setTimeout(() => {
+							fixLines()
+						},150)
+					})
+					//Update lines when scrolling
+					CodemirrorEditor.on('scroll', () => {
+						fixLines()
+					})
+				}
+			}
 			CodemirrorEditor.on('keydown', (cm, ev) => {
 				if (ev.code === 'KeyC' && ev.ctrlKey) {
 					RunningConfig.emit('clipboardHasBeenWritten', {

@@ -88,6 +88,8 @@
 		"axios": "^0.19.2",
 		"chokidar": "^3.4.2",
 		"codemirror": "^5.56.0",
+		"diff-match-patch": "^1.0.5",
+		"diff_match_patch": "^0.1.1",
 		"electron-is-dev": "^1.2.0",
 		"electron-log": "^4.2.4",
 		"electron-store": "^6.0.0",

@@ -22,7 +22,8 @@ class Editor implements EditorOptions {
 	public tabState: PuffinState
 	public filePath: string
 	public language: string
-	constructor({ bodyElement, tabElement, value, language, tabState, theme, directory }) {
+	public options: any
+	constructor({ bodyElement, tabElement, value, language, tabState, theme, directory, options = null}) {
 		this.language = language
 		this.client = this.getEditorClient()
 		this.savedFileContent = value
@@ -30,6 +31,7 @@ class Editor implements EditorOptions {
 		this.bodyElement = bodyElement
 		this.tabState = tabState
 		this.filePath = directory
+		this.options = options
 
 		bodyElement.setAttribute('client', this.client.name)
 		this.instance = this.client.do('create', {
@@ -39,6 +41,7 @@ class Editor implements EditorOptions {
 			theme,
 			directory,
 			CtrlPlusScroll: this.handleCtrlPlusScroll.bind(this),
+			options
 		}).instance
 
 		this.updateCursorDisplayer()
@@ -135,7 +138,8 @@ class Editor implements EditorOptions {
 				})
 			}
 		})
-		const tabFocusedWatcher = this.tabState.on('focusedMe', () => {
+		const tabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused', ({ tabElement }) => {
+			if(tabElement !== this.tabElement) return
 			this.focusEditor()
 			this.updateCursorDisplayer()
 			this.client.do('doRefresh', {

@@ -28,8 +28,7 @@ class Tab {
 	public projectPath: any
 	public client: any
 	public instance: any
-
-	private explorerProvider: any
+	public explorerProvider: any
 
 	constructor({ title, isEditor = false, directory, component, panel = RunningConfig.data.focusedPanel, id, projectPath, explorerProvider }: TabOptions) {
 		this.itemIconSource = isEditor && directory ? getFileIcon(path.basename(directory), getFormat(directory)) : null

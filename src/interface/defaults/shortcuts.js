@@ -10,9 +10,12 @@ import configEditor from './tabs/config.editor.js'
 import Settings from './windows/settings'
 import Welcome from './windows/welcome'
 import Store from './windows/store'
-import path from 'path'
-const { remote } = window.require('electron')
-import fs from 'fs-extra'
+import * as path from 'path'
+import * as fs from 'fs-extra'
+import Tab from '../constructors/tab'
+import Editor from '../constructors/editor'
+import normalizeDir from '../utils/directory_normalizer'
+import getFormat from '../utils/format_parser'
 
 RunningConfig.on('command.saveCurrentFile', () => {
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
@@ -292,6 +295,47 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 							focusCurrentEditor()
 						},
 					})
+				},
+			},
+			{
+				label: 'Compare changes',
+				action: async () => {
+					const { isEditor, instance, directory } = RunningConfig.data.focusedTab.state.data
+					if(isEditor){
+						const fileDir = normalizeDir(directory)
+						const fileData = await fs.readFile(fileDir, 'UTF-8')
+
+						const projectPath = instance.projectPath
+						const relativePath = path.relative(projectPath, fileDir)
+						const lastCommit = (await instance.explorerProvider.getGitFileLastCommit(projectPath, fileDir)).latest.hash
+						const commitContent = await instance.explorerProvider.getGitFileContentByObject(projectPath, lastCommit, relativePath)
+						
+						
+						const basename = path.basename(fileDir)
+						const fileExtension = getFormat(fileDir)
+						
+						const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+							title: `${basename}'s changes'`,
+							isEditor: true,
+							explorerProvider: instance.explorerPovider,
+						})
+						if (isCancelled) return //Cancels the tab opening
+						
+						new Editor({
+							language: fileExtension,
+							value: fileData,
+							theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+							bodyElement,
+							tabElement,
+							tabState,
+							directory: fileDir,
+							options:{
+								merge: true,
+								mirror: commitContent
+							}
+						})
+
+					}
 				},
 			},
 		],
