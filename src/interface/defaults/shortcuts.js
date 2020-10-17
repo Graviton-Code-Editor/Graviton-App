@@ -17,21 +17,30 @@ import Editor from '../constructors/editor'
 import normalizeDir from '../utils/directory_normalizer'
 import getFormat from '../utils/format_parser'
 
+//Command: Save current opened file if there is any (default: Ctrl+S)
 RunningConfig.on('command.saveCurrentFile', () => {
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
 })
+
+//Command: Create a new panel (default: Ctrl+N)
 RunningConfig.on('command.newPanel', () => {
 	new Panel()
 })
+
+//Command: Close the current tab (default: Ctrl+T)
 RunningConfig.on('command.closeCurrentTab', () => {
 	if (RunningConfig.data.focusedTab) {
 		//Check if there is any opened tab
 		RunningConfig.data.focusedTab.state.emit('close')
 	}
 })
+
+//Command: Try to close the current panel (default: Ctrl+L)
 RunningConfig.on('command.closeCurrentPanel', () => {
 	removePanel()
 })
+
+//Command: Open the global command prompt (default: Ctrl+P)
 RunningConfig.on('command.openCommandPrompt', () => {
 	new CommandPrompt({
 		name: 'global',
@@ -155,6 +164,7 @@ RunningConfig.on('command.openCommandPrompt', () => {
 	})
 })
 
+//Command: Open the explorer command (default: Ctrl+O)
 RunningConfig.on('command.openExplorerCommandPrompt', () => {
 	const currentTab = RunningConfig.data.focusedTab
 	const currentTabState = (currentTab && currentTab.state.data) || false
@@ -255,6 +265,7 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 const focusCurrentEditor = () => RunningConfig.data.focusedEditor.client.do('doFocus', { instance: RunningConfig.data.focusedEditor.instance })
 const currentEditorExists = () => RunningConfig.data.focusedEditor !== null
 
+//Command: Open Editor command prompt (default: Ctrl+I)
 RunningConfig.on('command.openEditorCommandPrompt', () => {
 	new CommandPrompt({
 		name: 'editor',
@@ -364,7 +375,7 @@ const getTabIndex = element => {
 	})
 	return i
 }
-
+//Command: Open the tabs iterator (default: Ctrl+Tab)
 RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 	if (RunningConfig.data.focusedTab) {
 		const focusedTabData = {
@@ -401,12 +412,18 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 		})
 	}
 })
+
+//Command: Increase the font size of all text editors
 RunningConfig.on('command.increaseFontSize', ({ factor = 2 } = { factor: 2 }) => {
 	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) + factor
 })
+
+//Command: Decrease the font size of all text editors
 RunningConfig.on('command.decreaseFontSize', ({ factor = 2 } = { factor: 2 }) => {
 	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) - factor
 })
+
+//Command: Close the current Window/Dialog opened (default: Esc)
 RunningConfig.on('command.closeCurrentWindow', () => {
 	const windows = document.getElementById('windows').children
 	const selectedWindow = windows[windows.length - 1]
@@ -416,6 +433,7 @@ RunningConfig.on('command.closeCurrentWindow', () => {
 	if (methods.closeWindow) methods.closeWindow()
 })
 
+//Command: Close app
 RunningConfig.on('command.closeApp', () => {
 	RunningConfig.emit('checkAllTabsAreSaved', {
 		whenContinue() {
@@ -425,6 +443,7 @@ RunningConfig.on('command.closeApp', () => {
 	})
 })
 
+//Command: Focus the explorer panel (default: Ctrl+E)
 RunningConfig.on('command.focusExplorerPanel', () => {
 	if (RunningConfig.data.focusedExplorerItem) {
 		//If there is a focused item
