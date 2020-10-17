@@ -301,26 +301,28 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 				label: 'Compare changes',
 				action: async () => {
 					const { isEditor, instance, directory } = RunningConfig.data.focusedTab.state.data
-					if(isEditor){
+					if (isEditor) {
 						const fileDir = normalizeDir(directory)
 						const fileData = await fs.readFile(fileDir, 'UTF-8')
-
 						const projectPath = instance.projectPath
 						const relativePath = path.relative(projectPath, fileDir)
+
+						const isGitRepo = await instance.explorerProvider.isGitRepo(projectPath)
+
+						if (!isGitRepo) return //Return if the project is not a git repository
+
 						const lastCommit = (await instance.explorerProvider.getGitFileLastCommit(projectPath, fileDir)).latest.hash
 						const commitContent = await instance.explorerProvider.getGitFileContentByObject(projectPath, lastCommit, relativePath)
-						
-						
 						const basename = path.basename(fileDir)
 						const fileExtension = getFormat(fileDir)
-						
+
 						const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 							title: `${basename}'s changes'`,
 							isEditor: true,
 							explorerProvider: instance.explorerPovider,
 						})
 						if (isCancelled) return //Cancels the tab opening
-						
+
 						new Editor({
 							language: fileExtension,
 							value: fileData,
@@ -329,12 +331,11 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 							tabElement,
 							tabState,
 							directory: fileDir,
-							options:{
+							options: {
 								merge: true,
-								mirror: commitContent
-							}
+								mirror: commitContent,
+							},
 						})
-
 					}
 				},
 			},

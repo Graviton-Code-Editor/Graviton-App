@@ -10,6 +10,6 @@ export interface EditorOptions {
 	tabState: PuffinState
 	filePath: string
 	language: string
-	savedFileContent: string,
+	savedFileContent: string
 	options?: any
 }

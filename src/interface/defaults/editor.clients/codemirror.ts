@@ -9,16 +9,15 @@ import 'lsp-codemirror/lib/codemirror-lsp.css'
 import 'lsp-codemirror/lib/icons/rect.svg'
 
 import { LspWsConnection, CodeMirrorAdapter } from 'lsp-codemirror'
+import DiffMatchPatch from 'diff-match-patch'
 
+let CustomWindow: any = window
+// codemirror's merge addon needs this globals
+CustomWindow.diff_match_patch = DiffMatchPatch
+CustomWindow.DIFF_EQUAL = 0
+CustomWindow.DIFF_INSERT = 1
+CustomWindow.DIFF_DELETE = -1
 
-let t: any = window
-
-t.diff_match_patch = require('diff-match-patch')
-t.DIFF_EQUAL = 0;
-t.DIFF_INSERT = 1
-t.DIFF_DELETE  = -1
-
-import 'diff-match-patch'
 import 'codemirror/addon/search/search'
 import 'codemirror/addon/merge/merge'
 import 'codemirror/addon/selection/active-line'
@@ -271,12 +270,11 @@ const CodemirrorClient = new EditorClient(
 			}
 		},
 		create({ element, language, value, theme, CtrlPlusScroll, directory, options }) {
-			
 			let way = CodeMirror
 			let ops = {}
-			
-			if(options){
-				if(options.merge){
+
+			if (options) {
+				if (options.merge) {
 					way = CodeMirror.MergeView
 					ops = {
 						origRight: options.mirror,
@@ -286,7 +284,7 @@ const CodemirrorClient = new EditorClient(
 					}
 				}
 			}
-			
+
 			emmet(CodeMirror)
 			let CodemirrorEditor = way(element, {
 				mode: language,
@@ -332,41 +330,76 @@ const CodemirrorClient = new EditorClient(
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
-			
-			function fixLines(){
-				for(const child of (document.getElementsByClassName('CodeMirror-merge-r-inserted') as any)){
-					const dad = child.parentElement.parentElement
-					dad.classList.add('CodeMirror-merge-line-inserted')
+
+			/*
+			 * Append a custom class to every inserted or deleted character's parent
+			 */
+			function fixLines() {
+				let pastLine = null
+
+				//Update inserted lines
+				for (const char of document.getElementsByClassName('CodeMirror-merge-r-inserted') as any) {
+					const line = char.parentElement.parentElement
+					if (pastLine !== line) line.classList.add('CodeMirror-merge-line-inserted')
+					pastLine = line
 				}
-				for(const child of (document.getElementsByClassName('CodeMirror-merge-r-deleted') as any)){
-					const dad = child.parentElement.parentElement
-					dad.classList.add('CodeMirror-merge-line-deleted')
-					
+
+				//Update removed lines
+				for (const char of document.getElementsByClassName('CodeMirror-merge-r-deleted') as any) {
+					const line = char.parentElement.parentElement
+					if (pastLine !== line) line.classList.add('CodeMirror-merge-line-deleted')
+					pastLine = line
 				}
 			}
-			
+
 			setTimeout(() => {
-				//Wait for lines to be renderer
+				//Wait 250ms for lines to be renderer
 				fixLines()
-			},150)
-			
-			if(options){
-				if(options.merge) {
-					// Reassign CodemirroEditor to the CM instance
-					CodemirrorEditor = CodemirrorEditor.edit
-					
+			}, 250)
+
+			if (options) {
+				//Only when is in merge mode
+				if (options.merge) {
+					const { edit, right } = CodemirrorEditor
+
 					//Update lines on changes
-					CodemirrorEditor.on('changes', () => {
+					edit.on('changes', () => {
 						setTimeout(() => {
 							fixLines()
-						},150)
+						}, 250)
 					})
+
 					//Update lines when scrolling
-					CodemirrorEditor.on('scroll', () => {
+					edit.on('scroll', () => {
 						fixLines()
 					})
+
+					edit.on('optionChange', (cm, option) => {
+						right.orig.setOption(option, edit.getOption(option))
+						right.orig.refresh()
+					})
+
+					edit.on('refresh', () => {
+						right.orig.refresh()
+						setTimeout(() => {
+							fixLines()
+						}, 300)
+					})
+					;[edit, right.orig].forEach(cm => {
+						//Update lines on cursor activity on both instances
+						cm.on('cursorActivity', () => {
+							setTimeout(() => {
+								fixLines()
+							}, 1)
+						})
+					})
+
+					// Reassign CodemirroEditor to the CM instance
+					CodemirrorEditor = edit
 				}
 			}
+
+			//Ctrl+C event handler
 			CodemirrorEditor.on('keydown', (cm, ev) => {
 				if (ev.code === 'KeyC' && ev.ctrlKey) {
 					RunningConfig.emit('clipboardHasBeenWritten', {
@@ -374,10 +407,17 @@ const CodemirrorClient = new EditorClient(
 					})
 				}
 			})
-			CodemirrorEditor.pstate = new state({})
-			element.getElementsByClassName('Codemirror')[0].style.fontSize = StaticConfig.data.editorFontSize
+
+			// Set fontsize for every editor
+			const editors = element.getElementsByClassName('Codemirror')
+			Object.keys(editors).forEach(cm => {
+				editors[cm].style.fontSize = StaticConfig.data.editorFontSize
+			})
+
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
 			const CtrlDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+Down')
+
+			//Ctrl+ArrowUp handler
 			if (CtrlUpShortcutEnabled) {
 				CodemirrorEditor.addKeyMap({
 					'Ctrl-Up': function (instance) {
@@ -385,6 +425,7 @@ const CodemirrorClient = new EditorClient(
 					},
 				})
 			}
+			//Ctrl+ArrowDown handler
 			if (CtrlDownShortcutEnabled) {
 				CodemirrorEditor.addKeyMap({
 					'Ctrl-Down': function (instance) {
@@ -392,6 +433,8 @@ const CodemirrorClient = new EditorClient(
 					},
 				})
 			}
+
+			// Ctrl+wheel event handler
 			element.addEventListener('wheel', e => {
 				if (!e.ctrlKey) return
 				if (e.wheelDeltaY.toString()[0] == '-') {
@@ -400,18 +443,24 @@ const CodemirrorClient = new EditorClient(
 					CtrlPlusScroll('up')
 				}
 			})
+
+			//Prevent default action of 'keyup' so codemirror doesn't go 1 line up when scrolling on context menus with arrows
 			CodemirrorEditor.on('keyup', (cm, event: KeyboardEvent) => {
 				event.preventDefault()
 			})
-			CodemirrorEditor.refresh()
+
 			let lspServer: string
 			let lspAdapter
 			let lspConnection
+
+			//Find the first language server that matches the current file's language
 			Object.keys(RunningConfig.data.LSPServers).forEach(server => {
 				if (server == language.mode) {
 					lspServer = `ws://localhost:${RunningConfig.data.LSPPort}/${server}`
 				}
 			})
+
+			//Create LSP Client if LSP is enabled
 			if (lspServer && StaticConfig.data.editorAutocomplete) {
 				const lspClient = createLspClient({
 					lspServer,
@@ -423,6 +472,7 @@ const CodemirrorClient = new EditorClient(
 				lspConnection = lspClient.lspConnection
 			}
 
+			//Enable or disable the LSP client if autocompleting is toggled
 			StaticConfig.keyChanged('editorAutocomplete', (value: string) => {
 				if (value) {
 					const lspClient = createLspClient({
@@ -440,6 +490,11 @@ const CodemirrorClient = new EditorClient(
 					lspConnection = null
 				}
 			})
+
+			//Assign a puffin state to the CodeMirror instance
+			CodemirrorEditor.pstate = new state({})
+
+			CodemirrorEditor.refresh()
 
 			handleCMAutocomplete(CodemirrorEditor, language)
 
@@ -522,7 +577,10 @@ const CodemirrorClient = new EditorClient(
 			instance.refresh()
 		},
 		setFontSize({ instance, element, fontSize }) {
-			element.getElementsByClassName('Codemirror')[0].style.fontSize = fontSize
+			const editors = element.getElementsByClassName('Codemirror')
+			Object.keys(editors).forEach(cm => {
+				editors[cm].style.fontSize = fontSize
+			})
 			instance.refresh()
 			instance.scrollIntoView()
 		},

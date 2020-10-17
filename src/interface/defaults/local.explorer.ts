@@ -95,7 +95,7 @@ const LocalExplorer = {
 		return simpleInstance.log([path])
 	},
 	getGitFileContentByObject(projectPath, object, path) {
-		const computedPath = path.replace(/\\/gm,'/')
+		const computedPath = path.replace(/\\/gm, '/')
 		const simpleInstance = simpleGit(projectPath)
 		return simpleInstance.show([`${object}:${computedPath}`])
 	},

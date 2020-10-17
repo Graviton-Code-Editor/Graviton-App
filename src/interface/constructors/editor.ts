@@ -23,7 +23,7 @@ class Editor implements EditorOptions {
 	public filePath: string
 	public language: string
 	public options: any
-	constructor({ bodyElement, tabElement, value, language, tabState, theme, directory, options = null}) {
+	constructor({ bodyElement, tabElement, value, language, tabState, theme, directory, options = null }) {
 		this.language = language
 		this.client = this.getEditorClient()
 		this.savedFileContent = value
@@ -41,7 +41,7 @@ class Editor implements EditorOptions {
 			theme,
 			directory,
 			CtrlPlusScroll: this.handleCtrlPlusScroll.bind(this),
-			options
+			options,
 		}).instance
 
 		this.updateCursorDisplayer()
@@ -139,7 +139,7 @@ class Editor implements EditorOptions {
 			}
 		})
 		const tabFocusedWatcher = RunningConfig.on('aTabHasBeenFocused', ({ tabElement }) => {
-			if(tabElement !== this.tabElement) return
+			if (tabElement !== this.tabElement) return
 			this.focusEditor()
 			this.updateCursorDisplayer()
 			this.client.do('doRefresh', {

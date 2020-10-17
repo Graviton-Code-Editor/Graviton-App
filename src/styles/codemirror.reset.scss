@@ -8,28 +8,18 @@
 	background-color: #d23131;
 }
 
-.CodeMirror-merge-line-deleted {
-	border: 1px solid tomato !important;
-	background: rgba(255,0,0,0.3) !important;
-}
-
-.CodeMirror-merge-line-inserted {
-	border: 1px solid green !important;
-	background: rgba(0,255,0,0.3) !important;
-}
-
 .CodeMirror-merge {
 	max-width: 100%;
 	display: flex;
 	position: relative;
 	flex: 1;
-	& .CodeMirror-merge-pane{
+	& .CodeMirror-merge-pane {
 		min-width: 0px;
 		display: inline-block;
 		flex: 1;
 	}
-	& .CodeMirror-merge-gap{
-		width:0px;
+	& .CodeMirror-merge-gap {
+		width: 0px;
 	}
 }
 
@@ -468,6 +458,15 @@ div.CodeMirror-dragcursors {
 	}
 	&::-moz-selection {
 		background: #d7d4f0;
+	}
+	&.CodeMirror-merge-line-deleted {
+		border: 1px solid tomato;
+		background: rgba(236, 0, 0, 0.13);
+	}
+
+	&.CodeMirror-merge-line-inserted {
+		border: 1px solid green;
+		background: rgb(153, 214, 153, 0.3);
 	}
 }
 .cm-searching {
