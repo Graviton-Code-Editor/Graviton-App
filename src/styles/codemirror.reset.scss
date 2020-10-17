@@ -460,12 +460,10 @@ div.CodeMirror-dragcursors {
 		background: #d7d4f0;
 	}
 	&.CodeMirror-merge-line-deleted {
-		border: 1px solid tomato;
 		background: rgba(236, 0, 0, 0.13);
 	}
 
 	&.CodeMirror-merge-line-inserted {
-		border: 1px solid green;
 		background: rgb(153, 214, 153, 0.3);
 	}
 }

@@ -55,6 +55,13 @@
 				}
 			}
 		}
+		&.CodeMirror-merge-line-deleted {
+			background: rgba(236, 0, 0, 0.13);
+		}
+
+		&.CodeMirror-merge-line-inserted {
+			background: rgb(153, 214, 153, 0.3);
+		}
 	}
 	span.cm-comment {
 		color: #858a99;
