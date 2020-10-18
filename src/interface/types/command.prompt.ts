@@ -17,8 +17,8 @@ export interface CommandPromptOptions {
 
 export interface CommandPromptOption {
 	label: string
-	action?: () => void,
-	selected?: boolean, 
-	data?: any, 
+	action?: () => void
+	selected?: boolean
+	data?: any
 	icon?: string
 }

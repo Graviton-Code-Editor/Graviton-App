@@ -36,12 +36,12 @@ export default function getScheme(scheme) {
 							}
 						}
 
-						return element({
+						const RadiosComp = element({
 							components: {
 								RadioGroup,
 							},
 						})`
-						<RadioGroup direction="${comp.direction || 'horizontally'}" :radioSelected="${onSelected}" styled="${comp.styled != null ? comp.styled : true}">
+						<RadioGroup direction="${comp.direction || 'vertically'}" :radioSelected="${onSelected}" styled="${comp.styled != null ? comp.styled : true}">
 							${comp.radios.map(radio => {
 								const radioKey = radio.key ? radio.key : radio.label ? radio.label.toLowerCase() : radio.toLowerCase()
 								return element`<label styled="${radio.styled != null ? comp.styled : true}" hidden-radio="${radio.hiddenRadio != null ? radio.hiddenRadio : false}" checked="${
@@ -49,6 +49,13 @@ export default function getScheme(scheme) {
 								}" key="${radioKey}">${radio.comp ? radio.comp({ info: radio.info }) : radio.label || radio}</label>`
 							})}
 						</RadioGroup>`
+						
+						if(comp.direction === 'horizontally'){
+							return element`<div style="overflow: auto; padding: 4px 0px;">${RadiosComp}</div>`
+						}else{
+							return RadiosComp
+						}
+						
 					case 'button':
 						return element({
 							components: {

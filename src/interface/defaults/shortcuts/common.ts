@@ -26,7 +26,6 @@ RunningConfig.on('command.closeCurrentPanel', () => {
 	removePanel()
 })
 
-
 //Command: Increase the font size of all text editors
 RunningConfig.on('command.increaseFontSize', ({ factor = 2 } = { factor: 2 }) => {
 	StaticConfig.data.editorFontSize = Number(StaticConfig.data.editorFontSize) + factor
@@ -62,6 +61,6 @@ RunningConfig.on('command.focusExplorerPanel', () => {
 		//If there is a focused item
 		RunningConfig.data.focusedExplorerItem.firstChild.focus()
 	} else {
-		(document.getElementById('explorer_panel').firstChild.firstChild as HTMLElement).focus()
+		;(document.getElementById('explorer_panel').firstChild.firstChild as HTMLElement).focus()
 	}
 })

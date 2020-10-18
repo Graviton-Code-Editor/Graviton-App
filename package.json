@@ -83,7 +83,7 @@
 	"dependencies": {
 		"@emmetio/codemirror-plugin": "^1.2.1",
 		"@mkenzo_8/puffin": "^1.1.1",
-		"@mkenzo_8/puffin-drac": "^0.1.7",
+		"@mkenzo_8/puffin-drac": "^0.1.9",
 		"adm-zip": "^0.4.14",
 		"axios": "^0.19.2",
 		"chokidar": "^3.4.2",

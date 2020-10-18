@@ -16,7 +16,7 @@ export default function () {
 				type: 'radioGroup',
 				styled: false,
 				key: 'appTheme',
-				direction: 'vertically',
+				direction: 'horizontally',
 				radios: Object.keys(pluginsList)
 					.map(plugin => {
 						const pluginInfo = pluginsList[plugin]

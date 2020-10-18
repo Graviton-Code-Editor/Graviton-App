@@ -13,42 +13,44 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 		if (itemPath === '') return []
 
 		const fileName = path.basename(itemPath)
-		
-		fs.lstat(itemPath).then(async (itemData) => {
-			const isFolder = itemData.isDirectory()
-			if (isFolder) {
-				const items = await fs.readdir(itemPath)
 
-				setOptions(
-					items.map(label => {
-						return {
-							label,
-							action() {
-								//
-							},
-						}
-					}),
-				)
-			}
-		}).catch(async () => {
-			const parentFolder = path.dirname(itemPath)
-			const parentFolderItems = await fs.readdir(parentFolder)
+		fs.lstat(itemPath)
+			.then(async itemData => {
+				const isFolder = itemData.isDirectory()
+				if (isFolder) {
+					const items = await fs.readdir(itemPath)
 
-			setOptions(
-				parentFolderItems
-					.map(label => {
-						if (label.match(fileName)) {
+					setOptions(
+						items.map(label => {
 							return {
 								label,
 								action() {
 									//
 								},
 							}
-						}
-					})
-					.filter(Boolean),
-			)
-		}) 
+						}),
+					)
+				}
+			})
+			.catch(async () => {
+				const parentFolder = path.dirname(itemPath)
+				const parentFolderItems = await fs.readdir(parentFolder)
+
+				setOptions(
+					parentFolderItems
+						.map(label => {
+							if (label.match(fileName)) {
+								return {
+									label,
+									action() {
+										//
+									},
+								}
+							}
+						})
+						.filter(Boolean),
+				)
+			})
 	}
 
 	new CommandPrompt({
@@ -90,7 +92,7 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 		onCompleted: async filePath => {
 			fs.lstat(filePath).then(() => {
 				RunningConfig.emit('loadFile', {
-					filePath
+					filePath,
 				})
 			})
 		},
