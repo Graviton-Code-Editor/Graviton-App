@@ -21,6 +21,7 @@ const ThemeProvider: PuffinState = new state({
 const puffinThemingKeys = {
 	puffinAccent: 'accentColor',
 	puffinTextColor: 'textColor',
+	puffinButtonText: 'buttonText',
 	puffinButtonBackground: 'buttonBackground',
 	puffinCardBackground: 'cardBackground',
 	puffinRadioBackgroundHovering: 'radioHoveringBackground',

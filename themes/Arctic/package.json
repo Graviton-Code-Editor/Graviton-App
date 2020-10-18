@@ -172,6 +172,7 @@
 		},
 		"button": {
 			"Background": "rgb(238,238,238)",
+			"Text": "black",
 			"Important": {
 				"Background": "#0066FF",
 				"Text": "white"

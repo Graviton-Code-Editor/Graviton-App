@@ -68,6 +68,7 @@
 		"explorerItemGitIndicatorText": "white",
 		"cardBackground": "#191919",
 		"buttonBackground": "#191919",
+		"buttonText": "white",
 		"buttonImportantBackground": "rgb(255, 0, 72)",
 		"buttonImportantText": "white",
 		"radioHoveringBackground": "rgb(60,60,60)",

@@ -49,13 +49,13 @@ export default function getScheme(scheme) {
 								}" key="${radioKey}">${radio.comp ? radio.comp({ info: radio.info }) : radio.label || radio}</label>`
 							})}
 						</RadioGroup>`
-						
-						if(comp.direction === 'horizontally'){
+
+						if (comp.direction === 'horizontally') {
 							return element`<div style="overflow: auto; padding: 4px 0px;">${RadiosComp}</div>`
-						}else{
+						} else {
 							return RadiosComp
 						}
-						
+
 					case 'button':
 						return element({
 							components: {
