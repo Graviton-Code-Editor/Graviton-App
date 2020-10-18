@@ -12,10 +12,13 @@ export interface CommandPromptOptions {
 	onWriting?: (a, b) => void
 	onScrolled?: (a, b) => void
 	onTabPressed?: (a, b) => void
-	defaultOption: number
+	defaultOption?: number
 }
 
 export interface CommandPromptOption {
 	label: string
-	action: () => void
+	action?: () => void,
+	selected?: boolean, 
+	data?: any, 
+	icon?: string
 }
