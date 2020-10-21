@@ -15,6 +15,8 @@ StaticConfig.keyChanged('appLanguage', () => {
 	createdMenus.map(m => new Menu(m, true))
 })
 
+ipcRenderer.send('destroy-menus', {})
+
 class Menu {
 	private MenuButton: String
 	private MenuList: object[]

@@ -17,7 +17,7 @@ export default window => {
 	})
 
 	ipcMain.on('destroy-menus', (e, props) => {
-		NativeMenuBar.clear()
+		if (NativeMenuBar) NativeMenuBar.clear()
 	})
 
 	function parse(obj) {
