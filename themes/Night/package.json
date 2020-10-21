@@ -43,6 +43,7 @@
 		"tabText": "white",
 		"tabActiveText": "white",
 		"tabActiveBackground": "#191919",
+		"tabHoveringBackground": "#1d1d1d",
 		"tabHoveringWhileDraggingBackground": "rgb(50,50,50)",
 		"scrollbarBackground": "rgba(0,0,0,0.4)",
 		"scrollbarHoveringBackground": "rgba(0,0,0,0.7)",

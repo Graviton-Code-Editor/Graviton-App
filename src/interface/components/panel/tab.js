@@ -14,9 +14,14 @@ const styleWrapper = style`
 		cursor:pointer;
 		padding:0px 10px;
 		user-select:none;
-	}
-	&:active{
-		transform:scale(0.98);
+		&[active="true"]{
+			background:var(--tabActiveBackground);
+			box-shadow:0px 0px 10px rgba(0,0,0,0.2);
+			color:var(--tabActiveText);
+		}
+		&:hover:not([active="true"]){
+			background:var(--tabHoveringBackground, var(--tabHoveringWhileDraggingBackground));
+		}
 	}
 	& img{
 		height: 20px;
@@ -49,11 +54,6 @@ const styleWrapper = style`
 		margin:0;
 		flex:1;   
 		margin-left:10px; 
-	}
-	&[active="true"]{
-		background:var(--tabActiveBackground);
-		box-shadow:0px 0px 10px rgba(0,0,0,0.2);
-		color:var(--tabActiveText);
 	}
 	&.dragging{
 		background:var(--tabHoveringWhileDraggingBackground);

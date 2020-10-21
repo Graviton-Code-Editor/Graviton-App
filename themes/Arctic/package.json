@@ -100,6 +100,7 @@
 				"Background": "white"
 			},
 			"Hovering": {
+				"Background": "rgb(230,230,230)",
 				"While": {
 					"Dragging": {
 						"Background": "rgb(250,250,250)"
