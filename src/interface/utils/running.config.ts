@@ -14,7 +14,9 @@ const CustomWindow: any = window
 const { isDev, processArguments } = CustomWindow.runtime
 CustomWindow.runtime = null
 
-// Create logger
+/*
+ * Create a console logger in production, this saves all logs, errors, warnings,etc...
+ */
 if (!isDev) {
 	const logger = electronLog.create('graviton')
 	logger.transports.file.fileName = 'graviton.log'
@@ -67,6 +69,9 @@ isGitInstalled().then(res => {
 
 const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
+/*
+ * Allow to register all language servers if 'experimentalEditorLSP' is enabled
+ */
 RunningConfig.on('appLoaded', () => {
 	if (StaticConfig.data.experimentalEditorLSP) {
 		//Experimental
@@ -86,6 +91,9 @@ RunningConfig.on('appLoaded', () => {
 	}
 })
 
+/*
+ * Simulate the copy event
+ */
 RunningConfig.on('writeToClipboard', function (text) {
 	clipboard.writeText(text)
 	RunningConfig.emit('clipboardHasBeenWritten', {
@@ -93,16 +101,29 @@ RunningConfig.on('writeToClipboard', function (text) {
 	})
 })
 
+/*
+ * Write to the the user's clipboard
+ */
 RunningConfig.on('writeToClipboardSilently', function (text) {
 	clipboard.writeText(text)
 })
 
+/*
+ * Register Environments inspectors
+ */
 RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filter }) {
 	RunningConfig.data.envs.push({
 		name,
 		prefix,
 		filter,
 	})
+})
+
+/*
+ * Register Editor Clients into the Editors Rank
+ */
+RunningConfig.on('registerEditorClient', function (editorClient) {
+	RunningConfig.data.editorsRank.push(editorClient)
 })
 
 export default RunningConfig

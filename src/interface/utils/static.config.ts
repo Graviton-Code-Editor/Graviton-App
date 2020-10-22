@@ -15,17 +15,25 @@ function saveConfiguration() {
 }
 
 const StaticConfig: PuffinState = new state(Object.assign({}, getConfiguration()))
-
+/*
+ * Save the user's configuration when anything gets changed
+ */
 StaticConfig.changed((data, keyName) => {
 	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(keyName) && !RunningConfig.data.isDebug) {
 		saveConfiguration()
 	}
 })
 
+/*
+ * Update GUI's zoom when it gets changed
+ */
 StaticConfig.keyChanged('appZoom', value => {
 	webFrame.setZoomFactor(value)
 })
 
+/*
+ * Emit start / stop events for FileSystem Watcher when it gets changed
+ */
 StaticConfig.keyChanged('editorFSWatcher', status => {
 	if (status) {
 		StaticConfig.emit('startWatchers')
@@ -34,6 +42,9 @@ StaticConfig.keyChanged('editorFSWatcher', status => {
 	}
 })
 
+/*
+ * Update Runtime's iconpack when it gets changed
+ */
 StaticConfig.keyChanged('appIconpack', value => {
 	setIconpack(value)
 })
