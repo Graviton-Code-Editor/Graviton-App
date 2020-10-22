@@ -18,11 +18,13 @@ const styleWrapper = style`
 		white-space:nowrap;
 		display:flex;
 		flex:1;
-		overflow-x:auto;
-		overflow-y:hidden;
+		overflow-x: auto;
+		overflow-y: hidden;
 		background:var(--tabsbarBackground);
+		transition:0.1s;
 	}
 	& .tabsbar:empty{
+		transition:0.1s;
 		background:transparent;
 	}
 	& .tabsbar::-webkit-scrollbar {

@@ -140,6 +140,12 @@ class Tab {
 			self.tabElement = this
 			self._addListeners()
 
+			this.classList.add('opening')
+
+			setTimeout(() => {
+				this.classList.remove('opening')
+			}, 135)
+
 			this.getPanelTabs = () => {
 				const tabs = this.parentElement.children
 				return Object.keys(tabs).map(tab => {
@@ -212,6 +218,16 @@ class Tab {
 		}
 		render(TabComp, panel.children[0])
 		self.tabState.data.bodyElement = render(TabEditorComp, panel.children[1])
+	}
+
+	private _removeElements() {
+		return new Promise(res => {
+			setTimeout(() => {
+				this.tabElement.remove()
+				this.bodyElement.remove()
+				res()
+			}, 135)
+		})
 	}
 
 	private _addListeners(): void {
@@ -297,22 +313,24 @@ class Tab {
 			focusATab(this.tabElement)
 		})
 		let closeDialogOpened = false
-		const closedListener = this.tabState.on('close', () => {
+		const closedListener = this.tabState.on('close', async () => {
 			if (this.tabState.data.saved) {
 				this.tabState.emit('destroyed', {
 					tabElement: this.tabElement,
 				})
+				this.tabElement.classList.add('closing')
+				this.bodyElement.classList.add('closing')
 				focusATab(this.tabElement)
-				this.tabElement.remove()
-				this.bodyElement.remove()
+				await this._removeElements()
 			} else {
 				if (!closeDialogOpened) {
 					closeDialogOpened = true
 					WarningDialog()
-						.then(() => {
+						.then(async () => {
+							this.tabElement.classList.add('closing')
+							this.bodyElement.classList.add('closing')
 							focusATab(this.tabElement)
-							this.tabElement.remove()
-							this.bodyElement.remove()
+							await this._removeElements()
 							this.tabElement.state.emit('destroyed', {
 								tabElement: this.tabElement,
 							})
@@ -415,14 +433,24 @@ function unfocusTabs(tab): void {
 	}
 }
 
+function getOpenedTabs(tabsBar: HTMLElement, tab = null) {
+	return Object.keys(tabsBar.children)
+		.map(e => {
+			if (!tabsBar.children[e].classList.contains('closing') || tab === tabsBar.children[e]) {
+				return tabsBar.children[e]
+			}
+		})
+		.filter(Boolean)
+}
+
 function focusATab(fromTab: PuffinElement): void {
 	const tabsBar = fromTab.parentElement
-	const tabsBarChildren = tabsBar.children
-	const fromTabPosition = guessTabPosition(fromTab, tabsBar)
+	const tabsBarChildren = getOpenedTabs(tabsBar) //Get opened tabs in the current focused panel
+	const fromTabPosition = guessTabPosition(fromTab, tabsBar) //Get the current focused tab position
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab, tabsBar)
 	if (focusedTabPosition === 0) {
-		if (fromTabPosition < tabsBarChildren.length - 1) {
-			;(tabsBarChildren[fromTabPosition + 1] as PuffinElement).state.emit('focusedMe')
+		if (fromTabPosition < tabsBarChildren.length) {
+			;(tabsBarChildren[fromTabPosition] as PuffinElement).state.emit('focusedMe')
 		} else if (tabsBarChildren.length === 1) {
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
@@ -432,14 +460,15 @@ function focusATab(fromTab: PuffinElement): void {
 	}
 }
 
-function guessTabPosition(tab: HTMLElement, tabsbar: HTMLElement): number {
-	return Number(
-		Object.keys(tabsbar.children).find(tabChildren => {
-			if (tabsbar.children[tabChildren] == tab) {
-				return tabChildren
-			}
-		}),
-	)
+function guessTabPosition(tab: HTMLElement, tabsBar: HTMLElement): number {
+	const tabs = getOpenedTabs(tabsBar, tab)
+	let res = null
+	tabs.find((t, i) => {
+		if (t == tab) {
+			res = i
+		}
+	})
+	return Number(res)
 }
 
 function getFileIcon(fileName: string, fileExt: string): void {

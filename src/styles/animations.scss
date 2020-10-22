@@ -37,3 +37,41 @@
 		opacity: 0;
 	}
 }
+
+@keyframes tabCloses {
+	0% {
+		transform: translateY(0px);
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(40px);
+		min-width: 0px;
+		width: 0px;
+		max-width: 0px;
+	}
+}
+
+@keyframes tabEditorCloses {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes tabOpens {
+	0% {
+		opacity: 0;
+		min-width: 0px;
+		width: 0px;
+		max-width: 0px;
+	}
+	100% {
+		opacity: 1;
+		min-width: 150px;
+		width: 150px;
+		max-width: 150px;
+	}
+}
