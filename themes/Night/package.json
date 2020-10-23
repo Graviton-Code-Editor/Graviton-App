@@ -11,6 +11,7 @@
 		"terminalForeground": "white",
 		"terminalSelection": "rgb(100,100,100,0.6)",
 		"terminalCursor": "white",
+		"selectBackground": "rgb(80, 80, 80,0.25)",
 		"accentColor": "rgb(255, 0, 72)",
 		"textColor": "white",
 		"textFocusedBackground": "rgba(100,100,100,0.4)",

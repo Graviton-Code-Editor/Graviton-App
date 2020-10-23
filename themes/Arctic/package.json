@@ -13,6 +13,9 @@
 			"Selection": "rgb(180,180,180,0.6)",
 			"Cursor": "black"
 		},
+		"select": {
+			"Background": "rgb(150,150,150,0.30)"
+		},
 		"accent": {
 			"Color": "#0066FF"
 		},

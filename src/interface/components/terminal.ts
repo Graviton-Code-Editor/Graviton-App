@@ -29,11 +29,17 @@ const styled = style`
 		font-size: 13px;
 	}
 	& select {
+		transition: 0.1s;
 		padding: 7px 5px;
 		background: transparent;
 		border:0;
 		color: var(--textColor);
-		border-bottom: 2px solid var(--textColor);
+		background: var(--selectBackground);
+		border-radius: 4px;
+		&:hover{
+			transition: 0.1s;
+			box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+		}
 		& option {
 			color: var(--contextmenuButtonText);
 			background: var(--contextmenuButtonBackground);
