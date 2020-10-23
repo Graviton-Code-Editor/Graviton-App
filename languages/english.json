@@ -160,7 +160,8 @@
 			"No": "No",
 			"Close": "Close",
 			"Ignore": "Ignore",
-			"BuildDate": "Build date"
+			"BuildDate": "Build date",
+			"By": "by"
 		},
 		"notifications": {
 			"appLanguageChanged": {

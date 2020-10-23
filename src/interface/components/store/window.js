@@ -31,16 +31,26 @@ const styleWrapper = style`
 	& .content {
 		overflow: hidden;
 	}
+	& .content span{
+		font-size: 15px;
+	}
 	& .content > div{
 		overflow:auto; 
-		min-height: calc( 100% - 100px);
-	}
-	& .content > .buttons{
-		max-height: 140px;
-		min-height: 50px;
-	}
-	& .content > .buttons *{
-		min-height: 36px;
+		height: 100%;
+		display: flex;
+		& > div {
+			flex: 1;
+		}
+		& > .buttons {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			max-height: 145px;
+			text-align: center;
+			& button {
+				max-width: 150px;
+			}
+		}
 	}
 	& .error {
 		margin-top: 7px;
@@ -48,12 +58,7 @@ const styleWrapper = style`
 	}
 `
 
-function pluginWindow(
-	{ name, releases, id, repository, author = 'Unknown' },
-	{ name: localName, version: localVersion = 'Unknown', id: localId, author: localAuthor = 'Unknown' },
-	isInstalled,
-	isReserved,
-) {
+function pluginWindow({ name, releases, id, repository, author = 'Unknown' }, { name: localName, version, id: localId, author: localAuthor = 'Unknown' }, isInstalled, isReserved) {
 	const pluginInfo = arguments[0]
 	const pluginLocalInfo = arguments[1]
 	const pluginInfoValid = Object.assign({}, pluginInfo, pluginLocalInfo)
@@ -66,13 +71,14 @@ function pluginWindow(
 		lastReleaseVersion = pluginCompatibleRelease.version
 		lastReleaseTarget = pluginCompatibleRelease.target
 	}
-	const newUpdate = hasUpdate(lastReleaseVersion, localVersion)
+	const newUpdate = hasUpdate(lastReleaseVersion, version)
 	const haveRelease = lastReleaseVersion !== 'Unknown'
 	const component = element({
 		components: {
 			H1: Titles.h1,
 			SideMenu,
 			Text,
+			Button,
 		},
 	})`
 		<SideMenu default="about">
@@ -83,19 +89,20 @@ function pluginWindow(
 			<div class="${styleWrapper}">
 				<div href="about" class="content">
 					<div>
-						<Text>
-							<b lang-string="misc.Author" string="{{misc.Author}}: ${getPluginInfo(pluginInfoValid, 'author')}"/>
-						</Text>
-						<Text>
-							${getPluginInfo(pluginInfoValid, 'description')}
-						</Text>
-						<Text lang-string="misc.LastVersion" string="{{misc.LastVersion}}: ${lastReleaseVersion}"/>
-						<Text lang-string="misc.InstalledVersion" string="{{misc.InstalledVersion}}: ${localVersion}"/>
-						${(!isReserved && !pluginCompatibleRelease && getNoCompatibleversion()) || element`<div/>`}
-					</div>
-					<div class="buttons">
-						${getUpdateButton()}
-						${getUninstallButton() || getInstallButton() || element`<div/>`}
+						<div>
+							<H1>${getPluginInfo(pluginInfoValid, 'name')} <span>${version ? `v${version}` : ''}</span></h1>
+							<Text>
+								<b lang-string="misc.By" string="{{misc.By}} ${getPluginInfo(pluginInfoValid, 'author')}"/>
+							</Text>
+							<Text>
+								${getPluginInfo(pluginInfoValid, 'description')}
+							</Text>
+							${(!isReserved && !pluginCompatibleRelease && getNoCompatibleversion()) || element`<div/>`}
+						</div>
+						<div class="buttons">
+							${getUpdateButton()}
+							${getUninstallButton() || getInstallButton() || element`<div/>`}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -112,9 +119,9 @@ function pluginWindow(
 		if (newUpdate) {
 			return element({
 				components: {
-					storeButton,
+					Button,
 				},
-			})` <storeButton :click="${update}" lang-string="windows.Store.Update"/>`
+			})` <Button :click="${update}" lang-string="windows.Store.Update"/>`
 		}
 		return element`<div/>`
 	}
@@ -122,9 +129,9 @@ function pluginWindow(
 		if (!isInstalled && haveRelease) {
 			return element({
 				components: {
-					storeButton,
+					Button,
 				},
-			})` <storeButton :click="${install}" lang-string="windows.Store.Install"/>`
+			})`<Button :click="${install}" lang-string="windows.Store.Install" string="{{windows.Store.Install}} v${lastReleaseVersion}"/>`
 		}
 		return null
 	}
@@ -132,9 +139,9 @@ function pluginWindow(
 		if (isInstalled && !isReserved) {
 			return element({
 				components: {
-					storeButton,
+					Button,
 				},
-			})`<storeButton :click="${uninstall}" lang-string="windows.Store.Uninstall"/>`
+			})`<Button :click="${uninstall}" lang-string="windows.Store.Uninstall"/>`
 		} else {
 			return null
 		}
