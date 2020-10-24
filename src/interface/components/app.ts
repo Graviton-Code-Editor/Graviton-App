@@ -97,8 +97,9 @@ const styleWrapper = style`
 			display:flex;
 			flex-direction:column;
 			overflow:hidden;
+			height: auto;
 		}
-    `
+  `
 
 function AppBody() {
 	return element`<div class="${styleWrapper}"/>`
