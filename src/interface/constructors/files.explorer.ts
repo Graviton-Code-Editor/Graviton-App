@@ -7,7 +7,6 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
 import * as path from 'path'
-const chokidar = window.require('chokidar')
 
 import { filesWatcherExcludedDirs } from 'Constants'
 
@@ -92,7 +91,7 @@ class FilesExplorer {
 		const ignored = new RegExp([...filesWatcherExcludedDirs, ...StaticConfig.data.editorExcludedDirs].map(x => `(${x})`).join('|'), 'g')
 
 		const gitWatcherPath = normalizeDir(path.join(this.folderPath, '.git', 'logs', 'HEAD'))
-		const projectWatcher = chokidar.watch(this.folderPath, {
+		const projectWatcher = this.explorerProvider.watchDir(this.folderPath, {
 			ignored,
 			persistent: true,
 			interval: 250,
@@ -131,7 +130,7 @@ class FilesExplorer {
 			})
 		let gitWatcher: any
 		if (this.isGitRepo) {
-			gitWatcher = chokidar.watch(gitWatcherPath, {
+			gitWatcher = this.explorerProvider.watchDir(gitWatcherPath, {
 				persistent: true,
 				interval: 400,
 				ignoreInitial: true,

@@ -10,9 +10,7 @@ import getFormat from '../utils/format_parser'
 import PuffinElement from '../types/puffin.element'
 import { PuffinState } from '../types/puffin.state'
 import { TabOptions } from '../types/tab'
-
-const fs = window.require('fs-extra')
-const path = window.require('path')
+import path from 'path'
 
 class Tab {
 	public tabElement: PuffinElement

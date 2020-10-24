@@ -27,7 +27,9 @@ module.exports = [
 				filename: path.resolve(__dirname, 'dist_ui', 'index.html'),
 				templateContent: `
 					<html>
-						<meta charset="UTF-8" />
+						<head>
+							<meta charset="UTF-8" />
+						</head>
 						<body>
 							<div id="App"></div>
 						</body>
@@ -95,10 +97,11 @@ module.exports = [
 				Components: path.resolve(__dirname, './src/interface/components'),
 				Assets: path.resolve(__dirname, './assets'),
 				Root: __dirname,
+				Core: path.resolve(__dirname, './src/interface/utils/core.ts'),
 			},
 		},
 		target: 'electron-renderer',
-		externals: ['node-pty', 'node-jsonrpc-lsp'],
+		externals: ['node-pty', 'node-jsonrpc-lsp', 'chokidar'],
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_ui'),
@@ -107,6 +110,112 @@ module.exports = [
 			contentBase: path.join(__dirname, 'dist_ui'),
 			compress: true,
 			port: 9000,
+			stats: 'errors-only',
+		},
+	},
+	{
+		name: 'browser',
+		mode: process.env.NODE_ENV,
+		optimization: {
+			minimize: true,
+		},
+		entry: {
+			index: './src/interface/main.ts',
+		},
+		plugins: [
+			new WebpackBar({
+				name: 'Browser',
+			}),
+			new WebpackMessages({
+				name: 'Browser',
+				logger: str => console.log(`[webpack] --> ${str}`),
+			}),
+			new HtmlWebpackPlugin({
+				title: 'Graviton Editor',
+				filename: path.resolve(__dirname, 'dist_browser', 'index.html'),
+				templateContent: `
+					<html>
+						<head>
+							<meta charset="UTF-8" />
+							<link rel="shortcut icon" type="image/svg" href="dist/logo.svg"/>
+							<title>Graviton Editor</title>
+						</head>
+						<body>
+							<div id="App"></div>
+						</body>
+					</html>
+				`,
+			}),
+			new CopyPlugin({
+				patterns: [
+					{ from: path.resolve(__dirname, 'assets'), to: path.resolve(__dirname, 'dist_browser') },
+					{ from: path.resolve(__dirname, 'iconpacks'), to: path.resolve(__dirname, 'dist_browser') },
+				],
+			}),
+		],
+		module: {
+			rules: [
+				{
+					test: /\.s[ac]ss$/i,
+					use: ['style-loader', 'css-loader', 'sass-loader'],
+				},
+				{
+					test: /\.css$/i,
+					use: ['style-loader', 'css-loader'],
+				},
+				{
+					test: /\.(woff(2)?|ttf|eot|png|jpe?g|svg)(\?v=\d+\.\d+\.\d+)?$/,
+					use: [
+						{
+							loader: 'file-loader',
+							options: {
+								name: '[name].[ext]',
+								outputPath: 'dist/',
+							},
+						},
+						{
+							loader: 'image-webpack-loader',
+							options: {
+								disable: true,
+							},
+						},
+					],
+				},
+				{
+					test: /\.tsx?$/,
+					loader: 'ts-loader',
+					exclude: path.resolve(__dirname, './node_modules'),
+				},
+			],
+		},
+		resolve: {
+			extensions: ['.js', '.ts'],
+			alias: {
+				ThemeProvider: path.resolve(__dirname, './src/interface/utils/theme.provider.ts'),
+				StaticConfig: path.resolve(__dirname, './src/interface/utils/static.config.ts'),
+				RunningConfig: path.resolve(__dirname, './src/interface/utils/running.config.ts'),
+				PluginsRegistry: path.resolve(__dirname, './src/interface/utils/plugins.registry.ts'),
+				LanguageConfig: path.resolve(__dirname, './src/interface/utils/lang.config.ts'),
+				AppPlatform: path.resolve(__dirname, './src/interface/utils/platform.ts'),
+				Constants: path.resolve(__dirname, './src/interface/defaults/constants.ts'),
+				StaticPlugins: path.resolve(__dirname, './plugins/static'),
+				Types: path.resolve(__dirname, './src/interface/types'),
+				Constructors: path.resolve(__dirname, './src/interface/constructors'),
+				Components: path.resolve(__dirname, './src/interface/components'),
+				Assets: path.resolve(__dirname, './assets'),
+				Root: __dirname,
+				Core: path.resolve(__dirname, './src/interface/utils/core.ts'),
+			},
+		},
+		target: 'web',
+		output: {
+			filename: 'main.js',
+			path: path.resolve(__dirname, 'dist_browser'),
+		},
+		devServer: {
+			contentBase: path.join(__dirname, 'dist_browser'),
+			compress: true,
+			port: 7500,
 			stats: 'errors-only',
 		},
 	},

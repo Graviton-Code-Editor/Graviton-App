@@ -11,8 +11,13 @@ import packageJSON from 'Root/package.json'
 import checkForUpdates from '../utils/check.updates'
 import AppPlatform from 'AppPlatform'
 import { openFolder, openFile } from '../utils/filesystem'
-import { ipcRenderer, shell } from 'electron'
-const { openExternal: openLink } = shell
+import Core from 'Core'
+const {
+	electron: {
+		ipcRenderer,
+		shell: { openExternal },
+	},
+} = Core
 
 /*
  * This creates the default Graviton Menus in the top bar
@@ -278,7 +283,7 @@ function getHelpMenu(button) {
 					{
 						label: 'Github',
 						action: () => {
-							openLink('https://github.com/marc2332')
+							openExternal('https://github.com/marc2332')
 						},
 					},
 				],
@@ -289,13 +294,13 @@ function getHelpMenu(button) {
 					{
 						label: 'Telegram',
 						action: () => {
-							openLink('https://t.me/gravitoneditor')
+							openExternal('https://t.me/gravitoneditor')
 						},
 					},
 					{
 						label: 'Discord',
 						action: () => {
-							openLink('https://discord.gg/gg6CTYA')
+							openExternal('https://discord.gg/gg6CTYA')
 						},
 					},
 				],
@@ -308,7 +313,7 @@ function getHelpMenu(button) {
 						return {
 							label: name,
 							action() {
-								openLink(url)
+								openExternal(url)
 							},
 						}
 					})
@@ -317,25 +322,25 @@ function getHelpMenu(button) {
 			{
 				label: 'menus.Help.Blog',
 				action: () => {
-					openLink('https://graviton.netlify.app/blog/')
+					openExternal('https://graviton.netlify.app/blog/')
 				},
 			},
 			{
 				label: 'menus.Help.Documentation',
 				action: () => {
-					openLink('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
+					openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
 				},
 			},
 			{
 				label: 'menus.Help.Website',
 				action: () => {
-					openLink('https://graviton.netlify.app/')
+					openExternal('https://graviton.netlify.app/')
 				},
 			},
 			{
 				label: 'menus.Help.SourceCode',
 				action: () => {
-					openLink('https://github.com/Graviton-Code-Editor/Graviton-App')
+					openExternal('https://github.com/Graviton-Code-Editor/Graviton-App')
 				},
 			},
 			{},

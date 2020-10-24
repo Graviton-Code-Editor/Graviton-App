@@ -1,20 +1,20 @@
-const fs = require('fs-extra')
-import simpleGit from 'simple-git'
+import Core from 'Core'
 import normalizeDir from '../utils/directory_normalizer'
 import { join } from 'path'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 
+const { fs, chokidar, simpleGit } = Core
+
 /*
-	This provides a tiny later between the GUI and the filesystem.
+	This provides a tiny layer between the GUI and the filesystem.
 	This is used to access, read and mofify the local filesystem.
 */
-
 const LocalExplorer = {
 	name: 'Local',
 	listDir: async function (path: string) {
 		return new Promise(async res => {
-			const items = await fs.readdir(path)
+			const items = await Core.fs.readdir(path)
 			const makeTransparentHiddenItems = StaticConfig.data.editorMakeTransparentHiddenItems
 			res(
 				await Promise.all(
@@ -25,7 +25,7 @@ const LocalExplorer = {
 							let dir = join(path, item)
 							try {
 								isFolder = await new Promise(res => {
-									fs.lstat(join(path, item), (err: string, result: any) => {
+									Core.fs.lstat(join(path, item), (err: string, result: any) => {
 										if (err) {
 											res(false)
 										} else {
@@ -41,12 +41,8 @@ const LocalExplorer = {
 								if (makeTransparentHiddenItems === true && item[0] === '.') {
 									isHidden = await new Promise(res => {
 										const hidefile = window.require('hidefile')
-										hidefile.isHidden(dir, (err: string, result: boolean) => {
-											if (err) {
-												res(false)
-											} else {
-												res(result)
-											}
+										hidefile.isHidden(dir, (result: boolean) => {
+											res(result)
 										})
 									})
 								}
@@ -75,7 +71,7 @@ const LocalExplorer = {
 		return fs.mkdir(path)
 	},
 	exists: function (path: string) {
-		return fs.exists(path)
+		return (fs as any).exists(path)
 	},
 	info: function (path: string) {
 		return fs.lstatSync(path)
@@ -102,6 +98,9 @@ const LocalExplorer = {
 	getGitLastCommit(repoPath) {
 		const simpleInstance = simpleGit(repoPath)
 		return simpleInstance.log(['--name-status', 'HEAD^..HEAD'])
+	},
+	watchDir(dir, options) {
+		return chokidar.watch(dir, options)
 	},
 	decorator: null,
 }

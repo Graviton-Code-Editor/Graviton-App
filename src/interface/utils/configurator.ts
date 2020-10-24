@@ -1,5 +1,9 @@
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 import StaticConfig from 'StaticConfig'
+import RunningConfig from 'RunningConfig'
 
 const CustomWindow: any = window
 
@@ -14,7 +18,11 @@ function getConfiguration() {
 }
 
 function updateConfiguration(config: any) {
-	ipcRenderer.send('update-config', config)
+	if (RunningConfig.data.isBrowser) {
+		localStorage.setItem('config', JSON.stringify(config))
+	} else {
+		ipcRenderer.send('update-config', config)
+	}
 }
 
 async function restartConfiguration() {

@@ -18,8 +18,6 @@ import '../styles/main.scss'
 import PuffinElement from './types/puffin.element'
 import { ContextMenuButton } from 'Types/contextmenu'
 
-window.require('v8-compile-cache')
-
 let blurViewApp: boolean = false
 
 const App = element({
@@ -32,7 +30,7 @@ const App = element({
 		MainBox,
 	},
 })`
-    <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}">
+  <AppBody mounted="${mountedApp}" class="app-container" os="${AppPlatform}" browser="${RunningConfig.data.isBrowser}">
 		<div mounted="${mountedAppView}" style="${handleAppviewState}">
 			<TitleBar/>
 			<div id="body">

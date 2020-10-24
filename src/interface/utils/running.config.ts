@@ -4,10 +4,14 @@ import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import minimist from 'minimist'
 import isGitInstalled from './is_git_installed'
-const nodeJSONRPC = window.require('node-jsonrpc-lsp')
-import electronLog from 'electron-log'
+import Core from 'Core'
+const {
+	nodeJSONRPC,
+	electron: { clipboard },
+} = Core
 import StaticConfig from 'StaticConfig'
-import { clipboard } from 'electron'
+
+const isBrowser = !eval('window.process')
 
 // Get runtime information
 const CustomWindow: any = window
@@ -17,7 +21,8 @@ CustomWindow.runtime = null
 /*
  * Create a console logger in production, this saves all logs, errors, warnings,etc...
  */
-if (!isDev) {
+if (!isDev && !isBrowser) {
+	const electronLog = window.require('electron-log')
 	const logger = electronLog.create('graviton')
 	logger.transports.file.fileName = 'graviton.log'
 	Object.assign(console, logger.functions)
@@ -59,6 +64,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	openedTerminals: [],
 	focusedTerminal: null,
 	localTerminalAccessories: [],
+	isBrowser,
 }
 
 isGitInstalled().then(res => {
@@ -125,5 +131,7 @@ RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filte
 RunningConfig.on('registerEditorClient', function (editorClient) {
 	RunningConfig.data.editorsRank.push(editorClient)
 })
+
+console.log(RunningConfig)
 
 export default RunningConfig

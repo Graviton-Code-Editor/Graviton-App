@@ -1,8 +1,11 @@
 import EnvClient from '../constructors/env.client'
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 import RunningConfig from 'RunningConfig'
-const url = window.require('url')
-const path = window.require('path')
+import * as url from 'url'
+import * as path from 'path'
 
 function openDebugClient() {
 	let windowID = Math.random()

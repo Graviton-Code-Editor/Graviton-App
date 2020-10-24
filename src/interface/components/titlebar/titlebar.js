@@ -3,6 +3,9 @@ import { css as style } from 'emotion'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
 import AppPlatform from 'AppPlatform'
+import RunningConfig from 'RunningConfig'
+
+const isBrowser = RunningConfig.data.isBrowser
 
 const styleWrapper = style`
 	.app-container[os="darwin"] &, .app-container[os="linux"] & {
@@ -59,6 +62,10 @@ function getButtons() {
 	}
 }
 
+function getLogo() {
+	return AppPlatform === 'win32' || isBrowser ? element`<img class="logo" draggable="false" src="${Logo}" />` : ''
+}
+
 function TitleBar() {
 	return element({
 		components: {
@@ -66,7 +73,7 @@ function TitleBar() {
 		},
 	})`
 	<div class="${styleWrapper}" style="${AppPlatform !== 'win32' ? 'margin:0;' : ''}">
-		${AppPlatform === 'win32' ? element`<img class="logo" draggable="false" src="${Logo}" />` : ''}
+		${getLogo()}
 		<div id="dropmenus" class="dropmenus"/>
 		<div class="title"/>
 		${getButtons()}

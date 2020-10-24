@@ -1,10 +1,10 @@
 import Store from 'electron-store'
 import { ipcMain, app } from 'electron'
 import * as path from 'path'
-import getDefaultConfiguration from './default_config'
+import { getElectronConfiguration } from './default_config'
 import isDev from 'electron-is-dev'
 
-const defaultConfig = getDefaultConfiguration(app)
+const defaultConfig = getElectronConfiguration(app)
 
 const AppStore = new Store({
 	defaults: defaultConfig,

@@ -10,7 +10,7 @@
 		"lib": ["es2019", "dom"],
 		"resolveJsonModule": true
 	},
-	"types": ["@types/fs-extra-promise"],
+	"types": ["@types/fs-extra-promise", "@types/nodes"],
 	"root": ".",
 	"exclude": ["node_modules", "plugins", "pluginsDist", "dist", "dist_ui", "assets", "iconpacks", "scripts", "test", "themes", "languages"]
 }

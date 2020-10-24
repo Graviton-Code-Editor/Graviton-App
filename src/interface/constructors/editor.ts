@@ -6,7 +6,10 @@ import Notification from './notification'
 import ContextMenu from './contextmenu'
 import path from 'path'
 import { element } from '@mkenzo_8/puffin'
-import { clipboard } from 'electron'
+import Core from 'Core'
+const {
+	electron: { clipboard },
+} = Core
 
 import { EditorOptions } from 'Types/editor'
 import { EditorClient } from 'Types/editorclient'

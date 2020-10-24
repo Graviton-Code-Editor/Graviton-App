@@ -1,7 +1,10 @@
 import { Panel, removePanel } from '../../constructors/panel'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 
 //Command: Save current opened file if there is any (default: Ctrl+S)
 RunningConfig.on('command.saveCurrentFile', () => {

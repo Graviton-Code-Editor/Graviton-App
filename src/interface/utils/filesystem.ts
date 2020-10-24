@@ -12,7 +12,8 @@ import selectFolderDialog from './dialogs/select_folder'
 import selectFileDialog from './dialogs/select_file'
 import LocalExplorer from '../defaults/local.explorer'
 import * as path from 'path'
-import * as fs from 'fs-extra'
+import Core from 'Core'
+const { fs } = Core
 
 import { WorkspaceFilename } from 'Constants'
 

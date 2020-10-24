@@ -2,8 +2,8 @@ import InputDialog from '../../utils/dialogs/dialog.input'
 import RunningConfig from 'RunningConfig'
 import normalizeDir from '../../utils/directory_normalizer'
 import * as path from 'path'
-
-const fs = window.require('fs-extra')
+import Core from 'Core'
+const { fs } = Core
 
 function newDirectoryDialog({ isFolder, parentDirectory, container, explorerState, explorerProvider }) {
 	new InputDialog({

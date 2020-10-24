@@ -1,6 +1,9 @@
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 import AppPlatform from 'AppPlatform'
 import RunningConfig from 'RunningConfig'
 

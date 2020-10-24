@@ -15,7 +15,10 @@ import getFormat from '../../utils/format_parser'
 import normalizeDir from '../../utils/directory_normalizer'
 import Notification from '../../constructors/notification'
 import FileItem from './file.item.style'
-import { clipboard } from 'electron'
+import Core from 'Core'
+const {
+	electron: { clipboard },
+} = Core
 import path from 'path'
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'

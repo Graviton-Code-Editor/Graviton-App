@@ -1,5 +1,6 @@
 import RunningConfig from 'RunningConfig'
-const fs = window.require('fs')
+import Core from 'Core'
+const { fs } = Core
 import { join } from 'path'
 
 RunningConfig.data.envs.push({

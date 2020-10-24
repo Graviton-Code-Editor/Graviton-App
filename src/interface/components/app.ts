@@ -2,11 +2,17 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
 
 const styleWrapper = style`
+		& > div{
+			height: 100%;
+		}
 		#body{
 			display:flex;
 			flex-direction:columns;
 			background:var(--bodyBackground);
 			height:calc(100% - 68px);
+		}
+		&[browser="true"] #body{
+			height:calc(100% - 65px);
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
 			font-family:var(--codeFont) !important;

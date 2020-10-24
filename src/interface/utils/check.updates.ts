@@ -1,6 +1,8 @@
 import gravitonHasUpdate from '../defaults/store/utils/app.update'
-import { shell } from 'electron'
-const { openExternal: openLink } = shell
+import Core from 'Core'
+const {
+	electron: { shell: openExternal },
+} = Core
 import RunningConfig from 'RunningConfig'
 import Notification from '../constructors/notification'
 
@@ -16,7 +18,7 @@ function checkForUpdates(ifNoUpdate?: any): any {
 						{
 							label: 'misc.Update',
 							action() {
-								openLink('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
+								openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
 							},
 						},
 						{

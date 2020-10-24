@@ -1,7 +1,8 @@
 import RunningConfig from 'RunningConfig'
 import CommandPrompt from '../../constructors/command.prompt'
 import * as path from 'path'
-import * as fs from 'fs-extra'
+import Core from 'Core'
+const { fs } = Core
 
 //Command: Open the explorer command (default: Ctrl+O)
 RunningConfig.on('command.openExplorerCommandPrompt', () => {

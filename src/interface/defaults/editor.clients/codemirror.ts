@@ -33,7 +33,7 @@ import 'codemirror/addon/hint/sql-hint'
 import 'codemirror/addon/hint/xml-hint'
 import 'codemirror/addon/hint/html-hint'
 
-const path = window.require('path')
+import path from 'path'
 
 /*
 	This is the editor client used to edit plain text files

@@ -2,7 +2,10 @@ import path from 'path'
 import StaticConfig from 'StaticConfig'
 import { addPluginToRegistry, loadPlugin } from '../../../utils/plugin.loader'
 import { pluginsExternalDir } from 'Constants'
-const { ipcRenderer } = window.require('electron')
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 
 export function installPluginFromURL({ id, release }) {
 	return new Promise((resolve, reject) => {

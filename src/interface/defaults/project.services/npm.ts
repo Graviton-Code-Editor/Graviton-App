@@ -1,5 +1,8 @@
 import RunningConfig from 'RunningConfig'
-import { spawn } from 'child_process'
+import Core from 'Core'
+const {
+	childProcess: { spawn },
+} = Core
 import selectFolderDialog from '../../utils/dialogs/select_folder'
 import Notification from '../../constructors/notification'
 import * as path from 'path'

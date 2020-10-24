@@ -10,7 +10,7 @@ import Notification from '../constructors/notification'
 import { Arctic, Night } from '../collections/themes'
 import checkForUpdates from '../utils/check.updates'
 import { GravitonIconpack } from '../collections/iconpacks'
-import * as fs from 'fs-extra'
+import Core from 'Core'
 import createMenus from './menus'
 import getFormat from '../utils/format_parser'
 import queryString from 'query-string'
@@ -28,6 +28,8 @@ import '../collections/codemirror'
 import '../collections/plugins'
 import '../utils/test'
 import './terminal_shells/local'
+
+const { fs } = Core
 
 export default function init(): void {
 	createMenus()

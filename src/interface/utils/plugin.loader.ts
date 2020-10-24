@@ -21,8 +21,9 @@ import Explorer from '../constructors/explorer'
 import FilesExplorer from '../constructors/files.explorer'
 import throwError from './throw_error'
 import * as path from 'path'
-import * as fs from 'fs-extra'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
+import Core from 'Core'
+const { fs } = Core
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = process.env.NODE_ENV === 'test'
@@ -143,10 +144,11 @@ export function unloadPluginFromRegistry(name) {
 /*
  * Load built-in and installed plugins when the app is loaded
  */
-
 RunningConfig.on('appLoaded', async function () {
-	await registerPluginsIn(pluginsIternalDir)
-	if (!isTesting) await registerPluginsIn(pluginsExternalDir)
+	if (!RunningConfig.data.isBrowser) {
+		await registerPluginsIn(pluginsIternalDir)
+		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
+	}
 	RunningConfig.emit('allPluginsLoaded')
 	loadAllPlugins()
 })

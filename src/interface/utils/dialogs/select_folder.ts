@@ -1,4 +1,7 @@
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const {
+	electron: { ipcRenderer },
+} = Core
 
 /**
  * Opens a native dialog to select a folder

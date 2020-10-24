@@ -4,7 +4,12 @@ import RunningConfig from 'RunningConfig'
 import PluginsRegistry from 'PluginsRegistry'
 import * as path from 'path'
 import { PuffinState } from 'Types/puffin.state'
-import { webFrame } from 'electron'
+import Core from 'Core'
+const {
+	electron: { webFrame },
+} = Core
+
+const isBrowser = RunningConfig.data.isBrowser
 
 function saveConfiguration() {
 	let config = {}
@@ -27,9 +32,12 @@ StaticConfig.changed((data, keyName) => {
 /*
  * Update GUI's zoom when it gets changed
  */
-StaticConfig.keyChanged('appZoom', value => {
-	webFrame.setZoomFactor(value)
-})
+
+if (!isBrowser) {
+	StaticConfig.keyChanged('appZoom', value => {
+		webFrame.setZoomFactor(value)
+	})
+}
 
 /*
  * Emit start / stop events for FileSystem Watcher when it gets changed
@@ -99,7 +107,8 @@ function setFontFamily(value) {
 	document.body.style.setProperty('--codeFont', value)
 }
 
-webFrame.setZoomFactor(StaticConfig.data.appZoom)
+if (!isBrowser) webFrame.setZoomFactor(StaticConfig.data.appZoom)
+
 setFontFamily(StaticConfig.data.editorFontFamily)
 
 export default StaticConfig

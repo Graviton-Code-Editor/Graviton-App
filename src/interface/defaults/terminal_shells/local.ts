@@ -1,6 +1,7 @@
 import RunningConfig from 'RunningConfig'
-import * as fs from 'fs-extra'
 import { element } from '@mkenzo_8/puffin'
+import Core from 'Core'
+const { fs } = Core
 
 function createProcess(bin) {
 	const pty = window.require('node-pty')
@@ -11,6 +12,7 @@ function createProcess(bin) {
 }
 
 RunningConfig.once('appLoaded', () => {
+	if (RunningConfig.data.isBrowser) return
 	if (process.platform === 'win32') {
 		// CMD Client for Terminal
 		RunningConfig.emit('registerTerminalShell', {

@@ -1,4 +1,7 @@
-import { shell } from 'electron'
+import Core from 'Core'
+const {
+	electron: { shell },
+} = Core
 
 export default function About() {
 	return {
