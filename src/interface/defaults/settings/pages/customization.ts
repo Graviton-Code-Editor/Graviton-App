@@ -10,7 +10,7 @@ export default function () {
 		customization: [
 			{
 				type: 'title',
-				label: 'windows.Settings.Customization.Iconpacks',
+				label: 'windows.Settings.Customization.Themes',
 			},
 			{
 				type: 'radioGroup',
@@ -35,7 +35,7 @@ export default function () {
 			},
 			{
 				type: 'title',
-				label: 'windows.Settings.Customization.Themes',
+				label: 'windows.Settings.Customization.Iconpacks',
 			},
 			{
 				type: 'radioGroup',

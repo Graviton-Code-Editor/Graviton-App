@@ -1,7 +1,9 @@
 import gravitonHasUpdate from '../defaults/store/utils/app.update'
 import Core from 'Core'
 const {
-	electron: { shell: openExternal },
+	electron: {
+		shell: { openExternal },
+	},
 } = Core
 import RunningConfig from 'RunningConfig'
 import Notification from '../constructors/notification'

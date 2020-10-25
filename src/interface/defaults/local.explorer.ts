@@ -25,7 +25,7 @@ const LocalExplorer = {
 							let dir = join(path, item)
 							try {
 								isFolder = await new Promise(res => {
-									Core.fs.lstat(join(path, item), (err: string, result: any) => {
+									;(Core.fs as any).lstat(join(path, item), (err: string, result: any) => {
 										if (err) {
 											res(false)
 										} else {

@@ -2,20 +2,6 @@ const isBrowser = !eval('window.process')
 const CustomWindow: any = window
 import { getBrowserConfiguration } from '../../app/default_config'
 
-if (isBrowser) {
-	const defaultConfig = getBrowserConfiguration()
-
-	CustomWindow.runtime = {
-		isDev: false,
-		processArguments: [],
-	}
-
-	const storage = localStorage.getItem('config')
-
-	CustomWindow.AppConfig = storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config
-	CustomWindow.DefaultAppConfig = defaultConfig.config
-}
-
 /*
  * By default all native dependencies are null, and then loaded dinamically if app is running in the desktop version
  */
@@ -33,6 +19,18 @@ const Core = {
 }
 
 if (isBrowser) {
+	const defaultConfig = getBrowserConfiguration()
+
+	CustomWindow.runtime = {
+		isDev: false,
+		processArguments: [],
+	}
+
+	const storage = localStorage.getItem('config')
+
+	CustomWindow.AppConfig = storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config
+	CustomWindow.DefaultAppConfig = defaultConfig.config
+
 	Core.electron = {
 		shell: {},
 		clipboard: null,
