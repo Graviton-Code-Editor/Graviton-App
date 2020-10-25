@@ -4,11 +4,14 @@ const { series } = require('gulp')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
 const { Bundler } = require('@gveditor/sdk')
-const { spawn } = require('child_process')
+const { spawn, exec } = require('child_process')
 const { ncp } = require('ncp')
+const download = require('download-git-repo')
+const TargetPlatform = process.env.GRAVITON_PLATFORM
 
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins', 'dynamic')
-const pluginDistFolder = path.resolve(__dirname, 'pluginsDist')
+const pluginsDistFolder = path.resolve(__dirname, 'pluginsDist')
+const pluginsBrowserDistFolder = path.resolve(__dirname, 'pluginsBrowserDist')
 
 function updatePluginsDependencies(cb) {
 	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {
@@ -29,23 +32,23 @@ function updatePluginsDependencies(cb) {
 }
 
 async function removePluginsDist(cb) {
-	if (fs.existsSync(pluginDistFolder)) {
-		rimraf(pluginDistFolder, () => {
+	if (fs.existsSync(pluginsDistFolder)) {
+		rimraf(pluginsDistFolder, () => {
 			cb()
 		})
 	}
 }
 
 function createPluginsFolder(cb) {
-	if (!fs.existsSync(pluginDistFolder)) {
-		fs.mkdirSync(pluginDistFolder)
+	if (!fs.existsSync(pluginsDistFolder)) {
+		fs.mkdirSync(pluginsDistFolder)
 	}
 	cb()
 }
 
 function createPluginFolder(pluginName) {
-	if (!fs.existsSync(path.join(pluginDistFolder, pluginName))) {
-		fs.mkdirSync(path.join(pluginDistFolder, pluginName))
+	if (!fs.existsSync(path.join(pluginsDistFolder, pluginName))) {
+		fs.mkdirSync(path.join(pluginsDistFolder, pluginName))
 	}
 }
 
@@ -69,7 +72,7 @@ async function pluginsSDK() {
 		pluginsFolders.forEach(async (pluginName, i) => {
 			const bundle = new Bundler({
 				projectPath: path.join(pluginsSourceFolder, pluginName),
-				distPath: path.join(pluginDistFolder, pluginName),
+				distPath: path.join(pluginsDistFolder, pluginName),
 			})
 			await bundle.bundle().then(err => {
 				if (err) console.log(err)
@@ -86,7 +89,7 @@ async function pluginsTasks() {
 	return await new Promise(async resolve => {
 		const pluginsFolders = await fs.readdir(pluginsSourceFolder)
 		pluginsFolders.forEach(async (pluginName, i) => {
-			const distFolder = path.join(pluginDistFolder, pluginName)
+			const distFolder = path.join(pluginsDistFolder, pluginName)
 			const { tasks } = require(path.join(pluginsSourceFolder, pluginName, 'graviton.config.js'))
 			tasks.forEach(task => {
 				task({
@@ -108,4 +111,73 @@ async function copyLSPCMIcons() {
 	})
 }
 
-exports.default = series(updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons)
+async function removeBrowserPluginsDist(cb) {
+	if (fs.existsSync(pluginsBrowserDistFolder)) {
+		rimraf(pluginsBrowserDistFolder, () => {
+			cb()
+		})
+	}
+}
+
+function createBrowserPluginsDist(cb) {
+	if (!fs.existsSync(pluginsBrowserDistFolder)) {
+		fs.mkdirSync(pluginsBrowserDistFolder)
+	}
+	cb()
+}
+
+async function cloneRemotePlugin() {
+	return new Promise(res => {
+		download('Graviton-Code-Editor/remote-plugin', path.join(__dirname, 'remote-plugin-temp'), () => {
+			res()
+		})
+	})
+}
+
+async function installRemoteDeps() {
+	return new Promise(res => {
+		exec(
+			'npm install',
+			{
+				cwd: path.join(__dirname, 'remote-plugin-temp'),
+			},
+			() => {
+				res()
+			},
+		)
+	})
+}
+
+async function buildRemote() {
+	return new Promise(res => {
+		exec(
+			'npm run build',
+			{
+				cwd: path.join(__dirname, 'remote-plugin-temp'),
+			},
+			() => {
+				res()
+			},
+		)
+	})
+}
+
+async function copyRemoteDist() {
+	return new Promise(res => {
+		ncp(path.join(__dirname, 'remote-plugin-temp', 'dist'), path.join(pluginsBrowserDistFolder, 'remote-plugin'), err => {
+			if (err) console.log(err)
+			res()
+		})
+	})
+}
+
+const electronTasks = [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons]
+const browserTasks = [createBrowserPluginsDist, cloneRemotePlugin, installRemoteDeps, buildRemote, copyRemoteDist]
+
+if (TargetPlatform === 'electron') {
+	exports.default = series(...electronTasks)
+} else if (TargetPlatform === 'browser') {
+	exports.default = series(...browserTasks)
+} else if (TargetPlatform === 'all') {
+	exports.default = series(...electronTasks, ...browserTasks)
+}

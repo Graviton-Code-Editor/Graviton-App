@@ -27,9 +27,56 @@ const { fs } = Core
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = process.env.NODE_ENV === 'test'
+const isBrowser = RunningConfig.data.isBrowser
 
-function loadMainFile({ mainDev, main, name, type, PATH }) {
-	if (main) {
+function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
+	class PluginNotification extends Notification {
+		constructor(params) {
+			super({
+				...params,
+				author: name,
+			})
+		}
+	}
+
+	const parameters = {
+		StaticConfig,
+		RunningConfig,
+		Window,
+		puffin,
+		Menu,
+		Dialog,
+		StatusBarItem,
+		ContextMenu,
+		Notification: PluginNotification,
+		CodeMirror,
+		Tab,
+		drac,
+		SideMenu,
+		EditorClient,
+		EnvClient,
+		SidePanel,
+		Explorer,
+		CommandPrompt,
+		Editor,
+		FilesExplorer,
+	}
+
+	if (pluginExports) {
+		if (type === 'plugin') {
+			if (!RunningConfig.data.isDev) {
+				try {
+					const { entry }: any = pluginExports
+					entry(parameters)
+				} catch (err) {
+					throwError(`(${name}) -> ${err}`, err)
+				}
+			} else {
+				const { entry }: any = pluginExports
+				entry(parameters)
+			}
+		}
+	} else if (main) {
 		let mainPath
 		const mainDevExists = mainDev ? fs.existsSync(path.join(PATH, mainDev)) : false
 		if (mainDev && mainDevExists) {
@@ -38,37 +85,6 @@ function loadMainFile({ mainDev, main, name, type, PATH }) {
 			mainPath = path.join(PATH, main) //BUILT version
 		}
 		if (type === 'plugin') {
-			class PluginNotification extends Notification {
-				constructor(params) {
-					super({
-						...params,
-						author: name,
-					})
-				}
-			}
-
-			const parameters = {
-				StaticConfig,
-				RunningConfig,
-				Window,
-				puffin,
-				Menu,
-				Dialog,
-				StatusBarItem,
-				ContextMenu,
-				Notification: PluginNotification,
-				CodeMirror,
-				Tab,
-				drac,
-				SideMenu,
-				EditorClient,
-				EnvClient,
-				SidePanel,
-				Explorer,
-				CommandPrompt,
-				Editor,
-				FilesExplorer,
-			}
 			if (!RunningConfig.data.isDev) {
 				try {
 					const { entry }: any = window.require(mainPath)
@@ -118,6 +134,13 @@ const registerPluginsIn = where => {
 				resolve()
 			})
 	})
+}
+
+export function addPluginToRegistryStatically(pluginPkg, pluginExports = null) {
+	if (!pluginPkg.type) pluginPkg.type = 'plugin' //Fallback to plugin type if no one is specified
+	pluginPkg.pluginExports = pluginExports
+	PluginsRegistry.add(pluginPkg)
+	return pluginPkg
 }
 
 /*

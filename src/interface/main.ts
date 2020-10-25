@@ -166,8 +166,8 @@ function sidebarContext(ev: MouseEvent): void {
 }
 
 function mountedApp(): void {
-	window.addEventListener('load', function () {
-		init()
+	window.addEventListener('load', async function () {
+		await init()
 		if (((!RunningConfig.data.isDev && RunningConfig.data.arguments[0] == null) || RunningConfig.data.isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
 			Welcome().launch()
 		}

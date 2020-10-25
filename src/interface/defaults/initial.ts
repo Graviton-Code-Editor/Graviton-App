@@ -14,6 +14,7 @@ import Core from 'Core'
 import createMenus from './menus'
 import getFormat from '../utils/format_parser'
 import queryString from 'query-string'
+import { addPluginToRegistryStatically } from '../utils/plugin.loader'
 import { installPluginFromGVP, installPluginFromURL } from './store/utils/install.plugin'
 import './environment.inspectors/npm'
 import './project.services/npm'
@@ -31,17 +32,24 @@ import './terminal_shells/local'
 
 const { fs } = Core
 
-export default function init(): void {
+export default async function init() {
 	createMenus()
 
 	new Panel() //Initial Panel
 
-	PluginsRegistry.add(Arctic)
-	PluginsRegistry.add(Night)
-	PluginsRegistry.add({
+	addPluginToRegistryStatically(Arctic)
+	addPluginToRegistryStatically(Night)
+	addPluginToRegistryStatically({
 		PATH: path.join(__dirname, '../../../Graviton'),
 		...GravitonIconpack,
 	})
+
+	if (RunningConfig.data.isBrowser) {
+		const RemoteExports = await import('../../../pluginsBrowserDist/remote-plugin/index')
+		const RemotePkg = await import('../../../pluginsBrowserDist/remote-plugin/package.json')
+
+		addPluginToRegistryStatically(RemotePkg, RemoteExports)
+	}
 
 	RunningConfig.emit('appLoaded')
 
