@@ -16,9 +16,9 @@ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git --depth 1
 
 **Important**: There are 3 different branches:
 
-- `master`: daily source (default).
-- `stable`: this doesn't mean it's ready to be released as stable build , but it doesn't have that many bugs, it's more stable overall.
-- `1.3.0`: it refers to the old Graviton source code.
+- `master`: Daily changes (default)
+- `stable`: Stable branch, but, does't mean it's released
+- `1.3.0`: Old Graviton Source Code
 
 ## Setuping
 
@@ -38,15 +38,39 @@ npm install
 
 In case you just want to test it in development mode, run:
 
+### Desktop
+
 ```shell
 npm start
 ```
 
+### Browser (experimental)
+
+```shell
+npm start:experimental:browser
+```
+
 If shows an empty dark screen just wait.
 
-## Building the installer
+## Building
 
-Default outputs:
+You can build Graviton as a browser app or as a desktop app, you probably want the second option.
+
+### Browser
+
+This will generate a static website, which includes the whole Graviton UI, Arctic, Night and Remote plugins by default.
+
+Run:
+
+```shell
+npm run build:experimental:browser
+```
+
+### Desktop App
+
+This will make a Desktop installer.
+
+Default formats for each platform:
 
 - Windows: 64 bits
 - Linux: Deb and AppImage
