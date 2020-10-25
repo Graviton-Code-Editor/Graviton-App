@@ -16,6 +16,7 @@ import Core from 'Core'
 const { fs } = Core
 
 import { WorkspaceFilename } from 'Constants'
+const isBrowser = RunningConfig.data.isBrowser
 
 import { AddFolderInWorkspace, AddFolderInWorkspaceFromDialog, SetWorkspace, RemoveWorkspace } from '../types/workspace.ts'
 
@@ -117,30 +118,34 @@ function getWorkspaceConfig(path): any {
  * if there is one loaded it
  * will open an editor for it.
  * @param {string} filePath - The loaded file's path
+ *
+ * Only in Desktop version
  */
-RunningConfig.on('loadFile', ({ filePath }) => {
-	const fileDir = normalizeDir(filePath)
-	const basename = path.basename(fileDir)
-	const fileExtension = getFormat(fileDir)
-	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
-		title: basename,
-		directory: fileDir,
-		isEditor: true,
-		explorerProvider: LocalExplorer,
-	})
-	if (isCancelled) return //Cancels the tab opening
-	fs.readFile(fileDir, 'UTF-8').then(data => {
-		new Editor({
-			language: fileExtension,
-			value: data,
-			theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
-			bodyElement,
-			tabElement,
-			tabState,
+if (!isBrowser) {
+	RunningConfig.on('loadFile', ({ filePath }) => {
+		const fileDir = normalizeDir(filePath)
+		const basename = path.basename(fileDir)
+		const fileExtension = getFormat(fileDir)
+		const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+			title: basename,
 			directory: fileDir,
+			isEditor: true,
+			explorerProvider: LocalExplorer,
+		})
+		if (isCancelled) return //Cancels the tab opening
+		fs.readFile(fileDir, 'UTF-8').then(data => {
+			new Editor({
+				language: fileExtension,
+				value: data,
+				theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+				bodyElement,
+				tabElement,
+				tabState,
+				directory: fileDir,
+			})
 		})
 	})
-})
+}
 
 /**
  * Watches for folders added,
@@ -223,30 +228,34 @@ function removeAllExplorerFolders() {
  * if there was already one
  * opened
  * @param {string} workspaceDir - Workspace's path
+ *
+ * Only in desktop version
  */
-RunningConfig.on('setWorkspace', ({ workspacePath }: SetWorkspace) => {
-	const workspacePathNormalized = normalizeDir(workspacePath)
-	const workspace = getWorkspaceConfig(workspacePathNormalized)
-	if (workspace) {
-		removeAllExplorerFolders()
-		RunningConfig.data.workspaceConfig = {
-			name: workspace.name,
-			folders: [],
-			settings: workspace.settings || {},
-		}
-		setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
-		RunningConfig.data.workspacePath = workspacePathNormalized
-		workspace.folders.forEach(async folder => {
-			fs.stat(folder.path, (err, stats) => {
-				if (!err) {
-					RunningConfig.emit('addFolderToRunningWorkspace', {
-						folderPath: normalizeDir(folder.path),
-					})
-				}
+if (!isBrowser) {
+	RunningConfig.on('setWorkspace', ({ workspacePath }: SetWorkspace) => {
+		const workspacePathNormalized = normalizeDir(workspacePath)
+		const workspace = getWorkspaceConfig(workspacePathNormalized)
+		if (workspace) {
+			removeAllExplorerFolders()
+			RunningConfig.data.workspaceConfig = {
+				name: workspace.name,
+				folders: [],
+				settings: workspace.settings || {},
+			}
+			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
+			RunningConfig.data.workspacePath = workspacePathNormalized
+			workspace.folders.forEach(async folder => {
+				fs.stat(folder.path, (err, stats) => {
+					if (!err) {
+						RunningConfig.emit('addFolderToRunningWorkspace', {
+							folderPath: normalizeDir(folder.path),
+						})
+					}
+				})
 			})
-		})
-	}
-})
+		}
+	})
+}
 
 function setWorkspaceSettings(settings) {
 	Object.keys(settings).forEach(sett => {

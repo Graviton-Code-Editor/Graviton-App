@@ -1,6 +1,7 @@
 const isBrowser = !eval('window.process')
 const CustomWindow: any = window
 import { getBrowserConfiguration } from '../../app/default_config'
+import './browser'
 
 /*
  * By default all native dependencies are null, and then loaded dinamically if app is running in the desktop version
@@ -16,6 +17,7 @@ const Core = {
 	nodeJSONRPC: null,
 	electron: null,
 	rimraf: null,
+	openExternal: null,
 }
 
 if (isBrowser) {
@@ -26,6 +28,7 @@ if (isBrowser) {
 		processArguments: [],
 	}
 
+	// Load User's configuration from the localStorage
 	const storage = localStorage.getItem('config')
 
 	CustomWindow.AppConfig = storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config
@@ -39,19 +42,22 @@ if (isBrowser) {
 	Core.childProcess = {
 		exec: null,
 	}
+	Core.openExternal = window.open
 } else {
 	window.require('v8-compile-cache')
 
 	/*
 	 * Load native dependencies into the Core module
 	 */
+	const electron = window.require('electron')
 	Core.chokidar = window.require('chokidar')
 	Core.fs = window.require('fs-extra')
 	Core.simpleGit = window.require('simple-git')
 	Core.childProcess = window.require('child_process')
 	Core.nodeJSONRPC = window.require('node-jsonrpc-lsp')
-	Core.electron = window.require('electron')
+	Core.electron = electron
 	Core.rimraf = window.require('rimraf')
+	Core.openExternal = electron.shell.openExternal
 }
 
 export default Core

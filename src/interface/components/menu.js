@@ -76,9 +76,10 @@ const styleWrapper = style`
 		min-height:100%;
 		background:var(--menuButtonBackground);
 		color:var(--menuButtonText);
-		border:none;
+		border:0px;
 		outline:0;
 		font-size:12px;
+		box-sizing: border-box;
 	}
 	& > button:hover{
 		min-height:100%;

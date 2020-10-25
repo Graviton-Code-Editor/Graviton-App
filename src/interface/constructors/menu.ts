@@ -26,7 +26,7 @@ class Menu {
 	private MenuList: object[]
 	constructor({ button, list }, fromEvent = false) {
 		this.MenuButton = button
-		this.MenuList = list
+		this.MenuList = list.filter(Boolean)
 
 		if ((AppPlatform === 'win32' || RunningConfig.data.isBrowser) && !fromEvent) {
 			// Render Graviton's menu bar only in Windows

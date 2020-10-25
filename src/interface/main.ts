@@ -92,6 +92,10 @@ function handleSidebarState(): string {
 }
 
 function mountedAppView(): void {
+	const sideBar: PuffinElement = document.getElementById('sidebar')
+	const sidePanel: PuffinElement = document.getElementById('sidepanel')
+	const mainPanel: PuffinElement = document.getElementById('mainpanel')
+
 	RunningConfig.keyChanged('openedWindows', value => {
 		if (value <= 0) {
 			blurViewApp = false
@@ -106,15 +110,10 @@ function mountedAppView(): void {
 		}
 	})
 	StaticConfig.keyChanged('appEnableSidebar', value => {
-		const sideBar = <PuffinElement>document.getElementById('sidebar')
-		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
 		sideBar.update()
 		mainPanel.update()
 	})
 	StaticConfig.keyChanged('appEnableSidepanel', value => {
-		const sidePanel = <PuffinElement>document.getElementById('sidepanel')
-		const sideBar = <PuffinElement>document.getElementById('sidebar')
-		const mainPanel = <PuffinElement>document.getElementById('mainpanel')
 		if (value) {
 			sidePanel.style.display = 'block'
 		} else {
@@ -168,7 +167,16 @@ function sidebarContext(ev: MouseEvent): void {
 function mountedApp(): void {
 	window.addEventListener('load', async function () {
 		await init()
-		if (((!RunningConfig.data.isDev && RunningConfig.data.arguments[0] == null) || RunningConfig.data.isDev) && StaticConfig.data.appOpenWelcomeInStartup) {
+		const isBrowser = RunningConfig.data.isBrowser
+		const isDev = RunningConfig.data.isDev
+		const appOpenWelcomeInStartup = StaticConfig.data.appOpenWelcomeInStartup
+		/*
+		 * Don't show the Welcome Window if:
+		 * - It's running in Browser mode
+		 * - The app was opened with arguments
+		 * - It's configured this way by the user in `appOpenWelcomeInStartup`
+		 */
+		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenWelcomeInStartup) {
 			Welcome().launch()
 		}
 	})

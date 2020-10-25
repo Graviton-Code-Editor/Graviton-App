@@ -49,12 +49,24 @@ const styleWrapper = style`
 `
 
 RunningConfig.on('appLoaded', () => {
-	const explorer = () => element({
-		components: {
-			Text,
-		},
-	})`
+	const explorer = () => element()`
 		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
+			${
+				RunningConfig.data.isBrowser
+					? element({
+							components: {
+								Text,
+							},
+					  })`
+				<div>
+					<Text>Join a room!</Text>
+				</div>
+			`
+					: element({
+							components: {
+								Text,
+							},
+					  })`
 			<div>
 				<button class="link" :click="${openFolderDialog}">
 						<Text lang-string="menus.File.OpenFolder"/>
@@ -66,6 +78,8 @@ RunningConfig.on('appLoaded', () => {
 					<Text lang-string="menus.File.Workspaces.OpenWorkspaces"/>
 				</button>
 			</div>
+			`
+			}
 		</div>`
 
 	const { display } = new SidePanel({

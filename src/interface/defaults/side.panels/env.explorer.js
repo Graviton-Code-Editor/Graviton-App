@@ -8,36 +8,41 @@ import EnvClient from '../../constructors/env.client'
 import Notification from '../../constructors/notification'
 import detectEnv from '../../utils/detect_env'
 
-RunningConfig.on('appLoaded', () => {
-	const { panelNode } = new SidePanel({
-		icon: EnvOutlined,
-		panel: () => element`<div/>`,
-		hint: 'Project inspector',
-	})
-	RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
-		const { env, prefix, info } = await detectEnv(folderPath)
-		if (env && info) {
-			const envExplorer = new Explorer({
-				items: [
-					{
-						label: basename(folderPath),
-						icon: 'file.package.json',
-						decorator: {
-							label: env,
+/*
+ * Only display it in Desktop version
+ */
+if (!RunningConfig.data.isBrowser) {
+	RunningConfig.on('appLoaded', () => {
+		const { panelNode } = new SidePanel({
+			icon: EnvOutlined,
+			panel: () => element`<div/>`,
+			hint: 'Project inspector',
+		})
+		RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+			const { env, prefix, info } = await detectEnv(folderPath)
+			if (env && info) {
+				const envExplorer = new Explorer({
+					items: [
+						{
+							label: basename(folderPath),
+							icon: 'file.package.json',
+							decorator: {
+								label: env,
+							},
+							items: getKeysToItems(info, folderPath, '', prefix),
 						},
-						items: getKeysToItems(info, folderPath, '', prefix),
-					},
-				],
-			})
-			const explorerNode = render(envExplorer, panelNode.children[0])
-			RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath: removedFolderPath }) => {
-				if (folderPath == removedFolderPath) {
-					explorerNode.remove()
-				}
-			})
-		}
+					],
+				})
+				const explorerNode = render(envExplorer, panelNode.children[0])
+				RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath: removedFolderPath }) => {
+					if (folderPath == removedFolderPath) {
+						explorerNode.remove()
+					}
+				})
+			}
+		})
 	})
-})
+}
 
 function getKeysToItems(keys, folder, fromKey, prefix = '') {
 	return Object.keys(keys).map(key => {
