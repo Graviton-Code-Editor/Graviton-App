@@ -1,7 +1,7 @@
-name: Node CI
+name: Pull requests
 
 on:
-  push:
+  pull_request:
     branches: [ master ]
 
 jobs:
@@ -28,16 +28,3 @@ jobs:
       uses: GabrielBB/xvfb-action@v1.2
       with:
         run: npm run test:mocha
-    - name : Building
-      run: |
-        npm run build:electron
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-    - name : Building for RPM
-      if: ${{ runner.os == 'Linux' }}
-      run: |
-        npm run build:electron:rpm
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
