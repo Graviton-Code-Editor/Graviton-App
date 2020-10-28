@@ -22,7 +22,7 @@ jobs:
         npm i
     - name: Building UI
       run: |
-        npm run script:build:electron
+        npm run script:build
         npm run build:webpack
     - name: Running unit tests
       uses: GabrielBB/xvfb-action@v1.2
