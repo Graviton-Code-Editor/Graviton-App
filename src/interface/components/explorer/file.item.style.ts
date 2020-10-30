@@ -9,6 +9,8 @@ const ItemWrapper = style`
 		user-select:none;
 		margin-top:1px;
 		margin-left: 10px;
+		content-visibility: paint;
+		contain-intrinsic-size: 26px;
 		&[animated="true"]{
 			animation: appearItem 0.07s ease-out;
 		}

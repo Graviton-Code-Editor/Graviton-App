@@ -76,31 +76,56 @@ const LocalExplorer = {
 	info: function (path: string) {
 		return fs.lstatSync(path)
 	},
-	isGitRepo: async function (path: string) {
+	/*
+	 * Returns if the project is a git repository
+	 */
+	isGitRepo: async function (projectPath: string) {
 		if (!RunningConfig.data.isGitInstalled) return false
-		const repoPath = normalizeDir(path)
+		const repoPath = normalizeDir(projectPath)
 		const simpleInstance = simpleGit(repoPath)
 		return simpleInstance.checkIsRepo()
 	},
-	getGitStatus(path: string) {
-		const simpleInstance = simpleGit(path)
+	/*
+	 * Return the the current git status
+	 */
+	getGitStatus(projectPath: string) {
+		const simpleInstance = simpleGit(projectPath)
 		return simpleInstance.status()
 	},
+	/*
+	 * Return the latest commit of an specific file
+	 */
 	getGitFileLastCommit(projectPath: string, path) {
 		const simpleInstance = simpleGit(projectPath)
 		return simpleInstance.log([path])
 	},
-	getGitFileContentByObject(projectPath, object, path) {
+	/*
+	 * Return a file's content in a specific commit
+	 */
+	getGitFileContentByObject(projectPath: string, object, path) {
 		const computedPath = path.replace(/\\/gm, '/')
 		const simpleInstance = simpleGit(projectPath)
 		return simpleInstance.show([`${object}:${computedPath}`])
 	},
-	getGitLastCommit(repoPath) {
-		const simpleInstance = simpleGit(repoPath)
+	/*
+	 * Return lastest commit
+	 */
+	getGitLastCommit(projectPath: string) {
+		const simpleInstance = simpleGit(projectPath)
 		return simpleInstance.log(['--name-status', 'HEAD^..HEAD'])
 	},
-	watchDir(dir, options) {
-		return chokidar.watch(dir, options)
+	/*
+	 * Return all commits in a project
+	 */
+	getGitAllCommits(projectPath: string) {
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.log()
+	},
+	/*
+	 * Return a event-emitter like which emits changes in a folder
+	 */
+	watchDir(projectPath: string, options) {
+		return chokidar.watch(projectPath, options)
 	},
 	decorator: null,
 }

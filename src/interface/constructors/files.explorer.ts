@@ -95,6 +95,7 @@ class FilesExplorer {
 			ignored,
 			persistent: true,
 			interval: 250,
+			depth: 20,
 			ignoreInitial: true,
 		})
 		projectWatcher
@@ -278,6 +279,7 @@ class FilesExplorer {
 					branch: this.gitChanges.current,
 					parentFolder: this.folderPath,
 					anyChanges: this.gitChanges.files.length > 0,
+					explorerProvider: this.explorerProvider,
 				})
 			}
 			const itemComputed = getItemComputed({

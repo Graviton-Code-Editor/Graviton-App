@@ -61,10 +61,10 @@ const ItemWrapper = style`
 		border-radius:20px;
 		margin: auto 2px;
 		margin-left:6px;
-		font-size:9px;
+		font-size: 9px;
 		min-width:4px;
-		padding: 4px 6px;
-		min-height: 8px;
+		padding: 1px 3px;
+		min-height: 6px;
 	}
 	& .icon{
 		height:20px;
@@ -91,24 +91,32 @@ const ItemWrapper = style`
 	}
 `
 
-function Item({ label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }) {
+function Item({ component, label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }) {
 	let itemIsOpened = false
 	let decoratorLabel = decorator.label || ''
 	let decoratorBackground = decorator.background || 'transparent'
+	let decoratorColor = decorator.color || 'var(--textColor)'
+	let decoratorFontSize = decorator.fontSize || '9px'
 	let configuredIcon = icon
-	return element({
-		components: {
-			ArrowIcon,
-		},
-	})`
+	return element`
 		<div itemIsOpened="${() => itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
-			<button :click="${onClick}" :contextmenu="${onContextMenu}">
-				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
-				${iconComp ? iconComp() : element`<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"/>`}
-				<span>${label}</span>
-				<span class="decorator" style="background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
-			</button>
-			<div/>
+			${
+				component
+					? component()
+					: element({
+							components: {
+								ArrowIcon,
+							},
+					  })`
+				<button :click="${onClick}" :contextmenu="${onContextMenu}">
+					<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
+					${iconComp ? iconComp() : element`<img class="icon" src="${RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']}"/>`}
+					<span>${label}</span>
+					<span class="decorator" style="font-size: ${() => decoratorFontSize};color: ${() => decoratorColor}; background: ${() => decoratorBackground}">${() => decoratorLabel}</span>
+				</button>
+				<div/>
+			`
+			}
 		</div>
 	`
 	function itemMounted() {
@@ -142,9 +150,11 @@ function Item({ label, items, mounted, icon, iconComp, action, contextAction, de
 			iconImg.src = RunningConfig.data.iconpack[icon] ? RunningConfig.data.iconpack[icon] : RunningConfig.data.iconpack['unknown.file']
 		}
 	}
-	function setDecorator({ label, background }, item) {
+	function setDecorator({ label, background, color, fontSize }, item) {
 		if (label) decoratorLabel = label
 		if (background) decoratorBackground = background
+		if (color) decoratorColor = color
+		if (fontSize) decoratorFontSize = fontSize
 		const decorator = item.getElementsByClassName('decorator')[0]
 		decorator.update()
 	}

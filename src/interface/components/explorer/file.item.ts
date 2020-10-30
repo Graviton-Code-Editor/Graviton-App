@@ -22,6 +22,7 @@ const {
 import path from 'path'
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'
+import { getFileIcon } from '../../utils/get_file_icon'
 
 class Item {
 	private itemClass: string
@@ -650,24 +651,6 @@ class Item {
 			IconpackListener.cancel()
 			this.itemElement.remove()
 		})
-	}
-}
-
-function getFileIcon(fileName: string, fileExt: string) {
-	const filetype = fileName.split('.').slice(1).join('.')
-	if (fileExt === ('png' || 'jpg' || 'ico')) {
-		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
-	}
-	if (RunningConfig.data.iconpack[`${filetype}.type`]) {
-		return RunningConfig.data.iconpack[`${filetype}.type`]
-	}
-	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
-		return RunningConfig.data.iconpack[`file.${fileName}`]
-	}
-	if (RunningConfig.data.iconpack[`${fileExt}.lang`]) {
-		return RunningConfig.data.iconpack[`${fileExt}.lang`]
-	} else {
-		return RunningConfig.data.iconpack['unknown.file']
 	}
 }
 
