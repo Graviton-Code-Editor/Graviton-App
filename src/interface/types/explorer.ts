@@ -8,9 +8,10 @@ interface ExplorerItemHooks {
 }
 
 interface ExplorerItemDecorator {
-	label?: string
-	background?: string
-	color?: string
+	label?: String
+	background?: String
+	color?: String
+	fontSize?: String
 }
 
 interface ExplorerItemOptions {
@@ -34,4 +35,4 @@ interface ExplorerItem extends HTMLElement {
 	gitChanges: StatusResult
 }
 
-export { ExplorerItem, ExplorerOptions, ExplorerItemOptions }
+export { ExplorerItem, ExplorerOptions, ExplorerItemOptions, ExplorerItemDecorator }

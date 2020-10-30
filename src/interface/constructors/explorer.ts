@@ -7,7 +7,7 @@ function Explorer({ items }: ExplorerOptions) {
 	return element`
 		<div>
 			${items.map(item => {
-				return Item(item)
+				return new Item(item)
 			})}
 		</div>
 	`
