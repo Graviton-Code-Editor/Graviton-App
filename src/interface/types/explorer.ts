@@ -1,21 +1,28 @@
 import { StatusResult } from 'simple-git'
+import { PuffinComponent } from './puffin.component'
 
-interface ExplorerItemMounted {
-	setIcons?: () => void
-	setItems?: () => void
-	setDecorator?: () => void
+interface ExplorerItemHooks {
+	setIcon?: (iconPath: string) => void
+	setItems?: (items: ExplorerItemOptions[]) => void
+	setDecorator?: (decorator: ExplorerItemDecorator) => void
+}
+
+interface ExplorerItemDecorator {
+	label?: string
+	background?: string
+	color?: string
 }
 
 interface ExplorerItemOptions {
 	label?: String
 	items?: this[]
-	mounted?: (ExplorerItemMounted) => void
+	mounted?: (hooks: ExplorerItemHooks) => void
 	icon?: String
-	iconComp?: any
-	action?: () => void
-	contextAction?: (any) => void
-	decorator?: any
-	component?: () => void
+	iconComp?: () => PuffinComponent
+	action?: (e: MouseEvent, hooks: ExplorerItemHooks) => void
+	contextAction?: (e: MouseEvent, hooks: ExplorerItemHooks) => void
+	decorator?: ExplorerItemDecorator
+	component?: () => PuffinComponent
 }
 
 interface ExplorerOptions {
