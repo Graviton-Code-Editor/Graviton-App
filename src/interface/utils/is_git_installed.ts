@@ -11,12 +11,8 @@ const {
 export default function isGitInstalled(): Promise<boolean> {
 	return new Promise(res => {
 		if (isBrowser) res(false) //Return false when it's running in browser
-		exec('git', {}, (err: any, stdout: string) => {
-			if (stdout.includes('usage: git')) {
-				res(true)
-			} else {
-				res(false)
-			}
+		exec('git --version', {}, (err: any, stdout: string) => {
+			res(!err)
 		})
 	})
 }
