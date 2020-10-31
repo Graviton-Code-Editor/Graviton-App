@@ -142,7 +142,8 @@
 		background: rgba(120, 178, 253, 0.281);
 	}
 	.CodeMirror-matchingbracket {
-		outline: 1.5px solid red;
+		background: rgba(255, 25, 25, 0.3);
+		border-radius: 1px;
 	}
 	.CodeMirror-matchingtag {
 		background: rgb(209, 209, 209);
