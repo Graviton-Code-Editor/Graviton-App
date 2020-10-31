@@ -79,7 +79,7 @@ const defaultConfig = {
 		editorMakeTransparentHiddenItems: false,
 		appShowTerminal: false,
 		experimentalEditorLSP: false,
-		experimeanlSourceTracker: false,
+		experimentalSourceTracker: false,
 	},
 }
 if (process.platform === 'darwin') {
