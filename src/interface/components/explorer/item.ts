@@ -103,6 +103,7 @@ class Item {
 	items: ExplorerItemOptions[]
 	action: any
 	contextAction: any
+	label: String
 
 	constructor({ component, label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }: ExplorerItemOptions) {
 		this.decoratorLabel = decorator?.label || ''
@@ -111,6 +112,7 @@ class Item {
 		this.decoratorFontSize = decorator?.fontSize || '9px'
 		this.configuredIcon = icon
 		this.items = items
+		this.label = label
 		this.action = action
 		this.contextAction = contextAction
 		const self = this
@@ -166,7 +168,7 @@ class Item {
 						<button :click="${onClick}" :contextmenu="${onContextMenu}">
 							<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
 							${iconComp ? iconComp() : element`<img class="icon" src="${iconSrc}"/>`}
-							<span>${label}</span>
+							<span class="label">${() => this.label}</span>
 							<span class="decorator" style="font-size: ${() => this.decoratorFontSize};color: ${() => this.decoratorColor}; background: ${() => this.decoratorBackground}">${() => this.decoratorLabel}</span>
 						</button>
 						<div/>
@@ -190,6 +192,9 @@ class Item {
 				this.setIcon(newIcon, item)
 				this.configuredIcon = newIcon
 			},
+			setLabel: (newLabel: string) => {
+				this.setLabel(newLabel, item)
+			},
 			setItems: (newItems: ExplorerItemOptions[], openItems: boolean = true) => {
 				this.setItems(newItems, openItems, item)
 			},
@@ -197,6 +202,14 @@ class Item {
 				this.setDecorator(newDecorator, item)
 			},
 		}
+	}
+	/*
+	 * Update Item's label
+	 */
+	setLabel(label: String, item: HTMLElement) {
+		const labelElement: any = item.getElementsByClassName('label')[0]
+		this.label = label
+		labelElement.update()
 	}
 	/*
 	 * Update Item's icon

@@ -5,6 +5,7 @@ interface ExplorerItemHooks {
 	setIcon?: (iconPath: string) => void
 	setItems?: (items: ExplorerItemOptions[], openItems?: boolean) => void
 	setDecorator?: (decorator: ExplorerItemDecorator) => void
+	setLabel?: (label: string) => void
 }
 
 interface ExplorerItemDecorator {
