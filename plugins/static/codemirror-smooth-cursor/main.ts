@@ -32,6 +32,14 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 		refreshCursor()
 	})
 
+	instance.on('blur', () => {
+		refreshCursor()
+	})
+
+	instance.on('refresh', () => {
+		refreshCursor()
+	})
+
 	StaticConfig.keyChanged('editorFontSize', () => {
 		refreshCursor()
 	})
