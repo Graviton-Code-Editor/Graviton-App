@@ -122,6 +122,20 @@ const LocalExplorer = {
 		return simpleInstance.log()
 	},
 	/*
+	 * Add files to the index
+	 */
+	gitAdd(projectPath: string, files: string[]) {
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.add(files)
+	},
+	/*
+	 * Create a commit
+	 */
+	gitCommit(projectPath: string, commitContent: string) {
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.commit(commitContent)
+	},
+	/*
 	 * Return a event-emitter like which emits changes in a folder
 	 */
 	watchDir(projectPath: string, options) {

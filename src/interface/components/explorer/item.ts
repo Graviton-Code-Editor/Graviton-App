@@ -190,8 +190,8 @@ class Item {
 				this.setIcon(newIcon, item)
 				this.configuredIcon = newIcon
 			},
-			setItems: (newItems: ExplorerItemOptions[]) => {
-				this.setItems(newItems, item)
+			setItems: (newItems: ExplorerItemOptions[], openItems: boolean = true) => {
+				this.setItems(newItems, openItems, item)
 			},
 			setDecorator: (newDecorator: ExplorerItemDecorator) => {
 				this.setDecorator(newDecorator, item)
@@ -222,14 +222,17 @@ class Item {
 	/*
 	 * Update Item's inner items
 	 */
-	setItems(newItems: ExplorerItemOptions[], item: PuffinElement) {
+	setItems(newItems: ExplorerItemOptions[], openItems: boolean, item: PuffinElement) {
 		this.items = newItems
-		const itemExplorer = Explorer({
-			items: this.items,
-		})
-		item.children[1].innerHTML = ''
-		render(itemExplorer, item.children[1])
-		this.itemIsOpened = true
+		if (this.itemIsOpened || openItems) {
+			const itemExplorer = Explorer({
+				items: this.items,
+			})
+			item.children[1].innerHTML = ''
+			render(itemExplorer, item.children[1])
+			this.itemIsOpened = true
+		}
+
 		item.update()
 	}
 }

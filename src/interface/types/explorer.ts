@@ -3,7 +3,7 @@ import { PuffinComponent } from './puffin.component'
 
 interface ExplorerItemHooks {
 	setIcon?: (iconPath: string) => void
-	setItems?: (items: ExplorerItemOptions[]) => void
+	setItems?: (items: ExplorerItemOptions[], openItems?: boolean) => void
 	setDecorator?: (decorator: ExplorerItemDecorator) => void
 }
 

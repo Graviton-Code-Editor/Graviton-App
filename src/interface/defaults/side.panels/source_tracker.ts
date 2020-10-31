@@ -9,6 +9,8 @@ import ContextMenu from '../../constructors/contextmenu'
 import EmojiConvertor from 'emoji-js'
 import GitIcon from '../../components/icons/git'
 import StaticConfig from 'StaticConfig'
+import InputDialog from '../../utils/dialogs/dialog.input'
+import Notification from 'Constructors/notification'
 
 const getExplorerItems = files => {
 	return files.map(file => {
@@ -25,17 +27,43 @@ const getExplorerItems = files => {
 	})
 }
 
-if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker) {
+const getAllCommits = commits => {
 	const emoji = new EmojiConvertor()
 	emoji.replace_mode = 'unified'
 	emoji.allow_native = true
+	return commits.slice(0, 25).map(commit => {
+		return {
+			label: `${emoji.replace_colons(commit.message.slice(0, 25))}${commit.message.length > 25 ? '...' : ''}`,
+			hint: commit.message,
+			decorator: {
+				label: new Date(commit.date).toLocaleString(),
+			},
+		}
+	})
+}
 
+const showCommitCreatedNotification = (projectPath: string) => {
+	new Notification({
+		title: 'Source Tracker',
+		content: `Commit created in ${projectPath}`,
+	})
+}
+
+if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker) {
 	RunningConfig.on('appLoaded', () => {
 		function mounted() {
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
 				RunningConfig.on('loadedGitRepo', async ({ parentFolder, gitChanges, anyChanges, explorerProvider }) => {
 					if (folderPath !== parentFolder) return
-					const { all: allCommits } = await explorerProvider.getGitAllCommits(parentFolder)
+					let { all: allCommits } = await explorerProvider.getGitAllCommits(parentFolder)
+
+					RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges: changes }) => {
+						if (parentFolder === folder) {
+							allCommits = (await explorerProvider.getGitAllCommits(parentFolder)).all
+							gitChanges = changes
+						}
+					})
+
 					const SourceTracker = Explorer({
 						items: [
 							{
@@ -60,9 +88,20 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 										label: 'Options',
 										items: [
 											{
+												label: 'Add',
+												action: async function () {
+													await explorerProvider.gitAdd(parentFolder, ['-A'])
+												},
+											},
+											{
 												label: 'Commit',
-												action() {
-													console.log('Commit')
+												action: async function () {
+													const commitContent = await InputDialog({
+														title: 'Commit message',
+														placeHolder: 'Bug fix',
+													})
+													await explorerProvider.gitCommit(parentFolder, commitContent)
+													showCommitCreatedNotification(parentFolder)
 												},
 											},
 											{
@@ -76,19 +115,22 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 									{
 										label: 'Changes',
 										mounted({ setItems, setDecorator }) {
-											RunningConfig.on('gitStatusUpdated', ({ parentFolder, gitChanges }) => {
-												setItems(getExplorerItems(gitChanges.files))
-												setDecorator({
-													label: gitChanges.files.length,
-												})
+											RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+												if (parentFolder === folder) {
+													setItems(getExplorerItems(gitChanges.files), false)
+													setDecorator({
+														label: gitChanges.files.length.toString(),
+													})
+												}
 											})
+											setItems(getExplorerItems(gitChanges.files), false)
 										},
 										decorator: {
 											label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
 											color: 'var(--explorerItemGitIndicatorText)',
 											background: 'var(--explorerItemGitNotAddedText)',
 										},
-										items: getExplorerItems(gitChanges.files),
+										items: [],
 									},
 									{
 										label: 'Last 25 Commits',
@@ -97,15 +139,19 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 											color: 'var(--explorerItemGitIndicatorText)',
 											background: 'var(--explorerItemGitNotAddedText)',
 										},
-										items: allCommits.slice(0, 25).map(commit => {
-											return {
-												label: `${emoji.replace_colons(commit.message.slice(0, 25))}${commit.message.length > 25 ? '...' : ''}`,
-												hint: commit.message,
-												decorator: {
-													label: new Date(commit.date).toLocaleString(),
-												},
-											}
-										}),
+										mounted({ setItems, setDecorator }) {
+											RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges }) => {
+												if (parentFolder === folder) {
+													const { all } = await explorerProvider.getGitAllCommits(parentFolder)
+													setItems(getAllCommits(all), false)
+													setDecorator({
+														label: all.length > 25 ? '25+' : all.slice(0, 25).length,
+													})
+												}
+											})
+											setItems(getAllCommits(allCommits), false)
+										},
+										items: [],
 									},
 								],
 							},
