@@ -21,6 +21,7 @@ const defaultConfig = {
 		editorFontFamily: 'JetBrainsMono',
 		editorWrapLines: false,
 		appPlatform: 'auto',
+		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
 				combos: ['Ctrl+S'],

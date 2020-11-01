@@ -1,5 +1,6 @@
 import SidePanel from '../../constructors/side.panel'
 import RunningConfig from 'RunningConfig'
+import StaticConfig from 'StaticConfig'
 import { element, render } from '@mkenzo_8/puffin'
 import EnvOutlined from '../../components/icons/env.outlined'
 import Explorer from '../../constructors/explorer'
@@ -11,7 +12,7 @@ import detectEnv from '../../utils/detect_env'
 /*
  * Only display it in Desktop version
  */
-if (!RunningConfig.data.isBrowser) {
+if (!RunningConfig.data.isBrowser && StaticConfig.data.appEnableProjectInspector) {
 	RunningConfig.on('appLoaded', () => {
 		const { panelNode } = new SidePanel({
 			icon: EnvOutlined,
