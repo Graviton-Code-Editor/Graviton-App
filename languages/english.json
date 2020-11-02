@@ -97,6 +97,8 @@
 						"ManualConfig": "Manual config",
 						"EditConfiguration": "Edit configuration"
 					},
+					"Explorer": "Explorer",
+					"Editor": "Editor",
 					"LSPIntegration": "LSP Integration",
 					"SourceTracker": "Source Tracker",
 					"Indentation": {
@@ -104,6 +106,7 @@
 						"Space": "Space",
 						"Tab": "Tab"
 					},
+					"Configuration": "Configuration",
 					"RestartConfig": {
 						"RestartConfig": "Restart configuration"
 					}

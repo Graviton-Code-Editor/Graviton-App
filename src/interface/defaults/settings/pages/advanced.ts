@@ -4,82 +4,72 @@ import restartConfigDialog from '../../dialogs/restart_config'
 
 export default function Advanced({ closeWindow }) {
 	return {
-		file_watcher: [
+		Explorer: [
 			{
 				type: 'title',
-				label: 'windows.Settings.Advanced.FileWatcher',
+				label: 'windows.Settings.Advanced.Explorer',
 			},
 			{
-				type: 'switch',
-				key: 'editorFSWatcher',
-				label: 'windows.Settings.Advanced.FileWatcher',
-			},
-		],
-		autocomplete: [
-			{
-				type: 'title',
-				label: 'windows.Settings.Advanced.Autocomplete',
-			},
-			{
-				type: 'switch',
-				key: 'editorAutocomplete',
-				label: 'windows.Settings.Advanced.Autocomplete',
-			},
-		],
-		'wrap lines': [
-			{
-				type: 'title',
-				label: 'windows.Settings.Advanced.WrapLines',
-			},
-			{
-				type: 'switch',
-				key: 'editorWrapLines',
-				label: 'windows.Settings.Advanced.WrapLines',
-			},
-		],
-		indentation: [
-			{
-				type: 'title',
-				label: 'windows.Settings.Advanced.Indentation.Indentation',
-			},
-			{
-				type: 'radioGroup',
-				key: 'editorIndentation',
-				radios: [
+				type: 'section',
+				content: [
 					{
-						checked: true,
-						label: 'Tab',
+						type: 'switch',
+						key: 'editorFSWatcher',
+						label: 'windows.Settings.Advanced.FileWatcher',
 					},
-					'Space',
+					{
+						type: 'switch',
+						key: 'experimentalSourceTracker',
+						label: 'windows.Settings.Advanced.SourceTracker',
+					},
 				],
 			},
 		],
-		'experimental lsp': [
+		Editor: [
 			{
 				type: 'title',
-				label: 'windows.Settings.Advanced.LSPIntegration',
+				label: 'windows.Settings.Advanced.Editor',
 			},
 			{
-				type: 'switch',
-				key: 'experimentalEditorLSP',
-				label: 'Enable LSP',
-			},
-		],
-		'experimental source tracker': [
-			{
-				type: 'title',
-				label: 'windows.Settings.Advanced.SourceTracker',
-			},
-			{
-				type: 'switch',
-				key: 'experimentalSourceTracker',
-				label: 'Enable Source Tracker',
+				type: 'section',
+				content: [
+					{
+						type: 'title',
+						label: 'windows.Settings.Advanced.Indentation.Indentation',
+					},
+					{
+						type: 'radioGroup',
+						key: 'editorIndentation',
+						radios: [
+							{
+								checked: true,
+								label: 'Tab',
+							},
+							'Space',
+						],
+					},
+					{
+						type: 'switch',
+						key: 'editorWrapLines',
+						label: 'windows.Settings.Advanced.WrapLines',
+					},
+					{
+						type: 'switch',
+						key: 'experimentalEditorLSP',
+						label: 'windows.Settings.Advanced.LSPIntegration',
+					},
+					{
+						type: 'switch',
+						key: 'editorAutocomplete',
+						label: 'windows.Settings.Advanced.Autocomplete',
+					},
+				],
 			},
 		],
 		'manual config': [
 			{
 				type: 'title',
-				label: 'windows.Settings.Advanced.ManualConfig.ManualConfig',
+				label: 'windows.Settings.Advanced.Configuration',
 			},
 			{
 				type: 'button',
@@ -88,12 +78,6 @@ export default function Advanced({ closeWindow }) {
 					configEditor()
 					closeWindow()
 				},
-			},
-		],
-		'restart config': [
-			{
-				type: 'title',
-				label: 'windows.Settings.Advanced.RestartConfig.RestartConfig',
 			},
 			{
 				type: 'button',

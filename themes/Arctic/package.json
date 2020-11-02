@@ -125,6 +125,9 @@
 		},
 		"sidemenu": {
 			"Background": "rgb(238,238,238)",
+			"Section": {
+				"Background": "rgba(0,0,0,0.05)"
+			},
 			"Button": {
 				"Background": "transparent",
 				"Hovering": {
@@ -184,13 +187,13 @@
 		},
 		"radio": {
 			"Hovering": {
-				"Background": "#EFEFEF"
+				"Background": "rgb(212,212,212)"
 			},
 			"Circle": {
 				"Background": "white",
 				"Border": "#CFCFCF",
 				"Hovering": {
-					"Border": "#5D9DFC"
+					"Border": "rgb(180,180,180)"
 				}
 			}
 		},

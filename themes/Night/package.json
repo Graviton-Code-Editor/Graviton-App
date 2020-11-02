@@ -59,6 +59,7 @@
 		"sidemenuSearcherBackground": "#222222",
 		"sidemenuSearcherText": "white",
 		"sidemenuSearcherBorder": "rgb(100,100,100)",
+		"sidemenuSectionBackground": "rgba(0,0,0,0.2)",
 		"explorerItemText": "white",
 		"explorerItemHoveringBackground": "rgba(150,150,150,0.6)",
 		"explorerItemSelectedBackground": "rgba(150,150,150,0.3)",
