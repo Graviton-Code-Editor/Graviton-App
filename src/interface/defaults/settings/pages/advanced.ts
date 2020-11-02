@@ -57,12 +57,23 @@ export default function Advanced({ closeWindow }) {
 		'experimental lsp': [
 			{
 				type: 'title',
-				label: 'Experimental LSP',
+				label: 'windows.Settings.Advanced.LSPIntegration',
 			},
 			{
 				type: 'switch',
 				key: 'experimentalEditorLSP',
 				label: 'Enable LSP',
+			},
+		],
+		'experimental source tracker': [
+			{
+				type: 'title',
+				label: 'windows.Settings.Advanced.SourceTracker',
+			},
+			{
+				type: 'switch',
+				key: 'experimentalSourceTracker',
+				label: 'Enable Source Tracker',
 			},
 		],
 		'manual config': [

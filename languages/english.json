@@ -97,6 +97,8 @@
 						"ManualConfig": "Manual config",
 						"EditConfiguration": "Edit configuration"
 					},
+					"LSPIntegration": "LSP Integration",
+					"SourceTracker": "Source Tracker",
 					"Indentation": {
 						"Indentation": "Indentation",
 						"Space": "Space",
