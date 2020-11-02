@@ -42,6 +42,13 @@ const getAllCommits = commits => {
 	})
 }
 
+const showFilesAddedNotification = (projectPath: string) => {
+	new Notification({
+		title: 'Source Tracker',
+		content: `Added files to the index in ${projectPath}`,
+	})
+}
+
 const showCommitCreatedNotification = (projectPath: string) => {
 	new Notification({
 		title: 'Source Tracker',
@@ -49,7 +56,14 @@ const showCommitCreatedNotification = (projectPath: string) => {
 	})
 }
 
-if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker) {
+const showChangesPulledNotification = (projectPath: string) => {
+	new Notification({
+		title: 'Source Tracker',
+		content: `Pulled changes in ${projectPath}`,
+	})
+}
+
+if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker) {
 	RunningConfig.on('appLoaded', () => {
 		function mounted() {
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
@@ -91,6 +105,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 												label: 'Add',
 												action: async function () {
 													await explorerProvider.gitAdd(parentFolder, ['-A'])
+													showFilesAddedNotification(parentFolder)
 												},
 											},
 											{
@@ -106,8 +121,10 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 											},
 											{
 												label: 'Pull',
-												action() {
-													console.log('Pull')
+												action: async function () {
+													const { current } = await explorerProvider.getGitStatus(parentFolder)
+													await explorerProvider.gitPull(parentFolder, current)
+													showChangesPulledNotification(parentFolder)
 												},
 											},
 										],
@@ -135,7 +152,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 									{
 										label: 'Last 25 Commits',
 										decorator: {
-											label: allCommits.length > 25 ? '25+' : allCommits.slice(0, 25).length,
+											label: getCommitChangesLabel(allCommits),
 											color: 'var(--explorerItemGitIndicatorText)',
 											background: 'var(--explorerItemGitNotAddedText)',
 										},
@@ -145,7 +162,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 													const { all } = await explorerProvider.getGitAllCommits(parentFolder)
 													setItems(getAllCommits(all), false)
 													setDecorator({
-														label: all.length > 25 ? '25+' : all.slice(0, 25).length,
+														label: getCommitChangesLabel(all),
 													})
 												}
 											})
@@ -157,7 +174,6 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 							},
 						],
 					})
-
 					render(SourceTracker, this)
 				})
 			})
@@ -171,4 +187,8 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimeanlSourceTracker)
 			hint: 'Source Tracker',
 		})
 	})
+}
+
+const getCommitChangesLabel = changes => {
+	return changes.length > 25 ? '25+' : changes.slice(0, 25).length
 }
