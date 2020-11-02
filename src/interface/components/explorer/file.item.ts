@@ -445,8 +445,9 @@ class Item {
 		const spanText = this.itemElement.children[0].children[2]
 		const statusIndicator = this.itemElement.children[0].children[3]
 		const isDirectory = this.isFolder
+		console.log(status, count)
 		switch (status) {
-			case 'modified':
+			case 'modified': // Modified (M)
 				this.itemElement.setAttribute('gitStatus', 'modified')
 				if (isDirectory) {
 					count && statusIndicator.setAttribute('count', count)
@@ -454,12 +455,28 @@ class Item {
 					spanText.textContent = `${spanText.getAttribute('originalName')} - M`
 				}
 				break
-			case 'not_added': //Same as untracked
+			case 'not_added': //Same as untracked (??)
 				this.itemElement.setAttribute('gitStatus', 'not_added')
 				if (isDirectory) {
 					count && statusIndicator.setAttribute('count', count)
 				} else {
 					spanText.textContent = `${spanText.getAttribute('originalName')} - U`
+				}
+				break
+			case 'renamed': // Renamed (R)
+				this.itemElement.setAttribute('gitStatus', 'renamed')
+				if (isDirectory) {
+					count && statusIndicator.setAttribute('count', count)
+				} else {
+					spanText.textContent = `${spanText.getAttribute('originalName')} - R`
+				}
+				break
+			case 'created': // Created (A) & (AM)
+				this.itemElement.setAttribute('gitStatus', 'created')
+				if (isDirectory) {
+					count && statusIndicator.setAttribute('count', count)
+				} else {
+					spanText.textContent = `${spanText.getAttribute('originalName')} - A`
 				}
 				break
 			default:
@@ -493,7 +510,7 @@ class Item {
 	private _getGitStatus(gitChanges: any) {
 		const filePath = this.itemPath
 		const projectPath = this.projectPath
-		const supportedGitStatuses = ['not_added', 'modified']
+		const supportedGitStatuses = ['not_added', 'modified', 'created', 'renamed']
 
 		let result = 'unknown'
 		if (gitChanges) {
@@ -506,7 +523,9 @@ class Item {
 				}
 			}
 			supportedGitStatuses.map(status => {
-				gitChanges[status].filter((gitPath: string) => {
+				gitChanges[status].filter((gPath: any) => {
+					const gitPath = gPath.to || gPath
+					console.log(gitPath, gPath)
 					if (normalizeDir(path.resolve(projectPath, gitPath)) == normalizeDir(filePath)) {
 						return (result = status)
 					} else {

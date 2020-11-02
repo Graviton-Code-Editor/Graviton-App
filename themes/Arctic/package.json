@@ -170,6 +170,14 @@
 					},
 					"Indicator": {
 						"Text": "white"
+					},
+					"Created": {
+						"Text": "rgb(199, 69, 0)",
+						"Indicator": "rgb(199, 69, 0)"
+					},
+					"Renamed": {
+						"Text": "rgb(0, 54, 225)",
+						"Indicator": "rgb(0, 54, 225)"
 					}
 				}
 			}

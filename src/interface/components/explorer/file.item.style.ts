@@ -73,6 +73,12 @@ const ItemWrapper = style`
 	&[gitStatus="not_added"] > button > span {
 		color:var(--explorerItemGitNotAddedText);
 	}
+  &[gitStatus="created"] > button > span {
+		color:var(--explorerItemGitCreatedText);
+	}
+  &[gitStatus="renamed"] > button > span {
+		color:var(--explorerItemGitRenamedText);
+	}
 	&[gitStatus="modified"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitModifiedIndicator);
@@ -80,6 +86,14 @@ const ItemWrapper = style`
 	&[gitStatus="not_added"][isFolder="true"] > button > .gitStatus {
 		display:block;
 		background:var(--explorerItemGitNotAddedIndicator);
+	}
+  &[gitStatus="created"][isFolder="true"] > button > .gitStatus {
+		display:block;
+		background:var(--explorerItemGitCreatedIndicator);
+	}
+  &[gitStatus="renamed"][isFolder="true"] > button > .gitStatus {
+		display:block;
+		background:var(--explorerItemGitRenamedIndicator);
 	}
 	&[isFolder="true"] > button > .gitStatus::after{	
 		content: attr(count) ;
