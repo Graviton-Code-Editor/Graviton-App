@@ -343,6 +343,12 @@ function TerminalBar() {
 
 	function closeTerminal() {
 		const focusedTerminal = RunningConfig.data.focusedTerminal
+
+		if (RunningConfig.data.openedTerminals.length === 0) {
+			//Hide terminal if there isn't any more shells opened
+			StaticConfig.data.appShowTerminal = false
+		}
+
 		;[...RunningConfig.data.openedTerminals].find(({ name, state }) => {
 			if (name === focusedTerminal) {
 				state.emit('close')
