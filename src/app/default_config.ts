@@ -15,6 +15,7 @@ const defaultConfig = {
 		appWorkspacesLog: [],
 		appZoom: 1,
 		editorFSWatcher: true,
+		editorGitIntegration: true,
 		editorAutocomplete: true,
 		editorIndentation: 'tab',
 		editorTabSize: 2,

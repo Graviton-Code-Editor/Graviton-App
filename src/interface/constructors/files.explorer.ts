@@ -65,6 +65,10 @@ class FilesExplorer {
 	 */
 	private _isGitRepo() {
 		return new (Promise as any)((resolve, reject) => {
+			if (!StaticConfig.data.editorGitIntegration) {
+				// Forcefully return `false` if the GitIntegration is disabled
+				resolve(false)
+			}
 			this.explorerProvider.isGitRepo(this.folderPath).then((res: boolean) => {
 				resolve(res)
 			})
@@ -84,13 +88,37 @@ class FilesExplorer {
 	}
 	/*
 	 *
-	 * Create the git and files watcher.
+	 * Create git watcher
 	 *
 	 */
-	private createWatcher() {
+	private createGitWatcher() {
+		const gitWatcherPath = normalizeDir(path.join(this.folderPath, '.git', 'index'))
+		let gitWatcher: any
+		if (this.isGitRepo && StaticConfig.data.editorGitIntegration) {
+			gitWatcher = this.explorerProvider.watchDir(gitWatcherPath, {
+				persistent: true,
+				interval: 400,
+				ignoreInitial: true,
+			})
+			gitWatcher.on('change', async () => {
+				this.gitChanges = await this._getGitChanges()
+				RunningConfig.emit('gitStatusUpdated', {
+					gitChanges: this.gitChanges,
+					branch: this.gitChanges.current,
+					parentFolder: this.folderPath,
+					anyChanges: this.gitChanges.files.length > 0,
+				})
+			})
+		}
+		return gitWatcher
+	}
+	/*
+	 *
+	 * Create a files watcher for the project.
+	 *
+	 */
+	private createProjectWatcher() {
 		const ignored = new RegExp([...filesWatcherExcludedDirs, ...StaticConfig.data.editorExcludedDirs].map(x => `(${x})`).join('|'), 'g')
-
-		const gitWatcherPath = normalizeDir(path.join(this.folderPath, '.git', 'logs', 'HEAD'))
 		const projectWatcher = this.explorerProvider.watchDir(this.folderPath, {
 			ignored,
 			persistent: true,
@@ -129,27 +157,7 @@ class FilesExplorer {
 					folderPath,
 				})
 			})
-		let gitWatcher: any
-		if (this.isGitRepo) {
-			gitWatcher = this.explorerProvider.watchDir(gitWatcherPath, {
-				persistent: true,
-				interval: 400,
-				ignoreInitial: true,
-			})
-			gitWatcher.on('change', async () => {
-				this.gitChanges = await this._getGitChanges()
-				RunningConfig.emit('gitStatusUpdated', {
-					gitChanges: this.gitChanges,
-					branch: this.gitChanges.current,
-					parentFolder: this.folderPath,
-					anyChanges: this.gitChanges.files.length > 0,
-				})
-			})
-		}
-		return {
-			projectWatcher,
-			gitWatcher,
-		}
+		return projectWatcher
 	}
 	/*
 	 *
@@ -168,36 +176,47 @@ class FilesExplorer {
 				})
 			}
 		})
-		/*
-		 * The filesystem watcher is only ignoring node_modules, .git,dist and .cache folders for now.
-		 * The Git watcher just watchs the commit message file.
-		 */
-		const stopedWatcherListener = this.explorerState.on('stopedWatcher', () => {
-			if (this.filesWatcher) {
-				this.filesWatcher.close()
-				this.filesWatcher = null
-			}
-			if (this.gitWatcher) {
-				this.gitWatcher.close()
-				this.gitWatcher = null
-			}
-		})
-		const startedWatcherListener = this.explorerState.on('startedWatcher', () => {
-			if (!this.filesWatcher) {
-				const watchers = this.createWatcher()
-				this.filesWatcher = watchers.projectWatcher
-				this.gitWatcher = watchers.gitWatcher
+
+		const toggledFSWatcherListener = StaticConfig.keyChanged('editorFSWatcher', status => {
+			if (status) {
+				if (!this.filesWatcher) {
+					this.filesWatcher = this.createProjectWatcher()
+				}
+			} else {
+				if (this.filesWatcher) {
+					this.filesWatcher.close()
+					this.filesWatcher = null
+				}
 			}
 		})
-		const stopWatchersListener = StaticConfig.on('stopWatchers', () => {
-			this.explorerState.emit('stopedWatcher')
+
+		const toggledGitIntegrationListener = StaticConfig.keyChanged('editorGitIntegration', status => {
+			if (status) {
+				if (!this.gitWatcher) {
+					this.gitWatcher = this.createGitWatcher()
+				}
+			} else {
+				if (this.gitWatcher) {
+					this.gitWatcher.close()
+					this.gitWatcher = null
+				}
+			}
 		})
-		const startWatchersListener = StaticConfig.on('startWatchers', () => {
-			this.explorerState.emit('startedWatcher')
-		})
-		if (StaticConfig.data.editorFSWatcher) this.explorerState.emit('startedWatcher')
+
+		if (StaticConfig.data.editorFSWatcher) {
+			// Initialize Files Watcher
+			this.filesWatcher = this.createProjectWatcher()
+		}
+		if (StaticConfig.data.editorGitIntegration) {
+			// Initialize the git watcher
+			this.gitWatcher = this.createGitWatcher()
+		}
+
 		const createItemListener = this.explorerState.on('createItem', ({ container, directory, level, isFolder = false, isHidden }) => {
-			if (container.children[1] == null) return //Folder is not opened
+			if (container.children[1] == null) {
+				//Folder is not opened
+				return
+			}
 			const possibleClass = getClassByDir(normalizeDir(directory))
 			if (document.getElementsByClassName(possibleClass)[0] == null) {
 				//Might have been already created by watcher
@@ -235,10 +254,8 @@ class FilesExplorer {
 			}
 		})
 		this.explorerState.once('destroyed', () => {
-			stopedWatcherListener.cancel()
-			startedWatcherListener.cancel()
-			stopWatchersListener.cancel()
-			startWatchersListener.cancel()
+			toggledFSWatcherListener.cancel()
+			toggledGitIntegrationListener.cancel()
 			createItemListener.cancel()
 		})
 	}

@@ -445,7 +445,6 @@ class Item {
 		const spanText = this.itemElement.children[0].children[2]
 		const statusIndicator = this.itemElement.children[0].children[3]
 		const isDirectory = this.isFolder
-		console.log(status, count)
 		switch (status) {
 			case 'modified': // Modified (M)
 				this.itemElement.setAttribute('gitStatus', 'modified')
@@ -525,7 +524,6 @@ class Item {
 			supportedGitStatuses.map(status => {
 				gitChanges[status].filter((gPath: any) => {
 					const gitPath = gPath.to || gPath
-					console.log(gitPath, gPath)
 					if (normalizeDir(path.resolve(projectPath, gitPath)) == normalizeDir(filePath)) {
 						return (result = status)
 					} else {

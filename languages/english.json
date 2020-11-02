@@ -99,7 +99,8 @@
 					},
 					"Explorer": "Explorer",
 					"Editor": "Editor",
-					"LSPIntegration": "LSP Integration",
+					"GitIntegration": "Git Integration",
+					"LSPIntegration": "LSP Integration (experimental)",
 					"SourceTracker": "Source Tracker",
 					"Indentation": {
 						"Indentation": "Indentation",

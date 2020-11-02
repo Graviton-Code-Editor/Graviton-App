@@ -19,6 +19,11 @@ export default function Advanced({ closeWindow }) {
 					},
 					{
 						type: 'switch',
+						key: 'editorGitIntegration',
+						label: 'windows.Settings.Advanced.GitIntegration',
+					},
+					{
+						type: 'switch',
 						key: 'experimentalSourceTracker',
 						label: 'windows.Settings.Advanced.SourceTracker',
 					},

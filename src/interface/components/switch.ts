@@ -7,7 +7,7 @@ const styleWrapper = style`
 		justify-content:start;
 		margin:5px;
 		padding:5px;
-		max-width:200px;
+		max-width:300px;
 	}
 	& .wrapper{
 		background:var(--switchBackground);
