@@ -8,6 +8,11 @@ import { basename } from 'path'
 import EnvClient from '../../constructors/env_client'
 import Notification from '../../constructors/notification'
 import detectEnv from '../../utils/detect_env'
+import Core from 'Core'
+import { createProcess } from '../terminal_shells/local'
+const {
+	childProcess: { exec },
+} = Core
 
 /*
  * Only display it in Desktop version
@@ -73,36 +78,42 @@ function getKeysToItems(keys, folder, fromKey, prefix = '') {
 }
 
 function executeScript(prefix, folder, script) {
-	const { exec } = window.require('child_process')
-
 	const scriptEnvClient = new EnvClient({
 		name: script,
 	})
-	let scriptProcess
+	let spawnProcess
 	scriptEnvClient.on('start', () => {
-		scriptProcess = exec(`${prefix} ${script}`, {
-			stdio: 'inherit',
-			shell: true,
-			detached: true,
-			cwd: folder,
+		RunningConfig.emit('registerTerminalShell', {
+			name: script,
+			onCreated(state) {
+				spawnProcess = exec(`${prefix} ${script}`, {
+					stdio: 'inherit',
+					shell: true,
+					detached: true,
+					cwd: folder,
+				})
+
+				spawnProcess.stdout.on('data', function (data) {
+					data
+						.trim()
+						.split('\n')
+						.forEach(line => {
+							state.emit('write', `\r\n ${line}`)
+						})
+				})
+			},
 		})
-		scriptProcess.stdout.on('data', data => {
-			new Notification({
-				title: script,
-				content: data,
-			})
+
+		RunningConfig.emit('createTerminalSession', {
+			shell: script,
 		})
-		scriptProcess.stdout.on('error', data => {
-			new Notification({
-				title: script,
-				content: data,
-			})
-		})
-		scriptProcess.on('close', () => {
-			scriptEnvClient.emit('stop')
-		})
+
+		if (!StaticConfig.data.appShowTerminal) {
+			//Forcefully enable terminal
+			StaticConfig.data.appShowTerminal = true
+		}
 	})
 	scriptEnvClient.on('stop', () => {
-		scriptProcess && scriptProcess.kill()
+		spawnProcess && spawnProcess.kill()
 	})
 }

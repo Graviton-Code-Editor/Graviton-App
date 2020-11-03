@@ -3,10 +3,10 @@ import { element } from '@mkenzo_8/puffin'
 import Core from 'Core'
 const { fs } = Core
 
-function createProcess(bin) {
+export function createProcess(bin, cwd = process.env.HOMEPATH) {
 	const pty = window.require('node-pty')
 	return pty.spawn(bin, [], {
-		cwd: process.env.HOMEPATH,
+		cwd,
 		env: process.env,
 	})
 }

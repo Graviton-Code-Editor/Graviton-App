@@ -136,7 +136,6 @@ const DefaultText = () => element`<p>Press the + to create a session</p>`
 
 export default function TerminalComp() {
 	function TerminalMounted() {
-		DefaultText
 		RunningConfig.on('aTerminalHasBeenClosed', () => {
 			if (RunningConfig.data.openedTerminals.length === 0) {
 				render(DefaultText(), this)
@@ -159,7 +158,7 @@ export default function TerminalComp() {
 	`
 }
 
-function XtermTerminal() {
+function XtermTerminal({ shell = null } = {}) {
 	sessionsCount++
 
 	const xtermState = new state({
@@ -196,110 +195,114 @@ function XtermTerminal() {
 				this.style.display = 'none'
 			} else {
 				this.style.display = 'block'
-				xtermState.data
 			}
 		})
 
-		await xtermState.on('shellSelected')
+		xtermState.on('shellSelected').then(async () => {
+			const terminalClient = xtermState.data.shell(xtermState)
 
-		const terminalClient = xtermState.data.shell(xtermState)
-
-		function mountedAccs() {
-			const focusedTerminalWatcher = RunningConfig.keyChanged('focusedTerminal', name => {
-				if (name != xtermState.data.name) {
-					this.style.display = 'none'
-				} else {
-					this.style.display = 'block'
-					xtermInstance.focus()
-				}
-			})
-			xtermState.once('close', () => {
-				this.remove()
-				focusedTerminalWatcher.cancel()
-			})
-		}
-		if (terminalClient) {
-			if (terminalClient.accessories) {
-				const accessoriesContainer = element`
+			function mountedAccs() {
+				const focusedTerminalWatcher = RunningConfig.keyChanged('focusedTerminal', name => {
+					if (name != xtermState.data.name) {
+						this.style.display = 'none'
+					} else {
+						this.style.display = 'block'
+						xtermInstance.focus()
+					}
+				})
+				xtermState.once('close', () => {
+					this.remove()
+					focusedTerminalWatcher.cancel()
+				})
+			}
+			if (terminalClient) {
+				if (terminalClient.accessories) {
+					const accessoriesContainer = element`
 					<div mounted="${mountedAccs}">
 						${terminalClient.accessories.map(acc => {
 							return acc.component(xtermState)
 						})}
 					</div>
 					`
-				render(accessoriesContainer, document.getElementById('terminal_accessories'))
+					render(accessoriesContainer, document.getElementById('terminal_accessories'))
+				}
 			}
+
+			const xtermInstance = new Terminal(getConfig())
+			const fit = new FitAddon()
+
+			bindTheme(xtermInstance)
+
+			xtermInstance.loadAddon(fit)
+			xtermInstance.loadAddon(new XtermWebfont())
+
+			xtermInstance.onData(data => {
+				// Emit the data event when the terminal is being written
+				xtermState.emit('data', data)
+			})
+
+			xtermState.on('write', data => {
+				console.log(data)
+				// Write to the terminal when the shell sends an output
+				xtermInstance.write(data)
+			})
+
+			xtermState.on('breakLine', () => {
+				//Break the line on the xterm
+				xtermInstance.writeln('')
+			})
+
+			xtermInstance.onKey(e => {
+				// Emit the keyPressed event
+				xtermState.emit('keyPressed', e.key)
+			})
+
+			const resizingWatchers = RunningConfig.on(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
+				// Force resizing when the sidepanel of the mainbox gets resized
+				fit.fit()
+			})
+
+			xtermState.once('close', () => {
+				// When the terminal needs to be closed
+				this.remove()
+				const openedTerms = RunningConfig.data.openedTerminals
+				const index = getTerminalIndex(xtermState.data.name)
+
+				if (openedTerms.length === 1) {
+					RunningConfig.data.focusedTerminal = null
+				} else if (openedTerms[index - 1]) {
+					RunningConfig.data.focusedTerminal = openedTerms[index - 1].name
+				} else {
+					RunningConfig.data.focusedTerminal = openedTerms[index + 1].name
+				}
+
+				resizingWatchers.cancel()
+
+				RunningConfig.data.openedTerminals.splice(index, 1)
+				RunningConfig.emit('aTerminalHasBeenClosed', { name })
+			})
+
+			await (xtermInstance as any).loadWebfontAndOpen(this)
+
+			window.addEventListener('resize', () => {
+				fit.fit()
+			})
+
+			xtermInstance.refresh(0, 0)
+			xtermInstance.focus()
+			fit.fit()
+		})
+
+		if (shell) {
+			xtermState.data.shell = RunningConfig.data.terminalShells[shell]
+			this.children[0].remove()
+			xtermState.emit('shellSelected')
 		}
-
-		const xtermInstance = new Terminal(getConfig())
-		const fit = new FitAddon()
-
-		bindTheme(xtermInstance)
-
-		xtermInstance.loadAddon(fit)
-		xtermInstance.loadAddon(new XtermWebfont())
-
-		xtermInstance.onData(data => {
-			// Emit the data event when the terminal is being written
-			xtermState.emit('data', data)
-		})
-
-		xtermState.on('write', data => {
-			// Write to the terminal when the shell sends an output
-			xtermInstance.write(data)
-		})
-
-		xtermState.on('breakLine', () => {
-			//Break the line on the xterm
-			xtermInstance.writeln('')
-		})
-
-		xtermInstance.onKey(e => {
-			// Emit the keyPressed event
-			xtermState.emit('keyPressed', e.key)
-		})
-
-		const resizingWatchers = RunningConfig.on(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
-			// Force resizing when the sidepanel of the mainbox gets resized
-			fit.fit()
-		})
-
-		xtermState.once('close', () => {
-			// When the terminal needs to be closed
-			this.remove()
-			const openedTerms = RunningConfig.data.openedTerminals
-			const index = getTerminalIndex(xtermState.data.name)
-
-			if (openedTerms.length === 1) {
-				RunningConfig.data.focusedTerminal = null
-			} else if (openedTerms[index - 1]) {
-				RunningConfig.data.focusedTerminal = openedTerms[index - 1].name
-			} else {
-				RunningConfig.data.focusedTerminal = openedTerms[index + 1].name
-			}
-
-			resizingWatchers.cancel()
-
-			RunningConfig.data.openedTerminals.splice(index, 1)
-			RunningConfig.emit('aTerminalHasBeenClosed', { name })
-		})
-
-		await (xtermInstance as any).loadWebfontAndOpen(this)
-
-		window.addEventListener('resize', () => {
-			fit.fit()
-		})
-
-		xtermInstance.refresh(0, 0)
-		xtermInstance.focus()
-		fit.fit()
 	}
 
 	function onChange() {
 		const selectedOption = this.options[this.selectedIndex].innerText
-
 		xtermState.data.shell = RunningConfig.data.terminalShells[selectedOption]
-
 		this.parentElement.parentElement.remove()
 		xtermState.emit('shellSelected')
 	}
@@ -340,6 +343,17 @@ function TerminalBar() {
 		if (container.innerText !== '') container.innerText = ''
 		render(XtermTerminal(), container)
 	}
+
+	RunningConfig.on('createTerminalSession', ({ shell }) => {
+		const container = document.getElementById('terms_stack')
+		if (container.innerText !== '') container.innerText = ''
+		render(
+			XtermTerminal({
+				shell,
+			}),
+			container,
+		)
+	})
 
 	function closeTerminal() {
 		const focusedTerminal = RunningConfig.data.focusedTerminal
