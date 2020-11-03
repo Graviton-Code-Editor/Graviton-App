@@ -640,7 +640,6 @@ class Item {
 		let removedProjectFolderListener: any
 		if (this.itemLevel == 0) {
 			removedProjectFolderListener = RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
-				console.log(folderPath, this.itemPath, this)
 				if (folderPath == this.itemPath) {
 					this.explorerState.emit('closedFolder', this.itemPath)
 					this.itemState.emit('destroyed')

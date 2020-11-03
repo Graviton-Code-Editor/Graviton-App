@@ -242,7 +242,6 @@ function XtermTerminal({ shell = null } = {}) {
 			})
 
 			xtermState.on('write', data => {
-				console.log(data)
 				// Write to the terminal when the shell sends an output
 				xtermInstance.write(data)
 			})
