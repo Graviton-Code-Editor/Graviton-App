@@ -38,7 +38,7 @@ const processPackage = packageData => {
 		scripts: (() => {
 			let res = {}
 			Object.keys(packageData.scripts || {}).forEach(scp => {
-				res[`run -> ${scp}`] = packageData.scripts[scp]
+				res[scp] = packageData.scripts[scp]
 			})
 			return res
 		})(),

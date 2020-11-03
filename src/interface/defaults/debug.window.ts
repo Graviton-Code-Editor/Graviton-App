@@ -1,4 +1,4 @@
-import EnvClient from '../constructors/env.client'
+import EnvClient from '../constructors/env_client'
 import Core from 'Core'
 const {
 	electron: { ipcRenderer },

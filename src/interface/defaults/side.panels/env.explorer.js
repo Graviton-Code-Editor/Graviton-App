@@ -5,7 +5,7 @@ import { element, render } from '@mkenzo_8/puffin'
 import EnvOutlined from '../../components/icons/env.outlined'
 import Explorer from '../../constructors/explorer'
 import { basename } from 'path'
-import EnvClient from '../../constructors/env.client'
+import EnvClient from '../../constructors/env_client'
 import Notification from '../../constructors/notification'
 import detectEnv from '../../utils/detect_env'
 
@@ -92,7 +92,7 @@ function executeScript(prefix, folder, script) {
 				content: data,
 			})
 		})
-		scriptProcess.stdout.on('data', data => {
+		scriptProcess.stdout.on('error', data => {
 			new Notification({
 				title: script,
 				content: data,
