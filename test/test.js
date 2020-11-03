@@ -115,4 +115,37 @@ describe('Constructors', function () {
 			return NotificationElement
 		})
 	})
+	describe('FileSystem', function () {
+		it('Open a file', function (done) {
+			const sampleFile = __filename
+			const { focusedTab } = RunningConfig.data
+
+			RunningConfig.on('aTabHasBeenFocused').then(() => {
+				const focusedTabDirectory = RunningConfig.data.focusedTab.state.data.directory
+				// Expect the same directory, so we ensure it opened correctly
+				expect(focusedTabDirectory).equal(sampleFile)
+				done()
+			})
+
+			RunningConfig.emit('loadFile', {
+				filePath: sampleFile,
+			})
+		})
+		it('Open a folder', function (done) {
+			const sampleFolder = __dirname
+			const { focusedTab } = RunningConfig.data
+			const explorerPanel = document.getElementById('explorer_panel')
+
+			RunningConfig.emit('addFolderToRunningWorkspace', {
+				folderPath: sampleFolder,
+			})
+
+			setTimeout(() => {
+				const { fullpath } = explorerPanel.children[1].props
+				// Expect the same directory as we previously defined
+				expect(fullpath).equal(sampleFolder)
+				done()
+			}, 500)
+		})
+	})
 })
