@@ -1,6 +1,6 @@
 import path from 'path'
 import StaticConfig from 'StaticConfig'
-import { addPluginToRegistry, loadPlugin } from '../../../utils/plugin.loader'
+import { addPluginToRegistry, loadPlugin } from 'PluginLoader'
 import { pluginsExternalDir } from 'Constants'
 import Core from 'Core'
 const {

@@ -1,5 +1,5 @@
 import { element } from '@mkenzo_8/puffin'
-import { openFolder } from '../../../utils/filesystem'
+import { openFolder } from 'FileSystem'
 import { Card, Button } from '@mkenzo_8/puffin-drac'
 import parseDirectory from '../../../utils/directory_parser'
 import RunningConfig from 'RunningConfig'

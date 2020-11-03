@@ -1,11 +1,11 @@
-import SidePanel from '../../constructors/side.panel'
+import SidePanel from 'Constructors/side.panel'
 import RunningConfig from 'RunningConfig'
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from 'emotion'
 import { Text } from '@mkenzo_8/puffin-drac'
 import FolderOutlined from '../../components/icons/folder.outlined'
 import Welcome from '../../defaults/windows/welcome'
-import { openFolder } from '../../utils/filesystem'
+import { openFolder } from 'FileSystem'
 
 const styleWrapper = style`
 	& {

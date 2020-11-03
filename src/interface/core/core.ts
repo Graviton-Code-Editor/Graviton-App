@@ -42,6 +42,8 @@ if (isBrowser) {
 	Core.childProcess = {
 		exec: null,
 	}
+
+	// Use Browser's API to open links
 	Core.openExternal = window.open
 } else {
 	window.require('v8-compile-cache')

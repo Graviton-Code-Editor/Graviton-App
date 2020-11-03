@@ -1,7 +1,7 @@
 import { element, render, lang } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ContextMenuWrapper from '../components/context.menu'
-import { LanguageState } from '../utils/lang.config'
+import { LanguageState } from 'LanguageConfig'
 import PuffinElement from 'Types/puffin.element'
 import { ContextMenuOptions } from 'Types/contextmenu'
 

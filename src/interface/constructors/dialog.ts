@@ -1,6 +1,6 @@
 import { element } from '@mkenzo_8/puffin'
 import { Text, Titles, Button } from '@mkenzo_8/puffin-drac'
-import { LanguageState } from '../utils/lang.config'
+import { LanguageState } from 'LanguageConfig'
 import Window from './window'
 import DialogBody from '../components/dialog/dialog'
 

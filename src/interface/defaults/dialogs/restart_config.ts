@@ -1,6 +1,6 @@
 import Dialog from '../../constructors/dialog'
 import StaticConfig from 'StaticConfig'
-import { restartConfiguration } from '../../utils/configurator'
+import { restartConfiguration } from '../../core/configurator'
 
 export default function RestartConfigDialog() {
 	return new Promise((resolve, reject) => {

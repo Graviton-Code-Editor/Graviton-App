@@ -40,17 +40,6 @@ if (!isBrowser) {
 }
 
 /*
- * Emit start / stop events for FileSystem Watcher when it gets changed
- */
-StaticConfig.keyChanged('editorFSWatcher', status => {
-	if (status) {
-		StaticConfig.emit('startWatchers')
-	} else {
-		StaticConfig.emit('stopWatchers')
-	}
-})
-
-/*
  * Update Runtime's iconpack when it gets changed
  */
 StaticConfig.keyChanged('appIconpack', value => {
@@ -94,11 +83,16 @@ function setIconpack(value) {
 
 RunningConfig.on('allPluginsLoaded', () => {
 	if (!PluginsRegistry.registry.data.list[StaticConfig.data.appIconpack]) {
+		// Fallback to Graviton's Iconpack if any iconpack is configured
 		StaticConfig.data.appIconpack = 'Graviton'
 	}
+	// Load the configured iconpack
 	setIconpack(StaticConfig.data.appIconpack)
 })
 
+/*
+ * Apply the new font when it's changed
+ */
 StaticConfig.keyChanged('editorFontFamily', value => {
 	setFontFamily(value)
 })

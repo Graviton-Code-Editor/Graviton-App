@@ -3,7 +3,7 @@ import NotificationBody from '../components/notification'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
 import Cross from '../components/icons/cross'
 import RunningConfig from 'RunningConfig'
-import { LanguageState } from '../utils/lang.config'
+import { LanguageState } from 'LanguageConfig'
 
 import { NotificationsLifeTime, NotificationsMaxCount } from 'Constants'
 import { NotificationOptions, NotificationDetails } from 'Types/notification'

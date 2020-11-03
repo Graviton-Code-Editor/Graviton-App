@@ -3,7 +3,7 @@ import { PuffinState } from 'Types/puffin.state'
 import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import minimist from 'minimist'
-import isGitInstalled from './is_git_installed'
+import isGitInstalled from '../utils/is_git_installed'
 import Core from 'Core'
 const {
 	nodeJSONRPC,
