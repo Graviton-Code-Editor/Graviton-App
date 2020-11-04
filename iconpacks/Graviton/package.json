@@ -18,8 +18,11 @@
 		"tsx": {
 			"icon": "./icons/tsx.lang.svg"
 		},
-		"jsx": {
-			"icon": "./icons/jsx.lang.svg"
+		"tsx": {
+			"icon": "./icons/tsx.lang.svg"
+		},
+		"rs": {
+			"icon": "./icons/rs.lang.svg"
 		},
 		"md": {
 			"icon": "./icons/md.lang.svg"
