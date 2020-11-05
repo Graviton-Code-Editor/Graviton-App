@@ -15,18 +15,38 @@ const styleWrapper = style`
 		min-height: 50px;
 		max-height: 50px;
 		--iconFill: var(--sidebarIconsFill);
-	}
-	&:hover:not(.active) {
-		transition: 0.1s;
-		background: var(--sidebarIconHoveringBackground);
-		--iconFill: var(--sidebarIconsHoveringFill)
-	}
-	&.active {
-		background: var(--sidebarIconActiveBackground);
-		--iconFill: var(--sidebarIconsActiveFill)
-	}
-	& svg {
-		width: 20px;
+			:hover:not(.active) {
+			transition: 0.1s;
+			background: var(--sidebarIconHoveringBackground);
+			--iconFill: var(--sidebarIconsHoveringFill)
+		}
+		&.active {
+			background: var(--sidebarIconActiveBackground);
+			--iconFill: var(--sidebarIconsActiveFill)
+		}
+		& svg {
+			width: 20px;
+		}
+		& > .decorator{
+			color: red;
+			position: absolute;
+			font-size:10px;
+			border-radius:50px;
+			padding: 0px;
+			width: 15px;
+			height: 15px;
+			margin-top: 26px;
+			margin-left: 26px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			pointer-events: none;
+			background: var(--sidebarDecoratorBackground);
+			color: var(--sidebarDecoratorColor);
+			&.false{
+				display: none;
+			}
+		}
 	}
 `
 
@@ -39,9 +59,17 @@ const styleWrapperPanel = style`
 `
 
 function SidePanel({ icon, panel, hint = '' }) {
+	let decoratorLabel = ''
+
+	function setDecorator({ label }) {
+		decoratorLabel = label
+		iconNode.children[1].update()
+	}
+
 	const panelIcon = element`
 		<div title="${hint}" :click=${display} class="${styleWrapper}">
-			${icon()}
+			${icon({ setDecorator })}
+			<div class="decorator ${() => (decoratorLabel === '' ? 'false' : 'true')}">${() => decoratorLabel}</div>
 		</div>`
 
 	const panelContainer = element({

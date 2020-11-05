@@ -119,7 +119,7 @@ class Item {
 
 		function itemMounted() {
 			if (mounted) {
-				mounted(self.getHooks(this))
+				mounted.bind(this)(self.getHooks(this))
 			}
 			if (iconComp) {
 				RunningConfig.on('updatedIconpack', () => {

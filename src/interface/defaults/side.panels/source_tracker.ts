@@ -64,6 +64,10 @@ const showChangesPulledNotification = (projectPath: string) => {
 }
 
 if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker) {
+	let globalCountOfChanges = 0
+
+	let setDecorator
+
 	RunningConfig.on('appLoaded', () => {
 		function mounted() {
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
@@ -75,7 +79,19 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 						if (parentFolder === folder) {
 							allCommits = (await explorerProvider.getGitAllCommits(parentFolder)).all
 							gitChanges = changes
+
+							globalCountOfChanges += gitChanges.files.length
+
+							setDecorator({
+								label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
+							})
 						}
+					})
+
+					globalCountOfChanges += gitChanges.files.length
+
+					setDecorator({
+						label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
 					})
 
 					const SourceTracker = Explorer({
@@ -83,6 +99,18 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 							{
 								label: basename(folderPath),
 								icon: 'folder.closed',
+								mounted() {
+									const foldeRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
+										if (folderPath === projectPath) {
+											this.remove()
+											globalCountOfChanges -= gitChanges.files.length
+											setDecorator({
+												label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
+											})
+											foldeRemovedWorkspaceListener.cancel()
+										}
+									})
+								},
 								contextAction(event) {
 									new ContextMenu({
 										list: [
@@ -178,9 +206,11 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 				})
 			})
 		}
-
 		const { display } = new SidePanel({
-			icon: GitIcon,
+			icon(hooks) {
+				setDecorator = hooks.setDecorator
+				return GitIcon()
+			},
 			panel() {
 				return element`<div mounted="${mounted}"/>`
 			},
