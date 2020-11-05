@@ -10,6 +10,7 @@ const {
 	electron: { clipboard },
 } = Core
 import StaticConfig from 'StaticConfig'
+import RunningConfigInterface from 'Types/running_config'
 
 const isBrowser = !eval('window.process')
 
@@ -73,7 +74,7 @@ isGitInstalled().then(res => {
 	}
 })
 
-const RunningConfig: PuffinState = new state(DEFAULT_RUNTIME_CONFIGURATION)
+const RunningConfig: RunningConfigInterface = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
 /*
  * Allow to register all language servers if 'experimentalEditorLSP' is enabled

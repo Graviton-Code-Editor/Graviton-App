@@ -1,17 +1,19 @@
 import RunningConfig from 'RunningConfig'
 import CommandPrompt from '../../constructors/command.prompt'
+import { TabEventArgs } from 'Types/tab'
+import PuffinElement from 'Types/puffin.element'
 
 let openedTabsList = []
 
-RunningConfig.on('aTabHasBeenCreated', ({ tabElement }) => {
+RunningConfig.on('aTabHasBeenCreated', ({ tabElement }: TabEventArgs) => {
 	openedTabsList.push({
 		element: tabElement,
 		title: tabElement.state.data.title,
-		icon: tabElement.children[0].src,
+		icon: (tabElement.children[0] as PuffinElement).src,
 	})
 })
 
-RunningConfig.on('aTabHasBeenClosed', ({ tabElement }) => {
+RunningConfig.on('aTabHasBeenClosed', ({ tabElement }: TabEventArgs) => {
 	openedTabsList.splice(getTabIndex(tabElement), 1)
 })
 

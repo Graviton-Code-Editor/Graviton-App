@@ -1,10 +1,11 @@
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import { element, createElement } from '@mkenzo_8/puffin'
+import { TabEventArgs } from 'Types/tab'
 
 const isEnabled = () => StaticConfig.data.editorEnableCSC || false
 
-RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor }) => {
+RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor }: TabEventArgs) => {
 	if (!isEditor) return
 	const isCM = client.name === 'codemirror'
 
