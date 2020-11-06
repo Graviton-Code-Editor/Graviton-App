@@ -145,7 +145,7 @@
 		"sidebarIconBackground": "transparent",
 		"sidebarIconHoveringBackground": "rgb(40,40,40)",
 		"sidebarIconActiveBackground": "rgb(50,50,50)",
-		"sidebarDecoratorBackground": "red",
+		"sidebarDecoratorBackground": "rgb(255, 0, 72)",
 		"sidebarDecoratorColor": "white"
 	}
 }
