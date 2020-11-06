@@ -28,7 +28,6 @@ const styleWrapper = style`
 			width: 20px;
 		}
 		& > .decorator{
-			color: red;
 			position: absolute;
 			font-size:10px;
 			border-radius:50px;

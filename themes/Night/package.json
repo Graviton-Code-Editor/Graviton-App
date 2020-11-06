@@ -138,14 +138,14 @@
 		"switchIndicatorActivatedBackground": "rgb(255, 0, 72)",
 		"switchIndicatorDesactivatedBackground": "rgb(220,200,200)",
 		"loaderBackground": "white",
+		"sidebarBackground": "#191919",
 		"sidebarIconsFill": "rgb(195,195,195)",
 		"sidebarIconsActiveFill": "rgb(235,235,235)",
 		"sidebarIconsHoveringFill": "rgb(195,195,195)",
 		"sidebarIconBackground": "transparent",
 		"sidebarIconHoveringBackground": "rgb(40,40,40)",
 		"sidebarIconActiveBackground": "rgb(50,50,50)",
-		"sidebarBackground": "#191919",
-		"sidebarDecoratorBackground": "rgb(255, 0, 72)",
+		"sidebarDecoratorBackground": "red",
 		"sidebarDecoratorColor": "white"
 	}
 }

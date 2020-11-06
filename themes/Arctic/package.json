@@ -343,7 +343,11 @@
 					"Background": "rgb(210,210,210)"
 				}
 			},
-			"Background": "white"
+			"Background": "white",
+			"Decorator": {
+				"Color": "white",
+				"Background": "#0066FF"
+			}
 		}
 	}
 }
