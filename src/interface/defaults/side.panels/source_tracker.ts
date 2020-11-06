@@ -27,7 +27,11 @@ const getExplorerItems = files => {
 	})
 }
 
-const getAllCommits = commits => {
+const getCommitChangesLabel = changes => {
+	return changes.length > 25 ? '25+' : changes.slice(0, 25).length
+}
+
+const getCommitsItems = commits => {
 	const emoji = new EmojiConvertor()
 	emoji.replace_mode = 'unified'
 	emoji.allow_native = true
@@ -68,30 +72,56 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 
 	let setDecorator
 
+	const getGlobalChanges = () => {
+		return globalCountOfChanges > 0 ? globalCountOfChanges : ''
+	}
+
+	const increateGlobalChanges = changes => {
+		globalCountOfChanges += changes
+	}
+
+	const decreaseGlobalChanges = changes => {
+		globalCountOfChanges -= changes
+	}
+
 	RunningConfig.on('appLoaded', () => {
 		function mounted() {
+			/*
+			 * When a folder is loaded
+			 */
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+				/*
+				 * When that folder's repository (if exists) gets loaded
+				 */
 				RunningConfig.on('loadedGitRepo', async ({ parentFolder, gitChanges, anyChanges, explorerProvider }) => {
 					if (folderPath !== parentFolder) return
+					//Load the current commits
 					let { all: allCommits } = await explorerProvider.getGitAllCommits(parentFolder)
 
+					/*
+					 * Listen for any git change in that folder
+					 */
 					RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges: changes }) => {
 						if (parentFolder === folder) {
+							//Get new commits
 							allCommits = (await explorerProvider.getGitAllCommits(parentFolder)).all
+							//Remote old count
+							decreaseGlobalChanges(gitChanges.files.length)
+							//Update the new count
+							increateGlobalChanges(changes.files.length)
+							//Save the new count
 							gitChanges = changes
-
-							globalCountOfChanges += gitChanges.files.length
-
+							//Display the new count
 							setDecorator({
-								label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
+								label: getGlobalChanges(),
 							})
 						}
 					})
-
-					globalCountOfChanges += gitChanges.files.length
-
+					//Set the current count
+					increateGlobalChanges(gitChanges.files.length)
+					//Display the current count
 					setDecorator({
-						label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
+						label: getGlobalChanges(),
 					})
 
 					const SourceTracker = Explorer({
@@ -102,27 +132,17 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 								mounted() {
 									const foldeRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
 										if (folderPath === projectPath) {
+											// Dirty way of removing the explorer
 											this.remove()
-											globalCountOfChanges -= gitChanges.files.length
+											// Decrease the count
+											decreaseGlobalChanges(gitChanges.files.length)
+											// Display the count
 											setDecorator({
 												label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
 											})
+											// Remove the listener
 											foldeRemovedWorkspaceListener.cancel()
 										}
-									})
-								},
-								contextAction(event) {
-									new ContextMenu({
-										list: [
-											{
-												label: 'Accept',
-												action() {
-													console.log('test')
-												},
-											},
-										],
-										event,
-										parent: document.body,
 									})
 								},
 								items: [
@@ -132,6 +152,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											{
 												label: 'Add',
 												action: async function () {
+													/*
+													 * Add all the files to the index
+													 */
 													await explorerProvider.gitAdd(parentFolder, ['-A'])
 													showFilesAddedNotification(parentFolder)
 												},
@@ -143,6 +166,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 														title: 'Commit message',
 														placeHolder: 'Bug fix',
 													})
+													/*
+													 * Create a commit
+													 */
 													await explorerProvider.gitCommit(parentFolder, commitContent)
 													showCommitCreatedNotification(parentFolder)
 												},
@@ -150,7 +176,13 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											{
 												label: 'Pull',
 												action: async function () {
+													/*
+													 * Get the current git branch
+													 */
 													const { current } = await explorerProvider.getGitStatus(parentFolder)
+													/*
+													 * Pull changes on that branch
+													 */
 													await explorerProvider.gitPull(parentFolder, current)
 													showChangesPulledNotification(parentFolder)
 												},
@@ -162,12 +194,21 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 										mounted({ setItems, setDecorator }) {
 											RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
+													/*
+													 * Display the changed files
+													 */
 													setItems(getExplorerItems(gitChanges.files), false)
+													/*
+													 * Update the changes count
+													 */
 													setDecorator({
 														label: gitChanges.files.length.toString(),
 													})
 												}
 											})
+											/*
+											 * Display the current changed files
+											 */
 											setItems(getExplorerItems(gitChanges.files), false)
 										},
 										decorator: {
@@ -187,14 +228,26 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 										mounted({ setItems, setDecorator }) {
 											RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
+													/*
+													 * Get the latest commits
+													 */
 													const { all } = await explorerProvider.getGitAllCommits(parentFolder)
-													setItems(getAllCommits(all), false)
+													/*
+													 * Display as item each commit
+													 */
+													setItems(getCommitsItems(all), false)
+													/*
+													 * Update the commits count
+													 */
 													setDecorator({
 														label: getCommitChangesLabel(all),
 													})
 												}
 											})
-											setItems(getAllCommits(allCommits), false)
+											/*
+											 * Display each current commit as item
+											 */
+											setItems(getCommitsItems(allCommits), false)
 										},
 										items: [],
 									},
@@ -217,8 +270,4 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 			hint: 'Source Tracker',
 		})
 	})
-}
-
-const getCommitChangesLabel = changes => {
-	return changes.length > 25 ? '25+' : changes.slice(0, 25).length
 }
