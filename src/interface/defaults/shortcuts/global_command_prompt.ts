@@ -22,19 +22,38 @@ RunningConfig.on('command.openCommandPrompt', () => {
 			},
 			{
 				label: 'Open Projects',
-				action: () => Welcome().launch(),
+				action: () => {
+					/*
+					 * Prevent opening the Welcome window in Browser mode
+					 */
+					if (!RunningConfig.data.isBrowser) {
+						Welcome().launch()
+					}
+				},
 			},
 			{
 				label: 'Open Workspaces',
 				action: () => {
-					Welcome({
-						defaultPage: 'workspaces',
-					}).launch()
+					/*
+					 * Prevent opening the Welcome window in Browser mode
+					 */
+					if (!RunningConfig.data.isBrowser) {
+						Welcome({
+							defaultPage: 'workspaces',
+						}).launch()
+					}
 				},
 			},
 			{
 				label: 'Open Store',
-				action: () => Store().launch(),
+				action: () => {
+					/*
+					 * Prevent opening Store in Browser mode
+					 */
+					if (!RunningConfig.data.isBrowser) {
+						Store().launch()
+					}
+				},
 			},
 			{
 				label: 'Open About',
