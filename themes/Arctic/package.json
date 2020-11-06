@@ -11,7 +11,22 @@
 			"Background": "white",
 			"Foreground": "black",
 			"Selection": "rgb(180,180,180,0.6)",
-			"Cursor": "black"
+			"Cursor": "black",
+			"Selection": "rgb(100,100,100,0.6",
+			"Black": "",
+			"Red": "",
+			"Green": "",
+			"Yellow": "",
+			"Blue": "",
+			"Magenta": "",
+			"Cyan": "",
+			"White": "",
+			"BrightGreen": "",
+			"BrightYellow": "",
+			"BrightBlue": "",
+			"BrightMagenta": "",
+			"BrightCyan": "",
+			"BrightWhite": ""
 		},
 		"select": {
 			"Background": "rgb(150,150,150,0.30)"

@@ -121,8 +121,23 @@ const getConfig = () => {
 		theme: {
 			background: getProp('terminalBackground'),
 			foreground: getProp('terminalForeground'),
-			selection: getProp('terminalSelection'),
 			cursor: getProp('terminalCursor'),
+			cursorAccent: getProp('terminalCursorAccent'),
+			selection: getProp('terminalSelection'),
+			black: getProp('terminalBlack'),
+			red: getProp('terminalRed'),
+			green: getProp('terminalGreen'),
+			yellow: getProp('terminalYellow'),
+			blue: getProp('terminalBlue'),
+			magenta: getProp('terminalMagenta'),
+			cyan: getProp('terminalCyan'),
+			white: getProp('terminalWhite'),
+			brightGreen: getProp('terminalBrightGreen'),
+			brightYellow: getProp('terminalBrightYellow'),
+			brightBlue: getProp('terminalBrightBlue'),
+			brightMagenta: getProp('terminalMagenta'),
+			brightCyan: getProp('terminalCyan'),
+			brightWhite: getProp('terminalWhite'),
 		},
 		cursorStyle: 'bar' as 'bar',
 		cursorBlink: true,
@@ -402,5 +417,6 @@ function getTerminalIndex(name) {
 }
 
 function getProp(prop) {
-	return getProperty(prop, ThemeProvider.data)
+	const value = getProperty(prop, ThemeProvider.data)
+	return value == '' ? null : value
 }
