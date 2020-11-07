@@ -6,6 +6,7 @@ import SideMenuSearcher from '../../components/window/side.menu.searcher'
 
 import CustomizationScheme from '../settings/pages/customization'
 import AdvancedScheme from '../settings/pages/advanced'
+import ShortcutsScheme from '../settings/pages/shortcuts'
 import LanguagesScheme from '../settings/pages/languages'
 import AboutScheme from '../settings/pages/about'
 
@@ -33,6 +34,7 @@ export default function Settings(): WindowInstance {
 					<SideMenuSearcher/>
 					<label to="customization" lang-string="windows.Settings.Customization.Customization"/>
 					<label to="advanced" lang-string="windows.Settings.Advanced.Advanced"/>
+					<label to="shortcuts" lang-string="windows.Settings.Shortcuts.Shortcuts"/>
 					<label to="languages" lang-string="windows.Settings.Languages"/>
 					<label to="about" lang-string="windows.Settings.About.About"/>
 				</div>
@@ -46,6 +48,9 @@ export default function Settings(): WindowInstance {
 								closeWindow: () => SettingsWindow.close(),
 							}),
 						)}
+					</div>
+					<div href="shortcuts">
+						${getScheme(ShortcutsScheme())}
 					</div>
 					<div href="languages">
 						${getScheme(LanguagesScheme())}

@@ -7,6 +7,7 @@ const styleWrapper = style`
 		background: var(--sidemenuSectionBackground);
 		border-radius: 6px;
 		margin:6px 6px;
+		min-height: 50px;
 	}
 `
 

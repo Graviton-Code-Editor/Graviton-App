@@ -113,6 +113,10 @@
 					}
 				},
 				"Languages": "Languages",
+				"Shortcuts": {
+					"Shortcuts": "Shortcuts",
+					"CreateCombo": "Create Combo"
+				},
 				"About": {
 					"About": "About",
 					"GravitonDescription": "Graviton is a cross platform editor."

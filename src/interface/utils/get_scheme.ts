@@ -1,4 +1,5 @@
-import { element } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
+import { LanguageState } from 'LanguageConfig'
 import Switch from '../components/switch'
 import { Titles, RadioGroup, Button, Text } from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
@@ -17,6 +18,12 @@ const getComp = (scheme: any) => {
 	}
 
 	return result
+}
+
+function getItemHooks() {
+	return {
+		getComponentFromScheme,
+	}
 }
 
 export default function getScheme(scheme) {
@@ -40,6 +47,7 @@ const getComponentFromScheme = comp => {
 				components: {
 					H4: Titles.h4,
 				},
+				addons: [lang(LanguageState)],
 			})`<H4 lang-string="${comp.label}"/>`
 		case 'switch':
 			function onSwitch(e) {
@@ -52,6 +60,7 @@ const getComponentFromScheme = comp => {
 				components: {
 					Switch,
 				},
+				addons: [lang(LanguageState)],
 			})`<Switch :toggled="${onSwitch}" data="${{ default: StaticConfig.data[comp.key], label: comp.label }}"/>`
 		case 'radioGroup':
 			function onSelected(e) {
@@ -65,6 +74,7 @@ const getComponentFromScheme = comp => {
 				components: {
 					RadioGroup,
 				},
+				addons: [lang(LanguageState)],
 			})`
 				<RadioGroup direction="${comp.direction || 'vertically'}" :radioSelected="${onSelected}" styled="${comp.styled != null ? comp.styled : true}">
 					${comp.radios.map(radio => {
@@ -84,16 +94,22 @@ const getComponentFromScheme = comp => {
 			}
 
 		case 'button':
+			function onClick(e) {
+				comp.onClick.bind(this)(e, getItemHooks())
+			}
+
 			return element({
 				components: {
 					Button,
 				},
-			})`<Button :click="${comp.onClick}" lang-string="${comp.label}"/>`
+				addons: [lang(LanguageState)],
+			})`<Button :click="${onClick}" lang-string="${comp.label}"/>`
 		case 'section':
 			return element({
 				components: {
 					Section,
 				},
+				addons: [lang(LanguageState)],
 			})`<Section>${comp.content.map(el => {
 				return getComponentFromScheme(el)
 			})}</Section>`
@@ -102,6 +118,7 @@ const getComponentFromScheme = comp => {
 				components: {
 					Text,
 				},
+				addons: [lang(LanguageState)],
 			})`<Text lang-string="${comp.label}"/>`
 	}
 }
