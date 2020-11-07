@@ -1,3 +1,4 @@
+import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import configEditor from '../../tabs/config.editor'
 import restartConfigDialog from '../../dialogs/restart_config'
@@ -8,9 +9,11 @@ export default function Advanced({ closeWindow }) {
 			{
 				type: 'title',
 				label: 'windows.Settings.Advanced.Explorer',
+				disabled: RunningConfig.data.isBrowser,
 			},
 			{
 				type: 'section',
+				disabled: RunningConfig.data.isBrowser,
 				content: [
 					{
 						type: 'switch',
@@ -60,6 +63,7 @@ export default function Advanced({ closeWindow }) {
 					},
 					{
 						type: 'switch',
+						disabled: RunningConfig.data.isBrowser,
 						key: 'experimentalEditorLSP',
 						label: 'windows.Settings.Advanced.LSPIntegration',
 					},

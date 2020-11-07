@@ -41,6 +41,7 @@ export default function getScheme(scheme) {
 }
 
 const getComponentFromScheme = comp => {
+	if (comp.disabled) return false
 	switch (comp.type) {
 		case 'title':
 			return element({
@@ -110,9 +111,11 @@ const getComponentFromScheme = comp => {
 					Section,
 				},
 				addons: [lang(LanguageState)],
-			})`<Section>${comp.content.map(el => {
-				return getComponentFromScheme(el)
-			})}</Section>`
+			})`<Section>${comp.content
+				.map(el => {
+					return getComponentFromScheme(el)
+				})
+				.filter(Boolean)}</Section>`
 		case 'text':
 			return element({
 				components: {
