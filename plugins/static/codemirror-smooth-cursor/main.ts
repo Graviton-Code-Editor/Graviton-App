@@ -12,7 +12,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	if (!isCM || !isEnabled()) return
 
 	const cursor = createElement(element`
-		<div tabindex="-1" style="top:0;left:0;pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); transition: ease-out 0.1s; width: ${StaticConfig.data.editorFontSize / 4}px"/>
+		<div tabindex="-1" style="top:0;left:0;pointer-events:none;position: absolute; background: rgba(150,150,150,0.4); width: ${StaticConfig.data.editorFontSize / 4}px"/>
 	`)
 
 	tabElement.state.data.bodyElement.appendChild(cursor)
@@ -22,7 +22,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	})
 
 	instance.on('scroll', () => {
-		refreshCursor()
+		refreshCursor(true)
 	})
 
 	instance.on('change', () => {
@@ -34,7 +34,7 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	})
 
 	instance.on('blur', () => {
-		refreshCursor()
+		refreshCursor(true)
 	})
 
 	instance.on('refresh', () => {
@@ -42,13 +42,18 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 	})
 
 	StaticConfig.keyChanged('editorFontSize', () => {
-		refreshCursor()
+		refreshCursor(true)
 	})
 
-	function refreshCursor() {
+	function refreshCursor(fast = false) {
 		if (!isCursorVisible(instance)) {
 			cursor.style.display = 'none'
 			return
+		}
+		if (fast) {
+			cursor.style.transition = ''
+		} else {
+			cursor.style.transition = 'ease-out 0.1s'
 		}
 		cursor.style.display = 'block'
 		const cursorElement = instance.getWrapperElement().getElementsByClassName('CodeMirror-cursor')[0]
@@ -59,6 +64,8 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 		cursor.style.height = clientHeight
 		cursor.style.width = StaticConfig.data.editorFontSize / 1.6
 	}
+
+	refreshCursor(true)
 })
 
 const isCursorVisible = cm => {
