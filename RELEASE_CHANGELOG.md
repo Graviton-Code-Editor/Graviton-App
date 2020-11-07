@@ -1,10 +1,13 @@
 ### 🔝 Important changes
 
+- Browser-mode version
 - LSP integration (experimental)
+- Source Tracker, a git toolbox
 - Built-in Terminal
 - Improved Workspaces
 - Iconpacks support
 - New translated languages
+- Added more Settings
 
 ### ✔ Changes
 
@@ -19,7 +22,7 @@
   - Less
   - Golang
   - and many more
-- Added an smooth cursor plugin built-in
+- Added a built-in smooth cursor plugin
 - Improved NPM inspector
 - New shortcuts:
   - Ctrl+Q: closes the app (Only in MacOS by default)
@@ -42,4 +45,4 @@
 - Added Unit tests
 - Updated to Electron v10
 - Added a ExplorerProvider API, which could allow Graviton to access, read and modify other FileSystems rather than the local of the machine.
-- Added a Terminal Clients API, to easily create new terminals
+- Added a Terminal Clients API, to easily create new terminals (shells)

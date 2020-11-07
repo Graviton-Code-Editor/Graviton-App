@@ -16,7 +16,7 @@
 
 Graviton is a **open source**, **cross-platform**, **minimalist-looking** code editor.
 
-You can download it for **Windows**, **MacOS**, and **GNU/Linux** from the [releases](https://github.com/Graviton-Code-Editor/Graviton-App/releases).
+You can download it for **Windows**, **MacOS**, and **GNU/Linux** from [Releases](https://github.com/Graviton-Code-Editor/Graviton-App/releases), or try the **experimental** [Online Version](https://graviton.netlify.app/browser).
 
 ![example screenshot](example.png)
 
