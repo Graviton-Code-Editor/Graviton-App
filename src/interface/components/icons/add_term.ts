@@ -3,7 +3,7 @@ import { css as style } from 'emotion'
 
 const styleWrapper = style`
 	& rect{
-		fill:var(--windowIconsFill);
+		fill:var(--tabIconFill);
 	}
 	&:hover rect{
 		fill:var(--tabIconHoveringFill);
