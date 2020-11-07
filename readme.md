@@ -1,5 +1,5 @@
 <p align="center">
-	<img align="center" src="https://graviton.netlify.app/assets/graviton-logo.png"  width="256" height="64.5"/>
+	<img align="center" src="https://graviton.netlify.app/logo.png"  width="256" height="64.5"/>
 	<br>
 	<a href="https://graviton.netlify.app">graviton.netlify.app</a>
 </p>
