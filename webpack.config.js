@@ -140,6 +140,7 @@ module.exports = [
 						<head>
 							<meta charset="UTF-8" />
 							<link rel="shortcut icon" type="image/svg" href="dist/logo.svg"/>
+							<meta name="viewport" content="initial-scale=1, maximum-scale=1">
 							<title>Graviton Editor</title>
 						</head>
 						<body>
