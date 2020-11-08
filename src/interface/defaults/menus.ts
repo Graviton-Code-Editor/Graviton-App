@@ -347,7 +347,7 @@ function getHelpMenu(button) {
 			{
 				label: 'menus.Help.Documentation',
 				action: () => {
-					openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/wiki')
+					openExternal('https://graviton.netlify.app/docs')
 				},
 			},
 			{

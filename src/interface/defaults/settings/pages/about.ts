@@ -18,7 +18,7 @@ export default function About() {
 				type: 'button',
 				label: 'Documentation',
 				onClick() {
-					shell.openExternal('https://graviton.netlify.app')
+					shell.openExternal('https://graviton.netlify.app/docs')
 				},
 			},
 		],
