@@ -1,7 +1,10 @@
 const isBrowser = !eval('window.process')
 const CustomWindow: any = window
 import { getBrowserConfiguration } from '../../app/default_config'
-import './browser'
+
+if (isBrowser) {
+	import('./browser').then(() => {})
+}
 
 /*
  * By default all native dependencies are null, and then loaded dinamically if app is running in the desktop version

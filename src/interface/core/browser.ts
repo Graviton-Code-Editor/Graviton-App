@@ -1,3 +1,6 @@
+import RunningConfig from 'RunningConfig'
+import BrowserWelcome from '../defaults/windows/browser_welcome'
+
 /*
  * Tweaks for Browser
  */
@@ -10,4 +13,8 @@ window.addEventListener('keydown', e => {
 	if (e.ctrlKey && ['p'].includes(e.key)) {
 		e.preventDefault()
 	}
+})
+
+RunningConfig.on('appLoaded', () => {
+	BrowserWelcome().launch()
 })

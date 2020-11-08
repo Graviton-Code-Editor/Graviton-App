@@ -77,6 +77,7 @@
 				"SourceCode": "Source code",
 				"ReportBug": "Report bug",
 				"CheckForUpdates": "Check for updates",
+				"ShowWelcome": "Show Welcome",
 				"About": "About"
 			}
 		},
@@ -142,6 +143,10 @@
 				"NewProject": "New project",
 				"OpenWorkspace": "Open a workspace",
 				"OpenFolder": "Open a folder"
+			},
+			"BrowserWelcome": {
+				"WelcomeTitle": "Welcome to Graviton for Browser!",
+				"WelcomeMessage": "Remember this is still very experimental and most things do not work. \n For a better experience download the desktop app."
 			}
 		},
 		"misc": {
@@ -172,7 +177,8 @@
 			"Close": "Close",
 			"Ignore": "Ignore",
 			"BuildDate": "Build date",
-			"By": "by"
+			"By": "by",
+			"Understood": "Understood"
 		},
 		"notifications": {
 			"appLanguageChanged": {

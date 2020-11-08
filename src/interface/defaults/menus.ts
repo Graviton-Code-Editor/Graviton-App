@@ -10,6 +10,7 @@ import openDebugClient from './debug.window'
 import packageJSON from 'Root/package.json'
 import checkForUpdates from '../utils/check.updates'
 import AppPlatform from 'AppPlatform'
+import BrowserWelcome from './windows/browser_welcome'
 import { openFolder, openFile } from 'FileSystem'
 import Core from 'Core'
 const {
@@ -379,6 +380,16 @@ function getHelpMenu(button) {
 									title: 'No updates found',
 								})
 							})
+						},
+					}
+				}
+			})(),
+			(() => {
+				if (isBrowser) {
+					return {
+						label: 'menus.Help.ShowWelcome',
+						action() {
+							BrowserWelcome().launch()
 						},
 					}
 				}
