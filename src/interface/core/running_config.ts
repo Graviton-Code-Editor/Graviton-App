@@ -53,7 +53,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	openedWindows: 0,
 	arguments: electronArguments,
 	parsedArguments: parsedElectronArguments,
-	currentStaticConfig: {},
+	ignoredStaticConfig: {},
 	envs: [],
 	projectServices: [],
 	languageServers: [],

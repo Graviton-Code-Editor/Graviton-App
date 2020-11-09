@@ -82,6 +82,7 @@ const defaultConfig = {
 		appShowTerminal: false,
 		experimentalEditorLSP: false,
 		experimentalSourceTracker: false,
+		appCheckWorkspaceExistsWhenOpeningFolders: true,
 	},
 }
 if (process.platform === 'darwin') {

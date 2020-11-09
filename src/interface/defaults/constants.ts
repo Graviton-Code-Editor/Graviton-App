@@ -5,7 +5,8 @@ import * as path from 'path'
 export const APIEndpoint = 'https://graviton-api.herokuapp.com'
 export const APIPluginsEndpoint = `${APIEndpoint}/plugins`
 
-export const WorkspaceFilename = 'graviton.wp.json'
+export const WorkspaceFilename = 'settings.json'
+export const WorkspaceFoldername = '.gveditor'
 
 export const pluginsIternalDir = window.process ? (RunningConfig.data.isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.join(window.process.resourcesPath, 'pluginsDist')) : ''
 export const pluginsExternalDir = window.process ? path.join(StaticConfig.data.appConfigPath, 'plugins') : ''

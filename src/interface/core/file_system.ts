@@ -15,7 +15,7 @@ import * as path from 'path'
 import Core from 'Core'
 const { fs } = Core
 
-import { WorkspaceFilename } from 'Constants'
+import { WorkspaceFoldername, WorkspaceFilename } from 'Constants'
 const isBrowser = RunningConfig.data.isBrowser
 
 import { AddFolderInWorkspace, AddFolderInWorkspaceFromDialog, SetWorkspace, RemoveWorkspace } from '../types/workspace.ts'
@@ -259,7 +259,7 @@ if (!isBrowser) {
 
 function setWorkspaceSettings(settings) {
 	Object.keys(settings).forEach(sett => {
-		RunningConfig.data.currentStaticConfig[sett] = settings[sett]
+		RunningConfig.data.ignoredStaticConfig[sett] = settings[sett]
 		StaticConfig.data[sett] = settings[sett]
 	})
 }
@@ -306,10 +306,16 @@ RunningConfig.on('addWorkspaceToLog', ({ workspacePath }) => {
  * @param {string} workspaceDir - Workspace's path
  * @param {string} workspaceConfig - Workspace's configuration object
  */
-function saveConfiguration(workspacePath: string, workspaceConfig: any) {
+async function saveConfiguration(workspacePath: string, workspaceSettingsPath: string, workspaceConfig: any) {
 	const workspacePathNormalized = normalizeDir(workspacePath)
+
+	if (!(await fs.exists(workspacePathNormalized))) {
+		await fs.mkdir(workspacePathNormalized)
+	}
+
 	const workspaceConfiguration = JSON.stringify(workspaceConfig, null, 2)
-	fs.writeFile(workspacePathNormalized, workspaceConfiguration, 'UTF-8', err => {
+
+	fs.writeFile(workspaceSettingsPath, workspaceConfiguration, 'UTF-8', err => {
 		if (err) throw err
 		StaticConfig.triggerChange()
 	})
@@ -325,19 +331,21 @@ function saveConfiguration(workspacePath: string, workspaceConfig: any) {
  */
 RunningConfig.on('saveCurrentWorkspace', function () {
 	if (RunningConfig.data.workspacePath) {
-		saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
+		const workspaceFolderPath = path.dirname(RunningConfig.data.workspacePath)
+		saveConfiguration(workspaceFolderPath, RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
 	} else {
 		selectFolderDialog().then((res: string) => {
 			InputDialog({
 				title: 'Name your workspace',
 				placeHolder: 'My workspace',
 			}).then((name: string) => {
-				const resultWorkspace = path.join(res, WorkspaceFilename)
-				RunningConfig.data.workspacePath = resultWorkspace
+				const workspaceFolderPath = path.join(res, WorkspaceFoldername)
+				const workspaceSettingsPath = path.join(workspaceFolderPath, WorkspaceFilename)
+				RunningConfig.data.workspacePath = workspaceSettingsPath
 				RunningConfig.data.workspaceConfig.name = name
-				saveConfiguration(RunningConfig.data.workspacePath, RunningConfig.data.workspaceConfig)
+				saveConfiguration(workspaceFolderPath, workspaceSettingsPath, RunningConfig.data.workspaceConfig)
 				RunningConfig.emit('addWorkspaceToLog', {
-					workspacePath: resultWorkspace,
+					workspacePath: workspaceSettingsPath,
 				})
 			})
 		})
@@ -364,10 +372,11 @@ RunningConfig.on('removeWorkspaceFromLog', ({ workspacePath }: RemoveWorkspace) 
  * @param {string} name - New workspace's name
  */
 RunningConfig.on('renameWorkspace', ({ workspacePath, name = '' }) => {
+	const workspaceFolderPath = path.dirname(workspacePath)
 	const workspaceConfig = getWorkspaceConfig(normalizeDir(workspacePath))
 	if (workspaceConfig) {
 		workspaceConfig.name = name
-		saveConfiguration(workspacePath, workspaceConfig)
+		saveConfiguration(workspaceFolderPath, workspacePath, workspaceConfig)
 	}
 })
 
@@ -397,4 +406,4 @@ RunningConfig.on('renameWorkspaceDialog', function ({ workspacePath, name = 'My 
 		})
 })
 
-export { getWorkspaceConfig, openFolder, openFile }
+export { getWorkspaceConfig, openFolder, openFile, setWorkspaceSettings }

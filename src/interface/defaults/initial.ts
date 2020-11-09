@@ -28,6 +28,7 @@ import '../collections/codemirror'
 import '../collections/plugins'
 import '../utils/test'
 import './terminal_shells/local'
+import '../core/workspaces'
 
 const { fs } = Core
 

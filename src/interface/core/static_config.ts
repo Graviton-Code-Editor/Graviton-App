@@ -14,7 +14,9 @@ const isBrowser = RunningConfig.data.isBrowser
 function saveConfiguration() {
 	let config = {}
 	Object.keys(StaticConfig.data).forEach(key => {
-		config[key] = StaticConfig.data[key]
+		if (!RunningConfig.data.ignoredStaticConfig.hasOwnProperty(key)) {
+			config[key] = StaticConfig.data[key]
+		}
 	})
 	updateConfiguration(config)
 }
@@ -24,7 +26,7 @@ const StaticConfig: PuffinState = new state(Object.assign({}, getConfiguration()
  * Save the user's configuration when anything gets changed
  */
 StaticConfig.changed((data, keyName) => {
-	if (!RunningConfig.data.currentStaticConfig.hasOwnProperty(keyName) && !RunningConfig.data.isDebug) {
+	if (!RunningConfig.data.ignoredStaticConfig.hasOwnProperty(keyName) && !RunningConfig.data.isDebug) {
 		saveConfiguration()
 	}
 })
