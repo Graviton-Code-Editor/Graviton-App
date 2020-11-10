@@ -65,18 +65,24 @@ function applyShortcuts() {
 				handler: event => RunningConfig.emit('command.openCurrentPanelTabsIterator'),
 			}
 		}),
-		...StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.map(shortcut => {
-			return {
-				shortcut: shortcut,
-				handler: event => RunningConfig.emit('command.increaseFontSize'),
-			}
-		}),
-		...StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.map(shortcut => {
-			return {
-				shortcut: shortcut,
-				handler: event => RunningConfig.emit('command.decreaseFontSize'),
-			}
-		}),
+		...StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos
+			.map(shortcut => {
+				if (shortcut === 'Ctrl+ScrollUp') return
+				return {
+					shortcut: shortcut,
+					handler: event => RunningConfig.emit('command.increaseFontSize'),
+				}
+			})
+			.filter(Boolean),
+		...StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos
+			.map(shortcut => {
+				if (shortcut === 'Ctrl+ScrollDown') return
+				return {
+					shortcut: shortcut,
+					handler: event => RunningConfig.emit('command.decreaseFontSize'),
+				}
+			})
+			.filter(Boolean),
 		...StaticConfig.data.appShortcuts.CloseCurrentWindow.combos.map(shortcut => {
 			return {
 				shortcut: shortcut,
