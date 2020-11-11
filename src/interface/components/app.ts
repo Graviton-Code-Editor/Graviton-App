@@ -34,6 +34,9 @@ const styleWrapper = style`
 			border-top-right-radius:  8px;
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
+			&::-webkit-scrollbar {
+				width: 4px;
+			}
 		}
 		#sidepanel{
 			border-top-right-radius:  8px;
