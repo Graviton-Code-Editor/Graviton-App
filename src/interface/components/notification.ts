@@ -32,12 +32,12 @@ const styleWrapper = style`
 			position: relative;
 		}
 	}
-	& > h5{
+	& h5{
 		color:var(--notificationTitleText);
 		overflow:hidden;
 		text-overflow:ellipsis;
-		max-width:225px;
-		width:225px;
+		max-width:145px;
+		width:145px;
 		white-space:nowrap;
 		margin-bottom: 2px;
 		user-select: none;
@@ -59,7 +59,11 @@ const styleWrapper = style`
 			font-size: 11px;
 			margin: auto 5px;
 			padding-bottom:2px;
-			color: var(--textColor)
+			color: var(--textColor);
+			max-width: 100px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			white-space:nowrap;
 		}
 	}
 `
