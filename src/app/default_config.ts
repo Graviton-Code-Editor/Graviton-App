@@ -49,10 +49,10 @@ const defaultConfig = {
 				combos: ['CmdOrCtrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: ['CmdOrCtrl+Up', 'CmdOrCtrl+ScrollUp'],
+				combos: ['Ctrl+Up', 'Ctrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: ['CmdOrCtrl+Down', 'CmdOrCtrl+ScrollDown'],
+				combos: ['Ctrl+Down', 'Ctrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
