@@ -25,34 +25,34 @@ const defaultConfig = {
 		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: ['Ctrl+S'],
+				combos: ['CmdOrCtrl+S'],
 			},
 			NewPanel: {
-				combos: ['Ctrl+N'],
+				combos: ['CmdOrCtrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: ['Ctrl+T'],
+				combos: ['CmdOrCtrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: ['Ctrl+L'],
+				combos: ['CmdOrCtrl+L'],
 			},
 			OpenEditorCommandPrompt: {
-				combos: ['Ctrl+I'],
+				combos: ['CmdOrCtrl+I'],
 			},
 			OpenExplorerCommandPrompt: {
-				combos: ['Ctrl+O'],
+				combos: ['CmdOrCtrl+O'],
 			},
 			OpenCommandPrompt: {
-				combos: ['Ctrl+P'],
+				combos: ['CmdOrCtrl+P'],
 			},
 			IterateCurrentPanelTabs: {
-				combos: ['Ctrl+Tab'],
+				combos: ['CmdOrCtrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: ['Ctrl+Up', 'Ctrl+ScrollUp'],
+				combos: ['CmdOrCtrl+Up', 'CmdOrCtrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: ['Ctrl+Down', 'Ctrl+ScrollDown'],
+				combos: ['CmdOrCtrl+Down', 'CmdOrCtrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
