@@ -93,6 +93,10 @@ function executeScript(prefix, folder, script) {
 					cwd: folder,
 				})
 
+				state.on('data', data => {
+					state.emit('write', data)
+				})
+
 				spawnProcess.stdout.on('data', function (data) {
 					data
 						.trim()
