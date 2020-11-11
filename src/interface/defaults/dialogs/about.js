@@ -4,6 +4,8 @@ import buildJSON from '../../../../assets/build.json'
 import { element, style } from '@mkenzo_8/puffin'
 import { Text } from '@mkenzo_8/puffin-drac'
 import GravitonLargeLogo from '../../../../assets/large_logo.svg'
+import Core from 'Core'
+const { openExternal } = Core
 
 const styleWrapper = style`
 	&{
@@ -49,8 +51,13 @@ function About() {
 		component: aboutContent,
 		buttons: [
 			{
+				label: 'menus.Help.Website',
+				action() {
+					openExternal('https://graviton.netlify.app/')
+				},
+			},
+			{
 				label: 'misc.Close',
-				important: false,
 			},
 		],
 	})
