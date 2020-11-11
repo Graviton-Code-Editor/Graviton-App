@@ -85,7 +85,7 @@ function handleSidebarState(): string {
 	if (StaticConfig.data.appEnableSidebar) {
 		return 'opacity:1; margin-right:1px;'
 	} else if (StaticConfig.data.appEnableSidepanel) {
-		return 'opacity:0; min-width:20px; width:20px;'
+		return 'opacity:0; min-width:7px; width:7px;'
 	} else {
 		return 'opacity:0; min-width:0; width:0; margin:0; padding:0; border:0;'
 	}
@@ -112,6 +112,7 @@ function mountedAppView(): void {
 	StaticConfig.keyChanged('appEnableSidebar', value => {
 		sideBar.update()
 		mainPanel.update()
+		sidePanel.update()
 	})
 	StaticConfig.keyChanged('appEnableSidepanel', value => {
 		if (value) {
