@@ -627,7 +627,6 @@ const CodemirrorClient = new EditorClient(
 			instance.pstate.on('displayContextMenu', action)
 		},
 		blur({ instance }) {
-			console.log(instance)
 			setTimeout(() => {
 				instance.getInputField().blur()
 			}, 1)

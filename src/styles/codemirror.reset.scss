@@ -491,7 +491,7 @@ span.CodeMirror-selectedtext {
 	display: block;
 	padding: 15px;
 	padding-right: 20px;
-	border-radius: 8px;
+	border-radius: 5px;
 	background: var(--editorDialogBackground);
 	z-index: 5;
 	overflow: hidden;
@@ -502,15 +502,17 @@ span.CodeMirror-selectedtext {
 		border: none;
 		outline: none;
 		background: transparent;
-		border: 2px solid rgba(225, 225, 225);
-		border-radius: 5px;
+		box-shadow: 0px 0px 0px 3px rgb(170, 170, 170);
+		border-radius: 4px;
 		min-width: 2em;
 		margin: 3px 0px;
-		padding: 3px 7px;
+		margin-top: 12px;
+		padding: 6px 8px;
 	}
 	.CodeMirror-search-label {
 		line-height: 20px;
-		bottom: 100px !important;
+		text-align: center;
+		display: block;
 	}
 	.CodeMirror-search-hint {
 		display: none;
@@ -520,9 +522,12 @@ span.CodeMirror-selectedtext {
 		color: inherit;
 	}
 	button {
-		padding: 5px;
+		padding: 5px 7px;
 		border: 0;
+		border-radius: 4px;
 		background: var(--buttonBackground);
+		cursor: pointer;
+		margin: 1px;
 	}
 }
 .CodeMirror-dialog-top {
