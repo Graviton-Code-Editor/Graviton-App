@@ -193,7 +193,7 @@
 			},
 			"restartConfig": {
 				"title": "Restart configuration",
-				"content": "Click continue to restart your configuration."
+				"content": "Click continue to restart your configuration. This will not uninstall any plugin."
 			},
 			"experimentalFeature": {
 				"title": "Experimental feature",
