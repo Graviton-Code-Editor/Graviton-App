@@ -5,13 +5,35 @@ import { LanguageState, getTranslation } from 'LanguageConfig'
 import getPluginById from '../../defaults/store/api/get.plugin'
 import getLocalPluginById from '../../defaults/store/utils/get.local.plugin'
 import pluginWindow from './window'
+import DefaultPluginIcon from '../icons/plugin_store'
 
 const CardStyle = style`
-	&{
+	padding: 3px 11px !important;
+	& > div {
+		height: 85px;
+		display: flex;
+		align-items: center;
 		min-width:160px;
 		width:150px;
 		height:90px;
 		overflow: auto;
+		& > div {
+			flex: 1;
+			max-width: calc(100% - 56px);
+		}
+	}
+	& .plugin_icon {
+		height: 50px;
+		width: 50px;
+		max-width: 50px;
+		border-radius: 6px;
+		box-shadow: 0px 2px 5px rgba(0,0,0,0.15);
+		margin: 3px;
+		background: var(--windowBackground);
+		& > * {
+			width: 20px;
+			height: 20px;
+		}
 	}
 	& h5 {
 		margin: 3px;
@@ -26,6 +48,15 @@ const CardStyle = style`
 
 const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver'
 
+function getPluginIcon() {
+	if (false) {
+		//WIP
+	} else {
+		//Fallback icon
+		return DefaultPluginIcon
+	}
+}
+
 function StoreCard(props) {
 	const { pluginID, displayName, isInstalled, description = '' } = props.data
 	return element({
@@ -33,11 +64,17 @@ function StoreCard(props) {
 			Card,
 			H5: Titles.h5,
 			Text,
+			Icon: getPluginIcon(),
 		},
 	})`
 		<Card :click="${clicked}" class="${CardStyle}">
-			<H5>${displayName}</H5>
-			<Text>${description}</Text>
+			<div>
+				<Icon class="plugin_icon"/>
+				<div>
+					<H5>${displayName}</H5>
+					<Text>${description}</Text>
+				</div>
+			</div>
 		</Card>
 	`
 	async function clicked() {
