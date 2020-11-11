@@ -9,7 +9,7 @@ import ContextMenu from '../../constructors/contextmenu'
 import EmojiConvertor from 'emoji-js'
 import GitIcon from '../../components/icons/git'
 import StaticConfig from 'StaticConfig'
-import InputDialog from '../../utils/dialogs/dialog.input'
+import InputDialog from '../../utils/dialogs/dialog_input'
 import Notification from 'Constructors/notification'
 
 const getExplorerItems = files => {

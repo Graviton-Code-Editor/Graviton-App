@@ -2,7 +2,7 @@ import PanelBody from '../components/panel/panel'
 import { element, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import ContextMenu from './contextmenu'
-import tabsUnsavedWarningDialog from '../defaults/dialogs/tabs.unsaved.warning'
+import tabsUnsavedWarningDialog from '../defaults/dialogs/tabs_unsaved_warning'
 import PuffinElement from 'Types/puffin.element'
 
 function guessTabPosition(tab, tabsbar) {

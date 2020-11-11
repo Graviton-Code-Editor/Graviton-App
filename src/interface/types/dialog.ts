@@ -5,7 +5,7 @@ interface DialogButton {
 }
 
 interface DialogOptions {
-	title: string
+	title?: string
 	content?: string
 	buttons: DialogButton[]
 	component?: any

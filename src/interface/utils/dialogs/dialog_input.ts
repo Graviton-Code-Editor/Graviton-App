@@ -2,7 +2,11 @@ import { element } from '@mkenzo_8/puffin'
 import Dialog from '../../constructors/dialog'
 import { Input } from '@mkenzo_8/puffin-drac'
 
-function InputDialog({ title, placeHolder = '' }) {
+/*
+ * This Dialog provides a easy way to ask something to the user.
+ */
+
+function InputDialog({ title, placeHolder = '' }): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const randomSelector = Math.random()
 		function onEnter(e) {
@@ -36,7 +40,7 @@ function InputDialog({ title, placeHolder = '' }) {
 				{
 					label: 'misc.Continue',
 					action() {
-						const inputValue = document.getElementById(randomSelector).children[0].value
+						const inputValue: string = (document.getElementById(randomSelector.toString()).children[0] as HTMLInputElement).value
 						if (inputValue != '') {
 							resolve(inputValue)
 						} else {

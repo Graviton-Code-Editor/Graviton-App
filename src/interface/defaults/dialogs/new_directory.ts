@@ -1,13 +1,18 @@
-import InputDialog from '../../utils/dialogs/dialog.input'
+import InputDialog from '../../utils/dialogs/dialog_input'
 import RunningConfig from 'RunningConfig'
 import normalizeDir from '../../utils/directory_normalizer'
 import * as path from 'path'
 import Core from 'Core'
 const { fs } = Core
 
+/*
+ * This provide a Dialog with an input to create a folder or a file
+ * This is mainly used in the Explorer's item context menu
+ */
+
 function newDirectoryDialog({ isFolder, parentDirectory, container, explorerState, explorerProvider }) {
-	new InputDialog({
-		title: isFolder ? 'New Folder' : 'New file',
+	InputDialog({
+		title: isFolder ? 'misg.NewFolder' : 'NewFile',
 		placeHolder: isFolder ? 'Folder' : 'File',
 	})
 		.then(function (res) {
@@ -19,7 +24,7 @@ function newDirectoryDialog({ isFolder, parentDirectory, container, explorerStat
 }
 
 async function createDirectory(value, isFolder, parentDirectory, container, explorerState, explorerProvider) {
-	const itemDirectory = normalizeDir(path.join(parentDirectory, value), true)
+	const itemDirectory = normalizeDir(path.join(parentDirectory, value))
 	if (!(await explorerProvider.exists(itemDirectory))) {
 		if (isFolder) {
 			await explorerProvider.mkdir(itemDirectory)

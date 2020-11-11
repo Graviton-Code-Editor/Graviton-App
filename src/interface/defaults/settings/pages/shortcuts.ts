@@ -2,7 +2,7 @@ import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
 import { render } from '@mkenzo_8/puffin'
 import WarningDialog from '../../../utils/dialogs/warning'
-import InputDialog from '../../../utils/dialogs/dialog.input'
+import InputDialog from '../../../utils/dialogs/dialog_input'
 
 function removeShortcut(item, shortcut, combo) {
 	WarningDialog().then(() => {
