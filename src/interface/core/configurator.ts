@@ -7,14 +7,13 @@ import RunningConfig from 'RunningConfig'
 
 const CustomWindow: any = window
 
-let InitialAppConfig = CustomWindow.AppConfig
-let DefaultAppConfig = CustomWindow.DefaultAppConfig
+const { AppConfig, DefaultAppConfig } = CustomWindow.graviton
 
-CustomWindow.AppConfig = null
-CustomWindow.DefaultAppConfig = null
+CustomWindow.graviton.AppConfig = null
+CustomWindow.graviton.DefaultAppConfig = null
 
 function getConfiguration() {
-	return InitialAppConfig
+	return AppConfig
 }
 
 function updateConfiguration(config: any) {

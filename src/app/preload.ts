@@ -2,6 +2,8 @@ import * as path from 'path'
 import * as fs from 'fs-extra'
 import { ipcRenderer } from 'electron'
 
+const CustomWindow: any = window
+
 const getConfig = () => {
 	return ipcRenderer.invoke('get-config')
 }
@@ -20,13 +22,14 @@ const getProcessArguments = () => {
 
 process.once('loaded', async () => {
 	const config = await getConfig()
-	let CustomWindow: any = window as any
 
-	CustomWindow.AppConfig = config
-	CustomWindow.DefaultAppConfig = await getDefaultConfig()
-	CustomWindow.runtime = {
-		isDev: await isDev(),
-		processArguments: await getProcessArguments(),
+	CustomWindow.graviton = {
+		AppConfig: config,
+		DefaultAppConfig: await getDefaultConfig(),
+		runtime: {
+			isDev: await isDev(),
+			processArguments: await getProcessArguments(),
+		},
 	}
 
 	const gravitonConfigPath = config.appConfigPath

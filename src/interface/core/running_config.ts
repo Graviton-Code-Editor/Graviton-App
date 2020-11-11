@@ -5,19 +5,18 @@ import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import minimist from 'minimist'
 import isGitInstalled from '../utils/is_git_installed'
 import Core from 'Core'
+import StaticConfig from 'StaticConfig'
+import RunningConfigInterface from 'Types/running_config'
 const {
 	nodeJSONRPC,
 	electron: { clipboard },
 } = Core
-import StaticConfig from 'StaticConfig'
-import RunningConfigInterface from 'Types/running_config'
-
-const isBrowser = !eval('window.process')
+import isBrowser from '../utils/is_browser'
 
 // Get runtime information
 const CustomWindow: any = window
-const { isDev, processArguments } = CustomWindow.runtime
-CustomWindow.runtime = null
+const { isDev, processArguments } = CustomWindow.graviton.runtime
+CustomWindow.graviton.runtime = null
 
 /*
  * Create a console logger in production, this saves all logs, errors, warnings,etc...
