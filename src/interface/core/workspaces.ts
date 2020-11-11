@@ -25,7 +25,15 @@ if (StaticConfig.data.appCheckWorkspaceExistsWhenOpeningFolders) {
 						// Apply workspace's settings
 						setWorkspaceSettings(workspaceConfig.settings)
 						RunningConfig.data.workspacePath = workspaceSettingsPath
-						RunningConfig.data.workspaceConfig = workspaceConfig
+						RunningConfig.data.workspaceConfig = {
+							...workspaceConfig,
+							folders: [
+								{
+									name: path.dirname(folderPath),
+									path: folderPath,
+								},
+							],
+						}
 					}
 				}
 			})

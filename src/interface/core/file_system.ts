@@ -161,6 +161,10 @@ RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldE
 		.then(() => {
 			if (replaceOldExplorer) {
 				removeAllExplorerFolders()
+				RunningConfig.data.workspaceConfig = {
+					name: null,
+					folders: [],
+				}
 			}
 			const folderDir = normalizeDir(folderPath)
 			const explorerPanel = document.getElementById('explorer_panel')
@@ -313,7 +317,13 @@ async function saveConfiguration(workspacePath: string, workspaceSettingsPath: s
 		await fs.mkdir(workspacePathNormalized)
 	}
 
-	const workspaceConfiguration = JSON.stringify(workspaceConfig, null, 2)
+	let settings = workspaceConfig
+
+	if (settings?.workspace?.noFolders) {
+		settings.folders = []
+	}
+
+	const workspaceConfiguration = JSON.stringify(settings, null, 2)
 
 	fs.writeFile(workspaceSettingsPath, workspaceConfiguration, 'UTF-8', err => {
 		if (err) throw err
