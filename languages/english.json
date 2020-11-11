@@ -194,6 +194,10 @@
 			"restartConfig": {
 				"title": "Restart configuration",
 				"content": "Click continue to restart your configuration."
+			},
+			"experimentalFeature": {
+				"title": "Experimental feature",
+				"content": "This feature is unstable and might cause some issues."
 			}
 		}
 	}

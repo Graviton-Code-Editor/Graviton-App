@@ -1,7 +1,7 @@
 interface DialogButton {
 	label: string
 	important?: boolean
-	action: object
+	action?: object
 }
 
 interface DialogOptions {

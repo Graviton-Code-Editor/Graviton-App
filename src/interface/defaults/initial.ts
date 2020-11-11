@@ -14,6 +14,7 @@ import getFormat from '../utils/format_parser'
 import queryString from 'query-string'
 import { addPluginToRegistryStatically } from 'PluginLoader'
 import { installPluginFromGVP, installPluginFromURL } from './store/utils/install.plugin'
+import ExperimentalFeatureDialog from './dialogs/feature_experimental'
 import './environment.inspectors/npm'
 import './project.services/npm'
 import './side.panels/files.explorer'
@@ -49,6 +50,12 @@ export default async function init() {
 		const RemotePkg = await import('../../../pluginsBrowserDist/remote-plugin/package.json')
 
 		addPluginToRegistryStatically(RemotePkg, RemoteExports)
+	} else {
+		StaticConfig.keyChanged('experimentalEditorLSP', value => {
+			if (value) {
+				ExperimentalFeatureDialog().launch()
+			}
+		})
 	}
 
 	RunningConfig.emit('appLoaded')
