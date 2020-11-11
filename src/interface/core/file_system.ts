@@ -160,11 +160,15 @@ RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldE
 	fs.stat(folderPath)
 		.then(() => {
 			if (replaceOldExplorer) {
+				//Close all opened folers
 				removeAllExplorerFolders()
+				//Restart workspace configuration
 				RunningConfig.data.workspaceConfig = {
 					name: null,
 					folders: [],
 				}
+				//Restart workspace settings
+				restartWorkspaceSettings()
 			}
 			const folderDir = normalizeDir(folderPath)
 			const explorerPanel = document.getElementById('explorer_panel')
@@ -240,12 +244,17 @@ if (!isBrowser) {
 		const workspacePathNormalized = normalizeDir(workspacePath)
 		const workspace = getWorkspaceConfig(workspacePathNormalized)
 		if (workspace) {
+			//Close all opened folers
 			removeAllExplorerFolders()
+			//Restart workspace configuration
 			RunningConfig.data.workspaceConfig = {
 				name: workspace.name,
 				folders: [],
 				settings: workspace.settings || {},
 			}
+			//Restart workspace settings
+			restartWorkspaceSettings()
+			//Apply new workspace settings
 			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 			RunningConfig.data.workspacePath = workspacePathNormalized
 			workspace.folders.forEach(async folder => {
@@ -261,6 +270,30 @@ if (!isBrowser) {
 	})
 }
 
+/*
+ * Make a copy of StaticConfig user's configuration
+ */
+const originalStaticConfig = { ...StaticConfig.data }
+Object.keys(StaticConfig.data).forEach(key => {
+	if (!RunningConfig.data.ignoredStaticConfig.hasOwnProperty(key)) {
+		//Update the mirror if the setting is not ignored
+		originalStaticConfig[key] = StaticConfig.data[key]
+	}
+})
+
+/*
+ * Restart the workspace settings to it's original state
+ */
+function restartWorkspaceSettings() {
+	RunningConfig.data.ignoredStaticConfig = {}
+	Object.keys(RunningConfig.data.ignoredStaticConfig).forEach(sett => {
+		StaticConfig.data[sett] = originalStaticConfig[sett]
+	})
+}
+
+/*
+ * Change the workspace settings
+ */
 function setWorkspaceSettings(settings) {
 	Object.keys(settings).forEach(sett => {
 		RunningConfig.data.ignoredStaticConfig[sett] = settings[sett]
@@ -416,4 +449,4 @@ RunningConfig.on('renameWorkspaceDialog', function ({ workspacePath, name = 'My 
 		})
 })
 
-export { getWorkspaceConfig, openFolder, openFile, setWorkspaceSettings }
+export { getWorkspaceConfig, openFolder, openFile, setWorkspaceSettings, restartWorkspaceSettings }
