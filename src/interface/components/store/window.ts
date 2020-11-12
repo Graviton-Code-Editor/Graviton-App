@@ -69,8 +69,11 @@ const styleWrapper = style`
 		}
 	}
 	& .error {
-		margin-top: 7px;
-		text-decoration: underline;
+		margin: 0px 12px;
+		max-width: 250px;
+		background: var(--cardBackground);
+		padding: 12px 10px;
+		border-radius: 6px;
 	}
 `
 
