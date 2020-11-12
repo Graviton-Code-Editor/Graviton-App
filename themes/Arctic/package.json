@@ -160,6 +160,19 @@
 				"Border": "#CFCFCF"
 			}
 		},
+		"topmenu": {
+			"Button": {
+				"Background": "transparent",
+				"Hovering": {
+					"Background": "rgb(212,212,212)"
+				},
+				"Active": {
+					"Background": "#0066FF",
+					"Text": "white"
+				},
+				"Text": "black"
+			}
+		},
 		"explorer": {
 			"Item": {
 				"Text": "black",

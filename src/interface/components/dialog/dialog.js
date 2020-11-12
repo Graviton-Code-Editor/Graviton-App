@@ -14,8 +14,11 @@ const styleWrapper = style`
 		padding: 12px;
 		user-select: none;
 	}
+	& h2:empty{
+		display: none;
+	}
 	& > div:nth-child(1){
-		min-height: auto;	
+		min-height: auto;
 		flex: 1;
 		& > p {
 			margin-top:15px;

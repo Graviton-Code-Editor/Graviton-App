@@ -7,7 +7,6 @@ import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
 import Notification from 'Constructors/notification'
 import openDebugClient from './debug.window'
-import packageJSON from 'Root/package.json'
 import checkForUpdates from '../utils/check.updates'
 import AppPlatform from 'AppPlatform'
 import BrowserWelcome from './windows/browser_welcome'
@@ -325,19 +324,6 @@ function getHelpMenu(button) {
 				],
 			},
 			{},
-			{
-				label: 'menus.Help.Contributors',
-				list: (() => {
-					return packageJSON.contributors.map(({ name, url }) => {
-						return {
-							label: name,
-							action() {
-								openExternal(url)
-							},
-						}
-					})
-				})(),
-			},
 			{
 				label: 'menus.Help.Blog',
 				action: () => {
