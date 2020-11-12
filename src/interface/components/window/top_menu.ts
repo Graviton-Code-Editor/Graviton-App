@@ -47,13 +47,13 @@ const styleWrapper = style`
 	& {
 		display:flex;
 		max-height:100%;
+		height: 100%;
 		flex:1;
 		overflow:hidden;
 		user-select:none;
 	}
 	& > div:nth-child(1){
 		background: transparent;
-		min-height:100%;
 		display:flex;
 		flex-direction:row;
 		justify-content: center;
@@ -73,12 +73,14 @@ const styleWrapper = style`
 		transition:0.04s;
 		display:block;
 		white-space:prewrap;
-		padding:9px 11px;
+		padding:8px 12px;
 		border-radius:5px;
 		background:var(--topmenuButtonBackground);
 		color:var(--sidemenuButtonText);
 		margin:1px 2px;
 		font-size:13px;
+		height: 15px;
+		min-height: 15px;
 		&:hover:not(.active) {
 			transition:0.04s;
 			background:var(--topmenuButtonHoveringBackground);
@@ -90,13 +92,9 @@ const styleWrapper = style`
 	}
 	& > div:nth-child(2){
 		background:transparent;
-		min-height:auto;
-		max-height:100%;
-		width:auto;
-		height:auto;
 		overflow:auto;
 		margin-top:5px;
-		padding: 15px 10px;
+		padding: 5px;
 		flex:1;
 	}
 	& > div:nth-child(2) > div > div h4{

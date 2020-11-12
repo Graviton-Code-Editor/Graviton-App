@@ -19,21 +19,27 @@ const styleWrapper = style`
 	&  img {
 		margin: 0 auto;
 	}
+	&  div[href="about"]{
+		height: 100%;
+	}
 	& .about{
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
-		padding: 15px;
-	}
-	& > div:nth-child(2){
-		width: 90%;
+		height: 100%;
 	}
 	& > div:nth-child(2) > div {
 		overflow: auto;
-		max-height: 150px;
+		max-height: 180px;
+		padding: 3px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		& > button {
 			display: block ;
+			width: 100%;
+			margin: 3px 0px;
 		}
 	}
 `
@@ -81,7 +87,7 @@ const aboutContent = () => element({
 
 function About() {
 	const DialogInstance = new Dialog({
-		height: '325',
+		height: '315px',
 		width: '275px',
 		component: aboutContent,
 		buttons: [

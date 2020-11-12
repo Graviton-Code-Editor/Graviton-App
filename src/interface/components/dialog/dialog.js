@@ -23,6 +23,10 @@ const styleWrapper = style`
 		& > p {
 			margin-top:15px;
 			font-size: 13px;
+			&[isComponent="true"]{
+				margin:0;
+				padding:0;
+			}
 		}
 	}
 	& > div:nth-child(2){

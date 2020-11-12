@@ -22,7 +22,7 @@ class Dialog {
 			<DialogBody>
 				<div>
 					<H2 lang-string="${title}"/>
-					<Text lang-string="${content || ''}">${content ? '' : component()}</Text>
+					<Text isComponent="${!!component}" lang-string="${content || ''}">${content ? '' : component()}</Text>
 				</div>
 				<div>
 					${buttons.map((btn, index) => {
