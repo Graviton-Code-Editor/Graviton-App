@@ -2,6 +2,7 @@ import RunningConfig from 'RunningConfig'
 import { element } from '@mkenzo_8/puffin'
 import Core from 'Core'
 const { fs } = Core
+import * as path from 'path'
 
 export function createProcess(bin, cwd = process.env.HOMEPATH) {
 	const pty = window.require('node-pty')
@@ -16,31 +17,18 @@ RunningConfig.once('appLoaded', () => {
 	if (process.platform === 'win32') {
 		// CMD Client for Terminal
 		RunningConfig.emit('registerTerminalShell', {
-			name: 'cmd',
+			name: 'CMD',
 			onCreated(state) {
-				const spawnProcess = createProcess(process.env['COMSPEC'])
-
-				/*
-				 * Write process's output to the emulator
-				 */
-				spawnProcess.on('data', function (data: any) {
-					state.emit('write', data)
-				})
-
-				/*
-				 * Resize the process'sterminal when the emulator is resized
-				 */
-				state.on('resize', ({ rows, cols }) => {
-					spawnProcess.resize(cols, rows)
-				})
-
-				/*
-				 * Write emulator's input to the process
-				 */
-				state.on('data', data => {
-					spawnProcess.write(data)
-				})
-
+				createLocalShell(state, process.env['COMSPEC'])
+				return {
+					accessories: RunningConfig.data.localTerminalAccessories,
+				}
+			},
+		})
+		RunningConfig.emit('registerTerminalShell', {
+			name: 'PowerShell',
+			onCreated(state) {
+				createLocalShell(state, 'powershell.exe')
 				return {
 					accessories: RunningConfig.data.localTerminalAccessories,
 				}
@@ -50,18 +38,9 @@ RunningConfig.once('appLoaded', () => {
 		fs.lstat(WSLPath)
 			.then(() => {
 				RunningConfig.emit('registerTerminalShell', {
-					name: 'wsl',
+					name: 'WSL',
 					onCreated(state) {
-						const spawnProcess = createProcess(WSLPath)
-
-						spawnProcess.on('data', function (data: any) {
-							state.emit('write', data)
-						})
-
-						state.on('data', data => {
-							spawnProcess.write(data)
-						})
-
+						createLocalShell(state, WSLPath)
 						return {
 							accessories: RunningConfig.data.localTerminalAccessories,
 						}
@@ -76,16 +55,7 @@ RunningConfig.once('appLoaded', () => {
 		RunningConfig.emit('registerTerminalShell', {
 			name: process.env['SHELL'],
 			onCreated(state) {
-				const spawnProcess = createProcess(process.env['SHELL'])
-
-				spawnProcess.on('data', function (data: any) {
-					state.emit('write', data)
-				})
-
-				state.on('data', data => {
-					spawnProcess.write(data)
-				})
-
+				createLocalShell(state, process.env['SHELL'])
 				return {
 					accessories: RunningConfig.data.localTerminalAccessories,
 				}
@@ -93,3 +63,28 @@ RunningConfig.once('appLoaded', () => {
 		})
 	}
 })
+
+function createLocalShell(state, shellBin) {
+	const spawnProcess = createProcess(shellBin)
+
+	/*
+	 * Write process's output to the emulator
+	 */
+	spawnProcess.on('data', function (data: any) {
+		state.emit('write', data)
+	})
+
+	/*
+	 * Resize the process'sterminal when the emulator is resized
+	 */
+	state.on('resize', ({ rows, cols }) => {
+		spawnProcess.resize(cols, rows)
+	})
+
+	/*
+	 * Write emulator's input to the process
+	 */
+	state.on('data', data => {
+		spawnProcess.write(data)
+	})
+}
