@@ -153,7 +153,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 										if (parentFolder === folder) {
 											/*
 											 * Update the changes count
-											*/
+											 */
 											setDecorator({
 												label: gitChanges.files.length.toString(),
 											})

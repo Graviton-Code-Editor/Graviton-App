@@ -8,7 +8,6 @@ class EditorClient {
 		this.name = name
 		this.type = type
 		this.do = (name, args) => {
-			console.log(name, args)
 			if (object[name]) {
 				return object[name](args)
 			}
