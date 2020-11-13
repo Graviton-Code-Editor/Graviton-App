@@ -22,9 +22,9 @@ class Panel {
 				PanelBody,
 			},
 		})`
-			<PanelBody :click="${focusPanel}">    
+			<PanelBody :click="${focusPanel}" :dragover="${allowDrop}" :drop="${onTabDropped}">    
 				<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
-				<div :contextmenu="${contextmenu}"/>
+				<div :contextmenu="${contextmenu}" class="tabspanel"/>
 			</PanelBody>
 		`
 		function allowDrop(e) {
@@ -39,7 +39,11 @@ class Panel {
 			let oldPanel = movingTab.state.data.panel
 			let panel = null
 			let position = 0
-			if (target.classList.contains('tabsbar')) {
+			if (target.classList.contains('tabspanel')) {
+				tabsBar = target.previousSibling
+				position = tabsBar.children.length - 1
+				panel = tabsBar.parentElement
+			} else if (target.classList.contains('tabsbar')) {
 				tabsBar = target
 				position = tabsBar.children.length - 1
 				panel = tabsBar.parentElement
@@ -53,9 +57,8 @@ class Panel {
 				} else {
 					nextTab = tabsBar.children[targetPosition + 1]
 				}
-			}
-			if (!tabsBar) {
-				//Something went wrong
+			} else {
+				// Unexpected behavior
 				return
 			}
 			if (position === tabsBar.children.length - 1) {
