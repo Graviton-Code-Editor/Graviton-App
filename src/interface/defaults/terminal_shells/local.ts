@@ -20,10 +20,23 @@ RunningConfig.once('appLoaded', () => {
 			onCreated(state) {
 				const spawnProcess = createProcess(process.env['COMSPEC'])
 
+				/*
+				 * Write process's output to the emulator
+				 */
 				spawnProcess.on('data', function (data: any) {
 					state.emit('write', data)
 				})
 
+				/*
+				 * Resize the process'sterminal when the emulator is resized
+				 */
+				state.on('resize', ({ rows, cols }) => {
+					spawnProcess.resize(cols, rows)
+				})
+
+				/*
+				 * Write emulator's input to the process
+				 */
 				state.on('data', data => {
 					spawnProcess.write(data)
 				})

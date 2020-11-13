@@ -251,11 +251,6 @@ function XtermTerminal({ shell = null } = {}) {
 			xtermInstance.loadAddon(fit)
 			xtermInstance.loadAddon(new XtermWebfont())
 
-			xtermInstance.onData(data => {
-				// Emit the data event when the terminal is being written
-				xtermState.emit('data', data)
-			})
-
 			xtermState.on('write', data => {
 				// Write to the terminal when the shell sends an output
 				xtermInstance.write(data)
@@ -264,6 +259,16 @@ function XtermTerminal({ shell = null } = {}) {
 			xtermState.on('breakLine', () => {
 				//Break the line on the xterm
 				xtermInstance.writeln('')
+			})
+
+			xtermInstance.onData(data => {
+				// Emit the data event when the terminal is being written
+				xtermState.emit('data', data)
+			})
+
+			xtermInstance.onResize(args => {
+				// Emit the resize event
+				xtermState.emit('resize', args)
 			})
 
 			xtermInstance.onKey(e => {
