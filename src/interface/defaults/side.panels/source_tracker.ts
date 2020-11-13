@@ -129,7 +129,12 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 							{
 								label: basename(folderPath),
 								icon: 'folder.closed',
-								mounted() {
+								decorator: {
+									label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
+									color: 'var(--explorerItemGitIndicatorText)',
+									background: 'var(--explorerItemGitNotAddedText)',
+								},
+								mounted({ setDecorator }) {
 									const foldeRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
 										if (folderPath === projectPath) {
 											// Dirty way of removing the explorer
@@ -138,10 +143,20 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											decreaseGlobalChanges(gitChanges.files.length)
 											// Display the count
 											setDecorator({
-												label: globalCountOfChanges > 0 ? globalCountOfChanges : '',
+												label: globalCountOfChanges > 0 ? globalCountOfChanges.toString() : '',
 											})
 											// Remove the listener
 											foldeRemovedWorkspaceListener.cancel()
+										}
+									})
+									RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+										if (parentFolder === folder) {
+											/*
+											 * Update the changes count
+											*/
+											setDecorator({
+												label: gitChanges.files.length.toString(),
+											})
 										}
 									})
 								},
