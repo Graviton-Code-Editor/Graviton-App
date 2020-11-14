@@ -26,16 +26,21 @@ const Core = {
 if (isBrowser) {
 	const defaultConfig = getBrowserConfiguration()
 
-	CustomWindow.runtime = {
-		isDev: false,
-		processArguments: [],
-	}
-
 	// Load User's configuration from the localStorage
 	const storage = localStorage.getItem('config')
 
-	CustomWindow.AppConfig = storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config
-	CustomWindow.DefaultAppConfig = defaultConfig.config
+	/*
+	 * Emulate what the preload script would do in the Desktop app by globally
+	 * defining the default config, user's config and runtime info
+	 */
+	CustomWindow.graviton = {
+		AppConfig: storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config,
+		DefaultAppConfig: defaultConfig.config,
+		runtime: {
+			isDev: false,
+			processArguments: [],
+		},
+	}
 
 	Core.electron = {
 		shell: {},

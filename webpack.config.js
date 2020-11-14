@@ -222,6 +222,8 @@ module.exports = [
 			electron: 'empty',
 			rimraf: 'empty',
 			'node-json-lsp': 'empty',
+			'lsp-codemirror': 'empty',
+			'diff-match-patch': 'empty',
 		},
 		output: {
 			filename: 'main.js',
