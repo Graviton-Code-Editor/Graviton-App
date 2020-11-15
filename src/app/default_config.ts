@@ -4,6 +4,8 @@ import * as path from 'path'
  * This contains the default Configuration of a just-installed Graviton version.
  */
 
+const isWindows = process.platform == 'win32'
+
 const defaultConfig = {
 	config: {
 		appTheme: 'Arctic',
@@ -25,34 +27,34 @@ const defaultConfig = {
 		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: ['CmdOrCtrl+S'],
+				combos: [isWindows ? 'Ctrl+S' : 'CmdOrCtrl+S'],
 			},
 			NewPanel: {
-				combos: ['CmdOrCtrl+N'],
+				combos: [isWindows ? 'Ctrl+N' : 'CmdOrCtrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: ['CmdOrCtrl+T'],
+				combos: [isWindows ? 'Ctrl+T' : 'CmdOrCtrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: ['CmdOrCtrl+L'],
+				combos: [isWindows ? 'Ctrl+L' : 'CmdOrCtrl+L'],
 			},
 			OpenEditorCommandPrompt: {
-				combos: ['CmdOrCtrl+I'],
+				combos: [isWindows ? 'Ctrl+I' : 'CmdOrCtrl+I'],
 			},
 			OpenExplorerCommandPrompt: {
-				combos: ['CmdOrCtrl+O'],
+				combos: [isWindows ? 'Ctrl+O' : 'CmdOrCtrl+O'],
 			},
 			OpenCommandPrompt: {
-				combos: ['CmdOrCtrl+P'],
+				combos: [isWindows ? 'Ctrl+P' : 'CmdOrCtrl+P'],
 			},
 			IterateCurrentPanelTabs: {
-				combos: ['CmdOrCtrl+Tab'],
+				combos: [isWindows ? 'Ctrl+Tab' : 'CmdOrCtrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: ['Ctrl+Up', 'Ctrl+ScrollUp'],
+				combos: [isWindows ? 'Ctrl+Up' : 'Ctrl+Up', 'Ctrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: ['Ctrl+Down', 'Ctrl+ScrollDown'],
+				combos: [isWindows ? 'Ctrl+Down' : 'Ctrl+Down', 'Ctrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
@@ -61,7 +63,7 @@ const defaultConfig = {
 				combos: [],
 			},
 			FocusExplorerPanel: {
-				combos: ['Ctrl+E'],
+				combos: [isWindows ? 'Ctrl+E' : 'CmdOrCtrl+E'],
 			},
 		},
 		miscEnableLiveUpdateInManualConfig: true,
