@@ -67,7 +67,7 @@ class Tab {
 				Cross,
 			},
 		})`
-		<TabBody mounted="${mounted}" active="${() => this.tabState.data.active}"  draggable="true" classSelector="${this.classSelector}" class="${
+		<TabBody title="${title}" mounted="${mounted}" active="${() => this.tabState.data.active}"  draggable="true" classSelector="${this.classSelector}" class="${
 			this.classSelector
 		}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :dragover="${dragOver}":drop="${onDropped}">
 			${this.itemIconSource ? element`<img class="tab-icon" src="${this.itemIconSource}"/>` : element`<div/>`}
