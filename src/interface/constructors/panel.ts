@@ -122,21 +122,23 @@ class Panel {
 
 function focusOtherPanel(currentPanel) {
 	const panelParent = currentPanel.parentElement
-	const parentChildren = panelParent.children
-	const position = (() => {
-		for (let panelIndex = 0; panelIndex < parentChildren.length; panelIndex++) {
-			if (parentChildren[panelIndex] == currentPanel) return panelIndex
-		}
-	})()
-	if (parentChildren.length !== 1) {
+	const parentChildren = [...panelParent.children]
+	const position = parentChildren.indexOf(currentPanel)
+	if (parentChildren.length > 1) {
 		if (position === 0) {
 			if (parentChildren.length > 1) {
+				/*
+				 * Focus sibling panel
+				 */
 				RunningConfig.data.focusedPanel = parentChildren[position + 1]
 				return {
 					oldPanel: currentPanel,
 				}
 			} else {
-				RunningConfig.data.focusedEditor = null
+				/*
+				 * Don't focus
+				 */
+				//RunningConfig.data.focusedEditor = null
 				return {
 					oldPanel: null,
 				}

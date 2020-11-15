@@ -168,6 +168,9 @@ class Editor implements EditorOptions {
 			tabSavedWatcher.cancel()
 			editorFontFamilyWatcher.cancel()
 			editorWrapLinesWatcher.cancel()
+			if (RunningConfig.data.focusedEditor?.instance === this.instance) {
+				RunningConfig.data.focusedEditor = null
+			}
 		})
 	}
 	private addClientsListeners(): void {
