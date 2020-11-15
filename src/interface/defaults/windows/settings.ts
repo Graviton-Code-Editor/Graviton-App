@@ -3,6 +3,7 @@ import { Titles } from '@mkenzo_8/puffin-drac'
 import Window from '../../constructors/window'
 import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
+import SideMenuPage from '../../components/window/side_menu_page'
 
 import CustomizationScheme from '../settings/pages/customization'
 import AdvancedScheme from '../settings/pages/advanced'
@@ -26,6 +27,7 @@ export default function Settings(): WindowInstance {
 				H1: Titles.h1,
 				SideMenu,
 				SideMenuSearcher,
+				SideMenuPage,
 			},
 		})`
 			<SideMenu default="customization">
@@ -42,22 +44,14 @@ export default function Settings(): WindowInstance {
 					<div href="customization">
 						${getScheme(CustomizationScheme())}
 					</div>
-					<div href="advanced">
-						${getScheme(
-							AdvancedScheme({
-								closeWindow: () => SettingsWindow.close(),
-							}),
-						)}
-					</div>
-					<div href="shortcuts">
-						${getScheme(ShortcutsScheme())}
-					</div>
-					<div href="languages">
-						${getScheme(LanguagesScheme())}
-					</div>
-					<div href="about">
-						${getScheme(AboutScheme())}
-					</div>
+					<SideMenuPage href="advanced" component="${getScheme(
+						AdvancedScheme({
+							closeWindow: () => SettingsWindow.close(),
+						}),
+					)}"/>
+					<SideMenuPage href="shortcuts" component="${getScheme(ShortcutsScheme())}"/>
+					<SideMenuPage href="languages" component="${getScheme(LanguagesScheme())}"/>
+					<SideMenuPage href="about" component="${getScheme(AboutScheme())}"/>
 				</div>
 			</SideMenu>
 		`
