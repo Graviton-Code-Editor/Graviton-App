@@ -4,7 +4,7 @@ import * as path from 'path'
  * This contains the default Configuration of a just-installed Graviton version.
  */
 
-const isWindows = process.platform == 'win32'
+const isMac = process.platform == 'darwin'
 
 const defaultConfig = {
 	config: {
@@ -27,34 +27,34 @@ const defaultConfig = {
 		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: [isWindows ? 'Ctrl+S' : 'CmdOrCtrl+S'],
+				combos: [isMac ? 'Ctrl+S': 'CmdOrCtrl+S'],
 			},
 			NewPanel: {
-				combos: [isWindows ? 'Ctrl+N' : 'CmdOrCtrl+N'],
+				combos: [isMac ? 'Ctrl+N': 'CmdOrCtrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: [isWindows ? 'Ctrl+T' : 'CmdOrCtrl+T'],
+				combos: [isMac ? 'Ctrl+T': 'CmdOrCtrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: [isWindows ? 'Ctrl+L' : 'CmdOrCtrl+L'],
+				combos: [isMac ? 'Ctrl+L': 'CmdOrCtrl+L'],
 			},
 			OpenEditorCommandPrompt: {
-				combos: [isWindows ? 'Ctrl+I' : 'CmdOrCtrl+I'],
+				combos: [isMac ? 'CmdOrCtrl+I': 'Ctrl+I'],
 			},
 			OpenExplorerCommandPrompt: {
-				combos: [isWindows ? 'Ctrl+O' : 'CmdOrCtrl+O'],
+				combos: [isMac ? 'CmdOrCtrl+O': 'Ctrl+O'],
 			},
 			OpenCommandPrompt: {
-				combos: [isWindows ? 'Ctrl+P' : 'CmdOrCtrl+P'],
+				combos: [isMac ? 'CmdOrCtrl+P': 'Ctrl+P'],
 			},
 			IterateCurrentPanelTabs: {
-				combos: [isWindows ? 'Ctrl+Tab' : 'CmdOrCtrl+Tab'],
+				combos: [isMac ? 'CmdOrCtrl+Tab': 'Ctrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: [isWindows ? 'Ctrl+Up' : 'CmdOrCtrl+Up', 'Ctrl+ScrollUp'],
+				combos: [isMac ? 'CmdOrCtrl+Up': 'Ctrl+Up', 'Ctrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: [isWindows ? 'Ctrl+Down' : 'CmdOrCtrl+Down', 'Ctrl+ScrollDown'],
+				combos: [isMac ? 'CmdOrCtrl+Down': 'Ctrl+Down', 'Ctrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
@@ -63,7 +63,7 @@ const defaultConfig = {
 				combos: [],
 			},
 			FocusExplorerPanel: {
-				combos: [isWindows ? 'Ctrl+E' : 'CmdOrCtrl+E'],
+				combos: [isMac ? 'CmdOrCtrl+E': 'Ctrl+E'],
 			},
 		},
 		miscEnableLiveUpdateInManualConfig: true,
