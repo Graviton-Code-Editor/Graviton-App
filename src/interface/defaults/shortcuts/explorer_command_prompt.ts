@@ -90,11 +90,20 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 		onWriting: async ({ value: itemPath }, { setOptions }) => {
 			showOptions(itemPath, setOptions)
 		},
-		onCompleted: async filePath => {
-			fs.lstat(filePath).then(() => {
-				RunningConfig.emit('loadFile', {
-					filePath,
-				})
+		onCompleted: async itemPath => {
+			fs.lstat(itemPath).then(stats => {
+				const isFile = stats.isFile()
+				if (isFile) {
+					// Open the file
+					RunningConfig.emit('loadFile', {
+						filePath: itemPath,
+					})
+				} else {
+					// Open the folder
+					RunningConfig.emit('addFolderToRunningWorkspace', {
+						folderPath: itemPath,
+					})
+				}
 			})
 		},
 	})
