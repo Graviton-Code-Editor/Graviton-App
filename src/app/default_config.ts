@@ -27,16 +27,16 @@ const defaultConfig = {
 		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: [isMac ? 'Ctrl+S' : 'CmdOrCtrl+S'],
+				combos: [isMac ? 'CmdOrCtrl+S' : 'Ctrl+S'],
 			},
 			NewPanel: {
-				combos: [isMac ? 'Ctrl+N' : 'CmdOrCtrl+N'],
+				combos: [isMac ? 'CmdOrCtrl+N' : 'Ctrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: [isMac ? 'Ctrl+T' : 'CmdOrCtrl+T'],
+				combos: [isMac ? 'CmdOrCtrl+T' : 'Ctrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: [isMac ? 'Ctrl+L' : 'CmdOrCtrl+L'],
+				combos: [isMac ? 'CmdOrCtrl+L' : 'Ctrl+L'],
 			},
 			OpenEditorCommandPrompt: {
 				combos: [isMac ? 'CmdOrCtrl+I' : 'Ctrl+I'],
