@@ -1,5 +1,5 @@
 import { element } from '@mkenzo_8/puffin'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import { Titles, Card, Text } from '@mkenzo_8/puffin-drac'
 import PluginsRegistry from 'PluginsRegistry'
 import path from 'path'

@@ -1,7 +1,7 @@
 import semver from 'semver'
 import packageJSON from '../../../../package.json'
 import { element } from '@mkenzo_8/puffin'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import { Titles, Card, Button, Text } from '@mkenzo_8/puffin-drac'
 import { LanguageState } from 'LanguageConfig'
 import SideMenu from '../window/side.menu'

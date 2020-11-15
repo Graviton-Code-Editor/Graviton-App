@@ -1,5 +1,5 @@
 import { element } from '@mkenzo_8/puffin'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import Buttons from './buttons'
 import Logo from '../../../../assets/logo.svg'
 import AppPlatform from 'AppPlatform'

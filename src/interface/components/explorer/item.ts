@@ -3,7 +3,7 @@ import RunningConfig from 'RunningConfig'
 import ArrowIcon from '../icons/arrow'
 import Explorer from '../../constructors/explorer'
 import StaticConfig from 'StaticConfig'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import { ExplorerItemOptions, ExplorerItemDecorator } from 'Types/explorer'
 import PuffinElement from 'Types/puffin.element'
 

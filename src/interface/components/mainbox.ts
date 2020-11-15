@@ -1,5 +1,5 @@
 import { element, render } from '@mkenzo_8/puffin'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import Terminal from './terminal'

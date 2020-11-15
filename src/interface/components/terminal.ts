@@ -1,6 +1,6 @@
 import { element, state, render } from '@mkenzo_8/puffin'
 import { Button } from '@mkenzo_8/puffin-drac'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import * as XtermWebfont from 'xterm-webfont'

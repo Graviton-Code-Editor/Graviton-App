@@ -1,5 +1,5 @@
 import { state, element } from '@mkenzo_8/puffin'
-import { css as style } from 'emotion'
+import { css as style } from '@emotion/css'
 
 const ItemWrapper = style`
 	&{
