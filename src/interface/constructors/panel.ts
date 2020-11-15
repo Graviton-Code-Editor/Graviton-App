@@ -17,12 +17,13 @@ function guessTabPosition(tab, tabsbar) {
 class Panel {
 	element: PuffinElement
 	constructor() {
+		const self = this
 		const PanelComp = element({
 			components: {
 				PanelBody,
 			},
 		})`
-			<PanelBody :click="${focusPanel}" :dragover="${allowDrop}" :drop="${onTabDropped}">    
+			<PanelBody :click="${this.focusPanel.bind(this)}" :dragover="${allowDrop}" :drop="${onTabDropped}">    
 				<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
 				<div :contextmenu="${contextmenu}" class="tabspanel"/>
 			</PanelBody>
@@ -31,55 +32,69 @@ class Panel {
 			e.preventDefault()
 		}
 		function onTabDropped(e) {
-			const target = <PuffinElement>document.getElementsByClassName(e.target.getAttribute('classSelector'))[0] || e.target
-			const movingTab = <PuffinElement>document.getElementsByClassName(e.dataTransfer.getData('classSelector'))[0]
-			const nextOldTab = <PuffinElement>document.getElementsByClassName(e.dataTransfer.getData('classSelectorForNext'))[0]
-			let nextTab = null
-			let tabsBar = null
-			let oldPanel = movingTab.state.data.panel
-			let panel = null
-			let position = 0
-			if (target.classList.contains('tabspanel')) {
-				tabsBar = target.previousSibling
-				position = tabsBar.children.length - 1
-				panel = tabsBar.parentElement
-			} else if (target.classList.contains('tabsbar')) {
-				tabsBar = target
-				position = tabsBar.children.length - 1
-				panel = tabsBar.parentElement
-			} else if (target.parentElement.classList.contains('tabsbar')) {
-				tabsBar = target.parentElement
-				panel = tabsBar.parentElement
-				const targetPosition = guessTabPosition(target, tabsBar)
-				const draggingTabPosition = guessTabPosition(movingTab, tabsBar)
-				if (targetPosition < draggingTabPosition) {
-					nextTab = tabsBar.children[targetPosition]
-				} else {
-					nextTab = tabsBar.children[targetPosition + 1]
-				}
-			} else {
-				// Unexpected behavior
-				return
+			const dropType = e.dataTransfer.getData('type') || 'tab'
+
+			switch (dropType) {
+				case 'tab':
+					const target = <PuffinElement>document.getElementsByClassName(e.target.getAttribute('classSelector'))[0] || e.target
+					const movingTab = <PuffinElement>document.getElementsByClassName(e.dataTransfer.getData('classSelector'))[0]
+					const nextOldTab = <PuffinElement>document.getElementsByClassName(e.dataTransfer.getData('classSelectorForNext'))[0]
+					let nextTab = null
+					let tabsBar = null
+					let oldPanel = movingTab.state.data.panel
+					let panel = null
+					let position = 0
+					if (target.classList.contains('tabspanel')) {
+						tabsBar = target.previousSibling
+						position = tabsBar.children.length - 1
+						panel = tabsBar.parentElement
+					} else if (target.classList.contains('tabsbar')) {
+						tabsBar = target
+						position = tabsBar.children.length - 1
+						panel = tabsBar.parentElement
+					} else if (target.parentElement.classList.contains('tabsbar')) {
+						tabsBar = target.parentElement
+						panel = tabsBar.parentElement
+						const targetPosition = guessTabPosition(target, tabsBar)
+						const draggingTabPosition = guessTabPosition(movingTab, tabsBar)
+						if (targetPosition < draggingTabPosition) {
+							nextTab = tabsBar.children[targetPosition]
+						} else {
+							nextTab = tabsBar.children[targetPosition + 1]
+						}
+					} else {
+						// Unexpected behavior
+						return
+					}
+					if (position === tabsBar.children.length - 1) {
+						//Drag targeting the tabs bar
+						tabsBar.appendChild(movingTab)
+					} else {
+						//Drag between tabs
+						tabsBar.insertBefore(movingTab, nextTab)
+					}
+					//Make dragged tab the active one in the new panel and also move the editor
+					movingTab.state.emit('changePanel', panel)
+					if (oldPanel !== panel && nextOldTab) {
+						//Focus a tab in old panel
+						nextOldTab.state.emit('focusedMe')
+					}
+					//Focus the new tab
+					movingTab.state.emit('focusedMe', {})
+					break
+
+				case 'explorerItem':
+					// Focus the panel where the file dropped
+					self.focusPanel()
+
+					// Launch an editor
+					RunningConfig.emit('loadFile', {
+						filePath: e.dataTransfer.getData('filePath'),
+					})
+					break
 			}
-			if (position === tabsBar.children.length - 1) {
-				//Drag targeting the tabs bar
-				tabsBar.appendChild(movingTab)
-			} else {
-				//Drag between tabs
-				tabsBar.insertBefore(movingTab, nextTab)
-			}
-			//Make dragged tab the active one in the new panel and also move the editor
-			movingTab.state.emit('changePanel', panel)
-			if (oldPanel !== panel && nextOldTab) {
-				//Focus a tab in old panel
-				nextOldTab.state.emit('focusedMe')
-			}
-			//Focus the new tab
-			movingTab.state.emit('focusedMe', {})
 		}
-		function focusPanel() {
-			RunningConfig.data.focusedPanel = this
-		}
+
 		function contextmenu(event) {
 			if (!this.children[0]) {
 				new ContextMenu({
@@ -98,6 +113,9 @@ class Panel {
 		}
 
 		this.element = render(PanelComp, document.getElementById('panels_stack'))
+		RunningConfig.data.focusedPanel = this.element
+	}
+	focusPanel() {
 		RunningConfig.data.focusedPanel = this.element
 	}
 }

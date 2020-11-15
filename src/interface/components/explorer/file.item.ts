@@ -81,7 +81,7 @@ class Item {
 			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
-				}" draggable="true" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+				}" draggable="true" :dragstart="${startDrag}" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"/>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"/>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
@@ -90,6 +90,11 @@ class Item {
 				</button>
 			</FileItem>
 		`
+
+		function startDrag(e: DragEvent): void {
+			e.dataTransfer.setData('type', 'explorerItem')
+			e.dataTransfer.setData('filePath', self.itemPath)
+		}
 
 		function handleTextDecorator() {
 			if (self.itemDecorator) {
