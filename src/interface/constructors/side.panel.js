@@ -3,48 +3,46 @@ import { css as style } from '@emotion/css'
 import { LanguageState } from 'LanguageConfig'
 
 const styleWrapper = style`
-	& {
-		padding:0px;
-		margin-bottom: 2px;
+	padding:0px;
+	margin-bottom: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--sidebarIconBackground);
+	border-radius: 5px;
+	overflow: hidden;
+	min-height: 50px;
+	max-height: 50px;
+	--iconFill: var(--sidebarIconsFill);
+	&:hover:not(.active) {
+		transition: 0.1s;
+		background: var(--sidebarIconHoveringBackground);
+		--iconFill: var(--sidebarIconsHoveringFill);
+	}
+	&.active {
+		background: var(--sidebarIconActiveBackground);
+		--iconFill: var(--sidebarIconsActiveFill);
+	}
+	svg {
+		width: 20px;
+	}
+	& > .decorator{
+		position: absolute;
+		font-size:10px;
+		border-radius:50px;
+		padding: 0px;
+		width: 15px;
+		height: 15px;
+		margin-top: 26px;
+		margin-left: 26px;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		background: var(--sidebarIconBackground);
-		border-radius: 5px;
-		overflow: hidden;
-		min-height: 50px;
-		max-height: 50px;
-		--iconFill: var(--sidebarIconsFill);
-			:hover:not(.active) {
-			transition: 0.1s;
-			background: var(--sidebarIconHoveringBackground);
-			--iconFill: var(--sidebarIconsHoveringFill)
-		}
-		&.active {
-			background: var(--sidebarIconActiveBackground);
-			--iconFill: var(--sidebarIconsActiveFill)
-		}
-		& svg {
-			width: 20px;
-		}
-		& > .decorator{
-			position: absolute;
-			font-size:10px;
-			border-radius:50px;
-			padding: 0px;
-			width: 15px;
-			height: 15px;
-			margin-top: 26px;
-			margin-left: 26px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			pointer-events: none;
-			background: var(--sidebarDecoratorBackground);
-			color: var(--sidebarDecoratorColor);
-			&.false{
-				display: none;
-			}
+		pointer-events: none;
+		background: var(--sidebarDecoratorBackground);
+		color: var(--sidebarDecoratorColor);
+		&.false{
+			display: none;
 		}
 	}
 `

@@ -2,9 +2,7 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
 
 const styleWrapper = style`
-	& path{
-		stroke: var(--iconFill);
-	}
+	stroke: var(--iconFill);
 `
 
 function FolderOutlined() {

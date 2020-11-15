@@ -2,10 +2,6 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
 
 const styleWrapper = style`
-	& {
-		width: 23px !important;
-		height: 23px !important;
-	}
 	& path{
 		fill: var(--iconFill);
 	}
@@ -16,11 +12,10 @@ const styleWrapper = style`
 
 function EnvOutlined() {
 	return element`
-		<svg class="${styleWrapper}" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-			<circle cx="19.799" cy="10.7944" r="6.30435" transform="rotate(-45 19.799 10.7944)" stroke-width="2"/>
-			<path d="M5.16495 25.4284C4.68953 24.953 4.68953 24.1822 5.16495 23.7068L14.634 14.2377L16.3557 15.9593L6.8866 25.4284C6.41118 25.9038 5.64037 25.9038 5.16495 25.4284V25.4284Z" />
+		<svg class="${styleWrapper}" width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<circle cx="21.2132" cy="11.0677" r="6.82609" transform="rotate(-45 21.2132 11.0677)" stroke-width="2"/>
+			<path d="M5.53387 26.7471C5.02449 26.2377 5.02449 25.4118 5.53387 24.9024L15.6793 14.757L17.5239 16.6016L7.3785 26.7471C6.86912 27.2564 6.04325 27.2564 5.53387 26.7471V26.7471Z" />
 		</svg>
-
 	`
 }
 
