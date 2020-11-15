@@ -130,25 +130,28 @@ class Menu {
 	 * Convert Graviton's menu to electron's Menu constructor
 	 */
 	private convertToElectronInterface(list) {
-		return list.map(btn => {
-			if (btn.label && btn.action) {
-				const id = Math.random()
-				ipcRenderer.on(`menu_${id}`, btn.action)
-				return {
-					label: lang.getTranslation(btn.label, LanguageState),
-					action: id,
+		return list
+			.map(btn => {
+				if (!btn) return
+				if (btn.label && btn.action) {
+					const id = Math.random()
+					ipcRenderer.on(`menu_${id}`, btn.action)
+					return {
+						label: lang.getTranslation(btn.label, LanguageState),
+						action: id,
+					}
+				} else if (btn.label && btn.list) {
+					return {
+						label: lang.getTranslation(btn.label, LanguageState),
+						submenu: this.convertToElectronInterface(btn.list),
+					}
+				} else {
+					return {
+						type: 'separator',
+					}
 				}
-			} else if (btn.label && btn.list) {
-				return {
-					label: lang.getTranslation(btn.label, LanguageState),
-					submenu: this.convertToElectronInterface(btn.list),
-				}
-			} else {
-				return {
-					type: 'separator',
-				}
-			}
-		})
+			})
+			.filter(Boolean)
 	}
 
 	private createNativeMenu(button, list) {
