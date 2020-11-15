@@ -27,34 +27,34 @@ const defaultConfig = {
 		appEnableProjectInspector: true,
 		appShortcuts: {
 			SaveCurrentFile: {
-				combos: [isMac ? 'Ctrl+S': 'CmdOrCtrl+S'],
+				combos: [isMac ? 'Ctrl+S' : 'CmdOrCtrl+S'],
 			},
 			NewPanel: {
-				combos: [isMac ? 'Ctrl+N': 'CmdOrCtrl+N'],
+				combos: [isMac ? 'Ctrl+N' : 'CmdOrCtrl+N'],
 			},
 			CloseCurrentTab: {
-				combos: [isMac ? 'Ctrl+T': 'CmdOrCtrl+T'],
+				combos: [isMac ? 'Ctrl+T' : 'CmdOrCtrl+T'],
 			},
 			CloseCurrentPanel: {
-				combos: [isMac ? 'Ctrl+L': 'CmdOrCtrl+L'],
+				combos: [isMac ? 'Ctrl+L' : 'CmdOrCtrl+L'],
 			},
 			OpenEditorCommandPrompt: {
-				combos: [isMac ? 'CmdOrCtrl+I': 'Ctrl+I'],
+				combos: [isMac ? 'CmdOrCtrl+I' : 'Ctrl+I'],
 			},
 			OpenExplorerCommandPrompt: {
-				combos: [isMac ? 'CmdOrCtrl+O': 'Ctrl+O'],
+				combos: [isMac ? 'CmdOrCtrl+O' : 'Ctrl+O'],
 			},
 			OpenCommandPrompt: {
-				combos: [isMac ? 'CmdOrCtrl+P': 'Ctrl+P'],
+				combos: [isMac ? 'CmdOrCtrl+P' : 'Ctrl+P'],
 			},
 			IterateCurrentPanelTabs: {
-				combos: [isMac ? 'CmdOrCtrl+Tab': 'Ctrl+Tab'],
+				combos: [isMac ? 'CmdOrCtrl+Tab' : 'Ctrl+Tab'],
 			},
 			IncreaseEditorFontSize: {
-				combos: [isMac ? 'CmdOrCtrl+Up': 'Ctrl+Up', 'Ctrl+ScrollUp'],
+				combos: [isMac ? 'CmdOrCtrl+Up' : 'Ctrl+Up', 'Ctrl+ScrollUp'],
 			},
 			DecreaseEditorFontSize: {
-				combos: [isMac ? 'CmdOrCtrl+Down': 'Ctrl+Down', 'Ctrl+ScrollDown'],
+				combos: [isMac ? 'CmdOrCtrl+Down' : 'Ctrl+Down', 'Ctrl+ScrollDown'],
 			},
 			CloseCurrentWindow: {
 				combos: ['Esc'],
@@ -63,7 +63,7 @@ const defaultConfig = {
 				combos: [],
 			},
 			FocusExplorerPanel: {
-				combos: [isMac ? 'CmdOrCtrl+E': 'Ctrl+E'],
+				combos: [isMac ? 'CmdOrCtrl+E' : 'Ctrl+E'],
 			},
 		},
 		miscEnableLiveUpdateInManualConfig: true,
