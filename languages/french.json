@@ -61,8 +61,8 @@
 					"DecreaseZoom": "Réduire le zoom"
 				},
 				"Debug": {
-					"Debug": "Debug",
-					"OpenDebugWindow": "Ouvrir la fenêtre de debuggage"
+					"Debug": "Débogage",
+					"OpenDebugWindow": "Ouvrir la fenêtre de débogage"
 				},
 				"OpenDevTools": "Outils de développement"
 			},
@@ -87,16 +87,16 @@
 				"Customization": {
 					"Customization": "Personnalisation",
 					"Themes": "Thèmes",
-					"Iconpacks": "Packs d'icons"
+					"Iconpacks": "Packs d'icônes"
 				},
 				"Advanced": {
 					"Advanced": "Paramètres avancés",
-					"FileWatcher": "Visualisateur de fichiers",
+					"FileWatcher": "Observateur de fichiers",
 					"Autocomplete": "Autocomplétion",
 					"WrapLines": "Wrap lines",
 					"ManualConfig": {
 						"ManualConfig": "Configuration manuelle",
-						"EditConfiguration": "Éditeur la configuration"
+						"EditConfiguration": "Éditer la configuration"
 					},
 					"Explorer": "Explorateur",
 					"Editor": "Editeur",
@@ -106,7 +106,7 @@
 					"Indentation": {
 						"Indentation": "Indentation",
 						"Space": "Espace",
-						"Tab": "Tab"
+						"Tab": "Tabulation"
 					},
 					"Configuration": "Configuration",
 					"RestartConfig": {
@@ -120,7 +120,7 @@
 				},
 				"About": {
 					"About": "À propos",
-					"GravitonDescription": "Graviton est un éditeur de texte cross-plateforme."
+					"GravitonDescription": "Graviton est un éditeur de texte multi-plateformes."
 				}
 			},
 			"Store": {
@@ -176,7 +176,7 @@
 			"No": "Non",
 			"Close": "Fermer",
 			"Ignore": "Ignorer",
-			"BuildDate": "Date de build",
+			"BuildDate": "Date de compilation",
 			"By": "par",
 			"Understood": "Compris"
 		},
