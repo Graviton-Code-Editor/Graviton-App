@@ -16,6 +16,17 @@ import getScheme from '../../utils/get_scheme'
 import { WindowInstance } from 'Types/window'
 
 export default function Settings(): WindowInstance {
+	const SettinsgPage = getScheme(CustomizationScheme())
+	const AdvancePage = () =>
+		getScheme(
+			AdvancedScheme({
+				closeWindow: () => SettingsWindow.close(),
+			}),
+		)
+	const ShortcutsPage = () => getScheme(ShortcutsScheme())
+	const LanguagesPage = () => getScheme(LanguagesScheme())
+	const AboutPage = () => getScheme(AboutScheme())
+
 	const SettingsWindow = new Window({
 		title: 'settings',
 		component: SettingsPage,
@@ -41,17 +52,11 @@ export default function Settings(): WindowInstance {
 					<label to="about" lang-string="windows.Settings.About.About"/>
 				</div>
 				<div>
-					<div href="customization">
-						${getScheme(CustomizationScheme())}
-					</div>
-					<SideMenuPage href="advanced" component="${getScheme(
-						AdvancedScheme({
-							closeWindow: () => SettingsWindow.close(),
-						}),
-					)}"/>
-					<SideMenuPage href="shortcuts" component="${getScheme(ShortcutsScheme())}"/>
-					<SideMenuPage href="languages" component="${getScheme(LanguagesScheme())}"/>
-					<SideMenuPage href="about" component="${getScheme(AboutScheme())}"/>
+					<div href="customization">${SettinsgPage}</div>
+					<SideMenuPage href="advanced" component="${AdvancePage}"/>
+					<SideMenuPage href="shortcuts" component="${ShortcutsPage}"/>
+					<SideMenuPage href="languages" component="${LanguagesPage}"/>
+					<SideMenuPage href="about" component="${AboutPage}"/>
 				</div>
 			</SideMenu>
 		`

@@ -7,7 +7,7 @@ export default function SideMenuPage({ component }) {
 			render(
 				element({
 					addons: [lang(LanguageState)],
-				})`<div>${component}</div>`,
+				})`<div>${component()}</div>`,
 				this,
 			)
 		}
