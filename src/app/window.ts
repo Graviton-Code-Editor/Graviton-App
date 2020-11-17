@@ -5,7 +5,9 @@ import * as path from 'path'
 
 export default window => {
 	ipcMain.on('close-window', (e, windowID) => {
-		if (window.windowID === windowID) window.close()
+		if (window.windowID === windowID) {
+			window.destroy()
+		}
 	})
 
 	ipcMain.on('maximize-window', (e, windowID) => {
