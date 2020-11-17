@@ -42,6 +42,16 @@
 					"CloseCurrentPanel": "Fermer le panneau actuel"
 				}
 			},
+			"View": {
+				"View": "Affichage",
+				"ToggleSidebar": "Afficher/Cacher la barre latérale",
+				"ToggleSidepanel": "Afficher/Cacher le panneau latéral",
+				"ShowSidebar": "Afficher la barre latérale",
+				"ShowSidepanel": "Afficher le panneau latéral",
+				"HideSidebar": "Cacher la barre latérale",
+				"HideSidepanel": "Cacher le panneau latéral",
+				"ToggleTerminal": "Afficher/Cacher le terminal"
+			},
 			"Window": {
 				"Window": "Fenêtre",
 				"Zoom": {
@@ -50,17 +60,24 @@
 					"IncreaseZoom": "Augmenter le zoom",
 					"DecreaseZoom": "Réduire le zoom"
 				},
+				"Debug": {
+					"Debug": "Débogage",
+					"OpenDebugWindow": "Ouvrir la fenêtre de débogage"
+				},
 				"OpenDevTools": "Outils de développement"
 			},
 			"Help": {
 				"Help": "Aide",
 				"Contact": "Contact",
 				"Social": "Social",
+				"Contributors": "Contributeurs",
 				"Blog": "Blog",
 				"Documentation": "Documentation",
 				"Website": "Site web",
 				"SourceCode": "Code source",
+				"ReportBug": "Signaler un bug",
 				"CheckForUpdates": "Rechercher des mises à jours",
+				"ShowWelcome": "Afficher la page d'accueil",
 				"About": "À propos"
 			}
 		},
@@ -70,10 +87,41 @@
 				"Customization": {
 					"Customization": "Personnalisation",
 					"Themes": "Thèmes",
-					"FileWatcher": "Suivi des fichiers"
+					"Iconpacks": "Packs d'icônes"
+				},
+				"Advanced": {
+					"Advanced": "Paramètres avancés",
+					"FileWatcher": "Observateur de fichiers",
+					"Autocomplete": "Autocomplétion",
+					"WrapLines": "Wrap lines",
+					"ManualConfig": {
+						"ManualConfig": "Configuration manuelle",
+						"EditConfiguration": "Éditer la configuration"
+					},
+					"Explorer": "Explorateur",
+					"Editor": "Editeur",
+					"GitIntegration": "Integration Git",
+					"LSPIntegration": "Integration LSP (expérimentale)",
+					"SourceTracker": "Source Tracker",
+					"Indentation": {
+						"Indentation": "Indentation",
+						"Space": "Espace",
+						"Tab": "Tabulation"
+					},
+					"Configuration": "Configuration",
+					"RestartConfig": {
+						"RestartConfig": "Redémarrer la configuration"
+					}
 				},
 				"Languages": "Langues",
-				"About": "À propos"
+				"Shortcuts": {
+					"Shortcuts": "Raccourcis",
+					"CreateCombo": "Créer un combo"
+				},
+				"About": {
+					"About": "À propos",
+					"GravitonDescription": "Graviton est un éditeur de texte multi-plateformes."
+				}
 			},
 			"Store": {
 				"Store": "Magasin",
@@ -85,7 +133,8 @@
 				},
 				"Install": "Installer",
 				"Update": "Mettre à jour",
-				"Uninstall": "Désinstaller"
+				"Uninstall": "Désinstaller",
+				"AnyCompatibleVersion": "Il n'y a pas de version compatibles."
 			},
 			"Welcome": {
 				"Welcome": "Bienvenue",
@@ -94,6 +143,10 @@
 				"NewProject": "Nouveau projet",
 				"OpenWorkspace": "Ouvrir un espace de travail",
 				"OpenFolder": "Ouvrir un dossier"
+			},
+			"BrowserWelcome": {
+				"WelcomeTitle": "Bienvenue sur Graviton pour navigateur",
+				"WelcomeMessage": "Veuillez garder à l'idée que cette version est encore très expérimentale et que certaines fonctions ne fonctionnent pas.\n Pour une meilleure expérience, veuillez télécharger l'application."
 			}
 		},
 		"misc": {
@@ -107,8 +160,14 @@
 			"Accept": "Accepter",
 			"Cancel": "Annuler",
 			"version": "Version",
+			"CopyPath": "Copier le chemin",
 			"More": "Plus",
 			"Copy": "Copier",
+			"Rename": "Re nommer",
+			"Remove": "Supprimer",
+			"OpenLocation": "Ouvrir le dossier",
+			"NewFile": "Nouveau fichier",
+			"NewFolder": "Nouveau dossier",
 			"Paste": "Coller",
 			"Author": "Auteur",
 			"Exit": "Quitter",
@@ -116,7 +175,30 @@
 			"Yes": "Oui",
 			"No": "Non",
 			"Close": "Fermer",
-			"Ignore": "Ignorer"
+			"Ignore": "Ignorer",
+			"BuildDate": "Date de compilation",
+			"By": "par",
+			"Understood": "Compris"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "La langue a été changée.",
+				"restartMessage": "Redémarrez l'application pour appliquer toutes les modifications."
+			}
+		},
+		"dialogs": {
+			"tabsUnsavedWarning": {
+				"title": "Il y a des fichiers non-enregistrés.",
+				"content": "Les modifications peuvent être perdues."
+			},
+			"restartConfig": {
+				"title": "Redémarrer la configuration",
+				"content": "Cliquez pour redémarrer l'éditeur avec votre nouvelle configuration. Cela ne va pas désinstaller vos plugins."
+			},
+			"experimentalFeature": {
+				"title": "Fonctionnalité expérimentale",
+				"content": "Cette fonctionnalité n'est pas stable et peut causer des bugs."
+			}
 		}
 	}
 }
