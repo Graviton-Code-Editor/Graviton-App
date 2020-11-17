@@ -7,6 +7,7 @@ import hasAnyValidArgument from './cli'
 import Store from './store_handler'
 import WindowHandler from './window'
 import MenusHandler from './menus_handler'
+import TerminalHandler from './terminal_handler'
 import './plugins_handler'
 import './debug_window'
 
@@ -90,6 +91,7 @@ function createWindow() {
 
 	WindowHandler(window)
 	MenusHandler(window)
+	TerminalHandler(window)
 }
 
 function getAppIcon() {

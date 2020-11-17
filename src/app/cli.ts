@@ -10,8 +10,8 @@ export default function hasAnyValidArgument() {
 		 * Print Graviton's version
 		 */
 		console.log(packageJson.version)
-		return false
+		return true
 	}
 
-	return true
+	return false
 }

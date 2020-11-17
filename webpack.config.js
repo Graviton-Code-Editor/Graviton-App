@@ -273,6 +273,7 @@ module.exports = [
 			],
 		},
 		target: 'electron-main',
+		externals: ['node-pty'],
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_main'),
@@ -313,7 +314,7 @@ module.exports = [
 			],
 		},
 		target: 'electron-main',
-		externals: ['fs-extra', 'electron', 'path'],
+		externals: ['fs-extra', 'electron', 'path', 'node-pty'],
 		output: {
 			filename: 'preload.js',
 			path: path.resolve(__dirname, 'dist_main'),

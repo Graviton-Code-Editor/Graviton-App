@@ -3,12 +3,21 @@ import { element } from '@mkenzo_8/puffin'
 import Core from 'Core'
 const { fs } = Core
 import * as path from 'path'
+import { ipcRenderer } from 'electron'
+import LocalTerminalShell from '../../utils/local_shell'
 
-export function createProcess(bin, cwd = process.env.HOMEPATH) {
-	const pty = window.require('node-pty')
-	return pty.spawn(bin, [], {
+const getShellCwd = () => {
+	if (RunningConfig.data.workspaceConfig.folders.length === 1) {
+		return RunningConfig.data.workspaceConfig.folders[0].path
+	} else {
+		return process.env.HOME
+	}
+}
+
+export function createProcess(bin, cwd = getShellCwd()) {
+	return new LocalTerminalShell({
+		bin,
 		cwd,
-		env: process.env,
 	})
 }
 
