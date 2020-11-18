@@ -331,13 +331,7 @@ const CodemirrorClient = new EditorClient(
 					mark: true,
 					markTagPairs: true,
 					previewOpenTag: false,
-					config: {
-						markup: {
-							snippets: {
-								foo: 'ul.nav>li',
-							},
-						},
-					},
+					config: {},
 				},
 				gutters: ['CodeMirror-lsp'],
 			})
