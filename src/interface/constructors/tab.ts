@@ -437,17 +437,17 @@ function getOpenedTabs(tabsBar: HTMLElement, tab = null) {
 function focusATab(fromTab: PuffinElement): void {
 	const tabsBar = fromTab.parentElement
 	const tabsBarChildren = getOpenedTabs(tabsBar) //Get opened tabs in the current focused panel
-	const fromTabPosition = guessTabPosition(fromTab, tabsBar) //Get the current focused tab position
-	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab, tabsBar)
-	if (focusedTabPosition === 0) {
-		if (fromTabPosition < tabsBarChildren.length) {
-			;(tabsBarChildren[fromTabPosition] as PuffinElement).state.emit('focusedMe')
-		} else if (tabsBarChildren.length === 1) {
+	const fromTabPosition = guessTabPosition(fromTab, tabsBar) //Get the closed tab position
+	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab, tabsBar) //Get the current focused tab position
+	if (focusedTabPosition === tabsBarChildren.length && fromTabPosition !== 0) {
+		;(tabsBarChildren[focusedTabPosition - 1] as PuffinElement).state.emit('focusedMe')
+	} else {
+		if (tabsBarChildren.length === 0) {
 			RunningConfig.data.focusedTab = null
 			RunningConfig.data.focusedEditor = null
+		} else if (focusedTabPosition >= 0) {
+			;(tabsBarChildren[focusedTabPosition] as PuffinElement).state.emit('focusedMe')
 		}
-	} else if ((focusedTabPosition !== 0 && fromTabPosition == focusedTabPosition) || focusedTabPosition == tabsBarChildren.length) {
-		;(tabsBarChildren[fromTabPosition - 1] as PuffinElement).state.emit('focusedMe')
 	}
 }
 
