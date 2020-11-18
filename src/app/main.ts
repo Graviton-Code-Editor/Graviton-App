@@ -5,7 +5,7 @@ import isDev from 'electron-is-dev'
 import windowStateKeeper from 'electron-window-state'
 import hasAnyValidArgument from './cli'
 import Store from './store_handler'
-import WindowHandler from './window'
+import WindowHandler from './window_handler'
 import MenusHandler from './menus_handler'
 import TerminalHandler from './terminal_handler'
 import './plugins_handler'
@@ -26,7 +26,7 @@ function createWindow() {
 		callback(pathname)
 	})
 
-	let mainWindowState = windowStateKeeper({
+	const mainWindowState = windowStateKeeper({
 		defaultWidth: 800,
 		defaultHeight: 600,
 	})
@@ -77,10 +77,10 @@ function createWindow() {
 	}
 
 	window.on('ready-to-show', () => {
-		mainWindowState.manage(window)
 		window.show()
 		window.focus()
 	})
+
 	if (path.basename(path.join(__dirname, '..')) === 'Graviton-App') {
 		window.setMenuBarVisibility(true)
 	} else {

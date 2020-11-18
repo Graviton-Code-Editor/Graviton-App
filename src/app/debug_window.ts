@@ -2,7 +2,7 @@ import { ipcMain, BrowserWindow } from 'electron'
 import * as isDev from 'electron-is-dev'
 import * as url from 'url'
 import * as path from 'path'
-import WindowHandler from './window'
+import WindowHandler from './window_handler'
 import MenusHandler from './menus_handler'
 
 let debugWindows = []

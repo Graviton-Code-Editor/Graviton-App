@@ -1,6 +1,10 @@
 import { ipcRenderer } from 'electron'
 import { EventEmitter } from 'events'
 
+/*
+ * Simple interface to create and manage  Node-pty's spawns
+ */
+
 export default class LocalTerminalShell {
 	id: number
 	event: EventEmitter
