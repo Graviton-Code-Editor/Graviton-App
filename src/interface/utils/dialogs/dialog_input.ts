@@ -1,12 +1,12 @@
 import { element } from '@mkenzo_8/puffin'
 import Dialog from '../../constructors/dialog'
-import { Input } from '@mkenzo_8/puffin-drac'
+import { Input, TextArea } from '@mkenzo_8/puffin-drac'
 
 /*
  * This Dialog provides a easy way to ask something to the user.
  */
 
-function InputDialog({ title, placeHolder = '' }): Promise<string> {
+function InputDialog({ title, placeHolder = '', type = 'input' }): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const randomSelector = Math.random()
 		function onEnter(e) {
@@ -24,13 +24,25 @@ function InputDialog({ title, placeHolder = '' }): Promise<string> {
 		function inputMounted() {
 			setTimeout(() => this.focus(), 1)
 		}
+
+		let inputComponent
+
+		switch (type) {
+			case 'input':
+				inputComponent = Input
+				break
+			case 'textarea':
+				inputComponent = TextArea
+				break
+		}
+
 		const component = () => element({
 			components: {
-				Input,
+				inputComponent,
 			},
 		})`
 			<div id="${randomSelector}">
-				<Input mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
+				<inputComponent mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
 			</div>
 		`
 		const DialogInstance = new Dialog({
