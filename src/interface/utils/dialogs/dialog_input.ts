@@ -1,6 +1,15 @@
 import { element } from '@mkenzo_8/puffin'
+import { css as style } from '@emotion/css'
 import Dialog from '../../constructors/dialog'
 import { Input, TextArea } from '@mkenzo_8/puffin-drac'
+
+const customStyle = style`
+	& textarea {
+		resize: none;
+		width: calc(100% - 10px);
+		height: 100px;
+	}
+`
 
 /*
  * This Dialog provides a easy way to ask something to the user.
@@ -41,13 +50,14 @@ function InputDialog({ title, placeHolder = '', type = 'input' }): Promise<strin
 				inputComponent,
 			},
 		})`
-			<div id="${randomSelector}">
+			<div  class="${customStyle}" id="${randomSelector}">
 				<inputComponent mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
 			</div>
 		`
 		const DialogInstance = new Dialog({
 			title,
 			component,
+			height: type === 'textarea' ? '250px' : '200px',
 			buttons: [
 				{
 					label: 'misc.Continue',

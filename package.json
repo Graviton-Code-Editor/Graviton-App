@@ -89,7 +89,7 @@
 		"@emmetio/codemirror-plugin": "^1.2.1",
 		"@emotion/css": "^11.0.0",
 		"@mkenzo_8/puffin": "^1.1.1",
-		"@mkenzo_8/puffin-drac": "^0.2.1",
+		"@mkenzo_8/puffin-drac": "^0.2.4",
 		"adm-zip": "^0.4.16",
 		"axios": "^0.21.0",
 		"chokidar": "^3.4.3",

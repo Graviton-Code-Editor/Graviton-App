@@ -179,7 +179,8 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 												action: async function () {
 													const commitContent = await InputDialog({
 														title: 'Commit message',
-														placeHolder: 'Bug fix',
+														placeHolder: '🐛 Bug fix',
+														type: 'textarea',
 													})
 													/*
 													 * Create a commit
