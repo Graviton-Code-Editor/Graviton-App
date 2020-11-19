@@ -17,12 +17,14 @@ export default function MainBox() {
 	function mounted() {
 		if (StaticConfig.data.appShowTerminal) {
 			this.style.display = 'block'
+			document.getElementById('panels_stack').style.height = '70%'
 		} else {
 			this.style.display = 'none'
 		}
 		StaticConfig.keyChanged('appShowTerminal', (show: boolean) => {
 			if (show) {
 				this.style.display = 'block'
+				document.getElementById('panels_stack').style.height = '70%'
 			} else {
 				this.style.display = 'none'
 			}
