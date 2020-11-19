@@ -153,6 +153,12 @@ class Editor implements EditorOptions {
 			this.savedFileContent = this.client.do('getValue', this.instance)
 		})
 
+		const mainboxResizedWatcher = RunningConfig.on('mainBoxHasBeenResized', () => {
+			this.client.do('doRefresh', {
+				instance: this.instance,
+			})
+		})
+
 		this.tabState.emit('editorCreated', {
 			client: this.client,
 			instance: this.instance,
@@ -168,6 +174,7 @@ class Editor implements EditorOptions {
 			tabSavedWatcher.cancel()
 			editorFontFamilyWatcher.cancel()
 			editorWrapLinesWatcher.cancel()
+			mainboxResizedWatcher.cancel()
 			if (RunningConfig.data.focusedEditor?.instance === this.instance) {
 				RunningConfig.data.focusedEditor = null
 			}
