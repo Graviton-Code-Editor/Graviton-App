@@ -12,7 +12,7 @@ const { fs } = Core
 
 function newDirectoryDialog({ isFolder, parentDirectory, container, explorerState, explorerProvider }) {
 	InputDialog({
-		title: isFolder ? 'misg.NewFolder' : 'NewFile',
+		title: isFolder ? 'misc.NewFolder' : 'misc.NewFile',
 		placeHolder: isFolder ? 'Folder' : 'File',
 	})
 		.then(function (res) {
