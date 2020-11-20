@@ -35,7 +35,7 @@
 	],
 	"scripts": {
 		"readme:contributors": "contributor-faces .",
-		"start": "npm run build:webpack:main && run-p script:build watch:webpack:renderer watch:electron",
+		"start": "npm run script:build && npm run build:webpack:main && run-p watch:webpack:renderer watch:electron",
 		"start:experimental:browser": "run-p watch:webpack:browser",
 		"build": "npm run script:build && npm run build:webpack  && npm run build:electron",
 		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
