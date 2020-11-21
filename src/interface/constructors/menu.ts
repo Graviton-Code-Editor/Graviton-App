@@ -9,6 +9,7 @@ const {
 } = Core
 import AppPlatform from 'AppPlatform'
 import RunningConfig from 'RunningConfig'
+import Tick from '../components/icons/tick'
 
 const createdMenus = []
 
@@ -67,37 +68,63 @@ class Menu {
 	}
 
 	private getDropmenu(list) {
+		const self = this
 		return list.map((option, index) => {
-			if (option.label !== undefined) {
-				let computedLabel = option.label
-				if (typeof option.label === 'function') computedLabel = option.label()
-				const triggerAction = e => {
-					if (option.list) {
-						this.renderSubmenu(e, option)
-					} else {
-						this.hideMenus(e.target)
-					}
-				}
-				let dropmenuOption
+			if (!option.label) return element`<div class="sep"/>`
+			let { label, action, checked } = option
+
+			const triggerAction = e => {
 				if (option.list) {
-					dropmenuOption = element({
-						components: {
-							ArrowIcon,
-						},
-					})`<p lang-string="${computedLabel}"></p><ArrowIcon/>`
+					this.renderSubmenu(e, option)
 				} else {
-					dropmenuOption = element`<p lang-string="${computedLabel}"/>`
+					this.hideMenus(e.target)
 				}
-				return element`
-				<div :click="${option.action}" >
+			}
+
+			let dropmenuOption
+			if (option.list) {
+				dropmenuOption = element({
+					components: {
+						ArrowIcon,
+					},
+				})`<p lang-string="${label}"></p><ArrowIcon class="arrow"/>`
+			} else {
+				dropmenuOption = element`<p lang-string="${label}"/>`
+			}
+
+			function mounted() {
+				option.mounted?.bind(this)(self.getMenuHooks(this))
+			}
+
+			return element({
+				components: {
+					Tick,
+				},
+			})`
+				<div :click="${action}" mounted="${mounted}">
 					<a :mouseenter="${triggerAction}" >
+						<Tick class="tick" style="display: ${checked ? 'block' : 'none'}"/>
 						${dropmenuOption}
 					</a>
 				</div>`
-			} else {
-				return element`<div class="sep"/>`
-			}
 		})
+	}
+
+	private getMenuHooks(item, native = false) {
+		return {
+			setChecked(value) {
+				if (native) {
+					ipcRenderer.send('checkMenuItem', {
+						id: item,
+						checked: value,
+					})
+				} else {
+					const tick = item.getElementsByClassName('tick')[0]
+
+					tick.style.display = value ? 'block' : 'none'
+				}
+			},
+		}
 	}
 
 	private getDropmenuButton(isSubmenu, button) {
@@ -131,19 +158,30 @@ class Menu {
 	 */
 	private convertToElectronInterface(list) {
 		return list
-			.map(btn => {
-				if (!btn) return
-				if (btn.label && btn.action) {
+			.map(option => {
+				if (!option) return
+				const { label, action, type, checked, list } = option
+				if (label && action) {
 					const id = Math.random()
-					ipcRenderer.on(`menu_${id}`, btn.action)
+
+					ipcRenderer.on(`menuItemClicked`, (e, menuItem) => {
+						if (menuItem == id) {
+							action()
+						}
+					})
+
+					option.mounted?.(this.getMenuHooks(id, true))
+
 					return {
-						label: lang.getTranslation(btn.label, LanguageState),
-						action: id,
+						type,
+						label: lang.getTranslation(label, LanguageState),
+						id,
+						checked,
 					}
-				} else if (btn.label && btn.list) {
+				} else if (label && list) {
 					return {
-						label: lang.getTranslation(btn.label, LanguageState),
-						submenu: this.convertToElectronInterface(btn.list),
+						label: lang.getTranslation(label, LanguageState),
+						submenu: this.convertToElectronInterface(list),
 					}
 				} else {
 					return {

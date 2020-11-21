@@ -220,16 +220,37 @@ function createMenus() {
 		button: 'menus.View.View',
 		list: [
 			{
-				label: 'menus.View.ToggleSidebar',
+				type: 'checkbox',
+				label: 'menus.View.Sidebar',
+				checked: StaticConfig.data.appEnableSidebar,
+				mounted({ setChecked }) {
+					StaticConfig.keyChanged('appEnableSidebar', value => {
+						setChecked(value)
+					})
+				},
 				action: () => (StaticConfig.data.appEnableSidebar = !StaticConfig.data.appEnableSidebar),
 			},
 			{
-				label: 'menus.View.ToggleSidepanel',
+				type: 'checkbox',
+				label: 'menus.View.Sidepanel',
+				checked: StaticConfig.data.appEnableSidepanel,
+				mounted({ setChecked }) {
+					StaticConfig.keyChanged('appEnableSidepanel', value => {
+						setChecked(value)
+					})
+				},
 				action: () => (StaticConfig.data.appEnableSidepanel = !StaticConfig.data.appEnableSidepanel),
 			},
 			{},
 			{
-				label: 'menus.View.ToggleTerminal',
+				type: 'checkbox',
+				label: 'menus.View.Terminal',
+				checked: StaticConfig.data.appShowTerminal,
+				mounted({ setChecked }) {
+					StaticConfig.keyChanged('appShowTerminal', value => {
+						setChecked(value)
+					})
+				},
 				action: () => (StaticConfig.data.appShowTerminal = !StaticConfig.data.appShowTerminal),
 			},
 		],

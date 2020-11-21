@@ -16,14 +16,18 @@ export default window => {
 		Menu.setApplicationMenu(NativeMenuBar)
 	})
 
+	ipcMain.on('checkMenuItem', (e, { id, checked }) => {
+		const item = NativeMenuBar.getMenuItemById(id)
+		item.checked = checked
+	})
+
 	ipcMain.on('destroy-menus', (e, props) => {
 		if (NativeMenuBar) NativeMenuBar.clear()
 	})
 
 	function parse(obj) {
-		let id = obj.action
 		obj.click = () => {
-			window.webContents.send(`menu_${id}`)
+			window.webContents.send('menuItemClicked', obj.id)
 		}
 		if (obj.submenu) {
 			obj.submenu.map(menu => {

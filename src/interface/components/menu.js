@@ -103,24 +103,33 @@ const styleWrapper = style`
 		padding:0;
 		height:16px;
 	}
-	& > div svg{
-		right:15px;
+	& > div .arrow{
+		right:13px;
 		width:8px;
 		position:absolute;
 		height:16px;
 	}
+	& .tick {
+		left: 7px;
+		padding: 5px;
+		margin: auto 0;
+		height: 14px;
+		width: 14px;
+		position: absolute;
+	}
 	& > div a{
-		left:0;
 		display:flex;
 		font-size:12px;
 		padding:6px 7px;
 		min-width:100px;
-		width: auto;
 		border-radius:5px;
 		color:var(--menuOptionText);
 		cursor:pointer;
 		align-items:center;
 		padding-right:25px;
+		& p{
+			margin-left: 22px;
+		}
 	}
 	& > div a:hover{
 		background:var(--menuOptionHoveringBackground);

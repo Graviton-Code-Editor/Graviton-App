@@ -44,13 +44,13 @@
 			},
 			"View": {
 				"View": "View",
-				"ToggleSidebar": "Toggle Sidebar",
-				"ToggleSidepanel": "Toggle Sidepanel",
+				"Sidebar": "Sidebar",
+				"Sidepanel": "Sidepanel",
+				"Terminal": "Terminal",
 				"ShowSidebar": "Show Sidebar",
 				"ShowSidepanel": "Show Sidepanel",
 				"HideSidebar": "Hide Sidebar",
-				"HideSidepanel": "Hide Sidepanel",
-				"ToggleTerminal": "Toggle Terminal"
+				"HideSidepanel": "Hide Sidepanel"
 			},
 			"Window": {
 				"Window": "Window",
