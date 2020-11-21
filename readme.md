@@ -45,7 +45,7 @@ Changes on this source may not be released as an official build yet.
 
 ## 🏗 Resources
 
-- [🤓 Documentation](https://graviton.netlify.app/)
+- [🤓 Documentation](https://graviton.netlify.app/docs)
 - [🛠 Building from source](BUILDING.md)
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
