@@ -12,14 +12,24 @@ import StaticConfig from 'StaticConfig'
 import InputDialog from '../../utils/dialogs/dialog_input'
 import Notification from 'Constructors/notification'
 
-const getExplorerItems = files => {
-	return files.map(file => {
-		const { name, ext } = parse(file.path)
+/*
+ * Return total count of changes, if is bigger than 25, return "25+"
+ */
+const getCommitChangesLabel = changes => {
+	return changes.length > 25 ? '25+' : changes.slice(0, 25).length
+}
+
+/*
+ * Return git changes as Explorer Items
+ */
+const getChangesAsItems = changes => {
+	return changes.map(change => {
+		const { name, ext } = parse(change.path)
 		return {
-			label: file.path,
+			label: change.path,
 			icon: getFileIconType(name, ext.replace('.', '')),
 			decorator: {
-				label: file.working_dir == '?' ? 'U' : file.working_dir,
+				label: change.working_dir == '?' ? 'U' : change.working_dir,
 				color: 'var(--explorerItemGitNotAddedText)',
 				fontSize: '11px',
 			},
@@ -27,11 +37,10 @@ const getExplorerItems = files => {
 	})
 }
 
-const getCommitChangesLabel = changes => {
-	return changes.length > 25 ? '25+' : changes.slice(0, 25).length
-}
-
-const getCommitsItems = commits => {
+/*
+ * Return git commits as Explorer Items
+ */
+const getCommitsAsItems = commits => {
 	const emoji = new EmojiConvertor()
 	emoji.replace_mode = 'unified'
 	emoji.allow_native = true
@@ -46,6 +55,9 @@ const getCommitsItems = commits => {
 	})
 }
 
+/*
+ * Notification for "git add"
+ */
 const showFilesAddedNotification = (projectPath: string) => {
 	new Notification({
 		title: 'Source Tracker',
@@ -53,6 +65,9 @@ const showFilesAddedNotification = (projectPath: string) => {
 	})
 }
 
+/*
+ * Notification for "git commit"
+ */
 const showCommitCreatedNotification = (projectPath: string) => {
 	new Notification({
 		title: 'Source Tracker',
@@ -60,6 +75,9 @@ const showCommitCreatedNotification = (projectPath: string) => {
 	})
 }
 
+/*
+ * Notification for "git pull"
+ */
 const showChangesPulledNotification = (projectPath: string) => {
 	new Notification({
 		title: 'Source Tracker',
@@ -69,7 +87,6 @@ const showChangesPulledNotification = (projectPath: string) => {
 
 if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker) {
 	let globalCountOfChanges = 0
-
 	let setDecorator
 
 	const getGlobalChanges = () => {
@@ -213,7 +230,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													/*
 													 * Display the changed files
 													 */
-													setItems(getExplorerItems(gitChanges.files), false)
+													setItems(getChangesAsItems(gitChanges.files), false)
 													/*
 													 * Update the changes count
 													 */
@@ -225,7 +242,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											/*
 											 * Display the current changed files
 											 */
-											setItems(getExplorerItems(gitChanges.files), false)
+											setItems(getChangesAsItems(gitChanges.files), false)
 										},
 										decorator: {
 											label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
@@ -251,7 +268,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													/*
 													 * Display as item each commit
 													 */
-													setItems(getCommitsItems(all), false)
+													setItems(getCommitsAsItems(all), false)
 													/*
 													 * Update the commits count
 													 */
@@ -263,7 +280,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											/*
 											 * Display each current commit as item
 											 */
-											setItems(getCommitsItems(allCommits), false)
+											setItems(getCommitsAsItems(allCommits), false)
 										},
 										items: [],
 									},
