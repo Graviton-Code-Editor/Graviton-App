@@ -5,11 +5,13 @@ import SideMenu from '../../components/window/side.menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
 import SideMenuPage from '../../components/window/side_menu_page'
 
+import TopMenu from '../../components/window/top_menu'
+
 import CustomizationScheme from '../settings/pages/customization'
 import AdvancedScheme from '../settings/pages/advanced'
 import ShortcutsScheme from '../settings/pages/shortcuts'
 import LanguagesScheme from '../settings/pages/languages'
-import AboutScheme from '../settings/pages/about'
+import AboutPage from '../settings/pages/about'
 
 import getScheme from '../../utils/get_scheme'
 
@@ -25,7 +27,6 @@ export default function Settings(): WindowInstance {
 		)
 	const ShortcutsPage = () => getScheme(ShortcutsScheme())
 	const LanguagesPage = () => getScheme(LanguagesScheme())
-	const AboutPage = () => getScheme(AboutScheme())
 
 	const SettingsWindow = new Window({
 		title: 'settings',
@@ -39,6 +40,7 @@ export default function Settings(): WindowInstance {
 				SideMenu,
 				SideMenuSearcher,
 				SideMenuPage,
+				TopMenu,
 			},
 		})`
 			<SideMenu default="customization">
