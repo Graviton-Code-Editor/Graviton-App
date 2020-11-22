@@ -36,4 +36,28 @@ export default window => {
 		}
 		return obj
 	}
+
+	ipcMain.on('newContextMenu', (e, scheme) => {
+		const NativeContextMenu = new Menu()
+		scheme.list.map(option => {
+			const item = new MenuItem(parse(option))
+			NativeContextMenu.append(item)
+		})
+
+		function closeMenu(e, scheme) {
+			NativeContextMenu.closePopup()
+
+			ipcMain.off('closeContextMenu', closeMenu)
+		}
+
+		const closeMenuListener = ipcMain.on('closeContextMenu', closeMenu)
+
+		NativeContextMenu.popup({
+			x: scheme.x,
+			y: scheme.y,
+			callback() {
+				window.webContents.send('contextMenuClosed', scheme.id)
+			},
+		})
+	})
 }

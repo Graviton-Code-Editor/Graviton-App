@@ -1,6 +1,7 @@
 export interface ContextMenuButton {
 	label?: string
 	action?: () => void
+	id?: number
 }
 
 export interface ContextMenuOptions {
