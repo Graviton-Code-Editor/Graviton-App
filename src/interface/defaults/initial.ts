@@ -17,7 +17,7 @@ import { installPluginFromGVP, installPluginFromURL } from './store/utils/instal
 import ExperimentalFeatureDialog from './dialogs/feature_experimental'
 import './environment.inspectors/npm'
 import './project.services/npm'
-import './side.panels/files.explorer'
+import './side.panels/files_explorer'
 import './side.panels/env.explorer'
 import './side.panels/source_tracker'
 import './shortcuts'

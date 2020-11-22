@@ -1,4 +1,4 @@
-import SidePanel from 'Constructors/side.panel'
+import SidePanel from '../../constructors/side.panel'
 import RunningConfig from 'RunningConfig'
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
@@ -6,6 +6,10 @@ import { Text } from '@mkenzo_8/puffin-drac'
 import FolderOutlined from '../../components/icons/folder.outlined'
 import Welcome from '../../defaults/windows/welcome'
 import { openFolder } from 'FileSystem'
+
+/*
+ * This manages how the Files Explorer looks
+ */
 
 const styleWrapper = style`
 	& {
@@ -21,7 +25,7 @@ const styleWrapper = style`
 		justify-content: center;
 		min-height: 100%;
 	}
-	&[hasFiles="true"] .link{
+	&[hasFiles="true"] .shortcuts{
 		display: none;
 	}
 	& .link{
@@ -49,25 +53,25 @@ const styleWrapper = style`
 `
 
 RunningConfig.on('appLoaded', () => {
-	const explorer = () => element()`
-		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
-			${
-				RunningConfig.data.isBrowser
-					? element({
-							components: {
-								Text,
-							},
-					  })`
-				<div>
-					<Text>Join a room!</Text>
-				</div>
-			`
-					: element({
-							components: {
-								Text,
-							},
-					  })`
-			<div>
+	let childComponent
+
+	if (RunningConfig.data.isBrowser) {
+		childComponent = element({
+			components: {
+				Text,
+			},
+		})`
+			<div class="shortcuts">
+				<Text>Join a room!</Text>
+			</div>
+		`
+	} else {
+		childComponent = element({
+			components: {
+				Text,
+			},
+		})`
+			<div class="shortcuts">
 				<button class="link" :click="${openFolderDialog}">
 						<Text lang-string="menus.File.OpenFolder"/>
 				</button>
@@ -77,9 +81,12 @@ RunningConfig.on('appLoaded', () => {
 				<button class="link" :click="${openWorkspaces}"> 
 					<Text lang-string="menus.File.Workspaces.OpenWorkspaces"/>
 				</button>
-			</div>
-			`
-			}
+			</div>`
+	}
+
+	const explorer = () => element()`
+		<div hasFiles="false" id="explorer_panel" class="${styleWrapper}">
+			${childComponent}
 		</div>`
 
 	const { display } = new SidePanel({
