@@ -9,10 +9,6 @@
 	"main": "dist_main/main.js",
 	"contributors": [
 		{
-			"name": "pjtsearch",
-			"url": "https://github.com/pjtsearch"
-		},
-		{
 			"name": "David Niederweis",
 			"url": "https://github.com/DJN1"
 		},
@@ -25,12 +21,16 @@
 			"url": "https://github.com/Max1Truc"
 		},
 		{
-			"name": "Marco Galli",
-			"url": "https://github.com/Gaarco"
+			"name": "pjtsearch",
+			"url": "https://github.com/pjtsearch"
 		},
 		{
-			"name": "Free Aoi",
-			"url": "https://github.com/FreeAoi"
+			"name": "Diego Domínguez",
+			"url": "https://github.com/seniorglez"
+		},
+		{
+			"name": "Saul Blanco",
+			"url": "https://github.com/Saul-BT"
 		}
 	],
 	"scripts": {
