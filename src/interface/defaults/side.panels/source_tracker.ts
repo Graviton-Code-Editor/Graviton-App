@@ -112,7 +112,6 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 			 * When a folder is loaded
 			 */
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
-				
 				/*
 				 * When that folder's repository (if exists) gets loaded
 				 */
@@ -140,20 +139,20 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 							})
 						}
 					})
-					
+
 					const projectListeners = [loadedGitRepoListener, gitStatusUpdatedListener]
-					
+
 					const folderRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
 						if (folderPath === projectPath) {
 							/*
-							* Cancel some git-related listeners when the folder is removed from the workspace.
-							*/
+							 * Cancel some git-related listeners when the folder is removed from the workspace.
+							 */
 							projectListeners.forEach(listener => listener.cancel())
 
 							folderRemovedWorkspaceListener.cancel()
 						}
 					})
-					
+
 					//Set the current count
 					increateGlobalChanges(gitChanges.files.length)
 					//Display the current count
@@ -196,7 +195,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											})
 										}
 									})
-									
+
 									projectListeners.push(gitStatusUpdatedListener)
 								},
 								items: [
@@ -247,7 +246,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 									{
 										label: 'Changes',
 										mounted({ setItems, setDecorator }) {
-											const gitStatusUpdatedListener =RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+											const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
 													/*
 													 * Display the changed files
@@ -261,9 +260,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													})
 												}
 											})
-											
+
 											projectListeners.push(gitStatusUpdatedListener)
-											
+
 											/*
 											 * Display the current changed files
 											 */
@@ -302,9 +301,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													})
 												}
 											})
-											
+
 											projectListeners.push(gitStatusUpdatedListener)
-											
+
 											/*
 											 * Display each current commit as item
 											 */
