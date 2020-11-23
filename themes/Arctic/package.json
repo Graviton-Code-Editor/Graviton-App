@@ -12,7 +12,7 @@
 			"Foreground": "black",
 			"Selection": "rgb(180,180,180,0.6)",
 			"Cursor": "black",
-			"Selection": "rgb(100,100,100,0.6",
+			"CursorAccent": "black",
 			"Black": "",
 			"Red": "",
 			"Green": "",
