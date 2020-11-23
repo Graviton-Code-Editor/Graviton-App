@@ -112,10 +112,11 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 			 * When a folder is loaded
 			 */
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+				
 				/*
 				 * When that folder's repository (if exists) gets loaded
 				 */
-				RunningConfig.on('loadedGitRepo', async ({ parentFolder, gitChanges, anyChanges, explorerProvider }) => {
+				const loadedGitRepoListener = RunningConfig.on('loadedGitRepo', async ({ parentFolder, gitChanges, anyChanges, explorerProvider }) => {
 					if (folderPath !== parentFolder) return
 					//Load the current commits
 					let { all: allCommits } = await explorerProvider.getGitAllCommits(parentFolder)
@@ -123,7 +124,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 					/*
 					 * Listen for any git change in that folder
 					 */
-					RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges: changes }) => {
+					const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges: changes }) => {
 						if (parentFolder === folder) {
 							//Get new commits
 							allCommits = (await explorerProvider.getGitAllCommits(parentFolder)).all
@@ -139,6 +140,20 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 							})
 						}
 					})
+					
+					const projectListeners = [loadedGitRepoListener, gitStatusUpdatedListener]
+					
+					const folderRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
+						if (folderPath === projectPath) {
+							/*
+							* Cancel some git-related listeners when the folder is removed from the workspace.
+							*/
+							projectListeners.forEach(listener => listener.cancel())
+
+							folderRemovedWorkspaceListener.cancel()
+						}
+					})
+					
 					//Set the current count
 					increateGlobalChanges(gitChanges.files.length)
 					//Display the current count
@@ -171,7 +186,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											folderRemovedWorkspaceListener.cancel()
 										}
 									})
-									RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+									const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
 										if (parentFolder === folder) {
 											/*
 											 * Update the changes count
@@ -181,6 +196,8 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											})
 										}
 									})
+									
+									projectListeners.push(gitStatusUpdatedListener)
 								},
 								items: [
 									{
@@ -230,7 +247,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 									{
 										label: 'Changes',
 										mounted({ setItems, setDecorator }) {
-											RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+											const gitStatusUpdatedListener =RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
 													/*
 													 * Display the changed files
@@ -244,6 +261,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													})
 												}
 											})
+											
+											projectListeners.push(gitStatusUpdatedListener)
+											
 											/*
 											 * Display the current changed files
 											 */
@@ -264,7 +284,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											background: 'var(--explorerItemGitNotAddedText)',
 										},
 										mounted({ setItems, setDecorator }) {
-											RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges }) => {
+											const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', async ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
 													/*
 													 * Get the latest commits
@@ -282,6 +302,9 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													})
 												}
 											})
+											
+											projectListeners.push(gitStatusUpdatedListener)
+											
 											/*
 											 * Display each current commit as item
 											 */
