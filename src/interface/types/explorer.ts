@@ -9,14 +9,15 @@ interface ExplorerItemHooks {
 }
 
 interface ExplorerItemDecorator {
-	label?: String
-	background?: String
-	color?: String
-	fontSize?: String
+	label?: string
+	background?: string
+	color?: string
+	fontSize?: string
 }
 
 interface ExplorerItemOptions {
-	label?: String
+	label?: string
+	hint?: string
 	items?: this[]
 	mounted?: (hooks: ExplorerItemHooks) => void
 	icon?: String

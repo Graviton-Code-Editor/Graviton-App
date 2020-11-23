@@ -11,6 +11,7 @@ import GitIcon from '../../components/icons/git'
 import StaticConfig from 'StaticConfig'
 import InputDialog from '../../utils/dialogs/dialog_input'
 import Notification from 'Constructors/notification'
+import * as path from 'path'
 
 /*
  * Return total count of changes, if is bigger than 25, return "25+"
@@ -22,12 +23,16 @@ const getCommitChangesLabel = changes => {
 /*
  * Return git changes as Explorer Items
  */
-const getChangesAsItems = changes => {
+const getChangesAsItems = (changes, projectPath) => {
 	return changes.map(change => {
 		const { name, ext } = parse(change.path)
+
+		const filePath = path.join(projectPath, change.path)
+
 		return {
-			label: change.path,
+			label: `./${change.path}`,
 			icon: getFileIconType(name, ext.replace('.', '')),
+			hint: filePath,
 			decorator: {
 				label: change.working_dir == '?' ? 'U' : change.working_dir,
 				color: 'var(--explorerItemGitNotAddedText)',
@@ -47,7 +52,7 @@ const getCommitsAsItems = commits => {
 	return commits.slice(0, 25).map(commit => {
 		return {
 			label: `${emoji.replace_colons(commit.message.slice(0, 25))}${commit.message.length > 25 ? '...' : ''}`,
-			hint: commit.message,
+			hint: `'${commit.message}' by ${commit.author_name}`,
 			decorator: {
 				label: new Date(commit.date).toLocaleString(),
 			},
@@ -230,7 +235,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													/*
 													 * Display the changed files
 													 */
-													setItems(getChangesAsItems(gitChanges.files), false)
+													setItems(getChangesAsItems(gitChanges.files, folder), false)
 													/*
 													 * Update the changes count
 													 */
@@ -242,7 +247,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											/*
 											 * Display the current changed files
 											 */
-											setItems(getChangesAsItems(gitChanges.files), false)
+											setItems(getChangesAsItems(gitChanges.files, folderPath), false)
 										},
 										decorator: {
 											label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,

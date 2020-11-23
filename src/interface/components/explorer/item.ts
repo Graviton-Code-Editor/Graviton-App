@@ -105,7 +105,7 @@ class Item {
 	contextAction: any
 	label: String
 
-	constructor({ component, label, items, mounted, icon, iconComp, action, contextAction, decorator = {} }: ExplorerItemOptions) {
+	constructor({ component, label, items, mounted, icon, iconComp, action, contextAction, decorator = {}, hint = '' }: ExplorerItemOptions) {
 		this.decoratorLabel = decorator?.label || ''
 		this.decoratorBackground = decorator?.background || 'transparent'
 		this.decoratorColor = decorator?.color || 'var(--textColor)'
@@ -155,25 +155,29 @@ class Item {
 
 		const iconSrc = this.getIcon(icon)
 
+		let itemComponent
+
+		if (component) {
+			itemComponent = component()
+		} else {
+			itemComponent = element({
+				components: {
+					ArrowIcon,
+				},
+			})`
+			<button :click="${onClick}" :contextmenu="${onContextMenu}"  title="${hint}">
+				<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
+				${iconComp ? iconComp() : element`<img class="icon" src="${iconSrc}"/>`}
+				<span class="label">${() => this.label}</span>
+				<span class="decorator" style="font-size: ${() => this.decoratorFontSize};color: ${() => this.decoratorColor}; background: ${() => this.decoratorBackground}">${() => this.decoratorLabel}</span>
+			</button>
+			<div/>
+			`
+		}
+
 		return element`
 			<div itemIsOpened="${() => this.itemIsOpened}" class="${ItemWrapper}" mounted="${itemMounted}" animated="${StaticConfig.data.appEnableExplorerItemsAnimations}">
-				${
-					component
-						? component()
-						: element({
-								components: {
-									ArrowIcon,
-								},
-						  })`
-						<button :click="${onClick}" :contextmenu="${onContextMenu}">
-							<ArrowIcon class="arrow" style="${items ? '' : 'opacity:0;'}"/>
-							${iconComp ? iconComp() : element`<img class="icon" src="${iconSrc}"/>`}
-							<span class="label">${() => this.label}</span>
-							<span class="decorator" style="font-size: ${() => this.decoratorFontSize};color: ${() => this.decoratorColor}; background: ${() => this.decoratorBackground}">${() => this.decoratorLabel}</span>
-						</button>
-						<div/>
-					`
-				}
+				${itemComponent}
 			</div>
 		`
 	}
