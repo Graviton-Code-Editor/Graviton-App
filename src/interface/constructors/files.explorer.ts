@@ -275,7 +275,6 @@ class FilesExplorer {
 				}
 			}
 		}
-		if (this.replaceOldExplorer) this.container.innerHTML = ''
 	}
 	/*
 	 *

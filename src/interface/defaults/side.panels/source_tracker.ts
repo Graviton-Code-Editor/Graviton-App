@@ -92,7 +92,7 @@ const showChangesPulledNotification = (projectPath: string) => {
 
 if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker) {
 	let globalCountOfChanges = 0
-	let setDecorator
+	let setGlobalDecorator
 
 	const getGlobalChanges = () => {
 		return globalCountOfChanges > 0 ? globalCountOfChanges : ''
@@ -134,7 +134,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 							//Save the new count
 							gitChanges = changes
 							//Display the new count
-							setDecorator({
+							setGlobalDecorator({
 								label: getGlobalChanges(),
 							})
 						}
@@ -142,7 +142,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 					//Set the current count
 					increateGlobalChanges(gitChanges.files.length)
 					//Display the current count
-					setDecorator({
+					setGlobalDecorator({
 						label: getGlobalChanges(),
 					})
 
@@ -157,18 +157,18 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 									background: 'var(--explorerItemGitNotAddedText)',
 								},
 								mounted({ setDecorator }) {
-									const foldeRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
+									const folderRemovedWorkspaceListener = RunningConfig.on('removeFolderFromRunningWorkspace', async ({ folderPath: projectPath }) => {
 										if (folderPath === projectPath) {
 											// Dirty way of removing the explorer
 											this.remove()
-											// Decrease the count
+											// Decrease the global count
 											decreaseGlobalChanges(gitChanges.files.length)
-											// Display the count
-											setDecorator({
+											// Update the global count
+											setGlobalDecorator({
 												label: globalCountOfChanges > 0 ? globalCountOfChanges.toString() : '',
 											})
 											// Remove the listener
-											foldeRemovedWorkspaceListener.cancel()
+											folderRemovedWorkspaceListener.cancel()
 										}
 									})
 									RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
@@ -299,7 +299,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 		}
 		const { display } = new SidePanel({
 			icon(hooks) {
-				setDecorator = hooks.setDecorator
+				setGlobalDecorator = hooks.setDecorator
 				return GitIcon()
 			},
 			panel() {

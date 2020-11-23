@@ -235,6 +235,7 @@ class Item {
 		if (fontSize) this.decoratorFontSize = fontSize
 		const decorator = <PuffinElement>item.getElementsByClassName('decorator')[0]
 		decorator.update()
+		console.log(label)
 	}
 	/*
 	 * Update Item's inner items

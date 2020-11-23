@@ -178,7 +178,8 @@
 			"Ignore": "Ignore",
 			"BuildDate": "Build date",
 			"By": "by",
-			"Understood": "Understood"
+			"Understood": "Understood",
+			"RemoveFromWorkspace": "Remove from workspace"
 		},
 		"notifications": {
 			"appLanguageChanged": {

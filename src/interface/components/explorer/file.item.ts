@@ -228,62 +228,75 @@ class Item {
 	 */
 	private _contextListener(event: MouseEvent): void {
 		if (this.isFolder) {
+			const folderContextMenu = [
+				{
+					label: 'misc.NewFolder',
+					action: () => {
+						newDirectoryDialog({
+							isFolder: true,
+							parentDirectory: this.itemPath,
+							container: this.itemElement,
+							explorerState: this.explorerState,
+							explorerProvider: this.explorerProvider,
+						})
+					},
+				},
+				{
+					label: 'misc.NewFile',
+					action: () => {
+						newDirectoryDialog({
+							isFolder: false,
+							parentDirectory: this.itemPath,
+							container: this.itemElement,
+							explorerState: this.explorerState,
+							explorerProvider: this.explorerProvider,
+						})
+					},
+				},
+				{},
+				{
+					label: 'misc.Rename',
+					action: () => {
+						this._rename()
+					},
+				},
+				{},
+				{
+					label: 'misc.Remove',
+					action: () => {
+						if (this.itemLevel !== 0) {
+							this._remove()
+						}
+					},
+				},
+				{},
+				{
+					label: 'misc.CopyPath',
+					action: () => {
+						clipboard.writeText(this.itemPath)
+					},
+				},
+				{
+					label: 'misc.OpenLocation',
+					action: () => {
+						openLocation(this.itemPath)
+					},
+				},
+			]
+
+			if (this.itemLevel === 0) {
+				folderContextMenu.splice(7, 0, {
+					label: 'misc.RemoveFromWorkspace',
+					action: () => {
+						RunningConfig.emit('removeFolderFromRunningWorkspace', {
+							folderPath: this.itemPath,
+						})
+					},
+				})
+			}
+
 			new ContextMenu({
-				list: [
-					{
-						label: 'misc.NewFolder',
-						action: () => {
-							newDirectoryDialog({
-								isFolder: true,
-								parentDirectory: this.itemPath,
-								container: this.itemElement,
-								explorerState: this.explorerState,
-								explorerProvider: this.explorerProvider,
-							})
-						},
-					},
-					{
-						label: 'misc.NewFile',
-						action: () => {
-							newDirectoryDialog({
-								isFolder: false,
-								parentDirectory: this.itemPath,
-								container: this.itemElement,
-								explorerState: this.explorerState,
-								explorerProvider: this.explorerProvider,
-							})
-						},
-					},
-					{},
-					{
-						label: 'misc.Rename',
-						action: () => {
-							this._rename()
-						},
-					},
-					{},
-					{
-						label: 'misc.Remove',
-						action: () => {
-							if (this.itemLevel !== 0) {
-								this._remove()
-							}
-						},
-					},
-					{},
-					{
-						label: 'misc.CopyPath',
-						action: () => {
-							clipboard.writeText(this.itemPath)
-						},
-					},
-					{
-						label: 'misc.OpenLocation',
-						action: () => {
-							openLocation(this.itemPath)
-						},
-					},
-				],
+				list: folderContextMenu,
 				parent: this.itemElement,
 				event,
 			})
@@ -646,6 +659,9 @@ class Item {
 		if (this.itemLevel == 0) {
 			removedProjectFolderListener = RunningConfig.on('removeFolderFromRunningWorkspace', ({ folderPath }) => {
 				if (folderPath == this.itemPath) {
+					if (RunningConfig.data.workspaceConfig.folders.length === 0) {
+						this.explorerContainer.parentElement.setAttribute('hasFiles', 'false')
+					}
 					this.explorerState.emit('closedFolder', this.itemPath)
 					this.itemState.emit('destroyed')
 				}
