@@ -42,6 +42,16 @@
 					"CloseCurrentPanel": "Tancar panell sel·leccionat"
 				}
 			},
+			"View": {
+				"View": "Veuew",
+				"Sidebar": "Barra lateral",
+				"Sidepanel": "Panell lateral",
+				"Terminal": "Terminal",
+				"ShowSidebar": "Mostrar Barra lateral",
+				"ShowSidepanel": "Mostrar Panell lateral",
+				"HideSidebar": "Amagar Barra lateral",
+				"HideSidepanel": "Amagar Panell lateral"
+			},
 			"Window": {
 				"Window": "Finestra",
 				"Zoom": {
@@ -56,11 +66,14 @@
 				"Help": "Ajuda",
 				"Contact": "Contactar",
 				"Social": "Social",
+				"Contributors": "Contribuïdors",
 				"Blog": "Blog",
 				"Documentation": "Documentació",
 				"Website": "Pàgina web",
 				"SourceCode": "Codi font",
+				"ReportBug": "Comunicar un error",
 				"CheckForUpdates": "Comprovar actualizacions",
+				"ShowWelcome": "Mostrar Benvinguda",
 				"About": "Sobre"
 			}
 		},
@@ -69,11 +82,36 @@
 				"Settings": "Configuració",
 				"Customization": {
 					"Customization": "Personalització",
-					"Themes": "Temes",
-					"FileWatcher": "Observador d'arxius"
+					"Themes": "Temes"
+				},
+				"Advanced": {
+					"Advanced": "Avançat",
+					"FileWatcher": "Observador d'arxius",
+					"Autocomplete": "Autocompletat",
+					"WrapLines": "No trencar les linies",
+					"ManualConfig": {
+						"ManualConfig": "Configuració manuaal",
+						"EditConfiguration": "Editar la configuració"
+					},
+					"Explorer": "Explorador",
+					"Editor": "Editar",
+					"GitIntegration": "Integració amb Git",
+					"LSPIntegration": "Integració amb LSP (experimental)",
+					"SourceTracker": "Source Tracker",
+					"Indentation": {
+						"Indentation": "Indentació",
+						"Space": "Espai",
+						"Tab": "Tab"
+					},
+					"Configuration": "Configuració",
+					"RestartConfig": {
+						"RestartConfig": "Reiniciar la configuració"
+					}
 				},
 				"Languages": "Llengües",
-				"About": "Sobre"
+				"About": {
+					"About": "Sobre"
+				}
 			},
 			"Store": {
 				"Store": "Botiga",
