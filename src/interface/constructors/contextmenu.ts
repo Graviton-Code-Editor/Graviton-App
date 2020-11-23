@@ -75,28 +75,30 @@ class ContextMenu {
 
 			ipcRenderer.send('newContextMenu', {
 				list: list.map(btn => {
-					btn.id = Math.random()
-					btn.label = lang.getTranslation(btn.label, LanguageState)
+					if (btn.label) {
+						btn.id = Math.random()
+						btn.label = lang.getTranslation(btn.label, LanguageState)
+						const itemAction = btn.action
+						delete btn.action
 
-					const itemAction = btn.action
-					delete btn.action
-
-					function itemClicked(e, id) {
-						if (id === btn.id) {
-							itemAction()
+						function itemClicked(e, id) {
+							if (id === btn.id) {
+								itemAction()
+							}
 						}
-					}
 
-					function menuClosed(e, id) {
-						if (id === self.menuID) {
-							ipcRenderer.off('menuItemClicked', itemClicked)
-							ipcRenderer.off('contextMenuClosed', menuClosed)
+						function menuClosed(e, id) {
+							if (id === self.menuID) {
+								ipcRenderer.off('menuItemClicked', itemClicked)
+								ipcRenderer.off('contextMenuClosed', menuClosed)
+							}
 						}
+
+						const clickedListener = ipcRenderer.on('menuItemClicked', itemClicked)
+						const callbackListener = ipcRenderer.on('contextMenuClosed', menuClosed)
+					} else {
+						btn.type = 'separator'
 					}
-
-					const clickedListener = ipcRenderer.on('menuItemClicked', itemClicked)
-					const callbackListener = ipcRenderer.on('contextMenuClosed', menuClosed)
-
 					return btn
 				}),
 				x,
