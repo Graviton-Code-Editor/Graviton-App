@@ -181,26 +181,57 @@ class Editor implements EditorOptions {
 		})
 	}
 	private addClientsListeners(): void {
+		const contextMenuDefaultButtons = [
+			{
+				label: 'misc.Copy',
+				action: () => {
+					const selectedText = this.client.do('getSelection', {
+						instance: this.instance,
+						action: () => RunningConfig.emit('hideAllFloatingComps'),
+					})
+
+					clipboard.writeText(selectedText)
+
+					RunningConfig.emit('writeToClipboard', selectedText)
+
+					setTimeout(() => {
+						this.client.do('doFocus', {
+							instance: this.instance,
+						})
+					}, 10)
+				},
+			},
+			{
+				label: 'misc.Paste',
+				action: () => {
+					const { line, ch } = this.client.do('getCursorPosition', {
+						instance: this.instance,
+					})
+
+					this.client.do('pasteContent', {
+						instance: this.instance,
+						from: {
+							line: line - 1,
+							ch: ch - 1,
+						},
+						text: clipboard.readText(),
+					})
+
+					setTimeout(() => {
+						this.client.do('doFocus', {
+							instance: this.instance,
+						})
+					}, 10)
+				},
+			},
+		]
+
 		this.client.do('displayContextMenu', {
 			instance: this.instance,
 			action: ({ event, buttons }) => {
 				new ContextMenu({
 					parent: document.body,
-					list: [
-						...buttons,
-						{},
-						{
-							label: 'misc.Copy',
-							action: () => {
-								const selectedText = this.client.do('getSelection', {
-									instance: this.instance,
-									action: () => RunningConfig.emit('hideAllFloatingComps'),
-								})
-								clipboard.writeText(selectedText)
-								RunningConfig.emit('writeToClipboard', selectedText)
-							},
-						},
-					],
+					list: [...buttons, {}, ...contextMenuDefaultButtons],
 					event,
 				})
 			},
@@ -210,19 +241,7 @@ class Editor implements EditorOptions {
 			action: (cm, e: MouseEvent) => {
 				new ContextMenu({
 					parent: document.body,
-					list: [
-						{
-							label: 'misc.Copy',
-							action: () => {
-								const selectedText = this.client.do('getSelection', {
-									instance: this.instance,
-									action: () => RunningConfig.emit('hideAllFloatingComps'),
-								})
-								clipboard.writeText(selectedText)
-								RunningConfig.emit('writeToClipboard', selectedText)
-							},
-						},
-					],
+					list: contextMenuDefaultButtons,
 					event: e,
 				})
 			},

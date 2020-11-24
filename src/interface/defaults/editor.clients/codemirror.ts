@@ -531,6 +531,9 @@ const CodemirrorClient = new EditorClient(
 		replaceRange({ instance, from, to, text }) {
 			instance.replaceRange(text, from, to, '+move')
 		},
+		pasteContent({ instance, from, text }) {
+			instance.replaceRange(text, from)
+		},
 		getRange({ instance, from, to }) {
 			return instance.getRange(from, to)
 		},
