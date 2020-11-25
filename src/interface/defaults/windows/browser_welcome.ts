@@ -1,6 +1,6 @@
 import { element } from '@mkenzo_8/puffin'
 import { Titles, Text, Button } from '@mkenzo_8/puffin-drac'
-import SideMenu from '../../components/window/side.menu'
+import SideMenu from '../../components/window/side_menu'
 import Window from '../../constructors/window'
 import { css as style } from '@emotion/css'
 import { WindowInstance } from 'Types/window'

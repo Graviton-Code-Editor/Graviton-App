@@ -36,7 +36,7 @@ export default function getScheme(scheme) {
 				return getComponentFromScheme(comp)
 			})
 			.filter(Boolean)
-		return element`<div href="${section}">${comps}</div>`
+		return element`<div class="section" href="${section}">${comps}</div>`
 	})
 }
 
@@ -49,7 +49,7 @@ const getComponentFromScheme = comp => {
 					H4: Titles.h4,
 				},
 				addons: [lang(LanguageState)],
-			})`<H4 lang-string="${comp.label}"/>`
+			})`<H4 class="section" lang-string="${comp.label}"/>`
 		case 'switch':
 			function onSwitch(e) {
 				const newStatus = e.detail.status
@@ -122,6 +122,6 @@ const getComponentFromScheme = comp => {
 					Text,
 				},
 				addons: [lang(LanguageState)],
-			})`<Text lang-string="${comp.label}"/>`
+			})`<Text class="section" lang-string="${comp.label}"/>`
 	}
 }

@@ -2,68 +2,89 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
 
 function moveToPage(page, buttons, pages) {
-	pages.map(function (contentPage) {
-		contentPage.style.display = 'none'
-		if (contentPage.getAttribute('href') == page) {
-			contentPage.style.display = 'block'
+	pages.map(pageElement => {
+		pageElement.style.display = 'none'
+		if (pageElement.getAttribute('href') == page) {
+			pageElement.style.display = 'block'
 			const loadedEvent = new CustomEvent('loaded', {})
-			contentPage.dispatchEvent(loadedEvent)
+			pageElement.dispatchEvent(loadedEvent)
 		}
 	})
-	buttons.map(function (buttonPage) {
-		buttonPage.classList.remove('active')
-		if (buttonPage.getAttribute('to') == page) {
-			buttonPage.classList.add('active')
+	buttons.map(buttonElement => {
+		buttonElement.classList.remove('active')
+		if (buttonElement.getAttribute('to') == page) {
+			buttonElement.classList.add('active')
 		}
 	})
 }
 
+const renderAllPages = (pages, except) => {
+	pages.map(pageElement => {
+		pageElement.style.display = 'none'
+		if (pageElement.getAttribute('href') == except) {
+			pageElement.style.display = 'block'
+		}
+		const loadedEvent = new CustomEvent('loaded', {})
+		pageElement.dispatchEvent(loadedEvent)
+	})
+}
+
 function moveToSection(search, sections, buttons, pages) {
-	const result = sections.filter(section => section.title && section.title.match(new RegExp(search, 'i')))[0]
-	if (result != null) {
-		moveToPage(result.page, buttons, pages)
-		result.element.scrollIntoView(false)
+	const foundSection = sections.find(section => {
+		return section.title && section.title.match(new RegExp(search, 'i'))
+	})
+
+	if (foundSection != null) {
+		moveToPage(foundSection.page, buttons, pages)
+		foundSection.element.scrollIntoView(false)
+	} else {
+		moveToPage('customization', buttons, pages)
 	}
 }
-function mounted(a) {
+function mounted() {
 	const target = this
 	const defaultPage = target.getAttribute('default')
-	const buttons = Object.keys(target.children[0].children)
-		.map(btn => {
-			const button = target.children[0].children[btn]
-			if (button.tagName == 'LABEL') {
-				button.addEventListener('click', () => {
-					moveToPage(button.getAttribute('to'), buttons, pages)
+
+	const buttons = [...target.children[0].children]
+		.map(buttonElement => {
+			if (buttonElement.tagName == 'LABEL') {
+				buttonElement.addEventListener('click', () => {
+					moveToPage(buttonElement.getAttribute('to'), buttons, pages)
 				})
-				return button
+				return buttonElement
 			}
 		})
 		.filter(Boolean)
-	const pages = Object.keys(target.children[1].children)
-		.map(pg => {
-			const page = target.children[1].children[pg]
-			if (page.tagName == 'DIV') {
-				return page
+
+	const pages = [...target.children[1].children]
+		.map(pageElement => {
+			if (pageElement.tagName == 'DIV') {
+				return pageElement
 			}
 		})
 		.filter(Boolean)
-	const sections = pages
-		.map(page => {
-			return Object.keys(page.children).map(function (index) {
-				const section = page.children[index]
-				if (section.tagName == 'DIV') {
-					return {
-						title: section.getAttribute('href'),
-						page: page.getAttribute('href'),
-						element: section,
-					}
-				}
+
+	const getSections = () => {
+		return pages
+			.map(page => {
+				return [...page.getElementsByClassName('section')]
+					.map(section => {
+						return {
+							title: section.getAttribute('href') || section.innerText,
+							page: page.getAttribute('href'),
+							element: section,
+						}
+					})
+					.filter(Boolean)
 			})
-		})
-		.flat()
-	target.searchBy = function (search) {
-		moveToSection(search, sections, buttons, pages)
+			.flat()
 	}
+
+	target.searchBy = function (search) {
+		renderAllPages(pages, defaultPage)
+		moveToSection(search, getSections(), buttons, pages)
+	}
+
 	moveToPage(defaultPage, buttons, pages)
 }
 
@@ -130,7 +151,7 @@ const styleWrapper = style`
 	}
 `
 
-function SideMenu() {
+function SideMenu({ schemes }) {
 	return element`
 		<div mounted="${mounted}" class="${styleWrapper}"/>
 	`

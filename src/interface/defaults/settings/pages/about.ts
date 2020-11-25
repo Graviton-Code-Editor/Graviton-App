@@ -42,7 +42,7 @@ export default function About() {
 			ReloadIcon,
 		},
 	})`
-		<div class="${styleWrapper}">
+		<div class="${styleWrapper} section" href="about">
 			<div>
 				<img width="175px" draggable="false" src="${GravitonLargeLogo}"/> 
 				<Text>

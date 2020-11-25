@@ -1,6 +1,6 @@
 import { element } from '@mkenzo_8/puffin'
 import { Titles } from '@mkenzo_8/puffin-drac'
-import SideMenu from '../../components/window/side.menu'
+import SideMenu from '../../components/window/side_menu'
 import Window from '../../constructors/window'
 
 import WorkspacesPage from '../welcome/pages/workspaces'
