@@ -3,7 +3,6 @@ import { element } from '@mkenzo_8/puffin'
 import Core from 'Core'
 const { fs } = Core
 import * as path from 'path'
-import { ipcRenderer } from 'electron'
 import LocalTerminalShell from '../../utils/local_shell'
 
 const getShellCwd = () => {

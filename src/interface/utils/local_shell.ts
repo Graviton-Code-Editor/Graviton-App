@@ -1,4 +1,5 @@
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const { electron: ipcRenderer } = Core
 import { EventEmitter } from 'events'
 
 /*

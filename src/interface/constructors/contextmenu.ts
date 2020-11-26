@@ -4,7 +4,8 @@ import ContextMenuWrapper from '../components/context.menu'
 import { LanguageState } from 'LanguageConfig'
 import PuffinElement from 'Types/puffin.element'
 import { ContextMenuOptions } from 'Types/contextmenu'
-import { ipcRenderer } from 'electron'
+import Core from 'Core'
+const { electron: ipcRenderer } = Core
 import AppPlatform from 'AppPlatform'
 
 class ContextMenu {
