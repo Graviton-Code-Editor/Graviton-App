@@ -79,13 +79,13 @@ function createMenus() {
 								}).launch()
 							},
 						},
-						{},
 						{
 							label: 'menus.File.Workspaces.OpenFromFile',
 							action: () => {
 								RunningConfig.emit('openWorkspaceDialog')
 							},
 						},
+						{},
 						{
 							label: 'menus.File.Workspaces.AddFolderToWorkspace',
 							action: () => {
@@ -348,7 +348,7 @@ function getHelpMenu(button) {
 			{
 				label: 'menus.Help.Blog',
 				action: () => {
-					openExternal('https://graviton.netlify.app/blog/')
+					openExternal('https://graviton.netlify.app/blog')
 				},
 			},
 			{
@@ -360,7 +360,7 @@ function getHelpMenu(button) {
 			{
 				label: 'menus.Help.Website',
 				action: () => {
-					openExternal('https://graviton.netlify.app/')
+					openExternal('https://graviton.netlify.app')
 				},
 			},
 			{

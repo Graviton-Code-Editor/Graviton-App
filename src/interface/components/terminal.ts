@@ -36,9 +36,14 @@ const styled = style`
 		color: var(--textColor);
 		background: var(--selectBackground);
 		border-radius: 4px;
-		&:hover{
+		:hover{
 			transition: 0.1s;
-			box-shadow: 0px 1px 5px rgba(0,0,0,0.2);
+			box-shadow: 0px 1px 5px rgba(0,0,0,0.15);
+		}
+		:focus{
+			transition: 0.1s;
+			box-sizing: border-box;
+			box-shadow:0px 1px 5px rgba(0,0,0,0.20);
 		}
 		& option {
 			color: var(--contextmenuButtonText);
