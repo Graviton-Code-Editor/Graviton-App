@@ -4,6 +4,8 @@ const CopyPlugin = require('copy-webpack-plugin')
 const WebpackMessages = require('webpack-messages')
 const WebpackBar = require('webpackbar')
 
+const PUBLIC_PATH = process.env.PUBLIC_PATH || '/'
+
 module.exports = [
 	{
 		name: 'renderer',
@@ -228,6 +230,7 @@ module.exports = [
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_browser'),
+			publicPath: PUBLIC_PATH,
 		},
 		devServer: {
 			contentBase: path.join(__dirname, 'dist_browser'),
