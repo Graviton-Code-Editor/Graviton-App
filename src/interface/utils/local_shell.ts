@@ -1,5 +1,8 @@
 import Core from 'Core'
-const { electron: ipcRenderer } = Core
+const {
+	electron: { ipcRenderer },
+} = Core
+console.log(ipcRenderer)
 import { EventEmitter } from 'events'
 
 /*
