@@ -1,6 +1,7 @@
 import RunningConfig from 'RunningConfig'
 import CommandPrompt from '../../constructors/command.prompt'
 import * as path from 'path'
+import normalizeDir from '../../utils/directory_normalizer'
 import Core from 'Core'
 const { fs } = Core
 
@@ -8,7 +9,7 @@ const { fs } = Core
 RunningConfig.on('command.openExplorerCommandPrompt', () => {
 	const currentTab = RunningConfig.data.focusedTab
 	const currentTabState = (currentTab && currentTab.state.data) || false
-	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || ''
+	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || `${process.env.HOME}/`
 
 	const showOptions = async (itemPath, setOptions) => {
 		if (itemPath === '') return []
@@ -43,13 +44,20 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 							if (label.match(fileName)) {
 								return {
 									label,
-									action() {
-										//
-									},
+									action: () => {},
 								}
 							}
 						})
-						.filter(Boolean),
+						.filter(Boolean)
+						.sort((item1, item2) => {
+							if (item1.label.startsWith(fileName)) {
+								return -1
+							}
+							if (item2.label.startsWith(fileName)) {
+								return 1
+							}
+							return 0
+						}),
 				)
 			})
 	}
@@ -57,11 +65,11 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 	new CommandPrompt({
 		name: 'explorer',
 		showInput: true,
-		inputDefaultText: currentFileFolder,
-		inputPlaceHolder: "Enter a file's path",
+		inputDefaultText: normalizeDir(currentFileFolder),
+		inputPlaceHolder: 'Enter a path',
 		options: [],
 		closeOnTab: false,
-		onTabPressed: async ({ option, value: itemPath }, { setValue, setOptions }) => {
+		onTabPressed: ({ option, value: itemPath }, { setValue, setOptions }) => {
 			let newItemPath
 			fs.lstat(itemPath)
 				.then(async () => {
@@ -87,10 +95,10 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 					showOptions(newItemPath, setOptions)
 				})
 		},
-		onWriting: async ({ value: itemPath }, { setOptions }) => {
+		onWriting: ({ value: itemPath }, { setOptions }) => {
 			showOptions(itemPath, setOptions)
 		},
-		onCompleted: async itemPath => {
+		onCompleted: itemPath => {
 			fs.lstat(itemPath).then(stats => {
 				const isFile = stats.isFile()
 				if (isFile) {
