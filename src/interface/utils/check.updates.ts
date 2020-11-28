@@ -8,7 +8,7 @@ const {
 import RunningConfig from 'RunningConfig'
 import Notification from '../constructors/notification'
 
-function checkForUpdates(ifNoUpdate?: any): any {
+function checkForUpdates(ifNoUpdate?: () => void): any {
 	if (RunningConfig.data.isDev && !ifNoUpdate) return
 	gravitonHasUpdate()
 		.then(({ res, version }) => {
@@ -20,7 +20,7 @@ function checkForUpdates(ifNoUpdate?: any): any {
 						{
 							label: 'misc.Update',
 							action() {
-								openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/releases')
+								openExternal('https://graviton.netlify.app/download')
 							},
 						},
 						{

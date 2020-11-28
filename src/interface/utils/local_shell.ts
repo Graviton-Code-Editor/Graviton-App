@@ -2,11 +2,10 @@ import Core from 'Core'
 const {
 	electron: { ipcRenderer },
 } = Core
-console.log(ipcRenderer)
 import { EventEmitter } from 'events'
 
 /*
- * Simple interface to create and manage  Node-pty's spawns
+ * Simple interface to create and manage Node-pty's spawns from renderer process
  */
 
 export default class LocalTerminalShell {
@@ -27,19 +26,19 @@ export default class LocalTerminalShell {
 			}
 		})
 	}
-	on(eventName, callback) {
+	on(eventName: string, callback: (data: string) => void) {
 		this.event.on(eventName, callback)
 	}
-	resize(cols, rows) {
+	resize(cols: number, rows: number) {
 		this.send('local-shell-resize', {
 			cols,
 			rows,
 		})
 	}
-	write(data) {
+	write(data: string) {
 		this.send('local-shell-write', data)
 	}
-	send(event, content) {
+	send(event: string, content: any) {
 		ipcRenderer.send(event, {
 			id: this.id,
 			content,

@@ -4,12 +4,9 @@ const {
 	electron: { ipcRenderer },
 } = Core
 import RunningConfig from 'RunningConfig'
-import * as url from 'url'
-import * as path from 'path'
 
 function openDebugClient() {
-	let windowID = Math.random()
-
+	const windowID = Math.random()
 	let created = false
 
 	const debugClient = new EnvClient({
