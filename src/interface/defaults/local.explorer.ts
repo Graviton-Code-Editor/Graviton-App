@@ -143,6 +143,13 @@ const LocalExplorer = {
 		return simpleInstance.pull('origin', branch)
 	},
 	/*
+	 * Push changes
+	 */
+	gitPush(projectPath: string, remote: string, branch: string) {
+		const simpleInstance = simpleGit(projectPath)
+		return simpleInstance.push(remote, branch)
+	},
+	/*
 	 * Return a event-emitter like which emits changes in a folder
 	 */
 	watchDir(projectPath: string, options) {

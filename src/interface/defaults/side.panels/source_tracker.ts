@@ -21,25 +21,41 @@ const getCommitChangesLabel = changes => {
 }
 
 /*
- * Return git changes as Explorer Items
+ * Return the total of files matching the status codes or "Any" if there isn't any change
  */
-const getChangesAsItems = (changes, projectPath) => {
-	return changes.map(change => {
-		const { name, ext } = parse(change.path)
-
-		const filePath = path.join(projectPath, change.path)
-
-		return {
-			label: `./${change.path}`,
-			icon: getFileIconType(name, ext.replace('.', '')),
-			hint: filePath,
-			decorator: {
-				label: change.working_dir == '?' ? 'U' : change.working_dir,
-				color: 'var(--explorerItemGitNotAddedText)',
-				fontSize: '11px',
-			},
+const getChangesCount = (changes, statusCodes) => {
+	let count = 0
+	changes.forEach(({ index }) => {
+		if (statusCodes.includes(index)) {
+			count++
 		}
 	})
+	if (count === 0) return 'Any'
+	return count.toString()
+}
+
+/*
+ * Return git changes as Explorer Items
+ */
+const getChangesAsItems = (changes, projectPath, statusCodes) => {
+	return changes
+		.map(change => {
+			if (statusCodes.includes(change.index)) {
+				const { name, ext } = parse(change.path)
+				const filePath = path.join(projectPath, change.path)
+				return {
+					label: `./${change.path}`,
+					icon: getFileIconType(name, ext.replace('.', '')),
+					hint: filePath,
+					decorator: {
+						label: change.working_dir == '?' ? 'U' : change.working_dir,
+						color: 'var(--explorerItemGitNotAddedText)',
+						fontSize: '11px',
+					},
+				}
+			}
+		})
+		.filter(Boolean)
 }
 
 /*
@@ -87,6 +103,16 @@ const showChangesPulledNotification = (projectPath: string) => {
 	new Notification({
 		title: 'Source Tracker',
 		content: `Pulled changes in ${projectPath}`,
+	})
+}
+
+/*
+ * Notification for "git push"
+ */
+const showChangesPushedNotification = (projectPath: string) => {
+	new Notification({
+		title: 'Source Tracker',
+		content: `Pushed changes in ${projectPath}`,
 	})
 }
 
@@ -241,6 +267,23 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													showChangesPulledNotification(parentFolder)
 												},
 											},
+											{
+												label: 'Push',
+												action: async function () {
+													const [remote, branch] = (
+														await InputDialog({
+															title: 'Remote and branch',
+															placeHolder: '<remote> <branch>',
+														})
+													).split(' ')
+													console.log(remote, branch)
+													/*
+													 * Pull changes on that branch
+													 */
+													await explorerProvider.gitPush(parentFolder, remote, branch)
+													showChangesPushedNotification(parentFolder)
+												},
+											},
 										],
 									},
 									{
@@ -251,12 +294,12 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													/*
 													 * Display the changed files
 													 */
-													setItems(getChangesAsItems(gitChanges.files, folder), false)
+													setItems(getChangesAsItems(gitChanges.files, folder, ['?', ' ']), false)
 													/*
 													 * Update the changes count
 													 */
 													setDecorator({
-														label: gitChanges.files.length.toString(),
+														label: getChangesCount(gitChanges.files, ['?', ' ']),
 													})
 												}
 											})
@@ -266,10 +309,40 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 											/*
 											 * Display the current changed files
 											 */
-											setItems(getChangesAsItems(gitChanges.files, folderPath), false)
+											setItems(getChangesAsItems(gitChanges.files, folderPath, ['?', ' ']), false)
 										},
 										decorator: {
-											label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
+											label: getChangesCount(gitChanges.files, ['?', ' ']),
+											color: 'var(--explorerItemGitIndicatorText)',
+											background: 'var(--explorerItemGitNotAddedText)',
+										},
+										items: [],
+									},
+									{
+										label: 'Staged',
+										mounted({ setItems, setDecorator }) {
+											console.log(gitChanges)
+											const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
+												if (parentFolder === folder) {
+													/*
+													 * Display the changed files
+													 */
+													setItems(getChangesAsItems(gitChanges.files, folder, ['A']), false)
+													/*
+													 * Update the changes count
+													 */
+													setDecorator({
+														label: getChangesCount(gitChanges.files, ['A']),
+													})
+												}
+											})
+
+											projectListeners.push(gitStatusUpdatedListener)
+
+											setItems(getChangesAsItems(gitChanges.files, folderPath, ['A']), false)
+										},
+										decorator: {
+											label: getChangesCount(gitChanges.files, ['A']),
 											color: 'var(--explorerItemGitIndicatorText)',
 											background: 'var(--explorerItemGitNotAddedText)',
 										},
@@ -297,7 +370,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 													 * Update the commits count
 													 */
 													setDecorator({
-														label: getCommitChangesLabel(all),
+														label: getCommitChangesLabel(all).toString(),
 													})
 												}
 											})
