@@ -288,16 +288,22 @@ function createMenus() {
 					],
 				},
 				{},
-				{
-					label: 'menus.Window.Debug.Debug',
-					list: [
-						{
-							label: 'menus.Window.Debug.OpenDebugWindow',
-							action: () => openDebugClient(),
-						},
-					],
-				},
-				{},
+				(() => {
+					if (!RunningConfig.data.isDebug) {
+						return {
+							label: 'menus.Window.Debug.Debug',
+							list: [
+								{
+									label: 'menus.Window.Debug.OpenDebugWindow',
+									action: () => openDebugClient(),
+								},
+							],
+						}
+					}
+				})(),
+				(() => {
+					if (!RunningConfig.data.isDebug) return {}
+				})(),
 				{
 					label: 'menus.Window.OpenDevTools',
 					action: () => ipcRenderer.invoke('toggle-devtools'),
