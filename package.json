@@ -93,7 +93,7 @@
 		"adm-zip": "^0.4.16",
 		"axios": "^0.21.0",
 		"chokidar": "^3.4.3",
-		"codemirror": "^5.58.2",
+		"codemirror": "^5.58.3",
 		"commander": "^6.2.0",
 		"diff-match-patch": "^1.0.5",
 		"electron-is-dev": "^1.2.0",
