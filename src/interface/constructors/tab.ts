@@ -210,7 +210,9 @@ class Tab {
 		render(TabComp, panel.children[0])
 		self.tabState.data.bodyElement = render(TabEditorComp, panel.children[1])
 	}
-
+	/*
+	 * Remove the tab's DOM node
+	 */
 	private _removeElements() {
 		return new Promise(res => {
 			setTimeout(() => {
@@ -220,7 +222,9 @@ class Tab {
 			}, 135)
 		})
 	}
-
+	/*
+	 * Essential tab's listeners
+	 */
 	private _addListeners(): void {
 		const IconpackWatcher = RunningConfig.on('updatedIconpack', () => {
 			if (this.directory) {
@@ -356,11 +360,15 @@ class Tab {
 			})
 		})
 	}
-
+	/*
+	 * Change the cross's opacity
+	 */
 	private _toggleCross(target: HTMLElement, state: number): void {
 		target.style.opacity = state.toString()
 	}
-
+	/*
+	 * Mark as un/saved the tab
+	 */
 	private _toggleTabStatus(newStatus: boolean): void {
 		const tabCrossIcon = <PuffinElement>this.tabElement.getElementsByClassName('tab-cross')[0]
 		const tabSaveIcon = this.tabElement.getElementsByClassName('tab-save')[0]
@@ -397,6 +405,9 @@ class Tab {
 			render(comp, this.tabElement.children[2])
 		}
 	}
+	/*
+	 * Save the tab's content
+	 */
 	private saveTab(callback) {
 		if (this.directory) {
 			const { client, instance } = this
@@ -413,7 +424,9 @@ class Tab {
 		}
 	}
 }
-
+/*
+ * Unfocus all tabs except one
+ */
 function unfocusTabs(tab): void {
 	const tabsBar = tab.parentElement
 	const tabsBarChildren = tabsBar.children
@@ -424,6 +437,9 @@ function unfocusTabs(tab): void {
 	}
 }
 
+/*
+ * Get all opened tabs in a specific tab's bar
+ */
 function getOpenedTabs(tabsBar: HTMLElement, tab = null) {
 	return Object.keys(tabsBar.children)
 		.map(e => {
@@ -434,6 +450,9 @@ function getOpenedTabs(tabsBar: HTMLElement, tab = null) {
 		.filter(Boolean)
 }
 
+/*
+ * Focus an specific tab
+ */
 function focusATab(fromTab: PuffinElement): void {
 	const tabsBar = fromTab.parentElement
 	const tabsBarChildren = getOpenedTabs(tabsBar) //Get opened tabs in the current focused panel
