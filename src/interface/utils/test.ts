@@ -11,10 +11,7 @@ import * as puffin from '@mkenzo_8/puffin'
  */
 
 if (!RunningConfig.data.isBrowser) {
-	if (eval('window.process.env.NODE_ENV') !== 'test') {
-		console.log(RunningConfig)
-		console.log(StaticConfig)
-	} else {
+	if (eval('window.process.env.NODE_ENV') === 'test') {
 		// Expose API globally, so can be accessed from the tests file
 		;(window as any).test = {
 			RunningConfig,
