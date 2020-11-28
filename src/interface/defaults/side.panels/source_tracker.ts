@@ -276,7 +276,6 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 															placeHolder: '<remote> <branch>',
 														})
 													).split(' ')
-													console.log(remote, branch)
 													/*
 													 * Pull changes on that branch
 													 */
@@ -321,7 +320,6 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 									{
 										label: 'Staged',
 										mounted({ setItems, setDecorator }) {
-											console.log(gitChanges)
 											const gitStatusUpdatedListener = RunningConfig.on('gitStatusUpdated', ({ parentFolder: folder, gitChanges }) => {
 												if (parentFolder === folder) {
 													/*

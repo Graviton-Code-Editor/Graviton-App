@@ -132,6 +132,11 @@ RunningConfig.on('registerEditorClient', function (editorClient) {
 	RunningConfig.data.editorsRank.push(editorClient)
 })
 
-console.log(RunningConfig)
+if (isDev) {
+	/*
+	 * Export RunningConfig as a global object in development mode
+	 */
+	CustomWindow.r = RunningConfig
+}
 
 export default RunningConfig
