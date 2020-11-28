@@ -148,7 +148,7 @@ class Tab {
 				})
 			}
 
-			unfocusTabs(this)
+			unfocusActiveTab(this.parentElement)
 
 			if (isEditor) {
 				self.tabState.on('editorCreated', ({ client: newClient, instance: newInstance }) => {
@@ -241,7 +241,7 @@ class Tab {
 			if (this.tabState.data.active && justCreated === false) return
 			RunningConfig.data.focusedTab = this.tabElement
 			RunningConfig.data.focusedPanel = this.tabElement.parentElement.parentElement
-			if (!this.tabState.data.active) unfocusTabs(this.tabElement)
+			if (!this.tabState.data.active) unfocusActiveTab(this.tabElement.parentElement)
 			RunningConfig.emit('aTabHasBeenFocused', {
 				tabElement: this.tabElement,
 				directory: this.directory,
@@ -425,13 +425,12 @@ class Tab {
 	}
 }
 /*
- * Unfocus all tabs except one
+ * Unfocus all tabs except the active one
  */
-function unfocusTabs(tab): void {
-	const tabsBar = tab.parentElement
+function unfocusActiveTab(tabsBar): void {
 	const tabsBarChildren = tabsBar.children
 	for (let otherTab of tabsBarChildren) {
-		if (otherTab != tab) {
+		if (otherTab.state.data.active) {
 			otherTab.state.emit('unfocusedMe')
 		}
 	}
@@ -458,6 +457,7 @@ function focusATab(fromTab: PuffinElement): void {
 	const tabsBarChildren = getOpenedTabs(tabsBar) //Get opened tabs in the current focused panel
 	const fromTabPosition = guessTabPosition(fromTab, tabsBar) //Get the closed tab position
 	const focusedTabPosition = guessTabPosition(RunningConfig.data.focusedTab, tabsBar) //Get the current focused tab position
+
 	if (focusedTabPosition === tabsBarChildren.length && fromTabPosition !== 0) {
 		;(tabsBarChildren[focusedTabPosition - 1] as PuffinElement).state.emit('focusedMe')
 	} else {
