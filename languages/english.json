@@ -150,6 +150,7 @@
 			}
 		},
 		"misc": {
+			"Miscellaneous": "Miscellaneous",
 			"LastVersion": "Last version",
 			"InstalledVersion": "Installed version",
 			"About": "About",

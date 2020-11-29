@@ -334,6 +334,15 @@
 				}
 			}
 		},
+		"slider": {
+			"Background": "rgba(220,220,220,0.3)",
+			"Thumb": {
+				"Background": "#0066FF"
+			},
+			"Filled": {
+				"Background": "#0066FF"
+			}
+		},
 		"loader": {
 			"Background": "black"
 		},

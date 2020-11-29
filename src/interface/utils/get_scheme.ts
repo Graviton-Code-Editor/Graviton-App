@@ -4,6 +4,7 @@ import Switch from '../components/switch'
 import { Titles, RadioGroup, Button, Text } from '@mkenzo_8/puffin-drac'
 import StaticConfig from 'StaticConfig'
 import Section from '../components/window/section'
+import Slider from '../components/slider'
 
 const getComp = (scheme: any) => {
 	let result: any = {
@@ -28,8 +29,8 @@ function getItemHooks() {
 
 export default function getScheme(scheme) {
 	return Object.keys(scheme).map(section => {
-		const { type, comps: schemeComps } = getComp(scheme[section])
-
+		const { type, comps: schemeComps, disabled } = getComp(scheme[section])
+		if (disabled) return
 		const comps = schemeComps
 			.map(scheme => {
 				const comp = getComp(scheme)
@@ -123,5 +124,19 @@ const getComponentFromScheme = comp => {
 				},
 				addons: [lang(LanguageState)],
 			})`<Text class="section" lang-string="${comp.label}"/>`
+		case 'slider':
+			function onChanged(e) {
+				const value = e.detail.value
+				if (value !== StaticConfig.data[comp.key]) {
+					StaticConfig.data[comp.key] = value
+				}
+			}
+
+			return element({
+				components: {
+					Slider,
+				},
+				addons: [lang(LanguageState)],
+			})`<Slider :change="${onChanged}" min="${comp.min}" max="${comp.max}" step="${comp.step}" value="${comp.default}" class="section" data="${{ label: comp.label }}"/>`
 	}
 }

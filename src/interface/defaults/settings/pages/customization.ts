@@ -1,5 +1,6 @@
 import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
+import RunningConfig from 'RunningConfig'
 import ThemeCard from '../../../components/settings/theme.card'
 import IconpackCard from '../../../components/settings/iconpack.card'
 
@@ -57,6 +58,25 @@ export default function () {
 						}
 					})
 					.filter(Boolean),
+			},
+			{
+				type: 'title',
+				label: 'misc.Miscellaneous',
+				disabled: RunningConfig.data.isBrowser,
+			},
+			{
+				type: 'section',
+				content: [
+					{
+						type: 'slider',
+						label: 'menus.Window.Zoom.Zoom',
+						key: 'appZoom',
+						min: 0.7,
+						max: 2,
+						default: StaticConfig.data.appZoom,
+						disabled: RunningConfig.data.isBrowser,
+					},
+				],
 			},
 		],
 	}

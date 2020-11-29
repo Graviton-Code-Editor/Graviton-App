@@ -95,6 +95,9 @@ RunningConfig.on('appLoaded', () => {
 			})
 		})
 	}
+	if (isDev) {
+		CustomWindow.s = StaticConfig
+	}
 })
 
 /*
