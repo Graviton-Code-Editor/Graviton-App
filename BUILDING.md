@@ -50,7 +50,7 @@ npm start
 npm start:experimental:browser
 ```
 
-If shows an empty dark screen just wait.
+If shows an empty dark screen wait some seconds and if Graviton doesn't load try reloading the window (Ctrl+R).
 
 ## Building
 
