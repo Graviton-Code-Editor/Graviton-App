@@ -1,0 +1,206 @@
+{
+	"name": "Simplified Chinese",
+	"locale": "zh-CN",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "文件",
+				"OpenFolder": "打开文件夹",
+				"OpenFile": "打开文件",
+				"Projects": {
+					"Projects": "项目",
+					"OpenProjects": "打开项目"
+				},
+				"Workspaces": {
+					"Workspaces": "工作区",
+					"OpenWorkspaces": "打开工作区",
+					"OpenFromFile": "从文件打开",
+					"AddFolderToWorkspace": "将文件夹添加到工作区",
+					"SaveWorkspace": "保存工作区"
+				}
+			},
+			"Edit": {
+				"Edit": "编辑",
+				"Undo": "撤消",
+				"Redo": "重做",
+				"FontSize": {
+					"FontSize": "字体大小",
+					"Increase": "放大",
+					"Decrease": "缩小"
+				},
+				"Find": "查找",
+				"Replace": "替换",
+				"FormatDocument": "格式化文档"
+			},
+			"Tools": {
+				"Tools": "工具",
+				"OpenSettings": "设置",
+				"OpenStore": "市场",
+				"Panels": {
+					"Panels": "面板",
+					"NewPanel": "新建面板",
+					"CloseCurrentPanel": "关闭当前面板"
+				}
+			},
+			"View": {
+				"View": "视图",
+				"Sidebar": "活动栏",
+				"Sidepanel": "侧边栏",
+				"Terminal": "终端",
+				"ShowSidebar": "显示活动栏",
+				"ShowSidepanel": "显示侧边栏",
+				"HideSidebar": "隐藏活动栏",
+				"HideSidepanel": "隐藏侧边栏"
+			},
+			"Window": {
+				"Window": "窗口",
+				"Zoom": {
+					"Zoom": "缩放",
+					"DefaultZoom": "默认",
+					"IncreaseZoom": "放大",
+					"DecreaseZoom": "缩小"
+				},
+				"Debug": {
+					"Debug": "调试",
+					"OpenDebugWindow": "打开调试窗口"
+				},
+				"OpenDevTools": "打开开发工具"
+			},
+			"Help": {
+				"Help": "帮助",
+				"Contact": "联系",
+				"Social": "社交",
+				"Contributors": "贡献者",
+				"Blog": "博客",
+				"Documentation": "文档",
+				"Website": "网站",
+				"SourceCode": "源码",
+				"ReportBug": "反馈",
+				"CheckForUpdates": "检查更新",
+				"ShowWelcome": "欢迎窗口",
+				"About": "关于"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "设置",
+				"Customization": {
+					"Customization": "定制",
+					"Themes": "主题",
+					"Iconpacks": "图标"
+				},
+				"Advanced": {
+					"Advanced": "高级",
+					"FileWatcher": "文件监视程序",
+					"Autocomplete": "自动完成",
+					"WrapLines": "换行",
+					"ManualConfig": {
+						"ManualConfig": "手动配置",
+						"EditConfiguration": "编辑配置"
+					},
+					"Explorer": "Explorer",
+					"Editor": "编辑器",
+					"GitIntegration": "Git集成",
+					"LSPIntegration": "LSP集成（实验）",
+					"SourceTracker": "源码跟踪器",
+					"Indentation": {
+						"Indentation": "缩进",
+						"Space": "空格",
+						"Tab": "Tab"
+					},
+					"Configuration": "配置",
+					"RestartConfig": {
+						"RestartConfig": "重置配置"
+					}
+				},
+				"Languages": "语言",
+				"Shortcuts": {
+					"Shortcuts": "快捷键",
+					"CreateCombo": "创建组合键"
+				},
+				"About": {
+					"About": "关于",
+					"GravitonDescription": "Graviton 是一个跨平台的编辑器。"
+				}
+			},
+			"Store": {
+				"Store": "市场",
+				"Home": {
+					"Home": "首页"
+				},
+				"Installed": {
+					"Installed": "已安装"
+				},
+				"Install": "安装",
+				"Update": "更新",
+				"Uninstall": "卸载",
+				"AnyCompatibleVersion": "没有任何兼容版本。"
+			},
+			"Welcome": {
+				"Welcome": "欢迎",
+				"RecentProjects": "最近的项目",
+				"RecentWorkspaces": "最近的工作区",
+				"NewProject": "新建项目",
+				"OpenWorkspace": "打开工作区",
+				"OpenFolder": "打开文件夹"
+			},
+			"BrowserWelcome": {
+				"WelcomeTitle": "欢迎在浏览器访问 Graviton",
+				"WelcomeMessage": "记住，这仍然是非常实验性的，大多数功能都不起作用。 \n 为了获得更好的体验，请下载桌面应用程序。"
+			}
+		},
+		"misc": {
+			"Miscellaneous": "杂项",
+			"LastVersion": "最新版本",
+			"InstalledVersion": "已安装版本",
+			"About": "关于",
+			"Skip": "跳过",
+			"Finish": "完成",
+			"Continue": "继续",
+			"GoBack": "返回",
+			"Accept": "接受",
+			"Cancel": "取消",
+			"version": "版本",
+			"CopyPath": "复制路径",
+			"More": "更多",
+			"Copy": "复制",
+			"Rename": "重命名",
+			"Remove": "删除",
+			"OpenLocation": "打开本地路径",
+			"NewFile": "新建文件",
+			"NewFolder": "新建文件夹",
+			"Paste": "粘贴",
+			"Author": "作者",
+			"Exit": "编辑",
+			"Tip": "Tip",
+			"Yes": "是",
+			"No": "否",
+			"Close": "关闭",
+			"Ignore": "忽略",
+			"BuildDate": "编译时间",
+			"By": "by",
+			"Understood": "理解",
+			"RemoveFromWorkspace": "从工作区删除"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "应用程序的语言已更改。",
+				"restartMessage": "重新启动应用程序以完全应用更改。"
+			}
+		},
+		"dialogs": {
+			"tabsUnsavedWarning": {
+				"title": "有未保存的文件。",
+				"content": "可能会失去进程。"
+			},
+			"restartConfig": {
+				"title": "重新启动配置",
+				"content": "单击“继续”重新启动配置。这不会卸载任何插件。"
+			},
+			"experimentalFeature": {
+				"title": "实验特性",
+				"content": "此功能不稳定，可能会导致一些问题。"
+			}
+		}
+	}
+}
