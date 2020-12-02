@@ -10,6 +10,7 @@ import spanish from '../../../languages/spanish.json'
 import polish from '../../../languages/polish.json'
 import arabic from '../../../languages/arabic.json'
 import turkish from '../../../languages/turkish.json'
+import simplifiedChinese from '../../../languages/chinese-simplified.json'
 
 export default {
 	english,
@@ -24,4 +25,5 @@ export default {
 	polish,
 	arabic,
 	turkish,
+	simplifiedChinese,
 }
