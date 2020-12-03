@@ -176,6 +176,7 @@ module.exports = [
 							options: {
 								name: '[name].[ext]',
 								outputPath: 'dist/',
+								publicPath: PUBLIC_PATH,
 							},
 						},
 						{
