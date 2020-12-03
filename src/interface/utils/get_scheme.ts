@@ -107,16 +107,18 @@ const getComponentFromScheme = comp => {
 				addons: [lang(LanguageState)],
 			})`<Button :click="${onClick}" lang-string="${comp.label}"/>`
 		case 'section':
+			const sectionContent = comp.content
+				.map(el => {
+					return getComponentFromScheme(el)
+				})
+				.filter(Boolean)
+
 			return element({
 				components: {
 					Section,
 				},
 				addons: [lang(LanguageState)],
-			})`<Section>${comp.content
-				.map(el => {
-					return getComponentFromScheme(el)
-				})
-				.filter(Boolean)}</Section>`
+			})`<Section>${sectionContent}</Section>`
 		case 'text':
 			return element({
 				components: {

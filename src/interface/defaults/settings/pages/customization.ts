@@ -66,6 +66,7 @@ export default function () {
 			},
 			{
 				type: 'section',
+				disabled: RunningConfig.data.isBrowser,
 				content: [
 					{
 						type: 'slider',
