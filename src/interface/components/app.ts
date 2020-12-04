@@ -16,11 +16,11 @@ const styleWrapper = style`
 				height: calc(100% - 25px);
 			}
 		}
-		&[os="windows"], &[browser="true"]{
-			#sidepanel{
+		&[os="win32"], &[browser="true"]{
+			& #sidebar{
 				border-top-right-radius:  8px;
 			}
-			#mainpanel{
+			& #mainpanel{
 				border-top-left-radius: 8px;
 			}
 		}
