@@ -11,17 +11,29 @@ const styleWrapper = style`
 			background:var(--bodyBackground);
 			height:calc(100% - 68px);
 		}
-		&[browser="true"] #body{
-			height:calc(100% - 65px);
+		&[os="darwin"], &[os="linux"]{
+			#body{
+				height: calc(100% - 25px);
+			}
+		}
+		&[os="windows"], &[browser="true"]{
+			#sidepanel{
+				border-top-right-radius:  8px;
+			}
+			#mainpanel{
+				border-top-left-radius: 8px;
+			}
+		}
+		&[browser="true"]{
+			#body{
+				height:calc(100% - 65px);
+			}
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {
 			font-family:var(--codeFont) !important;
 		}
 		* , .CodeMirror .CodeMirror-dialog * {
 			font-family: mainfont, Apple Color Emoji,Segoe UI,Segoe UI Emoji,Segoe UI Symbol !important;
-		}
-		&[os="darwin"] #body, &[os="linux"] #body{
-			height: calc(100% - 25px);
 		}
 		#sidebar{
 			padding:5px;
@@ -39,7 +51,6 @@ const styleWrapper = style`
 			}
 		}
 		#sidepanel{
-			border-top-right-radius:  8px;
 			background:var(--bodyBackground);
 			min-width:50px;
 			width:35%;
@@ -60,7 +71,6 @@ const styleWrapper = style`
 			display: flex;
 			flex:1;
 			border-top:1px solid var(--panelBorder);
-			border-top-left-radius: 8px;
 			background:var(--mainpanelBackground);
 			&[blocked="true"]{
 				border-top-left-radius: 0px;
