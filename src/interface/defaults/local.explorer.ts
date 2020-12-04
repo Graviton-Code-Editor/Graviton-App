@@ -83,7 +83,15 @@ const LocalExplorer = {
 		if (!RunningConfig.data.isGitInstalled) return false
 		const repoPath = normalizeDir(projectPath)
 		const simpleInstance = simpleGit(repoPath)
-		return simpleInstance.checkIsRepo()
+		return new Promise(resolve => {
+			simpleInstance
+				.checkIsRepo()
+				.then(res => resolve(res))
+				.catch(err => {
+					console.log(err)
+					resolve(false)
+				})
+		})
 	},
 	/*
 	 * Return the the current git status
