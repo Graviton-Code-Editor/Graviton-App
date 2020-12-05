@@ -1,5 +1,7 @@
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
+import { TopMenuStyle } from './top_menu'
+import RunningConfig from 'RunningConfig'
 
 function moveToPage(page, buttons, pages) {
 	pages.map(pageElement => {
@@ -88,7 +90,7 @@ function mounted() {
 	moveToPage(defaultPage, buttons, pages)
 }
 
-const styleWrapper = style`
+export const SideMenuStyle = style`
 	& {
 		display:flex;
 		max-height:100%;
@@ -151,9 +153,28 @@ const styleWrapper = style`
 	}
 `
 
-function SideMenu({ schemes }) {
+function getDynamicStyle() {
+	return style`
+		@media only screen and (max-width: 500px) {
+			margin: 0 10px;
+			${TopMenuStyle}
+			& > div:nth-child(1){
+				margin-top: 10px;
+			}
+			
+		}
+		@media only screen and (min-width: 500px) {
+			padding: 0px;
+			${SideMenuStyle}
+		}
+	`
+}
+
+function SideMenu() {
+	const usedStyle = RunningConfig.data.isBrowser ? getDynamicStyle() : SideMenuStyle
+
 	return element`
-		<div mounted="${mounted}" class="${styleWrapper}"/>
+		<div mounted="${mounted}" class="${usedStyle}"/>
 	`
 }
 

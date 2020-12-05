@@ -26,7 +26,14 @@ const styleWrapper = style`
 		}
 		&[browser="true"]{
 			#body{
-				height:calc(100% - 65px);
+				min-height: calc(100% - 70px);
+			}
+			@media only screen and (max-width: 500px) {
+				#statusbar{
+					padding: 0 10px 5px 10px;
+					min-height: 30px;
+					max-height: 30px;
+				}
 			}
 		}
 		.CodeMirror *:not(.CodeMirror-dialog) {

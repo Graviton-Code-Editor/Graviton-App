@@ -8,6 +8,8 @@ const styleWrapper = style`
 		margin:5px;
 		padding:5px;
 		max-width:300px;
+		-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0); 
 	}
 	& .wrapper{
 		background:var(--switchBackground);

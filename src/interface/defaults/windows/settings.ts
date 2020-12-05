@@ -1,11 +1,11 @@
-import { element, style, render, lang } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
 import { Titles } from '@mkenzo_8/puffin-drac'
+import { css as style } from '@emotion/css'
 import Window from '../../constructors/window'
-import SideMenu from '../../components/window/side_menu'
+import SideMenu, { SideMenuStyle } from '../../components/window/side_menu'
 import SideMenuSearcher from '../../components/window/side.menu.searcher'
 import SideMenuPage from '../../components/window/side_menu_page'
-
-import TopMenu from '../../components/window/top_menu'
+import RunningConfig from 'RunningConfig'
 
 import CustomizationScheme from '../settings/pages/customization'
 import AdvancedScheme from '../settings/pages/advanced'
@@ -40,10 +40,9 @@ export default function Settings(): WindowInstance {
 				SideMenu,
 				SideMenuSearcher,
 				SideMenuPage,
-				TopMenu,
 			},
 		})`
-			<SideMenu default="customization" schemes="${[CustomizationScheme, AdvancedScheme]}">
+			<SideMenu default="customization">
 				<div>
 					<H1 lang-string="windows.Settings.Settings"/>
 					<SideMenuSearcher/>

@@ -12,8 +12,6 @@ import { Button } from '@mkenzo_8/puffin-drac'
 
 const styleWrapper = style`
 	&{
-		display: flex;
-		flex-direction: column;
 		margin: 0 auto;
 	}
 	&  img {

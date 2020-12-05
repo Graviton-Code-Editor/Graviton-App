@@ -16,6 +16,8 @@ const styleWrapper = style`
 		padding:0px 10px;
 		user-select:none;
 		position: relative;
+		-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0); 
 		&[active="true"]{
 			background:var(--tabActiveBackground);
 			box-shadow:0px 0px 10px rgba(0,0,0,0.2);

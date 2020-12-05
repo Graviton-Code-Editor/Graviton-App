@@ -127,6 +127,9 @@ const styleWrapper = style`
 		cursor:pointer;
 		align-items:center;
 		padding-right:25px;
+		outline: 0;
+		-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0); 
 		& p{
 			margin-left: 22px;
 		}

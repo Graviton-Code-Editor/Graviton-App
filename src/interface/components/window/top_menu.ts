@@ -43,7 +43,7 @@ function mounted(a) {
 	moveToPage(defaultPage, buttons, pages)
 }
 
-const styleWrapper = style`
+export const TopMenuStyle = style`
 	& {
 		display:flex;
 		max-height:100%;
@@ -51,6 +51,7 @@ const styleWrapper = style`
 		flex:1;
 		overflow:hidden;
 		user-select:none;
+		flex-direction: column;
 	}
 	& > div:nth-child(1){
 		background: transparent;
@@ -58,16 +59,22 @@ const styleWrapper = style`
 		flex-direction:row;
 		justify-content: center;
 		padding:3px 15px;
-		overflow:auto;
+		overflow: auto;
+		min-width: auto;
+		max-width: calc(100% - 20px);
+		width: 100%;
+		min-height: auto;
+		box-shadow: none;
+		@media only screen and (max-width: 600px) {
+			display: block;
+			white-space: nowrap;
+		}
 	}
-	& > div:nth-child(1) > h1 {
-		overflow:hidden;
-		text-overflow:ellipsis;
-		text-align: center;
-		font-size: 25px;
-		max-width: 100%;
-		margin: 20px 0;
-		margin-bottom: 27px;
+	& > div:nth-child(1) > h1, & > div:nth-child(1) > input {
+		display: none;
+		/*
+		* Hide the searcher and the title 
+		*/
 	}
 	& > div:nth-child(1) > label {
 		transition:0.04s;
@@ -81,6 +88,9 @@ const styleWrapper = style`
 		font-size:13px;
 		height: 15px;
 		min-height: 15px;
+		@media only screen and (max-width: 600px) {
+			display: inline-block;
+		}
 		&:hover:not(.active) {
 			transition:0.04s;
 			background:var(--topmenuButtonHoveringBackground);
@@ -105,7 +115,7 @@ const styleWrapper = style`
 
 function TopMenu() {
 	return element`
-		<div mounted="${mounted}" class="${styleWrapper}"/>
+		<div mounted="${mounted}" class="${TopMenuStyle}"/>
 	`
 }
 

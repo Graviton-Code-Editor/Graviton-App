@@ -33,7 +33,7 @@ body {
 	src: url(../../assets/JetBrainsMono-Regular.woff2) format('woff2');
 }
 
-html {
+@mixin customScrollBars {
 	*::-webkit-scrollbar {
 		transition: 0.1s;
 		width: 10px;
@@ -61,5 +61,20 @@ html {
 	}
 	* ::-webkit-resizer {
 		cursor: ew-resize;
+	}
+}
+
+html {
+	min-height: 100%;
+	min-width: 100%;
+	max-width: 100%;
+	overflow: hidden;
+	#App > div[browser='false'] {
+		@include customScrollBars;
+	}
+	#App > div[browser='true'] {
+		@media only screen and (max-width: 500px) {
+			@include customScrollBars;
+		}
 	}
 }

@@ -5,6 +5,8 @@ const styleWrapper = style`
 	display: flex;
 	align-items: center;
 	padding: 10px 10px 10px 4px;
+	overflow: hidden;
+	white-space: nowrap;
 	& label {
 		margin-left: 12px;
 		font-size: 15px;

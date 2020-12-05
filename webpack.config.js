@@ -238,6 +238,7 @@ module.exports = [
 			compress: true,
 			port: 7500,
 			stats: 'errors-only',
+			host: '0.0.0.0',
 		},
 	},
 	{
