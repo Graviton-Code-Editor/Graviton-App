@@ -10,7 +10,6 @@ import getFormat from '../utils/format_parser'
 import normalizeDir from '../utils/directory_normalizer'
 import selectFolderDialog from '../utils/dialogs/select_folder'
 import selectFileDialog from '../utils/dialogs/select_file'
-import LocalExplorer from '../defaults/local.explorer'
 import * as path from 'path'
 import Core from 'Core'
 const { fs } = Core
@@ -130,7 +129,7 @@ if (!isBrowser) {
 			title: basename,
 			directory: fileDir,
 			isEditor: true,
-			explorerProvider: LocalExplorer,
+			explorerProvider: RunningConfig.data.explorerProvider,
 		})
 		if (isCancelled) return //Cancels the tab opening
 		fs.readFile(fileDir, 'UTF-8').then(data => {
@@ -173,7 +172,7 @@ RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldE
 			const folderDir = normalizeDir(folderPath)
 			const explorerPanel = document.getElementById('explorer_panel')
 			new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer, null, {
-				provider: LocalExplorer,
+				provider: RunningConfig.data.explorerProvider,
 			})
 			RunningConfig.data.workspaceConfig.folders.push({
 				name: parseDirectory(folderDir),

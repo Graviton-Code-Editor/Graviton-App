@@ -7,6 +7,7 @@ const { fs } = Core
 
 //Command: Open the explorer command (default: Ctrl+O)
 RunningConfig.on('command.openExplorerCommandPrompt', () => {
+	const currentProvider = RunningConfig.data.explorerProvider
 	const currentTab = RunningConfig.data.focusedTab
 	const currentTabState = (currentTab && currentTab.state.data) || false
 	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || `${process.env.HOME}/`
@@ -16,16 +17,17 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 
 		const fileName = path.basename(itemPath)
 
-		fs.lstat(itemPath)
+		currentProvider
+			.info(itemPath)
 			.then(async itemData => {
-				const isFolder = itemData.isDirectory()
+				const isFolder = itemData.isDirectory
 				if (isFolder) {
-					const items = await fs.readdir(itemPath)
+					const items = await currentProvider.listDir(itemPath)
 
 					setOptions(
-						items.map(label => {
+						items.map(({ name }) => {
 							return {
-								label,
+								label: name,
 								action() {
 									//
 								},
@@ -36,14 +38,14 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 			})
 			.catch(async () => {
 				const parentFolder = path.dirname(itemPath)
-				const parentFolderItems = await fs.readdir(parentFolder)
+				const parentFolderItems = await currentProvider.listDir(parentFolder)
 
 				setOptions(
 					parentFolderItems
-						.map(label => {
-							if (label.match(fileName)) {
+						.map(({ name }) => {
+							if (name.match(fileName)) {
 								return {
-									label,
+									label: name,
 									action: () => {},
 								}
 							}
@@ -71,10 +73,11 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 		closeOnTab: false,
 		onTabPressed: ({ option, value: itemPath }, { setValue, setOptions }) => {
 			let newItemPath
-			fs.lstat(itemPath)
+			currentProvider
+				.exists(itemPath)
 				.then(async () => {
 					newItemPath = path.join(itemPath, option)
-					const info = await fs.lstat(newItemPath)
+					const info = await currentProvider.info(newItemPath)
 
 					if (info.isDirectory()) {
 						newItemPath = path.join(newItemPath, '/')
@@ -84,7 +87,7 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 					const parentFolder = path.dirname(itemPath)
 					newItemPath = path.join(parentFolder, option)
 
-					const info = await fs.lstat(newItemPath)
+					const info = await currentProvider.info(newItemPath)
 
 					if (info.isDirectory()) {
 						newItemPath = path.join(newItemPath, '/')
@@ -99,7 +102,7 @@ RunningConfig.on('command.openExplorerCommandPrompt', () => {
 			showOptions(itemPath, setOptions)
 		},
 		onCompleted: itemPath => {
-			fs.lstat(itemPath).then(stats => {
+			currentProvider.info(itemPath).then(stats => {
 				const isFile = stats.isFile()
 				if (isFile) {
 					// Open the file

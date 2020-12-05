@@ -7,6 +7,7 @@ import isGitInstalled from '../utils/is_git_installed'
 import Core from 'Core'
 import StaticConfig from 'StaticConfig'
 import RunningConfigInterface from 'Types/running_config'
+import LocalExplorerProvider from '../defaults/local.explorer'
 const {
 	nodeJSONRPC,
 	electron: { clipboard },
@@ -65,6 +66,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedTerminal: null,
 	localTerminalAccessories: [],
 	isBrowser,
+	explorerProvider: LocalExplorerProvider,
 }
 
 isGitInstalled().then(res => {
@@ -133,6 +135,14 @@ RunningConfig.on('registerEnvironmentInspector', function ({ name, prefix, filte
  */
 RunningConfig.on('registerEditorClient', function (editorClient) {
 	RunningConfig.data.editorsRank.push(editorClient)
+})
+
+/*
+ * Safely load a explorer provider
+ * Default is the Local Explorer Provider
+ */
+RunningConfig.on('loadExplorerProvider', function (provider) {
+	RunningConfig.data.explorerProvider = provider
 })
 
 if (isDev) {

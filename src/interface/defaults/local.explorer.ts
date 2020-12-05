@@ -71,10 +71,10 @@ const LocalExplorer = {
 		return fs.mkdir(path)
 	},
 	exists: function (path: string) {
-		return (fs as any).exists(path)
+		return (fs as any).stat(path)
 	},
 	info: function (path: string) {
-		return fs.lstatSync(path)
+		return fs.lstat(path)
 	},
 	/*
 	 * Returns if the project is a git repository
