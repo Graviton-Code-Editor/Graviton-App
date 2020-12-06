@@ -10,6 +10,7 @@ const {
 import AppPlatform from 'AppPlatform'
 import RunningConfig from 'RunningConfig'
 import Tick from '../components/icons/tick'
+import { MenuOptions, MenuOption, MenuHooks } from 'Types/menu'
 
 const createdMenus = []
 
@@ -31,9 +32,9 @@ if (!RunningConfig.data.isBrowser) {
 }
 
 class Menu {
-	private MenuButton: String
-	private MenuList: object[]
-	constructor({ button, list }, fromEvent = false) {
+	private MenuButton: string
+	private MenuList: MenuOption[]
+	constructor({ button, list }: MenuOptions, fromEvent = false) {
 		this.MenuButton = button
 		this.MenuList = list.filter(Boolean)
 
@@ -62,7 +63,7 @@ class Menu {
 	 * DOM Dropmenu
 	 * Get the menu hooks
 	 */
-	private getMenuHooks(item, native = false) {
+	private getMenuHooks(item, native = false): MenuHooks {
 		return {
 			setChecked(value) {
 				if (native) {
