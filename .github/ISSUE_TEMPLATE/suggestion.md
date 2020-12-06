@@ -6,5 +6,8 @@ labels: enhancement
 assignees: ''
 ---
 
-**Describe the suggestion**
-A clear and concise description about the suggestion.
+<!--
+Your suggestion must have:
+1. A clear and concise description about the suggestion.
+2. A clear and concice explanation about why this is useful or a good idea.
+-->
