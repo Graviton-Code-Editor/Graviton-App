@@ -1,10 +1,15 @@
 import * as path from 'path'
+try {
+	var isBrowser = !!eval('window')
+} catch {
+	var isBrowser = false
+}
 
 /*
  * This contains the default Configuration of a just-installed Graviton version.
  */
 
-const isMac = process.platform == 'darwin'
+const isMac = isBrowser ? false : process.platform == 'darwin'
 
 const defaultConfig = {
 	config: {
@@ -86,8 +91,8 @@ const defaultConfig = {
 		experimentalSourceTracker: false,
 		appCheckWorkspaceExistsWhenOpeningFolders: true,
 	},
-}
-if (process.platform === 'darwin') {
+} //test
+if (isMac) {
 	defaultConfig.config.appShortcuts.CloseApp.combos.push('Ctrl+Q')
 }
 

@@ -214,20 +214,11 @@ module.exports = [
 				Assets: path.resolve(__dirname, './assets'),
 				Root: __dirname,
 			},
+			fallback: {
+				path: require.resolve('path-browserify'),
+			},
 		},
 		target: 'web',
-		node: {
-			fs: 'empty',
-			'fs-extra': 'empty',
-			chokidar: 'empty',
-			'simple-git': 'empty',
-			child_process: 'empty',
-			electron: 'empty',
-			rimraf: 'empty',
-			'node-json-lsp': 'empty',
-			'lsp-codemirror': 'empty',
-			'diff-match-patch': 'empty',
-		},
 		output: {
 			filename: 'main.js',
 			path: path.resolve(__dirname, 'dist_browser'),

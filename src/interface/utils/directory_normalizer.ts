@@ -1,4 +1,6 @@
-const OS = process.platform
+import isBrowser from './is_browser'
+
+const OS = isBrowser ? '' : process.platform
 
 /*
  * This will force Windows directories to use double back slash, this also removes doubles quotes in case there are

@@ -30,8 +30,8 @@ if (!isDev && !isBrowser) {
 }
 
 const electronArguments = isDev ? processArguments.slice(2) : processArguments.slice(1) || []
-const parsedElectronArguments = minimist(electronArguments)
-const parsedRendererArguments = isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
+const parsedElectronArguments = isBrowser ? [] : minimist(electronArguments)
+const parsedRendererArguments = isBrowser ? [] : isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
 const LSPPort = isDev ? 2020 : 2089
 
 const DEFAULT_RUNTIME_CONFIGURATION = {
