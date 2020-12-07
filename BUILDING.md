@@ -40,17 +40,23 @@ In case you just want to test it in development mode, run:
 
 ### Desktop
 
+This will open the app's window:
+
 ```shell
 npm start
 ```
 
 ### Browser (experimental)
 
+This will launch a web server in port 7500 (http://localhost:7500):
+
 ```shell
 npm start:experimental:browser
 ```
 
 ### Self-hosted server (experimental)
+
+This will launch a web server in port 7500 (http://localhost:7500):
 
 ```shell
 npm start:experimental:server
