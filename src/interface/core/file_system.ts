@@ -158,7 +158,8 @@ if (!isBrowser) {
 RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }: AddFolderInWorkspace) => {
 	RunningConfig.data.explorerProvider
 		.exists(folderPath)
-		.then(() => {
+		.then((exists) => {
+			if(!exists) return
 			if (replaceOldExplorer) {
 				//Close all opened folers
 				removeAllExplorerFolders()
@@ -182,9 +183,6 @@ RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldE
 			if (!workspacePath) {
 				RunningConfig.data.workspacePath = null
 			}
-		})
-		.catch(() => {
-			//Opened folder doesn't exist
 		})
 })
 
@@ -258,8 +256,8 @@ if (!isBrowser) {
 			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 			RunningConfig.data.workspacePath = workspacePathNormalized
 			workspace.folders.forEach(async folder => {
-				RunningConfig.data.explorerProvider.exists(folder.path, (err, stats) => {
-					if (!err) {
+				RunningConfig.data.explorerProvider.exists(folder.path).then((exists) => {
+					if(exists){
 						RunningConfig.emit('addFolderToRunningWorkspace', {
 							folderPath: normalizeDir(folder.path),
 						})
