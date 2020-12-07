@@ -258,7 +258,7 @@ if (!isBrowser) {
 			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 			RunningConfig.data.workspacePath = workspacePathNormalized
 			workspace.folders.forEach(async folder => {
-				RunningConfig.data.explorerProvider.exists.stat(folder.path, (err, stats) => {
+				RunningConfig.data.explorerProvider.exists(folder.path, (err, stats) => {
 					if (!err) {
 						RunningConfig.emit('addFolderToRunningWorkspace', {
 							folderPath: normalizeDir(folder.path),
