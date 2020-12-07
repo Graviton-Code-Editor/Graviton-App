@@ -5,9 +5,14 @@ import Notification from 'Constructors/notification'
 
 let ConnectionInstance
 
+interface Event {
+	eventName: string
+	callback: (any) => void
+}
+
 class Connection {
-	ws: any
-	events: any = []
+	ws: WebSocket
+	events: Event[] = []
 	constructor() {
 		this.ws = new WebSocket(`ws://${StaticConfig.data.remoteServerIP}/api/ws`)
 
@@ -41,7 +46,13 @@ class Connection {
 
 class remoteServer {
 	static providerName = 'Remote Server'
-	static listDir(path) {
+	/*
+	 * List a folder
+	 *
+	 * @param path - The folder's directory
+	 * @returns A promise with the received items
+	 */
+	static listDir(path: string): Promise<boolean> {
 		return new Promise(res => {
 			ConnectionInstance.send({
 				type: 'listDir',
@@ -57,7 +68,13 @@ class remoteServer {
 			})
 		})
 	}
-	static readFile(path) {
+	/*
+	 * Read a file
+	 *
+	 * @param path - The file's path
+	 * @returns A promise with the received content
+	 */
+	static readFile(path: string): Promise<string> {
 		return new Promise(res => {
 			ConnectionInstance.send({
 				type: 'readFile',
@@ -73,10 +90,31 @@ class remoteServer {
 			})
 		})
 	}
+	/*
+	 * Write a content to a file
+	 *
+	 * @beta
+	 */
 	static writeFile() {}
+	/*
+	 * Rename a item
+	 *
+	 * @beta
+	 */
 	static renameDir() {}
+	/*
+	 * Create a folder
+	 *
+	 * @beta
+	 */
 	static mkdir() {}
-	static exists(path) {
+	/*
+	 * Check if a file exists or not
+	 *
+	 * @param path - The items's path
+	 * @returns A promise with the result
+	 */
+	static exists(path: string): Promise<boolean> {
 		return new Promise(res => {
 			ConnectionInstance.send({
 				type: 'exists',
@@ -92,7 +130,13 @@ class remoteServer {
 			})
 		})
 	}
-	static info(path) {
+	/*
+	 * Get information about the file
+	 *
+	 * @param path - The items's path
+	 * @returns A promise with the result
+	 */
+	static info(path: string): Promise<Object> {
 		return new Promise(res => {
 			ConnectionInstance.send({
 				type: 'info',
