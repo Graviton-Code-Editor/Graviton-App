@@ -1,5 +1,5 @@
 {
-	"files": ["./src/app/preload.ts"],
+	"files": ["../src/app/preload.ts"],
 	"module": "umd",
 	"noImplicitAny": false,
 	"compilerOptions": {

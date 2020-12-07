@@ -17,7 +17,11 @@ export const WorkspaceFoldername = '.gveditor'
 /*
  * Plugins paths
  */
-export const pluginsIternalDir = window.process ? (RunningConfig.data.isDev ? path.resolve(__dirname, '..', '..', '..', 'pluginsDist') : path.join(window.process.resourcesPath, 'pluginsDist')) : ''
+export const pluginsIternalDir = window.process
+	? RunningConfig.data.isDev
+		? path.resolve(__dirname, '..', '..', '..', 'pluginsDist')
+		: path.join((window as any).process.resourcesPath, 'pluginsDist')
+	: ''
 export const pluginsExternalDir = window.process ? path.join(StaticConfig.data.appConfigPath, 'plugins') : ''
 
 /*

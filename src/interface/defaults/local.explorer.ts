@@ -11,7 +11,7 @@ const { fs, chokidar, simpleGit } = Core
 	This is used to access, read and mofify the local filesystem.
 */
 const LocalExplorer = {
-	name: 'Local',
+	providerName: 'Local',
 	listDir: async function (path: string) {
 		return new Promise(async res => {
 			const items = await Core.fs.readdir(path)

@@ -156,7 +156,8 @@ if (!isBrowser) {
  * @param {string} workspacePath - Path to the current loaded workspace
  */
 RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }: AddFolderInWorkspace) => {
-	fs.stat(folderPath)
+	RunningConfig.data.explorerProvider
+		.exists(folderPath)
 		.then(() => {
 			if (replaceOldExplorer) {
 				//Close all opened folers
@@ -257,7 +258,7 @@ if (!isBrowser) {
 			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 			RunningConfig.data.workspacePath = workspacePathNormalized
 			workspace.folders.forEach(async folder => {
-				fs.stat(folder.path, (err, stats) => {
+				RunningConfig.data.explorerProvider.exists.stat(folder.path, (err, stats) => {
 					if (!err) {
 						RunningConfig.emit('addFolderToRunningWorkspace', {
 							folderPath: normalizeDir(folder.path),

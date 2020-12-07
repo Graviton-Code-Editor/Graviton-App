@@ -124,7 +124,7 @@ RunningConfig.on('command.openCommandPrompt', () => {
 			{
 				label: 'Set Language',
 				action: () => {
-					const configuredLanguage = StaticConfig.data.language
+					const configuredLanguage = StaticConfig.data.appLanguage
 					new CommandPrompt({
 						showInput: true,
 						inputPlaceHolder: 'Select a language',
@@ -143,6 +143,34 @@ RunningConfig.on('command.openCommandPrompt', () => {
 						},
 						onScrolled(res) {
 							StaticConfig.data.appLanguage = res.data
+						},
+					})
+				},
+			},
+			{
+				label: 'Set provider',
+				action: () => {
+					const configuredProviderName = RunningConfig.data.explorerProvider.providerName
+					new CommandPrompt({
+						showInput: true,
+						inputPlaceHolder: 'Select a provider',
+						options: [
+							...RunningConfig.data.registeredExplorerProviders.map(provider => {
+								const providerName = provider.providerName
+								return {
+									data: {
+										provider,
+									},
+									label: providerName,
+									selected: true,
+								}
+							}),
+						],
+						onSelected(res) {
+							RunningConfig.data.explorerProvider = res.data.provider
+						},
+						onScrolled(res) {
+							RunningConfig.data.explorerProvider = res.data.provider
 						},
 					})
 				},

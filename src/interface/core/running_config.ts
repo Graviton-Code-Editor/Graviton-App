@@ -66,6 +66,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedTerminal: null,
 	localTerminalAccessories: [],
 	isBrowser,
+	registeredExplorerProviders: [LocalExplorerProvider],
 	explorerProvider: LocalExplorerProvider,
 }
 
@@ -141,8 +142,15 @@ RunningConfig.on('registerEditorClient', function (editorClient) {
  * Safely load a explorer provider
  * Default is the Local Explorer Provider
  */
-RunningConfig.on('loadExplorerProvider', function (provider) {
-	RunningConfig.data.explorerProvider = provider
+RunningConfig.on('registeredExplorerProvider', function (provider) {
+	RunningConfig.data.registeredExplorerProviders.push(provider)
+
+	/*
+	 * Have preference for Remote Provider in browser mode
+	 */
+	if (RunningConfig.data.isBrowser) {
+		RunningConfig.data.explorerProvider = provider
+	}
 })
 
 if (isDev) {

@@ -16,5 +16,6 @@ dist_main
 .vs
 dist_test
 dist_browser
+dist_server
 remote-plugin-temp
 pluginsBrowserDist

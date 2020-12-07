@@ -50,6 +50,12 @@ npm start
 npm start:experimental:browser
 ```
 
+### Self-hosted server (experimental)
+
+```shell
+npm start:experimental:server
+```
+
 If shows an empty dark screen wait some seconds and if Graviton doesn't load try reloading the window (Ctrl+R).
 
 ## Building

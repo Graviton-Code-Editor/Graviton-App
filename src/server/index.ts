@@ -1,0 +1,110 @@
+import express from 'express'
+import path from 'path'
+import enableWs from 'express-ws'
+import fs from 'fs-extra'
+import morgan from 'morgan'
+
+const app = express()
+
+enableWs(app)
+
+app.use(morgan('dev'))
+
+app.get('/api', (req, res) => {
+	res.json({
+		ok: true,
+	})
+})
+
+/*
+ * Check if a path is a folder or not
+ *
+ * @param path - Folder's directory
+ * @returns A promise, it will resolve with the result
+ */
+function isFolder(path: string): Promise<Boolean> {
+	return new Promise((res, rej) => {
+		fs.lstat(path, (err, stats) => {
+			if (err) return res(false)
+			res(stats.isDirectory())
+		})
+	})
+}
+
+/*
+ * Handle the incoming websockets requests
+ */
+app.ws('/api/ws', ws => {
+	/*
+	 * Send a message to the socket
+	 * @param content - The message's object
+	 */
+	function sendMessage(content: object) {
+		ws.send(JSON.stringify(content))
+	}
+
+	ws.on('message', (data: string) => {
+		const messageObject = JSON.parse(data)
+
+		switch (messageObject.type) {
+			case 'listDir':
+				fs.readdir(messageObject.data.path, async (err, items) => {
+					if (err) {
+						return sendMessage([])
+					}
+					sendMessage({
+						type: 'listedDir',
+						data: {
+							path: messageObject.data.path,
+							list: await Promise.all(
+								items.map(async item => {
+									const itemPath = path.join(messageObject.data.path, item)
+									return {
+										name: item,
+										isFolder: await isFolder(itemPath),
+										isHidden: false,
+									}
+								}),
+							),
+						},
+					})
+				})
+				break
+			case 'readFile':
+				sendMessage({
+					type: 'fileReaded',
+					data: {
+						path: messageObject.data.path,
+						content: fs.readFileSync(messageObject.data.path, 'utf8'),
+					},
+				})
+				break
+			case 'info':
+				fs.lstat(messageObject.data.path, (err, data) => {
+					sendMessage({
+						type: 'returnedInfo',
+						data: {
+							path: messageObject.data.path,
+							info: data,
+						},
+					})
+				})
+				break
+			case 'exists':
+				fs.stat(messageObject.data.path, err => {
+					sendMessage({
+						type: 'returnedExists',
+						data: {
+							path: messageObject.data.path,
+							exist: !err,
+						},
+					})
+				})
+				break
+		}
+	})
+})
+
+app.listen(8080, () => {
+	console.log('listening in port 8080')
+})

@@ -9,5 +9,5 @@
 		"lib": ["es2019"],
 		"resolveJsonModule": true
 	},
-	"root": "../"
+	"root": "."
 }

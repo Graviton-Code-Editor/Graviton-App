@@ -7,10 +7,16 @@ const { fs } = Core
 
 //Command: Open the explorer command (default: Ctrl+O)
 RunningConfig.on('command.openExplorerCommandPrompt', () => {
+	let initialPath = ''
+
+	if (!RunningConfig.data.isBrowser) {
+		initialPath = process.env.HOME
+	}
+
 	const currentProvider = RunningConfig.data.explorerProvider
 	const currentTab = RunningConfig.data.focusedTab
 	const currentTabState = (currentTab && currentTab.state.data) || false
-	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || `${process.env.HOME}/`
+	const currentFileFolder = (currentTabState && currentTabState.parentFolder && `${path.normalize(currentTabState.parentFolder)}/`) || `${initialPath}/`
 
 	const showOptions = async (itemPath, setOptions) => {
 		if (itemPath === '') return []
