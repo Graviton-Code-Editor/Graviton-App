@@ -78,10 +78,15 @@ class Editor implements EditorOptions {
 	private addListeners(): void {
 		const fileWatcher = RunningConfig.on('aFileHasBeenChanged', ({ filePath, newData }) => {
 			if (filePath == this.filePath) {
-				this.client.do('doChangeValue', {
-					instance: this.instance,
-					value: newData,
-				})
+				if (this.client.do('getValue', this.instance) != newData) {
+					this.client.do('doChangeValue', {
+						instance: this.instance,
+						value: newData,
+					})
+					this.client.do('scrollToCursor', {
+						instance: this.instance,
+					})
+				}
 			}
 		})
 

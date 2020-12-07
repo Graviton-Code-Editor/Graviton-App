@@ -1,7 +1,6 @@
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import CommandPrompt from 'Constructors/command.prompt'
-import Notification from 'Constructors/notification'
 
 let ConnectionInstance
 
@@ -44,7 +43,7 @@ class Connection {
 	}
 }
 
-class remoteServer {
+export default class remoteServer {
 	static providerName = 'Remote Server'
 	/*
 	 * List a folder
@@ -164,35 +163,29 @@ class remoteServer {
 	}
 }
 
-if (RunningConfig.data.isBrowser) {
-	RunningConfig.emit('registeredExplorerProvider', remoteServer)
-	RunningConfig.on('appLoaded', () => {
+window.addEventListener('load', () => {
+	if (RunningConfig.data.isBrowser) {
 		if (StaticConfig.data.remoteServerIP && RunningConfig.data.explorerProvider.providerName === 'Remote Server') {
 			ConnectionInstance = new Connection()
 		}
-	})
 
-	RunningConfig.data.globalCommandPrompt.push({
-		label: 'Configure Remote Provider',
-		action() {
-			const configuredIP = StaticConfig.data.remoteServerIP
+		RunningConfig.data.globalCommandPrompt.push({
+			label: 'Configure Remote Provider',
+			action() {
+				const configuredIP = StaticConfig.data.remoteServerIP
 
-			new CommandPrompt({
-				name: 'remote_provider_conf',
-				showInput: true,
-				inputPlaceHolder: configuredIP ? configuredIP : `Server's IP`,
-				options: [],
-				onCompleted(serverIP) {
-					StaticConfig.data.remoteServerIP = serverIP
+				new CommandPrompt({
+					name: 'remote_provider_conf',
+					showInput: true,
+					inputPlaceHolder: configuredIP ? configuredIP : `Server's IP`,
+					options: [],
+					onCompleted(serverIP) {
+						StaticConfig.data.remoteServerIP = serverIP
 
-					ConnectionInstance = new Connection()
-
-					new Notification({
-						title: 'Configured correctly',
-						content: `Remote Server IP is now ${serverIP}`,
-					})
-				},
-			})
-		},
-	})
-}
+						ConnectionInstance = new Connection()
+					},
+				})
+			},
+		})
+	}
+})

@@ -1,17 +1,17 @@
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import LocalExplorer from '../defaults/local.explorer'
+import LocalExplorer from '../defaults/explorer_providers/local'
 import { WorkspaceFoldername, WorkspaceFilename } from 'Constants'
 import * as path from 'path'
 import { setWorkspaceSettings } from 'FileSystem'
 
 if (StaticConfig.data.appCheckWorkspaceExistsWhenOpeningFolders) {
+	/*
+	 * Only search for a workspace config file if the user manually opened the folder,
+	 * it won't act if the folder is opened from a workspace since the workspace
+	 * itself already provides it's own settings
+	 */
 	RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldExplorer = false }) => {
-		/*
-		 * Only search for a workspace config file if the user manually opened the folder,
-		 * it won't act if the folder is opened from a workspace since the workspace
-		 * itself already provides it's own settings
-		 */
 		if (replaceOldExplorer) {
 			const files: any = await LocalExplorer.listDir(folderPath)
 			files.forEach(async ({ isFolder, name }) => {

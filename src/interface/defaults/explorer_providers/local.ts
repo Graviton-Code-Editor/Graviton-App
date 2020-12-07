@@ -1,5 +1,5 @@
 import Core from 'Core'
-import normalizeDir from '../utils/directory_normalizer'
+import normalizeDir from '../../utils/directory_normalizer'
 import { join } from 'path'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
@@ -71,7 +71,16 @@ const LocalExplorer = {
 		return fs.mkdir(path)
 	},
 	exists: function (path: string) {
-		return (fs as any).stat(path)
+		return new Promise(res => {
+			;(fs as any)
+				.stat(path)
+				.then(() => {
+					res(true)
+				})
+				.catch(() => {
+					res(false)
+				})
+		})
 	},
 	info: function (path: string) {
 		return fs.lstat(path)

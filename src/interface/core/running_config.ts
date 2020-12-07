@@ -7,7 +7,8 @@ import isGitInstalled from '../utils/is_git_installed'
 import Core from 'Core'
 import StaticConfig from 'StaticConfig'
 import RunningConfigInterface from 'Types/running_config'
-import LocalExplorerProvider from '../defaults/local.explorer'
+import LocalExplorerProvider from '../defaults/explorer_providers/local'
+import RemoteExplorerProvider from '../defaults/explorer_providers/remote'
 const {
 	nodeJSONRPC,
 	electron: { clipboard },
@@ -66,8 +67,8 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	focusedTerminal: null,
 	localTerminalAccessories: [],
 	isBrowser,
-	registeredExplorerProviders: [LocalExplorerProvider],
-	explorerProvider: LocalExplorerProvider,
+	registeredExplorerProviders: isBrowser ? [RemoteExplorerProvider] : [LocalExplorerProvider],
+	explorerProvider: isBrowser ? RemoteExplorerProvider : LocalExplorerProvider,
 }
 
 isGitInstalled().then(res => {
@@ -144,13 +145,6 @@ RunningConfig.on('registerEditorClient', function (editorClient) {
  */
 RunningConfig.on('registeredExplorerProvider', function (provider) {
 	RunningConfig.data.registeredExplorerProviders.push(provider)
-
-	/*
-	 * Have preference for Remote Provider in browser mode
-	 */
-	if (RunningConfig.data.isBrowser) {
-		RunningConfig.data.explorerProvider = provider
-	}
 })
 
 if (isDev) {
