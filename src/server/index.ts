@@ -105,6 +105,6 @@ app.ws('/api/ws', ws => {
 	})
 })
 
-app.listen(8080, () => {
+app.listen(process.env.PORT || 8080, () => {
 	console.log('listening in port 8080')
 })
