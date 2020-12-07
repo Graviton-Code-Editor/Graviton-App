@@ -78,23 +78,10 @@ class Editor implements EditorOptions {
 	private addListeners(): void {
 		const fileWatcher = RunningConfig.on('aFileHasBeenChanged', ({ filePath, newData }) => {
 			if (filePath == this.filePath) {
-				if (this.client.do('getValue', this.instance) != newData) {
-					new Notification({
-						title: path.basename(this.filePath),
-						content: 'This file content has changed',
-						buttons: [
-							{
-								label: 'Update',
-								action: () => {
-									this.client.do('doChangeValue', {
-										instance: this.instance,
-										value: newData,
-									})
-								},
-							},
-						],
-					})
-				}
+				this.client.do('doChangeValue', {
+					instance: this.instance,
+					value: newData,
+				})
 			}
 		})
 
