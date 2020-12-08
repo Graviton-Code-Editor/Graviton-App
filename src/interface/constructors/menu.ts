@@ -205,7 +205,7 @@ class Menu {
 		return list
 			.map(option => {
 				if (!option) return
-				const { label, action, type, checked, list } = option
+				const { label, action, type, checked, list, accelerator, selector } = option
 				if (label && action) {
 					const id = Math.random()
 
@@ -222,6 +222,8 @@ class Menu {
 						label: lang.getTranslation(label, LanguageState),
 						id,
 						checked,
+						accelerator,
+						selector,
 					}
 				} else if (label && list) {
 					return {

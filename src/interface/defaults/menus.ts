@@ -13,7 +13,7 @@ import BrowserWelcome from './windows/browser_welcome'
 import { openFolder, openFile } from 'FileSystem'
 import Core from 'Core'
 const {
-	electron: { ipcRenderer },
+	electron: { ipcRenderer, clipboard },
 	openExternal,
 } = Core
 
@@ -128,6 +128,65 @@ function createMenus() {
 						instance,
 					})
 				},
+			},
+			{},
+			{
+				label: 'Copy',
+				accelerator: 'CmdOrCtrl+C',
+				selector: 'copy:',
+				action: (() => {
+					if (AppPlatform !== 'darwin') {
+						return () => {
+							if (!RunningConfig.data.focusedEditor) return
+							const { client, instance } = RunningConfig.data.focusedEditor
+							const selectedText = client.do('getSelection', {
+								instance,
+								action: () => RunningConfig.emit('hideAllFloatingComps'),
+							})
+
+							clipboard.writeText(selectedText)
+
+							RunningConfig.emit('writeToClipboard', selectedText)
+
+							setTimeout(() => {
+								client.do('doFocus', {
+									instance,
+								})
+							}, 10)
+						}
+					}
+				})(),
+			},
+			{
+				label: 'Paste',
+				accelerator: 'CmdOrCtrl+V',
+				selector: 'paste:',
+				action: (() => {
+					if (AppPlatform !== 'darwin') {
+						return () => {
+							if (!RunningConfig.data.focusedEditor) return
+							const { client, instance } = RunningConfig.data.focusedEditor
+							const { line, ch } = client.do('getCursorPosition', {
+								instance,
+							})
+
+							client.do('pasteContent', {
+								instance,
+								from: {
+									line: line - 1,
+									ch: ch - 1,
+								},
+								text: clipboard.readText(),
+							})
+
+							setTimeout(() => {
+								client.do('doFocus', {
+									instance,
+								})
+							}, 10)
+						}
+					}
+				})(),
 			},
 			{},
 			{

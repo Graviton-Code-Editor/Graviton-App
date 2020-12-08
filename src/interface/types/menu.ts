@@ -14,4 +14,6 @@ export interface MenuOption {
 	mounted?: (MenuHooks) => void
 	type?: string
 	list?: this[]
+	accelerator?: string
+	selector?: string
 }
