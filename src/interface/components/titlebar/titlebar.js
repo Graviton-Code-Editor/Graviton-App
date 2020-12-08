@@ -39,7 +39,7 @@ const styleWrapper = style`
 		display:flex;
 	}
 	& .dropmenus::-webkit-scrollbar {
-		height:4px;
+		height:4px !important;
 	}
 	& .buttons{
 		max-width:auto;

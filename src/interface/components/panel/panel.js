@@ -28,7 +28,7 @@ const styleWrapper = style`
 		background:transparent;
 	}
 	& .tabsbar::-webkit-scrollbar {
-		height:4px;
+		height:4px !important;
 	}
 	& > div:nth-child(2){
 		flex:1;

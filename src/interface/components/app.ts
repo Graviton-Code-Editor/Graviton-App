@@ -54,7 +54,7 @@ const styleWrapper = style`
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
 			&::-webkit-scrollbar {
-				width: 4px;
+				width: 4px !important;
 			}
 		}
 		#sidepanel{
