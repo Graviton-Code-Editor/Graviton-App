@@ -135,26 +135,22 @@ function createMenus() {
 				accelerator: 'CmdOrCtrl+C',
 				selector: 'copy:',
 				action: () => {
-					if (AppPlatform !== 'darwin') {
-						return () => {
-							if (!RunningConfig.data.focusedEditor) return
-							const { client, instance } = RunningConfig.data.focusedEditor
-							const selectedText = client.do('getSelection', {
-								instance,
-								action: () => RunningConfig.emit('hideAllFloatingComps'),
-							})
+					if (!RunningConfig.data.focusedEditor) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					const selectedText = client.do('getSelection', {
+						instance,
+						action: () => RunningConfig.emit('hideAllFloatingComps'),
+					})
 
-							clipboard.writeText(selectedText)
+					clipboard.writeText(selectedText)
 
-							RunningConfig.emit('writeToClipboard', selectedText)
+					RunningConfig.emit('writeToClipboard', selectedText)
 
-							setTimeout(() => {
-								client.do('doFocus', {
-									instance,
-								})
-							}, 10)
-						}
-					}
+					setTimeout(() => {
+						client.do('doFocus', {
+							instance,
+						})
+					}, 10)
 				},
 			},
 			{
@@ -162,30 +158,26 @@ function createMenus() {
 				accelerator: 'CmdOrCtrl+V',
 				selector: 'paste:',
 				action: () => {
-					if (AppPlatform !== 'darwin') {
-						return () => {
-							if (!RunningConfig.data.focusedEditor) return
-							const { client, instance } = RunningConfig.data.focusedEditor
-							const { line, ch } = client.do('getCursorPosition', {
-								instance,
-							})
+					if (!RunningConfig.data.focusedEditor) return
+					const { client, instance } = RunningConfig.data.focusedEditor
+					const { line, ch } = client.do('getCursorPosition', {
+						instance,
+					})
 
-							client.do('pasteContent', {
-								instance,
-								from: {
-									line: line - 1,
-									ch: ch - 1,
-								},
-								text: clipboard.readText(),
-							})
+					client.do('pasteContent', {
+						instance,
+						from: {
+							line: line - 1,
+							ch: ch - 1,
+						},
+						text: clipboard.readText(),
+					})
 
-							setTimeout(() => {
-								client.do('doFocus', {
-									instance,
-								})
-							}, 10)
-						}
-					}
+					setTimeout(() => {
+						client.do('doFocus', {
+							instance,
+						})
+					}, 10)
 				},
 			},
 			{},
