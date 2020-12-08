@@ -20,6 +20,11 @@ import { ContextMenuButton } from 'Types/contextmenu'
 
 let blurViewApp: boolean = false
 
+/*
+ * Expose if it's running in the browser as attribute in the body element to apply dynamic styles
+ */
+document.body.setAttribute('browser', RunningConfig.data.isBrowser)
+
 const App = element({
 	components: {
 		TitleBar,

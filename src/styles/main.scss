@@ -38,10 +38,10 @@ body {
 		transition: 0.1s;
 		width: 10px;
 		height: 10px;
-		background: transparent;
+		background: red;
 	}
 	* ::-webkit-scrollbar-track {
-		background: transparent;
+		background: green;
 	}
 	* ::-webkit-scrollbar-thumb {
 		border-radius: 0.2rem;
@@ -69,10 +69,10 @@ html {
 	min-width: 100%;
 	max-width: 100%;
 	overflow: hidden;
-	#App > div[browser='false'] {
+	body[browser='false'] {
 		@include customScrollBars;
 	}
-	#App > div[browser='true'] {
+	body[browser='true'] {
 		@media only screen and (min-width: 500px) {
 			@include customScrollBars;
 		}
