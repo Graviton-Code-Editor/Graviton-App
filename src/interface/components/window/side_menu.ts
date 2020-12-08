@@ -131,6 +131,7 @@ export const SideMenuStyle = style`
 		&:hover:not(.active) {
 			transition:0.04s;
 			background:var(--sidemenuButtonHoveringBackground);
+			color:var(--sidemenuButtonHoveringText);
 		}
 		&.active {
 			background:var(--sidemenuButtonActiveBackground);

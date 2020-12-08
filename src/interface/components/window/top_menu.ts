@@ -94,6 +94,7 @@ export const TopMenuStyle = style`
 		&:hover:not(.active) {
 			transition:0.04s;
 			background:var(--topmenuButtonHoveringBackground);
+			color:var(--topmenuButtonHoveringText);
 		}
 		&.active {
 			background:var(--topmenuButtonActiveBackground);

@@ -68,6 +68,7 @@
 		"sidemenuBackground": "#191919",
 		"sidemenuButtonBackground": "transparent",
 		"sidemenuButtonHoveringBackground": "#222222",
+		"sidemenuButtonHoveringText": "white",
 		"sidemenuButtonActiveBackground": "rgb(255, 0, 72)",
 		"sidemenuButtonText": "white",
 		"sidemenuButtonActiveText": "white",
