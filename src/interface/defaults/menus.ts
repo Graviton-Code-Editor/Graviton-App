@@ -131,10 +131,10 @@ function createMenus() {
 			},
 			{},
 			{
-				label: 'Copy',
+				label: 'misc.Copy',
 				accelerator: 'CmdOrCtrl+C',
 				selector: 'copy:',
-				action: (() => {
+				action: () => {
 					if (AppPlatform !== 'darwin') {
 						return () => {
 							if (!RunningConfig.data.focusedEditor) return
@@ -155,13 +155,13 @@ function createMenus() {
 							}, 10)
 						}
 					}
-				})(),
+				},
 			},
 			{
-				label: 'Paste',
+				label: 'misc.Paste',
 				accelerator: 'CmdOrCtrl+V',
 				selector: 'paste:',
-				action: (() => {
+				action: () => {
 					if (AppPlatform !== 'darwin') {
 						return () => {
 							if (!RunningConfig.data.focusedEditor) return
@@ -186,7 +186,7 @@ function createMenus() {
 							}, 10)
 						}
 					}
-				})(),
+				},
 			},
 			{},
 			{
