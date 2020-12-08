@@ -78,6 +78,7 @@
 		"sidemenuSectionBackground": "rgba(0,0,0,0.2)",
 		"topmenuButtonBackground": "transparent",
 		"topmenuButtonHoveringBackground": "#191919",
+		"topmenuButtonHoveringText": "white",
 		"topmenuButtonActiveBackground": "rgb(255, 0, 72)",
 		"topmenuButtonText": "white",
 		"topmenuButtonActiveText": "white",
