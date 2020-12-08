@@ -38,10 +38,10 @@ body {
 		transition: 0.1s;
 		width: 10px;
 		height: 10px;
-		background: red;
+		background: transparent;
 	}
 	* ::-webkit-scrollbar-track {
-		background: green;
+		background: transparent;
 	}
 	* ::-webkit-scrollbar-thumb {
 		border-radius: 0.2rem;

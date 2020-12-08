@@ -19,9 +19,19 @@ const styleWrapper = style`
 		&[os="win32"], &[browser="true"]{
 			& #sidebar{
 				border-top-right-radius:  8px;
+				border-top:1px solid var(--panelBorder);
 			}
 			& #mainpanel{
 				border-top-left-radius: 8px;
+				border-top:1px solid var(--panelBorder);
+				border-left:1px solid var(--panelBorder);
+				& #panels_stack > div:nth-child(1){
+					border-top-left-radius:8px;
+					border-left:transparent;
+				}
+				&  .tabsbar > div:nth-last-child(1){
+					border-top-right-radius:5px;
+				}
 			}
 		}
 		&[browser="true"]{
@@ -50,7 +60,6 @@ const styleWrapper = style`
 			float: left;
 			left: 0;
 			border-right:1px solid var(--panelBorder);
-			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
 			&::-webkit-scrollbar {
 				width: 4px !important;
@@ -76,7 +85,6 @@ const styleWrapper = style`
 			width:300px;
 			display: flex;
 			flex:1;
-			border-top:1px solid var(--panelBorder);
 			background:var(--mainpanelBackground);
 			&[blocked="true"]{
 				border-top-left-radius: 0px;
@@ -90,16 +98,6 @@ const styleWrapper = style`
 				height:  100%;
 				max-height: 100%;
 				flex-direction:columns;
-				& > div:nth-child(1) {
-					border-top-left-radius:8px;
-					border-left:transparent;
-				}
-			}
-		}
-		#mainpanel {
-			border-left:1px solid var(--panelBorder);
-			&  .tabsbar > div:nth-last-child(1){
-				border-top-right-radius:5px;
 			}
 		}
 		#windows{
