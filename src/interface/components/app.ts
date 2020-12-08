@@ -50,7 +50,6 @@ const styleWrapper = style`
 			float: left;
 			left: 0;
 			border-right:1px solid var(--panelBorder);
-			border-top-right-radius:  8px;
 			border-top:1px solid var(--panelBorder);
 			background:var(--sidebarBackground);
 			&::-webkit-scrollbar {
