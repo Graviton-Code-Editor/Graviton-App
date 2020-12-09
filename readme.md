@@ -121,12 +121,12 @@ Copyright (c) Marc Espín Sanz
 <a href="https://github.com/Saul-BT"><img src="https://avatars2.githubusercontent.com/u/25767185?v=4" title="Saul-BT" width="80" height="80"></a>
 <a href="https://github.com/coder26-cmd"><img src="https://avatars1.githubusercontent.com/u/59140695?v=4" title="coder26-cmd" width="80" height="80"></a>
 <a href="https://github.com/liberodark"><img src="https://avatars1.githubusercontent.com/u/4238928?v=4" title="liberodark" width="80" height="80"></a>
+<a href="https://github.com/lzh370"><img src="https://avatars3.githubusercontent.com/u/8326663?v=4" title="lzh370" width="80" height="80"></a>
 <a href="https://github.com/Pilavcioglu"><img src="https://avatars1.githubusercontent.com/u/36800357?v=4" title="Pilavcioglu" width="80" height="80"></a>
 <a href="https://github.com/RatsWar"><img src="https://avatars1.githubusercontent.com/u/36457467?v=4" title="RatsWar" width="80" height="80"></a>
 <a href="https://github.com/chclxds"><img src="https://avatars0.githubusercontent.com/u/16403437?v=4" title="chclxds" width="80" height="80"></a>
 <a href="https://github.com/Tewort"><img src="https://avatars3.githubusercontent.com/u/32545979?v=4" title="Tewort" width="80" height="80"></a>
 <a href="https://github.com/UMR1352"><img src="https://avatars3.githubusercontent.com/u/31142849?v=4" title="UMR1352" width="80" height="80"></a>
 <a href="https://github.com/JANUS-IANVS"><img src="https://avatars3.githubusercontent.com/u/67259928?v=4" title="JANUS-IANVS" width="80" height="80"></a>
-<a href="https://github.com/kosiacek"><img src="https://avatars3.githubusercontent.com/u/34751458?v=4" title="kosiacek" width="80" height="80"></a>
 
 [//]: contributor-faces
