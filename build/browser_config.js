@@ -29,6 +29,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: 'Graviton Editor',
 			filename: path.resolve(process.cwd(), 'dist_browser', 'index.html'),
+			hash: true,
 			templateContent: `
 					<html>
 						<head>
