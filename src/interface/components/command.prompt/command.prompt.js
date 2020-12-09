@@ -14,7 +14,7 @@ const styleWrapper = style`
 	}
 	& input{
 		background:var(--commandPromptInputBackground);
-		color:var(--sidemenuSearcherText);
+		color:var(--commandPromptInputText);
 		border: none;
 		padding:8px;
 		margin:0 auto;
