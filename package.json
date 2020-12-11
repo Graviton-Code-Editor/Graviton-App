@@ -41,8 +41,6 @@
 		"build": "npm run script:build && npm run build:webpack  && npm run build:electron",
 		"build:outpacked": "npm run script:build && webpack  && npm run build:electron:outpacked",
 		"build:tasks": "cross-env GRAVITON_PLATFORM=all gulp",
-		"build:tasks:electron": "cross-env GRAVITON_PLATFORM=electron gulp",
-		"build:tasks:browser": "cross-env GRAVITON_PLATFORM=browser gulp",
 		"build:webpack": "webpack --mode=production",
 		"build:webpack:test": "webpack --mode=production --env NODE_ENV=test",
 		"build:webpack:main": "webpack --mode=development --config-name preload && webpack --mode=development --config-name main",

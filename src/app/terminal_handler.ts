@@ -1,6 +1,6 @@
-const nodePty = require('node-pty')
+import * as nodePty from 'node-pty'
 import { ipcMain } from 'electron'
-
+console.log(nodePty)
 const nodePtyProcesses = {}
 
 export default window => {

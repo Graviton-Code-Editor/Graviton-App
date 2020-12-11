@@ -7,7 +7,6 @@ const { Bundler } = require('@gveditor/sdk')
 const { spawn, exec } = require('child_process')
 const { ncp } = require('ncp')
 const download = require('download-git-repo')
-const TargetPlatform = process.env.GRAVITON_PLATFORM
 
 const pluginsSourceFolder = path.resolve(__dirname, 'plugins', 'dynamic')
 const pluginsDistFolder = path.resolve(__dirname, 'pluginsDist')
@@ -174,10 +173,4 @@ async function copyRemoteDist() {
 const electronTasks = [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons]
 const browserTasks = [createBrowserPluginsDist, cloneRemotePlugin, installRemoteDeps, buildRemote, copyRemoteDist]
 
-if (TargetPlatform === 'electron') {
-	exports.default = series(...electronTasks)
-} else if (TargetPlatform === 'browser') {
-	exports.default = series(...browserTasks)
-} else if (TargetPlatform === 'all') {
-	exports.default = series(...electronTasks, ...browserTasks)
-}
+exports.default = series(...[electronTasks, browserTasks])
