@@ -92,21 +92,76 @@ export default class remoteServer {
 	/*
 	 * Write a content to a file
 	 *
+	 * @param path - The file's path
+	 *
+	 * @param content - The file's new content
 	 * @beta
 	 */
-	static writeFile() {}
+	static writeFile(path: string, content: string) {
+		return new Promise(res => {
+			ConnectionInstance.send({
+				type: 'writeFile',
+				data: {
+					path,
+					content,
+				},
+			})
+
+			const cancel = ConnectionInstance.on('returnedWriteFile', data => {
+				if (data.path !== path) return
+				res(data.error)
+				cancel()
+			})
+		})
+	}
 	/*
 	 * Rename a item
 	 *
-	 * @beta
-	 */
-	static renameDir() {}
-	/*
-	 * Create a folder
+	 * @param path - The file's path
+	 * @param newPath - The file's new path
 	 *
 	 * @beta
 	 */
-	static mkdir() {}
+	static renameDir(path: string, newPath: string) {
+		return new Promise(res => {
+			ConnectionInstance.send({
+				type: 'renameDir',
+				data: {
+					path,
+					newPath,
+				},
+			})
+
+			const cancel = ConnectionInstance.on('returnedRenameDir', data => {
+				if (data.path !== path) return
+				res(data.error)
+				cancel()
+			})
+		})
+	}
+	/*
+	 * Create a folder
+	 *
+	 * @param path - The file's path
+	 *
+	 * @beta
+	 */
+	static mkdir(path: string) {
+		return new Promise(res => {
+			ConnectionInstance.send({
+				type: 'mkdir',
+				data: {
+					path,
+				},
+			})
+
+			const cancel = ConnectionInstance.on('returnedMkdir', data => {
+				if (data.path !== path) return
+				res(data.error)
+				cancel()
+			})
+		})
+	}
 	/*
 	 * Check if a file exists or not
 	 *
@@ -164,6 +219,9 @@ export default class remoteServer {
 }
 
 window.addEventListener('load', () => {
+	/*
+	 * Only make the remote provider available in browser mode
+	 */
 	if (RunningConfig.data.isBrowser) {
 		if (StaticConfig.data.remoteServerIP && RunningConfig.data.explorerProvider.providerName === 'Remote Server') {
 			ConnectionInstance = new Connection()

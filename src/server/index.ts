@@ -90,6 +90,36 @@ app.ws('/api/ws', ws => {
 					})
 				})
 				break
+			case 'renameDir':
+				fs.rename(messageObject.data.path, messageObject.data.newPath, error => {
+					sendMessage({
+						type: 'returnedRenameDir',
+						data: {
+							error,
+						},
+					})
+				})
+				break
+			case 'writeFile':
+				fs.writeFile(messageObject.data.path, messageObject.data.content, error => {
+					sendMessage({
+						type: 'returnedWriteFile',
+						data: {
+							error,
+						},
+					})
+				})
+				break
+			case 'mkdir':
+				fs.mkdir(messageObject.data.path, error => {
+					sendMessage({
+						type: 'returnedMkdir',
+						data: {
+							error,
+						},
+					})
+				})
+				break
 			case 'exists':
 				fs.stat(messageObject.data.path, err => {
 					sendMessage({
