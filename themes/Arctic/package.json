@@ -165,7 +165,8 @@
 			"Button": {
 				"Background": "transparent",
 				"Hovering": {
-					"Background": "rgb(212,212,212)"
+					"Background": "rgb(212,212,212)",
+					"Text": "black"
 				},
 				"Active": {
 					"Background": "#0066FF",

@@ -10,7 +10,7 @@ window.addEventListener('contextmenu', e => e.preventDefault())
 
 // Disable Brwoser's Ctrl+P shortcut
 window.addEventListener('keydown', e => {
-	if (e.ctrlKey && ['p'].includes(e.key)) {
+	if (e.ctrlKey && ['p', 's'].includes(e.key)) {
 		e.preventDefault()
 	}
 })
