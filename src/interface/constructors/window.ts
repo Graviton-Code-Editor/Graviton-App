@@ -25,7 +25,7 @@ class Window {
 	 *
 	 */
 	constructor({ title = '', component: externalComponent, minHeight = 'auto', minWidth = 'auto', height = '80%', width = '85%', id = '' }: WindowOptions) {
-		if (document.getElementById(id)) {
+		if (id !== '' && document.getElementById(id)) {
 			return
 		}
 		const closeWindowExternally = this.close.bind(this)
