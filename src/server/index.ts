@@ -95,6 +95,7 @@ app.ws('/api/ws', ws => {
 					sendMessage({
 						type: 'returnedRenameDir',
 						data: {
+							path: messageObject.data.path,
 							error,
 						},
 					})
@@ -105,6 +106,7 @@ app.ws('/api/ws', ws => {
 					sendMessage({
 						type: 'returnedWriteFile',
 						data: {
+							path: messageObject.data.path,
 							error,
 						},
 					})
@@ -115,6 +117,7 @@ app.ws('/api/ws', ws => {
 					sendMessage({
 						type: 'returnedMkdir',
 						data: {
+							path: messageObject.data.path,
 							error,
 						},
 					})
