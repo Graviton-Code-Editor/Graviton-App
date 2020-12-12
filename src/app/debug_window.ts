@@ -5,10 +5,18 @@ import * as path from 'path'
 import WindowHandler from './window_handler'
 import MenusHandler from './menus_handler'
 
-let debugWindows = []
-ipcMain.handle('create-debug-window', async (e, sessionID) => {
+const debugWindows = []
+
+interface CustomBrowserWindow extends BrowserWindow {
+	sessionID?: String
+}
+
+/*
+ * Creates a debug window with an unique ID
+ */
+ipcMain.handle('create-debug-window', async (_, sessionID) => {
 	return new Promise(res => {
-		const window: any = new BrowserWindow({
+		const window: CustomBrowserWindow = new BrowserWindow({
 			webPreferences: {
 				nativeWindowOpen: true,
 				nodeIntegrationInWorker: true,
@@ -48,7 +56,10 @@ ipcMain.handle('create-debug-window', async (e, sessionID) => {
 	})
 })
 
-ipcMain.handle('close-debug-window', async (e, sessionID) => {
+/*
+ * Closes a debug window by it's ID
+ */
+ipcMain.handle('close-debug-window', async (_, sessionID) => {
 	debugWindows.find(window => {
 		if (window.sessionID === sessionID) {
 			window.close()
@@ -56,7 +67,10 @@ ipcMain.handle('close-debug-window', async (e, sessionID) => {
 	})
 })
 
-ipcMain.handle('reload-debug-window', async (e, sessionID) => {
+/*
+ * Reloads a debug window by it's ID
+ */
+ipcMain.handle('reload-debug-window', async (_, sessionID) => {
 	debugWindows.find(window => {
 		if (window.sessionID === sessionID) {
 			window.reload()

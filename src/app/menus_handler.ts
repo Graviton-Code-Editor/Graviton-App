@@ -9,42 +9,56 @@ export default window => {
 	if (!isWindows) {
 		NativeMenuBar = new Menu()
 	}
-
-	ipcMain.on('newMenuItem', (e, props) => {
-		const obj = parse(props)
+	/*
+	 * Append a menu to the menus bar
+	 */
+	ipcMain.on('newMenuItem', (_, props) => {
+		const obj = transformActions(props)
 		NativeMenuBar.append(new MenuItem(obj))
 		Menu.setApplicationMenu(NativeMenuBar)
 	})
 
-	ipcMain.on('checkMenuItem', (e, { id, checked }) => {
+	/*
+	 * Check a menu item by it's ID
+	 */
+	ipcMain.on('checkMenuItem', (_, { id, checked }) => {
 		const item = NativeMenuBar.getMenuItemById(id)
 		item.checked = checked
 	})
 
-	ipcMain.on('destroy-menus', (e, props) => {
+	/*
+	 * Destroy the current menus bar
+	 */
+	ipcMain.on('destroy-menus', (_, props) => {
 		if (NativeMenuBar) NativeMenuBar.clear()
 	})
-
-	function parse(obj) {
+	/*
+	 * Transfrom Graviton's `action` event to Electron's `click`
+	 */
+	function transformActions(obj) {
 		obj.click = () => {
 			window.webContents.send('menuItemClicked', obj.id)
 		}
 		if (obj.submenu) {
 			obj.submenu.map(menu => {
-				parse(menu)
+				transformActions(menu)
 			})
 		}
 		return obj
 	}
 
-	ipcMain.on('newContextMenu', (e, scheme) => {
+	/*
+	 * Display a native context menu
+	 */
+	ipcMain.on('newContextMenu', (_, scheme) => {
 		const NativeContextMenu = new Menu()
+
 		scheme.list.map(option => {
-			const item = new MenuItem(parse(option))
+			const item = new MenuItem(transformActions(option))
 			NativeContextMenu.append(item)
 		})
 
-		function closeMenu(e, scheme) {
+		function closeMenu(_, scheme) {
 			NativeContextMenu.closePopup()
 
 			ipcMain.off('closeContextMenu', closeMenu)
