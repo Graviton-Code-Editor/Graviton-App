@@ -20,10 +20,10 @@ You can download it for **Windows**, **MacOS**, and **GNU/Linux** from [Releases
 
 ![example screenshot](example.png)
 
-**NOTE:**
-Changes on this source may not be released as an official build yet.
-
 ## ✨ Features
+
+**NOTE:**
+Some of these features may not be released as an official build yet, but they are already implemented in the source code.
 
 - 🧬 Git integration
 - 💻 Integrated Terminal
