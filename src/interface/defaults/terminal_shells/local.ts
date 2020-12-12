@@ -21,9 +21,16 @@ export function createProcess(bin, cwd = getShellCwd()) {
 }
 
 RunningConfig.once('appLoaded', () => {
-	if (RunningConfig.data.isBrowser) return
+	if (RunningConfig.data.isBrowser) {
+		/*
+		 * Prevent to load native terminals in the browser mode
+		 */
+		return
+	}
 	if (process.platform === 'win32') {
-		// CMD Client for Terminal
+		/*
+		 * CMD Client
+		 */
 		RunningConfig.emit('registerTerminalShell', {
 			name: 'CMD',
 			onCreated(state) {
@@ -45,6 +52,9 @@ RunningConfig.once('appLoaded', () => {
 		const WSLPath = 'C:/Windows/System32/wsl.exe'
 		fs.lstat(WSLPath)
 			.then(() => {
+				/*
+				 * Windows Subsystem for Linux (WSL)
+				 */
 				RunningConfig.emit('registerTerminalShell', {
 					name: 'WSL',
 					onCreated(state) {
@@ -58,8 +68,30 @@ RunningConfig.once('appLoaded', () => {
 			.catch(() => {
 				// WSL is not enabled
 			})
+
+		const GitBashPath = 'C:/Program Files/Git/bin/bash.exe'
+		fs.lstat(GitBashPath)
+			.then(() => {
+				/*
+				 * Git Bashs for Windows
+				 */
+				RunningConfig.emit('registerTerminalShell', {
+					name: 'Git Bash',
+					onCreated(state) {
+						createLocalShell(state, GitBashPath)
+						return {
+							accessories: RunningConfig.data.localTerminalAccessories,
+						}
+					},
+				})
+			})
+			.catch(() => {
+				// WSL is not enabled
+			})
 	} else {
-		// Linux's configured terminal ($SHELL) Client for Terminal
+		/*
+		 * Linux's configured terminal ($SHELL) Client for Terminal
+		 */
 		RunningConfig.emit('registerTerminalShell', {
 			name: process.env['SHELL'],
 			onCreated(state) {
