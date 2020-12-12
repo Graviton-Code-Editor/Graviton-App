@@ -41,8 +41,17 @@ RunningConfig.on('aTabHasBeenCreated', ({ tabElement, client, instance, isEditor
 		refreshCursor()
 	})
 
-	StaticConfig.keyChanged('editorFontSize', () => {
+	const EditorFontSizeChangedListener = StaticConfig.keyChanged('editorFontSize', () => {
 		refreshCursor(true)
+	})
+
+	const SidePanelResizedListener = RunningConfig.on('sidePanelHasBeenResized', () => {
+		refreshCursor(true)
+	})
+
+	tabElement.state.once('destroyed', () => {
+		EditorFontSizeChangedListener.cancel()
+		SidePanelResizedListener.cancel()
 	})
 
 	function refreshCursor(fast = false) {
