@@ -319,7 +319,7 @@ const CodemirrorClient = new EditorClient(
 				indentUnit: StaticConfig.data.editorTabSize,
 				undoDepth: 500,
 				miniMap: false,
-				indentWithTabs: StaticConfig.data.editorIndentation == 'tab',
+				indentWithTabs: language === 'yaml' ? false : StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
 				extraKeys: {
 					Tab: 'emmetExpandAbbreviation',
