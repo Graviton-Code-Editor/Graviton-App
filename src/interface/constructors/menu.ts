@@ -38,7 +38,7 @@ class Menu {
 		this.MenuButton = button
 		this.MenuList = list.filter(Boolean)
 
-		if ((AppPlatform === 'win32' || RunningConfig.data.isBrowser) && !fromEvent) {
+		if ((AppPlatform === 'win32' || RunningConfig.data.isBrowser || window.process?.env?.MENUBAR == 'builtin') && !fromEvent) {
 			/*
 			 * Display Graviton's DOM-based menus bar only in Windows
 			 */

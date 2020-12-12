@@ -2,6 +2,12 @@ const { remote } = require('electron')
 const { RunningConfig, StaticConfig, Dialog, Window, puffin, Notification } = window.test
 const { expect } = require('chai')
 
+console.log(`
+  Running with: \n
+   NODE_ENV -> ${process.env.NODE_ENV}\n
+   MENUBAR -> ${process.env.MENUBAR}\n
+`)
+
 describe('Main process', function () {
 	it('Window opens', function () {
 		return remote.getCurrentWindow() !== undefined ? true : false
