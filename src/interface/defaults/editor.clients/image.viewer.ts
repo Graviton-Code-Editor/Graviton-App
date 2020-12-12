@@ -36,19 +36,33 @@ const ImageViewerClient = new EditorClient(
 			switch (extension) {
 				case 'ico':
 					return {
+						fancy: 'ICO',
+						mode: 'ico',
 						name: 'ico',
 					}
 				case 'svg':
 					return {
+						fancy: 'SVG',
+						mode: 'svg',
 						name: 'svg',
 					}
 				case 'png':
 					return {
+						fancy: 'PNG',
+						mode: 'png',
 						name: 'png',
 					}
 				case 'jpg':
 					return {
+						fancy: 'JPG',
+						mode: 'jpg',
 						name: 'jpg',
+					}
+				case 'gif':
+					return {
+						fancy: 'GIF',
+						mode: 'gif',
+						name: 'gif',
 					}
 				default:
 					return {
