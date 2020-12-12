@@ -180,7 +180,8 @@
 			"BuildDate": "Build date",
 			"By": "by",
 			"Understood": "Understood",
-			"RemoveFromWorkspace": "Remove from workspace"
+			"RemoveFromWorkspace": "Remove from workspace",
+			"JoinTheDiscussion": "Join the Discussion"
 		},
 		"notifications": {
 			"appLanguageChanged": {

@@ -4,6 +4,8 @@ import SideMenu from '../../components/window/side_menu'
 import Window from '../../constructors/window'
 import { css as style } from '@emotion/css'
 import { WindowInstance } from 'Types/window'
+import Core from 'Core'
+const { openExternal } = Core
 
 const styleWrapper = style`
 	width: 100%;
@@ -23,6 +25,11 @@ const styleWrapper = style`
 `
 
 export default function BrowserWelcome(): WindowInstance {
+	const joinTheDiscussion = () => {
+		openExternal('https://github.com/Graviton-Code-Editor/Graviton-App/discussions/221')
+		BrowserWelcomeWindow.close()
+	}
+
 	const BrowserWelcomePage = element({
 		components: {
 			H2: Titles.h2,
@@ -34,6 +41,7 @@ export default function BrowserWelcome(): WindowInstance {
 			<div>
 				<H2 lang-string="windows.BrowserWelcome.WelcomeTitle"/>
 				<Text lang-string="windows.BrowserWelcome.WelcomeMessage"/>
+				<Button lang-string="misc.JoinTheDiscussion" :click="${joinTheDiscussion}"/>
 				<Button lang-string="misc.Understood" :click="${() => BrowserWelcomeWindow.close()}"/>
 			</div>
 		</div>
