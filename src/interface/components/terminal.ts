@@ -103,7 +103,7 @@ const styled = style`
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		height: calc(100% - 40px);
+		height: calc(100% - 100px);
 	}
 	& #terms_stack{
 		padding: 10px;
