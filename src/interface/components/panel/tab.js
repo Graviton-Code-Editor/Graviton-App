@@ -3,12 +3,12 @@ import { css as style } from '@emotion/css'
 
 const styleWrapper = style`
 	&{
-		height:40px;
+		height:37px;
 		background:var(--tabBackground);
 		color:var(--tabText);
-		min-width: 140px;
-		width: 140px;
-		max-width: 140px;
+		min-width: 125px;
+		width: 125px;
+		max-width: 125px;
 		display:flex;
 		justify-content:flex-start;
 		align-items:center;

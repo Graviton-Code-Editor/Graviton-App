@@ -13,8 +13,8 @@ const styleWrapper = style`
 		border-left:1px solid var(--panelBorder);
 	}
 	& .tabsbar{
-		min-height:40px;
-		max-height:40px;
+		min-height:37px;
+		max-height:37px;
 		white-space:nowrap;
 		display:flex;
 		flex:1;
