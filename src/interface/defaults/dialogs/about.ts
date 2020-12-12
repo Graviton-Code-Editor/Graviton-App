@@ -26,6 +26,9 @@ const styleWrapper = style`
 		align-items: center;
 		flex-direction: column;
 		height: 100%;
+		& img {
+			margin-bottom: 20px;
+		}
 	}
 	& > div:nth-child(2) > div {
 		overflow: auto;
