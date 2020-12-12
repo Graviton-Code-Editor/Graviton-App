@@ -10,6 +10,7 @@ import StaticConfig from 'StaticConfig'
 import AddTermIcon from './icons/add_term'
 import ButtonIcon from './button_icon'
 import CrossIcon from './icons/cross'
+import AppPlatform from 'AppPlatform'
 
 import '../../../node_modules/xterm/css/xterm.css'
 
@@ -148,7 +149,7 @@ const getConfig = () => {
 		cursorBlink: true,
 		fontSize: 14,
 		lineHeight: 1.4,
-		windowsMode: window.process?.platform === 'win32',
+		windowsMode: AppPlatform === 'win32',
 	}
 }
 
