@@ -30,6 +30,7 @@ const styleWrapper = style`
 	& img{
 		height: 20px;
 		margin-right: 10px;
+		margin-bottom: 2px;
 	}
 	& p{
 		margin:0;
