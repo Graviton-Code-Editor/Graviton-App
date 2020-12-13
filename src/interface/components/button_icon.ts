@@ -9,8 +9,9 @@ const styleWrapper = style`
 		background: transparent;
 		cursor: pointer;
 		& svg {
-			height: 12px;
-			width: 12px;
+			max-height: 20px;
+			max-width: 20px;
+			
 		}
 	}
 `
