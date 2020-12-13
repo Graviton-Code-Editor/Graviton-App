@@ -40,10 +40,17 @@ class Editor implements EditorOptions {
 		this.filePath = directory
 		this.options = options
 
-		if (value.split('\n').length > LargeFileLinesLength) {
-			this.createLongFileClient({
+		if (language === 'exe') {
+			this.createCustomClient({
 				value,
 				theme,
+				error: 'This is a binary file.',
+			})
+		} else if (value.split('\n').length > LargeFileLinesLength) {
+			this.createCustomClient({
+				value,
+				theme,
+				error: 'This file is too large.',
 			})
 		} else {
 			this.createEditorClient({
@@ -53,7 +60,10 @@ class Editor implements EditorOptions {
 		}
 	}
 
-	private createLongFileClient({ value, theme }) {
+	/*
+	 * Useful to show messages before opening files
+	 */
+	private createCustomClient({ value, theme, error }) {
 		const self = this
 
 		function accept() {
@@ -81,7 +91,7 @@ class Editor implements EditorOptions {
 		})`
 			<div class="${styleWrapper}">
 				<div>
-					<Text>This file is too large.<Text>
+					<Text>${error}<Text>
 					<Button :click="${accept}" lang-string="misc.OpenAnyway"/>
 				</div>
 			</div>
