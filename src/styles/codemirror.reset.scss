@@ -8,23 +8,6 @@
 	background-color: #d23131;
 }
 
-@keyframes close1 {
-	from {
-		transform: rotate(90deg);
-	}
-	to {
-		transform: rotate(0deg);
-	}
-}
-@keyframes open1 {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(90deg);
-	}
-}
-
 .CodeMirror-gutter-elt > div {
 	&.CodeMirror-foldgutter-open {
 		transform: rotate(90deg);
@@ -95,16 +78,6 @@
 li.CodeMirror-hint-active {
 	background: var(--accentColor);
 	color: var(--contextmenuButtonHoveringText);
-}
-
-@keyframes blink {
-	0% {
-	}
-	50% {
-		background-color: transparent;
-	}
-	100% {
-	}
 }
 
 @keyframes show_down {
@@ -196,12 +169,33 @@ li.CodeMirror-hint-active {
 .CodeMirror-guttermarker-subtle {
 	color: #999;
 }
+
+@keyframes blink {
+	25% {
+		opacity: 0;
+	}
+	45% {
+		opacity: 1;
+	}
+	70% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.CodeMirror-cursors {
+	visibility: visible !important;
+}
+
 .CodeMirror-cursor {
 	border-left: 1px solid black;
 	border-right: none;
 	width: 0;
 	position: absolute;
 	pointer-events: none;
+	animation: blink 1.6s infinite;
 }
 .cm-fat-cursor {
 	.CodeMirror-cursor {
@@ -213,20 +207,7 @@ li.CodeMirror-hint-active {
 		z-index: 1;
 	}
 }
-.cm-fat-cursor-mark {
-	background-color: rgba(20, 255, 20, 0.5);
-	-webkit-animation: blink 1.06s steps(1) infinite;
-	-moz-animation: blink 1.06s steps(1) infinite;
-	animation: blink 1.06s steps(1) infinite;
-}
-.cm-animate-fat-cursor {
-	width: auto;
-	border: 0;
-	-webkit-animation: blink 1.06s steps(1) infinite;
-	-moz-animation: blink 1.06s steps(1) infinite;
-	animation: blink 1.06s steps(1) infinite;
-	background-color: #7e7;
-}
+
 .cm-tab {
 	display: inline-block;
 	text-decoration: inherit;
