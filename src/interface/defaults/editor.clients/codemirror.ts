@@ -341,7 +341,7 @@ const CodemirrorClient = new EditorClient(
 					previewOpenTag: false,
 					config: {},
 				},
-				foldGutter: true,
+				foldGutter: StaticConfig.data.editorFold,
 				foldOptions: {
 					widget: (from, to) => {
 						return ' ··· '

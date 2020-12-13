@@ -90,6 +90,7 @@ const defaultConfig = {
 		experimentalEditorLSP: false,
 		experimentalSourceTracker: false,
 		appCheckWorkspaceExistsWhenOpeningFolders: true,
+		editorFold: true,
 	},
 } //test
 if (isMac) {
