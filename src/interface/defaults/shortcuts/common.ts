@@ -8,7 +8,6 @@ const {
 
 //Command: Save current opened file if there is any (default: Ctrl+S)
 RunningConfig.on('command.saveCurrentFile', () => {
-	console.log(RunningConfig.data.focusedTab)
 	RunningConfig.data.focusedTab && RunningConfig.data.focusedTab.state.emit('savedMe')
 })
 
