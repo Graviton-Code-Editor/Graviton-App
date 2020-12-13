@@ -8,6 +8,11 @@
 	background-color: #d23131;
 }
 
+.CodeMirror-foldmarker {
+	color: white;
+	text-shadow: 0px 1px 3px rgba(150, 150, 150, 0.17);
+}
+
 .CodeMirror-gutter-elt > div {
 	&.CodeMirror-foldgutter-open {
 		transform: rotate(90deg);
