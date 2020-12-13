@@ -86,6 +86,7 @@ class Editor implements EditorOptions {
 					this.client.do('scrollToCursor', {
 						instance: this.instance,
 					})
+					this.tabState.emit('savedMe')
 				}
 			}
 		})
