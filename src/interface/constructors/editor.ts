@@ -5,7 +5,11 @@ import CursorPositionStatusBarItem from '../defaults/status.bar.items/cursor.pos
 import Notification from './notification'
 import ContextMenu from './contextmenu'
 import path from 'path'
-import { element } from '@mkenzo_8/puffin'
+import { element, render, lang } from '@mkenzo_8/puffin'
+import { Text, Button } from '@mkenzo_8/puffin-drac'
+import { css as style } from '@emotion/css'
+import { LanguageState } from 'LanguageConfig'
+import { LargeFileLinesLength } from 'Constants'
 import Core from 'Core'
 const {
 	electron: { clipboard },
@@ -36,15 +40,67 @@ class Editor implements EditorOptions {
 		this.filePath = directory
 		this.options = options
 
-		bodyElement.setAttribute('client', this.client.name)
+		if (value.split('\n').length > LargeFileLinesLength) {
+			this.createLongFileClient({
+				value,
+				theme,
+			})
+		} else {
+			this.createEditorClient({
+				value,
+				theme,
+			})
+		}
+	}
+
+	private createLongFileClient({ value, theme }) {
+		const self = this
+
+		function accept() {
+			containerNode.remove()
+			self.createEditorClient({
+				value,
+				theme,
+			})
+		}
+
+		const styleWrapper = style`
+			display:flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			text-align: center;
+		`
+
+		const container = element({
+			components: {
+				Button,
+				Text,
+			},
+			addons: [lang(LanguageState)],
+		})`
+			<div class="${styleWrapper}">
+				<div>
+					<Text>This file is too large.<Text>
+					<Button :click="${accept}" lang-string="misc.OpenAnyway"/>
+				</div>
+			</div>
+		`
+
+		this.tabState.emit('focusedMe')
+
+		const containerNode = render(container, this.bodyElement)
+	}
+	private createEditorClient({ value, theme }) {
+		this.bodyElement.setAttribute('client', this.client.name)
 		this.instance = this.client.do('create', {
-			element: bodyElement,
-			language: this.client.do('getLangFromExt', { extension: language }),
-			value,
-			theme,
-			directory,
+			element: this.bodyElement,
+			language: this.client.do('getLangFromExt', { extension: this.language }),
+			value: value,
+			theme: theme,
+			directory: this.filePath,
 			CtrlPlusScroll: this.handleCtrlPlusScroll.bind(this),
-			options,
+			options: this.options,
 		}).instance
 
 		this.updateCursorDisplayer()

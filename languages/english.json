@@ -181,7 +181,8 @@
 			"By": "by",
 			"Understood": "Understood",
 			"RemoveFromWorkspace": "Remove from workspace",
-			"JoinTheDiscussion": "Join the Discussion"
+			"JoinTheDiscussion": "Join the Discussion",
+			"OpenAnyway": "Open anyway"
 		},
 		"notifications": {
 			"appLanguageChanged": {

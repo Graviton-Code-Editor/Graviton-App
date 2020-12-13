@@ -34,3 +34,8 @@ export const filesWatcherExcludedDirs = ['.git', 'dist', 'node_modules', '.cache
  */
 export const NotificationsLifeTime = 6000
 export const NotificationsMaxCount = 3
+
+/*
+ * Length of lines considered large
+ */
+export const LargeFileLinesLength = 15000
