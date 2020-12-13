@@ -8,6 +8,42 @@
 	background-color: #d23131;
 }
 
+@keyframes close1 {
+	from {
+		transform: rotate(90deg);
+	}
+	to {
+		transform: rotate(0deg);
+	}
+}
+@keyframes open1 {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(90deg);
+	}
+}
+
+.CodeMirror-gutter-elt > div {
+	&.CodeMirror-foldgutter-open {
+		transform: rotate(90deg);
+	}
+	&.CodeMirror-foldgutter-folded {
+		transform: rotate(0deg);
+	}
+	content: none;
+	background: url('../../assets/fold.svg') no-repeat;
+	height: 10px;
+	width: 10px;
+	&:after {
+		content: none;
+	}
+	&:hover {
+		opacity: 0.7;
+	}
+}
+
 .CodeMirror-merge {
 	max-width: 100%;
 	display: flex;
