@@ -48,6 +48,11 @@
 			"icon": "./icons/folder.closed.node_modules.svg",
 			"openedIcon": "./icons/folder.opened.node_modules.svg",
 			"type": "foldername"
+		},
+		".git": {
+			"icon": "./icons/folder.closed.git.svg",
+			"openedIcon": "./icons/folder.opened.git.svg",
+			"type": "foldername"
 		}
 	}
 }
