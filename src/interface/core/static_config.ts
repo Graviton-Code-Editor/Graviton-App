@@ -103,7 +103,7 @@ function setFontFamily(value) {
 	document.body.style.setProperty('--codeFont', value)
 }
 
-//if (!isBrowser) webFrame.setZoomFactor(StaticConfig.data.appZoom)
+if (!isBrowser) webFrame.setZoomFactor(StaticConfig.data.appZoom)
 
 setFontFamily(StaticConfig.data.editorFontFamily)
 
