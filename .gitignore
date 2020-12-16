@@ -19,3 +19,4 @@ dist_browser
 dist_server
 remote-plugin-temp
 pluginsBrowserDist
+dist_docs

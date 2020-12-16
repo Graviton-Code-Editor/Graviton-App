@@ -19,3 +19,7 @@ export interface NotificationDetails {
 	element: PuffinElement
 	instance: any
 }
+
+export interface NotificationInstance {
+	remote: () => void
+}

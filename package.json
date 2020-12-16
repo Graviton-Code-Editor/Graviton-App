@@ -34,6 +34,7 @@
 		}
 	],
 	"scripts": {
+		"doc": "typedoc --out dist_docs src/interface/types/doc.ts",
 		"readme:contributors": "contributor-faces .",
 		"start": "npm run script:build && npm run build:webpack:main && run-p watch:webpack:renderer watch:electron",
 		"start:experimental:browser": "run-p watch:webpack:browser",
@@ -158,6 +159,7 @@
 		"shebang-loader": "0.0.1",
 		"style-loader": "^1.2.1",
 		"ts-loader": "^8.0.0",
+		"typedoc": "^0.19.2",
 		"typescript": "^3.9.7",
 		"webpack": "^5.10.0",
 		"webpack-cli": "^4.2.0",
