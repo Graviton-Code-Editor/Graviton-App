@@ -11,7 +11,7 @@ export interface DialogOptions {
 	title?: string
 	content?: string
 	buttons: DialogButton[]
-	component?: PuffinComponent
+	component?: () => PuffinComponent
 	height?: string
 	width?: string
 	id?: string

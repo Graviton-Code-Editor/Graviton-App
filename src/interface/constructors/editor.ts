@@ -29,16 +29,18 @@ class Editor implements EditorOptions {
 	public tabState: PuffinState
 	public filePath: string
 	public language: string
+	public fileName: string
 	public options: any
 	constructor({ bodyElement, tabElement, value, language, tabState, theme, directory, options = null }) {
 		this.language = language
-		this.client = this.getEditorClient()
 		this.savedFileContent = value
 		this.tabElement = tabElement
 		this.bodyElement = bodyElement
 		this.tabState = tabState
 		this.filePath = directory
+		this.fileName = path.basename(directory)
 		this.options = options
+		this.client = this.getEditorClient()
 
 		if (language === 'exe') {
 			this.createCustomClient({
@@ -105,7 +107,10 @@ class Editor implements EditorOptions {
 		this.bodyElement.setAttribute('client', this.client.name)
 		this.instance = this.client.do('create', {
 			element: this.bodyElement,
-			language: this.client.do('getLangFromExt', { extension: this.language }),
+			language: this.client.do('getLangFromExt', {
+				extension: this.language,
+				fileName: this.fileName,
+			}),
 			value: value,
 			theme: theme,
 			directory: this.filePath,
@@ -349,6 +354,7 @@ class Editor implements EditorOptions {
 			finalEditorClient = RunningConfig.data.editorsRank.find((Client: EditorClient) => {
 				const { unknown = false } = Client.do('getLangFromExt', {
 					extension: this.language,
+					fileName: this.fileName,
 				})
 				if (!unknown) return Client
 			})

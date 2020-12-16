@@ -65,14 +65,23 @@ const CodemirrorClient = new EditorClient(
 	},
 	{
 		getValue: instance => instance.getValue(),
-		getLangFromExt({ extension }) {
+		getLangFromExt({ extension, fileName }) {
+			switch (fileName) {
+				case '.babelrc':
+					return {
+						fancy: 'json',
+						mode: 'json',
+						name: 'application/json',
+					}
+			}
+
+			/*
+			 * Every case refers to a programming language's file format,
+			 * (example: JavaScript -> js).
+			 * If it's not supported it will go into the default case,
+			 * bellow yo can see the list of supported by this CodeMirror Client.
+			 */
 			switch (extension) {
-				/*
-				Every case refers to a programming language's file format, 
-				(example: JavaScript -> js). 
-				If it's not supported it will go into the default case, 
-				bellow yo can see the list of supported by this CodeMirror Client.
-				*/
 				case 'html':
 					return {
 						fancy: 'html',
