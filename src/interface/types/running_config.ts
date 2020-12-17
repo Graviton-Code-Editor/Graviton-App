@@ -14,54 +14,54 @@ type EventsNames =
 	 * interface: none
 	 */
 	| 'appLoaded'
-	/*
+	/**
 	 * Event fired when a tab is created
 	 * interface: TabEventArgs
 	 */
 	| 'aTabHasBeenCreated'
-	/*
+	/**
 	 * Event fired when a tab is focused
 	 * interface: TabEventArgs
 	 */
 	| 'aTabHasBeenFocused'
-	/*
+	/**
 	 * Event fired when a tab is closed
 	 * interface: TabEventArgs
 	 */
 	| 'aTabHasBeenClosed'
-	/*
+	/**
 	 * Event fired when a file has been created in any of the opened folders
 	 * interface: FileEventsArgs
 	 */
 	| 'aFileHasBeenCreated'
-	/*
+	/**
 	 * Event fired when a file has been changed (it's content got modified) in any of the opened folders
 	 * interface: FileEventsArgs
 	 */
 	| 'aFileHasBeenChanged'
-	/*
+	/**
 	 * Event fired when a folder has been created in any of the opened folders
 	 * interface: FileEventsArgs
 	 */
 	| 'aFolderHasBeenChanged'
-	/*
+	/**
 	 * Event fired when a folder (aka project) is opened
 	 */
 	| 'addFolderToRunningWorkspace'
-	/*
+	/**
 	 * Event fired when a folder (aka project) is no longer opened
 	 */
 	| 'removeFolderFromRunningWorkspace'
-	/*
+	/**
 	 * Event fired when a LSP server is being registered
 	 */
 	| 'registerLanguageServer'
-	/*
+	/**
 	 * Event fired when a Environment (aka Project) Inspector is being registered
 	 * interface: RegisterEnvironmentInspectorArgs
 	 */
 	| 'registerEnvironmentInspector'
-	/*
+	/**
 	 * Event fired when a Editor client is being registered
 	 * Interface: RegisterEditorClientArgs
 	 */

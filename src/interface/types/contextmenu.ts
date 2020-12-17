@@ -12,3 +12,7 @@ export interface ContextMenuOptions {
 	x?: number
 	y?: number
 }
+
+export interface ContextMenuInstance {
+	close: () => void
+}

@@ -21,5 +21,5 @@ export interface NotificationDetails {
 }
 
 export interface NotificationInstance {
-	remote: () => void
+	remove: () => void
 }
