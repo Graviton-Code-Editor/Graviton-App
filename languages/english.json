@@ -146,7 +146,7 @@
 			},
 			"BrowserWelcome": {
 				"WelcomeTitle": "Welcome to Graviton for Browser!",
-				"WelcomeMessage": "Remember this is still very experimental and most things do not work. \n For a better experience download the desktop app."
+				"WelcomeMessage": "Remember this feature is still very experimental and most things do not work. \n For a better experience download the desktop app."
 			}
 		},
 		"misc": {
