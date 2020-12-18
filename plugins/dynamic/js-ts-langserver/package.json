@@ -1,5 +1,5 @@
 {
-	"name": "JS TS Language Server",
+	"name": "js-ts-langserver",
 	"id": "js-ts-langserver",
 	"author": "Marc Espín Sanz",
 	"version": "1.0.0",
