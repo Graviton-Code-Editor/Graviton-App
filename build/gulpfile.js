@@ -8,9 +8,26 @@ const { spawn, exec } = require('child_process')
 const { ncp } = require('ncp')
 const download = require('download-git-repo')
 
-const pluginsSourceFolder = path.resolve(__dirname, 'plugins', 'dynamic')
-const pluginsDistFolder = path.resolve(__dirname, 'pluginsDist')
-const pluginsBrowserDistFolder = path.resolve(__dirname, 'pluginsBrowserDist')
+const pluginsSourceFolder = path.resolve(__dirname, '..', 'plugins', 'dynamic')
+const pluginsDistFolder = path.resolve(__dirname, '..', 'pluginsDist')
+const pluginsBrowserDistFolder = path.resolve(__dirname, '..', 'pluginsBrowserDist')
+const remotePluginTemp = path.resolve(__dirname, '..', 'remote-plugin-temp')
+
+const buildData = {
+	date: new Date().toDateString(),
+}
+
+function createBuildFile(cb) {
+	const BUILD_DIR = path.join(__dirname, '..', 'assets', 'build.json')
+
+	fs.writeFile(BUILD_DIR, JSON.stringify(buildData))
+		.then(() => {
+			cb() // Ok
+		})
+		.catch(err => {
+			console.log(err)
+		})
+}
 
 function updatePluginsDependencies(cb) {
 	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {
@@ -127,7 +144,7 @@ function createBrowserPluginsDist(cb) {
 
 async function cloneRemotePlugin() {
 	return new Promise(res => {
-		download('Graviton-Code-Editor/remote-plugin', path.join(__dirname, 'remote-plugin-temp'), () => {
+		download('Graviton-Code-Editor/remote-plugin', remotePluginTemp, () => {
 			res()
 		})
 	})
@@ -138,7 +155,7 @@ async function installRemoteDeps() {
 		exec(
 			'npm install',
 			{
-				cwd: path.join(__dirname, 'remote-plugin-temp'),
+				cwd: remotePluginTemp,
 			},
 			() => {
 				res()
@@ -152,7 +169,7 @@ async function buildRemote() {
 		exec(
 			'npm run build',
 			{
-				cwd: path.join(__dirname, 'remote-plugin-temp'),
+				cwd: remotePluginTemp,
 			},
 			() => {
 				res()
@@ -163,14 +180,15 @@ async function buildRemote() {
 
 async function copyRemoteDist() {
 	return new Promise(res => {
-		ncp(path.join(__dirname, 'remote-plugin-temp', 'dist'), path.join(pluginsBrowserDistFolder, 'remote-plugin'), err => {
+		ncp(path.join(remotePluginTemp, 'dist'), path.join(pluginsBrowserDistFolder, 'remote-plugin'), err => {
 			if (err) console.log(err)
 			res()
 		})
 	})
 }
 
+const buildTasks = [createBuildFile]
 const electronTasks = [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons]
 const browserTasks = [createBrowserPluginsDist, cloneRemotePlugin, installRemoteDeps, buildRemote, copyRemoteDist]
 
-exports.default = series(...[electronTasks, browserTasks])
+exports.default = series(...[buildTasks, electronTasks, browserTasks])
