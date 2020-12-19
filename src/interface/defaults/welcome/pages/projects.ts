@@ -35,7 +35,7 @@ export default function ProjectsPage({ closeWindow }): PuffinComponent {
 				})}
 			</div>
 			<div>
-				<Button :click="${openDirectoryFromWindow}" lang-string="windows.Welcome.OpenFolder/>
+				<Button :click="${openDirectoryFromWindow}" lang-string="windows.Welcome.OpenFolder"/>
 			</div>
 		</CardsListContainer>
     `
