@@ -15,31 +15,37 @@ function newDirectoryDialog({ isFolder, parentDirectory, container, explorerStat
 		title: isFolder ? 'misc.NewFolder' : 'misc.NewFile',
 		placeHolder: isFolder ? 'Folder' : 'File',
 	})
-		.then(function (res) {
-			createDirectory(res, isFolder, parentDirectory, container, explorerState, explorerProvider)
+		.then(async (itemName: string) => {
+			const itemDirectory = normalizeDir(path.join(parentDirectory, itemName))
+			const isSuccessful = await createItem(isFolder, itemDirectory, container, explorerState, explorerProvider)
+			if (!isFolder && isSuccessful) {
+				RunningConfig.emit('loadFile', {
+					filePath: itemDirectory,
+				})
+			}
 		})
 		.catch(function () {
 			//Do nothing since there is nothing to create
 		})
 }
 
-async function createDirectory(value, isFolder, parentDirectory, container, explorerState, explorerProvider) {
-	const itemDirectory = normalizeDir(path.join(parentDirectory, value))
-	if (!(await explorerProvider.exists(itemDirectory))) {
-		if (isFolder) {
-			await explorerProvider.mkdir(itemDirectory)
-			explorerState.emit('createItem', {
-				container,
-				containerFolder: normalizeDir(container.getAttribute('parentfolder')),
-				level: container.getAttribute('level'),
-				directory: itemDirectory,
-				directoryName: path.basename(itemDirectory),
-				isFolder: true,
-				isHidden: false,
-			})
-		} else {
-			explorerProvider.writeFile(itemDirectory, '', err => {
-				if (err) throw err
+function createItem(isFolder, itemDirectory, container, explorerState, explorerProvider) {
+	return new Promise(async resolve => {
+		if (!(await explorerProvider.exists(itemDirectory))) {
+			if (isFolder) {
+				await explorerProvider.mkdir(itemDirectory)
+				explorerState.emit('createItem', {
+					container,
+					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
+					level: container.getAttribute('level'),
+					directory: itemDirectory,
+					directoryName: path.basename(itemDirectory),
+					isFolder: true,
+					isHidden: false,
+				})
+				resolve(true)
+			} else {
+				await explorerProvider.writeFile(itemDirectory, '')
 				explorerState.emit('createItem', {
 					container,
 					containerFolder: normalizeDir(container.getAttribute('parentfolder')),
@@ -49,9 +55,12 @@ async function createDirectory(value, isFolder, parentDirectory, container, expl
 					isFolder: false,
 					isHidden: false,
 				})
-			})
+				resolve(true)
+			}
+		} else {
+			resolve(false)
 		}
-	}
+	})
 }
 
 export default newDirectoryDialog
