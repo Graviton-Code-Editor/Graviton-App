@@ -60,6 +60,9 @@ const styleWrapper = style`
 		flex:1;   
 		margin-left:10px; 
 	}
+	& .tab-icon {
+		 pointer-events: none;
+	}
 	&.dragging{
 		background:var(--tabHoveringWhileDraggingBackground);
 	}
