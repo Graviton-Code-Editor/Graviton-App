@@ -8,11 +8,10 @@ import RunningConfig from 'RunningConfig'
 const isBrowser = RunningConfig.data.isBrowser
 
 const styleWrapper = style`
-	.app-container[os="darwin"] &, .app-container[os="linux"] & {
+	.app-container[browser="false"][os="darwin"] &, .app-container[browser="false"][os="linux"] & {
 		min-height:0px;
 		max-height:0px;
 		height:0px;
-		background: red;
 	}
 	&{
 		padding:0px;
