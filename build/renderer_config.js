@@ -41,7 +41,7 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{ from: path.resolve(process.cwd(), 'assets'), to: path.resolve(process.cwd(), 'dist_ui') },
-				{ from: path.resolve(process.cwd(), 'iconpacks'), to: path.resolve(process.cwd(), 'dist_ui') },
+				{ from: path.resolve(process.cwd(), 'plugins/iconpacks'), to: path.resolve(process.cwd(), 'dist_ui') },
 			],
 		}),
 	],
@@ -99,7 +99,6 @@ module.exports = {
 			AppPlatform: path.resolve(process.cwd(), './src/interface/core/platform.ts'),
 			Constants: path.resolve(process.cwd(), './src/interface/defaults/constants.ts'),
 			Core: path.resolve(process.cwd(), './src/interface/core/core.ts'),
-			StaticPlugins: path.resolve(process.cwd(), './plugins/static'),
 			Types: path.resolve(process.cwd(), './src/interface/types'),
 			Constructors: path.resolve(process.cwd(), './src/interface/constructors'),
 			Components: path.resolve(process.cwd(), './src/interface/components'),

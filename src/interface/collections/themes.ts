@@ -1,4 +1,4 @@
-import Arctic from '../../../themes/Arctic/package.json'
-import Night from '../../../themes/Night/package.json'
+import Arctic from '../../../plugins/themes/Arctic/package.json'
+import Night from '../../../plugins/themes/Night/package.json'
 
 export { Arctic, Night }

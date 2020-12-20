@@ -1,3 +1,3 @@
-import GravitonIconpack from '../../../iconpacks/Graviton/package.json'
+import GravitonIconpack from '../../../plugins/iconpacks/Graviton/package.json'
 
 export { GravitonIconpack }

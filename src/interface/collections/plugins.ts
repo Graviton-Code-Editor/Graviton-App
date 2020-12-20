@@ -1,1 +1,1 @@
-import 'StaticPlugins/codemirror-smooth-cursor/main.ts'
+import '../../../plugins/static/codemirror-smooth-cursor/main.ts'
