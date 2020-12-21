@@ -11,7 +11,7 @@ const styleWrapper = style`
 			background:var(--bodyBackground);
 			height:calc(100% - 68px);
 		}
-		&[os="darwin"], &[os="linux"]{
+		&[browser="false"][os="darwin"], &[browser="false"][os="linux"]{
 			#body{
 				height: calc(100% - 25px);
 			}
