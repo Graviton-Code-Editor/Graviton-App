@@ -1,0 +1,208 @@
+{
+	"name": "Ελληνικά",
+	"locale": "el",
+	"translations": {
+		"menus": {
+			"File": {
+				"File": "Αρχείο",
+				"OpenFolder": "Άνοιγμα φακέλου",
+				"OpenFile": "Άνοιγμα αρχείου",
+				"Projects": {
+					"Projects": "Πρότζεκτ",
+					"OpenProjects": "Άνοιγμα πρότζεκτ"
+				},
+				"Workspaces": {
+					"Workspaces": "Χώροι Εργασίας",
+					"OpenWorkspaces": "Άνοιγμα χώρων εργασίας",
+					"OpenFromFile": "Άνοιγμα από αρχείο",
+					"AddFolderToWorkspace": "Προσθήκη φακέλου στον χώρο εργασίας",
+					"SaveWorkspace": "Αποθήκευση χώρου εργασίας"
+				}
+			},
+			"Edit": {
+				"Edit": "Επεξεργασία",
+				"Undo": "Αναίρεση",
+				"Redo": "Επανάνληψη",
+				"FontSize": {
+					"FontSize": "Μέγεθος Γραμματοσειράς",
+					"Increase": "Αύξηση",
+					"Decrease": "Μείωση"
+				},
+				"Find": "Εύρεση",
+				"Replace": "Αντικατάσταση",
+				"FormatDocument": "Διαμόρφοση Έγγραφου"
+			},
+			"Tools": {
+				"Tools": "Εργαλεία",
+				"OpenSettings": "Ρυθμίσεις",
+				"OpenStore": "Κατάστημα",
+				"Panels": {
+					"Panels": "Πάνελ",
+					"NewPanel": "Νέο Πάνελ",
+					"CloseCurrentPanel": "Κλείσιμο τρέχον πάνελ"
+				}
+			},
+			"View": {
+				"View": "Προβολή",
+				"Sidebar": "Πλευρική Γραμμή",
+				"Sidepanel": "Πλευρικό Πάνελ",
+				"Terminal": "Τέρμιναλ",
+				"ShowSidebar": "Προβολή πλευρικής γραμμής",
+				"ShowSidepanel": "Προβολή πλευρικού πάνελ",
+				"HideSidebar": "Απόκρυψη πλευρικής γραμμής",
+				"HideSidepanel": "Απόκρυψη πλευρικού πάνελ"
+			},
+			"Window": {
+				"Window": "Παράθρυρο",
+				"Zoom": {
+					"Zoom": "Μεγέθυνση",
+					"DefaultZoom": "Προκαθορισμένη",
+					"IncreaseZoom": "Αύξηση",
+					"DecreaseZoom": "Μείωση"
+				},
+				"Debug": {
+					"Debug": "Εντόπιση Σφαλμάτων",
+					"OpenDebugWindow": "Άνοιγμα παραθύρου εντόπιση σφαλμάτων"
+				},
+				"OpenDevTools": "Άνοιγμα εργαλεία προγραμματιστή"
+			},
+			"Help": {
+				"Help": "Βοήθεια",
+				"Contact": "Επικοινωνία",
+				"Social": "Κοινωνικές Πλατφόρμες",
+				"Contributors": "Συνεισφέροντες",
+				"Blog": "Μπλογκ",
+				"Documentation": "Εγχειρίδια",
+				"Website": "Ιστοσελίδα",
+				"SourceCode": "Πηγαίος Κώδικας",
+				"ReportBug": "Αναφορά σφάλματος",
+				"CheckForUpdates": "Έλεγχος για ενημερώσεις",
+				"ShowWelcome": "Εμφάνιση καλωσορίσματος",
+				"About": "Σχετικά με"
+			}
+		},
+		"windows": {
+			"Settings": {
+				"Settings": "Ρυθμίσεις",
+				"Customization": {
+					"Customization": "Διαμόρφωση",
+					"Themes": "Θέματα",
+					"Iconpacks": "Πακέτα εικονιδίων"
+				},
+				"Advanced": {
+					"Advanced": "Για προχοριμένους",
+					"FileWatcher": "Παρακολουθητής Έγγραφων",
+					"Autocomplete": "Αυτόματη Συμπλήρωση",
+					"WrapLines": "Γραμμές Περιτύληξης",
+					"ManualConfig": {
+						"ManualConfig": "Χειροκίνητη Διαμόρφωση",
+						"EditConfiguration": "Επεξεργασία Διαμόρφωσης"
+					},
+					"Explorer": "Περιηγητής",
+					"Editor": "Συντάκτης",
+					"GitIntegration": "Ενσωμάτωση Git",
+					"LSPIntegration": "Ενσωμάτωση LSP (πειραματικό)",
+					"SourceTracker": "Ιχνηλάτης Πηγής",
+					"Indentation": {
+						"Indentation": "Ενδοπαραγραφοποίηση",
+						"Space": "Κενό",
+						"Tab": "Tab"
+					},
+					"Configuration": "Διαμόρφωση",
+					"RestartConfig": {
+						"RestartConfig": "Επανεκκίνηση Διαμόρφωσης"
+					}
+				},
+				"Languages": "Γλώσσες",
+				"Shortcuts": {
+					"Shortcuts": "Συντομεύσεις",
+					"CreateCombo": "Δημιουργία Συνδυασμού"
+				},
+				"About": {
+					"About": "Σχετικά με",
+					"GravitonDescription": "Το Graviton είναι συντάκτης που λειτουργεί σε πολλαπλές πλατφόρμες."
+				}
+			},
+			"Store": {
+				"Store": "Κατάστημα",
+				"Home": {
+					"Home": "Αρχική"
+				},
+				"Installed": {
+					"Installed": "Εγκατεστημένα"
+				},
+				"Install": "Εγκατάσταση",
+				"Update": "Ενημέρωση",
+				"Uninstall": "Κατ. Εγκατάστασης",
+				"AnyCompatibleVersion": "Δεν υπάρχει καμία συμβατή έκδoση."
+			},
+			"Welcome": {
+				"Welcome": "Καλωσήρθατε",
+				"RecentProjects": "Πρόσφατα πρότζεκτ",
+				"RecentWorkspaces": "Πρόσφατοι χώροι εργασίας",
+				"NewProject": "Νέο πρότζεκτ",
+				"OpenWorkspace": "Άνοιγμα χώρου εργασίας",
+				"OpenFolder": "Ανοιγμα φακελου"
+			},
+			"BrowserWelcome": {
+				"WelcomeTitle": "Καλωσήρθατε στο Graviton για περιηγητές!",
+				"WelcomeMessage": "Θυμηθείτε ότι αυτή η λειτουργία είναι πειραματική και τα περισσότερα πράγματα δεν δουλεύουν.\n Για μια καλύτερη εμπειρία, κατεβάστε την εφαρμογή."
+			}
+		},
+		"misc": {
+			"Miscellaneous": "Διάφορα",
+			"LastVersion": "Τελευταία έκδοση",
+			"InstalledVersion": "Εγκατεστημένη έκδωση",
+			"About": "Σχετικά με",
+			"Skip": "Παράληψη",
+			"Finish": "Ολοκλήρωση",
+			"Continue": "Συνέχια",
+			"GoBack": "Πίσω",
+			"Accept": "Αποδοχή",
+			"Cancel": "Ακύρωση",
+			"version": "έκδωση",
+			"CopyPath": "Αντιγραφή διεύθυνση",
+			"More": "Περισσότερα",
+			"Copy": "Αντιγραφή",
+			"Rename": "Μετονομασία",
+			"Remove": "Αφαίρεση",
+			"OpenLocation": "Άνοιγμα τοποθεσίας",
+			"NewFile": "Νέο έγγραφο",
+			"NewFolder": "Νέος φάκελος",
+			"Paste": "Επικόλληση",
+			"Author": "Συγγραφέας",
+			"Exit": "Έξοδος",
+			"Tip": "Συμβουλή",
+			"Yes": "Ναι",
+			"No": "Όχι",
+			"Close": "Κλείσιμο",
+			"Ignore": "Αγνόηση",
+			"BuildDate": "Ημερομηνία κατασκευής",
+			"By": "από",
+			"Understood": "Καταλαβαίνω",
+			"RemoveFromWorkspace": "Αφαίρεση από τον χώρο εργασίας",
+			"JoinTheDiscussion": "Γίνε μέλος της συζήτησης",
+			"OpenAnyway": "Άνοιγμα έτσι και αλλιώς"
+		},
+		"notifications": {
+			"appLanguageChanged": {
+				"appLanguageChanged": "Η γλώσσα της εφαρμογής άλλαξε.",
+				"restartMessage": "Κάντε επανεκκίνηση στην εφαρμογή για να εφαρμοστούν οι αλλαγές."
+			}
+		},
+		"dialogs": {
+			"tabsUnsavedWarning": {
+				"title": "Υπάρχουν μη αποθηκευμένα έγγραφα.",
+				"content": "Η πρόοδό σας μπορεί να χαθεί."
+			},
+			"restartConfig": {
+				"title": "Επανεκκίνηση Διαμόρφωσης",
+				"content": "Πατήστε συνέχια για να επανεκκινήσετε την διαμόρφωση. Αυτό δεν θα διαγράψει κανένα plug-in."
+			},
+			"experimentalFeature": {
+				"title": "Πειραματική λειτουργία",
+				"content": "Αυτή η λειτουργία είναι ασταθής και μπορεί να προκαλέσει προβλήματα."
+			}
+		}
+	}
+}
