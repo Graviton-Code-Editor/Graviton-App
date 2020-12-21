@@ -38,7 +38,7 @@ class Editor implements EditorOptions {
 		this.bodyElement = bodyElement
 		this.tabState = tabState
 		this.filePath = directory
-		this.fileName = path.basename(directory)
+		this.fileName = directory ? path.basename(directory) : ''
 		this.options = options
 		this.client = this.getEditorClient()
 
