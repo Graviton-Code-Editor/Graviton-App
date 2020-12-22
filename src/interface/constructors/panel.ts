@@ -24,7 +24,7 @@ class Panel {
 			},
 		})`
 			<PanelBody :click="${this.focusPanel.bind(this)}" :dragover="${allowDrop}" :drop="${onTabDropped}">    
-				<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
+				<div :dragover="${allowDrop}"  class="tabsbar"/>
 				<div :contextmenu="${contextmenu}" class="tabspanel"/>
 			</PanelBody>
 		`
@@ -32,6 +32,7 @@ class Panel {
 			e.preventDefault()
 		}
 		function onTabDropped(e) {
+			e.preventDefault()
 			const dropType = e.dataTransfer.getData('type') || 'tab'
 
 			switch (dropType) {
