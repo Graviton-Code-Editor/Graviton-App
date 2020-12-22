@@ -66,7 +66,7 @@ const styleWrapper = style`
 	& .tab-icon {
 		 pointer-events: none;
 	}
-	&.dragging{
+	&[active=false].dragging{
 		background:var(--tabHoveringWhileDraggingBackground);
 		& .tab-button {
 			pointer-events: none;
