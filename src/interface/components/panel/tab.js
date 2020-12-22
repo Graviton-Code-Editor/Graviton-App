@@ -27,6 +27,9 @@ const styleWrapper = style`
 			background:var(--tabHoveringBackground, var(--tabHoveringWhileDraggingBackground));
 		}
 	}
+	& > p {
+		pointer-events: none;
+	}
 	& img{
 		height: 20px;
 		margin-right: 10px;

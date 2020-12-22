@@ -81,7 +81,7 @@ class Item {
 			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
-				}" draggable="true" :dragstart="${startDrag}" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+				}" draggable="true" :dragleave="${dragLeave}" :dragenter="${dragEnter}" :drop="${onDropped}" :dragstart="${startDrag}" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"/>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"/>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
@@ -90,6 +90,20 @@ class Item {
 				</button>
 			</FileItem>
 		`
+
+		function onDropped(e: DragEvent): void {
+			e.preventDefault()
+			self.itemElement.classList.remove('dragging')
+		}
+
+		function dragEnter(e: DragEvent): void {
+			e.preventDefault()
+			self.itemElement.classList.add('dragging')
+		}
+
+		function dragLeave(e: DragEvent): void {
+			self.itemElement.classList.remove('dragging')
+		}
 
 		function startDrag(e: DragEvent): void {
 			e.dataTransfer.setData('type', 'explorerItem')

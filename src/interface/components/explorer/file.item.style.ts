@@ -13,6 +13,12 @@ const ItemWrapper = style`
 		&[animated="true"]{
 			animation: appearItem 0.07s ease-out;
 		}
+		&.dragging{
+			& > button {
+				box-shadow: 0px 0px 0px 3px var(--accentColor);
+				border-radius:5px;
+			}
+		}
 	}
 	& button{
 		transition:0.015s;
@@ -38,6 +44,9 @@ const ItemWrapper = style`
 		}
 		&[ishidden="true"]{
 			opacity: 0.6;
+		}
+		& > * {
+			pointer-events: none;
 		}
 	}
 	&[selected=true] > button{

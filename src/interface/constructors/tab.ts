@@ -69,7 +69,7 @@ class Tab {
 		})`
 		<TabBody title="${title}" mounted="${mounted}" active="${() => this.tabState.data.active}"  draggable="true" classSelector="${this.classSelector}" class="${
 			this.classSelector
-		}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :dragover="${dragOver}":drop="${onDropped}">
+		}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :drop="${onDropped}">
 			${this.itemIconSource ? element`<img class="tab-icon" src="${this.itemIconSource}"/>` : element`<div/>`}
 			<p :drop="${onDropped}" classSelector="${this.classSelector}">
 				${title}
@@ -79,15 +79,13 @@ class Tab {
 			</div>
 		</TabBody>
 		`
-		function dragOver(e: DragEvent): void {
+
+		function dragEnter(e: DragEvent): void {
 			e.preventDefault()
 			self.tabElement.classList.add('dragging')
 		}
-		function dragEnter(e: DragEvent): void {
-			e.preventDefault()
-		}
 		function dragLeave(e: DragEvent): void {
-			;(e.target as Element).classList.remove('dragging')
+			self.tabElement.classList.remove('dragging')
 		}
 		function onDropped(e: DragEvent): void {
 			e.preventDefault()
