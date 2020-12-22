@@ -13,17 +13,15 @@ const ItemWrapper = style`
 		&[animated="true"]{
 			animation: appearItem 0.07s ease-out;
 		}
-		&.dragging{
+		&[isfolder=true].dragging{
 			& > button {
 				box-shadow: 0px 0px 0px 3px var(--accentColor);
 				border-radius:5px;
 			}
 		}
 	}
-	& button{
-		transition:0.015s;
-	}
 	& > button{
+		box-shadow: none;
 		margin:0;
 		border-radius:12px;
 		font-size:12px;
