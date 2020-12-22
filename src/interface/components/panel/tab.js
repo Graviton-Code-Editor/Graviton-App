@@ -68,6 +68,9 @@ const styleWrapper = style`
 	}
 	&.dragging{
 		background:var(--tabHoveringWhileDraggingBackground);
+		& .tab-button {
+			pointer-events: none;
+		}
 	}
 	&.closing {
 		animation: tabCloses ease-out 0.14s;

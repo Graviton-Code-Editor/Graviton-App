@@ -75,7 +75,7 @@ class Tab {
 				${title}
 			</p>
 			<div class="tab-button" :drop="${onDropped}" classSelector="${this.classSelector}">
-				<Cross class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
+				<Cross draggable="false" class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
 			</div>
 		</TabBody>
 		`
