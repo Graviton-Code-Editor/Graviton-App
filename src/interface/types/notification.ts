@@ -1,4 +1,5 @@
 import PuffinElement from './puffin.element'
+import { PuffinComponent } from './puffin.component'
 
 interface NotificationButton {
 	label: string
@@ -6,6 +7,7 @@ interface NotificationButton {
 }
 
 export interface NotificationOptions {
+	component?: () => PuffinComponent
 	title: string
 	content?: string
 	buttons?: NotificationButton[]

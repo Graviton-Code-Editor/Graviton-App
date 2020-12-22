@@ -12,10 +12,11 @@ const styleWrapper = style`
 	box-shadow:0px 1px 7px rgba(0,0,0,0.17);
 	padding:8px;
 	margin:5px 7px;
+	overflow: hidden;
 	&.closing {
 		animation: notificationCloses ease-out 0.135s;
 	}
-	& div:nth-child(1){
+	& > div:nth-child(1){
 		display: flex;
 		width: 100%;
 		position: relative;
@@ -42,7 +43,7 @@ const styleWrapper = style`
 		margin-bottom: 2px;
 		user-select: none;
 	}
-	& > p{
+	& > div > .content{
 		font-size:13px;
 		color:var(--notificationContentText);
 		text-overflow: ellipsis;
@@ -53,7 +54,7 @@ const styleWrapper = style`
 		padding:8px 10px;
 		background:var(--notificationButtonBackground);
 	}
-	& div:nth-child(2){
+	& > div:nth-child(2){
 		display: flex;
 		& > span {
 			font-size: 11px;
@@ -64,6 +65,15 @@ const styleWrapper = style`
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space:nowrap;
+		}
+	}
+	& > div:nth-child(3){
+		min-height: 0px;
+		height: auto;
+		max-height: 115px;
+		overflow: hidden;
+		& * {
+			font-size: 13px;
 		}
 	}
 `

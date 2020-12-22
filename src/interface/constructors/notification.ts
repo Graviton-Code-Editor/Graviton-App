@@ -10,7 +10,7 @@ import { NotificationOptions, NotificationDetails } from 'Types/notification'
 
 class Notification {
 	public NotificationElement: HTMLElement
-	constructor({ author, title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
+	constructor({ component, author, title = 'Notification', content = '', buttons = [], lifeTime = NotificationsLifeTime }: NotificationOptions) {
 		const self = this
 		function mounted() {
 			this.instance = self
@@ -25,7 +25,6 @@ class Notification {
 			components: {
 				NotificationBody,
 				Title: Titles.h5,
-				Content: Text,
 				Cross,
 			},
 			addons: [lang(LanguageState)],
@@ -38,7 +37,17 @@ class Notification {
 					<Title lang-string="${title}"/>
 					${author ? element`<span>From: ${author}</span>` : element`<div/>`}
 				</div>
-				<Content lang-string="${content}"/>
+				<div>
+					${
+						component
+							? component()
+							: element({
+									components: {
+										Content: Text,
+									},
+							  })`<Content class="content" lang-string="${content}"/>`
+					}
+				</div>
 				<div class="buttons">
 					${buttons.map(({ label, action }) => {
 						const clickedButton = () => {
@@ -82,5 +91,7 @@ class Notification {
 		RunningConfig.emit('aNotificationHasBeenEmitted', notificationDetails)
 	}
 }
+
+console.log(Notification, element)
 
 export default Notification
