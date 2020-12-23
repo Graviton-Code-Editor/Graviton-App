@@ -1,68 +1,59 @@
 import PluginsRegistry from 'PluginsRegistry'
 import StaticConfig from 'StaticConfig'
-import { render } from '@mkenzo_8/puffin'
-import WarningDialog from '../../../utils/dialogs/warning'
+import { element, render } from '@mkenzo_8/puffin'
 import InputDialog from '../../../utils/dialogs/dialog_input'
+import ShortcutsTable from '../../../components/settings/shortcuts_table'
+import { Button } from '@mkenzo_8/puffin-drac'
 
-function removeShortcut(item, shortcut, combo) {
-	WarningDialog().then(() => {
-		item.remove()
-		const comboPos = StaticConfig.data.appShortcuts[shortcut].combos.indexOf(combo)
+function ShortcutCombo({ shortcut }) {
+	const { combos } = StaticConfig.data.appShortcuts[shortcut]
 
-		StaticConfig.data.appShortcuts[shortcut].combos.splice(comboPos, 1)
+	function changeCombo() {
+		InputDialog({
+			title: 'Change combo',
+		}).then(input => {
+			if (StaticConfig.data.appShortcuts[shortcut].combos[0]) {
+				StaticConfig.data.appShortcuts[shortcut].combos[0] = input
+			} else {
+				StaticConfig.data.appShortcuts[shortcut].combos.push(input)
+			}
 
-		StaticConfig.triggerChange()
+			StaticConfig.triggerChange()
+			this.innerText = input
 
-		StaticConfig.emit('shortcutsHaveBeenUpdated')
-	})
+			StaticConfig.emit('shortcutsHaveBeenUpdated')
+		})
+	}
+
+	return element({
+		components: {
+			Button,
+		},
+	})`
+		<Button :click="${changeCombo}">${combos[0] || 'Empty'}</Button>
+	`
 }
 
-export default function ShortcutsScheme() {
-	return {
-		shortcuts: Object.keys(StaticConfig.data.appShortcuts)
-			.map(shortcut => {
-				const { combos } = StaticConfig.data.appShortcuts[shortcut]
-				return [
-					{
-						type: 'title',
-						label: shortcut,
-					},
-					{
-						type: 'section',
-						content: combos.map(combo => ({
-							type: 'button',
-							label: combo,
-							onClick() {
-								removeShortcut(this, shortcut, combo)
-							},
-						})),
-					},
-					{
-						type: 'button',
-						label: 'windows.Settings.Shortcuts.CreateCombo',
-						onClick(e, { getComponentFromScheme }) {
-							InputDialog({
-								title: 'New combo',
-							}).then(input => {
-								StaticConfig.data.appShortcuts[shortcut].combos.push(input)
-								StaticConfig.triggerChange()
-								render(
-									getComponentFromScheme({
-										type: 'button',
-										label: input,
-										onClick() {
-											removeShortcut(this, shortcut, input)
-										},
-									}),
-									this.previousSibling,
-								)
-
-								StaticConfig.emit('shortcutsHaveBeenUpdated')
-							})
+export default function Shortcuts() {
+	return element({
+		components: {
+			ShortcutsTable,
+		},
+	})`
+		<ShortcutsTable>
+			<th>Shortcut</th>
+			<th>Combo</th>
+				${Object.keys(StaticConfig.data.appShortcuts).map(shortcut => {
+					const shortcutPrettyName = shortcut.match(/[A-Z]?[a-z]+/gm).join(' ')
+					return element({
+						components: {
+							ShortcutCombo,
 						},
-					},
-				]
-			})
-			.flat(),
-	}
+					})`<tr>
+								<td>${shortcutPrettyName}</td>
+								<td><ShortcutCombo shortcut="${shortcut}"/></td>
+							</tr>`
+				})}
+		</ShortcutsTable>
+	`
 }
