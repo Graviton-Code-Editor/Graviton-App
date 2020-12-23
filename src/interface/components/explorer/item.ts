@@ -10,17 +10,16 @@ import PuffinElement from 'Types/puffin.element'
 const ItemWrapper = style`
 	@keyframes appearItem{
 		from {
-			opacity: 0.35;
+			opacity: 0.5;
 			transform: translateX(-10px);
 		}
 		to {
 			transform: translateX(0px);
-			margin-left: 10px;
 			opacity: 1;
 		}
 	}
 	&{
-		animation: appearItem 0.07s ease-out;
+		animation: appearItem 0.06s ease-out;
 		background:transparent;
 		white-space:nowrap;
 		padding:0px;
