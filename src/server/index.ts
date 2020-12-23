@@ -4,6 +4,8 @@ import enableWs from 'express-ws'
 import fs from 'fs-extra'
 import morgan from 'morgan'
 
+const PORT = process.env.PORT || 8080
+
 const app = express()
 
 enableWs(app)
@@ -138,6 +140,6 @@ app.ws('/api/ws', ws => {
 	})
 })
 
-app.listen(process.env.PORT || 8080, () => {
-	console.log('listening in port 8080')
+app.listen(PORT, () => {
+	console.log(`Listening on port ${PORT}`)
 })
