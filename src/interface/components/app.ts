@@ -73,9 +73,10 @@ const styleWrapper = style`
 			overflow:auto;
 			float: left;
 			left: 0;
-			padding: 10px 2px;
+			padding: 5px 2px;
 			& > div{
-				height: 100%;
+				height: calc(100% - 8px);
+				padding: 4px 0px;
 			}
 		}
 		#mainpanel{
