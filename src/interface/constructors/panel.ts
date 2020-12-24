@@ -85,6 +85,10 @@ class Panel {
 					break
 
 				case 'explorerItem':
+					const isFolder = e.dataTransfer.getData('isFolder')
+
+					if (isFolder === 'true') return
+
 					// Focus the panel where the file dropped
 					self.focusPanel()
 

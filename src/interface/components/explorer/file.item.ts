@@ -108,6 +108,7 @@ class Item {
 		function startDrag(e: DragEvent): void {
 			e.dataTransfer.setData('type', 'explorerItem')
 			e.dataTransfer.setData('filePath', self.itemPath)
+			e.dataTransfer.setData('isFolder', self.isFolder.toString())
 		}
 
 		function handleTextDecorator() {
