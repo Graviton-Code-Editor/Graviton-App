@@ -32,9 +32,10 @@ function mounted() {
 	if (!isSubmenu) itemsContainer.style.display = 'none'
 	window.addEventListener('click', e => {
 		e.stopPropagation()
+		const eventTarget = <HTMLElement>e.target
 		if (
-			((e.target.tagName === 'A' || e.target.tagName === 'BUTTON') && e.target.parentElement.classList.contains('dropmenu') && e.target.parentElement.id === id) == false &&
-			(e.target.classList.contains('dropmenu') && e.target.id === id) == false &&
+			((eventTarget.tagName === 'A' || eventTarget.tagName === 'BUTTON') && eventTarget.parentElement.classList.contains('dropmenu') && eventTarget.parentElement.id === id) == false &&
+			(eventTarget.classList.contains('dropmenu') && eventTarget.id === id) == false &&
 			this.getAttribute('showed') === 'true'
 		) {
 			RunningConfig.emit('hideAllFloatingComps')
