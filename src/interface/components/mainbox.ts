@@ -13,21 +13,34 @@ const MainBoxStyle = style`
 	border-top: 1px solid var(--panelBorder);
 `
 
+function handleTerminal(element: HTMLElement, state: boolean) {
+	if (state) {
+		element.style.display = 'block'
+		document.getElementById('panels_stack').style.height = '70%'
+		if (RunningConfig.data.openedTerminals.length === 0) {
+			if (process.platform === 'win32') {
+				RunningConfig.emit('createTerminalSession', {
+					shell: 'PowerShell',
+				})
+			} else {
+				RunningConfig.emit('createTerminalSession', {
+					shell: process.env['SHELL'],
+				})
+			}
+		}
+	} else {
+		element.style.display = 'none'
+	}
+}
+
 export default function MainBox() {
 	function mounted() {
-		if (StaticConfig.data.appShowTerminal) {
-			this.style.display = 'block'
-			document.getElementById('panels_stack').style.height = '70%'
-		} else {
-			this.style.display = 'none'
-		}
-		StaticConfig.keyChanged('appShowTerminal', (show: boolean) => {
-			if (show) {
-				this.style.display = 'block'
-				document.getElementById('panels_stack').style.height = '70%'
-			} else {
-				this.style.display = 'none'
-			}
+		RunningConfig.once('allPluginsLoaded', () => {
+			handleTerminal(this, StaticConfig.data.appShowTerminal)
+		})
+
+		StaticConfig.keyChanged('appShowTerminal', (state: boolean) => {
+			handleTerminal(this, state)
 		})
 	}
 

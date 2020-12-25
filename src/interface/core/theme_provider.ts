@@ -13,7 +13,7 @@ StaticConfig.keyChanged('appTheme', (newTheme: string) => {
 	}
 })
 
-const ThemeProvider: PuffinState = new state({
+export const ThemeProvider: PuffinState = new state({
 	splashScreenText: 'white',
 	splashScreenBackground: '#191919',
 })
@@ -34,7 +34,7 @@ const puffinThemingKeys = {
 	puffinTextAreaBorder: 'inputBorder',
 }
 
-const getFallBackProp = (prop: string) => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
+export const getFallbackProp = (prop: string) => getProperty(prop, PluginsRegistry.registry.data.list.Night.colorsScheme)
 
 function applyTheme(state: PuffinState) {
 	const themeSchema = PluginsRegistry.registry.data.colorsSchemes.Night //Use Night theme as schema
@@ -42,12 +42,12 @@ function applyTheme(state: PuffinState) {
 	ThemeProvider.triggerChange()
 	Object.keys(puffinThemingKeys).forEach(key => {
 		const keyValue = puffinThemingKeys[key]
-		const valueInTheme = getProperty(keyValue, ThemeProvider.data) || getFallBackProp(key)
+		const valueInTheme = getProperty(keyValue, ThemeProvider.data) || getFallbackProp(key)
 		document.body.style.setProperty(`--${key}`, valueInTheme)
 	})
 	Object.keys(themeSchema).forEach(key => {
 		const keyValue = getProperty(key, ThemeProvider.data)
-		const valueInTheme = keyValue || getFallBackProp(key)
+		const valueInTheme = keyValue || getFallbackProp(key)
 		setProperty(key, valueInTheme, key)
 	})
 }
@@ -59,7 +59,7 @@ RunningConfig.on('allPluginsLoaded', () => {
 	applyTheme(StaticConfig)
 })
 
-function getProperty(key: string, keys: string[]): string {
+export function getProperty(key: string, keys: string[]): string {
 	let lastKey: string
 	let lastKeyValue: string[]
 	let res: string
@@ -103,5 +103,3 @@ function setProperty(key: string, keyValue: string, name = ''): void {
 		document.body.style.setProperty(`--${key}`, keyValue)
 	}
 }
-
-export { ThemeProvider, getProperty }

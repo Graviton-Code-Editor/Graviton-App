@@ -4,7 +4,7 @@ import { css as style } from '@emotion/css'
 import { Terminal } from 'xterm'
 import { FitAddon } from 'xterm-addon-fit'
 import * as XtermWebfont from 'xterm-webfont'
-import { getProperty, ThemeProvider } from 'ThemeProvider'
+import { getProperty, ThemeProvider, getFallbackProp } from 'ThemeProvider'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import AddTermIcon from './icons/add_term'
@@ -17,7 +17,6 @@ import '../../../node_modules/xterm/css/xterm.css'
 let sessionsCount = 0
 
 const styled = style`
-	box-shadow: inset 0 -1px 10px rgba(0,0,0,0.25);
 	max-width: 100%;
 	margin: 0;
 	position: relative;
@@ -30,7 +29,8 @@ const styled = style`
 		font-size: 13px;
 	}
 	& select {
-		transition: 0.1s;
+		user-select: none;
+		transition: 0.05s;
 		padding: 7px 5px;
 		background: transparent;
 		border:0;
@@ -429,5 +429,5 @@ function getTerminalIndex(name) {
 
 function getProp(prop) {
 	const value = getProperty(prop, ThemeProvider.data)
-	return value == '' ? null : value
+	return !!value ? value : getFallbackProp(prop)
 }
