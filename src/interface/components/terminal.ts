@@ -56,7 +56,7 @@ const styled = style`
 		padding: 5px;
 		display: flex;
 
-		& button {
+		& > button {
 			flex: 1;
 			min-width: 40px;
 			max-width: 40px;
@@ -82,6 +82,9 @@ const styled = style`
 				font-size: 13px;
 				color: var(--textColor);
 				align-items: center;
+			}
+			& button {
+				padding: 6px 9px;
 			}
 		}
 	}
@@ -110,6 +113,10 @@ const styled = style`
 		padding: 10px;
 	}
 `
+
+RunningConfig.on('unregisterTerminalShell', ({ name }) => {
+	delete RunningConfig.data.terminalShells[name]
+})
 
 RunningConfig.on('registerTerminalShell', ({ name, onCreated }) => {
 	RunningConfig.data.terminalShells[name] = onCreated
