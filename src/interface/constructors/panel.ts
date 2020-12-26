@@ -86,6 +86,8 @@ class Panel {
 
 				case 'explorerItem':
 					const isFolder = e.dataTransfer.getData('isFolder')
+					const itemClass = e.dataTransfer.getData('class')
+					const itemElement = document.getElementsByClassName(itemClass)[0]
 
 					if (isFolder === 'true') return
 
@@ -95,6 +97,7 @@ class Panel {
 					// Launch an editor
 					RunningConfig.emit('loadFile', {
 						filePath: e.dataTransfer.getData('filePath'),
+						explorerProvider: (itemElement as any).instance.explorerProvider,
 					})
 					break
 			}

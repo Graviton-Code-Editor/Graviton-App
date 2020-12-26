@@ -121,7 +121,7 @@ function getWorkspaceConfig(path): any {
  * Only in Desktop version
  */
 if (!isBrowser) {
-	RunningConfig.on('loadFile', ({ filePath }) => {
+	RunningConfig.on('loadFile', ({ filePath, explorerProvider }) => {
 		const fileDir = normalizeDir(filePath)
 		const basename = path.basename(fileDir)
 		const fileExtension = getFormat(fileDir)
@@ -129,7 +129,7 @@ if (!isBrowser) {
 			title: basename,
 			directory: fileDir,
 			isEditor: true,
-			explorerProvider: RunningConfig.data.explorerProvider,
+			explorerProvider: explorerProvider || RunningConfig.data.explorerProvider,
 		})
 		if (isCancelled) return //Cancels the tab opening
 		fs.readFile(fileDir, 'UTF-8').then(data => {
@@ -156,34 +156,32 @@ if (!isBrowser) {
  * @param {string} workspacePath - Path to the current loaded workspace
  */
 RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath, replaceOldExplorer = false, workspacePath = RunningConfig.data.workspacePath }: AddFolderInWorkspace) => {
-	RunningConfig.data.explorerProvider
-		.exists(folderPath)
-		.then((exists) => {
-			if(!exists) return
-			if (replaceOldExplorer) {
-				//Close all opened folers
-				removeAllExplorerFolders()
-				//Restart workspace configuration
-				RunningConfig.data.workspaceConfig = {
-					name: null,
-					folders: [],
-				}
-				//Restart workspace settings
-				restartWorkspaceSettings()
+	RunningConfig.data.explorerProvider.exists(folderPath).then(exists => {
+		if (!exists) return
+		if (replaceOldExplorer) {
+			//Close all opened folers
+			removeAllExplorerFolders()
+			//Restart workspace configuration
+			RunningConfig.data.workspaceConfig = {
+				name: null,
+				folders: [],
 			}
-			const folderDir = normalizeDir(folderPath)
-			const explorerPanel = document.getElementById('explorer_panel')
-			new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer, null, {
-				provider: RunningConfig.data.explorerProvider,
-			})
-			RunningConfig.data.workspaceConfig.folders.push({
-				name: parseDirectory(folderDir),
-				path: folderDir,
-			})
-			if (!workspacePath) {
-				RunningConfig.data.workspacePath = null
-			}
+			//Restart workspace settings
+			restartWorkspaceSettings()
+		}
+		const folderDir = normalizeDir(folderPath)
+		const explorerPanel = document.getElementById('explorer_panel')
+		new FilesExplorer(folderDir, folderDir, explorerPanel, 0, replaceOldExplorer, null, {
+			provider: RunningConfig.data.explorerProvider,
 		})
+		RunningConfig.data.workspaceConfig.folders.push({
+			name: parseDirectory(folderDir),
+			path: folderDir,
+		})
+		if (!workspacePath) {
+			RunningConfig.data.workspacePath = null
+		}
+	})
 })
 
 /**
@@ -256,8 +254,8 @@ if (!isBrowser) {
 			setWorkspaceSettings(RunningConfig.data.workspaceConfig.settings)
 			RunningConfig.data.workspacePath = workspacePathNormalized
 			workspace.folders.forEach(async folder => {
-				RunningConfig.data.explorerProvider.exists(folder.path).then((exists) => {
-					if(exists){
+				RunningConfig.data.explorerProvider.exists(folder.path).then(exists => {
+					if (exists) {
 						RunningConfig.emit('addFolderToRunningWorkspace', {
 							folderPath: normalizeDir(folder.path),
 						})

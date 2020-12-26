@@ -65,8 +65,6 @@ class Item {
 
 		const clickListener = this._clickListener.bind(this)
 		const contextListener = this._contextListener.bind(this)
-		const draggingListener = this._draggingListener.bind(this)
-		const dragginInListener = this._draggingInListener.bind(this)
 		const dragDroppedListener = this._dragDroppedListener.bind(this)
 
 		const animateItem = StaticConfig.data.appEnableExplorerItemsAnimations
@@ -81,7 +79,7 @@ class Item {
 			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
-				}" draggable="true" :dragleave="${dragLeave}" :dragenter="${dragEnter}" :drop="${onDropped}" :dragstart="${startDrag}" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+				}" draggable="true" :dragleave="${dragLeave}" :dragenter="${dragEnter}" :drop="${onDropped}" :dragstart="${startDrag}" :dragover="${draggingOver}" itemClass="${classSelector}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"/>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"/>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
@@ -105,10 +103,16 @@ class Item {
 			self.itemElement.classList.remove('dragging')
 		}
 
+		function draggingOver(e: DragEvent): void {
+			e.preventDefault()
+		}
+
 		function startDrag(e: DragEvent): void {
+			e.stopPropagation()
 			e.dataTransfer.setData('type', 'explorerItem')
 			e.dataTransfer.setData('filePath', self.itemPath)
 			e.dataTransfer.setData('isFolder', self.isFolder.toString())
+			e.dataTransfer.setData('class', self.itemClass)
 		}
 
 		function handleTextDecorator() {
@@ -153,18 +157,6 @@ class Item {
 	}
 	private _getIconSource(): string {
 		return this.isFolder ? getFolderClosedIcon(this.itemName) : getFileIcon(this.itemName, getFormat(this.itemPath))
-	}
-	public _draggingListener(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.dataTransfer.setData('class', this.itemClass)
-	}
-	public _draggingStarted(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.dataTransfer.setData('class', this.itemClass)
-	}
-	public _draggingInListener(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.preventDefault()
 	}
 	public _dragDroppedListener(ev: DragEvent): void {
 		ev.stopImmediatePropagation()
