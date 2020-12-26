@@ -88,7 +88,6 @@ class Panel {
 					const isFolder = e.dataTransfer.getData('isFolder')
 					const itemClass = e.dataTransfer.getData('class')
 					const itemElement = document.getElementsByClassName(itemClass)[0]
-					console.log(itemClass, isFolder, itemElement, e.dataTransfer.getData('filePath'), (itemElement as any).instance.explorerProvider)
 					if (isFolder === 'true') return
 
 					// Focus the panel where the file dropped

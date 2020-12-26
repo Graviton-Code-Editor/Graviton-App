@@ -442,14 +442,16 @@ const CodemirrorClient = new EditorClient(
 			}
 
 			// Ctrl+wheel event handler
-			element.addEventListener('wheel', e => {
-				if (!e.ctrlKey) return
-				if (e.wheelDeltaY.toString()[0] == '-') {
-					CtrlPlusScroll('down')
-				} else {
-					CtrlPlusScroll('up')
-				}
-			})
+			if (!RunningConfig.data.isBrowser) {
+				element.addEventListener('wheel', e => {
+					if (!e.ctrlKey) return
+					if (e.wheelDeltaY.toString()[0] == '-') {
+						CtrlPlusScroll('down')
+					} else {
+						CtrlPlusScroll('up')
+					}
+				})
+			}
 
 			//Prevent default action of 'keyup' so codemirror doesn't go 1 line up when scrolling on context menus with arrows
 			CodemirrorEditor.on('keyup', (cm, event: KeyboardEvent) => {
