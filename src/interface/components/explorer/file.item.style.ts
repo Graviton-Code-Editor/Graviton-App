@@ -6,7 +6,6 @@ const ItemWrapper = style`
 		background:transparent;
 		white-space:nowrap;
 		padding:0px;
-		user-select:none;
 		margin-left: 10px;
 		content-visibility: paint;
 		contain-intrinsic-size: 26px;
@@ -17,6 +16,9 @@ const ItemWrapper = style`
 			& > button {
 				box-shadow: 0px 0px 0px 3px var(--accentColor);
 				border-radius:5px;
+				& > * {
+					pointer-events: none;
+				}
 			}
 		}
 	}
@@ -42,9 +44,6 @@ const ItemWrapper = style`
 		}
 		&[ishidden="true"]{
 			opacity: 0.6;
-		}
-		& > * {
-			pointer-events: none;
 		}
 	}
 	&[selected=true] > button{

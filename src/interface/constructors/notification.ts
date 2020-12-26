@@ -92,6 +92,4 @@ class Notification {
 	}
 }
 
-console.log(Notification, element)
-
 export default Notification

@@ -118,33 +118,30 @@ function getWorkspaceConfig(path): any {
  * will open an editor for it.
  * @param {string} filePath - The loaded file's path
  *
- * Only in Desktop version
  */
-if (!isBrowser) {
-	RunningConfig.on('loadFile', ({ filePath, explorerProvider }) => {
-		const fileDir = normalizeDir(filePath)
-		const basename = path.basename(fileDir)
-		const fileExtension = getFormat(fileDir)
-		const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
-			title: basename,
+RunningConfig.on('loadFile', ({ filePath, explorerProvider }) => {
+	const fileDir = normalizeDir(filePath)
+	const basename = path.basename(fileDir)
+	const fileExtension = getFormat(fileDir)
+	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
+		title: basename,
+		directory: fileDir,
+		isEditor: true,
+		explorerProvider: explorerProvider || RunningConfig.data.explorerProvider,
+	})
+	if (isCancelled) return //Cancels the tab opening
+	explorerProvider.readFile(fileDir).then(data => {
+		new Editor({
+			language: fileExtension,
+			value: data,
+			theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
+			bodyElement,
+			tabElement,
+			tabState,
 			directory: fileDir,
-			isEditor: true,
-			explorerProvider: explorerProvider || RunningConfig.data.explorerProvider,
-		})
-		if (isCancelled) return //Cancels the tab opening
-		fs.readFile(fileDir, 'UTF-8').then(data => {
-			new Editor({
-				language: fileExtension,
-				value: data,
-				theme: PluginsRegistry.registry.data.list[StaticConfig.data.appTheme].textTheme,
-				bodyElement,
-				tabElement,
-				tabState,
-				directory: fileDir,
-			})
 		})
 	})
-}
+})
 
 /**
  * Watches for folders added,
