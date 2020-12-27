@@ -1,8 +1,9 @@
 import { PuffinEventInstance } from './puffin.state'
+import { PuffinComponent } from './puffin.component'
 
 interface WindowOptions {
 	title?: string
-	component: object
+	component: () => object
 	minWidth?: string
 	minHeight?: string
 	height?: string
