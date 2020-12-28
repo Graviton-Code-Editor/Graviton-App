@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { series } = require('gulp')
+const { series, task } = require('gulp')
 const webpack = require('webpack')
 const rimraf = require('rimraf')
 const { Bundler } = require('@gveditor/sdk')
@@ -10,8 +10,8 @@ const download = require('download-git-repo')
 
 const pluginsSourceFolder = path.resolve(__dirname, '..', 'plugins', 'dynamic')
 const pluginsDistFolder = path.resolve(__dirname, '..', 'pluginsDist')
-const pluginsBrowserDistFolder = path.resolve(__dirname, '..', 'pluginsBrowserDist')
-const remotePluginTemp = path.resolve(__dirname, '..', 'remote-plugin-temp')
+const pluginsBrowserDistFolder = path.resolve(__dirname, '..', 'dist_browser_plugins')
+const remotePluginTemp = path.resolve(__dirname, '..', 'temp_remote_plugin')
 
 const buildData = {
 	date: new Date().toDateString(),
@@ -191,4 +191,4 @@ const buildTasks = [createBuildFile]
 const electronTasks = [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons]
 const browserTasks = [createBrowserPluginsDist, cloneRemotePlugin, installRemoteDeps, buildRemote, copyRemoteDist]
 
-exports.default = series(...[buildTasks, electronTasks, browserTasks])
+exports.default = series([buildTasks, electronTasks, browserTasks])

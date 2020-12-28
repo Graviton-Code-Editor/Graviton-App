@@ -47,8 +47,8 @@ export default async function init() {
 			...GravitonIconpack,
 		})
 
-		const RemoteExports = await import('../../../pluginsBrowserDist/remote-plugin/index')
-		const RemotePkg = await import('../../../pluginsBrowserDist/remote-plugin/package.json')
+		const RemoteExports = await import('../../../dist_browser_plugins/remote-plugin/index')
+		const RemotePkg = await import('../../../dist_browser_plugins/remote-plugin/package.json')
 
 		addPluginToRegistryStatically(RemotePkg, RemoteExports)
 	} else {

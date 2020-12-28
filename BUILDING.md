@@ -132,3 +132,11 @@ Run:
 ```shell
 npm run build:outpacked
 ```
+
+## API Documentation
+
+To generate a static website with documentation about the plugins API, run:
+
+```shell
+npm run build:docs
+```
