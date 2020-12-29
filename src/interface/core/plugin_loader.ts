@@ -60,6 +60,7 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 		CommandPrompt,
 		Editor,
 		FilesExplorer,
+		PluginsRegistry,
 	}
 
 	if (pluginExports) {
