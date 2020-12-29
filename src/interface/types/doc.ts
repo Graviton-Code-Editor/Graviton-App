@@ -71,7 +71,7 @@ declare namespace GravitonAPI {
 	 * })
 	 * ```
 	 *
-	 * @param options  Notification's options
+	 * @param options  ContexMenu's options
 	 */
 	function ContextMenu(options: ContextMenuOptions): ContextMenuInstance
 	/**

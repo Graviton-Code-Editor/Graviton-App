@@ -69,6 +69,7 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	isBrowser,
 	registeredExplorerProviders: isBrowser ? [RemoteExplorerProvider] : [LocalExplorerProvider],
 	explorerProvider: isBrowser ? RemoteExplorerProvider : LocalExplorerProvider,
+	editorContextMenuButtons: [],
 }
 
 isGitInstalled().then(res => {

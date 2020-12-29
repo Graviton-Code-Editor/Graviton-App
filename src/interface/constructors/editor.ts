@@ -245,7 +245,7 @@ class Editor implements EditorOptions {
 		})
 	}
 	private addClientsListeners(): void {
-		const contextMenuDefaultButtons = [
+		const getContextMenuDefaultButtons = () => [
 			{
 				label: 'misc.Copy',
 				action: () => {
@@ -288,6 +288,13 @@ class Editor implements EditorOptions {
 					}, 10)
 				},
 			},
+			...(() => {
+				if (RunningConfig.data.editorContextMenuButtons.length > 0) {
+					return [{}, ...RunningConfig.data.editorContextMenuButtons]
+				} else {
+					return []
+				}
+			})(),
 		]
 
 		this.client.do('displayContextMenu', {
@@ -295,7 +302,7 @@ class Editor implements EditorOptions {
 			action: ({ event, buttons }) => {
 				new ContextMenu({
 					parent: document.body,
-					list: [...buttons, {}, ...contextMenuDefaultButtons],
+					list: [...buttons, {}, ...getContextMenuDefaultButtons()],
 					event,
 				})
 			},
@@ -305,7 +312,7 @@ class Editor implements EditorOptions {
 			action: (cm, e: MouseEvent) => {
 				new ContextMenu({
 					parent: document.body,
-					list: contextMenuDefaultButtons,
+					list: getContextMenuDefaultButtons(),
 					event: e,
 				})
 			},
