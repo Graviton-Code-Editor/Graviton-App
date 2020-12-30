@@ -10,6 +10,7 @@ import getFormat from '../utils/format_parser'
 import normalizeDir from '../utils/directory_normalizer'
 import selectFolderDialog from '../utils/dialogs/select_folder'
 import selectFileDialog from '../utils/dialogs/select_file'
+import saveFileAsDialog from '../utils/dialogs/save_file_as'
 import * as path from 'path'
 import Core from 'Core'
 const { fs } = Core
@@ -18,6 +19,24 @@ import { WorkspaceFoldername, WorkspaceFilename } from 'Constants'
 const isBrowser = RunningConfig.data.isBrowser
 
 import { AddFolderInWorkspace, AddFolderInWorkspaceFromDialog, SetWorkspace, RemoveWorkspace } from '../types/workspace.ts'
+
+/**
+ * Opens a native dialog to save files
+ * and resolves the returned promise
+ * with the file's path.
+ * @returns promise
+ */
+function saveFileAs() {
+	return new Promise((resolve, reject) => {
+		saveFileAsDialog()
+			.then(filePath => {
+				resolve(filePath)
+			})
+			.catch(err => {
+				reject(err)
+			})
+	})
+}
 
 /**
  * Opens a native dialog,
@@ -442,4 +461,4 @@ RunningConfig.on('renameWorkspaceDialog', function ({ workspacePath, name = 'My 
 		})
 })
 
-export { getWorkspaceConfig, openFolder, openFile, setWorkspaceSettings, restartWorkspaceSettings }
+export { getWorkspaceConfig, openFolder, openFile, saveFileAs,  setWorkspaceSettings, restartWorkspaceSettings }

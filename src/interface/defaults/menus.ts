@@ -58,6 +58,13 @@ function createMenus() {
 				},
 				{},
 				{
+					label: 'menus.File.SaveFile',
+					action: () => {
+						RunningConfig.emit('command.saveCurrentFile')
+					},
+				},
+				{},
+				{
 					label: 'menus.File.Projects.Projects',
 					list: [
 						{
