@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.1.5",
+	"version": "2.1.6",
 	"description": "A code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
@@ -54,7 +54,8 @@
 		"test:mocha:electron": " cross-env NODE_ENV=test electron-mocha --renderer --index dist_ui/index.html --reporter elexus --preload dist_main/preload.js --main dist_test/test.js",
 		"watch:electron": "electron dist_main/main.js Graviton --no-sandbox",
 		"build:experimental:browser": "npm run build:tasks && webpack --mode=production --config-name browser",
-		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton",
+		"build:electron": "npx electron-builder build -c.extraMetadata.name=Graviton --publish never",
+		"build:electron:publish": "npx electron-builder build -c.extraMetadata.name=Graviton --publish onTagOrDraft",
 		"build:electron:outpacked": "npx electron-builder build -c.extraMetadata.name=Graviton --dir",
 		"build:snap": "npm run build:tasks && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux snap",
 		"build:pacman": "npm run build:tasks && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux pacman",
@@ -64,7 +65,8 @@
 		"build:p5p": "npm run build:tasks && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux p5p",
 		"build:rpm": "npm run build:tasks && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
 		"build:AppImage": "npm run build:tasks && npm run build:webpack && npx electron-builder build -c.extraMetadata.name=Graviton --linux AppImage",
-		"build:electron:rpm": "npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm",
+		"build:electron:rpm": "npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm --publish never",
+		"build:electron:rpm:publish": "npx electron-builder build -c.extraMetadata.name=Graviton --linux rpm --publish onTagOrDraft",
 		"lint": "prettier --write *.{ts,js,scss,md,html,json}",
 		"rebuild": "electron-builder install-app-deps ",
 		"postinstall": "npm run rebuild"
@@ -234,6 +236,10 @@
 				],
 				"role": "Viewer"
 			}
-		]
+		],
+		"publish": {
+			"provider": "github",
+			"releaseType": "pre-release"
+		}
 	}
 }
