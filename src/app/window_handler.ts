@@ -59,13 +59,11 @@ export default window => {
 				})
 		})
 	})
-	
+
 	ipcMain.handle('save-file-as', async () => {
 		return new Promise(res => {
 			dialog
-				.showSaveDialog(window, {
-					
-				})
+				.showSaveDialog(window, {})
 				.then(result => {
 					if (result.canceled) return
 					res(result.filePath)

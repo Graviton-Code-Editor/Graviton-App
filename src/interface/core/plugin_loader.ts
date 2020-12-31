@@ -22,7 +22,7 @@ import FilesExplorer from '../constructors/files.explorer'
 import throwError from '../utils/throw_error'
 import * as path from 'path'
 import * as Emotion from '@emotion/css'
-import { openFile, openFolder, saveFileAs }  from 'FileSystem'
+import { openFile, openFolder, saveFileAs } from 'FileSystem'
 import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
 import Core from 'Core'
 const { fs } = Core
@@ -64,11 +64,11 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 		FilesExplorer,
 		PluginsRegistry,
 		Emotion,
-		Dialogs:{
+		Dialogs: {
 			openFile,
 			openFolder,
-			saveFileAs
-		}
+			saveFileAs,
+		},
 	}
 
 	if (pluginExports) {

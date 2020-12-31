@@ -461,4 +461,4 @@ RunningConfig.on('renameWorkspaceDialog', function ({ workspacePath, name = 'My 
 		})
 })
 
-export { getWorkspaceConfig, openFolder, openFile, saveFileAs,  setWorkspaceSettings, restartWorkspaceSettings }
+export { getWorkspaceConfig, openFolder, openFile, saveFileAs, setWorkspaceSettings, restartWorkspaceSettings }

@@ -50,10 +50,13 @@ export default function Advanced({ closeWindow }) {
 						key: 'editorIndentation',
 						radios: [
 							{
-								checked: true,
+								checked: StaticConfig.data.editorIndentation === 'tab',
 								label: 'Tab',
 							},
-							'Space',
+							{
+								checked: StaticConfig.data.editorIndentation === 'space',
+								label: 'Space',
+							},
 						],
 					},
 					{
