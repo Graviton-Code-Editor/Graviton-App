@@ -50,6 +50,8 @@ async function removePluginsDist(cb) {
 		rimraf(pluginsDistFolder, () => {
 			cb()
 		})
+	} else {
+		cb()
 	}
 }
 
@@ -122,6 +124,8 @@ async function removeBrowserPluginsDist(cb) {
 		rimraf(pluginsBrowserDistFolder, () => {
 			cb()
 		})
+	} else {
+		cb()
 	}
 }
 
