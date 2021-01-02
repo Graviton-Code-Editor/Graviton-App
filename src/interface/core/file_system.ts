@@ -142,14 +142,15 @@ RunningConfig.on('loadFile', ({ filePath, explorerProvider }) => {
 	const fileDir = normalizeDir(filePath)
 	const basename = path.basename(fileDir)
 	const fileExtension = getFormat(fileDir)
+	const configuredExplorerProvider = explorerProvider || RunningConfig.data.explorerProvider
 	const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
 		title: basename,
 		directory: fileDir,
 		isEditor: true,
-		explorerProvider: explorerProvider || RunningConfig.data.explorerProvider,
+		explorerProvider: configuredExplorerProvider,
 	})
 	if (isCancelled) return //Cancels the tab opening
-	explorerProvider.readFile(fileDir).then(data => {
+	configuredExplorerProvider.readFile(fileDir).then(data => {
 		new Editor({
 			language: fileExtension,
 			value: data,
