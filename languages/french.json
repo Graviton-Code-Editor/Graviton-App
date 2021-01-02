@@ -93,16 +93,16 @@
 					"Advanced": "Paramètres avancés",
 					"FileWatcher": "Observateur de fichiers",
 					"Autocomplete": "Autocomplétion",
-					"WrapLines": "Wrap lines",
+					"WrapLines": "Envelopper les lignes",
 					"ManualConfig": {
 						"ManualConfig": "Configuration manuelle",
 						"EditConfiguration": "Éditer la configuration"
 					},
 					"Explorer": "Explorateur",
 					"Editor": "Editeur",
-					"GitIntegration": "Integration Git",
-					"LSPIntegration": "Integration LSP (expérimentale)",
-					"SourceTracker": "Source Tracker",
+					"GitIntegration": "Intégration Git",
+					"LSPIntegration": "Intégration LSP (expérimentale)",
+					"SourceTracker": "Suivi des sources",
 					"Indentation": {
 						"Indentation": "Indentation",
 						"Space": "Espace",
