@@ -217,6 +217,13 @@ const CodemirrorClient = new EditorClient(
 						mode: 'c',
 						name: 'text/x-csrc',
 					}
+				case 'b':
+				case 'bf':
+					return {
+						fancy: 'Brainfuck',
+						mode: 'brainfuck',
+						name: 'text/x-brainfuck',
+					}
 				case 'java':
 					return {
 						fancy: 'java',
