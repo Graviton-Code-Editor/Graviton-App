@@ -38,23 +38,21 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
     - name: Installing dependencies
-      run: |
-        npm i
+      run: yarn
     - name: Building the interface
       run: |
-        npm run build:tasks
-        npm run build:webpack
+        yarn build:tasks
+        yarn build:webpack
     - name : Creating the installer and publishing it
-      run: |
-        npm run build:electron:publish
+      run: yarn build:electron --info publish=true
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name : Building for RPM
       if: ${{ runner.os == 'Linux' }}
-      run: |
-        npm run build:electron:rpm:publish
+      run: yarn build:electron --info platform=rpm publish=true
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}

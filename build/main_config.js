@@ -1,6 +1,4 @@
 const path = require('path')
-const WebpackMessages = require('webpack-messages')
-const WebpackBar = require('webpackbar')
 
 module.exports = {
 	name: 'main',
@@ -14,15 +12,6 @@ module.exports = {
 	entry: {
 		index: path.resolve(process.cwd(), 'src', 'app', 'main.ts'),
 	},
-	plugins: [
-		new WebpackBar({
-			name: 'App',
-		}),
-		new WebpackMessages({
-			name: 'App',
-			logger: str => console.log(`[webpack] --> ${str}`),
-		}),
-	],
 	node: {
 		__dirname: false,
 	},

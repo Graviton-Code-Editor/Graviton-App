@@ -1,6 +1,4 @@
 const path = require('path')
-const WebpackMessages = require('webpack-messages')
-const WebpackBar = require('webpackbar')
 
 module.exports = {
 	name: 'preload',
@@ -11,15 +9,6 @@ module.exports = {
 	entry: {
 		index: path.resolve(process.cwd(), 'src', 'app', 'preload.ts'),
 	},
-	plugins: [
-		new WebpackBar({
-			name: 'Preload',
-		}),
-		new WebpackMessages({
-			name: 'Preload',
-			logger: str => console.log(`[webpack] --> ${str}`),
-		}),
-	],
 	resolve: {
 		extensions: ['.js', '.ts'],
 	},

@@ -17,27 +17,23 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
     - name: Installing dependencies
+      run: yarn
+    - name: Building
       run: |
-        npm i
-    - name: Building UI
-      run: |
-        npm run build:tasks
-        npm run build:webpack
+        yarn build:tasks
+        yarn build:webpack
+      env:
+        CI: true
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name: Running unit tests
       uses: GabrielBB/xvfb-action@v1.2
       with:
         run: npm run test:mocha
-    - name : Building
-      run: |
-        npm run build:electron
-      env:
-        CI: true
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name : Building for RPM
       if: ${{ runner.os == 'Linux' }}
-      run: |
-        npm run build:electron:rpm
+      run: yarn build:electron --info platform="rpm"
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}

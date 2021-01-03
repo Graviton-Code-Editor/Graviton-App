@@ -1,6 +1,4 @@
 const path = require('path')
-const WebpackMessages = require('webpack-messages')
-const WebpackBar = require('webpackbar')
 const Nodemon = require('nodemon-webpack-plugin')
 
 module.exports = {
@@ -15,16 +13,7 @@ module.exports = {
 	entry: {
 		index: path.resolve(process.cwd(), 'src', 'server', 'index.ts'),
 	},
-	plugins: [
-		new WebpackBar({
-			name: 'Server',
-		}),
-		new WebpackMessages({
-			name: 'Server',
-			logger: str => console.log(`[webpack] --> ${str}`),
-		}),
-		new Nodemon(),
-	],
+	plugins: [new Nodemon()],
 	node: {
 		__dirname: false,
 	},

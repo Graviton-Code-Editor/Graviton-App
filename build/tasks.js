@@ -6,6 +6,10 @@ const { Bundler } = require('@gveditor/sdk')
 const { spawn, exec } = require('child_process')
 const { ncp } = require('ncp')
 const download = require('download-git-repo')
+const useWebpack = require('tasca-webpack')
+const useElectron = require('tasca-electron')
+const useServe = require('tasca-serve')
+const useElectronBuilder = require('tasca-electron-builder')
 
 const pluginsSourceFolder = path.resolve(__dirname, '..', 'plugins', 'dynamic')
 const pluginsDistFolder = path.resolve(__dirname, '..', 'pluginsDist')
@@ -173,7 +177,7 @@ async function copyRemoteDist(cb) {
 	})
 }
 
-function CommonTasks() {
+function BasicTasks() {
 	return [createBuildFile]
 }
 
@@ -185,4 +189,96 @@ function BrowserTasks() {
 	return [createBrowserPluginsDist, cloneRemotePlugin, installRemoteDeps, buildRemote, copyRemoteDist]
 }
 
-exports.default = [CommonTasks, ElectronTasks, BrowserTasks].flat()
+const CommonTasks = [BasicTasks, ElectronTasks, BrowserTasks].flat()
+
+exports.default = CommonTasks
+
+function BuildWebpackMain() {
+	this.use(useWebpack(path.join(__dirname, './main_config')))
+}
+function WatchWebpackRenderer() {
+	this.use(
+		useWebpack(path.join(__dirname, './renderer_config'), {
+			watch: true,
+		}),
+	)
+}
+function BuildElectronBuilder() {
+	let options = {}
+
+	if (info['32bits']) {
+		options.ia32 = true
+	}
+
+	if (info['platform']) {
+		options.linux = info['platform']
+	}
+
+	if (info['outpacked']) {
+		options.dir = true
+	}
+
+	if (info['publish']) {
+		options.publish = info['publish']
+	}
+
+	this.use(useElectronBuilder(path.join(__dirname, '..'), path.join(__dirname, '..'), options))
+}
+function BuildWebpackRenderer() {
+	this.use(useWebpack(path.join(__dirname, './renderer_config')))
+}
+function ServeElectronInterface() {
+	this.use(
+		useServe(path.join(__dirname, '..', 'dist_ui'), {
+			port: 9000,
+		}),
+	)
+}
+function RunElectron() {
+	this.use(useElectron(path.join(__dirname, '..'), path.join(__dirname, '..', 'dist_main', 'main.js'), '--no-sandbox'))
+}
+function BuildWebpackPreload() {
+	this.use(useWebpack(path.join(__dirname, './preload_config')))
+}
+function WatchWebpackBrowser() {
+	this.use(
+		useWebpack(path.join(__dirname, './browser_config'), {
+			watch: true,
+		}),
+	)
+}
+function BuildWebpackBrowser() {
+	this.use(useWebpack(path.join(__dirname, './browser_config')))
+}
+function ServeBrowserInterface() {
+	this.use(
+		useServe(path.join(__dirname, '..', 'dist_browser'), {
+			port: 7500,
+			host: '0.0.0.0',
+		}),
+	)
+}
+function WatchWebpackServer() {
+	this.use(
+		useWebpack(path.join(__dirname, './server_config'), {
+			watch: true,
+		}),
+	)
+}
+function BuildWebpackTesting() {
+	this.use(useWebpack(path.join(__dirname, './test_config')))
+}
+
+exports.watchElectron = [...CommonTasks, BuildWebpackMain, WatchWebpackRenderer, ServeElectronInterface, RunElectron, BuildWebpackPreload, BuildWebpackBrowser]
+
+exports.buildElectron = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildElectronBuilder]
+
+exports.buildAllWebpackConfigs = [BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
+
+exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrowser]
+
+exports.buildBrowser = [...CommonTasks, BuildWebpackBrowser]
+
+exports.watchServer = [...CommonTasks, WatchWebpackServer, ServeBrowserInterface, WatchWebpackBrowser]
+
+exports.buildTest = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
