@@ -17,7 +17,6 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install -g yarn
     - name: Installing dependencies
       run: yarn
     - name: Building
