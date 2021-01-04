@@ -46,7 +46,7 @@
 		"build:browser": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildBrowser",
 		"build:server": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildServer",
 		"build:test": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildTest",
-		"build:experimental:browser": "yarn tasks:build:browser",
+		"build:experimental:browser": "yarn build:browser",
 		"build:outpacked": "yarn build:electron --info outpacked=true",
 		"build:docs": "typedoc --out dist_docs src/interface/types/doc.ts",
 		"test": "yarn build:test && npm run test:mocha",
