@@ -68,7 +68,7 @@ const styleWrapper = style`
 		#sidepanel{
 			background:var(--bodyBackground);
 			min-width:50px;
-			width:35%;
+			width:25%;
 			max-height:100%;
 			overflow:auto;
 			float: left;
