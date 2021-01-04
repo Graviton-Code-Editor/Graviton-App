@@ -1,8 +1,9 @@
 name: Node CD
 
 on:
+  workflow_dispatch:
   schedule:    
-   - cron: '00 00 * * 3'
+   - cron: '00 00 * * 1'
 
 jobs:
   release:
@@ -39,22 +40,19 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Installing dependencies
-      run: |
-        npm i
+      run: yarn
     - name: Building the interface
       run: |
-        npm run build:tasks
-        npm run build:webpack
+        yarn build:tasks
+        yarn build:webpack
     - name : Creating the installer and publishing it
-      run: |
-        npm run build:electron:publish
+      run: yarn build:electron --info publish=onTagOrDraft
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name : Building for RPM
       if: ${{ runner.os == 'Linux' }}
-      run: |
-        npm run build:electron:rpm:publish
+      run: yarn build:electron --info platform=rpm publish=onTagOrDraft
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
