@@ -7,6 +7,7 @@
 				"File": "Fichier",
 				"OpenFolder": "Ouvrir un dossier",
 				"OpenFile": "Ouvrir un fichier",
+				"SaveFile": "Sauvegarder le fichier",
 				"Projects": {
 					"Projects": "Projets",
 					"OpenProjects": "Projets ouverts"
@@ -50,7 +51,10 @@
 				"ShowSidepanel": "Afficher le panneau latéral",
 				"HideSidebar": "Cacher la barre latérale",
 				"HideSidepanel": "Cacher le panneau latéral",
-				"ToggleTerminal": "Afficher/Cacher le terminal"
+				"ToggleTerminal": "Afficher/Cacher le terminal",
+				"Sidebar": "Barre latérale",
+				"Sidepanel": "Panneau latérale",
+				"Terminal": "Terminal"
 			},
 			"Window": {
 				"Window": "Fenêtre",
@@ -150,6 +154,7 @@
 			}
 		},
 		"misc": {
+			"Miscellaneous": "Divers",
 			"LastVersion": "Dernière version",
 			"InstalledVersion": "Version installée",
 			"About": "À propos",
@@ -178,7 +183,10 @@
 			"Ignore": "Ignorer",
 			"BuildDate": "Date de compilation",
 			"By": "par",
-			"Understood": "Compris"
+			"Understood": "Compris",
+			"RemoveFromWorkspace": "Retirer de l'espace de travail",
+			"JoinTheDiscussion": "Rejoindre la discussion",
+			"OpenAnyway": "Ouvert de toute manière"
 		},
 		"notifications": {
 			"appLanguageChanged": {
