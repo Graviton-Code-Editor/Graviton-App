@@ -29,7 +29,7 @@
 			"url": "https://github.com/seniorglez"
 		},
 		{
-			"name": "Saul Blanco",
+			"name": "Saúl Blanco",
 			"url": "https://github.com/Saul-BT"
 		}
 	],
@@ -43,7 +43,6 @@
 		"build:tasks": "tasca ./build/tasks.js",
 		"build:webpack": "cross-env NODE_ENV=development tasca ./build/tasks.js --tasks buildAllWebpackConfigs",
 		"build:electron": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildElectron",
-		"build:publish": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildElectron --info publish=onTagOrDraft",
 		"build:browser": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildBrowser",
 		"build:server": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildServer",
 		"build:test": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildTest",

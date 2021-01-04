@@ -1,6 +1,7 @@
 name: Node CD
 
 on:
+  workflow_dispatch:
   schedule:    
    - cron: '00 00 * * 1'
 
@@ -46,13 +47,13 @@ jobs:
         yarn build:tasks
         yarn build:webpack
     - name : Creating the installer and publishing it
-      run: yarn build:electron --info publish=true
+      run: yarn build:electron --info publish=onTagOrDraft
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name : Building for RPM
       if: ${{ runner.os == 'Linux' }}
-      run: yarn build:electron --info platform=rpm publish=true
+      run: yarn build:electron --info platform=rpm publish=onTagOrDraft
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
