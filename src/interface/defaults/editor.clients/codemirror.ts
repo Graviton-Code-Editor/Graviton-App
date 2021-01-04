@@ -297,6 +297,18 @@ const CodemirrorClient = new EditorClient(
 						mode: 'go',
 						name: 'text/x-go',
 					}
+				case 'cs':
+					return {
+						fancy: 'C#',
+						mode: 'csharp',
+						name: 'text/x-csharp',
+					}
+				case 'hs':
+					return {
+						fancy: 'Haskell',
+						mode: 'text/x-haskell',
+						name: 'text/x-haskell',
+					}
 				default:
 					return {
 						name: extension,
