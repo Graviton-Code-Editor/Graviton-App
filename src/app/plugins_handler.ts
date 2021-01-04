@@ -25,7 +25,7 @@ ipcMain.handle('install-gvp', (event, { path: gvpPath, name, dist }) => {
 })
 
 function getZip(url, pluginId, dist) {
-	return new Promise((resolve, reject) => {
+	return new Promise<void>((resolve, reject) => {
 		axios({
 			method: 'get',
 			url,
@@ -55,7 +55,7 @@ function createPluginFolder(pluginId, dist) {
 
 function extractZip(zipPath, pluginId, dist) {
 	const pluginDirectory = path.join(dist, pluginId)
-	return new Promise((resolve, reject) => {
+	return new Promise<void>((resolve, reject) => {
 		const zip = new AdmZip(zipPath)
 		zip.extractAllTo(pluginDirectory, true)
 		resolve()

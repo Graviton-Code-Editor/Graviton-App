@@ -212,7 +212,7 @@ class Tab {
 	 * Remove the tab's DOM node
 	 */
 	private _removeElements() {
-		return new Promise(res => {
+		return new Promise<void>(res => {
 			setTimeout(() => {
 				this.tabElement.remove()
 				this.bodyElement.remove()

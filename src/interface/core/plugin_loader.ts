@@ -124,7 +124,7 @@ async function loadPlugin(pluginPkg) {
 }
 
 const registerPluginsIn = where => {
-	return new Promise((resolve, reject) => {
+	return new Promise<void>((resolve, reject) => {
 		fs.readdir(where)
 			.then(paths => {
 				paths.map(pluginName => {
