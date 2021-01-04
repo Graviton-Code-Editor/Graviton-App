@@ -1,5 +1,5 @@
 import TabBody from '../components/panel/tab'
-import TabEditor from '../components/panel/tab.editor'
+import TabEditor from '../components/panel/tab_editor'
 import { state, element, render } from '@mkenzo_8/puffin'
 import RunningConfig from 'RunningConfig'
 import Cross from '../components/icons/cross'
