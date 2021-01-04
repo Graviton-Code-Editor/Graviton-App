@@ -10,8 +10,8 @@ function gravitonHasUpdate() {
 			url: APIEndpoint,
 		})
 			.then(async function (response) {
-				const { betaVersion, stableVersion } = response.data.graviton
-				let gravitonVersion = betaVersion
+				const { betaVersion, stableVersion, devVersion } = response.data.graviton
+				let gravitonVersion = devVersion
 				if (semver.gt(gravitonVersion, packageJSON.version)) {
 					resolve({
 						res: true,
