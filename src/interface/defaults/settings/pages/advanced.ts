@@ -75,6 +75,11 @@ export default function Advanced({ closeWindow }) {
 						key: 'editorAutocomplete',
 						label: 'windows.Settings.Advanced.Autocomplete',
 					},
+					{
+						type: 'switch',
+						key: 'editorFold',
+						label: 'windows.Settings.Advanced.FoldBlocks',
+					},
 				],
 			},
 		],

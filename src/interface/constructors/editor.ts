@@ -223,6 +223,13 @@ class Editor implements EditorOptions {
 			})
 		})
 
+		const editorFoldToggledWatcher = StaticConfig.keyChanged('editorFold', value => {
+			this.client.do('toggleFold', {
+				instance: this.instance,
+				value,
+			})
+		})
+
 		this.tabState.emit('editorCreated', {
 			client: this.client,
 			instance: this.instance,
@@ -239,6 +246,7 @@ class Editor implements EditorOptions {
 			editorFontFamilyWatcher.cancel()
 			editorWrapLinesWatcher.cancel()
 			mainboxResizedWatcher.cancel()
+			editorFoldToggledWatcher.cancel()
 			if (RunningConfig.data.focusedEditor?.instance === this.instance) {
 				RunningConfig.data.focusedEditor = null
 			}

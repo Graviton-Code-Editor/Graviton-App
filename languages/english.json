@@ -95,6 +95,7 @@
 					"FileWatcher": "Files Watcher",
 					"Autocomplete": "Autocomplete",
 					"WrapLines": "Wrap lines",
+					"FoldBlocks": "Fold blocks",
 					"ManualConfig": {
 						"ManualConfig": "Manual config",
 						"EditConfiguration": "Edit configuration"

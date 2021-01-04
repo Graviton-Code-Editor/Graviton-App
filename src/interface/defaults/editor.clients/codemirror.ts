@@ -650,6 +650,9 @@ const CodemirrorClient = new EditorClient(
 				instance.getInputField().blur()
 			}, 1)
 		},
+		toggleFold({ instance, value }) {
+			instance.setOption('foldGutter', value)
+		},
 	},
 )
 
