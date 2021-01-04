@@ -118,7 +118,6 @@
 		"@types/fs-extra": "^9.0.1",
 		"@types/fs-extra-promise": "^1.0.9",
 		"@types/node": "^14.14.10",
-		"@webpack-cli/serve": "^1.1.0",
 		"chai": "^4.2.0",
 		"contributor-faces": "^1.1.0",
 		"copy-webpack-plugin": "^6.0.3",
@@ -148,7 +147,7 @@
 		"tasca-serve": "^1.0.1",
 		"tasca-webpack": "1.0.1",
 		"ts-loader": "^8.0.13",
-		"typedoc": "^0.19.2",
+		"typedoc": "0.19.2",
 		"typescript": "^4.1.3",
 		"webpack": "^5.11.1"
 	},
