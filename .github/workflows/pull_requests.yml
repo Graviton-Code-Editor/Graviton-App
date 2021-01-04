@@ -17,13 +17,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm install -g yarn
     - name: Installing dependencies
-      run: |
-        npm i
+      run: yarn
     - name: Building UI
       run: |
-        npm run build:tasks
-        npm run build:webpack
+        yarn build:tasks
+        yarn build:webpack
     - name: Running unit tests
       uses: GabrielBB/xvfb-action@v1.2
       with:

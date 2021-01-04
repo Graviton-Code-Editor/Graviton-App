@@ -1,8 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const WebpackMessages = require('webpack-messages')
-const WebpackBar = require('webpackbar')
 
 module.exports = {
 	name: 'renderer',
@@ -17,13 +15,6 @@ module.exports = {
 		index: './src/interface/main.ts',
 	},
 	plugins: [
-		new WebpackBar({
-			name: 'Interface',
-		}),
-		new WebpackMessages({
-			name: 'Interface',
-			logger: str => console.log(`[webpack] --> ${str}`),
-		}),
 		new HtmlWebpackPlugin({
 			title: 'Graviton Editor',
 			filename: path.resolve(process.cwd(), 'dist_ui', 'index.html'),
@@ -111,11 +102,5 @@ module.exports = {
 	output: {
 		filename: 'main.js',
 		path: path.resolve(process.cwd(), 'dist_ui'),
-	},
-	devServer: {
-		contentBase: path.join(process.cwd(), 'dist_ui'),
-		compress: true,
-		port: 9000,
-		stats: 'errors-only',
 	},
 }
