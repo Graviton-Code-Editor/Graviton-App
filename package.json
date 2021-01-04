@@ -2,7 +2,7 @@
 	"name": "graviton",
 	"version": "2.1.7",
 	"description": "A code editor.",
-	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
+	"repository": "https://marc2332/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
 	"author": "Marc Espín Sanz <mespinsanz@gmail.com>",
 	"license": "MIT",
