@@ -5,19 +5,19 @@ import { EditorClient } from '../../constructors/editorclient'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import isBrowser from '../../utils/is_browser'
+import path from 'path'
+import DiffMatchPatch from 'diff-match-patch'
+import CodeMirrorOptions from 'Types/codemirror_client'
+import 'lsp-codemirror/lib/codemirror-lsp.css'
+import 'lsp-codemirror/lib/icons/rect.svg'
 
 let LspWsConnection
 let CodeMirrorAdapter
 
-import 'lsp-codemirror/lib/codemirror-lsp.css'
-import 'lsp-codemirror/lib/icons/rect.svg'
-
-import DiffMatchPatch from 'diff-match-patch'
-
 if (!isBrowser) {
 	let CustomWindow: any = window
 
-	// CodeMirror Merge Addon needs defined globally
+	// CodeMirror Merge Addon needs these defined globally
 	CustomWindow.diff_match_patch = DiffMatchPatch
 	CustomWindow.DIFF_EQUAL = 0
 	CustomWindow.DIFF_INSERT = 1
@@ -29,35 +29,9 @@ if (!isBrowser) {
 	})
 }
 
-import 'codemirror/addon/search/search'
-import 'codemirror/addon/merge/merge'
-import 'codemirror/addon/selection/active-line'
-import 'codemirror/addon/edit/matchbrackets'
-import 'codemirror/addon/edit/matchtags'
-import 'codemirror/addon/edit/closetag'
-import 'codemirror/addon/edit/closebrackets'
-import 'codemirror/addon/hint/show-hint.css'
-import 'codemirror/addon/hint/show-hint'
-import 'codemirror/addon/hint/javascript-hint'
-import 'codemirror/addon/hint/css-hint'
-import 'codemirror/addon/hint/sql-hint'
-import 'codemirror/addon/hint/xml-hint'
-import 'codemirror/addon/hint/html-hint'
-import 'codemirror/addon/hint/html-hint'
-import 'codemirror/addon/fold/foldgutter'
-import 'codemirror/addon/fold/foldcode'
-import 'codemirror/addon/fold/foldgutter.css'
-import 'codemirror/addon/fold/brace-fold'
-import 'codemirror/addon/fold/indent-fold'
-import 'codemirror/addon/fold/xml-fold'
-import 'codemirror/addon/fold/markdown-fold'
-import 'codemirror/addon/fold/comment-fold'
-import path from 'path'
-
 /*
 	This is the editor client used to edit plain text files
 */
-
 const CodemirrorClient = new EditorClient(
 	{
 		name: 'codemirror',
@@ -79,7 +53,7 @@ const CodemirrorClient = new EditorClient(
 			 * Every case refers to a programming language's file format,
 			 * (example: JavaScript -> js).
 			 * If it's not supported it will go into the default case,
-			 * bellow yo can see the list of supported by this CodeMirror Client.
+			 * below yo can see the list of supported by this CodeMirror Client.
 			 */
 			switch (extension) {
 				case 'html':
@@ -316,27 +290,29 @@ const CodemirrorClient = new EditorClient(
 					}
 			}
 		},
-		create({ element, language, value, theme, CtrlPlusScroll, directory, options }) {
-			let way = CodeMirror
-			let ops = {}
+		create({ element, language, value, theme, CtrlPlusScroll, directory, options = {} }: CodeMirrorOptions) {
+			let CodeMirrorClient = CodeMirror
+			let extraOptions = {}
 
-			if (options) {
-				if (options.merge) {
-					way = CodeMirror.MergeView
-					ops = {
-						origRight: options.mirror,
-						orig: value,
-						highlightDifferences: true,
-						conntect: 'align',
-					}
+			/*
+			 * Only when is in merge mode is enabled use CodeMirror's MergeView to create the instance
+			 */
+			if (options?.merge) {
+				CodeMirrorClient = CodeMirror.MergeView
+				extraOptions = {
+					origRight: options.mirror,
+					orig: value,
+					highlightDifferences: true,
+					conntect: 'align',
 				}
 			}
 
 			emmet(CodeMirror)
-			let CodemirrorEditor = way(element, {
+
+			let CodemirrorEditor = CodeMirrorClient(element, {
 				mode: language,
 				value: value,
-				...ops,
+				...extraOptions,
 				collpse: false,
 				lineNumbers: true,
 				htmlMode: true,
@@ -355,7 +331,7 @@ const CodemirrorClient = new EditorClient(
 				indentUnit: StaticConfig.data.editorTabSize,
 				undoDepth: 500,
 				miniMap: false,
-				indentWithTabs: language === 'yaml' ? false : StaticConfig.data.editorIndentation == 'tab',
+				indentWithTabs: language.name === 'yaml' ? false : StaticConfig.data.editorIndentation == 'tab',
 				lineWrapping: StaticConfig.data.editorWrapLines,
 				extraKeys: {
 					Tab: 'emmetExpandAbbreviation',
@@ -378,54 +354,56 @@ const CodemirrorClient = new EditorClient(
 				gutters: ['CodeMirror-lsp', 'CodeMirror-foldgutter'],
 			})
 
-			if (options) {
-				//Only when is in merge mode
-				if (options.merge) {
+			/*
+			 * Only when is in merge mode is enabled
+			 */
+			if (options?.merge) {
+				setTimeout(() => {
+					// Wait 250ms for lines to be rendered
+					highlightModifiedLines()
+				}, 250)
+
+				const { edit, right } = CodemirrorEditor
+
+				// Update lines on changes
+				edit.on('changes', () => {
 					setTimeout(() => {
-						//Wait 250ms for lines to be renderer
 						highlightModifiedLines()
 					}, 250)
+				})
 
-					const { edit, right } = CodemirrorEditor
+				// Update lines when scrolling
+				edit.on('scroll', () => {
+					highlightModifiedLines()
+				})
 
-					//Update lines on changes
-					edit.on('changes', () => {
-						setTimeout(() => {
-							highlightModifiedLines()
-						}, 250)
-					})
+				edit.on('optionChange', (cm, option) => {
+					right.orig.setOption(option, edit.getOption(option))
+					right.orig.refresh()
+				})
 
-					//Update lines when scrolling
-					edit.on('scroll', () => {
+				edit.on('refresh', () => {
+					right.orig.refresh()
+					setTimeout(() => {
 						highlightModifiedLines()
-					})
-
-					edit.on('optionChange', (cm, option) => {
-						right.orig.setOption(option, edit.getOption(option))
-						right.orig.refresh()
-					})
-
-					edit.on('refresh', () => {
-						right.orig.refresh()
+					}, 300)
+				})
+				;[edit, right.orig].forEach(cm => {
+					// Update lines on cursor activity on both instances
+					cm.on('cursorActivity', () => {
 						setTimeout(() => {
 							highlightModifiedLines()
-						}, 300)
+						}, 1)
 					})
-					;[edit, right.orig].forEach(cm => {
-						//Update lines on cursor activity on both instances
-						cm.on('cursorActivity', () => {
-							setTimeout(() => {
-								highlightModifiedLines()
-							}, 1)
-						})
-					})
+				})
 
-					// Reassign CodemirroEditor to the CM instance
-					CodemirrorEditor = edit
-				}
+				// Reassign the primary CodemirrorEditor to the CM instance
+				CodemirrorEditor = edit
 			}
 
-			//Ctrl+C event handler
+			/*
+			 * Send a event of clipboard been written on Ctrl+C
+			 */
 			CodemirrorEditor.on('keydown', (cm, ev) => {
 				if (ev.code === 'KeyC' && ev.ctrlKey) {
 					RunningConfig.emit('clipboardHasBeenWritten', {
@@ -434,7 +412,9 @@ const CodemirrorClient = new EditorClient(
 				}
 			})
 
-			// Set fontsize for every editor
+			/*
+			 * Force every CodeMirror instance inside the editor container to have the configured font size
+			 */
 			const editors = element.getElementsByClassName('Codemirror')
 			Object.keys(editors).forEach(cm => {
 				editors[cm].style.fontSize = StaticConfig.data.editorFontSize
@@ -443,7 +423,9 @@ const CodemirrorClient = new EditorClient(
 			const CtrlUpShortcutEnabled = StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos.includes('Ctrl+Up')
 			const CtrlDownShortcutEnabled = StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos.includes('Ctrl+Down')
 
-			//Ctrl+ArrowUp handler
+			/*
+			 * Ctrl+ArrowUp handler
+			 */
 			if (CtrlUpShortcutEnabled) {
 				CodemirrorEditor.addKeyMap({
 					'Ctrl-Up': function (instance) {
@@ -451,7 +433,9 @@ const CodemirrorClient = new EditorClient(
 					},
 				})
 			}
-			//Ctrl+ArrowDown handler
+			/*
+			 * Ctrl+ArrowDown handler
+			 */
 			if (CtrlDownShortcutEnabled) {
 				CodemirrorEditor.addKeyMap({
 					'Ctrl-Down': function (instance) {
@@ -462,7 +446,7 @@ const CodemirrorClient = new EditorClient(
 
 			// Ctrl+wheel event handler
 			if (!RunningConfig.data.isBrowser) {
-				element.addEventListener('wheel', e => {
+				element.addEventListener('wheel', (e: any) => {
 					if (!e.ctrlKey) return
 					if (e.wheelDeltaY.toString()[0] == '-') {
 						CtrlPlusScroll('down')
@@ -668,6 +652,9 @@ const CodemirrorClient = new EditorClient(
 	},
 )
 
+/*
+ * Create a LSP adapter client into a CodeMirror instance
+ */
 function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	const fileUri = directory.replace(/\\/gm, '/')
 	const folderUrl = path.dirname(fileUri)
@@ -696,6 +683,9 @@ function createLspClient({ lspServer, language, directory, CodemirrorEditor }) {
 	}
 }
 
+/*
+ * Handle CodeMirro's built-in autocomplete
+ */
 function handleCMAutocomplete(CodemirrorEditor, { fancy }): void {
 	if (fancy === 'html') {
 		CodemirrorEditor.on('change', (cm, change) => {
@@ -714,7 +704,7 @@ function handleCMAutocomplete(CodemirrorEditor, { fancy }): void {
 /*
  * Append a custom class to every inserted or deleted character's parent
  */
-function highlightModifiedLines() {
+function highlightModifiedLines(): void {
 	let pastLine = null
 
 	//Update inserted lines
