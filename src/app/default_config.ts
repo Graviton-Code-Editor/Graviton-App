@@ -14,10 +14,10 @@ const isWindows = isBrowser ? false : process.platform == 'win32'
 
 const defaultConfig = {
 	config: {
-		appTheme: 'Arctic',
+		appTheme: 'Night',
 		appIconpack: 'Graviton',
 		appLanguage: 'english',
-		editorFontSize: '16',
+		editorFontSize: '14',
 		appProjectsLog: [],
 		appConfigPath: '',
 		appWorkspacesLog: [],
@@ -25,7 +25,7 @@ const defaultConfig = {
 		editorFSWatcher: true,
 		editorGitIntegration: true,
 		editorAutocomplete: true,
-		editorIndentation: 'tab',
+		editorIndentation: 'space',
 		editorTabSize: 2,
 		editorFontFamily: 'JetBrainsMono',
 		editorWrapLines: false,
@@ -94,7 +94,7 @@ const defaultConfig = {
 		editorFold: true,
 		terminalDefaultShell: isBrowser ? null : isWindows ? 'PowerShell' : process.env['SHELL'],
 	},
-} //test
+}
 if (isMac) {
 	defaultConfig.config.appShortcuts.CloseApp.combos.push('Ctrl+Q')
 }
