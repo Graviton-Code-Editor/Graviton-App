@@ -10,6 +10,7 @@ try {
  */
 
 const isMac = isBrowser ? false : process.platform == 'darwin'
+const isWindows = isBrowser ? false : process.platform == 'win32'
 
 const defaultConfig = {
 	config: {
@@ -91,6 +92,7 @@ const defaultConfig = {
 		experimentalSourceTracker: false,
 		appCheckWorkspaceExistsWhenOpeningFolders: true,
 		editorFold: true,
+		terminalDefaultShell: isBrowser ? null : isWindows ? 'PowerShell' : process.env['SHELL'],
 	},
 } //test
 if (isMac) {

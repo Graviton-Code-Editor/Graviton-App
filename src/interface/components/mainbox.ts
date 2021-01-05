@@ -18,15 +18,9 @@ function handleTerminal(element: HTMLElement, state: boolean) {
 		element.style.display = 'block'
 		document.getElementById('panels_stack').style.height = '70%'
 		if (RunningConfig.data.openedTerminals.length === 0 && !RunningConfig.data.isBrowser) {
-			if (process.platform === 'win32') {
-				RunningConfig.emit('createTerminalSession', {
-					shell: 'PowerShell',
-				})
-			} else {
-				RunningConfig.emit('createTerminalSession', {
-					shell: process.env['SHELL'],
-				})
-			}
+			RunningConfig.emit('createTerminalSession', {
+				shell: StaticConfig.data.terminalDefaultShell,
+			})
 		}
 	} else {
 		element.style.display = 'none'
