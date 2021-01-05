@@ -205,6 +205,11 @@
 				"title": "Experimental feature",
 				"content": "This feature is unstable and might cause some issues."
 			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRepositoryOpen": "No repository open."
+			}
 		}
 	}
 }
