@@ -98,6 +98,7 @@
 					"FileWatcher": "Observateur de fichiers",
 					"Autocomplete": "Autocomplétion",
 					"WrapLines": "Envelopper les lignes",
+					"FoldBlocks": "Pliage de blocs",
 					"ManualConfig": {
 						"ManualConfig": "Configuration manuelle",
 						"EditConfiguration": "Éditer la configuration"
@@ -206,6 +207,11 @@
 			"experimentalFeature": {
 				"title": "Fonctionnalité expérimentale",
 				"content": "Cette fonctionnalité n'est pas stable et peut causer des bugs."
+			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRepositoryOpen": "Aucun dépôt n'est ouvert."
 			}
 		}
 	}
