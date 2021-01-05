@@ -69,13 +69,13 @@ class Tab {
 		})`
 		<TabBody title="${title}" mounted="${mounted}" active="${() => this.tabState.data.active}"  draggable="true" classSelector="${this.classSelector}" class="${
 			this.classSelector
-		}" :dragstart="${startDrag}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :drop="${onDropped}">
+		}" :dragstart="${startDrag}" :mousedown="${closeTab}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :drop="${onDropped}">
 			${this.itemIconSource ? element`<img class="tab-icon" src="${this.itemIconSource}"/>` : element`<div/>`}
 			<p :drop="${onDropped}" classSelector="${this.classSelector}">
 				${title}
 			</p>
 			<div class="tab-button" :drop="${onDropped}" classSelector="${this.classSelector}">
-				<Cross draggable="false" class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :click="${closeTab}"></Cross>
+				<Cross draggable="false" class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :mousedown="${closeTab}" :click="${closeTab}"></Cross>
 			</div>
 		</TabBody>
 		`
@@ -105,13 +105,16 @@ class Tab {
 			}
 			e.dataTransfer.setData('classSelectorForNext', classSelectorForNext)
 		}
-		function focusTab(): void {
+		function focusTab(e: MouseEvent): void {
 			self.tabState.emit('focusedMe')
 			self.tabState.emit('focusedItem')
 		}
 		function closeTab(e: MouseEvent): void {
-			e.stopPropagation()
-			self.tabState.emit('close')
+			if (e.which == 2) {
+				self.tabState.emit('close')
+			} else if (e.which == 1 && this.tagName === 'svg') {
+				self.tabState.emit('close')
+			}
 		}
 		function focusTabshowCross(): void {
 			self._toggleCross(this.getElementsByClassName('tab-cross')[0], 1)

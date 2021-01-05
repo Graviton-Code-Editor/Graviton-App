@@ -182,7 +182,7 @@ RunningConfig.on('appLoaded', async function () {
 		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
 	}
 	RunningConfig.emit('allPluginsLoaded')
-	if (eval('window.process.env.NODE_ENV') !== 'test') {
+	if (!isBrowser && eval('window.process.env.NODE_ENV') !== 'test') {
 		loadAllPlugins()
 	}
 })

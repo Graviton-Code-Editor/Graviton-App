@@ -28,6 +28,7 @@ module.exports = {
 						</body>
 					</html>
 				`,
+			hash: true,
 		}),
 		new CopyPlugin({
 			patterns: [
