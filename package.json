@@ -145,7 +145,7 @@
 		"tasca-electron": "^1.0.0",
 		"tasca-electron-builder": "^1.0.0",
 		"tasca-serve": "^1.0.1",
-		"tasca-webpack": "1.0.1",
+		"tasca-webpack": "1.0.2",
 		"ts-loader": "^8.0.13",
 		"typedoc": "0.19.2",
 		"typescript": "^4.1.3",

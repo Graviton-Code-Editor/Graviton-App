@@ -7970,10 +7970,10 @@ tasca-serve@^1.0.1:
     express "^4.17.1"
     serve-handler "^6.1.3"
 
-tasca-webpack@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/tasca-webpack/-/tasca-webpack-1.0.1.tgz#cb84ed79a916af53385bb446ed68da646aa4bca0"
-  integrity sha512-BvCALDnVBbS6hSxegCGSeCaxiu5pvkb5m2TAXheaW8kT0Tcozp0uLgVXQmFbxwY47IwTpguIxMSQY9puHI7zag==
+tasca-webpack@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/tasca-webpack/-/tasca-webpack-1.0.2.tgz#9b818478a9314fec822dff1de09c1c21a2785724"
+  integrity sha512-C0O+XGKEJ8eKg9UrXPeOFkyugjW0hw1uAJu3K31pXVIfMqDFtRY8TspR+rQ8XsNeVH20oFwWNaqEySdUTRNe+A==
   dependencies:
     chalk "^4.1.0"
 
