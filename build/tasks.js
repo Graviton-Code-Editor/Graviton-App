@@ -146,7 +146,7 @@ async function cloneRemotePlugin(cb) {
 	})
 }
 
-async function installRemoteDeps(cb) {
+function installRemoteDeps(cb) {
 	const installProcess = spawn('npm', ['install'], {
 		cwd: remotePluginTemp,
 		shell: true,
@@ -154,7 +154,16 @@ async function installRemoteDeps(cb) {
 
 	installProcess.on('close', (err, output) => {
 		if (err === 1) console.log(output)
-		cb()
+		const installDevProcess = spawn('npm', ['install', '--only=dev'], {
+			cwd: remotePluginTemp,
+			shell: true,
+		})
+
+		installDevProcess.on('close', (err, output) => {
+			if (err === 1) console.log(output)
+			console.log(output)
+			cb()
+		})
 	})
 }
 
