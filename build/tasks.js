@@ -164,7 +164,7 @@ async function buildRemote(cb) {
 		shell: true,
 	})
 
-	installProcess.on('close', (err, output) => {
+	buildProcess.on('close', (err, output) => {
 		if (err === 1) console.log(output)
 		cb()
 	})
