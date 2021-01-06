@@ -182,7 +182,16 @@ RunningConfig.on('appLoaded', async function () {
 		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
 	}
 	RunningConfig.emit('allPluginsLoaded')
-	if (!isBrowser && eval('window.process.env.NODE_ENV') !== 'test') {
+
+	let preventRunningPlugins = false
+
+	if (!isBrowser) {
+		if (eval('window.process.env.NODE_ENV') !== 'test') {
+			preventRunningPlugins = true
+		}
+	}
+
+	if (!preventRunningPlugins) {
 		loadAllPlugins()
 	}
 })
