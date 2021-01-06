@@ -147,27 +147,27 @@ async function cloneRemotePlugin(cb) {
 }
 
 async function installRemoteDeps(cb) {
-	exec(
-		'npm install',
-		{
-			cwd: remotePluginTemp,
-		},
-		() => {
-			cb()
-		},
-	)
+	const installProcess = spawn('npm', ['install'], {
+		cwd: remotePluginTemp,
+		shell: true,
+	})
+
+	installProcess.on('close', (err, output) => {
+		if (err === 1) console.log(output)
+		cb()
+	})
 }
 
 async function buildRemote(cb) {
-	exec(
-		'npm run build',
-		{
-			cwd: remotePluginTemp,
-		},
-		() => {
-			cb()
-		},
-	)
+	const buildProcess = spawn('npm', ['run build'], {
+		cwd: remotePluginTemp,
+		shell: true,
+	})
+
+	installProcess.on('close', (err, output) => {
+		if (err === 1) console.log(output)
+		cb()
+	})
 }
 
 async function copyRemoteDist(cb) {
