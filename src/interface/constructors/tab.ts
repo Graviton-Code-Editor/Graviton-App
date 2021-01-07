@@ -65,17 +65,19 @@ class Tab {
 			components: {
 				TabBody,
 				Cross,
+				UnSavedIcon,
 			},
 		})`
 		<TabBody title="${title}" mounted="${mounted}" active="${() => this.tabState.data.active}"  draggable="true" classSelector="${this.classSelector}" class="${
 			this.classSelector
-		}" :dragstart="${startDrag}" :mousedown="${closeTab}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :drop="${onDropped}">
+		}" :dragstart="${startDrag}" :mousedown="${closeTabFromMiddleLick}" :click="${focusTab}" :mouseover="${showCross}" :mouseleave="${hideCross}" :dragenter="${dragEnter}" :dragleave="${dragLeave}" :drop="${onDropped}">
 			${this.itemIconSource ? element`<img class="tab-icon" src="${this.itemIconSource}"/>` : element`<div/>`}
 			<p :drop="${onDropped}" classSelector="${this.classSelector}">
 				${title}
 			</p>
 			<div class="tab-button" :drop="${onDropped}" classSelector="${this.classSelector}">
-				<Cross draggable="false" class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :mousedown="${closeTab}" :click="${closeTab}"></Cross>
+				<Cross draggable="false" class="tab-cross" :drop="${onDropped}" classSelector="${this.classSelector}" style="opacity:0;" :mousedown="${closeTabFromMiddleLick}" :click="${closeTab}"></Cross>
+				<UnSavedIcon draggable="false" style="display: none;" classSelector="${this.classSelector}"  :click="${closeTab}"></UnSavedIcon>
 			</div>
 		</TabBody>
 		`
@@ -109,12 +111,14 @@ class Tab {
 			self.tabState.emit('focusedMe')
 			self.tabState.emit('focusedItem')
 		}
-		function closeTab(e: MouseEvent): void {
+
+		function closeTabFromMiddleLick(e: MouseEvent): void {
 			if (e.which == 2) {
 				self.tabState.emit('close')
-			} else if (e.which == 1 && this.tagName === 'svg') {
-				self.tabState.emit('close')
 			}
+		}
+		function closeTab(e: MouseEvent): void {
+			self.tabState.emit('close')
 		}
 		function focusTabshowCross(): void {
 			self._toggleCross(this.getElementsByClassName('tab-cross')[0], 1)
@@ -372,7 +376,7 @@ class Tab {
 	 */
 	private _toggleTabStatus(newStatus: boolean): void {
 		const tabCrossIcon = <PuffinElement>this.tabElement.getElementsByClassName('tab-cross')[0]
-		const tabSaveIcon = this.tabElement.getElementsByClassName('tab-save')[0]
+		const tabSaveIcon = <PuffinElement>this.tabElement.getElementsByClassName('tab-save')[0]
 		if (newStatus) {
 			if (!this.tabElement.state.data.saved) {
 				this.saveTab(() => {
@@ -381,29 +385,17 @@ class Tab {
 						parentFolder: this.tabElement.state.data.parentFolder,
 					})
 					tabCrossIcon.style.display = 'block'
-					if (tabSaveIcon) tabSaveIcon.remove()
+					tabSaveIcon.style.display = 'none'
 					this.tabElement.state.data.saved = true
 				})
 			} else {
 				tabCrossIcon.style.display = 'block'
-				if (tabSaveIcon) tabSaveIcon.remove()
+				tabSaveIcon.style.display = 'none'
 			}
 		} else if (this.tabElement.state.data.saved) {
 			this.tabElement.state.data.saved = false
 			tabCrossIcon.style.display = 'none'
-
-			const tryToClose = () => {
-				this.tabElement.state.emit('close')
-			}
-
-			const comp = element({
-				components: {
-					UnSavedIcon,
-				},
-			})`
-				<UnSavedIcon :click="${tryToClose}"></UnSavedIcon>
-			`
-			render(comp, this.tabElement.children[2])
+			tabSaveIcon.style.display = 'block'
 		}
 	}
 	/*
