@@ -110,6 +110,7 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 }
 
 function loadCodeMirror({ type, fileTheme, PATH }) {
+	console.log(type, fileTheme, PATH)
 	if (type === 'theme' && fileTheme) {
 		const style = document.createElement('link')
 		style.rel = 'stylesheet'
@@ -186,7 +187,7 @@ RunningConfig.on('appLoaded', async function () {
 	let preventRunningPlugins = false
 
 	if (!isBrowser) {
-		if (eval('window.process.env.NODE_ENV') !== 'test') {
+		if (eval('window.process.env.NODE_ENV') === 'test') {
 			preventRunningPlugins = true
 		}
 	}
