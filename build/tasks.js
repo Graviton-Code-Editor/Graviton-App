@@ -161,7 +161,6 @@ function installRemoteDeps(cb) {
 
 		installDevProcess.on('close', (err, output) => {
 			if (err === 1) console.log(output)
-			console.log(output)
 			cb()
 		})
 	})

@@ -4,6 +4,7 @@
 export interface FileEventsArgs {
 	parentFolder?: string
 	filePath?: string
+	newData?: string
 }
 
 /*

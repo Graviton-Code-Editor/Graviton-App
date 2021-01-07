@@ -2,6 +2,7 @@ import { DialogOptions, DialogInstance } from './dialog'
 import { NotificationOptions, NotificationInstance } from './notification'
 import { ContextMenuOptions, ContextMenuInstance } from './contextmenu'
 import { WindowOptions, WindowInstance } from './window'
+import RunningConfigInterface from './running_config'
 
 /**
  * Documented API for Graviton Editor
@@ -90,4 +91,7 @@ declare namespace GravitonAPI {
 	 *
 	 */
 	function Window(options: WindowOptions): WindowInstance
+	const RunningConfig: RunningConfigInterface
 }
+
+GravitonAPI.RunningConfig.on(['aTabHasBeenCreated', 'aFileHasBeenCreated'], () => {})

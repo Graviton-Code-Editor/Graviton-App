@@ -215,7 +215,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 								label: basename(folderPath),
 								icon: 'folder.closed',
 								decorator: {
-									label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
+									label: gitChanges.files.length == 0 ? 'Any' : gitChanges.files.length.toString(),
 									color: 'var(--explorerItemGitIndicatorText)',
 									background: 'var(--explorerItemGitNotAddedText)',
 								},

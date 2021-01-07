@@ -165,7 +165,7 @@ class FilesExplorer {
 	 *
 	 */
 	private _addListeners() {
-		RunningConfig.on(['aTabHasBeenSaved', 'aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
+		RunningConfig.on<any>(['aTabHasBeenSaved', 'aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
 			if (this.isGitRepo && parentFolder.includes(this.projectPath)) {
 				const gitChanges = await this._getGitChanges()
 				RunningConfig.emit('gitStatusUpdated', {

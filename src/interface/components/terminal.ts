@@ -289,7 +289,7 @@ function XtermTerminal({ shell = null } = {}) {
 				xtermState.emit('keyPressed', e.key)
 			})
 
-			const resizingWatchers = RunningConfig.on(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
+			const resizingWatchers = RunningConfig.on<any>(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
 				// Force resizing when the sidepanel of the mainbox gets resized
 				fit.fit()
 			})
@@ -364,7 +364,7 @@ function TerminalBar() {
 	}
 
 	function mountedSelect() {
-		RunningConfig.on(['aTerminalHasBeenCreated', 'aTerminalHasBeenClosed'], () => {
+		RunningConfig.on<any>(['aTerminalHasBeenCreated', 'aTerminalHasBeenClosed'], () => {
 			//Terminal was created
 			this.update()
 		})

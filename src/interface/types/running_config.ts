@@ -3,79 +3,85 @@ import { TabEventArgs } from './tab'
 import { FileEventsArgs, FolderEventsArgs } from './file_system'
 import { RegisterEnvironmentInspectorArgs } from './env_inspector'
 import { RegisterEditorClientArgs } from './editor_client'
+import { LoadedGitRepo, gitRepoStatusUpdated } from './git'
 
-type EventsNames =
-	/*
-	 * Allow custom event names
-	 */
-	| string
-	/*
-	 * Event fired when the app is fully loaded
-	 * interface: none
-	 */
-	| 'appLoaded'
-	/**
-	 * Event fired when a tab is created
-	 * interface: TabEventArgs
-	 */
-	| 'aTabHasBeenCreated'
-	/**
-	 * Event fired when a tab is focused
-	 * interface: TabEventArgs
-	 */
-	| 'aTabHasBeenFocused'
-	/**
-	 * Event fired when a tab is closed
-	 * interface: TabEventArgs
-	 */
-	| 'aTabHasBeenClosed'
-	/**
-	 * Event fired when a file has been created in any of the opened folders
-	 * interface: FileEventsArgs
-	 */
-	| 'aFileHasBeenCreated'
-	/**
-	 * Event fired when a file has been changed (it's content got modified) in any of the opened folders
-	 * interface: FileEventsArgs
-	 */
-	| 'aFileHasBeenChanged'
-	/**
-	 * Event fired when a folder has been created in any of the opened folders
-	 * interface: FileEventsArgs
-	 */
-	| 'aFolderHasBeenChanged'
-	/**
-	 * Event fired when a folder (aka project) is opened
-	 */
-	| 'addFolderToRunningWorkspace'
-	/**
-	 * Event fired when a folder (aka project) is no longer opened
-	 */
-	| 'removeFolderFromRunningWorkspace'
-	/**
-	 * Event fired when a LSP server is being registered
-	 */
-	| 'registerLanguageServer'
-	/**
-	 * Event fired when a Environment (aka Project) Inspector is being registered
-	 * interface: RegisterEnvironmentInspectorArgs
-	 */
-	| 'registerEnvironmentInspector'
-	/**
-	 * Event fired when a Editor client is being registered
-	 * Interface: RegisterEditorClientArgs
-	 */
-	| 'registerEditorClient'
-
-interface customEventsArgs {
-	[key: string]: any
+interface Events {
+	/* Tab Events */
+	aTabHasBeenCreated: TabEventArgs
+	aTabHasBeenClosed: TabEventArgs
+	aTabHasBeenFocused: TabEventArgs
+	aTabHasBeenUnSaved: TabEventArgs
+	aTabHasBeenUnfocused: TabEventArgs
+	aTabHasBeenSaved: TabEventArgs
+	/* Files and folders Events */
+	aFileHasBeenRemoved: FileEventsArgs
+	aFileHasBeenCreated: FileEventsArgs
+	aFileHasBeenChanged: FileEventsArgs
+	aFolderHasBeenChanged: FileEventsArgs
+	aFolderHasBeenCreated: FileEventsArgs
+	aFolderHasBeenRemoved: FileEventsArgs
+	/* Terminal events */
+	aTerminalHasBeenClosed: any
+	aTerminalHasBeenCreated: any
+	/* Terminal utils */
+	createTerminalSession: any
+	unregisterTerminalShell: any
+	addLocalTerminalAccessory: any
+	registerTerminalShell: any
+	/* Misc events  */
+	sidePanelHasBeenResized: any
+	mainBoxHasBeenResized: any
+	/* Git events */
+	loadedGitRepo: LoadedGitRepo
+	gitStatusUpdated: gitRepoStatusUpdated
+	/* Misc utils */
+	registerLanguageServer: any
+	registerEnvironmentInspector: any
+	registerEditorClient: any
+	registeredExplorerProvider: any
+	/* Notifications events	*/
+	aNotificationHasBeenCleared: any
+	aNotificationHasBeenEmitted: any
+	/* Useful commands (no parameters) */
+	'command.saveCurrentFile': any
+	'command.newPanel': any
+	'command.closeCurrentPanel': any
+	'command.increaseFontSize': any
+	'command.decreaseFontSize': any
+	'command.openCurrentPanelTabsIterator': any
+	'command.openCommandPrompt': any
+	'command.openExplorerCommandPrompt': any
+	'command.closeCurrentTab': any
+	'command.openEditorCommandPrompt': any
+	'command.closeApp': any
+	'command.closeCurrentWindow': any
+	'command.focusExplorerPanel': any
+	/* Core utils, don't use */
+	addFolderToRunningWorkspace: any
+	removeFolderFromRunningWorkspace: any
+	addWorkspaceToLog: any
+	writeToClipboard: any
+	clipboardHasBeenWritten: any
+	writeToClipboardSilently: any
+	updatedIconpack: any
+	loadFile: any
+	checkAllTabsAreSaved: any
+	hideAllFloatingComps: any
+	setWorkspace: any
+	addProjectToLog: any
+	removeProjectFromLog: any
+	saveCurrentWorkspace: any
+	tabSaved: any
+	renameWorkspace: any
+	renameWorkspaceDialog: any
+	removeWorkspaceFromLog: any
+	openWorkspaceDialog: any
+	addFolderToRunningWorkspaceDialog: any
+	appLoaded: any
+	allPluginsLoaded: any
+	'test.bootedUp': any
 }
 
-/*
- * Mix all Events's arguments interfaces into one
- */
-interface EventsArgs extends TabEventArgs, FileEventsArgs, FolderEventsArgs, RegisterEnvironmentInspectorArgs, customEventsArgs, RegisterEditorClientArgs {}
+type RunningConfigInterface = PuffinState<Events>
 
-interface RunningConfig extends PuffinState<EventsNames, EventsArgs> {}
-
-export default RunningConfig
+export default RunningConfigInterface
