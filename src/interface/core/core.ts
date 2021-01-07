@@ -44,7 +44,7 @@ if (isBrowser) {
 	 */
 	CustomWindow.graviton = {
 		AppConfig: getValidBrowserConfig(storage, defaultConfig),
-		DefaultAppConfig: defaultConfig.config,
+		DefaultAppConfig: defaultConfig,
 		runtime: {
 			isDev: false,
 			processArguments: [],
