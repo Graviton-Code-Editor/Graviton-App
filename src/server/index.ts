@@ -83,13 +83,27 @@ app.ws('/api/ws', ws => {
 				break
 			case 'info':
 				fs.lstat(messageObject.data.path, (err, data) => {
-					sendMessage({
-						type: 'returnedInfo',
-						data: {
-							path: messageObject.data.path,
-							info: data,
-						},
-					})
+					if (err) {
+						sendMessage({
+							type: 'returnedInfo',
+							data: {
+								path: messageObject.data.path,
+								error: true,
+							},
+						})
+					} else {
+						sendMessage({
+							type: 'returnedInfo',
+							data: {
+								path: messageObject.data.path,
+								info: {
+									...data,
+									isDirectory: data.isDirectory(),
+									isFile: data.isFile(),
+								},
+							},
+						})
+					}
 				})
 				break
 			case 'renameDir':

@@ -191,7 +191,7 @@ export default class remoteServer {
 	 * @returns A promise with the result
 	 */
 	static info(path: string): Promise<Object> {
-		return new Promise(res => {
+		return new Promise((resolve, reject) => {
 			ConnectionInstance.send({
 				type: 'info',
 				data: {
@@ -201,14 +201,17 @@ export default class remoteServer {
 
 			const cancel = ConnectionInstance.on('returnedInfo', data => {
 				if (data.path !== path) return
+				if (data.error) {
+					reject()
+				}
 
-				res({
+				resolve({
 					...data.info,
 					isDirectory() {
-						return true
+						return data.isDirectory
 					},
 					isFile() {
-						return false
+						return data.isFile
 					},
 				})
 
