@@ -23,6 +23,15 @@ const Core = {
 	openExternal: null,
 }
 
+function getValidBrowserConfig(storage, defaultConfig) {
+	if (storage !== '' && storage !== null) {
+		const currentConf = JSON.parse(storage)
+		return Object.assign(defaultConfig.config, currentConf)
+	} else {
+		return defaultConfig.config
+	}
+}
+
 if (isBrowser) {
 	const defaultConfig = getBrowserConfiguration()
 
@@ -34,7 +43,7 @@ if (isBrowser) {
 	 * defining the default config, user's config and runtime info
 	 */
 	CustomWindow.graviton = {
-		AppConfig: storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config,
+		AppConfig: getValidBrowserConfig(storage, defaultConfig),
 		DefaultAppConfig: defaultConfig.config,
 		runtime: {
 			isDev: false,
