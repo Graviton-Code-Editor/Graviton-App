@@ -16,6 +16,7 @@ const MainBoxStyle = style`
 function handleTerminal(element: HTMLElement, state: boolean) {
 	if (state) {
 		element.style.display = 'block'
+		element.previousElementSibling.style.display = 'block'
 		document.getElementById('panels_stack').style.height = '70%'
 		if (RunningConfig.data.openedTerminals.length === 0 && !RunningConfig.data.isBrowser) {
 			RunningConfig.emit('createTerminalSession', {
@@ -23,6 +24,7 @@ function handleTerminal(element: HTMLElement, state: boolean) {
 			})
 		}
 	} else {
+		element.previousElementSibling.style.display = 'none'
 		element.style.display = 'none'
 	}
 }
