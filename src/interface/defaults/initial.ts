@@ -38,10 +38,15 @@ export default async function init() {
 
 	new Panel() //Initial Panel
 
-	addPluginToRegistryStatically(Arctic)
-	addPluginToRegistryStatically(Night)
-
 	if (RunningConfig.data.isBrowser) {
+		addPluginToRegistryStatically({
+			PATH: 'Graviton',
+			...Arctic,
+		})
+		addPluginToRegistryStatically({
+			PATH: 'Graviton',
+			...Night,
+		})
 		addPluginToRegistryStatically({
 			PATH: 'Graviton',
 			...GravitonIconpack,
@@ -56,6 +61,16 @@ export default async function init() {
 			if (value) {
 				ExperimentalFeatureDialog().launch()
 			}
+		})
+
+		addPluginToRegistryStatically({
+			PATH: path.join(__dirname, '../../../Arctic'),
+			...Arctic,
+		})
+
+		addPluginToRegistryStatically({
+			PATH: path.join(__dirname, '../../../Night'),
+			...Night,
 		})
 
 		addPluginToRegistryStatically({

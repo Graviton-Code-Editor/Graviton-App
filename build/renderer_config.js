@@ -34,6 +34,7 @@ module.exports = {
 			patterns: [
 				{ from: path.resolve(process.cwd(), 'assets'), to: path.resolve(process.cwd(), 'dist_ui') },
 				{ from: path.resolve(process.cwd(), 'plugins/iconpacks'), to: path.resolve(process.cwd(), 'dist_ui') },
+				{ from: path.resolve(process.cwd(), 'plugins/themes'), to: path.resolve(process.cwd(), 'dist_ui') },
 			],
 		}),
 	],
