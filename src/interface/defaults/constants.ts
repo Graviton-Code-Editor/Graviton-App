@@ -39,3 +39,8 @@ export const NotificationsMaxCount = 3
  * Length of lines considered large
  */
 export const LargeFileLinesLength = 15000
+
+/*
+ * Length of characters considered large
+ */
+export const LargeFileCharsLength = 170000

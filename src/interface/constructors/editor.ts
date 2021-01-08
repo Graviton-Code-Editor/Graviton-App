@@ -9,7 +9,7 @@ import { element, render, lang } from '@mkenzo_8/puffin'
 import { Text, Button } from '@mkenzo_8/puffin-drac'
 import { css as style } from '@emotion/css'
 import { LanguageState } from 'LanguageConfig'
-import { LargeFileLinesLength } from 'Constants'
+import { LargeFileLinesLength, LargeFileCharsLength } from 'Constants'
 import Core from 'Core'
 const {
 	electron: { clipboard },
@@ -48,7 +48,7 @@ class Editor implements EditorOptions {
 				theme,
 				error: 'This is a binary file.',
 			})
-		} else if (value.split('\n').length > LargeFileLinesLength) {
+		} else if (value.split('\n').length > LargeFileLinesLength || value.length > LargeFileCharsLength) {
 			this.createCustomClient({
 				value,
 				theme,

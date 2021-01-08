@@ -3,6 +3,7 @@ import { css as style } from '@emotion/css'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import Terminal from './terminal'
+import PuffinElement from 'Types/puffin.element'
 
 const MainBoxStyle = style`
 	position: relative;
@@ -13,10 +14,11 @@ const MainBoxStyle = style`
 	border-top: 1px solid var(--panelBorder);
 `
 
-function handleTerminal(element: HTMLElement, state: boolean) {
+function handleTerminal(element: PuffinElement, state: boolean) {
+	const resizerElement = <PuffinElement>element.previousElementSibling
 	if (state) {
 		element.style.display = 'block'
-		element.previousElementSibling.style.display = 'block'
+		resizerElement.style.display = 'block'
 		document.getElementById('panels_stack').style.height = '70%'
 		if (RunningConfig.data.openedTerminals.length === 0 && !RunningConfig.data.isBrowser) {
 			RunningConfig.emit('createTerminalSession', {
@@ -24,8 +26,8 @@ function handleTerminal(element: HTMLElement, state: boolean) {
 			})
 		}
 	} else {
-		element.previousElementSibling.style.display = 'none'
 		element.style.display = 'none'
+		resizerElement.style.display = 'none'
 	}
 }
 
