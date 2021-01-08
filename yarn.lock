@@ -7977,10 +7977,10 @@ tasca-webpack@1.0.2:
   dependencies:
     chalk "^4.1.0"
 
-tasca@1.1.7:
-  version "1.1.7"
-  resolved "https://registry.yarnpkg.com/tasca/-/tasca-1.1.7.tgz#33f6c2abbb422f8f31f206cc5fb0c41dea445a66"
-  integrity sha512-SFJk8bm5WmR6lTjbreo57FO2Tx64L5fEjN4duenXug5ErWclkgQYGGWTZ2Zf8hgfbjobxH0N8OSywacMgBCM3g==
+tasca@1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/tasca/-/tasca-1.1.8.tgz#5af555c8d14b7b250909a9aa654c43ed6a39435b"
+  integrity sha512-bFY9zq67iKsQSvVUTstPDy09on7WVKrLu3IK0LSQLg0vag/VL683gnXYo/vh8BSJHBqAP8BuYG9lgI7ksGDxrg==
   dependencies:
     chalk "^4.1.0"
     commander "^6.2.1"
