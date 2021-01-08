@@ -46,7 +46,7 @@ const CardStyle = style`
 	}
 `
 
-const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver'
+const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver' || pluginID === 'graviton-iconpack'
 
 function getPluginIcon(iconPath) {
 	if (iconPath) {
