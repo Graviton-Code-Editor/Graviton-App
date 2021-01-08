@@ -1,5 +1,6 @@
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
+import StaticConfig from 'StaticConfig'
 
 const styleWrapper = style`
 		& > div{
@@ -68,7 +69,7 @@ const styleWrapper = style`
 		#sidepanel{
 			background:var(--bodyBackground);
 			min-width:50px;
-			width:25%;
+			width: ${StaticConfig.data.appCache.sidePanelWidth};
 			max-height:100%;
 			overflow:auto;
 			float: left;

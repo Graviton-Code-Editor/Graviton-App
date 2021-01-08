@@ -80,6 +80,7 @@ const defaultConfig = {
 		appEnableExplorerItemsAnimations: true,
 		appOpenWelcomeInStartup: true,
 		appCache: {
+			sidePanelWidth: '20%',
 			store: {
 				plugins: [],
 			},

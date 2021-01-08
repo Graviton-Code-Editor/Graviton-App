@@ -41,7 +41,7 @@ const App = element({
 			<div id="body">
 				<div id="sidebar" :contextmenu="${sidebarContext}" style="${handleSidebarState}"/>
 				<div id="sidepanel" :resized="${sidePanelResized}" style="${handlesidePanelState}"/>
-				<Resizer direction="horizontally"/>
+				<Resizer direction="horizontally" :mouseup="${stoppedResizing}"/>
 				<div id="mainpanel" blocked="${handleMainpanelState}">
 					<div id="panels_stack"></div>
 					<Resizer direction="vertically"/>
@@ -62,8 +62,13 @@ StaticConfig.keyChanged('appShowTerminal', (value: boolean) => {
 	}
 })
 
+function stoppedResizing() {
+	StaticConfig.triggerChange()
+}
+
 function sidePanelResized() {
 	RunningConfig.emit('sidePanelHasBeenResized')
+	StaticConfig.data.appCache.sidePanelWidth = this.style.getPropertyValue('width')
 }
 
 function handleAppviewState() {
