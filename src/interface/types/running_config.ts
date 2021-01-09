@@ -5,7 +5,37 @@ import { RegisterEnvironmentInspectorArgs } from './env_inspector'
 import { RegisterEditorClientArgs } from './editor_client'
 import { LoadedGitRepo, gitRepoStatusUpdated } from './git'
 
-interface Events {
+interface CoreEvents {
+	/* Core utils, don't use */
+	addFolderToRunningWorkspace: any
+	removeFolderFromRunningWorkspace: any
+	addWorkspaceToLog: any
+	writeToClipboard: any
+	clipboardHasBeenWritten: any
+	writeToClipboardSilently: any
+	updatedIconpack: any
+	loadFile: any
+	checkAllTabsAreSaved: any
+	hideAllFloatingComps: any
+	setWorkspace: any
+	addProjectToLog: any
+	removeProjectFromLog: any
+	saveCurrentWorkspace: any
+	tabSaved: any
+	renameWorkspace: any
+	renameWorkspaceDialog: any
+	removeWorkspaceFromLog: any
+	openWorkspaceDialog: any
+	addFolderToRunningWorkspaceDialog: any
+	appLoaded: any
+	allPluginsLoaded: any
+	'test.bootedUp': any
+}
+
+/**
+ * All events which plugins can easily use and listen
+ */
+interface PluginsEvents {
 	/* Tab Events */
 	aTabHasBeenCreated: TabEventArgs
 	aTabHasBeenClosed: TabEventArgs
@@ -56,32 +86,9 @@ interface Events {
 	'command.closeApp': any
 	'command.closeCurrentWindow': any
 	'command.focusExplorerPanel': any
-	/* Core utils, don't use */
-	addFolderToRunningWorkspace: any
-	removeFolderFromRunningWorkspace: any
-	addWorkspaceToLog: any
-	writeToClipboard: any
-	clipboardHasBeenWritten: any
-	writeToClipboardSilently: any
-	updatedIconpack: any
-	loadFile: any
-	checkAllTabsAreSaved: any
-	hideAllFloatingComps: any
-	setWorkspace: any
-	addProjectToLog: any
-	removeProjectFromLog: any
-	saveCurrentWorkspace: any
-	tabSaved: any
-	renameWorkspace: any
-	renameWorkspaceDialog: any
-	removeWorkspaceFromLog: any
-	openWorkspaceDialog: any
-	addFolderToRunningWorkspaceDialog: any
-	appLoaded: any
-	allPluginsLoaded: any
-	'test.bootedUp': any
 }
 
-type RunningConfigInterface = PuffinState<Events>
+interface AllEvents extends PluginsEvents, CoreEvents {}
 
-export default RunningConfigInterface
+export type RunningConfigPluginsInterface = PuffinState<PluginsEvents>
+export type RunningConfigInterface = PuffinState<AllEvents>

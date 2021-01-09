@@ -1,12 +1,11 @@
 import { state } from '@mkenzo_8/puffin'
-import { PuffinState } from 'Types/puffin.state'
 import CodemirrorClient from '../defaults/editor.clients/codemirror'
 import ImageViewerClient from '../defaults/editor.clients/image.viewer'
 import minimist from 'minimist'
 import isGitInstalled from '../utils/is_git_installed'
 import Core from 'Core'
 import StaticConfig from 'StaticConfig'
-import RunningConfigInterface from 'Types/running_config'
+import { RunningConfigInterface } from 'Types/running_config'
 import LocalExplorerProvider from '../defaults/explorer_providers/local'
 import RemoteExplorerProvider from '../defaults/explorer_providers/remote'
 const {
