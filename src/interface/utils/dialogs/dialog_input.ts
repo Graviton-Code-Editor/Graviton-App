@@ -59,12 +59,13 @@ function InputDialog({ title, placeHolder = '', type = 'input', content }: Input
 		})`
 			<div  class="${customStyle}" id="${randomSelector}">
 				${
-					content &&
-					element({
-						components: {
-							Text,
-						},
-					})`<Text>${content}</Text>`
+					content
+						? element({
+								components: {
+									Text,
+								},
+						  })`<Text>${content}</Text>`
+						: ''
 				}
 				<inputComponent mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
 			</div>
