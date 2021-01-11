@@ -15,8 +15,6 @@ class Connection {
 	constructor() {
 		this.ws = new WebSocket(`ws://${StaticConfig.data.remoteServerIP}/api/ws`)
 
-		ConnectedNotification()
-
 		this.ws.onmessage = ({ data }) => {
 			const msg = JSON.parse(data)
 			this.events.forEach(({ eventName, callback }, i) => {
@@ -24,6 +22,9 @@ class Connection {
 					callback(msg.data)
 				}
 			})
+		}
+		this.ws.onopen = () => {
+			ConnectedNotification()
 		}
 	}
 	send(messageObject: Object) {
@@ -303,7 +304,7 @@ window.addEventListener('load', () => {
 	 */
 
 	if (RunningConfig.data.isBrowser) {
-		if (!StaticConfig.data.remoteServerIP) {
+		if (!StaticConfig.data.remoteServerIP && window.location.hostname !== 'graviton.netlify.app') {
 			NoConnectionNotification()
 		}
 
