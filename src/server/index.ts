@@ -18,6 +18,8 @@ app.get('/api', (req, res) => {
 	})
 })
 
+app.use('/', express.static(path.resolve(__dirname, '..', 'dist_browser')))
+
 /*
  * Check if a path is a folder or not
  *
@@ -154,6 +156,12 @@ app.ws('/api/ws', ws => {
 	})
 })
 
-app.listen(PORT, () => {
-	console.log(`Listening on port ${PORT}`)
-})
+app.listen(
+	PORT,
+	{
+		host: '0.0.0.0',
+	},
+	() => {
+		console.log(`Listening on port ${PORT}`)
+	},
+)

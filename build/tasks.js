@@ -276,6 +276,9 @@ function WatchWebpackServer() {
 function BuildWebpackTesting() {
 	this.use(useWebpack(path.join(__dirname, './test_config')))
 }
+function BuildWebpackServer() {
+	this.use(useWebpack(path.join(__dirname, './server_config')))
+}
 
 exports.watchElectron = [...CommonTasks, BuildWebpackMain, WatchWebpackRenderer, ServeElectronInterface, RunElectron, BuildWebpackPreload, BuildWebpackBrowser]
 
@@ -287,6 +290,8 @@ exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrows
 
 exports.buildBrowser = [...CommonTasks, BuildWebpackBrowser]
 
-exports.watchServer = [...CommonTasks, WatchWebpackServer, ServeBrowserInterface, WatchWebpackBrowser]
+exports.watchServer = [...CommonTasks, WatchWebpackServer, WatchWebpackBrowser]
+
+exports.buildServer = [...CommonTasks, BuildWebpackServer, BuildWebpackBrowser]
 
 exports.buildTest = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]

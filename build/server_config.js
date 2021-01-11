@@ -8,7 +8,7 @@ module.exports = {
 		hints: false,
 	},
 	optimization: {
-		minimize: true,
+		minimize: false,
 	},
 	entry: {
 		index: path.resolve(process.cwd(), 'src', 'server', 'index.ts'),
