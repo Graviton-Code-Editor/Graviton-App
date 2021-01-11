@@ -301,7 +301,7 @@ window.addEventListener('load', () => {
 	/*
 	 * Only make the remote provider available in browser mode
 	 */
-	StaticConfig.data.remoteServerIP = null
+
 	if (RunningConfig.data.isBrowser) {
 		if (!StaticConfig.data.remoteServerIP) {
 			NoConnectionNotification()
