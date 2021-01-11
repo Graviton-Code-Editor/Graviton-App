@@ -88,6 +88,7 @@ const styleWrapper = style`
 			display: flex;
 			flex:1;
 			background:var(--mainpanelBackground);
+			border-left:1px solid var(--panelBorder);
 			&[blocked="true"]{
 				border-top-left-radius: 0px;
 			}
@@ -100,6 +101,9 @@ const styleWrapper = style`
 				height:  100%;
 				max-height: 100%;
 				flex-direction:columns;
+				& > div:nth-child(1) {
+					border: none;
+				}
 			}
 		}
 		#windows{
