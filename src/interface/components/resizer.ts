@@ -1,6 +1,8 @@
 import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
 import StaticConfig from 'StaticConfig'
+import AppPlatform from 'AppPlatform'
+import RunningConfig from 'RunningConfig'
 
 const styleWrapper = style`
 	&{
@@ -39,9 +41,10 @@ export default function resizerComponent() {
 function working() {
 	const resizerElement = this
 	const direction = resizerElement.getAttribute('direction')
-	let resizerOffset = direction === 'horizontally' ? (StaticConfig.data.appEnableSidebar ? 70 : 25) : 45
+	let resizerOffset = 0
 
 	if (direction === 'horizontally') {
+		resizerOffset = StaticConfig.data.appEnableSidebar ? 70 : 25
 		StaticConfig.keyChanged('appEnableSidebar', status => {
 			if (status) {
 				resizerOffset = 70
@@ -49,6 +52,12 @@ function working() {
 				resizerOffset = 25
 			}
 		})
+	} else {
+		if (AppPlatform == 'win32' || RunningConfig.data.isBrowser) {
+			resizerOffset = 45
+		} else {
+			resizerOffset = 0
+		}
 	}
 
 	window.addEventListener('mousemove', startResizing, false)
