@@ -49,7 +49,7 @@
 		"build:electron": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildElectron",
 		"build:browser": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildBrowser",
 		"build:server": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildServer",
-		"package:server": "pkg ./package.json --out-path dist --debug",
+		"package:server": "pkg ./package.json --out-path dist",
 		"build:test": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildTest",
 		"build:experimental:browser": "yarn build:browser",
 		"build:outpacked": "yarn build:electron --info outpacked=true",
