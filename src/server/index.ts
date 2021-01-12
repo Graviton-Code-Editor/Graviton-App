@@ -12,12 +12,6 @@ enableWs(app)
 
 app.use(morgan('dev'))
 
-app.get('/api', (req, res) => {
-	res.json({
-		ok: true,
-	})
-})
-
 app.use('/', express.static(path.resolve(__dirname, '..', 'dist_browser')))
 
 /*
@@ -162,6 +156,6 @@ app.listen(
 		host: '0.0.0.0',
 	},
 	() => {
-		console.log(`Listening on port ${PORT}`)
+		console.log(` Serving Graviton Browser in port ${PORT}`)
 	},
 )
