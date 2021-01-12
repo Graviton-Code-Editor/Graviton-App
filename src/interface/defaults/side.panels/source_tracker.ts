@@ -22,7 +22,6 @@ const panelStyled = style`
 		height: 100%;
 		& > p {
 			text-align: center;
-			color: var(--textColor);
 			font-size: 13px;
 			user-select: none;
 		}
