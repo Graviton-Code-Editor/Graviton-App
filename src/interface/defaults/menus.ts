@@ -311,6 +311,15 @@ function createMenus() {
 				},
 				action: () => (StaticConfig.data.appShowTerminal = !StaticConfig.data.appShowTerminal),
 			},
+			{},
+			{
+				label: 'menus.View.CommandPrompt',
+				action: () => RunningConfig.emit('command.openCommandPrompt'),
+			},
+			{
+				label: 'menus.View.ExplorerPrompt',
+				action: () => RunningConfig.emit('command.openExplorerCommandPrompt'),
+			},
 		],
 	})
 
