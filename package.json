@@ -82,7 +82,7 @@
 	"dependencies": {
 		"@emmetio/codemirror-plugin": "^1.2.1",
 		"@emotion/css": "^11.1.3",
-		"@mkenzo_8/puffin": "^1.1.3",
+		"@mkenzo_8/puffin": "1.1.4",
 		"@mkenzo_8/puffin-drac": "^0.2.4",
 		"adm-zip": "^0.4.16",
 		"axios": "^0.21.1",
@@ -148,7 +148,7 @@
 		"sass-loader": "^10.1.0",
 		"shebang-loader": "0.0.1",
 		"style-loader": "^2.0.0",
-		"tasca": "1.1.8",
+		"tasca": "1.1.9",
 		"tasca-electron": "^1.0.0",
 		"tasca-electron-builder": "^1.0.0",
 		"tasca-serve": "^1.0.1",
