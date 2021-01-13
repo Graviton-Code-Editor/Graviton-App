@@ -49,6 +49,11 @@
 				"ToggleSidepanel": "Afficher/Cacher le panneau latéral",
 				"ShowSidebar": "Afficher la barre latérale",
 				"ShowSidepanel": "Afficher le panneau latéral",
+				
+				"HideSidepanel": "Afficher le panneau latéral"
+				"CommandPrompt": "Invite de commande",
+				"ExplorerPrompt": "Explorateur"
+				
 				"HideSidebar": "Cacher la barre latérale",
 				"HideSidepanel": "Cacher le panneau latéral",
 				"ToggleTerminal": "Afficher/Cacher le terminal",
