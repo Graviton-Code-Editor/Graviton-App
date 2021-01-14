@@ -123,7 +123,7 @@
 				},
 				"About": {
 					"About": "À propos",
-					"GravitonDescription": "Graviton est un éditeur de texte multi-plateformes."
+					"GravitonDescription": "Graviton est un éditeur de code open-source moderne."
 				}
 			},
 			"Store": {
@@ -150,6 +150,14 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Bienvenue sur Graviton pour navigateur",
 				"WelcomeMessage": "Veuillez garder à l'idée que cette version est encore très expérimentale et que certaines fonctions ne fonctionnent pas.\n Pour une meilleure expérience, veuillez télécharger l'application."
+			},
+			"Introduction": {
+				"Theming": {
+					"SelectATheme": "Sélectionnez un thème"
+				},
+				"Finished": {
+					"Finished": "Terminé"
+				}
 			}
 		},
 		"misc": {
