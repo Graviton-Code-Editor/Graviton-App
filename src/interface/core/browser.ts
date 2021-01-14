@@ -1,5 +1,4 @@
 import RunningConfig from 'RunningConfig'
-import BrowserWelcome from '../defaults/windows/browser_welcome'
 
 /*
  * Tweaks for Browser
@@ -13,11 +12,4 @@ window.addEventListener('keydown', e => {
 	if (e.ctrlKey && ['p', 's', 'o'].includes(e.key)) {
 		e.preventDefault()
 	}
-})
-
-/*
- * When the app loads open the Browser's welcome
- */
-RunningConfig.on('appLoaded', () => {
-	BrowserWelcome().launch()
 })

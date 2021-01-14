@@ -5,6 +5,8 @@ import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
 import Welcome from './defaults/windows/welcome'
+import BrowserWelcome from './defaults/windows/browser_welcome'
+import Introduction from './defaults/windows/introduction'
 import Resizer from './components/resizer'
 import StatusBar from './components/status.bar/status.bar'
 import RunningConfig from 'RunningConfig'
@@ -180,7 +182,20 @@ function mountedApp(): void {
 		await init()
 		const isBrowser = RunningConfig.data.isBrowser
 		const isDev = RunningConfig.data.isDev
-		const appOpenWelcomeInStartup = StaticConfig.data.appOpenWelcomeInStartup
+		const { appOpenWelcomeInStartup, appOpenIntroductionInStartup } = StaticConfig.data
+
+		let IntroductionWindow
+
+		if (appOpenIntroductionInStartup) {
+			IntroductionWindow = Introduction()
+
+			IntroductionWindow.launch()
+
+			StaticConfig.data.appOpenIntroductionInStartup = false
+		}
+
+		let welcomeWindowToOpen
+
 		/*
 		 * Don't show the Welcome Window if:
 		 * - It's running in Browser mode
@@ -188,7 +203,21 @@ function mountedApp(): void {
 		 * - It's configured this way by the user in `appOpenWelcomeInStartup`
 		 */
 		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenWelcomeInStartup) {
-			Welcome().launch()
+			welcomeWindowToOpen = Welcome
+		}
+
+		/*
+		 * Don't show the Welcome Window if:
+		 * - It's running in Desktop mode
+		 */
+		if (isBrowser) welcomeWindowToOpen = BrowserWelcome
+
+		if (IntroductionWindow) {
+			IntroductionWindow.WindowState.on('closed', () => {
+				welcomeWindowToOpen().launch()
+			})
+		} else {
+			welcomeWindowToOpen().launch()
 		}
 	})
 }

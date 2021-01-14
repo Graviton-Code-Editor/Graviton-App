@@ -79,6 +79,7 @@ const defaultConfig = {
 		appEnableSidepanel: true,
 		appEnableExplorerItemsAnimations: true,
 		appOpenWelcomeInStartup: true,
+		appOpenIntroductionInStartup: true,
 		appCache: {
 			sidePanelWidth: '20%',
 			store: {

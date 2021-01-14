@@ -123,7 +123,7 @@
 				},
 				"About": {
 					"About": "About",
-					"GravitonDescription": "Graviton is a cross platform editor."
+					"GravitonDescription": "Graviton is a modern open source code editor."
 				}
 			},
 			"Store": {
@@ -150,6 +150,14 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Welcome to Graviton for Browser!",
 				"WelcomeMessage": "Remember this feature is still very experimental and most things do not work. \n For a better experience download the desktop app."
+			},
+			"Introduction": {
+				"Theming": {
+					"SelectATheme": "Select a theme"
+				},
+				"Finished": {
+					"Finished": "Finished"
+				}
 			}
 		},
 		"misc": {
