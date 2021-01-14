@@ -25,22 +25,24 @@ function toggleMenuStatus(element) {
 		element.parentElement.setAttribute('anyDropmenuOpened', 'true')
 	}
 }
+
+window.addEventListener('click', (ev: MouseEvent) => {
+	ev.stopPropagation()
+	const eventTarget = <HTMLElement>ev.target
+	if (!eventTarget.parentElement) {
+		// Prevent throwing error when the element is no longer attached to the DOM
+		return
+	}
+	if (!eventTarget.parentElement.classList.contains('dropmenu')) {
+		RunningConfig.emit('hideAllFloatingComps')
+	}
+})
+
 function mounted() {
 	const { id, props, children, parentElement } = this
 	const isSubmenu = props.data.isSubmenu
 	const itemsContainer = children[1] ? children[1] : children[0]
 	if (!isSubmenu) itemsContainer.style.display = 'none'
-	window.addEventListener('click', e => {
-		e.stopPropagation()
-		const eventTarget = <HTMLElement>e.target
-		if (
-			((eventTarget.tagName === 'A' || eventTarget.tagName === 'BUTTON') && eventTarget.parentElement.classList.contains('dropmenu') && eventTarget.parentElement.id === id) == false &&
-			(eventTarget.classList.contains('dropmenu') && eventTarget.id === id) == false &&
-			this.getAttribute('showed') === 'true'
-		) {
-			RunningConfig.emit('hideAllFloatingComps')
-		}
-	})
 	RunningConfig.on('hideAllFloatingComps', () => {
 		itemsContainer.style.display = 'none'
 		children[0].classList.remove('active')
@@ -50,10 +52,6 @@ function mounted() {
 			this.remove()
 		}
 	})
-}
-
-function onMenuClicked() {
-	toggleMenuStatus(this)
 }
 
 function onMenuHovering() {
@@ -154,6 +152,10 @@ const styleWrapper = style`
 `
 
 function MenuComp() {
+	function onMenuClicked() {
+		toggleMenuStatus(this)
+	}
+
 	return element`
 		<div id="${Math.random()}" mounted="${mounted} :click="${onMenuClicked}" :mousemove="${onMenuHovering}" showed="false" class="${styleWrapper} dropmenu"/>
 	`
