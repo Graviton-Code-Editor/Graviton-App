@@ -30,9 +30,6 @@ const styleWrapper = style`
 					border-top-left-radius:8px;
 					border-left:transparent;
 				}
-				&  .tabsbar > div:nth-last-child(1){
-					border-top-right-radius:5px;
-				}
 			}
 		}
 		&[browser="true"]{
