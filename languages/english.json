@@ -213,6 +213,9 @@
 			"experimentalFeature": {
 				"title": "Experimental feature",
 				"content": "This feature is unstable and might cause some issues."
+			},
+			"warning": {
+				"title": "Are you sure?"
 			}
 		},
 		"sidepanels": {
