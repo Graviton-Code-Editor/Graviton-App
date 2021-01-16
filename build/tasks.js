@@ -245,7 +245,7 @@ function ServeElectronInterface() {
 	)
 }
 function RunElectron() {
-	this.use(useElectron(path.join(__dirname, '..'), path.join(__dirname, '..', 'dist_main', 'main.js'), '--no-sandbox'))
+	this.use(useElectron(path.join(__dirname, '..'), path.join(__dirname, '..', 'dist_main', 'main.js'), ['--no-sandbox']))
 }
 function BuildWebpackPreload() {
 	this.use(useWebpack(path.join(__dirname, './preload_config')))

@@ -77,7 +77,7 @@ window.addEventListener('load', () => {
 	RunningConfig.data.arguments = electronArguments
 	RunningConfig.data.parsedArguments = parsedElectronArguments
 	RunningConfig.data.isDev = isDev
-	RunningConfig.data.windowID = parsedElectronArguments.windowID
+	RunningConfig.data.windowID = parsedRendererArguments.windowID
 	RunningConfig.data.isDebug = parsedRendererArguments.mode === 'debug'
 	RunningConfig.data.LSPPort = LSPPort
 
