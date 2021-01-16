@@ -9,6 +9,6 @@
 	"mainDev": "index.js",
 	"dependencies": {
 		"typescript": "^4.0.2",
-		"typescript-language-server": "^0.4.0"
+		"typescript-language-server": "^0.5.1"
 	}
 }

@@ -23,9 +23,29 @@ import throwError from '../utils/throw_error'
 import * as path from 'path'
 import * as Emotion from '@emotion/css'
 import { openFile, openFolder, saveFileAs } from 'FileSystem'
-import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
 import Core from 'Core'
 const { fs } = Core
+
+/*
+ * Plugins paths
+ */
+let pluginsInternalDir
+let pluginsExternalDir
+
+RunningConfig.on('appLoaded', () => {
+	const { isBrowser, isDev } = RunningConfig.data
+
+	if (isBrowser) {
+		pluginsInternalDir = ''
+	} else {
+		if (isDev) {
+			pluginsInternalDir = path.resolve(__dirname, '..', '..', '..', 'pluginsDist')
+		} else {
+			pluginsInternalDir = path.join((window as any).process.resourcesPath, 'pluginsDist')
+		}
+	}
+	pluginsExternalDir = window.process ? path.join(StaticConfig.data.appConfigPath, 'plugins') : ''
+})
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = process.env.NODE_ENV === 'test'
@@ -70,7 +90,6 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 			saveFileAs,
 		},
 	}
-
 	if (pluginExports) {
 		if (type === 'plugin') {
 			if (!RunningConfig.data.isDev) {
@@ -178,7 +197,7 @@ export function unloadPluginFromRegistry(name) {
  */
 RunningConfig.on('appLoaded', async function () {
 	if (!RunningConfig.data.isBrowser) {
-		await registerPluginsIn(pluginsIternalDir)
+		await registerPluginsIn(pluginsInternalDir)
 		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
 	}
 	RunningConfig.emit('allPluginsLoaded')

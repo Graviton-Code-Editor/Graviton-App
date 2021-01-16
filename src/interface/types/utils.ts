@@ -1,5 +1,5 @@
 export interface RegisterCommand {
-	name: string,
-	shortcut: string,
+	name: string
+	shortcut: string
 	action: () => void
 }

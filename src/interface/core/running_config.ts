@@ -14,35 +14,15 @@ const {
 } = Core
 import isBrowser from '../utils/is_browser'
 
-// Get runtime information
-const CustomWindow: any = window
-const { isDev, processArguments } = CustomWindow.graviton.runtime
-CustomWindow.graviton.runtime = null
-
-/*
- * Create a console logger in production, this saves all logs, errors, warnings,etc...
- */
-if (!isDev && !isBrowser) {
-	const electronLog = window.require('electron-log')
-	const logger = electronLog.create('graviton')
-	logger.transports.file.fileName = 'graviton.log'
-	Object.assign(console, logger.functions)
-}
-
-const electronArguments = isDev ? processArguments.slice(2) : processArguments.slice(1) || []
-const parsedElectronArguments = isBrowser ? [] : minimist(electronArguments)
-const parsedRendererArguments = isBrowser ? [] : isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
-const LSPPort = isDev ? 2020 : 2089
-
 const DEFAULT_RUNTIME_CONFIGURATION = {
-	windowID: parsedRendererArguments.windowID,
+	windowID: null,
 	focusedPanel: null,
 	focusedTab: null,
 	focusedEditor: null,
 	workspacePath: null,
 	iconpack: {},
-	isDebug: parsedRendererArguments.mode === 'debug',
-	isDev,
+	isDebug: false,
+	isDev: false,
 	workspaceConfig: {
 		name: null,
 		folders: [],
@@ -51,13 +31,13 @@ const DEFAULT_RUNTIME_CONFIGURATION = {
 	notifications: [],
 	editorsRank: [CodemirrorClient, ImageViewerClient],
 	openedWindows: 0,
-	arguments: electronArguments,
-	parsedArguments: parsedElectronArguments,
+	arguments: [],
+	parsedArguments: [],
 	ignoredStaticConfig: {},
 	envs: [],
 	projectServices: [],
 	languageServers: [],
-	LSPPort,
+	LSPPort: null,
 	LSPServers: {},
 	isGitInstalled: false,
 	focusedExplorerItem: null,
@@ -79,12 +59,42 @@ isGitInstalled().then(res => {
 
 const RunningConfig: RunningConfigInterface = new state(DEFAULT_RUNTIME_CONFIGURATION)
 
-/*
- * Allow to register all language servers if 'experimentalEditorLSP' is enabled
- */
-RunningConfig.on('appLoaded', () => {
+window.addEventListener('load', () => {
+	/*
+	 * Get runtime information
+	 */
+	const CustomWindow: any = window
+	const { isDev, processArguments } = CustomWindow.graviton.runtime
+	const electronArguments = isDev ? processArguments.slice(2) : processArguments.slice(1) || []
+	const parsedElectronArguments = isBrowser ? [] : minimist(electronArguments)
+	const parsedRendererArguments = isBrowser ? [] : isDev ? minimist(process.argv.slice(5)) : minimist(process.argv.slice(1))
+	const LSPPort = isDev ? 2020 : 2089
+	CustomWindow.graviton.runtime = null
+
+	/*
+	 * Dinamically assign runtime information in RunningConfig
+	 */
+	RunningConfig.data.arguments = electronArguments
+	RunningConfig.data.parsedArguments = parsedElectronArguments
+	RunningConfig.data.isDev = isDev
+	RunningConfig.data.windowID = parsedElectronArguments.windowID
+	RunningConfig.data.isDebug = parsedRendererArguments.mode === 'debug'
+	RunningConfig.data.LSPPort = LSPPort
+
+	/*
+	 * Create a console logger in production, this saves all logs, errors, warnings,etc...
+	 */
+	if (!isDev && !isBrowser) {
+		const electronLog = window.require('electron-log')
+		const logger = electronLog.create('graviton')
+		logger.transports.file.fileName = 'graviton.log'
+		Object.assign(console, logger.functions)
+	}
+
+	/*
+	 * Create a server for LSP and allow to register all language servers if 'experimentalEditorLSP' is enabled
+	 */
 	if (StaticConfig.data.experimentalEditorLSP) {
-		//Experimental
 		const lspServer = new nodeJSONRPC({
 			port: LSPPort,
 			languageServers: {},
@@ -99,8 +109,13 @@ RunningConfig.on('appLoaded', () => {
 			})
 		})
 	}
+
+	/*
+	 * Expose RunningConfig and StaticConfig globally when running on development mode
+	 */
 	if (isDev) {
 		CustomWindow.s = StaticConfig
+		CustomWindow.r = RunningConfig
 	}
 })
 
@@ -153,16 +168,8 @@ RunningConfig.on('registeredExplorerProvider', function (provider) {
 RunningConfig.on('registerCommand', ({ name, shortcut, action }) => {
 	RunningConfig.data.globalCommandPrompt.push({
 		label: name,
-		action
+		action,
 	})
 })
-
-
-if (isDev) {
-	/*
-	 * Export RunningConfig as a global object in development mode
-	 */
-	CustomWindow.r = RunningConfig
-}
 
 export default RunningConfig
