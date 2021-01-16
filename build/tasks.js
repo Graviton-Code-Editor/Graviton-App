@@ -92,7 +92,7 @@ async function pluginsSDK(cb) {
 			distPath: path.join(pluginsDistFolder, pluginName),
 		})
 		await bundle.bundle().then(err => {
-			if (err) console.log(err)
+			if (err) throw err
 		})
 		await bundle.copyAssets()
 		if (pluginsFolders.length - 1 === i) {
@@ -118,7 +118,8 @@ async function pluginsTasks(cb) {
 }
 
 async function copyLSPCMIcons(cb) {
-	ncp(path.join(__dirname, 'node_modules/lsp-codemirror/lib/icons'), path.join(__dirname, 'dist_ui', 'icons'), () => {
+	ncp(path.join(__dirname, '..', 'node_modules/lsp-codemirror/lib/icons'), path.join(__dirname, '..', 'dist_ui', 'icons'), err => {
+		if (err) throw err
 		cb()
 	})
 }
