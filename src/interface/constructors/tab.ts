@@ -354,9 +354,11 @@ class Tab {
 			changedPanelListener.cancel()
 			IconpackWatcher.cancel()
 			closedListener.cancel()
-			this.client.do('close', {
-				instance: this.instance,
-			})
+			if (this.client) {
+				this.client.do('close', {
+					instance: this.instance,
+				})
+			}
 			RunningConfig.emit('aTabHasBeenClosed', {
 				tabElement: this.tabElement,
 				directory: this.directory,

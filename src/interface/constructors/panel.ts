@@ -103,7 +103,9 @@ class Panel {
 		}
 
 		function contextmenu(event) {
-			if (!this.children[0]) {
+			const panelParent = this.parentElement.parentElement
+			const parentChildren = [...panelParent.children]
+			if (!this.children[0] && parentChildren.length > 1) {
 				new ContextMenu({
 					list: [
 						{

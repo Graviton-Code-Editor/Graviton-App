@@ -507,7 +507,7 @@ const CodemirrorClient = new EditorClient(
 			CodemirrorEditor.pstate = new state({})
 
 			CodemirrorEditor.pstate.once('close', () => {
-				lspConnection.close()
+				if (lspConnection) lspConnection.close()
 			})
 
 			CodemirrorEditor.refresh()
