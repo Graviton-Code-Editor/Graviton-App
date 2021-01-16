@@ -147,6 +147,17 @@ RunningConfig.on('registeredExplorerProvider', function (provider) {
 	RunningConfig.data.registeredExplorerProviders.push(provider)
 })
 
+/*
+ * Safely create a command
+ */
+RunningConfig.on('registerCommand', ({ name, shortcut, action }) => {
+	RunningConfig.data.globalCommandPrompt.push({
+		label: name,
+		action
+	})
+})
+
+
 if (isDev) {
 	/*
 	 * Export RunningConfig as a global object in development mode

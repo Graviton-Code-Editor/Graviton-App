@@ -4,6 +4,7 @@ import { FileEventsArgs, FolderEventsArgs } from './file_system'
 import { RegisterEnvironmentInspectorArgs } from './env_inspector'
 import { RegisterEditorClientArgs } from './editor_client'
 import { LoadedGitRepo, gitRepoStatusUpdated } from './git'
+import { RegisterCommand } from './utils'
 
 interface CoreEvents {
 	/* Core utils, don't use */
@@ -69,7 +70,8 @@ interface PluginsEvents {
 	registerEnvironmentInspector: any
 	registerEditorClient: any
 	registeredExplorerProvider: any
-	/* Notifications events	*/
+	registerCommand: RegisterCommand
+	/* Notifications events */
 	aNotificationHasBeenCleared: any
 	aNotificationHasBeenEmitted: any
 	/* Useful commands (no parameters) */

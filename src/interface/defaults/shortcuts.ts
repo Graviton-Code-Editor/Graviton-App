@@ -15,8 +15,22 @@ StaticConfig.on('shortcutsHaveBeenUpdated', () => {
 	applyShortcuts()
 })
 
-function applyShortcuts() {
-	appShortCuts.add([
+const externalShortcuts = []
+
+/*
+ * Safely create a shortcut
+ */
+RunningConfig.on('registerCommand', ({ name, shortcut, action }) => {
+	externalShortcuts.push({
+		shortcut,
+		handler: action
+	})
+	appShortCuts.reset()
+	applyShortcuts()
+})
+
+function getAppShortcuts(){
+	return [
 		...StaticConfig.data.appShortcuts.SaveCurrentFile.combos.map(shortcut => {
 			return {
 				shortcut: shortcut,
@@ -66,23 +80,23 @@ function applyShortcuts() {
 			}
 		}),
 		...StaticConfig.data.appShortcuts.IncreaseEditorFontSize.combos
-			.map(shortcut => {
-				if (shortcut === 'Ctrl+ScrollUp') return
-				return {
-					shortcut: shortcut,
-					handler: event => RunningConfig.emit('command.increaseFontSize'),
-				}
-			})
-			.filter(Boolean),
+		.map(shortcut => {
+			if (shortcut === 'Ctrl+ScrollUp') return
+			return {
+				shortcut: shortcut,
+				handler: event => RunningConfig.emit('command.increaseFontSize'),
+			}
+		})
+		.filter(Boolean),
 		...StaticConfig.data.appShortcuts.DecreaseEditorFontSize.combos
-			.map(shortcut => {
-				if (shortcut === 'Ctrl+ScrollDown') return
-				return {
-					shortcut: shortcut,
-					handler: event => RunningConfig.emit('command.decreaseFontSize'),
-				}
-			})
-			.filter(Boolean),
+		.map(shortcut => {
+			if (shortcut === 'Ctrl+ScrollDown') return
+			return {
+				shortcut: shortcut,
+				handler: event => RunningConfig.emit('command.decreaseFontSize'),
+			}
+		})
+		.filter(Boolean),
 		...StaticConfig.data.appShortcuts.CloseCurrentWindow.combos.map(shortcut => {
 			return {
 				shortcut: shortcut,
@@ -101,6 +115,14 @@ function applyShortcuts() {
 				handler: event => RunningConfig.emit('command.focusExplorerPanel'),
 			}
 		}),
+	]
+}
+
+
+function applyShortcuts() {
+	appShortCuts.add([
+		...getAppShortcuts(),
+		...externalShortcuts
 	])
 }
 
