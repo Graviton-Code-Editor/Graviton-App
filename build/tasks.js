@@ -191,7 +191,7 @@ function BasicTasks() {
 }
 
 function ElectronTasks() {
-	return [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks, copyLSPCMIcons]
+	return [updatePluginsDependencies, removePluginsDist, createPluginsFolder, pluginsWebpack, pluginsSDK, pluginsTasks]
 }
 
 function BrowserTasks() {
@@ -199,6 +199,7 @@ function BrowserTasks() {
 }
 
 const CommonTasks = [BasicTasks, ElectronTasks, BrowserTasks].flat()
+const MiscTasks = [copyLSPCMIcons]
 
 exports.default = CommonTasks
 
@@ -281,18 +282,18 @@ function BuildWebpackServer() {
 	this.use(useWebpack(path.join(__dirname, './server_config')))
 }
 
-exports.watchElectron = [...CommonTasks, BuildWebpackMain, WatchWebpackRenderer, ServeElectronInterface, RunElectron, BuildWebpackPreload, BuildWebpackBrowser]
+exports.watchElectron = [...CommonTasks, BuildWebpackMain, WatchWebpackRenderer, ServeElectronInterface, RunElectron, BuildWebpackPreload, BuildWebpackBrowser, ...MiscTasks]
 
-exports.buildElectron = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildElectronBuilder]
+exports.buildElectron = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, ...MiscTasks, BuildElectronBuilder]
 
-exports.buildAllWebpackConfigs = [BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
+exports.buildAllWebpackConfigs = [BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting, ...MiscTasks]
 
-exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrowser]
+exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrowser, ...MiscTasks]
 
-exports.buildBrowser = [...CommonTasks, BuildWebpackBrowser]
+exports.buildBrowser = [...CommonTasks, ...MiscTasks, BuildWebpackBrowser]
 
-exports.watchServer = [...CommonTasks, WatchWebpackServer, WatchWebpackBrowser]
+exports.watchServer = [...CommonTasks, ...MiscTasks, WatchWebpackServer, WatchWebpackBrowser]
 
-exports.buildServer = [...CommonTasks, BuildWebpackServer, BuildWebpackBrowser]
+exports.buildServer = [...CommonTasks, ...MiscTasks, BuildWebpackServer, BuildWebpackBrowser]
 
-exports.buildTest = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
+exports.buildTest = [...CommonTasks, ...MiscTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
