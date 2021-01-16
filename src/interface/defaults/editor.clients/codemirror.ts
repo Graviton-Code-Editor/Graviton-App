@@ -506,6 +506,10 @@ const CodemirrorClient = new EditorClient(
 			//Assign a puffin state to the CodeMirror instance
 			CodemirrorEditor.pstate = new state({})
 
+			CodemirrorEditor.pstate.once('close', () => {
+				lspConnection.close()
+			})
+
 			CodemirrorEditor.refresh()
 
 			handleCMAutocomplete(CodemirrorEditor, language)
@@ -513,6 +517,9 @@ const CodemirrorClient = new EditorClient(
 			return {
 				instance: CodemirrorEditor,
 			}
+		},
+		close({ instance }) {
+			instance.pstate.emit('close')
 		},
 		getMode({ instance }) {
 			return instance.getOption('mode')
