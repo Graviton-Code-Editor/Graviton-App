@@ -1,6 +1,7 @@
 const isBrowser = !eval('window.process')
 const CustomWindow: any = window
 import { getBrowserConfiguration } from '../../app/default_config'
+import * as clipboard from 'clipboard-polyfill'
 
 if (isBrowser) {
 	import('./browser').then(() => {})
@@ -21,6 +22,7 @@ const Core = {
 	electron: null,
 	rimraf: null,
 	openExternal: null,
+	clipboard,
 }
 
 function getValidBrowserConfig(storage, defaultConfig) {

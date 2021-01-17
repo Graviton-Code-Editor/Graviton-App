@@ -8,10 +8,7 @@ import StaticConfig from 'StaticConfig'
 import { RunningConfigInterface } from 'Types/running_config'
 import LocalExplorerProvider from '../defaults/explorer_providers/local'
 import RemoteExplorerProvider from '../defaults/explorer_providers/remote'
-const {
-	nodeJSONRPC,
-	electron: { clipboard },
-} = Core
+const { nodeJSONRPC, clipboard } = Core
 import isBrowser from '../utils/is_browser'
 
 const DEFAULT_RUNTIME_CONFIGURATION = {
@@ -122,8 +119,8 @@ window.addEventListener('load', () => {
 /*
  * Simulate the copy event
  */
-RunningConfig.on('writeToClipboard', function (text) {
-	clipboard.writeText(text)
+RunningConfig.on('writeToClipboard', async function (text) {
+	await clipboard.writeText(text)
 	RunningConfig.emit('clipboardHasBeenWritten', {
 		text,
 	})
@@ -132,8 +129,8 @@ RunningConfig.on('writeToClipboard', function (text) {
 /*
  * Write to the the user's clipboard
  */
-RunningConfig.on('writeToClipboardSilently', function (text) {
-	clipboard.writeText(text)
+RunningConfig.on('writeToClipboardSilently', async function (text) {
+	await clipboard.writeText(text)
 })
 
 /*

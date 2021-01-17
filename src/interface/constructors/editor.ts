@@ -11,9 +11,7 @@ import { css as style } from '@emotion/css'
 import { LanguageState } from 'LanguageConfig'
 import { LargeFileLinesLength, LargeFileCharsLength } from 'Constants'
 import Core from 'Core'
-const {
-	electron: { clipboard },
-} = Core
+const { clipboard } = Core
 
 import { EditorOptions } from 'Types/editor'
 import { EditorClient } from 'Types/editorclient'
@@ -256,13 +254,13 @@ class Editor implements EditorOptions {
 		const getContextMenuDefaultButtons = () => [
 			{
 				label: 'misc.Copy',
-				action: () => {
+				action: async () => {
 					const selectedText = this.client.do('getSelection', {
 						instance: this.instance,
 						action: () => RunningConfig.emit('hideAllFloatingComps'),
 					})
 
-					clipboard.writeText(selectedText)
+					await clipboard.writeText(selectedText)
 
 					RunningConfig.emit('writeToClipboard', selectedText)
 
@@ -275,7 +273,7 @@ class Editor implements EditorOptions {
 			},
 			{
 				label: 'misc.Paste',
-				action: () => {
+				action: async () => {
 					const { line, ch } = this.client.do('getCursorPosition', {
 						instance: this.instance,
 					})
@@ -286,7 +284,7 @@ class Editor implements EditorOptions {
 							line: line - 1,
 							ch: ch - 1,
 						},
-						text: clipboard.readText(),
+						text: await clipboard.readText(),
 					})
 
 					setTimeout(() => {
