@@ -152,11 +152,15 @@
 				"WelcomeMessage": "Remember this feature is still very experimental and most things do not work. \n For a better experience download the desktop app."
 			},
 			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "Welcome to Graviton"
+				},
 				"Theming": {
 					"SelectATheme": "Select a theme"
 				},
 				"Finished": {
-					"Finished": "Finished"
+					"Finished": "Finished",
+					"HaveAGreatExperience": "Have a great experience 😀"
 				}
 			}
 		},

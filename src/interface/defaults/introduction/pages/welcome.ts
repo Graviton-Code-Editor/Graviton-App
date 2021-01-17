@@ -16,7 +16,7 @@ export default function Welcome() {
 		},
 	})`
 		<IntroductionPage>
-			<Title class="title">Welcome to Graviton ✨</Title>
+			<Title class="title" lang-string="windows.Introduction.Welcome.WelcomeToGraviton" string="{{windows.Introduction.Welcome.WelcomeToGraviton}} 🎉" />
 			<Text lang-string="windows.Settings.About.GravitonDescription"/>
 			<table>
 				<tr>

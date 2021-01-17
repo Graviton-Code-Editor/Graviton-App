@@ -16,7 +16,7 @@ export default function Finished() {
 	})`
 		<IntroductionPage>
 			<Title class="title" lang-string="windows.Introduction.Finished.Finished" string="{{windows.Introduction.Finished.Finished}} 🎉"/>
-			<Text> Have a great experience 😀</Text>
+			<Text lang-string="windows.Introduction.Finished.HaveAGreatExperience"/>
 		</IntroductionPage>
 	`
 }
