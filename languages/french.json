@@ -152,11 +152,15 @@
 				"WelcomeMessage": "Veuillez garder à l'idée que cette version est encore très expérimentale et que certaines fonctions ne fonctionnent pas.\n Pour une meilleure expérience, veuillez télécharger l'application."
 			},
 			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "Bienvenue avec Graviton"
+				},
 				"Theming": {
 					"SelectATheme": "Sélectionnez un thème"
 				},
 				"Finished": {
-					"Finished": "Terminé"
+					"Finished": "Terminé",
+					"HaveAGreatExperience": "Vivez une grande expérience 😀"
 				}
 			}
 		},
