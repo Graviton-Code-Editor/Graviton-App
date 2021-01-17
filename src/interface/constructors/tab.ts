@@ -325,7 +325,7 @@ class Tab {
 			} else {
 				if (!closeDialogOpened) {
 					closeDialogOpened = true
-					WarningDialog(`You are about to delete '${this.tabState.data.title}' .`)
+					WarningDialog(`You are about to lose changes in '${this.tabState.data.title}' .`)
 						.then(async () => {
 							this.tabElement.classList.add('closing')
 							this.bodyElement.classList.add('closing')
