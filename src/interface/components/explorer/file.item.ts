@@ -16,9 +16,7 @@ import normalizeDir from '../../utils/directory_normalizer'
 import Notification from '../../constructors/notification'
 import FileItem from './file.item.style'
 import Core from 'Core'
-const {
-	electron: { clipboard },
-} = Core
+const { clipboard } = Core
 import * as path from 'path'
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'
