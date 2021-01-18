@@ -46,7 +46,7 @@ class Editor implements EditorOptions {
 				theme,
 				error: 'This is a binary file.',
 			})
-		} else if (value.split('\n').length > LargeFileLinesLength || value.length > LargeFileCharsLength) {
+		} else if (this.client.type === 'editor' && (value.split('\n').length > LargeFileLinesLength || value.length > LargeFileCharsLength)) {
 			this.createCustomClient({
 				value,
 				theme,
