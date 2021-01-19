@@ -118,6 +118,7 @@ class Tab {
 			}
 		}
 		function closeTab(e: MouseEvent): void {
+			e.stopPropagation()
 			self.tabState.emit('close')
 		}
 		function focusTabshowCross(): void {
