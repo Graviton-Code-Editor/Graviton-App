@@ -3,6 +3,7 @@ import axios from 'axios'
 import packageJSON from '../../../../../package.json'
 import semver from 'semver'
 import buildJSON from '../../../../../assets/build.json'
+import RunningConfig from 'RunningConfig'
 
 enum ChannelsMap {
 	dev = 'devVersion',
@@ -12,6 +13,14 @@ enum ChannelsMap {
 
 function gravitonHasUpdate() {
 	return new Promise((resolve, reject) => {
+		if (RunningConfig.data.isBrowser) {
+			resolve({
+				res: false,
+				version: packageJSON.version,
+				channelBuild: buildJSON.channelBuild,
+			})
+		}
+
 		axios({
 			method: 'get',
 			url: APIEndpoint,
