@@ -289,12 +289,12 @@ exports.buildElectron = [...CommonTasks, BuildWebpackMain, BuildWebpackRenderer,
 
 exports.buildAllWebpackConfigs = [BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting, ...MiscTasks]
 
-exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrowser, ...MiscTasks]
+exports.watchBrowser = [...CommonTasks, ServeBrowserInterface, WatchWebpackBrowser]
 
-exports.buildBrowser = [...CommonTasks, ...MiscTasks, BuildWebpackBrowser]
+exports.buildBrowser = [...CommonTasks, BuildWebpackBrowser]
 
-exports.watchServer = [...CommonTasks, ...MiscTasks, WatchWebpackServer, WatchWebpackBrowser]
+exports.watchServer = [...CommonTasks, WatchWebpackServer, WatchWebpackBrowser]
 
-exports.buildServer = [...CommonTasks, ...MiscTasks, BuildWebpackServer, BuildWebpackBrowser]
+exports.buildServer = [...CommonTasks, BuildWebpackServer, BuildWebpackBrowser]
 
 exports.buildTest = [...CommonTasks, ...MiscTasks, BuildWebpackMain, BuildWebpackRenderer, BuildWebpackPreload, BuildWebpackBrowser, BuildWebpackTesting]
