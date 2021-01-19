@@ -25,6 +25,12 @@ export default class LocalTerminalShell {
 				this.event.emit('data', data)
 			}
 		})
+
+		ipcRenderer.on('local-shell-closed', (e, { id }) => {
+			if (this.id === id) {
+				this.event.emit('closed', id)
+			}
+		})
 	}
 	on(eventName: string, callback: (data: string) => void) {
 		this.event.on(eventName, callback)

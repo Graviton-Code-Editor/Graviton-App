@@ -127,4 +127,11 @@ function createLocalShell(state, shellBin) {
 	state.on('data', data => {
 		spawnProcess.write(data)
 	})
+
+	/*
+	 * When the process is closed (exited) then close the terminal
+	 */
+	spawnProcess.on('closed', id => {
+		state.emit('close')
+	})
 }

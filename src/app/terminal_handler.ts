@@ -16,6 +16,12 @@ export default window => {
 			})
 		})
 
+		nodePtyProcesses[id].on('exit', () => {
+			window.webContents.send('local-shell-closed', {
+				id,
+			})
+		})
+
 		ipcMain.on('local-shell-write', (e, { id: idMessenger, content }) => {
 			if (id === idMessenger) {
 				nodePtyProcesses[id].write(content)
