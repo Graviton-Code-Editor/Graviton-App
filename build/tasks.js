@@ -18,6 +18,7 @@ const remotePluginTemp = path.resolve(__dirname, '..', 'temp_remote_plugin')
 
 const buildData = {
 	date: new Date().toDateString(),
+	channelBuild: global.channel || 'dev',
 }
 
 function createBuildFile(cb) {

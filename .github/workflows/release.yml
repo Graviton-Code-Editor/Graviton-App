@@ -46,13 +46,13 @@ jobs:
         yarn build:tasks
         yarn build:webpack
     - name : Creating the installer and publishing it
-      run: yarn build:electron --info publish=onTagOrDraft
+      run: yarn build:electron --info publish=onTagOrDraft channel=dev
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
     - name : Building for RPM
       if: ${{ runner.os == 'Linux' }}
-      run: yarn build:electron --info platform=rpm publish=onTagOrDraft
+      run: yarn build:electron --info platform=rpm publish=onTagOrDraft channel=dev
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
