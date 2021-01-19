@@ -71,6 +71,9 @@ const defaultConfig = {
 			FocusExplorerPanel: {
 				combos: [isMac ? 'CmdOrCtrl+E' : 'Ctrl+E'],
 			},
+			ToggleTerminal: {
+				combos: [isMac ? 'CmdOrCtrl+H' : 'Ctrl+H'],
+			},
 		},
 		miscEnableLiveUpdateInManualConfig: true,
 		appBlurEffect: 10,
