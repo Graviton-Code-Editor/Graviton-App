@@ -25,27 +25,7 @@ import * as Emotion from '@emotion/css'
 import { openFile, openFolder, saveFileAs } from 'FileSystem'
 import Core from 'Core'
 const { fs } = Core
-
-/*
- * Plugins paths
- */
-let pluginsInternalDir
-let pluginsExternalDir
-
-RunningConfig.on('appLoaded', () => {
-	const { isBrowser, isDev } = RunningConfig.data
-
-	if (isBrowser) {
-		pluginsInternalDir = ''
-	} else {
-		if (isDev) {
-			pluginsInternalDir = path.resolve(__dirname, '..', '..', '..', 'pluginsDist')
-		} else {
-			pluginsInternalDir = path.join((window as any).process.resourcesPath, 'pluginsDist')
-		}
-	}
-	pluginsExternalDir = window.process ? path.join(StaticConfig.data.appConfigPath, 'plugins') : ''
-})
+import { pluginsInternalDir, pluginsExternalDir } from '../utils/plugins_dirs'
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = process.env.NODE_ENV === 'test'
@@ -197,8 +177,8 @@ export function unloadPluginFromRegistry(name) {
  */
 RunningConfig.on('appLoaded', async function () {
 	if (!RunningConfig.data.isBrowser) {
-		await registerPluginsIn(pluginsInternalDir)
-		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
+		await registerPluginsIn(pluginsInternalDir())
+		if (!isTesting) await registerPluginsIn(pluginsExternalDir())
 	}
 	RunningConfig.emit('allPluginsLoaded')
 
