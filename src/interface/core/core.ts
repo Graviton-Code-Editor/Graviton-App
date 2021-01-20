@@ -28,6 +28,11 @@ const Core = {
 function getValidBrowserConfig(storage, defaultConfig) {
 	if (storage !== '' && storage !== null) {
 		const currentConf = JSON.parse(storage)
+		Object.keys(defaultConfig.config.appShortcuts).forEach(key => {
+			if (!currentConf.hasOwnProperty(key)) {
+				currentConf.appShortcuts[key] = defaultConfig.config.appShortcuts[key] //
+			}
+		})
 		return Object.assign(defaultConfig.config, currentConf)
 	} else {
 		return defaultConfig.config
@@ -36,7 +41,6 @@ function getValidBrowserConfig(storage, defaultConfig) {
 
 if (isBrowser) {
 	const defaultConfig = getBrowserConfiguration()
-
 	// Load User's configuration from the localStorage
 	const storage = localStorage.getItem('config')
 
