@@ -10,7 +10,7 @@
 
 .CodeMirror-foldmarker {
 	color: white;
-	text-shadow: 0px 1px 3px rgba(150, 150, 150, 0.17);
+	text-shadow: 0 1px 3px rgba(150, 150, 150, 0.17);
 }
 
 .CodeMirror-gutter-elt > div {
@@ -38,12 +38,12 @@
 	position: relative;
 	flex: 1;
 	& .CodeMirror-merge-pane {
-		min-width: 0px;
+		min-width: 0;
 		display: inline-block;
 		flex: 1;
 	}
 	& .CodeMirror-merge-gap {
-		width: 0px;
+		width: 0;
 	}
 }
 
@@ -517,16 +517,16 @@ span.CodeMirror-selectedtext {
 	z-index: 5;
 	overflow: hidden;
 	color: var(--editorDialogText);
-	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	font-size: 13px;
 	input {
 		border: none;
 		outline: none;
 		background: transparent;
-		box-shadow: 0px 0px 0px 3px rgb(170, 170, 170);
+		box-shadow: 0 0 0 3px rgb(170, 170, 170);
 		border-radius: 4px;
 		min-width: 2em;
-		margin: 3px 0px;
+		margin: 3px 0;
 		margin-top: 12px;
 		padding: 6px 8px;
 	}

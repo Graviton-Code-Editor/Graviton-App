@@ -46,9 +46,9 @@
 	100% {
 		opacity: 0;
 		transform: translateY(37px);
-		min-width: 0px;
-		width: 0px;
-		max-width: 0px;
+		min-width: 0;
+		width: 0;
+		max-width: 0;
 	}
 }
 
@@ -64,9 +64,9 @@
 @keyframes tabOpens {
 	0% {
 		opacity: 0;
-		min-width: 0px;
-		width: 0px;
-		max-width: 0px;
+		min-width: 0;
+		width: 0;
+		max-width: 0;
 	}
 	100% {
 		opacity: 1;
