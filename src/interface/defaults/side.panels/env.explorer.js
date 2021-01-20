@@ -53,7 +53,6 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.appEnableProjectInspector
 function getKeysToItems(keys, folder, fromKey, prefix = '') {
 	return Object.keys(keys).map(key => {
 		const keyValue = keys[key]
-
 		const item = {
 			label: key,
 		}
@@ -62,7 +61,9 @@ function getKeysToItems(keys, folder, fromKey, prefix = '') {
 				executeScript(prefix, folder, key)
 			}
 		}
-		if (typeof keyValue == 'object') {
+		if (Array.isArray(keys)) {
+			item.label = `${key}. ${keys[key]}`
+		} else if (typeof keyValue == 'object') {
 			if (keyValue.icon === undefined && keyValue.value === undefined) {
 				item.items = getKeysToItems(keyValue, folder, key, prefix)
 			} else {
