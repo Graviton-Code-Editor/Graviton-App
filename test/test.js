@@ -10,7 +10,7 @@ console.log(`
 
 describe('Main process', function () {
 	it('Window opens', function () {
-		return remote.getCurrentWindow() !== undefined ? true : false
+		return remote.getCurrentWindow() !== undefined
 	})
 })
 
