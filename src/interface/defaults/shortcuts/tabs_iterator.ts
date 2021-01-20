@@ -30,7 +30,7 @@ RunningConfig.on('command.openCurrentPanelTabsIterator', () => {
 		const focusedTabData = {
 			element: RunningConfig.data.focusedTab,
 			title: RunningConfig.data.focusedTab.state.data.title,
-			icon: RunningConfig.data.focusedTab.children[0].src,
+			icon: (RunningConfig.data.focusedTab.children[0] as HTMLImageElement).src,
 		}
 
 		const focusedTabIndex = getTabIndex(RunningConfig.data.focusedTab)

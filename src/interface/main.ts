@@ -25,7 +25,7 @@ let blurViewApp: boolean = false
 /*
  * Expose if it's running in the browser as attribute in the body element to apply dynamic styles
  */
-document.body.setAttribute('browser', RunningConfig.data.isBrowser)
+document.body.setAttribute('browser', RunningConfig.data.isBrowser.toString())
 
 const App = element({
 	components: {

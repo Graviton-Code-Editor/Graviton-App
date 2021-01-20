@@ -1,10 +1,59 @@
 import { PuffinState } from './puffin.state'
+import PuffinElement from './puffin.element'
+import { PuffinComponent } from './puffin.component'
 import { TabEventArgs } from './tab'
 import { FileEventsArgs, FolderEventsArgs } from './file_system'
 import { RegisterEnvironmentInspectorArgs } from './env_inspector'
 import { RegisterEditorClientArgs } from './editor_client'
 import { LoadedGitRepo, gitRepoStatusUpdated } from './git'
 import { RegisterCommand } from './utils'
+import { EditorClient } from './editorclient'
+import { NotificationInstance, NotificationDetails } from './notification'
+import { ExplorerProvider } from './explorer_provider'
+
+interface RunningConfigData {
+	focusedTab: PuffinElement | null
+	focusedPanel: PuffinElement
+	focusedEditor: { client; instance } | null
+	workspacePath: string | null
+	iconpack: any
+	isDebug: boolean
+	isDev: boolean
+	workspaceConfig: {
+		name: string
+		folders: Array<{ path: string; name: string }>
+		settings?: any
+	}
+	globalCommandPrompt: Array<{ label: string; action: () => void }>
+	notifications: NotificationDetails[]
+	editorsRank: EditorClient[]
+	openedWindows: number
+	arguments: string[]
+	envs: any[]
+	registeredExplorerProviders: ExplorerProvider[]
+	ignoredStaticConfig: any
+	projectServices: any[]
+	languageServers: any[]
+	LSPPort: Number
+	LSPServers: {
+		LanguageMode: {
+			server: string[]
+		}
+	}
+	isGitInstalled: Boolean
+	focusedExplorerItem: PuffinElement | null
+	terminalShells: {
+		TerminalShellName: () => void
+	}
+	openedTerminals: Array<{ name: string; state: PuffinState }>
+	focusedTerminal: string
+	localTerminalAccessories: Array<{ component: PuffinComponent }>
+	isBrowser: Boolean
+	parsedArguments: string[]
+	windowID: string
+	explorerProvider: any
+	editorContextMenuButtons: any
+}
 
 interface CoreEvents {
 	/* Core utils, don't use */
@@ -69,7 +118,7 @@ interface PluginsEvents {
 	registerLanguageServer: any
 	registerEnvironmentInspector: any
 	registerEditorClient: any
-	registeredExplorerProvider: any
+	registerExplorerProvider: ExplorerProvider
 	registerCommand: RegisterCommand
 	/* Notifications events */
 	aNotificationHasBeenCleared: any
@@ -92,5 +141,5 @@ interface PluginsEvents {
 
 interface AllEvents extends PluginsEvents, CoreEvents {}
 
-export type RunningConfigPluginsInterface = PuffinState<PluginsEvents>
-export type RunningConfigInterface = PuffinState<AllEvents>
+export type RunningConfigPluginsInterface = PuffinState<RunningConfigData, PluginsEvents>
+export type RunningConfigInterface = PuffinState<RunningConfigData, AllEvents>

@@ -155,7 +155,7 @@ RunningConfig.on('registerEditorClient', function (editorClient) {
  * Safely load a explorer provider
  * Default is the Local Explorer Provider
  */
-RunningConfig.on('registeredExplorerProvider', function (provider) {
+RunningConfig.on('registerExplorerProvider', function (provider) {
 	RunningConfig.data.registeredExplorerProviders.push(provider)
 })
 
