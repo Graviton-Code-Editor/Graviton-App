@@ -1,8 +1,9 @@
 import * as path from 'path'
+let isBrowser
 try {
-	var isBrowser = !!eval('window')
+	isBrowser = !!eval('window')
 } catch {
-	var isBrowser = false
+	isBrowser = false
 }
 
 /*
