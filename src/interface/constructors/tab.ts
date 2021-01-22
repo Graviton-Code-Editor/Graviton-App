@@ -10,6 +10,7 @@ import getFormat from '../utils/format_parser'
 import PuffinElement from '../types/puffin.element'
 import { PuffinState } from '../types/puffin.state'
 import { TabOptions } from '../types/tab'
+import { getFileIcon } from '../utils/get_file_icon'
 import path from 'path'
 
 class Tab {
@@ -478,20 +479,6 @@ function guessTabPosition(tab: HTMLElement, tabsBar: HTMLElement): number {
 		}
 	})
 	return Number(res)
-}
-
-function getFileIcon(fileName: string, fileExt: string): void {
-	if (fileExt === ('png' || 'jpg' || 'ico')) {
-		return RunningConfig.data.iconpack.image || RunningConfig.data.iconpack['unknown.file']
-	}
-	if (RunningConfig.data.iconpack[`file.${fileName}`]) {
-		return RunningConfig.data.iconpack[`file.${fileName}`]
-	}
-	if (RunningConfig.data.iconpack[`${fileExt}.lang`]) {
-		return RunningConfig.data.iconpack[`${fileExt}.lang`]
-	} else {
-		return RunningConfig.data.iconpack['unknown.file']
-	}
 }
 
 export default Tab
