@@ -93,7 +93,6 @@
 		"diff-match-patch": "^1.0.5",
 		"electron-is-dev": "^1.2.0",
 		"electron-log": "^4.2.4",
-		"electron-mocha": "^10.0.0",
 		"electron-store": "^6.0.1",
 		"electron-window-state": "^5.0.3",
 		"emoji-js": "^3.5.0",
@@ -119,6 +118,7 @@
 		"xterm-webfont": "^2.0.0"
 	},
 	"devDependencies": {
+		"electron-mocha": "^10.0.0",
 		"@electron/typescript-definitions": "^8.8.0",
 		"@gveditor/sdk": "0.4.8",
 		"@types/fs-extra": "^9.0.1",
