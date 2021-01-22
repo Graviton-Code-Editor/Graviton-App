@@ -93,7 +93,7 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 			mainPath = path.join(PATH, main) //BUILT version
 		}
 		if (type === 'plugin') {
-			if (!RunningConfig.data.isDev) {
+			if (!RunningConfig.data.isDev && !RunningConfig.data.isDebug) {
 				try {
 					const { entry }: any = window.require(mainPath)
 					entry(parameters)
