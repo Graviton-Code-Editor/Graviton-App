@@ -23,6 +23,7 @@ const defaultConfig = {
 		appWorkspacesLog: [],
 		appZoom: 1,
 		editorFSWatcher: true,
+		editorFSIgnoreIgnoredGitFiles: true,
 		editorGitIntegration: true,
 		editorAutocomplete: true,
 		editorIndentation: 'space',
