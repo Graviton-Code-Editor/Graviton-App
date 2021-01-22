@@ -139,8 +139,8 @@
 				"Uninstall": "Uninstall",
 				"AnyCompatibleVersion": "There isn't any compatible version."
 			},
-			"Welcome": {
-				"Welcome": "Welcome",
+			"Dashboard": {
+				"Dashboard": "Dashboard",
 				"RecentProjects": "Recent projects",
 				"RecentWorkspaces": "Recent workspaces",
 				"NewProject": "New project",

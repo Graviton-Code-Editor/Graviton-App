@@ -6,7 +6,7 @@ import About from '../dialogs/about'
 import Languages from '../../collections/languages'
 import configEditor from '../tabs/config.editor.js'
 import Settings from '../windows/settings'
-import Welcome from '../windows/welcome'
+import Dashboard from '../windows/dashboard'
 import Store from '../windows/store'
 
 //Command: Open the global command prompt (default: Ctrl+P)
@@ -27,7 +27,7 @@ RunningConfig.on('command.openCommandPrompt', () => {
 					 * Prevent opening the Welcome window in Browser mode
 					 */
 					if (!RunningConfig.data.isBrowser) {
-						Welcome().launch()
+						Dashboard().launch()
 					}
 				},
 			},
@@ -38,7 +38,7 @@ RunningConfig.on('command.openCommandPrompt', () => {
 					 * Prevent opening the Welcome window in Browser mode
 					 */
 					if (!RunningConfig.data.isBrowser) {
-						Welcome({
+						Dashboard({
 							defaultPage: 'workspaces',
 						}).launch()
 					}

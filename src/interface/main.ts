@@ -4,7 +4,7 @@ import { css as style } from '@emotion/css'
 import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
-import Welcome from './defaults/windows/welcome'
+import Dashboard from './defaults/windows/dashboard'
 import BrowserWelcome from './defaults/windows/browser_welcome'
 import Introduction from './defaults/windows/introduction'
 import Resizer from './components/resizer'
@@ -182,7 +182,7 @@ function mountedApp(): void {
 		await init()
 		const isBrowser = RunningConfig.data.isBrowser
 		const isDev = RunningConfig.data.isDev
-		const { appOpenWelcomeInStartup, appOpenIntroductionInStartup } = StaticConfig.data
+		const { appOpenDashboardInStartup, appOpenIntroductionInStartup } = StaticConfig.data
 
 		let IntroductionWindow
 
@@ -200,10 +200,10 @@ function mountedApp(): void {
 		 * Don't show the Welcome Window if:
 		 * - It's running in Browser mode
 		 * - The app was opened with arguments
-		 * - It's configured this way by the user in `appOpenWelcomeInStartup`
+		 * - It's configured this way by the user in `appOpenDashboardInStartup`
 		 */
-		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenWelcomeInStartup) {
-			welcomeWindowToOpen = Welcome
+		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenDashboardInStartup) {
+			welcomeWindowToOpen = Dashboard
 		}
 
 		/*

@@ -1,7 +1,7 @@
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
-import Welcome from './windows/welcome'
+import Dashboard from './windows/dashboard'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
@@ -70,7 +70,7 @@ function createMenus() {
 						{
 							label: 'menus.File.Projects.OpenProjects',
 							action: () => {
-								Welcome().launch()
+								Dashboard().launch()
 							},
 						},
 					],
@@ -81,7 +81,7 @@ function createMenus() {
 						{
 							label: 'menus.File.Workspaces.OpenWorkspaces',
 							action: () => {
-								Welcome({
+								Dashboard({
 									defaultPage: 'workspaces',
 								}).launch()
 							},

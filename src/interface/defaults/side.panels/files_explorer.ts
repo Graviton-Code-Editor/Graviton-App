@@ -4,7 +4,7 @@ import { element } from '@mkenzo_8/puffin'
 import { css as style } from '@emotion/css'
 import { Text } from '@mkenzo_8/puffin-drac'
 import FolderOutlined from '../../components/icons/folder.outlined'
-import Welcome from '../../defaults/windows/welcome'
+import Dashboard from '../../defaults/windows/dashboard'
 import { openFolder } from 'FileSystem'
 
 /*
@@ -98,13 +98,13 @@ RunningConfig.on('appLoaded', () => {
 })
 
 function openProjects() {
-	Welcome({
+	Dashboard({
 		defaultPage: 'projects',
 	}).launch()
 }
 
 function openWorkspaces() {
-	Welcome({
+	Dashboard({
 		defaultPage: 'workspaces',
 	}).launch()
 }
