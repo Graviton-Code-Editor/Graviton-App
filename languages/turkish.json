@@ -31,7 +31,7 @@
 				},
 				"Find": "Bul",
 				"Replace": "Değiştir",
-				"FormatDocument": "Dosyayı Biçimlendir"
+				"FormatDocument": "Dosyayı biçimlendir"
 			},
 			"Tools": {
 				"Tools": "Araçlar",
@@ -88,13 +88,15 @@
 				"Customization": {
 					"Customization": "Kişiselleştirme",
 					"Themes": "Temalar",
-					"Iconpacks": "İkon Paketleri"
+					"Iconpacks": "İkon Paketleri",
+					"Blur": "Bulanıklık"
 				},
 				"Advanced": {
 					"Advanced": "Gelişmiş",
 					"FileWatcher": "Dosya İzleyici",
 					"Autocomplete": "Oto Tamamlama",
 					"WrapLines": "Satırı kaydır",
+					"FoldBlocks": "Kod Bloklarını katla",
 					"ManualConfig": {
 						"ManualConfig": "Varsayılan yapılandırma",
 						"EditConfiguration": "Yapılandırmayı düzenle"
@@ -111,7 +113,7 @@
 					},
 					"Configuration": "Yapılandırma",
 					"RestartConfig": {
-						"RestartConfig": "Yapılandırmayı yeniden başlat"
+						"RestartConfig": "Yapılandırmayı sıfırla"
 					}
 				},
 				"Languages": "Diller",
@@ -137,8 +139,8 @@
 				"Uninstall": "Kaldır",
 				"AnyCompatibleVersion": "Uyumlu bir sürüm yok."
 			},
-			"Welcome": {
-				"Welcome": "Hoş Geldin",
+			"Dashboard": {
+				"Dashboard": "Kontrol Paneli",
 				"RecentProjects": "Son projeler",
 				"RecentWorkspaces": "Son çalışma alanları",
 				"NewProject": "Yeni proje",
@@ -148,6 +150,14 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Tarayıcı için Graviton'a hoş geldin!",
 				"WelcomeMessage": "Bu özelliğin hâlâ aşırı deneysel olduğunu ve bazı özelliklerin çalışmayacağını unutmayın. \n En iyi deneyim için masaüstü sürümünü indirin."
+			},
+			"Introduction": {
+				"Welcome": { "WelcomeToGraviton": "Graviton'a hoş geldin" },
+				"Theming": { "SelectATheme": "Bir tema seçin" },
+				"Finished": {
+					"Finished": "Tamamlandı",
+					"HaveAGreatExperience": "İyi bir deneyim yaşayın 😀"
+				}
 			}
 		},
 		"misc": {
@@ -179,11 +189,12 @@
 			"Close": "Kapat",
 			"Ignore": "Yok say",
 			"BuildDate": "İnşa zamanı",
-			"By": "tarafından",
+			"By": "Şu kişiden ",
 			"Understood": "Anladım",
 			"RemoveFromWorkspace": "Çalışma alanından kaldır",
 			"JoinTheDiscussion": "Tartışmaya Katıl",
-			"OpenAnyway": "Yine de aç"
+			"OpenAnyway": "Yine de aç",
+			"Update": "Güncelle"
 		},
 		"notifications": {
 			"appLanguageChanged": {
@@ -197,12 +208,20 @@
 				"content": "İlerleme kaybolabilir."
 			},
 			"restartConfig": {
-				"title": "Yapılandırmayı yeniden başlat",
-				"content": "Yapılandırmayı yeniden başlatmak için tıkla. Bu herhangi bir eklentiyi kaldırmayacaktır."
+				"title": "Yapılandırmayı sıfırla",
+				"content": "Yapılandırmayı sıfırlamak için tıkla. Bu herhangi bir eklentiyi kaldırmayacaktır."
 			},
 			"experimentalFeature": {
 				"title": "Deneysel özellik",
 				"content": "Bu özellik stabil değil ve bazı sorunlara sebep olabilir."
+			},
+			"warning": {
+				"title": "Emin misin?"
+			},
+			"sidepanels": {
+				"sourceTracker": {
+					"noRepositoryOpen": "Açık depo yok."
+				}
 			}
 		}
 	}
