@@ -1,5 +1,5 @@
 {
-	"name": "Polski",
+	"name": "Polish",
 	"locale": "pl",
 	"translations": {
 		"menus": {
@@ -75,7 +75,7 @@
 				"Website": "Strona internetowa",
 				"SourceCode": "Kod źródłowy",
 				"CheckForUpdates": "Sprawdź aktualizacje",
-				"About": "O"
+				"About": "O programie"
 			}
 		},
 		"windows": {
@@ -99,7 +99,7 @@
 				},
 				"Languages": "Języki",
 				"About": {
-					"About": "O",
+					"About": "O programie",
 					"GravitonDescription": "Graviton jest multi-platformowym edytorem kodu."
 				}
 			},
