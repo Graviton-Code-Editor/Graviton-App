@@ -4,7 +4,9 @@ import { css as style } from '@emotion/css'
 import TitleBar from './components/titlebar/titlebar'
 import SplashScreen from './components/splash.screen'
 import init from './defaults/initial'
-import Welcome from './defaults/windows/welcome'
+import Dashboard from './defaults/windows/dashboard'
+import BrowserWelcome from './defaults/windows/browser_welcome'
+import Introduction from './defaults/windows/introduction'
 import Resizer from './components/resizer'
 import StatusBar from './components/status.bar/status.bar'
 import RunningConfig from 'RunningConfig'
@@ -23,7 +25,7 @@ let blurViewApp: boolean = false
 /*
  * Expose if it's running in the browser as attribute in the body element to apply dynamic styles
  */
-document.body.setAttribute('browser', RunningConfig.data.isBrowser)
+document.body.setAttribute('browser', RunningConfig.data.isBrowser.toString())
 
 const App = element({
 	components: {
@@ -41,7 +43,7 @@ const App = element({
 			<div id="body">
 				<div id="sidebar" :contextmenu="${sidebarContext}" style="${handleSidebarState}"/>
 				<div id="sidepanel" :resized="${sidePanelResized}" style="${handlesidePanelState}"/>
-				<Resizer direction="horizontally"/>
+				<Resizer direction="horizontally" :mouseup="${stoppedResizing}"/>
 				<div id="mainpanel" blocked="${handleMainpanelState}">
 					<div id="panels_stack"></div>
 					<Resizer direction="vertically"/>
@@ -62,8 +64,13 @@ StaticConfig.keyChanged('appShowTerminal', (value: boolean) => {
 	}
 })
 
+function stoppedResizing() {
+	StaticConfig.triggerChange()
+}
+
 function sidePanelResized() {
 	RunningConfig.emit('sidePanelHasBeenResized')
+	StaticConfig.data.appCache.sidePanelWidth = this.style.getPropertyValue('width')
 }
 
 function handleAppviewState() {
@@ -175,15 +182,42 @@ function mountedApp(): void {
 		await init()
 		const isBrowser = RunningConfig.data.isBrowser
 		const isDev = RunningConfig.data.isDev
-		const appOpenWelcomeInStartup = StaticConfig.data.appOpenWelcomeInStartup
+		const { appOpenDashboardInStartup, appOpenIntroductionInStartup } = StaticConfig.data
+
+		let IntroductionWindow
+
+		if (appOpenIntroductionInStartup) {
+			IntroductionWindow = Introduction()
+
+			IntroductionWindow.launch()
+
+			StaticConfig.data.appOpenIntroductionInStartup = false
+		}
+
+		let welcomeWindowToOpen
+
 		/*
 		 * Don't show the Welcome Window if:
 		 * - It's running in Browser mode
 		 * - The app was opened with arguments
-		 * - It's configured this way by the user in `appOpenWelcomeInStartup`
+		 * - It's configured this way by the user in `appOpenDashboardInStartup`
 		 */
-		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenWelcomeInStartup) {
-			Welcome().launch()
+		if (((!isDev && RunningConfig.data.arguments[0] == null) || isDev) && !isBrowser && appOpenDashboardInStartup) {
+			welcomeWindowToOpen = Dashboard
+		}
+
+		/*
+		 * Don't show the Welcome Window if:
+		 * - It's running in Desktop mode
+		 */
+		if (isBrowser) welcomeWindowToOpen = BrowserWelcome
+
+		if (IntroductionWindow) {
+			IntroductionWindow.WindowState.on('closed', () => {
+				welcomeWindowToOpen().launch()
+			})
+		} else {
+			welcomeWindowToOpen().launch()
 		}
 	})
 }

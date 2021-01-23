@@ -4,7 +4,7 @@ import SidePanel from '../../constructors/side.panel'
 import Explorer from '../../constructors/explorer'
 import { basename, parse } from 'path'
 import { getFileIconType } from '../../utils/get_file_icon'
-import { Input, Titles, Button } from '@mkenzo_8/puffin-drac'
+import { Input, Titles, Button, Text } from '@mkenzo_8/puffin-drac'
 import ContextMenu from '../../constructors/contextmenu'
 import EmojiConvertor from 'emoji-js'
 import GitIcon from '../../components/icons/git'
@@ -12,6 +12,26 @@ import StaticConfig from 'StaticConfig'
 import InputDialog from '../../utils/dialogs/dialog_input'
 import Notification from 'Constructors/notification'
 import * as path from 'path'
+import { css as style } from '@emotion/css'
+
+const panelStyled = style`
+	&[empty=true]{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+		& > p {
+			text-align: center;
+			font-size: 13px;
+			user-select: none;
+		}
+	}
+	&[empty=false]{
+		& > p{
+			display: none;
+		}
+	}
+`
 
 /*
  * Return total count of changes, if is bigger than 25, return "25+"
@@ -138,6 +158,8 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 			 * When a folder is loaded
 			 */
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+				this.setAttribute('empty', 'false')
+
 				/*
 				 * When that folder's repository (if exists) gets loaded
 				 */
@@ -192,7 +214,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 								label: basename(folderPath),
 								icon: 'folder.closed',
 								decorator: {
-									label: gitChanges.files.length == '0' ? 'Any' : gitChanges.files.length,
+									label: gitChanges.files.length == 0 ? 'Any' : gitChanges.files.length.toString(),
 									color: 'var(--explorerItemGitIndicatorText)',
 									background: 'var(--explorerItemGitNotAddedText)',
 								},
@@ -396,7 +418,15 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 				return GitIcon()
 			},
 			panel() {
-				return element`<div mounted="${mounted}"/>`
+				return element({
+					components: {
+						Text,
+					},
+				})`
+				<div mounted="${mounted}" class="${panelStyled}" empty="true">
+					<Text lang-string="sidepanels.sourceTracker.noRepositoryOpen"></Text>
+				</div>
+				`
 			},
 			hint: 'Source Tracker',
 		})

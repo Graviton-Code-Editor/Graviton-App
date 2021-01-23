@@ -7,6 +7,7 @@
 				"File": "Fichier",
 				"OpenFolder": "Ouvrir un dossier",
 				"OpenFile": "Ouvrir un fichier",
+				"SaveFile": "Sauvegarder le fichier",
 				"Projects": {
 					"Projects": "Projets",
 					"OpenProjects": "Projets ouverts"
@@ -44,13 +45,14 @@
 			},
 			"View": {
 				"View": "Affichage",
-				"ToggleSidebar": "Afficher/Cacher la barre latérale",
-				"ToggleSidepanel": "Afficher/Cacher le panneau latéral",
+				"Sidebar": "Barre latérale",
+				"Sidepanel": "Panneau latérale",
+				"Terminal": "Terminal",
 				"ShowSidebar": "Afficher la barre latérale",
 				"ShowSidepanel": "Afficher le panneau latéral",
 				"HideSidebar": "Cacher la barre latérale",
-				"HideSidepanel": "Cacher le panneau latéral",
-				"ToggleTerminal": "Afficher/Cacher le terminal"
+				"CommandPrompt": "Invite de commande",
+				"ExplorerPrompt": "Explorateur"
 			},
 			"Window": {
 				"Window": "Fenêtre",
@@ -87,22 +89,24 @@
 				"Customization": {
 					"Customization": "Personnalisation",
 					"Themes": "Thèmes",
-					"Iconpacks": "Packs d'icônes"
+					"Iconpacks": "Packs d'icônes",
+					"Blur": "Flou"
 				},
 				"Advanced": {
 					"Advanced": "Paramètres avancés",
 					"FileWatcher": "Observateur de fichiers",
 					"Autocomplete": "Autocomplétion",
-					"WrapLines": "Wrap lines",
+					"WrapLines": "Envelopper les lignes",
+					"FoldBlocks": "Pliage de blocs",
 					"ManualConfig": {
 						"ManualConfig": "Configuration manuelle",
 						"EditConfiguration": "Éditer la configuration"
 					},
 					"Explorer": "Explorateur",
 					"Editor": "Editeur",
-					"GitIntegration": "Integration Git",
-					"LSPIntegration": "Integration LSP (expérimentale)",
-					"SourceTracker": "Source Tracker",
+					"GitIntegration": "Intégration Git",
+					"LSPIntegration": "Intégration LSP (expérimentale)",
+					"SourceTracker": "Suivi des sources",
 					"Indentation": {
 						"Indentation": "Indentation",
 						"Space": "Espace",
@@ -120,7 +124,7 @@
 				},
 				"About": {
 					"About": "À propos",
-					"GravitonDescription": "Graviton est un éditeur de texte multi-plateformes."
+					"GravitonDescription": "Graviton est un éditeur de code open-source moderne."
 				}
 			},
 			"Store": {
@@ -136,8 +140,8 @@
 				"Uninstall": "Désinstaller",
 				"AnyCompatibleVersion": "Il n'y a pas de version compatibles."
 			},
-			"Welcome": {
-				"Welcome": "Bienvenue",
+			"Dashboard": {
+				"Dashboard": "Tableau de bord",
 				"RecentProjects": "Projets récents",
 				"RecentWorkspaces": "Espaces de travail récents",
 				"NewProject": "Nouveau projet",
@@ -147,9 +151,22 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Bienvenue sur Graviton pour navigateur",
 				"WelcomeMessage": "Veuillez garder à l'idée que cette version est encore très expérimentale et que certaines fonctions ne fonctionnent pas.\n Pour une meilleure expérience, veuillez télécharger l'application."
+			},
+			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "Bienvenue avec Graviton"
+				},
+				"Theming": {
+					"SelectATheme": "Sélectionnez un thème"
+				},
+				"Finished": {
+					"Finished": "Terminé",
+					"HaveAGreatExperience": "Vivez une grande expérience 😀"
+				}
 			}
 		},
 		"misc": {
+			"Miscellaneous": "Divers",
 			"LastVersion": "Dernière version",
 			"InstalledVersion": "Version installée",
 			"About": "À propos",
@@ -178,7 +195,11 @@
 			"Ignore": "Ignorer",
 			"BuildDate": "Date de compilation",
 			"By": "par",
-			"Understood": "Compris"
+			"Understood": "Compris",
+			"RemoveFromWorkspace": "Retirer de l'espace de travail",
+			"JoinTheDiscussion": "Rejoindre la discussion",
+			"OpenAnyway": "Ouvert de toute manière",
+			"Update": "Mise à jour"
 		},
 		"notifications": {
 			"appLanguageChanged": {
@@ -198,6 +219,14 @@
 			"experimentalFeature": {
 				"title": "Fonctionnalité expérimentale",
 				"content": "Cette fonctionnalité n'est pas stable et peut causer des bugs."
+			},
+			"warning": {
+				"title": "Êtes-vous sûr ?"
+			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRepositoryOpen": "Aucun dépôt n'est ouvert."
 			}
 		}
 	}

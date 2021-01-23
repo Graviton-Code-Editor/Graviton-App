@@ -6,18 +6,24 @@ const ItemWrapper = style`
 		background:transparent;
 		white-space:nowrap;
 		padding:0px;
-		user-select:none;
 		margin-left: 10px;
 		content-visibility: paint;
 		contain-intrinsic-size: 26px;
 		&[animated="true"]{
 			animation: appearItem 0.07s ease-out;
 		}
-	}
-	& button{
-		transition:0.015s;
+		&[isfolder=true].dragging{
+			& > button {
+				box-shadow: 0px 0px 0px 3px var(--accentColor);
+				border-radius:5px;
+				& > * {
+					pointer-events: none;
+				}
+			}
+		}
 	}
 	& > button{
+		box-shadow: none;
 		margin:0;
 		border-radius:12px;
 		font-size:12px;

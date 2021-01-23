@@ -76,7 +76,8 @@ RunningConfig.on('command.openEditorCommandPrompt', () => {
 						const fileExtension = getFormat(fileDir)
 
 						const { bodyElement, tabElement, tabState, isCancelled } = new Tab({
-							title: `${basename}'s changes'`,
+							id: `${fileDir}_git_diff`,
+							title: `${basename}'s changes`,
 							isEditor: true,
 							explorerProvider: instance.explorerPovider,
 						})

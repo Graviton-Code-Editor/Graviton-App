@@ -3,6 +3,7 @@
 Prerequisites:
 
 - NodeJS (LTS version)
+- yarn
 - Git
 - **❗ IMPORTANT ❗** -> https://www.npmjs.com/package/node-gyp#installation
 
@@ -31,7 +32,7 @@ cd Graviton-App
 Install the dependencies:
 
 ```shell
-npm install
+yarn
 ```
 
 ## Developing (optional)
@@ -43,7 +44,7 @@ In case you just want to test it in development mode, run:
 This will open the app's window:
 
 ```shell
-npm start
+yarn start
 ```
 
 ### Browser (experimental)
@@ -51,7 +52,7 @@ npm start
 This will launch a web server in port 7500 (http://localhost:7500):
 
 ```shell
-npm start:experimental:browser
+yarn start:experimental:browser
 ```
 
 ### Self-hosted server (experimental)
@@ -59,7 +60,7 @@ npm start:experimental:browser
 This will launch a web server in port 7500 (http://localhost:7500):
 
 ```shell
-npm start:experimental:server
+yarn start:experimental:server
 ```
 
 If shows an empty dark screen wait some seconds and if Graviton doesn't load try reloading the window (Ctrl+R).
@@ -75,7 +76,7 @@ This will generate a static website, which includes the whole Graviton UI, Arcti
 Run:
 
 ```shell
-npm run build:experimental:browser
+yarn build:experimental:browser
 ```
 
 ### Desktop App
@@ -91,7 +92,7 @@ Default formats for each platform:
 Run:
 
 ```shell
-npm run build
+yarn build
 ```
 
 You can override the default outputs in the package.json, or just skip to the next section.
@@ -101,13 +102,13 @@ You can override the default outputs in the package.json, or just skip to the ne
 If you want to build a specific linux Installer for your distro you can run:
 
 ```shell
-npm run build:whatever_package
+yarn build:electron  --info platform=X
 ```
 
 For example, if you are an Arch Linux user, run:
 
 ```shell
-npm run build:pacman
+yarn build:electron  --info platform=arch
 ```
 
 Here is the list of the supported packages:
@@ -130,5 +131,13 @@ In case you want to test Graviton in a production build but don't want to create
 Run:
 
 ```shell
-npm run build:outpacked
+yarn build:electron --info outpacked=true
+```
+
+## API Documentation
+
+To generate a static website with documentation about the plugins API, run:
+
+```shell
+yarn build:docs
 ```

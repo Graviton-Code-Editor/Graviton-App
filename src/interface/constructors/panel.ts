@@ -24,7 +24,7 @@ class Panel {
 			},
 		})`
 			<PanelBody :click="${this.focusPanel.bind(this)}" :dragover="${allowDrop}" :drop="${onTabDropped}">    
-				<div :dragover="${allowDrop}" :drop="${onTabDropped}" class="tabsbar"/>
+				<div :dragover="${allowDrop}"  class="tabsbar"/>
 				<div :contextmenu="${contextmenu}" class="tabspanel"/>
 			</PanelBody>
 		`
@@ -32,6 +32,7 @@ class Panel {
 			e.preventDefault()
 		}
 		function onTabDropped(e) {
+			e.preventDefault()
 			const dropType = e.dataTransfer.getData('type') || 'tab'
 
 			switch (dropType) {
@@ -84,19 +85,27 @@ class Panel {
 					break
 
 				case 'explorerItem':
+					const isFolder = e.dataTransfer.getData('isFolder')
+					const itemClass = e.dataTransfer.getData('class')
+					const itemElement = document.getElementsByClassName(itemClass)[0]
+					if (isFolder === 'true') return
+
 					// Focus the panel where the file dropped
 					self.focusPanel()
 
 					// Launch an editor
 					RunningConfig.emit('loadFile', {
 						filePath: e.dataTransfer.getData('filePath'),
+						explorerProvider: (itemElement as any).instance.explorerProvider,
 					})
 					break
 			}
 		}
 
 		function contextmenu(event) {
-			if (!this.children[0]) {
+			const panelParent = this.parentElement.parentElement
+			const parentChildren = [...panelParent.children]
+			if (!this.children[0] && parentChildren.length > 1) {
 				new ContextMenu({
 					list: [
 						{

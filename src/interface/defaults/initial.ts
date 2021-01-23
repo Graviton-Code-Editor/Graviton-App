@@ -38,17 +38,22 @@ export default async function init() {
 
 	new Panel() //Initial Panel
 
-	addPluginToRegistryStatically(Arctic)
-	addPluginToRegistryStatically(Night)
-
 	if (RunningConfig.data.isBrowser) {
+		addPluginToRegistryStatically({
+			PATH: 'Graviton',
+			...Arctic,
+		})
+		addPluginToRegistryStatically({
+			PATH: 'Graviton',
+			...Night,
+		})
 		addPluginToRegistryStatically({
 			PATH: 'Graviton',
 			...GravitonIconpack,
 		})
 
-		const RemoteExports = await import('../../../pluginsBrowserDist/remote-plugin/index')
-		const RemotePkg = await import('../../../pluginsBrowserDist/remote-plugin/package.json')
+		const RemoteExports = await import('../../../dist_browser_plugins/remote-plugin/index')
+		const RemotePkg = await import('../../../dist_browser_plugins/remote-plugin/package.json')
 
 		addPluginToRegistryStatically(RemotePkg, RemoteExports)
 	} else {
@@ -56,6 +61,16 @@ export default async function init() {
 			if (value) {
 				ExperimentalFeatureDialog().launch()
 			}
+		})
+
+		addPluginToRegistryStatically({
+			PATH: path.join(__dirname, '../../../Arctic'),
+			...Arctic,
+		})
+
+		addPluginToRegistryStatically({
+			PATH: path.join(__dirname, '../../../Night'),
+			...Night,
 		})
 
 		addPluginToRegistryStatically({

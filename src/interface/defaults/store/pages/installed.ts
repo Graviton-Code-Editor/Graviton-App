@@ -4,6 +4,7 @@ import { LanguageState } from 'LanguageConfig'
 import getList from '../api/get.list'
 import StoreCard from '../../../components/store/card'
 import PluginsRegistry from 'PluginsRegistry'
+import * as path from 'path'
 
 import { PuffinComponent } from 'Types/puffin.component'
 
@@ -24,6 +25,7 @@ function displayInstalled(container) {
 					pluginID: pluginInfo.id,
 					displayName: pluginInfo.name,
 					description: pluginInfo.description,
+					icon: pluginInfo.icon ? path.join(pluginInfo.PATH, pluginInfo.icon) : null,
 				}
 				return element({
 					components: {

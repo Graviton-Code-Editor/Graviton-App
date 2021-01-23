@@ -11,7 +11,7 @@ import Notification from '../constructors/notification'
 function checkForUpdates(ifNoUpdate?: () => void): any {
 	if (RunningConfig.data.isDev && !ifNoUpdate) return
 	gravitonHasUpdate()
-		.then(({ res, version }) => {
+		.then(({ res, version, channelBuild }) => {
 			if (res) {
 				new Notification({
 					title: 'Update available',
@@ -20,7 +20,11 @@ function checkForUpdates(ifNoUpdate?: () => void): any {
 						{
 							label: 'misc.Update',
 							action() {
-								openExternal('https://graviton.netlify.app/download')
+								if (channelBuild === 'dev') {
+									openExternal(`https://github.com/Graviton-Code-Editor/Graviton-App/releases/tag/v${version}`)
+								} else {
+									openExternal('https://graviton.netlify.app/download')
+								}
 							},
 						},
 						{

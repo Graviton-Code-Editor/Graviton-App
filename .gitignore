@@ -20,3 +20,6 @@ dist_server
 remote-plugin-temp
 pluginsBrowserDist
 dist_docs
+dist_browser_plugins
+temp_remote_plugin
+yarn-error.log

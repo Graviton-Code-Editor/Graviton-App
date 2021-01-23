@@ -65,6 +65,7 @@
 		"scrollbarHoveringBackground": "rgba(0,0,0,0.7)",
 		"tabIconFill": "white",
 		"tabIconHoveringFill": "gray",
+		"tabBordersBackground": "rgb(50,50,50)",
 		"sidemenuBackground": "#191919",
 		"sidemenuButtonBackground": "transparent",
 		"sidemenuButtonHoveringBackground": "#222222",

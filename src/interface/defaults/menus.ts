@@ -1,7 +1,7 @@
 import Menu from '../constructors/menu'
 import Settings from './windows/settings'
 import Store from './windows/store'
-import Welcome from './windows/welcome'
+import Dashboard from './windows/dashboard'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import About from './dialogs/about'
@@ -58,12 +58,19 @@ function createMenus() {
 				},
 				{},
 				{
+					label: 'menus.File.SaveFile',
+					action: () => {
+						RunningConfig.emit('command.saveCurrentFile')
+					},
+				},
+				{},
+				{
 					label: 'menus.File.Projects.Projects',
 					list: [
 						{
 							label: 'menus.File.Projects.OpenProjects',
 							action: () => {
-								Welcome().launch()
+								Dashboard().launch()
 							},
 						},
 					],
@@ -74,7 +81,7 @@ function createMenus() {
 						{
 							label: 'menus.File.Workspaces.OpenWorkspaces',
 							action: () => {
-								Welcome({
+								Dashboard({
 									defaultPage: 'workspaces',
 								}).launch()
 							},
@@ -303,6 +310,15 @@ function createMenus() {
 					})
 				},
 				action: () => (StaticConfig.data.appShowTerminal = !StaticConfig.data.appShowTerminal),
+			},
+			{},
+			{
+				label: 'menus.View.CommandPrompt',
+				action: () => RunningConfig.emit('command.openCommandPrompt'),
+			},
+			{
+				label: 'menus.View.ExplorerPrompt',
+				action: () => RunningConfig.emit('command.openExplorerCommandPrompt'),
 			},
 		],
 	})

@@ -7,6 +7,7 @@
 				"File": "文件",
 				"OpenFolder": "打开文件夹",
 				"OpenFile": "打开文件",
+				"SaveFile": "保存文件",
 				"Projects": {
 					"Projects": "项目",
 					"OpenProjects": "打开项目"
@@ -35,7 +36,7 @@
 			"Tools": {
 				"Tools": "工具",
 				"OpenSettings": "设置",
-				"OpenStore": "市场",
+				"OpenStore": "插件",
 				"Panels": {
 					"Panels": "面板",
 					"NewPanel": "新建面板",
@@ -50,7 +51,8 @@
 				"ShowSidebar": "显示活动栏",
 				"ShowSidepanel": "显示侧边栏",
 				"HideSidebar": "隐藏活动栏",
-				"HideSidepanel": "隐藏侧边栏"
+				"CommandPrompt": "命令提示符",
+				"ExplorerPrompt": "资源管理器"
 			},
 			"Window": {
 				"Window": "窗口",
@@ -94,6 +96,7 @@
 					"FileWatcher": "文件监视程序",
 					"Autocomplete": "自动完成",
 					"WrapLines": "换行",
+					"FoldBlocks": "折叠块",
 					"ManualConfig": {
 						"ManualConfig": "手动配置",
 						"EditConfiguration": "编辑配置"
@@ -124,7 +127,7 @@
 				}
 			},
 			"Store": {
-				"Store": "市场",
+				"Store": "插件",
 				"Home": {
 					"Home": "首页"
 				},
@@ -180,7 +183,9 @@
 			"BuildDate": "编译时间",
 			"By": "by",
 			"Understood": "理解",
-			"RemoveFromWorkspace": "从工作区删除"
+			"RemoveFromWorkspace": "从工作区删除",
+			"JoinTheDiscussion": "参于讨论",
+			"OpenAnyway": "仍然打开"
 		},
 		"notifications": {
 			"appLanguageChanged": {
@@ -200,6 +205,11 @@
 			"experimentalFeature": {
 				"title": "实验特性",
 				"content": "此功能不稳定，可能会导致一些问题。"
+			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRepositoryOpen": "没有打开存储库。"
 			}
 		}
 	}

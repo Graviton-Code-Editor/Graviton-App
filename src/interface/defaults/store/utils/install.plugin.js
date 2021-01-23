@@ -1,7 +1,7 @@
 import path from 'path'
 import StaticConfig from 'StaticConfig'
 import { addPluginToRegistry, loadPlugin } from 'PluginLoader'
-import { pluginsExternalDir } from 'Constants'
+import { pluginsInternalDir, pluginsExternalDir } from '../../../utils/plugins_dirs'
 import Core from 'Core'
 const {
 	electron: { ipcRenderer },
@@ -13,10 +13,10 @@ export function installPluginFromURL({ id, release }) {
 			.invoke('install-plugin', {
 				url: release,
 				id: id,
-				dist: pluginsExternalDir,
+				dist: pluginsExternalDir(),
 			})
 			.then(data => {
-				const pluginPath = path.join(pluginsExternalDir, id)
+				const pluginPath = path.join(pluginsExternalDir(), id)
 				const pluginPkg = addPluginToRegistry(pluginPath)
 				loadPlugin(pluginPkg)
 				resolve(data)
@@ -30,7 +30,7 @@ export function installPluginFromGVP({ path, name }) {
 			.invoke('install-gvp', {
 				path,
 				name,
-				dist: pluginsExternalDir,
+				dist: pluginsExternalDir(),
 			})
 			.then(data => {
 				resolve(data)

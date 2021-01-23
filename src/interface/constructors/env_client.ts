@@ -15,7 +15,7 @@ class EnvClient {
 	status: string
 	data: any
 	on(eventName: string, action: () => void): PuffinEventInstance {
-		return this.clientState.on(eventName, action)
+		return <PuffinEventInstance>this.clientState.on(eventName, action)
 	}
 	emit(eventName: string, data: any): void {
 		return this.clientState.emit(eventName, data)

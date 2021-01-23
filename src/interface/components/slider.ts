@@ -56,8 +56,11 @@ function Slider({ data, min, max, step, value }) {
 		const width = e.clientX - slider.getBoundingClientRect().left - 5
 
 		const sliderSize = slider.offsetWidth - thumb.offsetWidth
-
-		if (width > 0 && width < sliderSize) {
+		if (width < 0) {
+			track.style.width = 0
+		} else if (width > sliderSize) {
+			track.style.width = sliderSize
+		} else if (width > 0 && width < sliderSize) {
 			track.style.width = width
 		}
 	}

@@ -21,9 +21,11 @@ import Explorer from '../constructors/explorer'
 import FilesExplorer from '../constructors/files.explorer'
 import throwError from '../utils/throw_error'
 import * as path from 'path'
-import { pluginsIternalDir, pluginsExternalDir } from 'Constants'
+import * as Emotion from '@emotion/css'
+import { openFile, openFolder, saveFileAs } from 'FileSystem'
 import Core from 'Core'
 const { fs } = Core
+import { pluginsInternalDir, pluginsExternalDir } from '../utils/plugins_dirs'
 
 const getPlugin = (pluginPath: string) => window.require(pluginPath)
 const isTesting: boolean = process.env.NODE_ENV === 'test'
@@ -60,8 +62,14 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 		CommandPrompt,
 		Editor,
 		FilesExplorer,
+		PluginsRegistry,
+		Emotion,
+		Dialogs: {
+			openFile,
+			openFolder,
+			saveFileAs,
+		},
 	}
-
 	if (pluginExports) {
 		if (type === 'plugin') {
 			if (!RunningConfig.data.isDev) {
@@ -85,7 +93,7 @@ function loadMainFile({ mainDev, main, name, type, PATH, pluginExports }) {
 			mainPath = path.join(PATH, main) //BUILT version
 		}
 		if (type === 'plugin') {
-			if (!RunningConfig.data.isDev) {
+			if (!RunningConfig.data.isDev && !RunningConfig.data.isDebug) {
 				try {
 					const { entry }: any = window.require(mainPath)
 					entry(parameters)
@@ -115,7 +123,7 @@ async function loadPlugin(pluginPkg) {
 }
 
 const registerPluginsIn = where => {
-	return new Promise((resolve, reject) => {
+	return new Promise<void>((resolve, reject) => {
 		fs.readdir(where)
 			.then(paths => {
 				paths.map(pluginName => {
@@ -169,11 +177,22 @@ export function unloadPluginFromRegistry(name) {
  */
 RunningConfig.on('appLoaded', async function () {
 	if (!RunningConfig.data.isBrowser) {
-		await registerPluginsIn(pluginsIternalDir)
-		if (!isTesting) await registerPluginsIn(pluginsExternalDir)
+		await registerPluginsIn(pluginsInternalDir())
+		if (!isTesting) await registerPluginsIn(pluginsExternalDir())
 	}
 	RunningConfig.emit('allPluginsLoaded')
-	loadAllPlugins()
+
+	let preventRunningPlugins = false
+
+	if (!isBrowser) {
+		if (eval('window.process.env.NODE_ENV') === 'test') {
+			preventRunningPlugins = true
+		}
+	}
+
+	if (!preventRunningPlugins) {
+		loadAllPlugins()
+	}
 })
 
 function loadAllPlugins() {

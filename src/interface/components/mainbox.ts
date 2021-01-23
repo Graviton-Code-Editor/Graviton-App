@@ -3,6 +3,7 @@ import { css as style } from '@emotion/css'
 import StaticConfig from 'StaticConfig'
 import RunningConfig from 'RunningConfig'
 import Terminal from './terminal'
+import PuffinElement from 'Types/puffin.element'
 
 const MainBoxStyle = style`
 	position: relative;
@@ -13,21 +14,31 @@ const MainBoxStyle = style`
 	border-top: 1px solid var(--panelBorder);
 `
 
+function handleTerminal(element: PuffinElement, state: boolean) {
+	const resizerElement = <PuffinElement>element.previousElementSibling
+	if (state) {
+		element.style.display = 'block'
+		resizerElement.style.display = 'block'
+		document.getElementById('panels_stack').style.height = '70%'
+		if (RunningConfig.data.openedTerminals.length === 0 && !RunningConfig.data.isBrowser) {
+			RunningConfig.emit('createTerminalSession', {
+				shell: StaticConfig.data.terminalDefaultShell,
+			})
+		}
+	} else {
+		element.style.display = 'none'
+		resizerElement.style.display = 'none'
+	}
+}
+
 export default function MainBox() {
 	function mounted() {
-		if (StaticConfig.data.appShowTerminal) {
-			this.style.display = 'block'
-			document.getElementById('panels_stack').style.height = '70%'
-		} else {
-			this.style.display = 'none'
-		}
-		StaticConfig.keyChanged('appShowTerminal', (show: boolean) => {
-			if (show) {
-				this.style.display = 'block'
-				document.getElementById('panels_stack').style.height = '70%'
-			} else {
-				this.style.display = 'none'
-			}
+		RunningConfig.once('allPluginsLoaded', () => {
+			handleTerminal(this, StaticConfig.data.appShowTerminal)
+		})
+
+		StaticConfig.keyChanged('appShowTerminal', (state: boolean) => {
+			handleTerminal(this, state)
 		})
 	}
 

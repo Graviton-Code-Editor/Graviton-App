@@ -46,11 +46,13 @@ const CardStyle = style`
 	}
 `
 
-const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver'
+const pluginReserved = pluginID => pluginID === 'arctic-theme' || pluginID === 'night-theme' || pluginID === 'js-ts-langserver' || pluginID === 'graviton-iconpack'
 
-function getPluginIcon() {
-	if (false) {
-		//WIP
+function getPluginIcon(iconPath) {
+	if (iconPath) {
+		return () => element`
+				<img src="${iconPath}"/>
+			`
 	} else {
 		//Fallback icon
 		return DefaultPluginIcon
@@ -58,13 +60,13 @@ function getPluginIcon() {
 }
 
 function StoreCard(props) {
-	const { pluginID, displayName, isInstalled, description = '' } = props.data
+	const { pluginID, displayName, isInstalled, description = '', icon } = props.data
 	return element({
 		components: {
 			Card,
 			H5: Titles.h5,
 			Text,
-			Icon: getPluginIcon(),
+			Icon: getPluginIcon(icon),
 		},
 	})`
 		<Card :click="${clicked}" class="${CardStyle}">

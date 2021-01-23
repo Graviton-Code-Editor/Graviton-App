@@ -20,14 +20,14 @@ const processPackage = packageData => {
 	Object.keys(packageData).forEach(str => {
 		const val = packageData[str]
 
-		if (typeof val === 'string') {
+		if (typeof val === 'string' || typeof val === 'boolean') {
 			finalPackage[str] = {
-				icon: 'unnknown',
+				icon: 'unknown',
 				value: `${str}: ${val}`,
 			}
 		} else {
 			finalPackage[str] = {
-				icon: 'unnknown',
+				icon: 'unknown',
 				value: val,
 			}
 		}

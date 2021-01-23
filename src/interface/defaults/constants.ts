@@ -15,16 +15,6 @@ export const WorkspaceFilename = 'settings.json'
 export const WorkspaceFoldername = '.gveditor'
 
 /*
- * Plugins paths
- */
-export const pluginsIternalDir = window.process
-	? RunningConfig.data.isDev
-		? path.resolve(__dirname, '..', '..', '..', 'pluginsDist')
-		: path.join((window as any).process.resourcesPath, 'pluginsDist')
-	: ''
-export const pluginsExternalDir = window.process ? path.join(StaticConfig.data.appConfigPath, 'plugins') : ''
-
-/*
  * Default ignored files in the files watcher
  */
 export const filesWatcherExcludedDirs = ['.git', 'dist', 'node_modules', '.cache', '.next', 'bin', 'package-lock.json', 'yarn.lock']
@@ -39,3 +29,8 @@ export const NotificationsMaxCount = 3
  * Length of lines considered large
  */
 export const LargeFileLinesLength = 15000
+
+/*
+ * Length of characters considered large
+ */
+export const LargeFileCharsLength = 170000

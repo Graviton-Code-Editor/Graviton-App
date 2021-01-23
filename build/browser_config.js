@@ -1,8 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const WebpackMessages = require('webpack-messages')
-const WebpackBar = require('webpackbar')
 
 const PUBLIC_PATH = process.env.PUBLIC_PATH || '/'
 
@@ -19,13 +17,6 @@ module.exports = {
 		index: './src/interface/main.ts',
 	},
 	plugins: [
-		new WebpackBar({
-			name: 'Browser',
-		}),
-		new WebpackMessages({
-			name: 'Browser',
-			logger: str => console.log(`[webpack] --> ${str}`),
-		}),
 		new HtmlWebpackPlugin({
 			title: 'Graviton Editor',
 			filename: path.resolve(process.cwd(), 'dist_browser', 'index.html'),
@@ -48,6 +39,7 @@ module.exports = {
 			patterns: [
 				{ from: path.resolve(process.cwd(), 'assets'), to: path.resolve(process.cwd(), 'dist_browser') },
 				{ from: path.resolve(process.cwd(), 'plugins/iconpacks'), to: path.resolve(process.cwd(), 'dist_browser') },
+				{ from: path.resolve(process.cwd(), 'plugins/themes'), to: path.resolve(process.cwd(), 'dist_ui') },
 			],
 		}),
 	],
@@ -118,12 +110,5 @@ module.exports = {
 		filename: 'main.js',
 		path: path.resolve(process.cwd(), 'dist_browser'),
 		publicPath: PUBLIC_PATH,
-	},
-	devServer: {
-		contentBase: path.join(process.cwd(), 'dist_browser'),
-		compress: true,
-		port: 7500,
-		stats: 'errors-only',
-		host: '0.0.0.0',
 	},
 }

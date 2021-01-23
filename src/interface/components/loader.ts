@@ -4,12 +4,12 @@ import { css as style } from '@emotion/css'
 const styleWrapper = style`
 	&{
 		animation: spin 1s linear infinite;
-		border:7px solid rgba(0,0,0,0);
-		border-top:7px solid var(--loaderBackground);
-		border-bottom:7px solid var(--loaderBackground);
+		border: 5px solid rgba(0,0,0,0);
+		border-top: 5px solid var(--loaderBackground);
+		border-bottom: 5px solid var(--loaderBackground);
 		border-radius: 50%;
-		width: 40px;
-		height: 40px;
+		width: 37px;
+		height: 37px;
 		box-sizing:border-box;
 		margin:0;
 		padding:0;

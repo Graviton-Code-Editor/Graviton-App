@@ -1,7 +1,7 @@
 import { element } from '@mkenzo_8/puffin'
 import { Card } from '@mkenzo_8/puffin-drac'
 import RunningConfig from 'RunningConfig'
-import CardsListContainer from '../../../components/welcome/cards.list'
+import CardsListContainer from '../../../components/dashboard/cards.list'
 
 import { PuffinComponent } from 'Types/puffin.component'
 

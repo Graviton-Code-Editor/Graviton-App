@@ -1,6 +1,7 @@
 const isBrowser = !eval('window.process')
 const CustomWindow: any = window
 import { getBrowserConfiguration } from '../../app/default_config'
+import * as clipboard from 'clipboard-polyfill'
 
 if (isBrowser) {
 	import('./browser').then(() => {})
@@ -21,11 +22,25 @@ const Core = {
 	electron: null,
 	rimraf: null,
 	openExternal: null,
+	clipboard,
+}
+
+function getValidBrowserConfig(storage, defaultConfig) {
+	if (storage !== '' && storage !== null) {
+		const currentConf = JSON.parse(storage)
+		Object.keys(defaultConfig.config.appShortcuts).forEach(key => {
+			if (!currentConf.hasOwnProperty(key)) {
+				currentConf.appShortcuts[key] = defaultConfig.config.appShortcuts[key] //
+			}
+		})
+		return Object.assign(defaultConfig.config, currentConf)
+	} else {
+		return defaultConfig.config
+	}
 }
 
 if (isBrowser) {
 	const defaultConfig = getBrowserConfiguration()
-
 	// Load User's configuration from the localStorage
 	const storage = localStorage.getItem('config')
 
@@ -34,8 +49,8 @@ if (isBrowser) {
 	 * defining the default config, user's config and runtime info
 	 */
 	CustomWindow.graviton = {
-		AppConfig: storage !== '' && storage !== null ? JSON.parse(storage) : defaultConfig.config,
-		DefaultAppConfig: defaultConfig.config,
+		AppConfig: getValidBrowserConfig(storage, defaultConfig),
+		DefaultAppConfig: defaultConfig,
 		runtime: {
 			isDev: false,
 			processArguments: [],

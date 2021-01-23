@@ -15,10 +15,7 @@ const styleWrapper = style`
 	& .CodeMirror-scroll{
 		overflow-x:hidden;
 	}
-	&.closing{
-		animation: tabEditorCloses ease-out 0.05s;
-		opacity: 0;
-	}
+
 `
 
 function TabEditor() {

@@ -9,7 +9,7 @@ import RunningConfig from 'RunningConfig'
 
 import CustomizationScheme from '../settings/pages/customization'
 import AdvancedScheme from '../settings/pages/advanced'
-import ShortcutsScheme from '../settings/pages/shortcuts'
+import ShortcutsPage from '../settings/pages/shortcuts'
 import LanguagesScheme from '../settings/pages/languages'
 import AboutPage from '../settings/pages/about'
 
@@ -25,7 +25,7 @@ export default function Settings(): WindowInstance {
 				closeWindow: () => SettingsWindow.close(),
 			}),
 		)
-	const ShortcutsPage = () => getScheme(ShortcutsScheme())
+
 	const LanguagesPage = () => getScheme(LanguagesScheme())
 
 	const SettingsWindow = new Window({

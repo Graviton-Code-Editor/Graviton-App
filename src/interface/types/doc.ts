@@ -1,6 +1,8 @@
 import { DialogOptions, DialogInstance } from './dialog'
 import { NotificationOptions, NotificationInstance } from './notification'
 import { ContextMenuOptions, ContextMenuInstance } from './contextmenu'
+import { WindowOptions, WindowInstance } from './window'
+import { RunningConfigPluginsInterface } from './running_config'
 
 /**
  * Documented API for Graviton Editor
@@ -70,7 +72,26 @@ declare namespace GravitonAPI {
 	 * })
 	 * ```
 	 *
-	 * @param options  Notification's options
+	 * @param options  ContexMenu's options
 	 */
 	function ContextMenu(options: ContextMenuOptions): ContextMenuInstance
+	/**
+	 * Window constructor
+	 *
+	 * ```ts
+	 * const windowExample = new Window({
+	 *   component(){
+	 *     return element`<p>Hello World</p>`
+	 *   }
+	 * })
+	 *
+	 * ```
+	 *
+	 * @param options  Window's options
+	 *
+	 */
+	function Window(options: WindowOptions): WindowInstance
+	const RunningConfig: RunningConfigPluginsInterface
 }
+
+GravitonAPI.RunningConfig.on(['aTabHasBeenCreated', 'aFileHasBeenCreated'], () => {})

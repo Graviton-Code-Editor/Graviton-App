@@ -23,6 +23,9 @@ class Connection {
 				}
 			})
 		}
+		this.ws.onopen = () => {
+			ConnectedNotification()
+		}
 	}
 	send(messageObject: Object) {
 		this.ws.send(JSON.stringify(messageObject))
@@ -184,6 +187,13 @@ export default class remoteServer {
 			})
 		})
 	}
+
+	static isGitRepo() {
+		return new Promise((resolve, reject) => {
+			resolve(false)
+		})
+	}
+
 	/*
 	 * Get information about the file
 	 *
@@ -191,7 +201,7 @@ export default class remoteServer {
 	 * @returns A promise with the result
 	 */
 	static info(path: string): Promise<Object> {
-		return new Promise(res => {
+		return new Promise((resolve, reject) => {
 			ConnectionInstance.send({
 				type: 'info',
 				data: {
@@ -201,14 +211,17 @@ export default class remoteServer {
 
 			const cancel = ConnectionInstance.on('returnedInfo', data => {
 				if (data.path !== path) return
+				if (data.error) {
+					reject()
+				}
 
-				res({
+				resolve({
 					...data.info,
 					isDirectory() {
-						return true
+						return data.isDirectory
 					},
 					isFile() {
-						return false
+						return data.isFile
 					},
 				})
 
@@ -218,11 +231,83 @@ export default class remoteServer {
 	}
 }
 
+async function ConnectedNotification() {
+	const { default: Notification } = await import('Constructors/notification')
+
+	new Notification({
+		title: `Connected to ${StaticConfig.data.remoteServerIP}`,
+		content: `Press Ctrl+O to start exploring.`,
+		buttons: [
+			{
+				label: 'Start exploring',
+				action() {
+					RunningConfig.emit('command.openExplorerCommandPrompt')
+				},
+			},
+		],
+	})
+}
+
+async function NoConnectionNotification() {
+	const { default: Notification } = await import('Constructors/notification')
+
+	new Notification({
+		title: 'No server configured',
+		lifeTime: Infinity,
+		buttons: [
+			{
+				label: 'Configure',
+				action() {
+					goConfigure()
+				},
+			},
+		],
+	})
+}
+
+function goConfigure() {
+	const configuredIP = StaticConfig.data.remoteServerIP
+
+	new CommandPrompt({
+		name: 'remote_provider_conf',
+		showInput: true,
+		inputPlaceHolder: configuredIP ? configuredIP : `Server's IP`,
+		options: [
+			{
+				label: 'Default: localhost:8080 ',
+				data: {
+					key: 'default',
+				},
+				action() {},
+			},
+		],
+		onSelected({ data: { key } }) {
+			if (key === 'default') {
+				StaticConfig.data.remoteServerIP = 'localhost:8080'
+
+				ConnectionInstance = new Connection()
+			}
+		},
+		onCompleted(serverIP) {
+			if (serverIP == '') return
+
+			StaticConfig.data.remoteServerIP = serverIP
+
+			ConnectionInstance = new Connection()
+		},
+	})
+}
+
 window.addEventListener('load', () => {
 	/*
 	 * Only make the remote provider available in browser mode
 	 */
+
 	if (RunningConfig.data.isBrowser) {
+		if (!StaticConfig.data.remoteServerIP && window.location.hostname !== 'graviton.netlify.app') {
+			NoConnectionNotification()
+		}
+
 		if (StaticConfig.data.remoteServerIP && RunningConfig.data.explorerProvider.providerName === 'Remote Server') {
 			ConnectionInstance = new Connection()
 		}
@@ -230,19 +315,7 @@ window.addEventListener('load', () => {
 		RunningConfig.data.globalCommandPrompt.push({
 			label: 'Configure Remote Provider',
 			action() {
-				const configuredIP = StaticConfig.data.remoteServerIP
-
-				new CommandPrompt({
-					name: 'remote_provider_conf',
-					showInput: true,
-					inputPlaceHolder: configuredIP ? configuredIP : `Server's IP`,
-					options: [],
-					onCompleted(serverIP) {
-						StaticConfig.data.remoteServerIP = serverIP
-
-						ConnectionInstance = new Connection()
-					},
-				})
+				goConfigure()
 			},
 		})
 	}

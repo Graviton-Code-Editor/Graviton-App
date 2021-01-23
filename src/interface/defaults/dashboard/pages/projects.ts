@@ -4,7 +4,7 @@ import { Card, Button } from '@mkenzo_8/puffin-drac'
 import parseDirectory from '../../../utils/directory_parser'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import CardsListContainer from '../../../components/welcome/cards.list'
+import CardsListContainer from '../../../components/dashboard/cards.list'
 import ContextMenu from '../../../constructors/contextmenu'
 import beautifyDir from '../../../utils/directory_beautifier'
 import normalizeDir from '../../../utils/directory_normalizer'
@@ -35,7 +35,7 @@ export default function ProjectsPage({ closeWindow }): PuffinComponent {
 				})}
 			</div>
 			<div>
-				<Button :click="${openDirectoryFromWindow}" lang-string="windows.Welcome.OpenFolder"/>
+				<Button :click="${openDirectoryFromWindow}" lang-string="windows.Dashboard.OpenFolder"/>
 			</div>
 		</CardsListContainer>
     `

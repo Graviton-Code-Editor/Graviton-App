@@ -16,9 +16,7 @@ import normalizeDir from '../../utils/directory_normalizer'
 import Notification from '../../constructors/notification'
 import FileItem from './file.item.style'
 import Core from 'Core'
-const {
-	electron: { clipboard },
-} = Core
+const { clipboard } = Core
 import * as path from 'path'
 import PuffinElement from '../../types/puffin.element'
 import { PuffinState } from '../../types/puffin.state'
@@ -65,8 +63,6 @@ class Item {
 
 		const clickListener = this._clickListener.bind(this)
 		const contextListener = this._contextListener.bind(this)
-		const draggingListener = this._draggingListener.bind(this)
-		const dragginInListener = this._draggingInListener.bind(this)
 		const dragDroppedListener = this._dragDroppedListener.bind(this)
 
 		const animateItem = StaticConfig.data.appEnableExplorerItemsAnimations
@@ -81,7 +77,7 @@ class Item {
 			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
-				}" draggable="true" :dragstart="${startDrag}" itemClass="${classSelector}" :dragover="${dragginInListener}" :dragstart="${draggingListener}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
+				}" draggable="true" :dragleave="${dragLeave}" :dragenter="${dragEnter}" :drop="${onDropped}" :dragstart="${startDrag}" :dragover="${draggingOver}" itemClass="${classSelector}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
 					<ArrowIcon draggable="false" itemClass="${classSelector}"  class="arrow" style="${isFolder ? '' : 'opacity:0;'}"/>
 					<img draggable="false" itemClass="${classSelector}" class="icon" src="${this._getIconSource()}"/>
 					<span itemClass="${classSelector}" originalName="${this.itemName}">${this.itemName}</span>
@@ -91,9 +87,30 @@ class Item {
 			</FileItem>
 		`
 
+		function onDropped(e: DragEvent): void {
+			e.preventDefault()
+			self.itemElement.classList.remove('dragging')
+		}
+
+		function dragEnter(e: DragEvent): void {
+			e.preventDefault()
+			self.itemElement.classList.add('dragging')
+		}
+
+		function dragLeave(e: DragEvent): void {
+			self.itemElement.classList.remove('dragging')
+		}
+
+		function draggingOver(e: DragEvent): void {
+			e.preventDefault()
+		}
+
 		function startDrag(e: DragEvent): void {
+			e.stopPropagation()
 			e.dataTransfer.setData('type', 'explorerItem')
 			e.dataTransfer.setData('filePath', self.itemPath)
+			e.dataTransfer.setData('isFolder', self.isFolder.toString())
+			e.dataTransfer.setData('class', self.itemClass)
 		}
 
 		function handleTextDecorator() {
@@ -138,18 +155,6 @@ class Item {
 	}
 	private _getIconSource(): string {
 		return this.isFolder ? getFolderClosedIcon(this.itemName) : getFileIcon(this.itemName, getFormat(this.itemPath))
-	}
-	public _draggingListener(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.dataTransfer.setData('class', this.itemClass)
-	}
-	public _draggingStarted(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.dataTransfer.setData('class', this.itemClass)
-	}
-	public _draggingInListener(ev: DragEvent): void {
-		ev.stopPropagation()
-		ev.preventDefault()
 	}
 	public _dragDroppedListener(ev: DragEvent): void {
 		ev.stopImmediatePropagation()
@@ -232,6 +237,7 @@ class Item {
 				{
 					label: 'misc.NewFolder',
 					action: () => {
+						console.log('_')
 						newDirectoryDialog({
 							isFolder: true,
 							parentDirectory: this.itemPath,
@@ -284,6 +290,12 @@ class Item {
 				},
 			]
 
+			// Remove OpenLocation button in BrowserMode
+			if (RunningConfig.data.isBrowser) {
+				folderContextMenu.splice(8, 1)
+			}
+
+			// Add "Remove from workspace" option when it's the folder of a project (top-folder)
 			if (this.itemLevel === 0) {
 				folderContextMenu.splice(7, 0, {
 					label: 'misc.RemoveFromWorkspace',
@@ -301,35 +313,42 @@ class Item {
 				event,
 			})
 		} else {
+			const fileContextMenu = [
+				{
+					label: 'misc.Rename',
+					action: () => {
+						this._rename()
+					},
+				},
+				{},
+				{
+					label: 'misc.Remove',
+					action: () => {
+						this._remove()
+					},
+				},
+				{},
+				{
+					label: 'misc.CopyPath',
+					action: () => {
+						clipboard.writeText(this.itemPath)
+					},
+				},
+				{
+					label: 'misc.OpenLocation',
+					action: () => {
+						openLocation(this.itemFolder)
+					},
+				},
+			]
+
+			// Remove OpenLocation button in BrowserMode
+			if (RunningConfig.data.isBrowser) {
+				fileContextMenu.splice(5, 1)
+			}
+
 			new ContextMenu({
-				list: [
-					{
-						label: 'misc.Rename',
-						action: () => {
-							this._rename()
-						},
-					},
-					{},
-					{
-						label: 'misc.Remove',
-						action: () => {
-							this._remove()
-						},
-					},
-					{},
-					{
-						label: 'misc.CopyPath',
-						action: () => {
-							clipboard.writeText(this.itemPath)
-						},
-					},
-					{
-						label: 'misc.OpenLocation',
-						action: () => {
-							openLocation(this.itemFolder)
-						},
-					},
-				],
+				list: fileContextMenu,
 				parent: this.itemElement,
 				event,
 			})

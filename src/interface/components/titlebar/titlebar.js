@@ -54,7 +54,7 @@ const styleWrapper = style`
 `
 
 function getButtons() {
-	if (AppPlatform == 'win32') {
+	if (AppPlatform == 'win32' && !isBrowser) {
 		return Buttons()
 	} else {
 		return element`<div/>`

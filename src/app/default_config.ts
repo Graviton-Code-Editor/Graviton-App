@@ -10,21 +10,23 @@ try {
  */
 
 const isMac = isBrowser ? false : process.platform == 'darwin'
+const isWindows = isBrowser ? false : process.platform == 'win32'
 
 const defaultConfig = {
 	config: {
-		appTheme: 'Arctic',
+		appTheme: 'Night',
 		appIconpack: 'Graviton',
 		appLanguage: 'english',
-		editorFontSize: '16',
+		editorFontSize: '14',
 		appProjectsLog: [],
 		appConfigPath: '',
 		appWorkspacesLog: [],
 		appZoom: 1,
 		editorFSWatcher: true,
+		editorFSIgnoreIgnoredGitFiles: true,
 		editorGitIntegration: true,
 		editorAutocomplete: true,
-		editorIndentation: 'tab',
+		editorIndentation: 'space',
 		editorTabSize: 2,
 		editorFontFamily: 'JetBrainsMono',
 		editorWrapLines: false,
@@ -70,6 +72,9 @@ const defaultConfig = {
 			FocusExplorerPanel: {
 				combos: [isMac ? 'CmdOrCtrl+E' : 'Ctrl+E'],
 			},
+			ToggleTerminal: {
+				combos: [isMac ? 'CmdOrCtrl+H' : 'Ctrl+H'],
+			},
 		},
 		miscEnableLiveUpdateInManualConfig: true,
 		appBlurEffect: 10,
@@ -77,8 +82,10 @@ const defaultConfig = {
 		appEnableSidebar: true,
 		appEnableSidepanel: true,
 		appEnableExplorerItemsAnimations: true,
-		appOpenWelcomeInStartup: true,
+		appOpenDashboardInStartup: true,
+		appOpenIntroductionInStartup: true,
 		appCache: {
+			sidePanelWidth: '20%',
 			store: {
 				plugins: [],
 			},
@@ -91,8 +98,9 @@ const defaultConfig = {
 		experimentalSourceTracker: false,
 		appCheckWorkspaceExistsWhenOpeningFolders: true,
 		editorFold: true,
+		terminalDefaultShell: isBrowser ? null : isWindows ? 'PowerShell' : process.env['SHELL'],
 	},
-} //test
+}
 if (isMac) {
 	defaultConfig.config.appShortcuts.CloseApp.combos.push('Ctrl+Q')
 }

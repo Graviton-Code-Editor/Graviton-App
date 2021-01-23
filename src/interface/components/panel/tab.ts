@@ -17,15 +17,18 @@ const styleWrapper = style`
 		user-select:none;
 		position: relative;
 		-webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
-    -webkit-focus-ring-color: rgba(255, 255, 255, 0); 
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0);
+		border-right: 1px solid var(--tabBordersBackground);
 		&[active="true"]{
 			background:var(--tabActiveBackground);
-			box-shadow:0px 0px 10px rgba(0,0,0,0.2);
 			color:var(--tabActiveText);
 		}
 		&:hover:not([active="true"]){
 			background:var(--tabHoveringBackground, var(--tabHoveringWhileDraggingBackground));
 		}
+	}
+	& > p {
+		pointer-events: none;
 	}
 	& img{
 		height: 20px;
@@ -63,8 +66,11 @@ const styleWrapper = style`
 	& .tab-icon {
 		 pointer-events: none;
 	}
-	&.dragging{
+	&[active=false].dragging{
 		background:var(--tabHoveringWhileDraggingBackground);
+		& .tab-button {
+			pointer-events: none;
+		}
 	}
 	&.closing {
 		animation: tabCloses ease-out 0.14s;

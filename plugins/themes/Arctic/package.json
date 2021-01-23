@@ -130,6 +130,9 @@
 				"Hovering": {
 					"Fill": "gray"
 				}
+			},
+			"Borders": {
+				"Background": "rgba(215,215,215)"
 			}
 		},
 		"scrollbar": {

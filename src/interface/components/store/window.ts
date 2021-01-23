@@ -12,6 +12,7 @@ import storeButton from './button'
 import Notification from '../../constructors/notification'
 import getCompatibleRelease from '../../defaults/store/utils/get.compatible.release'
 import DefaultPluginIcon from '../icons/plugin_store'
+import * as path from 'path'
 
 const styleWrapper = style`
 	& .content {
@@ -166,8 +167,11 @@ class pluginWindow {
 		}
 	}
 	getPluginIcon() {
-		if (this.usefulPackage.plugin) {
-			//WIP
+		if (this.usefulPackage.icon) {
+			const iconPath = path.join(this.usefulPackage.PATH, this.usefulPackage.icon)
+			return () => element`
+				<img src="${iconPath}"/>
+			`
 		} else {
 			//Fallback icon
 			return DefaultPluginIcon

@@ -1,6 +1,8 @@
 const { remote } = require('electron')
 const { RunningConfig, StaticConfig, Dialog, Window, puffin, Notification } = window.test
 const { expect } = require('chai')
+const { element } = require('@mkenzo_8/puffin')
+const fs = require('fs-extra')
 
 console.log(`
   Running with: \n
@@ -10,7 +12,7 @@ console.log(`
 
 describe('Main process', function () {
 	it('Window opens', function () {
-		return remote.getCurrentWindow() !== undefined ? true : false
+		return remote.getCurrentWindow()
 	})
 })
 
@@ -120,16 +122,35 @@ describe('Constructors', function () {
 
 			return NotificationElement
 		})
+		it('With [title, component]', function () {
+			const { NotificationElement } = new Notification({
+				title: 'Title',
+				component() {
+					return element`<span class="span">TEST</span>`
+				},
+			})
+			const notificationSpan = NotificationElement.getElementsByClassName('span')[0]
+			expect(notificationSpan.innerText).to.be.equal('TEST')
+			return NotificationElement
+		})
 	})
 	describe('FileSystem', function () {
 		it('Open a file', function (done) {
 			const sampleFile = __filename
 			const { focusedTab } = RunningConfig.data
 
-			RunningConfig.on('aTabHasBeenFocused').then(() => {
+			RunningConfig.on('aTabHasBeenFocused').then(async () => {
 				const focusedTabDirectory = RunningConfig.data.focusedTab.state.data.directory
-				// Expect the same directory, so we ensure it opened correctly
+				// Expect the same directory
 				expect(focusedTabDirectory).equal(sampleFile)
+
+				const { client, instance } = RunningConfig.data.focusedEditor
+				const fileData = await fs.readFile(__filename, 'UTF-8')
+				const editorData = client.do('getValue', instance)
+
+				// Expect the same file's value
+				expect(fileData).equal(editorData)
+
 				done()
 			})
 

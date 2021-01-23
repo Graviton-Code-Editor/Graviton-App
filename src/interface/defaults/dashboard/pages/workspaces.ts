@@ -4,7 +4,7 @@ import { Card, Button } from '@mkenzo_8/puffin-drac'
 import parseDirectory from '../../../utils/directory_parser'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
-import CardsListContainer from '../../../components/welcome/cards.list'
+import CardsListContainer from '../../../components/dashboard/cards.list'
 import ContextMenu from '../../../constructors/contextmenu'
 
 import { PuffinComponent } from 'Types/puffin.component'
@@ -43,7 +43,7 @@ export default function WorkspacesPage({ closeWindow }): PuffinComponent {
 					.filter(Boolean)}
 			</div>
 			<div>
-				<Button :click="${openWorkspaceFromWindow}" lang-string="windows.Welcome.OpenWorkspace"/>
+				<Button :click="${openWorkspaceFromWindow}" lang-string="windows.Dashboard.OpenWorkspace"/>
 			</div>
 		</CardsListContainer>
     `

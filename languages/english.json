@@ -7,6 +7,7 @@
 				"File": "File",
 				"OpenFolder": "Open folder",
 				"OpenFile": "Open file",
+				"SaveFile": "Save file",
 				"Projects": {
 					"Projects": "Projects",
 					"OpenProjects": "Open Projects"
@@ -50,7 +51,8 @@
 				"ShowSidebar": "Show Sidebar",
 				"ShowSidepanel": "Show Sidepanel",
 				"HideSidebar": "Hide Sidebar",
-				"HideSidepanel": "Hide Sidepanel"
+				"CommandPrompt": "Command Prompt",
+				"ExplorerPrompt": "Explorer Prompt"
 			},
 			"Window": {
 				"Window": "Window",
@@ -87,13 +89,15 @@
 				"Customization": {
 					"Customization": "Customization",
 					"Themes": "Themes",
-					"Iconpacks": "Iconpacks"
+					"Iconpacks": "Iconpacks",
+					"Blur": "Blur"
 				},
 				"Advanced": {
 					"Advanced": "Advanced",
 					"FileWatcher": "Files Watcher",
 					"Autocomplete": "Autocomplete",
 					"WrapLines": "Wrap lines",
+					"FoldBlocks": "Fold blocks",
 					"ManualConfig": {
 						"ManualConfig": "Manual config",
 						"EditConfiguration": "Edit configuration"
@@ -120,7 +124,7 @@
 				},
 				"About": {
 					"About": "About",
-					"GravitonDescription": "Graviton is a cross platform editor."
+					"GravitonDescription": "Graviton is a modern open source code editor."
 				}
 			},
 			"Store": {
@@ -136,8 +140,8 @@
 				"Uninstall": "Uninstall",
 				"AnyCompatibleVersion": "There isn't any compatible version."
 			},
-			"Welcome": {
-				"Welcome": "Welcome",
+			"Dashboard": {
+				"Dashboard": "Dashboard",
 				"RecentProjects": "Recent projects",
 				"RecentWorkspaces": "Recent workspaces",
 				"NewProject": "New project",
@@ -147,6 +151,18 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Welcome to Graviton for Browser!",
 				"WelcomeMessage": "Remember this feature is still very experimental and most things do not work. \n For a better experience download the desktop app."
+			},
+			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "Welcome to Graviton"
+				},
+				"Theming": {
+					"SelectATheme": "Select a theme"
+				},
+				"Finished": {
+					"Finished": "Finished",
+					"HaveAGreatExperience": "Have a great experience 😀"
+				}
 			}
 		},
 		"misc": {
@@ -182,7 +198,8 @@
 			"Understood": "Understood",
 			"RemoveFromWorkspace": "Remove from workspace",
 			"JoinTheDiscussion": "Join the Discussion",
-			"OpenAnyway": "Open anyway"
+			"OpenAnyway": "Open anyway",
+			"Update": "Update"
 		},
 		"notifications": {
 			"appLanguageChanged": {
@@ -202,6 +219,14 @@
 			"experimentalFeature": {
 				"title": "Experimental feature",
 				"content": "This feature is unstable and might cause some issues."
+			},
+			"warning": {
+				"title": "Are you sure?"
+			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRepositoryOpen": "No repository open."
 			}
 		}
 	}

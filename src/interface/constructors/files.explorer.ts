@@ -7,6 +7,7 @@ import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
 import Notification from './notification'
 import * as path from 'path'
+import getGitIgnoredFiles from '../utils/get_git_ignored_files'
 
 import { filesWatcherExcludedDirs } from 'Constants'
 
@@ -117,8 +118,8 @@ class FilesExplorer {
 	 * Create a files watcher for the project.
 	 *
 	 */
-	private createProjectWatcher() {
-		const ignored = new RegExp([...filesWatcherExcludedDirs, ...StaticConfig.data.editorExcludedDirs].map(x => `(${x})`).join('|'), 'g')
+	private async createProjectWatcher() {
+		const ignored = new RegExp([...(await getGitIgnoredFiles(this.folderPath)), ...filesWatcherExcludedDirs, ...StaticConfig.data.editorExcludedDirs].map(x => `(${x})`).join('|'), 'g')
 		const projectWatcher = this.explorerProvider.watchDir(this.folderPath, {
 			ignored,
 			persistent: true,
@@ -164,8 +165,8 @@ class FilesExplorer {
 	 * Create all the event listeners.
 	 *
 	 */
-	private _addListeners() {
-		RunningConfig.on(['aTabHasBeenSaved', 'aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
+	private async _addListeners() {
+		RunningConfig.on<any>(['aTabHasBeenSaved', 'aFileHasBeenChanged', 'aFileHasBeenCreated', 'aFolderHasBeenCreated', 'aFileHasBeenRemoved', 'aFolderHasBeenRemoved'], async ({ parentFolder }) => {
 			if (this.isGitRepo && parentFolder.includes(this.projectPath)) {
 				const gitChanges = await this._getGitChanges()
 				RunningConfig.emit('gitStatusUpdated', {
@@ -177,10 +178,10 @@ class FilesExplorer {
 			}
 		})
 
-		const toggledFSWatcherListener = StaticConfig.keyChanged('editorFSWatcher', status => {
+		const toggledFSWatcherListener = StaticConfig.keyChanged('editorFSWatcher', async (status: boolean) => {
 			if (status) {
 				if (!this.filesWatcher) {
-					this.filesWatcher = this.createProjectWatcher()
+					this.filesWatcher = await this.createProjectWatcher()
 				}
 			} else {
 				if (this.filesWatcher) {
@@ -205,7 +206,7 @@ class FilesExplorer {
 
 		if (StaticConfig.data.editorFSWatcher) {
 			// Initialize Files Watcher
-			this.filesWatcher = this.createProjectWatcher()
+			this.filesWatcher = await this.createProjectWatcher()
 		}
 		if (StaticConfig.data.editorGitIntegration) {
 			// Initialize the git watcher
