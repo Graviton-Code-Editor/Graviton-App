@@ -89,7 +89,8 @@
 				"Customization": {
 					"Customization": "Personnalisation",
 					"Themes": "Thèmes",
-					"Iconpacks": "Packs d'icônes"
+					"Iconpacks": "Packs d'icônes",
+					"Blur": "Flou"
 				},
 				"Advanced": {
 					"Advanced": "Paramètres avancés",
@@ -139,8 +140,8 @@
 				"Uninstall": "Désinstaller",
 				"AnyCompatibleVersion": "Il n'y a pas de version compatibles."
 			},
-			"Welcome": {
-				"Welcome": "Bienvenue",
+			"Dashboard": {
+				"Dashboard": "Tableau de bord",
 				"RecentProjects": "Projets récents",
 				"RecentWorkspaces": "Espaces de travail récents",
 				"NewProject": "Nouveau projet",
