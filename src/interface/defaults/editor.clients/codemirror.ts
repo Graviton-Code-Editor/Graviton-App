@@ -177,6 +177,12 @@ const CodemirrorClient = new EditorClient(
 						mode: 'pug',
 						name: 'pug',
 					}
+				case 'jade':
+					return {
+						fancy: 'jade',
+						mode: 'jade',
+						name: 'pug',
+					}
 				case 'hpp':
 				case 'cpp':
 				case 'h':
