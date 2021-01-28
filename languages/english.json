@@ -51,6 +51,7 @@
 				"ShowSidebar": "Show Sidebar",
 				"ShowSidepanel": "Show Sidepanel",
 				"HideSidebar": "Hide Sidebar",
+				"HideSidepanel": "Hide Sidepanel",
 				"CommandPrompt": "Command Prompt",
 				"ExplorerPrompt": "Explorer Prompt"
 			},

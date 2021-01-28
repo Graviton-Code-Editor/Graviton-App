@@ -237,7 +237,6 @@ class Item {
 				{
 					label: 'misc.NewFolder',
 					action: () => {
-						console.log('_')
 						newDirectoryDialog({
 							isFolder: true,
 							parentDirectory: this.itemPath,
