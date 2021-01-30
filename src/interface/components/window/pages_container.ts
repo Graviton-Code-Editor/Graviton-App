@@ -69,7 +69,7 @@ export default function PagesSlider({ pages, closeWindow }) {
 							components: {
 								Button,
 							},
-						})`<Button :click="${back}" class="go_back">Back</Button>`,
+						})`<Button :click="${back}" class="go_back" lang-string="misc.Back"/>`,
 					)
 				}
 				if (index < pages.length - 1) {
@@ -78,7 +78,7 @@ export default function PagesSlider({ pages, closeWindow }) {
 							components: {
 								Button,
 							},
-						})`<Button :click="${next}" class="go_next">Next</Button>`,
+						})`<Button :click="${next}" class="go_next" lang-string="misc.Next" />`,
 					)
 				} else {
 					buttons.push(
@@ -86,7 +86,7 @@ export default function PagesSlider({ pages, closeWindow }) {
 							components: {
 								Button,
 							},
-						})`<Button :click="${closeWindow}" class="go_next">Okay</Button>`,
+						})`<Button :click="${closeWindow}" class="go_next" lang-string="misc.Okay"/>`,
 					)
 				}
 				return buttons

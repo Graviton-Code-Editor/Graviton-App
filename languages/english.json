@@ -200,7 +200,10 @@
 			"RemoveFromWorkspace": "Remove from workspace",
 			"JoinTheDiscussion": "Join the Discussion",
 			"OpenAnyway": "Open anyway",
-			"Update": "Update"
+			"Update": "Update",
+			"Next": "Next",
+			"Back": "Back",
+			"Okay": "Okay"
 		},
 		"notifications": {
 			"appLanguageChanged": {
