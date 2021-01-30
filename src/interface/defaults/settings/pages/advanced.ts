@@ -51,11 +51,13 @@ export default function Advanced({ closeWindow }) {
 						radios: [
 							{
 								checked: StaticConfig.data.editorIndentation === 'tab',
-								label: 'Tab',
+								key: 'tab',
+								label: 'windows.Settings.Advanced.Indentation.Tab',
 							},
 							{
 								checked: StaticConfig.data.editorIndentation === 'space',
-								label: 'Space',
+								key: 'space',
+								label: 'windows.Settings.Advanced.Indentation.Space',
 							},
 						],
 					},

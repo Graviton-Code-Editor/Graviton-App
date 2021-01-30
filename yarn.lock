@@ -1046,10 +1046,10 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@mkenzo_8/puffin-drac@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@mkenzo_8/puffin-drac/-/puffin-drac-0.2.4.tgz#ad4839ef7840672069f9ae73aa84d57bae936789"
-  integrity sha512-cB1n5/DBzCb0hfoEW2NnuQ1Jz8JXcwNLMQZY5qFg4kXrLnoMBf5agzWtIM54A91YgX7UQ3D+CAK1qp3zXeXwgg==
+"@mkenzo_8/puffin-drac@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@mkenzo_8/puffin-drac/-/puffin-drac-0.3.1.tgz#5c0a258fddead4c7cce5c235668cf5edba8cf0eb"
+  integrity sha512-SAprrhi1yBvTslZec58++E2xqOqE9ICH5Qn1MNQ9qRL42Mn3KTZe51NhwS70h8Zj9xJz/D8/WCanlviVVFMOBg==
   dependencies:
     "@mkenzo_8/puffin" "^1.1.1"
 

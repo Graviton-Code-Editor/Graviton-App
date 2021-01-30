@@ -18,17 +18,17 @@ export default function () {
 				styled: false,
 				key: 'appTheme',
 				direction: 'horizontally',
+				translated: false,
 				radios: Object.keys(pluginsList)
 					.map(plugin => {
 						const pluginInfo = pluginsList[plugin]
 						if (pluginInfo.type === 'theme') {
 							return {
 								styled: false,
-								comp: ThemeCard,
+								component: () => ThemeCard({ info: pluginInfo }),
 								hiddenRadio: true,
 								key: plugin,
 								checked: StaticConfig.data.appTheme == plugin,
-								info: pluginInfo,
 							}
 						}
 					})
@@ -43,17 +43,17 @@ export default function () {
 				styled: false,
 				key: 'appIconpack',
 				direction: 'horizontally',
+				translated: false,
 				radios: Object.keys(pluginsList)
 					.map(plugin => {
 						const pluginInfo = pluginsList[plugin]
 						if (pluginInfo.type === 'iconpack') {
 							return {
 								styled: false,
-								comp: IconpackCard,
+								component: () => IconpackCard({ info: pluginInfo }),
 								hiddenRadio: true,
 								key: plugin,
 								checked: StaticConfig.data.appIconpack == plugin,
-								info: pluginInfo,
 							}
 						}
 					})
