@@ -27,12 +27,10 @@ const styleWrapper = style`
 		& > .horizontal_view {
 			display: flex;
 			& .buttons {
-				flex: 1;
-				display: flex;
-				justify-content: center;
-				align-items: center;
 				max-height: 145px;
 				text-align: center;
+				display: flex;
+				justify-content: flex-start;
 				& button {
 					max-width: 150px;
 				}
@@ -42,6 +40,9 @@ const styleWrapper = style`
 				align-items:flex-start;
 				& h2 {
 					margin-top: 10px;
+					& span {
+						font-weight: normal;
+					}
 				}
 				& > div > * {
 					margin-left: 2px;
@@ -120,17 +121,20 @@ class pluginWindow {
 							<div class="title">
 								<Icon class="plugin_icon"/>
 								<div>
-									<H2>${this.usefulPackage.name}</H2>
+									<H2>
+										${this.usefulPackage.name}
+										<span>
+											${this.usefulPackage.version ? ` v${this.usefulPackage.version}` : ''}
+										</span>
+									</H2>
 									<Text class="author" lang-string="misc.By" string="{{misc.By}} ${this.usefulPackage.author}"/>
-									<span>
-										${this.usefulPackage.version ? `v${this.usefulPackage.version}` : ''}
-									</span>
+									<div class="buttons">
+										${this.getUpdateButton()}
+										${this.getUninstallButton() || this.getInstallButton() || element`<div/>`}
+									</div>
 								</div>
 							</div>
-							<div class="buttons">
-								${this.getUpdateButton()}
-								${this.getUninstallButton() || this.getInstallButton() || element`<div/>`}
-							</div>
+							
 						</div>
 						<Text class="description">
 							${this.usefulPackage.description}
