@@ -199,7 +199,10 @@
 			"RemoveFromWorkspace": "Retirer de l'espace de travail",
 			"JoinTheDiscussion": "Rejoindre la discussion",
 			"OpenAnyway": "Ouvert de toute manière",
-			"Update": "Mise à jour"
+			"Update": "Mise à jour",
+			"Next": "Suivant",
+			"Back": "Retour",
+			"Okay": "Ok"
 		},
 		"notifications": {
 			"appLanguageChanged": {
