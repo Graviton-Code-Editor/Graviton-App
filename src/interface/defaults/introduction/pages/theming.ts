@@ -1,7 +1,5 @@
-import { element, render, lang } from '@mkenzo_8/puffin'
-import { Titles, Text } from '@mkenzo_8/puffin-drac'
-import { css as style } from '@emotion/css'
-import Link from '../../../components/link'
+import { element, lang } from '@mkenzo_8/puffin'
+import { Titles } from '@mkenzo_8/puffin-drac'
 import IntroductionPage from '../../../components/introduction/slider_page'
 import RunningConfig from 'RunningConfig'
 import StaticConfig from 'StaticConfig'
@@ -15,7 +13,7 @@ export default function Theming() {
 	const NightInfo = pluginsList['Night']
 	const ArcticInfo = pluginsList['Arctic']
 
-	const setTheme = theme => (StaticConfig.data.appTheme = theme)
+	const setTheme = (theme: string) => (StaticConfig.data.appTheme = theme)
 
 	return element({
 		addons: [lang(LanguageState)],

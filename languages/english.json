@@ -203,7 +203,8 @@
 			"Update": "Update",
 			"Next": "Next",
 			"Back": "Back",
-			"Okay": "Okay"
+			"Okay": "Okay",
+			"Languages": "Languages"
 		},
 		"notifications": {
 			"appLanguageChanged": {

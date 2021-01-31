@@ -1,9 +1,7 @@
-import { element, render, lang } from '@mkenzo_8/puffin'
-import { Titles, Text } from '@mkenzo_8/puffin-drac'
-import { css as style } from '@emotion/css'
 import Window from '../../constructors/window'
 import PagesSlider from '../../components/window/pages_container'
 
+import LanguagesPage from '../introduction/pages/languages'
 import WelcomePage from '../introduction/pages/welcome'
 import ThemingPage from '../introduction/pages/theming'
 import FinishedPage from '../introduction/pages/finished'
@@ -18,7 +16,7 @@ export default function Introduction() {
 
 	function IntroductionPage() {
 		return PagesSlider({
-			pages: [WelcomePage, ThemingPage, FinishedPage],
+			pages: [LanguagesPage, WelcomePage, ThemingPage, FinishedPage],
 			closeWindow: () => IntroductionWindow.close(),
 		})
 	}
