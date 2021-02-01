@@ -1,6 +1,6 @@
 {
 	"name": "graviton",
-	"version": "2.2.0",
+	"version": "2.2.1",
 	"description": "A code editor.",
 	"repository": "https://github.com/Graviton-Code-Editor/Graviton-App",
 	"homepage": "https://graviton.netlify.app",
