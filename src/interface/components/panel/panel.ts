@@ -21,11 +21,13 @@ const styleWrapper = style`
 		overflow-x: auto;
 		overflow-y: hidden;
 		background:var(--tabsbarBackground);
-		transition:0.1s;
+		opacity: 1;
 	}
 	& .tabsbar:empty{
 		transition:0.1s;
-		background:transparent;
+		opacity: 0;
+		min-height: 0px;
+		max-height: 0px;
 	}
 	& .tabsbar::-webkit-scrollbar {
 		height:4px !important;
