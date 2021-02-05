@@ -202,7 +202,8 @@
 			"Update": "Mise à jour",
 			"Next": "Suivant",
 			"Back": "Retour",
-			"Okay": "Ok"
+			"Okay": "Ok",
+			"Languages": "Langues"
 		},
 		"notifications": {
 			"appLanguageChanged": {
