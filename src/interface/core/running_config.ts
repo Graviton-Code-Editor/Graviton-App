@@ -106,14 +106,6 @@ window.addEventListener('load', () => {
 			})
 		})
 	}
-
-	/*
-	 * Expose RunningConfig and StaticConfig globally when running on development mode
-	 */
-	if (isDev) {
-		CustomWindow.s = StaticConfig
-		CustomWindow.r = RunningConfig
-	}
 })
 
 /*

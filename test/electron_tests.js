@@ -1,3 +1,7 @@
+/*
+ * Tests for Graviton in Electron (desktop app) mode
+ */
+
 const { remote } = require('electron')
 const { RunningConfig, StaticConfig, Dialog, Window, puffin, Notification } = window.test
 const { expect } = require('chai')
