@@ -232,6 +232,9 @@
 		"sidepanels": {
 			"sourceTracker": {
 				"noRepositoryOpen": "No repository open."
+			},
+			"projectInspector": {
+				"noProjectOpen": "No project open."
 			}
 		}
 	}

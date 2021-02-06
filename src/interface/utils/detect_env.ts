@@ -5,7 +5,13 @@ import RunningConfig from 'RunningConfig'
  * This function is used to display the first-matched environment filter in the Environments Panel when a folder is created.
  */
 
-function detectEnv(folder) {
+interface EnvResult {
+	env: string
+	prefix: string
+	info: any
+}
+
+function detectEnv(folder): Promise<EnvResult> {
 	return new Promise(resolve => {
 		const registeredEnvs = RunningConfig.data.envs
 		for (const { name, prefix, filter } of registeredEnvs) {

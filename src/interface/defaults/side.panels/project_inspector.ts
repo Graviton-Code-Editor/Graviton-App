@@ -13,6 +13,9 @@ import { createProcess } from '../terminal_shells/local'
 const {
 	childProcess: { exec },
 } = Core
+import { ExplorerItemOptions } from 'Types/explorer'
+import { Text } from '@mkenzo_8/puffin-drac'
+import ContainerPanel from '../../components/container_panel'
 
 /*
  * Only display it in Desktop version
@@ -21,13 +24,27 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.appEnableProjectInspector
 	RunningConfig.on('appLoaded', () => {
 		const { panelNode } = new SidePanel({
 			icon: EnvOutlined,
-			panel: () => element`<div/>`,
+			panel: () => {
+				return element({
+					components: {
+						Text,
+						ContainerPanel,
+					},
+				})`
+				<ContainerPanel empty="true">
+					<Text lang-string="sidepanels.projectInspector.noProjectOpen"></Text>
+				</ContainerPanel>
+				`
+			},
 			hint: 'Project inspector',
 		})
 		RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
+			//Hide "No project open" message
+			panelNode.children[0].setAttribute('empty', 'false')
+
 			const { env, prefix, info } = await detectEnv(folderPath)
 			if (env && info) {
-				const envExplorer = new Explorer({
+				const envExplorer = Explorer({
 					items: [
 						{
 							label: basename(folderPath),
@@ -53,7 +70,7 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.appEnableProjectInspector
 function getKeysToItems(keys, folder, fromKey, prefix = '') {
 	return Object.keys(keys).map(key => {
 		const keyValue = keys[key]
-		const item = {
+		const item: ExplorerItemOptions = {
 			label: key,
 		}
 		if (fromKey == 'scripts') {

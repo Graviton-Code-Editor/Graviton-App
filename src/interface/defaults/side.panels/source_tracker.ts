@@ -13,25 +13,7 @@ import InputDialog from '../../utils/dialogs/dialog_input'
 import Notification from 'Constructors/notification'
 import * as path from 'path'
 import { css as style } from '@emotion/css'
-
-const panelStyled = style`
-	&[empty=true]{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100%;
-		& > p {
-			text-align: center;
-			font-size: 13px;
-			user-select: none;
-		}
-	}
-	&[empty=false]{
-		& > p{
-			display: none;
-		}
-	}
-`
+import ContainerPanel from '../../components/container_panel'
 
 /*
  * Return total count of changes, if is bigger than 25, return "25+"
@@ -158,13 +140,13 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 			 * When a folder is loaded
 			 */
 			RunningConfig.on('addFolderToRunningWorkspace', async ({ folderPath }) => {
-				this.setAttribute('empty', 'false')
-
 				/*
 				 * When that folder's repository (if exists) gets loaded
 				 */
 				const loadedGitRepoListener = RunningConfig.on('loadedGitRepo', async ({ parentFolder, gitChanges, anyChanges, explorerProvider }) => {
 					if (folderPath !== parentFolder) return
+					//Hide "No repository open" message
+					this.setAttribute('empty', 'false')
 					//Load the current commits
 					let { all: allCommits } = await explorerProvider.getGitAllCommits(parentFolder)
 
@@ -421,11 +403,12 @@ if (!RunningConfig.data.isBrowser && StaticConfig.data.experimentalSourceTracker
 				return element({
 					components: {
 						Text,
+						ContainerPanel,
 					},
 				})`
-				<div mounted="${mounted}" class="${panelStyled}" empty="true">
+				<ContainerPanel mounted="${mounted}" empty="true">
 					<Text lang-string="sidepanels.sourceTracker.noRepositoryOpen"></Text>
-				</div>
+				</ContainerPanel>
 				`
 			},
 			hint: 'Source Tracker',
