@@ -1,33 +1,32 @@
-import def from '../../../languages/default.json'
-import en from '../../../languages/english.json'
-import cat from '../../../languages/catalan.json'
-import la from '../../../languages/classical_latin.json'
-import pt from '../../../languages/brazilian_portuguese.json'
-import fr from '../../../languages/french.json'
-import de from '../../../languages/german.json'
-import it from '../../../languages/italian.json'
-import ru from '../../../languages/russian.json'
-import es from '../../../languages/spanish.json'
-import pl from '../../../languages/polish.json'
-import ar from '../../../languages/arabic.json'
-import tr from '../../../languages/turkish.json'
-import zh from '../../../languages/chinese-simplified.json'
-import el from '../../../languages/greek.json'
+import english from '../../../languages/english.json'
+import catalan from '../../../languages/catalan.json'
+import classical_latin from '../../../languages/classical_latin.json'
+import brazilian_portuguese from '../../../languages/brazilian_portuguese.json'
+import french from '../../../languages/french.json'
+import german from '../../../languages/german.json'
+import italian from '../../../languages/italian.json'
+import russian from '../../../languages/russian.json'
+import spanish from '../../../languages/spanish.json'
+import polish from '../../../languages/polish.json'
+import arabic from '../../../languages/arabic.json'
+import turkish from '../../../languages/turkish.json'
+import simplifiedChinese from '../../../languages/chinese-simplified.json'
+import greek from '../../../languages/greek.json'
 
 export default {
-	def,
-	en,
-	cat,
-	la,
-	pt,
-	fr,
-	de,
-	it,
-	ru,
-	es,
-	pl,
-	ar,
-	tr,
-	zh,
-	el,
+	default: { name: 'Default' },
+	english,
+	catalan,
+	classical_latin,
+	brazilian_portuguese,
+	french,
+	german,
+	italian,
+	russian,
+	spanish,
+	polish,
+	arabic,
+	turkish,
+	simplifiedChinese,
+	greek,
 }
