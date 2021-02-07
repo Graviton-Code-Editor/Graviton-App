@@ -22,7 +22,7 @@ const LanguageState: PuffinState = new state({
 })
 
 function setFallback(notFoundLang: string): void {
-	StaticConfig.data.appLanguage = 'english'
+	StaticConfig.data.appLanguage = 'en'
 	LanguageState.data.translations = Languages[StaticConfig.data.appLanguage].translations
 	const err = `Couldnt find language by name ${notFoundLang}`
 	throwError(err, err)
@@ -32,6 +32,8 @@ StaticConfig.keyChanged('appLanguage', (newLanguage: string) => {
 	if (Languages[newLanguage].name === 'Default') {
 		if (Languages[globalAny.navigator.language]) {
 			LanguageState.data.translations = Languages[globalAny.navigator.language].translations
+		} else {
+			setFallback(globalAny.navigator.language)
 		}
 	} else if (Languages[newLanguage]) {
 		LanguageState.data.translations = Languages[newLanguage].translations
