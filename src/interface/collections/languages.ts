@@ -12,7 +12,7 @@ import pl from '../../../languages/polish.json'
 import ar from '../../../languages/arabic.json'
 import tr from '../../../languages/turkish.json'
 import zh from '../../../languages/chinese-simplified.json'
-import eel from '../../../languages/greek.json'
+import el from '../../../languages/greek.json'
 
 export default {
 	def,
@@ -29,5 +29,5 @@ export default {
 	ar,
 	tr,
 	zh,
-	eel,
+	el,
 }
