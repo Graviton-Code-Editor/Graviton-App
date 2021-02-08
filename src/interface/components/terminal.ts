@@ -24,6 +24,7 @@ const styled = style`
 	max-height: 100%;
 	min-height: 100%;
 	overflow: hidden;
+	padding: 4px;
 	& p{
 		color: var(--textColor);
 		font-size: 13px;
@@ -55,7 +56,6 @@ const styled = style`
 		height: 30px;
 		padding: 5px;
 		display: flex;
-
 		& > button {
 			flex: 1;
 			min-width: 40px;
@@ -160,7 +160,7 @@ const getConfig = () => {
 	}
 }
 
-const DefaultText = () => element`<p>Press the + to create a session</p>`
+const DefaultText = () => element`<p id="terminal_tip">Press the + to create a session</p>`
 
 export default function TerminalComp() {
 	function TerminalMounted() {
@@ -372,13 +372,15 @@ function TerminalBar() {
 
 	function createTerminal() {
 		const container = document.getElementById('terms_stack')
-		if (container.innerText !== '') container.innerText = ''
+		const terminalTip = document.getElementById('terminal_tip')
+		if (terminalTip != null) terminalTip.remove()
 		render(XtermTerminal(), container)
 	}
 
 	RunningConfig.on('createTerminalSession', ({ shell }) => {
 		const container = document.getElementById('terms_stack')
-		if (container.innerText !== '') container.innerText = ''
+		const terminalTip = document.getElementById('terminal_tip')
+		if (terminalTip != null) terminalTip.remove()
 		render(
 			XtermTerminal({
 				shell,

@@ -42,9 +42,7 @@ interface RunningConfigData {
 	}
 	isGitInstalled: Boolean
 	focusedExplorerItem: PuffinElement | null
-	terminalShells: {
-		TerminalShellName: () => void
-	}
+	terminalShells: Array<() => void>
 	openedTerminals: Array<{ name: string; state: PuffinState }>
 	focusedTerminal: string
 	localTerminalAccessories: Array<{ component: PuffinComponent }>
