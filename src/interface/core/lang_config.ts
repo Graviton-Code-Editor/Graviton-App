@@ -31,53 +31,19 @@ function setFallback(notFoundLang: string): void {
 StaticConfig.keyChanged('appLanguage', (newLanguage: string) => {
 	if (Languages[newLanguage].name === 'Default') {
 		// Get the language part from the locale (e.g. en-GB -> en)
-		const locale = globalAny.navigator.language.substr(0, globalAny.navigator.language.indexOf('-'))
+		const newLocale = globalAny.navigator.language.substr(0, globalAny.navigator.language.indexOf('-'))
+		// Used to detect if the language was found
+		let found = false
 
-		switch (locale) {
-			case 'en':
-				LanguageState.data.translations = Languages['english'].translations
-				break
-			case 'cat':
-				LanguageState.data.translations = Languages['catalan'].translations
-				break
-			case 'la':
-				LanguageState.data.translations = Languages['classical_latin'].translations
-				break
-			case 'pt':
-				LanguageState.data.translations = Languages['brazilian_portuguese'].translations
-				break
-			case 'fr':
-				LanguageState.data.translations = Languages['french'].translations
-				break
-			case 'de':
-				LanguageState.data.translations = Languages['german'].translations
-				break
-			case 'it':
-				LanguageState.data.translations = Languages['italian'].translations
-				break
-			case 'ru':
-				LanguageState.data.translations = Languages['russian'].translations
-				break
-			case 'es':
-				LanguageState.data.translations = Languages['spanish'].translations
-				break
-			case 'pl':
-				LanguageState.data.translations = Languages['polish'].translations
-				break
-			case 'ar':
-				LanguageState.data.translations = Languages['arabic'].translations
-				break
-			case 'tr':
-				LanguageState.data.translations = Languages['turkish'].translations
-				break
-			case 'zh':
-				LanguageState.data.translations = Languages['simplifiedChinese'].translations
-				break
-			case 'el':
-				LanguageState.data.translations = Languages['greek'].translations
-				break
-			default:
-				setFallback(locale)
+		Object.keys(Languages).some(i => {
+			if (Languages[i].locale === newLocale) {
+				LanguageState.data.translations = Languages[i].translations
+				found = true
+			}
+		})
+
+		if (!found) {
+			setFallback(newLocale)
 		}
 	} else if (Languages[newLanguage]) {
 		LanguageState.data.translations = Languages[newLanguage].translations
