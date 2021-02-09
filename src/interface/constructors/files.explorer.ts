@@ -321,7 +321,7 @@ class FilesExplorer {
 				components: {
 					itemComputed: () => itemComputed,
 				},
-			})`<itemComputed mounted="${mounted}"/>`
+			})`<itemComputed mounted="${mounted}" />`
 
 			this._removeExistingExplorers()
 

@@ -64,7 +64,7 @@ function SidePanel({ icon, panel, hint = '' }) {
 	}
 
 	const panelIcon = element`
-		<div title="${hint}" :click=${display} class="${styleWrapper}">
+		<div title="${hint}" :click="${display}" class="${styleWrapper}">
 			${icon({ setDecorator })}
 			<div class="decorator ${() => (decoratorLabel === '' ? 'false' : 'true')}">${() => decoratorLabel}</div>
 		</div>`

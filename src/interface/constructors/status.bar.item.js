@@ -9,7 +9,7 @@ function StatusBarItem({ label, component, action, contextAction, position, impo
 			StatusBarItemBody,
 		},
 	})`
-		<StatusBarItemBody important="${important}" title="${hint}" :click="${action} :contextmenu="${contextAction}">
+		<StatusBarItemBody important="${important}" title="${hint}" :click="${action}" :contextmenu="${contextAction}">
 			${component ? component() : label}
 		</StatusBarItemBody>
 	`

@@ -1053,10 +1053,10 @@
   dependencies:
     "@mkenzo_8/puffin" "^1.1.1"
 
-"@mkenzo_8/puffin@1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@mkenzo_8/puffin/-/puffin-1.1.6.tgz#ee46754fe7f25bc0167a10093201b57d4639c8dd"
-  integrity sha512-ZqghPfnRho285ya4WKGgaLhXOn6R5lYBMQ2lsh1vPA8VU6c3x9EY+8GzQ9ssvDOmPOv5wB3HuCX7pLR1PFIzHQ==
+"@mkenzo_8/puffin@1.1.8":
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/@mkenzo_8/puffin/-/puffin-1.1.8.tgz#a29c0fe0fa135470b5fb1e1921fe2d07440ee4bd"
+  integrity sha512-wbIJUsHVSr8YRDxrRXqhYwF6PtxAaU8xubopDy38i7YDbCaexDtU/IUtguliOA4HmP3thp2MgCmMwkQwnx4CPQ==
 
 "@mkenzo_8/puffin@^1.1.1":
   version "1.1.3"

@@ -415,7 +415,7 @@ function TerminalBar() {
 	})`
 		<div class="bar">
 			<select :change="${onChange}" mounted="${mountedSelect}">
-				${() => RunningConfig.data.openedTerminals.map(({ name }) => element`<option selected="${name === RunningConfig.data.focusedTerminal}">${name}</option>`)}
+				${() => RunningConfig.data.openedTerminals.map(({ name }) => element`<option ${name === RunningConfig.data.focusedTerminal ? 'selected=' : ''}>${name}</option>`)}
 			</select>
 			<ButtonIcon :click="${closeTerminal}">
 				<CrossIcon/>

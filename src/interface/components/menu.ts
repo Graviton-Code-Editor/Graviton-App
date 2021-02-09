@@ -157,7 +157,7 @@ function MenuComp() {
 	}
 
 	return element`
-		<div id="${Math.random()}" mounted="${mounted} :click="${onMenuClicked}" :mousemove="${onMenuHovering}" showed="false" class="${styleWrapper} dropmenu"/>
+		<div id="${Math.random()}" mounted="${mounted}" :click="${onMenuClicked}" :mousemove="${onMenuHovering}" showed="false" class="${styleWrapper} dropmenu"/>
 	`
 }
 

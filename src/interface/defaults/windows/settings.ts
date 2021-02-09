@@ -19,7 +19,7 @@ import { WindowInstance } from 'Types/window'
 
 export default function Settings(): WindowInstance {
 	const SettinsgPage = getScheme(CustomizationScheme())
-	const AdvancePage = () =>
+	const AdvancedPage = () =>
 		getScheme(
 			AdvancedScheme({
 				closeWindow: () => SettingsWindow.close(),
@@ -54,7 +54,7 @@ export default function Settings(): WindowInstance {
 				</div>
 				<div>
 					<div href="customization">${SettinsgPage}</div>
-					<SideMenuPage href="advanced" component="${AdvancePage}"/>
+					<SideMenuPage href="advanced" component="${AdvancedPage}"/>
 					<SideMenuPage href="shortcuts" component="${ShortcutsPage}"/>
 					<SideMenuPage href="languages" component="${LanguagesPage}"/>
 					<SideMenuPage href="about" component="${AboutPage}"/>

@@ -83,7 +83,7 @@
 	"dependencies": {
 		"@emmetio/codemirror-plugin": "^1.2.1",
 		"@emotion/css": "^11.1.3",
-		"@mkenzo_8/puffin": "1.1.6",
+		"@mkenzo_8/puffin": "1.1.8",
 		"@mkenzo_8/puffin-drac": "^0.3.1",
 		"adm-zip": "^0.4.16",
 		"axios": "^0.21.1",
@@ -119,7 +119,6 @@
 		"xterm-webfont": "^2.0.0"
 	},
 	"devDependencies": {
-		"electron-mocha": "^10.0.0",
 		"@electron/typescript-definitions": "^8.8.0",
 		"@gveditor/sdk": "0.4.8",
 		"@types/fs-extra": "^9.0.1",
@@ -133,6 +132,7 @@
 		"download-git-repo": "^3.0.2",
 		"electron": "^10.1.5",
 		"electron-builder": "^22.9.1",
+		"electron-mocha": "^10.0.0",
 		"elexus": "^1.0.0",
 		"file-loader": "^6.0.0",
 		"html-webpack-plugin": "^5.0.0-beta.1",

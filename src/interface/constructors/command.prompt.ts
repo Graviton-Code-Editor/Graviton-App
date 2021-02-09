@@ -60,7 +60,7 @@ class CommandPrompt {
 			},
 		})`
 		<CommandPromptBody mounted="${mounted}" id="${finalName}" :keydown="${scrolling}">
-			<WindowBackground window="${finalName}" closeWindow=${() => this.closeCP()}/>
+			<WindowBackground window="${finalName}" closeWindow="${() => this.closeCP()}"/>
 			<div class="container">
 				<input value="${inputDefaultText}" style="${showInput ? '' : 'opacity:0; height:1px; margin:0;padding:0; border:0px;'}" placeHolder="${inputPlaceHolder}" :keydown="${keydown}" :keyup="${writing}"/>
 				<div/>

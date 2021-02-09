@@ -217,7 +217,7 @@ function mountedApp(): void {
 				welcomeWindowToOpen().launch()
 			})
 		} else {
-			welcomeWindowToOpen().launch()
+			welcomeWindowToOpen && welcomeWindowToOpen().launch()
 		}
 	})
 }

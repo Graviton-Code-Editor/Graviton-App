@@ -17,7 +17,7 @@ function SideMenuSearcher() {
 			Input,
 		},
 	})`
-		<Input mounted="${mounted} :keyup="${writing}" placeHolder="Search" class="${styleWrapper}"/>
+		<Input mounted="${mounted}" :keyup="${writing}" placeHolder="Search" class="${styleWrapper}"/>
 	`
 }
 
