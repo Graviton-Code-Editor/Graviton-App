@@ -49,13 +49,15 @@ const CodemirrorClient = new EditorClient(
 					}
 			}
 
+			const lowerCasedExtension = extension.toLowerCase()
+
 			/*
 			 * Every case refers to a programming language's file format,
 			 * (example: JavaScript -> js).
 			 * If it's not supported it will go into the default case,
 			 * below yo can see the list of supported by this CodeMirror Client.
 			 */
-			switch (extension) {
+			switch (lowerCasedExtension) {
 				case 'html':
 					return {
 						fancy: 'html',
