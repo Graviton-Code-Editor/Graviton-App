@@ -12,8 +12,8 @@ import { WindowOptions } from '../types/window'
 
 class Window {
 	private WindowComponent: object
-	private WindowElement: PuffinElement
-	private WindowState: PuffinState
+	public WindowElement: PuffinElement
+	public WindowState: PuffinState
 	/**
 	 *  Initializes a Graviton window.
 	 *

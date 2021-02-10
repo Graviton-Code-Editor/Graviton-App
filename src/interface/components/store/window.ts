@@ -13,6 +13,8 @@ import Notification from '../../constructors/notification'
 import getCompatibleRelease from '../../defaults/store/utils/get.compatible.release'
 import DefaultPluginIcon from '../icons/plugin_store'
 import * as path from 'path'
+import PuffinElement from 'Types/puffin.element'
+import getLocalPluginById from '../../defaults/store/utils/get.local.plugin'
 
 const styleWrapper = style`
 	& .content {
@@ -86,6 +88,7 @@ class pluginWindow {
 	lastReleaseTarget: string = 'Unknown'
 	lastRelease: any
 	hasAnyUpdate: boolean
+	pluginWindow: Window
 
 	remotePackage: any
 	localPackage: any
@@ -129,8 +132,8 @@ class pluginWindow {
 									</H2>
 									<Text class="author" lang-string="misc.By" string="{{misc.By}} ${this.usefulPackage.author}"/>
 									<div class="buttons">
-										${this.getUpdateButton()}
-										${this.getUninstallButton() || this.getInstallButton() || element`<div/>`}
+										${() => this.getUpdateButton()}
+										${() => this.getUninstallButton() || this.getInstallButton() || element`<div/>`}
 									</div>
 								</div>
 							</div>
@@ -146,7 +149,7 @@ class pluginWindow {
 		</SideMenu>
 		`
 
-		const pluginWindow = new Window({
+		this.pluginWindow = new Window({
 			component: () => component,
 			minWidth: '300px',
 			minHeight: '250px',
@@ -154,7 +157,7 @@ class pluginWindow {
 			width: '70%',
 		})
 
-		pluginWindow.launch()
+		this.pluginWindow.launch()
 	}
 	init() {
 		this.usefulPackage = Object.assign({}, this.remotePackage, this.localPackage)
@@ -233,12 +236,32 @@ class pluginWindow {
 			release: this.lastRelease.url,
 		}).then(() => {
 			pluginInstalledNotification(this.usefulPackage.name)
+
+			this.isInstalled = true
+
+			this.refreshAfterBeingInstalled()
+
+			const buttonsContainer = <PuffinElement>this.pluginWindow.WindowElement.getElementsByClassName('buttons')[0]
+
+			buttonsContainer.update()
 		})
 	}
 	uninstall() {
 		uninstallPlugin(this.usefulPackage).then(() => {
 			pluginUninstalledNotification(this.usefulPackage.name)
+
+			this.isInstalled = false
+
+			this.refreshAfterBeingInstalled()
+
+			const buttonsContainer = <PuffinElement>this.pluginWindow.WindowElement.getElementsByClassName('buttons')[0]
+
+			buttonsContainer.update()
 		})
+	}
+	refreshAfterBeingInstalled() {
+		this.localPackage = getLocalPluginById(this.remotePackage.id)
+		this.init()
 	}
 }
 
