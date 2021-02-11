@@ -34,8 +34,8 @@ class Notification {
 					<Cross :click="${() => this.remove()}"/>
 				</div>
 				<div>
+					${author ? element`<span>(${author} plugin)</span>` : element`<div/>`}
 					<Title lang-string="${title}"/>
-					${author ? element`<span>From: ${author}</span>` : element`<div/>`}
 				</div>
 				<div>
 					${

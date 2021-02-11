@@ -29,11 +29,11 @@
 
 @keyframes notificationCloses {
 	0% {
-		transform: scale(0.985) translateY(0px);
+		transform: scale(1) translateY(0px);
 		opacity: 1;
 	}
 	100% {
-		transform: scale(1) translateY(12px);
+		transform: scale(0.985) translateY(12px);
 		opacity: 0;
 	}
 }

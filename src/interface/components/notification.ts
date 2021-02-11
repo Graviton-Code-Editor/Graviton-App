@@ -40,7 +40,7 @@ const styleWrapper = style`
 		max-width:145px;
 		width:145px;
 		white-space:nowrap;
-		margin-bottom: 2px;
+		margin-bottom: 0px;
 		user-select: none;
 	}
 	& > div > .content{
@@ -55,13 +55,18 @@ const styleWrapper = style`
 		background:var(--notificationButtonBackground);
 	}
 	& > div:nth-child(2){
-		display: flex;
+		align-items: center;
+		height:45px;
+		padding-top:5px;
+		& > h5 {
+			max-width: 150px;
+		}
 		& > span {
 			font-size: 11px;
-			margin: auto 5px;
-			padding-bottom:2px;
+			margin-left: 7px;
 			color: var(--textColor);
-			max-width: 100px;
+			opacity: 0.7;
+			max-width:auto;
 			text-overflow: ellipsis;
 			overflow: hidden;
 			white-space:nowrap;
@@ -72,8 +77,9 @@ const styleWrapper = style`
 		height: auto;
 		max-height: 115px;
 		overflow: hidden;
-		& * {
+		& .content  {
 			font-size: 13px;
+			padding-top: 0px;
 		}
 	}
 `
