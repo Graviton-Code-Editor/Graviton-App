@@ -156,6 +156,11 @@ app.listen(
 		host: '0.0.0.0',
 	},
 	() => {
-		console.log(` Serving Graviton Browser in port ${PORT}`)
+		console.log(`
+			\r Serving Graviton Server and Browser in port ${PORT}
+			\n 
+			\r NOTE: Be aware that Graviton Server is not completely secure, therefore is not recommended for public usage.
+			\r You can discuss in: https://github.com/Graviton-Code-Editor/Graviton-App/discussions
+		`)
 	},
 )
