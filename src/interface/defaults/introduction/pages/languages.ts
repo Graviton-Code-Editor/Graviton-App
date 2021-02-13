@@ -32,7 +32,7 @@ export default function LanguagesPage() {
 		<IntroductionPage>
 			<Title class="title" lang-string="misc.Languages"/>
 			<div style="overflow: auto; width: 90%;">
-				<RadioGroup :radioSelected="${onSelected} translated="${true}" options="${languagesOptions}"/>
+				<RadioGroup :radioSelected="${onSelected}" translated="${true}" options="${languagesOptions}"/>
 			</div>
 		</IntroductionPage>
 	`
