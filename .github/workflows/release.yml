@@ -18,6 +18,7 @@ jobs:
       id: package-node-version
       uses: culshaw/read-package-node-version-actions@v1
     - name: Create Release
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -27,7 +28,7 @@ jobs:
         body: Release for Graviton Editor v${{ steps.package-node-version.outputs.version}}
         draft: false
         prerelease: true
-  build:
+  buildElectron:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -56,3 +57,26 @@ jobs:
       env:
         CI: true
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
+  buildServer:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Installing dependencies
+      run: yarn
+    - name: Building Graviton Server
+      run: yarn build:server
+    - name: Building the binaries
+      run: yarn package:server
+    - name: Get packageJSON version
+      id: package-node-version
+      uses: culshaw/read-package-node-version-actions@v1
+    - name: Upload binaries
+      uses: AButler/upload-release-assets@v2.0
+      with:
+        repo-token: ${{ secrets.GH_TOKEN }}
+        release-tag: "v${{ steps.package-node-version.outputs.version}}"
+        files: 'dist/Graviton-Server*'

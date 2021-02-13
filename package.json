@@ -49,7 +49,7 @@
 		"build:electron": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildElectron",
 		"build:browser": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildBrowser",
 		"build:server": "cross-env NODE_ENV=production tasca ./build/tasks.js --tasks buildServer",
-		"package:server": "pkg ./package.json --out-path dist",
+		"package:server": "pkg ./package.json --output dist/Graviton-Server_Windows --target node14-win-x64 && pkg ./package.json --output dist/Graviton-Server_MacOS --target node14-macos-x64 && pkg ./package.json --output dist/Graviton-Server_Linux --target node14-linux-x64",
 		"build:test": "cross-env NODE_ENV=development PUBLIC_PATH=./ tasca ./build/tasks.js --tasks buildTest",
 		"build:experimental:browser": "yarn build:browser",
 		"build:outpacked": "yarn build:electron --info outpacked=true",
