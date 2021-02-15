@@ -1,18 +1,22 @@
-import express from 'express'
+import koa from 'koa'
 import path from 'path'
-import enableWs from 'express-ws'
+import koaWs from 'koa-easy-ws'
+import koaRouter from '@koa/router'
+import koaStatic from 'koa-static'
 import fs from 'fs-extra'
-import morgan from 'morgan'
+import koaLogger from 'koa-logger'
+import koaCors from '@koa/cors'
 
 const PORT = process.env.PORT || 8080
 
-const app = express()
+const app = new koa()
+const router = koaRouter()
 
-enableWs(app)
+app.use(koaLogger())
+app.use(koaWs())
+app.use(koaCors())
 
-app.use(morgan('dev'))
-
-app.use('/', express.static(path.resolve(__dirname, '..', 'dist_browser')))
+app.use(koaStatic(path.resolve(__dirname, '..', 'dist_browser')))
 
 /*
  * Check if a path is a folder or not
@@ -32,7 +36,9 @@ function isFolder(path: string): Promise<Boolean> {
 /*
  * Handle the incoming websockets requests
  */
-app.ws('/api/ws', ws => {
+router.get('/api/ws', async ctx => {
+	if (!ctx.ws) return
+	const ws = await ctx.ws()
 	/*
 	 * Send a message to the socket
 	 * @param content - The message's object
@@ -149,6 +155,8 @@ app.ws('/api/ws', ws => {
 		}
 	})
 })
+
+app.use(router.routes())
 
 app.listen(
 	PORT,
