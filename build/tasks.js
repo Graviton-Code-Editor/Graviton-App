@@ -38,7 +38,7 @@ function updatePluginsDependencies(cb) {
 	fs.readdir(pluginsSourceFolder).then(pluginsFolders => {
 		pluginsFolders.forEach((pluginName, i) => {
 			const pluginDir = path.join(pluginsSourceFolder, pluginName)
-			const proc = spawn('npm', ['install'], {
+			const proc = spawn('yarn', {
 				cwd: pluginDir,
 				shell: true,
 			})
