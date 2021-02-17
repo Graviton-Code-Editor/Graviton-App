@@ -38,6 +38,7 @@ function isFolder(path: string): Promise<Boolean> {
  * Handle the incoming websockets requests
  */
 router.get('/api/ws', async ctx => {
+	console.log(ctx, ctx.ws)
 	if (!ctx.ws) return
 	const ws = await ctx.ws()
 	/*
@@ -50,7 +51,7 @@ router.get('/api/ws', async ctx => {
 
 	ws.on('message', (data: string) => {
 		const messageObject = JSON.parse(data)
-
+		console.log(`Received message: `, messageObject)
 		switch (messageObject.type) {
 			case 'listDir':
 				fs.readdir(messageObject.data.path, async (err, items) => {
