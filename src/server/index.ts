@@ -8,6 +8,7 @@ import koaLogger from 'koa-logger'
 import koaCors from '@koa/cors'
 
 const PORT = process.env.PORT || 8080
+const HOST = process.env.HOST || '0.0.0.0'
 
 const app = new koa()
 const router = koaRouter()
@@ -161,7 +162,7 @@ app.use(router.routes())
 app.listen(
 	PORT,
 	{
-		host: '0.0.0.0',
+		host: HOST,
 	},
 	() => {
 		console.log(`
