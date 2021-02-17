@@ -33,7 +33,7 @@ window.addEventListener('click', (ev: MouseEvent) => {
 		// Prevent throwing error when the element is no longer attached to the DOM
 		return
 	}
-	if (!eventTarget.parentElement.classList.contains('dropmenu')) {
+	if (!eventTarget.parentElement.classList.contains('dropmenu') && eventTarget.tagName != 'BUTTON') {
 		RunningConfig.emit('hideAllFloatingComps')
 	}
 })
