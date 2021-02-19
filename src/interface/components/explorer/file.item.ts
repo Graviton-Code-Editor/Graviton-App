@@ -74,7 +74,7 @@ class Item {
 				ArrowIcon,
 			},
 		})`
-			<FileItem class="${classSelector} level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
+			<FileItem class="${classSelector}" level="${level}" id="${IDItem}" fullpath="${fullPath}" itemClass="${classSelector}" isFolder="${isFolder}" parentFolder="${projectPath}" mounted="${mounted}" selected="false" opened="false" animated="${animateItem}" :drop="${dragDroppedListener}" >
 				<button ishidden="${
 					this.itemIsHidden
 				}" draggable="true" :dragleave="${dragLeave}" :dragenter="${dragEnter}" :drop="${onDropped}" :dragstart="${startDrag}" :dragover="${draggingOver}" itemClass="${classSelector}" :click="${clickListener}" :contextmenu="${contextListener}" title="${hint}">
