@@ -16,7 +16,7 @@ function guessTabPosition(tab, tabsbar) {
 
 class Panel {
 	element: PuffinElement
-	constructor() {
+	constructor(containerElement = document.getElementById('panels_stack')) {
 		const self = this
 		const PanelComp = element({
 			components: {
@@ -121,7 +121,7 @@ class Panel {
 			}
 		}
 
-		this.element = render(PanelComp, document.getElementById('panels_stack'))
+		this.element = render(PanelComp, containerElement)
 		RunningConfig.data.focusedPanel = this.element
 	}
 	focusPanel() {
@@ -186,10 +186,9 @@ function getUnsavedtabs(panel) {
 }
 
 RunningConfig.on('checkAllTabsAreSaved', ({ whenContinue = function () {}, whenIgnore = function () {} } = {}) => {
-	const panels = document.getElementById('panels_stack').children
-	const allUnsavedTabs = Object.keys(panels)
-		.map(n => {
-			const panel = panels[n]
+	const panels = [...(<any>document.getElementById('panels_stack').children), ...(<any>document.getElementById('terms_stack').children)]
+	const allUnsavedTabs = panels
+		.map(panel => {
 			return getUnsavedtabs(panel)
 		})
 		.flat()

@@ -423,6 +423,12 @@ class Tab {
 			callback()
 		}
 	}
+	/*
+	 * Add a context menu listener
+	 */
+	public addContextMenuListener(callback: (any) => void) {
+		this.tabElement.addEventListener('contextmenu', callback)
+	}
 }
 /*
  * Unfocus all tabs except the active one

@@ -36,7 +36,7 @@ const styleWrapper = style`
 		flex:1;
 		height: 100%;
 		max-height:100%;
-		overflow:auto;
+		overflow: hidden;
 	}
 `
 

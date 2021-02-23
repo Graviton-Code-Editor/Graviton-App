@@ -10,6 +10,7 @@ import { RegisterCommand } from './utils'
 import { EditorClient } from './editorclient'
 import { NotificationInstance, NotificationDetails } from './notification'
 import { ExplorerProvider } from './explorer_provider'
+import { MenuOption } from './menu'
 
 interface RunningConfigData {
 	focusedTab: PuffinElement | null
@@ -45,7 +46,7 @@ interface RunningConfigData {
 	terminalShells: Array<() => void>
 	openedTerminals: Array<{ name: string; state: PuffinState }>
 	focusedTerminal: string
-	localTerminalAccessories: Array<{ component: PuffinComponent }>
+	localTerminalAccessories: Array<{ menu: MenuOption }>
 	isBrowser: Boolean
 	parsedArguments: string[]
 	windowID: string

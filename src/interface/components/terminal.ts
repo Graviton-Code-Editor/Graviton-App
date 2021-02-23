@@ -11,6 +11,9 @@ import AddTermIcon from './icons/add_term'
 import ButtonIcon from './button_icon'
 import CrossIcon from './icons/cross'
 import AppPlatform from 'AppPlatform'
+import { Panel } from 'Constructors/panel'
+import Tab from 'Constructors/tab'
+import ContextMenu from 'Constructors/contextmenu'
 
 import '../../../node_modules/xterm/css/xterm.css'
 
@@ -23,11 +26,81 @@ const styled = style`
 	width: auto;
 	max-height: 100%;
 	min-height: 100%;
-	overflow: hidden;
-	padding: 4px;
-	& p{
-		color: var(--textColor);
-		font-size: 13px;
+	background:var(--tabsbarBackground);
+	& #terms_stack > div {
+		border-left: 0px;
+	}
+	& .tabsbar {
+		margin-right: 90px;
+	}
+	& .tabspanel {
+		display: flex;
+		& > div {
+			background:var(--mainpanelBackground);
+			flex: 1;
+			max-width: 100%;
+		}
+	}
+	& .bar {
+		height: 0px;
+		& > .buttons {
+			flex: 1;
+			position: absolute;
+			top: 0;
+			right: 0px;
+			height: 37px;
+			display: flex;
+			justify-content: center;
+			& > button {
+				flex: 1;
+				margin: 0 10px;
+			}
+		}
+		& > div{
+			flex: 1;
+			min-width: 0px;
+			max-width: 100%;
+		}
+		& #terminal_accessories{
+			display: flex;
+			justify-content: center;
+			& > div {
+				display: flex;
+				text-align: center;
+				justify-content: center;
+				font-size: 13px;
+				color: var(--textColor);
+				align-items: center;
+			}
+			& button {
+				padding: 6px 9px;
+			}
+		}
+	}
+`
+
+const term_style = style`
+  min-width: calc(100% - 30px);
+	max-width: calc(100% - 30px);
+	margin: 0;
+	min-height: calc( 100% - 50px);
+	padding: 15px;
+	background: var(--mainpanelBackground);
+	& .xterm {
+		padding: 0px;
+		& > * {
+			z-index: 0 !important;
+		}
+	}
+	& .shell_selector{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		height: calc(100% - 100px);
+	}
+	& #terms_stack{
+		padding: 10px;
 	}
 	& select {
 		user-select: none;
@@ -52,65 +125,9 @@ const styled = style`
 			background: var(--contextmenuButtonBackground);
 		}
 	}
-	& .bar {
-		height: 30px;
-		padding: 5px;
-		display: flex;
-		& > button {
-			flex: 1;
-			min-width: 40px;
-			max-width: 40px;
-		}
-		& select {
-			flex: 1;
-			min-width: 35px;
-			width: auto;
-			max-width: 100px;
-		}
-		& div{
-			flex: 1;
-			min-width: 0px;
-			max-width: 100%;
-		}
-		& #terminal_accessories{
-			display: flex;
-			justify-content: center;
-			& > div {
-				display: flex;
-				text-align: center;
-				justify-content: center;
-				font-size: 13px;
-				color: var(--textColor);
-				align-items: center;
-			}
-			& button {
-				padding: 6px 9px;
-			}
-		}
-	}
-	& .terminal_container{
-		max-width: 100%;
-		margin: 0;
-		position: relative;
-		width: auto;
-		min-height: calc( 100% - 50px);
-		max-height: calc( 100% - 50px);
-	}
-	& .xterm {
-		padding: 0px;
-		& > * {
-			z-index: 0 !important;
-		}
-	}
-	& .shell_selector{
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		height: calc(100% - 100px);
-	}
-	& #terms_stack{
-		padding: 10px;
+	& p{
+		color: var(--textColor);
+		font-size: 13px;
 	}
 `
 
@@ -122,9 +139,9 @@ RunningConfig.on('registerTerminalShell', ({ name, onCreated }) => {
 	RunningConfig.data.terminalShells[name] = onCreated
 })
 
-RunningConfig.on('addLocalTerminalAccessory', ({ component }) => {
+RunningConfig.on('addLocalTerminalAccessory', ({ menu }) => {
 	RunningConfig.data.localTerminalAccessories.push({
-		component,
+		menu,
 	})
 })
 
@@ -160,28 +177,21 @@ const getConfig = () => {
 	}
 }
 
-const DefaultText = () => element`<p id="terminal_tip">Press the + to create a session</p>`
+let terminalPanel
 
 export default function TerminalComp() {
 	function TerminalMounted() {
-		RunningConfig.on('aTerminalHasBeenClosed', () => {
-			if (RunningConfig.data.openedTerminals.length === 0) {
-				render(DefaultText(), this)
-			}
-		})
+		terminalPanel = new Panel(this).element
 	}
 
 	return element({
 		components: {
 			TerminalBar,
-			DefaultText,
 		},
 	})`
 		<div class="${styled}">
 			<TerminalBar/>
-			<div id="terms_stack" mounted="${TerminalMounted}">
-				<DefaultText/>
-			</div>
+			<div id="terms_stack" mounted="${TerminalMounted}"/>
 		</div>
 	`
 }
@@ -218,23 +228,28 @@ function XtermTerminal({ shell = null } = {}) {
 	}
 
 	async function mounted() {
-		RunningConfig.keyChanged('focusedTerminal', name => {
-			if (name != xtermState.data.name) {
-				this.style.display = 'none'
-			} else {
-				this.style.display = 'block'
-			}
-		})
-
 		xtermState.on('shellSelected').then(async () => {
 			const terminalClient = xtermState.data.shell(xtermState)
 
+			const focusedTabListener = terminalTab.tabState.on('focusedMe', () => {
+				RunningConfig.data.focusedTerminal = xtermState.data.name
+			})
+
+			terminalTab.tabState.once('destroyed', () => {
+				xtermState.emit('close')
+			})
+
+			terminalTab.addContextMenuListener(event => {
+				new ContextMenu({
+					list: terminalClient.accessories.map(acc => acc.menu(xtermState)).flat(),
+					event,
+					parent: document.body,
+				})
+			})
+
 			function mountedAccs() {
 				const focusedTerminalWatcher = RunningConfig.keyChanged('focusedTerminal', name => {
-					if (name != xtermState.data.name) {
-						this.style.display = 'none'
-					} else {
-						this.style.display = 'block'
+					if (name === xtermState.data.name) {
 						xtermInstance.focus()
 					}
 				})
@@ -242,18 +257,6 @@ function XtermTerminal({ shell = null } = {}) {
 					this.remove()
 					focusedTerminalWatcher.cancel()
 				})
-			}
-			if (terminalClient) {
-				if (terminalClient.accessories) {
-					const accessoriesContainer = element`
-					<div mounted="${mountedAccs}">
-						${terminalClient.accessories.map(acc => {
-							return acc.component(xtermState)
-						})}
-					</div>
-					`
-					render(accessoriesContainer, document.getElementById('terminal_accessories'))
-				}
 			}
 
 			const xtermInstance = new Terminal(getConfig())
@@ -289,8 +292,18 @@ function XtermTerminal({ shell = null } = {}) {
 				xtermState.emit('keyPressed', e.key)
 			})
 
-			const resizingWatchers = RunningConfig.on<any>(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
-				// Force resizing when the sidepanel of the mainbox gets resized
+			const tabFocusedListener = terminalTab.tabState.on('focusedMe', () => {
+				// Force resizing when the tab is focused (or dropped)
+				fit.fit()
+			})
+
+			const resizingListeners = RunningConfig.on<any>(['sidePanelHasBeenResized', 'mainBoxHasBeenResized'], () => {
+				// Force resizing when the sidepanel or the mainbox gets resized
+				fit.fit()
+			})
+
+			const terminalShowedListener = StaticConfig.keyChanged('appShowTerminal', () => {
+				// Force resizing when the mainbox is toggled
 				fit.fit()
 			})
 
@@ -302,13 +315,12 @@ function XtermTerminal({ shell = null } = {}) {
 
 				if (openedTerms.length === 1) {
 					RunningConfig.data.focusedTerminal = null
-				} else if (openedTerms[index - 1]) {
-					RunningConfig.data.focusedTerminal = openedTerms[index - 1].name
-				} else {
-					RunningConfig.data.focusedTerminal = openedTerms[index + 1].name
 				}
 
-				resizingWatchers.cancel()
+				resizingListeners.cancel()
+				terminalShowedListener.cancel()
+				tabFocusedListener.cancel()
+				focusedTabListener.cancel()
 
 				RunningConfig.data.openedTerminals.splice(index, 1)
 				RunningConfig.emit('aTerminalHasBeenClosed', { name })
@@ -339,8 +351,8 @@ function XtermTerminal({ shell = null } = {}) {
 		xtermState.emit('shellSelected')
 	}
 
-	return element`
-		<div class="terminal_container" mounted="${mounted}">
+	const terminalComponent = element`
+		<div class="terminal_container ${term_style}" mounted="${mounted}">
 			<div class="shell_selector">
 				<div>
 					<p>Select a shell</p>
@@ -354,55 +366,28 @@ function XtermTerminal({ shell = null } = {}) {
 			<div>
 		</div>
 	`
+
+	const terminalTab = new Tab({
+		panel: terminalPanel,
+		title: `Session ${sessionsCount}`,
+		component: () => terminalComponent,
+		id: Math.random().toString(),
+	})
 }
 
 function TerminalBar() {
-	function onChange() {
-		// Selected a Terminal Shell
-		const selectedOption = this.options[this.selectedIndex].innerText
-		RunningConfig.data.focusedTerminal = selectedOption
-	}
-
-	function mountedSelect() {
-		RunningConfig.on<any>(['aTerminalHasBeenCreated', 'aTerminalHasBeenClosed'], () => {
-			//Terminal was created
-			this.update()
-		})
-	}
-
 	function createTerminal() {
-		const container = document.getElementById('terms_stack')
-		const terminalTip = document.getElementById('terminal_tip')
-		if (terminalTip != null) terminalTip.remove()
-		render(XtermTerminal(), container)
+		XtermTerminal()
 	}
 
 	RunningConfig.on('createTerminalSession', ({ shell }) => {
-		const container = document.getElementById('terms_stack')
-		const terminalTip = document.getElementById('terminal_tip')
-		if (terminalTip != null) terminalTip.remove()
-		render(
-			XtermTerminal({
-				shell,
-			}),
-			container,
-		)
+		XtermTerminal({
+			shell,
+		})
 	})
 
 	function closeTerminal() {
-		const focusedTerminal = RunningConfig.data.focusedTerminal
-
-		if (RunningConfig.data.openedTerminals.length === 0) {
-			//Hide terminal if there isn't any more shells opened
-			StaticConfig.data.appShowTerminal = false
-		}
-
-		;[...RunningConfig.data.openedTerminals].find(({ name, state }) => {
-			if (name === focusedTerminal) {
-				state.emit('close')
-				return
-			}
-		})
+		StaticConfig.data.appShowTerminal = false
 	}
 
 	return element({
@@ -414,16 +399,15 @@ function TerminalBar() {
 		},
 	})`
 		<div class="bar">
-			<select :change="${onChange}" mounted="${mountedSelect}">
-				${() => RunningConfig.data.openedTerminals.map(({ name }) => element`<option ${name === RunningConfig.data.focusedTerminal ? 'selected=' : ''}>${name}</option>`)}
-			</select>
-			<ButtonIcon :click="${closeTerminal}">
-				<CrossIcon/>
-			</ButtonIcon>
 			<div id="terminal_accessories"/>
-			<ButtonIcon :click="${createTerminal}">
-				<AddTermIcon/>
-			</ButtonIcon>
+			<div class="buttons">
+				<ButtonIcon :click="${closeTerminal}">
+					<CrossIcon/>
+				</ButtonIcon>
+				<ButtonIcon :click="${createTerminal}">
+					<AddTermIcon/>
+				</ButtonIcon>
+			</div>
 		</div>
 	`
 }

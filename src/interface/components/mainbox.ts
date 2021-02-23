@@ -12,6 +12,7 @@ const MainBoxStyle = style`
 	bottom: 0;
 	flex: 1;
 	border-top: 1px solid var(--panelBorder);
+	overflow: hidden;
 `
 
 function handleTerminal(element: PuffinElement, state: boolean) {
