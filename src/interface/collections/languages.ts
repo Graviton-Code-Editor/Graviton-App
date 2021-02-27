@@ -14,7 +14,6 @@ import simplifiedChinese from '../../../languages/chinese-simplified.json'
 import greek from '../../../languages/greek.json'
 
 export default {
-	default: { name: 'Default' },
 	english,
 	catalan,
 	classical_latin,

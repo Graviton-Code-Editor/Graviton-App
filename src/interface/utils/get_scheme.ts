@@ -58,27 +58,49 @@ const getComponentFromScheme = comp => {
 					StaticConfig.data[comp.key] = newStatus
 				}
 			}
+			function mountedSwitch() {
+				if (comp.liveUpdate) {
+					StaticConfig.keyChanged(comp.key, value => {
+						this.toggle(value)
+					})
+				}
+			}
 			return element({
 				components: {
 					Switch,
 				},
 				addons: [lang(LanguageState)],
-			})`<Switch :toggled="${onSwitch}" data="${{ default: StaticConfig.data[comp.key], label: comp.label }}"/>`
+			})`<Switch mounted="${mountedSwitch}" :toggled="${onSwitch}" data="${{ default: StaticConfig.data[comp.key], label: comp.label }}"/>`
 		case 'radioGroup':
+			let enabled = true
 			function onSelected(e) {
-				const selectedRadio = e.detail.key
-				if (selectedRadio !== StaticConfig.data[comp.key]) {
-					StaticConfig.data[comp.key] = selectedRadio
+				if (enabled) {
+					const selectedRadio = e.detail.key
+					if (selectedRadio !== StaticConfig.data[comp.key]) {
+						StaticConfig.data[comp.key] = selectedRadio
+					}
 				}
 			}
-
+			function mountedRadioGroup() {
+				if (comp.liveUpdate) {
+					StaticConfig.keyChanged(comp.key, value => {
+						let radioPosition
+						comp.radios.forEach((radio, i) => {
+							if (radio.key === value) radioPosition = i
+						})
+						enabled = false
+						this.children[radioPosition].click()
+						enabled = true
+					})
+				}
+			}
 			const RadiosComp = element({
 				components: {
 					RadioGroup,
 				},
 				addons: [lang(LanguageState)],
 			})`
-				<RadioGroup translated="${comp.translated === false ? false : true}" direction="${comp.direction || 'vertically'}" :radioSelected="${onSelected}" styled="${
+				<RadioGroup mounted="${mountedRadioGroup}" translated="${comp.translated === false ? false : true}" direction="${comp.direction || 'vertically'}" :radioSelected="${onSelected}" styled="${
 				comp.styled != null ? comp.styled : true
 			}" options="${comp.radios}"/>`
 

@@ -50,7 +50,7 @@ const styleWrapper = style`
 function Switch({ data }) {
 	let { default: defaultStatus, label } = data
 	return element`
-		<div :click="${toggled}" mounted="${mounted}" status="${() => defaultStatus}" class="${styleWrapper}">
+		<div :click="${toggle}" mounted="${mounted}" status="${() => defaultStatus}" class="${styleWrapper}">
 			<div class="wrapper">
 				<div class="indicator"/>
 			</div>
@@ -59,20 +59,25 @@ function Switch({ data }) {
 	`
 	function mounted() {
 		this.props.status = defaultStatus
+		this.toggle = value => toggle.bind(this)(null, value)
 	}
-	function toggled() {
-		//Invert the the status
-		defaultStatus = !defaultStatus == true
+	function toggle(ev, customStatus) {
+		const isClicked = !!ev
+		//Update the status
+		if (customStatus) defaultStatus = customStatus
+		else defaultStatus = !defaultStatus == true
 		//Update the status prop
 		this.update()
 		//Create the toggled event
-		const toggledEvent = new CustomEvent('toggled', {
-			detail: {
-				status: defaultStatus,
-			},
-		})
-		//Trigger the toggled event
-		this.dispatchEvent(toggledEvent)
+		if (isClicked) {
+			const toggledEvent = new CustomEvent('toggled', {
+				detail: {
+					status: defaultStatus,
+				},
+			})
+			//Trigger the toggled event
+			this.dispatchEvent(toggledEvent)
+		}
 	}
 }
 

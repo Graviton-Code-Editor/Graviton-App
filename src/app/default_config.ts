@@ -17,6 +17,7 @@ const defaultConfig = {
 		appTheme: 'Night',
 		appIconpack: 'Graviton',
 		appLanguage: 'english',
+		appUseSystemLanguage: false,
 		editorFontSize: '14',
 		appProjectsLog: [],
 		appConfigPath: '',

@@ -118,7 +118,10 @@
 						"RestartConfig": "Restart configuration"
 					}
 				},
-				"Languages": "Languages",
+				"Languages": {
+					"Languages": "Languages",
+					"UseSystemLanguage": "Use System's language"
+				},
 				"Shortcuts": {
 					"Shortcuts": "Shortcuts",
 					"CreateCombo": "Create Combo"

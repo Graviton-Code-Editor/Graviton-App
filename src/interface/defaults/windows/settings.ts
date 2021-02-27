@@ -49,7 +49,7 @@ export default function Settings(): WindowInstance {
 					<label to="customization" lang-string="windows.Settings.Customization.Customization"/>
 					<label to="advanced" lang-string="windows.Settings.Advanced.Advanced"/>
 					<label to="shortcuts" lang-string="windows.Settings.Shortcuts.Shortcuts"/>
-					<label to="languages" lang-string="windows.Settings.Languages"/>
+					<label to="languages" lang-string="windows.Settings.Languages.Languages"/>
 					<label to="about" lang-string="windows.Settings.About.About"/>
 				</div>
 				<div>

@@ -7,6 +7,7 @@ export default function () {
 			{
 				type: 'radioGroup',
 				key: 'appLanguage',
+				liveUpdate: true,
 				radios: Object.keys(Languages).map(lang => {
 					const label = Languages[lang].name
 					return {
@@ -15,6 +16,22 @@ export default function () {
 						checked: StaticConfig.data.appLanguage === lang,
 					}
 				}),
+			},
+			{
+				type: 'section',
+				content: [
+					{
+						type: 'title',
+						key: 'appUseSystemLanguage',
+						label: 'windows.Settings.Settings',
+					},
+					{
+						type: 'switch',
+						key: 'appUseSystemLanguage',
+						label: 'windows.Settings.Languages.UseSystemLanguage',
+						liveUpdate: true,
+					},
+				],
 			},
 		],
 	}
