@@ -124,7 +124,7 @@ RunningConfig.on('command.openCommandPrompt', () => {
 			{
 				label: 'Set Language',
 				action: () => {
-					const configuredLanguage = StaticConfig.data.appLanguage
+					const configuredLanguage = Languages[StaticConfig.data.appLanguage].name
 					new CommandPrompt({
 						showInput: true,
 						inputPlaceHolder: 'Select a language',
