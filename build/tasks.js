@@ -150,33 +150,31 @@ async function cloneRemotePlugin(cb) {
 }
 
 function installRemoteDeps(cb) {
-	const installProcess = spawn('npm', ['install'], {
+	const installProcess = spawn('yarn', ['--production=false'], {
 		cwd: remotePluginTemp,
 		shell: true,
 	})
 
-	installProcess.on('close', (err, output) => {
-		if (err === 1) console.log(output)
-		const installDevProcess = spawn('npm', ['install', '--only=dev'], {
-			cwd: remotePluginTemp,
-			shell: true,
-		})
+	installProcess.stderr.on('data', err => {
+		console.log(err.toString())
+	})
 
-		installDevProcess.on('close', (err, output) => {
-			if (err === 1) console.log(output)
-			cb()
-		})
+	installProcess.on('close', (err, output) => {
+		cb()
 	})
 }
 
 async function buildRemote(cb) {
-	const buildProcess = spawn('npm', ['run build'], {
+	const buildProcess = spawn('yarn', ['run build'], {
 		cwd: remotePluginTemp,
 		shell: true,
 	})
 
+	buildProcess.stderr.on('data', err => {
+		console.log(err.toString())
+	})
+
 	buildProcess.on('close', (err, output) => {
-		if (err === 1) console.log(output)
 		cb()
 	})
 }
