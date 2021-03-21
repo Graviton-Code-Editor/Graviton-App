@@ -181,7 +181,9 @@ let terminalPanel
 
 export default function TerminalComp() {
 	function TerminalMounted() {
-		terminalPanel = new Panel(this).element
+		terminalPanel = new Panel(this, {
+			autoFocus: false,
+		}).element
 	}
 
 	return element({

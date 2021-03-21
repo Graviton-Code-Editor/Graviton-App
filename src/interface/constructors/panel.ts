@@ -4,6 +4,7 @@ import RunningConfig from 'RunningConfig'
 import ContextMenu from './contextmenu'
 import tabsUnsavedWarningDialog from '../defaults/dialogs/tabs_unsaved_warning'
 import PuffinElement from 'Types/puffin.element'
+import { PanelOptions } from 'Types/panel'
 
 function guessTabPosition(tab, tabsbar) {
 	const res = Object.keys(tabsbar.children).find((tabChildren, index) => {
@@ -14,9 +15,15 @@ function guessTabPosition(tab, tabsbar) {
 	return Number(res)
 }
 
+const defaultOptions = {
+	autoFocus: true,
+}
+
 class Panel {
 	element: PuffinElement
-	constructor(containerElement = document.getElementById('panels_stack')) {
+	options: PanelOptions
+	constructor(containerElement = document.getElementById('panels_stack'), options?: PanelOptions) {
+		this.options = options || defaultOptions
 		const self = this
 		const PanelComp = element({
 			components: {
@@ -122,10 +129,12 @@ class Panel {
 		}
 
 		this.element = render(PanelComp, containerElement)
-		RunningConfig.data.focusedPanel = this.element
+		const panelElement = this.element as any
+		panelElement.focusPanel = this.focusPanel.bind(this)
+		this.focusPanel()
 	}
 	focusPanel() {
-		RunningConfig.data.focusedPanel = this.element
+		if (this.options.autoFocus) RunningConfig.data.focusedPanel = this.element
 	}
 }
 
