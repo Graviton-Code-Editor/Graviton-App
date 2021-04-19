@@ -57,7 +57,7 @@ function InputDialog({ title, placeHolder = '', type = 'input', content }: Input
 				inputComponent,
 			},
 		})`
-			<div  class="${customStyle}" id="${randomSelector}">
+			<div  class="${customStyle}" >
 				${
 					content
 						? element({
@@ -67,7 +67,7 @@ function InputDialog({ title, placeHolder = '', type = 'input', content }: Input
 						  })`<Text>${content}</Text>`
 						: ''
 				}
-				<inputComponent mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
+				<inputComponent id="${randomSelector}" mounted="${inputMounted}" placeHolder="${placeHolder}" :keyup="${onEnter}"/>
 			</div>
 		`
 		const DialogInstance = new Dialog({
@@ -78,7 +78,7 @@ function InputDialog({ title, placeHolder = '', type = 'input', content }: Input
 				{
 					label: 'misc.Continue',
 					action() {
-						const inputValue: string = (document.getElementById(randomSelector.toString()).children[0] as HTMLInputElement).value
+						const inputValue: string = (document.getElementById(randomSelector.toString()) as HTMLInputElement).value
 						if (inputValue != '') {
 							resolve(inputValue)
 						} else {
