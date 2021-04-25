@@ -1,10 +1,5 @@
 name: Node CD
 
-on:
-  workflow_dispatch:
-  schedule:    
-   - cron: '00 00 * * 1'
-
 jobs:
   release:
     runs-on: ubuntu-latest
