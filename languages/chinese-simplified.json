@@ -51,6 +51,7 @@
 				"ShowSidebar": "显示活动栏",
 				"ShowSidepanel": "显示侧边栏",
 				"HideSidebar": "隐藏活动栏",
+				"HideSidepanel": "隐藏侧边栏",
 				"CommandPrompt": "命令提示符",
 				"ExplorerPrompt": "资源管理器"
 			},
@@ -89,7 +90,8 @@
 				"Customization": {
 					"Customization": "定制",
 					"Themes": "主题",
-					"Iconpacks": "图标"
+					"Iconpacks": "图标",
+					"Blur": "模糊"
 				},
 				"Advanced": {
 					"Advanced": "高级",
@@ -116,7 +118,10 @@
 						"RestartConfig": "重置配置"
 					}
 				},
-				"Languages": "语言",
+				"Languages": {
+					"Languages": "语言",
+					"UseSystemLanguage": "使用系统默认语言"
+				},
 				"Shortcuts": {
 					"Shortcuts": "快捷键",
 					"CreateCombo": "创建组合键"
@@ -139,8 +144,8 @@
 				"Uninstall": "卸载",
 				"AnyCompatibleVersion": "没有任何兼容版本。"
 			},
-			"Welcome": {
-				"Welcome": "欢迎",
+			"Dashboard": {
+				"Dashboard": "仪表板",
 				"RecentProjects": "最近的项目",
 				"RecentWorkspaces": "最近的工作区",
 				"NewProject": "新建项目",
@@ -150,6 +155,18 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "欢迎在浏览器访问 Graviton",
 				"WelcomeMessage": "记住，这仍然是非常实验性的，大多数功能都不起作用。 \n 为了获得更好的体验，请下载桌面应用程序。"
+			},
+			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "欢迎使用 Graviton"
+				},
+				"Theming": {
+					"SelectATheme": "选择一个模板"
+				},
+				"Finished": {
+					"Finished": "完成了",
+					"HaveAGreatExperience": "有一个很好的体验 😀"
+				}
 			}
 		},
 		"misc": {
@@ -181,11 +198,16 @@
 			"Close": "关闭",
 			"Ignore": "忽略",
 			"BuildDate": "编译时间",
-			"By": "by",
+			"By": "于",
 			"Understood": "理解",
 			"RemoveFromWorkspace": "从工作区删除",
 			"JoinTheDiscussion": "参于讨论",
-			"OpenAnyway": "仍然打开"
+			"OpenAnyway": "仍然打开",
+			"Update": "更新",
+			"Next": "下一个",
+			"Back": "返回",
+			"Okay": "可以",
+			"Languages": "语言"
 		},
 		"notifications": {
 			"appLanguageChanged": {
@@ -205,12 +227,30 @@
 			"experimentalFeature": {
 				"title": "实验特性",
 				"content": "此功能不稳定，可能会导致一些问题。"
+			},
+			"warning": {
+				"title": "你确定吗？"
 			}
 		},
 		"sidepanels": {
 			"sourceTracker": {
 				"noRepositoryOpen": "没有打开存储库。"
+			},
+			"projectInspector": {
+				"noProjectOpen": "没有打开的项目。"
 			}
 		}
 	}
 }
+© 2021 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
