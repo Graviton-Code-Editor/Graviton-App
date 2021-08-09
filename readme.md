@@ -20,6 +20,8 @@ You can also download weekly (probably unstable) releases from the [Releases](ht
 
 ![example screenshot](example.png)
 
+**NOTE: This project is forked from Marc's [graviton code editor](https://github.com/Graviton-Code-Editor/Graviton-App). Go and star him!**
+
 ## ✨ Features
 
 **NOTE:**
@@ -51,12 +53,7 @@ Some of these features may not be released as an official build yet, but they ar
 - [📜 Changelog](CHANGELOG.md)
 - [😓 Known issues](https://github.com/orgs/Graviton-Code-Editor/projects/1#column-4042477)
 
-## 🎁 Donating
-
-- BTC address: 1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6
-- Paypal: https://www.paypal.me/mkenzo8
-
-### Donators
+### Donators to Graviton
 
 - [Malok](https://github.com/malokdev)
 - [Saúl Blanco](https://github.com/Saul-BT)
@@ -76,8 +73,6 @@ Thank you for the donations!
 **Linux**
 
 - `Appimage (.appimage)`
-- `Debian package (.deb)`
-- `RPM (.rpm)`
 - You can manually build from source code for more platforms if you wish.
 
 **MacOS**
