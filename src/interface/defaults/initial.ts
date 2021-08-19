@@ -50,9 +50,15 @@ export default async function init() {
 		addPluginToRegistryStatically({
 			PATH: 'Graviton',
 			...GravitonIconpack,
-		})
+		});
+
+		// Ugly fix
+		(window as any).process = {
+			browser: true
+		}
 
 		const RemoteExports = await import('../../../dist_browser_plugins/remote-plugin/index')
+
 		const RemotePkg = await import('../../../dist_browser_plugins/remote-plugin/package.json')
 
 		addPluginToRegistryStatically(RemotePkg, RemoteExports)

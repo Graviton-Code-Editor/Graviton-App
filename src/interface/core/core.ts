@@ -1,5 +1,6 @@
 const isBrowser = !eval('window.process')
 const CustomWindow: any = window
+import './polyfills'
 import { getBrowserConfiguration } from '../../app/default_config'
 import * as clipboard from 'clipboard-polyfill'
 

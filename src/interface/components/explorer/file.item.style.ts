@@ -64,6 +64,9 @@ const ItemWrapper = style`
 		font-size:9px;
 		min-width:10px;
 		padding:1px 3px;
+		& > p {
+			margin: 0;
+		}
 	}
 	& .gitStatus {
 		display:none;
