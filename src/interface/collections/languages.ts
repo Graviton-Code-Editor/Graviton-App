@@ -5,6 +5,7 @@ import brazilian_portuguese from '../../../languages/brazilian_portuguese.json'
 import french from '../../../languages/french.json'
 import german from '../../../languages/german.json'
 import italian from '../../../languages/italian.json'
+import indonesian from '../../../languages/indonesian.json'
 import russian from '../../../languages/russian.json'
 import spanish from '../../../languages/spanish.json'
 import polish from '../../../languages/polish.json'
@@ -21,6 +22,7 @@ export default {
 	french,
 	german,
 	italian,
+	indonesian,
 	russian,
 	spanish,
 	polish,
