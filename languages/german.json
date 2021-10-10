@@ -7,6 +7,7 @@
 				"File": "Datei",
 				"OpenFolder": "Ordner öffnen",
 				"OpenFile": "Datei öffnen",
+				"SaveFile": "Datei speichern",
 				"Projects": {
 					"Projects": "Projekte",
 					"OpenProjects": "Projekte öffnen"
@@ -50,7 +51,9 @@
 				"ShowSidebar": "Seitenleiste Einblenden",
 				"ShowSidepanel": "Seitliches Bedienfeld Einblendend",
 				"HideSidebar": "Seitenleiste Ausblenden",
-				"HideSidepanel": "Seitliches Bedienfeld Ausblenden"
+				"HideSidepanel": "Seitliches Bedienfeld Ausblenden",
+				"CommandPrompt": "Befehlszeile",
+				"ExplorerPrompt": "Explorer Fenster"
 			},
 			"Window": {
 				"Window": "Fenster",
@@ -87,13 +90,15 @@
 				"Customization": {
 					"Customization": "Personalisierung",
 					"Themes": "Themes",
-					"Iconpacks": "Icon Packs"
+					"Iconpacks": "Icon Packs",
+					"Blur": "Schärfe"
 				},
 				"Advanced": {
 					"Advanced": "Erweitert",
 					"FileWatcher": "Datei Beobachter",
 					"Autocomplete": "Autocomplete",
 					"WrapLines": "Zeilen umbrechen",
+					"FoldBlocks": "Code Falten",
 					"ManualConfig": {
 						"ManualConfig": "Manuelle Konfiguration",
 						"EditConfiguration": "Konfiguration Bearbeiten"
@@ -107,13 +112,16 @@
 						"Indentation": "Einzug",
 						"Space": "Leerzeichen",
 						"Tab": "Tab"
+					},
+					"Configuration": "Konfiguration",
+					"RestartConfig": {
+						"RestartConfig": "Konfiguration Neustarten"
 					}
 				},
-				"Configuration": "Konfiguration",
-				"RestartConfig": {
-					"RestartConfig": "Konfiguration Neustarten"
-				},
-				"Languages": "Sprachen",
+				"Languages": {
+					"Languages": "Sprachen",
+					"UseSystemLanguage": "System Sprache Benutzen"
+				}
 				"Shortcuts": {
 					"Shortcuts": "Tastatürkürzel",
 					"CreateCombo": "Tastatürkürzel Erstellen"
@@ -136,8 +144,8 @@
 				"Uninstall": "Deinstallieren",
 				"AnyCompatibleVersion": "Jede kompatible Version."
 			},
-			"Welcome": {
-				"Welcome": "Willkommen",
+			"Dashboard": {
+				"Dashboard": "Dashboard",
 				"RecentProjects": "Zuletzt geöffnete Projekte",
 				"RecentWorkspaces": "Zuletzt geöffnete Arbeitsplätze",
 				"NewProject": "Neues Projekt",
@@ -147,6 +155,18 @@
 			"BrowserWelcome": {
 				"WelcomeTitle": "Willkommen zu Graviton für den Browser!",
 				"WelcomeMessage": "Dieses feature is noch sehr in der Experimentierphase und viele Sachen funktionieren noch nicht. \n Für eine bessere Erfahrung, laden sie bitte die Desktop-Anwendung herunter."
+			},
+			"Introduction": {
+				"Welcome": {
+					"WelcomeToGraviton": "Wilkommen zu Graviton"
+				},
+				"Theming": {
+					"SelectATheme": "Wählen Sie ein Farbdesign"
+				},
+				"Finished": {
+					"Finished": "Fertig",
+					"HaveAGreatExperience": "Wir hoffen Sie haben eine tolle Erfahrung 😀"
+				}
 			}
 		},
 		"misc": {
@@ -182,7 +202,12 @@
 			"Understood": "Verstanden",
 			"RemoveFromWorkspace": "Vom Arbeitsplatz Entfernen",
 			"JoinTheDiscussion": "Der Diskussion Beitreten",
-			"OpenAnyway": "Trotzdem Öffnen"
+			"OpenAnyway": "Trotzdem Öffnen",
+			"Update": "Aktualisieren",
+			"Next": "Weiter",
+			"Back": "Zurück",
+			"Okay": "Ok",
+			"Languages": "Sprachen"
 		},
 		"notifications" : {
 			"appLanguageChanged": {
@@ -202,6 +227,17 @@
 			"experimentalFeature": {
 				"title": "Experimentelles Feature",
 				"content": "Dieses Feature ist unstabil und kann Problemen verursachen."
+			},
+			"warning": {
+				"title": "Sind Sie sich sicher?"
+			}
+		},
+		"sidepanels": {
+			"sourceTracker": {
+				"noRespositoryOpen": "Keine Repository geöffnet."
+			},
+			"projectInspector": {
+				"noProjectOpen": "Kein Project geöffnet."
 			}
 		}
 	}
