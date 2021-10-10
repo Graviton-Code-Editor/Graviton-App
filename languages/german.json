@@ -121,7 +121,7 @@
 				"Languages": {
 					"Languages": "Sprachen",
 					"UseSystemLanguage": "System Sprache Benutzen"
-				}
+				},
 				"Shortcuts": {
 					"Shortcuts": "Tastatürkürzel",
 					"CreateCombo": "Tastatürkürzel Erstellen"
@@ -209,16 +209,16 @@
 			"Okay": "Ok",
 			"Languages": "Sprachen"
 		},
-		"notifications" : {
+		"notifications": {
 			"appLanguageChanged": {
 				"appLanguageChanged": "Die Sprache der App hat sich geändert.",
 				"restartMessage": "Neustarten sie die App um die Sprache zu aktualisieren."
 			}
 		},
-		"dialogs" : {
-			"tabsUnsavedWarning" : {
+		"dialogs": {
+			"tabsUnsavedWarning": {
 				"title": "Ungespeicherte Dateien sind vorhanden.",
-				"content" : "Sie könnten Fortschritt verlieren."
+				"content": "Sie könnten Fortschritt verlieren."
 			},
 			"restartConfig": {
 				"title": "Neustart Einstellungen",
