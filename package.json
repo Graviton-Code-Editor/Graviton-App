@@ -134,7 +134,7 @@
 		"cross-env": "^7.0.2",
 		"css-loader": "^3.6.0",
 		"download-git-repo": "^3.0.2",
-		"electron": "^10.1.5",
+		"electron": "^11.5.0",
 		"electron-builder": "^22.9.1",
 		"electron-mocha": "^10.0.0",
 		"elexus": "^1.0.0",
