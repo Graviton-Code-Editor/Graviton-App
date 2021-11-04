@@ -1,6 +1,0 @@
-{
-	"webPreferences": {
-		"enableRemoteModule": false,
-		"nodeIntegration": false
-	}
-}
