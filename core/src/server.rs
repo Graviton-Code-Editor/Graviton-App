@@ -1,28 +1,62 @@
-use jsonrpc_core::futures::SinkExt;
-use jsonrpc_core::futures::StreamExt;
-use jsonrpc_core::serde_json;
-use jsonrpc_core::serde_json::json;
-use jsonrpc_core::IoHandler;
+use jsonrpc_core::{
+    futures::{
+        SinkExt,
+        StreamExt,
+    },
+    futures_util::stream::{
+        SplitSink,
+        SplitStream,
+    },
+    serde_json,
+    serde_json::json,
+    IoHandler,
+};
 use jsonrpc_derive::rpc;
-use jsonrpc_http_server::AccessControlAllowOrigin;
-use jsonrpc_http_server::DomainsValidation;
-use serde::Deserialize;
-use serde::Serialize;
+use jsonrpc_http_server::{
+    AccessControlAllowOrigin,
+    DomainsValidation,
+};
+use serde::{
+    Deserialize,
+    Serialize,
+};
 use std::sync::Arc;
-use warp::{ws::Message, Filter};
+use tokio::sync::Mutex;
+use warp::{
+    ws::{
+        Message,
+        WebSocket,
+    },
+    Filter,
+};
 
-use crate::State;
-use crate::StatesList;
+use crate::{
+    State,
+    StatesList,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "msg_type")]
 enum WebSocketsMessages {
-    ListenToState { 
+    ListenToState {
         // The message author, Core | Client
         trigger: String,
         // The state ID
-        state_id: u8
-     },
+        state_id: u8,
+    },
+}
+
+impl WebSocketsMessages {
+    /// Short way to create a `stateUpdated` message
+    pub fn state_updated(state: State) -> Message {
+        Message::text(
+            json!({
+                "msg_type": "stateUpdated",
+                "state": state
+            })
+            .to_string(),
+        )
+    }
 }
 
 pub struct Server {
@@ -30,19 +64,12 @@ pub struct Server {
 }
 
 impl Server {
+    /// Create a new Server
     pub fn new(states: StatesList) -> Self {
-        Self {
-            states: states.clone(),
-        }
+        Self { states }
     }
 
     /// Start the JSON RPC HTTP Server and WebSockets server
-    ///
-    /// List of possible JSON RPC methods:
-    /// - get_file_content(path: &str, filesystem: FsEnum)
-    /// - get_file_info(path: &str filesystem: FsEnum)
-    /// - get_state_by_id(id: u8) -> State
-    /// - set_state_by_id(id: u8, state: State)
     pub async fn run(&self) {
         let states = self.states.clone();
 
@@ -58,68 +85,8 @@ impl Server {
                     ws.on_upgrade(async move |websocket| {
                         let (sender, recv) = websocket.split();
 
-                        use tokio::sync::Mutex;
-
-                        let sender = Arc::new(Mutex::new(sender));
-                        let recv = Arc::new(Mutex::new(recv));
-
                         // Create a different thread of every active connection
-                        std::thread::spawn(move || {
-                            let states = states.clone();
-                            let runtime = tokio::runtime::Runtime::new().unwrap();
-                            runtime.block_on(async {
-                                let states = states.clone();
-                                loop {
-                                    let mut recv = recv.lock().await;
-                                    // Listen for incomming messages
-                                    if let Some(Ok(msg)) = recv.next().await {
-                                        if msg.is_text() {
-                                            let text = msg.to_str().unwrap();
-
-                                            let message: WebSocketsMessages =
-                                                serde_json::from_str(text).unwrap();
-
-                                            // Handle the incomming message
-                                            match message {
-                                                // When a frontend listens for changes in a particular state
-                                                // The core will sent the current state for it's particular ID if there is anyone
-                                                // If not, a default state will be sent
-                                                WebSocketsMessages::ListenToState {
-                                                    state_id,
-                                                    trigger,
-                                                } => {
-                                                    // Make sure if there is already an existing state 
-                                                    let state = if let Some(state) = states.get_state_by_id(state_id) {
-                                                        state.lock().unwrap().to_owned()
-                                                    } else {
-                                                        State::default()
-                                                    };
-
-                                                    // Send the state
-                                                    sender
-                                                        .lock()
-                                                        .await
-                                                        .send(Message::text(
-                                                            json!({
-                                                                "msg_type": "stateUpdated",
-                                                                "state": state
-                                                            })
-                                                            .to_string(),
-                                                        ))
-                                                        .await
-                                                        .unwrap();
-
-                                                    // TODO, this is just spaghetti code to get something basic working
-                                                }
-                                                _ => {
-                                                    println!("unknown message")
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            });
-                        });
+                        Self::handle_ws_listener(states, (sender, recv))
                     })
                 });
 
@@ -141,13 +108,70 @@ impl Server {
                 .cors(DomainsValidation::AllowOnly(vec![
                     AccessControlAllowOrigin::Any,
                 ]))
-                .start_http(&format!("127.0.0.1:50001").parse().unwrap())
+                .start_http(&"127.0.0.1:50001".to_string().parse().unwrap())
                 .expect("Unable to start RPC HTTP server");
             println!("running server");
             server.wait();
         })
         .await
         .unwrap();
+    }
+
+    /// Handle the socket connection of a listener
+    fn handle_ws_listener(
+        states: StatesList,
+        (sender, recv): (SplitSink<WebSocket, Message>, SplitStream<WebSocket>),
+    ) {
+        let sender = Arc::new(Mutex::new(sender));
+        let recv = Arc::new(Mutex::new(recv));
+
+        std::thread::spawn(move || {
+            let states = states.clone();
+            let runtime = tokio::runtime::Runtime::new().unwrap();
+            runtime.block_on(async {
+                let states = states.clone();
+                loop {
+                    let mut recv = recv.lock().await;
+                    // Listen for incomming messages
+                    if let Some(Ok(msg)) = recv.next().await {
+                        if msg.is_text() {
+                            let text = msg.to_str().unwrap();
+
+                            let message: WebSocketsMessages = serde_json::from_str(text).unwrap();
+
+                            // Handle the incomming message
+                            match message {
+                                // When a frontend listens for changes in a particular state
+                                // The core will sent the current state for it's particular ID if there is anyone
+                                // If not, a default state will be sent
+                                WebSocketsMessages::ListenToState {
+                                    state_id,
+                                    trigger: _,
+                                } => {
+                                    // Make sure if there is already an existing state
+                                    let state =
+                                        if let Some(state) = states.get_state_by_id(state_id) {
+                                            state.lock().unwrap().to_owned()
+                                        } else {
+                                            State::default()
+                                        };
+
+                                    // Send the state
+                                    sender
+                                        .lock()
+                                        .await
+                                        .send(WebSocketsMessages::state_updated(state))
+                                        .await
+                                        .unwrap();
+
+                                    // TODO, this is just spaghetti code to get something basic working
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
     }
 }
 

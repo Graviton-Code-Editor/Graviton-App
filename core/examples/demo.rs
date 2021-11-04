@@ -1,6 +1,13 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{
+    Arc,
+    Mutex,
+};
 
-use rusty_graviton::{Core, Configuration, StatesList};
+use graviton_core::{
+    Configuration,
+    Core,
+    StatesList,
+};
 
 #[tokio::main]
 async fn main() {
@@ -14,5 +21,4 @@ async fn main() {
     let core = Core::new(config, states);
 
     core.run().await;
-
 }

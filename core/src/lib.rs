@@ -3,18 +3,23 @@ mod configuration;
 mod server;
 mod state;
 
-use std::sync::{Arc, Mutex};
+use std::sync::{
+    Arc,
+    Mutex,
+};
 
 pub use configuration::Configuration;
-pub use state::StatesList;
-pub use state::State;
 use server::Server;
+pub use state::{
+    State,
+    StatesList,
+};
 
-/// Entry point of Graviton Core
+#[allow(dead_code)]
 pub struct Core {
     server: Server,
     config: Arc<Mutex<Configuration>>,
-    states: StatesList
+    states: StatesList,
 }
 
 impl Core {
@@ -22,7 +27,7 @@ impl Core {
         Self {
             server: Server::new(states.clone()),
             config,
-            states
+            states,
         }
     }
 

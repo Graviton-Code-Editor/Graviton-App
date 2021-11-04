@@ -1,5 +1,5 @@
 [package]
-name = "rusty-graviton"
+name = "graviton_core"
 version = "0.1.0"
 edition = "2021"
 
