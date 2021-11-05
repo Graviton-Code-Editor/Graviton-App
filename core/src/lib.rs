@@ -1,5 +1,6 @@
 #![feature(async_closure)]
 mod configuration;
+mod filesystems;
 mod server;
 mod state;
 
@@ -7,7 +8,6 @@ use std::sync::{
     Arc,
     Mutex,
 };
-
 pub use configuration::Configuration;
 use server::Server;
 pub use state::{

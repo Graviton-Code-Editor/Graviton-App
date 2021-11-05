@@ -31,6 +31,7 @@ use warp::{
 };
 
 use crate::{
+    filesystems::FilesystemErrors,
     State,
     StatesList,
 };
@@ -175,15 +176,31 @@ impl Server {
     }
 }
 
+/// Global errors enum
+#[derive(Serialize, Deserialize)]
+pub enum Errors {
+    StateNotFound,
+    Fs(FilesystemErrors),
+}
+
 type RPCResult<T> = jsonrpc_core::Result<T>;
 
 /// Definition of all JSON RPC Methods
 #[rpc]
 pub trait RpcMethods {
     #[rpc(name = "get_state_by_id")]
-    fn get_state_by_id(&self, id: u8) -> RPCResult<Option<State>>;
+    fn get_state_by_id(&self, state_id: u8) -> RPCResult<Option<State>>;
+
     #[rpc(name = "set_state_by_id")]
-    fn set_state_by_id(&self, id: u8, state: State) -> RPCResult<()>;
+    fn set_state_by_id(&self, state_id: u8, state: State) -> RPCResult<()>;
+
+    #[rpc(name = "read_file_by_path")]
+    fn read_file_by_path(
+        &self,
+        path: String,
+        filesystem_name: String,
+        state_id: u8,
+    ) -> RPCResult<Result<String, Errors>>;
 }
 
 /// JSON RPC manager
@@ -194,15 +211,39 @@ pub struct RpcManager {
 /// Implementation of all JSON RPC methods
 impl RpcMethods for RpcManager {
     /// Return the state by the given ID if found
-    fn get_state_by_id(&self, id: u8) -> RPCResult<Option<State>> {
+    fn get_state_by_id(&self, state_id: u8) -> RPCResult<Option<State>> {
         let states = self.states.clone();
-        if let Some(state) = states.get_state_by_id(id) {
+        if let Some(state) = states.get_state_by_id(state_id) {
             Ok(Some(state.lock().unwrap().to_owned()))
         } else {
             Ok(None)
         }
     }
-    fn set_state_by_id(&self, _id: u8, _state: State) -> RPCResult<()> {
+
+    /// Update the Core's version of a particular state
+    fn set_state_by_id(&self, _state_id: u8, _state: State) -> RPCResult<()> {
         todo!()
+    }
+
+    /// Returns the content of a file
+    /// Internally implemented by the given filesystem
+    fn read_file_by_path(
+        &self,
+        path: String,
+        filesystem_name: String,
+        state_id: u8,
+    ) -> RPCResult<Result<String, Errors>> {
+        let states = self.states.clone();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            // Try to get the requested filesystem implementation
+            if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
+                Ok(filesystem.lock().unwrap().read_file_by_path(&path))
+            } else {
+                Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
     }
 }
