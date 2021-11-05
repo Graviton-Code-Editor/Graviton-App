@@ -1,3 +1,4 @@
+
 image: gitpod/workspace-full
 
 tasks:
@@ -7,3 +8,6 @@ tasks:
   - name: Web
     init: npm i yarn -g && cd web && yarn
     command: yarn dev
+vscode:
+  extensions:
+    - rust-lang.rust
