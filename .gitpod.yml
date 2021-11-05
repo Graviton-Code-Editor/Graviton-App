@@ -1,5 +1,5 @@
 
-image: gitpod/workspace-full
+image: gitpod/workspace-full-vnc
 
 tasks:
   - name: Rust
@@ -8,6 +8,11 @@ tasks:
   - name: Web
     init: npm i yarn -g && cd web && yarn
     command: yarn dev
+
 vscode:
   extensions:
     - rust-lang.rust
+
+ports:
+  - port: 6080
+    onOpen: open-preview
