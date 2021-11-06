@@ -2,6 +2,7 @@
 name = "graviton_core"
 version = "0.1.0"
 edition = "2021"
+license-file = "../LICENSE.md"
 
 [dependencies]
 jsonrpc-derive = "18.0.0"
