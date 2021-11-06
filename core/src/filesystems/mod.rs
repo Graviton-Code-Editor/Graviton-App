@@ -17,5 +17,12 @@ pub enum FilesystemErrors {
 /// Filesystem interface
 pub trait Filesystem {
     fn read_file_by_path(&self, path: &str) -> Result<String, Errors>;
-    fn list_dir_by_path(&self, path: &str) -> Result<Vec<String>, Errors>;
+    fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct DirItemInfo {
+    path: String,
+    name: String,
+    is_file: bool,
 }

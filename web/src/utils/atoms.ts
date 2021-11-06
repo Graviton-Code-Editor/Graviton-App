@@ -8,15 +8,13 @@ import RpcClient from './client';
 export const openedTabsState = atom({ key: 'openedTabs', default: [] as Array<Tab> });
 
 export interface PanelState {
-    panel: Panel,
-    displayed: boolean
+    panel: Panel
 }
 
 export const panels = atom({
     key: 'panels', default: [
         {
-            panel: new ExplorerPanel(),
-            displayed: true
+            panel: new ExplorerPanel()
         }
     ] as Array<PanelState>
 });

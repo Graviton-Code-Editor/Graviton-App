@@ -5,6 +5,7 @@ use std::{
 };
 
 use super::{
+    DirItemInfo,
     Filesystem,
     FilesystemErrors,
 };
@@ -28,17 +29,25 @@ impl Filesystem for LocalFilesystem {
     }
 
     // List a local directory
-    fn list_dir_by_path(&self, path: &str) -> Result<Vec<String>, Errors> {
+    fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors> {
         fs::read_dir(path)
             .map(|dirs| {
                 dirs.filter_map(|entry| {
                     if let Ok(entry) = entry {
-                        Some(entry.path().as_os_str().to_str().unwrap().to_string())
+                        let path = entry.path();
+                        let str_path = path.as_os_str().to_str().unwrap().to_string();
+                        let item_name = path.file_name().unwrap().to_str().unwrap().to_string();
+                        let is_file = path.is_file();
+                        Some(DirItemInfo {
+                            path: str_path,
+                            name: item_name,
+                            is_file,
+                        })
                     } else {
                         None
                     }
                 })
-                .collect::<Vec<String>>()
+                .collect::<Vec<DirItemInfo>>()
             })
             .map_err(|err| match err.kind() {
                 ErrorKind::NotFound => Errors::Fs(FilesystemErrors::FileNotFound),

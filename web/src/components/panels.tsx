@@ -1,30 +1,40 @@
+import { useState } from "react";
 import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 import { panels } from "../utils/atoms";
+import IconButton from "./panels/icon_button";
+
+const PanelsContainer = styled.div`
+    padding: 20px;
+    display: flex;
+    
+`
 
 
 /*
  * Sidebar that contains all the loaded panels
  */
-function Panels(){
+function Panels() {
 
     const loadedPanels = useRecoilValue(panels);
+    const [displayedPanelName, setDisplayedPanelName] = useState("Explorer");
 
     return (
-        <div>
+        <PanelsContainer>
             <div>
-            {loadedPanels.map(({ panel }) => {
-                return <button key={panel.name}>{panel.name}</button>
-            })}
+                {loadedPanels.map(({ panel }) => {
+                    return <IconButton key={panel.name} onClick={() => setDisplayedPanelName(panel.name)}>{panel.name}</IconButton>
+                })}
             </div>
-           <div>
-           {loadedPanels.map(({ panel, displayed }) => {
-                if (displayed){
-                    const Container = panel.container;
-                    return <Container key={panel.name}/>;
-                }
-            })}
-           </div>
-        </div>
+            <div>
+                {loadedPanels.map(({ panel }) => {
+                    if (panel.name === displayedPanelName) {
+                        const PanelContainer = panel.container;
+                        return <PanelContainer key={panel.name}/>;
+                    }
+                })}
+            </div>
+        </PanelsContainer>
     )
 }
 

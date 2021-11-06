@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import FilesystemExplorer from "../components/explorer";
+import FilesystemExplorer, { TreeItemInfo } from "../components/explorer";
 import { Panel } from "../modules/panel";
 import TextEditorTab from "../tabs/text_editor";
 import { clientState, openedTabsState } from "../utils/atoms";
@@ -9,12 +9,12 @@ function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
   const [tabs, setTabs] = useRecoilState(openedTabsState);
 
-  async function openFile(path: string) {
+  async function openFile(item: TreeItemInfo) {
     try {
-      const fileContent = await client.read_file_by_path(path, "local", 1);
+      const fileContent = await client.read_file_by_path(item.path, "local", 1);
 
       if (fileContent.Ok) {
-        const newTab = new TextEditorTab(path, fileContent.Ok);
+        const newTab = new TextEditorTab(item.path, fileContent.Ok);
 
         setTabs([...tabs, newTab])
       } else {

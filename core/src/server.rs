@@ -31,7 +31,10 @@ use warp::{
 };
 
 use crate::{
-    filesystems::FilesystemErrors,
+    filesystems::{
+        DirItemInfo,
+        FilesystemErrors,
+    },
     State,
     StatesList,
 };
@@ -213,7 +216,7 @@ pub trait RpcMethods {
         path: String,
         filesystem_name: String,
         state_id: u8,
-    ) -> RPCResult<Result<Vec<String>, Errors>>;
+    ) -> RPCResult<Result<Vec<DirItemInfo>, Errors>>;
 }
 
 /// JSON RPC manager
@@ -267,7 +270,7 @@ impl RpcMethods for RpcManager {
         path: String,
         filesystem_name: String,
         state_id: u8,
-    ) -> RPCResult<Result<Vec<String>, Errors>> {
+    ) -> RPCResult<Result<Vec<DirItemInfo>, Errors>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {

@@ -13,6 +13,12 @@ interface CoreResponse<T> {
     Ok?: T
 }
 
+export interface DirItemInfo {
+    path: string,
+    name: string,
+    is_file: boolean
+}
+
 /*
  * Internal RPC Client to connect to a backend
  */
@@ -66,7 +72,7 @@ class RpcClient extends Emittery {
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public list_dir_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<Array<string>>> {
+    public list_dir_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<Array<DirItemInfo>>> {
         return this.rpc.call('list_dir_by_path', [path, filesystem_name, state_id]);
     }
 
