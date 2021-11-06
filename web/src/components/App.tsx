@@ -1,22 +1,14 @@
 
-import { useEffect, useRef, useState } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 import RpcClient from '../utils/client'
 import Configuration from '../utils/config'
 import { openedTabsState, clientState } from '../utils/atoms'
 import { RecoilRoot, useRecoilValue } from 'recoil'
-import { Tab, TabData } from '../utils/state'
 import { setRecoil } from 'recoil-nexus';
-import RecoilNexus  from 'recoil-nexus'
-
-
-/* FLOW
-- core starts up
-- frontend opens
-- frontends logs in the core
-- core now knows a frontend logged in and sends him it's current state
-- when a state change happens on the frontend it will send it to the core so it's on sync
-- Only allow 1 frontend per registered state
-*/
+import RecoilNexus from 'recoil-nexus'
+import { Tab, TabData } from '../modules/tab'
+import Panels from './panels'
+import Tabs from './tabs'
 
 
 function StateManager() {
@@ -25,7 +17,6 @@ function StateManager() {
 
   // Listen for any change on the state
   client.on('stateUpdated', function ({ state }) {
-    console.log(state)
     // Convert all tab datas into Tab instances
     const openedTabs = state.opened_tabs.map((tabData: TabData) => Tab.fromJson(tabData))
     // Update the atom
@@ -40,46 +31,30 @@ function StateManager() {
   setRecoil(clientState, client)
 }
 
-function Body() {
+function ClientRoot({ children }: PropsWithChildren<any>) {
 
-  useEffect(() => {
-    StateManager();
-  }, [])
-
-  const refInput: any = useRef(null);
-  const [text, setText] = useState("default");
-  const useClient = useRecoilValue(clientState);
-
-  async function openFile() {
-
-    try {
-      const fileContent = await useClient.read_file_by_path(refInput.current.value, "local", 1);
-      if(fileContent.Ok) {
-        setText(fileContent.Ok);
-      } else {
-        setText("err");
-      }
-      
-    } catch(err) {
-      console.log(1, err)
-    }
-  }
+  const client = useRecoilValue(clientState);
 
   return (
     <div>
-      <input ref={refInput} defaultValue="path"></input>
-      <button onClick={openFile}>open</button>
-      <textarea value={text} readOnly/>
+      {client && children}
     </div>
   )
 }
 
 function App() {
 
+  useEffect(() => {
+    StateManager();
+  }, [])
+
   return (
     <RecoilRoot>
-      <RecoilNexus/>    
-      <Body />
+      <RecoilNexus />
+      <ClientRoot>
+        <Panels/>
+        <Tabs/>
+      </ClientRoot>
     </RecoilRoot>
   )
 }

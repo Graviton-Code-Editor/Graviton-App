@@ -1,7 +1,24 @@
 import { atom } from 'recoil'
+import { Panel } from '../modules/panel';
+import { Tab } from '../modules/tab';
+import ExplorerPanel from '../panels/explorer';
 import RpcClient from './client';
-import { Tab } from './state';
 
-export const openedTabsState = atom({ key: 'openedTabs', default: [] as Array<Tab>});
+
+export const openedTabsState = atom({ key: 'openedTabs', default: [] as Array<Tab> });
+
+export interface PanelState {
+    panel: Panel,
+    displayed: boolean
+}
+
+export const panels = atom({
+    key: 'panels', default: [
+        {
+            panel: new ExplorerPanel(),
+            displayed: true
+        }
+    ] as Array<PanelState>
+});
 
 export const clientState = atom({ key: 'clientState', default: null as unknown as RpcClient });

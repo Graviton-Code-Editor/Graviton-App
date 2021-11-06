@@ -17,4 +17,5 @@ pub enum FilesystemErrors {
 /// Filesystem interface
 pub trait Filesystem {
     fn read_file_by_path(&self, path: &str) -> Result<String, Errors>;
+    fn list_dir_by_path(&self, path: &str) -> Result<Vec<String>, Errors>;
 }

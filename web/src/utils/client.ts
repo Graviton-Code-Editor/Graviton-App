@@ -8,9 +8,9 @@ interface WebSocketsMessage {
     trigger: string,
     msg_type: string
 }
-interface CoreResponse {
+interface CoreResponse<T> {
     Err?: any,
-    Ok?: any
+    Ok?: T
 }
 
 /*
@@ -58,8 +58,16 @@ class RpcClient extends Emittery {
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public read_file_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse> {
+    public read_file_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<string>> {
         return this.rpc.call('read_file_by_path', [path, filesystem_name, state_id]);
+    }
+
+    /*
+     * Implemented in the Core
+     * @JsonRpcMethod
+     */
+    public list_dir_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<Array<string>>> {
+        return this.rpc.call('list_dir_by_path', [path, filesystem_name, state_id]);
     }
 
     /*

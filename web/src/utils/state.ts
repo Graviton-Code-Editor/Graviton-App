@@ -1,30 +1,11 @@
 import RpcClient from "./client";
 import BaseEditor from "../editors/base";
 import TextEditor from "../editors/text";
-
-export interface TabData {
-    title: string
-}
+import { TabData } from "../modules/tab";
 
 export interface StateData {
     opened_tabs: Array<TabData>
 }
-
-export class Tab implements TabData {
-
-    public title: string;
-
-    constructor(title: string){
-        this.title = title;
-    }
-
-    public static fromJson(data: TabData): Tab {
-        const tab = new Tab(data.title);
-
-        return tab;
-    }
-}
-
 export class State {
 
     // Internal clients

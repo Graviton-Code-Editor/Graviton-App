@@ -206,6 +206,14 @@ pub trait RpcMethods {
         filesystem_name: String,
         state_id: u8,
     ) -> RPCResult<Result<String, Errors>>;
+
+    #[rpc(name = "list_dir_by_path")]
+    fn list_dir_by_path(
+        &self,
+        path: String,
+        filesystem_name: String,
+        state_id: u8,
+    ) -> RPCResult<Result<Vec<String>, Errors>>;
 }
 
 /// JSON RPC manager
@@ -244,6 +252,28 @@ impl RpcMethods for RpcManager {
             // Try to get the requested filesystem implementation
             if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
                 Ok(filesystem.lock().unwrap().read_file_by_path(&path))
+            } else {
+                Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
+    }
+
+    /// Returns the list of items inside the given directory
+    /// Internally implemented by the given filesystem
+    fn list_dir_by_path(
+        &self,
+        path: String,
+        filesystem_name: String,
+        state_id: u8,
+    ) -> RPCResult<Result<Vec<String>, Errors>> {
+        let states = self.states.lock().unwrap();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            // Try to get the requested filesystem implementation
+            if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
+                Ok(filesystem.lock().unwrap().list_dir_by_path(&path))
             } else {
                 Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
             }
