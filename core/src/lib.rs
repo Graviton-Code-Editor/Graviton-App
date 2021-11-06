@@ -4,15 +4,15 @@ mod filesystems;
 mod server;
 mod state;
 
-use std::sync::{
-    Arc,
-    Mutex,
-};
 pub use configuration::Configuration;
 use server::Server;
 pub use state::{
     State,
     StatesList,
+};
+use std::sync::{
+    Arc,
+    Mutex,
 };
 
 #[allow(dead_code)]

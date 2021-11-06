@@ -1,4 +1,4 @@
-import { EditorInterface } from "../types";
+import { EditorInterface } from "../types/types";
 import BaseEditor from "./base";
 
 /*
@@ -6,7 +6,7 @@ import BaseEditor from "./base";
  */
 class TextEditor extends BaseEditor implements EditorInterface {
 
-    public name: String;
+    public name: string;
 
     constructor(){
         super();
@@ -14,7 +14,7 @@ class TextEditor extends BaseEditor implements EditorInterface {
     }
 
     public save(): void {
-       
+       return;
     }
 }
 

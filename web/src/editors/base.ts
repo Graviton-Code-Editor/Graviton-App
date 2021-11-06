@@ -1,4 +1,4 @@
-import { EditorInterface } from "../types";
+import { EditorInterface } from "../types/types";
 
 /*
  * Base editor clas
@@ -7,14 +7,14 @@ import { EditorInterface } from "../types";
 class BaseEditor implements EditorInterface {
 
     // Name of the editor
-    public name: String;
+    public name: string;
 
     constructor(){
         this.name = "Base Editor"
     }
 
     public save(): void {
-        
+        return;
     }
 }
 

@@ -61,13 +61,15 @@ impl WebSocketsMessages {
 }
 
 pub struct Server {
-    states: StatesList,
+    states: Arc<std::sync::Mutex<StatesList>>,
 }
 
 impl Server {
     /// Create a new Server
     pub fn new(states: StatesList) -> Self {
-        Self { states }
+        Self {
+            states: Arc::new(std::sync::Mutex::new(states)),
+        }
     }
 
     /// Start the JSON RPC HTTP Server and WebSockets server
@@ -75,27 +77,26 @@ impl Server {
         let states = self.states.clone();
 
         // Create the WebSockets server
-        tokio::task::spawn_blocking(async move || {
-            let states = states.clone();
+        std::thread::spawn(move || {
+            let rt = tokio::runtime::Runtime::new().unwrap();
+            rt.block_on(async {
+                let states = states.clone();
 
-            let routes = warp::path("echo")
-                .and(warp::ws())
-                .map(move |ws: warp::ws::Ws| {
-                    let states = states.clone();
+                let routes = warp::path("echo")
+                    .and(warp::ws())
+                    .map(move |ws: warp::ws::Ws| {
+                        let states = states.clone();
 
-                    ws.on_upgrade(async move |websocket| {
-                        let (sender, recv) = websocket.split();
+                        ws.on_upgrade(async move |websocket| {
+                            let (sender, recv) = websocket.split();
+                            // Create a different thread of every active connection
+                            Self::handle_ws_listener(states.clone(), (sender, recv))
+                        })
+                    });
 
-                        // Create a different thread of every active connection
-                        Self::handle_ws_listener(states, (sender, recv))
-                    })
-                });
-
-            warp::serve(routes).run(([127, 0, 0, 1], 8000)).await;
-        })
-        .await
-        .unwrap()
-        .await;
+                warp::serve(routes).run(([127, 0, 0, 1], 8000)).await;
+            });
+        });
 
         // Create the HTTP JSON RPC server
         let mut http_io = IoHandler::default();
@@ -111,7 +112,6 @@ impl Server {
                 ]))
                 .start_http(&"127.0.0.1:50001".to_string().parse().unwrap())
                 .expect("Unable to start RPC HTTP server");
-            println!("running server");
             server.wait();
         })
         .await
@@ -120,7 +120,7 @@ impl Server {
 
     /// Handle the socket connection of a listener
     fn handle_ws_listener(
-        states: StatesList,
+        states: Arc<std::sync::Mutex<StatesList>>,
         (sender, recv): (SplitSink<WebSocket, Message>, SplitStream<WebSocket>),
     ) {
         let sender = Arc::new(Mutex::new(sender));
@@ -150,12 +150,17 @@ impl Server {
                                     trigger: _,
                                 } => {
                                     // Make sure if there is already an existing state
-                                    let state =
+
+                                    let state = {
+                                        let mut states = states.lock().unwrap();
                                         if let Some(state) = states.get_state_by_id(state_id) {
                                             state.lock().unwrap().to_owned()
                                         } else {
-                                            State::default()
-                                        };
+                                            let state = State::default();
+                                            states.add_state(state.clone());
+                                            state
+                                        }
+                                    };
 
                                     // Send the state
                                     sender
@@ -205,14 +210,14 @@ pub trait RpcMethods {
 
 /// JSON RPC manager
 pub struct RpcManager {
-    pub states: StatesList,
+    pub states: Arc<std::sync::Mutex<StatesList>>,
 }
 
 /// Implementation of all JSON RPC methods
 impl RpcMethods for RpcManager {
     /// Return the state by the given ID if found
     fn get_state_by_id(&self, state_id: u8) -> RPCResult<Option<State>> {
-        let states = self.states.clone();
+        let states = self.states.lock().unwrap();
         if let Some(state) = states.get_state_by_id(state_id) {
             Ok(Some(state.lock().unwrap().to_owned()))
         } else {
@@ -233,7 +238,7 @@ impl RpcMethods for RpcManager {
         filesystem_name: String,
         state_id: u8,
     ) -> RPCResult<Result<String, Errors>> {
-        let states = self.states.clone();
+        let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
             // Try to get the requested filesystem implementation

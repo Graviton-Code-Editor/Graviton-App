@@ -13,7 +13,7 @@ use serde::{
 
 use crate::filesystems::{
     Filesystem,
-    LocalFilesystem
+    LocalFilesystem,
 };
 
 /// Internal list of states
@@ -30,6 +30,11 @@ impl StatesList {
     pub fn get_state_by_id(&self, id: u8) -> Option<Arc<Mutex<State>>> {
         self.0.get(&id).cloned()
     }
+
+    /// Return the state by the given ID if found
+    pub fn add_state(&mut self, state: State) {
+        self.0.insert(state.id, Arc::new(Mutex::new(state)));
+    }
 }
 
 /// a Tab state
@@ -43,6 +48,7 @@ pub struct State {
     #[serde(skip_serializing, skip_deserializing)]
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
     opened_tabs: Vec<Tab>,
+    id: u8,
 }
 
 impl Default for State {
@@ -56,9 +62,10 @@ impl Default for State {
         filesystems.insert("local".to_string(), Arc::new(Mutex::new(local_fs)));
 
         Self {
+            id: 1,
             filesystems,
             opened_tabs: Vec::new(),
-        } 
+        }
     }
 }
 

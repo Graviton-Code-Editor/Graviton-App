@@ -1,9 +1,9 @@
 import RpcClient from "./client";
-import BaseEditor from "./editors/base";
-import TextEditor from "./editors/text";
+import BaseEditor from "../editors/base";
+import TextEditor from "../editors/text";
 
 export interface TabData {
-    
+    title: string
 }
 
 export interface StateData {
@@ -12,8 +12,14 @@ export interface StateData {
 
 export class Tab implements TabData {
 
+    public title: string;
+
+    constructor(title: string){
+        this.title = title;
+    }
+
     public static fromJson(data: TabData): Tab {
-        const tab = new Tab();
+        const tab = new Tab(data.title);
 
         return tab;
     }
