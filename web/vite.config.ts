@@ -1,10 +1,18 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import { EsLinter, linterPlugin, TypeScriptLinter } from 'vite-plugin-linter';
+import reactSvgPlugin  from 'vite-plugin-react-svg'
+import checker from 'vite-plugin-checker'
 
 export default defineConfig((configEnv) => ({
-  plugins: [react(), linterPlugin({
-    include: ["./src/**/*.ts", "./src/**/*.tsx"],
-    linters: [new EsLinter({ configEnv: configEnv }), new TypeScriptLinter()],
-  }),]
+  plugins: [
+    react(),
+    reactSvgPlugin(),
+    checker({
+      typescript: true,
+      eslint: {
+        files: ['./src'],
+        extensions: ['.ts'],
+      },
+    })
+  ]
 }));

@@ -1,5 +1,5 @@
 export interface EditorInterface {
-    name: String,
+    name: string,
     /*
      * Sabe the state of the editor
      */

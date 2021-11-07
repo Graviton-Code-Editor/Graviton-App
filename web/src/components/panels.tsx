@@ -8,6 +8,9 @@ const PanelsContainer = styled.div`
     display: flex;    
     & > .sidebar {
         background: ${props => props.theme.tones.dark1};
+        & svg {
+            --sidebarButtonFill: ${({ theme }) => theme.elements.sidebar.button.fill};
+        }
     }
     & > .sidepanel {
         background: ${props => props.theme.tones.dark2};
@@ -29,14 +32,19 @@ function Panels() {
             <div className="sidebar">
                 {loadedPanels.map(({ panel }) => {
                     const isSelected = panel.name === displayedPanelName;
-                    return <IconButton key={panel.name} onClick={() => setDisplayedPanelName(panel.name)} selected={isSelected}>{panel.name}</IconButton>
+                    const PanelIcon = panel.icon;
+                    return (
+                        <IconButton key={panel.name} onClick={() => setDisplayedPanelName(panel.name)} selected={isSelected}>
+                            <PanelIcon />
+                        </IconButton>
+                    )
                 })}
             </div>
             <div className="sidepanel">
                 {loadedPanels.map(({ panel }) => {
                     if (panel.name === displayedPanelName) {
                         const PanelContainer = panel.container;
-                        return <PanelContainer key={panel.name}/>;
+                        return <PanelContainer key={panel.name} />;
                     }
                 })}
             </div>

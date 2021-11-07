@@ -3,6 +3,7 @@ import FilesystemExplorer, { TreeItemInfo } from "../components/explorer";
 import { Panel } from "../modules/panel";
 import TextEditorTab from "../tabs/text_editor";
 import { clientState, openedTabsState } from "../utils/atoms";
+import FolderOutlined from '../icons/folder_outlined.svg?component'
 
 function ExplorerPanelContainer() {
 
@@ -38,6 +39,7 @@ function ExplorerPanelContainer() {
 class ExplorerPanel extends Panel {
   constructor() {
     super("Explorer");
+    this.icon = () => <FolderOutlined/>;
     this.container = () => <ExplorerPanelContainer />;
   }
 }

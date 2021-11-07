@@ -11,10 +11,14 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
 	align-items: center;
 	border-radius: 5px;
 	overflow: hidden;
-    margin: 2px;
+    margin: 3px;
 	&:hover {
 		transition: 0.1s;
         background: ${({ selected, theme }) => !selected && theme.elements.sidebar.button.hover.background}
 	}
+    & > svg {
+        height: 18px;
+        stroke: var(--sidebarButtonFill);
+    }
 `
 export default StyledIconButton;

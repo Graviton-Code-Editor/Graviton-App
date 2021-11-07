@@ -30,6 +30,7 @@ const theme = {
         sidebar: {
             button: {
                 background: 'transparent',
+                fill: 'white',
                 hover: {
                     background: 'rgb(40,40,40)'
                 },
