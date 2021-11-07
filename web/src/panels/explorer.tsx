@@ -21,12 +21,12 @@ function ExplorerPanelContainer() {
         // handle error
       }
     } catch (err) {
-       // handle error
+      // handle error
     }
   }
 
   return (
-    <div>
+    <div style={{ height: '100%', width: '100%' }}>
       <FilesystemExplorer initialRoute="/" onSelected={openFile} />
     </div>
   )

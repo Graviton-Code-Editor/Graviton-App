@@ -9,8 +9,7 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { DirItemInfo } from '../utils/client';
 
 
-const ExplorerContainer = styled.div`
-    padding: 10px;
+const ExplorerContainer = styled(AutoSizer)`
     overflow: hidden;
 `
 
@@ -22,16 +21,21 @@ const ExplorerItemContainer = styled.div`
         cursor: pointer;
         outline:0;
 		white-space:nowrap;
-        position:relative;
-        background: rgba(0,0,0,0.1);
+        position: relative;
+        background: ${({ theme }) => theme.elements.explorer.item.background};
+        color: ${({ theme }) => theme.elements.explorer.item.text.color};
+        font-size: 12px;
         border-radius: 5px;
         line-break: none;
         text-overflow: elliptic;
         overflow: hidden;
-        padding: 8px;
+        padding: 6px;
         border: none;
-        width: 150px;
+        max-width: 150px;
         text-align: left;
+        &:hover {
+            background:  ${({ theme }) => theme.elements.explorer.item.hover.background};
+        }
     }
 `
 
@@ -199,7 +203,7 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
         const itemInfo = folderItems[index];
         const itemStyle = {
             ...style,
-            paddingLeft: itemInfo.depth * 20,
+            paddingLeft: itemInfo.depth * 10,
         };
 
         // When the item is clicked
@@ -224,15 +228,11 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
 
     return (
         <ExplorerContainer>
-            <div style={{ height: 500, width: 500 }}>
-                <AutoSizer>
-                    {({ height, width }: { height: number, width: number }) => (
-                        <List itemCount={folderItems.length} width={width} height={height} itemSize={35} overscanCount={10} >
-                            {ListItem}
-                        </List>
-                    )}
-                </AutoSizer>
-            </div>
+             {({ height, width }: { height: number, width: number }) => (
+                    <List itemCount={folderItems.length} width={width} height={height} itemSize={26} overscanCount={10} >
+                        {ListItem}
+                    </List>
+                )}
         </ExplorerContainer>
     )
 }

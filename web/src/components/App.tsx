@@ -9,7 +9,8 @@ import RecoilNexus from 'recoil-nexus'
 import { Tab, TabData } from '../modules/tab'
 import Panels from './panels'
 import Tabs from './tabs'
-
+import Theme from '../utils/theme_provider'
+import View from './view'
 
 function StateManager() {
   const config = new Configuration("http://127.0.0.1:50001", "ws://127.0.0.1:8000/echo");
@@ -26,9 +27,8 @@ function StateManager() {
   // Subscribe for new events on the given state 
   client.on('connected', () => {
     client.listenToState(1);
+    setRecoil(clientState, client)
   })
-
-  setRecoil(clientState, client)
 }
 
 function ClientRoot({ children }: PropsWithChildren<any>) {
@@ -36,9 +36,9 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const client = useRecoilValue(clientState);
 
   return (
-    <div>
+    <View>
       {client && children}
-    </div>
+    </View>
   )
 }
 
@@ -51,10 +51,12 @@ function App() {
   return (
     <RecoilRoot>
       <RecoilNexus />
-      <ClientRoot>
-        <Panels/>
-        <Tabs/>
-      </ClientRoot>
+      <Theme>
+        <ClientRoot>
+          <Panels />
+          <Tabs />
+        </ClientRoot>
+      </Theme>
     </RecoilRoot>
   )
 }
