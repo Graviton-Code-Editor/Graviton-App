@@ -1,0 +1,7 @@
+[package]
+name = "desktop"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tauri = { git = "https://github.com/tauri-apps/tauri",  features = ["api-all"] }
