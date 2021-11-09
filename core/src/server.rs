@@ -63,6 +63,30 @@ impl WebSocketsMessages {
     }
 }
 
+#[derive(Deserialize, Serialize)]
+struct Options {
+    token: String,
+    state: u8,
+}
+
+/// Middleware that makes sure the incoming websocket connection has a valid token
+async fn websockets_authentication(
+    states: Arc<std::sync::Mutex<StatesList>>,
+) -> impl Filter<Extract = ((),), Error = warp::reject::Rejection> + Clone {
+    warp::query::<Options>()
+        .map(move |options| (states.clone(), options))
+        .and_then({
+            |(states, options): (Arc<std::sync::Mutex<StatesList>>, Options)| async move {
+                if let Some(state) = states.lock().unwrap().get_state_by_id(options.state) {
+                    if state.lock().unwrap().has_token(&options.token) {
+                        return Ok(());
+                    }
+                }
+                Err(warp::reject::not_found())
+            }
+        })
+}
+
 pub struct Server {
     states: Arc<std::sync::Mutex<StatesList>>,
 }
@@ -85,11 +109,11 @@ impl Server {
             rt.block_on(async {
                 let states = states.clone();
 
-                let routes = warp::path("echo")
+                let routes = warp::path("listen")
+                    .and(websockets_authentication(states.clone()).await)
                     .and(warp::ws())
-                    .map(move |ws: warp::ws::Ws| {
+                    .map(move |_, ws: warp::ws::Ws| {
                         let states = states.clone();
-
                         ws.on_upgrade(async move |websocket| {
                             let (sender, recv) = websocket.split();
                             // Create a different thread of every active connection
@@ -153,27 +177,21 @@ impl Server {
                                     trigger: _,
                                 } => {
                                     // Make sure if there is already an existing state
-
                                     let state = {
-                                        let mut states = states.lock().unwrap();
-                                        if let Some(state) = states.get_state_by_id(state_id) {
-                                            state.lock().unwrap().to_owned()
-                                        } else {
-                                            let state = State::default();
-                                            states.add_state(state.clone());
-                                            state
-                                        }
+                                        let states = states.lock().unwrap();
+                                        states.get_state_by_id(state_id)
                                     };
-
-                                    // Send the state
-                                    sender
-                                        .lock()
-                                        .await
-                                        .send(WebSocketsMessages::state_updated(state))
-                                        .await
-                                        .unwrap();
-
-                                    // TODO, this is just spaghetti code to get something basic working
+                                    if let Some(state) = state {
+                                        // Send the state
+                                        sender
+                                            .lock()
+                                            .await
+                                            .send(WebSocketsMessages::state_updated(
+                                                state.lock().unwrap().to_owned(),
+                                            ))
+                                            .await
+                                            .unwrap();
+                                    }
                                 }
                             }
                         }
@@ -189,6 +207,7 @@ impl Server {
 pub enum Errors {
     StateNotFound,
     Fs(FilesystemErrors),
+    BadToken,
 }
 
 type RPCResult<T> = jsonrpc_core::Result<T>;
@@ -197,10 +216,10 @@ type RPCResult<T> = jsonrpc_core::Result<T>;
 #[rpc]
 pub trait RpcMethods {
     #[rpc(name = "get_state_by_id")]
-    fn get_state_by_id(&self, state_id: u8) -> RPCResult<Option<State>>;
+    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<State>>;
 
     #[rpc(name = "set_state_by_id")]
-    fn set_state_by_id(&self, state_id: u8, state: State) -> RPCResult<()>;
+    fn set_state_by_id(&self, state_id: u8, state: State, token: String) -> RPCResult<()>;
 
     #[rpc(name = "read_file_by_path")]
     fn read_file_by_path(
@@ -208,6 +227,7 @@ pub trait RpcMethods {
         path: String,
         filesystem_name: String,
         state_id: u8,
+        token: String,
     ) -> RPCResult<Result<String, Errors>>;
 
     #[rpc(name = "list_dir_by_path")]
@@ -216,6 +236,7 @@ pub trait RpcMethods {
         path: String,
         filesystem_name: String,
         state_id: u8,
+        token: String,
     ) -> RPCResult<Result<Vec<DirItemInfo>, Errors>>;
 }
 
@@ -227,17 +248,23 @@ pub struct RpcManager {
 /// Implementation of all JSON RPC methods
 impl RpcMethods for RpcManager {
     /// Return the state by the given ID if found
-    fn get_state_by_id(&self, state_id: u8) -> RPCResult<Option<State>> {
+    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<State>> {
         let states = self.states.lock().unwrap();
+        // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
-            Ok(Some(state.lock().unwrap().to_owned()))
+            // Make sure the token is valid
+            if state.lock().unwrap().has_token(&token) {
+                Ok(Some(state.lock().unwrap().to_owned()))
+            } else {
+                Ok(None)
+            }
         } else {
             Ok(None)
         }
     }
 
     /// Update the Core's version of a particular state
-    fn set_state_by_id(&self, _state_id: u8, _state: State) -> RPCResult<()> {
+    fn set_state_by_id(&self, _state_id: u8, _state: State, _token: String) -> RPCResult<()> {
         todo!()
     }
 
@@ -248,15 +275,21 @@ impl RpcMethods for RpcManager {
         path: String,
         filesystem_name: String,
         state_id: u8,
+        token: String,
     ) -> RPCResult<Result<String, Errors>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
-            // Try to get the requested filesystem implementation
-            if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
-                Ok(filesystem.lock().unwrap().read_file_by_path(&path))
+            // Make sure the token is valid
+            if state.lock().unwrap().has_token(&token) {
+                // Try to get the requested filesystem implementation
+                if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
+                    Ok(filesystem.lock().unwrap().read_file_by_path(&path))
+                } else {
+                    Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                }
             } else {
-                Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                Ok(Err(Errors::BadToken))
             }
         } else {
             Ok(Err(Errors::StateNotFound))
@@ -270,15 +303,21 @@ impl RpcMethods for RpcManager {
         path: String,
         filesystem_name: String,
         state_id: u8,
+        token: String,
     ) -> RPCResult<Result<Vec<DirItemInfo>, Errors>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
-            // Try to get the requested filesystem implementation
-            if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
-                Ok(filesystem.lock().unwrap().list_dir_by_path(&path))
+            // Make sure the token is valid
+            if state.lock().unwrap().has_token(&token) {
+                // Try to get the requested filesystem implementation
+                if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
+                    Ok(filesystem.lock().unwrap().list_dir_by_path(&path))
+                } else {
+                    Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                }
             } else {
-                Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                Ok(Err(Errors::BadToken))
             }
         } else {
             Ok(Err(Errors::StateNotFound))

@@ -16,24 +16,49 @@ use crate::filesystems::{
     LocalFilesystem,
 };
 
+#[derive(Clone)]
+pub enum TokenFlags {
+    All(String),
+}
+
 /// Internal list of states
 #[derive(Clone, Default)]
-pub struct StatesList(HashMap<u8, Arc<Mutex<State>>>);
+pub struct StatesList {
+    states: HashMap<u8, Arc<Mutex<State>>>,
+    provided_tokens: Vec<TokenFlags>,
+}
 
 impl StatesList {
     /// Create a new empty states list
     pub fn new() -> Self {
-        Self(HashMap::new())
+        Self {
+            states: HashMap::new(),
+            provided_tokens: Vec::new(),
+        }
+    }
+
+    pub fn with_tokens(&mut self, tokens: &[TokenFlags]) -> &mut Self {
+        self.provided_tokens = tokens.to_vec();
+        self
     }
 
     /// Return the state by the given ID if found
     pub fn get_state_by_id(&self, id: u8) -> Option<Arc<Mutex<State>>> {
-        self.0.get(&id).cloned()
+        self.states.get(&id).cloned()
     }
 
     /// Return the state by the given ID if found
-    pub fn add_state(&mut self, state: State) {
-        self.0.insert(state.id, Arc::new(Mutex::new(state)));
+    pub fn add_state(&mut self, state: &mut State) {
+        for token in &self.provided_tokens {
+            match token {
+                TokenFlags::All(token) => {
+                    state.tokens.push(token.clone());
+                }
+            }
+        }
+
+        self.states
+            .insert(state.id, Arc::new(Mutex::new(state.to_owned())));
     }
 }
 
@@ -48,7 +73,8 @@ pub struct State {
     #[serde(skip_serializing, skip_deserializing)]
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
     opened_tabs: Vec<Tab>,
-    id: u8,
+    pub id: u8,
+    tokens: Vec<String>,
 }
 
 impl Default for State {
@@ -65,13 +91,17 @@ impl Default for State {
             id: 1,
             filesystems,
             opened_tabs: Vec::new(),
+            tokens: Vec::new(),
         }
     }
 }
 
 impl State {
-    pub fn new() -> Self {
-        Self::default()
+    pub fn new(id: u8) -> Self {
+        State {
+            id,
+            ..Default::default()
+        }
     }
 
     /// Retrieve the specified filesystem by the given name
@@ -80,6 +110,10 @@ impl State {
         filesystem: &str,
     ) -> Option<Arc<Mutex<Box<dyn Filesystem + Send>>>> {
         return self.filesystems.get(filesystem).cloned();
+    }
+
+    pub fn has_token(&self, token: &str) -> bool {
+        self.tokens.contains(&token.to_owned())
     }
 }
 

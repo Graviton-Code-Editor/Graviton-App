@@ -13,22 +13,25 @@ import Theme from '../utils/theme_provider'
 import View from './view'
 
 function StateManager() {
-  const config = new Configuration("http://127.0.0.1:50001", "ws://127.0.0.1:8000/echo");
-  const client = new RpcClient(config);
+  const token = new URL(location.toString()).searchParams.get("token");
+  if (token !== null) {
+    const config = new Configuration("http://127.0.0.1:50001", `ws://127.0.0.1:8000/listen?token=${token}&state=1`, 1, token);
+    const client = new RpcClient(config);
 
-  // Listen for any change on the state
-  client.on('stateUpdated', function ({ state }) {
-    // Convert all tab datas into Tab instances
-    const openedTabs = state.opened_tabs.map((tabData: TabData) => Tab.fromJson(tabData))
-    // Update the atom
-    setRecoil(openedTabsState, openedTabs)
-  })
+    // Listen for any change on the state
+    client.on('stateUpdated', function ({ state }) {
+      // Convert all tab datas into Tab instances
+      const openedTabs = state.opened_tabs.map((tabData: TabData) => Tab.fromJson(tabData))
+      // Update the atom
+      setRecoil(openedTabsState, openedTabs)
+    })
 
-  // Subscribe for new events on the given state 
-  client.on('connected', () => {
-    client.listenToState(1);
-    setRecoil(clientState, client)
-  })
+    // Subscribe for new events on the given state 
+    client.on('connected', () => {
+      client.listenToState();
+      setRecoil(clientState, client)
+    })
+  }
 }
 
 function ClientRoot({ children }: PropsWithChildren<any>) {

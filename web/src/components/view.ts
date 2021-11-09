@@ -4,6 +4,7 @@ const View = styled.div`
     display: flex;
     background: ${({ theme }) => theme.elements.view.background};
     min-height: 100%;
+    max-height: 100%;
     & > div {
         flex: 1;
     }

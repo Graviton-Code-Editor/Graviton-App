@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 tauri = { git = "https://github.com/tauri-apps/tauri",  features = ["api-all"] }
+home = "0.5.3"

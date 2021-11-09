@@ -33,6 +33,6 @@ export class State {
      * Save the current state into the backend
      */
     public async save(){
-        await this.client.set_state_by_id(this.id, this.state);
+        await this.client.set_state_by_id(this.state);
     }
 }

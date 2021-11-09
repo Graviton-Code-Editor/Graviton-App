@@ -28,11 +28,13 @@ class RpcClient extends Emittery {
     private rpc: simple_jsonrpc;
     // Internal websockets client
     private socket: WebSocket;
+    private config: Configuration;
 
     constructor(config: Configuration) {
         super();
         this.rpc = simple_jsonrpc.connect_xhr(config.http_uri);
         this.socket = new WebSocket(config.ws_uri);
+        this.config = config;
 
         this.socket.onmessage = (ev) => {
             const message: WebSocketsMessage = JSON.parse(ev.data);
@@ -48,43 +50,43 @@ class RpcClient extends Emittery {
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public get_state_by_id(id: number): Promise<StateData> {
-        return this.rpc.call('get_state_by_id', [id]);
+    public get_state_by_id(): Promise<StateData> {
+        return this.rpc.call('get_state_by_id', [this.config.state_id, this.config.token]);
     }
 
     /*
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public set_state_by_id(id: number, state: StateData): Promise<void> {
-        return this.rpc.call('set_state_by_id', [id, state]);
+    public set_state_by_id(state: StateData): Promise<void> {
+        return this.rpc.call('set_state_by_id', [this.config.state_id, state, this.config.token]);
     }
 
     /*
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public read_file_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<string>> {
-        return this.rpc.call('read_file_by_path', [path, filesystem_name, state_id]);
+    public read_file_by_path(path: string, filesystem_name: string,): Promise<CoreResponse<string>> {
+        return this.rpc.call('read_file_by_path', [path, filesystem_name, this.config.state_id, this.config.token]);
     }
 
     /*
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public list_dir_by_path(path: string, filesystem_name: string, state_id: number): Promise<CoreResponse<Array<DirItemInfo>>> {
-        return this.rpc.call('list_dir_by_path', [path, filesystem_name, state_id]);
+    public list_dir_by_path(path: string, filesystem_name: string): Promise<CoreResponse<Array<DirItemInfo>>> {
+        return this.rpc.call('list_dir_by_path', [path, filesystem_name, this.config.state_id, this.config.token]);
     }
 
     /*
      * Listen for any mess in the websockets connection
      * @WSCommand
      */
-    public listenToState(id: number) {
+    public listenToState() {
         this.socket.send(JSON.stringify({
             trigger: 'client',
             msg_type: 'ListenToState',
-            state_id: id
+            state_id: this.config.state_id
         }))
     }
 

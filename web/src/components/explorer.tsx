@@ -157,7 +157,7 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
 
     useEffect(() => {
         // Load the given initial route
-        client.list_dir_by_path(initialRoute, "local", 1).then((pathItems) => {
+        client.list_dir_by_path(initialRoute, "local").then((pathItems) => {
             if (pathItems.Ok) {
 
                 const subTree: TreeItem = {
@@ -183,7 +183,7 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
             setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
         } else {
             // Open the folder
-            client.list_dir_by_path(path, "local", 1).then((pathItems) => {
+            client.list_dir_by_path(path, "local").then((pathItems) => {
                 if (pathItems.Ok) {
                     const subTreeItems: TreeItems = mapItemsListToSubTreeItem(pathItems.Ok);
 

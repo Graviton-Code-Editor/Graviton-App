@@ -12,7 +12,7 @@ function ExplorerPanelContainer() {
 
   async function openFile(item: TreeItemInfo) {
     try {
-      const fileContent = await client.read_file_by_path(item.path, "local", 1);
+      const fileContent = await client.read_file_by_path(item.path, "local");
 
       if (fileContent.Ok) {
         const newTab = new TextEditorTab(item.path, fileContent.Ok);

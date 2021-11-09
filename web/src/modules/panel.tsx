@@ -6,7 +6,7 @@ import { ReactElement } from "react";
 export abstract class Panel {
     public name: string;
     public container: () => ReactElement;
-    public icon: () => ReactElement;
+    public icon: () => ReactElement<any>;
 
     constructor(name: string){
         this.name = name;
