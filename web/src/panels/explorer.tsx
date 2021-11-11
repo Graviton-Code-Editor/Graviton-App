@@ -12,16 +12,17 @@ function ExplorerPanelContainer() {
 
   async function openFile(item: TreeItemInfo) {
     try {
-      const fileContent = await client.read_file_by_path(item.path, "local");
-
-      if (fileContent.Ok) {
-        const newTab = new TextEditorTab(item.path, fileContent.Ok);
-
-        setTabs([...tabs, newTab])
-      } else {
-        // handle error
-      }
+      client.read_file_by_path(item.path, "local").then(fileContent => {
+        if (fileContent.Ok) {
+          const newTab = new TextEditorTab(item.path, fileContent.Ok);
+          tabs[0][0].push(newTab)
+          setTabs([...tabs])
+        } else {
+          // handle error
+        }
+      })
     } catch (err) {
+      console.log(err)
       // handle error
     }
   }
@@ -39,7 +40,7 @@ function ExplorerPanelContainer() {
 class ExplorerPanel extends Panel {
   constructor() {
     super("Explorer");
-    this.icon = () => <FolderOutlined/>;
+    this.icon = () => <FolderOutlined />;
     this.container = () => <ExplorerPanelContainer />;
   }
 }

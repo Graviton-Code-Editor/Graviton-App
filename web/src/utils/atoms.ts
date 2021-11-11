@@ -4,13 +4,11 @@ import { Tab } from '../modules/tab';
 import ExplorerPanel from '../panels/explorer';
 import RpcClient from './client';
 
-
-export const openedTabsState = atom({ key: 'openedTabs', default: [] as Array<Tab> });
-
+export type TabsPanels = Array<Array<Array<Tab>>>
+export const openedTabsState = atom({ key: 'openedTabs', default: [[[]]] as TabsPanels, dangerouslyAllowMutability: true });
 export interface PanelState {
     panel: Panel
 }
-
 export const panels = atom({
     key: 'panels', default: [
         {
@@ -20,3 +18,5 @@ export const panels = atom({
 });
 
 export const clientState = atom({ key: 'clientState', default: null as unknown as RpcClient });
+
+export const focusedTab = atom({ key: 'focusedTab', default: 0 });

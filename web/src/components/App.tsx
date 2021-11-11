@@ -11,6 +11,7 @@ import Panels from './panels'
 import Tabs from './tabs'
 import Theme from '../utils/theme_provider'
 import View from './view'
+import { SplitPane } from 'react-multi-split-pane'
 
 function StateManager() {
   const token = new URL(location.toString()).searchParams.get("token");
@@ -23,7 +24,10 @@ function StateManager() {
       // Convert all tab datas into Tab instances
       const openedTabs = state.opened_tabs.map((tabData: TabData) => Tab.fromJson(tabData))
       // Update the atom
-      setRecoil(openedTabsState, openedTabs)
+      if (openedTabs.length > 0) {
+        setRecoil(openedTabsState, openedTabs)
+      }
+
     })
 
     // Subscribe for new events on the given state 
@@ -56,8 +60,10 @@ function App() {
       <RecoilNexus />
       <Theme>
         <ClientRoot>
-          <Panels />
-          <Tabs />
+          <SplitPane split="vertical" minSize={250}>
+            <Panels />
+            <Tabs />
+          </SplitPane>
         </ClientRoot>
       </Theme>
     </RecoilRoot>

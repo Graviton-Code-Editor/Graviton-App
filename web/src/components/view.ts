@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 
 const View = styled.div`
-    display: flex;
+    
     background: ${({ theme }) => theme.elements.view.background};
     min-height: 100%;
     max-height: 100%;
-    & > div {
-        flex: 1;
+    & .Pane > div {
+        height: 100%;
+        width: 100%;
     }
 `
 

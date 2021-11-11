@@ -10,17 +10,19 @@ import { DirItemInfo } from '../utils/client';
 
 
 const ExplorerContainer = styled(AutoSizer)`
-    overflow: hidden;
+  
 `
 
 const ExplorerItemContainer = styled.div`
     max-width: 300px;
     display: flex;
     align-items: center;
+    margin: 5px;
     & > button {
+        margin: 1px;
         cursor: pointer;
-        outline:0;
-		white-space:nowrap;
+        outline: 0;
+		white-space: nowrap;
         position: relative;
         background: ${({ theme }) => theme.elements.explorer.item.background};
         color: ${({ theme }) => theme.elements.explorer.item.text.color};
@@ -31,8 +33,10 @@ const ExplorerItemContainer = styled.div`
         overflow: hidden;
         padding: 6px;
         border: none;
-        max-width: 150px;
+        min-width: 170px;
+        max-width: 200px;
         text-align: left;
+        user-select: none;
         &:hover {
             background:  ${({ theme }) => theme.elements.explorer.item.hover.background};
         }

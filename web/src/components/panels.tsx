@@ -6,6 +6,7 @@ import IconButton from "./panels/icon_button";
 
 const PanelsContainer = styled.div`
     display: flex;    
+    min-height: 100%;
     & > .sidebar {
         background: ${props => props.theme.tones.dark1};
         & svg {
@@ -15,7 +16,6 @@ const PanelsContainer = styled.div`
     & > .sidepanel {
         background: ${props => props.theme.tones.dark2};
         width: 100%;
-        padding: 10px;
     }
 `
 

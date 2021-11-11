@@ -1334,9 +1334,9 @@ flat-cache@^3.0.4:
     rimraf "^3.0.2"
 
 flatted@^3.1.0:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.2.tgz#64bfed5cb68fe3ca78b3eb214ad97b63bedce561"
-  integrity sha512-JaTY/wtrcSyvXJl4IMFHPKyFur1sE9AUqc0QnhOaJ0CxHtAoIV8pYDzeEfAaNEtGkOfq4gr3LBFmdXW5mOQFnA==
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
+  integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
 
 fs.realpath@^1.0.0:
   version "1.0.0"
@@ -1976,6 +1976,11 @@ react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-multi-split-pane@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-multi-split-pane/-/react-multi-split-pane-0.3.2.tgz#04e6f10596454c54e5f1be22d420a9b36a7aca7a"
+  integrity sha512-SBoqkHHtfPJOeTmbwmiPPKiJzpeTBpfd8Ww6NJrmflatG2ogdRGVqUdFAPbfebRP4bSkOEFCebUeB52b9YUSCA==
 
 react-refresh@^0.10.0:
   version "0.10.0"

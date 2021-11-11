@@ -15,6 +15,7 @@ use std::sync::{
     Arc,
     Mutex,
 };
+pub use tokio;
 
 #[allow(dead_code)]
 pub struct Core {

@@ -659,6 +659,7 @@ dependencies = [
 name = "desktop"
 version = "0.1.0"
 dependencies = [
+ "graviton_core",
  "home",
  "tauri",
 ]
