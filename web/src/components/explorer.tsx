@@ -232,11 +232,11 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
 
     return (
         <ExplorerContainer>
-             {({ height, width }: { height: number, width: number }) => (
-                    <List itemCount={folderItems.length} width={width} height={height} itemSize={26} overscanCount={10} >
-                        {ListItem}
-                    </List>
-                )}
+            {({ height, width }: { height: number, width: number }) => (
+                <List itemCount={folderItems.length} width={width} height={height} itemSize={26} overscanCount={10} >
+                    {ListItem}
+                </List>
+            )}
         </ExplorerContainer>
     )
 }

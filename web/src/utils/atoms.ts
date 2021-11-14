@@ -19,4 +19,4 @@ export const panels = atom({
 
 export const clientState = atom({ key: 'clientState', default: null as unknown as RpcClient });
 
-export const focusedTab = atom({ key: 'focusedTab', default: 0 });
+export const focusedTab = atom({ key: 'focusedTab', default: {row: 0, col: 0} });
