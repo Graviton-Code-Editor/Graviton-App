@@ -19,6 +19,11 @@ export interface DirItemInfo {
     is_file: boolean
 }
 
+export interface FileInfo {
+    content: string,
+    format: string
+}
+
 /*
  * Internal RPC Client to connect to a backend
  */
@@ -66,7 +71,7 @@ class RpcClient extends Emittery {
      * Implemented in the Core
      * @JsonRpcMethod
      */
-    public read_file_by_path(path: string, filesystem_name: string,): Promise<CoreResponse<string>> {
+    public read_file_by_path(path: string, filesystem_name: string,): Promise<CoreResponse<FileInfo>> {
         return this.rpc.call('read_file_by_path', [path, filesystem_name, this.config.state_id, this.config.token]);
     }
 

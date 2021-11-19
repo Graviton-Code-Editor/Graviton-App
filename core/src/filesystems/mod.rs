@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use crate::server::Errors;
 use serde::{
     Deserialize,
@@ -16,7 +18,7 @@ pub enum FilesystemErrors {
 
 /// Filesystem interface
 pub trait Filesystem {
-    fn read_file_by_path(&self, path: &str) -> Result<String, Errors>;
+    fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors>;
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
 }
 
@@ -25,4 +27,37 @@ pub struct DirItemInfo {
     path: String,
     name: String,
     is_file: bool,
+}
+
+#[derive(Serialize, Deserialize)]
+pub enum FileFormat {
+    Unknown,
+    Binary,
+    Text(String),
+}
+
+pub fn get_format_from_path(path: &str) -> FileFormat {
+    if let Some(ext) = Path::new(path).extension() {
+        match ext.to_str().unwrap() {
+            "rs" => FileFormat::Text("Rust".to_string()),
+            _ => FileFormat::Unknown,
+        }
+    } else {
+        FileFormat::Unknown
+    }
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct FileInfo {
+    content: String,
+    format: FileFormat,
+}
+
+impl FileInfo {
+    pub fn new(path: &str, content: String) -> Self {
+        Self {
+            content,
+            format: get_format_from_path(path),
+        }
+    }
 }

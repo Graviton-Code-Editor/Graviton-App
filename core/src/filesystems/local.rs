@@ -6,6 +6,7 @@ use std::{
 
 use super::{
     DirItemInfo,
+    FileInfo,
     Filesystem,
     FilesystemErrors,
 };
@@ -21,11 +22,13 @@ impl LocalFilesystem {
 
 impl Filesystem for LocalFilesystem {
     /// Read a local file
-    fn read_file_by_path(&self, path: &str) -> Result<String, Errors> {
-        fs::read_to_string(path).map_err(|err| match err.kind() {
-            ErrorKind::NotFound => Errors::Fs(FilesystemErrors::FileNotFound),
-            _ => Errors::Fs(FilesystemErrors::FileNotFound),
-        })
+    fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors> {
+        fs::read_to_string(path)
+            .map(|content| FileInfo::new(path, content))
+            .map_err(|err| match err.kind() {
+                ErrorKind::NotFound => Errors::Fs(FilesystemErrors::FileNotFound),
+                _ => Errors::Fs(FilesystemErrors::FileNotFound),
+            })
     }
 
     // List a local directory

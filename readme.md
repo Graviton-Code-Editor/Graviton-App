@@ -53,22 +53,14 @@ See [this](#running) to compile it yourself. (There aren't any releases of the n
 
 ## Running
 
-Run the web:
-```rust
-cd web
-yarn dev
+### Requisites
+- Cargo
+- cargo-make
+- yarn
+
+Run the demo:
+```shell
+cargo make demo
 ```
 
-Run the desktop app:
-```rust
-cd desktop
-cargo run 
-```
-
-Run a core (Not necessary):
-```rust
-cd core
-cargo run --example demo
-```
-
-wip.
+wip. See [TODO](./TODO.md)

@@ -1,0 +1,14 @@
+[env]
+CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
+
+[tasks.serve_demo_web]
+script = "yarn --cwd ../web dev"
+
+[tasks.desktop_demo]
+command = "cargo"
+args = ["run", "--package", "desktop"]
+
+[tasks.demo]
+run_task = [
+    { name = ["serve_demo_web", "desktop_demo"], parallel = true }
+]

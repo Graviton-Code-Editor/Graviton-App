@@ -14,7 +14,8 @@ function ExplorerPanelContainer() {
     try {
       client.read_file_by_path(item.path, "local").then(fileContent => {
         if (fileContent.Ok) {
-          const newTab = new TextEditorTab(item.path, fileContent.Ok);
+          const { content } = fileContent.Ok;
+          const newTab = new TextEditorTab(item.path, content);
           tabs[0][0].push(newTab)
           setTabs([...tabs])
         } else {

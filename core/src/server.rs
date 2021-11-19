@@ -33,6 +33,7 @@ use warp::{
 use crate::{
     filesystems::{
         DirItemInfo,
+        FileInfo,
         FilesystemErrors,
     },
     State,
@@ -228,7 +229,7 @@ pub trait RpcMethods {
         filesystem_name: String,
         state_id: u8,
         token: String,
-    ) -> RPCResult<Result<String, Errors>>;
+    ) -> RPCResult<Result<FileInfo, Errors>>;
 
     #[rpc(name = "list_dir_by_path")]
     fn list_dir_by_path(
@@ -276,7 +277,7 @@ impl RpcMethods for RpcManager {
         filesystem_name: String,
         state_id: u8,
         token: String,
-    ) -> RPCResult<Result<String, Errors>> {
+    ) -> RPCResult<Result<FileInfo, Errors>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
