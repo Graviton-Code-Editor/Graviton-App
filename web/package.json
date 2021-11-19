@@ -1,5 +1,5 @@
 {
-  "name": "graviton-web",
+  "name": "@gveditor/web",
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
@@ -8,6 +8,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@gveditor/web_components":"*",
     "@codemirror/basic-setup": "^0.19.0",
     "@codemirror/lang-javascript": "^0.19.2",
     "@uiw/react-codemirror": "^4.2.3",
@@ -35,8 +36,5 @@
     "vite": "^2.6.4",
     "vite-plugin-checker": "^0.3.4",
     "vite-plugin-react-svg": "^0.2.0"
-  },
-  "peerDependencies": {
-    "eslint": "^8.2.0"
   }
 }

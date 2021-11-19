@@ -1,8 +1,11 @@
 [env]
 CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
 
+[tasks.watch_web_components]
+script = "yarn workspace @gveditor/web_components dev"
+
 [tasks.serve_demo_web]
-script = "yarn --cwd ../web dev"
+script = "yarn workspace @gveditor/web dev"
 
 [tasks.desktop_demo]
 command = "cargo"
@@ -10,5 +13,5 @@ args = ["run", "--package", "desktop"]
 
 [tasks.demo]
 run_task = [
-    { name = ["serve_demo_web", "desktop_demo"], parallel = true }
+    { name = ["serve_demo_web", "watch_web_components", "desktop_demo"], parallel = true }
 ]
