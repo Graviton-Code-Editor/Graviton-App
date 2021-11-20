@@ -7,6 +7,12 @@ const theme = {
         dark2: '#222222',
     },
     elements: {
+        prompt: {
+            container: {
+                border: '#222222',
+                background: '#191919'
+            }
+        },
         tabsContainer: {
             background: '#191919'
         },

@@ -1,8 +1,8 @@
 
-import { PropsWithChildren, useEffect } from 'react'
+import { PropsWithChildren, ReactElement, useEffect, useState } from 'react'
 import RpcClient from '../utils/client'
 import Configuration from '../utils/config'
-import { openedTabsState, clientState } from '../utils/atoms'
+import { openedTabsState, clientState, prompts } from '../utils/atoms'
 import { RecoilRoot, useRecoilValue } from 'recoil'
 import { setRecoil } from 'recoil-nexus';
 import RecoilNexus from 'recoil-nexus'
@@ -12,6 +12,8 @@ import Tabs from './tabs'
 import Theme from '../utils/theme_provider'
 import View from './view'
 import { SplitPane } from 'react-multi-split-pane'
+import { useHotkeys } from 'react-hotkeys-hook'
+import PromptContainer from './prompt'
 
 function StateManager() {
   const token = new URL(location.toString()).searchParams.get("token");
@@ -42,18 +44,38 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
 
   const client = useRecoilValue(clientState);
 
+  const usePrompts = useRecoilValue(prompts);
+  const [displayedPrompt, setDisplayedPrompt] = useState<(() => ReactElement) | null>(null);
+
+  // Register all shortcuts
+  usePrompts.forEach((prompt) => {
+    if(prompt.shortcut){
+      useHotkeys(prompt.shortcut, () => {
+        const promptContainer = prompt.container;
+        setDisplayedPrompt(promptContainer)
+      });
+    }
+  })
+
+  useHotkeys('esc', () => {
+    setDisplayedPrompt(null)
+  });
+
+  useEffect(() => {
+    // Connect the client
+    StateManager();
+  }, [])
+
   return (
     <View>
       {client && children}
+      {displayedPrompt}
     </View>
   )
 }
 
 function App() {
 
-  useEffect(() => {
-    StateManager();
-  }, [])
 
   return (
     <RecoilRoot>

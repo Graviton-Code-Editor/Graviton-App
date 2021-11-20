@@ -4,6 +4,9 @@ import reactSvgPlugin  from 'vite-plugin-react-svg'
 import checker from 'vite-plugin-checker'
 
 export default defineConfig((configEnv) => ({
+  server: {
+    port: 8080
+  },
   clearScreen: false,
   plugins: [
     react(),

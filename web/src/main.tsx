@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import App from './components/App'
+import applyPatches from './utils/patches'
+
+applyPatches();
 
 ReactDOM.render(
   <React.StrictMode>

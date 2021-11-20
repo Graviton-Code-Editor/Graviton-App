@@ -1,6 +1,4 @@
 import RpcClient from "./client";
-import BaseEditor from "../editors/base";
-import TextEditor from "../editors/text";
 import { TabData } from "../modules/tab";
 
 export interface StateData {
@@ -15,18 +13,12 @@ export class State {
     // Shared state data
     public state: StateData;
 
-    // Available file editors
-    private editors: typeof BaseEditor[];
-
     constructor(client: RpcClient, id: number){
         this.client = client;
         this.id = id;
         this.state = {
             opened_tabs: []
         };
-        this.editors = [
-            TextEditor
-        ];
     }
 
     /*
