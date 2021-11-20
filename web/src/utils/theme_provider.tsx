@@ -8,6 +8,12 @@ const theme = {
     },
     elements: {
         prompt: {
+            option: {
+                background: '#222222',
+                hover: {
+                    background: 'rgb(40,40,40)'
+                }
+            },
             container: {
                 border: '#222222',
                 background: '#191919'

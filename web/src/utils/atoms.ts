@@ -32,6 +32,11 @@ export const prompts = atom<typeof Prompt[]>({
     ]
 });
 
+export const prompt = atom<Prompt | null>({
+    key: 'prompt',
+    default: null
+});
+
 export const editors = atom<typeof BaseEditor[]>({
     key: 'editors',
     default: [

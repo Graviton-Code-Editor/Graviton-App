@@ -2,8 +2,8 @@
 import { PropsWithChildren, ReactElement, useEffect, useState } from 'react'
 import RpcClient from '../utils/client'
 import Configuration from '../utils/config'
-import { openedTabsState, clientState, prompts } from '../utils/atoms'
-import { RecoilRoot, useRecoilValue } from 'recoil'
+import { openedTabsState, clientState, prompts, prompt } from '../utils/atoms'
+import { RecoilRoot, useRecoilState, useRecoilValue } from 'recoil'
 import { setRecoil } from 'recoil-nexus';
 import RecoilNexus from 'recoil-nexus'
 import { Tab, TabData } from '../modules/tab'
@@ -45,7 +45,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const client = useRecoilValue(clientState);
 
   const usePrompts = useRecoilValue(prompts);
-  const [displayedPrompt, setDisplayedPrompt] = useState<(() => ReactElement) | null>(null);
+  const [displayedPrompt, setDisplayedPrompt] = useRecoilState(prompt);
 
   // Register all shortcuts
   usePrompts.forEach((prompt) => {
