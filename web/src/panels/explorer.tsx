@@ -2,7 +2,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import FilesystemExplorer, { TreeItemInfo } from "../components/explorer";
 import { Panel } from "../modules/panel";
 import TextEditorTab from "../tabs/text_editor";
-import { clientState, openedTabsState } from "../utils/atoms";
+import { clientState, openedFolders, openedTabsState } from "../utils/atoms";
 import FolderOutlined from '../icons/folder_outlined.svg?component'
 
 function ExplorerPanelContainer() {
@@ -28,9 +28,16 @@ function ExplorerPanelContainer() {
     }
   }
 
+  const [folders, setFolders] = useRecoilState(openedFolders);
+
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <FilesystemExplorer initialRoute="/" onSelected={openFile} />
+    <div style={{ height : '100%', width: '100%' }}>
+      {folders.map(({ path }, i) => {
+        // Note: path shouldn't really be the key
+        return (
+          <FilesystemExplorer initialRoute={path} onSelected={openFile} key={path} />
+        )
+      })}
     </div>
   )
 }

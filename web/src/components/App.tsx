@@ -13,7 +13,6 @@ import Theme from '../utils/theme_provider'
 import View from './view'
 import { SplitPane } from 'react-multi-split-pane'
 import { useHotkeys } from 'react-hotkeys-hook'
-import PromptContainer from './prompt'
 
 function StateManager() {
   const token = new URL(location.toString()).searchParams.get("token");

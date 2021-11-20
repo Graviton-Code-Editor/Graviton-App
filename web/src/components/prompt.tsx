@@ -38,9 +38,12 @@ const StyledPrompt = styled.div`
     }
 `
 
+export interface OptionUtils {
+    closePrompt: () => void
+}
 export interface Option {
     label: string,
-    onSelected: () => void
+    onSelected: (utils: OptionUtils) => void
 }
 
 interface PromptOptions {
@@ -64,8 +67,17 @@ export default function PromptContainer({ options }: PromptOptions) {
             <StyledPrompt onClick={closePrompt} ref={refBackground} >
                 <div className="prompt">
                     {options.map(option => {
+
+                        function optionSelected() {
+                            option.onSelected({
+                                closePrompt: () => {
+                                    setPromptState(null)
+                                }
+                            })
+                        }
+
                         return (
-                            <StyledPromptOption key={option.label} onClick={option.onSelected}>{option.label}</StyledPromptOption>
+                            <StyledPromptOption key={option.label} onClick={optionSelected}>{option.label}</StyledPromptOption>
                         )
                     })}
                 </div>

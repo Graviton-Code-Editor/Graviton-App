@@ -43,3 +43,13 @@ export const editors = atom<typeof BaseEditor[]>({
         TextEditor
     ]
 });
+
+export interface FolderState {
+    path: string,
+    //filesystem: string
+}
+
+export const openedFolders = atom<FolderState[]>({
+    key: 'openedFolders',
+    default: []
+});
