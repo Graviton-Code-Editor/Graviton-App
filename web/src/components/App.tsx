@@ -1,5 +1,5 @@
 
-import { PropsWithChildren, ReactElement, useEffect, useState } from 'react'
+import { PropsWithChildren, useEffect } from 'react'
 import RpcClient from '../utils/client'
 import Configuration from '../utils/config'
 import { openedTabsState, clientState, prompts, prompt } from '../utils/atoms'
@@ -13,9 +13,21 @@ import Theme from '../utils/theme_provider'
 import View from './view'
 import { SplitPane } from 'react-multi-split-pane'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { invoke } from "@tauri-apps/api"
+import { isTauri } from '../utils/commands'
 
-function StateManager() {
-  const token = new URL(location.toString()).searchParams.get("token");
+async function getToken() {
+  if(isTauri) {
+    // Invoke the tauri command to retrieve the token
+    return await invoke<string>('get_token');
+  } else {
+    // Or query the URL to get the token
+    return new URL(location.toString()).searchParams.get('token');
+  }
+}
+
+async function StateManager() {
+  const token = await getToken();
   if (token !== null) {
     const config = new Configuration("http://127.0.0.1:50001", `ws://127.0.0.1:8000/listen?token=${token}&state=1`, 1, token);
     const client = new RpcClient(config);

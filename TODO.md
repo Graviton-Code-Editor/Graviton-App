@@ -9,3 +9,4 @@
 - [ ] Make the JSON RPC & WebSockets client as a separate library
 - [ ] Don't start a new Core on the Desktop app when it detects that there is one already running
 - [ ] Register a new Token::All token on the Core by passing an existing already-used (by another frontend) token, so a new frontend can make use of it (idea)
+- [ ] Think about using CORS to maximize security of Core

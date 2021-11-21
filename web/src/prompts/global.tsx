@@ -11,9 +11,10 @@ function GlobalPromptContainer(){
             label: "Open Folder",
             async onSelected({ closePrompt }) {
                 closePrompt();
-                const openedFolder = await openFolderPicker();
-                // Folder selected
+                const openedFolder = await openFolderPicker('local');
+                // If a folder selected
                 if(openedFolder != null){
+                    // Clear all opened folders and open the selected one
                     setRecoil(openedFolders, [{
                         path: openedFolder
                     }])

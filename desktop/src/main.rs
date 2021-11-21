@@ -17,15 +17,27 @@ use graviton_core::{
     TokenFlags,
 };
 
-fn open_tauri(local_token: String) {
+struct TauriState {
+    token: String
+}
+
+#[tauri::command]
+fn get_token(state: tauri::State<TauriState>) -> String {
+    return state.token.clone();
+}
+
+fn open_tauri(token: String) {
+
     tauri::Builder::default()
+        .manage(TauriState { token })
+        .invoke_handler(tauri::generate_handler![get_token])
         .create_window(
             "Rust".to_string(),
             // This should better load a static file in production, using a server is fine for development
-            tauri::WindowUrl::App(format!("http://localhost:8080?token={}", local_token).into()),
+            tauri::WindowUrl::App("http://localhost:8080".into()),
             |window_builder, webview_attributes| {
                 (
-                    window_builder.title("Graviton Editor Test"),
+                    window_builder.title("Graviton Editor"),
                     webview_attributes,
                 )
             },
