@@ -9,7 +9,7 @@ const TabsContainer = styled.div`
     background: green;
     display: flex;
     flex-direction: column;
-    background: ${({ theme }) => theme.elements.tabsContainer.background};
+    background: ${({ theme }) => theme.elements.tabs.container.background};
     min-height: 100%;
     width: 100%;
     & .row {

@@ -16,21 +16,19 @@ const tabOpening = keyframes`
 
 const TabButtonStyle = styled.div<PropsWithChildren<any>>`
     color: white;
-    background: black;
+    background: transparent;
     padding: 5px 10px;
     font-size: 13px;
-    border-radius: 7px;
     display: flex;
     min-width: 125px;
     max-width: 125px;
-    max-height: 36px;
     align-items: center;
     cursor:pointer;
     justify-content:flex-start;
     user-select:none;
     animation: ${tabOpening} ease-in 0.14s;
     &.selected {
-        background: gray;
+        background: ${({ theme }) => theme.elements.tabs.button.focused.background};
     }
     & > p {
         margin: 3px;

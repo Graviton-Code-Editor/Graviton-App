@@ -11,8 +11,12 @@ const TabsPanelContainer = styled.div`
     flex-direction: column;
     & .tabsList {
         display: flex;
-        min-height: 45px;
+        min-height: 40px;
         overflow-x: auto;
+        background: ${({ theme }) => theme.elements.tabs.list.background};
+        &:empty{
+            background: transparent;
+        }
         &::-webkit-scrollbar {
             height: 6px !important;
         }

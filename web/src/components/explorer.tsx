@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components'
+import { keyframes, default as styled } from 'styled-components'
 import { clientState } from '../utils/atoms';
 //@ts-ignore
 import { FixedSizeList as List } from "react-window";
 //@ts-ignore
 import AutoSizer from "react-virtualized-auto-sizer";
 import { DirItemInfo } from '../utils/client';
+import CollapseArrow from '../icons/collapse_arrow.svg?component'
 
 
 const ExplorerContainer = styled(AutoSizer)`
   
 `
 
-const ExplorerItemContainer = styled.div`
+const ExplorerItemContainer = styled.div<{ isFile: boolean, isOpened: boolean }>`
     max-width: 300px;
     display: flex;
     align-items: center;
     margin: 5px;
+    ${({ isFile }) => isFile && 'margin-left: 22px;'}
     & > button {
         margin: 1px;
         cursor: pointer;
@@ -38,8 +40,15 @@ const ExplorerItemContainer = styled.div`
         text-align: left;
         user-select: none;
         &:hover {
-            background:  ${({ theme }) => theme.elements.explorer.item.hover.background};
+            background: ${({ theme }) => theme.elements.explorer.item.hover.background};
         }
+    }
+    & > svg {
+        fill: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
+        margin-right: 7px;
+        margin-left: 3px;
+        width: 7px;
+        transform: ${({ isOpened }) => isOpened ? ' rotate(90deg)' : ' rotate(0deg)'} 
     }
 `
 
@@ -180,29 +189,28 @@ function FilesystemExplorer({ initialRoute, onSelected, filesystem_name }: Explo
         })
     }, [])
 
+    function closeFolder(path: string) {
+        // Open the folder
+        client.list_dir_by_path(path, filesystem_name).then((pathItems) => {
+            if (pathItems.Ok) {
+                const subTreeItems: TreeItems = mapItemsListToSubTreeItem(pathItems.Ok);
+
+                // Add the new items to the sub tree 
+                addItemsToSubTreeByPath(folderTree, path, subTreeItems);
+
+                setFolderData([{ ...folderTree }, mapTree([], folderTree, 0)]);
+            } else {
+                // handle error
+            }
+        })
+    }
+
     function openFolder(path: string) {
 
-        const isOpened = isSubTreeByPathOpened(folderTree, path);
+        // Close the sub tree
+        const newFolderTree = removeSubTreeByPath(folderTree, path);
+        setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
 
-        if (isOpened) {
-            // Close the sub tree
-            const newFolderTree = removeSubTreeByPath(folderTree, path);
-            setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
-        } else {
-            // Open the folder
-            client.list_dir_by_path(path, filesystem_name).then((pathItems) => {
-                if (pathItems.Ok) {
-                    const subTreeItems: TreeItems = mapItemsListToSubTreeItem(pathItems.Ok);
-
-                    // Add the new items to the sub tree 
-                    addItemsToSubTreeByPath(folderTree, path, subTreeItems);
-
-                    setFolderData([{ ...folderTree }, mapTree([], folderTree, 0)]);
-                } else {
-                    // handle error
-                }
-            })
-        }
     }
 
     function ListItem({ index, style }: { index: number, style: any }) {
@@ -212,6 +220,7 @@ function FilesystemExplorer({ initialRoute, onSelected, filesystem_name }: Explo
             ...style,
             paddingLeft: itemInfo.depth * 10,
         };
+        const isOpened = isSubTreeByPathOpened(folderTree, itemInfo.path);
 
         // When the item is clicked
         function onClick() {
@@ -220,14 +229,22 @@ function FilesystemExplorer({ initialRoute, onSelected, filesystem_name }: Explo
                 // Trigger the select callback
                 onSelected(itemInfo)
             } else {
-                // Open itself
-                openFolder(itemInfo.path)
+
+                if (isOpened) {
+                    // Close itself
+                    openFolder(itemInfo.path)
+                } else {
+                    // Open itself
+                    closeFolder(itemInfo.path)
+                }
+
             }
 
         }
 
         return (
-            <ExplorerItemContainer key={itemInfo.path} onClick={onClick} style={itemStyle}>
+            <ExplorerItemContainer key={itemInfo.path} onClick={onClick} style={itemStyle} isFile={itemInfo.isFile} isOpened={isOpened}>
+                {!itemInfo.isFile && <CollapseArrow />}
                 <button>{itemInfo.name}</button>
             </ExplorerItemContainer>
         )

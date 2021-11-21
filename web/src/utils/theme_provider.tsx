@@ -19,14 +19,27 @@ const theme = {
                 background: '#191919'
             }
         },
-        tabsContainer: {
-            background: '#191919'
+        tabs: {
+            list: {
+                background: '#222222'
+            },
+            button: {
+                focused: {
+                    background: '#191919'
+                }
+            },
+            container: {
+                background: '#191919'
+            }
         },
         view: {
             background: '#222222'
         },
         explorer: {
             item: {
+                arrow: {
+                    fill: 'rgba(255, 255, 255)'
+                },
                 background: 'transparent',
                 text: {
                     color: 'white'
