@@ -1,19 +1,34 @@
-import { PropsWithChildren } from 'react'
-import styled from 'styled-components'
+import { MouseEvent, PropsWithChildren } from 'react'
+import { keyframes, default as styled } from 'styled-components'
+
+const tabOpening = keyframes`
+    0% {
+        opacity: 0;
+        min-width: 0px;
+        width: 0px;
+    }
+    100% {
+        opacity: 1;
+        min-width: 125px;
+        width: 125px;
+    }
+`
 
 const TabButtonStyle = styled.div<PropsWithChildren<any>>`
     color: white;
-    max-width: 200px;
     background: black;
     padding: 5px 10px;
     font-size: 13px;
     border-radius: 7px;
-    margin: 3px;
     display: flex;
-    min-width: 130px;
-    max-width: 150px;
+    min-width: 125px;
+    max-width: 125px;
     max-height: 36px;
     align-items: center;
+    cursor:pointer;
+    justify-content:flex-start;
+    user-select:none;
+    animation: ${tabOpening} ease-in 0.14s;
     &.selected {
         background: gray;
     }
@@ -31,13 +46,21 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
 interface TabButtonOptions {
     title: string,
     isSelected: boolean,
-    select: () => void
+    select: () => void,
+    close: () => void
 }
 
-export default function TabButton({ title, isSelected, select }: TabButtonOptions){
+export default function TabButton({ title, isSelected, select, close }: TabButtonOptions) {
+
+    function closeTab(event: MouseEvent){
+        event.stopPropagation();
+        close();
+    }
+
     return (
         <TabButtonStyle className={isSelected && 'selected'} onClick={select}>
             <p>{title}</p>
+            <button onClick={closeTab}>x</button>
         </TabButtonStyle>
     )
 }

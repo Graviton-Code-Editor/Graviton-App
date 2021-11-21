@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components'
 import { Tab } from '../../modules/tab';
@@ -32,39 +32,56 @@ const TabsPanelContainer = styled.div`
 interface TabPanelOptions {
     tabs: Tab[],
     col: number,
-    row: number
+    row: number,
+    close: (i: number) => void
 }
 
-export default function TabsPanel({ tabs, col, row }: TabPanelOptions) {
+export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
 
-    const [selectedTab, setSelectedTab] = useState(0);
+    const [selectedTabID, setSelectedTabID] = useState<string | null>(null);
     const setFocusedTab = useSetRecoilState(focusedTab);
 
-    function selectTab(index: number) {
+    // If there isn't any tab opened then set the selected tab to null
+    if(tabs.length === 0 && selectedTabID != null){
+        setSelectedTabID(null);
+    }
+
+    // If there is not selected tab but there exists one, select it
+    if(selectedTabID == null && tabs.length > 0){
+        setSelectedTabID(tabs[0].id);
+    }
+
+    function selectTab(id: string) {
         // Update the panel state
-        setSelectedTab(index)
+        setSelectedTabID(id);
 
         // Focus the tab
         setFocusedTab({
             col,
-            row
+            row,
+            id
         })
+    }
+
+    function removeTab(index: number) {
+        setSelectedTabID(null);
+        close(index);    
     }
 
     return (
         <TabsPanelContainer>
             <div className="tabsList" >
                 {tabs.map((tab, i) => {
-                    const isSelected = i == selectedTab;
-                    return <TabButton key={tab.title} title={tab.title} isSelected={isSelected} select={() => selectTab(i)} />;
+                    const isSelected = tab.id == selectedTabID;
+                    return <TabButton key={tab.id} title={tab.title} isSelected={isSelected} select={() => selectTab(tab.id)} close={() => removeTab(i)}/>;
                 })}
             </div>
             <div className="tabsContainer">
-                {tabs.map((tab, i) => {
-                    const isSelected = i == selectedTab;
+                {tabs.map((tab) => {
+                    const isSelected = tab.id == selectedTabID;
                     const Container = tab.container;
                     return isSelected && (
-                        <TabContainer key={tab.title}>
+                        <TabContainer key={tab.id}>
                             <Container />
                         </TabContainer>
                     );

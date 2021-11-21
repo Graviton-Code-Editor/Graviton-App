@@ -23,7 +23,13 @@ export const panels = atom({
 
 export const clientState = atom({ key: 'clientState', default: null as unknown as RpcClient });
 
-export const focusedTab = atom({ key: 'focusedTab', default: { row: 0, col: 0 } });
+interface FocusedTab {
+    row: number,
+    col: number,
+    id: string | null
+}
+
+export const focusedTab = atom<FocusedTab>({ key: 'focusedTab', default: { row: 0, col: 0, id: null } });
 
 export const prompts = atom<typeof Prompt[]>({
     key: 'prompts',

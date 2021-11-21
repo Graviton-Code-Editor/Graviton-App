@@ -1,9 +1,7 @@
 import { SplitPane } from 'react-multi-split-pane';
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { openedTabsState } from "../utils/atoms";
-import TabButton from "./tabs/tab_button";
-import TabContainer from "./tabs/tab_container";
 import TabsPanel from './tabs/tab_panel';
 
 const TabsContainer = styled.div`
@@ -29,7 +27,12 @@ const TabsContainer = styled.div`
  */
 function Tabs() {
 
-    const tabsPanels = useRecoilValue(openedTabsState);
+    const [tabsPanels, setTabsPanels] = useRecoilState(openedTabsState);
+
+    function closeTab(row: number, column: number, index: number){
+        tabsPanels[row][column].splice(index, 1);
+        setTabsPanels([...tabsPanels]);
+    }
 
     return (
         <TabsContainer>
@@ -38,7 +41,7 @@ function Tabs() {
                     return (
                         <SplitPane split="vertical" minSize={20} className="colunmn" key={`${r}_row`} >
                             {columns.map((tabs, c) => {
-                                return <TabsPanel key={`${r}${c}_tabs_panel`} tabs={tabs} row={r} col={c}/>
+                                return <TabsPanel key={`${r}${c}_tabs_panel`} tabs={tabs} row={r} col={c} close={(i) => closeTab(r,c, i)}/>
                             })}
                         </SplitPane>
                     )

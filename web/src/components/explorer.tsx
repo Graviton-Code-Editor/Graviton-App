@@ -46,6 +46,9 @@ const ExplorerItemContainer = styled.div`
 interface ExplorerOptions {
     // Route where the explorer opens in
     initialRoute: string,
+    // Name of the FS installed in the Core
+    filesystem_name: string,
+    // Callback executed when a item is clicked
     onSelected: (path: TreeItemInfo) => void
 }
 
@@ -149,7 +152,7 @@ function mapItemsListToSubTreeItem(items: DirItemInfo[]): TreeItems {
     return subTreeItems;
 }
 
-function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
+function FilesystemExplorer({ initialRoute, onSelected, filesystem_name }: ExplorerOptions) {
 
     const client = useRecoilValue(clientState);
     const defaultState: [TreeItem, TreeItemInfo[]] = [{
@@ -161,7 +164,7 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
 
     useEffect(() => {
         // Load the given initial route
-        client.list_dir_by_path(initialRoute, "local").then((pathItems) => {
+        client.list_dir_by_path(initialRoute, filesystem_name).then((pathItems) => {
             if (pathItems.Ok) {
 
                 const subTree: TreeItem = {
@@ -187,7 +190,7 @@ function FilesystemExplorer({ initialRoute, onSelected }: ExplorerOptions) {
             setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
         } else {
             // Open the folder
-            client.list_dir_by_path(path, "local").then((pathItems) => {
+            client.list_dir_by_path(path, filesystem_name).then((pathItems) => {
                 if (pathItems.Ok) {
                     const subTreeItems: TreeItems = mapItemsListToSubTreeItem(pathItems.Ok);
 

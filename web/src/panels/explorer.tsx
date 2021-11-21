@@ -32,10 +32,10 @@ function ExplorerPanelContainer() {
 
   return (
     <div style={{ height : '100%', width: '100%' }}>
-      {folders.map(({ path }, i) => {
-        // Note: path shouldn't really be the key
+      {folders.map(({ path }) => {
+        // Note: path shouldn't really be the key and filesystem_name shouldn't be always local
         return (
-          <FilesystemExplorer initialRoute={path} onSelected={openFile} key={path} />
+          <FilesystemExplorer initialRoute={path} onSelected={openFile} key={path} filesystem_name="local" />
         )
       })}
     </div>
