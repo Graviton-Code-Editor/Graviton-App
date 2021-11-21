@@ -26,4 +26,4 @@ This is mainly used for the Core to notify of certains events to all frontends w
 ## Authentication
 The core manages the authentication of frontends through tokens. These token allow access to the states on Core, frontends must know what token they need to make of use of an specific state. 
 
-For frontends running on the same machine, they can get a token that will allow them to make use of a "default" state, in the file `$HOME/graviton_local_token`. This protects it against for example, websites you access through your browser, because they don't know the token of any state.
+For frontends running on the same machine, they can get a token that will allow them to make use of a "default" state, in the file `$HOME/graviton_local_token`. This protects it against for example, websites you access through your browser, because they don't know the token of any state. For example, the desktop-web version made with Tauri passes the generated token through a command invocation to the web frontend.
