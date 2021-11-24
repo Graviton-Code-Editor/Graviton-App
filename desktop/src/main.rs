@@ -8,15 +8,7 @@ use std::{
 };
 use tauri::WindowBuilder;
 
-use graviton_core::{
-    tokio,
-    Configuration,
-    Core,
-    State,
-    StatesList,
-    TokenFlags,
-};
-
+use graviton_core::{Configuration, Core, State, StatesList, TokenFlags, jsonrpc_http_server::{self, DomainsValidation}, tokio};
 struct TauriState {
     token: String
 }
@@ -51,11 +43,13 @@ async fn main() {
     let token = "demo_secret_token";
 
     // Create the configuration
-    let config = Arc::new(Mutex::new(Configuration::new()));
+    let config = Arc::new(Mutex::new(Configuration::new(
+        DomainsValidation::Disabled
+    )));
 
     // Create an empty states list
     let mut states = StatesList::new();
-    let states = states.with_tokens(&vec![TokenFlags::All(token.to_string())]);
+    states.with_tokens(&vec![TokenFlags::All(token.to_string())]);
     let mut demo_state = State::new(1);
     states.add_state(&mut demo_state);
 
@@ -67,8 +61,10 @@ async fn main() {
         .unwrap();
     }
 
+    let states = Arc::new(Mutex::new(states.to_owned()));
+
     // Create a new config passing the configuration
-    let core = Core::new(config, states.to_owned());
+    let core = Core::new(config, states);
 
     tokio::task::spawn(async move { core.run().await });
 

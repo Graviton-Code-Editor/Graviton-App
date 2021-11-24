@@ -16,18 +16,19 @@ use std::sync::{
     Mutex,
 };
 pub use tokio;
+pub use jsonrpc_http_server;
 
 #[allow(dead_code)]
 pub struct Core {
     server: Server,
     config: Arc<Mutex<Configuration>>,
-    states: StatesList,
+    states: Arc<Mutex<StatesList>>,
 }
 
 impl Core {
-    pub fn new(config: Arc<Mutex<Configuration>>, states: StatesList) -> Self {
+    pub fn new(config: Arc<Mutex<Configuration>>, states: Arc<Mutex<StatesList>>) -> Self {
         Self {
-            server: Server::new(states.clone()),
+            server: Server::new(config.clone(), states.clone()),
             config,
             states,
         }

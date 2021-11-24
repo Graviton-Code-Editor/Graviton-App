@@ -20,8 +20,11 @@ use serde::{
     Deserialize,
     Serialize,
 };
-use std::sync::Arc;
-use tokio::sync::Mutex;
+use std::sync::{
+    Arc,
+    Mutex
+};
+use tokio::sync::Mutex as AsyncMutex;
 use warp::{
     ws::{
         Message,
@@ -30,15 +33,11 @@ use warp::{
     Filter,
 };
 
-use crate::{
-    filesystems::{
+use crate::{Configuration, State, StatesList, filesystems::{
         DirItemInfo,
         FileInfo,
         FilesystemErrors,
-    },
-    State,
-    StatesList,
-};
+    }};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "msg_type")]
@@ -72,12 +71,12 @@ struct Options {
 
 /// Middleware that makes sure the incoming websocket connection has a valid token
 async fn websockets_authentication(
-    states: Arc<std::sync::Mutex<StatesList>>,
+    states: Arc<Mutex<StatesList>>,
 ) -> impl Filter<Extract = ((),), Error = warp::reject::Rejection> + Clone {
     warp::query::<Options>()
         .map(move |options| (states.clone(), options))
         .and_then({
-            |(states, options): (Arc<std::sync::Mutex<StatesList>>, Options)| async move {
+            |(states, options): (Arc<Mutex<StatesList>>, Options)| async move {
                 if let Some(state) = states.lock().unwrap().get_state_by_id(options.state) {
                     if state.lock().unwrap().has_token(&options.token) {
                         return Ok(());
@@ -89,14 +88,16 @@ async fn websockets_authentication(
 }
 
 pub struct Server {
-    states: Arc<std::sync::Mutex<StatesList>>,
+    states: Arc<Mutex<StatesList>>,
+    config: Arc<Mutex<Configuration>>
 }
 
 impl Server {
     /// Create a new Server
-    pub fn new(states: StatesList) -> Self {
+    pub fn new(config: Arc<Mutex<Configuration>>, states: Arc<Mutex<StatesList>>) -> Self {
         Self {
-            states: Arc::new(std::sync::Mutex::new(states)),
+            config,
+            states: states,
         }
     }
 
@@ -133,11 +134,11 @@ impl Server {
         };
         http_io.extend_with(manager.to_delegate());
 
+
+        let http_cors = self.config.lock().unwrap().json_rpc_http_cors.clone();        
         tokio::task::spawn_blocking(move || {
             let server = jsonrpc_http_server::ServerBuilder::new(http_io)
-                .cors(DomainsValidation::AllowOnly(vec![
-                    AccessControlAllowOrigin::Any,
-                ]))
+                .cors(http_cors)
                 .start_http(&"127.0.0.1:50001".to_string().parse().unwrap())
                 .expect("Unable to start RPC HTTP server");
             server.wait();
@@ -148,11 +149,11 @@ impl Server {
 
     /// Handle the socket connection of a listener
     fn handle_ws_listener(
-        states: Arc<std::sync::Mutex<StatesList>>,
+        states: Arc<Mutex<StatesList>>,
         (sender, recv): (SplitSink<WebSocket, Message>, SplitStream<WebSocket>),
     ) {
-        let sender = Arc::new(Mutex::new(sender));
-        let recv = Arc::new(Mutex::new(recv));
+        let sender = Arc::new(AsyncMutex::new(sender));
+        let recv = Arc::new(AsyncMutex::new(recv));
 
         std::thread::spawn(move || {
             let states = states.clone();
@@ -243,7 +244,7 @@ pub trait RpcMethods {
 
 /// JSON RPC manager
 pub struct RpcManager {
-    pub states: Arc<std::sync::Mutex<StatesList>>,
+    pub states: Arc<Mutex<StatesList>>,
 }
 
 /// Implementation of all JSON RPC methods
