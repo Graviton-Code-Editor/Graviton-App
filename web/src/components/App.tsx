@@ -13,11 +13,11 @@ import Theme from '../utils/theme_provider'
 import View from './view'
 import { SplitPane } from 'react-multi-split-pane'
 import { useHotkeys } from 'react-hotkeys-hook'
-import { invoke } from "@tauri-apps/api"
 import { isTauri } from '../utils/commands'
 
 async function getToken() {
   if(isTauri) {
+    const { invoke } = await import("@tauri-apps/api")
     // Invoke the tauri command to retrieve the token
     return await invoke<string>('get_token');
   } else {
@@ -29,7 +29,7 @@ async function getToken() {
 async function StateManager() {
   const token = await getToken();
   if (token !== null) {
-    const config = new Configuration("http://127.0.0.1:50001", `ws://127.0.0.1:8000/listen?token=${token}&state=1`, 1, token);
+    const config = new Configuration("http://127.0.0.1:50001", `ws://127.0.0.1:7700/listen?token=${token}&state=1`, 1, token);
     const client = new RpcClient(config);
 
     // Listen for any change on the state

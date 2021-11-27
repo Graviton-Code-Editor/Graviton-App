@@ -1,17 +1,40 @@
 [env]
 CARGO_MAKE_EXTEND_WORKSPACE_MAKEFILE = true
 
+# Development
 [tasks.watch_web_components]
 script = "yarn workspace @gveditor/web_components dev"
 
-[tasks.serve_demo_web]
-script = "yarn workspace @gveditor/web dev"
+[tasks.watch_desktop]
+script = "cargo tauri dev"
 
-[tasks.desktop_demo]
-command = "cargo"
-args = ["run", "--package", "desktop"]
+[tasks.desktop_dev]
+script_runner = "@duckscript"
+script = '''
+cd ../desktop
+cm_run_task watch_desktop
+'''
 
-[tasks.demo]
+[tasks.dev_desktop]
 run_task = [
-    { name = ["serve_demo_web", "watch_web_components", "desktop_demo"], parallel = true }
+    { name = ["desktop_dev", "watch_web_components"], parallel = true }
+]
+
+# Building
+[tasks.build_web_components]
+script = "yarn workspace @gveditor/web_components build"
+
+[tasks.build_tauri]
+script = "cargo tauri build"
+
+[tasks.desktop_build]
+script_runner = "@duckscript"
+script = '''
+cd ../desktop
+cm_run_task build_tauri
+'''
+
+[tasks.build_desktop]
+run_task = [
+    { name = ["build_web_components", "desktop_build"], parallel = false }
 ]

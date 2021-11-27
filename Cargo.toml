@@ -1,5 +1,6 @@
 [workspace]
 members = [
    "core",
-   "desktop"
+   "desktop/src-tauri"
 ]
+

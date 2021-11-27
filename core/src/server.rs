@@ -12,17 +12,13 @@ use jsonrpc_core::{
     IoHandler,
 };
 use jsonrpc_derive::rpc;
-use jsonrpc_http_server::{
-    AccessControlAllowOrigin,
-    DomainsValidation,
-};
 use serde::{
     Deserialize,
     Serialize,
 };
 use std::sync::{
     Arc,
-    Mutex
+    Mutex,
 };
 use tokio::sync::Mutex as AsyncMutex;
 use warp::{
@@ -33,11 +29,16 @@ use warp::{
     Filter,
 };
 
-use crate::{Configuration, State, StatesList, filesystems::{
+use crate::{
+    filesystems::{
         DirItemInfo,
         FileInfo,
         FilesystemErrors,
-    }};
+    },
+    Configuration,
+    State,
+    StatesList,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(tag = "msg_type")]
@@ -89,16 +90,13 @@ async fn websockets_authentication(
 
 pub struct Server {
     states: Arc<Mutex<StatesList>>,
-    config: Arc<Mutex<Configuration>>
+    config: Arc<Mutex<Configuration>>,
 }
 
 impl Server {
     /// Create a new Server
     pub fn new(config: Arc<Mutex<Configuration>>, states: Arc<Mutex<StatesList>>) -> Self {
-        Self {
-            config,
-            states: states,
-        }
+        Self { config, states }
     }
 
     /// Start the JSON RPC HTTP Server and WebSockets server
@@ -123,7 +121,7 @@ impl Server {
                         })
                     });
 
-                warp::serve(routes).run(([127, 0, 0, 1], 8000)).await;
+                warp::serve(routes).run(([127, 0, 0, 1], 7700)).await;
             });
         });
 
@@ -134,8 +132,7 @@ impl Server {
         };
         http_io.extend_with(manager.to_delegate());
 
-
-        let http_cors = self.config.lock().unwrap().json_rpc_http_cors.clone();        
+        let http_cors = self.config.lock().unwrap().json_rpc_http_cors.clone();
         tokio::task::spawn_blocking(move || {
             let server = jsonrpc_http_server::ServerBuilder::new(http_io)
                 .cors(http_cors)

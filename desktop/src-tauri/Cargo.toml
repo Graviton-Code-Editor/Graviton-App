@@ -1,0 +1,23 @@
+[package]
+name = "graviton"
+version = "0.1.0"
+description = "Code Editor"
+author = "Marc Espín Sanz"
+license = "MIT"
+repository = "https://github.com/Graviton-Code-Editor/Graviton-App"
+edition = "2021"
+build = "src/build.rs"
+
+[build-dependencies]
+tauri-build = { version = "1.0.0-beta.4" }
+
+[dependencies]
+serde_json = "1.0"
+serde = { version = "1.0", features = ["derive"] }
+tauri = { git = "https://github.com/tauri-apps/tauri",  features = ["api-all"] }
+home = "0.5.3"
+graviton_core = { path = "../../core"}
+
+[features]
+default = [ "custom-protocol" ]
+custom-protocol = [ "tauri/custom-protocol" ]

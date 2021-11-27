@@ -1,3 +1,17 @@
+#![cfg_attr(
+    all(not(debug_assertions), target_os = "windows"),
+    windows_subsystem = "windows"
+)]
+
+use graviton_core::{
+    jsonrpc_http_server::DomainsValidation,
+    tokio,
+    Configuration,
+    Core,
+    State,
+    StatesList,
+    TokenFlags,
+};
 use home::home_dir;
 use std::{
     fs,
@@ -6,11 +20,9 @@ use std::{
         Mutex,
     },
 };
-use tauri::WindowBuilder;
 
-use graviton_core::{Configuration, Core, State, StatesList, TokenFlags, jsonrpc_http_server::{self, DomainsValidation}, tokio};
 struct TauriState {
-    token: String
+    token: String,
 }
 
 #[tauri::command]
@@ -19,22 +31,10 @@ fn get_token(state: tauri::State<TauriState>) -> String {
 }
 
 fn open_tauri(token: String) {
-
     tauri::Builder::default()
         .manage(TauriState { token })
         .invoke_handler(tauri::generate_handler![get_token])
-        .create_window(
-            "Rust".to_string(),
-            // This should better load a static file in production, using a server is fine for development
-            tauri::WindowUrl::App("http://localhost:8080".into()),
-            |window_builder, webview_attributes| {
-                (
-                    window_builder.title("Graviton Editor"),
-                    webview_attributes,
-                )
-            },
-        )
-        .run(tauri::generate_context!("src/conf.json"))
+        .run(tauri::generate_context!("tauri.conf.json"))
         .expect("failed to run tauri application");
 }
 
@@ -43,9 +43,7 @@ async fn main() {
     let token = "demo_secret_token";
 
     // Create the configuration
-    let config = Arc::new(Mutex::new(Configuration::new(
-        DomainsValidation::Disabled
-    )));
+    let config = Arc::new(Mutex::new(Configuration::new(DomainsValidation::Disabled)));
 
     // Create an empty states list
     let mut states = StatesList::new();

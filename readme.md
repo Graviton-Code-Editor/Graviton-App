@@ -16,7 +16,7 @@
 
 Graviton is a Code Editor, for Desktop or as server service. Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
 
-See [this](#running) to compile it yourself. (There aren't any releases of the new version)
+See [this](./book/src/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
 
 ## 📑 Goals
 - No freezes or lags
@@ -47,20 +47,5 @@ See [this](#running) to compile it yourself. (There aren't any releases of the n
 - Alex Mayol
 - [Machou](http://github.com/Machou)
 - Cristina Piva
-
-
-<a id="running"></a>
-
-## Running
-
-### Requisites
-- Cargo
-- cargo-make
-- yarn
-
-Run the demo:
-```shell
-cargo make demo
-```
 
 wip. See [TODO](./TODO.md)

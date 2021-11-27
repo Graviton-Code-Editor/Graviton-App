@@ -5,6 +5,7 @@ mod server;
 mod state;
 
 pub use configuration::Configuration;
+pub use jsonrpc_http_server;
 use server::Server;
 pub use state::{
     State,
@@ -16,7 +17,6 @@ use std::sync::{
     Mutex,
 };
 pub use tokio;
-pub use jsonrpc_http_server;
 
 #[allow(dead_code)]
 pub struct Core {
