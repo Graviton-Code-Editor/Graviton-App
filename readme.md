@@ -20,8 +20,8 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
-| [gveditor-core](./core)       | Graviton backend engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core)     |   
-| [gveditor-core-api](./core_api)   | Graviton backend engine API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core)  |
+| [gveditor-core](./core)       | Graviton backend engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
+| [gveditor-core-api](./core_api)   | Graviton backend engine API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
 | [extensions/git](./extensions/git)      | Graviton Core Git Extension | WIP |
 | [desktop](./desktop)             | Desktop web-based frontend  | WIP |
 | [@gveditor/web](./web)                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fgraviton-rewrite%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core) |
