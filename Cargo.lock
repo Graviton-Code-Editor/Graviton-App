@@ -1107,6 +1107,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "git"
+version = "0.1.0"
+dependencies = [
+ "gveditor-core-api",
+]
+
+[[package]]
 name = "glib"
 version = "0.14.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1199,28 +1206,14 @@ dependencies = [
 name = "graviton"
 version = "0.1.0"
 dependencies = [
- "graviton_core",
+ "gveditor-core",
+ "gveditor-core-api",
  "home",
+ "libloading",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
-]
-
-[[package]]
-name = "graviton_core"
-version = "0.1.0"
-dependencies = [
- "home",
- "jsonrpc-core",
- "jsonrpc-core-client",
- "jsonrpc-derive",
- "jsonrpc-http-server",
- "jsonwebtoken",
- "serde",
- "serde_derive",
- "tokio",
- "warp",
 ]
 
 [[package]]
@@ -1278,6 +1271,27 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "gveditor-core"
+version = "0.1.0"
+dependencies = [
+ "gveditor-core-api",
+ "home",
+ "jsonrpc-core",
+ "jsonrpc-core-client",
+ "jsonrpc-derive",
+ "jsonrpc-http-server",
+ "jsonwebtoken",
+ "serde",
+ "serde_derive",
+ "tokio",
+ "warp",
+]
+
+[[package]]
+name = "gveditor-core-api"
+version = "0.1.0"
 
 [[package]]
 name = "h2"
@@ -1737,6 +1751,16 @@ name = "libc"
 version = "0.2.106"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a60553f9a9e039a333b4e9b20573b9e9b9c0bb3a11e201ccc48ef4283456d673"
+
+[[package]]
+name = "libloading"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "afe203d669ec979b7128619bae5a63b7b42e9203c1b29146079ee05e2f604b52"
+dependencies = [
+ "cfg-if 1.0.0",
+ "winapi",
+]
 
 [[package]]
 name = "lock_api"

@@ -18,6 +18,16 @@ Graviton is a Code Editor, for Desktop or as server service. Learn more about [h
 
 See [this](./book/src/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
 
+| Package             | Description | Status |
+|---------------------|-------------|-------------|
+| gveditor-core       | Graviton backend engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core)     |   
+| gveditor-core-api   | Graviton backend engine API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core)  |
+| extensions/git      | Graviton Core Git Extension | WIP |
+| desktop             | Desktop web-based frontend  | WIP |
+| @gveditor/web                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fgraviton-rewrite%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core) |
+| @gveditor/web_components      | Web components | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb_components&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fgraviton-rewrite%2Fweb_components%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/graviton-rewrite/core) |
+
+
 ## 📑 Goals
 - No freezes or lags
 - Fast startup time

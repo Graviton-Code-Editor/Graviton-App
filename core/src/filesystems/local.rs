@@ -1,14 +1,13 @@
-use crate::server::Errors;
-use std::{
-    fs,
-    io::ErrorKind,
-};
-
 use super::{
     DirItemInfo,
     FileInfo,
     Filesystem,
     FilesystemErrors,
+};
+use crate::server::Errors;
+use std::{
+    fs,
+    io::ErrorKind,
 };
 
 /// Implementation of FileSystem methods for a local access

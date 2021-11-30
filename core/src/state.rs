@@ -1,19 +1,18 @@
+use crate::filesystems::{
+    Filesystem,
+    LocalFilesystem,
+};
+use gveditor_core_api::Extension;
+use serde::{
+    Deserialize,
+    Serialize,
+};
 use std::{
     collections::HashMap,
     sync::{
         Arc,
         Mutex,
     },
-};
-
-use serde::{
-    Deserialize,
-    Serialize,
-};
-
-use crate::filesystems::{
-    Filesystem,
-    LocalFilesystem,
 };
 
 #[derive(Clone)]
@@ -37,7 +36,7 @@ impl StatesList {
         }
     }
 
-    pub fn with_tokens(&mut self, tokens: &[TokenFlags]) -> &mut Self {
+    pub fn with_tokens(mut self, tokens: &[TokenFlags]) -> Self {
         self.provided_tokens = tokens.to_vec();
         self
     }
@@ -48,7 +47,7 @@ impl StatesList {
     }
 
     /// Return the state by the given ID if found
-    pub fn add_state(&mut self, state: &mut State) {
+    pub fn with_state(mut self, state: &mut State) -> Self {
         for token in &self.provided_tokens {
             match token {
                 TokenFlags::All(token) => {
@@ -59,6 +58,8 @@ impl StatesList {
 
         self.states
             .insert(state.id, Arc::new(Mutex::new(state.to_owned())));
+
+        self
     }
 }
 
@@ -68,10 +69,13 @@ struct Tab {}
 
 /// A state is like a small configuration, like a profile
 /// It stores what tabs do you have open, what extensions to load
+#[allow(dead_code)]
 #[derive(Serialize, Deserialize, Clone)]
 pub struct State {
     #[serde(skip_serializing, skip_deserializing)]
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
+    #[serde(skip_serializing, skip_deserializing)]
+    extensions: Vec<Arc<Mutex<Box<dyn Extension + Send>>>>,
     opened_tabs: Vec<Tab>,
     pub id: u8,
     tokens: Vec<String>,
@@ -90,6 +94,7 @@ impl Default for State {
         Self {
             id: 1,
             filesystems,
+            extensions: Vec::new(),
             opened_tabs: Vec::new(),
             tokens: Vec::new(),
         }
@@ -97,9 +102,10 @@ impl Default for State {
 }
 
 impl State {
-    pub fn new(id: u8) -> Self {
+    pub fn new(id: u8, extensions: Vec<Arc<Mutex<Box<dyn Extension + Send>>>>) -> Self {
         State {
             id,
+            extensions,
             ..Default::default()
         }
     }

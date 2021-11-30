@@ -3,9 +3,8 @@
 ## Graviton Desktop
 Requisites:
 - nodejs + npm ([`https://nodejs.org`](https://nodejs.org))
-- cargo ([`https://www.rust-lang.org`](https://www.rust-lang.org))
-- cargo-make (`cargo install cargo-make`)
-- tauri cli (`cargo install tauri`)
+- cargo (**nightly** channel) ([`https://www.rust-lang.org`](https://www.rust-lang.org))
+- tauri cli (`cargo install tauri-cli --version ^1.0.0-beta`)
 - yarn (`npm i -g yarn`)
 
 
@@ -13,12 +12,12 @@ For developing, run:
 ```shell
 cd Graviton-App
 yarn
-cargo make dev_desktop
+yarn dev_desktop
 ```
 
 To create a binary / installer, run:
 ```shell
 cd Graviton-App
 yarn
-cargo make dev_desktop
+yarn build_desktop
 ```

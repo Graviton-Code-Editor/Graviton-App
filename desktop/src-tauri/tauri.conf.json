@@ -19,8 +19,9 @@
         "./icons/icon.png",
         "./icons/icon.ico"
       ],
-      "resources": [],
-      "externalBin": [],
+      "resources": [
+        "../../target/debug"
+      ],
       "copyright": "Marc Espín Sanz",
       "category": "DeveloperTool",
       "shortDescription": "Code Editor",

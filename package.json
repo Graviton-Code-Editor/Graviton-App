@@ -1,7 +1,15 @@
 {
   "private": true,
+  "scripts":{
+    "dev_desktop":"jake build_git_extension dev_desktop",
+    "build_desktop":"jake build_git_extension build_desktop"
+  },
   "workspaces": [
     "web",
     "web_components"
-  ]
+  ],
+  "devDependencies": {
+    "execa": "^6.0.0",
+    "jake": "^10.8.2"
+  }
 }

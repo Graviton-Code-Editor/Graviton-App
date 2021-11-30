@@ -1,3 +1,13 @@
+use crate::{
+    filesystems::{
+        DirItemInfo,
+        FileInfo,
+        FilesystemErrors,
+    },
+    Configuration,
+    State,
+    StatesList,
+};
 use jsonrpc_core::{
     futures::{
         SinkExt,
@@ -27,17 +37,6 @@ use warp::{
         WebSocket,
     },
     Filter,
-};
-
-use crate::{
-    filesystems::{
-        DirItemInfo,
-        FileInfo,
-        FilesystemErrors,
-    },
-    Configuration,
-    State,
-    StatesList,
 };
 
 #[derive(Serialize, Deserialize, Debug)]
