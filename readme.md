@@ -13,11 +13,11 @@
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 [![Discord Server](https://discordapp.com/api/guilds/536130219057086514/widget.png)](https://discord.gg/gg6CTYA)
 
-Graviton is a Code Editor, for Desktop or as server service. Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
+Graviton is a Code Editor, for Desktop or as server service (WIP). 
 
 See [this](./book/src/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
 
-**NOTE**: Old Graviton (version 2.3.0) is in a different [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0).
+**NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
 
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
