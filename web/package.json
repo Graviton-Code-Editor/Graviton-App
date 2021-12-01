@@ -1,0 +1,43 @@
+{
+  "name": "@gveditor/web",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@codemirror/basic-setup": "^0.19.0",
+    "@codemirror/lang-javascript": "^0.19.2",
+    "@fontsource/inter": "^4.5.1",
+    "@gveditor/web_components": "*",
+    "@tauri-apps/api": "^1.0.0-beta.8",
+    "@uiw/react-codemirror": "^4.2.3",
+    "emittery": "^0.10.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
+    "react-hotkeys-hook": "^3.4.4",
+    "react-multi-split-pane": "^0.3.2",
+    "react-virtualized-auto-sizer": "^1.0.6",
+    "react-window": "^1.8.6",
+    "recoil": "^0.5.0",
+    "recoil-nexus": "^0.3.8",
+    "simple-jsonrpc-js": "^1.2.0",
+    "styled-components": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-virtualized": "^9.21.14",
+    "@types/styled-components": "^5.1.15",
+    "@typescript-eslint/eslint-plugin": "^5.3.0",
+    "@typescript-eslint/parser": "^5.3.0",
+    "@vitejs/plugin-react": "1.0.5",
+    "eslint": "^8.2.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.6.4",
+    "vite-plugin-checker": "^0.3.4",
+    "vite-plugin-react-svg": "^0.2.0"
+  }
+}

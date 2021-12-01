@@ -1,0 +1,66 @@
+{
+  "package": {
+    "productName": "GravitonEditor",
+    "version": "0.1.0"
+  },
+  "build": {
+    "distDir": "../../web/dist",
+    "devPath": "http://localhost:8080",
+    "beforeDevCommand": "yarn --cwd ../web run dev",
+    "beforeBuildCommand": "yarn --cwd ../web run build"
+  },
+  "tauri": {
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.graviton.editor",
+      "icon": [
+        "./icons/icon.png",
+        "./icons/icon.png",
+        "./icons/icon.ico"
+      ],
+      "resources": [
+        "../../target/debug"
+      ],
+      "copyright": "Marc Espín Sanz",
+      "category": "DeveloperTool",
+      "shortDescription": "Code Editor",
+      "longDescription": "Programming Code Editor",
+      "deb": {
+        "depends": [],
+        "useBootstrapper": false
+      },
+      "macOS": {
+        "frameworks": [],
+        "minimumSystemVersion": "",
+        "useBootstrapper": false,
+        "exceptionDomain": "",
+        "signingIdentity": null,
+        "entitlements": null
+      },
+      "windows": {
+        "certificateThumbprint": null,
+        "digestAlgorithm": "sha256",
+        "timestampUrl": ""
+      }
+    },
+    "updater": {
+      "active": false
+    },
+    "allowlist": {
+      "all": true
+    },
+    "windows": [
+      {
+        "title": "Graviton Editor",
+        "width": 800,
+        "height": 600,
+        "resizable": true,
+        "fullscreen": false
+      }
+    ],
+    "security": {
+      "csp": "default-src blob: data: filesystem: ws: wss: http: https: tauri: 'unsafe-eval' 'unsafe-inline' 'self' img-src: 'self'"
+    }
+  }
+}

@@ -1,6 +1,0 @@
-{
-	"compilerOptions": {
-		"esModuleInterop": true
-	},
-	"files": ["../src/server/index.ts"]
-}
