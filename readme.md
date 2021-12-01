@@ -17,6 +17,8 @@ Graviton is a Code Editor, for Desktop or as server service. Learn more about [h
 
 See [this](./book/src/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
 
+**NOTE**: Old Graviton (version 2.3.0) is in a different [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0).
+
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
 | [gveditor-core](./core)       | Graviton backend engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
