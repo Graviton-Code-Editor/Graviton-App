@@ -7,7 +7,7 @@ use std::path::Path;
 mod local;
 pub use local::LocalFilesystem;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum FilesystemErrors {
     FilesystemNotFound,
     FileNotFound,
@@ -21,7 +21,7 @@ pub trait Filesystem {
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct DirItemInfo {
     path: String,
     name: String,
@@ -35,6 +35,12 @@ pub enum FileFormat {
     Text(String),
 }
 
+/// Returns the content format of the give file
+///
+/// # Arguments
+///
+/// * `path`   - The path of the file
+///
 pub fn get_format_from_path(path: &str) -> FileFormat {
     if let Some(ext) = Path::new(path).extension() {
         match ext.to_str().unwrap() {
@@ -46,6 +52,7 @@ pub fn get_format_from_path(path: &str) -> FileFormat {
     }
 }
 
+/// Contains information about a file
 #[derive(Serialize, Deserialize)]
 pub struct FileInfo {
     content: String,

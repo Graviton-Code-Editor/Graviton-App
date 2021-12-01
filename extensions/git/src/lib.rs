@@ -13,6 +13,6 @@ impl Extension for GitExtension {
 
 #[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn main() -> Box<dyn Extension> {
+pub extern "C" fn entry() -> Box<dyn Extension> {
     Box::new(GitExtension { state: None })
 }

@@ -66,9 +66,9 @@ fn load_extensions_from_path(path: String) -> Vec<Arc<Mutex<Box<dyn Extension + 
     unsafe {
         // Load the extension library
         let lib = libloading::Library::new(format!("{}/{}", path, "git.dll")).unwrap();
-        // Retrieve the main function handler
+        // Retrieve the entry function handler
         let func: libloading::Symbol<unsafe extern "C" fn() -> Box<dyn Extension + Send>> =
-            lib.get(b"main").unwrap();
+            lib.get(b"entry").unwrap();
         // Initialize the extension
         let extension_obj = func();
         let extension_obj = Arc::new(Mutex::new(extension_obj));
@@ -100,22 +100,6 @@ async fn main() {
     let context = tauri::generate_context!("tauri.conf.json");
     let token = "demo_secret_token";
 
-    // Load built-in extensions
-    let built_in_extensions_path = get_built_in_extensions_path(&context);
-    let built_in_extensions = load_extensions_from_path(built_in_extensions_path);
-
-    // Create the configuration
-    let config = Arc::new(Mutex::new(Configuration::new(DomainsValidation::Disabled)));
-
-    // Create the StatesList
-    let states = {
-        let mut demo_state = State::new(1, built_in_extensions);
-        StatesList::new()
-            .with_tokens(&[TokenFlags::All(token.to_string())])
-            .with_state(&mut demo_state)
-    };
-    let states = Arc::new(Mutex::new(states));
-
     if let Some(home) = home_dir() {
         fs::write(
             format!("{}/graviton_local_token", home.to_str().unwrap()),
@@ -123,6 +107,23 @@ async fn main() {
         )
         .unwrap();
     }
+
+    // Load built-in extensions
+    let built_in_extensions_path = get_built_in_extensions_path(&context);
+    let built_in_extensions = load_extensions_from_path(built_in_extensions_path);
+
+    // Create the StatesList
+    let states = {
+        let default_state = State::new(1, built_in_extensions);
+        let states = StatesList::new()
+            .with_tokens(&[TokenFlags::All(token.to_string())])
+            .with_state(default_state);
+
+        Arc::new(Mutex::new(states))
+    };
+
+    // Create the configuration
+    let config = Arc::new(Mutex::new(Configuration::new(DomainsValidation::Disabled)));
 
     // Create a new config passing the configuration
     let core = Core::new(config, states);

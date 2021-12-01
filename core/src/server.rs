@@ -201,7 +201,7 @@ impl Server {
 }
 
 /// Global errors enum
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Errors {
     StateNotFound,
     Fs(FilesystemErrors),

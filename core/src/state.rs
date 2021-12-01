@@ -47,7 +47,9 @@ impl StatesList {
     }
 
     /// Return the state by the given ID if found
-    pub fn with_state(mut self, state: &mut State) -> Self {
+    pub fn with_state(mut self, state: State) -> Self {
+        let mut state = state;
+
         for token in &self.provided_tokens {
             match token {
                 TokenFlags::All(token) => {

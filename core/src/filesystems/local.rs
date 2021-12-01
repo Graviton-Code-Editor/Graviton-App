@@ -57,3 +57,39 @@ impl Filesystem for LocalFilesystem {
             })
     }
 }
+
+#[cfg(test)]
+mod tests {
+
+    use super::{
+        Filesystem,
+        LocalFilesystem,
+    };
+
+    #[test]
+    fn read_files() {
+        let fs = LocalFilesystem::new();
+
+        let file_exists = fs.read_file_by_path("./readme.md").is_ok();
+        let doesnt_exist = !fs.read_file_by_path("rust_>_*").is_ok();
+
+        assert!(file_exists);
+        assert!(doesnt_exist);
+    }
+
+    #[test]
+    fn list_dir() {
+        let fs = LocalFilesystem::new();
+
+        let items_in_dir = fs.list_dir_by_path(".");
+
+        assert!(items_in_dir.is_ok());
+
+        let items_in_dir = items_in_dir.unwrap();
+
+        assert!(items_in_dir.len() > 1);
+
+        assert_eq!(items_in_dir[0].name, "Cargo.toml");
+        assert!(items_in_dir[0].is_file);
+    }
+}
