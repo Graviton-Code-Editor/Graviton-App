@@ -34,22 +34,27 @@ impl Filesystem for LocalFilesystem {
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors> {
         fs::read_dir(path)
             .map(|dirs| {
-                dirs.filter_map(|entry| {
-                    if let Ok(entry) = entry {
-                        let path = entry.path();
-                        let str_path = path.as_os_str().to_str().unwrap().to_string();
-                        let item_name = path.file_name().unwrap().to_str().unwrap().to_string();
-                        let is_file = path.is_file();
-                        Some(DirItemInfo {
-                            path: str_path,
-                            name: item_name,
-                            is_file,
-                        })
-                    } else {
-                        None
-                    }
-                })
-                .collect::<Vec<DirItemInfo>>()
+                let mut items = dirs
+                    .filter_map(|entry| {
+                        if let Ok(entry) = entry {
+                            let path = entry.path();
+                            let str_path = path.as_os_str().to_str().unwrap().to_string();
+                            let item_name = path.file_name().unwrap().to_str().unwrap().to_string();
+                            let is_file = path.is_file();
+                            Some(DirItemInfo {
+                                path: str_path,
+                                name: item_name,
+                                is_file,
+                            })
+                        } else {
+                            None
+                        }
+                    })
+                    .collect::<Vec<DirItemInfo>>();
+
+                items.sort_by_key(|item| item.is_file);
+
+                items
             })
             .map_err(|err| match err.kind() {
                 ErrorKind::NotFound => Errors::Fs(FilesystemErrors::FileNotFound),
