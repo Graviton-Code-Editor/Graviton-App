@@ -159,39 +159,45 @@ impl Server {
                 loop {
                     let mut recv = recv.lock().await;
                     // Listen for incomming messages
-                    if let Some(Ok(msg)) = recv.next().await {
-                        if msg.is_text() {
-                            let text = msg.to_str().unwrap();
-
-                            let message: WebSocketsMessages = serde_json::from_str(text).unwrap();
-
-                            // Handle the incomming message
-                            match message {
-                                // When a frontend listens for changes in a particular state
-                                // The core will sent the current state for it's particular ID if there is anyone
-                                // If not, a default state will be sent
-                                WebSocketsMessages::ListenToState {
-                                    state_id,
-                                    trigger: _,
-                                } => {
-                                    // Make sure if there is already an existing state
-                                    let state = {
-                                        let states = states.lock().unwrap();
-                                        states.get_state_by_id(state_id)
-                                    };
-                                    if let Some(state) = state {
-                                        // Send the state
-                                        sender
-                                            .lock()
-                                            .await
-                                            .send(WebSocketsMessages::state_updated(
-                                                state.lock().unwrap().to_owned(),
-                                            ))
-                                            .await
-                                            .unwrap();
+                    match recv.next().await {
+                        Some(Ok(msg )) => {
+                            if msg.is_text() {
+                                let text = msg.to_str().unwrap();
+    
+                                let message: WebSocketsMessages = serde_json::from_str(text).unwrap();
+    
+                                // Handle the incomming message
+                                match message {
+                                    // When a frontend listens for changes in a particular state
+                                    // The core will sent the current state for it's particular ID if there is anyone
+                                    // If not, a default state will be sent
+                                    WebSocketsMessages::ListenToState {
+                                        state_id,
+                                        trigger: _,
+                                    } => {
+                                        // Make sure if there is already an existing state
+                                        let state = {
+                                            let states = states.lock().unwrap();
+                                            states.get_state_by_id(state_id)
+                                        };
+                                        if let Some(state) = state {
+                                            // Send the state
+                                            sender
+                                                .lock()
+                                                .await
+                                                .send(WebSocketsMessages::state_updated(
+                                                    state.lock().unwrap().to_owned(),
+                                                ))
+                                                .await
+                                                .unwrap();
+                                        }
                                     }
                                 }
                             }
+                        },
+                        _ => {
+                            // Close thread for the particular connection
+                            break;  
                         }
                     }
                 }
