@@ -1269,7 +1269,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "gveditor-core-api",
  "home",
@@ -1286,7 +1286,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core-api"
-version = "0.1.0"
+version = "0.1.1"
 
 [[package]]
 name = "h2"

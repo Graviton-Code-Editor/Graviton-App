@@ -1,6 +1,6 @@
 [package]
 name = "gveditor-core-api"
-version = "0.1.0"
+version = "0.1.1"
 description = "Graviton Core API"
 authors = ["Marc Espín Sanz"]
 edition = "2021"
