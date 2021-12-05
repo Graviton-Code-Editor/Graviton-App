@@ -9,7 +9,10 @@ import AutoSizer from "react-virtualized-auto-sizer";
 import { DirItemInfo } from "../utils/client";
 import { ReactSVG } from "react-svg";
 
-const ExplorerContainer = styled(AutoSizer)``;
+const ExplorerContainer = styled.div`
+  margin: 5px;
+  height: calc(100% - 10px);
+`;
 
 const ExplorerItemContainer = styled.div<{
   isFile: boolean;
@@ -18,39 +21,37 @@ const ExplorerItemContainer = styled.div<{
   max-width: 300px;
   display: flex;
   align-items: center;
-  margin: 5px;
-  ${({ isFile }) => isFile && "margin-left: 22px;"}
-  & > button {
-    margin: 1px;
-    cursor: pointer;
-    outline: 0;
-    white-space: nowrap;
-    position: relative;
-    background: ${({ theme }) => theme.elements.explorer.item.background};
-    color: ${({ theme }) => theme.elements.explorer.item.text.color};
-    font-size: 12px;
-    border-radius: 5px;
-    line-break: none;
-    text-overflow: elliptic;
-    overflow: hidden;
-    padding: 6px;
-    border: none;
-    min-width: 170px;
-    max-width: 200px;
-    text-align: left;
-    user-select: none;
-    &:hover {
-      background: ${({ theme }) =>
-        theme.elements.explorer.item.hover.background};
-    }
+  cursor: pointer;
+  outline: 0;
+  white-space: nowrap;
+  position: relative;
+  background: ${({ theme }) => theme.elements.explorer.item.background};
+  color: ${({ theme }) => theme.elements.explorer.item.text.color};
+  font-size: 12px;
+  border-radius: 5px;
+  line-break: none;
+  text-overflow: elliptic;
+  overflow: hidden;
+  border: none;
+  min-width: 170px;
+  max-width: 200px;
+  text-align: left;
+  user-select: none;
+  &:hover {
+    background: ${({ theme }) => theme.elements.explorer.item.hover.background};
+  }
+  & > span {
+    ${({ isFile }) => isFile && "padding-left: 27px;"}
   }
   & svg {
-    fill: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
     margin-right: 7px;
-    margin-left: 3px;
+    margin-left: 15px;
     width: 7px;
     transform: ${({ isOpened }) =>
       isOpened ? " rotate(90deg)" : " rotate(0deg)"};
+    & > path {
+      stroke: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
+    }
   }
 `;
 
@@ -256,26 +257,28 @@ function FilesystemExplorer({
         isOpened={isOpened}
       >
         {!itemInfo.isFile && <ReactSVG src="./src/icons/collapse_arrow.svg" />}
-        <button>{itemInfo.name}</button>
+        <span>{itemInfo.name}</span>
       </ExplorerItemContainer>
     );
   }
 
   return (
     <ExplorerContainer>
-      {({ height, width }: { height: number; width: number }) => {
-        return (
-          <List
-            itemCount={folderItems.length}
-            width={width}
-            height={height}
-            itemSize={26}
-            overscanCount={10}
-          >
-            {ListItem}
-          </List>
-        );
-      }}
+      <AutoSizer>
+        {({ height, width }: { height: number; width: number }) => {
+          return (
+            <List
+              itemCount={folderItems.length}
+              width={width}
+              height={height}
+              itemSize={30}
+              overscanCount={10}
+            >
+              {ListItem}
+            </List>
+          );
+        }}
+      </AutoSizer>
     </ExplorerContainer>
   );
 }
