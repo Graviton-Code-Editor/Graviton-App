@@ -3,7 +3,9 @@
   "scripts": {
     "dev_desktop": "jake build_git_extension dev_desktop",
     "build_desktop": "jake build_git_extension build_desktop",
-    "test": "jake core_tests web_tests"
+    "test": "jake core_tests web_tests",
+    "format": "jake format_core format_web",
+    "lint": "jake lint_core"
   },
   "workspaces": [
     "web",

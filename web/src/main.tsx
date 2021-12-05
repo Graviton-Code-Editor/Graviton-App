@@ -4,7 +4,7 @@ import "./index.css";
 import "@fontsource/inter/index.css";
 import App from "./components/App";
 import applyPatches from "./utils/patches";
-import './utils/translation'
+import "./utils/translation";
 
 applyPatches();
 

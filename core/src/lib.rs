@@ -32,7 +32,7 @@ pub use tokio;
 ///     StatesList,
 ///     TokenFlags,
 /// };
-/// 
+///
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions

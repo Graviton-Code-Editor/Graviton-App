@@ -42,3 +42,16 @@ task('web_tests', async function () {
     await run('yarn', ['--cwd', './web','run','test'])
 });
 
+desc('Format the code');
+task('format_core', async function () {
+    await run('cargo', ['fmt'])
+});
+task('format_web', async function () {
+    await run('yarn', ['--cwd', './web','run','format'])
+});
+
+desc('Lint the code');
+task('lint_core', async function () {
+    await run('cargo', ['clippy'])
+});
+
