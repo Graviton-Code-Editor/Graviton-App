@@ -1,7 +1,7 @@
 {
   "package": {
     "productName": "GravitonEditor",
-    "version": "0.1.0"
+    "version": "0.0.1"
   },
   "build": {
     "distDir": "../../web/dist",
@@ -20,7 +20,7 @@
         "./icons/icon.ico"
       ],
       "resources": [
-        "../../target/debug"
+        "../../dist/extensions"
       ],
       "copyright": "Marc Espín Sanz",
       "category": "DeveloperTool",

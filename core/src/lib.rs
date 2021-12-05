@@ -22,6 +22,17 @@ pub use tokio;
 ///
 /// # Example
 /// ```rust
+/// use std::sync::{Arc, Mutex};
+/// use gveditor_core::{
+///     jsonrpc_http_server::DomainsValidation,
+///     tokio,
+///     Configuration,
+///     Core,
+///     State,
+///     StatesList,
+///     TokenFlags,
+/// };
+/// 
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
@@ -70,13 +81,8 @@ impl Core {
     /// Start the core
     ///
     /// # Note
-    /// This blocks the current thread, you might run this on a separate thread.
+    /// This blocks the current thread, you might prefer to run this on a separate thread.
     ///
-    /// ## Exemple
-    /// With tokio:
-    /// ```rust
-    /// tokio::task::spawn(async move { core.run().await });
-    /// ```
     pub async fn run(&self) {
         self.server.run().await;
     }

@@ -1,8 +1,9 @@
 {
   "private": true,
-  "scripts":{
-    "dev_desktop":"jake build_git_extension dev_desktop",
-    "build_desktop":"jake build_git_extension build_desktop"
+  "scripts": {
+    "dev_desktop": "jake build_git_extension dev_desktop",
+    "build_desktop": "jake build_git_extension build_desktop",
+    "test": "jake core_tests web_tests"
   },
   "workspaces": [
     "web",
@@ -10,6 +11,8 @@
   ],
   "devDependencies": {
     "execa": "^6.0.0",
-    "jake": "^10.8.2"
+    "fs-extra": "^10.0.0",
+    "jake": "^10.8.2",
+    "rimraf": "^3.0.2"
   }
 }

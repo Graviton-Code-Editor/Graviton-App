@@ -7,17 +7,23 @@ Requisites:
 - tauri cli (`cargo install tauri-cli --version ^1.0.0-beta`)
 - yarn (`npm i -g yarn`)
 
-
-For developing, run:
+Installing dependencies:
 ```shell
 cd Graviton-App
 yarn
+```
+
+For developing, run:
+```shell
 yarn dev_desktop
 ```
 
 To create a binary / installer, run:
 ```shell
-cd Graviton-App
-yarn
 yarn build_desktop
+```
+
+To run automated tests:
+```shell
+yarn test
 ```

@@ -1,75 +1,80 @@
 body {
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
 }
 
-html, body, #root {
-    height: 100%;
+html,
+body,
+#root {
+  height: 100%;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
 }
 
 * ::-webkit-scrollbar {
-    height: 10px;
-    width: 10px;
+  height: 10px;
+  width: 10px;
 }
 
 * ::-webkit-scrollbar-thumb {
-    background: rgb(160, 160, 160);
-    border-radius: 3px;
+  background: rgb(160, 160, 160);
+  border-radius: 3px;
 }
 
 * ::-webkit-scrollbar-thumb:hover {
-    background: rgb(200, 200, 200);
+  background: rgb(200, 200, 200);
 }
 
 * ::-webkit-scrollbar-corner {
-    display: none !important;
+  display: none !important;
 }
 
 .Resizer {
-    background: rgba(50,50,50);
-    box-sizing: border-box;
-    background-clip: padding-box;
+  background: rgba(50, 50, 50);
+  box-sizing: border-box;
+  background-clip: padding-box;
 }
 
 .Resizer.horizontal {
-    height: 11px;
-    border-top: 5px solid rgba(255, 255, 255, 0);
-    border-bottom: 5px solid rgba(255, 255, 255, 0);
-    cursor: row-resize;
+  height: 11px;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
 }
 
 .Resizer.vertical {
-    width: 11px;
-    border-left: 5px solid rgba(255, 255, 255, 0);
-    border-right: 5px solid rgba(255, 255, 255, 0);
-    cursor: col-resize;
+  width: 11px;
+  border-left: 5px solid rgba(255, 255, 255, 0);
+  border-right: 5px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
 }
 
 .DragLayer {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .DragLayer.resizing {
-    pointer-events: auto;
+  pointer-events: auto;
 }
 
 .DragLayer.horizontal {
-    cursor: row-resize;
+  cursor: row-resize;
 }
 
 .DragLayer.vertical {
-    cursor: col-resize;
+  cursor: col-resize;
 }
 
 .cm-editor {
-    background: white;
+  background: white;
 }

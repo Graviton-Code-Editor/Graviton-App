@@ -3,10 +3,9 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
-    "allowJs": false,
+    "allowJs": true,
     "skipLibCheck": true,
-    "esModuleInterop": false,
-    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
@@ -16,6 +15,6 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["./src","./src/custom.d.ts"],
-  "exclude":["./node_modules/@uiw/react-codemirror/cjs/index.d.ts"]
+  "include": ["./src/*/**/*", "./src/vite-env.d.ts"],
+  "exclude": ["./node_modules"]
 }

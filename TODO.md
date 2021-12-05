@@ -12,3 +12,4 @@
 - [x] Think about using CORS to maximize security of Core
 - [ ] Setup CI
 - [ ] Setup CD (daily beta releases)
+- [ ] State shouldn't have a global `opened_tabs` array but insted opened_tabs per folder

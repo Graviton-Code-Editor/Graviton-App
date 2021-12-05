@@ -1,61 +1,61 @@
-import { atom } from 'recoil'
-import BaseEditor from '../editors/base';
-import TextEditor from '../editors/text';
-import { Panel } from '../modules/panel';
-import { Prompt } from '../modules/prompt';
-import { Tab } from '../modules/tab';
-import ExplorerPanel from '../panels/explorer';
-import GlobalPrompt from '../prompts/global';
-import RpcClient from './client';
+import { atom } from "recoil";
+import BaseEditor from "../editors/base";
+import TextEditor from "../editors/text";
+import { Prompt } from "../modules/prompt";
+import GlobalPrompt from "../prompts/global";
+import {
+  FocusedTab,
+  FolderState,
+  PanelState,
+  TabsPanels,
+} from "../types/types";
+import { Client } from "./client";
 
-export type TabsPanels = Array<Array<Array<Tab>>>
-export const openedTabsState = atom({ key: 'openedTabs', default: [[[]]] as TabsPanels, dangerouslyAllowMutability: true });
-export interface PanelState {
-    panel: Panel
-}
+// Opened tabs
+export const openedTabsState = atom({
+  key: "openedTabs",
+  default: [[[]]] as TabsPanels,
+  dangerouslyAllowMutability: true,
+});
+
+// Opened panels
 export const panels = atom({
-    key: 'panels', default: [
-        {
-            panel: new ExplorerPanel()
-        }
-    ] as Array<PanelState>
+  key: "panels",
+  default: [] as Array<PanelState>,
 });
 
-export const clientState = atom({ key: 'clientState', default: null as unknown as RpcClient });
+// Client used across the app
+export const clientState = atom({
+  key: "clientState",
+  default: null as unknown as Client,
+});
 
-interface FocusedTab {
-    row: number,
-    col: number,
-    id: string | null
-}
+// Current focused (clicked) tab
+export const focusedTab = atom<FocusedTab>({
+  key: "focusedTab",
+  default: { row: 0, col: 0, id: null },
+});
 
-export const focusedTab = atom<FocusedTab>({ key: 'focusedTab', default: { row: 0, col: 0, id: null } });
-
+// Registered prompts launchers
 export const prompts = atom<typeof Prompt[]>({
-    key: 'prompts',
-    default: [
-        GlobalPrompt
-    ]
+  key: "prompts",
+  default: [GlobalPrompt],
 });
 
+// Current launched prompt
 export const prompt = atom<Prompt | null>({
-    key: 'prompt',
-    default: null
+  key: "prompt",
+  default: null,
 });
 
+// Registed Editors implementations
 export const editors = atom<typeof BaseEditor[]>({
-    key: 'editors',
-    default: [
-        TextEditor
-    ]
+  key: "editors",
+  default: [TextEditor],
 });
 
-export interface FolderState {
-    path: string,
-    //filesystem: string
-}
-
+// Opened folders in the explorer panel
 export const openedFolders = atom<FolderState[]>({
-    key: 'openedFolders',
-    default: []
+  key: "openedFolders",
+  default: [],
 });
