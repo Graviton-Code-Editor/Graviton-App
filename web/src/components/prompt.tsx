@@ -1,8 +1,8 @@
-import React from "react";
 import { useRef } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { prompt } from "../utils/atoms";
+import { useTranslation } from "react-i18next";
 import WindowBackground from "./window_background";
 
 const StyledPromptOption = styled.div`
@@ -54,6 +54,7 @@ interface PromptOptions {
 export default function PromptContainer({ options }: PromptOptions) {
   const refBackground = useRef(null);
   const setPromptState = useSetRecoilState(prompt);
+  const { t } = useTranslation();
 
   function closePrompt(event: any) {
     if (event.target === refBackground.current) {
@@ -77,7 +78,7 @@ export default function PromptContainer({ options }: PromptOptions) {
 
             return (
               <StyledPromptOption key={option.label} onClick={optionSelected}>
-                {option.label}
+                {t(option.label)}
               </StyledPromptOption>
             );
           })}
