@@ -17,6 +17,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+        
+      - name: Installing nodejs dependencies
+        run: yarn
+
+      - name: Build web
+        run: yarn --cwd web run build
 
       - name: Install linux dependencies
         if: runner.os == 'Linux'
@@ -31,7 +37,6 @@ jobs:
           patchelf \
           librsvg2-dev
        
-
       - name: Install MacOS dependencies
         if: runner.os == 'macOS'
         run: brew install gcc
@@ -39,9 +44,6 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
-
-      - name: Installing nodejs dependencies
-        run: yarn
 
       - name: Running unit tests
         run: yarn test
