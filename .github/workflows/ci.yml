@@ -22,5 +22,4 @@ jobs:
       - name: Installing nodejs dependencies
         run: yarn
       - name: Running unit tests
-        uses: actions-rs/cargo@v1
         run: yarn test
