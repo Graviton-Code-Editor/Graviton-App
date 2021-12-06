@@ -19,7 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install linux dependencies
-        if: ${{ runner.os == 'Linux' }}"
+        if: runner.os == 'Linux'
         run: |
           sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
           build-essential \
@@ -33,9 +33,9 @@ jobs:
        
 
       - name: Install MacOS dependencies
-        if: ${{ runner.os == 'Darwin' }}"
+        if: runner.os == 'macOS'
         run: brew install gcc
-        
+
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
