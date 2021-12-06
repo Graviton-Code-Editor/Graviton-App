@@ -31,7 +31,7 @@ task('dev_desktop', async function () {
 
 desc('Build the desktop');
 task('build_desktop', async function () {
-    await run('cargo', ['build'], './desktop')
+    await run('cargo tauri build', [], './desktop')
 });
 
 desc('Run tests');
