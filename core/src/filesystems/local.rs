@@ -94,7 +94,7 @@ mod tests {
 
         assert!(items_in_dir.len() > 1);
 
-        assert_eq!(items_in_dir[0].name, "Cargo.toml");
+        assert_eq!(items_in_dir[0].name, "src");
         assert!(items_in_dir[0].is_file);
     }
 }
