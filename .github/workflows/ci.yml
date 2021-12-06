@@ -13,13 +13,35 @@ jobs:
         node-version: [16.x]
     steps:
       - uses: actions/checkout@v1
+
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Install linux dependencies
+        if: ${{ runner.os == 'Linux' }}"
+        run: |
+          sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
+          build-essential \
+          curl \
+          wget \
+          libssl-dev \
+          libgtk-3-dev \
+          libappindicator3-dev \
+          patchelf \
+          librsvg2-dev
+       
+
+      - name: Install MacOS dependencies
+        if: ${{ runner.os == 'Darwin' }}"
+        run: brew install gcc
+        
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
+
       - name: Installing nodejs dependencies
         run: yarn
+
       - name: Running unit tests
         run: yarn test
