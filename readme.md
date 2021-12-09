@@ -47,7 +47,7 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 ## 🎁 Donating
 
 - BTC address: `1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6`
-- Solana address: `u5GzDDXyzhB9zA8vSHuEow5mQJ6Tk3kC4Bn2T9dp6nX3U`
+- Solana address: `5GzDDXyzhB9zA8vSHuEow5mQJ6Tk3kC4Bn2T9dp6nX3U`
 - Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators
