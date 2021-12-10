@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from "react";
-import RpcClient from "../utils/client";
+import { createClient } from "../utils/client";
 import Configuration from "../utils/config";
 import {
   openedTabsState,
@@ -30,9 +30,7 @@ import ExplorerPanel from "../panels/explorer";
  */
 async function getToken() {
   if (isTauri) {
-    const { invoke } = await import("@tauri-apps/api");
-    // Invoke the tauri command to retrieve the token
-    return await invoke<string>("get_token");
+    return "graviton_token"
   } else {
     // Or query the URL to get the token
     return new URL(location.toString()).searchParams.get("token");
@@ -53,10 +51,10 @@ function StateRoot() {
           1,
           token
         );
-        const client = new RpcClient(config);
+        const client = createClient(config);
 
         // Listen for any change on the state
-        client.on("stateUpdated", function ({ state }) {
+        client.on("StateUpdated", function ({ state }) {
           // Convert all tab datas into Tab instances
           const openedTabs = state.opened_tabs.map((tabData: TabData) =>
             Tab.fromJson(tabData)

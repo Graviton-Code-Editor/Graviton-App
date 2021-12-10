@@ -9,6 +9,7 @@ use serde::{
 };
 use std::{
     collections::HashMap,
+    fmt,
     sync::{
         Arc,
         Mutex,
@@ -66,7 +67,7 @@ impl StatesList {
 }
 
 /// a Tab state
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 struct Tab {}
 
 /// A state is like a small configuration, like a profile
@@ -81,6 +82,16 @@ pub struct State {
     opened_tabs: Vec<Tab>,
     pub id: u8,
     tokens: Vec<String>,
+}
+
+impl fmt::Debug for State {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("State")
+            .field("opened_tabs", &self.opened_tabs)
+            .field("id", &self.id)
+            .field("tokens", &self.tokens)
+            .finish()
+    }
 }
 
 impl Default for State {

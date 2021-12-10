@@ -1,3 +1,4 @@
+import Emittery from "emittery";
 import {
   Client,
   CoreResponse,
@@ -10,7 +11,7 @@ import { StateData } from "../../src/utils/state";
  * This simulates a real client
  * Only used for tests
  */
-export default class FakeClient implements Client {
+export default class FakeClient extends Emittery implements Client {
   // TO-DO
   async get_state_by_id(): Promise<any> {
     return null;

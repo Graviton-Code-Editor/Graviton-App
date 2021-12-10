@@ -3,9 +3,26 @@
     windows_subsystem = "windows"
 )]
 
+mod methods;
+
 use gveditor_core::{
-    jsonrpc_http_server::DomainsValidation,
-    tokio,
+    gen_client::Client,
+    tokio::{
+        self,
+        sync::{
+            mpsc::{
+                channel,
+                Receiver,
+                Sender,
+            },
+            Mutex as AsyncMutex,
+        },
+    },
+    transports::{
+        LocalHandler,
+        Messages,
+        Transport,
+    },
     Configuration,
     Core,
     State,
@@ -13,13 +30,12 @@ use gveditor_core::{
     TokenFlags,
 };
 use gveditor_core_api::Extension;
-use home::home_dir;
 use std::{
-    fs,
     sync::{
         Arc,
         Mutex,
     },
+    thread,
 };
 use tauri::{
     api::path::{
@@ -28,15 +44,36 @@ use tauri::{
     },
     utils::assets::EmbeddedAssets,
     Context,
+    Manager,
+    Window,
 };
 
-struct TauriState {
-    token: String,
+/// The window state
+pub struct TauriState {
+    client: Client,
+    channel_receiver: Arc<AsyncMutex<Receiver<Messages>>>,
+    channel_sender: Sender<Messages>,
 }
 
+/// Forward all the core events to the webview
 #[tauri::command]
-fn get_token(state: tauri::State<TauriState>) -> String {
-    state.token.clone()
+fn init_listener(window: Window, state: tauri::State<TauriState>) {
+    let channel_receiver = state.channel_receiver.clone();
+
+    // And every event from the core sent it to the webview
+    thread::spawn(move || {
+        let runtime = tokio::runtime::Runtime::new().unwrap();
+
+        runtime.block_on(async move {
+            let mut channel_receiver = channel_receiver.lock().await;
+
+            loop {
+                if let Some(msg) = channel_receiver.recv().await {
+                    window.emit("to_webview", msg).unwrap();
+                }
+            }
+        });
+    });
 }
 
 /// Launch the main window
@@ -46,15 +83,42 @@ fn get_token(state: tauri::State<TauriState>) -> String {
 /// * `token`   - The authentication token that will be used to access the local state
 /// * `context` - The Tauri context
 ///
-fn open_tauri(token: String, context: Context<EmbeddedAssets>) {
+fn open_tauri(
+    context: Context<EmbeddedAssets>,
+    client: Client,
+    channel_sender: Sender<Messages>,
+    channel_receiver: Receiver<Messages>,
+) {
+    let channel_receiver = Arc::new(AsyncMutex::new(channel_receiver));
+
     tauri::Builder::default()
-        .manage(TauriState { token })
-        .invoke_handler(tauri::generate_handler![get_token])
+        .on_page_load(|window, _| {
+            let state: tauri::State<TauriState> = window.state();
+            let channel_sender = state.channel_sender.clone();
+
+            window.listen("to_core", move |event| {
+                let channel_sender = channel_sender.clone();
+                let msg: Messages = serde_json::from_str(event.payload().unwrap()).unwrap();
+                tokio::task::spawn(async move { channel_sender.send(msg).await });
+            });
+        })
+        .manage(TauriState {
+            client,
+            channel_receiver,
+            channel_sender,
+        })
+        .invoke_handler(tauri::generate_handler![
+            methods::get_state_by_id,
+            methods::list_dir_by_path,
+            methods::read_file_by_path,
+            methods::set_state_by_id,
+            init_listener
+        ])
         .run(context)
         .expect("failed to run tauri application");
 }
 
-/// Returns a vector of pointer to all extensions instances
+/// Returns a vector of pointers to all extensions instances
 ///
 /// # Arguments
 ///
@@ -95,18 +159,11 @@ fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> String {
     .to_string()
 }
 
+static TOKEN: &str = "graviton_token";
+
 #[tokio::main]
 async fn main() {
     let context = tauri::generate_context!("tauri.conf.json");
-    let token = "demo_secret_token";
-
-    if let Some(home) = home_dir() {
-        fs::write(
-            format!("{}/graviton_local_token", home.to_str().unwrap()),
-            token.as_bytes(),
-        )
-        .unwrap();
-    }
 
     // Load built-in extensions
     let built_in_extensions_path = get_built_in_extensions_path(&context);
@@ -116,19 +173,28 @@ async fn main() {
     let states = {
         let default_state = State::new(1, built_in_extensions);
         let states = StatesList::new()
-            .with_tokens(&[TokenFlags::All(token.to_string())])
+            .with_tokens(&[TokenFlags::All(TOKEN.to_string())])
             .with_state(default_state);
 
         Arc::new(Mutex::new(states))
     };
 
-    // Create the configuration
-    let config = Arc::new(Mutex::new(Configuration::new(DomainsValidation::Disabled)));
+    // Core sender and receiver
+    let (core_sender, core_receiver) = channel(1);
 
-    // Create a new config passing the configuration
+    // Local handler
+    let (local_handler, client, webview_sender) = LocalHandler::new(states.clone(), core_sender);
+    let local_handler: Box<dyn Transport + Send + Sync> = Box::new(local_handler);
+
+    // Create the configuration
+    let config = Configuration::new(local_handler);
+
+    // Create the Core
     let core = Core::new(config, states);
 
+    // Run the core in a separate thread
     tokio::task::spawn(async move { core.run().await });
 
-    open_tauri(token.to_string(), context);
+    // Open the window
+    open_tauri(context, client, webview_sender, core_receiver);
 }

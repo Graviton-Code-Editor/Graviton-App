@@ -3,6 +3,9 @@ import * as simple_jsonrpc from "simple-jsonrpc-js";
 import Configuration from "./config";
 import { StateData } from "./state";
 import Emittery from "emittery";
+import { emit, listen } from '@tauri-apps/api/event'
+import { invoke } from "@tauri-apps/api/tauri";
+import { isTauri } from "./commands";
 
 export interface WebSocketsMessage {
   trigger: string;
@@ -24,7 +27,7 @@ export interface FileInfo {
   format: string;
 }
 
-export interface Client {
+export interface Client extends Emittery {
   get_state_by_id: () => Promise<StateData>;
   set_state_by_id: (state: StateData) => Promise<void>;
   read_file_by_path: (
@@ -39,9 +42,9 @@ export interface Client {
 }
 
 /*
- * Internal RPC Client to connect to a backend
+ * HTTP Client
  */
-class RpcClient extends Emittery implements Client {
+export class HTTPClient extends Emittery implements Client {
   // Internal rpc client
   private rpc: simple_jsonrpc;
   // Internal websockets client
@@ -134,4 +137,103 @@ class RpcClient extends Emittery implements Client {
   }
 }
 
-export default RpcClient;
+/*
+ * Tauri Client
+ */
+export class TauriClient extends Emittery implements Client {
+  private config: Configuration;
+
+  constructor(config: Configuration) {
+    super();
+    this.config = config;
+
+    listen('to_webview', ({ payload }: { payload: WebSocketsMessage }) => {
+      this.emit(payload.msg_type, payload);
+    })
+
+    invoke('init_listener');
+
+    setTimeout(async () => {
+     
+      this.emit("connected");
+    }, 1000)
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public get_state_by_id(): Promise<StateData> {
+    return invoke('get_state_by_id', {
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public set_state_by_id(state: StateData): Promise<void> {
+    return invoke('set_state_by_id', {
+      stateId: this.config.state_id,
+      state,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public read_file_by_path(
+    path: string,
+    filesystemName: string
+  ): Promise<CoreResponse<FileInfo>> {
+    return invoke('read_file_by_path', {
+      path,
+      filesystemName,
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public list_dir_by_path(
+    path: string,
+    filesystemName: string
+  ): Promise<CoreResponse<Array<DirItemInfo>>> {
+    return invoke('list_dir_by_path', {
+      path,
+      filesystemName,
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Listen for any mess in the websockets connection
+   * @WSCommand
+   */
+  public listenToState() {
+    emit('to_core',
+      JSON.stringify({
+        trigger: "client",
+        msg_type: "ListenToState",
+        state_id: this.config.state_id,
+      })
+    );
+  }
+}
+
+
+export function createClient(config: Configuration): Client {
+  if(isTauri){
+    return new TauriClient(config);
+  } else {
+    return new HTTPClient(config);
+  }
+}

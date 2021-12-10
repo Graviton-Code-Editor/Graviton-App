@@ -1,4 +1,4 @@
-import RpcClient from "./client";
+import { Client } from "./client";
 import { TabData } from "../modules/tab";
 
 export interface StateData {
@@ -6,13 +6,13 @@ export interface StateData {
 }
 export class State {
   // Internal clients
-  private client: RpcClient;
+  private client: Client;
   private id: number;
 
   // Shared state data
   public state: StateData;
 
-  constructor(client: RpcClient, id: number) {
+  constructor(client: Client, id: number) {
     this.client = client;
     this.id = id;
     this.state = {

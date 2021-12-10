@@ -1,12 +1,19 @@
 #![feature(async_closure)]
 mod configuration;
-mod filesystems;
+pub mod filesystems;
 mod server;
 mod state;
+pub mod transports;
 
 pub use configuration::Configuration;
+pub use jsonrpc_core_client;
 pub use jsonrpc_http_server;
-use server::Server;
+pub use server::{
+    gen_client,
+    Errors,
+    RPCResult,
+    Server,
+};
 pub use state::{
     State,
     StatesList,
@@ -31,6 +38,7 @@ pub use tokio;
 ///     State,
 ///     StatesList,
 ///     TokenFlags,
+///     transports::{ Transport, HTTPHandler }
 /// };
 ///
 ///  // A pointer to a StatesList
@@ -44,8 +52,10 @@ pub use tokio;
 ///     Arc::new(Mutex::new(states))
 ///  };
 ///  
-///  // Crate a Configuration with CORS
-///  let config = Arc::new(Mutex::new(Configuration::new(DomainsValidation::Disabled)));
+///  // Crate a HTTP Transport and a configuration
+///  let http_handler = HTTPHandler::new(DomainsValidation::Disabled);
+///  let http_handler: Box<dyn Transport + Send + Sync> = Box::new(http_handler);
+///  let config = Configuration::new(http_handler);
 ///
 ///  // Create a Core
 ///  let core = Core::new(config, states);
@@ -58,7 +68,6 @@ pub use tokio;
 #[allow(dead_code)]
 pub struct Core {
     server: Server,
-    config: Arc<Mutex<Configuration>>,
     states: Arc<Mutex<StatesList>>,
 }
 
@@ -70,10 +79,9 @@ impl Core {
     /// * `config`   - The Core configuration
     /// * `states`   - The States list the Core will launch with
     ///
-    pub fn new(config: Arc<Mutex<Configuration>>, states: Arc<Mutex<StatesList>>) -> Self {
+    pub fn new(config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
         Self {
-            server: Server::new(config.clone(), states.clone()),
-            config,
+            server: Server::new(config, states.clone()),
             states,
         }
     }

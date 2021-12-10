@@ -28,7 +28,7 @@ pub struct DirItemInfo {
     is_file: bool,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub enum FileFormat {
     Unknown,
     Binary,
@@ -53,7 +53,7 @@ pub fn get_format_from_path(path: &str) -> FileFormat {
 }
 
 /// Contains information about a file
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct FileInfo {
     content: String,
     format: FileFormat,

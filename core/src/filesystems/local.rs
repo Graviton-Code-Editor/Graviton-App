@@ -11,6 +11,7 @@ use std::{
 };
 
 /// Implementation of FileSystem methods for a local access
+#[derive(Default)]
 pub struct LocalFilesystem;
 
 impl LocalFilesystem {

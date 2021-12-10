@@ -1,29 +1,22 @@
 # Introduction
-Gravitons is a modularized code editor, meaning that the different modules can be used together to build different kind of editors. By design, it's a frontend-agnostic editor, so multiple frontends can be built on it.
+Gravitons is a modularized code editor, meaning that the different modules can be used together to build different kind of editors. By design, it's a frontend-agnostic editor, so different frontends, even in different languages, can be built on it.
 
 **WIP**
 
 Modules:
 - Core: The backend
+- Core-api: A set of APIs for extensions to use (WIP)
 - Web: A web-based frontend implementation
 - Desktop: A webview-based app that handles running the core and the web frontend
-- Cli: a CLI to easily launch and manage a core instance )
 
 ## Core
-The core is a Rust crate that:
-- Opens a JSON RPC HTTP Server 
-- Opens a WebSockets server
-- Loads and save states
-- Runs extensions (wip)
-- Manage authentication
+A Core instance handles the states and extensions, it needs also needs of a transport layer.
 
-### JSON RPC Server
-This is a JSON RPC server that frontends can use to execute remote procedures, like, reading a file through a filesystem implementation, mutate a state, load a state, etc...
+### Transport layer
+There are two transport layers that are included by default, a JSON HTTP RPC Server + WebSockets server, and a Local JSON RPC Server + MPSC channels.
 
-### WebSockets server
-This is mainly used for the Core to notify of certains events to all frontends who are listening. 
+Both JSON RPC Servers included several methods client can use to interact with a state, like reading a file from a filesystem. And the WebSockets and MPSC channels are mainly used to send messages from the core to the client.
 
 ## Authentication
-The core manages the authentication of frontends through tokens. These token allow access to the states on Core, frontends must know what token they need to make of use of an specific state. 
+The core manages the authentication of frontends through tokens. These token allow access to the states on Core, frontends must know what token they need to make of use of an specific state. For example, since the desktop version uses a the Local JSON RPC Server, it already knows what the token is, but in a case where the core is in a remote machine, you might not know it.
 
-For frontends running on the same machine, they can get a token that will allow them to make use of a "default" state, in the file `$HOME/graviton_local_token`. This protects it against for example, websites you access through your browser, because they don't know the token of any state. For example, the desktop-web version made with Tauri passes the generated token through a command invocation to the web frontend.
