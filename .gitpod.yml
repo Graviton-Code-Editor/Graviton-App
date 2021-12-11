@@ -1,25 +1,16 @@
-image: gitpod/workspace-full-vnc
+image:
+  file: .gitpod.Dockerfile
 
 tasks:
-  - name: Install packages
-    init: sudo apt update
-    command: sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
-      build-essential \
-      curl \
-      wget \
-      libssl-dev \
-      libgtk-3-dev \
-      libappindicator3-dev \
-      patchelf \
-      librsvg2-dev -y
-    env:
-      DEBIAN_FRONTEND: noninteractive
-  - name: Install tauri
-    command: sudo cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch tmp/pin-clap
-  - name: Compile git extension
-    command: cd extensions/git && cargo build
-  - name: Install dependencies
-    command: yarn
+  - name: Start graviton
+    command: yarn dev_desktop
+
+ports:
+  - port: 6080
+    onOpen: open-preview
+    visibility: private
+  - port: 5090
+    visibility: private
 
 vscode:
   extensions:
