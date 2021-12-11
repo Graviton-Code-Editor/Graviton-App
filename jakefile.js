@@ -20,8 +20,10 @@ task('build_git_extension', async function () {
     rimraf.sync('./dist')
     await mkdir('dist')
     await mkdir('dist/extensions')
-    await copyFile('target/debug/git.dll', 'dist/extensions/git.dll')
-    
+    try {
+        await copyFile('target/debug/git.dll', 'dist/extensions/git.dll')
+        await copyFile('target/debug/libgit.so', 'dist/extensions/git.dll')
+    } catch { }
 });
 
 desc('Run the desktop in develop mode');
