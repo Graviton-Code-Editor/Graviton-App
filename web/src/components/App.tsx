@@ -30,7 +30,7 @@ import ExplorerPanel from "../panels/explorer";
  */
 async function getToken() {
   if (isTauri) {
-    return "graviton_token"
+    return "graviton_token";
   } else {
     // Or query the URL to get the token
     return new URL(location.toString()).searchParams.get("token");
@@ -55,7 +55,7 @@ function StateRoot() {
 
         // Listen for any change on the state
         client.on("StateUpdated", function ({ state }) {
-          console.log(state)
+          console.log(state);
           // Convert all tab datas into Tab instances
           const openedTabs = state.opened_tabs.map((tabData: TabData) =>
             Tab.fromJson(tabData)

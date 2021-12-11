@@ -30,18 +30,17 @@ pub use tokio;
 ///
 /// # Example
 /// ```rust
-/// use std::sync::{Arc, Mutex};
-/// use gveditor_core::{
-///     jsonrpc_http_server::DomainsValidation,
-///     tokio,
-///     Configuration,
-///     Core,
-///     State,
-///     StatesList,
-///     TokenFlags,
-///     handlers::{ TransportHandler, HTTPHandler }
-/// };
-///
+/// # use std::sync::{Arc, Mutex};
+/// # use gveditor_core::{
+///   # jsonrpc_http_server::DomainsValidation,
+///   # tokio,
+///   # Configuration,
+///   # Core,
+///   # State,
+///   # StatesList,
+///   # TokenFlags,
+///   # handlers::{ TransportHandler, HTTPHandler }
+/// # };
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
@@ -50,20 +49,22 @@ pub use tokio;
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()
 ///         .with_state(sample_state);
+///
 ///     Arc::new(Mutex::new(states))
 ///  };
 ///  
 ///  // Crate a HTTP TransportHandler and a configuration
 ///  let http_handler = HTTPHandler::new(DomainsValidation::Disabled);
 ///  let http_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(http_handler);
+///
+///  // Create the configuration
 ///  let config = Configuration::new(http_handler);
 ///
 ///  // Create a Core
 ///  let core = Core::new(config, states);
 ///
-///  // Run the core
+///  // Run the core (this blocks the thread)
 ///  core.run();
-///
 /// ```
 ///
 #[allow(dead_code)]

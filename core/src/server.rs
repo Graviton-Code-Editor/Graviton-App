@@ -52,9 +52,7 @@ impl Server {
         }
     }
 
-    /*
-     * Receive all incoming messages
-     */
+    /// Receive all incoming messages
     pub fn create_receiver(
         states: Arc<Mutex<StatesList>>,
         mut receiver: Receiver<Messages>,
@@ -72,9 +70,7 @@ impl Server {
         });
     }
 
-    /*
-     * Run the configured handler
-     */
+    /// Run the configured handler
     pub async fn run(&self) {
         let states = self.states.clone();
         let mut handler = self.config.handler.lock().await;
@@ -82,9 +78,7 @@ impl Server {
         handler.run(states.clone(), self.sender.clone()).await;
     }
 
-    /*
-     * Process every message
-     */
+    /// Process every message
     pub async fn process_message(
         states: Arc<Mutex<StatesList>>,
         msg: Messages,
@@ -175,7 +169,7 @@ impl RpcMethods for RpcManager {
         }
     }
 
-    /// Update the Core's version of a particular state
+    /// Update an state
     fn set_state_by_id(&self, _state_id: u8, _state: State, _token: String) -> RPCResult<()> {
         todo!()
     }

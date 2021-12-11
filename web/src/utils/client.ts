@@ -3,7 +3,7 @@ import * as simple_jsonrpc from "simple-jsonrpc-js";
 import Configuration from "./config";
 import { StateData } from "./state";
 import Emittery from "emittery";
-import { emit, listen } from '@tauri-apps/api/event'
+import { emit, listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/tauri";
 import { isTauri } from "./commands";
 
@@ -147,16 +147,15 @@ export class TauriClient extends Emittery implements Client {
     super();
     this.config = config;
 
-    listen('to_webview', ({ payload }: { payload: WebSocketsMessage }) => {
+    listen("to_webview", ({ payload }: { payload: WebSocketsMessage }) => {
       this.emit(payload.msg_type, payload);
-    })
+    });
 
-    invoke('init_listener');
+    invoke("init_listener");
 
     setTimeout(async () => {
-     
       this.emit("connected");
-    }, 1000)
+    }, 1000);
   }
 
   /*
@@ -164,7 +163,7 @@ export class TauriClient extends Emittery implements Client {
    * @JsonRpcMethod
    */
   public get_state_by_id(): Promise<StateData> {
-    return invoke('get_state_by_id', {
+    return invoke("get_state_by_id", {
       stateId: this.config.state_id,
       token: this.config.token,
     });
@@ -175,7 +174,7 @@ export class TauriClient extends Emittery implements Client {
    * @JsonRpcMethod
    */
   public set_state_by_id(state: StateData): Promise<void> {
-    return invoke('set_state_by_id', {
+    return invoke("set_state_by_id", {
       stateId: this.config.state_id,
       state,
       token: this.config.token,
@@ -190,7 +189,7 @@ export class TauriClient extends Emittery implements Client {
     path: string,
     filesystemName: string
   ): Promise<CoreResponse<FileInfo>> {
-    return invoke('read_file_by_path', {
+    return invoke("read_file_by_path", {
       path,
       filesystemName,
       stateId: this.config.state_id,
@@ -206,7 +205,7 @@ export class TauriClient extends Emittery implements Client {
     path: string,
     filesystemName: string
   ): Promise<CoreResponse<Array<DirItemInfo>>> {
-    return invoke('list_dir_by_path', {
+    return invoke("list_dir_by_path", {
       path,
       filesystemName,
       stateId: this.config.state_id,
@@ -219,7 +218,8 @@ export class TauriClient extends Emittery implements Client {
    * @WSCommand
    */
   public listenToState() {
-    emit('to_core',
+    emit(
+      "to_core",
       JSON.stringify({
         trigger: "client",
         msg_type: "ListenToState",
@@ -229,9 +229,8 @@ export class TauriClient extends Emittery implements Client {
   }
 }
 
-
 export function createClient(config: Configuration): Client {
-  if(isTauri){
+  if (isTauri) {
     return new TauriClient(config);
   } else {
     return new HTTPClient(config);

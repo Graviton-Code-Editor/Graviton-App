@@ -11,6 +11,7 @@ Modules:
 
 ## Core
 A Core instance handles the states and extensions, it needs also needs of a transport layer.
+Learn more in [Core](./core.md)
 
 ### Transport layer
 There are two transport layers that are included by default, a JSON HTTP RPC Server + WebSockets server, and a Local JSON RPC Server + MPSC channels.

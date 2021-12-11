@@ -157,7 +157,7 @@ impl HTTPHandler {
     }
 
     /// Easily send a message to all websockets in it's state ID
-    pub async fn send_message_to_web_socket(&self, message: Messages) {
+    async fn send_message_to_web_socket(&self, message: Messages) {
         let msg_state_id = message.get_state_id();
         let sockets = &*self.sockets.lock().await;
         for (websocket, state_id) in sockets {
