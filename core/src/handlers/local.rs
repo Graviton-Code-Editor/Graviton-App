@@ -18,78 +18,70 @@ use std::{
 };
 use tokio::sync::mpsc::{
     channel,
+    Receiver,
     Sender,
 };
 
 use super::{
     Messages,
-    Transport,
+    TransportHandler,
 };
 
 /// This a local handler, meaning that you can use the JSON RPC Server directly
-pub struct LocalHandler;
+pub struct LocalHandler {
+    receiver_to_local: Arc<Mutex<Receiver<Messages>>>,
+    channel_sender: Sender<Messages>,
+}
 
 impl LocalHandler {
-    #[allow(dead_code)]
     pub fn new(
         states: Arc<Mutex<StatesList>>,
         channel_sender: Sender<Messages>,
     ) -> (Self, Client, Sender<Messages>) {
         // Create the RPC Handler
         let mut local_io = IoHandler::new();
-        let manager = RpcManager {
-            states: states.clone(),
-        };
+        let manager = RpcManager { states };
         local_io.extend_with(manager.to_delegate());
 
         // Create the channel handler
-        let (tx, rv) = channel::<Messages>(1);
+        let (sender_to_local, receiver_to_local) = channel::<Messages>(1);
+        let receiver_to_local = Arc::new(Mutex::new(receiver_to_local));
 
         // Create the local JSON RPC instance
         let (client, server) = local::connect::<Client, _, _>(local_io);
         tokio::task::spawn(async { server.await });
 
-        thread::spawn(move || {
-            let mut rv = rv;
-            let states = states.clone();
-            let runtime = tokio::runtime::Runtime::new().unwrap();
-            runtime.block_on(async {
-                loop {
-                    if let Some(msg) = rv.recv().await {
-                        match msg {
-                            Messages::ListenToState {
-                                state_id,
-                                trigger: _,
-                            } => {
-                                // Make sure if there is already an existing state
-                                let state = {
-                                    let states = states.lock().unwrap();
-                                    states.get_state_by_id(state_id)
-                                };
-                                if let Some(state) = state {
-                                    // Send the state
-                                    channel_sender
-                                        .send(Messages::StateUpdated {
-                                            state: state.lock().unwrap().to_owned(),
-                                        })
-                                        .await
-                                        .unwrap();
-                                }
-                            }
-                            Messages::StateUpdated { .. } => {}
-                        }
-                    }
-                }
-            });
-        });
+        let local = Self {
+            receiver_to_local,
+            channel_sender,
+        };
 
-        (Self, client, tx)
+        (local, client, sender_to_local)
     }
 }
 
 #[async_trait]
-impl Transport for LocalHandler {
-    async fn run(&self, _: Arc<Mutex<StatesList>>) {}
+impl TransportHandler for LocalHandler {
+    async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Arc<Mutex<Sender<Messages>>>) {
+        let rv = self.receiver_to_local.clone();
+
+        thread::spawn(move || {
+            let mut rv = rv.lock().unwrap();
+            let runtime = tokio::runtime::Runtime::new().unwrap();
+            runtime.block_on(async {
+                loop {
+                    if let Some(msg) = rv.recv().await {
+                        let core_sender = core_sender.lock().unwrap();
+                        core_sender.send(msg).await.unwrap();
+                    }
+                }
+            });
+        });
+    }
+
+    async fn send(&self, message: Messages) {
+        self.channel_sender.send(message).await.unwrap();
+    }
 }
 
 #[cfg(test)]
@@ -132,7 +124,7 @@ mod tests {
             let (core_sender, _) = channel(1);
 
             // Crate the local handler
-            let (_, client, _channel_name) = LocalHandler::new(states, core_sender);
+            let (_, client, _) = LocalHandler::new(states, core_sender);
 
             // Use the client to call JSON RPC Methods
             let req = client

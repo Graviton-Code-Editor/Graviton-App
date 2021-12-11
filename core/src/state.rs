@@ -89,7 +89,6 @@ impl fmt::Debug for State {
         f.debug_struct("State")
             .field("opened_tabs", &self.opened_tabs)
             .field("id", &self.id)
-            .field("tokens", &self.tokens)
             .finish()
     }
 }

@@ -1,9 +1,10 @@
 #![feature(async_closure)]
+#![feature(associated_type_defaults)]
 mod configuration;
 pub mod filesystems;
+pub mod handlers;
 mod server;
 mod state;
-pub mod transports;
 
 pub use configuration::Configuration;
 pub use jsonrpc_core_client;
@@ -38,7 +39,7 @@ pub use tokio;
 ///     State,
 ///     StatesList,
 ///     TokenFlags,
-///     transports::{ Transport, HTTPHandler }
+///     handlers::{ TransportHandler, HTTPHandler }
 /// };
 ///
 ///  // A pointer to a StatesList
@@ -52,9 +53,9 @@ pub use tokio;
 ///     Arc::new(Mutex::new(states))
 ///  };
 ///  
-///  // Crate a HTTP Transport and a configuration
+///  // Crate a HTTP TransportHandler and a configuration
 ///  let http_handler = HTTPHandler::new(DomainsValidation::Disabled);
-///  let http_handler: Box<dyn Transport + Send + Sync> = Box::new(http_handler);
+///  let http_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(http_handler);
 ///  let config = Configuration::new(http_handler);
 ///
 ///  // Create a Core

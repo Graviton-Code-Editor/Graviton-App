@@ -7,6 +7,11 @@ mod methods;
 
 use gveditor_core::{
     gen_client::Client,
+    handlers::{
+        LocalHandler,
+        Messages,
+        TransportHandler,
+    },
     tokio::{
         self,
         sync::{
@@ -17,11 +22,6 @@ use gveditor_core::{
             },
             Mutex as AsyncMutex,
         },
-    },
-    transports::{
-        LocalHandler,
-        Messages,
-        Transport,
     },
     Configuration,
     Core,
@@ -159,6 +159,7 @@ fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> String {
     .to_string()
 }
 
+// Dummy token
 static TOKEN: &str = "graviton_token";
 
 #[tokio::main]
@@ -184,7 +185,7 @@ async fn main() {
 
     // Local handler
     let (local_handler, client, webview_sender) = LocalHandler::new(states.clone(), core_sender);
-    let local_handler: Box<dyn Transport + Send + Sync> = Box::new(local_handler);
+    let local_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(local_handler);
 
     // Create the configuration
     let config = Configuration::new(local_handler);

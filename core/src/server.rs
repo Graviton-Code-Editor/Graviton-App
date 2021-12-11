@@ -1,8 +1,13 @@
 use crate::{
+    configuration::Handler,
     filesystems::{
         DirItemInfo,
         FileInfo,
         FilesystemErrors,
+    },
+    handlers::{
+        Messages,
+        TransportHandler,
     },
     Configuration,
     State,
@@ -17,23 +22,95 @@ use std::sync::{
     Arc,
     Mutex,
 };
+use tokio::sync::{
+    mpsc::{
+        channel,
+        Receiver,
+        Sender,
+    },
+    Mutex as AsyncMutex,
+};
 
 pub struct Server {
     states: Arc<Mutex<StatesList>>,
     config: Configuration,
+    sender: Arc<Mutex<Sender<Messages>>>,
 }
 
 impl Server {
     /// Create a new Server
     pub fn new(config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        Self { config, states }
+        let (sender, receiver) = channel::<Messages>(1);
+        let sender = Arc::new(Mutex::new(sender));
+
+        Self::create_receiver(states.clone(), receiver, config.handler.clone());
+
+        Self {
+            config,
+            states,
+            sender,
+        }
     }
 
-    /// Start the JSON RPC HTTP Server and WebSockets server
+    /*
+     * Receive all incoming messages
+     */
+    pub fn create_receiver(
+        states: Arc<Mutex<StatesList>>,
+        mut receiver: Receiver<Messages>,
+        handler: Handler,
+    ) {
+        std::thread::spawn(move || {
+            let rt = tokio::runtime::Runtime::new().unwrap();
+            rt.block_on(async move {
+                loop {
+                    if let Some(message) = receiver.recv().await {
+                        Self::process_message(states.clone(), message, handler.clone()).await;
+                    }
+                }
+            });
+        });
+    }
+
+    /*
+     * Run the configured handler
+     */
     pub async fn run(&self) {
         let states = self.states.clone();
+        let mut handler = self.config.handler.lock().await;
 
-        self.config.handler.lock().await.run(states.clone()).await;
+        handler.run(states.clone(), self.sender.clone()).await;
+    }
+
+    /*
+     * Process every message
+     */
+    pub async fn process_message(
+        states: Arc<Mutex<StatesList>>,
+        msg: Messages,
+        handler: Arc<AsyncMutex<Box<dyn TransportHandler + Send + Sync>>>,
+    ) {
+        match msg {
+            Messages::ListenToState {
+                state_id,
+                trigger: _,
+            } => {
+                // Make sure if there is already an existing state
+                let state = {
+                    let states = states.lock().unwrap();
+                    states.get_state_by_id(state_id)
+                };
+                if let Some(state) = state {
+                    let handler = handler.lock().await;
+                    // Send the loaded state to the handler
+                    let message = Messages::StateUpdated {
+                        state: state.lock().unwrap().to_owned(),
+                    };
+                    handler.send(message).await;
+                }
+            }
+            Messages::StateUpdated { .. } => {}
+        }
     }
 }
 

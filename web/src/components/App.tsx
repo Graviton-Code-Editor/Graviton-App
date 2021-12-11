@@ -55,6 +55,7 @@ function StateRoot() {
 
         // Listen for any change on the state
         client.on("StateUpdated", function ({ state }) {
+          console.log(state)
           // Convert all tab datas into Tab instances
           const openedTabs = state.opened_tabs.map((tabData: TabData) =>
             Tab.fromJson(tabData)

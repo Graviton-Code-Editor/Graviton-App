@@ -7,6 +7,7 @@ use std::sync::{
     Arc,
     Mutex,
 };
+use tokio::sync::mpsc::Sender;
 
 use crate::{
     State,
@@ -20,8 +21,15 @@ pub use http::HTTPHandler;
 pub use local::LocalHandler;
 
 #[async_trait]
-pub trait Transport {
-    async fn run(&self, config: Arc<Mutex<StatesList>>);
+pub trait TransportHandler {
+    /// Run the handler
+    async fn run(
+        &mut self,
+        states: Arc<Mutex<StatesList>>,
+        core_sender: Arc<Mutex<Sender<Messages>>>,
+    );
+    /// Send a message to the handler
+    async fn send(&self, message: Messages);
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -39,4 +47,13 @@ pub enum Messages {
     StateUpdated {
         state: State,
     },
+}
+
+impl Messages {
+    pub fn get_state_id(&self) -> u8 {
+        match self {
+            Self::ListenToState { state_id, .. } => *state_id,
+            Self::StateUpdated { state } => state.id,
+        }
+    }
 }

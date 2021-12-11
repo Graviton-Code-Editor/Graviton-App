@@ -1,14 +1,16 @@
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
-use crate::transports::Transport;
+use crate::handlers::TransportHandler;
+
+pub type Handler = Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>;
 
 pub struct Configuration {
-    pub handler: Arc<Mutex<Box<dyn Transport + Send + Sync>>>,
+    pub handler: Handler,
 }
 
 impl Configuration {
-    pub fn new(handler: Box<dyn Transport + Send + Sync>) -> Self {
+    pub fn new(handler: Box<dyn TransportHandler + Send + Sync>) -> Self {
         Self {
             handler: Arc::new(Mutex::new(handler)),
         }
