@@ -2,7 +2,7 @@ image: gitpod/workspace-full-vnc
 
 tasks:
   - name: Install packages
-    init: apt update
+    init: sudo apt update
     command:  sudo apt install libwebkit2gtk-4.0-dev \
       build-essential \
       curl \
@@ -15,7 +15,7 @@ tasks:
     env:
       DEBIAN_FRONTEND: noninteractive
   - name: Install tauri
-    command: cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch tmp/pin-clap
+    command: sudo cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch tmp/pin-clap
   - name: Compile git extension
     command: cd extensions/git && cargo build
   - name: Install dependencies
