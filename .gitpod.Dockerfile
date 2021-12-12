@@ -1,8 +1,8 @@
 FROM gitpod/workspace-full-vnc
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
+RUN printf '%s\n' 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections && \
+    sudo apt-get update && \
+    sudo apt-get install -yq libwebkit2gtk-4.0-dev \
       build-essential \
       curl \
       wget \
@@ -10,7 +10,8 @@ RUN sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
       libgtk-3-dev \
       libappindicator3-dev \
       patchelf \
-      librsvg2-dev -y
+      librsvg2-dev
+
 
 RUN sudo cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch tmp/pin-clap
 
