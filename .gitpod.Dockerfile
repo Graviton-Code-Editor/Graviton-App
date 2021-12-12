@@ -13,7 +13,7 @@ RUN printf '%s\n' 'debconf debconf/frontend select Noninteractive' | sudo debcon
       librsvg2-dev
 
 
-RUN cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch tmp/pin-clap
+RUN cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch next
 
 RUN npm i yarn -g && yarn
 
