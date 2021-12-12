@@ -1,6 +1,6 @@
 FROM gitpod/workspace-full-vnc
 
-ENV DEBIAN_FRONTEND="noninteractive"
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sudo apt update && sudo apt install libwebkit2gtk-4.0-dev \
       build-essential \
