@@ -338,10 +338,10 @@ impl TransportHandler for HTTPHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::sync::{
+    use std::{sync::{
         Arc,
         Mutex,
-    };
+    }, time::Duration};
 
     use hyper_tungstenite::tungstenite::{
         connect,
@@ -351,7 +351,7 @@ mod tests {
         self,
         json,
     };
-    use tokio::runtime::Runtime;
+    use tokio::{runtime::Runtime, time::sleep};
     use url::Url;
 
     use crate::{
@@ -388,6 +388,8 @@ mod tests {
             let core = Core::new(config, states);
 
             core.run().await;
+
+            sleep(Duration::from_secs(2)).await;
 
             // RUN A WEBSOCKETS CLIENT
 
