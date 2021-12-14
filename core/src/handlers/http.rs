@@ -6,6 +6,18 @@ use crate::{
     StatesList,
 };
 use async_trait::async_trait;
+use hyper_tungstenite::{
+    hyper::{
+        self,
+        upgrade::Upgraded,
+    },
+    tungstenite::{
+        self,
+        Message,
+    },
+    HyperWebsocket,
+    WebSocketStream,
+};
 use jsonrpc_core::{
     futures::StreamExt,
     futures_util::{
@@ -17,39 +29,67 @@ use jsonrpc_core::{
 use jsonrpc_http_server::{
     AccessControlAllowOrigin,
     DomainsValidation,
+    RequestMiddleware,
+    RequestMiddlewareAction,
+    RestApi,
 };
-use std::sync::{
-    Arc,
-    Mutex,
-};
-use tokio::sync::{
-    mpsc::Sender,
-    Mutex as AsyncMutex,
-};
-use warp::{
-    ws::{
-        Message,
-        WebSocket,
+use std::{
+    collections::HashMap,
+    sync::{
+        Arc,
+        Mutex,
     },
-    Filter,
+    thread,
 };
-
-use jsonrpc_core::{
-    futures_util::stream::SplitStream,
-    serde_json::{
-        self,
-        json,
+use tokio::{
+    runtime::Runtime,
+    sync::{
+        mpsc::Sender,
+        Mutex as AsyncMutex,
     },
-};
-
-use serde::{
-    Deserialize,
-    Serialize,
 };
 
 use crate::handlers::Messages;
+use jsonrpc_core::serde_json::{
+    self,
+    json,
+};
 
 use super::TransportHandler;
+
+pub struct HTTPHandlerBuilder {
+    cors: DomainsValidation<AccessControlAllowOrigin>,
+    port: u16,
+}
+
+impl Default for HTTPHandlerBuilder {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl HTTPHandlerBuilder {
+    pub fn new() -> Self {
+        Self {
+            cors: DomainsValidation::Disabled,
+            port: 50010,
+        }
+    }
+
+    pub fn cors(&mut self, cors: DomainsValidation<AccessControlAllowOrigin>) -> &mut Self {
+        self.cors = cors;
+        self
+    }
+
+    pub fn port(&mut self, port: u16) -> &mut Self {
+        self.port = port;
+        self
+    }
+
+    pub fn build(&self) -> HTTPHandler {
+        HTTPHandler::new(self.cors.clone(), self.port)
+    }
+}
 
 /// Easily convert variants of Messages to WebSocket messages
 pub struct WSMessages;
@@ -69,91 +109,165 @@ impl WSMessages {
     }
 }
 
-#[derive(Deserialize, Serialize)]
-struct AuthOptions {
-    token: String,
-    state: u8,
-}
+type SocketsRegistry = Arc<
+    AsyncMutex<
+        Vec<(
+            Arc<AsyncMutex<SplitSink<WebSocketStream<Upgraded>, tungstenite::Message>>>,
+            u8,
+        )>,
+    >,
+>;
 
-/// Middleware that makes sure the incoming websocket connection has a valid token
-pub async fn ws_auth(
-    states: Arc<Mutex<StatesList>>,
-) -> impl Filter<Extract = ((),), Error = warp::reject::Rejection> + Clone {
-    warp::query::<AuthOptions>()
-        .map(move |options| (states.clone(), options))
-        .and_then({
-            |(states, options): (Arc<Mutex<StatesList>>, AuthOptions)| async move {
-                // Lookup for the requested state
-                if let Some(state) = states.lock().unwrap().get_state_by_id(options.state) {
-                    // If found, then make sure the token is valid
-                    if state.lock().unwrap().has_token(&options.token) {
-                        return Ok(());
-                    }
-                }
-                Err(warp::reject::not_found())
-            }
-        })
-}
 
-type SocketsRegistry = Arc<AsyncMutex<Vec<(Arc<AsyncMutex<SplitSink<WebSocket, Message>>>, u8)>>>;
-
-/// Handle a WebSockets connection
-///
-/// * `states`               - A States list
-/// * `core_sender`          - A sender to communicate to the Core
-/// * `(sender, receiver)`   - The Websockets sender and receiver
-pub fn ws_handler(
+/// WebSockets middleware for HTTP JSON RPC
+struct WebSocketsManager {
     sockets: SocketsRegistry,
     core_sender: Arc<Mutex<Sender<Messages>>>,
-    (sender, recv): (SplitSink<WebSocket, Message>, SplitStream<WebSocket>),
-) {
-    let sender = Arc::new(AsyncMutex::new(sender));
-    let recv = Arc::new(AsyncMutex::new(recv));
+    states: Arc<Mutex<StatesList>>,
+}
 
-    std::thread::spawn(move || {
-        let sockets = sockets.clone();
-        let runtime = tokio::runtime::Runtime::new().unwrap();
-        runtime.block_on(async {
-            loop {
-                let mut recv = recv.lock().await;
-                // Listen for incomming messages
-                match recv.next().await {
-                    Some(Ok(msg)) => {
-                        if msg.is_text() {
-                            let text = msg.to_str().unwrap();
+impl RequestMiddleware for WebSocketsManager {
+    // This acts as a Middleware to upgrade requests  on `/websockets` to actual WebSockets connections
+    fn on_request(
+        &self,
+        request: jsonrpc_http_server::hyper::Request<jsonrpc_http_server::hyper::Body>,
+    ) -> RequestMiddlewareAction {
+        // Authentificate the websockets connection
+        if !Self::auth_ws(&request, &self.states) {
+            return request.into();
+        }
 
-                            let message: Messages = serde_json::from_str(text).unwrap();
+        match request.uri().path() {
+            "/websockets" => {
+                if hyper_tungstenite::is_upgrade_request(&request) {
+                    let (response, websocket) = hyper_tungstenite::upgrade(request, None).unwrap();
 
+                    // Handle the WebSocket connection
+                    Self::handle_ws(self.sockets.clone(), self.core_sender.clone(), websocket);
+
+                    // Return the response so the spawned future can continue.
+                    response.into()
+                } else {
+                    request.into()
+                }
+            }
+            _ => request.into(),
+        }
+    }
+}
+
+impl WebSocketsManager {
+    /// Authenticate the Websocket by querying the URL
+    ///
+    /// * `sockets`              - The Hyper request
+    /// * `core_sender`          - A sender to communicate to the Core
+    /// * `states`               - A States list
+    pub fn new(
+        sockets: SocketsRegistry,
+        core_sender: Arc<Mutex<Sender<Messages>>>,
+        states: Arc<Mutex<StatesList>>,
+    ) -> Self {
+        Self {
+            sockets,
+            core_sender,
+            states,
+        }
+    }
+
+    /// Authenticate the Websocket by querying the URL
+    ///
+    /// * `request`           - The Hyper request
+    /// * `states`            - A States list
+    pub fn auth_ws(request: &hyper::Request<hyper::Body>, states: &Arc<Mutex<StatesList>>) -> bool {
+        let url = request.uri();
+        // Create a URL to so the parameters can be queried
+        let url = url::Url::parse(&format!("ws://locahost{}", &url.to_string())).unwrap();
+        // Get tha parameters
+        let parameters: HashMap<String, String> = url.query_pairs().into_owned().collect();
+        let token = parameters.get("token");
+        let state_id = parameters.get("state_id");
+
+        if let (Some(token), Some(state_id)) = (token, state_id) {
+            let state_id = state_id.parse::<u8>();
+            if let Ok(state_id) = state_id {
+                if let Some(state) = states.lock().unwrap().get_state_by_id(state_id) {
+                    // If found, then make sure the token is valid
+                    state.lock().unwrap().has_token(token)
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        } else {
+            false
+        }
+    }
+
+    /// Handle a WebSockets connection
+    ///
+    /// * `states`               - A States list
+    /// * `core_sender`          - A sender to communicate to the Core
+    /// * `websocklet`           - The Websockets connection
+    pub fn handle_ws(
+        sockets: SocketsRegistry,
+        core_sender: Arc<Mutex<Sender<Messages>>>,
+        websocket: HyperWebsocket,
+    ) {
+        std::thread::spawn(move || {
+            let sockets = sockets.clone();
+            let runtime = Runtime::new().unwrap();
+            runtime.block_on(async {
+                let websocket = websocket.await.unwrap();
+                let (sender, mut recv) = websocket.split();
+                let sender = Arc::new(AsyncMutex::new(sender));
+
+                // Handle new incoming message in the ws connection
+                while let Some(Ok(message)) = recv.next().await {
+                    if let Message::Text(msg) = message {
+                        if let Ok(message) = serde_json::from_str::<Messages>(&msg) {
                             // Save the WebSocket if it just subscribed
                             if let Messages::ListenToState { state_id, .. } = message {
                                 sockets.lock().await.push((sender.clone(), state_id));
                             }
 
+                            // Forward the message to the core
                             core_sender.lock().unwrap().send(message).await.unwrap();
+                        } else {
+                            // not json
                         }
-                    }
-                    _ => {
-                        // Close thread for the particular connection
-                        break;
+                    } else {
+                        // not text
                     }
                 }
-            }
+            });
         });
-    });
+    }
 }
 
 /// This is the HTTP Handler
 pub struct HTTPHandler {
     pub json_rpc_http_cors: DomainsValidation<AccessControlAllowOrigin>,
     pub sockets: SocketsRegistry,
+    pub port: u16,
 }
 
 impl HTTPHandler {
-    pub fn new(json_rpc_http_cors: DomainsValidation<AccessControlAllowOrigin>) -> Self {
+    pub fn new(json_rpc_http_cors: DomainsValidation<AccessControlAllowOrigin>, port: u16) -> Self {
         Self {
             json_rpc_http_cors,
             sockets: Arc::new(AsyncMutex::new(Vec::new())),
+            port,
         }
+    }
+
+    /// Shortcut to builder
+    pub fn builder() -> HTTPHandlerBuilder {
+        HTTPHandlerBuilder::new()
+    }
+
+    pub fn wrap(self) -> Box<dyn TransportHandler + Send + Sync> {
+        Box::new(self)
     }
 
     /// Easily send a message to all websockets in it's state ID
@@ -164,7 +278,6 @@ impl HTTPHandler {
             if msg_state_id == *state_id {
                 if let Some(message) = WSMessages::from_message(&message) {
                     let sent_message = websocket.lock().await.send(message).await;
-
                     match sent_message {
                         Ok(_) => {}
                         Err(_err) => {
@@ -176,55 +289,34 @@ impl HTTPHandler {
         }
     }
 
-    /// Create WebSockets server
-    fn create_ws_server(
+    // Create the HTTP JSON RPC Server
+    async fn create_server(
         &self,
         states: Arc<Mutex<StatesList>>,
         core_sender: Arc<Mutex<Sender<Messages>>>,
     ) {
-        let sockets = self.sockets.clone();
+        // Create a WebSockets Manager which acts as Middleware
+        let ws_middleware =
+            WebSocketsManager::new(self.sockets.clone(), core_sender, states.clone());
 
-        std::thread::spawn(move || {
-            let rt = tokio::runtime::Runtime::new().unwrap();
-
-            rt.block_on(async {
-                let routes = warp::path("listen")
-                    .and(ws_auth(states.clone()).await)
-                    .and(warp::ws())
-                    .map(move |_, ws: warp::ws::Ws| {
-                        let sockets = sockets.clone();
-                        let core_sender = core_sender.clone();
-                        ws.on_upgrade(async move |websocket| {
-                            let (sender, recv) = websocket.split();
-                            // Handle every new connection
-                            ws_handler(sockets, core_sender, (sender, recv));
-                        })
-                    });
-
-                warp::serve(routes).run(([127, 0, 0, 1], 7700)).await;
-            });
-        });
-    }
-
-    // Create the HTTP JSON RPC Server
-    async fn create_http_json_rpc_server(&self, states: Arc<Mutex<StatesList>>) {
         // Create the HTTP JSON RPC server
         let mut http_io = IoHandler::default();
-        let manager = RpcManager {
-            states: states.clone(),
-        };
+        let manager = RpcManager { states };
         http_io.extend_with(manager.to_delegate());
 
         let http_cors = self.json_rpc_http_cors.clone();
-        tokio::task::spawn_blocking(move || {
+        let http_port = self.port;
+
+        // Run the HTTP JSON RPC in a separate thread
+        thread::spawn(move || {
             let server = jsonrpc_http_server::ServerBuilder::new(http_io)
+                .request_middleware(ws_middleware)
                 .cors(http_cors)
-                .start_http(&"127.0.0.1:50001".to_string().parse().unwrap())
+                .rest_api(RestApi::Unsecure)
+                .start_http(&format!("127.0.0.1:{}", http_port).parse().unwrap())
                 .expect("Unable to start RPC HTTP server");
             server.wait();
-        })
-        .await
-        .unwrap();
+        });
     }
 }
 
@@ -235,11 +327,97 @@ impl TransportHandler for HTTPHandler {
         states: Arc<Mutex<StatesList>>,
         core_sender: Arc<Mutex<Sender<Messages>>>,
     ) {
-        self.create_ws_server(states.clone(), core_sender);
-        self.create_http_json_rpc_server(states).await;
+        self.create_server(states, core_sender).await;
     }
 
     async fn send(&self, message: Messages) {
         self.send_message_to_web_socket(message).await;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use std::sync::{
+        Arc,
+        Mutex,
+    };
+
+    use hyper_tungstenite::tungstenite::{
+        connect,
+        Message,
+    };
+    use jsonrpc_core::serde_json::{
+        self,
+        json,
+    };
+    use tokio::runtime::Runtime;
+    use url::Url;
+
+    use crate::{
+        handlers::Messages,
+        Configuration,
+        Core,
+        State,
+        StatesList,
+        TokenFlags,
+    };
+
+    use super::HTTPHandler;
+
+    #[test]
+    fn json_rpc_works() {
+        let rt = Runtime::new().unwrap();
+        rt.block_on(async {
+            // RUN THE SERVER
+
+            let states = {
+                let sample_state = State::new(1, vec![]);
+
+                let states = StatesList::new()
+                    .with_tokens(&[TokenFlags::All("test".to_string())])
+                    .with_state(sample_state);
+
+                Arc::new(Mutex::new(states))
+            };
+
+            let http_handler = HTTPHandler::builder().build().wrap();
+
+            let config = Configuration::new(http_handler);
+
+            let core = Core::new(config, states);
+
+            core.run().await;
+
+            // RUN A WEBSOCKETS CLIENT
+
+            let (mut socket, _) = connect(
+                Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap(),
+            )
+            .expect("Can't connect");
+
+            let listen_to_state_msg = json!({
+                "msg_type": "ListenToState",
+                "state_id": 1 as u16,
+                "trigger": "client"
+            })
+            .to_string();
+
+            socket
+                .write_message(Message::Text(listen_to_state_msg))
+                .unwrap();
+
+            let msg = socket.read_message().expect("Error reading message");
+
+            assert!(msg.is_text());
+
+            let msg = msg.into_text().unwrap();
+
+            let state_updated_msg = serde_json::from_str(&msg).unwrap();
+
+            assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }))
+
+            // TO-DO TEST JSON RPC CLIENT
+        });
     }
 }

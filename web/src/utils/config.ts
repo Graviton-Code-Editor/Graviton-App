@@ -1,15 +1,10 @@
-class Configuration {
-  public http_uri: string;
-  public ws_uri: string;
+class Configuration<T> {
+  public http_uri: T;
+  public ws_uri: T;
   public state_id: number;
   public token: string;
 
-  constructor(
-    http_uri: string,
-    ws_uri: string,
-    state_id: number,
-    token: string
-  ) {
+  constructor(http_uri: T, ws_uri: T, state_id: number, token: string) {
     this.http_uri = http_uri;
     this.ws_uri = ws_uri;
     this.state_id = state_id;

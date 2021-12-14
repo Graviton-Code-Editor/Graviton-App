@@ -45,13 +45,7 @@ function StateRoot() {
   useEffect(() => {
     getToken().then((token) => {
       if (token !== null) {
-        const config = new Configuration(
-          "http://127.0.0.1:50001",
-          `ws://127.0.0.1:7700/listen?token=${token}&state=1`,
-          1,
-          token
-        );
-        const client = createClient(config);
+        const client = createClient(token);
 
         // Listen for any change on the state
         client.on("StateUpdated", function ({ state }) {

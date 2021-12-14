@@ -49,9 +49,9 @@ export class HTTPClient extends Emittery implements Client {
   private rpc: simple_jsonrpc;
   // Internal websockets client
   private socket: WebSocket;
-  private config: Configuration;
+  private config: Configuration<string>;
 
-  constructor(config: Configuration) {
+  constructor(config: Configuration<string>) {
     super();
     this.rpc = simple_jsonrpc.connect_xhr(config.http_uri);
     this.socket = new WebSocket(config.ws_uri);
@@ -141,9 +141,9 @@ export class HTTPClient extends Emittery implements Client {
  * Tauri Client
  */
 export class TauriClient extends Emittery implements Client {
-  private config: Configuration;
+  private config: Configuration<null>;
 
-  constructor(config: Configuration) {
+  constructor(config: Configuration<null>) {
     super();
     this.config = config;
 
@@ -229,10 +229,17 @@ export class TauriClient extends Emittery implements Client {
   }
 }
 
-export function createClient(config: Configuration): Client {
+export function createClient(token: string): Client {
   if (isTauri) {
+    const config = new Configuration(null, null, 1, token);
     return new TauriClient(config);
   } else {
+    const config = new Configuration(
+      "http://127.0.0.1:50001",
+      `ws://127.0.0.1:50001/websockets?token=${token}&state=1`,
+      1,
+      token
+    );
     return new HTTPClient(config);
   }
 }

@@ -54,8 +54,7 @@ pub use tokio;
 ///  };
 ///  
 ///  // Crate a HTTP TransportHandler and a configuration
-///  let http_handler = HTTPHandler::new(DomainsValidation::Disabled);
-///  let http_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(http_handler);
+///  let http_handler = HTTPHandler::builder().build().wrap();
 ///
 ///  // Create the configuration
 ///  let config = Configuration::new(http_handler);
@@ -88,11 +87,7 @@ impl Core {
         }
     }
 
-    /// Start the core
-    ///
-    /// # Note
-    /// This blocks the current thread, you might prefer to run this on a separate thread.
-    ///
+    /// Runs the defined handler and the server
     pub async fn run(&self) {
         self.server.run().await;
     }
