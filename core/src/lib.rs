@@ -25,15 +25,27 @@ pub use tokio;
 /// ```rust
 /// # use std::sync::{Arc, Mutex};
 /// # use gveditor_core::{
-///   # jsonrpc_http_server::DomainsValidation,
-///   # tokio,
-///   # Configuration,
-///   # Core,
-///   # State,
-///   # StatesList,
-///   # TokenFlags,
-///   # handlers::{ TransportHandler, HTTPHandler },
+///     # handlers::HTTPHandler,
+///     # Configuration,
+///     # Core,
 /// # };
+///  # use gveditor_core_api::{
+///     # extensions_manager::ExtensionsManager,
+///     # messaging::Messages,
+///     # state::{
+///     #    StatesList,
+///     #    TokenFlags,
+///     # },
+///     # State,
+///  # };
+/// # use tokio::sync::{
+///    # mpsc::channel,
+///    # Mutex as AsyncMutex
+/// # };
+///
+///  let (to_core, from_core) = channel::<Messages>(1);
+///  let from_core = Arc::new(AsyncMutex::new(from_core));
+///
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
@@ -50,7 +62,7 @@ pub use tokio;
 ///  let http_handler = HTTPHandler::builder().build().wrap();
 ///
 ///  // Create the configuration
-///  let config = Configuration::new(http_handler);
+///  let config = Configuration::new(http_handler, to_core, from_core);
 ///
 ///  // Create a Core
 ///  let core = Core::new(config, states);
