@@ -1,11 +1,21 @@
-import { setRecoil } from "../components/external_state";
+import { setRecoil, useRecoil } from "../components/external_state";
 import PromptContainer, { Option } from "../components/prompt";
 import { Prompt } from "../modules/prompt";
-import { openedFolders } from "../utils/atoms";
+import { openedFolders, openedTabsState } from "../utils/atoms";
 import { openFolderPicker } from "../utils/commands";
+import WelcomeTab from "../tabs/welcome";
 
 function GlobalPromptContainer() {
   const options: Option[] = [
+    {
+      label: "Open Welcome",
+      onSelected({ closePrompt }) {
+        closePrompt();
+        const tabs = useRecoil(openedTabsState);
+        tabs[0][0].push(new WelcomeTab());
+        setRecoil(openedTabsState, [...tabs]);
+      },
+    },
     {
       label: "Open Folder",
       async onSelected({ closePrompt }) {

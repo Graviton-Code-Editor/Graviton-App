@@ -7,6 +7,12 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
+    link: {
+      color: "rgb(200, 200, 200)",
+      hover: {
+        color: "rgb(180, 180, 180)",
+      },
+    },
     prompt: {
       option: {
         background: "#222222",
@@ -19,17 +25,24 @@ const theme = {
         background: "#191919",
       },
     },
-    tabs: {
+    tab: {
       list: {
         background: "#222222",
       },
       button: {
+        fill: "rgb(255,255,255)",
+        hover: {
+          fill: "rgb(180,180,180)",
+        },
         focused: {
           background: "#191919",
         },
       },
       container: {
         background: "#191919",
+      },
+      text: {
+        color: "rgb(255,255,255)",
       },
     },
     view: {

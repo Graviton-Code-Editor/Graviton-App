@@ -13,13 +13,11 @@ interface Externalizer {
 const utils: Externalizer = {} as Externalizer;
 
 export default function RecoilExternalState() {
-  utils.useRecoil = function <T>(atom: RecoilValue<T>): T {
-    return useRecoilCallback(({ snapshot }) => {
-      return (atom: RecoilValue<T>) => {
-        return snapshot.getLoadable(atom).contents;
-      };
-    }, [])(atom);
-  };
+  utils.useRecoil = useRecoilCallback(({ snapshot }) => {
+    return function <T>(atom: RecoilValue<T>) {
+      return snapshot.getLoadable(atom).contents;
+    };
+  }, []);
 
   utils.setRecoil = useRecoilCallback(({ set }) => set, []);
 

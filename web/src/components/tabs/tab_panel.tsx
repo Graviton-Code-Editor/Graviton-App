@@ -13,7 +13,7 @@ const TabsPanelContainer = styled.div`
     display: flex;
     min-height: 40px;
     overflow-x: auto;
-    background: ${({ theme }) => theme.elements.tabs.list.background};
+    background: ${({ theme }) => theme.elements.tab.list.background};
     &:empty {
       background: transparent;
     }

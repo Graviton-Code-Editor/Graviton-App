@@ -1,6 +1,5 @@
 import { PropsWithChildren, useEffect } from "react";
 import { createClient } from "../utils/client";
-import Configuration from "../utils/config";
 import {
   openedTabsState,
   clientState,

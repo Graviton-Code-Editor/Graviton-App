@@ -1,4 +1,5 @@
 import { MouseEvent, PropsWithChildren } from "react";
+import { ReactSVG } from "react-svg";
 import { keyframes, default as styled } from "styled-components";
 
 const tabOpening = keyframes`
@@ -28,7 +29,7 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
   user-select: none;
   animation: ${tabOpening} ease-in 0.14s;
   &.selected {
-    background: ${({ theme }) => theme.elements.tabs.button.focused.background};
+    background: ${({ theme }) => theme.elements.tab.button.focused.background};
   }
   & > p {
     margin: 3px;
@@ -38,6 +39,22 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
     flex: 1;
     white-space: pre;
     display: block;
+  }
+  & > button {
+    width: 0px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    & svg {
+      width: 11px;
+      height: 11px;
+      & > path {
+        stroke: ${({ theme }) => theme.elements.tab.button.fill};
+      }
+    }
+    &:hover svg > path {
+      stroke: ${({ theme }) => theme.elements.tab.button.hover.fill};
+    }
   }
 `;
 
@@ -62,7 +79,9 @@ export default function TabButton({
   return (
     <TabButtonStyle className={isSelected && "selected"} onClick={select}>
       <p>{title}</p>
-      <button onClick={closeTab}>x</button>
+      <button onClick={closeTab}>
+        <ReactSVG src="./src/icons/close_cross.svg" />
+      </button>
     </TabButtonStyle>
   );
 }
