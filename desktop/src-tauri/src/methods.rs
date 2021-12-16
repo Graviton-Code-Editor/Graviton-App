@@ -1,10 +1,10 @@
-use gveditor_core::{
+use gveditor_core::RPCResult;
+use gveditor_core_api::{
     filesystems::{
         DirItemInfo,
         FileInfo,
     },
     Errors,
-    RPCResult,
     State,
 };
 

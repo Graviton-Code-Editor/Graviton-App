@@ -1,4 +1,3 @@
-use crate::server::Errors;
 use serde::{
     Deserialize,
     Serialize,
@@ -6,6 +5,8 @@ use serde::{
 use std::path::Path;
 mod local;
 pub use local::LocalFilesystem;
+
+use crate::Errors;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum FilesystemErrors {

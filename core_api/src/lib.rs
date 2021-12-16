@@ -1,6 +1,26 @@
-/// Extensions structure
-pub trait Extension {
-    /// Init method of the extension
-    /// This will be called when the extension is loaded
-    fn init(&mut self);
+pub mod extensions;
+pub mod extensions_manager;
+pub mod filesystems;
+pub mod messaging;
+pub mod state;
+pub use filesystems::FilesystemErrors;
+pub use serde::{
+    Deserialize,
+    Serialize,
+};
+pub use state::State;
+pub use tokio::{
+    self,
+    sync::{
+        mpsc::Sender,
+        Mutex,
+    },
+};
+
+/// Global errors enum
+#[derive(Serialize, Deserialize, Debug)]
+pub enum Errors {
+    StateNotFound,
+    Fs(FilesystemErrors),
+    BadToken,
 }

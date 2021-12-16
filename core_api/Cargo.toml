@@ -10,3 +10,7 @@ homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
 license = "MIT"
 
 [dependencies]
+tokio = { version = "1.14.0", features = ["rt-multi-thread", "macros", "sync", "time"]}
+serde_derive = "1.0.126"
+serde = { version = "1.0.127", features = ["derive"] }
+async-trait = "0.1.52"

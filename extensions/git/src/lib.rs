@@ -1,18 +1,31 @@
-use gveditor_core_api::Extension;
+use gveditor_core_api::{
+    extensions::base::Extension,
+    extensions_manager::ExtensionsManager,
+    messaging::Messages,
+    tokio::sync::mpsc::Sender,
+};
+use std::{
+    thread,
+    time::Duration,
+};
 
+#[allow(dead_code)]
 struct GitExtension {
-    state: Option<u8>,
+    sender: Sender<Messages>,
 }
 
 impl Extension for GitExtension {
     fn init(&mut self) {
-        self.state = Some(1);
-        println!("Hey ! {:?}", self.state);
+        println!("Running git extension...");
+
+        thread::spawn(move || loop {
+            thread::sleep(Duration::from_millis(500));
+            println!("hello...");
+        });
     }
 }
 
-#[allow(improper_ctypes_definitions)]
 #[no_mangle]
-pub extern "C" fn entry() -> Box<dyn Extension> {
-    Box::new(GitExtension { state: None })
+pub fn entry(extensions: &mut ExtensionsManager, sender: Sender<Messages>) {
+    extensions.register(Box::new(GitExtension { sender }));
 }

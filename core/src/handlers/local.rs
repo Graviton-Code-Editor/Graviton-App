@@ -1,3 +1,4 @@
+use super::TransportHandler;
 use crate::{
     server::{
         gen_client::Client,
@@ -7,6 +8,7 @@ use crate::{
     StatesList,
 };
 use async_trait::async_trait;
+use gveditor_core_api::messaging::Messages;
 use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
 use std::{
@@ -20,11 +22,6 @@ use tokio::sync::mpsc::{
     channel,
     Receiver,
     Sender,
-};
-
-use super::{
-    Messages,
-    TransportHandler,
 };
 
 /// This a local handler, meaning that you can use the JSON RPC Server directly
@@ -62,7 +59,7 @@ impl LocalHandler {
 
 #[async_trait]
 impl TransportHandler for LocalHandler {
-    async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Arc<Mutex<Sender<Messages>>>) {
+    async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
         let rv = self.receiver_to_local.clone();
 
         thread::spawn(move || {
@@ -71,7 +68,6 @@ impl TransportHandler for LocalHandler {
             runtime.block_on(async {
                 loop {
                     if let Some(msg) = rv.recv().await {
-                        let core_sender = core_sender.lock().unwrap();
                         core_sender.send(msg).await.unwrap();
                     }
                 }
@@ -92,16 +88,18 @@ mod tests {
         Mutex,
     };
 
+    use gveditor_core_api::{
+        extensions_manager::ExtensionsManager,
+        state::TokenFlags,
+        State,
+    };
+
     use tokio::{
         runtime::Runtime,
         sync::mpsc::channel,
     };
 
-    use crate::{
-        State,
-        StatesList,
-        TokenFlags,
-    };
+    use crate::StatesList;
 
     use super::LocalHandler;
 
@@ -112,7 +110,7 @@ mod tests {
         rt.block_on(async {
             // Sample StatesList
             let states = {
-                let sample_state = State::new(1, vec![]);
+                let sample_state = State::new(1, ExtensionsManager::default());
 
                 // A StatesList with the previous state
                 let states = StatesList::new()

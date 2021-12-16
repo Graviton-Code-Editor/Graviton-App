@@ -1,24 +1,17 @@
 #![feature(async_closure)]
 #![feature(associated_type_defaults)]
 mod configuration;
-pub mod filesystems;
 pub mod handlers;
 mod server;
-mod state;
 
 pub use configuration::Configuration;
+use gveditor_core_api::state::StatesList;
 pub use jsonrpc_core_client;
 pub use jsonrpc_http_server;
 pub use server::{
     gen_client,
-    Errors,
     RPCResult,
     Server,
-};
-pub use state::{
-    State,
-    StatesList,
-    TokenFlags,
 };
 use std::sync::{
     Arc,
@@ -39,12 +32,12 @@ pub use tokio;
 ///   # State,
 ///   # StatesList,
 ///   # TokenFlags,
-///   # handlers::{ TransportHandler, HTTPHandler }
+///   # handlers::{ TransportHandler, HTTPHandler },
 /// # };
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
-///     let sample_state = State::new(1, vec![]);
+///     let sample_state = State::new(1, ExtensionsManager::default());
 ///
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()

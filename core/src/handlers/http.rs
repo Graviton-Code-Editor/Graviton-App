@@ -6,6 +6,7 @@ use crate::{
     StatesList,
 };
 use async_trait::async_trait;
+use gveditor_core_api::messaging::Messages;
 use hyper_tungstenite::{
     hyper::{
         self,
@@ -49,7 +50,6 @@ use tokio::{
     },
 };
 
-use crate::handlers::Messages;
 use jsonrpc_core::serde_json::{
     self,
     json,
@@ -118,11 +118,10 @@ type SocketsRegistry = Arc<
     >,
 >;
 
-
 /// WebSockets middleware for HTTP JSON RPC
 struct WebSocketsManager {
     sockets: SocketsRegistry,
-    core_sender: Arc<Mutex<Sender<Messages>>>,
+    core_sender: Sender<Messages>,
     states: Arc<Mutex<StatesList>>,
 }
 
@@ -164,7 +163,7 @@ impl WebSocketsManager {
     /// * `states`               - A States list
     pub fn new(
         sockets: SocketsRegistry,
-        core_sender: Arc<Mutex<Sender<Messages>>>,
+        core_sender: Sender<Messages>,
         states: Arc<Mutex<StatesList>>,
     ) -> Self {
         Self {
@@ -211,7 +210,7 @@ impl WebSocketsManager {
     /// * `websocklet`           - The Websockets connection
     pub fn handle_ws(
         sockets: SocketsRegistry,
-        core_sender: Arc<Mutex<Sender<Messages>>>,
+        core_sender: Sender<Messages>,
         websocket: HyperWebsocket,
     ) {
         std::thread::spawn(move || {
@@ -232,7 +231,7 @@ impl WebSocketsManager {
                             }
 
                             // Forward the message to the core
-                            core_sender.lock().unwrap().send(message).await.unwrap();
+                            core_sender.send(message).await.unwrap();
                         } else {
                             // not json
                         }
@@ -290,11 +289,7 @@ impl HTTPHandler {
     }
 
     // Create the HTTP JSON RPC Server
-    async fn create_server(
-        &self,
-        states: Arc<Mutex<StatesList>>,
-        core_sender: Arc<Mutex<Sender<Messages>>>,
-    ) {
+    async fn create_server(&self, states: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
         // Create a WebSockets Manager which acts as Middleware
         let ws_middleware =
             WebSocketsManager::new(self.sockets.clone(), core_sender, states.clone());
@@ -322,11 +317,7 @@ impl HTTPHandler {
 
 #[async_trait]
 impl TransportHandler for HTTPHandler {
-    async fn run(
-        &mut self,
-        states: Arc<Mutex<StatesList>>,
-        core_sender: Arc<Mutex<Sender<Messages>>>,
-    ) {
+    async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
         self.create_server(states, core_sender).await;
     }
 
@@ -338,11 +329,19 @@ impl TransportHandler for HTTPHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::{sync::{
-        Arc,
-        Mutex,
-    }, time::Duration};
+    use std::{
+        sync::{
+            Arc,
+            Mutex,
+        },
+        time::Duration,
+    };
 
+    use gveditor_core_api::{
+        extensions_manager::ExtensionsManager,
+        state::TokenFlags,
+        State,
+    };
     use hyper_tungstenite::tungstenite::{
         connect,
         Message,
@@ -351,16 +350,21 @@ mod tests {
         self,
         json,
     };
-    use tokio::{runtime::Runtime, time::sleep};
+    use tokio::{
+        runtime::Runtime,
+        sync::mpsc::channel,
+        time::sleep,
+    };
     use url::Url;
 
     use crate::{
-        handlers::Messages,
+        handlers::{
+            http::AsyncMutex,
+            Messages,
+        },
         Configuration,
         Core,
-        State,
         StatesList,
-        TokenFlags,
     };
 
     use super::HTTPHandler;
@@ -371,8 +375,11 @@ mod tests {
         rt.block_on(async {
             // RUN THE SERVER
 
+            let (to_core, from_core) = channel::<Messages>(1);
+            let from_core = Arc::new(AsyncMutex::new(from_core));
+
             let states = {
-                let sample_state = State::new(1, vec![]);
+                let sample_state = State::new(1, ExtensionsManager::default());
 
                 let states = StatesList::new()
                     .with_tokens(&[TokenFlags::All("test".to_string())])
@@ -383,7 +390,7 @@ mod tests {
 
             let http_handler = HTTPHandler::builder().build().wrap();
 
-            let config = Configuration::new(http_handler);
+            let config = Configuration::new(http_handler, to_core, from_core);
 
             let core = Core::new(config, states);
 

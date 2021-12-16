@@ -1,10 +1,11 @@
+use crate::Errors;
+
 use super::{
     DirItemInfo,
     FileInfo,
     Filesystem,
     FilesystemErrors,
 };
-use crate::server::Errors;
 use std::{
     fs,
     io::ErrorKind,

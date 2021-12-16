@@ -15,7 +15,7 @@ jsonrpc-core = "18.0.0"
 jsonrpc-core-client = "18.0.0"
 serde_derive = "1.0.126"
 serde = { version = "1.0.127", features = ["derive"] }
-tokio = { version = "1.11.0", features = ["rt-multi-thread", "macros"]}
+tokio = { version = "1.14.0", features = ["rt-multi-thread", "macros", "sync"]}
 jsonrpc-http-server = "18.0.0"
 
 jsonwebtoken = "7.2.0"

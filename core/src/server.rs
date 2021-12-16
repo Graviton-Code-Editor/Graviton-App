@@ -1,66 +1,57 @@
 use crate::{
     configuration::Handler,
+    handlers::TransportHandler,
+    Configuration,
+};
+use gveditor_core_api::{
     filesystems::{
         DirItemInfo,
         FileInfo,
         FilesystemErrors,
     },
-    handlers::{
-        Messages,
-        TransportHandler,
-    },
-    Configuration,
+    messaging::Messages,
+    state::StatesList,
+    Errors,
     State,
-    StatesList,
 };
 use jsonrpc_derive::rpc;
-use serde::{
-    Deserialize,
-    Serialize,
-};
+
 use std::sync::{
     Arc,
     Mutex,
 };
 use tokio::sync::{
-    mpsc::{
-        channel,
-        Receiver,
-        Sender,
-    },
+    mpsc::Receiver,
     Mutex as AsyncMutex,
 };
 
 pub struct Server {
     states: Arc<Mutex<StatesList>>,
     config: Configuration,
-    sender: Arc<Mutex<Sender<Messages>>>,
 }
 
 impl Server {
     /// Create a new Server
     pub fn new(config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        let (sender, receiver) = channel::<Messages>(1);
-        let sender = Arc::new(Mutex::new(sender));
+        Self::create_receiver(
+            states.clone(),
+            config.receiver.clone(),
+            config.handler.clone(),
+        );
 
-        Self::create_receiver(states.clone(), receiver, config.handler.clone());
-
-        Self {
-            config,
-            states,
-            sender,
-        }
+        Self { config, states }
     }
 
     /// Receive all incoming messages
     pub fn create_receiver(
         states: Arc<Mutex<StatesList>>,
-        mut receiver: Receiver<Messages>,
+        receiver: Arc<AsyncMutex<Receiver<Messages>>>,
         handler: Handler,
     ) {
         std::thread::spawn(move || {
             let rt = tokio::runtime::Runtime::new().unwrap();
             rt.block_on(async move {
+                let mut receiver = receiver.lock().await;
                 loop {
                     if let Some(message) = receiver.recv().await {
                         Self::process_message(states.clone(), message, handler.clone()).await;
@@ -75,7 +66,9 @@ impl Server {
         let states = self.states.clone();
         let mut handler = self.config.handler.lock().await;
 
-        handler.run(states.clone(), self.sender.clone()).await;
+        handler
+            .run(states.clone(), self.config.sender.clone())
+            .await;
     }
 
     /// Process every message
@@ -101,19 +94,18 @@ impl Server {
                         state: state.lock().unwrap().to_owned(),
                     };
                     handler.send(message).await;
+
+                    state.lock().unwrap().run_extensions().await;
                 }
             }
             Messages::StateUpdated { .. } => {}
+            _ => {
+                // Forward to the handler messages not handled here
+                let handler = handler.lock().await;
+                handler.send(msg).await;
+            }
         }
     }
-}
-
-/// Global errors enum
-#[derive(Serialize, Deserialize, Debug)]
-pub enum Errors {
-    StateNotFound,
-    Fs(FilesystemErrors),
-    BadToken,
 }
 
 pub type RPCResult<T> = jsonrpc_core::Result<T>;

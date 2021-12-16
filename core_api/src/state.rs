@@ -1,8 +1,10 @@
-use crate::filesystems::{
-    Filesystem,
-    LocalFilesystem,
+use crate::{
+    extensions_manager::ExtensionsManager,
+    filesystems::{
+        Filesystem,
+        LocalFilesystem,
+    },
 };
-use gveditor_core_api::Extension;
 use serde::{
     Deserialize,
     Serialize,
@@ -78,7 +80,7 @@ pub struct State {
     #[serde(skip_serializing, skip_deserializing)]
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
     #[serde(skip_serializing, skip_deserializing)]
-    extensions: Vec<Arc<Mutex<Box<dyn Extension + Send>>>>,
+    extensions_manager: ExtensionsManager,
     opened_tabs: Vec<Tab>,
     pub id: u8,
     tokens: Vec<String>,
@@ -106,7 +108,7 @@ impl Default for State {
         Self {
             id: 1,
             filesystems,
-            extensions: Vec::new(),
+            extensions_manager: ExtensionsManager::default(),
             opened_tabs: Vec::new(),
             tokens: Vec::new(),
         }
@@ -114,10 +116,10 @@ impl Default for State {
 }
 
 impl State {
-    pub fn new(id: u8, extensions: Vec<Arc<Mutex<Box<dyn Extension + Send>>>>) -> Self {
+    pub fn new(id: u8, extensions_manager: ExtensionsManager) -> Self {
         State {
             id,
-            extensions,
+            extensions_manager,
             ..Default::default()
         }
     }
@@ -132,6 +134,15 @@ impl State {
 
     pub fn has_token(&self, token: &str) -> bool {
         self.tokens.contains(&token.to_owned())
+    }
+
+    /// Run all the extensions in the manager
+    pub async fn run_extensions(&self) {
+        println!("...");
+        for ext in &self.extensions_manager.extensions {
+            let mut ext = ext.lock().await;
+            ext.init();
+        }
     }
 }
 
