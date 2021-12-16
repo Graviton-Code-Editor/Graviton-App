@@ -20,9 +20,7 @@ export default function Link(props: PropsWithChildren<any>) {
     const href = props.href;
     props = { ...props, href: null };
 
-    const [openUrl, setOpenUrl] = useState<
-      (url: string) => Promise<void> | void
-    >((_) => {});
+    const [openUrl, setOpenUrl] = useState<((url: string) => Promise<void> | void) | null >(null);
 
     useEffect(() => {
       // Dinamically load tauri's open.shell
@@ -31,7 +29,7 @@ export default function Link(props: PropsWithChildren<any>) {
       });
     }, []);
 
-    return <LinkStyled onClick={() => openUrl(href)} {...props} />;
+    return <LinkStyled onClick={() => openUrl && openUrl(href)} {...props} />;
   }
   return <LinkStyled {...props} />;
 }
