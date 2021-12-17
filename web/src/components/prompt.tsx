@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { prompt } from "../utils/atoms";
+import { showedWindows } from "../utils/atoms";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "./window_background";
 
@@ -53,26 +53,32 @@ interface PromptOptions {
 
 export default function PromptContainer({ options }: PromptOptions) {
   const refBackground = useRef(null);
-  const setPromptState = useSetRecoilState(prompt);
+  const setShowedWindows = useSetRecoilState(showedWindows);
   const { t } = useTranslation();
 
-  function closePrompt(event: any) {
+  function closePrompt() {
+    setShowedWindows((val) => {
+      const newValue = [...val];
+      newValue.pop();
+      return newValue;
+    });
+  }
+
+  function closePromptOnClick(event: any) {
     if (event.target === refBackground.current) {
-      setPromptState(null);
+      closePrompt();
     }
   }
 
   return (
     <>
       <WindowBackground />
-      <StyledPrompt onClick={closePrompt} ref={refBackground}>
+      <StyledPrompt onClick={closePromptOnClick} ref={refBackground}>
         <div className="prompt">
           {options.map((option) => {
             function optionSelected() {
               option.onSelected({
-                closePrompt: () => {
-                  setPromptState(null);
-                },
+                closePrompt,
               });
             }
 

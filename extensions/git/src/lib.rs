@@ -1,8 +1,14 @@
 use gveditor_core_api::{
-    extensions::base::Extension,
+    extensions::{
+        base::Extension,
+        modules::popup::Popup,
+    },
     extensions_manager::ExtensionsManager,
     messaging::Messages,
-    tokio::sync::mpsc::Sender,
+    tokio::{
+        self,
+        sync::mpsc::Sender,
+    },
 };
 use std::{
     thread,
@@ -12,20 +18,23 @@ use std::{
 #[allow(dead_code)]
 struct GitExtension {
     sender: Sender<Messages>,
+    state_id: u8,
 }
 
 impl Extension for GitExtension {
     fn init(&mut self) {
-        println!("Running git extension...");
-
-        thread::spawn(move || loop {
-            thread::sleep(Duration::from_millis(500));
-            println!("hello...");
+        let popup = Popup::new(self.sender.clone(), self.state_id, "Welcome", "Hello World");
+        thread::spawn(|| {
+            let rt = tokio::runtime::Runtime::new().unwrap();
+            rt.block_on(async move {
+                thread::sleep(Duration::from_millis(5000));
+                popup.show().await;
+            });
         });
     }
 }
 
 #[no_mangle]
-pub fn entry(extensions: &mut ExtensionsManager, sender: Sender<Messages>) {
-    extensions.register(Box::new(GitExtension { sender }));
+pub fn entry(extensions: &mut ExtensionsManager, sender: Sender<Messages>, state_id: u8) {
+    extensions.register(Box::new(GitExtension { sender, state_id }));
 }

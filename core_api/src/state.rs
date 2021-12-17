@@ -132,13 +132,13 @@ impl State {
         return self.filesystems.get(filesystem).cloned();
     }
 
+    // Check if the state can be used with the specified token
     pub fn has_token(&self, token: &str) -> bool {
         self.tokens.contains(&token.to_owned())
     }
 
     /// Run all the extensions in the manager
     pub async fn run_extensions(&self) {
-        println!("...");
         for ext in &self.extensions_manager.extensions {
             let mut ext = ext.lock().await;
             ext.init();

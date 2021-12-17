@@ -22,6 +22,8 @@ pub enum Messages {
     },
     ShowPopup {
         state_id: u8,
+        popup_id: u8,
+        content: String,
         title: String,
     },
 }

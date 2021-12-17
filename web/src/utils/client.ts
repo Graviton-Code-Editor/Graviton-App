@@ -6,6 +6,7 @@ import Emittery from "emittery";
 import { emit, listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/tauri";
 import { isTauri } from "./commands";
+import { ShowPopup, StateUpdated } from "../types/messages";
 
 export interface WebSocketsMessage {
   trigger: string;
@@ -137,10 +138,19 @@ export class HTTPClient extends Emittery implements Client {
   }
 }
 
+type EventsInterface = Record<
+  string,
+  {
+    ShowPopup: ShowPopup;
+    ListenToState: StateUpdated;
+    connected: null;
+  } | null
+>;
+
 /*
  * Tauri Client
  */
-export class TauriClient extends Emittery implements Client {
+export class TauriClient extends Emittery<EventsInterface> implements Client {
   private config: Configuration<null>;
 
   constructor(config: Configuration<null>) {
@@ -148,13 +158,13 @@ export class TauriClient extends Emittery implements Client {
     this.config = config;
 
     listen("to_webview", ({ payload }: { payload: WebSocketsMessage }) => {
-      this.emit(payload.msg_type, payload);
+      this.emit(payload.msg_type, payload as any);
     });
 
     invoke("init_listener");
 
     setTimeout(async () => {
-      this.emit("connected");
+      this.emit("connected", null);
     }, 1000);
   }
 

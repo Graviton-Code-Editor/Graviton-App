@@ -2,6 +2,7 @@ import { atom } from "recoil";
 import BaseEditor from "../editors/base";
 import TextEditor from "../editors/text";
 import { Prompt } from "../modules/prompt";
+import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
 import {
   FocusedTab,
@@ -42,12 +43,6 @@ export const prompts = atom<typeof Prompt[]>({
   default: [GlobalPrompt],
 });
 
-// Current launched prompt
-export const prompt = atom<Prompt | null>({
-  key: "prompt",
-  default: null,
-});
-
 // Registed Editors implementations
 export const editors = atom<typeof BaseEditor[]>({
   key: "editors",
@@ -57,5 +52,11 @@ export const editors = atom<typeof BaseEditor[]>({
 // Opened folders in the explorer panel
 export const openedFolders = atom<FolderState[]>({
   key: "openedFolders",
+  default: [],
+});
+
+// Opened windows (popup, prompts...)
+export const showedWindows = atom<FloatingWindow[]>({
+  key: "showedWindows",
   default: [],
 });

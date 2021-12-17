@@ -130,7 +130,11 @@ fn open_tauri(
 /// * `path`    - The directory path from where to load the extensions
 /// * `sender`  -  A mpsc sender to communicate with the core
 ///
-async fn load_extensions_from_path(path: String, sender: Sender<Messages>) -> ExtensionsManager {
+async fn load_extensions_from_path(
+    path: String,
+    sender: Sender<Messages>,
+    state_id: u8,
+) -> ExtensionsManager {
     let mut manager = ExtensionsManager::new();
     // NOTE: This should load all the built-in extensions, not just the git one. WIP
     unsafe {
@@ -140,10 +144,10 @@ async fn load_extensions_from_path(path: String, sender: Sender<Messages>) -> Ex
         ));
         // Retrieve the entry function handler
         let entry_func: libloading::Symbol<
-            unsafe extern "C" fn(&ExtensionsManager, Sender<Messages>) -> (),
+            unsafe extern "C" fn(&ExtensionsManager, Sender<Messages>, u8) -> (),
         > = lib.get(b"entry").unwrap();
 
-        entry_func(&mut manager, sender);
+        entry_func(&mut manager, sender, state_id);
     }
     manager
 }
@@ -168,6 +172,7 @@ fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> String {
 
 // Dummy token
 static TOKEN: &str = "graviton_token";
+static STATE_ID: u8 = 1;
 
 #[tokio::main]
 async fn main() {
@@ -179,11 +184,11 @@ async fn main() {
     // Load built-in extensions
     let built_in_extensions_path = get_built_in_extensions_path(&context);
     let extensions_manager =
-        load_extensions_from_path(built_in_extensions_path, to_core.clone()).await;
+        load_extensions_from_path(built_in_extensions_path, to_core.clone(), STATE_ID).await;
 
     // Create the StatesList
     let states = {
-        let default_state = State::new(1, extensions_manager);
+        let default_state = State::new(STATE_ID, extensions_manager);
         let states = StatesList::new()
             .with_tokens(&[TokenFlags::All(TOKEN.to_string())])
             .with_state(default_state);

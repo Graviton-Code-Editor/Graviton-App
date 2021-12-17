@@ -13,11 +13,15 @@
 - [ ] Setup CD (daily beta releases)
 - [ ] State shouldn't have a global `opened_tabs` array but insted opened_tabs per folder
 - [ ] Implement sub variants for the `enum` Messages, like, `Messages::Module(ModuleMessages::Popup { .. })`
+- [ ] Make a Popup builder
+- [ ] Ability to close a popup from the extension
+- [ ] Random ID generator for the popup id
+- [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 
 ### web
 - [ ] Make a web-based filesystem explorer component
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
-- [ ] Make the popup module
+- [x] Make the popup module
 
 ### web_components
 - [ ] Make some useful components of the web-based frontend as a React library
