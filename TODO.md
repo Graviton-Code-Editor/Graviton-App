@@ -18,6 +18,7 @@
 - [ ] Ability to close a popup from the extension
 - [ ] Random ID generator for the popup id
 - [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
+- [ ] Build git extension with `--release` when building the binary / installer
 
 ### web
 - [ ] Make a web-based filesystem explorer component
