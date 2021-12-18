@@ -43,6 +43,17 @@ use tauri::{
     Window,
 };
 
+
+// Each OS has a different file format for dynamic libraries
+#[cfg(target_os = "macos")]
+static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
+#[cfg(target_os = "linux")]
+static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
+#[cfg(target_os = "windows")]
+static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
+
+
+
 /// The app backend state
 pub struct TauriState {
     client: Client,
@@ -132,7 +143,7 @@ async fn load_extensions_from_path(
     unsafe {
         // Load the extension library
         let lib = Box::leak(Box::new(
-            libloading::Library::new(format!("{}/{}", path, "git.dll")).unwrap(),
+            libloading::Library::new(format!("{}/{}.{}", path, "git", PLUGIN_DYNAMIC_LIBRARY_FORMAT)).unwrap(),
         ));
         // Retrieve the entry function handler
         let entry_func: libloading::Symbol<
