@@ -1,5 +1,6 @@
 ### ideas
 - Implement frontend-only extensions (through the Core ?)
+- Move the built-in transport handlers from the `core` crate into their own crate
 
 # core / core_api
 - [x] Make use of the native (OS-builtin) filesystem explorer to open folder and files
