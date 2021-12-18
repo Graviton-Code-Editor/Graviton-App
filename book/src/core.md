@@ -1,8 +1,9 @@
 # Core
 
-The core is the backend engine of Graviton, it handles all the states and extensions. In a normal situation it would be used by clients through a transport layer.
+The `core` is the engine that handles all the states and extensions. In order for clients to communicate to it, it needs to make use of a transport handler.
 
-The core itself, is transport-agnostic. That means that all the messages fro n the cliens can be sent through any transport that implements the trait `TransportHandler`. The Core crate provides two possible transport handlers:
+The core itself, is transport-agnostic. That means that all the messages from the clients can be sent to any transport handler that implements the trait `TransportHandler`. 
+To facilitate, the `core` crate provides two possible transport handlers:
 
 ### Local
 This is used when you use the Core in the same process as your back, like a desktop editor or a terminal-based editor.
