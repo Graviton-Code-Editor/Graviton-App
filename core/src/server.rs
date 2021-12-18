@@ -9,7 +9,10 @@ use gveditor_core_api::{
         FileInfo,
         FilesystemErrors,
     },
-    messaging::Messages,
+    messaging::{
+        ExtensionMessages,
+        Messages,
+    },
     state::StatesList,
     Errors,
     State,
@@ -98,7 +101,10 @@ impl Server {
                     state.lock().unwrap().run_extensions().await;
                 }
             }
-            Messages::StateUpdated { .. } => {}
+            Messages::StateUpdated { .. } => {
+                let states = states.lock().unwrap();
+                states.notify_extensions(ExtensionMessages::CoreMessage(msg));
+            }
             _ => {
                 // Forward to the handler messages not handled here
                 let handler = handler.lock().await;
@@ -180,9 +186,12 @@ impl RpcMethods for RpcManager {
         if let Some(state) = states.get_state_by_id(state_id) {
             // Make sure the token is valid
             if state.lock().unwrap().has_token(&token) {
+                let state = state.lock().unwrap();
                 // Try to get the requested filesystem implementation
-                if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
-                    Ok(filesystem.lock().unwrap().read_file_by_path(&path))
+                if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
+                    let result = filesystem.lock().unwrap().read_file_by_path(&path);
+                    state.notify_extensions(ExtensionMessages::ReadFile(state_id, result.clone()));
+                    Ok(result)
                 } else {
                     Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
                 }

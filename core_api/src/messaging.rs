@@ -3,7 +3,11 @@ use serde::{
     Serialize,
 };
 
-use crate::State;
+use crate::{
+    filesystems::FileInfo,
+    Errors,
+    State,
+};
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(tag = "msg_type")]
@@ -34,6 +38,21 @@ impl Messages {
             Self::ListenToState { state_id, .. } => *state_id,
             Self::StateUpdated { state } => state.id,
             Self::ShowPopup { state_id, .. } => *state_id,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone)]
+pub enum ExtensionMessages {
+    CoreMessage(Messages),
+    ReadFile(u8, Result<FileInfo, Errors>),
+}
+
+impl ExtensionMessages {
+    pub fn get_state_id(&self) -> u8 {
+        match self {
+            Self::CoreMessage(msg) => msg.get_state_id(),
+            Self::ReadFile(state_id, ..) => *state_id,
         }
     }
 }

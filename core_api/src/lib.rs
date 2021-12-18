@@ -18,7 +18,7 @@ pub use tokio::{
 };
 
 /// Global errors enum
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum Errors {
     StateNotFound,
     Fs(FilesystemErrors),

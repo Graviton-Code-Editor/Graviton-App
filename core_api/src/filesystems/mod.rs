@@ -8,7 +8,7 @@ pub use local::LocalFilesystem;
 
 use crate::Errors;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum FilesystemErrors {
     FilesystemNotFound,
     FileNotFound,
@@ -24,12 +24,12 @@ pub trait Filesystem {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct DirItemInfo {
-    path: String,
-    name: String,
-    is_file: bool,
+    pub path: String,
+    pub name: String,
+    pub is_file: bool,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum FileFormat {
     Unknown,
     Binary,
@@ -54,10 +54,11 @@ pub fn get_format_from_path(path: &str) -> FileFormat {
 }
 
 /// Contains information about a file
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct FileInfo {
-    content: String,
-    format: FileFormat,
+    pub content: String,
+    pub format: FileFormat,
+    pub path: String,
 }
 
 impl FileInfo {
@@ -65,6 +66,7 @@ impl FileInfo {
         Self {
             content,
             format: get_format_from_path(path),
+            path: path.to_owned(),
         }
     }
 }

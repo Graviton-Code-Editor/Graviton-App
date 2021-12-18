@@ -4,6 +4,7 @@ use crate::{
         Filesystem,
         LocalFilesystem,
     },
+    messaging::ExtensionMessages,
 };
 use serde::{
     Deserialize,
@@ -65,6 +66,16 @@ impl StatesList {
             .insert(state.id, Arc::new(Mutex::new(state.to_owned())));
 
         self
+    }
+
+    /// Notify all the extensions in a state about a message
+    pub fn notify_extensions(&self, message: ExtensionMessages) {
+        let state_id = message.get_state_id();
+        let state = self.states.get(&state_id);
+        if let Some(state) = state {
+            let state = state.lock().unwrap();
+            state.notify_extensions(message);
+        }
     }
 }
 
@@ -142,6 +153,18 @@ impl State {
         for ext in &self.extensions_manager.extensions {
             let mut ext = ext.lock().await;
             ext.init();
+        }
+    }
+
+    /// Notify all the extensions in a state about a message, asynchronously and independently
+    pub fn notify_extensions(&self, message: ExtensionMessages) {
+        for ext in &self.extensions_manager.extensions {
+            let ext = ext.clone();
+            let message = message.clone();
+            tokio::task::spawn(async move {
+                let mut ext = ext.lock().await;
+                ext.notify(message.clone());
+            });
         }
     }
 }
