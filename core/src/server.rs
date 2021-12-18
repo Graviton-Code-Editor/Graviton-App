@@ -1,19 +1,17 @@
-use crate::{
-    configuration::Handler,
-    handlers::TransportHandler,
-    Configuration,
+use crate::configuration::Handler;
+use crate::handlers::TransportHandler;
+use crate::Configuration;
+use gveditor_core_api::filesystems::{
+    DirItemInfo,
+    FileInfo,
+    FilesystemErrors,
 };
+use gveditor_core_api::messaging::{
+    ExtensionMessages,
+    Messages,
+};
+use gveditor_core_api::state::StatesList;
 use gveditor_core_api::{
-    filesystems::{
-        DirItemInfo,
-        FileInfo,
-        FilesystemErrors,
-    },
-    messaging::{
-        ExtensionMessages,
-        Messages,
-    },
-    state::StatesList,
     Errors,
     State,
 };
@@ -23,10 +21,8 @@ use std::sync::{
     Arc,
     Mutex,
 };
-use tokio::sync::{
-    mpsc::Receiver,
-    Mutex as AsyncMutex,
-};
+use tokio::sync::mpsc::Receiver;
+use tokio::sync::Mutex as AsyncMutex;
 
 pub struct Server {
     states: Arc<Mutex<StatesList>>,

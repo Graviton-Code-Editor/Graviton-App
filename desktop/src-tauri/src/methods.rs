@@ -1,9 +1,9 @@
 use gveditor_core::RPCResult;
+use gveditor_core_api::filesystems::{
+    DirItemInfo,
+    FileInfo,
+};
 use gveditor_core_api::{
-    filesystems::{
-        DirItemInfo,
-        FileInfo,
-    },
     Errors,
     State,
 };

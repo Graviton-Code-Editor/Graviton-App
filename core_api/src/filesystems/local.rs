@@ -6,10 +6,8 @@ use super::{
     Filesystem,
     FilesystemErrors,
 };
-use std::{
-    fs,
-    io::ErrorKind,
-};
+use std::fs;
+use std::io::ErrorKind;
 
 /// Implementation of FileSystem methods for a local access
 #[derive(Default)]

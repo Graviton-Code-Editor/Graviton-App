@@ -1,32 +1,24 @@
-use crate::{
-    server::{
-        RpcManager,
-        RpcMethods,
-    },
-    StatesList,
+use crate::server::{
+    RpcManager,
+    RpcMethods,
 };
+use crate::StatesList;
 use async_trait::async_trait;
 use gveditor_core_api::messaging::Messages;
+use hyper_tungstenite::hyper::upgrade::Upgraded;
+use hyper_tungstenite::tungstenite::{
+    self,
+    Message,
+};
 use hyper_tungstenite::{
-    hyper::{
-        self,
-        upgrade::Upgraded,
-    },
-    tungstenite::{
-        self,
-        Message,
-    },
+    hyper,
     HyperWebsocket,
     WebSocketStream,
 };
-use jsonrpc_core::{
-    futures::StreamExt,
-    futures_util::{
-        stream::SplitSink,
-        SinkExt,
-    },
-    IoHandler,
-};
+use jsonrpc_core::futures::StreamExt;
+use jsonrpc_core::futures_util::stream::SplitSink;
+use jsonrpc_core::futures_util::SinkExt;
+use jsonrpc_core::IoHandler;
 use jsonrpc_http_server::{
     AccessControlAllowOrigin,
     DomainsValidation,
@@ -34,21 +26,15 @@ use jsonrpc_http_server::{
     RequestMiddlewareAction,
     RestApi,
 };
-use std::{
-    collections::HashMap,
-    sync::{
-        Arc,
-        Mutex,
-    },
-    thread,
+use std::collections::HashMap;
+use std::sync::{
+    Arc,
+    Mutex,
 };
-use tokio::{
-    runtime::Runtime,
-    sync::{
-        mpsc::Sender,
-        Mutex as AsyncMutex,
-    },
-};
+use std::thread;
+use tokio::runtime::Runtime;
+use tokio::sync::mpsc::Sender;
+use tokio::sync::Mutex as AsyncMutex;
 
 use jsonrpc_core::serde_json::{
     self,
@@ -329,19 +315,15 @@ impl TransportHandler for HTTPHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::{
-        sync::{
-            Arc,
-            Mutex,
-        },
-        time::Duration,
+    use std::sync::{
+        Arc,
+        Mutex,
     };
+    use std::time::Duration;
 
-    use gveditor_core_api::{
-        extensions_manager::ExtensionsManager,
-        state::TokenFlags,
-        State,
-    };
+    use gveditor_core_api::extensions_manager::ExtensionsManager;
+    use gveditor_core_api::state::TokenFlags;
+    use gveditor_core_api::State;
     use hyper_tungstenite::tungstenite::{
         connect,
         Message,
@@ -350,18 +332,14 @@ mod tests {
         self,
         json,
     };
-    use tokio::{
-        runtime::Runtime,
-        sync::mpsc::channel,
-        time::sleep,
-    };
+    use tokio::runtime::Runtime;
+    use tokio::sync::mpsc::channel;
+    use tokio::time::sleep;
     use url::Url;
 
+    use crate::handlers::http::AsyncMutex;
+    use crate::handlers::Messages;
     use crate::{
-        handlers::{
-            http::AsyncMutex,
-            Messages,
-        },
         Configuration,
         Core,
         StatesList,

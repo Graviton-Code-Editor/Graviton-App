@@ -1,2 +1,2 @@
 imports_layout = "Vertical"
-imports_granularity = "Crate"
+imports_granularity = "Module"

@@ -1,30 +1,20 @@
-use gveditor_core_api::{
-    extensions::{
-        base::Extension,
-        modules::popup::Popup,
-    },
-    extensions_manager::ExtensionsManager,
-    messaging::{
-        ExtensionMessages,
-        Messages,
-    },
-    tokio::{
-        runtime::Runtime,
-        sync::mpsc::Sender as AsyncSender,
-    },
-    Mutex,
+use gveditor_core_api::extensions::base::Extension;
+use gveditor_core_api::extensions::modules::popup::Popup;
+use gveditor_core_api::extensions_manager::ExtensionsManager;
+use gveditor_core_api::messaging::{
+    ExtensionMessages,
+    Messages,
 };
-use std::{
-    sync::{
-        mpsc::{
-            channel,
-            Receiver,
-            Sender,
-        },
-        Arc,
-    },
-    thread,
+use gveditor_core_api::tokio::runtime::Runtime;
+use gveditor_core_api::tokio::sync::mpsc::Sender as AsyncSender;
+use gveditor_core_api::Mutex;
+use std::sync::mpsc::{
+    channel,
+    Receiver,
+    Sender,
 };
+use std::sync::Arc;
+use std::thread;
 
 #[allow(dead_code)]
 struct GitExtension {
@@ -43,16 +33,10 @@ impl Extension for GitExtension {
             Runtime::new().unwrap().block_on(async move {
                 let receiver = receiver.lock().await;
                 loop {
-                    if let Ok(ExtensionMessages::ReadFile(_, info)) = receiver.recv() {
-                        if let Ok(info) = info {
-                            let popup = Popup::new(
-                                external_sender.clone(),
-                                state_id,
-                                "you opened",
-                                &info.path,
-                            );
-                            popup.show().await;
-                        }
+                    if let Ok(ExtensionMessages::ReadFile(_, Ok(info))) = receiver.recv() {
+                        let popup =
+                            Popup::new(external_sender.clone(), state_id, "you opened", &info.path);
+                        popup.show().await;
                     }
                 }
             });

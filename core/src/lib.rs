@@ -6,8 +6,6 @@ mod server;
 
 pub use configuration::Configuration;
 use gveditor_core_api::state::StatesList;
-pub use jsonrpc_core_client;
-pub use jsonrpc_http_server;
 pub use server::{
     gen_client,
     RPCResult,
@@ -17,7 +15,11 @@ use std::sync::{
     Arc,
     Mutex,
 };
-pub use tokio;
+pub use {
+    jsonrpc_core_client,
+    jsonrpc_http_server,
+    tokio,
+};
 
 /// Graviton Core entry point
 ///

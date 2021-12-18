@@ -1,22 +1,18 @@
-use crate::{
-    extensions_manager::ExtensionsManager,
-    filesystems::{
-        Filesystem,
-        LocalFilesystem,
-    },
-    messaging::ExtensionMessages,
+use crate::extensions_manager::ExtensionsManager;
+use crate::filesystems::{
+    Filesystem,
+    LocalFilesystem,
 };
+use crate::messaging::ExtensionMessages;
 use serde::{
     Deserialize,
     Serialize,
 };
-use std::{
-    collections::HashMap,
-    fmt,
-    sync::{
-        Arc,
-        Mutex,
-    },
+use std::collections::HashMap;
+use std::fmt;
+use std::sync::{
+    Arc,
+    Mutex,
 };
 
 #[derive(Clone)]

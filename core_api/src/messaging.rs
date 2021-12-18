@@ -3,8 +3,8 @@ use serde::{
     Serialize,
 };
 
+use crate::filesystems::FileInfo;
 use crate::{
-    filesystems::FileInfo,
     Errors,
     State,
 };

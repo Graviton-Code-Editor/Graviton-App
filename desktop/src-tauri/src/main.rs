@@ -4,48 +4,40 @@
 )]
 
 mod methods;
+use gveditor_core::gen_client::Client;
+use gveditor_core::handlers::{
+    LocalHandler,
+    TransportHandler,
+};
+use gveditor_core::tokio::sync::mpsc::{
+    channel,
+    Receiver,
+    Sender,
+};
+use gveditor_core::tokio::sync::Mutex as AsyncMutex;
 use gveditor_core::{
-    gen_client::Client,
-    handlers::{
-        LocalHandler,
-        TransportHandler,
-    },
-    tokio::{
-        self,
-        sync::{
-            mpsc::{
-                channel,
-                Receiver,
-                Sender,
-            },
-            Mutex as AsyncMutex,
-        },
-    },
+    tokio,
     Configuration,
     Core,
 };
-use gveditor_core_api::{
-    extensions_manager::ExtensionsManager,
-    messaging::Messages,
-    state::{
-        StatesList,
-        TokenFlags,
-    },
-    State,
+use gveditor_core_api::extensions_manager::ExtensionsManager;
+use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::state::{
+    StatesList,
+    TokenFlags,
 };
-use std::{
-    sync::{
-        Arc,
-        Mutex,
-    },
-    thread,
+use gveditor_core_api::State;
+use std::sync::{
+    Arc,
+    Mutex,
 };
+use std::thread;
+use tauri::api::path::{
+    resolve_path,
+    BaseDirectory,
+};
+use tauri::utils::assets::EmbeddedAssets;
 use tauri::{
-    api::path::{
-        resolve_path,
-        BaseDirectory,
-    },
-    utils::assets::EmbeddedAssets,
     Context,
     Manager,
     Window,

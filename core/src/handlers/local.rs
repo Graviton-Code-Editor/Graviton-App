@@ -1,23 +1,19 @@
 use super::TransportHandler;
-use crate::{
-    server::{
-        gen_client::Client,
-        RpcManager,
-        RpcMethods,
-    },
-    StatesList,
+use crate::server::gen_client::Client;
+use crate::server::{
+    RpcManager,
+    RpcMethods,
 };
+use crate::StatesList;
 use async_trait::async_trait;
 use gveditor_core_api::messaging::Messages;
 use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
-use std::{
-    sync::{
-        Arc,
-        Mutex,
-    },
-    thread,
+use std::sync::{
+    Arc,
+    Mutex,
 };
+use std::thread;
 use tokio::sync::mpsc::{
     channel,
     Receiver,
@@ -88,16 +84,12 @@ mod tests {
         Mutex,
     };
 
-    use gveditor_core_api::{
-        extensions_manager::ExtensionsManager,
-        state::TokenFlags,
-        State,
-    };
+    use gveditor_core_api::extensions_manager::ExtensionsManager;
+    use gveditor_core_api::state::TokenFlags;
+    use gveditor_core_api::State;
 
-    use tokio::{
-        runtime::Runtime,
-        sync::mpsc::channel,
-    };
+    use tokio::runtime::Runtime;
+    use tokio::sync::mpsc::channel;
 
     use crate::StatesList;
 

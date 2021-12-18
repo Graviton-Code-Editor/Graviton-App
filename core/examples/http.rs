@@ -1,29 +1,23 @@
-use std::{
-    sync::{
-        Arc,
-        Mutex,
-    },
-    thread,
+use std::sync::{
+    Arc,
+    Mutex,
 };
+use std::thread;
 
+use gveditor_core::handlers::HTTPHandler;
 use gveditor_core::{
-    handlers::HTTPHandler,
     Configuration,
     Core,
 };
-use gveditor_core_api::{
-    extensions_manager::ExtensionsManager,
-    messaging::Messages,
-    state::{
-        StatesList,
-        TokenFlags,
-    },
-    State,
+use gveditor_core_api::extensions_manager::ExtensionsManager;
+use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::state::{
+    StatesList,
+    TokenFlags,
 };
-use tokio::sync::{
-    mpsc::channel,
-    Mutex as AsyncMutex,
-};
+use gveditor_core_api::State;
+use tokio::sync::mpsc::channel;
+use tokio::sync::Mutex as AsyncMutex;
 
 #[tokio::main]
 async fn main() {
