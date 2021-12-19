@@ -28,7 +28,7 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 | [server](./server)               | HTTP Core + Web  | WIP |
 | [@gveditor/web](./web)                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
 | [@gveditor/web_components](./web_components)      | Web components | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb_components&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb_components%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
-| [@gveditor/languages](./languges)             | Language translations  | WIP |
+| [@gveditor/languages](./languges)             | Language translations  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Flanguages&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Flanguages%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
 
 
 ## 📑 Goals
