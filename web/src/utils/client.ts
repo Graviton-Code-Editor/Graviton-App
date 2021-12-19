@@ -60,6 +60,7 @@ export class HTTPClient extends Emittery implements Client {
 
     this.socket.onmessage = (ev) => {
       const message: WebSocketsMessage = JSON.parse(ev.data);
+      console.log(message);
       this.emit(message.msg_type, message);
     };
 
@@ -245,8 +246,8 @@ export function createClient(token: string): Client {
     return new TauriClient(config);
   } else {
     const config = new Configuration(
-      "http://127.0.0.1:50001",
-      `ws://127.0.0.1:50001/websockets?token=${token}&state=1`,
+      "http://localhost:50010",
+      `ws://localhost:50010/websockets?token=${token}&state_id=1`,
       1,
       token
     );

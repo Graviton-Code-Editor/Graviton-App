@@ -1,7 +1,9 @@
 [workspace]
 members = [
    "core",
+   "core_api",
    "desktop/src-tauri",
-   "extensions/git"
+   "extensions/git",
+   "server"
 ]
 

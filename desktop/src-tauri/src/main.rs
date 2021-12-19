@@ -43,17 +43,6 @@ use tauri::{
     Window,
 };
 
-
-// Each OS has a different file format for dynamic libraries
-#[cfg(target_os = "macos")]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
-#[cfg(target_os = "linux")]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
-#[cfg(target_os = "windows")]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
-
-
-
 /// The app backend state
 pub struct TauriState {
     client: Client,
@@ -126,36 +115,6 @@ fn open_tauri(
         .expect("failed to run tauri application");
 }
 
-/// Returns a vector of pointers to all extensions instances
-///
-/// # Arguments
-///
-/// * `path`    - The directory path from where to load the extensions
-/// * `sender`  -  A mpsc sender to communicate with the core
-///
-async fn load_extensions_from_path(
-    path: String,
-    sender: Sender<Messages>,
-    state_id: u8,
-) -> ExtensionsManager {
-    let mut manager = ExtensionsManager::new();
-    // NOTE: This should load all the built-in extensions, not just the git one. WIP
-    unsafe {
-        // Load the extension library
-        // NOTE: The library should be saved instead of leaked. WIP
-        let lib = Box::leak(Box::new(
-            libloading::Library::new(format!("{}/{}.{}", path, "git", PLUGIN_DYNAMIC_LIBRARY_FORMAT)).unwrap(),
-        ));
-        // Retrieve the entry function handler
-        let entry_func: libloading::Symbol<
-            unsafe extern "C" fn(&ExtensionsManager, Sender<Messages>, u8) -> (),
-        > = lib.get(b"entry").unwrap();
-
-        entry_func(&mut manager, sender, state_id);
-    }
-    manager
-}
-
 /// Returns the bundled path to the extensions directory
 ///
 /// # Arguments
@@ -187,8 +146,14 @@ async fn main() {
 
     // Load built-in extensions
     let built_in_extensions_path = get_built_in_extensions_path(&context);
-    let extensions_manager =
-        load_extensions_from_path(built_in_extensions_path, to_core.clone(), STATE_ID).await;
+    let extensions_manager = ExtensionsManager::new()
+        .load_extensions_from_path(
+            &format!("{}/{}", built_in_extensions_path, "git"),
+            to_core.clone(),
+            STATE_ID,
+        )
+        .await
+        .to_owned();
 
     // Create the StatesList
     let states = {

@@ -26,6 +26,12 @@ task('build_git_extension', async function () {
     } catch { }
 });
 
+desc('Run the server in develop mode');
+task('dev_server', async function () {
+    run('yarn', ['--cwd', 'web', 'run', 'dev'])
+    await run('cargo run', [], './server')
+});
+
 desc('Run the desktop in develop mode');
 task('dev_desktop', async function () {
     await run('cargo tauri dev', [], './desktop')

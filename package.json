@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "dev_server": "jake build_git_extension dev_server",
     "dev_desktop": "jake build_git_extension dev_desktop",
     "build_extension": "jake build_git_extension",
     "build_desktop": "jake build_git_extension build_desktop",

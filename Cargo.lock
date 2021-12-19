@@ -1291,6 +1291,7 @@ name = "gveditor-core-api"
 version = "0.1.3"
 dependencies = [
  "async-trait",
+ "libloading",
  "serde",
  "serde_derive",
  "tokio",
@@ -2952,6 +2953,16 @@ dependencies = [
  "itoa",
  "ryu",
  "serde",
+]
+
+[[package]]
+name = "server"
+version = "0.1.0"
+dependencies = [
+ "gveditor-core",
+ "gveditor-core-api",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

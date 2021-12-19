@@ -36,10 +36,7 @@ use tokio::runtime::Runtime;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex as AsyncMutex;
 
-use jsonrpc_core::serde_json::{
-    self,
-    json,
-};
+use jsonrpc_core::serde_json::{self,};
 
 use super::TransportHandler;
 
@@ -82,15 +79,11 @@ pub struct WSMessages;
 
 impl WSMessages {
     pub fn from_message(message: &Messages) -> Option<Message> {
-        match message {
-            Messages::StateUpdated { state } => Some(Message::text(
-                json!({
-                    "msg_type": "StateUpdated",
-                    "state": state
-                })
-                .to_string(),
-            )),
-            _ => None,
+        let message_str = serde_json::to_string(message);
+        if let Ok(message_str) = message_str {
+            Some(Message::text(message_str))
+        } else {
+            None
         }
     }
 }
