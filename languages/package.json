@@ -1,0 +1,8 @@
+{
+  "name": "@gveditor/languages",
+  "version": "1.0.0",
+  "license": "MIT",
+  "exports": {
+    "./english": "./src/english.json"
+  }
+}

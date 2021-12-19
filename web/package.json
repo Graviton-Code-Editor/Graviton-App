@@ -28,7 +28,8 @@
     "react-window": "^1.8.6",
     "recoil": "^0.5.0",
     "simple-jsonrpc-js": "^1.2.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "@gveditor/languages": "*"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
