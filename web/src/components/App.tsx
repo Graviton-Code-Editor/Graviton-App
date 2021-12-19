@@ -90,7 +90,8 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
 
   // Register all shortcuts
-  usePrompts.forEach((prompt) => {
+  usePrompts.forEach((PromptClass) => {
+    const prompt = new PromptClass();
     if (prompt.shortcut) {
       useHotkeys(prompt.shortcut, () => {
         setShowedWindows((val) => [...val, prompt]);

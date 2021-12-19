@@ -38,7 +38,7 @@ function GlobalPromptContainer() {
 }
 console.log;
 export default class GlobalPrompt extends Prompt {
-  public static promptName = "Global Prompt";
-  public static container = GlobalPromptContainer;
-  public static shortcut = "ctrl+p";
+  public promptName = "Global Prompt";
+  public container = GlobalPromptContainer;
+  public shortcut = "ctrl+p";
 }
