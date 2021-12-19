@@ -142,6 +142,7 @@ async fn load_extensions_from_path(
     // NOTE: This should load all the built-in extensions, not just the git one. WIP
     unsafe {
         // Load the extension library
+        // NOTE: The library should be saved instead of leaked. WIP
         let lib = Box::leak(Box::new(
             libloading::Library::new(format!("{}/{}.{}", path, "git", PLUGIN_DYNAMIC_LIBRARY_FORMAT)).unwrap(),
         ));
