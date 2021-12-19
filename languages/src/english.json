@@ -1,6 +1,9 @@
 {
     "code": "en",
     "translation": {
-        "Open Folder": "Open Folder"
+        "Open Folder": "Open Folder",
+        "Welcome to Graviton": "Welcome to Graviton",
+        "This version is still on alpha.": "This version is still on alpha.",
+        "Report bugs here":"Report bugs here"
     }
 }

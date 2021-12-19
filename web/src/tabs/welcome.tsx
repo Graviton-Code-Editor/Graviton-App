@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import Link from "../components/link";
 import { Tab } from "../modules/tab";
@@ -8,12 +9,14 @@ const WelcomeTabContainerStyled = styled.div`
 `;
 
 function WelcomeTabContainer() {
+  const { t } = useTranslation();
+
   return (
     <WelcomeTabContainerStyled>
-      <h2>Welcome to Graviton</h2>
-      <p>This version is still on alpha.</p>
+      <h2>{t('Welcome to Graviton')}</h2>
+      <p>{t('This version is still on alpha.')}</p>
       <Link href="https://github.com/Graviton-Code-Editor/Graviton-App/issues">
-        Report bugs here
+        {t('Report bugs here')}
       </Link>
     </WelcomeTabContainerStyled>
   );
