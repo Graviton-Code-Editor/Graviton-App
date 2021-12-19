@@ -37,12 +37,21 @@ interface SavedState {
   scrollHeight: number;
   codemirrorState: EditorState | null;
 }
+
+/**
+ * A tab that displays a CodeMirror editor inside it
+ */
 class TextEditorTab extends Tab {
   private state: SavedState = {
     scrollHeight: 0,
     codemirrorState: null,
   };
 
+  /**
+   *
+   * @param path - Path of the opened file
+   * @param initialContent - Current content of the file
+   */
   constructor(path: string, initialContent: string) {
     super(path);
 

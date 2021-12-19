@@ -4,7 +4,6 @@ import { Panel } from "../modules/panel";
 import TextEditorTab from "../tabs/text_editor";
 import { clientState, openedFolders, openedTabsState } from "../utils/atoms";
 import { ReactSVG } from "react-svg";
-import React from "react";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
@@ -47,8 +46,8 @@ function ExplorerPanelContainer() {
   );
 }
 
-/*
- * Built-in panel that displays a files explorer
+/**
+ * Built-in panel that displays a filesystem explorer
  */
 export default class ExplorerPanel extends Panel {
   constructor() {

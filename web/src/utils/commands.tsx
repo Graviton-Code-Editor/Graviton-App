@@ -1,7 +1,7 @@
 export const isTauri = (window as any).__TAURI__ != null;
 
-/*
- * Launches a filesystem picker
+/**
+ * Launches a filesystem picker, native if Tauri and web-based if not
  */
 export async function openFolderPicker(
   filesystem_name: string

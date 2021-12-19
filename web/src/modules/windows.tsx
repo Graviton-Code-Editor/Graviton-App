@@ -1,7 +1,9 @@
 import { ReactElement } from "react";
 
-/*
- * Window API
+/**
+ * Floating Window base class
+ *
+ * @alpha
  */
 export class FloatingWindow {
   public container: () => ReactElement = () => <div />;

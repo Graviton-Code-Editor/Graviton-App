@@ -1,8 +1,8 @@
 import { ReactElement } from "react";
 import { FloatingWindow } from "./windows";
 
-/*
- * Prompt API
+/**
+ * A Prompt gives tha ability to the user choose between some options
  */
 export class Prompt extends FloatingWindow {
   public promptName = "Prompt";

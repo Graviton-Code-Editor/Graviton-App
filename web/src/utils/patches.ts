@@ -1,5 +1,5 @@
 export default function applyPatches() {
-  /*
+  /**
    * Disable the print prompt
    */
   window.addEventListener(

@@ -1,8 +1,10 @@
 import { EditorInterface } from "../types/types";
 
-/*
- * Base editor clas
+/**
+ * Base editor class
  * All other editors extend this class
+ *
+ * @alpha
  */
 class BaseEditor implements EditorInterface {
   // Name of the editor

@@ -19,6 +19,7 @@
 - [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 - [ ] Build git extension with `--release` when building the binary / installer
 - [ ] Document all what needs to be documented in the book
+- [ ] Make Graviton web decide what editor should be opened depending on the file format
 
 ### web
 - [ ] Make a web-based filesystem explorer component

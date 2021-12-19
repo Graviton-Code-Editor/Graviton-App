@@ -1,8 +1,10 @@
 import { EditorInterface } from "../types/types";
 import BaseEditor from "./base";
 
-/*
- * Text editor that uses CodeMirror v6 under the hood
+/**
+ * Text editor
+ *
+ * @alpha
  */
 class TextEditor extends BaseEditor implements EditorInterface {
   public name: string;

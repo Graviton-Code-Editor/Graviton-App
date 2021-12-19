@@ -13,15 +13,18 @@ function WelcomeTabContainer() {
 
   return (
     <WelcomeTabContainerStyled>
-      <h2>{t('Welcome to Graviton')}</h2>
-      <p>{t('This version is still on alpha.')}</p>
+      <h2>{t("Welcome to Graviton")}</h2>
+      <p>{t("This version is still on alpha.")}</p>
       <Link href="https://github.com/Graviton-Code-Editor/Graviton-App/issues">
-        {t('Report bugs here')}
+        {t("Report bugs here")}
       </Link>
     </WelcomeTabContainerStyled>
   );
 }
 
+/**
+ * A Tab that displays a Welcome message
+ */
 class WelcomeTab extends Tab {
   constructor() {
     super("Welcome");

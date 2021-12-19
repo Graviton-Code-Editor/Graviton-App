@@ -2,12 +2,17 @@ import { ReactElement } from "react";
 import PopupContainer from "../components/popup";
 import { FloatingWindow } from "./windows";
 
-/*
- * Popup API
+/**
+ * Popup is a dialog-like floating window message
  */
 export class Popup extends FloatingWindow {
   public container: () => ReactElement;
 
+  /**
+   *
+   * @param title - Title of the popup
+   * @param content - Body of the popup
+   */
   constructor(title: string, content: string) {
     super();
     this.container = () => {

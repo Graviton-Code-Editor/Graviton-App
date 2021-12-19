@@ -36,7 +36,10 @@ function GlobalPromptContainer() {
 
   return <PromptContainer options={options} />;
 }
-console.log;
+
+/**
+ * A built-in prompt that displays commands
+ */
 export default class GlobalPrompt extends Prompt {
   public promptName = "Global Prompt";
   public container = GlobalPromptContainer;
