@@ -11,7 +11,8 @@
   },
   "workspaces": [
     "web",
-    "web_components"
+    "web_components",
+    "languages"
   ],
   "devDependencies": {
     "execa": "^6.0.0",
