@@ -2,7 +2,7 @@ import * as React from "react";
 import { render, RenderResult, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import FakeRoot from "./utils/fake_root";
-import FilesystemExplorer from "../src/components/explorer";
+import FilesystemExplorer from "../src/components/FilesystemExplorer";
 import { act } from "@testing-library/react";
 
 describe("<FilesystemExplorer/>", () => {

@@ -1,4 +1,4 @@
-import RecoilExternalState from "../../src/components/external_state";
+import RecoilExternalState from "../../src/components/ExternalState";
 import { clientState } from "../../src/utils/atoms";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import React, { PropsWithChildren, useEffect } from "react";
