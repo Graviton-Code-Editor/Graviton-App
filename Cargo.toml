@@ -6,4 +6,3 @@ members = [
    "extensions/git",
    "server"
 ]
-
