@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
 import { javascript } from "@codemirror/lang-javascript";
-import React from "react";
 
 function defaultState({ initialValue }: { initialValue: string }): EditorState {
   return EditorState.create({
@@ -66,7 +65,7 @@ export default function CodeMirror({
 
   useEffect(() => {
     if (editorView && editorView.dom && editorView.dom.lastChild) {
-      let container = editorView.dom.lastChild as HTMLElement;
+      const container = editorView.dom.lastChild as HTMLElement;
       container.scrollTo(0, scrollPos);
     }
   }, [scrollPos]);

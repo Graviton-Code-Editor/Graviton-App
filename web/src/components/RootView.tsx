@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const View = styled.div`
+const RootView = styled.div`
   background: ${({ theme }) => theme.elements.view.background};
   min-height: 100%;
   max-height: 100%;
@@ -10,4 +10,4 @@ const View = styled.div`
   }
 `;
 
-export default View;
+export default RootView;

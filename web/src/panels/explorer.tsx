@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import FilesystemExplorer, { TreeItemInfo } from "../components/explorer";
+import FilesystemExplorer, { TreeItemInfo } from "../components/FilesystemExplorer";
 import { Panel } from "../modules/panel";
 import TextEditorTab from "../tabs/text_editor";
 import { clientState, openedFolders, openedTabsState } from "../utils/atoms";

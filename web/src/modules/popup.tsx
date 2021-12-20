@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import PopupContainer from "../components/popup";
+import PopupContainer from "../components/PopupContainer";
 import { FloatingWindow } from "./windows";
 
 /**

@@ -3,7 +3,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showedWindows } from "../utils/atoms";
 import { useTranslation } from "react-i18next";
-import WindowBackground from "./window_background";
+import WindowBackground from "./WindowBackground";
 
 const StyledPromptOption = styled.div`
   color: white;

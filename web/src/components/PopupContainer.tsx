@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showedWindows } from "../utils/atoms";
-import WindowBackground from "./window_background";
+import WindowBackground from "./WindowBackground";
 
 const StyledPopup = styled.div`
   user-select: none;

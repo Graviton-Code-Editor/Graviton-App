@@ -1,5 +1,5 @@
-import { setRecoil, useRecoil } from "../components/external_state";
-import PromptContainer, { Option } from "../components/prompt";
+import { setRecoil, useRecoil } from "../components/ExternalState";
+import PromptContainer, { Option } from "../components/PromptContainer";
 import { Prompt } from "../modules/prompt";
 import { openedFolders, openedTabsState } from "../utils/atoms";
 import { openFolderPicker } from "../utils/commands";

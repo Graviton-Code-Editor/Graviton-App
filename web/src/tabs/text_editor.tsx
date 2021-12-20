@@ -1,7 +1,6 @@
 import { Tab } from "../modules/tab";
-import CodeMirror from "../components/codemirror";
+import CodeMirror from "../components/CodeMirror";
 import { EditorState } from "@codemirror/state";
-import React from "react";
 
 interface CodeMirrorContainerOptions {
   initialContent: string;

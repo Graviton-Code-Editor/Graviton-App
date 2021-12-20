@@ -13,12 +13,12 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import RecoilExternalState from "./external_state";
+import RecoilExternalState from "./ExternalState";
 import { Tab, TabData } from "../modules/tab";
-import Panels from "./panels";
-import Tabs from "./tabs";
+import Panels from "./PanelsView";
+import Tabs from "./TabsView";
 import Theme from "../utils/theme_provider";
-import View from "./view";
+import View from "./RootView";
 import { SplitPane } from "react-multi-split-pane";
 import { useHotkeys } from "react-hotkeys-hook";
 import { isTauri } from "../utils/commands";
@@ -38,35 +38,19 @@ async function getToken() {
   }
 }
 
+/**
+ * Handles the state Connection
+ */
 function StateRoot() {
   const setClient = useSetRecoilState(clientState);
-  const setTabs = useSetRecoilState(openedTabsState);
   const setPanels = useSetRecoilState(panels);
-  const setShowedWindows = useSetRecoilState(showedWindows);
 
   useEffect(() => {
+    // Retrieve the token and then create a new client
     getToken().then((token) => {
       if (token !== null) {
         const client = createClient(token);
-
-        // Listen for any change on the state
-        client.on("StateUpdated", ({ state }: StateUpdated) => {
-          // Convert all tab datas into Tab instances
-          const openedTabs = state.opened_tabs.map((tabData: TabData) =>
-            Tab.fromJson(tabData)
-          );
-          // Open the tabs
-          if (openedTabs.length > 0) {
-            setTabs([[openedTabs]]);
-          }
-        });
-
-        // Show popups
-        client.on("ShowPopup", (e: ShowPopup) => {
-          setShowedWindows((val) => [...val, new Popup(e.title, e.content)]);
-        });
-
-        // Subscribe for new events on the given state
+        // Wait until it's connected
         client.on("connected", () => {
           client.listenToState();
           setClient(client);
@@ -83,13 +67,18 @@ function StateRoot() {
   return null;
 }
 
+/**
+ * Handles the root view
+ */
 function ClientRoot({ children }: PropsWithChildren<any>) {
   const client = useRecoilValue(clientState);
-
   const usePrompts = useRecoilValue(prompts);
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
+  const setTabs = useSetRecoilState(openedTabsState);
 
-  // Register all shortcuts
+  /**
+   *  Register all prompts's shortcuts
+   */
   usePrompts.forEach((PromptClass) => {
     const prompt = new PromptClass();
     if (prompt.shortcut) {
@@ -99,6 +88,35 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
     }
   });
 
+  useEffect(() => {
+
+    if (client != null) {
+      /**
+       * Update the App state if a new state is received
+       */
+      client.on("StateUpdated", ({ state }: StateUpdated) => {
+        // Convert all tab datas into Tab instances
+        const openedTabs = state.opened_tabs.map((tabData: TabData) =>
+          Tab.fromJson(tabData)
+        );
+        // Open the tabs
+        if (openedTabs.length > 0) {
+          setTabs([[openedTabs]]);
+        }
+      });
+
+      /**
+       * Display Popups
+       */
+      client.on("ShowPopup", (e: ShowPopup) => {
+        setShowedWindows((val) => [...val, new Popup(e.title, e.content)]);
+      });
+    }
+  }, [client])
+
+  /**
+   * Close all the last opened window when ESC is pressed
+   */
   useHotkeys("esc", () => {
     setShowedWindows((val) => {
       const newValue = [...val];
@@ -107,7 +125,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
     });
   });
 
-  function WindowContainer() {
+  function WindowsView() {
     if (useShowedWindows.length > 0) {
       const Container = useShowedWindows[useShowedWindows.length - 1].container;
       return <Container />;
@@ -119,7 +137,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   return (
     <View>
       {client && children}
-      <WindowContainer />
+      <WindowsView />
     </View>
   );
 }

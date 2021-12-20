@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { panels } from "../utils/atoms";
-import IconButton from "./panels/icon_button";
+import IconButton from "./panels/IconButton";
 
 const PanelsContainer = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ const PanelsContainer = styled.div`
 /*
  * Sidebar that contains all the loaded panels
  */
-function Panels() {
+function PanelsView() {
   const loadedPanels = useRecoilValue(panels);
   const [displayedPanelName, setDisplayedPanelName] = useState("Explorer");
 
@@ -56,4 +56,4 @@ function Panels() {
   );
 }
 
-export default Panels;
+export default PanelsView;

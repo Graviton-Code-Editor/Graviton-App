@@ -3,8 +3,8 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Tab } from "../../modules/tab";
 import { focusedTab } from "../../utils/atoms";
-import TabContainer from "./tab_container";
-import TabButton from "./tab_button";
+import TabContainer from "./TabContainer";
+import TabButton from "./TabButton";
 
 const TabsPanelContainer = styled.div`
   display: flex;
