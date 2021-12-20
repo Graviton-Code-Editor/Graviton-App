@@ -1,5 +1,5 @@
 import { Tab } from "../modules/tab";
-import CodeMirror from "../components/CodeMirror";
+import CodeMirror from "../components/codemirror";
 import { EditorState } from "@codemirror/state";
 
 interface CodeMirrorContainerOptions {
