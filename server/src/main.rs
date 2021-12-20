@@ -21,7 +21,7 @@ use gveditor_core_api::tokio::sync::Mutex as AsyncMutex;
 use gveditor_core_api::State;
 
 // Each OS has a different file format for dynamic libraries
-#[cfg(any(target_os = "linux", target_os = "macos"))]
+#[cfg(unix)]
 static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
 #[cfg(target_os = "windows")]
 static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
