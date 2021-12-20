@@ -36,7 +36,7 @@ use tokio::runtime::Runtime;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex as AsyncMutex;
 
-use jsonrpc_core::serde_json::{self,};
+use jsonrpc_core::serde_json;
 
 use super::TransportHandler;
 
@@ -378,7 +378,7 @@ mod tests {
 
             let listen_to_state_msg = json!({
                 "msg_type": "ListenToState",
-                "state_id": 1 as u16,
+                "state_id": 1,
                 "trigger": "client"
             })
             .to_string();
