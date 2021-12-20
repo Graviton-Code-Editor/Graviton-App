@@ -76,7 +76,7 @@ mod tests {
         let fs = LocalFilesystem::new();
 
         let file_exists = fs.read_file_by_path("../readme.md").is_ok();
-        let doesnt_exist = !fs.read_file_by_path("rust_>_*").is_ok();
+        let doesnt_exist = fs.read_file_by_path("rust_>_*").is_err();
 
         assert!(file_exists);
         assert!(doesnt_exist);
