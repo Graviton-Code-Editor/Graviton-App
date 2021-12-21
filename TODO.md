@@ -20,6 +20,7 @@
 - [ ] Build git extension with `--release` when building the binary / installer
 - [ ] Document all what needs to be documented in the book
 - [ ] Make Graviton web decide what editor should be opened depending on the file format
+- [ ] Create StatusBarItem module
 
 ### web
 - [ ] Make a web-based filesystem explorer component
