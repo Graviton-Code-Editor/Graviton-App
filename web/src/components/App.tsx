@@ -25,6 +25,7 @@ import { isTauri } from "../utils/commands";
 import ExplorerPanel from "../panels/explorer";
 import { Popup } from "../modules/popup";
 import { ShowPopup, StateUpdated } from "../types/messages";
+import StatusBarView from "./StatusBarView";
 
 /*
  * Retrieve the authentication token
@@ -89,7 +90,6 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   });
 
   useEffect(() => {
-
     if (client != null) {
       /**
        * Update the App state if a new state is received
@@ -112,7 +112,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
         setShowedWindows((val) => [...val, new Popup(e.title, e.content)]);
       });
     }
-  }, [client])
+  }, [client]);
 
   /**
    * Close all the last opened window when ESC is pressed
@@ -149,10 +149,13 @@ function App() {
       <RecoilExternalState />
       <Theme>
         <ClientRoot>
-          <SplitPane split="vertical" minSize={250}>
-            <Panels />
-            <Tabs />
-          </SplitPane>
+          <div>
+            <SplitPane split="vertical" minSize={250}>
+              <Panels />
+              <Tabs />
+            </SplitPane>
+          </div>
+          <StatusBarView />
         </ClientRoot>
       </Theme>
     </RecoilRoot>

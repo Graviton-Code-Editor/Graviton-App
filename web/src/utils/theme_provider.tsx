@@ -77,6 +77,9 @@ const theme = {
         },
       },
     },
+    statusbar: {
+      background: "#191919",
+    },
   },
 };
 

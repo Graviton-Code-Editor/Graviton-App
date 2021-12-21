@@ -8,6 +8,14 @@ const RootView = styled.div`
     height: 100%;
     width: 100%;
   }
+  display: flex;
+  flex-direction: column;
+  & > div > .SplitPane {
+    height: calc(100% - 20px) !important;
+  }
+  & > * {
+    flex: 1 !important;
+  }
 `;
 
 export default RootView;
