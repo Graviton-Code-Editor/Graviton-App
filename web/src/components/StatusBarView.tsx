@@ -1,4 +1,6 @@
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { showedStatusBarItem } from "../utils/atoms";
 
 const StatusBarContainer = styled.div`
   background: red;
@@ -11,7 +13,16 @@ const StatusBarContainer = styled.div`
  * StausBar
  */
 function StatusBarView() {
-  return <StatusBarContainer></StatusBarContainer>;
+  const statusBarItems = useRecoilValue(showedStatusBarItem);
+
+  return (
+    <StatusBarContainer>
+      {statusBarItems.map((item) => {
+        const ItemContainer = item.container;
+        return <ItemContainer />;
+      })}
+    </StatusBarContainer>
+  );
 }
 
 export default StatusBarView;

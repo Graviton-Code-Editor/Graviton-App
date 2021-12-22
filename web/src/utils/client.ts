@@ -8,7 +8,8 @@ import { invoke } from "@tauri-apps/api/tauri";
 import { isTauri } from "./commands";
 import { ShowPopup, StateUpdated } from "../types/messages";
 
-export interface WebSocketsMessage {
+export interface BaseMessage {
+  state_id: number;
   trigger: string;
   msg_type: string;
 }
@@ -59,8 +60,7 @@ export class HTTPClient extends Emittery implements Client {
     this.config = config;
 
     this.socket.onmessage = (ev) => {
-      const message: WebSocketsMessage = JSON.parse(ev.data);
-      console.log(message);
+      const message: BaseMessage = JSON.parse(ev.data);
       this.emit(message.msg_type, message);
     };
 
@@ -158,7 +158,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     super();
     this.config = config;
 
-    listen("to_webview", ({ payload }: { payload: WebSocketsMessage }) => {
+    listen("to_webview", ({ payload }: { payload: BaseMessage }) => {
       this.emit(payload.msg_type, payload as any);
     });
 

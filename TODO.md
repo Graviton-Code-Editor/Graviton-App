@@ -13,14 +13,14 @@
 - [ ] Setup CD (daily beta releases)
 - [ ] State shouldn't have a global `opened_tabs` array but insted opened_tabs per folder
 - [x] Implement  ExtensionMessages
-- [ ] Make a Popup builder
-- [ ] Ability to close a popup from the extension
+- [ ] Make a Popup, StatusBarItem builder
+- [ ] Ability to close a popup, StatusBarItem from the extension
 - [ ] Random ID generator for the popup id
 - [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 - [ ] Build git extension with `--release` when building the binary / installer
 - [ ] Document all what needs to be documented in the book
 - [ ] Make Graviton web decide what editor should be opened depending on the file format
-- [ ] Create StatusBarItem module
+- [x] Create StatusBarItem module
 
 ### web
 - [ ] Make a web-based filesystem explorer component

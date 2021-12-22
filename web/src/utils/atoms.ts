@@ -2,6 +2,7 @@ import { atom } from "recoil";
 import BaseEditor from "../editors/base";
 import TextEditor from "../editors/text";
 import { Prompt } from "../modules/prompt";
+import { StatusBarItem } from "../modules/statusbar_item";
 import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
 import {
@@ -58,5 +59,11 @@ export const openedFolders = atom<FolderState[]>({
 // Opened windows (popup, prompts...)
 export const showedWindows = atom<FloatingWindow[]>({
   key: "showedWindows",
+  default: [],
+});
+
+// Displayed StatusBar Items
+export const showedStatusBarItem = atom<StatusBarItem[]>({
+  key: "showedStatusBarItem",
   default: [],
 });

@@ -1,6 +1,6 @@
 {
   "name": "@gveditor/web",
-  "version": "0.0.1",
+  "version": "0.1.4",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

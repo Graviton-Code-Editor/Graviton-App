@@ -8,3 +8,4 @@ crate-type = ["cdylib"]
 
 [dependencies]
 gveditor-core-api  = { path = "../../core_api"}
+git2 = "0.13.25"

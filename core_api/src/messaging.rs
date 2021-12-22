@@ -3,7 +3,10 @@ use serde::{
     Serialize,
 };
 
-use crate::filesystems::FileInfo;
+use crate::filesystems::{
+    DirItemInfo,
+    FileInfo,
+};
 use crate::{
     Errors,
     State,
@@ -30,6 +33,11 @@ pub enum Messages {
         content: String,
         title: String,
     },
+    ShowStatusBarItem {
+        state_id: u8,
+        statusbar_item_id: u8,
+        label: String,
+    },
 }
 
 impl Messages {
@@ -38,6 +46,7 @@ impl Messages {
             Self::ListenToState { state_id, .. } => *state_id,
             Self::StateUpdated { state } => state.id,
             Self::ShowPopup { state_id, .. } => *state_id,
+            Self::ShowStatusBarItem { state_id, .. } => *state_id,
         }
     }
 }
@@ -46,6 +55,7 @@ impl Messages {
 pub enum ExtensionMessages {
     CoreMessage(Messages),
     ReadFile(u8, Result<FileInfo, Errors>),
+    ListDir(u8, String, Result<Vec<DirItemInfo>, Errors>),
 }
 
 impl ExtensionMessages {
@@ -53,6 +63,7 @@ impl ExtensionMessages {
         match self {
             Self::CoreMessage(msg) => msg.get_state_id(),
             Self::ReadFile(state_id, ..) => *state_id,
+            Self::ListDir(state_id, ..) => *state_id,
         }
     }
 }

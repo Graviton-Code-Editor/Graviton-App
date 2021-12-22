@@ -6,6 +6,7 @@ import {
   prompts,
   panels,
   showedWindows,
+  showedStatusBarItem,
 } from "../utils/atoms";
 import {
   RecoilRoot,
@@ -13,7 +14,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import RecoilExternalState from "./ExternalState";
+import RecoilExternalState, { setRecoil, useRecoil } from "./ExternalState";
 import { Tab, TabData } from "../modules/tab";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
@@ -24,8 +25,9 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { isTauri } from "../utils/commands";
 import ExplorerPanel from "../panels/explorer";
 import { Popup } from "../modules/popup";
-import { ShowPopup, StateUpdated } from "../types/messages";
+import { ShowPopup, ShowStatusBarItem, StateUpdated } from "../types/messages";
 import StatusBarView from "./StatusBarView";
+import { StatusBarItem } from "../modules/statusbar_item";
 
 /*
  * Retrieve the authentication token
@@ -75,6 +77,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const client = useRecoilValue(clientState);
   const usePrompts = useRecoilValue(prompts);
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
+  const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
   const setTabs = useSetRecoilState(openedTabsState);
 
   /**
@@ -110,6 +113,19 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
        */
       client.on("ShowPopup", (e: ShowPopup) => {
         setShowedWindows((val) => [...val, new Popup(e.title, e.content)]);
+      });
+
+      /**
+       * Display StatusBarItems
+       */
+      client.on("ShowStatusBarItem", (e: ShowStatusBarItem) => {
+        const val = useRecoil(showedStatusBarItem);
+        const itemIfFound = val.find((item) => item.id === e.statusbar_item_id);
+        if (itemIfFound != null) {
+          setRecoil(itemIfFound.state, e);
+        } else {
+          setShowedStatusBarItems([...val, new StatusBarItem(e)]);
+        }
       });
     }
   }, [client]);

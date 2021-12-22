@@ -180,9 +180,9 @@ impl RpcMethods for RpcManager {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
+            let state = state.lock().unwrap();
             // Make sure the token is valid
-            if state.lock().unwrap().has_token(&token) {
-                let state = state.lock().unwrap();
+            if state.has_token(&token) {
                 // Try to get the requested filesystem implementation
                 if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
                     let result = filesystem.lock().unwrap().read_file_by_path(&path);
@@ -211,11 +211,18 @@ impl RpcMethods for RpcManager {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
+            let state = state.lock().unwrap();
             // Make sure the token is valid
-            if state.lock().unwrap().has_token(&token) {
+            if state.has_token(&token) {
                 // Try to get the requested filesystem implementation
-                if let Some(filesystem) = state.lock().unwrap().get_fs_by_name(&filesystem_name) {
-                    Ok(filesystem.lock().unwrap().list_dir_by_path(&path))
+                if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
+                    let result = filesystem.lock().unwrap().list_dir_by_path(&path);
+                    state.notify_extensions(ExtensionMessages::ListDir(
+                        state_id,
+                        path,
+                        result.clone(),
+                    ));
+                    Ok(result)
                 } else {
                     Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
                 }

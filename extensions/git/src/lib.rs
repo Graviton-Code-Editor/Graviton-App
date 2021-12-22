@@ -1,5 +1,6 @@
+use git2::Repository;
 use gveditor_core_api::extensions::base::Extension;
-use gveditor_core_api::extensions::modules::popup::Popup;
+use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::extensions_manager::ExtensionsManager;
 use gveditor_core_api::messaging::{
     ExtensionMessages,
@@ -16,12 +17,39 @@ use std::sync::mpsc::{
 use std::sync::Arc;
 use std::thread;
 
-#[allow(dead_code)]
 struct GitExtension {
     sender: AsyncSender<Messages>,
     state_id: u8,
     rx: Arc<Mutex<Receiver<ExtensionMessages>>>,
     tx: Sender<ExtensionMessages>,
+}
+
+impl GitExtension {
+    /// Handle ListDir events
+    /// Note: The errors should be better handled
+    pub async fn handle_list_dir(
+        external_sender: AsyncSender<Messages>,
+        state_id: u8,
+        path: String,
+    ) {
+        let repo = Repository::discover(path);
+        if let Ok(repo) = repo {
+            if let Ok(head) = repo.head() {
+                let branch = head.shorthand();
+                if let Some(branch) = branch {
+                    let statusbar_item =
+                        StatusBarItem::new(external_sender.clone(), state_id, branch);
+                    statusbar_item.show().await;
+                } else {
+                    println!("Can't format head");
+                }
+            } else {
+                println!("Head not found");
+            }
+        } else {
+            println!("Repo not found");
+        }
+    }
 }
 
 impl Extension for GitExtension {
@@ -33,10 +61,8 @@ impl Extension for GitExtension {
             Runtime::new().unwrap().block_on(async move {
                 let receiver = receiver.lock().await;
                 loop {
-                    if let Ok(ExtensionMessages::ReadFile(_, Ok(info))) = receiver.recv() {
-                        let popup =
-                            Popup::new(external_sender.clone(), state_id, "you opened", &info.path);
-                        popup.show().await;
+                    if let Ok(ExtensionMessages::ListDir(_, path, _)) = receiver.recv() {
+                        Self::handle_list_dir(external_sender.clone(), state_id, path).await;
                     }
                 }
             });

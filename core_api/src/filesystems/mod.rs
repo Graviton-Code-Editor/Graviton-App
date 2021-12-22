@@ -22,7 +22,7 @@ pub trait Filesystem {
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct DirItemInfo {
     pub path: String,
     pub name: String,
