@@ -26,6 +26,9 @@
 - [ ] Make a web-based filesystem explorer component
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
 - [ ] Make the popup module, WIP
+- [ ] Add file icons support
+- [ ] Configure CodeMirror 
+- [ ] Create a settings tab
 
 ### web_components
 - [ ] Make some useful components of the web-based frontend as a React library
