@@ -4,7 +4,7 @@ import { showedStatusBarItem } from "../utils/atoms";
 
 const StatusBarContainer = styled.div`
   background: red;
-  max-height: 20px;
+  max-height: 25px;
   width: 100%;
   background: ${({ theme }) => theme.elements.statusbar.background};
 `;

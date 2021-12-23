@@ -79,6 +79,12 @@ const theme = {
     },
     statusbar: {
       background: "#191919",
+      item: {
+        color: "rgb(255,255,255)",
+        hover: {
+          background: "rgb(80, 80, 80)",
+        },
+      },
     },
   },
 };

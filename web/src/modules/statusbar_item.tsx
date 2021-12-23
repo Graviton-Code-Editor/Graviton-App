@@ -10,7 +10,9 @@ function StatusBarItemElement({
   const options = useRecoilValue(state);
   return (
     <StatusBarItemContainer>
-      <span>{options.label}</span>
+      <div>
+        <span>{options.label}</span>
+      </div>
     </StatusBarItemContainer>
   );
 }

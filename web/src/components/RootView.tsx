@@ -11,7 +11,7 @@ const RootView = styled.div`
   display: flex;
   flex-direction: column;
   & > div > .SplitPane {
-    height: calc(100% - 20px) !important;
+    height: calc(100% - 25px) !important;
   }
   & > * {
     flex: 1 !important;
