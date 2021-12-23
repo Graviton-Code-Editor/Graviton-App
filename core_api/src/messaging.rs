@@ -54,8 +54,8 @@ impl Messages {
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ExtensionMessages {
     CoreMessage(Messages),
-    ReadFile(u8, Result<FileInfo, Errors>),
-    ListDir(u8, String, Result<Vec<DirItemInfo>, Errors>),
+    ReadFile(u8, String, Result<FileInfo, Errors>),
+    ListDir(u8, String, String, Result<Vec<DirItemInfo>, Errors>),
 }
 
 impl ExtensionMessages {

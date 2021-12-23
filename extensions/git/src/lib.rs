@@ -61,8 +61,11 @@ impl Extension for GitExtension {
             Runtime::new().unwrap().block_on(async move {
                 let receiver = receiver.lock().await;
                 loop {
-                    if let Ok(ExtensionMessages::ListDir(_, path, _)) = receiver.recv() {
-                        Self::handle_list_dir(external_sender.clone(), state_id, path).await;
+                    if let Ok(ExtensionMessages::ListDir(_, fs_name, path, _)) = receiver.recv() {
+                        // Only react when using the local file system
+                        if fs_name == "local" {
+                            Self::handle_list_dir(external_sender.clone(), state_id, path).await;
+                        }
                     }
                 }
             });

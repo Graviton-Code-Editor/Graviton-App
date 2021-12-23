@@ -186,7 +186,11 @@ impl RpcMethods for RpcManager {
                 // Try to get the requested filesystem implementation
                 if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
                     let result = filesystem.lock().unwrap().read_file_by_path(&path);
-                    state.notify_extensions(ExtensionMessages::ReadFile(state_id, result.clone()));
+                    state.notify_extensions(ExtensionMessages::ReadFile(
+                        state_id,
+                        filesystem_name,
+                        result.clone(),
+                    ));
                     Ok(result)
                 } else {
                     Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
@@ -219,6 +223,7 @@ impl RpcMethods for RpcManager {
                     let result = filesystem.lock().unwrap().list_dir_by_path(&path);
                     state.notify_extensions(ExtensionMessages::ListDir(
                         state_id,
+                        filesystem_name,
                         path,
                         result.clone(),
                     ));
