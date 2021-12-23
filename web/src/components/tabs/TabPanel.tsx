@@ -23,7 +23,7 @@ const TabsPanelContainer = styled.div`
   }
   & .tabsContainer {
     display: flex;
-    height: calc(100% - 45px);
+    height: calc(100% - 40px);
     & > div {
       width: 100%;
     }
