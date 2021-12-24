@@ -1,8 +1,8 @@
 pub mod extensions;
-pub mod extensions_manager;
 pub mod filesystems;
 pub mod messaging;
 pub mod state;
+pub use extensions::ExtensionErrors;
 pub use filesystems::FilesystemErrors;
 pub use serde::{
     Deserialize,
@@ -18,5 +18,6 @@ pub use tokio::sync::Mutex;
 pub enum Errors {
     StateNotFound,
     Fs(FilesystemErrors),
+    Ext(ExtensionErrors),
     BadToken,
 }

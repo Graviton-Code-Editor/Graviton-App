@@ -314,17 +314,14 @@ mod tests {
     };
     use std::time::Duration;
 
-    use gveditor_core_api::extensions_manager::ExtensionsManager;
+    use gveditor_core_api::extensions::manager::ExtensionsManager;
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::State;
     use hyper_tungstenite::tungstenite::{
         connect,
         Message,
     };
-    use jsonrpc_core::serde_json::{
-        self,
-        json,
-    };
+    use jsonrpc_core::serde_json;
     use tokio::runtime::Runtime;
     use tokio::sync::mpsc::channel;
     use tokio::time::sleep;
@@ -376,12 +373,12 @@ mod tests {
             )
             .expect("Can't connect");
 
-            let listen_to_state_msg = json!({
-                "msg_type": "ListenToState",
-                "state_id": 1,
-                "trigger": "client"
-            })
-            .to_string();
+            let listen_to_state_msg = Messages::ListenToState {
+                state_id: 1,
+                trigger: "client".to_string()
+            };
+
+            let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
 
             socket
                 .write_message(Message::Text(listen_to_state_msg))

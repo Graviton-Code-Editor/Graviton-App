@@ -8,6 +8,7 @@ pub use local::LocalFilesystem;
 
 use crate::Errors;
 
+/// Filesystem errors
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum FilesystemErrors {
     FilesystemNotFound,

@@ -1,9 +1,14 @@
-use crate::extensions_manager::ExtensionsManager;
+use crate::extensions::base::ExtensionInfo;
+use crate::extensions::manager::ExtensionsManager;
 use crate::filesystems::{
     Filesystem,
     LocalFilesystem,
 };
 use crate::messaging::ExtensionMessages;
+use crate::{
+    Errors,
+    ExtensionErrors,
+};
 use serde::{
     Deserialize,
     Serialize,
@@ -147,23 +152,87 @@ impl State {
     /// Run all the extensions in the manager
     pub async fn run_extensions(&self) {
         for ext in &self.extensions_manager.extensions {
-            let mut ext = ext.lock().await;
-            ext.init();
+            let mut ext_plugin = ext.plugin.lock().await;
+            ext_plugin.init();
         }
     }
 
     /// Notify all the extensions in a state about a message, asynchronously and independently
     pub fn notify_extensions(&self, message: ExtensionMessages) {
         for ext in &self.extensions_manager.extensions {
-            let ext = ext.clone();
+            let ext_plugin = ext.plugin.clone();
             let message = message.clone();
             tokio::task::spawn(async move {
-                let mut ext = ext.lock().await;
-                ext.notify(message.clone());
+                let mut ext_plugin = ext_plugin.lock().await;
+                ext_plugin.notify(message.clone());
             });
         }
+    }
+
+    /// Try to retrieve info about a perticular loaded extension
+    pub fn get_ext_info_by_id(&self, ext_id: &str) -> Result<ExtensionInfo, Errors> {
+        let extensions = &self.extensions_manager.extensions;
+        let result = extensions
+            .iter()
+            .find(|extension| extension.info.id == ext_id)
+            .map(|ext| ext.info.clone());
+
+        result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
     }
 }
 
 // NOTE: It would be interesting to implement https://doc.rust-lang.org/std/ops/trait.AddAssign.html
 // So it's easier to merge 2 states, old + new
+
+#[cfg(test)]
+mod tests {
+
+    use crate::extensions::base::{
+        Extension,
+        ExtensionInfo,
+    };
+    use crate::extensions::manager::ExtensionsManager;
+    use crate::messaging::ExtensionMessages;
+
+    use super::State;
+
+    fn get_sample_extension_info() -> ExtensionInfo {
+        ExtensionInfo {
+            id: "sample".to_string(),
+            name: "sample".to_string(),
+        }
+    }
+
+    fn get_sample_extension() -> Box<dyn Extension + Send> {
+        struct SampleExtension;
+
+        impl Extension for SampleExtension {
+            fn get_info(&self) -> ExtensionInfo {
+                get_sample_extension_info()
+            }
+
+            fn init(&mut self) {
+                todo!()
+            }
+
+            fn notify(&mut self, _message: ExtensionMessages) {
+                todo!()
+            }
+        }
+
+        Box::new(SampleExtension)
+    }
+
+    #[test]
+    fn get_info() {
+        let mut manager = ExtensionsManager::new();
+        manager.register(get_sample_extension());
+        let test_state = State::new(0, manager);
+
+        let ext_info = test_state.get_ext_info_by_id("sample");
+        assert!(ext_info.is_ok());
+
+        let ext_info = ext_info.unwrap();
+        assert_eq!(get_sample_extension_info(), ext_info);
+    }
+}

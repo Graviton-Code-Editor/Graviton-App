@@ -1,5 +1,5 @@
 [package]
-name = "git"
+name = "git-for-graviton"
 version = "0.1.0"
 edition = "2021"
 

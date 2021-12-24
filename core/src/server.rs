@@ -1,6 +1,7 @@
 use crate::configuration::Handler;
 use crate::handlers::TransportHandler;
 use crate::Configuration;
+use gveditor_core_api::extensions::base::ExtensionInfo;
 use gveditor_core_api::filesystems::{
     DirItemInfo,
     FileInfo,
@@ -138,6 +139,14 @@ pub trait RpcMethods {
         state_id: u8,
         token: String,
     ) -> RPCResult<Result<Vec<DirItemInfo>, Errors>>;
+
+    #[rpc(name = "get_ext_info_by_id")]
+    fn get_ext_info_by_id(
+        &self,
+        extension_id: String,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<ExtensionInfo, Errors>>;
 }
 
 /// JSON RPC manager
@@ -231,6 +240,29 @@ impl RpcMethods for RpcManager {
                 } else {
                     Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
                 }
+            } else {
+                Ok(Err(Errors::BadToken))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
+    }
+
+    /// Returns the information about a extension
+    fn get_ext_info_by_id(
+        &self,
+        extension_id: String,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<ExtensionInfo, Errors>> {
+        let states = self.states.lock().unwrap();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            let state = state.lock().unwrap();
+            // Make sure the token is valid
+            if state.has_token(&token) {
+                // Try to get the requested info about the extension
+                Ok(state.get_ext_info_by_id(&extension_id))
             } else {
                 Ok(Err(Errors::BadToken))
             }

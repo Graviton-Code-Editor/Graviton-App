@@ -10,7 +10,7 @@ use gveditor_core::{
     Configuration,
     Core,
 };
-use gveditor_core_api::extensions_manager::ExtensionsManager;
+use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{
     StatesList,

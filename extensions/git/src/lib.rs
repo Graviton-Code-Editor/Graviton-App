@@ -1,7 +1,10 @@
 use git2::Repository;
-use gveditor_core_api::extensions::base::Extension;
+use gveditor_core_api::extensions::base::{
+    Extension,
+    ExtensionInfo,
+};
+use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
-use gveditor_core_api::extensions_manager::ExtensionsManager;
 use gveditor_core_api::messaging::{
     ExtensionMessages,
     Messages,
@@ -53,6 +56,13 @@ impl GitExtension {
 }
 
 impl Extension for GitExtension {
+    fn get_info(&self) -> ExtensionInfo {
+        ExtensionInfo {
+            id: env!("CARGO_PKG_NAME").to_string(),
+            name: env!("CARGO_PKG_NAME").to_string(),
+        }
+    }
+
     fn init(&mut self) {
         let receiver = self.rx.clone();
         let external_sender = self.sender.clone();

@@ -84,7 +84,7 @@ mod tests {
         Mutex,
     };
 
-    use gveditor_core_api::extensions_manager::ExtensionsManager;
+    use gveditor_core_api::extensions::manager::ExtensionsManager;
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::State;
 

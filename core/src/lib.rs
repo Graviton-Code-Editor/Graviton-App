@@ -32,7 +32,7 @@ pub use {
 ///     # Core,
 /// # };
 ///  # use gveditor_core_api::{
-///     # extensions_manager::ExtensionsManager,
+///     # extensions::manager::ExtensionsManager,
 ///     # messaging::Messages,
 ///     # state::{
 ///     #    StatesList,

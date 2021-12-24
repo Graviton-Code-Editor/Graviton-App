@@ -6,10 +6,12 @@ use tokio::sync::Mutex as AsyncMutex;
 use crate::extensions::base::Extension;
 use crate::messaging::Messages;
 
+use super::base::ExtensionInfo;
+
 /// Manage a group of extensions
 #[derive(Default, Clone)]
 pub struct ExtensionsManager {
-    pub extensions: Vec<Arc<AsyncMutex<Box<dyn Extension + Send>>>>,
+    pub extensions: Vec<LoadedExtension>,
 }
 
 impl ExtensionsManager {
@@ -48,6 +50,14 @@ impl ExtensionsManager {
     }
 
     pub fn register(&mut self, plugin: Box<dyn Extension + Send>) {
-        self.extensions.push(Arc::new(AsyncMutex::new(plugin)));
+        let info = plugin.get_info();
+        let plugin = Arc::new(AsyncMutex::new(plugin));
+        self.extensions.push(LoadedExtension { plugin, info });
     }
+}
+
+#[derive(Clone)]
+pub struct LoadedExtension {
+    pub plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
+    pub info: ExtensionInfo,
 }
