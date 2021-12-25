@@ -1,3 +1,4 @@
+use std::fmt;
 use std::path::Path;
 use std::sync::Arc;
 
@@ -79,6 +80,19 @@ pub enum LoadedExtension {
         plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
         info: ExtensionInfo,
     },
+}
+
+impl fmt::Debug for LoadedExtension {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let name = if let LoadedExtension::FromFile { .. } = self {
+            "FromFile"
+        } else {
+            "FromExtension"
+        };
+        f.debug_struct(name)
+            .field("info", &self.get_info())
+            .finish()
+    }
 }
 
 impl LoadedExtension {
