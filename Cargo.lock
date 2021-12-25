@@ -281,6 +281,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "cargo_toml"
+version = "0.10.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "67110a7844b75a4dda12f4dca5a731c961750d6c8fa3cb6a41ab67411be05d3a"
+dependencies = [
+ "serde",
+ "serde_derive",
+ "toml",
+]
+
+[[package]]
 name = "cc"
 version = "1.0.72"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1307,6 +1318,7 @@ name = "gveditor-core-api"
 version = "0.1.4"
 dependencies = [
  "async-trait",
+ "cargo_toml",
  "libloading",
  "serde",
  "serde_derive",

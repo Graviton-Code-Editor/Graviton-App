@@ -13,17 +13,22 @@ const run  = (what, args, where = './') => {
 
 
 // Theses are all the build tasks by Graviton
-
+const distPaths = ['desktop/src-tauri', 'server']
 desc('Build the Git extension');
 task('build_git_extension', async function () {
     await run('cargo', ['build'], './extensions/git')
-    rimraf.sync('./dist')
-    await mkdir('dist')
-    await mkdir('dist/extensions')
-    try {
-        await copyFile('target/debug/git.dll', 'dist/extensions/git.dll')
-        await copyFile('target/debug/libgit.so', 'dist/extensions/git.dll')
-    } catch { }
+    for(const path of distPaths ){
+        rimraf.sync(`${path}/dist`)
+        await mkdir(`${path}/dist`)
+        await mkdir(`${path}/dist/extensions`)
+        await mkdir(`${path}/dist/extensions/git`)
+        try {
+            await copyFile(`extensions/git/Cargo.toml`, `${path}/dist/extensions/git/Cargo.toml`)
+            await copyFile(`target/debug/git_for_graviton.dll`, `${path}/dist/extensions/git/git.dll`)
+            await copyFile(`target/debug/git_for_graviton.so`, `${path}/dist/extensions/git/git.dll`)
+        } catch { }
+    }
+    
 });
 
 desc('Run the server in develop mode');

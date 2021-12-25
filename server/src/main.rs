@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::sync::{
     Arc,
     Mutex,
@@ -20,23 +21,13 @@ use gveditor_core_api::tokio::sync::mpsc::channel;
 use gveditor_core_api::tokio::sync::Mutex as AsyncMutex;
 use gveditor_core_api::State;
 
-// Each OS has a different file format for dynamic libraries
-#[cfg(unix)]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
-#[cfg(target_os = "windows")]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
-
 #[tokio::main]
 async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
     let from_core = Arc::new(AsyncMutex::new(from_core));
 
     let extensions_manager = ExtensionsManager::new()
-        .load_extensions_from_path(
-            &format!("../target/debug/git.{}", PLUGIN_DYNAMIC_LIBRARY_FORMAT),
-            to_core.clone(),
-            1,
-        )
+        .load_extensions_from_path(Path::new("./dist/extensions/git"), to_core.clone(), 1)
         .await
         .to_owned();
 

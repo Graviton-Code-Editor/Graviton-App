@@ -15,3 +15,4 @@ serde_derive = "1.0.126"
 serde = { version = "1.0.127", features = ["derive"] }
 async-trait = "0.1.52"
 libloading = "0.7.2"
+cargo_toml = "0.10.2"

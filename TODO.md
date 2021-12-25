@@ -21,6 +21,7 @@
 - [ ] Document all what needs to be documented in the book
 - [ ] Make Graviton web decide what editor should be opened depending on the file format
 - [x] Create StatusBarItem module
+- [ ] Load extensions from the <HOME_DIR>/.graviton/extensions/
 
 ### web
 - [ ] Make a web-based filesystem explorer component

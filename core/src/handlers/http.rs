@@ -375,7 +375,7 @@ mod tests {
 
             let listen_to_state_msg = Messages::ListenToState {
                 state_id: 1,
-                trigger: "client".to_string()
+                trigger: "client".to_string(),
             };
 
             let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();

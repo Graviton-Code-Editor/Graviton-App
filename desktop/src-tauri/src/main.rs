@@ -27,6 +27,7 @@ use gveditor_core_api::state::{
     TokenFlags,
 };
 use gveditor_core_api::State;
+use std::path::PathBuf;
 use std::sync::{
     Arc,
     Mutex,
@@ -121,16 +122,14 @@ fn open_tauri(
 ///
 /// * `context` - The Tauri Context
 ///
-fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> String {
+fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> PathBuf {
     resolve_path(
         context.config(),
         context.package_info(),
-        ".",
+        "dist/extensions",
         Some(BaseDirectory::Resource),
     )
     .unwrap()
-    .to_string_lossy()
-    .to_string()
 }
 
 // Dummy token
@@ -146,9 +145,10 @@ async fn main() {
 
     // Load built-in extensions
     let built_in_extensions_path = get_built_in_extensions_path(&context);
+
     let extensions_manager = ExtensionsManager::new()
         .load_extensions_from_path(
-            &format!("{}/{}", built_in_extensions_path, "git"),
+            &built_in_extensions_path.join("git"),
             to_core.clone(),
             STATE_ID,
         )
