@@ -54,7 +54,7 @@ function ExplorerPanelContainer() {
 export default class ExplorerPanel extends Panel {
   constructor() {
     super("Explorer");
-    this.icon = () => <ReactSVG src="./src/icons/folder_outlined.svg" />;
+    this.icon = () => <ReactSVG src="/icons/folder_outlined.svg" />;
     this.container = () => <ExplorerPanelContainer />;
   }
 }

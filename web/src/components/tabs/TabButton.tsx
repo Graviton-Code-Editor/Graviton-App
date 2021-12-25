@@ -80,7 +80,7 @@ export default function TabButton({
     <TabButtonStyle className={isSelected && "selected"} onClick={select}>
       <p>{title}</p>
       <button onClick={closeTab}>
-        <ReactSVG src="./src/icons/close_cross.svg" />
+        <ReactSVG src="/icons/close_cross.svg" />
       </button>
     </TabButtonStyle>
   );

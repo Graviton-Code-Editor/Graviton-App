@@ -256,7 +256,7 @@ function FilesystemExplorer({
         isFile={itemInfo.isFile}
         isOpened={isOpened}
       >
-        {!itemInfo.isFile && <ReactSVG src="./src/icons/collapse_arrow.svg" />}
+        {!itemInfo.isFile && <ReactSVG src="/icons/collapse_arrow.svg" />}
         <span>{itemInfo.name}</span>
       </ExplorerItemContainer>
     );
