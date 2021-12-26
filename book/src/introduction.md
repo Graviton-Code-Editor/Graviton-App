@@ -14,9 +14,10 @@ Modules:
 - `web`: A web-based frontend implementation
 - `web-components`: A set of React Components used in Graviton to be used elsewhere
 - `languages`: All the translations as NPM package
-- Graviton Desktop: A webview-based app that handles running the core and the web frontend
-- Graviton Server: A cli launcher for a Graviton HTTP Core + serving the web-based frontend
+- `Graviton Desktop`: A webview-based app that handles running the core and the web frontend
+- `Graviton Server`: A cli launcher for a Graviton HTTP Core + serving the web-based frontend
 
 Learn more:
 - [Building](./building.md)
+- [Extensions](./extensions.md)
 - [Core](./core.md)
