@@ -25,7 +25,7 @@ task('build_git_extension', async function () {
         try {
             await copyFile(`extensions/git/Cargo.toml`, `${path}/dist/extensions/git/Cargo.toml`)
             await copyFile(`target/debug/git_for_graviton.dll`, `${path}/dist/extensions/git/git.dll`)
-            await copyFile(`target/debug/git_for_graviton.so`, `${path}/dist/extensions/git/git.so`)
+            await copyFile(`target/debug/libgit_for_graviton.so`, `${path}/dist/extensions/git/git.so`)
         } catch { }
     }
     
