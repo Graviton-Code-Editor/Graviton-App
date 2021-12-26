@@ -69,11 +69,11 @@ impl ExtensionsManager {
     }
 
     /// Load a extension
-    pub fn register(&mut self, plugin: Box<dyn Extension + Send>) {
+    pub fn register(&mut self, parent_id: String, plugin: Box<dyn Extension + Send>) {
         let info = plugin.get_info();
         let plugin = Arc::new(AsyncMutex::new(plugin));
         self.extensions
-            .push(LoadedExtension::FromExtension { plugin, info });
+            .push(LoadedExtension::FromExtension { plugin, info, parent_id });
     }
 }
 
@@ -87,6 +87,7 @@ pub enum LoadedExtension {
     FromExtension {
         plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
         info: ExtensionInfo,
+        parent_id: String
     },
 }
 

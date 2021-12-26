@@ -91,10 +91,12 @@ impl Extension for GitExtension {
 pub fn entry(extensions: &mut ExtensionsManager, sender: AsyncSender<Messages>, state_id: u8) {
     let (tx, rx) = channel::<ExtensionMessages>();
     let rx = Arc::new(Mutex::new(rx));
-    extensions.register(Box::new(GitExtension {
+    let plugin = Box::new(GitExtension {
         sender,
         state_id,
         rx,
         tx,
-    }));
+    });
+    let parent_id = env!("CARGO_PKG_NAME").to_string();
+    extensions.register(parent_id, plugin);
 }
