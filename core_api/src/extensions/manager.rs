@@ -1,5 +1,8 @@
 use std::fmt;
-use std::path::Path;
+use std::path::{
+    Path,
+    PathBuf,
+};
 use std::sync::Arc;
 
 use cargo_toml::Value;
@@ -41,7 +44,10 @@ impl ExtensionsManager {
         let info = LoadedExtension::get_info_from_file(&path.join("Cargo.toml"));
 
         if let Some(info) = info {
-            self.extensions.push(LoadedExtension::FromFile { info });
+            self.extensions.push(LoadedExtension::FromFile {
+                info,
+                path: path.to_path_buf(),
+            });
             let extension_file_name = path.file_name().unwrap();
 
             unsafe {
@@ -62,6 +68,7 @@ impl ExtensionsManager {
         self
     }
 
+    /// Load a extension
     pub fn register(&mut self, plugin: Box<dyn Extension + Send>) {
         let info = plugin.get_info();
         let plugin = Arc::new(AsyncMutex::new(plugin));
@@ -75,6 +82,7 @@ impl ExtensionsManager {
 pub enum LoadedExtension {
     FromFile {
         info: ExtensionInfo,
+        path: PathBuf,
     },
     FromExtension {
         plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,

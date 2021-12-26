@@ -32,7 +32,10 @@ use std::sync::{
     Arc,
     Mutex,
 };
-use std::thread;
+use std::{
+    fs,
+    thread,
+};
 use tauri::api::path::{
     resolve_path,
     BaseDirectory,
@@ -116,6 +119,26 @@ fn open_tauri(
         .expect("failed to run tauri application");
 }
 
+/// Returns the path where third-party extensions are installed and loaded from
+///
+/// # Arguments
+///
+/// * `context` - The Tauri Context
+///
+fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> PathBuf {
+    let extensions_installation_path = resolve_path(
+        context.config(),
+        context.package_info(),
+        ".graviton/extensions",
+        Some(BaseDirectory::Home),
+    )
+    .unwrap();
+
+    fs::create_dir_all(extensions_installation_path.to_path_buf()).ok();
+
+    extensions_installation_path
+}
+
 /// Returns the bundled path to the extensions directory
 ///
 /// # Arguments
@@ -143,17 +166,29 @@ async fn main() {
 
     let context = tauri::generate_context!("tauri.conf.json");
 
-    // Load built-in extensions
+    // Get the extensions paths
+    let third_party_extensions_path = get_extensions_installation_path(&context);
     let built_in_extensions_path = get_built_in_extensions_path(&context);
 
-    let extensions_manager = ExtensionsManager::new()
+    let mut extensions_manager = ExtensionsManager::new();
+
+    // Load built-in extensions
+    extensions_manager
+        .load_extensions_from_path(
+            &third_party_extensions_path.join("git"),
+            to_core.clone(),
+            STATE_ID,
+        )
+        .await;
+
+    // Load third-party extensions
+    extensions_manager
         .load_extensions_from_path(
             &built_in_extensions_path.join("git"),
             to_core.clone(),
             STATE_ID,
         )
-        .await
-        .to_owned();
+        .await;
 
     // Create the StatesList
     let states = {
