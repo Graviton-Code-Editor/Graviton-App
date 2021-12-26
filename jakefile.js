@@ -11,6 +11,12 @@ const run  = (what, args, where = './') => {
     })
 }
 
+const copy = async (from, to) => {
+    try {
+        await copyFile(from, to);
+    } catch {}
+}
+
 
 // Theses are all the build tasks by Graviton
 const distPaths = ['desktop/src-tauri', 'server']
@@ -22,11 +28,9 @@ task('build_git_extension', async function () {
         await mkdir(`${path}/dist`)
         await mkdir(`${path}/dist/extensions`)
         await mkdir(`${path}/dist/extensions/git`)
-        try {
-            await copyFile(`extensions/git/Cargo.toml`, `${path}/dist/extensions/git/Cargo.toml`)
-            await copyFile(`target/debug/git_for_graviton.dll`, `${path}/dist/extensions/git/git.dll`)
-            await copyFile(`target/debug/libgit_for_graviton.so`, `${path}/dist/extensions/git/git.so`)
-        } catch { }
+        await copy(`extensions/git/Cargo.toml`, `${path}/dist/extensions/git/Cargo.toml`)
+        await copy(`target/debug/git_for_graviton.dll`, `${path}/dist/extensions/git/git.dll`)
+        await copy(`target/debug/libgit_for_graviton.so`, `${path}/dist/extensions/git/git.so`)
     }
     
 });
