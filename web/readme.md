@@ -4,7 +4,6 @@ This is a web-based frontend implementation
 | -------------- | ------------------ |
 | src/components | General components |
 | src/editors    | Built-in editors   |
-| src/icons      | Built-in icons     |
 | src/modules    | API utilities      |
 | src/panels     | Built-in panels    |
 | src/prompts    | Built-in prompts   |
