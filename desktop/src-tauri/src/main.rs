@@ -27,6 +27,8 @@ use gveditor_core_api::state::{
     TokenFlags,
 };
 use gveditor_core_api::State;
+use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
+use tracing_subscriber::{EnvFilter, Registry, fmt};
 use std::path::PathBuf;
 use std::sync::{
     Arc,
@@ -157,12 +159,29 @@ fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> PathBuf {
     .unwrap()
 }
 
+/// Setup the logger
+fn setup_logger() {
+    let filter = EnvFilter::default()
+        .add_directive("graviton=info".parse().unwrap())
+        .add_directive("gveditor_core_api=info".parse().unwrap())
+        .add_directive("gveditor_core=info".parse().unwrap());
+
+    let subscriber = Registry::default()
+        .with(filter)
+        .with(fmt::Layer::default());
+
+    tracing::subscriber::set_global_default(subscriber).expect("Unable to set global subscriber");
+}
+
 // Dummy token
 static TOKEN: &str = "graviton_token";
 static STATE_ID: u8 = 1;
 
 #[tokio::main]
 async fn main() {
+
+    setup_logger();
+
     let (to_core, from_core) = channel::<Messages>(1);
     let from_core = Arc::new(AsyncMutex::new(from_core));
 

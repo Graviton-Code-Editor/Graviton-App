@@ -23,3 +23,4 @@ gveditor-core-api = { version = "0.1.4", path = "../core_api"}
 async-trait = "0.1.52"
 hyper-tungstenite = "0.5.0"
 url = "2.2.2"
+tracing = "0.1.29"

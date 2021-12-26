@@ -44,6 +44,7 @@ impl ExtensionsManager {
         let info = LoadedExtension::get_info_from_file(&path.join("Cargo.toml"));
 
         if let Some(info) = info {
+            tracing::info!("Loaded extension <{}> from it's manifest file", info.name);
             self.extensions.push(LoadedExtension::FromFile {
                 info,
                 path: path.to_path_buf(),
