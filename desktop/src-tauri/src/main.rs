@@ -113,6 +113,8 @@ fn open_tauri(
             methods::list_dir_by_path,
             methods::read_file_by_path,
             methods::set_state_by_id,
+            methods::get_ext_info_by_id,
+            methods::get_ext_list_by_id,
             init_listener
         ])
         .run(context)
@@ -134,7 +136,7 @@ fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> PathBu
     )
     .unwrap();
 
-    fs::create_dir_all(extensions_installation_path.to_path_buf()).ok();
+    fs::create_dir_all(&extensions_installation_path).ok();
 
     extensions_installation_path
 }

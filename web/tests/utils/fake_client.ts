@@ -38,6 +38,15 @@ export default class FakeClient extends Emittery implements Client {
       ],
     };
   }
+
+  async get_ext_info_by_id(extension_id: string): Promise<any> {
+    return null;
+  }
+
+  async get_ext_list_by_id(): Promise<any> {
+    return null;
+  }
+
   // TODO
   listenToState() {
     return null;

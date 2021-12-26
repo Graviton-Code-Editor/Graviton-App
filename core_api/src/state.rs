@@ -186,6 +186,16 @@ impl State {
 
         result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
     }
+
+    /// Return the list of loaded extensions
+    pub fn get_ext_list_by_id(&self) -> Vec<String> {
+        let extensions = &self.extensions_manager.extensions;
+
+        extensions
+            .iter()
+            .map(|ext| ext.get_info().id)
+            .collect::<Vec<String>>()
+    }
 }
 
 // NOTE: It would be interesting to implement https://doc.rust-lang.org/std/ops/trait.AddAssign.html
@@ -233,7 +243,7 @@ mod tests {
     #[test]
     fn get_info() {
         let mut manager = ExtensionsManager::new();
-        manager.register(get_sample_extension());
+        manager.register("sample", get_sample_extension());
         let test_state = State::new(0, manager);
 
         let ext_info = test_state.get_ext_info_by_id("sample");

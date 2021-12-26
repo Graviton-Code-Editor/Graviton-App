@@ -97,6 +97,6 @@ pub fn entry(extensions: &mut ExtensionsManager, sender: AsyncSender<Messages>, 
         rx,
         tx,
     });
-    let parent_id = env!("CARGO_PKG_NAME").to_string();
+    let parent_id = env!("CARGO_PKG_NAME");
     extensions.register(parent_id, plugin);
 }

@@ -147,6 +147,13 @@ pub trait RpcMethods {
         state_id: u8,
         token: String,
     ) -> RPCResult<Result<ExtensionInfo, Errors>>;
+
+    #[rpc(name = "get_ext_list_by_id")]
+    fn get_ext_list_by_id(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<Vec<String>, Errors>>;
 }
 
 /// JSON RPC manager
@@ -263,6 +270,27 @@ impl RpcMethods for RpcManager {
             if state.has_token(&token) {
                 // Try to get the requested info about the extension
                 Ok(state.get_ext_info_by_id(&extension_id))
+            } else {
+                Ok(Err(Errors::BadToken))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
+    }
+    /// Returns the list of extensions in the specified state
+    fn get_ext_list_by_id(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<Vec<String>, Errors>> {
+        let states = self.states.lock().unwrap();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            let state = state.lock().unwrap();
+            // Make sure the token is valid
+            if state.has_token(&token) {
+                // Try to get the requested info about the extension
+                Ok(Ok(state.get_ext_list_by_id()))
             } else {
                 Ok(Err(Errors::BadToken))
             }

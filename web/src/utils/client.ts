@@ -29,6 +29,11 @@ export interface FileInfo {
   format: string;
 }
 
+export interface ExtensionInfo {
+  name: string;
+  id: string;
+}
+
 export interface Client extends Emittery {
   get_state_by_id: () => Promise<StateData>;
   set_state_by_id: (state: StateData) => Promise<void>;
@@ -40,6 +45,10 @@ export interface Client extends Emittery {
     path: string,
     fs: string
   ) => Promise<CoreResponse<Array<DirItemInfo>>>;
+  get_ext_info_by_id: (
+    extension_id: string
+  ) => Promise<CoreResponse<ExtensionInfo>>;
+  get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
 }
 
@@ -119,6 +128,31 @@ export class HTTPClient extends Emittery implements Client {
     return this.rpc.call("list_dir_by_path", [
       path,
       filesystem_name,
+      this.config.state_id,
+      this.config.token,
+    ]);
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public get_ext_info_by_id(
+    extension_id: string
+  ): Promise<CoreResponse<ExtensionInfo>> {
+    return this.rpc.call("get_ext_info_by_id", [
+      extension_id,
+      this.config.state_id,
+      this.config.token,
+    ]);
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public get_ext_list_by_id(): Promise<CoreResponse<string[]>> {
+    return this.rpc.call("get_ext_list_by_id", [
       this.config.state_id,
       this.config.token,
     ]);
@@ -219,6 +253,31 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     return invoke("list_dir_by_path", {
       path,
       filesystemName,
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public get_ext_info_by_id(
+    extension_id: string
+  ): Promise<CoreResponse<ExtensionInfo>> {
+    return invoke("get_ext_info_by_id", {
+      extension_id,
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public get_ext_list_by_id(): Promise<CoreResponse<string[]>> {
+    return invoke("get_ext_list_by_id", {
       stateId: this.config.state_id,
       token: this.config.token,
     });
