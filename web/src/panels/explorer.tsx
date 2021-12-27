@@ -12,20 +12,22 @@ function ExplorerPanelContainer() {
   const [tabs, setTabs] = useRecoilState(openedTabsState);
 
   async function openFile(item: TreeItemInfo) {
-    try {
-      client.read_file_by_path(item.path, "local").then((fileContent) => {
-        if (fileContent.Ok) {
-          const { content } = fileContent.Ok;
-          const newTab = new TextEditorTab(item.path, content);
-          tabs[0][0].push(newTab);
-          setTabs([...tabs]);
-        } else {
-          // handle error
-        }
-      });
-    } catch (err) {
-      console.log(err);
-      // handle error
+    if (item.isFile) {
+      try {
+        client.read_file_by_path(item.path, "local").then((fileContent) => {
+          if (fileContent.Ok) {
+            const { content } = fileContent.Ok;
+            const newTab = new TextEditorTab(item.path, content);
+            tabs[0][0].push(newTab);
+            setTabs([...tabs]);
+          } else {
+            // handle error
+          }
+        });
+      } catch (err) {
+        console.log(err);
+        // handle error
+      }
     }
   }
 

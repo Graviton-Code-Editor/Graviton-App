@@ -49,5 +49,7 @@ async fn main() {
 
     core.run().await;
 
+    println!("Open http://localhost:8080/?state=0&token=test");
+
     thread::park();
 }

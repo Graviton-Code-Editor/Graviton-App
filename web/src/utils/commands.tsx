@@ -1,3 +1,7 @@
+import { setRecoil } from "../components/ExternalState";
+import { RemoteExplorer } from "../modules/remote_explorer";
+import { showedWindows } from "./atoms";
+
 export const isTauri = (globalThis as any).__TAURI__ != null;
 
 /**
@@ -8,13 +12,22 @@ export async function openFolderPicker(
 ): Promise<string | null> {
   const { dialog } = await import("@tauri-apps/api");
 
-  if (filesystem_name == "local" && isTauri) {
+  if (filesystem_name == "loca2l" && isTauri) {
     // Make use of the native file picker if it's running in Tauri
     return (await dialog.open({ multiple: false, directory: true })) as
       | string
       | null;
   } else {
-    // Use custom prompt
-    return null;
+    // Use web-based explorer
+    return new Promise((resolve) => {
+      function onSelectedFolder(folderPath: string) {
+        console.log(folderPath);
+        resolve(folderPath);
+      }
+      setRecoil(showedWindows, (val) => [
+        ...val,
+        new RemoteExplorer({ onSelectedFolder }),
+      ]);
+    });
   }
 }

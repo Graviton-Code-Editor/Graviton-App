@@ -234,10 +234,11 @@ function FilesystemExplorer({
 
     // When the item is clicked
     function onClick() {
-      if (itemInfo.isFile) {
-        // Trigger the select callback
-        onSelected(itemInfo);
-      } else {
+      // Trigger the select callback
+      onSelected(itemInfo);
+
+      // If folder
+      if (!itemInfo.isFile) {
         if (isOpened) {
           // Close itself
           openFolder(itemInfo.path);

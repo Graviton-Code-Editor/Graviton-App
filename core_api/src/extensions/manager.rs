@@ -61,7 +61,11 @@ impl ExtensionsManager {
                 // Load the extension library
                 // NOTE: The library should be saved instead of leaked. WIP
                 let lib = Box::leak(Box::new(
-                    libloading::Library::new(path.join(extension_file_name).with_extension(PLUGIN_DYNAMIC_LIBRARY_FORMAT)).unwrap(),
+                    libloading::Library::new(
+                        path.join(extension_file_name)
+                            .with_extension(PLUGIN_DYNAMIC_LIBRARY_FORMAT),
+                    )
+                    .unwrap(),
                 ));
                 // Retrieve the entry function handler
                 let entry_func: libloading::Symbol<
