@@ -4,7 +4,7 @@
 Requisites:
 - nodejs + npm ([`https://nodejs.org`](https://nodejs.org))
 - cargo (**nightly** channel) ([`https://www.rust-lang.org`](https://www.rust-lang.org))
-- tauri cli (`cargo install tauri-cli --version ^1.0.0-beta`)
+- tauri cli (`cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch next`)
 - yarn (`npm i -g yarn`)
 
 Installing dependencies:
