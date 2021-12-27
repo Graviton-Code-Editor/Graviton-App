@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Tab } from "../../modules/tab";
 import ExtensionsRoute from "./routes/extensions";
 import SideBar from "../../components/SideBar";
+//@ts-ignore
 import { Button } from "@gveditor/web_components";
 import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/HorizontalView";

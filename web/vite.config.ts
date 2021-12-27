@@ -20,5 +20,8 @@ export default defineConfig(() => ({
   test: {
     global: true,
     environment: "happy-dom",
+    deps: {
+      inline: ['recoil']
+    }
   },
 }));
