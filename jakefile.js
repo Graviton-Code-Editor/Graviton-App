@@ -42,7 +42,7 @@ task('dev_web_components', async function () {
 
 
 desc('Build web_components');
-task('dev_web_components', async function () {
+task('build_web_components', async function () {
     await run('yarn', ['--cwd', 'web_components', 'run', 'build'])
 });
 
