@@ -193,6 +193,23 @@ impl State {
         result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
     }
 
+    /// Try to retrieve info about a perticular loaded extension's runtime
+    pub fn get_ext_run_info_by_id(&self, ext_id: &str) -> Result<ExtensionInfo, Errors> {
+        let extensions = &self.extensions_manager.extensions;
+        let result = extensions
+            .iter()
+            .find(|extension| {
+                if let LoadedExtension::FromExtension { info, .. } = extension {
+                    info.id == ext_id
+                } else {
+                    false
+                }
+            })
+            .map(|ext| ext.get_info());
+
+        result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
+    }
+
     /// Return the list of loaded extensions
     pub fn get_ext_list_by_id(&self) -> Vec<String> {
         let extensions = &self.extensions_manager.extensions;
@@ -258,7 +275,7 @@ mod tests {
         manager.register("sample", get_sample_extension());
         let test_state = State::new(0, manager);
 
-        let ext_info = test_state.get_ext_info_by_id("sample");
+        let ext_info = test_state.get_ext_run_info_by_id("sample");
         assert!(ext_info.is_ok());
 
         let ext_info = ext_info.unwrap();

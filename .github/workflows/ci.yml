@@ -26,6 +26,9 @@ jobs:
       - name: Installing nodejs dependencies
         run: yarn
 
+      - name: Build web_components
+        run: yarn --cwd web_components run build
+
       - name: Build web
         run: yarn --cwd web run build
 
