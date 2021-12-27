@@ -35,4 +35,7 @@
 - [ ] Create a settings tab
 
 ### web_components
-- [ ] Make some useful components of the web-based frontend as a React library
+- [ ] Publish to npm ?
+
+### server
+- [ ] Use a random-generate token for it's state
