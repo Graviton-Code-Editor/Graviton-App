@@ -14,6 +14,12 @@ use crate::messaging::Messages;
 
 use super::base::ExtensionInfo;
 
+// Each OS has a different file format for dynamic libraries
+#[cfg(unix)]
+static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
+#[cfg(target_os = "windows")]
+static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
+
 /// Manage a group of extensions
 #[derive(Default, Clone)]
 pub struct ExtensionsManager {
@@ -55,7 +61,7 @@ impl ExtensionsManager {
                 // Load the extension library
                 // NOTE: The library should be saved instead of leaked. WIP
                 let lib = Box::leak(Box::new(
-                    libloading::Library::new(path.join(extension_file_name)).unwrap(),
+                    libloading::Library::new(path.join(extension_file_name).with_extension(PLUGIN_DYNAMIC_LIBRARY_FORMAT)).unwrap(),
                 ));
                 // Retrieve the entry function handler
                 let entry_func: libloading::Symbol<
