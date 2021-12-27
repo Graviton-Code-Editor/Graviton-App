@@ -7,10 +7,22 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
+    primaryButton: {
+      background: "#222222",
+      color: "rgb(255,255,255)",
+    },
+    primaryTitle: {
+      color: "rgb(255,255,255)",
+    },
     link: {
       color: "rgb(200, 200, 200)",
       hover: {
         color: "rgb(180, 180, 180)",
+      },
+    },
+    list: {
+      item: {
+        color: "rgb(255,255,255)",
       },
     },
     prompt: {

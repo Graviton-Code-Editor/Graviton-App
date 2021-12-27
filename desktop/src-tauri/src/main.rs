@@ -27,8 +27,6 @@ use gveditor_core_api::state::{
     TokenFlags,
 };
 use gveditor_core_api::State;
-use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
-use tracing_subscriber::{EnvFilter, Registry, fmt};
 use std::path::PathBuf;
 use std::sync::{
     Arc,
@@ -47,6 +45,12 @@ use tauri::{
     Context,
     Manager,
     Window,
+};
+use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
+use tracing_subscriber::{
+    fmt,
+    EnvFilter,
+    Registry,
 };
 
 /// The app backend state
@@ -166,9 +170,7 @@ fn setup_logger() {
         .add_directive("gveditor_core_api=info".parse().unwrap())
         .add_directive("gveditor_core=info".parse().unwrap());
 
-    let subscriber = Registry::default()
-        .with(filter)
-        .with(fmt::Layer::default());
+    let subscriber = Registry::default().with(filter).with(fmt::Layer::default());
 
     tracing::subscriber::set_global_default(subscriber).expect("Unable to set global subscriber");
 }
@@ -179,7 +181,6 @@ static STATE_ID: u8 = 1;
 
 #[tokio::main]
 async fn main() {
-
     setup_logger();
 
     let (to_core, from_core) = channel::<Messages>(1);

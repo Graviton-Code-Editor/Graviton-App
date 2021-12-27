@@ -4,6 +4,7 @@ import { Prompt } from "../modules/prompt";
 import { openedFolders, openedTabsState } from "../utils/atoms";
 import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";
+import SettingsTab from "../tabs/settings";
 
 function GlobalPromptContainer() {
   const options: Option[] = [
@@ -13,6 +14,15 @@ function GlobalPromptContainer() {
         closePrompt();
         const tabs = useRecoil(openedTabsState);
         tabs[0][0].push(new WelcomeTab());
+        setRecoil(openedTabsState, [...tabs]);
+      },
+    },
+    {
+      label: "Open Settings",
+      onSelected({ closePrompt }) {
+        closePrompt();
+        const tabs = useRecoil(openedTabsState);
+        tabs[0][0].push(new SettingsTab());
         setRecoil(openedTabsState, [...tabs]);
       },
     },

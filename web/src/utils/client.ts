@@ -46,7 +46,7 @@ export interface Client extends Emittery {
     fs: string
   ) => Promise<CoreResponse<Array<DirItemInfo>>>;
   get_ext_info_by_id: (
-    extension_id: string
+    extensionId: string
   ) => Promise<CoreResponse<ExtensionInfo>>;
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
@@ -263,10 +263,10 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    * @JsonRpcMethod
    */
   public get_ext_info_by_id(
-    extension_id: string
+    extensionId: string
   ): Promise<CoreResponse<ExtensionInfo>> {
     return invoke("get_ext_info_by_id", {
-      extension_id,
+      extensionId,
       stateId: this.config.state_id,
       token: this.config.token,
     });

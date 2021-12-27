@@ -1,0 +1,20 @@
+//@ts-ignore
+import { Title } from "@gveditor/web_components";
+import List from "../../../components/List";
+import TabText from "../../../components/TabText";
+import useExtensions from "../../../hooks/useExtensions";
+
+export default function ExtensionsRoute() {
+  const extensions = useExtensions();
+  return (
+    <div>
+      <Title>Extensions</Title>
+      <TabText>These are the currently loaded extensions:</TabText>
+      <List>
+        {extensions.map((ext) => (
+          <li key={ext.id}> {ext.name}</li>
+        ))}
+      </List>
+    </div>
+  );
+}

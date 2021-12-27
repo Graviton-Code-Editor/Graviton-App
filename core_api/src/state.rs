@@ -181,7 +181,13 @@ impl State {
         let extensions = &self.extensions_manager.extensions;
         let result = extensions
             .iter()
-            .find(|extension| extension.get_info().id == ext_id)
+            .find(|extension| {
+                if let LoadedExtension::FromFile { info, .. } = extension {
+                    info.id == ext_id
+                } else {
+                    false
+                }
+            })
             .map(|ext| ext.get_info());
 
         result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
@@ -193,7 +199,13 @@ impl State {
 
         extensions
             .iter()
-            .map(|ext| ext.get_info().id)
+            .filter_map(|extension| {
+                if let LoadedExtension::FromFile { info, .. } = extension {
+                    Some(info.id.to_string())
+                } else {
+                    None
+                }
+            })
             .collect::<Vec<String>>()
     }
 }
