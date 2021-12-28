@@ -12,7 +12,7 @@ export async function openFolderPicker(
 ): Promise<string | null> {
   const { dialog } = await import("@tauri-apps/api");
 
-  if (filesystem_name == "loca2l" && isTauri) {
+  if (filesystem_name == "local" && isTauri) {
     // Make use of the native file picker if it's running in Tauri
     return (await dialog.open({ multiple: false, directory: true })) as
       | string
