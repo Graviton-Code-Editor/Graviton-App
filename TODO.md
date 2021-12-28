@@ -25,6 +25,8 @@
 - [x] Create StatusBarItem module
 - [x] Desktop: Load extensions from the <HOME_DIR>/.graviton/extensions/
 - [ ] Save `tracing`'s logs in a file (with `tracing_subscriber`)
+- [ ] Implement a Theme extensions 
+- [ ] Add `ProjectOpened` message event (useful for the git extension)
 
 ### web
 - [ ] Make a web-based filesystem explorer component
