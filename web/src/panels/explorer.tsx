@@ -3,13 +3,14 @@ import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/FilesystemExplorer";
 import { Panel } from "../modules/panel";
-import TextEditorTab from "../tabs/text_editor";
 import { clientState, openedFolders, openedTabsState } from "../utils/atoms";
 import { ReactSVG } from "react-svg";
+import useEditor from "../hooks/useEditor";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
   const [tabs, setTabs] = useRecoilState(openedTabsState);
+  const getEditor = useEditor()
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
@@ -17,11 +18,17 @@ function ExplorerPanelContainer() {
         client.read_file_by_path(item.path, "local").then((fileContent) => {
           if (fileContent.Ok) {
             const { content } = fileContent.Ok;
-            const newTab = new TextEditorTab(item.path, content);
-            tabs[0][0].push(newTab);
-            setTabs([...tabs]);
+            const editor = getEditor(fileContent.Ok.format)
+            // Make sure a compatible editor was found
+            if (editor != null) {
+              const newTab = new editor(item.path, content);
+              tabs[0][0].push(newTab);
+              setTabs([...tabs]);
+            } else {
+              // Handle error
+            }
           } else {
-            // handle error
+            // Handle error
           }
         });
       } catch (err) {

@@ -1,10 +1,10 @@
 import { atom } from "recoil";
-import BaseEditor from "../editors/base";
-import TextEditor from "../editors/text";
+import EditorTab from "../modules/editor_tab";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
+import TextEditorTab from "../tabs/text_editor";
 import {
   FocusedTab,
   FolderState,
@@ -45,9 +45,9 @@ export const prompts = atom<typeof Prompt[]>({
 });
 
 // Registed Editors implementations
-export const editors = atom<typeof BaseEditor[]>({
+export const editors = atom<typeof EditorTab[]>({
   key: "editors",
-  default: [TextEditor],
+  default: [TextEditorTab],
 });
 
 // Opened folders in the explorer panel
@@ -67,3 +67,4 @@ export const showedStatusBarItem = atom<StatusBarItem[]>({
   key: "showedStatusBarItem",
   default: [],
 });
+//

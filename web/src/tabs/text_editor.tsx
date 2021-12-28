@@ -1,6 +1,6 @@
-import { Tab } from "../modules/tab";
-import CodeMirror from "../components/codemirror";
+import TextEditor from "../components/TextEditor";
 import { EditorState } from "@codemirror/state";
+import EditorTab from "../modules/editor_tab";
 
 interface CodeMirrorContainerOptions {
   initialContent: string;
@@ -14,7 +14,7 @@ function CodemirrorContainer({
   saveState,
 }: CodeMirrorContainerOptions) {
   return (
-    <CodeMirror
+    <TextEditor
       scrollPos={savedState.scrollHeight}
       state={savedState.codemirrorState}
       onUpdate={(view) => {
@@ -40,7 +40,7 @@ interface SavedState {
 /**
  * A tab that displays a CodeMirror editor inside it
  */
-class TextEditorTab extends Tab {
+class TextEditorTab extends EditorTab {
   private state: SavedState = {
     scrollHeight: 0,
     codemirrorState: null,
@@ -52,7 +52,7 @@ class TextEditorTab extends Tab {
    * @param initialContent - Current content of the file
    */
   constructor(path: string, initialContent: string) {
-    super(path);
+    super(path, initialContent);
 
     const saveState = (state: SavedState) => {
       this.state = {
@@ -61,13 +61,22 @@ class TextEditorTab extends Tab {
       };
     };
 
-    this.container = () => (
-      <CodemirrorContainer
-        savedState={this.state}
-        initialContent={initialContent}
-        saveState={saveState}
-      />
-    );
+    this.container = () => {
+      return <CodemirrorContainer
+      savedState={this.state}
+      initialContent={initialContent}
+      saveState={saveState}
+    />
+    }
+  }
+  static isCompatible(format: string) {
+    switch(format) {
+      default:
+          return true
+    }
+  }
+  save(){
+    return;
   }
 }
 

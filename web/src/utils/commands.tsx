@@ -21,7 +21,6 @@ export async function openFolderPicker(
     // Use web-based explorer
     return new Promise((resolve) => {
       function onSelectedFolder(folderPath: string) {
-        console.log(folderPath);
         resolve(folderPath);
       }
       setRecoil(showedWindows, (val) => [

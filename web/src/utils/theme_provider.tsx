@@ -7,6 +7,9 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
+    textEdtior: {
+      background: 'black'
+    },
     primaryButton: {
       background: "#222222",
       color: "rgb(255,255,255)",

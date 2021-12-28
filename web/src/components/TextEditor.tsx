@@ -9,7 +9,7 @@ function defaultState({ initialValue }: { initialValue: string }): EditorState {
   });
 }
 
-interface CodeMirrorOptions {
+interface TextEditorOptions {
   state?: EditorState;
   initialValue: string;
   scrollPos: number;
@@ -17,13 +17,13 @@ interface CodeMirrorOptions {
   onScroll: (scroll: number, view: EditorView) => void;
 }
 
-export default function CodeMirror({
+export default function TextEditor({
   state,
   initialValue,
   onUpdate,
   scrollPos,
   onScroll,
-}: CodeMirrorOptions) {
+}: TextEditorOptions) {
   const ref = useRef(null);
   /* eslint-disable */
   let [editorView, setEditorView] = useState<EditorView | null>(null);
@@ -69,6 +69,5 @@ export default function CodeMirror({
       container.scrollTo(0, scrollPos);
     }
   }, [scrollPos]);
-
   return <div ref={ref} style={{ height: "100%", width: "100%" }} />;
 }

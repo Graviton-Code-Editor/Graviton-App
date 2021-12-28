@@ -31,7 +31,6 @@ function GlobalPromptContainer() {
       async onSelected({ closePrompt }) {
         closePrompt();
         const openedFolder = await openFolderPicker("local");
-        console.log(openedFolder);
         // If a folder selected
         if (openedFolder != null) {
           // Clear all opened folders and open the selected one
