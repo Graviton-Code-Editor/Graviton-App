@@ -7,8 +7,48 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
-    textEdtior: {
-      background: 'black'
+    textEditor: {
+      background: 'transparent',
+      color: '#f8f8f2',
+      activeLine: {
+        background: 'rgba(255, 255, 255, 0.1)'
+      },
+      variable: {
+        color: '#fdbd5d'
+      },
+      keyword: {
+        color: '#9969ff'
+      },
+      def: {
+        color: '#ff6666'
+      },
+      string: {
+        color: '#a5e572'
+      },
+      property: {
+        color: '#69a5ff'
+      },
+      number: {
+        color: '#bd93f9'
+      },
+      atom: {
+        color: '#bd93f9'
+      },
+      comment: {
+        color: '#858a99'
+      },
+      gutters: {
+        background: '#191919',
+        gutter:{
+          color: '#6d8a88',
+          active: {
+            color: 'rgb(255,255,255)'
+          }
+        }
+      },
+      matchingBracket: {
+        background: 'rgba(255, 255, 255, 0.2);'
+      }
     },
     primaryButton: {
       background: "#222222",

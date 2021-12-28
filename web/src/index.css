@@ -16,9 +16,9 @@ body,
   height: 100%;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+
+.cm-editor * {
+  font-family: 'JetBrains Mono';
 }
 
 * ::-webkit-scrollbar {
@@ -75,6 +75,3 @@ code {
   cursor: col-resize;
 }
 
-.cm-editor {
-  background: white;
-}

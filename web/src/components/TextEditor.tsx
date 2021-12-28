@@ -1,10 +1,71 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
 import { javascript } from "@codemirror/lang-javascript";
+import { useTheme } from "styled-components";
 
-function defaultState({ initialValue }: { initialValue: string }): EditorState {
+function getCodeMirrorThemeExtensions(theme: any){
+  return EditorView.theme({
+    "&": {
+      background: theme.elements.textEditor.background,
+    },
+    "& .ͼa": {
+      color: theme.elements.textEditor.keyword.color
+    },
+    "& .ͼf": {
+      color: theme.elements.textEditor.def.color
+    },
+    "& .ͼd, .ͼe": {
+      color: theme.elements.textEditor.string.color
+    },
+    "& .ͼk": {
+      color: theme.elements.textEditor.property.color
+    },
+    "& .ͼc": {
+      color: theme.elements.textEditor.number.color
+    },
+    "& .ͼl": {
+      color: theme.elements.textEditor.comment.color
+    },
+    "& .ͼb": {
+      color: theme.elements.textEditor.atom.color
+    },
+    "& .cm-gutters": {
+      'padding-left': '25px',
+      'user-select': 'none',
+      background: theme.elements.textEditor.gutters.background,
+      border: 'none',
+      '& .cm-gutterElement':{
+        color: theme.elements.textEditor.gutters.gutter.color,
+      },
+      '& .cm-activeLineGutter': {
+        color: theme.elements.textEditor.gutters.gutter.active.color,
+        background: 'transparent'
+      }
+    },
+    "& .cm-content": {
+      color: theme.elements.textEditor.color,
+    },
+    "& *": {
+      "caret-color": theme.elements.textEditor.color,
+    },
+    "& .cm-cursor": {
+      "border-color": theme.elements.textEditor.color,
+    },
+    "& .cm-line": {
+      'line-height': '26px'
+    },
+    "& .cm-activeLine": {
+      background: theme.elements.textEditor.activeLine.background
+    },
+    "& .cm-matchingBracket": {
+      background: theme.elements.textEditor.matchingBracket.background
+    }
+  })
+}
+
+function defaultState({ initialValue, theme }: { initialValue: string, theme: any }): EditorState {
   return EditorState.create({
-    extensions: [basicSetup, javascript()],
+    extensions: [basicSetup, javascript(), getCodeMirrorThemeExtensions(theme) ],
     doc: initialValue,
   });
 }
@@ -25,6 +86,7 @@ export default function TextEditor({
   onScroll,
 }: TextEditorOptions) {
   const ref = useRef(null);
+  const theme = useTheme();
   /* eslint-disable */
   let [editorView, setEditorView] = useState<EditorView | null>(null);
 
@@ -42,6 +104,7 @@ export default function TextEditor({
           state ||
           defaultState({
             initialValue,
+            theme
           }),
         parent: ref.current,
         dispatch: (txs) => {

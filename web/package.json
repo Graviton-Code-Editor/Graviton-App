@@ -13,6 +13,7 @@
     "@codemirror/basic-setup": "^0.19.0",
     "@codemirror/lang-javascript": "^0.19.2",
     "@fontsource/inter": "^4.5.1",
+    "@fontsource/jetbrains-mono": "^4.5.0",
     "@gveditor/languages": "*",
     "@gveditor/web_components": "*",
     "@tauri-apps/api": "^1.0.0-beta.8",

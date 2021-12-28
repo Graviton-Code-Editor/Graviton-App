@@ -536,6 +536,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/inter/-/inter-4.5.1.tgz#058d8a02354f3c78e369d452c15d33557ec1b705"
   integrity sha512-mvtOvXNNVLlF1p/UbLgLrmz2RCOl6Ow+TqyiK10SosoLKX7edsXYiHFHb7XIZdjII6F2sJVPPsJXWhBnbXT2DQ==
 
+"@fontsource/jetbrains-mono@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/jetbrains-mono/-/jetbrains-mono-4.5.0.tgz#4cf4014ad1538b1441afb2794097109d8515b7e9"
+  integrity sha512-gxUlpdCLoIrEQ6+1hkPbFHuQz8E5bPZ/iERU+13zEKb8rD/h21v3uHuAT7dTD+Co9nbSlgk6fyVkFwF5edUMog==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.2.tgz#68be55c737023009dfc5fe245d51181bb6476914"
