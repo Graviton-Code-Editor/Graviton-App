@@ -25,7 +25,12 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { isTauri } from "../utils/commands";
 import ExplorerPanel from "../panels/explorer";
 import { Popup } from "../modules/popup";
-import { ShowPopup, ShowStatusBarItem, StateUpdated } from "../types/messages";
+import {
+  HideStatusBarItem,
+  ShowPopup,
+  ShowStatusBarItem,
+  StateUpdated,
+} from "../types/messages";
 import StatusBarView from "./StatusBarView";
 import { StatusBarItem } from "../modules/statusbar_item";
 
@@ -124,8 +129,20 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
         if (itemIfFound != null) {
           setRecoil(itemIfFound.state, e);
         } else {
-          setShowedStatusBarItems([...val, new StatusBarItem(e)]);
+          setShowedStatusBarItems((currVal) => [
+            ...currVal,
+            new StatusBarItem(e),
+          ]);
         }
+      });
+
+      /**
+       * Hide StatusBarItems
+       */
+      client.on("HideStatusBarItem", (e: HideStatusBarItem) => {
+        setShowedStatusBarItems((val) => [
+          ...val.filter((item) => item.id !== e.statusbar_item_id),
+        ]);
       });
     }
   }, [client]);

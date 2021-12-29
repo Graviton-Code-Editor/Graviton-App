@@ -4,6 +4,7 @@ use serde::{
 };
 
 pub mod base;
+pub mod client;
 pub mod manager;
 pub mod modules;
 

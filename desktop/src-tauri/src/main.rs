@@ -192,24 +192,16 @@ async fn main() {
     let third_party_extensions_path = get_extensions_installation_path(&context);
     let built_in_extensions_path = get_built_in_extensions_path(&context);
 
-    let mut extensions_manager = ExtensionsManager::new();
+    let mut extensions_manager = ExtensionsManager::new(to_core.clone());
 
     // Load built-in extensions
     extensions_manager
-        .load_extensions_from_path(
-            &third_party_extensions_path.join("git"),
-            to_core.clone(),
-            STATE_ID,
-        )
+        .load_extensions_from_path(&third_party_extensions_path.join("git"), STATE_ID)
         .await;
 
     // Load third-party extensions
     extensions_manager
-        .load_extensions_from_path(
-            &built_in_extensions_path.join("git"),
-            to_core.clone(),
-            STATE_ID,
-        )
+        .load_extensions_from_path(&built_in_extensions_path.join("git"), STATE_ID)
         .await;
 
     // Create the StatesList

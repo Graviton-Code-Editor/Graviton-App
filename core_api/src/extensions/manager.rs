@@ -6,13 +6,17 @@ use std::path::{
 use std::sync::Arc;
 
 use cargo_toml::Value;
-use tokio::sync::mpsc::Sender;
+use tokio::sync::mpsc::{
+    channel,
+    Sender,
+};
 use tokio::sync::Mutex as AsyncMutex;
 
 use crate::extensions::base::Extension;
 use crate::messaging::Messages;
 
 use super::base::ExtensionInfo;
+use super::client::ExtensionClient;
 
 // Each OS has a different file format for dynamic libraries
 #[cfg(unix)]
@@ -21,15 +25,24 @@ static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
 static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
 
 /// Manage a group of extensions
-#[derive(Default, Clone)]
+#[derive(Clone)]
 pub struct ExtensionsManager {
     pub extensions: Vec<LoadedExtension>,
+    pub sender: Sender<Messages>,
+}
+
+impl Default for ExtensionsManager {
+    fn default() -> Self {
+        let (to_core, _) = channel::<Messages>(1);
+        Self::new(to_core)
+    }
 }
 
 impl ExtensionsManager {
-    pub fn new() -> Self {
+    pub fn new(sender: Sender<Messages>) -> Self {
         Self {
             extensions: Vec::new(),
+            sender,
         }
     }
 
@@ -44,13 +57,13 @@ impl ExtensionsManager {
     pub async fn load_extensions_from_path(
         &mut self,
         path: &Path,
-        sender: Sender<Messages>,
         state_id: u8,
     ) -> &mut ExtensionsManager {
         let info = LoadedExtension::get_info_from_file(&path.join("Cargo.toml"));
 
         if let Some(info) = info {
-            tracing::info!("Loaded extension <{}> from it's manifest file", info.name);
+            let name = info.name.clone();
+            tracing::info!("Loaded extension <{}> from it's manifest file", name);
             self.extensions.push(LoadedExtension::FromFile {
                 info,
                 path: path.to_path_buf(),
@@ -69,10 +82,12 @@ impl ExtensionsManager {
                 ));
                 // Retrieve the entry function handler
                 let entry_func: libloading::Symbol<
-                    unsafe extern "C" fn(&ExtensionsManager, Sender<Messages>, u8) -> (),
+                    unsafe extern "C" fn(&ExtensionsManager, ExtensionClient, u8) -> (),
                 > = lib.get(b"entry").unwrap();
 
-                entry_func(self, sender, state_id);
+                let client = ExtensionClient::new(&name, self.sender.clone());
+
+                entry_func(self, client, state_id);
             }
         }
 

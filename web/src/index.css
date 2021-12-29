@@ -16,9 +16,8 @@ body,
   height: 100%;
 }
 
-
 .cm-editor * {
-  font-family: 'JetBrains Mono';
+  font-family: "JetBrains Mono";
 }
 
 * ::-webkit-scrollbar {
@@ -74,4 +73,3 @@ body,
 .DragLayer.vertical {
   cursor: col-resize;
 }
-

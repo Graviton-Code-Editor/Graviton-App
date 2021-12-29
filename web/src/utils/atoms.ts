@@ -67,4 +67,3 @@ export const showedStatusBarItem = atom<StatusBarItem[]>({
   key: "showedStatusBarItem",
   default: [],
 });
-//

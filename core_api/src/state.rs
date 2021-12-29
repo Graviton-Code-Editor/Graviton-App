@@ -271,7 +271,7 @@ mod tests {
 
     #[test]
     fn get_info() {
-        let mut manager = ExtensionsManager::new();
+        let mut manager = ExtensionsManager::default();
         manager.register("sample", get_sample_extension());
         let test_state = State::new(0, manager);
 

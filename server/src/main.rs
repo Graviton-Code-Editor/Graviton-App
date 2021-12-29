@@ -26,8 +26,8 @@ async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
     let from_core = Arc::new(AsyncMutex::new(from_core));
 
-    let extensions_manager = ExtensionsManager::new()
-        .load_extensions_from_path(Path::new("./dist/extensions/git"), to_core.clone(), 1)
+    let extensions_manager = ExtensionsManager::new(to_core.clone())
+        .load_extensions_from_path(Path::new("./dist/extensions/git"), 1)
         .await
         .to_owned();
 

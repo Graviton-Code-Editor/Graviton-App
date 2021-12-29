@@ -5,8 +5,11 @@ import { editors } from "../utils/atoms";
 /*
  * Easily retrieve the best matching editor
  */
-export default function useEditor(): (format: string) => typeof EditorTab | undefined  {
-    const loadedEditors = useRecoilValue(editors);
-    
-    return (format: string) => loadedEditors.find(editor => editor.isCompatible(format))
+export default function useEditor(): (
+  format: string
+) => typeof EditorTab | undefined {
+  const loadedEditors = useRecoilValue(editors);
+
+  return (format: string) =>
+    loadedEditors.find((editor) => editor.isCompatible(format));
 }

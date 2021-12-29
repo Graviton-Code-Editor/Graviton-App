@@ -62,20 +62,22 @@ class TextEditorTab extends EditorTab {
     };
 
     this.container = () => {
-      return <CodemirrorContainer
-      savedState={this.state}
-      initialContent={initialContent}
-      saveState={saveState}
-    />
-    }
+      return (
+        <CodemirrorContainer
+          savedState={this.state}
+          initialContent={initialContent}
+          saveState={saveState}
+        />
+      );
+    };
   }
   static isCompatible(format: string) {
-    switch(format) {
+    switch (format) {
       default:
-          return true
+        return true;
     }
   }
-  save(){
+  save() {
     return;
   }
 }

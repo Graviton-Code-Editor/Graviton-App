@@ -1,22 +1,21 @@
-use tokio::sync::mpsc::Sender;
-
+use crate::extensions::client::ExtensionClient;
 use crate::messaging::Messages;
 
 /// Dialog-like message
 #[allow(dead_code)]
 pub struct Popup {
-    id: u8,
+    id: String,
     title: String,
     content: String,
-    sender: Sender<Messages>,
+    client: ExtensionClient,
     state_id: u8,
 }
 
 impl Popup {
-    pub fn new(sender: Sender<Messages>, state_id: u8, title: &str, content: &str) -> Self {
+    pub fn new(mut client: ExtensionClient, state_id: u8, title: &str, content: &str) -> Self {
         Self {
-            id: 0,
-            sender,
+            id: client.get_id(),
+            client,
             state_id,
             title: title.to_string(),
             content: content.to_string(),
@@ -24,10 +23,10 @@ impl Popup {
     }
 
     pub async fn show(&self) {
-        self.sender
+        self.client
             .send(Messages::ShowPopup {
                 state_id: self.state_id,
-                popup_id: self.id,
+                popup_id: self.id.clone(),
                 title: self.title.clone(),
                 content: self.content.clone(),
             })

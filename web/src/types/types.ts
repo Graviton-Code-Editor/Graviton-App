@@ -1,8 +1,6 @@
 import { Panel } from "../modules/panel";
 import { Tab } from "../modules/tab";
 
-
-
 export interface FocusedTab {
   row: number;
   col: number;

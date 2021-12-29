@@ -100,9 +100,11 @@ mod tests {
         let rt = Runtime::new().unwrap();
 
         rt.block_on(async {
+            let (core_sender, _) = channel(1);
+
             // Sample StatesList
             let states = {
-                let sample_state = State::new(1, ExtensionsManager::default());
+                let sample_state = State::new(1, ExtensionsManager::new(core_sender.clone()));
 
                 // A StatesList with the previous state
                 let states = StatesList::new()
@@ -110,8 +112,6 @@ mod tests {
                     .with_state(sample_state);
                 Arc::new(Mutex::new(states))
             };
-
-            let (core_sender, _) = channel(1);
 
             // Crate the local handler
             let (_, client, _) = LocalHandler::new(states, core_sender);

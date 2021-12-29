@@ -29,14 +29,18 @@ pub enum Messages {
     },
     ShowPopup {
         state_id: u8,
-        popup_id: u8,
+        popup_id: String,
         content: String,
         title: String,
     },
     ShowStatusBarItem {
         state_id: u8,
-        statusbar_item_id: u8,
+        statusbar_item_id: String,
         label: String,
+    },
+    HideStatusBarItem {
+        state_id: u8,
+        statusbar_item_id: String,
     },
 }
 
@@ -47,6 +51,7 @@ impl Messages {
             Self::StateUpdated { state } => state.id,
             Self::ShowPopup { state_id, .. } => *state_id,
             Self::ShowStatusBarItem { state_id, .. } => *state_id,
+            Self::HideStatusBarItem { state_id, .. } => *state_id,
         }
     }
 }

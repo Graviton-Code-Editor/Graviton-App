@@ -3,44 +3,44 @@ import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
 import { javascript } from "@codemirror/lang-javascript";
 import { useTheme } from "styled-components";
 
-function getCodeMirrorThemeExtensions(theme: any){
+function getCodeMirrorThemeExtensions(theme: any) {
   return EditorView.theme({
     "&": {
       background: theme.elements.textEditor.background,
     },
     "& .ͼa": {
-      color: theme.elements.textEditor.keyword.color
+      color: theme.elements.textEditor.keyword.color,
     },
     "& .ͼf": {
-      color: theme.elements.textEditor.def.color
+      color: theme.elements.textEditor.def.color,
     },
     "& .ͼd, .ͼe": {
-      color: theme.elements.textEditor.string.color
+      color: theme.elements.textEditor.string.color,
     },
     "& .ͼk": {
-      color: theme.elements.textEditor.property.color
+      color: theme.elements.textEditor.property.color,
     },
     "& .ͼc": {
-      color: theme.elements.textEditor.number.color
+      color: theme.elements.textEditor.number.color,
     },
     "& .ͼl": {
-      color: theme.elements.textEditor.comment.color
+      color: theme.elements.textEditor.comment.color,
     },
     "& .ͼb": {
-      color: theme.elements.textEditor.atom.color
+      color: theme.elements.textEditor.atom.color,
     },
     "& .cm-gutters": {
-      'padding-left': '25px',
-      'user-select': 'none',
+      "padding-left": "25px",
+      "user-select": "none",
       background: theme.elements.textEditor.gutters.background,
-      border: 'none',
-      '& .cm-gutterElement':{
+      border: "none",
+      "& .cm-gutterElement": {
         color: theme.elements.textEditor.gutters.gutter.color,
       },
-      '& .cm-activeLineGutter': {
+      "& .cm-activeLineGutter": {
         color: theme.elements.textEditor.gutters.gutter.active.color,
-        background: 'transparent'
-      }
+        background: "transparent",
+      },
     },
     "& .cm-content": {
       color: theme.elements.textEditor.color,
@@ -52,20 +52,26 @@ function getCodeMirrorThemeExtensions(theme: any){
       "border-color": theme.elements.textEditor.color,
     },
     "& .cm-line": {
-      'line-height': '26px'
+      "line-height": "26px",
     },
     "& .cm-activeLine": {
-      background: theme.elements.textEditor.activeLine.background
+      background: theme.elements.textEditor.activeLine.background,
     },
     "& .cm-matchingBracket": {
-      background: theme.elements.textEditor.matchingBracket.background
-    }
-  })
+      background: theme.elements.textEditor.matchingBracket.background,
+    },
+  });
 }
 
-function defaultState({ initialValue, theme }: { initialValue: string, theme: any }): EditorState {
+function defaultState({
+  initialValue,
+  theme,
+}: {
+  initialValue: string;
+  theme: any;
+}): EditorState {
   return EditorState.create({
-    extensions: [basicSetup, javascript(), getCodeMirrorThemeExtensions(theme) ],
+    extensions: [basicSetup, javascript(), getCodeMirrorThemeExtensions(theme)],
     doc: initialValue,
   });
 }
@@ -104,7 +110,7 @@ export default function TextEditor({
           state ||
           defaultState({
             initialValue,
-            theme
+            theme,
           }),
         parent: ref.current,
         dispatch: (txs) => {
