@@ -1298,7 +1298,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "async-trait",
  "gveditor-core-api",
@@ -1318,7 +1318,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core-api"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [
  "async-trait",
  "cargo_toml",

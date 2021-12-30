@@ -1,6 +1,6 @@
 [package]
 name = "gveditor-core"
-version = "0.1.5"
+version = "0.1.6"
 description = "Graviton Core"
 authors = ["Marc Espín Sanz"]
 edition = "2021"
@@ -19,7 +19,7 @@ tokio = { version = "1.14.0", features = ["rt-multi-thread", "macros", "sync"]}
 jsonrpc-http-server = "18.0.0"
 jsonwebtoken = "7.2.0"
 home = "0.5.3"
-gveditor-core-api = { version = "0.1.5", path = "../core_api"}
+gveditor-core-api = { version = "0.1.6", path = "../core_api"}
 async-trait = "0.1.52"
 hyper-tungstenite = "0.5.0"
 url = "2.2.2"
