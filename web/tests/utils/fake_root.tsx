@@ -1,4 +1,4 @@
-import RecoilExternalState from "../../src/components/ExternalState";
+import Recoilnexus from "recoil-nexus";
 import { clientState } from "../../src/utils/atoms";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import React, { PropsWithChildren, useEffect } from "react";
@@ -18,7 +18,7 @@ function RootRenderer({ children }: PropsWithChildren<any>) {
 export default function FakeRoot({ children }: PropsWithChildren<any>) {
   return (
     <RecoilRoot>
-      <RecoilExternalState />
+      <Recoilnexus />
       <Theme>
         <RootRenderer>{children}</RootRenderer>
       </Theme>

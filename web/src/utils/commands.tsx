@@ -1,4 +1,4 @@
-import { setRecoil } from "../components/ExternalState";
+import { setRecoil } from "recoil-nexus";
 import { RemoteExplorer } from "../modules/remote_explorer";
 import { showedWindows } from "./atoms";
 

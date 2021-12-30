@@ -14,7 +14,7 @@ import {
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import RecoilExternalState, { setRecoil, useRecoil } from "./ExternalState";
+import RecoilNexus, { setRecoil, getRecoil } from "recoil-nexus";
 import { Tab, TabData } from "../modules/tab";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
@@ -124,7 +124,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
        * Display StatusBarItems
        */
       client.on("ShowStatusBarItem", (e: ShowStatusBarItem) => {
-        const val = useRecoil(showedStatusBarItem);
+        const val = getRecoil(showedStatusBarItem);
         const itemIfFound = val.find((item) => item.id === e.statusbar_item_id);
         if (itemIfFound != null) {
           setRecoil(itemIfFound.state, e);
@@ -179,7 +179,7 @@ function App() {
   return (
     <RecoilRoot>
       <StateRoot />
-      <RecoilExternalState />
+      <RecoilNexus />
       <Theme>
         <ClientRoot>
           <div>

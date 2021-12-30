@@ -2439,6 +2439,11 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
+recoil-nexus@^0.3.14:
+  version "0.3.14"
+  resolved "https://registry.yarnpkg.com/recoil-nexus/-/recoil-nexus-0.3.14.tgz#5f58f5f5d87727d7ba887558ce930d53fbcd293b"
+  integrity sha512-6WmnkJveqrj4hLl/pgMxw31LrY0/ZpcuDu8K+YBqnnmHGJAxHsbPrHjvbiPH0QI3Fkdlsya7reLtax3h2el7sQ==
+
 recoil@^0.5.0:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.5.2.tgz#61fecce3b4dc91127a595586cf7369e2811ba024"
