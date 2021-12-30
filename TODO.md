@@ -18,7 +18,7 @@
 - [x] Implement  ExtensionMessages
 - [ ] Make a Popup, StatusBarItem builder
 - [ ] Ability to close a popup, StatusBarItem from the extension
-- [ ] Random ID generator for the the modules
+- [x] Random ID generator for the the modules
 - [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 - [ ] Build git extension with `--release` when building the binary / installer
 - [ ] Make Graviton web decide what editor should be opened depending on the file format
@@ -27,6 +27,7 @@
 - [ ] Save `tracing`'s logs in a file (with `tracing_subscriber`)
 - [ ] Implement a Theme extensions 
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
+- [ ] Add a custom hook to easily open a tab 
 
 ### web
 - [ ] Make a web-based filesystem explorer component
