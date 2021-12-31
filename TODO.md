@@ -28,6 +28,8 @@
 - [ ] Implement a Theme extensions 
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
 - [ ] Add a custom hook to easily open a tab 
+- [ ] Ability to write files (XD)
+- [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
 
 ### web
 - [ ] Make a web-based filesystem explorer component
