@@ -1,6 +1,7 @@
 import TextEditor from "../components/TextEditor";
 import { EditorState } from "@codemirror/state";
 import EditorTab from "../modules/editor_tab";
+import { FileFormat } from "../utils/client";
 
 interface CodeMirrorContainerOptions {
   initialContent: string;
@@ -71,11 +72,11 @@ class TextEditorTab extends EditorTab {
       );
     };
   }
-  static isCompatible(format: string) {
-    switch (format) {
-      default:
-        return true;
-    }
+  /*
+   * Only open text files
+   */
+  static isCompatible(format: FileFormat) {
+    return format !== "Binary";
   }
   save() {
     return;

@@ -384,6 +384,15 @@
     "@codemirror/view" "^0.19.0"
     "@lezer/javascript" "^0.15.1"
 
+"@codemirror/lang-rust@^0.19.1":
+  version "0.19.1"
+  resolved "https://registry.yarnpkg.com/@codemirror/lang-rust/-/lang-rust-0.19.1.tgz#3ed1386bbc825ae5dbd09b28f31a9ee4ec0dae86"
+  integrity sha512-T/LzRC5bMPvkMg11kr/jnpScqsE68B+F0SYqjyQTzQ+666RhHJICDCSlk7wbIrJi/fagpBwvuAmo2LgQ8dcGsQ==
+  dependencies:
+    "@codemirror/highlight" "^0.19.0"
+    "@codemirror/language" "^0.19.0"
+    "@lezer/rust" "^0.15.0"
+
 "@codemirror/language@^0.19.0":
   version "0.19.7"
   resolved "https://registry.yarnpkg.com/@codemirror/language/-/language-0.19.7.tgz#9eef8e827692d93a701b18db9d46a42be34ecca6"
@@ -584,6 +593,13 @@
   integrity sha512-DEcLyhdmBxD1foQe7RegLrSlfS/XaTMGLkO5evkzHWAQKh/JnFWp7j7iNB7s2EpxzRrBCh0U+W7JDCeFhv2mng==
   dependencies:
     "@lezer/common" "^0.15.0"
+
+"@lezer/rust@^0.15.0":
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/@lezer/rust/-/rust-0.15.0.tgz#ddf89cae9d01c46f583162cff4ac71d1b39c1c0f"
+  integrity sha512-vq7P0P9478Y4J0cKuwChNJjoZBNERyqBJ4wG94gYORKqXmUei/GtIAxu1Ei24BJRPrVHrg0NmC6daFd+i1re1Q==
+  dependencies:
+    "@lezer/lr" "^0.15.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

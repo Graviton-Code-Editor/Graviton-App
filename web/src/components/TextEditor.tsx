@@ -1,9 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
-import { javascript } from "@codemirror/lang-javascript";
 import { useTheme } from "styled-components";
 
-function getCodeMirrorThemeExtensions(theme: any) {
+// Language imports
+import { javascript } from "@codemirror/lang-javascript";
+import { rust } from "@codemirror/lang-rust";
+
+function getCodeMirrorTheme(theme: any) {
   return EditorView.theme({
     "&": {
       background: theme.elements.textEditor.background,
@@ -28,6 +31,9 @@ function getCodeMirrorThemeExtensions(theme: any) {
     },
     "& .ͼb": {
       color: theme.elements.textEditor.atom.color,
+    },
+    "& .ͼh": {
+      color: theme.elements.textEditor.variable.color,
     },
     "& .cm-gutters": {
       "padding-left": "25px",
@@ -63,6 +69,9 @@ function getCodeMirrorThemeExtensions(theme: any) {
   });
 }
 
+/*
+ * Initial state for the CodeMirror instance
+ */
 function defaultState({
   initialValue,
   theme,
@@ -71,7 +80,7 @@ function defaultState({
   theme: any;
 }): EditorState {
   return EditorState.create({
-    extensions: [basicSetup, javascript(), getCodeMirrorThemeExtensions(theme)],
+    extensions: [basicSetup, javascript(), rust(), getCodeMirrorTheme(theme)],
     doc: initialValue,
   });
 }

@@ -1,3 +1,4 @@
+import { FileFormat } from "../utils/client";
 import { Tab } from "./tab";
 
 export default class EditorTab extends Tab {
@@ -5,7 +6,7 @@ export default class EditorTab extends Tab {
     return;
   }
 
-  static isCompatible(format: string): boolean {
+  static isCompatible(format: FileFormat): boolean {
     switch (format) {
       default:
         return true;

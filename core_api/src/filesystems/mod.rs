@@ -47,6 +47,7 @@ pub fn get_format_from_path(path: &str) -> FileFormat {
     if let Some(ext) = Path::new(path).extension() {
         match ext.to_str().unwrap() {
             "rs" => FileFormat::Text("Rust".to_string()),
+            "js" => FileFormat::Text("JavaScript".to_string()),
             _ => FileFormat::Unknown,
         }
     } else {

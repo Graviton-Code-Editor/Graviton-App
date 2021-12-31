@@ -32,7 +32,7 @@ const theme = {
         color: "#bd93f9",
       },
       atom: {
-        color: "#bd93f9",
+        color: "#fdbd5d",
       },
       comment: {
         color: "#858a99",

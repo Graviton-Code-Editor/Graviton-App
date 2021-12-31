@@ -24,9 +24,14 @@ export interface DirItemInfo {
   is_file: boolean;
 }
 
+export interface FileFormatText {
+  Text: string;
+}
+
+export type FileFormat = "Unknown" | "Binary" | FileFormatText;
 export interface FileInfo {
   content: string;
-  format: string;
+  format: FileFormat;
 }
 
 export interface ExtensionInfo {
