@@ -3,7 +3,6 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Tab } from "../../modules/tab";
 import { focusedTab } from "../../utils/atoms";
-import TabContainer from "./TabContainer";
 import TabButton from "./TabButton";
 
 const TabsPanelContainer = styled.div`
@@ -93,9 +92,9 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
           const Container = tab.container;
           return (
             isSelected && (
-              <TabContainer key={tab.id}>
+              <div key={tab.id}>
                 <Container />
-              </TabContainer>
+              </div>
             )
           );
         })}

@@ -1,151 +1,119 @@
-import { useEffect, useRef, useState } from "react";
-import { EditorState, EditorView, basicSetup } from "@codemirror/basic-setup";
-import { useTheme } from "styled-components";
+import { useEffect, useRef } from "react";
+import { EditorView } from "@codemirror/basic-setup";
+import styled from "styled-components";
 
-// Language imports
-import { javascript } from "@codemirror/lang-javascript";
-import { rust } from "@codemirror/lang-rust";
-
-function getCodeMirrorTheme(theme: any) {
-  return EditorView.theme({
-    "&": {
-      background: theme.elements.textEditor.background,
-    },
-    "& .ͼa": {
-      color: theme.elements.textEditor.keyword.color,
-    },
-    "& .ͼf": {
-      color: theme.elements.textEditor.def.color,
-    },
-    "& .ͼd, .ͼe": {
-      color: theme.elements.textEditor.string.color,
-    },
-    "& .ͼk": {
-      color: theme.elements.textEditor.property.color,
-    },
-    "& .ͼc": {
-      color: theme.elements.textEditor.number.color,
-    },
-    "& .ͼl": {
-      color: theme.elements.textEditor.comment.color,
-    },
-    "& .ͼb": {
-      color: theme.elements.textEditor.atom.color,
-    },
-    "& .ͼh": {
-      color: theme.elements.textEditor.variable.color,
-    },
-    "& .cm-gutters": {
-      "padding-left": "25px",
-      "user-select": "none",
-      background: theme.elements.textEditor.gutters.background,
-      border: "none",
-      "& .cm-gutterElement": {
-        color: theme.elements.textEditor.gutters.gutter.color,
-      },
-      "& .cm-activeLineGutter": {
-        color: theme.elements.textEditor.gutters.gutter.active.color,
-        background: "transparent",
-      },
-    },
-    "& .cm-content": {
-      color: theme.elements.textEditor.color,
-    },
-    "& *": {
-      "caret-color": theme.elements.textEditor.color,
-    },
-    "& .cm-cursor": {
-      "border-color": theme.elements.textEditor.color,
-    },
-    "& .cm-line": {
-      "line-height": "26px",
-    },
-    "& .cm-activeLine": {
-      background: theme.elements.textEditor.activeLine.background,
-    },
-    "& .cm-matchingBracket": {
-      background: theme.elements.textEditor.matchingBracket.background,
-    },
-  });
-}
-
-/*
- * Initial state for the CodeMirror instance
- */
-function defaultState({
-  initialValue,
-  theme,
-}: {
-  initialValue: string;
-  theme: any;
-}): EditorState {
-  return EditorState.create({
-    extensions: [basicSetup, javascript(), rust(), getCodeMirrorTheme(theme)],
-    doc: initialValue,
-  });
-}
+// I could have used EditorView.theme(),
+// but since the theme is loaded from the StyledComponents provider,
+// it couldn't access the theme in a non-component context.
+// But, anyway, applying the theme via a styled-components component shouldn't give any issue
+const CodeMirrorStyler = styled.div`
+  & {
+    background: ${({ theme }) => theme.elements.textEditor.background};
+  }
+  & .ͼa {
+    color: ${({ theme }) => theme.elements.textEditor.keyword.color};
+  }
+  & .ͼf {
+    color: ${({ theme }) => theme.elements.textEditor.def.color};
+  }
+  & .ͼd,
+  .ͼe {
+    color: ${({ theme }) => theme.elements.textEditor.string.color};
+  }
+  & .ͼk {
+    color: ${({ theme }) => theme.elements.textEditor.property.color};
+  }
+  & .ͼc {
+    color: ${({ theme }) => theme.elements.textEditor.number.color};
+  }
+  & .ͼl {
+    color: ${({ theme }) => theme.elements.textEditor.comment.color};
+  }
+  & .ͼb {
+    color: ${({ theme }) => theme.elements.textEditor.atom.color};
+  }
+  & .ͼh {
+    color: ${({ theme }) => theme.elements.textEditor.variable.color};
+  }
+  & .cm-gutters {
+    padding-left: 25px;
+    user-select: none;
+    background: ${({ theme }) => theme.elements.textEditor.gutters.background};
+    border: none;
+  }
+  & .cm-gutterElement {
+    color: ${({ theme }) => theme.elements.textEditor.gutters.gutter.color};
+  }
+  & .cm-activeLineGutter {
+    color: ${({ theme }) =>
+      theme.elements.textEditor.gutters.gutter.active.color};
+    background: transparent;
+  }
+  & .cm-content {
+    color: ${({ theme }) => theme.elements.textEditor.color};
+  }
+  & * {
+    caret-color: ${({ theme }) => theme.elements.textEditor.color};
+  }
+  & .cm-cursor {
+    border-color: ${({ theme }) => theme.elements.textEditor.color};
+  }
+  & .cm-line {
+    line-height: 26px;
+  }
+  & .cm-activeLine {
+    background: ${({ theme }) =>
+      theme.elements.textEditor.activeLine.background};
+  }
+  & .cm-matchingBracket {
+    background: ${({ theme }) =>
+      theme.elements.textEditor.matchingBracket.background};
+  }
+`;
 
 interface TextEditorOptions {
-  state?: EditorState;
-  initialValue: string;
-  scrollPos: number;
-  onUpdate: (view: EditorView) => void;
-  onScroll: (scroll: number, view: EditorView) => void;
+  view: EditorView;
+  scrollHeight: number;
+  saveScroll: (height: number) => void;
 }
 
 export default function TextEditor({
-  state,
-  initialValue,
-  onUpdate,
-  scrollPos,
-  onScroll,
+  view,
+  saveScroll,
+  scrollHeight,
 }: TextEditorOptions) {
   const ref = useRef(null);
-  const theme = useTheme();
-  /* eslint-disable */
-  let [editorView, setEditorView] = useState<EditorView | null>(null);
 
+  /*
+   * Save the scroll position
+   */
   function onEventScroll() {
-    if (editorView != null) {
-      onScroll(editorView.scrollDOM.scrollTop, editorView);
-    }
+    saveScroll(view.scrollDOM.scrollTop);
   }
 
   useEffect(() => {
     if (ref.current) {
-      // Create the CodeMirror instance in the container
-      const editor = new EditorView({
-        state:
-          state ||
-          defaultState({
-            initialValue,
-            theme,
-          }),
-        parent: ref.current,
-        dispatch: (txs) => {
-          editor.update([txs]);
-          onUpdate(editor);
-        },
-      });
+      // Append the CM node to the new tab
+      const container = ref.current as HTMLElement;
+      container.appendChild(view.dom);
 
-      editorView = editor;
-      setEditorView(editor);
+      // Scroll to the saved position,
+      // No need to scroll if it's 0
+      if (scrollHeight != 0) {
+        view.scrollDOM.scrollTo(0, scrollHeight);
+      }
 
-      if (editor.scrollDOM != null) {
-        editor.scrollDOM.addEventListener("scroll", onEventScroll);
+      if (view.scrollDOM != null) {
+        view.scrollDOM.addEventListener("scroll", onEventScroll);
       }
 
       return () => {
-        editor.scrollDOM.removeEventListener("scroll", onEventScroll);
+        view.scrollDOM.removeEventListener("scroll", onEventScroll);
       };
     }
-  }, []);
+  }, [ref.current]);
 
-  useEffect(() => {
-    if (editorView && editorView.dom && editorView.dom.lastChild) {
-      const container = editorView.dom.lastChild as HTMLElement;
-      container.scrollTo(0, scrollPos);
-    }
-  }, [scrollPos]);
-  return <div ref={ref} style={{ height: "100%", width: "100%" }} />;
+  return (
+    <CodeMirrorStyler ref={ref} style={{ height: "100%", width: "100%" }} />
+  );
 }

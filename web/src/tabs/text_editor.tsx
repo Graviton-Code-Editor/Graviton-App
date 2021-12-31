@@ -2,50 +2,35 @@ import TextEditor from "../components/TextEditor";
 import { EditorState } from "@codemirror/state";
 import EditorTab from "../modules/editor_tab";
 import { FileFormat } from "../utils/client";
-
-interface CodeMirrorContainerOptions {
-  initialContent: string;
-  savedState: any;
-  saveState: (state: any) => void;
-}
-
-function CodemirrorContainer({
-  initialContent,
-  savedState,
-  saveState,
-}: CodeMirrorContainerOptions) {
-  return (
-    <TextEditor
-      scrollPos={savedState.scrollHeight}
-      state={savedState.codemirrorState}
-      onUpdate={(view) => {
-        saveState({
-          codemirrorState: view.state,
-        });
-      }}
-      onScroll={(scroll) => {
-        saveState({
-          scrollHeight: scroll,
-        });
-      }}
-      initialValue={initialContent}
-    />
-  );
-}
+import { basicSetup, EditorView } from "@codemirror/basic-setup";
+import { javascript } from "@codemirror/lang-javascript";
+import { rust } from "@codemirror/lang-rust";
 
 interface SavedState {
   scrollHeight: number;
-  codemirrorState: EditorState | null;
+}
+
+/*
+ * Initial state for the CodeMirror instance
+ */
+function defaultState({ initialValue }: { initialValue: string }): EditorState {
+  return EditorState.create({
+    extensions: [basicSetup, javascript(), rust()],
+    doc: initialValue,
+  });
 }
 
 /**
  * A tab that displays a CodeMirror editor inside it
  */
 class TextEditorTab extends EditorTab {
+  // Tab's state
   private state: SavedState = {
     scrollHeight: 0,
-    codemirrorState: null,
   };
+
+  // CodeMirror instance
+  private view: EditorView;
 
   /**
    *
@@ -55,23 +40,23 @@ class TextEditorTab extends EditorTab {
   constructor(path: string, initialContent: string) {
     super(path, initialContent);
 
-    const saveState = (state: SavedState) => {
-      this.state = {
-        ...this.state,
-        ...state,
-      };
-    };
+    this.view = new EditorView({
+      state: defaultState({
+        initialValue: initialContent,
+      }),
+    });
 
     this.container = () => {
       return (
-        <CodemirrorContainer
-          savedState={this.state}
-          initialContent={initialContent}
-          saveState={saveState}
+        <TextEditor
+          view={this.view}
+          scrollHeight={this.state.scrollHeight}
+          saveScroll={(height) => (this.state.scrollHeight = height)}
         />
       );
     };
   }
+
   /*
    * Only open text files
    */
