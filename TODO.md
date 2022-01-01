@@ -14,30 +14,31 @@
 - [x] Think about using CORS to maximize security of Core
 - [x] Setup CI
 - [ ] Setup CD (daily beta releases)
-- [ ] State shouldn't have a global `opened_tabs` array but insted opened_tabs per folder
+- [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Implement  ExtensionMessages
 - [ ] Make a Popup, StatusBarItem builder
-- [ ] Ability to close a popup, StatusBarItem from the extension
+- [ ] Ability to close a popup from the extension
 - [x] Random ID generator for the the modules
 - [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 - [ ] Build git extension with `--release` when building the binary / installer
-- [ ] Make Graviton web decide what editor should be opened depending on the file format
+- [x] Make Graviton web decide what editor should be opened depending on the file format
 - [x] Create StatusBarItem module
 - [x] Desktop: Load extensions from the <HOME_DIR>/.graviton/extensions/
 - [ ] Save `tracing`'s logs in a file (with `tracing_subscriber`)
-- [ ] Implement a Theme extensions 
+- [ ] Implement Theme extensions support
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
-- [ ] Add a custom hook to easily open a tab 
 - [ ] Ability to write files (XD)
-- [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
+
 
 ### web
-- [ ] Make a web-based filesystem explorer component
+- [ ] Make a web-based filesystem explorer component (WIP)
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
-- [ ] Make the popup module, WIP
+- [ ] Make the popup module (WIP)
 - [ ] Add file icons support
-- [ ] Configure CodeMirror 
-- [ ] Create a settings tab
+- [ ] Configure CodeMirror  (WIP)
+- [ ] Create a settings tab (WIP)
+- [ ] Add a custom hook to easily open a tab 
+- [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
 
 ### web_components
 - [ ] Publish to npm ?
