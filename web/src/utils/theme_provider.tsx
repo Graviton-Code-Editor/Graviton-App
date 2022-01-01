@@ -99,6 +99,9 @@ const theme = {
       text: {
         color: "rgb(255,255,255)",
       },
+      unSavedIndicator: {
+        background: "rgb(255,255,255)",
+      },
     },
     view: {
       background: "#222222",

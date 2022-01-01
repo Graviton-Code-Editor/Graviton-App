@@ -10,7 +10,12 @@ export interface TabData {
 export class Tab implements TabData {
   public id: string;
   public title: string;
-  public container: () => ReactElement;
+  public edited: boolean;
+  public container: ({
+    setEdited,
+  }: {
+    setEdited: (state: boolean) => void;
+  }) => ReactElement;
 
   /**
    *
@@ -19,6 +24,7 @@ export class Tab implements TabData {
   constructor(title: string) {
     this.id = Date.now().toString();
     this.title = title;
+    this.edited = false;
     this.container = () => <div />;
   }
 

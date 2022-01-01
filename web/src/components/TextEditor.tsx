@@ -111,7 +111,7 @@ export default function TextEditor({
         view.scrollDOM.removeEventListener("scroll", onEventScroll);
       };
     }
-  }, [ref.current]);
+  }, []);
 
   return (
     <CodeMirrorStyler ref={ref} style={{ height: "100%", width: "100%" }} />

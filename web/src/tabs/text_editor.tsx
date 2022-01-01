@@ -32,6 +32,8 @@ class TextEditorTab extends EditorTab {
   // CodeMirror instance
   private view: EditorView;
 
+  private setEdited: (state: boolean) => void;
+
   /**
    *
    * @param path - Path of the opened file
@@ -40,18 +42,38 @@ class TextEditorTab extends EditorTab {
   constructor(path: string, initialContent: string) {
     super(path, initialContent);
 
+    this.setEdited = () => {
+      console.error("Tried changing an unmounted tab");
+    };
+
     this.view = new EditorView({
       state: defaultState({
         initialValue: initialContent,
       }),
+      dispatch: (tx) => {
+        if (tx.docChanged) setEdited(true);
+        this.view.update([tx]);
+      },
     });
 
-    this.container = () => {
+    const saveScroll = (height: number) => {
+      this.state.scrollHeight = height;
+    };
+
+    const setEdited = (state: boolean) => {
+      if (this.edited != state) {
+        this.setEdited(state);
+      }
+      this.edited = state;
+    };
+
+    this.container = ({ setEdited }) => {
+      this.setEdited = setEdited;
       return (
         <TextEditor
           view={this.view}
           scrollHeight={this.state.scrollHeight}
-          saveScroll={(height) => (this.state.scrollHeight = height)}
+          saveScroll={saveScroll}
         />
       );
     };
