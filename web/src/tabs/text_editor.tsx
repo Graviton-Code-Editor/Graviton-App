@@ -68,8 +68,8 @@ class TextEditorTab extends EditorTab {
    * @param path - Path of the opened file
    * @param initialContent - Current content of the file
    */
-  constructor(path: string, initialContent: string) {
-    super(path, initialContent);
+  constructor(filename: string, path: string, initialContent: string) {
+    super(filename, path, initialContent);
     this.path = path;
 
     this.setEditedComp = () => {

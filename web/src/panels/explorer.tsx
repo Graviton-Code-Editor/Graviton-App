@@ -22,7 +22,7 @@ function ExplorerPanelContainer() {
             const editor = getEditor(fileContent.Ok.format);
             // Make sure a compatible editor was found
             if (editor != null) {
-              const newTab = new editor(item.path, content);
+              const newTab = new editor(item.name, item.path, content);
               openTab(newTab);
             } else {
               // Handle error

@@ -10,7 +10,7 @@ export default class EditorTab extends Tab {
   }
 
   /* eslint-disable */
-  constructor(path: string, initialContent: string) {
-    super(path);
+  constructor(filename: string, path: string, initialContent: string) {
+    super(filename);
   }
 }
