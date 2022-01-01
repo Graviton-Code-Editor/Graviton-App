@@ -1,15 +1,16 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/FilesystemExplorer";
 import { Panel } from "../modules/panel";
-import { clientState, openedFolders, openedTabsState } from "../utils/atoms";
+import { clientState, openedFolders } from "../utils/atoms";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
+import useTabs from "../hooks/useTabs";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
-  const [tabs, setTabs] = useRecoilState(openedTabsState);
+  const [openTab] = useTabs();
   const getEditor = useEditor();
 
   async function openFile(item: TreeItemInfo) {
@@ -22,8 +23,7 @@ function ExplorerPanelContainer() {
             // Make sure a compatible editor was found
             if (editor != null) {
               const newTab = new editor(item.path, content);
-              tabs[0][0].push(newTab);
-              setTabs([...tabs]);
+              openTab(newTab);
             } else {
               // Handle error
             }

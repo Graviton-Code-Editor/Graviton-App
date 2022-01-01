@@ -5,6 +5,7 @@ export interface FocusedTab {
   row: number;
   col: number;
   id: string | null;
+  tab: Tab | null;
 }
 
 export interface PanelState {

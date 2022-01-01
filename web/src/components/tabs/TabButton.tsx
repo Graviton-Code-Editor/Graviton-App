@@ -68,6 +68,7 @@ interface TabButtonOptions {
   isEdited: boolean;
   select: () => void;
   close: () => void;
+  save: () => void;
 }
 
 export default function TabButton({
@@ -76,17 +77,23 @@ export default function TabButton({
   select,
   close,
   isEdited,
+  save,
 }: TabButtonOptions) {
   function closeTab(event: MouseEvent) {
     event.stopPropagation();
     close();
   }
 
+  function saveTab(event: MouseEvent) {
+    event.stopPropagation();
+    save();
+  }
+
   return (
     <TabButtonStyle className={isSelected && "selected"} onClick={select}>
       <p>{title}</p>
       {isEdited ? (
-        <UnSavedIndicator className="indicator" onClick={closeTab} />
+        <UnSavedIndicator className="indicator" onClick={saveTab} />
       ) : (
         <button onClick={closeTab}>
           <ReactSVG src="/icons/close_cross.svg" />

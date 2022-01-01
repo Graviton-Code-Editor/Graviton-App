@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Tab } from "../../modules/tab";
@@ -48,28 +48,33 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
   tabs.forEach((tab) => tabsStates.set(tab.id, tab.edited));
   const [states, setStates] = useState(tabsStates);
 
-  // If there isn't any tab opened then set the selected tab to null
-  if (tabs.length === 0 && selectedTabID != null) {
-    setSelectedTabID(null);
-  }
+  useEffect(() => {
+    // If there isn't any tab opened then set the selected tab to null
+    if (tabs.length === 0 && selectedTabID != null) {
+      selectTab(null);
+    }
 
-  // If there is not selected tab but there exists one, select it
-  if (selectedTabID == null && tabs.length > 0) {
-    setSelectedTabID(tabs[0].id);
-  }
+    // Select the first Tab as fallback
+    if (tabs.length > 0 && selectedTabID == null) {
+      selectTab(tabs[0]);
+    }
+  }, [tabs, selectedTabID]);
 
   /*
    * Focused the tab by the specified ID
    */
-  function selectTab(id: string) {
+  function selectTab(tab: Tab | null) {
+    const tabID = tab ? tab.id : null;
+
     // Update the panel state
-    setSelectedTabID(id);
+    setSelectedTabID(tabID);
 
     // Focus the tab
     setFocusedTab({
       col,
       row,
-      id,
+      id: tabID,
+      tab,
     });
   }
 
@@ -78,8 +83,15 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
    */
   function removeTab(tab: Tab, index: number) {
     tab.close();
-    setSelectedTabID(null);
+    if (selectedTabID === tab.id) setSelectedTabID(null);
     close(index);
+  }
+
+  /*
+   * Save the current tab
+   */
+  function saveTab(tab: Tab) {
+    tab.save();
   }
 
   return (
@@ -94,8 +106,9 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
               title={tab.title}
               isEdited={isEdited}
               isSelected={isSelected}
-              select={() => selectTab(tab.id)}
+              select={() => selectTab(tab)}
               close={() => removeTab(tab, i)}
+              save={() => saveTab(tab)}
             />
           );
         })}
@@ -111,6 +124,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
               return new Map(states);
             });
           };
+
           return (
             isSelected && (
               <div key={tab.id}>

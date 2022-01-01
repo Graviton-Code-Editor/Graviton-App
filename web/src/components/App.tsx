@@ -7,6 +7,7 @@ import {
   panels,
   showedWindows,
   showedStatusBarItem,
+  focusedTab,
 } from "../utils/atoms";
 import {
   RecoilRoot,
@@ -84,6 +85,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
   const setTabs = useSetRecoilState(openedTabsState);
+  const currentFocusedTab = useRecoilValue(focusedTab);
 
   /**
    *  Register all prompts's shortcuts
@@ -157,6 +159,17 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
       return newValue;
     });
   });
+
+  /*
+   * Save the current focused tab
+   */
+  useHotkeys(
+    "ctrl+s",
+    () => {
+      currentFocusedTab.tab?.save();
+    },
+    [currentFocusedTab]
+  );
 
   function WindowsView() {
     if (useShowedWindows.length > 0) {

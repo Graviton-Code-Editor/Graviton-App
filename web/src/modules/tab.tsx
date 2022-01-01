@@ -36,6 +36,13 @@ export class Tab implements TabData {
   }
 
   /**
+   * Called when the tab is being saved
+   */
+  public save(): void {
+    return;
+  }
+
+  /**
    *
    * @param data - Construct a new Tab from some data
    * @returns A new Tab

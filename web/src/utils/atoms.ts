@@ -35,7 +35,8 @@ export const clientState = atom({
 // Current focused (clicked) tab
 export const focusedTab = atom<FocusedTab>({
   key: "focusedTab",
-  default: { row: 0, col: 0, id: null },
+  default: { row: 0, col: 0, id: null, tab: null },
+  dangerouslyAllowMutability: true,
 });
 
 // Registered prompts launchers

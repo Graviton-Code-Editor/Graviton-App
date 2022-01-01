@@ -1,10 +1,11 @@
-import { setRecoil, getRecoil } from "recoil-nexus";
+import { setRecoil } from "recoil-nexus";
 import PromptContainer, { Option } from "../components/PromptContainer";
 import { Prompt } from "../modules/prompt";
-import { openedFolders, openedTabsState } from "../utils/atoms";
+import { openedFolders } from "../utils/atoms";
 import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";
 import SettingsTab from "../tabs/settings";
+import useTabs from "../hooks/useTabs";
 
 function GlobalPromptContainer() {
   const options: Option[] = [
@@ -12,18 +13,16 @@ function GlobalPromptContainer() {
       label: "Open Welcome",
       onSelected({ closePrompt }) {
         closePrompt();
-        const tabs = getRecoil(openedTabsState);
-        tabs[0][0].push(new WelcomeTab());
-        setRecoil(openedTabsState, [...tabs]);
+        const [openTab] = useTabs();
+        openTab(new WelcomeTab());
       },
     },
     {
       label: "Open Settings",
       onSelected({ closePrompt }) {
         closePrompt();
-        const tabs = getRecoil(openedTabsState);
-        tabs[0][0].push(new SettingsTab());
-        setRecoil(openedTabsState, [...tabs]);
+        const [openTab] = useTabs();
+        openTab(new SettingsTab());
       },
     },
     {

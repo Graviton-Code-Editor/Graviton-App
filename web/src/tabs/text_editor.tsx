@@ -3,19 +3,44 @@ import { EditorState } from "@codemirror/state";
 import EditorTab from "../modules/editor_tab";
 import { FileFormat } from "../utils/client";
 import { basicSetup, EditorView } from "@codemirror/basic-setup";
+import { keymap, KeyBinding, Command } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { rust } from "@codemirror/lang-rust";
+import { clientState } from "../utils/atoms";
+import { getRecoil } from "recoil-nexus";
+import { Tab } from "../modules/tab";
 
 interface SavedState {
   scrollHeight: number;
 }
 
 /*
+ * Create a KeyMap extension
+ */
+function getKeymap(tab: Tab) {
+  // Save command
+  const save: Command = () => {
+    tab.save();
+    return false;
+  };
+
+  const conf: readonly KeyBinding[] = [{ key: "ctrl-s", run: save }];
+
+  return keymap.of(conf);
+}
+
+/*
  * Initial state for the CodeMirror instance
  */
-function defaultState({ initialValue }: { initialValue: string }): EditorState {
+function createDefaulState({
+  initialValue,
+  tab,
+}: {
+  initialValue: string;
+  tab: Tab;
+}): EditorState {
   return EditorState.create({
-    extensions: [basicSetup, javascript(), rust()],
+    extensions: [basicSetup, javascript(), rust(), getKeymap(tab)],
     doc: initialValue,
   });
 }
@@ -32,7 +57,11 @@ class TextEditorTab extends EditorTab {
   // CodeMirror instance
   private view: EditorView;
 
-  private setEdited: (state: boolean) => void;
+  // Update the tab component
+  public setEditedComp: (state: boolean) => void;
+
+  // Path to the file
+  private path: string;
 
   /**
    *
@@ -41,14 +70,16 @@ class TextEditorTab extends EditorTab {
    */
   constructor(path: string, initialContent: string) {
     super(path, initialContent);
+    this.path = path;
 
-    this.setEdited = () => {
+    this.setEditedComp = () => {
       console.error("Tried changing an unmounted tab");
     };
 
     this.view = new EditorView({
-      state: defaultState({
+      state: createDefaulState({
         initialValue: initialContent,
+        tab: this,
       }),
       dispatch: (tx) => {
         if (tx.docChanged) setEdited(true);
@@ -68,7 +99,7 @@ class TextEditorTab extends EditorTab {
     };
 
     this.container = ({ setEdited }) => {
-      this.setEdited = setEdited;
+      this.setEditedComp = setEdited;
       return (
         <TextEditor
           view={this.view}
@@ -90,7 +121,24 @@ class TextEditorTab extends EditorTab {
   static isCompatible(format: FileFormat) {
     return format !== "Binary";
   }
-  save() {
+
+  /*
+   * Shortcut to update the tab's state
+   */
+  public setEdited(state: boolean) {
+    if (this.edited != state) {
+      this.setEditedComp(state);
+    }
+    this.edited = state;
+  }
+
+  public async save() {
+    if (this.edited) {
+      const client = getRecoil(clientState);
+      const newContent = this.view.state.doc.sliceString(0);
+      await client.write_file_by_path(this.path, newContent, "local");
+      this.setEdited(false);
+    }
     return;
   }
 }
