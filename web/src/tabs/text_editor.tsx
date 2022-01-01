@@ -57,6 +57,11 @@ class TextEditorTab extends EditorTab {
     };
   }
 
+  public close(): void {
+    this.view.destroy();
+    return;
+  }
+
   /*
    * Only open text files
    */

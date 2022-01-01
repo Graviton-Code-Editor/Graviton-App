@@ -23,6 +23,13 @@ export class Tab implements TabData {
   }
 
   /**
+   * Called when the tab is closed
+   */
+  public close() {
+    return;
+  }
+
+  /**
    *
    * @param data - Construct a new Tab from some data
    * @returns A new Tab

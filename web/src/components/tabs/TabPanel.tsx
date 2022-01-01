@@ -65,7 +65,8 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
     });
   }
 
-  function removeTab(index: number) {
+  function removeTab(tab: Tab, index: number) {
+    tab.close();
     setSelectedTabID(null);
     close(index);
   }
@@ -81,7 +82,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
               title={tab.title}
               isSelected={isSelected}
               select={() => selectTab(tab.id)}
-              close={() => removeTab(i)}
+              close={() => removeTab(tab, i)}
             />
           );
         })}
