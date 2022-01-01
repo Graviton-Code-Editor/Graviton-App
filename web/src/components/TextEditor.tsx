@@ -69,6 +69,11 @@ const CodeMirrorStyler = styled.div`
     background: ${({ theme }) =>
       theme.elements.textEditor.matchingBracket.background};
   }
+  & .cm-selectionBackground {
+    background: ${({ theme }) =>
+      theme.elements.textEditor.selection.background} !important;
+    border-radius: 2px;
+  }
 `;
 
 interface TextEditorOptions {

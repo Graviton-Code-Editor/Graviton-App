@@ -47,7 +47,10 @@ const theme = {
         },
       },
       matchingBracket: {
-        background: "rgba(255, 255, 255, 0.2);",
+        background: "rgba(255, 255, 255, 0.2)",
+      },
+      selection: {
+        background: "rgba(255, 255, 255, 0.1)",
       },
     },
     primaryButton: {

@@ -37,7 +37,7 @@
 - [ ] Add file icons support
 - [ ] Configure CodeMirror  (WIP)
 - [ ] Create a settings tab (WIP)
-- [ ] Add a custom hook to easily open a tab 
+- [x] Add a custom hook to easily open a tab 
 - [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
 
 ### web_components
