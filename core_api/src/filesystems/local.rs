@@ -30,6 +30,14 @@ impl Filesystem for LocalFilesystem {
             })
     }
 
+    /// Read a local file
+    fn write_file_by_path(&self, path: &str, content: &str) -> Result<(), Errors> {
+        fs::write(path, content).map_err(|err| match err.kind() {
+            ErrorKind::NotFound => Errors::Fs(FilesystemErrors::FileNotFound),
+            _ => Errors::Fs(FilesystemErrors::FileNotFound),
+        })
+    }
+
     // List a local directory
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors> {
         fs::read_dir(path)

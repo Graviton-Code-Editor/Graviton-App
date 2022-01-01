@@ -54,6 +54,23 @@ pub async fn read_file_by_path(
 
 /// Same as the JSON RPC Method
 #[tauri::command(async)]
+pub async fn write_file_by_path(
+    path: String,
+    content: String,
+    filesystem_name: String,
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+) -> RPCResult<Result<(), Errors>> {
+    let res =
+        tauri_state
+            .client
+            .write_file_by_path(path, content, filesystem_name, state_id, token);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
 pub async fn set_state_by_id(
     state_id: u8,
     state: State,

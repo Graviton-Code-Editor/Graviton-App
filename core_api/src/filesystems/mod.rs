@@ -20,6 +20,7 @@ pub enum FilesystemErrors {
 /// Filesystem interface
 pub trait Filesystem {
     fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors>;
+    fn write_file_by_path(&self, path: &str, content: &str) -> Result<(), Errors>;
     fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
 }
 

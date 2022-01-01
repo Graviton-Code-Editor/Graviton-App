@@ -117,6 +117,7 @@ fn open_tauri(
         .invoke_handler(tauri::generate_handler![
             methods::get_state_by_id,
             methods::list_dir_by_path,
+            methods::write_file_by_path,
             methods::read_file_by_path,
             methods::set_state_by_id,
             methods::get_ext_info_by_id,

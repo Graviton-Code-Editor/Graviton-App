@@ -46,6 +46,11 @@ export interface Client extends Emittery {
     path: string,
     fs: string
   ) => Promise<CoreResponse<FileInfo>>;
+  write_file_by_path: (
+    path: string,
+    content: string,
+    fs: string
+  ) => Promise<CoreResponse<never>>;
   list_dir_by_path: (
     path: string,
     fs: string
@@ -116,6 +121,24 @@ export class HTTPClient extends Emittery implements Client {
   ): Promise<CoreResponse<FileInfo>> {
     return this.rpc.call("read_file_by_path", [
       path,
+      filesystem_name,
+      this.config.state_id,
+      this.config.token,
+    ]);
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public write_file_by_path(
+    path: string,
+    content: string,
+    filesystem_name: string
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("write_file_by_path", [
+      path,
+      content,
       filesystem_name,
       this.config.state_id,
       this.config.token,
@@ -241,6 +264,24 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
   ): Promise<CoreResponse<FileInfo>> {
     return invoke("read_file_by_path", {
       path,
+      filesystemName,
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  /*
+   * Implemented in the Core
+   * @JsonRpcMethod
+   */
+  public write_file_by_path(
+    path: string,
+    content: string,
+    filesystemName: string
+  ): Promise<CoreResponse<never>> {
+    return invoke("write_file_by_path", {
+      path,
+      content,
       filesystemName,
       stateId: this.config.state_id,
       token: this.config.token,

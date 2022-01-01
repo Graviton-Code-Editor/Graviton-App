@@ -131,6 +131,16 @@ pub trait RpcMethods {
         token: String,
     ) -> RPCResult<Result<FileInfo, Errors>>;
 
+    #[rpc(name = "write_file_by_path")]
+    fn write_file_by_path(
+        &self,
+        path: String,
+        content: String,
+        filesystem_name: String,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<(), Errors>>;
+
     #[rpc(name = "list_dir_by_path")]
     fn list_dir_by_path(
         &self,
@@ -205,6 +215,45 @@ impl RpcMethods for RpcManager {
                     state.notify_extensions(ExtensionMessages::ReadFile(
                         state_id,
                         filesystem_name,
+                        result.clone(),
+                    ));
+                    Ok(result)
+                } else {
+                    Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                }
+            } else {
+                Ok(Err(Errors::BadToken))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
+    }
+
+    /// Writes new content to the specified path
+    fn write_file_by_path(
+        &self,
+        path: String,
+        content: String,
+        filesystem_name: String,
+        state_id: u8,
+        token: String,
+    ) -> RPCResult<Result<(), Errors>> {
+        let states = self.states.lock().unwrap();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            let state = state.lock().unwrap();
+            // Make sure the token is valid
+            if state.has_token(&token) {
+                // Try to get the requested filesystem implementation
+                if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
+                    let result = filesystem
+                        .lock()
+                        .unwrap()
+                        .write_file_by_path(&path, &content);
+                    state.notify_extensions(ExtensionMessages::WriteFile(
+                        state_id,
+                        filesystem_name,
+                        content,
                         result.clone(),
                     ));
                     Ok(result)

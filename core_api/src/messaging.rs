@@ -60,6 +60,7 @@ impl Messages {
 pub enum ExtensionMessages {
     CoreMessage(Messages),
     ReadFile(u8, String, Result<FileInfo, Errors>),
+    WriteFile(u8, String, String, Result<(), Errors>),
     ListDir(u8, String, String, Result<Vec<DirItemInfo>, Errors>),
 }
 
@@ -68,6 +69,7 @@ impl ExtensionMessages {
         match self {
             Self::CoreMessage(msg) => msg.get_state_id(),
             Self::ReadFile(state_id, ..) => *state_id,
+            Self::WriteFile(state_id, ..) => *state_id,
             Self::ListDir(state_id, ..) => *state_id,
         }
     }
