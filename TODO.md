@@ -27,7 +27,7 @@
 - [ ] Save `tracing`'s logs in a file (with `tracing_subscriber`)
 - [ ] Implement Theme extensions support
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
-- [ ] Ability to write files (XD)
+- [x] Ability to write files (XD)
 
 
 ### web
