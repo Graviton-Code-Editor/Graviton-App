@@ -80,8 +80,11 @@ const theme = {
     },
     prompt: {
       option: {
-        background: "#222222",
+        background: "transparent",
         hover: {
+          background: "rgb(40,40,40)",
+        },
+        selected: {
           background: "rgb(40,40,40)",
         },
       },
