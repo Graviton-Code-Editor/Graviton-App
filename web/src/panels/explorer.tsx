@@ -7,6 +7,10 @@ import { clientState, openedFolders } from "../utils/atoms";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
+//@ts-ignore
+import { BorderedButton } from "@gveditor/web_components";
+import { openFolderPicker } from "../utils/commands";
+import { setRecoil } from "recoil-nexus";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
@@ -38,10 +42,23 @@ function ExplorerPanelContainer() {
     }
   }
 
+  async function openFolder() {
+    const openedFolder = await openFolderPicker("local");
+    // If a folder selected
+    if (openedFolder != null) {
+      // Clear all opened folders and open the selected one
+      setRecoil(openedFolders, [
+        {
+          path: openedFolder,
+        },
+      ]);
+    }
+  }
+
   const folders = useRecoilValue(openedFolders);
 
   return (
-    <div style={{ height: "100%", width: "100%" }}>
+    <div style={{ height: "100%", paddingLeft: 5 }}>
       {folders.map(({ path }) => {
         // Note: path shouldn't really be the key and filesystem_name shouldn't be always local
         return (
@@ -53,6 +70,13 @@ function ExplorerPanelContainer() {
           />
         );
       })}
+      {folders.length === 0 && (
+        <>
+          <BorderedButton expanded={true} onClick={openFolder}>
+            Open folder
+          </BorderedButton>
+        </>
+      )}
     </div>
   );
 }

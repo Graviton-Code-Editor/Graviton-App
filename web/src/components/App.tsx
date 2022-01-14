@@ -196,7 +196,7 @@ function App() {
       <Theme>
         <ClientRoot>
           <div>
-            <SplitPane split="vertical" minSize={250}>
+            <SplitPane split="vertical" minSize={250} defaultSizes={[2, 10]}>
               <Panels />
               <Tabs />
             </SplitPane>

@@ -57,6 +57,13 @@ const theme = {
       background: "#222222",
       color: "rgb(255,255,255)",
     },
+    primaryButtonBordered: {
+      background: "#2c2c2c",
+      color: "rgb(255,255,255)",
+      hover: {
+        background: "#3a3a3a",
+      },
+    },
     primaryTitle: {
       color: "rgb(255,255,255)",
     },
