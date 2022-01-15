@@ -111,6 +111,9 @@ const theme = {
       },
       text: {
         color: "rgb(255,255,255)",
+        unfocused: {
+          color: "rgb(185,185,185)",
+        },
       },
       unSavedIndicator: {
         background: "rgb(255,255,255)",

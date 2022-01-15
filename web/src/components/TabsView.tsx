@@ -4,6 +4,22 @@ import styled from "styled-components";
 import { openedTabsState } from "../utils/atoms";
 import TabsPanel from "./tabs/TabPanel";
 
+const NoTabsOpenedMessageContainer = styled.div`
+  color: ${({ theme }) => theme.elements.tab.text.unfocused.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+function NoTabsOpenedMessage() {
+  return (
+    <NoTabsOpenedMessageContainer>
+      <span>Tip: Open the Global Prompt with 'Ctrl+P'</span>
+    </NoTabsOpenedMessageContainer>
+  );
+}
+
 const TabsContainer = styled.div`
   overflow: hidden;
   background: green;
@@ -59,6 +75,7 @@ function TabsView() {
           );
         })}
       </SplitPane>
+      {tabsPanels[0][0].length == 0 && <NoTabsOpenedMessage />}
     </TabsContainer>
   );
 }
