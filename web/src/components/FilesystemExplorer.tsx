@@ -40,18 +40,23 @@ const ExplorerItemContainer = styled.div<{
   &:hover {
     background: ${({ theme }) => theme.elements.explorer.item.hover.background};
   }
-  & > span {
-    ${({ isFile }) => isFile && "padding-left: 27px;"}
-  }
-  & svg {
+  & .arrow svg {
     margin-right: 7px;
     margin-left: 15px;
-    width: 7px;
+    margin-top: 2px;
+    width: 8px;
     transform: ${({ isOpened }) =>
-      isOpened ? " rotate(90deg)" : " rotate(0deg)"};
-    & > path {
+      isOpened ? " rotate(0deg)" : " rotate(-90deg)"};
+    & > rect {
+      fill: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
       stroke: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
     }
+  }
+  & .file svg {
+    width: 18px;
+    margin-right: 5px;
+    margin-top: 3px;
+    ${({ isFile }) => isFile && "padding-left: 27px;"}
   }
 `;
 
@@ -257,7 +262,16 @@ function FilesystemExplorer({
         isFile={itemInfo.isFile}
         isOpened={isOpened}
       >
-        {!itemInfo.isFile && <ReactSVG src="/icons/collapse_arrow.svg" />}
+        {!itemInfo.isFile && (
+          <ReactSVG src="/icons/collapse_arrow.svg" className="arrow" />
+        )}
+        {itemInfo.isFile ? (
+          <ReactSVG src="/icons/files/unknown.svg" className="file" />
+        ) : isOpened ? (
+          <ReactSVG src="/icons/files/folder_opened.svg" className="file" />
+        ) : (
+          <ReactSVG src="/icons/files/folder_closed.svg" className="file" />
+        )}
         <span>{itemInfo.name}</span>
       </ExplorerItemContainer>
     );
@@ -272,7 +286,7 @@ function FilesystemExplorer({
               itemCount={folderItems.length}
               width={width}
               height={height}
-              itemSize={30}
+              itemSize={26}
               overscanCount={10}
             >
               {ListItem}
