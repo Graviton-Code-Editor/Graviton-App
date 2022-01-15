@@ -53,10 +53,10 @@ const ExplorerItemContainer = styled.div<{
     }
   }
   & .file svg {
-    width: 18px;
-    margin-right: 5px;
+    width: 20px;
+    margin-right: 4px;
     margin-top: 3px;
-    ${({ isFile }) => isFile && "padding-left: 28px;"}
+    ${({ isFile }) => isFile && "padding-left: 29px;"}
   }
 `;
 
