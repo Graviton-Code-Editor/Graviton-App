@@ -261,6 +261,7 @@ function FilesystemExplorer({
         style={itemStyle}
         isFile={itemInfo.isFile}
         isOpened={isOpened}
+        title={itemInfo.path}
       >
         {!itemInfo.isFile && (
           <ReactSVG src="/icons/collapse_arrow.svg" className="arrow" />
