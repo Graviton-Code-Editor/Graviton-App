@@ -19,6 +19,16 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 
 **NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
 
+### 🏥 Rewrite Changes
+- Ditch ElectronJS in favor of Tauri
+- Move from [PuffinJS](https://github.com/PuffinJS/puffin) to React for the Web frontend
+- Core is declouped from the frontend itself
+- Extensions run in the core rather than in the same UI process
+- Third-party clients (desktop, mobile, etc) can be built upon the core
+- Core and Extensions are written in Rust rather than NodeJS (this is only used for the dev workflow)
+
+See [TODO](./TODO.md)
+
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
 | [gveditor-core](./core)       | Graviton core engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
@@ -35,9 +45,9 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 - No freezes or lags
 - Fast startup time
 - Low memory usage
-- Scalable through a consistent and good plugins API
+- Scalable through a consistent and dev-friendly plugins API
 - Flexible workspace configurations
-- Privacy
+- Respect privacy
 - Easy to use and pleasant UI
 
 ## 📣 Community
@@ -47,6 +57,8 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 - 💭 [Twitter](https://twitter.com/gravitoneditor)
 
 ## 🎁 Donating
+
+Feel free to donate in any way you want, if you want to support this project :)
 
 - BTC address: `1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6`
 - Solana address: `5GzDDXyzhB9zA8vSHuEow5mQJ6Tk3kC4Bn2T9dp6nX3U`
@@ -61,4 +73,4 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 - [Machou](http://github.com/Machou)
 - Cristina Piva
 
-wip. See [TODO](./TODO.md)
+MIT License

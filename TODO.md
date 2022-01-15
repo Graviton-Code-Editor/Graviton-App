@@ -19,7 +19,7 @@
 - [ ] Make a Popup, StatusBarItem builder
 - [ ] Ability to close a popup from the extension
 - [x] Random ID generator for the the modules
-- [ ] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
+- [x] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
 - [ ] Build git extension with `--release` when building the binary / installer
 - [x] Make Graviton web decide what editor should be opened depending on the file format
 - [x] Create StatusBarItem module
@@ -44,4 +44,4 @@
 - [ ] Publish to npm ?
 
 ### server
-- [ ] Use a random-generate token for it's state
+- [ ] Use a random-generated token for it's state
