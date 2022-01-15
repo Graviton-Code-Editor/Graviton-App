@@ -56,7 +56,7 @@ const ExplorerItemContainer = styled.div<{
     width: 18px;
     margin-right: 5px;
     margin-top: 3px;
-    ${({ isFile }) => isFile && "padding-left: 27px;"}
+    ${({ isFile }) => isFile && "padding-left: 28px;"}
   }
 `;
 
