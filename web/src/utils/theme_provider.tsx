@@ -139,7 +139,15 @@ const theme = {
         },
       },
     },
+    sidepanel: {
+      border: {
+        color: "rgba(48, 48, 48)",
+      },
+    },
     sidebar: {
+      border: {
+        color: "rgba(48, 48, 48)",
+      },
       button: {
         background: "transparent",
         fill: "white",
@@ -157,6 +165,14 @@ const theme = {
         color: "rgb(255,255,255)",
         hover: {
           background: "rgb(80, 80, 80)",
+        },
+      },
+    },
+    pageSideBar: {
+      button: {
+        background: "#222222",
+        hover: {
+          background: "#2c2c2c",
         },
       },
     },

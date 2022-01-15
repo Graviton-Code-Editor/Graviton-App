@@ -1,39 +1,48 @@
 import styled from "styled-components";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { Tab } from "../../modules/tab";
 import ExtensionsRoute from "./routes/extensions";
-import SideBar from "../../components/SideBar";
-//@ts-ignore
-import { Button } from "@gveditor/web_components";
+import PageSideBar, { SideBarButton } from "../../components/PageSideBar";
 import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/HorizontalView";
 import RouteView from "../../components/RouteView";
+import { useEffect } from "react";
 
 const SettingsTabContainerStyled = styled.div`
   padding: 10px;
 `;
 
 function SettingsTabContainer() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate("/extensions");
+  }, []);
+
   return (
     <SettingsTabContainerStyled>
-      <BrowserRouter>
-        <HorizontalView>
-          <SideBar>
-            <Link to="/extensions">
-              <Button>Extensions</Button>
-            </Link>
-            <Link to="/about">
-              <Button>About</Button>
-            </Link>
-          </SideBar>
-          <RouteView>
-            <Routes>
-              <Route path="/extensions" element={<ExtensionsRoute />} />
-              <Route path="/about" element={<AboutRoute />} />
-            </Routes>
-          </RouteView>
-        </HorizontalView>
-      </BrowserRouter>
+      <HorizontalView>
+        <PageSideBar>
+          <Link to="/extensions">
+            <SideBarButton>Extensions</SideBarButton>
+          </Link>
+          <Link to="/about">
+            <SideBarButton>About</SideBarButton>
+          </Link>
+        </PageSideBar>
+        <RouteView>
+          <Routes>
+            <Route path="/extensions" element={<ExtensionsRoute />} />
+            <Route path="/about" element={<AboutRoute />} />
+          </Routes>
+        </RouteView>
+      </HorizontalView>
     </SettingsTabContainerStyled>
   );
 }
@@ -44,7 +53,11 @@ function SettingsTabContainer() {
 class SettingsTab extends Tab {
   constructor() {
     super("Settings");
-    this.container = () => <SettingsTabContainer />;
+    this.container = () => (
+      <BrowserRouter>
+        <SettingsTabContainer />
+      </BrowserRouter>
+    );
   }
 }
 

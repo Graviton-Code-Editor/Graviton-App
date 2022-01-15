@@ -10,11 +10,15 @@ const PanelsContainer = styled.div`
   min-height: 100%;
   & > .sidebar {
     background: ${(props) => props.theme.tones.dark1};
+    border-right: 1px solid
+      ${({ theme }) => theme.elements.sidebar.border.color};
     & svg {
       --sidebarButtonFill: ${({ theme }) => theme.elements.sidebar.button.fill};
     }
   }
   & > .sidepanel {
+    border-bottom: 1px solid
+      ${({ theme }) => theme.elements.sidepanel.border.color};
     background: ${(props) => props.theme.tones.dark2};
     width: 100%;
   }

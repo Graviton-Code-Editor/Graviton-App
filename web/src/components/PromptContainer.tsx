@@ -126,7 +126,6 @@ export default function PromptContainer({ options }: PromptOptions) {
             useEffect(() => {
               if (isSelected && optionRef.current) {
                 const element = optionRef.current as HTMLElement;
-                console.log(element);
                 element.focus();
               }
             }, [isSelected]);
