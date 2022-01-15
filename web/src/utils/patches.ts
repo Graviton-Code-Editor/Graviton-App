@@ -11,4 +11,15 @@ export default function applyPatches() {
     },
     true
   );
+
+  /**
+   * Disable the browser's context menu
+   */
+  window.addEventListener(
+    "contextmenu",
+    (event: MouseEvent) => {
+      event.preventDefault();
+    },
+    true
+  );
 }
