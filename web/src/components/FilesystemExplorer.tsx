@@ -233,7 +233,7 @@ function FilesystemExplorer({
     const itemInfo = folderItems[index];
     const itemStyle = {
       ...style,
-      paddingLeft: itemInfo.depth * 10,
+      marginLeft: itemInfo.depth * 10,
     };
     const isOpened = isSubTreeByPathOpened(folderTree, itemInfo.path);
 
