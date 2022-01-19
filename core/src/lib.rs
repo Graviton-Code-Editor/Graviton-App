@@ -37,8 +37,9 @@ pub use {
 ///     # state::{
 ///     #    StatesList,
 ///     #    TokenFlags,
+///     #    MemoryReadWriter,
 ///     # },
-///     # State,
+///     # State
 ///  # };
 /// # use tokio::sync::{
 ///    # mpsc::channel,
@@ -51,7 +52,7 @@ pub use {
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
-///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone()));
+///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone()), Box::new(MemoryReadWriter));
 ///
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()
@@ -61,10 +62,10 @@ pub use {
 ///  };
 ///  
 ///  // Crate a HTTP TransportHandler and a configuration
-///  let http_handler = HTTPHandler::builder().build().wrap();
+///  let http_handler = HTTPHandler::builder().build();
 ///
 ///  // Create the configuration
-///  let config = Configuration::new(http_handler, to_core, from_core);
+///  let config = Configuration::new(Box::new(http_handler), to_core, from_core);
 ///
 ///  // Create a Core
 ///  let core = Core::new(config, states);

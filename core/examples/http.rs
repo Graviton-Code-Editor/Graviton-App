@@ -12,6 +12,7 @@ use gveditor_core::{
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{
+    MemoryReadWriter,
     StatesList,
     TokenFlags,
 };
@@ -25,7 +26,11 @@ async fn main() {
     let from_core = Arc::new(AsyncMutex::new(from_core));
 
     let states = {
-        let sample_state = State::new(1, ExtensionsManager::new(to_core.clone()));
+        let sample_state = State::new(
+            1,
+            ExtensionsManager::new(to_core.clone()),
+            Box::new(MemoryReadWriter),
+        );
 
         let states = StatesList::new()
             .with_tokens(&[TokenFlags::All("test".to_string())])

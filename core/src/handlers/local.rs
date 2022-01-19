@@ -85,7 +85,10 @@ mod tests {
     };
 
     use gveditor_core_api::extensions::manager::ExtensionsManager;
-    use gveditor_core_api::state::TokenFlags;
+    use gveditor_core_api::state::{
+        MemoryReadWriter,
+        TokenFlags,
+    };
     use gveditor_core_api::State;
 
     use tokio::runtime::Runtime;
@@ -104,7 +107,11 @@ mod tests {
 
             // Sample StatesList
             let states = {
-                let sample_state = State::new(1, ExtensionsManager::new(core_sender.clone()));
+                let sample_state = State::new(
+                    1,
+                    ExtensionsManager::new(core_sender.clone()),
+                    Box::new(MemoryReadWriter),
+                );
 
                 // A StatesList with the previous state
                 let states = StatesList::new()

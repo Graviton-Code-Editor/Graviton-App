@@ -18,6 +18,10 @@ use serde::{
 };
 use std::collections::HashMap;
 use std::fmt;
+use std::io::{
+    Read,
+    Write,
+};
 use std::sync::{
     Arc,
     Mutex,
@@ -83,9 +87,34 @@ impl StatesList {
     }
 }
 
-/// a Tab state
+/// A Tab state
 #[derive(Serialize, Deserialize, Clone, Debug)]
 struct Tab {}
+
+/// Group Read and Write traits
+pub trait ReadWriter: Write + Read {}
+impl<T: Write + Read> ReadWriter for T {}
+
+/// In-memory read and writer
+/// Useless for now
+#[derive(Clone)]
+pub struct MemoryReadWriter;
+
+impl Write for MemoryReadWriter {
+    fn write(&mut self, _buf: &[u8]) -> std::io::Result<usize> {
+        Ok(1)
+    }
+
+    fn flush(&mut self) -> std::io::Result<()> {
+        Ok(())
+    }
+}
+
+impl Read for MemoryReadWriter {
+    fn read(&mut self, _buf: &mut [u8]) -> std::io::Result<usize> {
+        Ok(1)
+    }
+}
 
 /// A state is like a small configuration, like a profile
 /// It stores what tabs do you have open, what extensions to load
@@ -96,6 +125,8 @@ pub struct State {
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
     #[serde(skip_serializing, skip_deserializing)]
     extensions_manager: ExtensionsManager,
+    #[serde(skip_serializing, skip_deserializing)]
+    read_writer: Option<Arc<Mutex<Box<dyn ReadWriter + Send>>>>,
     opened_tabs: Vec<Tab>,
     pub id: u8,
     tokens: Vec<String>,
@@ -126,15 +157,21 @@ impl Default for State {
             extensions_manager: ExtensionsManager::default(),
             opened_tabs: Vec::new(),
             tokens: Vec::new(),
+            read_writer: None,
         }
     }
 }
 
 impl State {
-    pub fn new(id: u8, extensions_manager: ExtensionsManager) -> Self {
+    pub fn new(
+        id: u8,
+        extensions_manager: ExtensionsManager,
+        read_writer: Box<dyn ReadWriter + Send>,
+    ) -> Self {
         State {
             id,
             extensions_manager,
+            read_writer: Some(Arc::new(Mutex::new(read_writer))),
             ..Default::default()
         }
     }
@@ -239,6 +276,7 @@ mod tests {
     };
     use crate::extensions::manager::ExtensionsManager;
     use crate::messaging::ExtensionMessages;
+    use crate::state::MemoryReadWriter;
 
     use super::State;
 
@@ -273,7 +311,7 @@ mod tests {
     fn get_info() {
         let mut manager = ExtensionsManager::default();
         manager.register("sample", get_sample_extension());
-        let test_state = State::new(0, manager);
+        let test_state = State::new(0, manager, Box::new(MemoryReadWriter));
 
         let ext_info = test_state.get_ext_run_info_by_id("sample");
         assert!(ext_info.is_ok());

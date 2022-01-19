@@ -347,7 +347,7 @@ mod tests {
             let from_core = Arc::new(AsyncMutex::new(from_core));
 
             let states = {
-                let sample_state = State::new(1, ExtensionsManager::default());
+                let sample_state = State::default();
 
                 let states = StatesList::new()
                     .with_tokens(&[TokenFlags::All("test".to_string())])
