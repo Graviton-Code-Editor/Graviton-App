@@ -14,7 +14,6 @@
 - [x] Think about using CORS to maximize security of Core
 - [x] Setup CI
 - [ ] Setup CD (daily beta releases)
-- [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Implement  ExtensionMessages
 - [ ] Make a Popup, StatusBarItem builder
 - [ ] Ability to close a popup from the extension
@@ -28,7 +27,9 @@
 - [ ] Implement Theme extensions support
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
 - [x] Ability to write files (XD)
-
+- [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
+- [x] Make it possible to persist states
+- [ ] Add tests for extensions loaded from shared libraries
 
 ### web
 - [ ] Make a web-based filesystem explorer component (WIP)
