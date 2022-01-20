@@ -1,7 +1,10 @@
 import { atom } from "recoil";
+import { getRecoil } from "recoil-nexus";
+import useEditor from "../hooks/useEditor";
 import EditorTab from "../modules/editor_tab";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
+import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
 import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
 import TextEditorTab from "../tabs/text_editor";
@@ -12,12 +15,69 @@ import {
   TabsPanels,
 } from "../types/types";
 import { Client } from "./client";
+import { StateData } from "./state";
+
+type TabDataList = Array<TabDataList | TabData> | TabData;
+type TabList<T> = Array<TabList<T> | T> | T;
+
+function tabToTabDataRecursively(val: TabList<Tab>): TabDataList {
+  if (Array.isArray(val)) {
+    return val.map(tabToTabDataRecursively);
+  } else {
+    return val.toJson();
+  }
+}
+
+export function tabDataToTabRecursively(
+  val: TabDataList
+): TabList<undefined | EditorTab | Tab> {
+  if (Array.isArray(val)) {
+    return val.map(tabDataToTabRecursively).filter(Boolean);
+  } else {
+    switch (val.tab_type) {
+      case "TextEditor": {
+        const getEditor = useEditor();
+        const editor = getEditor({ Text: "Rust" });
+        const data = val as TextEditorTabData;
+        if (editor != null) {
+          const tab = new editor(data.filename, data.path, data.content);
+          return tab;
+        }
+        break;
+      }
+      default:
+        return Tab.fromJson(val as BasicTabData);
+    }
+  }
+}
+
+function getAllStateData(): Omit<StateData, "id"> {
+  const opened_tabs = tabToTabDataRecursively(
+    getRecoil(openedTabsState)
+  ) as Array<Array<Array<TabData>>>;
+
+  // The core doesn't support multiple panels yet, because of this, the tabs are flatted for now
+  const tmp_opened_tabs = opened_tabs.flat().flat().flat() as any;
+
+  return {
+    opened_tabs: tmp_opened_tabs,
+  };
+}
 
 // Opened tabs
 export const openedTabsState = atom({
   key: "openedTabs",
   default: [[[]]] as TabsPanels,
   dangerouslyAllowMutability: true,
+  effects_UNSTABLE: [
+    ({ onSet }) => {
+      onSet(() => {
+        const data = getAllStateData();
+        const client = getRecoil(clientState);
+        client.set_state_by_id(data);
+      });
+    },
+  ],
 });
 
 // Opened panels

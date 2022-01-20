@@ -1,13 +1,24 @@
 import { ReactElement } from "react";
 
-export interface TabData {
+export interface TextEditorTabData {
+  tab_type: string;
+  path: string;
+  filesystem: string;
+  content: string;
+  filename: string;
+}
+
+export interface BasicTabData {
+  tab_type: string;
   title: string;
 }
+
+export type TabData = BasicTabData | TextEditorTabData;
 
 /**
  * Tab API
  */
-export class Tab implements TabData {
+export class Tab implements Omit<BasicTabData, "tab_type"> {
   public id: string;
   public title: string;
   public edited: boolean;
@@ -49,9 +60,22 @@ export class Tab implements TabData {
    *
    * @alpha
    */
-  public static fromJson(data: TabData): Tab {
+  public static fromJson(data: BasicTabData): Tab | undefined {
     const tab = new Tab(data.title);
 
     return tab;
+  }
+
+  /**
+   *
+   * @returns The tab's data
+   *
+   * @alpha
+   */
+  public toJson(): TabData {
+    return {
+      tab_type: "Basic",
+      title: this.title,
+    };
   }
 }

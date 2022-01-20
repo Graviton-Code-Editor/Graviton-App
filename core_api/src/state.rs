@@ -8,6 +8,8 @@ use crate::filesystems::{
     LocalFilesystem,
 };
 use crate::messaging::ExtensionMessages;
+pub use crate::state_persistors::memory::MemoryPersistor;
+use crate::state_persistors::Persistor;
 use crate::{
     Errors,
     ExtensionErrors,
@@ -18,10 +20,6 @@ use serde::{
 };
 use std::collections::HashMap;
 use std::fmt;
-use std::io::{
-    Read,
-    Write,
-};
 use std::sync::{
     Arc,
     Mutex,
@@ -71,7 +69,7 @@ impl StatesList {
         }
 
         self.states
-            .insert(state.id, Arc::new(Mutex::new(state.to_owned())));
+            .insert(state.data.id, Arc::new(Mutex::new(state.to_owned())));
 
         self
     }
@@ -87,56 +85,57 @@ impl StatesList {
     }
 }
 
-/// A Tab state
-#[derive(Serialize, Deserialize, Clone, Debug)]
-struct Tab {}
-
-/// Group Read and Write traits
-pub trait ReadWriter: Write + Read {}
-impl<T: Write + Read> ReadWriter for T {}
-
-/// In-memory read and writer
-/// Useless for now
-#[derive(Clone)]
-pub struct MemoryReadWriter;
-
-impl Write for MemoryReadWriter {
-    fn write(&mut self, _buf: &[u8]) -> std::io::Result<usize> {
-        Ok(1)
-    }
-
-    fn flush(&mut self) -> std::io::Result<()> {
-        Ok(())
-    }
+/// A Tab data
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(tag = "tab_type")]
+pub enum TabData {
+    // Text Editor tab
+    TextEditor {
+        path: String,
+        filesystem: String,
+        // It should save a piece-table like not the content, this way, the history could be retrieved too
+        content: String,
+        filename: String,
+    },
+    // Basic tab (e.g. Settings)
+    Basic {
+        title: String,
+    },
 }
 
-impl Read for MemoryReadWriter {
-    fn read(&mut self, _buf: &mut [u8]) -> std::io::Result<usize> {
-        Ok(1)
+/// The data of a state
+#[derive(Serialize, Deserialize, Clone, Debug)]
+pub struct StateData {
+    pub id: u8,
+    opened_tabs: Vec<TabData>,
+}
+
+impl Default for StateData {
+    fn default() -> Self {
+        Self {
+            id: 1,
+            opened_tabs: Vec::new(),
+        }
     }
 }
 
 /// A state is like a small configuration, like a profile
-/// It stores what tabs do you have open, what extensions to load
+/// It stores what tabs do you have open, what extensions are loaded, etc...
 #[allow(dead_code)]
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Clone)]
 pub struct State {
-    #[serde(skip_serializing, skip_deserializing)]
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
-    #[serde(skip_serializing, skip_deserializing)]
     extensions_manager: ExtensionsManager,
-    #[serde(skip_serializing, skip_deserializing)]
-    read_writer: Option<Arc<Mutex<Box<dyn ReadWriter + Send>>>>,
-    opened_tabs: Vec<Tab>,
-    pub id: u8,
+    persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
+    pub data: StateData,
     tokens: Vec<String>,
 }
 
 impl fmt::Debug for State {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("State")
-            .field("opened_tabs", &self.opened_tabs)
-            .field("id", &self.id)
+            .field("opened_tabs", &self.data.opened_tabs)
+            .field("id", &self.data.id)
             .finish()
     }
 }
@@ -144,6 +143,8 @@ impl fmt::Debug for State {
 impl Default for State {
     /// The default constructor will include:
     /// - LocalFilesystem
+    ///
+    /// But will not persist the state
     fn default() -> Self {
         let mut filesystems = HashMap::new();
 
@@ -152,12 +153,11 @@ impl Default for State {
         filesystems.insert("local".to_string(), Arc::new(Mutex::new(local_fs)));
 
         Self {
-            id: 1,
+            data: StateData::default(),
             filesystems,
             extensions_manager: ExtensionsManager::default(),
-            opened_tabs: Vec::new(),
             tokens: Vec::new(),
-            read_writer: None,
+            persistor: None,
         }
     }
 }
@@ -166,12 +166,15 @@ impl State {
     pub fn new(
         id: u8,
         extensions_manager: ExtensionsManager,
-        read_writer: Box<dyn ReadWriter + Send>,
+        mut persistor: Box<dyn Persistor + Send>,
     ) -> Self {
+        // Retrieve opened tabs from the persistor
+        let state = persistor.load();
+
         State {
-            id,
+            data: StateData { id, ..state },
             extensions_manager,
-            read_writer: Some(Arc::new(Mutex::new(read_writer))),
+            persistor: Some(Arc::new(Mutex::new(persistor))),
             ..Default::default()
         }
     }
@@ -262,6 +265,14 @@ impl State {
             })
             .collect::<Vec<String>>()
     }
+
+    pub fn update(&mut self, new_data: StateData) {
+        self.data.opened_tabs = new_data.opened_tabs;
+
+        if let Some(persistor) = &self.persistor {
+            persistor.lock().unwrap().save(&self.data);
+        }
+    }
 }
 
 // NOTE: It would be interesting to implement https://doc.rust-lang.org/std/ops/trait.AddAssign.html
@@ -276,7 +287,7 @@ mod tests {
     };
     use crate::extensions::manager::ExtensionsManager;
     use crate::messaging::ExtensionMessages;
-    use crate::state::MemoryReadWriter;
+    use crate::state::MemoryPersistor;
 
     use super::State;
 
@@ -311,7 +322,7 @@ mod tests {
     fn get_info() {
         let mut manager = ExtensionsManager::default();
         manager.register("sample", get_sample_extension());
-        let test_state = State::new(0, manager, Box::new(MemoryReadWriter));
+        let test_state = State::new(0, manager, Box::new(MemoryPersistor::new()));
 
         let ext_info = test_state.get_ext_run_info_by_id("sample");
         assert!(ext_info.is_ok());

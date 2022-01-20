@@ -11,11 +11,11 @@ use gveditor_core_api::messaging::{
     ExtensionMessages,
     Messages,
 };
-use gveditor_core_api::state::StatesList;
-use gveditor_core_api::{
-    Errors,
-    State,
+use gveditor_core_api::state::{
+    StateData,
+    StatesList,
 };
+use gveditor_core_api::Errors;
 use jsonrpc_derive::rpc;
 
 use std::sync::{
@@ -87,11 +87,12 @@ impl Server {
                     let states = states.lock().unwrap();
                     states.get_state_by_id(state_id)
                 };
+
                 if let Some(state) = state {
                     let handler = handler.lock().await;
                     // Send the loaded state to the handler
                     let message = Messages::StateUpdated {
-                        state: state.lock().unwrap().to_owned(),
+                        state_data: state.lock().unwrap().data.clone(),
                     };
                     handler.send(message).await;
 
@@ -116,11 +117,16 @@ pub type RPCResult<T> = jsonrpc_core::Result<T>;
 /// Definition of all JSON RPC Methods
 #[rpc]
 pub trait RpcMethods {
-    #[rpc(name = "get_state_by_id")]
-    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<State>>;
+    #[rpc(name = "get_state_data_by_id")]
+    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<StateData>>;
 
-    #[rpc(name = "set_state_by_id")]
-    fn set_state_by_id(&self, state_id: u8, state: State, token: String) -> RPCResult<()>;
+    #[rpc(name = "set_state_data_by_id")]
+    fn set_state_by_id(
+        &self,
+        state_id: u8,
+        state: StateData,
+        token: String,
+    ) -> RPCResult<Result<(), Errors>>;
 
     #[rpc(name = "read_file_by_path")]
     fn read_file_by_path(
@@ -174,13 +180,13 @@ pub struct RpcManager {
 /// Implementation of all JSON RPC methods
 impl RpcMethods for RpcManager {
     /// Return the state by the given ID if found
-    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<State>> {
+    fn get_state_by_id(&self, state_id: u8, token: String) -> RPCResult<Option<StateData>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {
             // Make sure the token is valid
             if state.lock().unwrap().has_token(&token) {
-                Ok(Some(state.lock().unwrap().to_owned()))
+                Ok(Some(state.lock().unwrap().data.clone()))
             } else {
                 Ok(None)
             }
@@ -190,8 +196,27 @@ impl RpcMethods for RpcManager {
     }
 
     /// Update an state
-    fn set_state_by_id(&self, _state_id: u8, _state: State, _token: String) -> RPCResult<()> {
-        todo!()
+    fn set_state_by_id(
+        &self,
+        state_id: u8,
+        new_state_data: StateData,
+        token: String,
+    ) -> RPCResult<Result<(), Errors>> {
+        let states = self.states.lock().unwrap();
+        // Try to get the requested state
+        if let Some(state) = states.get_state_by_id(state_id) {
+            let mut state = state.lock().unwrap();
+            // Make sure the token is valid
+            if state.has_token(&token) {
+                tracing::info!("Updated state by id <{}>", state.data.id);
+                state.update(new_state_data);
+                Ok(Ok(()))
+            } else {
+                Ok(Err(Errors::BadToken))
+            }
+        } else {
+            Ok(Err(Errors::StateNotFound))
+        }
     }
 
     /// Returns the content of a file

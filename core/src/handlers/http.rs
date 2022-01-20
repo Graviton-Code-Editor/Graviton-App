@@ -314,7 +314,6 @@ mod tests {
     };
     use std::time::Duration;
 
-    use gveditor_core_api::extensions::manager::ExtensionsManager;
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::State;
     use hyper_tungstenite::tungstenite::{

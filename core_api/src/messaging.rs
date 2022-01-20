@@ -7,10 +7,8 @@ use crate::filesystems::{
     DirItemInfo,
     FileInfo,
 };
-use crate::{
-    Errors,
-    State,
-};
+use crate::state::StateData;
+use crate::Errors;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(tag = "msg_type")]
@@ -25,7 +23,7 @@ pub enum Messages {
         state_id: u8,
     },
     StateUpdated {
-        state: State,
+        state_data: StateData,
     },
     ShowPopup {
         state_id: u8,
@@ -48,7 +46,7 @@ impl Messages {
     pub fn get_state_id(&self) -> u8 {
         match self {
             Self::ListenToState { state_id, .. } => *state_id,
-            Self::StateUpdated { state } => state.id,
+            Self::StateUpdated { state_data } => state_data.id,
             Self::ShowPopup { state_id, .. } => *state_id,
             Self::ShowStatusBarItem { state_id, .. } => *state_id,
             Self::HideStatusBarItem { state_id, .. } => *state_id,

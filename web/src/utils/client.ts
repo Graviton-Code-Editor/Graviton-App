@@ -41,7 +41,7 @@ export interface ExtensionInfo {
 
 export interface Client extends Emittery {
   get_state_by_id: () => Promise<StateData>;
-  set_state_by_id: (state: StateData) => Promise<void>;
+  set_state_by_id: (state: Omit<StateData, "id">) => Promise<void>;
   read_file_by_path: (
     path: string,
     fs: string
@@ -60,6 +60,7 @@ export interface Client extends Emittery {
   ) => Promise<CoreResponse<ExtensionInfo>>;
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
+  whenConnected: () => Promise<void>;
 }
 
 /*
@@ -89,6 +90,17 @@ export class HTTPClient extends Emittery implements Client {
   }
 
   /*
+   * Promise wrapper for `connected` event
+   */
+  public whenConnected() {
+    return new Promise<void>((resolve) => {
+      this.on("connected", () => {
+        resolve();
+      });
+    });
+  }
+
+  /*
    * Implemented in the Core
    * @JsonRpcMethod
    */
@@ -103,10 +115,10 @@ export class HTTPClient extends Emittery implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public set_state_by_id(state: StateData): Promise<void> {
+  public set_state_by_id(state_data: Omit<StateData, "id">): Promise<void> {
     return this.rpc.call("set_state_by_id", [
       this.config.state_id,
-      state,
+      state_data,
       this.config.token,
     ]);
   }
@@ -224,11 +236,13 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
       this.emit(payload.msg_type, payload as any);
     });
 
-    invoke("init_listener");
-
     setTimeout(async () => {
       this.emit("connected", null);
-    }, 1000);
+    }, 1);
+  }
+
+  public whenConnected() {
+    return Promise.resolve();
   }
 
   /*
@@ -246,10 +260,13 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public set_state_by_id(state: StateData): Promise<void> {
+  public set_state_by_id(state_data: Omit<StateData, "id">): Promise<void> {
     return invoke("set_state_by_id", {
       stateId: this.config.state_id,
-      state,
+      stateData: {
+        ...state_data,
+        id: this.config.state_id,
+      },
       token: this.config.token,
     });
   }

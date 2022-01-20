@@ -86,7 +86,7 @@ mod tests {
 
     use gveditor_core_api::extensions::manager::ExtensionsManager;
     use gveditor_core_api::state::{
-        MemoryReadWriter,
+        MemoryPersistor,
         TokenFlags,
     };
     use gveditor_core_api::State;
@@ -110,7 +110,7 @@ mod tests {
                 let sample_state = State::new(
                     1,
                     ExtensionsManager::new(core_sender.clone()),
-                    Box::new(MemoryReadWriter),
+                    Box::new(MemoryPersistor::new()),
                 );
 
                 // A StatesList with the previous state

@@ -37,7 +37,7 @@ pub use {
 ///     # state::{
 ///     #    StatesList,
 ///     #    TokenFlags,
-///     #    MemoryReadWriter,
+///     #    MemoryPersistor,
 ///     # },
 ///     # State
 ///  # };
@@ -52,7 +52,7 @@ pub use {
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
-///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone()), Box::new(MemoryReadWriter));
+///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone()), Box::new(MemoryPersistor::new()));
 ///
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()

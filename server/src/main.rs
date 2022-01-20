@@ -14,7 +14,7 @@ use gveditor_core::{
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{
-    MemoryReadWriter,
+    MemoryPersistor,
     StatesList,
     TokenFlags,
 };
@@ -33,7 +33,7 @@ async fn main() {
         .to_owned();
 
     let states = {
-        let sample_state = State::new(1, extensions_manager, Box::new(MemoryReadWriter));
+        let sample_state = State::new(1, extensions_manager, Box::new(MemoryPersistor::new()));
 
         let states = StatesList::new()
             .with_tokens(&[TokenFlags::All("test".to_string())])

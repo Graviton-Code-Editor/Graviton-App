@@ -205,9 +205,15 @@ function FilesystemExplorer({
         // handle error
       }
     });
-  }, []);
+  }, [initialRoute]); // InitialRoute
 
   function closeFolder(path: string) {
+    // Close the sub tree
+    const newFolderTree = removeSubTreeByPath(folderTree, path);
+    setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
+  }
+
+  function openFolder(path: string) {
     // Open the folder
     client.list_dir_by_path(path, filesystem_name).then((pathItems) => {
       if (pathItems.Ok) {
@@ -221,12 +227,6 @@ function FilesystemExplorer({
         // handle error
       }
     });
-  }
-
-  function openFolder(path: string) {
-    // Close the sub tree
-    const newFolderTree = removeSubTreeByPath(folderTree, path);
-    setFolderData([{ ...newFolderTree }, mapTree([], newFolderTree, 0)]);
   }
 
   function ListItem({ index, style }: { index: number; style: any }) {
@@ -246,10 +246,10 @@ function FilesystemExplorer({
       if (!itemInfo.isFile) {
         if (isOpened) {
           // Close itself
-          openFolder(itemInfo.path);
+          closeFolder(itemInfo.path);
         } else {
           // Open itself
-          closeFolder(itemInfo.path);
+          openFolder(itemInfo.path);
         }
       }
     }

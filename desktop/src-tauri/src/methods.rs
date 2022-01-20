@@ -4,10 +4,8 @@ use gveditor_core_api::filesystems::{
     DirItemInfo,
     FileInfo,
 };
-use gveditor_core_api::{
-    Errors,
-    State,
-};
+use gveditor_core_api::state::StateData;
+use gveditor_core_api::Errors;
 
 use crate::TauriState;
 
@@ -17,7 +15,7 @@ pub async fn get_state_by_id(
     state_id: u8,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
-) -> RPCResult<Option<State>> {
+) -> RPCResult<Option<StateData>> {
     let res = tauri_state.client.get_state_by_id(state_id, token.clone());
     Ok(res.await.unwrap())
 }
@@ -73,13 +71,14 @@ pub async fn write_file_by_path(
 #[tauri::command(async)]
 pub async fn set_state_by_id(
     state_id: u8,
-    state: State,
+    state_data: StateData,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
-) -> RPCResult<()> {
-    let res = tauri_state.client.set_state_by_id(state_id, state, token);
-    res.await.unwrap();
-    Ok(())
+) -> RPCResult<Result<(), Errors>> {
+    let res = tauri_state
+        .client
+        .set_state_by_id(state_id, state_data, token);
+    Ok(res.await.unwrap())
 }
 
 /// Same as the JSON RPC Method

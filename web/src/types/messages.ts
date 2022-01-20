@@ -15,5 +15,5 @@ export interface HideStatusBarItem extends BaseMessage {
 }
 
 export interface StateUpdated {
-  state: StateData;
+  state_data: StateData;
 }

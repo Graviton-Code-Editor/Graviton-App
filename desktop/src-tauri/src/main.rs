@@ -24,17 +24,16 @@ use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{
     StatesList,
-    TokenFlags, MemoryReadWriter,
+    TokenFlags,
 };
+use gveditor_core_api::state_persistors::file::FilePersistor;
 use gveditor_core_api::State;
+use std::fs;
+use std::fs::File;
 use std::path::PathBuf;
 use std::sync::{
     Arc,
     Mutex,
-};
-use std::{
-    fs,
-    thread,
 };
 use tauri::api::path::{
     resolve_path,
@@ -44,7 +43,6 @@ use tauri::utils::assets::EmbeddedAssets;
 use tauri::{
     Context,
     Manager,
-    Window,
 };
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::{
@@ -56,29 +54,6 @@ use tracing_subscriber::{
 /// The app backend state
 pub struct TauriState {
     client: Client,
-    receiver_from_handler: Arc<AsyncMutex<Receiver<Messages>>>,
-    sender_to_handler: Sender<Messages>,
-}
-
-/// Forward all the core events to the webview
-#[tauri::command]
-fn init_listener(window: Window, state: tauri::State<TauriState>) {
-    let receiver_from_handler = state.receiver_from_handler.clone();
-
-    // And every event from the core sent it to the webview
-    thread::spawn(move || {
-        let runtime = tokio::runtime::Runtime::new().unwrap();
-
-        runtime.block_on(async move {
-            let mut receiver_from_handler = receiver_from_handler.lock().await;
-
-            loop {
-                if let Some(msg) = receiver_from_handler.recv().await {
-                    window.emit("to_webview", msg).unwrap();
-                }
-            }
-        });
-    });
 }
 
 /// Launch the main window
@@ -97,23 +72,39 @@ fn open_tauri(
     receiver_from_handler: Receiver<Messages>,
 ) {
     let receiver_from_handler = Arc::new(AsyncMutex::new(receiver_from_handler));
+    let sender_to_handler = Arc::new(AsyncMutex::new(sender_to_handler));
 
     tauri::Builder::default()
-        .on_page_load(|window, _| {
-            let state: tauri::State<TauriState> = window.state();
-            let sender_to_handler = state.sender_to_handler.clone();
+        .setup(move |app| {
+            let receiver_from_handler = receiver_from_handler.clone();
+            let sender_to_handler = sender_to_handler.clone();
 
+            let window = app.get_window("main").unwrap();
+
+            // Forward messages from the webview to the core
             window.listen("to_core", move |event| {
                 let sender_to_handler = sender_to_handler.clone();
                 let msg: Messages = serde_json::from_str(event.payload().unwrap()).unwrap();
-                tokio::task::spawn(async move { sender_to_handler.send(msg).await });
+                tokio::task::spawn(async move {
+                    let sender_to_handler = sender_to_handler.lock().await;
+                    sender_to_handler.send(msg).await
+                });
             });
+
+            // Forward messages from the core to the webview
+            tokio::spawn(async move {
+                let mut receiver_from_handler = receiver_from_handler.lock().await;
+
+                loop {
+                    if let Some(msg) = receiver_from_handler.recv().await {
+                        window.emit("to_webview", msg).unwrap();
+                    }
+                }
+            });
+
+            Ok(())
         })
-        .manage(TauriState {
-            client,
-            receiver_from_handler,
-            sender_to_handler,
-        })
+        .manage(TauriState { client })
         .invoke_handler(tauri::generate_handler![
             methods::get_state_by_id,
             methods::list_dir_by_path,
@@ -121,11 +112,34 @@ fn open_tauri(
             methods::read_file_by_path,
             methods::set_state_by_id,
             methods::get_ext_info_by_id,
-            methods::get_ext_list_by_id,
-            init_listener
+            methods::get_ext_list_by_id
         ])
         .run(context)
         .expect("failed to run tauri application");
+}
+
+/// Returns the location of the settings file
+///
+/// # Arguments
+///
+/// * `context` - The Tauri Context
+///
+fn get_settings_path(context: &Context<EmbeddedAssets>) -> PathBuf {
+    let states_path = resolve_path(
+        context.config(),
+        context.package_info(),
+        ".graviton/states",
+        Some(BaseDirectory::Home),
+    )
+    .unwrap();
+
+    fs::create_dir_all(&states_path).ok();
+
+    let settings_file_path = states_path.join("settings.json");
+
+    File::create(&settings_file_path).unwrap();
+
+    settings_file_path
 }
 
 /// Returns the path where third-party extensions are installed and loaded from
@@ -189,7 +203,8 @@ async fn main() {
 
     let context = tauri::generate_context!("tauri.conf.json");
 
-    // Get the extensions paths
+    // Get the paths
+    let settings_file_path = get_settings_path(&context);
     let third_party_extensions_path = get_extensions_installation_path(&context);
     let built_in_extensions_path = get_built_in_extensions_path(&context);
 
@@ -210,7 +225,7 @@ async fn main() {
         let default_state = State::new(
             STATE_ID,
             extensions_manager,
-            Box::new(MemoryReadWriter),
+            Box::new(FilePersistor::new(settings_file_path)),
         );
         let states = StatesList::new()
             .with_tokens(&[TokenFlags::All(TOKEN.to_string())])

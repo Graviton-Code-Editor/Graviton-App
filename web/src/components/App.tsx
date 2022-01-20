@@ -8,6 +8,7 @@ import {
   showedWindows,
   showedStatusBarItem,
   focusedTab,
+  tabDataToTabRecursively,
 } from "../utils/atoms";
 import {
   RecoilRoot,
@@ -16,7 +17,6 @@ import {
   useSetRecoilState,
 } from "recoil";
 import RecoilNexus, { setRecoil, getRecoil } from "recoil-nexus";
-import { Tab, TabData } from "../modules/tab";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
 import Theme from "../utils/theme_provider";
@@ -34,6 +34,7 @@ import {
 } from "../types/messages";
 import StatusBarView from "./StatusBarView";
 import { StatusBarItem } from "../modules/statusbar_item";
+import { Tab } from "../modules/tab";
 
 /*
  * Retrieve the authentication token
@@ -59,9 +60,9 @@ function StateRoot() {
     getToken().then((token) => {
       if (token !== null) {
         const client = createClient(token);
+
         // Wait until it's connected
-        client.on("connected", () => {
-          client.listenToState();
+        client.whenConnected().then(() => {
           setClient(client);
           setPanels([
             {
@@ -101,14 +102,17 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
 
   useEffect(() => {
     if (client != null) {
+      client.listenToState();
+
       /**
        * Update the App state if a new state is received
        */
-      client.on("StateUpdated", ({ state }: StateUpdated) => {
+      client.on("StateUpdated", ({ state_data }: StateUpdated) => {
         // Convert all tab datas into Tab instances
-        const openedTabs = state.opened_tabs.map((tabData: TabData) =>
-          Tab.fromJson(tabData)
-        );
+        const openedTabs = tabDataToTabRecursively(
+          state_data.opened_tabs
+        ) as Tab[];
+
         // Open the tabs
         if (openedTabs.length > 0) {
           setTabs([[openedTabs]]);

@@ -60,9 +60,6 @@ class TextEditorTab extends EditorTab {
   // Update the tab component
   public setEditedComp: (state: boolean) => void;
 
-  // Path to the file
-  private path: string;
-
   /**
    *
    * @param path - Path of the opened file
@@ -70,7 +67,6 @@ class TextEditorTab extends EditorTab {
    */
   constructor(filename: string, path: string, initialContent: string) {
     super(filename, path, initialContent);
-    this.path = path;
 
     this.setEditedComp = () => {
       console.error("Tried changing an unmounted tab");
@@ -132,10 +128,14 @@ class TextEditorTab extends EditorTab {
     this.edited = state;
   }
 
+  public getContent(): string {
+    return this.view.state.doc.sliceString(0);
+  }
+
   public async save() {
     if (this.edited) {
       const client = getRecoil(clientState);
-      const newContent = this.view.state.doc.sliceString(0);
+      const newContent = this.getContent();
       await client.write_file_by_path(this.path, newContent, "local");
       this.setEdited(false);
     }
