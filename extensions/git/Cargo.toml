@@ -6,9 +6,6 @@ edition = "2021"
 [package.metadata.graviton]
 id = "git-for-graviton"
 
-[lib]
-crate-type = ["cdylib"]
-
 [dependencies]
 gveditor-core-api  = { path = "../../core_api"}
 git2 = "0.13.25"

@@ -46,6 +46,17 @@ impl ExtensionsManager {
         }
     }
 
+    pub async fn load_extension_from_entry(
+        &mut self,
+        entry: fn(&mut Self, ExtensionClient, u8),
+        info: ExtensionInfo,
+        state_id: u8,
+    ) {
+        let client = ExtensionClient::new(&info.name, self.sender.clone());
+        entry(self, client, state_id);
+        self.extensions.push(LoadedExtension::FromRuntime { info });
+    }
+
     /// Returns a vector of pointers to all extensions instances
     ///
     /// # Arguments
@@ -109,6 +120,9 @@ impl ExtensionsManager {
 /// Extension wrappers
 #[derive(Clone)]
 pub enum LoadedExtension {
+    FromRuntime {
+        info: ExtensionInfo,
+    },
     FromFile {
         info: ExtensionInfo,
         path: PathBuf,
@@ -122,10 +136,10 @@ pub enum LoadedExtension {
 
 impl fmt::Debug for LoadedExtension {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let name = if let LoadedExtension::FromFile { .. } = self {
-            "FromFile"
-        } else {
-            "FromExtension"
+        let name = match self {
+            LoadedExtension::FromFile { .. } => "FromFile",
+            LoadedExtension::FromRuntime { .. } => "FromRuntime",
+            LoadedExtension::FromExtension { .. } => "FromExtension",
         };
         f.debug_struct(name)
             .field("info", &self.get_info())
@@ -175,6 +189,7 @@ impl LoadedExtension {
     pub fn get_info(&self) -> ExtensionInfo {
         match self {
             Self::FromExtension { info, .. } => info.clone(),
+            Self::FromRuntime { info, .. } => info.clone(),
             Self::FromFile { info, .. } => info.clone(),
         }
     }

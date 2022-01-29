@@ -162,22 +162,6 @@ fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> PathBu
     extensions_installation_path
 }
 
-/// Returns the bundled path to the extensions directory
-///
-/// # Arguments
-///
-/// * `context` - The Tauri Context
-///
-fn get_built_in_extensions_path(context: &Context<EmbeddedAssets>) -> PathBuf {
-    resolve_path(
-        context.config(),
-        context.package_info(),
-        "dist/extensions",
-        Some(BaseDirectory::Resource),
-    )
-    .unwrap()
-}
-
 /// Setup the logger
 fn setup_logger() {
     let filter = EnvFilter::default()
@@ -206,7 +190,6 @@ async fn main() {
     // Get the paths
     let settings_file_path = get_settings_path(&context);
     let third_party_extensions_path = get_extensions_installation_path(&context);
-    let built_in_extensions_path = get_built_in_extensions_path(&context);
 
     let mut extensions_manager = ExtensionsManager::new(to_core.clone());
 
@@ -217,8 +200,14 @@ async fn main() {
 
     // Load built-in extensions
     extensions_manager
-        .load_extensions_from_path(&built_in_extensions_path.join("git"), STATE_ID)
+        .load_extension_from_entry(
+            git_for_graviton::entry,
+            git_for_graviton::get_info(),
+            STATE_ID,
+        )
         .await;
+
+    println!("{:?}", git_for_graviton::get_info());
 
     // Create the StatesList
     let states = {

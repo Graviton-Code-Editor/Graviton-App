@@ -59,10 +59,7 @@ impl GitExtension {
 
 impl Extension for GitExtension {
     fn get_info(&self) -> ExtensionInfo {
-        ExtensionInfo {
-            id: env!("CARGO_PKG_NAME").to_string(),
-            name: env!("CARGO_PKG_NAME").to_string(),
-        }
+        get_info()
     }
 
     fn init(&mut self) {
@@ -91,7 +88,6 @@ impl Extension for GitExtension {
     }
 }
 
-#[no_mangle]
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
     let (tx, rx) = channel::<ExtensionMessages>();
     let rx = Arc::new(Mutex::new(rx));
@@ -104,4 +100,11 @@ pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_
     });
     let parent_id = env!("CARGO_PKG_NAME");
     extensions.register(parent_id, plugin);
+}
+
+pub fn get_info() -> ExtensionInfo {
+    ExtensionInfo {
+        id: env!("CARGO_PKG_NAME").to_string(),
+        name: env!("CARGO_PKG_NAME").to_string(),
+    }
 }

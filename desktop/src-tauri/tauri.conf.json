@@ -19,9 +19,6 @@
         "./icons/icon.png",
         "./icons/icon.ico"
       ],
-      "resources": [
-        "dist"
-      ],
       "copyright": "Marc Espín Sanz",
       "category": "DeveloperTool",
       "shortDescription": "Code Editor",

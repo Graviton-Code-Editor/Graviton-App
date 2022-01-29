@@ -1,10 +1,9 @@
 {
   "private": true,
   "scripts": {
-    "dev_server": "jake build_git_extension dev_server",
-    "dev_desktop": "jake dev_web_components build_git_extension dev_desktop",
-    "build_extension": "jake build_git_extension",
-    "build_desktop": "jake build_git_extension build_desktop",
+    "dev_server": "jake dev_server",
+    "dev_desktop": "jake dev_web_components dev_desktop",
+    "build_desktop": "jake build_desktop",
     "test": "jake core_tests web_tests",
     "format": "jake format_core format_web",
     "lint": "jake lint_core"

@@ -1229,6 +1229,7 @@ dependencies = [
 name = "graviton"
 version = "0.1.0"
 dependencies = [
+ "git-for-graviton",
  "gveditor-core",
  "gveditor-core-api",
  "libloading",

@@ -1,6 +1,4 @@
 const { task, desc } = require('jake')
-const { copyFile, mkdir } = require('fs-extra')
-const rimraf = require('rimraf')
 const { spawn } = require('child_process')
 
 // Easily run commands
@@ -11,29 +9,6 @@ const run  = (what, args, where = './') => {
     })
 }
 
-const copy = async (from, to) => {
-    try {
-        await copyFile(from, to);
-    } catch {}
-}
-
-
-// Theses are all the build tasks by Graviton
-const distPaths = ['desktop/src-tauri', 'server']
-desc('Build the Git extension');
-task('build_git_extension', async function () {
-    await run('cargo', ['build'], './extensions/git')
-    for(const path of distPaths ){
-        rimraf.sync(`${path}/dist`)
-        await mkdir(`${path}/dist`)
-        await mkdir(`${path}/dist/extensions`)
-        await mkdir(`${path}/dist/extensions/git`)
-        await copy(`extensions/git/Cargo.toml`, `${path}/dist/extensions/git/Cargo.toml`)
-        await copy(`target/debug/git_for_graviton.dll`, `${path}/dist/extensions/git/git.dll`)
-        await copy(`target/debug/libgit_for_graviton.so`, `${path}/dist/extensions/git/git.so`)
-    }
-    
-});
 
 desc('Watch web_components for changes');
 task('dev_web_components', async function () {

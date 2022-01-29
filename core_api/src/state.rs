@@ -222,7 +222,9 @@ impl State {
         let result = extensions
             .iter()
             .find(|extension| {
-                if let LoadedExtension::FromFile { info, .. } = extension {
+                if let LoadedExtension::FromFile { info, .. }
+                | LoadedExtension::FromRuntime { info, .. } = extension
+                {
                     info.id == ext_id
                 } else {
                     false
@@ -257,7 +259,9 @@ impl State {
         extensions
             .iter()
             .filter_map(|extension| {
-                if let LoadedExtension::FromFile { info, .. } = extension {
+                if let LoadedExtension::FromFile { info, .. }
+                | LoadedExtension::FromRuntime { info, .. } = extension
+                {
                     Some(info.id.to_string())
                 } else {
                     None
