@@ -51,10 +51,11 @@ impl ExtensionsManager {
         entry: fn(&mut Self, ExtensionClient, u8),
         info: ExtensionInfo,
         state_id: u8,
-    ) {
+    ) -> &mut ExtensionsManager {
         let client = ExtensionClient::new(&info.name, self.sender.clone());
         entry(self, client, state_id);
         self.extensions.push(LoadedExtension::FromRuntime { info });
+        self
     }
 
     /// Returns a vector of pointers to all extensions instances

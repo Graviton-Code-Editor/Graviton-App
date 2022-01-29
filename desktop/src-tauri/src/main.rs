@@ -207,8 +207,6 @@ async fn main() {
         )
         .await;
 
-    println!("{:?}", git_for_graviton::get_info());
-
     // Create the StatesList
     let states = {
         let default_state = State::new(

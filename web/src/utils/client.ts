@@ -118,7 +118,10 @@ export class HTTPClient extends Emittery implements Client {
   public set_state_by_id(state_data: Omit<StateData, "id">): Promise<void> {
     return this.rpc.call("set_state_by_id", [
       this.config.state_id,
-      state_data,
+      {
+        ...state_data,
+        id: this.config.state_id,
+      },
       this.config.token,
     ]);
   }

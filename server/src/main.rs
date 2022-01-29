@@ -1,4 +1,3 @@
-use std::path::Path;
 use std::sync::{
     Arc,
     Mutex,
@@ -28,7 +27,11 @@ async fn main() {
     let from_core = Arc::new(AsyncMutex::new(from_core));
 
     let extensions_manager = ExtensionsManager::new(to_core.clone())
-        .load_extensions_from_path(Path::new("./dist/extensions/git"), 1)
+        .load_extension_from_entry(
+            git_for_graviton::entry,
+            git_for_graviton::get_info(),
+            1,
+        )
         .await
         .to_owned();
 
