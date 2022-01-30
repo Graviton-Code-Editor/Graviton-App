@@ -32,10 +32,13 @@
 - [ ] Add tests for extensions loaded from shared libraries
 
 ### web
+
+WIP = Work in progress, aka, exists but is not finished
+
 - [ ] Make a web-based filesystem explorer component (WIP)
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
 - [ ] Make the popup module (WIP)
-- [ ] Add file icons support
+- [ ] Add file icons support (WIP)
 - [ ] Configure CodeMirror  (WIP)
 - [ ] Create a settings tab (WIP)
 - [x] Add a custom hook to easily open a tab 
@@ -45,4 +48,4 @@
 - [ ] Publish to npm ?
 
 ### server
-- [ ] Use a random-generated token for it's state
+- [ ] Use a random-generated token for it's state ID
