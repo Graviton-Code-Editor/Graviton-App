@@ -149,7 +149,7 @@ function isSubTreeByPathOpened(tree: TreeItem, path: string): boolean {
         return;
       }
     }
-    if (path.startsWith(item_path)) {
+    if (path.startsWith(item_path) && res === false) {
       res = isSubTreeByPathOpened(tree.items[item_path], path);
       return;
     }
