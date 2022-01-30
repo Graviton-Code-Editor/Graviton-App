@@ -8,13 +8,13 @@ import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
 import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
 import TextEditorTab from "../tabs/text_editor";
+import { Client } from "../types/client";
 import {
   FocusedTab,
   FolderState,
   PanelState,
   TabsPanels,
 } from "../types/types";
-import { Client } from "./client";
 import { StateData } from "./state";
 
 type TabDataList = Array<TabDataList | TabData> | TabData;
@@ -57,7 +57,7 @@ function getAllStateData(): Omit<StateData, "id"> {
   ) as Array<Array<Array<TabData>>>;
 
   // The core doesn't support multiple panels yet, because of this, the tabs are flatted for now
-  const tmp_opened_tabs = opened_tabs.flat().flat().flat() as any;
+  const tmp_opened_tabs = opened_tabs.flat(3) as any;
 
   return {
     opened_tabs: tmp_opened_tabs,

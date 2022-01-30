@@ -1,4 +1,4 @@
-import { FileFormat } from "../utils/client";
+import { FileFormat } from "../types/client";
 import { Tab, TextEditorTabData } from "./tab";
 
 export default class EditorTab extends Tab {

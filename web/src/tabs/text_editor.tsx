@@ -1,7 +1,6 @@
 import TextEditor from "../components/TextEditor";
 import { EditorState } from "@codemirror/state";
 import EditorTab from "../modules/editor_tab";
-import { FileFormat } from "../utils/client";
 import { basicSetup, EditorView } from "@codemirror/basic-setup";
 import { keymap, KeyBinding, Command } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
@@ -9,6 +8,7 @@ import { rust } from "@codemirror/lang-rust";
 import { clientState } from "../utils/atoms";
 import { getRecoil } from "recoil-nexus";
 import { Tab } from "../modules/tab";
+import { FileFormat } from "../types/client";
 
 interface SavedState {
   scrollHeight: number;

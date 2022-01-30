@@ -6,8 +6,8 @@ import { clientState } from "../utils/atoms";
 import { FixedSizeList as List } from "react-window";
 //@ts-ignore
 import AutoSizer from "react-virtualized-auto-sizer";
-import { DirItemInfo } from "../utils/client";
 import { ReactSVG } from "react-svg";
+import { DirItemInfo } from "../types/client";
 
 const ExplorerContainer = styled.div`
   margin: 5px;

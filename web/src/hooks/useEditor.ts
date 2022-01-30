@@ -1,7 +1,7 @@
 import { getRecoil } from "recoil-nexus";
 import EditorTab from "../modules/editor_tab";
+import { FileFormat } from "../types/client";
 import { editors } from "../utils/atoms";
-import { FileFormat } from "../utils/client";
 
 /*
  * Easily retrieve the best matching editor
