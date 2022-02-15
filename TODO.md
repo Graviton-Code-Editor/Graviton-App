@@ -7,11 +7,12 @@
 - [ ] docs.rs: Document the Core JSON RPC and WebSockets API
 
 # core / core_api
+- [ ] Use deno as third-party extensions runner
 - [x] Make use of the native (OS-builtin) filesystem explorer to open folder and files
-- [ ] Also return the language codename or "unknown" when reading a file in the Core
+- [ ] Return the language codename or "unknown" when reading a file in the Core
 - [ ] Implement a workspace system
 - [ ] Implement a frontend-agnostic theme standard
-- [x] Think about using CORS to maximize security of Core
+- [x] Use CORS to maximize security of Core with HTTP transport
 - [x] Setup CI
 - [ ] Setup CD (daily beta releases)
 - [x] Implement  ExtensionMessages
@@ -19,7 +20,6 @@
 - [ ] Ability to close a popup from the extension
 - [x] Random ID generator for the the modules
 - [x] Ability to listen on core messages from any extension (tokio::sync::broadcast might be useful)
-- [ ] Build git extension with `--release` when building the binary / installer
 - [x] Make Graviton web decide what editor should be opened depending on the file format
 - [x] Create StatusBarItem module
 - [x] Desktop: Load extensions from the <HOME_DIR>/.graviton/extensions/
@@ -29,7 +29,6 @@
 - [x] Ability to write files (XD)
 - [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Make it possible to persist states
-- [ ] Add tests for extensions loaded from shared libraries
 
 ### web
 
