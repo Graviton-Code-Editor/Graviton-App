@@ -63,7 +63,6 @@ impl ExtensionsManager {
     /// # Arguments
     ///
     /// * `path`     - The directory path from where to load the extensions
-    /// * `sender`   -  A mpsc sender to communicate with the core
     /// * `state_id` - The State ID in whidh it was loaded
     ///
     pub async fn load_extensions_from_path(

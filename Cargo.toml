@@ -2,6 +2,7 @@
 members = [
    "core",
    "core_api",
+   "core_deno",
    "desktop/src-tauri",
    "extensions/git",
    "server"
