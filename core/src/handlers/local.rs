@@ -98,42 +98,38 @@ mod tests {
 
     use super::LocalHandler;
 
-    #[test]
-    fn json_rpc_works() {
-        let rt = Runtime::new().unwrap();
+    #[tokio::test]
+    async fn json_rpc_works() {
+        let (core_sender, _) = channel(1);
 
-        rt.block_on(async {
-            let (core_sender, _) = channel(1);
+        // Sample StatesList
+        let states = {
+            let sample_state = State::new(
+                1,
+                ExtensionsManager::new(core_sender.clone()),
+                Box::new(MemoryPersistor::new()),
+            );
 
-            // Sample StatesList
-            let states = {
-                let sample_state = State::new(
-                    1,
-                    ExtensionsManager::new(core_sender.clone()),
-                    Box::new(MemoryPersistor::new()),
-                );
+            // A StatesList with the previous state
+            let states = StatesList::new()
+                .with_tokens(&[TokenFlags::All("test_token".to_string())])
+                .with_state(sample_state);
+            Arc::new(Mutex::new(states))
+        };
 
-                // A StatesList with the previous state
-                let states = StatesList::new()
-                    .with_tokens(&[TokenFlags::All("test_token".to_string())])
-                    .with_state(sample_state);
-                Arc::new(Mutex::new(states))
-            };
+        // Crate the local handler
+        let (_, client, _) = LocalHandler::new(states, core_sender);
 
-            // Crate the local handler
-            let (_, client, _) = LocalHandler::new(states, core_sender);
+        // Use the client to call JSON RPC Methods
+        let req = client
+            .read_file_by_path(
+                "./readme.md".to_string(),
+                "local".to_string(),
+                1,
+                "test_token".to_string(),
+            )
+            .await;
 
-            // Use the client to call JSON RPC Methods
-            let req = client
-                .read_file_by_path(
-                    "./readme.md".to_string(),
-                    "local".to_string(),
-                    1,
-                    "test_token".to_string(),
-                )
-                .await;
-
-            assert!(req.is_ok());
-        });
+        assert!(req.is_ok());
     }
 }

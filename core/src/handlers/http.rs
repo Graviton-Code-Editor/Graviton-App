@@ -186,7 +186,7 @@ impl WebSocketsManager {
     ///
     /// * `states`               - A States list
     /// * `core_sender`          - A sender to communicate to the Core
-    /// * `websocklet`           - The Websockets connection
+    /// * `websocket`           - The Websockets connection
     pub fn handle_ws(
         sockets: SocketsRegistry,
         core_sender: Sender<Messages>,
@@ -336,64 +336,60 @@ mod tests {
 
     use super::HTTPHandler;
 
-    #[test]
-    fn json_rpc_works() {
-        let rt = Runtime::new().unwrap();
-        rt.block_on(async {
-            // RUN THE SERVER
+    #[tokio::test]
+    async fn json_rpc_works() {
+        // RUN THE SERVER
 
-            let (to_core, from_core) = channel::<Messages>(1);
-            let from_core = Arc::new(AsyncMutex::new(from_core));
+        let (to_core, from_core) = channel::<Messages>(1);
+        let from_core = Arc::new(AsyncMutex::new(from_core));
 
-            let states = {
-                let sample_state = State::default();
+        let states = {
+            let sample_state = State::default();
 
-                let states = StatesList::new()
-                    .with_tokens(&[TokenFlags::All("test".to_string())])
-                    .with_state(sample_state);
+            let states = StatesList::new()
+                .with_tokens(&[TokenFlags::All("test".to_string())])
+                .with_state(sample_state);
 
-                Arc::new(Mutex::new(states))
-            };
+            Arc::new(Mutex::new(states))
+        };
 
-            let http_handler = HTTPHandler::builder().build().wrap();
+        let http_handler = HTTPHandler::builder().build().wrap();
 
-            let config = Configuration::new(http_handler, to_core, from_core);
+        let config = Configuration::new(http_handler, to_core, from_core);
 
-            let core = Core::new(config, states);
+        let core = Core::new(config, states);
 
-            core.run().await;
+        core.run().await;
 
-            sleep(Duration::from_secs(2)).await;
+        sleep(Duration::from_secs(2)).await;
 
-            // RUN A WEBSOCKETS CLIENT
+        // RUN A WEBSOCKETS CLIENT
 
-            let (mut socket, _) = connect(
-                Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap(),
-            )
-            .expect("Can't connect");
+        let (mut socket, _) =
+            connect(Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap())
+                .expect("Can't connect");
 
-            let listen_to_state_msg = Messages::ListenToState {
-                state_id: 1,
-                trigger: "client".to_string(),
-            };
+        let listen_to_state_msg = Messages::ListenToState {
+            state_id: 1,
+            trigger: "client".to_string(),
+        };
 
-            let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
+        let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
 
-            socket
-                .write_message(Message::Text(listen_to_state_msg))
-                .unwrap();
+        socket
+            .write_message(Message::Text(listen_to_state_msg))
+            .unwrap();
 
-            let msg = socket.read_message().expect("Error reading message");
+        let msg = socket.read_message().expect("Error reading message");
 
-            assert!(msg.is_text());
+        assert!(msg.is_text());
 
-            let msg = msg.into_text().unwrap();
+        let msg = msg.into_text().unwrap();
 
-            let state_updated_msg = serde_json::from_str(&msg).unwrap();
+        let state_updated_msg = serde_json::from_str(&msg).unwrap();
 
-            assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }))
+        assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }))
 
-            // TO-DO TEST JSON RPC CLIENT
-        });
+        // TO-DO TEST JSON RPC CLIENT
     }
 }

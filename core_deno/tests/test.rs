@@ -2,8 +2,7 @@ use core_deno::DenoExtensionSupport;
 use gveditor_core_api::extensions::base::ExtensionInfo;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 
-#[tokio::main]
-#[test]
+#[tokio::test]
 async fn test_sample_ext() {
     let mut manager = ExtensionsManager::default();
 

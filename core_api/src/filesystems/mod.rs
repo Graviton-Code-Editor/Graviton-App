@@ -17,6 +17,7 @@ pub enum FilesystemErrors {
     PermissionDenied,
 }
 
+// TODO: Make them "asynchronous" by using tokio::fs
 /// Filesystem interface
 pub trait Filesystem {
     fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors>;
