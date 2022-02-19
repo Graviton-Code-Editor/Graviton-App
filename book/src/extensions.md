@@ -2,7 +2,7 @@
 
 WARNING: This is work in progress.
 
-At the core, extensions are language-agnostic as long there are is a wrapper for the language. Extensions are written in Rust, but because of Rust nature, it  makes it difficult for developers to run their extensions in multiple platforms safely. Not FFI can avoid this. Because of this, the Graviton project maintains a wrapper around [Deno](https://deno.land/) that allows extensions to be made in JavaScript/TypeScript. Rust extensions are still used for built-in extensions.
+At the core, extensions are language-agnostic as long there are is a wrapper for the language. Extensions are written in Rust, but because of Rust nature, it  makes it difficult for developers to run their extensions in multiple platforms safely. FFI is not suitable neither. Because of this, the Graviton project maintains a wrapper around [Deno](https://deno.land/) that allows extensions to be made in JavaScript/TypeScript. Rust extensions are still used for built-in extensions.
 
 ## Deno extension
 
