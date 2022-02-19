@@ -18,7 +18,7 @@ tauri = { git = "https://github.com/tauri-apps/tauri",  features = ["api-all"] }
 gveditor-core = { path = "../../core"}
 gveditor-core-api  = { path = "../../core_api"}
 tracing = "0.1.29"
-tracing-subscriber = "0.3.4"
+tracing-subscriber = {version="0.3.4", features=["env-filter", "std"]}
 git-for-graviton = { path = "../../extensions/git"}
 
 [features]

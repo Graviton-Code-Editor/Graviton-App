@@ -1,4 +1,5 @@
-use async_trait::async_trait;
+use tokio::runtime::Runtime;
+
 use gveditor_core_api::extensions::base::{
     Extension,
     ExtensionInfo,
@@ -9,6 +10,11 @@ use gveditor_core_api::extensions::manager::{
     LoadedExtension,
 };
 use gveditor_core_api::messaging::ExtensionMessages;
+
+mod main_worker;
+mod worker_extension;
+
+use main_worker::create_main_worker;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
@@ -31,7 +37,17 @@ impl DenoExtension {
 }
 
 impl Extension for DenoExtension {
-    fn init(&mut self) {}
+    fn init(&mut self) {
+        let location = self.location.clone();
+        let client = self.client.clone();
+        // TODO: Is there a better way instead of launching it in a different thread?
+        std::thread::spawn(move || {
+            let r = Runtime::new().unwrap();
+            r.block_on(async move {
+                create_main_worker(&location, client).await;
+            });
+        });
+    }
 
     fn notify(&mut self, _message: ExtensionMessages) {}
 
@@ -41,9 +57,8 @@ impl Extension for DenoExtension {
 }
 
 /// Add support for a special method that allows core invokers to execute Deno extensions
-#[async_trait]
 pub trait DenoExtensionSupport {
-    async fn load_extension_with_deno(
+    fn load_extension_with_deno(
         &mut self,
         path: &str,
         info: ExtensionInfo,
@@ -51,9 +66,8 @@ pub trait DenoExtensionSupport {
     ) -> &mut ExtensionsManager;
 }
 
-#[async_trait]
 impl DenoExtensionSupport for ExtensionsManager {
-    async fn load_extension_with_deno(
+    fn load_extension_with_deno(
         &mut self,
         path: &str,
         info: ExtensionInfo,

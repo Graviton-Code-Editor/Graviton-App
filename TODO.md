@@ -7,7 +7,6 @@
 - [ ] docs.rs: Document the Core JSON RPC and WebSockets API
 
 # core / core_api
-- [ ] Use deno as third-party extensions runner
 - [x] Make use of the native (OS-builtin) filesystem explorer to open folder and files
 - [ ] Return the language codename or "unknown" when reading a file in the Core
 - [ ] Implement a workspace system
@@ -29,6 +28,10 @@
 - [x] Ability to write files (XD)
 - [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Make it possible to persist states
+
+# core_deno
+- [ ] Send core messages (WIP)
+- [ ] Extension messages listener using async function generators
 
 ### web
 
