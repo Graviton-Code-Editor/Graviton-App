@@ -100,6 +100,7 @@ impl fmt::Debug for LoadedExtension {
 
 impl LoadedExtension {
     /// Retrieve information about a extension from it's manifest file
+    /// DEPRECATE: Use something like Graviton.toml instead of Cargo.toml
     pub fn get_info_from_file(manifest_path: &Path) -> Option<ExtensionInfo> {
         let manifest = cargo_toml::Manifest::from_path(manifest_path);
 

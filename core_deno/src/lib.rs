@@ -40,7 +40,7 @@ impl Extension for DenoExtension {
     fn init(&mut self) {
         let location = self.location.clone();
         let client = self.client.clone();
-        // TODO: Is there a better way instead of launching it in a different thread?
+        // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
