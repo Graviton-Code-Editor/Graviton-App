@@ -10,6 +10,7 @@ use gveditor_core_api::extensions::manager::{
 };
 use gveditor_core_api::messaging::ExtensionMessages;
 
+/// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
 struct DenoExtension {
     location: String,
@@ -39,6 +40,7 @@ impl Extension for DenoExtension {
     }
 }
 
+/// Add support for a special method that allows core invokers to execute Deno extensions
 #[async_trait]
 pub trait DenoExtensionSupport {
     async fn load_extension_with_deno(
