@@ -321,7 +321,6 @@ mod tests {
         Message,
     };
     use jsonrpc_core::serde_json;
-    use tokio::runtime::Runtime;
     use tokio::sync::mpsc::channel;
     use tokio::time::sleep;
     use url::Url;

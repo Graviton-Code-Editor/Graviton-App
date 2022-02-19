@@ -60,7 +60,8 @@ impl DenoExtensionSupport for ExtensionsManager {
         let client = ExtensionClient::new(&info.name, self.sender.clone());
         let deno_extension = Box::new(DenoExtension::new(path, info.clone(), client, state_id));
         self.register(&info.id, deno_extension);
-        self.extensions.push(LoadedExtension::FromRuntime { info });
+        self.extensions
+            .push(LoadedExtension::ManifestBuiltin { info });
         self
     }
 }

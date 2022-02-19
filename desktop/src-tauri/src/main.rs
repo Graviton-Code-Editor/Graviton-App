@@ -189,14 +189,9 @@ async fn main() {
 
     // Get the paths
     let settings_file_path = get_settings_path(&context);
-    let third_party_extensions_path = get_extensions_installation_path(&context);
+    let _third_party_extensions_path = get_extensions_installation_path(&context);
 
     let mut extensions_manager = ExtensionsManager::new(to_core.clone());
-
-    // Load third-party extensions
-    extensions_manager
-        .load_extensions_from_path(&third_party_extensions_path.join("git"), STATE_ID)
-        .await;
 
     // Load built-in extensions
     extensions_manager

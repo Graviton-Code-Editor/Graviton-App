@@ -91,7 +91,6 @@ mod tests {
     };
     use gveditor_core_api::State;
 
-    use tokio::runtime::Runtime;
     use tokio::sync::mpsc::channel;
 
     use crate::StatesList;

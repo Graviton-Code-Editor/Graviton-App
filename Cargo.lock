@@ -1241,7 +1241,6 @@ dependencies = [
  "git-for-graviton",
  "gveditor-core",
  "gveditor-core-api",
- "libloading",
  "serde",
  "serde_json",
  "tauri",
@@ -1332,7 +1331,6 @@ version = "0.1.6"
 dependencies = [
  "async-trait",
  "cargo_toml",
- "libloading",
  "serde",
  "serde_derive",
  "serde_json",
@@ -1760,16 +1758,6 @@ dependencies = [
  "libz-sys",
  "openssl-sys",
  "pkg-config",
-]
-
-[[package]]
-name = "libloading"
-version = "0.7.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "afe203d669ec979b7128619bae5a63b7b42e9203c1b29146079ee05e2f604b52"
-dependencies = [
- "cfg-if 1.0.0",
- "winapi",
 ]
 
 [[package]]

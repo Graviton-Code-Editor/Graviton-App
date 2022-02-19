@@ -18,12 +18,6 @@ use crate::messaging::Messages;
 use super::base::ExtensionInfo;
 use super::client::ExtensionClient;
 
-// Each OS has a different file format for dynamic libraries
-#[cfg(unix)]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "so";
-#[cfg(target_os = "windows")]
-static PLUGIN_DYNAMIC_LIBRARY_FORMAT: &str = "dll";
-
 /// Manage a group of extensions
 #[derive(Clone)]
 pub struct ExtensionsManager {
@@ -54,54 +48,8 @@ impl ExtensionsManager {
     ) -> &mut ExtensionsManager {
         let client = ExtensionClient::new(&info.name, self.sender.clone());
         entry(self, client, state_id);
-        self.extensions.push(LoadedExtension::FromRuntime { info });
-        self
-    }
-
-    /// Returns a vector of pointers to all extensions instances
-    ///
-    /// # Arguments
-    ///
-    /// * `path`     - The directory path from where to load the extensions
-    /// * `state_id` - The State ID in whidh it was loaded
-    ///
-    pub async fn load_extensions_from_path(
-        &mut self,
-        path: &Path,
-        state_id: u8,
-    ) -> &mut ExtensionsManager {
-        let info = LoadedExtension::get_info_from_file(&path.join("Cargo.toml"));
-
-        if let Some(info) = info {
-            let name = info.name.clone();
-            tracing::info!("Loaded extension <{}> from it's manifest file", name);
-            self.extensions.push(LoadedExtension::FromFile {
-                info,
-                path: path.to_path_buf(),
-            });
-            let extension_file_name = path.file_name().unwrap();
-
-            unsafe {
-                // Load the extension library
-                // NOTE: The library should be saved instead of leaked. WIP
-                let lib = Box::leak(Box::new(
-                    libloading::Library::new(
-                        path.join(extension_file_name)
-                            .with_extension(PLUGIN_DYNAMIC_LIBRARY_FORMAT),
-                    )
-                    .unwrap(),
-                ));
-                // Retrieve the entry function handler
-                let entry_func: libloading::Symbol<
-                    unsafe extern "C" fn(&ExtensionsManager, ExtensionClient, u8) -> (),
-                > = lib.get(b"entry").unwrap();
-
-                let client = ExtensionClient::new(&name, self.sender.clone());
-
-                entry_func(self, client, state_id);
-            }
-        }
-
+        self.extensions
+            .push(LoadedExtension::ManifestBuiltin { info });
         self
     }
 
@@ -109,7 +57,7 @@ impl ExtensionsManager {
     pub fn register(&mut self, parent_id: &str, plugin: Box<dyn Extension + Send>) {
         let info = plugin.get_info();
         let plugin = Arc::new(AsyncMutex::new(plugin));
-        self.extensions.push(LoadedExtension::FromExtension {
+        self.extensions.push(LoadedExtension::ExtensionInstance {
             plugin,
             info,
             parent_id: parent_id.to_string(),
@@ -120,14 +68,17 @@ impl ExtensionsManager {
 /// Extension wrappers
 #[derive(Clone)]
 pub enum LoadedExtension {
-    FromRuntime {
+    // Core invokers might load extensions directly in the source code
+    ManifestBuiltin {
         info: ExtensionInfo,
     },
-    FromFile {
+    // Loaded from a manifest file
+    ManifestFile {
         info: ExtensionInfo,
         path: PathBuf,
     },
-    FromExtension {
+    // Created from a extension
+    ExtensionInstance {
         plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
         info: ExtensionInfo,
         parent_id: String,
@@ -137,9 +88,9 @@ pub enum LoadedExtension {
 impl fmt::Debug for LoadedExtension {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let name = match self {
-            LoadedExtension::FromFile { .. } => "FromFile",
-            LoadedExtension::FromRuntime { .. } => "FromRuntime",
-            LoadedExtension::FromExtension { .. } => "FromExtension",
+            LoadedExtension::ManifestFile { .. } => "FromFile",
+            LoadedExtension::ManifestBuiltin { .. } => "FromRuntime",
+            LoadedExtension::ExtensionInstance { .. } => "FromExtension",
         };
         f.debug_struct(name)
             .field("info", &self.get_info())
@@ -188,9 +139,9 @@ impl LoadedExtension {
     /// Retrieve information about the extension
     pub fn get_info(&self) -> ExtensionInfo {
         match self {
-            Self::FromExtension { info, .. } => info.clone(),
-            Self::FromRuntime { info, .. } => info.clone(),
-            Self::FromFile { info, .. } => info.clone(),
+            Self::ExtensionInstance { info, .. } => info.clone(),
+            Self::ManifestBuiltin { info, .. } => info.clone(),
+            Self::ManifestFile { info, .. } => info.clone(),
         }
     }
 }

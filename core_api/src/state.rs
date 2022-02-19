@@ -195,7 +195,7 @@ impl State {
     /// Run all the extensions in the manager
     pub async fn run_extensions(&self) {
         for ext in &self.extensions_manager.extensions {
-            if let LoadedExtension::FromExtension { plugin, .. } = ext {
+            if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let mut ext_plugin = plugin.lock().await;
                 ext_plugin.init();
             }
@@ -205,7 +205,7 @@ impl State {
     /// Notify all the extensions in a state about a message, asynchronously and independently
     pub fn notify_extensions(&self, message: ExtensionMessages) {
         for ext in &self.extensions_manager.extensions {
-            if let LoadedExtension::FromExtension { plugin, .. } = ext {
+            if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let ext_plugin = plugin.clone();
                 let message = message.clone();
                 tokio::task::spawn(async move {
@@ -222,8 +222,8 @@ impl State {
         let result = extensions
             .iter()
             .find(|extension| {
-                if let LoadedExtension::FromFile { info, .. }
-                | LoadedExtension::FromRuntime { info, .. } = extension
+                if let LoadedExtension::ManifestFile { info, .. }
+                | LoadedExtension::ManifestBuiltin { info, .. } = extension
                 {
                     info.id == ext_id
                 } else {
@@ -241,7 +241,7 @@ impl State {
         let result = extensions
             .iter()
             .find(|extension| {
-                if let LoadedExtension::FromExtension { info, .. } = extension {
+                if let LoadedExtension::ExtensionInstance { info, .. } = extension {
                     info.id == ext_id
                 } else {
                     false
@@ -259,8 +259,8 @@ impl State {
         extensions
             .iter()
             .filter_map(|extension| {
-                if let LoadedExtension::FromFile { info, .. }
-                | LoadedExtension::FromRuntime { info, .. } = extension
+                if let LoadedExtension::ManifestFile { info, .. }
+                | LoadedExtension::ManifestBuiltin { info, .. } = extension
                 {
                     Some(info.id.to_string())
                 } else {
