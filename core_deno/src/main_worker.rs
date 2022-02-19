@@ -8,12 +8,16 @@ use deno_runtime::worker::{
     WorkerOptions,
 };
 use deno_runtime::BootstrapOptions;
+use std::path::Path;
 use std::rc::Rc;
 use std::sync::Arc;
 
 use gveditor_core_api::extensions::client::ExtensionClient;
 
 use crate::worker_extension;
+
+static GRAVITON_DENO_API: &'static str =
+    include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/graviton.js"));
 
 pub async fn create_main_worker(js_path: &str, client: ExtensionClient) {
     let module_loader = Rc::new(FsModuleLoader);
@@ -41,7 +45,7 @@ pub async fn create_main_worker(js_path: &str, client: ExtensionClient) {
         extensions: vec![worker_extension::new(client)],
         unsafely_ignore_certificate_errors: None,
         root_cert_store: None,
-        user_agent: "hello_runtime".to_string(),
+        user_agent: "graviton".to_string(),
         seed: None,
         js_error_create_fn: None,
         web_worker_preload_module_cb,
@@ -62,7 +66,14 @@ pub async fn create_main_worker(js_path: &str, client: ExtensionClient) {
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);
 
+    // Load the Graviton namespace
+    worker
+        .execute_script("<graviton>", GRAVITON_DENO_API)
+        .unwrap();
+
+    // Load the extension's main module
     worker.execute_main_module(&main_module).await.unwrap();
+
     worker.run_event_loop(false).await.unwrap();
 }
 
