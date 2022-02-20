@@ -32,10 +32,11 @@
 
 # core_deno
 - [ ] Send core messages (WIP)
+- [ ] Bridge gveditor_core_api::extensions::modules over Deno
 - [ ] Extension messages listener using async function generators
 ### web
 
-WIP = Work in progress, aka, exists but is not finished
+WIP = Work in progress, aka exists but is not finished
 
 - [ ] Make a web-based filesystem explorer component (WIP)
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
