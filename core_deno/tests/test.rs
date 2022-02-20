@@ -40,3 +40,18 @@ async fn load_sample_extension() {
     // Wait for the javascript to send the message
     rv.recv().await;
 }
+
+#[tokio::test]
+async fn load_extensions_from_folder() {
+    let (sd, _rv) = channel::<Messages>(1);
+    let mut manager = ExtensionsManager::new(sd.clone());
+
+    let location = current_dir().unwrap().join("tests/extensions");
+    let location = location.to_str().unwrap();
+
+    manager
+        .load_extensions_with_deno_in_directory(location, 0)
+        .await;
+
+    assert_eq!(manager.extensions.len(), 2);
+}
