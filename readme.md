@@ -21,11 +21,11 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 
 ### 🏥 Rewrite Changes
 - Ditch ElectronJS in favor of Tauri
+- Use [Deno](https://deno.land/) as a runtime for third-party extensions
 - Move from [PuffinJS](https://github.com/PuffinJS/puffin) to React for the Web frontend
 - Core is declouped from the frontend itself
-- Extensions run in the core rather than in the same UI process
 - Third-party clients (desktop, mobile, etc) can be built upon the core
-- Core and Extensions are written in Rust rather than NodeJS (this is only used for the dev workflow)
+- Core and built-in extensions are written in Rust rather than NodeJS (this is only used for the dev workflow)
 
 See [TODO](./TODO.md)
 
@@ -35,8 +35,8 @@ See [TODO](./TODO.md)
 | [gveditor-core-api](./core_api)   | Graviton API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
 | [gveditor-core-deno](./core_deno)   | Deno runtime for Graviton extensions | WIP  |
 | [extensions/git](./extensions/git)      | Graviton Core Git Extension | WIP |
-| [desktop](./desktop)             | Desktop web-based frontend  | WIP |
-| [server](./server)               | HTTP Core + Web  | WIP |
+| [desktop](./desktop)             | Desktop web-based app | WIP |
+| [server](./server)               | HTTP Core + web app served  | WIP |
 | [@gveditor/web](./web)                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
 | [@gveditor/web_components](./web_components)      | Web components | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb_components&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb_components%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
 | [@gveditor/languages](./languges)             | Language translations  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Flanguages&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Flanguages%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |

@@ -122,7 +122,6 @@ impl Default for StateData {
 
 /// A state is like a small configuration, like a profile
 /// It stores what tabs do you have open, what extensions are loaded, etc...
-#[allow(dead_code)]
 #[derive(Clone)]
 pub struct State {
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,

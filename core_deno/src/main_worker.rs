@@ -15,17 +15,19 @@ use gveditor_core_api::extensions::client::ExtensionClient;
 
 use crate::worker_extension;
 
+// Load up the Graviton JavaScript api, aka, fancy wrapper over Deno.core.opSync/opAsync
 static GRAVITON_DENO_API: &str =
     include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/graviton.js"));
 
+// Launches a Deno runtime for the specified file, it also embeds the Graviton Deno API
 pub async fn create_main_worker(main_path: &str, client: ExtensionClient) {
     let module_loader = Rc::new(FsModuleLoader);
 
     let create_web_worker_cb = Arc::new(|_| {
-        todo!("Web workers are not supported in the example");
+        todo!("Web workers are not supported");
     });
     let web_worker_preload_module_cb = Arc::new(|_| {
-        todo!("Web workers are not supported in the example");
+        todo!("Web workers are not supported");
     });
 
     let options = WorkerOptions {
@@ -37,8 +39,8 @@ pub async fn create_main_worker(main_path: &str, client: ExtensionClient) {
             enable_testing_features: false,
             location: None,
             no_color: false,
-            runtime_version: "x".to_string(),
-            ts_version: "x".to_string(),
+            runtime_version: "0.0.0".to_string(),
+            ts_version: "0.0.0".to_string(),
             unstable: false,
         },
         extensions: vec![worker_extension::new(client)],
@@ -61,6 +63,9 @@ pub async fn create_main_worker(main_path: &str, client: ExtensionClient) {
     };
 
     let main_module = deno_core::resolve_path(main_path).unwrap();
+
+    // Enable all permissions
+    // TODO: it would be interesting to specify what permissions the extensions have, this would make them more secure too
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);

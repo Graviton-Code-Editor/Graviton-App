@@ -7,7 +7,7 @@ Requisites:
 - tauri cli (`cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch next`)
 - tauri os-specific dependencies (See [this](https://tauri.studio/docs/get-started/intro#setting-up-your-environment))
 - yarn (`npm i -g yarn`)
-- (Optional, just for tests): [nextest](https://nexte.st/) (`cargo nextest run`)
+- (Optional, just for tests): [nextest](https://nexte.st/) (`cargo install cargo-nextest`)
 
 Installing dependencies:
 ```shell
@@ -17,7 +17,6 @@ yarn
 
 To develop, run:
 ```shell
-
 yarn dev_desktop
 ```
 
@@ -29,4 +28,9 @@ yarn build_desktop
 To run automated tests:
 ```shell
 yarn test
+```
+
+To lint all the code:
+```shell
+yarn lint
 ```

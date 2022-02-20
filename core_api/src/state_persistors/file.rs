@@ -6,7 +6,6 @@ use crate::state::StateData;
 use super::Persistor;
 
 /// File state persistor
-/// Useless for now
 #[derive(Clone)]
 pub struct FilePersistor {
     path: PathBuf,

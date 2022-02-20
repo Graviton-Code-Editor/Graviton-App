@@ -2,6 +2,11 @@
 name = "git-for-graviton"
 version = "0.1.0"
 edition = "2021"
+authors = ["Marc Espín Sanz"]
+readme = "../readme.md"
+repository = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+license = "MIT"
 
 [dependencies]
 gveditor-core-api  = { path = "../../core_api"}

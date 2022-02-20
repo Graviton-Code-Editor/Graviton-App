@@ -5,7 +5,7 @@ use serde::{
 
 use crate::messaging::ExtensionMessages;
 
-/// Information about a extension
+/// Information about a extension instance
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct ExtensionInfo {
     pub id: String,

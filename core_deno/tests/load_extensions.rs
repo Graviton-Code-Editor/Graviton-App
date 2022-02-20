@@ -1,4 +1,3 @@
-use std::env::current_dir;
 use gveditor_core_api::extensions::manager::{
     ExtensionsManager,
     LoadedExtension,
@@ -9,9 +8,10 @@ use gveditor_core_api::{
     ManifestInfo,
 };
 use gveditor_core_deno::DenoExtensionSupport;
+use std::env::current_dir;
 use tokio::sync::mpsc::channel;
 
-/// Loads an extension entrypoint directly, and waits for a message sent from it
+/// Loads an extension entry file directly, and waits for a message sent from it
 #[tokio::test]
 async fn load_sample_extension() {
     let (sd, mut rv) = channel::<Messages>(1);

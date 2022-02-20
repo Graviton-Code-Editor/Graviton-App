@@ -10,6 +10,7 @@ use crate::filesystems::{
 use crate::state::StateData;
 use crate::Errors;
 
+/// Messages bidirectionally with the core
 #[derive(Serialize, Deserialize, Debug, Clone)]
 #[serde(tag = "msg_type")]
 pub enum Messages {
@@ -54,6 +55,7 @@ impl Messages {
     }
 }
 
+/// Messages use to notify the extensions of certain events
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ExtensionMessages {
     CoreMessage(Messages),

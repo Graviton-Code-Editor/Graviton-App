@@ -1,7 +1,13 @@
 [package]
 name = "gveditor-core-deno"
 version = "0.1.0"
+description = "Deno Runtime for Core extensions"
+authors = ["Marc Espín Sanz"]
 edition = "2021"
+readme = "../readme.md"
+repository = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+license = "MIT"
 
 [dependencies]
 gveditor-core-api  = { path = "../core_api"}

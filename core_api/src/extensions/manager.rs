@@ -1,4 +1,3 @@
-use std::fmt;
 use std::sync::Arc;
 
 use tokio::sync::mpsc::{
@@ -67,29 +66,18 @@ impl ExtensionsManager {
 /// Extension wrappers
 #[derive(Clone)]
 pub enum LoadedExtension {
-    // Core invokers might load extensions directly in the source code
+    // Loaded from the source code itself, not dinamically, e.g git-for-graviton (because it has a manifest but not a path)
     ManifestBuiltin {
         info: ManifestInfo,
     },
-    // Loaded from a manifest file
+    // Loaded from a manifest file dinamically, e.g any third-party extension
     ManifestFile {
         manifest: Manifest,
     },
-    // Created from a extension
+    // Loaded from a extension
     ExtensionInstance {
         plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
         info: ExtensionInfo,
         parent_id: String,
     },
-}
-
-impl fmt::Debug for LoadedExtension {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let name = match self {
-            LoadedExtension::ManifestFile { .. } => "FromFile",
-            LoadedExtension::ManifestBuiltin { .. } => "FromRuntime",
-            LoadedExtension::ExtensionInstance { .. } => "FromExtension",
-        };
-        f.debug_struct(name).finish()
-    }
 }
