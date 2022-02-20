@@ -12,9 +12,14 @@ use gveditor_core_api::extensions::manager::{
 use gveditor_core_api::messaging::ExtensionMessages;
 
 mod main_worker;
+mod manifest;
 mod worker_extension;
 
 use main_worker::create_main_worker;
+pub use manifest::{
+    Manifest,
+    ManifestErrors,
+};
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]

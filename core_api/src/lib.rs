@@ -10,9 +10,13 @@ pub use serde::{
     Serialize,
 };
 pub use state::State;
-pub use tokio;
 pub use tokio::sync::mpsc::Sender;
 pub use tokio::sync::Mutex;
+pub use {
+    serde,
+    serde_derive,
+    tokio,
+};
 
 /// Global errors enum
 #[derive(Serialize, Deserialize, Debug, Clone)]

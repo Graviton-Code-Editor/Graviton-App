@@ -1,6 +1,12 @@
+#![feature(is_some_with)]
+
 use std::env::current_dir;
 
-use core_deno::DenoExtensionSupport;
+use core_deno::{
+    DenoExtensionSupport,
+    Manifest,
+    ManifestErrors,
+};
 use gveditor_core_api::extensions::base::ExtensionInfo;
 use gveditor_core_api::extensions::manager::{
     ExtensionsManager,
@@ -30,4 +36,21 @@ async fn load_sample_extension() {
 
     // Wait for the javascript to send the message
     rv.recv().await;
+}
+
+#[tokio::test]
+async fn load_manifests() {
+    let cwd = current_dir().unwrap();
+
+    let ok_manifest_path = cwd.join("tests/ok_manifest.toml");
+    let bad_manifest_path = cwd.join("tests/bad_manifest.toml");
+    let not_found_manifest_path = cwd.join("this_doesnt_exist");
+
+    let ok_manifest = Manifest::parse(&ok_manifest_path).await;
+    let bad_manifest = Manifest::parse(&bad_manifest_path).await;
+    let not_found_manifest = Manifest::parse(&not_found_manifest_path).await;
+
+    assert!(ok_manifest.is_ok());
+    assert!(bad_manifest.is_err_with(|e| matches!(e, &ManifestErrors::CannotParse)));
+    assert!(not_found_manifest.is_err_with(|e| matches!(e, &ManifestErrors::NotFound)));
 }

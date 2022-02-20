@@ -8,7 +8,6 @@ use deno_runtime::worker::{
     WorkerOptions,
 };
 use deno_runtime::BootstrapOptions;
-use std::path::Path;
 use std::rc::Rc;
 use std::sync::Arc;
 

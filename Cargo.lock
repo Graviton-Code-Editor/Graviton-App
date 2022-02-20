@@ -719,7 +719,10 @@ dependencies = [
  "deno_core",
  "deno_runtime",
  "gveditor-core-api",
+ "serde",
+ "serde_derive",
  "tokio",
+ "toml",
 ]
 
 [[package]]
