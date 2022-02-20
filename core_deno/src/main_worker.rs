@@ -18,7 +18,7 @@ use crate::worker_extension;
 static GRAVITON_DENO_API: &'static str =
     include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/graviton.js"));
 
-pub async fn create_main_worker(js_path: &str, client: ExtensionClient) {
+pub async fn create_main_worker(main_path: &str, client: ExtensionClient) {
     let module_loader = Rc::new(FsModuleLoader);
 
     let create_web_worker_cb = Arc::new(|_| {
@@ -60,7 +60,7 @@ pub async fn create_main_worker(js_path: &str, client: ExtensionClient) {
         compiled_wasm_module_store: None,
     };
 
-    let main_module = deno_core::resolve_path(js_path).unwrap();
+    let main_module = deno_core::resolve_path(main_path).unwrap();
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);

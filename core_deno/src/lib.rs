@@ -30,16 +30,16 @@ use tokio_stream::StreamExt;
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
 struct DenoExtension {
-    location: String,
+    main_path: String,
     info: ManifestInfo,
     client: ExtensionClient,
     state_id: u8,
 }
 
 impl DenoExtension {
-    pub fn new(path: &str, info: ManifestInfo, client: ExtensionClient, state_id: u8) -> Self {
+    pub fn new(main_path: &str, info: ManifestInfo, client: ExtensionClient, state_id: u8) -> Self {
         Self {
-            location: path.to_string(),
+            main_path: main_path.to_string(),
             info,
             client,
             state_id,
@@ -49,13 +49,13 @@ impl DenoExtension {
 
 impl Extension for DenoExtension {
     fn init(&mut self) {
-        let location = self.location.clone();
+        let main_path = self.main_path.clone();
         let client = self.client.clone();
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
-                create_main_worker(&location, client).await;
+                create_main_worker(&main_path, client).await;
             });
         });
     }
@@ -112,23 +112,34 @@ impl DenoExtensionSupport for ExtensionsManager {
         if let Ok(items) = items {
             let mut items = ReadDirStream::new(items);
 
+            // Iterate over all the found extensions
             while let Some(Ok(item)) = items.next().await {
                 let item_path = item.path();
                 let manifest_path = item_path.join("Graviton.toml");
+
+                // Get the extension manifest
                 let manifest = Manifest::parse(&manifest_path).await;
 
                 if let Ok(manifest) = manifest {
-                    let client =
-                        ExtensionClient::new(&manifest.info.extension.name, self.sender.clone());
-                    let deno_extension = Box::new(DenoExtension::new(
-                        path,
-                        manifest.info.clone(),
-                        client,
-                        state_id,
-                    ));
-                    self.register(&manifest.info.extension.id, deno_extension);
-                    self.extensions
-                        .push(LoadedExtension::ManifestFile { manifest });
+                    // Load it's entry file if specified
+                    if let Some(main) = &manifest.info.extension.main {
+                        let client = ExtensionClient::new(
+                            &manifest.info.extension.name,
+                            self.sender.clone(),
+                        );
+                        let main_path = item_path.join(main);
+                        let deno_extension = Box::new(DenoExtension::new(
+                            main_path.to_str().unwrap(),
+                            manifest.info.clone(),
+                            client,
+                            state_id,
+                        ));
+                        self.register(&manifest.info.extension.id, deno_extension);
+                        self.extensions
+                            .push(LoadedExtension::ManifestFile { manifest });
+                    } else {
+                        // Doesn't have an entry file
+                    }
                 }
             }
         }
