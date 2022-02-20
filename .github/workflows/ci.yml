@@ -50,7 +50,7 @@ jobs:
         run: brew install gcc
 
       - name: Install nextest (test runner for rust)
-        run: cargo install nextest
+        run: cargo install cargo-nextest
 
       - uses: actions-rs/toolchain@v1
         with:
