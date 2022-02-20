@@ -49,6 +49,9 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install gcc
 
+      - name: Install nextest (test runner for rust)
+        run: cargo install nextest
+
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: nightly
