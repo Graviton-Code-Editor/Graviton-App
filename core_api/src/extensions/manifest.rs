@@ -1,5 +1,6 @@
 use std::path::PathBuf;
 
+use serde::Serialize;
 use serde_derive::Deserialize;
 use tokio::fs::read_to_string;
 
@@ -10,22 +11,23 @@ pub enum ManifestErrors {
 }
 
 /// Represents the [extension] section
-#[derive(Deserialize, PartialEq, Eq)]
-struct ManifestExtension {
-    name: String,
-    author: String,
-    version: String,
-    repository: String,
-    main: String,
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone)]
+pub struct ManifestExtension {
+    pub name: String,
+    pub id: String,
+    pub author: String,
+    pub version: String,
+    pub repository: String,
+    pub main: Option<String>,
 }
 
 /// Represents the whole TOML file
-#[derive(Deserialize, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone)]
 pub struct ManifestInfo {
-    extension: ManifestExtension,
+    pub extension: ManifestExtension,
 }
 
-#[derive(Deserialize, PartialEq, Eq)]
+#[derive(Deserialize, PartialEq, Eq, Clone)]
 pub struct Manifest {
     pub location: PathBuf,
     pub info: ManifestInfo,

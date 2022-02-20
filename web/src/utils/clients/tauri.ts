@@ -7,7 +7,7 @@ import {
   CoreResponse,
   DirItemInfo,
   EventsInterface,
-  ExtensionInfo,
+  ManifestInfo as ManifestInfo,
   FileInfo,
 } from "../../types/client";
 import Configuration from "../config";
@@ -120,7 +120,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    */
   public get_ext_info_by_id(
     extensionId: string
-  ): Promise<CoreResponse<ExtensionInfo>> {
+  ): Promise<CoreResponse<ManifestInfo>> {
     return invoke("get_ext_info_by_id", {
       extensionId,
       stateId: this.config.state_id,

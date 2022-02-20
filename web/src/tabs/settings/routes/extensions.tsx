@@ -12,7 +12,7 @@ export default function ExtensionsRoute() {
       <TabText>These are the currently loaded extensions:</TabText>
       <List>
         {extensions.map((ext) => (
-          <li key={ext.id}> {ext.name}</li>
+          <li key={ext.extension.id}> {ext.extension.name}</li>
         ))}
       </List>
     </div>

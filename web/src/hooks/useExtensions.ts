@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { ExtensionInfo } from "../types/client";
+import { ManifestInfo } from "../types/client";
 import { clientState } from "../utils/atoms";
 
 /*
  * Easily retrieve the extensions using the client
  */
 export default function useExtensions() {
-  const [extensions, setExtensions] = useState<ExtensionInfo[]>([]);
+  const [extensions, setExtensions] = useState<ManifestInfo[]>([]);
   const client = useRecoilValue(clientState);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function useExtensions() {
         const extensions_info_list = await Promise.all(
           extesions_list.map(async (id) => {
             const info_response = await client.get_ext_info_by_id(id);
-            return info_response.Ok as ExtensionInfo;
+            return info_response.Ok as ManifestInfo;
           })
         );
         setExtensions(extensions_info_list);

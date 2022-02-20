@@ -1,7 +1,6 @@
 use crate::configuration::Handler;
 use crate::handlers::TransportHandler;
 use crate::Configuration;
-use gveditor_core_api::extensions::base::ExtensionInfo;
 use gveditor_core_api::filesystems::{
     DirItemInfo,
     FileInfo,
@@ -15,7 +14,10 @@ use gveditor_core_api::state::{
     StateData,
     StatesList,
 };
-use gveditor_core_api::Errors;
+use gveditor_core_api::{
+    Errors,
+    ManifestInfo,
+};
 use jsonrpc_derive::rpc;
 
 use std::sync::{
@@ -162,7 +164,7 @@ pub trait RpcMethods {
         extension_id: String,
         state_id: u8,
         token: String,
-    ) -> RPCResult<Result<ExtensionInfo, Errors>>;
+    ) -> RPCResult<Result<ManifestInfo, Errors>>;
 
     #[rpc(name = "get_ext_list_by_id")]
     fn get_ext_list_by_id(
@@ -335,7 +337,7 @@ impl RpcMethods for RpcManager {
         extension_id: String,
         state_id: u8,
         token: String,
-    ) -> RPCResult<Result<ExtensionInfo, Errors>> {
+    ) -> RPCResult<Result<ManifestInfo, Errors>> {
         let states = self.states.lock().unwrap();
         // Try to get the requested state
         if let Some(state) = states.get_state_by_id(state_id) {

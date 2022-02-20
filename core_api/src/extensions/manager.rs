@@ -1,11 +1,6 @@
 use std::fmt;
-use std::path::{
-    Path,
-    PathBuf,
-};
 use std::sync::Arc;
 
-use cargo_toml::Value;
 use tokio::sync::mpsc::{
     channel,
     Sender,
@@ -14,6 +9,10 @@ use tokio::sync::Mutex as AsyncMutex;
 
 use crate::extensions::base::Extension;
 use crate::messaging::Messages;
+use crate::{
+    Manifest,
+    ManifestInfo,
+};
 
 use super::base::ExtensionInfo;
 use super::client::ExtensionClient;
@@ -43,10 +42,10 @@ impl ExtensionsManager {
     pub async fn load_extension_from_entry(
         &mut self,
         entry: fn(&mut Self, ExtensionClient, u8),
-        info: ExtensionInfo,
+        info: ManifestInfo,
         state_id: u8,
     ) -> &mut ExtensionsManager {
-        let client = ExtensionClient::new(&info.name, self.sender.clone());
+        let client = ExtensionClient::new(&info.extension.name, self.sender.clone());
         entry(self, client, state_id);
         self.extensions
             .push(LoadedExtension::ManifestBuiltin { info });
@@ -70,12 +69,11 @@ impl ExtensionsManager {
 pub enum LoadedExtension {
     // Core invokers might load extensions directly in the source code
     ManifestBuiltin {
-        info: ExtensionInfo,
+        info: ManifestInfo,
     },
     // Loaded from a manifest file
     ManifestFile {
-        info: ExtensionInfo,
-        path: PathBuf,
+        manifest: Manifest,
     },
     // Created from a extension
     ExtensionInstance {
@@ -92,57 +90,6 @@ impl fmt::Debug for LoadedExtension {
             LoadedExtension::ManifestBuiltin { .. } => "FromRuntime",
             LoadedExtension::ExtensionInstance { .. } => "FromExtension",
         };
-        f.debug_struct(name)
-            .field("info", &self.get_info())
-            .finish()
-    }
-}
-
-impl LoadedExtension {
-    /// Retrieve information about a extension from it's manifest file
-    /// DEPRECATE: Use something like Graviton.toml instead of Cargo.toml
-    pub fn get_info_from_file(manifest_path: &Path) -> Option<ExtensionInfo> {
-        let manifest = cargo_toml::Manifest::from_path(manifest_path);
-
-        if manifest.is_err() {
-            return None;
-        }
-        let manifest = manifest.unwrap();
-        manifest.package.as_ref()?;
-
-        let package = manifest.package.unwrap();
-        package.metadata.as_ref()?;
-
-        let extension_metadata = package.metadata.unwrap();
-
-        if let cargo_toml::Value::Table(extension_metadata) = extension_metadata {
-            let graviton_metadata = extension_metadata.get("graviton");
-            graviton_metadata.as_ref()?;
-
-            let extension_metadata = graviton_metadata.unwrap();
-
-            if let cargo_toml::Value::Table(info) = extension_metadata {
-                let name = package.name;
-                let id = info.get("id");
-
-                if let Some(Value::String(id)) = id {
-                    return Some(ExtensionInfo {
-                        name,
-                        id: id.to_string(),
-                    });
-                }
-            }
-        }
-
-        None
-    }
-
-    /// Retrieve information about the extension
-    pub fn get_info(&self) -> ExtensionInfo {
-        match self {
-            Self::ExtensionInstance { info, .. } => info.clone(),
-            Self::ManifestBuiltin { info, .. } => info.clone(),
-            Self::ManifestFile { info, .. } => info.clone(),
-        }
+        f.debug_struct(name).finish()
     }
 }

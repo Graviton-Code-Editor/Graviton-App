@@ -13,6 +13,7 @@ use crate::state_persistors::Persistor;
 use crate::{
     Errors,
     ExtensionErrors,
+    ManifestInfo,
 };
 use serde::{
     Deserialize,
@@ -217,37 +218,43 @@ impl State {
     }
 
     /// Try to retrieve info about a perticular loaded extension
-    pub fn get_ext_info_by_id(&self, ext_id: &str) -> Result<ExtensionInfo, Errors> {
+    pub fn get_ext_info_by_id(&self, ext_id: &str) -> Result<ManifestInfo, Errors> {
         let extensions = &self.extensions_manager.extensions;
-        let result = extensions
-            .iter()
-            .find(|extension| {
-                if let LoadedExtension::ManifestFile { info, .. }
-                | LoadedExtension::ManifestBuiltin { info, .. } = extension
-                {
-                    info.id == ext_id
+        let result = extensions.iter().find_map(|extension| {
+            if let LoadedExtension::ManifestFile { manifest } = extension {
+                if manifest.info.extension.id == ext_id {
+                    Some(manifest.info.clone())
                 } else {
-                    false
+                    None
                 }
-            })
-            .map(|ext| ext.get_info());
+            } else if let LoadedExtension::ManifestBuiltin { info, .. } = extension {
+                if info.extension.id == ext_id {
+                    Some(info.clone())
+                } else {
+                    None
+                }
+            } else {
+                None
+            }
+        });
 
         result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
     }
 
-    /// Try to retrieve info about a perticular loaded extension's runtime
+    /// Try to retrieve info about a perticular loaded extension
     pub fn get_ext_run_info_by_id(&self, ext_id: &str) -> Result<ExtensionInfo, Errors> {
         let extensions = &self.extensions_manager.extensions;
-        let result = extensions
-            .iter()
-            .find(|extension| {
-                if let LoadedExtension::ExtensionInstance { info, .. } = extension {
-                    info.id == ext_id
+        let result = extensions.iter().find_map(|extension| {
+            if let LoadedExtension::ExtensionInstance { info, .. } = extension {
+                if info.id == ext_id {
+                    Some(info.clone())
                 } else {
-                    false
+                    None
                 }
-            })
-            .map(|ext| ext.get_info());
+            } else {
+                None
+            }
+        });
 
         result.ok_or(Errors::Ext(ExtensionErrors::ExtensionNotFound))
     }
@@ -259,10 +266,10 @@ impl State {
         extensions
             .iter()
             .filter_map(|extension| {
-                if let LoadedExtension::ManifestFile { info, .. }
-                | LoadedExtension::ManifestBuiltin { info, .. } = extension
-                {
-                    Some(info.id.to_string())
+                if let LoadedExtension::ManifestBuiltin { info, .. } = extension {
+                    Some(info.extension.id.to_string())
+                } else if let LoadedExtension::ManifestFile { manifest } = extension {
+                    Some(manifest.info.extension.id.to_string())
                 } else {
                     None
                 }

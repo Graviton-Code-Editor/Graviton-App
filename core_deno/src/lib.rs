@@ -1,3 +1,8 @@
+use gveditor_core_api::{
+    Manifest,
+    ManifestInfo,
+};
+use tokio::fs;
 use tokio::runtime::Runtime;
 
 use gveditor_core_api::extensions::base::{
@@ -12,26 +17,27 @@ use gveditor_core_api::extensions::manager::{
 use gveditor_core_api::messaging::ExtensionMessages;
 
 mod main_worker;
-mod manifest;
+
 mod worker_extension;
 
 use main_worker::create_main_worker;
-pub use manifest::{
-    Manifest,
-    ManifestErrors,
-};
+
+use async_trait::async_trait;
+
+use tokio_stream::wrappers::ReadDirStream;
+use tokio_stream::StreamExt;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
 struct DenoExtension {
     location: String,
-    info: ExtensionInfo,
+    info: ManifestInfo,
     client: ExtensionClient,
     state_id: u8,
 }
 
 impl DenoExtension {
-    pub fn new(path: &str, info: ExtensionInfo, client: ExtensionClient, state_id: u8) -> Self {
+    pub fn new(path: &str, info: ManifestInfo, client: ExtensionClient, state_id: u8) -> Self {
         Self {
             location: path.to_string(),
             info,
@@ -57,32 +63,76 @@ impl Extension for DenoExtension {
     fn notify(&mut self, _message: ExtensionMessages) {}
 
     fn get_info(&self) -> ExtensionInfo {
-        self.info.clone()
+        ExtensionInfo {
+            name: self.info.extension.name.clone(),
+            id: self.info.extension.id.clone(),
+        }
     }
 }
 
 /// Add support for a special method that allows core invokers to execute Deno extensions
+#[async_trait]
 pub trait DenoExtensionSupport {
     fn load_extension_with_deno(
         &mut self,
         path: &str,
-        info: ExtensionInfo,
+        info: ManifestInfo,
+        state_id: u8,
+    ) -> &mut ExtensionsManager;
+    async fn load_extensions_with_deno_in_directory(
+        &mut self,
+        path: &str,
         state_id: u8,
     ) -> &mut ExtensionsManager;
 }
 
+#[async_trait]
 impl DenoExtensionSupport for ExtensionsManager {
     fn load_extension_with_deno(
         &mut self,
         path: &str,
-        info: ExtensionInfo,
+        info: ManifestInfo,
         state_id: u8,
     ) -> &mut ExtensionsManager {
-        let client = ExtensionClient::new(&info.name, self.sender.clone());
+        let client = ExtensionClient::new(&info.extension.name.clone(), self.sender.clone());
         let deno_extension = Box::new(DenoExtension::new(path, info.clone(), client, state_id));
-        self.register(&info.id, deno_extension);
+        self.register(&info.extension.id, deno_extension);
         self.extensions
             .push(LoadedExtension::ManifestBuiltin { info });
+        self
+    }
+
+    async fn load_extensions_with_deno_in_directory(
+        &mut self,
+        path: &str,
+        state_id: u8,
+    ) -> &mut ExtensionsManager {
+        let items = fs::read_dir(path).await;
+
+        if let Ok(items) = items {
+            let mut items = ReadDirStream::new(items);
+
+            while let Some(Ok(item)) = items.next().await {
+                let item_path = item.path();
+                let manifest_path = item_path.join("Graviton.toml");
+                let manifest = Manifest::parse(&manifest_path).await;
+
+                if let Ok(manifest) = manifest {
+                    let client =
+                        ExtensionClient::new(&manifest.info.extension.name, self.sender.clone());
+                    let deno_extension = Box::new(DenoExtension::new(
+                        path,
+                        manifest.info.clone(),
+                        client,
+                        state_id,
+                    ));
+                    self.register(&manifest.info.extension.id, deno_extension);
+                    self.extensions
+                        .push(LoadedExtension::ManifestFile { manifest });
+                }
+            }
+        }
+
         self
     }
 }

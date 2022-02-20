@@ -4,10 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-toml = "0.5.8"
 gveditor-core-api  = { path = "../core_api"}
 deno_core = "0.119.0"
 deno_runtime = "0.45.0"
 tokio = { version = "1.14.0", features = ["rt-multi-thread", "macros", "sync", "time"]}
+tokio-stream = { version = "0.1.8", features = ["fs"]}
 serde_derive = "1.0.126"
 serde = { version = "1.0.127", features = ["derive"] }
+async-trait = "0.1.52"

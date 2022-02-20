@@ -8,7 +8,11 @@ use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::ExtensionMessages;
 use gveditor_core_api::tokio::runtime::Runtime;
-use gveditor_core_api::Mutex;
+use gveditor_core_api::{
+    ManifestExtension,
+    ManifestInfo,
+    Mutex,
+};
 use std::sync::mpsc::{
     channel,
     Receiver,
@@ -59,7 +63,10 @@ impl GitExtension {
 
 impl Extension for GitExtension {
     fn get_info(&self) -> ExtensionInfo {
-        get_info()
+        ExtensionInfo {
+            id: env!("CARGO_PKG_NAME").to_string(),
+            name: env!("CARGO_PKG_NAME").to_string(),
+        }
     }
 
     fn init(&mut self) {
@@ -102,9 +109,15 @@ pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_
     extensions.register(parent_id, plugin);
 }
 
-pub fn get_info() -> ExtensionInfo {
-    ExtensionInfo {
-        id: env!("CARGO_PKG_NAME").to_string(),
-        name: env!("CARGO_PKG_NAME").to_string(),
+pub fn get_info() -> ManifestInfo {
+    ManifestInfo {
+        extension: ManifestExtension {
+            id: env!("CARGO_PKG_NAME").to_string(),
+            name: env!("CARGO_PKG_NAME").to_string(),
+            author: "Marc Espín".to_string(),
+            version: env!("CARGO_PKG_VERSION").to_string(),
+            repository: "".to_string(), //TODO
+            main: None,
+        },
     }
 }

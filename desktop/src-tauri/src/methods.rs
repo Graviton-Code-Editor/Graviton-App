@@ -1,11 +1,13 @@
 use gveditor_core::RPCResult;
-use gveditor_core_api::extensions::base::ExtensionInfo;
 use gveditor_core_api::filesystems::{
     DirItemInfo,
     FileInfo,
 };
 use gveditor_core_api::state::StateData;
-use gveditor_core_api::Errors;
+use gveditor_core_api::{
+    Errors,
+    ManifestInfo,
+};
 
 use crate::TauriState;
 
@@ -88,7 +90,7 @@ pub async fn get_ext_info_by_id(
     state_id: u8,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
-) -> RPCResult<Result<ExtensionInfo, Errors>> {
+) -> RPCResult<Result<ManifestInfo, Errors>> {
     let res = tauri_state
         .client
         .get_ext_info_by_id(extension_id, state_id, token);

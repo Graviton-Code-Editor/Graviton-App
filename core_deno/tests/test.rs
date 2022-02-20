@@ -1,18 +1,15 @@
-#![feature(is_some_with)]
-
 use std::env::current_dir;
 
-use core_deno::{
-    DenoExtensionSupport,
-    Manifest,
-    ManifestErrors,
-};
-use gveditor_core_api::extensions::base::ExtensionInfo;
+use core_deno::DenoExtensionSupport;
 use gveditor_core_api::extensions::manager::{
     ExtensionsManager,
     LoadedExtension,
 };
 use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::{
+    ManifestExtension,
+    ManifestInfo,
+};
 use tokio::sync::mpsc::channel;
 
 #[tokio::test]
@@ -20,9 +17,15 @@ async fn load_sample_extension() {
     let (sd, mut rv) = channel::<Messages>(1);
     let mut manager = ExtensionsManager::new(sd.clone());
 
-    let sample_info = ExtensionInfo {
-        id: "sample".to_string(),
-        name: "sample".to_string(),
+    let sample_info = ManifestInfo {
+        extension: ManifestExtension {
+            name: String::new(),
+            id: String::new(),
+            version: String::new(),
+            author: String::new(),
+            repository: String::new(),
+            main: None,
+        },
     };
 
     let location = current_dir().unwrap().join("tests/sample_extension.js");
@@ -36,21 +39,4 @@ async fn load_sample_extension() {
 
     // Wait for the javascript to send the message
     rv.recv().await;
-}
-
-#[tokio::test]
-async fn load_manifests() {
-    let cwd = current_dir().unwrap();
-
-    let ok_manifest_path = cwd.join("tests/ok_manifest.toml");
-    let bad_manifest_path = cwd.join("tests/bad_manifest.toml");
-    let not_found_manifest_path = cwd.join("this_doesnt_exist");
-
-    let ok_manifest = Manifest::parse(&ok_manifest_path).await;
-    let bad_manifest = Manifest::parse(&bad_manifest_path).await;
-    let not_found_manifest = Manifest::parse(&not_found_manifest_path).await;
-
-    assert!(ok_manifest.is_ok());
-    assert!(bad_manifest.is_err_with(|e| matches!(e, &ManifestErrors::CannotParse)));
-    assert!(not_found_manifest.is_err_with(|e| matches!(e, &ManifestErrors::NotFound)));
 }

@@ -8,7 +8,7 @@ import {
   Client,
   CoreResponse,
   DirItemInfo,
-  ExtensionInfo,
+  ManifestInfo,
   FileInfo,
 } from "../../types/client";
 
@@ -134,7 +134,7 @@ export class HTTPClient extends Emittery implements Client {
    */
   public get_ext_info_by_id(
     extension_id: string
-  ): Promise<CoreResponse<ExtensionInfo>> {
+  ): Promise<CoreResponse<ManifestInfo>> {
     return this.rpc.call("get_ext_info_by_id", [
       extension_id,
       this.config.state_id,

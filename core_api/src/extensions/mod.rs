@@ -6,6 +6,7 @@ use serde::{
 pub mod base;
 pub mod client;
 pub mod manager;
+pub mod manifest;
 pub mod modules;
 
 /// Extensions errors

@@ -28,9 +28,16 @@ export interface FileInfo {
   format: FileFormat;
 }
 
-export interface ExtensionInfo {
+export interface ManifestExtension {
   name: string;
   id: string;
+  author: string;
+  version: string;
+  repository: string;
+  main: string | null;
+}
+export interface ManifestInfo {
+  extension: ManifestExtension;
 }
 
 export interface Client extends Emittery {
@@ -51,7 +58,7 @@ export interface Client extends Emittery {
   ) => Promise<CoreResponse<Array<DirItemInfo>>>;
   get_ext_info_by_id: (
     extensionId: string
-  ) => Promise<CoreResponse<ExtensionInfo>>;
+  ) => Promise<CoreResponse<ManifestInfo>>;
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
   whenConnected: () => Promise<void>;
