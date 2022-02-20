@@ -7,6 +7,7 @@ Requisites:
 - tauri cli (`cargo install tauri-cli --git https://github.com/tauri-apps/tauri --branch next`)
 - tauri os-specific dependencies (See [this](https://tauri.studio/docs/get-started/intro#setting-up-your-environment))
 - yarn (`npm i -g yarn`)
+- (Optional, just for tests): [nextest](https://nexte.st/) (`cargo nextest run`)
 
 Installing dependencies:
 ```shell

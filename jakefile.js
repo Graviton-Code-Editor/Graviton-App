@@ -39,7 +39,7 @@ task('build_desktop', async function () {
 
 desc('Run tests');
 task('core_tests', async function () {
-    await run('cargo', ['test'])
+    await run('cargo', ['nextest', 'run'])
 });
 task('web_tests', async function () {
     await run('yarn', ['--cwd', './web','run','test'])
