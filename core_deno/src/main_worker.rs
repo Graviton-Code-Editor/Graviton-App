@@ -15,7 +15,7 @@ use gveditor_core_api::extensions::client::ExtensionClient;
 
 use crate::worker_extension;
 
-static GRAVITON_DENO_API: &'static str =
+static GRAVITON_DENO_API: &str =
     include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/graviton.js"));
 
 pub async fn create_main_worker(main_path: &str, client: ExtensionClient) {
