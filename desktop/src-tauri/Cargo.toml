@@ -17,6 +17,7 @@ serde = { version = "1.0", features = ["derive"] }
 tauri = { git = "https://github.com/tauri-apps/tauri",  features = ["api-all"] }
 gveditor-core = { path = "../../core"}
 gveditor-core-api  = { path = "../../core_api"}
+gveditor-core-deno = { path = "../../core_deno"}
 tracing = "0.1.29"
 tracing-subscriber = {version="0.3.4", features= ["env-filter", "std"] }
 git-for-graviton = { path = "../../extensions/git"}

@@ -116,7 +116,7 @@ pub fn get_info() -> ManifestInfo {
             name: env!("CARGO_PKG_NAME").to_string(),
             author: "Marc Espín".to_string(),
             version: env!("CARGO_PKG_VERSION").to_string(),
-            repository: "".to_string(), //TODO
+            repository: "https://github.com/Graviton-Code-Editor/Graviton-App".to_string(),
             main: None,
         },
     }

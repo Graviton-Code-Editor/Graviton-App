@@ -702,20 +702,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "core_deno"
-version = "0.1.0"
-dependencies = [
- "async-trait",
- "deno_core",
- "deno_runtime",
- "gveditor-core-api",
- "serde",
- "serde_derive",
- "tokio",
- "tokio-stream",
-]
-
-[[package]]
 name = "cpufeatures"
 version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2004,6 +1990,7 @@ dependencies = [
  "git-for-graviton",
  "gveditor-core",
  "gveditor-core-api",
+ "gveditor-core-deno",
  "serde",
  "serde_json",
  "tauri",
@@ -2110,6 +2097,20 @@ dependencies = [
  "tokio",
  "toml",
  "tracing",
+]
+
+[[package]]
+name = "gveditor-core-deno"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "deno_core",
+ "deno_runtime",
+ "gveditor-core-api",
+ "serde",
+ "serde_derive",
+ "tokio",
+ "tokio-stream",
 ]
 
 [[package]]

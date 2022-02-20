@@ -28,6 +28,7 @@ use gveditor_core_api::state::{
 };
 use gveditor_core_api::state_persistors::file::FilePersistor;
 use gveditor_core_api::State;
+use gveditor_core_deno::DenoExtensionSupport;
 use std::fs;
 use std::fs::File;
 use std::path::PathBuf;
@@ -187,9 +188,9 @@ async fn main() {
 
     let context = tauri::generate_context!("tauri.conf.json");
 
-    // Get the paths
+    // Get the extension paths
     let settings_file_path = get_settings_path(&context);
-    let _third_party_extensions_path = get_extensions_installation_path(&context);
+    let third_party_extensions_path = get_extensions_installation_path(&context);
 
     let mut extensions_manager = ExtensionsManager::new(to_core.clone());
 
@@ -198,6 +199,14 @@ async fn main() {
         .load_extension_from_entry(
             git_for_graviton::entry,
             git_for_graviton::get_info(),
+            STATE_ID,
+        )
+        .await;
+
+    // Load third party extensions
+    extensions_manager
+        .load_extensions_with_deno_in_directory(
+            third_party_extensions_path.to_str().unwrap(),
             STATE_ID,
         )
         .await;

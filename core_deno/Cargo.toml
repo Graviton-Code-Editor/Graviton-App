@@ -1,5 +1,5 @@
 [package]
-name = "core_deno"
+name = "gveditor-core-deno"
 version = "0.1.0"
 edition = "2021"
 

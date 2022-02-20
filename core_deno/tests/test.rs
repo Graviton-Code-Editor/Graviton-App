@@ -1,6 +1,4 @@
 use std::env::current_dir;
-
-use core_deno::DenoExtensionSupport;
 use gveditor_core_api::extensions::manager::{
     ExtensionsManager,
     LoadedExtension,
@@ -10,6 +8,7 @@ use gveditor_core_api::{
     ManifestExtension,
     ManifestInfo,
 };
+use gveditor_core_deno::DenoExtensionSupport;
 use tokio::sync::mpsc::channel;
 
 /// Loads an extension entrypoint directly, and waits for a message sent from it
