@@ -33,7 +33,7 @@ See [TODO](./TODO.md)
 |---------------------|-------------|-------------|
 | [gveditor-core](./core)       | Graviton core engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
 | [gveditor-core-api](./core_api)   | Graviton API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
-| [gveditor-core-deno](./core_deno)   | Extension connector for Deno | WIP  |
+| [gveditor-core-deno](./core_deno)   | Deno runtime for Graviton extensions | WIP  |
 | [extensions/git](./extensions/git)      | Graviton Core Git Extension | WIP |
 | [desktop](./desktop)             | Desktop web-based frontend  | WIP |
 | [server](./server)               | HTTP Core + Web  | WIP |

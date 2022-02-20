@@ -28,7 +28,7 @@
 - [x] Ability to write files (XD)
 - [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Make it possible to persist states
-- [ ] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
+- [x] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
 
 # core_deno
 - [ ] Send core messages (WIP)
