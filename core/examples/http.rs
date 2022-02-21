@@ -1,7 +1,4 @@
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 use std::thread;
 
 use gveditor_core::handlers::HTTPHandler;
@@ -16,14 +13,16 @@ use gveditor_core_api::state::{
     StatesList,
     TokenFlags,
 };
-use gveditor_core_api::State;
+use gveditor_core_api::{
+    Mutex,
+    State,
+};
 use tokio::sync::mpsc::channel;
-use tokio::sync::Mutex as AsyncMutex;
 
 #[tokio::main]
 async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
-    let from_core = Arc::new(AsyncMutex::new(from_core));
+    let from_core = Arc::new(Mutex::new(from_core));
 
     let states = {
         let sample_state = State::new(

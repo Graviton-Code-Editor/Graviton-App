@@ -6,15 +6,13 @@ mod server;
 
 pub use configuration::Configuration;
 use gveditor_core_api::state::StatesList;
+use gveditor_core_api::Mutex;
 pub use server::{
     gen_client,
     RPCResult,
     Server,
 };
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 pub use {
     jsonrpc_core_client,
     jsonrpc_http_server,

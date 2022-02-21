@@ -4,26 +4,26 @@ use tokio::sync::mpsc::{
     Receiver,
     Sender,
 };
-use tokio::sync::Mutex as AsyncMutex;
+use tokio::sync::Mutex;
 
 use crate::handlers::TransportHandler;
 
-pub type Handler = Arc<AsyncMutex<Box<dyn TransportHandler + Send + Sync>>>;
+pub type Handler = Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>;
 
 pub struct Configuration {
     pub handler: Handler,
     pub sender: Sender<Messages>,
-    pub receiver: Arc<AsyncMutex<Receiver<Messages>>>,
+    pub receiver: Arc<Mutex<Receiver<Messages>>>,
 }
 
 impl Configuration {
     pub fn new(
         handler: Box<dyn TransportHandler + Send + Sync>,
         sender: Sender<Messages>,
-        receiver: Arc<AsyncMutex<Receiver<Messages>>>,
+        receiver: Arc<Mutex<Receiver<Messages>>>,
     ) -> Self {
         Self {
-            handler: Arc::new(AsyncMutex::new(handler)),
+            handler: Arc::new(Mutex::new(handler)),
             sender,
             receiver,
         }

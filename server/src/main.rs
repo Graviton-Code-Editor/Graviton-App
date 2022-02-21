@@ -1,7 +1,4 @@
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 use std::thread;
 
 use gveditor_core::handlers::HTTPHandler;
@@ -18,13 +15,15 @@ use gveditor_core_api::state::{
     TokenFlags,
 };
 use gveditor_core_api::tokio::sync::mpsc::channel;
-use gveditor_core_api::tokio::sync::Mutex as AsyncMutex;
-use gveditor_core_api::State;
+use gveditor_core_api::{
+    Mutex,
+    State,
+};
 
 #[tokio::main]
 async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
-    let from_core = Arc::new(AsyncMutex::new(from_core));
+    let from_core = Arc::new(Mutex::new(from_core));
 
     let extensions_manager = ExtensionsManager::new(to_core.clone())
         .load_extension_from_entry(git_for_graviton::entry, git_for_graviton::get_info(), 1)

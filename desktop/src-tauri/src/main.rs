@@ -14,7 +14,6 @@ use gveditor_core::tokio::sync::mpsc::{
     Receiver,
     Sender,
 };
-use gveditor_core::tokio::sync::Mutex as AsyncMutex;
 use gveditor_core::{
     tokio,
     Configuration,
@@ -27,15 +26,15 @@ use gveditor_core_api::state::{
     TokenFlags,
 };
 use gveditor_core_api::state_persistors::file::FilePersistor;
-use gveditor_core_api::State;
+use gveditor_core_api::{
+    Mutex,
+    State,
+};
 use gveditor_core_deno::DenoExtensionSupport;
 use std::fs;
 use std::fs::File;
 use std::path::PathBuf;
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 use tauri::api::path::{
     resolve_path,
     BaseDirectory,
@@ -72,8 +71,8 @@ fn open_tauri(
     sender_to_handler: Sender<Messages>,
     receiver_from_handler: Receiver<Messages>,
 ) {
-    let receiver_from_handler = Arc::new(AsyncMutex::new(receiver_from_handler));
-    let sender_to_handler = Arc::new(AsyncMutex::new(sender_to_handler));
+    let receiver_from_handler = Arc::new(Mutex::new(receiver_from_handler));
+    let sender_to_handler = Arc::new(Mutex::new(sender_to_handler));
 
     tauri::Builder::default()
         .setup(move |app| {
@@ -184,7 +183,7 @@ async fn main() {
     setup_logger();
 
     let (to_core, from_core) = channel::<Messages>(1);
-    let from_core = Arc::new(AsyncMutex::new(from_core));
+    let from_core = Arc::new(Mutex::new(from_core));
 
     let context = tauri::generate_context!("tauri.conf.json");
 

@@ -21,10 +21,8 @@ use serde::{
 };
 use std::collections::HashMap;
 use std::fmt;
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
+use tokio::sync::Mutex;
 
 #[derive(Clone)]
 pub enum TokenFlags {
@@ -76,11 +74,11 @@ impl StatesList {
     }
 
     /// Notify all the extensions in a state about a message
-    pub fn notify_extensions(&self, message: ExtensionMessages) {
+    pub async fn notify_extensions(&self, message: ExtensionMessages) {
         let state_id = message.get_state_id();
         let state = self.states.get(&state_id);
         if let Some(state) = state {
-            let state = state.lock().unwrap();
+            let state = state.lock().await;
             state.notify_extensions(message);
         }
     }
@@ -276,11 +274,11 @@ impl State {
             .collect::<Vec<String>>()
     }
 
-    pub fn update(&mut self, new_data: StateData) {
+    pub async fn update(&mut self, new_data: StateData) {
         self.data.opened_tabs = new_data.opened_tabs;
 
         if let Some(persistor) = &self.persistor {
-            persistor.lock().unwrap().save(&self.data);
+            persistor.lock().await.save(&self.data);
         }
     }
 }

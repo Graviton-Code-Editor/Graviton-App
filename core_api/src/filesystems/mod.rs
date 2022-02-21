@@ -1,3 +1,4 @@
+use async_trait::async_trait;
 use serde::{
     Deserialize,
     Serialize,
@@ -17,12 +18,12 @@ pub enum FilesystemErrors {
     PermissionDenied,
 }
 
-// TODO: Make them "asynchronous" by using tokio::fs
 /// Filesystem interface
+#[async_trait]
 pub trait Filesystem {
-    fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors>;
-    fn write_file_by_path(&self, path: &str, content: &str) -> Result<(), Errors>;
-    fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
+    async fn read_file_by_path(&self, path: &str) -> Result<FileInfo, Errors>;
+    async fn write_file_by_path(&self, path: &str, content: &str) -> Result<(), Errors>;
+    async fn list_dir_by_path(&self, path: &str) -> Result<Vec<DirItemInfo>, Errors>;
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone)]

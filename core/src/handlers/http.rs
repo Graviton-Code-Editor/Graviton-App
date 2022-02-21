@@ -16,6 +16,7 @@ use hyper_tungstenite::{
     WebSocketStream,
 };
 use jsonrpc_core::futures::StreamExt;
+use jsonrpc_core::futures_executor::block_on;
 use jsonrpc_core::futures_util::stream::SplitSink;
 use jsonrpc_core::futures_util::SinkExt;
 use jsonrpc_core::IoHandler;
@@ -27,14 +28,11 @@ use jsonrpc_http_server::{
     RestApi,
 };
 use std::collections::HashMap;
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 use std::thread;
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc::Sender;
-use tokio::sync::Mutex as AsyncMutex;
+use tokio::sync::Mutex;
 
 use jsonrpc_core::serde_json;
 
@@ -89,9 +87,9 @@ impl WSMessages {
 }
 
 type SocketsRegistry = Arc<
-    AsyncMutex<
+    Mutex<
         Vec<(
-            Arc<AsyncMutex<SplitSink<WebSocketStream<Upgraded>, tungstenite::Message>>>,
+            Arc<Mutex<SplitSink<WebSocketStream<Upgraded>, tungstenite::Message>>>,
             u8,
         )>,
     >,
@@ -111,7 +109,8 @@ impl RequestMiddleware for WebSocketsManager {
         request: jsonrpc_http_server::hyper::Request<jsonrpc_http_server::hyper::Body>,
     ) -> RequestMiddlewareAction {
         // Authentificate the websockets connection
-        if !Self::auth_ws(&request, &self.states) {
+        // TODO: Don't use block_on
+        if !block_on(Self::auth_ws(&request, &self.states)) {
             return request.into();
         }
 
@@ -156,7 +155,10 @@ impl WebSocketsManager {
     ///
     /// * `request`           - The Hyper request
     /// * `states`            - A States list
-    pub fn auth_ws(request: &hyper::Request<hyper::Body>, states: &Arc<Mutex<StatesList>>) -> bool {
+    pub async fn auth_ws(
+        request: &hyper::Request<hyper::Body>,
+        states: &Arc<Mutex<StatesList>>,
+    ) -> bool {
         let url = request.uri();
         // Create a URL to so the parameters can be queried
         let url = url::Url::parse(&format!("ws://locahost{}", &url.to_string())).unwrap();
@@ -168,9 +170,9 @@ impl WebSocketsManager {
         if let (Some(token), Some(state_id)) = (token, state_id) {
             let state_id = state_id.parse::<u8>();
             if let Ok(state_id) = state_id {
-                if let Some(state) = states.lock().unwrap().get_state_by_id(state_id) {
+                if let Some(state) = states.lock().await.get_state_by_id(state_id) {
                     // If found, then make sure the token is valid
-                    state.lock().unwrap().has_token(token)
+                    state.lock().await.has_token(token)
                 } else {
                     false
                 }
@@ -198,7 +200,7 @@ impl WebSocketsManager {
             runtime.block_on(async {
                 let websocket = websocket.await.unwrap();
                 let (sender, mut recv) = websocket.split();
-                let sender = Arc::new(AsyncMutex::new(sender));
+                let sender = Arc::new(Mutex::new(sender));
 
                 // Handle new incoming message in the ws connection
                 while let Some(Ok(message)) = recv.next().await {
@@ -234,7 +236,7 @@ impl HTTPHandler {
     pub fn new(json_rpc_http_cors: DomainsValidation<AccessControlAllowOrigin>, port: u16) -> Self {
         Self {
             json_rpc_http_cors,
-            sockets: Arc::new(AsyncMutex::new(Vec::new())),
+            sockets: Arc::new(Mutex::new(Vec::new())),
             port,
         }
     }
@@ -308,14 +310,14 @@ impl TransportHandler for HTTPHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::sync::{
-        Arc,
-        Mutex,
-    };
+    use std::sync::Arc;
     use std::time::Duration;
 
     use gveditor_core_api::state::TokenFlags;
-    use gveditor_core_api::State;
+    use gveditor_core_api::{
+        Mutex,
+        State,
+    };
     use hyper_tungstenite::tungstenite::{
         connect,
         Message,
@@ -325,7 +327,6 @@ mod tests {
     use tokio::time::sleep;
     use url::Url;
 
-    use crate::handlers::http::AsyncMutex;
     use crate::handlers::Messages;
     use crate::{
         Configuration,
@@ -340,7 +341,7 @@ mod tests {
         // RUN THE SERVER
 
         let (to_core, from_core) = channel::<Messages>(1);
-        let from_core = Arc::new(AsyncMutex::new(from_core));
+        let from_core = Arc::new(Mutex::new(from_core));
 
         let states = {
             let sample_state = State::default();

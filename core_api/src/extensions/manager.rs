@@ -4,7 +4,7 @@ use tokio::sync::mpsc::{
     channel,
     Sender,
 };
-use tokio::sync::Mutex as AsyncMutex;
+use tokio::sync::Mutex;
 
 use crate::extensions::base::Extension;
 use crate::messaging::Messages;
@@ -54,7 +54,7 @@ impl ExtensionsManager {
     /// Load a extension
     pub fn register(&mut self, parent_id: &str, plugin: Box<dyn Extension + Send>) {
         let info = plugin.get_info();
-        let plugin = Arc::new(AsyncMutex::new(plugin));
+        let plugin = Arc::new(Mutex::new(plugin));
         self.extensions.push(LoadedExtension::ExtensionInstance {
             plugin,
             info,
@@ -76,7 +76,7 @@ pub enum LoadedExtension {
     },
     // Loaded from a extension
     ExtensionInstance {
-        plugin: Arc<AsyncMutex<Box<dyn Extension + Send>>>,
+        plugin: Arc<Mutex<Box<dyn Extension + Send>>>,
         info: ExtensionInfo,
         parent_id: String,
     },

@@ -1,3 +1,5 @@
+#![feature(async_closure)]
+
 pub mod extensions;
 pub mod filesystems;
 pub mod messaging;

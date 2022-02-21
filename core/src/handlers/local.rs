@@ -7,12 +7,10 @@ use crate::server::{
 use crate::StatesList;
 use async_trait::async_trait;
 use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::Mutex;
 use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
-use std::sync::{
-    Arc,
-    Mutex,
-};
+use std::sync::Arc;
 use std::thread;
 use tokio::sync::mpsc::{
     channel,
@@ -59,9 +57,9 @@ impl TransportHandler for LocalHandler {
         let rv = self.receiver_to_local.clone();
 
         thread::spawn(move || {
-            let mut rv = rv.lock().unwrap();
             let runtime = tokio::runtime::Runtime::new().unwrap();
             runtime.block_on(async {
+                let mut rv = rv.lock().await;
                 loop {
                     if let Some(msg) = rv.recv().await {
                         core_sender.send(msg).await.unwrap();
@@ -79,17 +77,17 @@ impl TransportHandler for LocalHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::sync::{
-        Arc,
-        Mutex,
-    };
+    use std::sync::Arc;
 
     use gveditor_core_api::extensions::manager::ExtensionsManager;
     use gveditor_core_api::state::{
         MemoryPersistor,
         TokenFlags,
     };
-    use gveditor_core_api::State;
+    use gveditor_core_api::{
+        Mutex,
+        State,
+    };
 
     use tokio::sync::mpsc::channel;
 
