@@ -33,7 +33,7 @@ export class Tab implements Omit<BasicTabData, "tab_type"> {
    * @param title - Title of the tab
    */
   constructor(title: string) {
-    this.id = Date.now().toString();
+    this.id = Date.now().toString() + Math.random();
     this.title = title;
     this.edited = false;
     this.container = () => <div />;

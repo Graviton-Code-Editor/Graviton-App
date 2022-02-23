@@ -1,6 +1,13 @@
+#![feature(map_try_insert)]
+
+use std::collections::HashMap;
+use std::sync::Arc;
+
 use gveditor_core_api::{
     Manifest,
     ManifestInfo,
+    Mutex,
+    Sender,
 };
 use tokio::fs;
 use tokio::runtime::Runtime;
@@ -26,6 +33,9 @@ use async_trait::async_trait;
 
 use tokio_stream::wrappers::ReadDirStream;
 use tokio_stream::StreamExt;
+use uuid::Uuid;
+
+pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ExtensionMessages>>>>>;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
@@ -34,15 +44,23 @@ struct DenoExtension {
     info: ManifestInfo,
     client: ExtensionClient,
     state_id: u8,
+    listeners: EventListeners,
 }
 
 impl DenoExtension {
-    pub fn new(main_path: &str, info: ManifestInfo, client: ExtensionClient, state_id: u8) -> Self {
+    pub fn new(
+        main_path: &str,
+        info: ManifestInfo,
+        client: ExtensionClient,
+        state_id: u8,
+        listeners: EventListeners,
+    ) -> Self {
         Self {
             main_path: main_path.to_string(),
             info,
             client,
             state_id,
+            listeners,
         }
     }
 }
@@ -51,16 +69,41 @@ impl Extension for DenoExtension {
     fn init(&mut self) {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
+        let listeners = self.listeners.clone();
+
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
-                create_main_worker(&main_path, client).await;
+                create_main_worker(&main_path, client, listeners).await;
             });
         });
+
+        tracing::info!(
+            "Loaded Deno Extension <{}> from {}",
+            self.info.extension.name,
+            self.main_path
+        );
     }
 
-    fn notify(&mut self, _message: ExtensionMessages) {}
+    fn unload(&mut self) {
+        self.notify(ExtensionMessages::Unload(self.state_id));
+    }
+
+    fn notify(&mut self, message: ExtensionMessages) {
+        let listeners = self.listeners.clone();
+        tokio::spawn(async move {
+            let listeners = listeners.lock().await;
+            let event_name = message.get_name();
+            let unload_listeners = listeners.get(event_name);
+
+            if let Some(unload_listeners) = unload_listeners {
+                for listener in unload_listeners.values() {
+                    listener.send(message.clone()).await.ok();
+                }
+            }
+        });
+    }
 
     fn get_info(&self) -> ExtensionInfo {
         ExtensionInfo {
@@ -95,7 +138,17 @@ impl DenoExtensionSupport for ExtensionsManager {
         state_id: u8,
     ) -> &mut ExtensionsManager {
         let client = ExtensionClient::new(&info.extension.name.clone(), self.sender.clone());
-        let deno_extension = Box::new(DenoExtension::new(path, info.clone(), client, state_id));
+        let listeners = Arc::new(Mutex::new(HashMap::<
+            String,
+            HashMap<Uuid, Sender<ExtensionMessages>>,
+        >::new()));
+        let deno_extension = Box::new(DenoExtension::new(
+            path,
+            info.clone(),
+            client,
+            state_id,
+            listeners,
+        ));
         self.register(&info.extension.id, deno_extension);
         self.extensions
             .push(LoadedExtension::ManifestBuiltin { info });
@@ -128,16 +181,27 @@ impl DenoExtensionSupport for ExtensionsManager {
                             self.sender.clone(),
                         );
                         let main_path = item_path.join(main);
+                        let listeners = Arc::new(Mutex::new(HashMap::<
+                            String,
+                            HashMap<Uuid, Sender<ExtensionMessages>>,
+                        >::new()));
                         let deno_extension = Box::new(DenoExtension::new(
                             main_path.to_str().unwrap(),
                             manifest.info.clone(),
                             client,
                             state_id,
+                            listeners,
                         ));
                         self.register(&manifest.info.extension.id, deno_extension);
+
                         self.extensions
                             .push(LoadedExtension::ManifestFile { manifest });
                     } else {
+                        tracing::error!(
+                            "Could not register Deno Extension <{}> from {}",
+                            manifest.info.extension.name,
+                            manifest.location.to_str().unwrap()
+                        );
                         // Doesn't have an entry file
                     }
                 }

@@ -18,6 +18,10 @@ pub trait Extension {
     /// This will be called when the extension is loaded
     fn init(&mut self);
 
+    /// Unload method of the extension
+    /// This will be called when the extension is unloaded
+    fn unload(&mut self);
+
     /// Forward messages to the extension
     fn notify(&mut self, message: ExtensionMessages);
 

@@ -2112,6 +2112,8 @@ dependencies = [
  "serde_derive",
  "tokio",
  "tokio-stream",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]

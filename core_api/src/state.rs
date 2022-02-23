@@ -195,6 +195,7 @@ impl State {
         for ext in &self.extensions_manager.extensions {
             if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let mut ext_plugin = plugin.lock().await;
+                ext_plugin.unload();
                 ext_plugin.init();
             }
         }
@@ -315,6 +316,10 @@ mod tests {
             }
 
             fn init(&mut self) {
+                todo!()
+            }
+
+            fn unload(&mut self) {
                 todo!()
             }
 

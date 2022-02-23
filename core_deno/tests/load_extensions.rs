@@ -2,7 +2,10 @@ use gveditor_core_api::extensions::manager::{
     ExtensionsManager,
     LoadedExtension,
 };
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{
+    ExtensionMessages,
+    Messages,
+};
 use gveditor_core_api::{
     ManifestExtension,
     ManifestInfo,
@@ -34,13 +37,34 @@ async fn load_sample_extension() {
 
     assert_eq!(manager.extensions.len(), 2);
 
+    // Load
     if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
         let mut ext_plugin = plugin.lock().await;
         ext_plugin.init();
     }
 
-    // Wait for the javascript to send the message
+    // Wait for the javascript to send a response
     rv.recv().await;
+
+    // Send some dumy event
+    if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
+        let mut ext_plugin = plugin.lock().await;
+        ext_plugin.notify(ExtensionMessages::ListDir(
+            0,
+            "".to_string(),
+            "".to_string(),
+            Ok(vec![]),
+        ));
+    }
+
+    // Wait for the javascript to send a response
+    rv.recv().await;
+
+    // Unload
+    if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
+        let mut ext_plugin = plugin.lock().await;
+        ext_plugin.unload();
+    }
 }
 
 /// Loads the extension located under tests/extensions, executes it, and waits for a message sent from it
@@ -65,4 +89,24 @@ async fn load_extensions_from_folder() {
 
     // Wait for the javascript to send the message
     rv.recv().await;
+
+    // Send some dumy event
+    if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
+        let mut ext_plugin = plugin.lock().await;
+        ext_plugin.notify(ExtensionMessages::ListDir(
+            0,
+            "".to_string(),
+            "".to_string(),
+            Ok(vec![]),
+        ));
+    }
+
+    // Wait for the javascript to send a response
+    rv.recv().await;
+
+    // Unload
+    if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
+        let mut ext_plugin = plugin.lock().await;
+        ext_plugin.unload();
+    }
 }

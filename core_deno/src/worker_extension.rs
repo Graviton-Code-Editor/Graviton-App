@@ -5,9 +5,59 @@ use deno_core::{
     OpState,
 };
 use gveditor_core_api::extensions::client::ExtensionClient;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{
+    ExtensionMessages,
+    Messages,
+};
 use std::cell::RefCell;
+use std::collections::HashMap;
 use std::rc::Rc;
+use tokio::sync::mpsc;
+use uuid::Uuid;
+
+use crate::EventListeners;
+
+/// Send Core Messages from deno
+async fn listen_messages_from_core(
+    state: Rc<RefCell<OpState>>,
+    event_name: String,
+    _: (),
+) -> Result<ExtensionMessages, AnyError> {
+    let (s, mut r) = mpsc::channel(1);
+    let s_id = Uuid::new_v4();
+
+    let state = state.borrow();
+
+    let listeners: &EventListeners = state.try_borrow::<EventListeners>().unwrap();
+
+    // Create the event map if not found
+    listeners
+        .lock()
+        .await
+        .try_insert(event_name.clone(), HashMap::new())
+        .ok();
+
+    // Insert the listener
+    listeners
+        .lock()
+        .await
+        .get_mut(&event_name)
+        .unwrap()
+        .insert(s_id, s);
+
+    let event = r.recv().await;
+
+    listeners
+        .lock()
+        .await
+        .get_mut(&event_name)
+        .unwrap()
+        .remove(&s_id);
+
+    // TODO, remove the event hashmap if no more senders are on it
+
+    Ok(event.unwrap())
+}
 
 /// Send Core Messages from deno
 async fn send_message_to_core(
@@ -25,14 +75,18 @@ async fn send_message_to_core(
 }
 
 /// Crate the extension to bridge Graviton Core and the Deno extension
-pub fn new(client: ExtensionClient) -> Extension {
+pub fn new(client: ExtensionClient, listeners: EventListeners) -> Extension {
     Extension::builder()
-        .ops(vec![(
-            "send_message_to_core",
-            op_async(send_message_to_core),
-        )])
+        .ops(vec![
+            ("send_message_to_core", op_async(send_message_to_core)),
+            (
+                "listen_messages_from_core",
+                op_async(listen_messages_from_core),
+            ),
+        ])
         .state(move |s| {
             s.put(client.clone());
+            s.put(listeners.clone());
             Ok(())
         })
         .build()

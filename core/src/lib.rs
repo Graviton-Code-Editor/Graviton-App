@@ -23,7 +23,7 @@ pub use {
 ///
 /// # Example
 /// ```rust
-/// # use std::sync::{Arc, Mutex};
+/// # use std::sync::Arc;
 /// # use gveditor_core::{
 ///     # handlers::HTTPHandler,
 ///     # Configuration,
@@ -41,11 +41,11 @@ pub use {
 ///  # };
 /// # use tokio::sync::{
 ///    # mpsc::channel,
-///    # Mutex as AsyncMutex
+///    # Mutex
 /// # };
 ///
 ///  let (to_core, from_core) = channel::<Messages>(1);
-///  let from_core = Arc::new(AsyncMutex::new(from_core));
+///  let from_core = Arc::new(Mutex::new(from_core));
 ///
 ///  // A pointer to a StatesList
 ///  let states = {

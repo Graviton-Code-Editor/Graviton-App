@@ -90,6 +90,8 @@ impl Extension for GitExtension {
         });
     }
 
+    fn unload(&mut self) {}
+
     fn notify(&mut self, message: ExtensionMessages) {
         self.tx.send(message).unwrap();
     }

@@ -18,3 +18,5 @@ tokio-stream = { version = "0.1.8", features = ["fs"]}
 serde_derive = "1.0.126"
 serde = { version = "1.0.127", features = ["derive"] }
 async-trait = "0.1.52"
+tracing = "0.1.29"
+uuid = "0.8.2"

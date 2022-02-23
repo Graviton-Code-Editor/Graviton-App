@@ -62,6 +62,7 @@ pub enum ExtensionMessages {
     ReadFile(u8, String, Result<FileInfo, Errors>),
     WriteFile(u8, String, String, Result<(), Errors>),
     ListDir(u8, String, String, Result<Vec<DirItemInfo>, Errors>),
+    Unload(u8),
 }
 
 impl ExtensionMessages {
@@ -71,6 +72,17 @@ impl ExtensionMessages {
             Self::ReadFile(state_id, ..) => *state_id,
             Self::WriteFile(state_id, ..) => *state_id,
             Self::ListDir(state_id, ..) => *state_id,
+            Self::Unload(state_id, ..) => *state_id,
+        }
+    }
+
+    pub fn get_name(&self) -> &str {
+        match self {
+            Self::CoreMessage(..) => "core",
+            Self::ReadFile(..) => "readFile",
+            Self::WriteFile(..) => "writeFile",
+            Self::ListDir(..) => "listDir",
+            Self::Unload(..) => "unload",
         }
     }
 }

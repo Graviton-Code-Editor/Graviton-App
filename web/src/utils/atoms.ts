@@ -7,7 +7,9 @@ import { StatusBarItem } from "../modules/statusbar_item";
 import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
 import { FloatingWindow } from "../modules/windows";
 import GlobalPrompt from "../prompts/global";
+import SettingsTab from "../tabs/settings";
 import TextEditorTab from "../tabs/text_editor";
+import WelcomeTab from "../tabs/welcome";
 import { Client } from "../types/client";
 import {
   FocusedTab,
@@ -29,26 +31,35 @@ function tabToTabDataRecursively(val: TabList<Tab>): TabDataList {
 }
 
 export function tabDataToTabRecursively(
-  val: TabDataList
+  tabData: TabDataList
 ): TabList<undefined | EditorTab | Tab> {
-  if (Array.isArray(val)) {
-    return val.map(tabDataToTabRecursively).filter(Boolean);
+  if (Array.isArray(tabData)) {
+    return tabData.map(tabDataToTabRecursively).filter(Boolean);
   } else {
-    switch (val.tab_type) {
+    switch (tabData.tab_type) {
       case "TextEditor": {
         const getEditor = useEditor();
         const editor = getEditor({ Text: "Rust" });
-        const data = val as TextEditorTabData;
+        const data = tabData as TextEditorTabData;
         if (editor != null) {
           const tab = new editor(data.filename, data.path, data.content);
           return tab;
         }
         break;
       }
-      default:
-        return Tab.fromJson(val as BasicTabData);
+      default: {
+        const basicTabData = tabData as BasicTabData;
+        switch (basicTabData.title) {
+          case "Settings":
+            return new SettingsTab();
+          case "Welcome":
+            return new WelcomeTab();
+          default:
+            return Tab.fromJson(basicTabData);
+        }
+      }
     }
-  }
+  } //
 }
 
 function getAllStateData(): Omit<StateData, "id"> {

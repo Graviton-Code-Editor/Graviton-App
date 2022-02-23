@@ -5,7 +5,10 @@ export default function applyPatches() {
   window.addEventListener(
     "keydown",
     (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === "p") {
+      if (
+        (event.ctrlKey || event.metaKey || event.shiftKey) &&
+        event.key === "p"
+      ) {
         event.preventDefault();
       }
     },
@@ -23,3 +26,4 @@ export default function applyPatches() {
     true
   );
 }
+//
