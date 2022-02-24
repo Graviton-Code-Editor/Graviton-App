@@ -20,9 +20,18 @@ function listenTo(event){
     return Deno.core.opAsync("listen_messages_from_core", event);
 }
 
+function exit(){
+    return Deno.core.opAsync("terminate_main_worker")
+}
+
+function whenUnload(){
+    return listenTo("unload")
+}
 
 globalThis.Graviton = {
     send,
     listen,
-    listenTo
+    listenTo,
+    exit,
+    whenUnload,
 }

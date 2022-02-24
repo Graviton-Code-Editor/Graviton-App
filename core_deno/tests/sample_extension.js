@@ -10,6 +10,11 @@ const send = () => {
 
 Graviton.listenTo("listDir").then(() => send())
 
+Graviton.whenUnload().then(async () => {
+    await send();
+    await Graviton.exit()
+})
+
 send()
 
 

@@ -65,6 +65,9 @@ async fn load_sample_extension() {
         let mut ext_plugin = plugin.lock().await;
         ext_plugin.unload();
     }
+
+    // Wait for the javascript to send a response
+    rv.recv().await;
 }
 
 /// Loads the extension located under tests/extensions, executes it, and waits for a message sent from it

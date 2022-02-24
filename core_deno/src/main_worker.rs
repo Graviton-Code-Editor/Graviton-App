@@ -8,6 +8,7 @@ use deno_runtime::worker::{
     WorkerOptions,
 };
 use deno_runtime::BootstrapOptions;
+use gveditor_core_api::Mutex;
 use std::rc::Rc;
 use std::sync::Arc;
 
@@ -28,6 +29,8 @@ pub async fn create_main_worker(
     client: ExtensionClient,
     listeners: EventListeners,
 ) -> MainWorker {
+    let worker_handle = Arc::new(Mutex::new(None));
+
     let module_loader = Rc::new(FsModuleLoader);
 
     let create_web_worker_cb = Arc::new(|_| {
@@ -50,7 +53,11 @@ pub async fn create_main_worker(
             ts_version: "0.0.0".to_string(),
             unstable: false,
         },
-        extensions: vec![worker_extension::new(client, listeners.clone())],
+        extensions: vec![worker_extension::new(
+            client,
+            listeners,
+            worker_handle.clone(),
+        )],
         unsafely_ignore_certificate_errors: None,
         root_cert_store: None,
         user_agent: "graviton".to_string(),
@@ -76,6 +83,10 @@ pub async fn create_main_worker(
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);
+
+    // Save the worker handle
+    let handle = worker.js_runtime.handle_scope().thread_safe_handle();
+    worker_handle.lock().await.replace(handle);
 
     // Load the Graviton namespace
     worker

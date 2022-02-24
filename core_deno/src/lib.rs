@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
+use deno_core::v8::IsolateHandle;
 use gveditor_core_api::{
     Manifest,
     ManifestInfo,
@@ -31,12 +32,12 @@ use main_worker::create_main_worker;
 
 use async_trait::async_trait;
 
-use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReadDirStream;
 use tokio_stream::StreamExt;
 use uuid::Uuid;
 
 pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ExtensionMessages>>>>>;
+pub type WorkerHandle = Arc<Mutex<Option<IsolateHandle>>>;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
 #[allow(dead_code)]
@@ -70,11 +71,7 @@ impl Extension for DenoExtension {
     fn init(&mut self) {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
-        let listeners = self.listeners.clone();
-        let handle_p = Arc::new(Mutex::new(None));
-
-        let worker_handle = handle_p.clone();
-        let worker_listeners = listeners.clone();
+        let worker_listeners = self.listeners.clone();
 
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
@@ -83,43 +80,8 @@ impl Extension for DenoExtension {
                 let mut worker =
                     create_main_worker(&main_path, client, worker_listeners.clone()).await;
 
-                let handle = worker.js_runtime.handle_scope().thread_safe_handle();
-
-                worker_handle.lock().await.replace(handle);
-
                 worker.run_event_loop(false).await.ok();
             });
-        });
-
-        // Register an event listener on "unload" that will terminate the worker
-        tokio::spawn(async move {
-            let mut lists = listeners.lock().await;
-
-            lists.try_insert("unload".to_string(), HashMap::new()).ok();
-
-            let (s, mut r) = mpsc::channel(1);
-            let s_id = Uuid::new_v4();
-
-            lists.get_mut("unload").unwrap().insert(s_id, s);
-
-            drop(lists);
-
-            // Wait for the unload event
-            r.recv().await;
-
-            // Clear up all listeners
-            listeners
-                .lock()
-                .await
-                .get_mut("unload")
-                .unwrap()
-                .remove(&s_id);
-            // TODO: Clear all other listeners
-
-            // Close the worker forcefully
-            if let Some(handle) = &*handle_p.lock().await {
-                handle.terminate_execution();
-            }
         });
 
         tracing::info!(
