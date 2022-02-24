@@ -31,6 +31,7 @@ use main_worker::create_main_worker;
 
 use async_trait::async_trait;
 
+use tokio::sync::mpsc;
 use tokio_stream::wrappers::ReadDirStream;
 use tokio_stream::StreamExt;
 use uuid::Uuid;
@@ -70,13 +71,55 @@ impl Extension for DenoExtension {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
         let listeners = self.listeners.clone();
+        let handle_p = Arc::new(Mutex::new(None));
+
+        let worker_handle = handle_p.clone();
+        let worker_listeners = listeners.clone();
 
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
-                create_main_worker(&main_path, client, listeners).await;
+                let mut worker =
+                    create_main_worker(&main_path, client, worker_listeners.clone()).await;
+
+                let handle = worker.js_runtime.handle_scope().thread_safe_handle();
+
+                worker_handle.lock().await.replace(handle);
+
+                worker.run_event_loop(false).await.ok();
             });
+        });
+
+        // Register an event listener on "unload" that will terminate the worker
+        tokio::spawn(async move {
+            let mut lists = listeners.lock().await;
+
+            lists.try_insert("unload".to_string(), HashMap::new()).ok();
+
+            let (s, mut r) = mpsc::channel(1);
+            let s_id = Uuid::new_v4();
+
+            lists.get_mut("unload").unwrap().insert(s_id, s);
+
+            drop(lists);
+
+            // Wait for the unload event
+            r.recv().await;
+
+            // Clear up all listeners
+            listeners
+                .lock()
+                .await
+                .get_mut("unload")
+                .unwrap()
+                .remove(&s_id);
+            // TODO: Clear all other listeners
+
+            // Close the worker forcefully
+            if let Some(handle) = &*handle_p.lock().await {
+                handle.terminate_execution();
+            }
         });
 
         tracing::info!(
@@ -95,10 +138,10 @@ impl Extension for DenoExtension {
         tokio::spawn(async move {
             let listeners = listeners.lock().await;
             let event_name = message.get_name();
-            let unload_listeners = listeners.get(event_name);
+            let event_listeners = listeners.get(event_name);
 
-            if let Some(unload_listeners) = unload_listeners {
-                for listener in unload_listeners.values() {
+            if let Some(event_listeners) = event_listeners {
+                for listener in event_listeners.values() {
                     listener.send(message.clone()).await.ok();
                 }
             }

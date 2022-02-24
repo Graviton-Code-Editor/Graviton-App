@@ -8,11 +8,8 @@ use deno_runtime::worker::{
     WorkerOptions,
 };
 use deno_runtime::BootstrapOptions;
-use std::collections::HashMap;
 use std::rc::Rc;
 use std::sync::Arc;
-use tokio::sync::mpsc;
-use uuid::Uuid;
 
 use gveditor_core_api::extensions::client::ExtensionClient;
 
@@ -30,7 +27,7 @@ pub async fn create_main_worker(
     main_path: &str,
     client: ExtensionClient,
     listeners: EventListeners,
-) {
+) -> MainWorker {
     let module_loader = Rc::new(FsModuleLoader);
 
     let create_web_worker_cb = Arc::new(|_| {
@@ -80,38 +77,6 @@ pub async fn create_main_worker(
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);
 
-    let handle = worker.js_runtime.handle_scope().thread_safe_handle();
-    let main_path = main_path.to_string();
-
-    // Register an event listener on "unload" that will terminate the worker
-    tokio::spawn(async move {
-        listeners
-            .lock()
-            .await
-            .try_insert("unload".to_string(), HashMap::new())
-            .ok();
-
-        let (s, mut r) = mpsc::channel(1);
-        let s_id = Uuid::new_v4();
-
-        listeners
-            .lock()
-            .await
-            .get_mut("unload")
-            .unwrap()
-            .insert(s_id, s);
-
-        // Wait for the unload event
-        r.recv().await;
-
-        tracing::info!("Unloaded Deno Extension from {}", main_path);
-
-        //TODO: Clean up event listeners
-
-        // Close the worker forcefully
-        handle.terminate_execution();
-    });
-
     // Load the Graviton namespace
     worker
         .execute_script("<graviton>", GRAVITON_DENO_API)
@@ -120,7 +85,7 @@ pub async fn create_main_worker(
     // Load the extension's main module
     worker.execute_main_module(&main_module).await.ok();
 
-    worker.run_event_loop(false).await.ok();
+    worker
 }
 
 fn get_error_class_name(e: &AnyError) -> &'static str {
