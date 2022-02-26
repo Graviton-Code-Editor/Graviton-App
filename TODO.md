@@ -31,9 +31,11 @@
 - [x] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
 
 # core_deno
-- [ ] Send core messages (WIP)
+- [x] Send messages to the Core
 - [ ] Bridge gveditor_core_api::extensions::modules over Deno
-- [ ] Extension messages listener using async function generators
+- [x] Extension messages listener using async function generators
+- [x] Unload event
+- [ ] Unit tests
 ### web
 
 WIP = Work in progress, aka exists but is not finished
