@@ -20,8 +20,7 @@ use crate::{
 };
 
 // Load up the Graviton JavaScript api, aka, fancy wrapper over Deno.core.opSync/opAsync
-static GRAVITON_DENO_API: &str =
-    include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/src/graviton.js"));
+static GRAVITON_DENO_API: &str = include_str!(concat!(env!("OUT_DIR"), "/graviton.js"));
 
 // Launches a Deno runtime for the specified file, it also embeds the Graviton Deno API
 pub async fn create_main_worker(

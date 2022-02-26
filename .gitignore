@@ -9,3 +9,4 @@ WixTools
 .dockerignore
 .gitpod.Dockerfile
 scripts
+*/graviton.js
