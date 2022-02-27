@@ -15,7 +15,6 @@ pub use server::{
 use std::sync::Arc;
 pub use {
     jsonrpc_core_client,
-    jsonrpc_http_server,
     tokio,
 };
 

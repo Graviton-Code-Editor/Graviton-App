@@ -9,8 +9,8 @@ homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
 license = "MIT"
 
 [dependencies]
-serde_json = "1.0"
-serde = { version = "1.0", features = ["derive"] }
-gveditor-core = { path = "../core"}
+serde_json = "1.0.79"
+serde = { version = "1.0.136", features = ["derive"] }
+gveditor-core = { path = "../core", features = ["http_client"]}
 gveditor-core-api  = { path = "../core_api"}
 git-for-graviton = { path = "../extensions/git"}

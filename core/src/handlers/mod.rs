@@ -6,10 +6,14 @@ use tokio::sync::mpsc::Sender;
 
 use crate::StatesList;
 
+#[cfg(feature = "http_client")]
 mod http;
-mod local;
-
+#[cfg(feature = "http_client")]
 pub use http::HTTPHandler;
+
+#[cfg(feature = "local_client")]
+mod local;
+#[cfg(feature = "local_client")]
 pub use local::LocalHandler;
 
 #[async_trait]

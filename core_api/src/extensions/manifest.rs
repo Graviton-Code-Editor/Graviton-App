@@ -1,7 +1,9 @@
 use std::path::PathBuf;
 
-use serde::Serialize;
-use serde_derive::Deserialize;
+use serde::{
+    Deserialize,
+    Serialize,
+};
 use tokio::fs::read_to_string;
 
 /// Possible errors when trying to read a manifest file

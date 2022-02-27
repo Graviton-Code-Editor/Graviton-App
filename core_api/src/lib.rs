@@ -22,7 +22,6 @@ pub use tokio::sync::mpsc::Sender;
 pub use tokio::sync::Mutex;
 pub use {
     serde,
-    serde_derive,
     tokio,
 };
 

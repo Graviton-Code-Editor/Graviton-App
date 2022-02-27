@@ -1,6 +1,5 @@
 ### ideas
 - Implement frontend-only extensions (through the Core ?)
-- Move the built-in transport handlers from the `core` crate into their own crate
 
 # Docs 
 - [ ] book: Write a guide to create an extension
@@ -44,10 +43,11 @@ WIP = Work in progress, aka exists but is not finished
 - [ ] Make the JSON RPC & WebSockets TypeScript client a separate library
 - [ ] Make the popup module (WIP)
 - [ ] Add file icons support (WIP)
-- [ ] Configure CodeMirror  (WIP)
+- [ ] Configure CodeMirror properly (WIP)
 - [ ] Create a settings tab (WIP)
 - [x] Add a custom hook to easily open a tab 
 - [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
+- [ ] Ability to create multiple panels
 
 ### web_components
 - [ ] Publish to npm ?

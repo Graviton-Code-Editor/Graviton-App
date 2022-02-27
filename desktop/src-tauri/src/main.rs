@@ -42,6 +42,7 @@ use tauri::api::path::{
 use tauri::utils::assets::EmbeddedAssets;
 use tauri::{
     Context,
+    Env,
     Manager,
 };
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
@@ -77,7 +78,6 @@ fn open_tauri(
     tauri::Builder::default()
         .setup(move |app| {
             let receiver_from_handler = receiver_from_handler.clone();
-            let sender_to_handler = sender_to_handler.clone();
 
             let window = app.get_window("main").unwrap();
 
@@ -128,6 +128,7 @@ fn get_settings_path(context: &Context<EmbeddedAssets>) -> PathBuf {
     let states_path = resolve_path(
         context.config(),
         context.package_info(),
+        &Env::default(),
         ".graviton/states",
         Some(BaseDirectory::Home),
     )
@@ -152,6 +153,7 @@ fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> PathBu
     let extensions_installation_path = resolve_path(
         context.config(),
         context.package_info(),
+        &Env::default(),
         ".graviton/extensions",
         Some(BaseDirectory::Home),
     )
