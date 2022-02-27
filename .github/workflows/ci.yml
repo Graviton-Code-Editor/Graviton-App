@@ -26,6 +26,10 @@ jobs:
       - name: Installing nodejs dependencies
         run: yarn
 
+      - uses: denoland/setup-deno@v1
+        with:
+          deno-version: vx.x.x
+
       - name: Build web_components
         run: yarn --cwd web_components run build
 
@@ -48,9 +52,6 @@ jobs:
       - name: Install MacOS dependencies
         if: runner.os == 'macOS'
         run: brew install gcc
-
-      - name: Install Deno
-        run: cargo install deno
 
       - name: Install nextest (test runner for rust)
         run: cargo install cargo-nextest
