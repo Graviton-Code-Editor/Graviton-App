@@ -173,7 +173,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   useHotkeys(
     "ctrl+s",
     () => {
-      currentFocusedTab.tab?.save();
+      currentFocusedTab.tab?.save({ force: true });
     },
     [currentFocusedTab]
   );

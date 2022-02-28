@@ -15,6 +15,10 @@ export interface BasicTabData {
 
 export type TabData = BasicTabData | TextEditorTabData;
 
+export interface SaveTabOptions {
+  force: boolean;
+}
+
 /**
  * Tab API
  */
@@ -51,7 +55,7 @@ export class Tab implements Omit<BasicTabData, "tab_type"> {
   /**
    * Called when the tab is being saved
    */
-  public save(): void {
+  public save(_options: SaveTabOptions = { force: false }): void {
     return;
   }
 

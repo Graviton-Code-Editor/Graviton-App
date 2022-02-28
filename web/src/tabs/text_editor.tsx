@@ -10,6 +10,7 @@ import { getRecoil, setRecoil } from "recoil-nexus";
 import { FileFormat } from "../types/client";
 import { Popup } from "../modules/popup";
 import * as history from "@codemirror/history";
+import { SaveTabOptions } from "../modules/tab";
 
 interface SavedState {
   scrollHeight: number;
@@ -198,7 +199,10 @@ class TextEditorTab extends EditorTab {
     this.lastSavedStateText = this.view.state.doc.toJSON();
   }
 
-  public save() {
+  public save({ force }: SaveTabOptions = { force: false }) {
+    // Save the tab forcefully, e.j, from a shortcut
+    if (force === true) return void this.saveFile();
+
     if (this.edited) {
       const message = new Popup(
         {
