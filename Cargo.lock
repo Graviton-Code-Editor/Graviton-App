@@ -4646,6 +4646,7 @@ dependencies = [
  "gveditor-core-api",
  "serde",
  "serde_json",
+ "tokio",
 ]
 
 [[package]]

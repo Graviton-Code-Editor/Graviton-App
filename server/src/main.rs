@@ -3,7 +3,6 @@ use std::thread;
 
 use gveditor_core::handlers::HTTPHandler;
 use gveditor_core::{
-    tokio,
     Configuration,
     Core,
 };
