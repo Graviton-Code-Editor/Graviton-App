@@ -1,5 +1,5 @@
 import { getRecoil } from "recoil-nexus";
-import EditorTab from "../modules/editor_tab";
+import TextEditorTab from "../tabs/text_editor";
 import { FileFormat } from "../types/client";
 import { editors } from "../utils/atoms";
 
@@ -8,7 +8,7 @@ import { editors } from "../utils/atoms";
  */
 export default function useEditor(): (
   format: FileFormat
-) => typeof EditorTab | undefined {
+) => typeof TextEditorTab | undefined {
   const loadedEditors = getRecoil(editors);
 
   return (format: FileFormat) =>

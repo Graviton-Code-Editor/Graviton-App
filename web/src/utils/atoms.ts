@@ -1,7 +1,6 @@
 import { atom } from "recoil";
 import { getRecoil } from "recoil-nexus";
 import useEditor from "../hooks/useEditor";
-import EditorTab from "../modules/editor_tab";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
@@ -32,7 +31,7 @@ function tabToTabDataRecursively(val: TabList<Tab>): TabDataList {
 
 export function tabDataToTabRecursively(
   tabData: TabDataList
-): TabList<undefined | EditorTab | Tab> {
+): TabList<undefined | TextEditorTab | Tab> {
   if (Array.isArray(tabData)) {
     return tabData.map(tabDataToTabRecursively).filter(Boolean);
   } else {
@@ -54,8 +53,6 @@ export function tabDataToTabRecursively(
             return new SettingsTab();
           case "Welcome":
             return new WelcomeTab();
-          default:
-            return Tab.fromJson(basicTabData);
         }
       }
     }
@@ -117,7 +114,7 @@ export const prompts = atom<typeof Prompt[]>({
 });
 
 // Registed Editors implementations
-export const editors = atom<typeof EditorTab[]>({
+export const editors = atom<typeof TextEditorTab[]>({
   key: "editors",
   default: [TextEditorTab],
 });

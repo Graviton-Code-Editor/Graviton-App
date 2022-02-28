@@ -1,6 +1,5 @@
 import TextEditor from "../components/TextEditor";
 import { EditorState, StateCommand } from "@codemirror/state";
-import EditorTab from "../modules/editor_tab";
 import { basicSetup, EditorView } from "@codemirror/basic-setup";
 import { keymap, KeyBinding, Command } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
@@ -10,7 +9,7 @@ import { getRecoil, setRecoil } from "recoil-nexus";
 import { FileFormat } from "../types/client";
 import { Popup } from "../modules/popup";
 import * as history from "@codemirror/history";
-import { SaveTabOptions } from "../modules/tab";
+import { SaveTabOptions, Tab, TextEditorTabData } from "../modules/tab";
 
 interface SavedState {
   scrollHeight: number;
@@ -19,11 +18,13 @@ interface SavedState {
 /**
  * A tab that displays a CodeMirror editor inside it
  */
-class TextEditorTab extends EditorTab {
+class TextEditorTab extends Tab {
   // Tab's state
   private state: SavedState = {
     scrollHeight: 0,
   };
+  private path: string;
+  private filename: string;
 
   private lastSavedStateText: string[] = [];
 
@@ -41,7 +42,9 @@ class TextEditorTab extends EditorTab {
    * @param initialContent - Current content of the file
    */
   constructor(filename: string, path: string, initialContent: string) {
-    super(filename, path, initialContent);
+    super(filename);
+    this.path = path;
+    this.filename = filename;
 
     this.setEditedComp = () => {
       console.error("Tried changing an unmounted tab");
@@ -235,6 +238,22 @@ class TextEditorTab extends EditorTab {
       setRecoil(showedWindows, (val) => [...val, message]);
     }
     return;
+  }
+
+  /**
+   *
+   * @returns The tab's data
+   *
+   * @alpha
+   */
+  public toJson(): TextEditorTabData {
+    return {
+      tab_type: "TextEditor",
+      path: this.path,
+      filesystem: "local",
+      content: this.getContent(),
+      filename: this.filename,
+    };
   }
 }
 

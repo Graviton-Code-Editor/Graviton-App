@@ -22,7 +22,7 @@ export interface SaveTabOptions {
 /**
  * Tab API
  */
-export class Tab implements Omit<BasicTabData, "tab_type"> {
+export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
   public id: string;
   public title: string;
   public edited: boolean;
@@ -48,28 +48,16 @@ export class Tab implements Omit<BasicTabData, "tab_type"> {
   /**
    * Called when the tab is closed
    */
-  public close() {
-    return;
+  public close(): void {
+    return undefined;
   }
 
   /**
    * Called when the tab is being saved
    */
-  public save(_options: SaveTabOptions = { force: false }): void {
-    return;
-  }
-
-  /**
-   *
-   * @param data - Construct a new Tab from some data
-   * @returns A new Tab
-   *
-   * @alpha
-   */
-  public static fromJson(data: BasicTabData): Tab | undefined {
-    const tab = new Tab(data.title);
-
-    return tab;
+  /* eslint-disable */
+  public save(_options?: SaveTabOptions): void {
+    return undefined;
   }
 
   /**
