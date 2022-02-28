@@ -1,15 +1,19 @@
-import { getRecoil } from "recoil-nexus";
+import { useRecoilValue } from "recoil";
 import TextEditorTab from "../tabs/text_editor";
 import { FileFormat } from "../types/client";
 import { editors } from "../utils/atoms";
 
-/*
- * Easily retrieve the best matching editor
- */
-export default function useEditor(): (
+export type EditorFinder = (
   format: FileFormat
-) => typeof TextEditorTab | undefined {
-  const loadedEditors = getRecoil(editors);
+) => typeof TextEditorTab | undefined;
+
+/**
+ * Easily retrieve the best matching editor
+ *
+ * @param format The file's format, used to retrieve the best matching editor
+ */
+export default function useEditor(): EditorFinder {
+  const loadedEditors = useRecoilValue(editors);
 
   return (format: FileFormat) =>
     loadedEditors.find((editor) => editor.isCompatible(format));

@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 import { getRecoil } from "recoil-nexus";
-import useEditor from "../hooks/useEditor";
+import { EditorFinder } from "../hooks/useEditor";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
@@ -30,14 +30,16 @@ function tabToTabDataRecursively(val: TabList<Tab>): TabDataList {
 }
 
 export function tabDataToTabRecursively(
-  tabData: TabDataList
+  tabData: TabDataList,
+  getEditor: EditorFinder
 ): TabList<undefined | TextEditorTab | Tab> {
   if (Array.isArray(tabData)) {
-    return tabData.map(tabDataToTabRecursively).filter(Boolean);
+    return tabData
+      .map((tab) => tabDataToTabRecursively(tab, getEditor))
+      .filter(Boolean);
   } else {
     switch (tabData.tab_type) {
       case "TextEditor": {
-        const getEditor = useEditor();
         const editor = getEditor({ Text: "Rust" });
         const data = tabData as TextEditorTabData;
         if (editor != null) {

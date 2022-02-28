@@ -3,8 +3,10 @@ import { useRecoilValue } from "recoil";
 import { ManifestInfo } from "../types/client";
 import { clientState } from "../utils/atoms";
 
-/*
+/**
  * Easily retrieve the extensions using the client
+ *
+ * @returns All the loaded extensions manifests
  */
 export default function useExtensions() {
   const [extensions, setExtensions] = useState<ManifestInfo[]>([]);

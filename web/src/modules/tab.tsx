@@ -19,6 +19,14 @@ export interface SaveTabOptions {
   force: boolean;
 }
 
+type TabContainer = ({
+  setEdited,
+  close,
+}: {
+  setEdited: (state: boolean) => void;
+  close: () => void;
+}) => ReactElement;
+
 /**
  * Tab API
  */
@@ -26,16 +34,9 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
   public id: string;
   public title: string;
   public edited: boolean;
-  public container: ({
-    setEdited,
-    close,
-  }: {
-    setEdited: (state: boolean) => void;
-    close: () => void;
-  }) => ReactElement;
+  public container: TabContainer;
 
   /**
-   *
    * @param title - Title of the tab
    */
   constructor(title: string) {
@@ -54,6 +55,7 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
 
   /**
    * Called when the tab is being saved
+   * @param options - Different options to tweak the saving behavior
    */
   /* eslint-disable */
   public save(_options?: SaveTabOptions): void {

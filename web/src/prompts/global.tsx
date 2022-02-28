@@ -1,4 +1,3 @@
-import { setRecoil } from "recoil-nexus";
 import PromptContainer, { Option } from "../components/PromptContainer";
 import { Prompt } from "../modules/prompt";
 import { openedFolders } from "../utils/atoms";
@@ -6,16 +5,17 @@ import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";
 import SettingsTab from "../tabs/settings";
 import useTabs from "../hooks/useTabs";
+import { useSetRecoilState } from "recoil";
 
 function GlobalPromptContainer() {
-  // TODO: call useTabs from here
+  const [openTab] = useTabs();
+  const setOpenedFolders = useSetRecoilState(openedFolders);
 
   const options: Option[] = [
     {
       label: { text: "prompts.Global.OpenWelcome" },
       onSelected({ closePrompt }) {
         closePrompt();
-        const [openTab] = useTabs();
         openTab(new WelcomeTab());
       },
     },
@@ -23,7 +23,6 @@ function GlobalPromptContainer() {
       label: { text: "prompts.Global.OpenSettings" },
       onSelected({ closePrompt }) {
         closePrompt();
-        const [openTab] = useTabs();
         openTab(new SettingsTab());
       },
     },
@@ -35,7 +34,7 @@ function GlobalPromptContainer() {
         // If a folder selected
         if (openedFolder != null) {
           // Clear all opened folders and open the selected one
-          setRecoil(openedFolders, [
+          setOpenedFolders([
             {
               path: openedFolder,
             },

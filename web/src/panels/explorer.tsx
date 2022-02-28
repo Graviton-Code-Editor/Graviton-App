@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/FilesystemExplorer";
@@ -10,12 +10,12 @@ import useTabs from "../hooks/useTabs";
 //@ts-ignore
 import { BorderedButton } from "@gveditor/web_components";
 import { openFolderPicker } from "../utils/commands";
-import { setRecoil } from "recoil-nexus";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
   const [openTab] = useTabs();
   const getEditor = useEditor();
+  const setOpenedFolders = useSetRecoilState(openedFolders);
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
@@ -47,7 +47,7 @@ function ExplorerPanelContainer() {
     // If a folder selected
     if (openedFolder != null) {
       // Clear all opened folders and open the selected one
-      setRecoil(openedFolders, [
+      setOpenedFolders([
         {
           path: openedFolder,
         },

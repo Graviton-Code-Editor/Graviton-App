@@ -88,8 +88,102 @@ class TextEditorTab extends Tab {
     };
   }
 
-  /*
-   * Create a KeyMap extension
+  /**
+   * Destroy the CodeMirror view
+   */
+  public close(): void {
+    this.view.destroy();
+    return;
+  }
+
+  /**
+   * Only open text files
+   * @param format - The requested file's format
+   */
+  static isCompatible(format: FileFormat) {
+    return format !== "Binary";
+  }
+
+  /**
+   * Shortcut to update the tab's state
+   * @param state - Wether the editor is edited or not
+   */
+  public setEdited(state: boolean) {
+    if (this.edited != state) {
+      this.setEditedComp(state);
+    }
+    this.edited = state;
+  }
+
+  /**
+   * Get the content of the Codemirror state as a String
+   * @returns The current content on the editor
+   */
+  public getContent(): string {
+    return this.view.state.doc.sliceString(0);
+  }
+
+  /**
+   *
+   * Save the tab
+   *
+   * @param options - Different options to tweak the saving behavior
+   */
+  public save({ force }: SaveTabOptions = { force: false }) {
+    // Save the tab forcefully, e.j, from a shortcut
+    if (force === true) return void this.saveFile();
+
+    if (this.edited) {
+      const message = new Popup(
+        {
+          text: "popups.AskSaveFile.title",
+          props: { file_path: this.path },
+        },
+        {
+          text: "popups.AskSaveFile.content",
+        },
+        [
+          {
+            label: "Save",
+            action: this.saveFile.bind(this),
+          },
+          {
+            label: "Don't save",
+            action: () => {
+              // User decided to not save the file, therefore close it
+              this.closeTabComp();
+            },
+          },
+          {
+            label: "Cancel",
+            action: () => undefined,
+          },
+        ],
+        240
+      );
+
+      setRecoil(showedWindows, (val) => [...val, message]);
+    }
+    return;
+  }
+
+  /**
+   * Write the file to the FS
+   */
+  private async saveFile() {
+    const client = getRecoil(clientState);
+    const newContent = this.getContent();
+    await client.write_file_by_path(this.path, newContent, "local");
+
+    // Mark the tab as saved
+    this.setEdited(false);
+
+    // Update the last saved state text
+    this.lastSavedStateText = this.view.state.doc.toJSON();
+  }
+
+  /**
+   * Return the custom keymap
    */
   private getKeymap() {
     // Save command
@@ -136,8 +230,8 @@ class TextEditorTab extends Tab {
     return keymap.of(customKeymap);
   }
 
-  /*
-   * Initial state for the CodeMirror instance
+  /**
+   * Create the initial state for the CodeMirror instance
    */
   private createDefaulState({
     initialValue,
@@ -153,91 +247,6 @@ class TextEditorTab extends Tab {
     this.lastSavedStateText = state.doc.toJSON();
 
     return state;
-  }
-
-  /*
-   * Destroy the CodeMirror view
-   */
-  public close(): void {
-    this.view.destroy();
-    return;
-  }
-
-  /*
-   * Only open text files
-   */
-  static isCompatible(format: FileFormat) {
-    return format !== "Binary";
-  }
-
-  /*
-   * Shortcut to update the tab's state
-   */
-  public setEdited(state: boolean) {
-    if (this.edited != state) {
-      this.setEditedComp(state);
-    }
-    this.edited = state;
-  }
-
-  /*
-   * Get the content of the codemirror as a String
-   */
-  public getContent(): string {
-    return this.view.state.doc.sliceString(0);
-  }
-
-  /*
-   * Write the file to the FS
-   */
-  private async saveFile() {
-    const client = getRecoil(clientState);
-    const newContent = this.getContent();
-    await client.write_file_by_path(this.path, newContent, "local");
-
-    // Mark the tab as saved
-    this.setEdited(false);
-
-    // Update the last saved state text
-    this.lastSavedStateText = this.view.state.doc.toJSON();
-  }
-
-  public save({ force }: SaveTabOptions = { force: false }) {
-    // Save the tab forcefully, e.j, from a shortcut
-    if (force === true) return void this.saveFile();
-
-    if (this.edited) {
-      const message = new Popup(
-        {
-          text: "popups.AskSaveFile.title",
-          props: { file_path: this.path },
-        },
-        {
-          text: "popups.AskSaveFile.content",
-        },
-        [
-          {
-            label: "Save",
-            action: this.saveFile.bind(this),
-          },
-          {
-            label: "Don't save",
-            action: () => {
-              // User decided to not save the file, therefore close it
-              this.closeTabComp();
-            },
-          },
-          {
-            label: "Cancel",
-            action: () => undefined,
-          },
-        ],
-        240
-      );
-
-      setRecoil(showedWindows, (val) => [...val, message]);
-    }
-    return;
   }
 
   /**

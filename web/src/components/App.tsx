@@ -12,11 +12,12 @@ import {
 } from "../utils/atoms";
 import {
   RecoilRoot,
+  useRecoilCallback,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
-import RecoilNexus, { setRecoil, getRecoil } from "recoil-nexus";
+import RecoilNexus from "recoil-nexus";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
 import Theme from "../utils/theme_provider";
@@ -35,6 +36,7 @@ import {
 import StatusBarView from "./StatusBarView";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { Tab } from "../modules/tab";
+import useEditor from "../hooks/useEditor";
 
 /*
  * Retrieve the authentication token
@@ -87,6 +89,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
   const setTabs = useSetRecoilState(openedTabsState);
   const currentFocusedTab = useRecoilValue(focusedTab);
+  const getEditor = useEditor();
 
   /**
    *  Register all prompts's shortcuts
@@ -100,6 +103,28 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
     }
   });
 
+  /**
+   * Show a statusbar button if not shown, and update it in case it's already shown
+   */
+  const showStatusBarItem = useRecoilCallback(
+    ({ snapshot, set }) =>
+      async (statusBarItem: ShowStatusBarItem) => {
+        const statusBarItems = await snapshot.getPromise(showedStatusBarItem);
+        const itemIfFound = statusBarItems.find(
+          (item) => item.id === statusBarItem.statusbar_item_id
+        );
+        if (itemIfFound != null) {
+          set(itemIfFound.state, statusBarItem);
+        } else {
+          setShowedStatusBarItems((currVal) => [
+            ...currVal,
+            new StatusBarItem(statusBarItem),
+          ]);
+        }
+      },
+    []
+  );
+
   useEffect(() => {
     if (client != null) {
       client.listenToState();
@@ -110,7 +135,8 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
         // Convert all tab datas into Tab instances
         const openedTabs = tabDataToTabRecursively(
-          state_data.opened_tabs
+          state_data.opened_tabs,
+          getEditor
         ) as Tab[];
 
         // Open the tabs
@@ -132,18 +158,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
       /**
        * Display StatusBarItems
        */
-      client.on("ShowStatusBarItem", (e: ShowStatusBarItem) => {
-        const val = getRecoil(showedStatusBarItem);
-        const itemIfFound = val.find((item) => item.id === e.statusbar_item_id);
-        if (itemIfFound != null) {
-          setRecoil(itemIfFound.state, e);
-        } else {
-          setShowedStatusBarItems((currVal) => [
-            ...currVal,
-            new StatusBarItem(e),
-          ]);
-        }
-      });
+      client.on("ShowStatusBarItem", showStatusBarItem);
 
       /**
        * Hide StatusBarItems
