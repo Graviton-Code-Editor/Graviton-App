@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { showedWindows } from "../utils/atoms";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "./WindowBackground";
+import { TranslatedText } from "../types/types";
 
 const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   color: white;
@@ -51,7 +52,7 @@ export interface OptionUtils {
   closePrompt: () => void;
 }
 export interface Option {
-  label: string;
+  label: TranslatedText;
   onSelected: (utils: OptionUtils) => void;
 }
 
@@ -133,11 +134,11 @@ export default function PromptContainer({ options }: PromptOptions) {
             return (
               <StyledPromptOption
                 ref={optionRef}
-                key={option.label}
+                key={option.label.text}
                 onClick={optionSelected}
                 isSelected={isSelected}
               >
-                {t(option.label)}
+                {t(option.label.text, option.label.props)}
               </StyledPromptOption>
             );
           })}

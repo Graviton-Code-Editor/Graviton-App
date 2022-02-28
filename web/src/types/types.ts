@@ -18,3 +18,8 @@ export interface FolderState {
   path: string;
   //filesystem: string
 }
+
+export interface TranslatedText {
+  text: string;
+  props?: Record<string, string>;
+}

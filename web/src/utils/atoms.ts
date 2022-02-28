@@ -59,7 +59,7 @@ export function tabDataToTabRecursively(
         }
       }
     }
-  } //
+  }
 }
 
 function getAllStateData(): Omit<StateData, "id"> {

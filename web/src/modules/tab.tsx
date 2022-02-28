@@ -24,8 +24,10 @@ export class Tab implements Omit<BasicTabData, "tab_type"> {
   public edited: boolean;
   public container: ({
     setEdited,
+    close,
   }: {
     setEdited: (state: boolean) => void;
+    close: () => void;
   }) => ReactElement;
 
   /**

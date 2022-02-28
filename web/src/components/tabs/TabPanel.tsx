@@ -114,7 +114,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
         })}
       </div>
       <div className="tabsContainer">
-        {tabs.map((tab) => {
+        {tabs.map((tab, i) => {
           const isSelected = tab.id == selectedTabID;
           const Container = tab.container;
 
@@ -128,7 +128,10 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
           return (
             isSelected && (
               <div key={tab.id}>
-                <Container setEdited={setEdited} />
+                <Container
+                  setEdited={setEdited}
+                  close={() => removeTab(tab, i)}
+                />
               </div>
             )
           );

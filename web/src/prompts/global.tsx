@@ -8,9 +8,11 @@ import SettingsTab from "../tabs/settings";
 import useTabs from "../hooks/useTabs";
 
 function GlobalPromptContainer() {
+  // TODO: call useTabs from here
+
   const options: Option[] = [
     {
-      label: "Open Welcome",
+      label: { text: "prompts.Global.OpenWelcome" },
       onSelected({ closePrompt }) {
         closePrompt();
         const [openTab] = useTabs();
@@ -18,7 +20,7 @@ function GlobalPromptContainer() {
       },
     },
     {
-      label: "Open Settings",
+      label: { text: "prompts.Global.OpenSettings" },
       onSelected({ closePrompt }) {
         closePrompt();
         const [openTab] = useTabs();
@@ -26,7 +28,7 @@ function GlobalPromptContainer() {
       },
     },
     {
-      label: "Open Folder",
+      label: { text: "prompts.Global.OpenFolder" },
       async onSelected({ closePrompt }) {
         closePrompt();
         const openedFolder = await openFolderPicker("local");

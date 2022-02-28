@@ -123,7 +123,10 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
        * Display Popups
        */
       client.on("ShowPopup", (e: ShowPopup) => {
-        setShowedWindows((val) => [...val, new Popup(e.title, e.content)]);
+        setShowedWindows((val) => [
+          ...val,
+          new Popup({ text: e.title }, { text: e.content }),
+        ]);
       });
 
       /**
