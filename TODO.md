@@ -28,6 +28,7 @@
 - [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Make it possible to persist states
 - [x] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
+- [ ] Add support for buttons in popup module
 
 # core_deno
 - [x] Send messages to the Core
