@@ -10,7 +10,7 @@ const TabsPanelContainer = styled.div`
   flex-direction: column;
   & .tabsList {
     display: flex;
-    min-height: 40px;
+    min-height: 37px;
     overflow-x: auto;
     background: ${({ theme }) => theme.elements.tab.list.background};
     &:empty {
@@ -22,12 +22,13 @@ const TabsPanelContainer = styled.div`
   }
   & .tabsContainer {
     display: flex;
-    height: calc(100% - 40px);
+    height: calc(100% - 37px);
     & > div {
       width: 100%;
     }
     & .cm-editor {
       height: 100%;
+      outline: none;
     }
   }
 `;

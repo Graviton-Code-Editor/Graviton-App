@@ -6,7 +6,7 @@
         "This version is still on alpha.": "This version is still on alpha.",
         "popups":{
             "AskSaveFile":{
-                "title": "Do you want to save the changes in {{file_path}}",
+                "title": "Do you want to save the changes in {{file_path}} ?",
                 "content": "Important changes might be lost if you decline."
             }
         },

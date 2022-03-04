@@ -3,7 +3,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import FakeRoot from "./utils/fake_root";
 import FilesystemExplorer from "../src/components/FilesystemExplorer";
 import { act } from "@testing-library/react";
-import { test, describe } from "vitest";
+import { test, describe, expect, vi } from "vitest";
 
 vi.mock("react-virtualized-auto-sizer", () => {
   return {

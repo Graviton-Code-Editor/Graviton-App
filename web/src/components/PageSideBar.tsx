@@ -1,8 +1,8 @@
 //@ts-ignore
-import { Button } from "@gveditor/web_components";
+import { PrimaryButton } from "@gveditor/web_components";
 import styled from "styled-components";
 
-export const SideBarButton = styled(Button)`
+export const SideBarButton = styled(PrimaryButton)`
   background: ${({ theme }) => theme.elements.pageSideBar.button.background};
   width: 100%;
   padding: 8px 12px;

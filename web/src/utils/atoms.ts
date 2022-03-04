@@ -5,7 +5,6 @@ import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
 import { FloatingWindow } from "../modules/windows";
-import GlobalPrompt from "../prompts/global";
 import SettingsTab from "../tabs/settings";
 import TextEditorTab from "../tabs/text_editor";
 import WelcomeTab from "../tabs/welcome";
@@ -112,7 +111,7 @@ export const focusedTab = atom<FocusedTab>({
 // Registered prompts launchers
 export const prompts = atom<typeof Prompt[]>({
   key: "prompts",
-  default: [GlobalPrompt],
+  default: [],
 });
 
 // Registed Editors implementations

@@ -23,7 +23,6 @@ import Tabs from "./TabsView";
 import Theme from "../utils/theme_provider";
 import View from "./RootView";
 import { SplitPane } from "react-multi-split-pane";
-import { useHotkeys } from "react-hotkeys-hook";
 import { isTauri } from "../utils/commands";
 import ExplorerPanel from "../panels/explorer";
 import { Popup } from "../modules/popup";
@@ -37,6 +36,8 @@ import StatusBarView from "./StatusBarView";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { Tab } from "../modules/tab";
 import useEditor from "../hooks/useEditor";
+import GlobalPrompt from "../prompts/global";
+import useHotkeys from "../hooks/useHotkey";
 
 /*
  * Retrieve the authentication token
@@ -56,6 +57,7 @@ async function getToken() {
 function StateRoot() {
   const setClient = useSetRecoilState(clientState);
   const setPanels = useSetRecoilState(panels);
+  const setPrompts = useSetRecoilState(prompts);
 
   useEffect(() => {
     // Retrieve the token and then create a new client
@@ -71,6 +73,7 @@ function StateRoot() {
               panel: new ExplorerPanel(),
             },
           ]);
+          setPrompts((val) => [...val, GlobalPrompt]);
         });
       }
     });
@@ -90,18 +93,21 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   const setTabs = useSetRecoilState(openedTabsState);
   const currentFocusedTab = useRecoilValue(focusedTab);
   const getEditor = useEditor();
+  const { pushHotkey } = useHotkeys();
 
-  /**
-   *  Register all prompts's shortcuts
-   */
-  usePrompts.forEach((PromptClass) => {
-    const prompt = new PromptClass();
-    if (prompt.shortcut) {
-      useHotkeys(prompt.shortcut, () => {
-        setShowedWindows((val) => [...val, prompt]);
-      });
-    }
-  });
+  useEffect(() => {
+    /**
+     *  Register all prompts's shortcuts
+     */
+    usePrompts.forEach((PromptClass) => {
+      const prompt = new PromptClass();
+      if (prompt.shortcut) {
+        pushHotkey(prompt.shortcut, () => {
+          setShowedWindows((val) => [...val, prompt]);
+        });
+      }
+    });
+  }, [usePrompts]);
 
   /**
    * Show a statusbar button if not shown, and update it in case it's already shown
@@ -169,29 +175,27 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
         ]);
       });
     }
+
+    /**
+     * Close all the last opened window when ESC is pressed
+     */
+    pushHotkey("esc", () => {
+      setShowedWindows((val) => {
+        const newValue = [...val];
+        newValue.pop();
+        return newValue;
+      });
+    });
   }, [client]);
 
-  /**
-   * Close all the last opened window when ESC is pressed
-   */
-  useHotkeys("esc", () => {
-    setShowedWindows((val) => {
-      const newValue = [...val];
-      newValue.pop();
-      return newValue;
-    });
-  });
-
-  /*
-   * Save the current focused tab
-   */
-  useHotkeys(
-    "ctrl+s",
-    () => {
+  useEffect(() => {
+    /*
+     * Save the current focused tab
+     */
+    pushHotkey("ctrl+s", () => {
       currentFocusedTab.tab?.save({ force: true });
-    },
-    [currentFocusedTab]
-  );
+    });
+  }, [currentFocusedTab]);
 
   function WindowsView() {
     if (useShowedWindows.length > 0) {

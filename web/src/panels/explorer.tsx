@@ -8,7 +8,7 @@ import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
 //@ts-ignore
-import { BorderedButton } from "@gveditor/web_components";
+import { SecondaryButton } from "@gveditor/web_components";
 import { openFolderPicker } from "../utils/commands";
 
 function ExplorerPanelContainer() {
@@ -72,9 +72,9 @@ function ExplorerPanelContainer() {
       })}
       {folders.length === 0 && (
         <>
-          <BorderedButton expanded={true} onClick={openFolder}>
+          <SecondaryButton expanded={true} onClick={openFolder}>
             Open folder
-          </BorderedButton>
+          </SecondaryButton>
         </>
       )}
     </div>

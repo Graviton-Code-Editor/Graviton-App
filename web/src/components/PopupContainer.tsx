@@ -1,5 +1,5 @@
 // @ts-ignore
-import { BorderedButton } from "@gveditor/web_components";
+import { WindowButton } from "@gveditor/web_components";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
@@ -21,7 +21,7 @@ const StyledPopup = styled.div<{ height: number }>`
   align-items: center;
   animation: opening 0.1s;
   & .popup {
-    padding: 20px;
+    padding: 25px;
     border: 1px solid ${({ theme }) => theme.elements.prompt.container.border};
     width: 300px;
     border-radius: 10px;
@@ -31,8 +31,12 @@ const StyledPopup = styled.div<{ height: number }>`
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
     overflow: auto;
   }
+  & h5 {
+    margin-top: 0px;
+  }
   & p {
     font-size: 14px;
+    margin: 5px 0px 18px 0px;
   }
   @keyframes opening {
     from {
@@ -88,7 +92,7 @@ export default function PopupContainer({
         height={height}
       >
         <div className="popup">
-          <h4>{t(title.text, title.props)}</h4>
+          <h5>{t(title.text, title.props)}</h5>
           <p>{t(content.text, title.props)}</p>
           <div>
             {buttons.map(({ label, action }, i) => {
@@ -97,9 +101,9 @@ export default function PopupContainer({
                 closePopup();
               };
               return (
-                <BorderedButton expanded={true} key={i} onClick={buttonAction}>
+                <WindowButton expanded={true} key={i} onClick={buttonAction}>
                   {t(label)}
-                </BorderedButton>
+                </WindowButton>
               );
             })}
           </div>

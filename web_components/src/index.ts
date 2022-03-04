@@ -1,2 +1,2 @@
-export { Button, BorderedButton } from "./components/button"
+export { PrimaryButton, SecondaryButton, WindowButton } from "./components/button"
 export { default as  Title } from "./components/title"

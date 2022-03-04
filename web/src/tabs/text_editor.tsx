@@ -137,7 +137,7 @@ class TextEditorTab extends Tab {
       const message = new Popup(
         {
           text: "popups.AskSaveFile.title",
-          props: { file_path: this.path },
+          props: { file_path: this.filename },
         },
         {
           text: "popups.AskSaveFile.content",
@@ -159,7 +159,7 @@ class TextEditorTab extends Tab {
             action: () => undefined,
           },
         ],
-        240
+        195
       );
 
       setRecoil(showedWindows, (val) => [...val, message]);

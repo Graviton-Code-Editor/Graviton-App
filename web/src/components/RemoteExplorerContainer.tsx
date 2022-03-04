@@ -1,5 +1,5 @@
 //@ts-ignore
-import { Button } from "@gveditor/web_components";
+import { PrimaryButton } from "@gveditor/web_components";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
@@ -88,9 +88,9 @@ export default function RemoteExplorerContainer({
             />
           </div>
           <div className="bottomView">
-            <Button onClick={openFolder}>
+            <PrimaryButton onClick={openFolder}>
               {focusedFolder ? `Open ${focusedFolder.name}` : "Select a folder"}
-            </Button>
+            </PrimaryButton>
           </div>
         </div>
       </StyledExplorer>
