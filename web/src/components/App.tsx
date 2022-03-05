@@ -61,9 +61,9 @@ function StateRoot() {
 
   useEffect(() => {
     // Retrieve the token and then create a new client
-    getToken().then((token) => {
+    getToken().then(async (token) => {
       if (token !== null) {
-        const client = createClient(token);
+        const client = await createClient(token);
 
         // Wait until it's connected
         client.whenConnected().then(() => {
