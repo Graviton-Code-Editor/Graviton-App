@@ -17,6 +17,8 @@ const PanelsContainer = styled.div`
     }
   }
   & > .sidepanel {
+    border-top: 1px solid
+      ${({ theme }) => theme.elements.sidepanel.border.color};
     border-bottom: 1px solid
       ${({ theme }) => theme.elements.sidepanel.border.color};
     background: ${(props) => props.theme.tones.dark2};

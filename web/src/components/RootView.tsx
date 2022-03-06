@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const RootView = styled.div`
+const RootView = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
   min-height: 100%;
   max-height: 100%;
@@ -11,7 +11,9 @@ const RootView = styled.div`
   display: flex;
   flex-direction: column;
   & > div > .SplitPane {
-    height: calc(100% - 25px) !important;
+    height: calc(
+      100% - 25px ${({ isWindows }) => isWindows && `- 30px`}
+    ) !important;
   }
   & > * {
     flex: 1 !important;

@@ -38,6 +38,7 @@ import { Tab } from "../modules/tab";
 import useEditor from "../hooks/useEditor";
 import GlobalPrompt from "../prompts/global";
 import useHotkeys from "../hooks/useHotkey";
+import TitleBar from "./TitleBar";
 
 /*
  * Retrieve the authentication token
@@ -85,7 +86,10 @@ function StateRoot() {
 /**
  * Handles the root view
  */
-function ClientRoot({ children }: PropsWithChildren<any>) {
+function ClientRoot({
+  children,
+  isWindows,
+}: PropsWithChildren<{ isWindows: boolean }>) {
   const client = useRecoilValue(clientState);
   const usePrompts = useRecoilValue(prompts);
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
@@ -207,7 +211,7 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
   }
 
   return (
-    <View>
+    <View isWindows={isWindows}>
       {client && children}
       <WindowsView />
     </View>
@@ -215,12 +219,15 @@ function ClientRoot({ children }: PropsWithChildren<any>) {
 }
 
 function App() {
+  const isWindows = window.navigator.platform === "Win32";
+
   return (
     <RecoilRoot>
       <StateRoot />
       <RecoilNexus />
       <Theme>
-        <ClientRoot>
+        <ClientRoot isWindows={isWindows}>
+          {isWindows && <TitleBar />}
           <div>
             <SplitPane split="vertical" minSize={250} defaultSizes={[2, 10]}>
               <Panels />

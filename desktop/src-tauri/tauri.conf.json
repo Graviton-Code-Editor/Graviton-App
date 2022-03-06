@@ -47,6 +47,14 @@
     "allowlist": {
       "dialog": {
         "all": true
+      },
+      "window":{
+        "maximize": true,
+        "minimize": true,
+        "close": true,
+        "unminimize": true,
+        "unmaximize": true,
+        "startDragging": true
       }
     },
     "windows": [
@@ -55,7 +63,8 @@
         "width": 800,
         "height": 600,
         "resizable": true,
-        "fullscreen": false
+        "fullscreen": false,
+        "decorations": false
       }
     ],
     "security": {

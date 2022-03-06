@@ -51,6 +51,7 @@ use tracing_subscriber::{
     EnvFilter,
     Registry,
 };
+use window_shadows::set_shadow;
 
 /// The app backend state
 pub struct TauriState {
@@ -80,6 +81,9 @@ fn open_tauri(
             let receiver_from_handler = receiver_from_handler.clone();
 
             let window = app.get_window("main").unwrap();
+
+            #[cfg(any(target_os = "windows"))]
+            set_shadow(&window, true).unwrap();
 
             // Forward messages from the webview to the core
             window.listen("to_core", move |event| {

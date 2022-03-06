@@ -7,6 +7,20 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
+    titleBar: {
+      background: "#191919",
+      controls: {
+        color: "white",
+        background: "transparent",
+        hover: {
+          background: "gray",
+          closeButton: {
+            background: "red",
+            color: "white",
+          },
+        },
+      },
+    },
     textEditor: {
       background: "transparent",
       color: "#f8f8f2",
