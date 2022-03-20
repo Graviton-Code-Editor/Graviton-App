@@ -1,4 +1,4 @@
-#![feature(is_some_with)]
+#![feature(result_contains_err)]
 
 use std::env::current_dir;
 
@@ -20,6 +20,6 @@ async fn load_manifests() {
     let not_found_manifest = Manifest::parse(&not_found_manifest_path).await;
 
     assert!(ok_manifest.is_ok());
-    assert!(bad_manifest.is_err_with(|e| matches!(e, &ManifestErrors::CannotParse)));
-    assert!(not_found_manifest.is_err_with(|e| matches!(e, &ManifestErrors::NotFound)));
+    assert!(bad_manifest.contains_err(&ManifestErrors::CannotParse));
+    assert!(not_found_manifest.contains_err(&ManifestErrors::NotFound));
 }
