@@ -1,6 +1,6 @@
 use deno_core::error::AnyError;
 use deno_core::{
-    op_async,
+    op,
     Extension,
     OpState,
 };
@@ -21,6 +21,7 @@ use crate::{
 };
 
 /// Send Core Messages from deno
+#[op]
 async fn listen_messages_from_core(
     state: Rc<RefCell<OpState>>,
     event_name: String,
@@ -63,6 +64,7 @@ async fn listen_messages_from_core(
 }
 
 /// Send Core Messages from deno
+#[op]
 async fn send_message_to_core(
     state: Rc<RefCell<OpState>>,
     msg: Messages,
@@ -78,6 +80,7 @@ async fn send_message_to_core(
 }
 
 /// Terminate the worker
+#[op]
 async fn terminate_main_worker(state: Rc<RefCell<OpState>>, _: (), _: ()) -> Result<(), AnyError> {
     let state = state.borrow();
 
@@ -98,12 +101,9 @@ pub fn new(
 ) -> Extension {
     Extension::builder()
         .ops(vec![
-            ("send_message_to_core", op_async(send_message_to_core)),
-            (
-                "listen_messages_from_core",
-                op_async(listen_messages_from_core),
-            ),
-            ("terminate_main_worker", op_async(terminate_main_worker)),
+            send_message_to_core::decl(),
+            listen_messages_from_core::decl(),
+            terminate_main_worker::decl(),
         ])
         .state(move |s| {
             s.put(client.clone());

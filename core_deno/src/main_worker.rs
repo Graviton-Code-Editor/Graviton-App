@@ -51,6 +51,7 @@ pub async fn create_main_worker(
             runtime_version: "0.0.0".to_string(),
             ts_version: "0.0.0".to_string(),
             unstable: false,
+            is_tty: false,
         },
         extensions: vec![worker_extension::new(
             client,

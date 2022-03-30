@@ -11,8 +11,8 @@ license = "MIT"
 
 [dependencies]
 gveditor-core-api  = { path = "../core_api"}
-deno_core = "0.120.0"
-deno_runtime = "0.46.0"
+deno_core = "0.126.0"
+deno_runtime = "0.52.0"
 tokio = { version = "1.17.0", features = ["sync"]}
 tokio-stream = { version = "0.1.8", features = ["fs"]}
 serde = { version = "1.0.136", features = ["derive"] }
