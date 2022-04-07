@@ -17,7 +17,7 @@ function StatusBarView() {
 
   return (
     <StatusBarContainer>
-      {statusBarItems.map((item) => {
+      {Object.values(statusBarItems).map((item) => {
         const ItemContainer = item.container;
         return <ItemContainer key={item.id} />;
       })}

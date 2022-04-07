@@ -117,20 +117,20 @@ function ClientRoot({
    * Show a statusbar button if not shown, and update it in case it's already shown
    */
   const showStatusBarItem = useRecoilCallback(
-    ({ snapshot, set }) =>
+    ({ set }) =>
       async (statusBarItem: ShowStatusBarItem) => {
-        const statusBarItems = await snapshot.getPromise(showedStatusBarItem);
-        const itemIfFound = statusBarItems.find(
-          (item) => item.id === statusBarItem.statusbar_item_id
-        );
-        if (itemIfFound != null) {
-          set(itemIfFound.state, statusBarItem);
-        } else {
-          setShowedStatusBarItems((currVal) => [
-            ...currVal,
-            new StatusBarItem(statusBarItem),
-          ]);
-        }
+        setShowedStatusBarItems((statusBarItems) => {
+          const itemIfFound = statusBarItems[statusBarItem.statusbar_item_id];
+          if(itemIfFound != null ){
+            set(itemIfFound.state, statusBarItem);
+            return statusBarItems;
+          }else {
+            return {
+              ...statusBarItems,
+              [statusBarItem.statusbar_item_id]: new StatusBarItem(statusBarItem),
+            }
+          }
+        });
       },
     []
   );
@@ -174,9 +174,11 @@ function ClientRoot({
        * Hide StatusBarItems
        */
       client.on("HideStatusBarItem", (e: HideStatusBarItem) => {
-        setShowedStatusBarItems((val) => [
-          ...val.filter((item) => item.id !== e.statusbar_item_id),
-        ]);
+        setShowedStatusBarItems((currVal) => {
+          const filteredStatusBarItems = {...currVal};
+          delete filteredStatusBarItems[e.statusbar_item_id];
+          return filteredStatusBarItems;
+        });
       });
     }
 
