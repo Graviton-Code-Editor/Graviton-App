@@ -35,7 +35,7 @@
 - [ ] Bridge gveditor_core_api::extensions::modules over Deno
 - [x] Extension messages listener using async function generators
 - [x] Unload event
-- [ ] Unit tests
+- [x] Unit tests
 ### web
 
 WIP = Work in progress, aka exists but is not finished
@@ -50,10 +50,5 @@ WIP = Work in progress, aka exists but is not finished
 - [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
 - [ ] Ability to create multiple panels
 - [ ] Avoid use recoil-nexus
-- [ ] Document with TSDOC
-
-### web_components
-- [ ] Publish to npm ?
-
 ### server
-- [ ] Use a random-generated token for it's state ID
+- [ ] Use JSON Web Woken
