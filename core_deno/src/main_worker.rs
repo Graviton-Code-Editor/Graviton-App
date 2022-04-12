@@ -14,10 +14,8 @@ use std::sync::Arc;
 
 use gveditor_core_api::extensions::client::ExtensionClient;
 
-use crate::{
-    worker_extension,
-    EventListeners,
-};
+use crate::events_manager::EventsManager;
+use crate::worker_extension;
 
 // Load up the Graviton JavaScript api, aka, fancy wrapper over Deno.core.opSync/opAsync
 static GRAVITON_DENO_API: &str = include_str!(concat!(env!("OUT_DIR"), "/graviton.js"));
@@ -26,7 +24,7 @@ static GRAVITON_DENO_API: &str = include_str!(concat!(env!("OUT_DIR"), "/gravito
 pub async fn create_main_worker(
     main_path: &str,
     client: ExtensionClient,
-    listeners: EventListeners,
+    events_manager: EventsManager,
 ) -> MainWorker {
     let worker_handle = Arc::new(Mutex::new(None));
 
@@ -48,14 +46,14 @@ pub async fn create_main_worker(
             enable_testing_features: false,
             location: None,
             no_color: false,
-            runtime_version: "0.0.0".to_string(),
-            ts_version: "0.0.0".to_string(),
+            runtime_version: "1.20.5".to_string(),
+            ts_version: "4.6.2".to_string(),
             unstable: false,
             is_tty: false,
         },
         extensions: vec![worker_extension::new(
             client,
-            listeners,
+            events_manager,
             worker_handle.clone(),
         )],
         unsafely_ignore_certificate_errors: None,
@@ -79,7 +77,7 @@ pub async fn create_main_worker(
     let main_module = deno_core::resolve_path(main_path).unwrap();
 
     // Enable all permissions
-    // TODO: it would be interesting to specify what permissions the extensions have, this would make them more secure too
+    // TODO: it would be interesting to be able to specify what permissions the extensions have in it's manifest file, this would make them more secure too
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);

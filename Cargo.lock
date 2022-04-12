@@ -2029,7 +2029,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core-deno"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "async-trait",
  "deno_core",

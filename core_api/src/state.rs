@@ -4,8 +4,9 @@ use crate::extensions::manager::{
     LoadedExtension,
 };
 use crate::filesystems::{
+    FileFormat,
     Filesystem,
-    LocalFilesystem, FileFormat,
+    LocalFilesystem,
 };
 use crate::messaging::ExtensionMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;

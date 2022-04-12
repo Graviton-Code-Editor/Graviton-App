@@ -1,18 +1,6 @@
-#![feature(map_try_insert)]
-
-use std::collections::HashMap;
-use std::sync::Arc;
-
+use async_trait::async_trait;
 use deno_core::v8::IsolateHandle;
-use gveditor_core_api::{
-    Manifest,
-    ManifestInfo,
-    Mutex,
-    Sender,
-};
-use tokio::fs;
-use tokio::runtime::Runtime;
-
+use events_manager::EventsManager;
 use gveditor_core_api::extensions::base::{
     Extension,
     ExtensionInfo,
@@ -23,18 +11,25 @@ use gveditor_core_api::extensions::manager::{
     LoadedExtension,
 };
 use gveditor_core_api::messaging::ExtensionMessages;
-
-mod main_worker;
-
-mod worker_extension;
-
-use main_worker::create_main_worker;
-
-use async_trait::async_trait;
-
+use gveditor_core_api::{
+    Manifest,
+    ManifestInfo,
+    Mutex,
+    Sender,
+};
+use std::collections::HashMap;
+use std::sync::Arc;
+use tokio::fs;
+use tokio::runtime::Runtime;
 use tokio_stream::wrappers::ReadDirStream;
 use tokio_stream::StreamExt;
 use uuid::Uuid;
+
+mod events_manager;
+mod main_worker;
+mod worker_extension;
+
+use main_worker::create_main_worker;
 
 pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ExtensionMessages>>>>>;
 pub type WorkerHandle = Arc<Mutex<Option<IsolateHandle>>>;
@@ -46,7 +41,7 @@ struct DenoExtension {
     info: ManifestInfo,
     client: ExtensionClient,
     state_id: u8,
-    listeners: EventListeners,
+    events_manager: EventsManager,
 }
 
 impl DenoExtension {
@@ -55,14 +50,14 @@ impl DenoExtension {
         info: ManifestInfo,
         client: ExtensionClient,
         state_id: u8,
-        listeners: EventListeners,
+        events_manager: EventsManager,
     ) -> Self {
         Self {
             main_path: main_path.to_string(),
             info,
             client,
             state_id,
-            listeners,
+            events_manager,
         }
     }
 }
@@ -71,14 +66,14 @@ impl Extension for DenoExtension {
     fn init(&mut self) {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
-        let worker_listeners = self.listeners.clone();
+        let events_manager = self.events_manager.clone();
 
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
                 let mut worker =
-                    create_main_worker(&main_path, client, worker_listeners.clone()).await;
+                    create_main_worker(&main_path, client, events_manager.clone()).await;
 
                 worker.run_event_loop(false).await.ok();
             });
@@ -96,17 +91,9 @@ impl Extension for DenoExtension {
     }
 
     fn notify(&mut self, message: ExtensionMessages) {
-        let listeners = self.listeners.clone();
+        let events_manager = self.events_manager.clone();
         tokio::spawn(async move {
-            let listeners = listeners.lock().await;
-            let event_name = message.get_name();
-            let event_listeners = listeners.get(event_name);
-
-            if let Some(event_listeners) = event_listeners {
-                for listener in event_listeners.values() {
-                    listener.send(message.clone()).await.ok();
-                }
-            }
+            events_manager.send(message).await.unwrap();
         });
     }
 
@@ -143,16 +130,13 @@ impl DenoExtensionSupport for ExtensionsManager {
         state_id: u8,
     ) -> &mut ExtensionsManager {
         let client = ExtensionClient::new(&info.extension.name.clone(), self.sender.clone());
-        let listeners = Arc::new(Mutex::new(HashMap::<
-            String,
-            HashMap<Uuid, Sender<ExtensionMessages>>,
-        >::new()));
+        let events_manager = EventsManager::new();
         let deno_extension = Box::new(DenoExtension::new(
             path,
             info.clone(),
             client,
             state_id,
-            listeners,
+            events_manager,
         ));
         self.register(&info.extension.id, deno_extension);
         self.extensions
@@ -181,26 +165,13 @@ impl DenoExtensionSupport for ExtensionsManager {
                 if let Ok(manifest) = manifest {
                     // Load it's entry file if specified
                     if let Some(main) = &manifest.info.extension.main {
-                        let client = ExtensionClient::new(
-                            &manifest.info.extension.name,
-                            self.sender.clone(),
-                        );
                         let main_path = item_path.join(main);
-                        let listeners = Arc::new(Mutex::new(HashMap::<
-                            String,
-                            HashMap<Uuid, Sender<ExtensionMessages>>,
-                        >::new()));
-                        let deno_extension = Box::new(DenoExtension::new(
+
+                        self.load_extension_with_deno(
                             main_path.to_str().unwrap(),
                             manifest.info.clone(),
-                            client,
                             state_id,
-                            listeners,
-                        ));
-                        self.register(&manifest.info.extension.id, deno_extension);
-
-                        self.extensions
-                            .push(LoadedExtension::ManifestFile { manifest });
+                        );
                     } else {
                         tracing::error!(
                             "Could not register Deno Extension <{}> from {}",

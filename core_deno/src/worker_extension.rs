@@ -10,15 +10,12 @@ use gveditor_core_api::messaging::{
     Messages,
 };
 use std::cell::RefCell;
-use std::collections::HashMap;
 use std::rc::Rc;
 use tokio::sync::mpsc;
 use uuid::Uuid;
 
-use crate::{
-    EventListeners,
-    WorkerHandle,
-};
+use crate::events_manager::EventsManager;
+use crate::WorkerHandle;
 
 /// Send Core Messages from deno
 #[op]
@@ -27,40 +24,24 @@ async fn listen_messages_from_core(
     event_name: String,
     _: (),
 ) -> Result<ExtensionMessages, AnyError> {
-    let (s, mut r) = mpsc::channel(1);
-    let s_id = Uuid::new_v4();
+    let (listener, mut receiver) = mpsc::channel(1);
+    let listener_id = Uuid::new_v4();
 
-    let state = state.borrow();
+    let events_manager: EventsManager = {
+        let state = state.try_borrow()?;
 
-    let listeners: &EventListeners = state.try_borrow::<EventListeners>().unwrap();
+        state.try_borrow::<EventsManager>().unwrap().clone()
+    };
 
-    // Create the event map if not found
-    listeners
-        .lock()
-        .await
-        .try_insert(event_name.clone(), HashMap::new())
-        .ok();
+    events_manager
+        .listen_on(event_name.clone(), listener_id, listener)
+        .await;
 
-    // Insert the listener
-    listeners
-        .lock()
-        .await
-        .get_mut(&event_name)
-        .unwrap()
-        .insert(s_id, s);
+    let event_response = receiver.recv().await;
 
-    let event = r.recv().await;
+    events_manager.unlisten_from(event_name, listener_id).await;
 
-    listeners
-        .lock()
-        .await
-        .get_mut(&event_name)
-        .unwrap()
-        .remove(&s_id);
-
-    // TODO, remove the event hashmap if no more senders are on it
-
-    Ok(event.unwrap())
+    Ok(event_response.unwrap())
 }
 
 /// Send Core Messages from deno
@@ -70,9 +51,10 @@ async fn send_message_to_core(
     msg: Messages,
     _: (),
 ) -> Result<(), AnyError> {
-    let state = state.borrow();
-
-    let client: &ExtensionClient = state.try_borrow::<ExtensionClient>().unwrap();
+    let client: ExtensionClient = {
+        let state = state.borrow();
+        state.try_borrow::<ExtensionClient>().unwrap().clone()
+    };
 
     client.send(msg).await?;
 
@@ -82,9 +64,10 @@ async fn send_message_to_core(
 /// Terminate the worker
 #[op]
 async fn terminate_main_worker(state: Rc<RefCell<OpState>>, _: (), _: ()) -> Result<(), AnyError> {
-    let state = state.borrow();
-
-    let worker_handle: &WorkerHandle = state.try_borrow::<WorkerHandle>().unwrap();
+    let worker_handle: WorkerHandle = {
+        let state = state.borrow();
+        state.try_borrow::<WorkerHandle>().unwrap().clone()
+    };
 
     if let Some(handle) = &*worker_handle.lock().await {
         handle.terminate_execution();
@@ -96,7 +79,7 @@ async fn terminate_main_worker(state: Rc<RefCell<OpState>>, _: (), _: ()) -> Res
 /// Crate the extension to bridge Graviton Core and the Deno extension
 pub fn new(
     client: ExtensionClient,
-    listeners: EventListeners,
+    events_manager: EventsManager,
     worker_handle: WorkerHandle,
 ) -> Extension {
     Extension::builder()
@@ -107,7 +90,7 @@ pub fn new(
         ])
         .state(move |s| {
             s.put(client.clone());
-            s.put(listeners.clone());
+            s.put(events_manager.clone());
             s.put(worker_handle.clone());
             Ok(())
         })
