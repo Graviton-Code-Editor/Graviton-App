@@ -4,7 +4,7 @@ import FakeRoot from "./utils/fake_root";
 import FilesystemExplorer from "../src/components/FilesystemExplorer";
 import { test, describe, expect, vi } from "vitest";
 
-global.IS_REACT_ACT_ENVIRONMENT=true
+global.IS_REACT_ACT_ENVIRONMENT = true;
 
 vi.mock("react-virtualized-auto-sizer", () => {
   return {
@@ -12,11 +12,14 @@ vi.mock("react-virtualized-auto-sizer", () => {
   };
 });
 
-vi.stubGlobal("XMLHttpRequest", vi.fn(() => ({
-  open            : vi.fn(),
-  send            : vi.fn(),
-  setRequestHeader: vi.fn()
-})));
+vi.stubGlobal(
+  "XMLHttpRequest",
+  vi.fn(() => ({
+    open: vi.fn(),
+    send: vi.fn(),
+    setRequestHeader: vi.fn(),
+  }))
+);
 
 describe("<FilesystemExplorer/>", () => {
   test("readme.md exists", async () => {

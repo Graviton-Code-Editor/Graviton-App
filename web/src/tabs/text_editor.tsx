@@ -36,7 +36,12 @@ class TextEditorTab extends Tab {
    * @param path - Path of the opened file
    * @param initialContent - Current content of the file
    */
-  constructor(filename: string, path: string, initialContent: string, format: FileFormat) {
+  constructor(
+    filename: string,
+    path: string,
+    initialContent: string,
+    format: FileFormat
+  ) {
     super(filename);
     this.path = path;
     this.filename = filename;
@@ -234,11 +239,10 @@ class TextEditorTab extends Tab {
   }: {
     initialValue: string;
   }): EditorState {
-
     const extensions = [this.getKeymap(), basicSetup];
 
-    if(typeof this.format !== "string" ){
-      switch(this.format.Text){
+    if (typeof this.format !== "string") {
+      switch (this.format.Text) {
         case "TypeScript": // TODO: Not exactly the same anyway
         case "JavaScript":
           extensions.push(javascript());

@@ -42,7 +42,12 @@ export function tabDataToTabRecursively(
         const data = tabData as TextEditorTabData;
         const editor = getEditor(data.format);
         if (editor != null) {
-          const tab = new editor(data.filename, data.path, data.content, data.format);
+          const tab = new editor(
+            data.filename,
+            data.path,
+            data.content,
+            data.format
+          );
           return tab;
         }
         break;
@@ -133,7 +138,7 @@ export const showedWindows = atom<FloatingWindow[]>({
 });
 
 // Displayed StatusBar Items
-export const showedStatusBarItem = atom<{[key: string]: StatusBarItem}>({
+export const showedStatusBarItem = atom<{ [key: string]: StatusBarItem }>({
   key: "showedStatusBarItem",
   default: {},
 });

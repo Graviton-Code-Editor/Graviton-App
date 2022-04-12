@@ -121,14 +121,16 @@ function ClientRoot({
       async (statusBarItem: ShowStatusBarItem) => {
         setShowedStatusBarItems((statusBarItems) => {
           const itemIfFound = statusBarItems[statusBarItem.statusbar_item_id];
-          if(itemIfFound != null ){
+          if (itemIfFound != null) {
             set(itemIfFound.state, statusBarItem);
             return statusBarItems;
-          }else {
+          } else {
             return {
               ...statusBarItems,
-              [statusBarItem.statusbar_item_id]: new StatusBarItem(statusBarItem),
-            }
+              [statusBarItem.statusbar_item_id]: new StatusBarItem(
+                statusBarItem
+              ),
+            };
           }
         });
       },
@@ -175,7 +177,7 @@ function ClientRoot({
        */
       client.on("HideStatusBarItem", (e: HideStatusBarItem) => {
         setShowedStatusBarItems((currVal) => {
-          const filteredStatusBarItems = {...currVal};
+          const filteredStatusBarItems = { ...currVal };
           delete filteredStatusBarItems[e.statusbar_item_id];
           return filteredStatusBarItems;
         });
