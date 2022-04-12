@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import React from 'react'
 
 export const PrimaryButton =  styled.button`
     background: ${({ theme }) => theme.elements.primaryButton.background};

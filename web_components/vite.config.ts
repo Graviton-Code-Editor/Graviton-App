@@ -1,9 +1,19 @@
 import { defineConfig } from 'vite'
-import typescript from '@rollup/plugin-typescript'
+import checker from "vite-plugin-checker";
+import react from "@vitejs/plugin-react";
 import path from 'path'
 
 export default defineConfig((configEnv) => ({
   clearScreen: false,
+  plugins:[
+    react(),
+    checker({
+      typescript: true,
+      eslint: {
+        lintCommand: 'eslint "./src/**/*.{ts,tsx}"'
+      },
+    }),
+  ],
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
@@ -13,9 +23,6 @@ export default defineConfig((configEnv) => ({
     rollupOptions: {
       external: ['react', 'styled-components'],
       output: {},
-      plugins: [
-        typescript({ tsconfig: './tsconfig.json' })
-      ]
     }
   }
 }));

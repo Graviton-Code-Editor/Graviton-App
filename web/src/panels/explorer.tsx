@@ -22,11 +22,11 @@ function ExplorerPanelContainer() {
       try {
         client.read_file_by_path(item.path, "local").then((fileContent) => {
           if (fileContent.Ok) {
-            const { content } = fileContent.Ok;
-            const editor = getEditor(fileContent.Ok.format);
+            const { content, format } = fileContent.Ok;
+            const editor = getEditor(format);
             // Make sure a compatible editor was found
             if (editor != null) {
-              const newTab = new editor(item.name, item.path, content);
+              const newTab = new editor(item.name, item.path, content, format);
               openTab(newTab);
             } else {
               // Handle error

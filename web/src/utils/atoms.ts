@@ -39,10 +39,10 @@ export function tabDataToTabRecursively(
   } else {
     switch (tabData.tab_type) {
       case "TextEditor": {
-        const editor = getEditor({ Text: "Rust" });
         const data = tabData as TextEditorTabData;
+        const editor = getEditor(data.format);
         if (editor != null) {
-          const tab = new editor(data.filename, data.path, data.content);
+          const tab = new editor(data.filename, data.path, data.content, data.format);
           return tab;
         }
         break;

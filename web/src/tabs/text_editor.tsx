@@ -1,15 +1,15 @@
 import TextEditor from "../components/TextEditor";
-import { EditorState, StateCommand } from "@codemirror/state";
-import { basicSetup, EditorView } from "@codemirror/basic-setup";
+import { StateCommand } from "@codemirror/state";
+import { basicSetup, EditorView, EditorState } from "@codemirror/basic-setup";
 import { keymap, KeyBinding, Command } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { rust } from "@codemirror/lang-rust";
 import { clientState, showedWindows } from "../utils/atoms";
 import { getRecoil, setRecoil } from "recoil-nexus";
 import { FileFormat } from "../types/client";
 import { Popup } from "../modules/popup";
 import * as history from "@codemirror/history";
 import { SaveTabOptions, Tab, TextEditorTabData } from "../modules/tab";
+import { rust } from "@codemirror/lang-rust";
 
 interface SavedState {
   scrollHeight: number;
@@ -19,21 +19,16 @@ interface SavedState {
  * A tab that displays a CodeMirror editor inside it
  */
 class TextEditorTab extends Tab {
-  // Tab's state
   private state: SavedState = {
     scrollHeight: 0,
   };
   private path: string;
   private filename: string;
-
+  private format: FileFormat;
   private lastSavedStateText: string[] = [];
-
-  // CodeMirror instance
   private view: EditorView;
 
-  // Update the tab component
   public setEditedComp: (state: boolean) => void;
-  // Close the tab component
   public closeTabComp: () => void;
 
   /**
@@ -41,10 +36,11 @@ class TextEditorTab extends Tab {
    * @param path - Path of the opened file
    * @param initialContent - Current content of the file
    */
-  constructor(filename: string, path: string, initialContent: string) {
+  constructor(filename: string, path: string, initialContent: string, format: FileFormat) {
     super(filename);
     this.path = path;
     this.filename = filename;
+    this.format = format;
 
     this.setEditedComp = () => {
       console.error("Tried changing an unmounted tab");
@@ -238,8 +234,23 @@ class TextEditorTab extends Tab {
   }: {
     initialValue: string;
   }): EditorState {
+
+    const extensions = [this.getKeymap(), basicSetup];
+
+    if(typeof this.format !== "string" ){
+      switch(this.format.Text){
+        case "TypeScript": // TODO: Not exactly the same anyway
+        case "JavaScript":
+          extensions.push(javascript());
+          break;
+        case "Rust":
+          extensions.push(rust());
+          break;
+      }
+    }
+
     const state = EditorState.create({
-      extensions: [this.getKeymap(), basicSetup, javascript(), rust()],
+      extensions,
       doc: initialValue,
     });
 
@@ -261,6 +272,7 @@ class TextEditorTab extends Tab {
       path: this.path,
       filesystem: "local",
       content: this.getContent(),
+      format: this.format,
       filename: this.filename,
     };
   }

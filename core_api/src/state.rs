@@ -5,7 +5,7 @@ use crate::extensions::manager::{
 };
 use crate::filesystems::{
     Filesystem,
-    LocalFilesystem,
+    LocalFilesystem, FileFormat,
 };
 use crate::messaging::ExtensionMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
@@ -93,6 +93,7 @@ pub enum TabData {
         path: String,
         filesystem: String,
         // It should save a piece-table like not the content, this way, the history could be retrieved too
+        format: FileFormat,
         content: String,
         filename: String,
     },

@@ -9,20 +9,20 @@
   "typings": "./dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "tsc && vite build --watch",
+    "dev": "vite build --watch",
     "build": "tsc && vite build"
   },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.3.0",
     "@types/node": "^16.11.9",
-    "@types/react": "^17.0.0",
+    "@types/react": "^18.0.2",
+    "@types/styled-components": "^5.1.25",
     "@vitejs/plugin-react": "1.0.5",
-    "typescript": "^4.3.2",
-    "vite": "^2.6.4",
-    "vite-plugin-checker": "^0.3.4"
+    "typescript": "^4.6.3",
+    "vite": "^2.9.1",
+    "vite-plugin-checker": "^0.4.5"
   },
   "peerDependencies": {
-    "react": "^17.0.0",
-    "styled-components": "^5.3.3"
+    "react": "^18.0.0",
+    "styled-components": "^5.3.5"
   }
 }

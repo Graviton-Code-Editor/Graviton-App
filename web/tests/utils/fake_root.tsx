@@ -16,12 +16,16 @@ function RootRenderer({ children }: PropsWithChildren<any>) {
 }
 
 export default function FakeRoot({ children }: PropsWithChildren<any>) {
+
+  //https://github.com/facebookexperimental/Recoil/issues/1726
+  const RecoilRootTmp: any = RecoilRoot as any;
+
   return (
-    <RecoilRoot>
+    <RecoilRootTmp>
       <Recoilnexus />
       <Theme>
         <RootRenderer>{children}</RootRenderer>
       </Theme>
-    </RecoilRoot>
+    </RecoilRootTmp>
   );
 }
