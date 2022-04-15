@@ -9,6 +9,7 @@ import styled from "styled-components";
 const CodeMirrorStyler = styled.div`
   & {
     background: ${({ theme }) => theme.elements.textEditor.background};
+    box-shadow: inset 0px 5px 10px rgba(0,0,0, 0.1);
   }
   & .ͼa {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
