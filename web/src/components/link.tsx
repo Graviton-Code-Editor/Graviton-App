@@ -13,7 +13,6 @@ const StyledAnchor = styled.a`
   }
 `;
 
-
 function openUrl(url: string) {
   import("@tauri-apps/api").then(({ shell }) => {
     shell.open(url);
@@ -21,19 +20,17 @@ function openUrl(url: string) {
 }
 
 interface LinkOptions {
-  href: string,
-  label: string,
-  onClick?: () => void
+  href: string;
+  label: string;
+  onClick?: () => void;
 }
 
-function LinkButton(props: PropsWithChildren<LinkOptions>){
+function LinkButton(props: PropsWithChildren<LinkOptions>) {
   return (
     <StyledAnchor {...props}>
-      <SecondaryButton>
-        {props.label}
-      </SecondaryButton>
+      <SecondaryButton>{props.label}</SecondaryButton>
     </StyledAnchor>
-  )
+  );
 }
 
 /*
@@ -44,7 +41,15 @@ export default function Link(props: LinkOptions) {
   if (isTauri) {
     const href = props.href;
     props = { ...props, href: null } as any;
-    return <LinkButton  {...props} onClick={() => {openUrl(href); console.log(href)}}  />;
+    return (
+      <LinkButton
+        {...props}
+        onClick={() => {
+          openUrl(href);
+          console.log(href);
+        }}
+      />
+    );
   }
   return <LinkButton {...props} />;
 }

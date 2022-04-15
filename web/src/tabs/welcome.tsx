@@ -15,12 +15,12 @@ function WelcomeTabContainer() {
     <WelcomeTabContainerStyled>
       <h2>{t("tabs.Welcome.title")}</h2>
       <p>{t("tabs.Welcome.content")}</p>
-      <Link 
-        href="https://github.com/Graviton-Code-Editor/Graviton-App/issues" 
+      <Link
+        href="https://github.com/Graviton-Code-Editor/Graviton-App/issues"
         label={t("Report bugs here")}
       />
-      <br/>
-      <Link 
+      <br />
+      <Link
         href="https://github.com/Graviton-Code-Editor/Graviton-App/issues"
         label={t("Contribute here")}
       />
