@@ -55,6 +55,9 @@
         "unminimize": true,
         "unmaximize": true,
         "startDragging": true
+      },
+      "shell":{
+        "open": true
       }
     },
     "windows": [

@@ -2,12 +2,16 @@
     "code": "en",
     "translation": {
         "Open Folder": "Open Folder",
-        "Welcome to Graviton": "Welcome to Graviton",
-        "This version is still on alpha.": "This version is still on alpha.",
         "popups":{
             "AskSaveFile":{
                 "title": "Do you want to save the changes in {{file_path}} ?",
                 "content": "Important changes might be lost if you decline."
+            }
+        },
+        "tabs":{
+            "Welcome":{
+                "title": "Welcome",
+                "content": "You are currently using a pre-alpha version of Graviton, expect bugs or uncompleted features."
             }
         },
         "prompts":{
@@ -17,7 +21,8 @@
                 "OpenFolder": "Open Folder"
             }
         },
-        "Report bugs here":"Report bugs here",
+        "Contribute here": "Contribute here",
+        "Report bugs here": "Report bugs here",
         "Save": "Save",
         "Don't save": "Don't save",
         "Cancel": "Cancel"

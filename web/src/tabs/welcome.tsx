@@ -13,11 +13,17 @@ function WelcomeTabContainer() {
 
   return (
     <WelcomeTabContainerStyled>
-      <h2>{t("Welcome to Graviton")}</h2>
-      <p>{t("This version is still on alpha.")}</p>
-      <Link href="https://github.com/Graviton-Code-Editor/Graviton-App/issues">
-        {t("Report bugs here")}
-      </Link>
+      <h2>{t("tabs.Welcome.title")}</h2>
+      <p>{t("tabs.Welcome.content")}</p>
+      <Link 
+        href="https://github.com/Graviton-Code-Editor/Graviton-App/issues" 
+        label={t("Report bugs here")}
+      />
+      <br/>
+      <Link 
+        href="https://github.com/Graviton-Code-Editor/Graviton-App/issues"
+        label={t("Contribute here")}
+      />
     </WelcomeTabContainerStyled>
   );
 }
