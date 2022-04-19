@@ -13,7 +13,7 @@ const theme = {
         color: "white",
         background: "transparent",
         hover: {
-          background: "gray",
+          background: "#2d2d2d",
           closeButton: {
             background: "red",
             color: "white",
