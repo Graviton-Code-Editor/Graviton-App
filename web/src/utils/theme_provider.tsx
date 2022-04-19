@@ -52,7 +52,7 @@ const theme = {
         color: "#858a99",
       },
       gutters: {
-        background: "transparent",
+        background: "#191919",
         gutter: {
           color: "#6d8a88",
           active: {
