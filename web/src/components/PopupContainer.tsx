@@ -1,5 +1,4 @@
-// @ts-ignore
-import { WindowButton } from "@gveditor/web_components";
+import { WindowButton } from "./primitive/button";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";

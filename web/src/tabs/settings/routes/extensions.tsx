@@ -1,5 +1,4 @@
-//@ts-ignore
-import { Title } from "@gveditor/web_components";
+import Title from "../../../components/primitive/title";
 import List from "../../../components/List";
 import TabText from "../../../components/TabText";
 import useExtensions from "../../../hooks/useExtensions";

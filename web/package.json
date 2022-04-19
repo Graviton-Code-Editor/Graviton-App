@@ -1,6 +1,6 @@
 {
   "name": "@gveditor/web",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -16,7 +16,6 @@
     "@fontsource/inter": "^4.5.1",
     "@fontsource/jetbrains-mono": "^4.5.0",
     "@gveditor/languages": "*",
-    "@gveditor/web_components": "*",
     "@tauri-apps/api": "^1.0.0-rc.3",
     "emittery": "^0.10.0",
     "i18next": "^21.5.4",

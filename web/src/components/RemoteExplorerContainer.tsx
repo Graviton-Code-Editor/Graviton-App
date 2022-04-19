@@ -1,5 +1,4 @@
-//@ts-ignore
-import { PrimaryButton } from "@gveditor/web_components";
+import { PrimaryButton } from "./primitive/button";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";

@@ -7,8 +7,7 @@ import { clientState, openedFolders } from "../utils/atoms";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
-//@ts-ignore
-import { SecondaryButton } from "@gveditor/web_components";
+import { SecondaryButton } from "../components/primitive/button";
 import { openFolderPicker } from "../utils/commands";
 
 function ExplorerPanelContainer() {

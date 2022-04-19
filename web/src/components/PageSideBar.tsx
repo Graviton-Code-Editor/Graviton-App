@@ -1,5 +1,4 @@
-//@ts-ignore
-import { PrimaryButton } from "@gveditor/web_components";
+import { PrimaryButton } from "./primitive/button";
 import styled from "styled-components";
 
 export const SideBarButton = styled(PrimaryButton)`

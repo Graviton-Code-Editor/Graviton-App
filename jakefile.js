@@ -9,18 +9,6 @@ const run  = (what, args, where = './') => {
     })
 }
 
-
-desc('Watch web_components for changes');
-task('dev_web_components', async function () {
-    run('yarn', ['--cwd', 'web_components', 'run', 'dev'])
-});
-
-
-desc('Build web_components');
-task('build_web_components', async function () {
-    await run('yarn', ['--cwd', 'web_components', 'run', 'build'])
-});
-
 desc('Run the server in develop mode');
 task('dev_server', async function () {
     run('yarn', ['--cwd', 'web', 'run', 'dev'])

@@ -1,5 +1,4 @@
-//@ts-ignore
-import { Title } from "@gveditor/web_components";
+import Title from "../../../components/primitive/title";
 import TabText from "../../../components/TabText";
 
 export default function AboutRoute() {
