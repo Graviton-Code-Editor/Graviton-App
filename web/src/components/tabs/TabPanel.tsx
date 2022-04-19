@@ -41,6 +41,7 @@ interface TabPanelOptions {
 }
 
 export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
+  // Todo(marc2332): This should be externalized to an atom instead of a local state, so the selected tab can be changed externally
   const [selectedTabID, setSelectedTabID] = useState<string | null>(null);
   const setFocusedTab = useSetRecoilState(focusedTab);
 
