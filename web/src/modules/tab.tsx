@@ -8,11 +8,13 @@ export interface TextEditorTabData {
   content: string;
   format: FileFormat;
   filename: string;
+  id: string;
 }
 
 export interface BasicTabData {
   tab_type: string;
   title: string;
+  id: string;
 }
 
 export type TabData = BasicTabData | TextEditorTabData;
@@ -74,6 +76,7 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
     return {
       tab_type: "Basic",
       title: this.title,
+      id: this.id,
     };
   }
 }

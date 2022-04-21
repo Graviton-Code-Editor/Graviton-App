@@ -48,7 +48,7 @@ function TabsView() {
                 return (
                   <TabsPanel
                     key={`${r}${c}_tabs_panel`}
-                    tabs={viewPanel.tabs}
+                    panel={viewPanel}
                     row={r}
                     col={c}
                     close={(i) => closeTab(r, c, i)}

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import useTabs from "../../hooks/useTabs";
 import { Tab } from "../../modules/tab";
-import { focusedTabState } from "../../utils/state/tabs";
+import { ViewPanel } from "../../utils/state/tabs";
 import TabButton from "./TabButton";
 
 const NoTabsOpenedMessageContainer = styled.div`
@@ -51,48 +51,47 @@ const TabsPanelContainer = styled.div`
 `;
 
 interface TabPanelOptions {
-  tabs: Tab[];
+  panel: ViewPanel<Tab>;
   col: number;
   row: number;
   close: (i: number) => void;
 }
 
-export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
-  // Todo(marc2332): This should be externalized to an atom instead of a local state, so the selected tab can be changed externally
-  const [selectedTabID, setSelectedTabID] = useState<string | null>(null);
-  const setFocusedTab = useSetRecoilState(focusedTabState);
+export default function TabsPanel({
+  panel: { tabs, selected_tab_id },
+  col,
+  row,
+  close,
+}: TabPanelOptions) {
+  const { focusTab, selectTab } = useTabs();
 
-  // Panel's tab states
   const tabsStates: Map<string, boolean> = new Map();
   tabs.forEach((tab) => tabsStates.set(tab.id, tab.edited));
   const [states, setStates] = useState(tabsStates);
 
   useEffect(() => {
     // If there isn't any tab opened then set the selected tab to null
-    if (tabs.length === 0 && selectedTabID != null) {
-      selectTab(null);
+    if (tabs.length === 0 && selected_tab_id != null) {
+      selectPanelTab(null);
     }
 
     // Select the first Tab as fallback
-    if (tabs.length > 0 && selectedTabID == null) {
-      selectTab(tabs[0]);
+    if (tabs.length > 0 && selected_tab_id == null) {
+      selectPanelTab(tabs[0]);
     }
-  }, [tabs, selectedTabID]);
+  }, [tabs, selected_tab_id]);
 
   /*
    * Focused the tab by the specified ID
    */
-  function selectTab(tab: Tab | null) {
-    const tabID = tab ? tab.id : null;
-
+  function selectPanelTab(tab: Tab | null) {
     // Update the panel state
-    setSelectedTabID(tabID);
+    selectTab({ col, row, tab });
 
     // Focus the tab
-    setFocusedTab({
+    focusTab({
       col,
       row,
-      id: tabID,
       tab,
     });
   }
@@ -102,7 +101,13 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
    */
   function removeTab(tab: Tab, index: number) {
     tab.close();
-    if (selectedTabID === tab.id) setSelectedTabID(null);
+    if (selected_tab_id === tab.id) {
+      if (tabs[index - 1]) {
+        selectTab({ col, row, tab: tabs[index - 1] });
+      } else {
+        selectTab({ col, row, tab: null });
+      }
+    }
     close(index);
   }
 
@@ -117,7 +122,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
     <TabsPanelContainer>
       <div className="tabsList">
         {tabs.map((tab, i) => {
-          const isSelected = tab.id == selectedTabID;
+          const isSelected = tab.id == selected_tab_id;
           const isEdited = states.get(tab.id) as boolean;
           return (
             <TabButton
@@ -125,7 +130,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
               title={tab.title}
               isEdited={isEdited}
               isSelected={isSelected}
-              select={() => selectTab(tab)}
+              select={() => selectPanelTab(tab)}
               close={() => removeTab(tab, i)}
               save={() => saveTab(tab)}
             />
@@ -134,7 +139,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
       </div>
       <div className="tabsContainer">
         {tabs.map((tab, i) => {
-          const isSelected = tab.id == selectedTabID;
+          const isSelected = tab.id == selected_tab_id;
           const Container = tab.container;
 
           const setEdited = (state: boolean) => {

@@ -8,7 +8,7 @@ import { useSetRecoilState } from "recoil";
 import { foldersState } from "../utils/state";
 
 function GlobalPromptContainer() {
-  const [openTab] = useTabs();
+  const { openTab } = useTabs();
   const setOpenedFolders = useSetRecoilState(foldersState);
 
   const options: Option[] = [

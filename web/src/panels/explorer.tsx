@@ -12,7 +12,7 @@ import { openFolderPicker } from "../utils/commands";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
-  const [openTab] = useTabs();
+  const { openTab } = useTabs();
   const getEditor = useEditor();
   const setOpenedFolders = useSetRecoilState(foldersState);
 

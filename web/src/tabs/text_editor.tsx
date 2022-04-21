@@ -278,6 +278,7 @@ class TextEditorTab extends Tab {
       content: this.getContent(),
       format: this.format,
       filename: this.filename,
+      id: this.id,
     };
   }
 }

@@ -14,7 +14,7 @@ import { clientState } from "../state";
 import getAllStateData from "./state_data";
 
 export interface ViewPanel<T> {
-  focused_tab_id?: string;
+  selected_tab_id?: string;
   tabs: Array<T>;
 }
 
@@ -28,8 +28,8 @@ export function transformTabsDataToTabs(
   return views.map((viewPanel) => {
     return viewPanel.map((viewPanel) => {
       return {
-        focused_tab_id: viewPanel.focused_tab_id,
-        _tabs: viewPanel.tabs.map((tabData) => {
+        selected_tab_id: viewPanel.selected_tab_id,
+        tabs: viewPanel.tabs.map((tabData) => {
           switch (tabData.tab_type) {
             case "TextEditor": {
               const data = tabData as TextEditorTabData;
@@ -41,6 +41,7 @@ export function transformTabsDataToTabs(
                   data.content,
                   data.format
                 );
+                tab.id = tabData.id;
                 return tab;
               }
               break;
@@ -48,20 +49,20 @@ export function transformTabsDataToTabs(
             default: {
               const basicTabData = tabData as BasicTabData;
               switch (basicTabData.title) {
-                case "Settings":
-                  return new SettingsTab();
-                case "Welcome":
-                  return new WelcomeTab();
+                case "Settings": {
+                  const settingsTab = new SettingsTab();
+                  settingsTab.id = basicTabData.id;
+                  return settingsTab;
+                }
+                case "Welcome": {
+                  const welcomeTab = new WelcomeTab();
+                  welcomeTab.id = tabData.id;
+                  return welcomeTab;
+                }
               }
             }
           }
         }),
-        get tabs() {
-          return this._tabs;
-        },
-        set tabs(value) {
-          this._tabs = value;
-        },
       };
     });
   });

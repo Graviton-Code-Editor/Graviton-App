@@ -97,15 +97,17 @@ pub enum TabData {
         format: FileFormat,
         content: String,
         filename: String,
+        id: String,
     },
     // Basic tab (e.g. Settings)
     Basic {
         title: String,
+        id: String,
     },
 }
 #[derive(Serialize, Deserialize, Clone, Debug, Default)]
 struct ViewPanel {
-    focused_tab_id: Option<String>,
+    selected_tab_id: Option<String>,
     tabs: Vec<TabData>,
 }
 

@@ -22,7 +22,7 @@ function transformTabsToData(
   return views.map((viewPanel) => {
     return viewPanel.map((view) => {
       return {
-        focused_tab_id: view.focused_tab_id,
+        selected_tab_id: view.selected_tab_id,
         tabs: view.tabs.map((tab) => {
           return tab.toJson();
         }),
