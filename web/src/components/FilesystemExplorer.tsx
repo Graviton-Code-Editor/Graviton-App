@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { default as styled } from "styled-components";
-import { clientState } from "../utils/atoms";
+import { clientState } from "../utils/state";
 //@ts-ignore
 import { FixedSizeList as List } from "react-window";
 //@ts-ignore

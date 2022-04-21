@@ -11,7 +11,7 @@ import {
   FileInfo,
 } from "../../types/client";
 import Configuration from "../config";
-import { StateData } from "../state";
+import { StateData } from "../state/state_data";
 
 /**
  * Tauri Client

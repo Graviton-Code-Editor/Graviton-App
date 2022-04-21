@@ -45,7 +45,6 @@ export default function Link(props: LinkOptions) {
         {...props}
         onClick={() => {
           openUrl(href);
-          console.log(href);
         }}
       />
     );

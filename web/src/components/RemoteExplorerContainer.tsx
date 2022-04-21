@@ -2,7 +2,7 @@ import { PrimaryButton } from "./primitive/button";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../utils/atoms";
+import { showedWindows } from "../utils/state";
 import FilesystemExplorer, { TreeItemInfo } from "./FilesystemExplorer";
 import WindowBackground from "./WindowBackground";
 

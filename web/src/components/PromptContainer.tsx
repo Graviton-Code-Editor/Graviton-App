@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../utils/atoms";
+import { showedWindows } from "../utils/state";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "./WindowBackground";
 import { TranslatedText } from "../types/types";

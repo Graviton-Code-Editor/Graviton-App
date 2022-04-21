@@ -1,25 +1,8 @@
 import { SplitPane } from "react-multi-split-pane";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { openedTabsState } from "../utils/atoms";
+import { tabsState } from "../utils/state";
 import TabsPanel from "./tabs/TabPanel";
-
-const NoTabsOpenedMessageContainer = styled.div`
-  color: ${({ theme }) => theme.elements.tab.text.unfocused.color};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  text-align: center;
-`;
-
-function NoTabsOpenedMessage() {
-  return (
-    <NoTabsOpenedMessageContainer>
-      <span>Tip: Open the Global Prompt with 'Ctrl+P'</span>
-    </NoTabsOpenedMessageContainer>
-  );
-}
 
 const TabsContainer = styled.div`
   overflow: hidden;
@@ -43,10 +26,10 @@ const TabsContainer = styled.div`
  * Container that displays all the opened tabs
  */
 function TabsView() {
-  const [tabsPanels, setTabsPanels] = useRecoilState(openedTabsState);
+  const [tabsPanels, setTabsPanels] = useRecoilState(tabsState);
 
   function closeTab(row: number, column: number, index: number) {
-    tabsPanels[row][column].splice(index, 1);
+    tabsPanels[row][column].tabs.splice(index, 1);
     setTabsPanels([...tabsPanels]);
   }
 
@@ -61,11 +44,11 @@ function TabsView() {
               className="colunmn"
               key={`${r}_row`}
             >
-              {columns.map((tabs, c) => {
+              {columns.map((viewPanel, c) => {
                 return (
                   <TabsPanel
                     key={`${r}${c}_tabs_panel`}
-                    tabs={tabs}
+                    tabs={viewPanel.tabs}
                     row={r}
                     col={c}
                     close={(i) => closeTab(r, c, i)}
@@ -76,7 +59,6 @@ function TabsView() {
           );
         })}
       </SplitPane>
-      {tabsPanels[0][0].length == 0 && <NoTabsOpenedMessage />}
     </TabsContainer>
   );
 }

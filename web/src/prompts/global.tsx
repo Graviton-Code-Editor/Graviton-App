@@ -1,15 +1,15 @@
 import PromptContainer, { Option } from "../components/PromptContainer";
 import { Prompt } from "../modules/prompt";
-import { openedFolders } from "../utils/atoms";
 import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";
 import SettingsTab from "../tabs/settings";
 import useTabs from "../hooks/useTabs";
 import { useSetRecoilState } from "recoil";
+import { foldersState } from "../utils/state";
 
 function GlobalPromptContainer() {
   const [openTab] = useTabs();
-  const setOpenedFolders = useSetRecoilState(openedFolders);
+  const setOpenedFolders = useSetRecoilState(foldersState);
 
   const options: Option[] = [
     {

@@ -3,7 +3,7 @@ import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/FilesystemExplorer";
 import { Panel } from "../modules/panel";
-import { clientState, openedFolders } from "../utils/atoms";
+import { clientState, foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
@@ -14,7 +14,7 @@ function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
   const [openTab] = useTabs();
   const getEditor = useEditor();
-  const setOpenedFolders = useSetRecoilState(openedFolders);
+  const setOpenedFolders = useSetRecoilState(foldersState);
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
@@ -54,7 +54,7 @@ function ExplorerPanelContainer() {
     }
   }
 
-  const folders = useRecoilValue(openedFolders);
+  const folders = useRecoilValue(foldersState);
 
   return (
     <div style={{ height: "100%", paddingLeft: 5 }}>

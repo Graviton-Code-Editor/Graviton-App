@@ -2,8 +2,25 @@ import { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { Tab } from "../../modules/tab";
-import { focusedTab } from "../../utils/atoms";
+import { focusedTabState } from "../../utils/state/tabs";
 import TabButton from "./TabButton";
+
+const NoTabsOpenedMessageContainer = styled.div`
+  color: ${({ theme }) => theme.elements.tab.text.unfocused.color};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+`;
+
+function NoTabsOpenedMessage() {
+  return (
+    <NoTabsOpenedMessageContainer>
+      <span>Tip: Open the Global Prompt with 'Ctrl+P'</span>
+    </NoTabsOpenedMessageContainer>
+  );
+}
 
 const TabsPanelContainer = styled.div`
   display: flex;
@@ -43,7 +60,7 @@ interface TabPanelOptions {
 export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
   // Todo(marc2332): This should be externalized to an atom instead of a local state, so the selected tab can be changed externally
   const [selectedTabID, setSelectedTabID] = useState<string | null>(null);
-  const setFocusedTab = useSetRecoilState(focusedTab);
+  const setFocusedTab = useSetRecoilState(focusedTabState);
 
   // Panel's tab states
   const tabsStates: Map<string, boolean> = new Map();
@@ -138,6 +155,7 @@ export default function TabsPanel({ tabs, col, row, close }: TabPanelOptions) {
             )
           );
         })}
+        {tabs.length == 0 ? <NoTabsOpenedMessage /> : <></>}
       </div>
     </TabsPanelContainer>
   );

@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
 import TextEditorTab from "../tabs/text_editor";
 import { FileFormat } from "../types/client";
-import { editors } from "../utils/atoms";
+import { editors } from "../utils/state";
 
 export type EditorFinder = (
   format: FileFormat

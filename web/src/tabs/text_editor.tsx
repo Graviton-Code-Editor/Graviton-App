@@ -3,7 +3,7 @@ import { StateCommand } from "@codemirror/state";
 import { basicSetup, EditorView, EditorState } from "@codemirror/basic-setup";
 import { keymap, KeyBinding, Command } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { clientState, showedWindows } from "../utils/atoms";
+import { clientState, showedWindows } from "../utils/state";
 import { getRecoil, setRecoil } from "recoil-nexus";
 import { FileFormat } from "../types/client";
 import { Popup } from "../modules/popup";

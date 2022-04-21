@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { ManifestInfo } from "../types/client";
-import { clientState } from "../utils/atoms";
+import { clientState } from "../utils/state";
 
 /**
  * Easily retrieve the extensions using the client

@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { panels } from "../utils/atoms";
+import { panelsState } from "../utils/state";
 import IconButton from "./panels/IconButton";
 
 const PanelsContainer = styled.div`
@@ -30,7 +30,7 @@ const PanelsContainer = styled.div`
  * Sidebar that contains all the loaded panels
  */
 function PanelsView() {
-  const loadedPanels = useRecoilValue(panels);
+  const loadedPanels = useRecoilValue(panelsState);
   const [displayedPanelName, setDisplayedPanelName] = useState("Explorer");
 
   return (

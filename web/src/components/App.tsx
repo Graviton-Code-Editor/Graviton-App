@@ -1,15 +1,13 @@
 import { PropsWithChildren, useEffect } from "react";
 import { createClient } from "../utils/client";
 import {
-  openedTabsState,
   clientState,
+  panelsState,
   prompts,
-  panels,
-  showedWindows,
   showedStatusBarItem,
-  focusedTab,
-  tabDataToTabRecursively,
-} from "../utils/atoms";
+  showedWindows,
+  tabsState,
+} from "../utils/state";
 import {
   RecoilRoot,
   useRecoilCallback,
@@ -20,7 +18,7 @@ import {
 import RecoilNexus from "recoil-nexus";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
-import Theme from "../utils/theme_provider";
+import Theme from "./ThemeProvider";
 import View from "./RootView";
 import { SplitPane } from "react-multi-split-pane";
 import { isTauri } from "../utils/commands";
@@ -39,6 +37,11 @@ import useEditor from "../hooks/useEditor";
 import GlobalPrompt from "../prompts/global";
 import useHotkeys from "../hooks/useHotkey";
 import TitleBar from "./TitleBar";
+import {
+  focusedTabState,
+  TabsViews,
+  transformTabsDataToTabs,
+} from "../utils/state/tabs";
 
 /*
  * Retrieve the authentication token
@@ -53,11 +56,11 @@ async function getToken() {
 }
 
 /**
- * Handles the state Connection
+ * Handles the connection client
  */
-function StateRoot() {
+function ClientRoot() {
   const setClient = useSetRecoilState(clientState);
-  const setPanels = useSetRecoilState(panels);
+  const setPanels = useSetRecoilState(panelsState);
   const setPrompts = useSetRecoilState(prompts);
 
   useEffect(() => {
@@ -84,9 +87,9 @@ function StateRoot() {
 }
 
 /**
- * Handles the root view
+ * Manage the different states
  */
-function ClientRoot({
+function StateRoot({
   children,
   isWindows,
 }: PropsWithChildren<{ isWindows: boolean }>) {
@@ -94,15 +97,13 @@ function ClientRoot({
   const usePrompts = useRecoilValue(prompts);
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
-  const setTabs = useSetRecoilState(openedTabsState);
-  const currentFocusedTab = useRecoilValue(focusedTab);
+  const setTabs = useSetRecoilState(tabsState);
+  const currentFocusedTab = useRecoilValue(focusedTabState);
   const getEditor = useEditor();
   const { pushHotkey } = useHotkeys();
 
   useEffect(() => {
-    /**
-     *  Register all prompts's shortcuts
-     */
+    // Register all prompts's shortcuts
     usePrompts.forEach((PromptClass) => {
       const prompt = new PromptClass();
       if (prompt.shortcut) {
@@ -113,9 +114,7 @@ function ClientRoot({
     });
   }, [usePrompts]);
 
-  /**
-   * Show a statusbar button if not shown, and update it in case it's already shown
-   */
+  // Show a statusbar button if not shown, and update it if it's already shown
   const showStatusBarItem = useRecoilCallback(
     ({ set }) =>
       async (statusBarItem: ShowStatusBarItem) => {
@@ -141,25 +140,28 @@ function ClientRoot({
     if (client != null) {
       client.listenToState();
 
-      /**
-       * Update the App state if a new state is received
-       */
+      // Load the received state
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
         // Convert all tab datas into Tab instances
-        const openedTabs = tabDataToTabRecursively(
+        const openedTabs = transformTabsDataToTabs(
           state_data.opened_tabs,
           getEditor
-        ) as Tab[];
+        ) as Array<TabsViews<Tab>>;
+
+        const allTabs = openedTabs
+          .flat()
+          .map((view) => view.tabs)
+          .flat();
 
         // Open the tabs
-        if (openedTabs.length > 0) {
-          setTabs([[openedTabs]]);
+        if (allTabs.length > 0) {
+          setTabs([...openedTabs]);
+        } else {
+          setTabs([[{ tabs: [] }]]);
         }
       });
 
-      /**
-       * Display Popups
-       */
+      // Display Popups when
       client.on("ShowPopup", (e: ShowPopup) => {
         setShowedWindows((val) => [
           ...val,
@@ -167,14 +169,10 @@ function ClientRoot({
         ]);
       });
 
-      /**
-       * Display StatusBarItems
-       */
+      // Display StatusBarItems
       client.on("ShowStatusBarItem", showStatusBarItem);
 
-      /**
-       * Hide StatusBarItems
-       */
+      // Hide StatusBarItems
       client.on("HideStatusBarItem", (e: HideStatusBarItem) => {
         setShowedStatusBarItems((currVal) => {
           const filteredStatusBarItems = { ...currVal };
@@ -230,10 +228,10 @@ function App() {
 
   return (
     <RecoilRootTmp>
-      <StateRoot />
+      <ClientRoot />
       <RecoilNexus />
       <Theme>
-        <ClientRoot isWindows={isWindows}>
+        <StateRoot isWindows={isWindows}>
           {isWindows && <TitleBar />}
           <div>
             <SplitPane split="vertical" minSize={250} defaultSizes={[2, 10]}>
@@ -242,7 +240,7 @@ function App() {
             </SplitPane>
           </div>
           <StatusBarView />
-        </ClientRoot>
+        </StateRoot>
       </Theme>
     </RecoilRootTmp>
   );

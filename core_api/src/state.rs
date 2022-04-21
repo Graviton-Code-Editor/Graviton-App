@@ -103,19 +103,26 @@ pub enum TabData {
         title: String,
     },
 }
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
+struct ViewPanel {
+    focused_tab_id: Option<String>,
+    tabs: Vec<TabData>,
+}
+
+type TabsViews = Vec<ViewPanel>;
 
 /// The data of a state
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct StateData {
     pub id: u8,
-    opened_tabs: Vec<TabData>,
+    opened_tabs: Vec<TabsViews>,
 }
 
 impl Default for StateData {
     fn default() -> Self {
         Self {
             id: 1,
-            opened_tabs: Vec::new(),
+            opened_tabs: Vec::default(),
         }
     }
 }
