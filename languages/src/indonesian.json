@@ -1,9 +1,30 @@
 {
     "code": "id",
     "translation": {
-        "Open Folder": "Buka folder",
-        "Welcome to Graviton": "Selamat datang di Graviton",
-        "This version is still on alpha.": "Versi ini sedang dalam tahap alpha.",
-        "Report bugs here":"Laporkan bug disini"
+        "Open Folder": "Buka Folder",
+        "popups":{
+            "AskSaveFile":{
+                "title": "Apakah Anda ingin menyimpan di {{file_path}} ?",
+                "content": "Perubahan penting akan hilang jika Anda mengabaikan."
+            }
+        },
+        "tabs":{
+            "Welcome":{
+                "title": "Selamat Datang",
+                "content": "Anda sedang menggunakan Graviton versi pra-alfa. Ada akan banyak bug, dan lain. Jadi berhati-hati!"
+            }
+        },
+        "prompts":{
+            "Global":{
+                "OpenWelcome": "Buka kedatangan",
+                "OpenSettings": "Buka pengaturan",
+                "OpenFolder": "Buka folder"
+            }
+        },
+        "Contribute here": "Berkontribusi disini",
+        "Report bugs here": "Laporkan bug di sini",
+        "Save": "Simpan",
+        "Don't save": "Jangan simpan",
+        "Cancel": "Batal"
     }
 }
