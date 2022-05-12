@@ -14,7 +14,7 @@ const CodeMirrorStyler = styled.div`
   & .ͼa {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
   }
-  & .ͼf {
+  & .ͼj {
     color: ${({ theme }) => theme.elements.textEditor.def.color};
   }
   & .ͼd,
@@ -27,13 +27,19 @@ const CodeMirrorStyler = styled.div`
   & .ͼc {
     color: ${({ theme }) => theme.elements.textEditor.number.color};
   }
+  & .ͼi {
+    color: ${({ theme }) => theme.elements.textEditor.def.color};
+  }
   & .ͼl {
+    color: ${({ theme }) => theme.elements.textEditor.keyword.color};
+  }
+  & .ͼm {
     color: ${({ theme }) => theme.elements.textEditor.comment.color};
   }
   & .ͼb {
     color: ${({ theme }) => theme.elements.textEditor.atom.color};
   }
-  & .ͼh {
+  & .ͼg {
     color: ${({ theme }) => theme.elements.textEditor.variable.color};
   }
   & .cm-gutters {

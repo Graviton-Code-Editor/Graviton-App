@@ -1,0 +1,1 @@
+This is a built-in extension of Graviton, it uses typescript-language-server to provide LSP (aka Intellisense) support for TypeScript and JavaScript.

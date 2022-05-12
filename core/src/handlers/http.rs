@@ -1,30 +1,17 @@
-use crate::server::{
-    RpcManager,
-    RpcMethods,
-};
+use crate::server::{RpcManager, RpcMethods};
 use crate::StatesList;
 use async_trait::async_trait;
 use gveditor_core_api::messaging::Messages;
 use hyper_tungstenite::hyper::upgrade::Upgraded;
-use hyper_tungstenite::tungstenite::{
-    self,
-    Message,
-};
-use hyper_tungstenite::{
-    hyper,
-    HyperWebsocket,
-    WebSocketStream,
-};
+use hyper_tungstenite::tungstenite::{self, Message};
+use hyper_tungstenite::{hyper, HyperWebsocket, WebSocketStream};
 use jsonrpc_core::futures::StreamExt;
 use jsonrpc_core::futures_executor::block_on;
 use jsonrpc_core::futures_util::stream::SplitSink;
 use jsonrpc_core::futures_util::SinkExt;
 use jsonrpc_core::IoHandler;
 use jsonrpc_http_server::{
-    AccessControlAllowOrigin,
-    DomainsValidation,
-    RequestMiddleware,
-    RequestMiddlewareAction,
+    AccessControlAllowOrigin, DomainsValidation, RequestMiddleware, RequestMiddlewareAction,
     RestApi,
 };
 use std::collections::HashMap;
@@ -314,25 +301,15 @@ mod tests {
     use std::time::Duration;
 
     use gveditor_core_api::state::TokenFlags;
-    use gveditor_core_api::{
-        Mutex,
-        State,
-    };
-    use hyper_tungstenite::tungstenite::{
-        connect,
-        Message,
-    };
+    use gveditor_core_api::{Mutex, State};
+    use hyper_tungstenite::tungstenite::{connect, Message};
     use jsonrpc_core::serde_json;
     use tokio::sync::mpsc::channel;
     use tokio::time::sleep;
     use url::Url;
 
     use crate::handlers::Messages;
-    use crate::{
-        Configuration,
-        Core,
-        StatesList,
-    };
+    use crate::{Configuration, Core, StatesList};
 
     use super::HTTPHandler;
 

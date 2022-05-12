@@ -9,6 +9,7 @@ import {
   DirItemInfo,
   ManifestInfo,
   FileInfo,
+  LanguageServer,
 } from "../../types/client";
 import { StateData } from "../state/state_data";
 
@@ -23,7 +24,7 @@ export class HTTPClient extends Emittery implements Client {
 
   // Internal websockets client
   private socket: WebSocket;
-  private config: Configuration<string>;
+  public config: Configuration<string>;
 
   constructor(config: Configuration<string>) {
     super();
@@ -165,5 +166,16 @@ export class HTTPClient extends Emittery implements Client {
         state_id: this.config.state_id,
       })
     );
+  }
+
+  public get_all_language_servers(): Promise<CoreResponse<LanguageServer[]>> {
+    return this.rpc.call("get_all_language_servers", [
+      this.config.state_id,
+      this.config.token,
+    ]);
+  }
+
+  public async emitMessage(message: any) {
+    this.socket.send(JSON.stringify(message));
   }
 }

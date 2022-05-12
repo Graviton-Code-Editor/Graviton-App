@@ -5,52 +5,24 @@
 
 mod methods;
 use gveditor_core::gen_client::Client;
-use gveditor_core::handlers::{
-    LocalHandler,
-    TransportHandler,
-};
-use gveditor_core::tokio::sync::mpsc::{
-    channel,
-    Receiver,
-    Sender,
-};
-use gveditor_core::{
-    tokio,
-    Configuration,
-    Core,
-};
+use gveditor_core::handlers::{LocalHandler, TransportHandler};
+use gveditor_core::tokio::sync::mpsc::{channel, Receiver, Sender};
+use gveditor_core::{tokio, Configuration, Core};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
-use gveditor_core_api::state::{
-    StatesList,
-    TokenFlags,
-};
+use gveditor_core_api::state::{StatesList, TokenFlags};
 use gveditor_core_api::state_persistors::file::FilePersistor;
-use gveditor_core_api::{
-    Mutex,
-    State,
-};
+use gveditor_core_api::{Mutex, State};
 use gveditor_core_deno::DenoExtensionSupport;
 use std::fs;
 use std::fs::File;
 use std::path::PathBuf;
 use std::sync::Arc;
-use tauri::api::path::{
-    resolve_path,
-    BaseDirectory,
-};
+use tauri::api::path::{resolve_path, BaseDirectory};
 use tauri::utils::assets::EmbeddedAssets;
-use tauri::{
-    Context,
-    Env,
-    Manager,
-};
+use tauri::{Context, Env, Manager};
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
-use tracing_subscriber::{
-    fmt,
-    EnvFilter,
-    Registry,
-};
+use tracing_subscriber::{fmt, EnvFilter, Registry};
 use window_shadows::set_shadow;
 
 /// The app backend state
@@ -89,6 +61,7 @@ fn open_tauri(
             window.listen("to_core", move |event| {
                 let sender_to_handler = sender_to_handler.clone();
                 let msg: Messages = serde_json::from_str(event.payload().unwrap()).unwrap();
+
                 tokio::task::spawn(async move {
                     let sender_to_handler = sender_to_handler.lock().await;
                     sender_to_handler.send(msg).await
@@ -116,7 +89,8 @@ fn open_tauri(
             methods::read_file_by_path,
             methods::set_state_by_id,
             methods::get_ext_info_by_id,
-            methods::get_ext_list_by_id
+            methods::get_ext_list_by_id,
+            methods::get_all_language_servers
         ])
         .run(context)
         .expect("failed to run tauri application");
@@ -173,7 +147,8 @@ fn setup_logger() {
     let filter = EnvFilter::default()
         .add_directive("graviton=info".parse().unwrap())
         .add_directive("gveditor_core_api=info".parse().unwrap())
-        .add_directive("gveditor_core=info".parse().unwrap());
+        .add_directive("gveditor_core=info".parse().unwrap())
+        .add_directive("typescript_lsp_graviton=info".parse().unwrap());
 
     let subscriber = Registry::default().with(filter).with(fmt::Layer::default());
 
@@ -204,6 +179,12 @@ async fn main() {
         .load_extension_from_entry(
             git_for_graviton::entry,
             git_for_graviton::get_info(),
+            STATE_ID,
+        )
+        .await
+        .load_extension_from_entry(
+            typescript_lsp_graviton::entry,
+            typescript_lsp_graviton::get_info(),
             STATE_ID,
         )
         .await;

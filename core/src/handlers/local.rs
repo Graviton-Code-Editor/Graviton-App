@@ -1,9 +1,6 @@
 use super::TransportHandler;
 use crate::server::gen_client::Client;
-use crate::server::{
-    RpcManager,
-    RpcMethods,
-};
+use crate::server::{RpcManager, RpcMethods};
 use crate::StatesList;
 use async_trait::async_trait;
 use gveditor_core_api::messaging::Messages;
@@ -12,11 +9,7 @@ use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
 use std::sync::Arc;
 use std::thread;
-use tokio::sync::mpsc::{
-    channel,
-    Receiver,
-    Sender,
-};
+use tokio::sync::mpsc::{channel, Receiver, Sender};
 
 /// This a local handler, meaning that you can use the JSON RPC Server directly
 pub struct LocalHandler {
@@ -80,14 +73,8 @@ mod tests {
     use std::sync::Arc;
 
     use gveditor_core_api::extensions::manager::ExtensionsManager;
-    use gveditor_core_api::state::{
-        MemoryPersistor,
-        TokenFlags,
-    };
-    use gveditor_core_api::{
-        Mutex,
-        State,
-    };
+    use gveditor_core_api::state::{MemoryPersistor, TokenFlags};
+    use gveditor_core_api::{Mutex, State};
 
     use tokio::sync::mpsc::channel;
 

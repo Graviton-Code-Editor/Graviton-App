@@ -17,3 +17,12 @@ export interface HideStatusBarItem extends BaseMessage {
 export interface StateUpdated {
   state_data: StateData;
 }
+
+export interface LanguageServerInitialization {
+  state_id: number;
+}
+
+export interface LanguageServerNotification {
+  state_id: number;
+  content: string;
+}

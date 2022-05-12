@@ -1,23 +1,12 @@
 use git2::Repository;
-use gveditor_core_api::extensions::base::{
-    Extension,
-    ExtensionInfo,
-};
+use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::ExtensionMessages;
 use gveditor_core_api::tokio::runtime::Runtime;
-use gveditor_core_api::{
-    ManifestExtension,
-    ManifestInfo,
-    Mutex,
-};
-use std::sync::mpsc::{
-    channel,
-    Receiver,
-    Sender,
-};
+use gveditor_core_api::{ManifestExtension, ManifestInfo, Mutex};
+use std::sync::mpsc::{channel, Receiver, Sender};
 use std::sync::Arc;
 use std::thread;
 

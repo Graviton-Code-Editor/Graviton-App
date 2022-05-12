@@ -1,25 +1,11 @@
 use crate::extensions::base::ExtensionInfo;
-use crate::extensions::manager::{
-    ExtensionsManager,
-    LoadedExtension,
-};
-use crate::filesystems::{
-    FileFormat,
-    Filesystem,
-    LocalFilesystem,
-};
+use crate::extensions::manager::{ExtensionsManager, LoadedExtension};
+use crate::filesystems::{FileFormat, Filesystem, LocalFilesystem};
 use crate::messaging::ExtensionMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
-use crate::{
-    Errors,
-    ExtensionErrors,
-    ManifestInfo,
-};
-use serde::{
-    Deserialize,
-    Serialize,
-};
+use crate::{Errors, ExtensionErrors, LanguageServer, ManifestInfo};
+use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt;
 use std::sync::Arc;
@@ -130,7 +116,6 @@ impl Default for StateData {
 }
 
 /// A state is like a small configuration, like a profile
-/// It stores what tabs do you have open, what extensions are loaded, etc...
 #[derive(Clone)]
 pub struct State {
     filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
@@ -138,6 +123,7 @@ pub struct State {
     persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
     pub data: StateData,
     tokens: Vec<String>,
+    language_servers: HashMap<String, LanguageServer>,
 }
 
 impl fmt::Debug for State {
@@ -167,6 +153,7 @@ impl Default for State {
             extensions_manager: ExtensionsManager::default(),
             tokens: Vec::new(),
             persistor: None,
+            language_servers: HashMap::new(),
         }
     }
 }
@@ -286,12 +273,29 @@ impl State {
             .collect::<Vec<String>>()
     }
 
+    // Merge a new state data
     pub async fn update(&mut self, new_data: StateData) {
         self.data.opened_tabs = new_data.opened_tabs;
 
         if let Some(persistor) = &self.persistor {
             persistor.lock().await.save(&self.data);
         }
+    }
+
+    // Register a new language server
+    pub async fn register_language_servers(
+        &mut self,
+        language_servers: HashMap<String, LanguageServer>,
+    ) {
+        self.language_servers.extend(language_servers);
+    }
+
+    // Register a new language server
+    pub async fn get_all_language_servers(&self) -> Vec<LanguageServer> {
+        self.language_servers
+            .values()
+            .cloned()
+            .collect::<Vec<LanguageServer>>()
     }
 }
 
@@ -301,10 +305,7 @@ impl State {
 #[cfg(test)]
 mod tests {
 
-    use crate::extensions::base::{
-        Extension,
-        ExtensionInfo,
-    };
+    use crate::extensions::base::{Extension, ExtensionInfo};
     use crate::extensions::manager::ExtensionsManager;
     use crate::messaging::ExtensionMessages;
     use crate::state::MemoryPersistor;

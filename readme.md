@@ -34,7 +34,8 @@ See [TODO](./TODO.md)
 | [gveditor-core](./core)       | Graviton core engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
 | [gveditor-core-api](./core_api)   | Graviton API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
 | [gveditor-core-deno](./core_deno)   | Deno runtime for Graviton extensions | WIP  |
-| [extensions/git](./extensions/git)      | Graviton Core Git Extension | WIP |
+| [extensions/git](./extensions/git)      | Git Extension | WIP |
+| [extensions/typescript-lsp](./extensions/typescript-lsp)      | TypeScript/JavaScript extension | WIP |
 | [desktop](./desktop)             | Desktop web-based app | WIP |
 | [server](./server)               | HTTP Core + web app served  | WIP |
 | [@gveditor/web](./web)                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |

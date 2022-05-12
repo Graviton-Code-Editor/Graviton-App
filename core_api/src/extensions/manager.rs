@@ -1,17 +1,11 @@
 use std::sync::Arc;
 
-use tokio::sync::mpsc::{
-    channel,
-    Sender,
-};
+use tokio::sync::mpsc::{channel, Sender};
 use tokio::sync::Mutex;
 
 use crate::extensions::base::Extension;
 use crate::messaging::Messages;
-use crate::{
-    Manifest,
-    ManifestInfo,
-};
+use crate::{Manifest, ManifestInfo};
 
 use super::base::ExtensionInfo;
 use super::client::ExtensionClient;
@@ -44,7 +38,11 @@ impl ExtensionsManager {
         info: ManifestInfo,
         state_id: u8,
     ) -> &mut ExtensionsManager {
-        let client = ExtensionClient::new(&info.extension.name, self.sender.clone());
+        let client = ExtensionClient::new(
+            &info.extension.id,
+            &info.extension.name,
+            self.sender.clone(),
+        );
         entry(self, client, state_id);
         self.extensions
             .push(LoadedExtension::ManifestBuiltin { info });

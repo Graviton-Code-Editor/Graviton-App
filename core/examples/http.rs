@@ -2,21 +2,11 @@ use std::sync::Arc;
 use std::thread;
 
 use gveditor_core::handlers::HTTPHandler;
-use gveditor_core::{
-    Configuration,
-    Core,
-};
+use gveditor_core::{Configuration, Core};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
-use gveditor_core_api::state::{
-    MemoryPersistor,
-    StatesList,
-    TokenFlags,
-};
-use gveditor_core_api::{
-    Mutex,
-    State,
-};
+use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
+use gveditor_core_api::{Mutex, State};
 use tokio::sync::mpsc::channel;
 
 #[tokio::main]

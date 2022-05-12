@@ -1,11 +1,6 @@
-#![feature(result_contains_err)]
-
 use std::env::current_dir;
 
-use gveditor_core_api::{
-    Manifest,
-    ManifestErrors,
-};
+use gveditor_core_api::{Manifest, ManifestErrors};
 
 #[tokio::test]
 async fn load_manifests() {
@@ -20,6 +15,6 @@ async fn load_manifests() {
     let not_found_manifest = Manifest::parse(&not_found_manifest_path).await;
 
     assert!(ok_manifest.is_ok());
-    assert!(bad_manifest.contains_err(&ManifestErrors::CannotParse));
-    assert!(not_found_manifest.contains_err(&ManifestErrors::NotFound));
+    assert_eq!(bad_manifest.unwrap_err(), ManifestErrors::CannotParse);
+    assert_eq!(not_found_manifest.unwrap_err(), ManifestErrors::NotFound);
 }

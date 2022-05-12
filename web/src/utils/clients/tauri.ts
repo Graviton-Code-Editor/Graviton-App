@@ -9,6 +9,7 @@ import {
   EventsInterface,
   ManifestInfo as ManifestInfo,
   FileInfo,
+  LanguageServer,
 } from "../../types/client";
 import Configuration from "../config";
 import { StateData } from "../state/state_data";
@@ -19,7 +20,7 @@ import { StateData } from "../state/state_data";
  * This makes use of Tauri's commands and events system, as a bridge to communicate the webview frontend and the Graviton core
  */
 export class TauriClient extends Emittery<EventsInterface> implements Client {
-  private config: Configuration<null>;
+  public config: Configuration<null>;
 
   constructor(config: Configuration<null>) {
     super();
@@ -152,5 +153,16 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
         state_id: this.config.state_id,
       })
     );
+  }
+
+  public get_all_language_servers(): Promise<CoreResponse<LanguageServer[]>> {
+    return invoke("get_all_language_servers", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  public async emitMessage(message: any) {
+    await emit("to_core", JSON.stringify(message));
   }
 }

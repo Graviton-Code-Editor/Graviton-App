@@ -140,6 +140,8 @@ function StateRoot({
     if (client != null) {
       client.listenToState();
 
+      console.log(client);
+
       // Load the received state
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
         // Convert all tab datas into Tab instances

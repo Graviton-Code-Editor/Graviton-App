@@ -1,5 +1,3 @@
-#![feature(async_closure)]
-#![feature(associated_type_defaults)]
 mod configuration;
 pub mod handlers;
 mod server;
@@ -7,16 +5,9 @@ mod server;
 pub use configuration::Configuration;
 use gveditor_core_api::state::StatesList;
 use gveditor_core_api::Mutex;
-pub use server::{
-    gen_client,
-    RPCResult,
-    Server,
-};
+pub use server::{gen_client, RPCResult, Server};
 use std::sync::Arc;
-pub use {
-    jsonrpc_core_client,
-    tokio,
-};
+pub use {jsonrpc_core_client, tokio};
 
 /// Graviton Core entry point
 ///

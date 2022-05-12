@@ -21,6 +21,7 @@ gveditor-core-deno = { path = "../../core_deno"}
 tracing = "0.1.31"
 tracing-subscriber = {version="0.3.9", features= ["env-filter", "std"] }
 git-for-graviton = { path = "../../extensions/git" }
+typescript-lsp-graviton = { path = "../../extensions/typescript-lsp" }
 window-shadows = "0.1.0"
 
 [features]

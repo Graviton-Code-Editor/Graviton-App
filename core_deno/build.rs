@@ -1,9 +1,6 @@
 use std::env;
 use std::path::Path;
-use std::process::{
-    Command,
-    Stdio,
-};
+use std::process::{Command, Stdio};
 
 fn main() {
     // Watch for changes in the deno api

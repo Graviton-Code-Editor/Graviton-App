@@ -1,14 +1,10 @@
-use serde::{
-    Deserialize,
-    Serialize,
-};
+use std::collections::HashMap;
 
-use crate::filesystems::{
-    DirItemInfo,
-    FileInfo,
-};
+use serde::{Deserialize, Serialize};
+
+use crate::filesystems::{DirItemInfo, FileInfo};
 use crate::state::StateData;
-use crate::Errors;
+use crate::{Errors, LanguageServer};
 
 /// Messages bidirectionally with the core
 #[derive(Serialize, Deserialize, Debug, Clone)]
@@ -41,6 +37,19 @@ pub enum Messages {
         state_id: u8,
         statusbar_item_id: String,
     },
+    RegisterLanguageServers {
+        state_id: u8,
+        languages: HashMap<String, LanguageServer>,
+        extension_id: String,
+    },
+    NotifyLanguageServersClient {
+        state_id: u8,
+        content: String,
+    },
+    NotifyLanguageServers {
+        state_id: u8,
+        message: LanguageServerMessage,
+    },
 }
 
 impl Messages {
@@ -51,13 +60,25 @@ impl Messages {
             Self::ShowPopup { state_id, .. } => *state_id,
             Self::ShowStatusBarItem { state_id, .. } => *state_id,
             Self::HideStatusBarItem { state_id, .. } => *state_id,
+            Self::RegisterLanguageServers { state_id, .. } => *state_id,
+            Self::NotifyLanguageServersClient { state_id, .. } => *state_id,
+            Self::NotifyLanguageServers { state_id, .. } => *state_id,
         }
     }
+}
+
+/// Messages use to notify the language server of certain events
+#[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(tag = "msg_type")]
+pub enum LanguageServerMessage {
+    Initialization { id: String },
+    Notification { id: String, content: String },
 }
 
 /// Messages use to notify the extensions of certain events
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub enum ExtensionMessages {
+    // TODO(marc2332): Don't use tuples
     CoreMessage(Messages),
     ReadFile(u8, String, Result<FileInfo, Errors>),
     WriteFile(u8, String, String, Result<(), Errors>),

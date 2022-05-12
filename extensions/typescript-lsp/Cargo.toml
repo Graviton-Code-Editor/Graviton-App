@@ -1,0 +1,18 @@
+[package]
+name = "typescript-lsp-graviton"
+version = "0.1.0"
+edition = "2021"
+authors = ["Marc Espín Sanz"]
+readme = "../readme.md"
+repository = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+license = "MIT"
+
+[dependencies]
+gveditor-core-api  = { path = "../../core_api"}
+interactive_process = "0.1.2"
+serde_json = "1.0.79"
+serde = { version = "1.0.136", features = ["derive"] }
+snailquote = "0.3.1"
+bytes = "1.1.0"
+tracing = "0.1.31"

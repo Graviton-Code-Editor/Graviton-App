@@ -1,6 +1,7 @@
 import { ShowPopup, StateUpdated } from "./messages";
 import Emittery from "emittery";
 import { StateData } from "../utils/state/state_data";
+import Configuration from "../utils/config";
 
 export interface BaseMessage {
   state_id: number;
@@ -40,7 +41,14 @@ export interface ManifestInfo {
   extension: ManifestExtension;
 }
 
+export interface LanguageServer {
+  name: string;
+  id: string;
+  extension_id: string;
+}
+
 export interface Client extends Emittery {
+  config: Configuration<string | null>;
   get_state_by_id: () => Promise<StateData>;
   set_state_by_id: (state: Omit<StateData, "id">) => Promise<void>;
   read_file_by_path: (
@@ -62,6 +70,8 @@ export interface Client extends Emittery {
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
   whenConnected: () => Promise<void>;
+  get_all_language_servers: () => Promise<CoreResponse<Array<LanguageServer>>>;
+  emitMessage: (message: any) => Promise<void>;
 }
 
 export type EventsInterface = Record<

@@ -1,22 +1,11 @@
 use async_trait::async_trait;
 use deno_core::v8::IsolateHandle;
 use events_manager::EventsManager;
-use gveditor_core_api::extensions::base::{
-    Extension,
-    ExtensionInfo,
-};
+use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
-use gveditor_core_api::extensions::manager::{
-    ExtensionsManager,
-    LoadedExtension,
-};
+use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
 use gveditor_core_api::messaging::ExtensionMessages;
-use gveditor_core_api::{
-    Manifest,
-    ManifestInfo,
-    Mutex,
-    Sender,
-};
+use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::fs;
@@ -129,7 +118,11 @@ impl DenoExtensionSupport for ExtensionsManager {
         info: ManifestInfo,
         state_id: u8,
     ) -> &mut ExtensionsManager {
-        let client = ExtensionClient::new(&info.extension.name.clone(), self.sender.clone());
+        let client = ExtensionClient::new(
+            &info.extension.id.clone(),
+            &info.extension.name.clone(),
+            self.sender.clone(),
+        );
         let events_manager = EventsManager::new();
         let deno_extension = Box::new(DenoExtension::new(
             path,

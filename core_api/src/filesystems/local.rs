@@ -5,12 +5,7 @@ use tokio_stream::StreamExt;
 
 use crate::Errors;
 
-use super::{
-    DirItemInfo,
-    FileInfo,
-    Filesystem,
-    FilesystemErrors,
-};
+use super::{DirItemInfo, FileInfo, Filesystem, FilesystemErrors};
 use std::io::ErrorKind;
 
 /// Implementation of FileSystem methods for a local access
@@ -83,10 +78,7 @@ impl Filesystem for LocalFilesystem {
 #[cfg(test)]
 mod tests {
 
-    use super::{
-        Filesystem,
-        LocalFilesystem,
-    };
+    use super::{Filesystem, LocalFilesystem};
 
     #[tokio::test]
     async fn read_files() {

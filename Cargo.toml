@@ -6,6 +6,7 @@ members = [
    "core_deno",
    "desktop/src-tauri",
    "extensions/git",
+   "extensions/typescript-lsp",
    "server"
 ]
 

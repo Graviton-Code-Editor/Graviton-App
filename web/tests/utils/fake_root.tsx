@@ -1,9 +1,9 @@
 import Recoilnexus from "recoil-nexus";
-import { clientState } from "../../src/utils/atoms";
+import { clientState } from "../../src/utils/state";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import React, { PropsWithChildren, useEffect } from "react";
 import FakeClient from "./fake_client";
-import Theme from "../../src/utils/theme_provider";
+import ThemeProvider from "../../src/components/ThemeProvider";
 
 function RootRenderer({ children }: PropsWithChildren<any>) {
   const [client, setClient] = useRecoilState(clientState);
@@ -22,9 +22,9 @@ export default function FakeRoot({ children }: PropsWithChildren<any>) {
   return (
     <RecoilRootTmp>
       <Recoilnexus />
-      <Theme>
+      <ThemeProvider>
         <RootRenderer>{children}</RootRenderer>
-      </Theme>
+      </ThemeProvider>
     </RecoilRootTmp>
   );
 }

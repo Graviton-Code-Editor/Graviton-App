@@ -18,7 +18,7 @@ jsonrpc-derive = "18.0.0"
 jsonrpc-core = "18.0.0"
 jsonrpc-core-client = "18.0.0"
 serde = { version = "1.0.136", features = ["derive"] }
-tokio = { version = "1.17.0", features = ["sync"]}
+tokio = { version = "1.18.2", features = ["sync"]}
 tracing = "0.1.31"
 gveditor-core-api = { version = "0.1.6", path = "../core_api"}
 async-trait = "0.1.52"

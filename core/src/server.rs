@@ -1,24 +1,10 @@
 use crate::configuration::Handler;
 use crate::handlers::TransportHandler;
 use crate::Configuration;
-use gveditor_core_api::filesystems::{
-    DirItemInfo,
-    FileInfo,
-    FilesystemErrors,
-};
-use gveditor_core_api::messaging::{
-    ExtensionMessages,
-    Messages,
-};
-use gveditor_core_api::state::{
-    StateData,
-    StatesList,
-};
-use gveditor_core_api::{
-    Errors,
-    ManifestInfo,
-    Mutex,
-};
+use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
+use gveditor_core_api::messaging::{ExtensionMessages, Messages};
+use gveditor_core_api::state::{StateData, StatesList};
+use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex};
 use jsonrpc_core::BoxFuture;
 use jsonrpc_derive::rpc;
 
@@ -105,6 +91,41 @@ impl Server {
                     .notify_extensions(ExtensionMessages::CoreMessage(msg))
                     .await;
             }
+            Messages::RegisterLanguageServers {
+                state_id,
+                languages,
+                ..
+            } => {
+                let state = {
+                    let states = states.lock().await;
+                    states.get_state_by_id(state_id)
+                };
+
+                if let Some(state) = state {
+                    state
+                        .lock()
+                        .await
+                        .register_language_servers(languages)
+                        .await;
+                }
+            }
+            Messages::NotifyLanguageServers {
+                state_id, message, ..
+            } => {
+                let state = {
+                    let states = states.lock().await;
+                    states.get_state_by_id(state_id)
+                };
+
+                if let Some(state) = state {
+                    state
+                        .lock()
+                        .await
+                        .notify_extensions(ExtensionMessages::CoreMessage(
+                            Messages::NotifyLanguageServers { state_id, message },
+                        ));
+                }
+            }
             _ => {
                 // Forward to the handler messages not handled here
                 let handler = handler.lock().await;
@@ -176,6 +197,21 @@ pub trait RpcMethods {
         state_id: u8,
         token: String,
     ) -> BoxFuture<RPCResult<Result<Vec<String>, Errors>>>;
+
+    #[rpc(name = "get_all_language_servers")]
+    fn get_all_language_servers(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>>;
+
+    #[rpc(name = "get_all_language_servers")]
+    fn notify_extension(
+        &self,
+        state_id: u8,
+        token: String,
+        message: ExtensionMessages,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 }
 
 /// JSON RPC manager
@@ -403,6 +439,57 @@ impl RpcMethods for RpcManager {
                 if state.has_token(&token) {
                     // Try to get the requested info about the extension
                     Ok(Ok(state.get_ext_list_by_id()))
+                } else {
+                    Ok(Err(Errors::BadToken))
+                }
+            } else {
+                Ok(Err(Errors::StateNotFound))
+            }
+        })
+    }
+
+    /// Returns the list of language servers services in the specified state
+    fn get_all_language_servers(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            let states = states.lock().await;
+            // Try to get the requested state
+            if let Some(state) = states.get_state_by_id(state_id) {
+                let state = state.lock().await;
+                // Make sure the token is valid
+                if state.has_token(&token) {
+                    // Try to get the requested info about the extension
+                    Ok(Ok(state.get_all_language_servers().await))
+                } else {
+                    Ok(Err(Errors::BadToken))
+                }
+            } else {
+                Ok(Err(Errors::StateNotFound))
+            }
+        })
+    }
+
+    fn notify_extension(
+        &self,
+        state_id: u8,
+        token: String,
+        message: ExtensionMessages,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            let states = states.lock().await;
+            // Try to get the requested state
+            if let Some(state) = states.get_state_by_id(state_id) {
+                let state = state.lock().await;
+                // Make sure the token is valid
+                if state.has_token(&token) {
+                    // Try to get the requested info about the extension
+                    state.notify_extensions(message);
+                    Ok(Ok(()))
                 } else {
                     Ok(Err(Errors::BadToken))
                 }

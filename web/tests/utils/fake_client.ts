@@ -1,12 +1,20 @@
 import Emittery from "emittery";
-import { Client, CoreResponse, DirItemInfo } from "../../src/types/client";
-import { StateData } from "../../src/utils/state";
+import {
+  Client,
+  CoreResponse,
+  DirItemInfo,
+  LanguageServer,
+} from "../../src/types/client";
+import Configuration from "../../src/utils/config";
+import { StateData } from "../../src/utils/state/state_data";
 
 /*
  * This simulates a real client
  * Only used for tests
  */
 export default class FakeClient extends Emittery implements Client {
+  config: Configuration<string>;
+  emitMessage: (message: any) => Promise<void>;
   // TO-DO
   async write_file_by_path(
     path: string,
@@ -62,6 +70,10 @@ export default class FakeClient extends Emittery implements Client {
 
   // TO-DO
   listenToState() {
+    return null;
+  }
+
+  async get_all_language_servers(): Promise<any> {
     return null;
   }
 }

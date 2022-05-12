@@ -28,7 +28,7 @@ const theme = {
         background: "rgba(255, 255, 255, 0.1)",
       },
       variable: {
-        color: "#fdbd5d",
+        color: "#ca9feb",
       },
       keyword: {
         color: "#9969ff",
