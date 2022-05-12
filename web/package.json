@@ -34,8 +34,7 @@
     "recoil-nexus": "^0.3.15",
     "rollup-plugin-node-polyfills": "^0.2.1",
     "simple-jsonrpc-js": "^1.2.0",
-    "styled-components": "^5.3.5",
-    "vscode-languageserver-protocol": "^3.16.0"
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@testing-library/react": "^13.0.1",
