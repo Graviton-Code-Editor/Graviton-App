@@ -10,8 +10,20 @@ import {
 import SettingsTab from "../../tabs/settings";
 import TextEditorTab from "../../tabs/text_editor";
 import WelcomeTab from "../../tabs/welcome";
+import { Client, CoreResponse, FileInfo } from "../../types/client";
 import { clientState } from "../state";
 import getAllStateData from "./state_data";
+
+async function toContentResolver(
+  reader: Promise<CoreResponse<FileInfo>>
+): Promise<string | null> {
+  const res = await reader;
+  if (res.Ok) {
+    return res.Ok.content;
+  } else {
+    return null;
+  }
+}
 
 export interface ViewPanel<T> {
   selected_tab_id?: string;
@@ -23,7 +35,8 @@ export type TabsViews<T> = Array<ViewPanel<T>>;
 // Transform TabDatas to Tabs
 export function transformTabsDataToTabs(
   views: Array<TabsViews<TabData>>,
-  getEditor: EditorFinder
+  getEditor: EditorFinder,
+  client: Client
 ): Array<TabsViews<undefined | TextEditorTab | Tab>> {
   return views.map((viewPanel) => {
     return viewPanel.map((viewPanel) => {
@@ -35,10 +48,14 @@ export function transformTabsDataToTabs(
               const data = tabData as TextEditorTabData;
               const editor = getEditor(data.format);
               if (editor != null) {
+                const tabContentReader = client.read_file_by_path(
+                  data.path,
+                  data.filesystem
+                );
                 const tab = new editor(
                   data.filename,
                   data.path,
-                  data.content,
+                  toContentResolver(tabContentReader),
                   data.format
                 );
                 tab.id = tabData.id;

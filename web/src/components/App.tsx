@@ -147,7 +147,8 @@ function StateRoot({
         // Convert all tab datas into Tab instances
         const openedTabs = transformTabsDataToTabs(
           state_data.opened_tabs,
-          getEditor
+          getEditor,
+          client
         ) as Array<TabsViews<Tab>>;
 
         const allTabs = openedTabs
@@ -182,18 +183,17 @@ function StateRoot({
           return filteredStatusBarItems;
         });
       });
-    }
-
-    /**
-     * Close all the last opened window when ESC is pressed
-     */
-    pushHotkey("esc", () => {
-      setShowedWindows((val) => {
-        const newValue = [...val];
-        newValue.pop();
-        return newValue;
+      /**
+       * Close all the last opened window when ESC is pressed
+       */
+      pushHotkey("esc", () => {
+        setShowedWindows((val) => {
+          const newValue = [...val];
+          newValue.pop();
+          return newValue;
+        });
       });
-    });
+    }
   }, [client]);
 
   useEffect(() => {

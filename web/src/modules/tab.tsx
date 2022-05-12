@@ -5,7 +5,6 @@ export interface TextEditorTabData {
   tab_type: string;
   path: string;
   filesystem: string;
-  content: string;
   format: FileFormat;
   filename: string;
   id: string;

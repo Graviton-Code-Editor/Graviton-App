@@ -25,7 +25,12 @@ function ExplorerPanelContainer() {
             const editor = getEditor(format);
             // Make sure a compatible editor was found
             if (editor != null) {
-              const newTab = new editor(item.name, item.path, content, format);
+              const newTab = new editor(
+                item.name,
+                item.path,
+                Promise.resolve(content),
+                format
+              );
               openTab(newTab);
             } else {
               // Handle error

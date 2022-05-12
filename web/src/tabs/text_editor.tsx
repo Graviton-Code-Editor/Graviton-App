@@ -14,6 +14,9 @@ import { dirname, basename } from "path";
 import { EventEmitterTransport } from "@open-rpc/client-js";
 import { EventEmitter } from "events";
 import { languageServerWithTransport } from "codemirror-languageserver";
+import { useEffect, useState } from "react";
+import TabText from "../components/TabText";
+import LoadingTabContent from "../components/tabs/LoadingTabContent";
 
 interface SavedState {
   scrollHeight: number;
@@ -30,10 +33,17 @@ class TextEditorTab extends Tab {
   private filename: string;
   private format: FileFormat;
   private lastSavedStateText: string[] = [];
-  private view: EditorView;
+  private view?: EditorView;
 
-  public setEditedComp: (state: boolean) => void;
-  public closeTabComp: () => void;
+  private setEditedComp: (state: boolean) => void = () => {
+    /**/
+  };
+  private closeTabComp: () => void = () => {
+    /**/
+  };
+  private setViewComp: (view: EditorView) => void = () => {
+    /**/
+  };
 
   /**
    * @param path - Path of the opened file
@@ -42,7 +52,7 @@ class TextEditorTab extends Tab {
   constructor(
     filename: string,
     path: string,
-    initialContent: string,
+    contentResolver: Promise<string | null>,
     format: FileFormat
   ) {
     super(filename);
@@ -50,45 +60,56 @@ class TextEditorTab extends Tab {
     this.filename = filename;
     this.format = format;
 
-    this.setEditedComp = () => {
-      console.error("Tried changing an unmounted tab");
-    };
-
-    this.closeTabComp = () => {
-      console.error("Can't close an unmounted tab");
-    };
-
-    this.view = new EditorView({
-      state: this.createDefaulState({
-        initialValue: initialContent,
-      }),
-      dispatch: (tx) => {
-        if (tx.docChanged) setEdited(true);
-        this.view.update([tx]);
-      },
-    });
-
     const saveScroll = (height: number) => {
       this.state.scrollHeight = height;
     };
 
-    const setEdited = (state: boolean) => {
-      if (this.edited != state) {
-        this.setEdited(state);
-      }
-      this.edited = state;
-    };
-
     this.container = ({ setEdited, close }) => {
-      this.setEditedComp = setEdited;
-      this.closeTabComp = close;
-      return (
-        <TextEditor
-          view={this.view}
-          scrollHeight={this.state.scrollHeight}
-          saveScroll={saveScroll}
-        />
-      );
+      const [view, setView] = useState(this.view);
+
+      useEffect(() => {
+        this.setEditedComp = setEdited;
+        this.closeTabComp = close;
+        this.setViewComp = setView;
+
+        // Wait until the tab is mounted to read it's content
+        contentResolver.then((initialValue) => {
+          if (initialValue) {
+            this.view = new EditorView({
+              state: this.createDefaulState({
+                initialValue,
+              }),
+              dispatch: (tx) => {
+                if (tx.docChanged) this.setEdited(true);
+                (this.view as EditorView).update([tx]);
+              },
+            });
+
+            // Update the view component
+            this.setViewComp(this.view);
+          } else {
+            // If there is no content to read then just close the tab
+            this.close();
+            this.closeTabComp();
+          }
+        });
+      }, []);
+
+      if (view) {
+        return (
+          <TextEditor
+            view={view}
+            scrollHeight={this.state.scrollHeight}
+            saveScroll={saveScroll}
+          />
+        );
+      } else {
+        return (
+          <LoadingTabContent>
+            <TabText>Loading content...</TabText>
+          </LoadingTabContent>
+        );
+      }
     };
   }
 
@@ -96,7 +117,7 @@ class TextEditorTab extends Tab {
    * Destroy the CodeMirror view
    */
   public close(): void {
-    this.view.destroy();
+    this.view?.destroy();
     return;
   }
 
@@ -123,8 +144,9 @@ class TextEditorTab extends Tab {
    * Get the content of the Codemirror state as a String
    * @returns The current content on the editor
    */
-  public getContent(): string {
-    return this.view.state.doc.sliceString(0);
+  public getContent(): string | null {
+    if (this.view) return this.view.state.doc.sliceString(0);
+    return null;
   }
 
   /**
@@ -174,15 +196,21 @@ class TextEditorTab extends Tab {
    * Write the file to the FS
    */
   private async saveFile() {
-    const client = getRecoil(clientState);
-    const newContent = this.getContent();
-    await client.write_file_by_path(this.path, newContent, "local");
+    const currentContent = this.getContent();
 
-    // Mark the tab as saved
-    this.setEdited(false);
+    // Make sure the file is loaded and has content
+    if (this.view && currentContent != null) {
+      const client = getRecoil(clientState);
 
-    // Update the last saved state text
-    this.lastSavedStateText = this.view.state.doc.toJSON();
+      // Save the file
+      await client.write_file_by_path(this.path, currentContent, "local");
+
+      // Mark the tab as saved
+      this.setEdited(false);
+
+      // Update the last saved state text
+      this.lastSavedStateText = this.view.state.doc.toJSON();
+    }
   }
 
   /**
@@ -349,7 +377,6 @@ class TextEditorTab extends Tab {
       tab_type: "TextEditor",
       path: this.path,
       filesystem: "local",
-      content: this.getContent(),
       format: this.format,
       filename: this.filename,
       id: this.id,

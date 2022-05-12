@@ -79,9 +79,7 @@ pub enum TabData {
     TextEditor {
         path: String,
         filesystem: String,
-        // It should save a piece-table like not the content, this way, the history could be retrieved too
         format: FileFormat,
-        content: String,
         filename: String,
         id: String,
     },
