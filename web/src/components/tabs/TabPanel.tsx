@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import useTabs from "../../hooks/useTabs";
 import { Tab } from "../../modules/tab";
 import { ViewPanel } from "../../utils/state/tabs";
+import { focusedViewPanelState } from "../../utils/state/views";
 import TabButton from "./TabButton";
 
 const NoTabsOpenedMessageContainer = styled.div`
@@ -64,6 +66,7 @@ export default function TabsPanel({
   close,
 }: TabPanelOptions) {
   const { focusTab, selectTab } = useTabs();
+  const setFocusedView = useSetRecoilState(focusedViewPanelState);
 
   const tabsStates: Map<string, boolean> = new Map();
   tabs.forEach((tab) => tabsStates.set(tab.id, tab.edited));
@@ -81,9 +84,7 @@ export default function TabsPanel({
     }
   }, [tabs, selected_tab_id]);
 
-  /*
-   * Focused the tab by the specified ID
-   */
+  // Focus the tab by the specified ID
   function selectPanelTab(tab: Tab | null) {
     // Update the panel state
     selectTab({ col, row, tab });
@@ -96,9 +97,7 @@ export default function TabsPanel({
     });
   }
 
-  /*
-   * Close the specified tab in this panel
-   */
+  // Close the specified tab from this panel
   function removeTab(tab: Tab, index: number) {
     tab.close();
     if (selected_tab_id === tab.id) {
@@ -111,15 +110,21 @@ export default function TabsPanel({
     close(index);
   }
 
-  /*
-   * Save the current tab
-   */
+  // Save the tab
   function saveTab(tab: Tab) {
     tab.save();
   }
 
+  // Mark this view as focused
+  function viewClicked() {
+    setFocusedView({
+      col,
+      row,
+    });
+  }
+
   return (
-    <TabsPanelContainer>
+    <TabsPanelContainer onClick={viewClicked}>
       <div className="tabsList">
         {tabs.map((tab, i) => {
           const isSelected = tab.id == selected_tab_id;

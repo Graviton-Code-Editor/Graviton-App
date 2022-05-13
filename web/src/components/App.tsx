@@ -42,6 +42,8 @@ import {
   TabsViews,
   transformTabsDataToTabs,
 } from "../utils/state/tabs";
+import useViews from "../hooks/useViews";
+import { focusedViewPanelState } from "../utils/state/views";
 
 /*
  * Retrieve the authentication token
@@ -97,10 +99,17 @@ function StateRoot({
   const usePrompts = useRecoilValue(prompts);
   const [useShowedWindows, setShowedWindows] = useRecoilState(showedWindows);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
-  const setTabs = useSetRecoilState(tabsState);
+  const [tabs, setTabs] = useRecoilState(tabsState);
   const currentFocusedTab = useRecoilValue(focusedTabState);
   const getEditor = useEditor();
   const { pushHotkey } = useHotkeys();
+  const {
+    newView,
+    closeFocusedView,
+    newViewPanelInFocused,
+    closeFocusedViewPanel,
+  } = useViews();
+  const focusedView = useRecoilValue(focusedViewPanelState);
 
   useEffect(() => {
     // Register all prompts's shortcuts
@@ -139,8 +148,6 @@ function StateRoot({
   useEffect(() => {
     if (client != null) {
       client.listenToState();
-
-      console.log(client);
 
       // Load the received state
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
@@ -183,9 +190,8 @@ function StateRoot({
           return filteredStatusBarItems;
         });
       });
-      /**
-       * Close all the last opened window when ESC is pressed
-       */
+
+      // Close all the last opened window when ESC is pressed
       pushHotkey("esc", () => {
         setShowedWindows((val) => {
           const newValue = [...val];
@@ -197,9 +203,29 @@ function StateRoot({
   }, [client]);
 
   useEffect(() => {
-    /*
-     * Save the current focused tab
-     */
+    // Create a new view to the right
+    pushHotkey("ctrl+l", () => {
+      newView();
+    });
+
+    // Close the focused view
+    pushHotkey("ctrl+k", () => {
+      closeFocusedView();
+    });
+
+    // Create a new view panel in the focused view
+    pushHotkey("ctrl+.", () => {
+      newViewPanelInFocused();
+    });
+
+    // Close the focused view panel
+    pushHotkey("ctrl+,", () => {
+      closeFocusedViewPanel();
+    });
+  }, [tabs, focusedView]);
+
+  useEffect(() => {
+    // Save the current focused tab
     pushHotkey("ctrl+s", () => {
       currentFocusedTab.tab?.save({ force: true });
     });
