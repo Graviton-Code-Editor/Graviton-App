@@ -9,7 +9,7 @@ use tokio::sync::mpsc::channel;
 #[tokio::test]
 async fn load_sample_extension() {
     let (sd, mut rv) = channel::<Messages>(1);
-    let mut manager = ExtensionsManager::new(sd.clone());
+    let mut manager = ExtensionsManager::new(sd.clone(), None);
 
     let sample_info = ManifestInfo {
         extension: ManifestExtension {
@@ -65,7 +65,7 @@ async fn load_sample_extension() {
 #[tokio::test]
 async fn load_extensions_from_folder() {
     let (sd, mut rv) = channel::<Messages>(1);
-    let mut manager = ExtensionsManager::new(sd.clone());
+    let mut manager = ExtensionsManager::new(sd.clone(), None);
 
     let location = current_dir().unwrap().join("tests/extensions");
     let location = location.to_str().unwrap();

@@ -122,6 +122,7 @@ impl DenoExtensionSupport for ExtensionsManager {
             &info.extension.id.clone(),
             &info.extension.name.clone(),
             self.sender.clone(),
+            self.settings_path.clone(),
         );
         let events_manager = EventsManager::new();
         let deno_extension = Box::new(DenoExtension::new(

@@ -14,7 +14,7 @@ async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
     let from_core = Arc::new(Mutex::new(from_core));
 
-    let extensions_manager = ExtensionsManager::new(to_core.clone())
+    let extensions_manager = ExtensionsManager::new(to_core.clone(), None)
         .load_extension_from_entry(git_for_graviton::entry, git_for_graviton::get_info(), 1)
         .await
         .to_owned();

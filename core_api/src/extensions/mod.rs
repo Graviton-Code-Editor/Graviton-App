@@ -5,6 +5,7 @@ pub mod client;
 pub mod manager;
 pub mod manifest;
 pub mod modules;
+pub mod settings;
 
 /// Extensions errors
 #[derive(Serialize, Deserialize, Debug, Clone)]

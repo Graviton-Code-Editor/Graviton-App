@@ -114,11 +114,7 @@ fn get_settings_path(context: &Context<EmbeddedAssets>) -> PathBuf {
 
     fs::create_dir_all(&states_path).ok();
 
-    let settings_file_path = states_path.join("settings.json");
-
-    File::create(&settings_file_path).unwrap();
-
-    settings_file_path
+    states_path
 }
 
 /// Returns the path where third-party extensions are installed and loaded from
@@ -169,10 +165,15 @@ async fn main() {
     let context = tauri::generate_context!("tauri.conf.json");
 
     // Get the extension paths
-    let settings_file_path = get_settings_path(&context);
+    let settings_path = get_settings_path(&context);
+
+    let settings_file_path = settings_path.join("settings.json");
+
+    File::create(&settings_file_path).unwrap();
+
     let third_party_extensions_path = get_extensions_installation_path(&context);
 
-    let mut extensions_manager = ExtensionsManager::new(to_core.clone());
+    let mut extensions_manager = ExtensionsManager::new(to_core.clone(), Some(settings_path));
 
     // Load built-in extensions
     extensions_manager

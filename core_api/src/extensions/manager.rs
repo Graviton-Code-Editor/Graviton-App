@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use std::sync::Arc;
 
 use tokio::sync::mpsc::{channel, Sender};
@@ -15,20 +16,26 @@ use super::client::ExtensionClient;
 pub struct ExtensionsManager {
     pub extensions: Vec<LoadedExtension>,
     pub sender: Sender<Messages>,
+    pub settings_path: Option<PathBuf>,
 }
 
 impl Default for ExtensionsManager {
     fn default() -> Self {
-        let (to_core, _) = channel::<Messages>(1);
-        Self::new(to_core)
+        let (sender, _) = channel::<Messages>(1);
+        Self {
+            extensions: Vec::new(),
+            sender,
+            settings_path: None,
+        }
     }
 }
 
 impl ExtensionsManager {
-    pub fn new(sender: Sender<Messages>) -> Self {
+    pub fn new(sender: Sender<Messages>, settings_path: Option<PathBuf>) -> Self {
         Self {
             extensions: Vec::new(),
             sender,
+            settings_path,
         }
     }
 
@@ -42,6 +49,7 @@ impl ExtensionsManager {
             &info.extension.id,
             &info.extension.name,
             self.sender.clone(),
+            self.settings_path.clone(),
         );
         entry(self, client, state_id);
         self.extensions

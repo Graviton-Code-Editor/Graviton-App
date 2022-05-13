@@ -90,7 +90,7 @@ mod tests {
         let states = {
             let sample_state = State::new(
                 1,
-                ExtensionsManager::new(core_sender.clone()),
+                ExtensionsManager::new(core_sender.clone(), None),
                 Box::new(MemoryPersistor::new()),
             );
 

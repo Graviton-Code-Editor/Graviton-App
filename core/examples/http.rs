@@ -17,7 +17,7 @@ async fn main() {
     let states = {
         let sample_state = State::new(
             1,
-            ExtensionsManager::new(to_core.clone()),
+            ExtensionsManager::new(to_core.clone(), None),
             Box::new(MemoryPersistor::new()),
         );
 
