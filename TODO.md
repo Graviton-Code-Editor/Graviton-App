@@ -47,7 +47,7 @@ WIP = Work in progress, aka exists but is not finished
 - [ ] Configure CodeMirror properly (WIP)
 - [ ] Create a settings tab (WIP)
 - [x] Add a custom hook to easily open a tab 
-- [ ] LSP support (https://github.com/FurqanSoftware/codemirror-languageserver)
+- [ ] Experimental LSP support (https://github.com/FurqanSoftware/codemirror-languageserver) (WIP)
 - [ ] Ability to create multiple panels
 - [ ] Avoid use recoil-nexus
 ### server
