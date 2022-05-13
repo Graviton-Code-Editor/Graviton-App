@@ -19,6 +19,7 @@ function ExplorerPanelContainer() {
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
       try {
+        // TODO(marc2332): For better UX, a content resolver could be passed to the editor creator instead of waiting to read the file, this will make the tab creation faster in "big" files.
         client.read_file_by_path(item.path, "local").then((fileContent) => {
           if (fileContent.Ok) {
             const { content, format } = fileContent.Ok;
