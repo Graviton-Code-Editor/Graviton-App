@@ -19,6 +19,7 @@ export default function useViews(): ViewUtils {
   const [tabPanels, setTabPanels] = useRecoilState(tabsState);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
 
+  // TODO(marc2332): This should somehow check for the tabs state, just to make sure they are all saved, and if not, prompt the user to do it
   const closeViewPanel = ({ col, row }: FocusedViewPanel) => {
     // Always leave at least one view panel opened
     if (tabPanels.length == 1 || tabPanels[row].length === 1) return;
