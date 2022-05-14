@@ -327,7 +327,7 @@ class TextEditorTab extends Tab {
         languageId,
         workspaceFolders: [
           {
-            name: basename(unixPath),
+            name: basename(dirname(unixPath)),
             uri: unixPath,
           },
         ],
