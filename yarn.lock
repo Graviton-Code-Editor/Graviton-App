@@ -2285,10 +2285,10 @@ recoil-nexus@^0.3.15:
   resolved "https://registry.yarnpkg.com/recoil-nexus/-/recoil-nexus-0.3.15.tgz#82e9b916409aef53cf2b2cc2dbae26b331f1a893"
   integrity sha512-UrV1VWZskAa/bvLmLc/W/DN11GkL9WGrB5heAtgiz8XLWvyUFfJr20uM4c7YIsssO7g1zDfM4MfbAldbGYWMYQ==
 
-recoil@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.7.0.tgz#de19c6fb9816c172b0dae92cf8fe94c2c90a23ab"
-  integrity sha512-NYG79ZciSILFIu6Zo3aoqPOIU0Ok+dIwA9DM4NdxIx0tKXKenAZWxsalyRQyGVfxR3cVynsgVu7XCAdKNa957A==
+recoil@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/recoil/-/recoil-0.7.2.tgz#37aafc9e0674abae639263354a11c910e71bf78a"
+  integrity sha512-OT4pI7FOUHcIoRtjsL5Lqq+lFFzQfir4MIbUkqyJ3nqv3WfBP1pHepyurqTsK5gw+T+I2R8+uOD28yH+Lg5o4g==
   dependencies:
     hamt_plus "1.0.2"
 

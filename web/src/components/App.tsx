@@ -251,11 +251,8 @@ function StateRoot({
 function App() {
   const isWindows = window.navigator.platform === "Win32";
 
-  //https://github.com/facebookexperimental/Recoil/issues/1726
-  const RecoilRootTmp: any = RecoilRoot as any;
-
   return (
-    <RecoilRootTmp>
+    <RecoilRoot>
       <ClientRoot />
       <RecoilNexus />
       <Theme>
@@ -270,7 +267,7 @@ function App() {
           <StatusBarView />
         </StateRoot>
       </Theme>
-    </RecoilRootTmp>
+    </RecoilRoot>
   );
 }
 
