@@ -22,7 +22,7 @@ export default function useViews(): ViewUtils {
   // TODO(marc2332): This should somehow check for the tabs state, just to make sure they are all saved, and if not, prompt the user to do it
   const closeViewPanel = ({ col, row }: FocusedViewPanel) => {
     // Always leave at least one view panel opened
-    if (tabPanels.length == 1 || tabPanels[row].length === 1) return;
+    if (tabPanels[row].length === 1) return;
 
     const nextFocusedCol = col > 1 ? col - 1 : 0;
 
