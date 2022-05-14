@@ -1,10 +1,15 @@
+use std::sync::Arc;
+
+use tokio::sync::Mutex;
+
 use crate::extensions::client::ExtensionClient;
 use crate::messaging::Messages;
 
 /// StatusBarItem
+#[derive(Clone)]
 pub struct StatusBarItem {
     id: String,
-    label: String,
+    label: Arc<Mutex<String>>,
     client: ExtensionClient,
     state_id: u8,
 }
@@ -15,7 +20,7 @@ impl StatusBarItem {
             id: client.get_id(),
             client,
             state_id,
-            label: label.to_string(),
+            label: Arc::new(Mutex::new(label.to_string())),
         }
     }
 
@@ -24,7 +29,7 @@ impl StatusBarItem {
             .send(Messages::ShowStatusBarItem {
                 state_id: self.state_id,
                 statusbar_item_id: self.id.clone(),
-                label: self.label.clone(),
+                label: self.label.lock().await.to_string(),
             })
             .await
             .unwrap();
@@ -38,5 +43,12 @@ impl StatusBarItem {
             })
             .await
             .unwrap();
+    }
+
+    pub async fn set_label(&mut self, label: &str){
+
+        *self.label.lock().await = label.to_string();
+
+        self.show().await
     }
 }
