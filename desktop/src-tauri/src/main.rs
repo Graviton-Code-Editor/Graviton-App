@@ -7,7 +7,7 @@ mod methods;
 use gveditor_core::gen_client::Client;
 use gveditor_core::handlers::{LocalHandler, TransportHandler};
 use gveditor_core::tokio::sync::mpsc::{channel, Receiver, Sender};
-use gveditor_core::{tokio, Configuration, Core};
+use gveditor_core::{tokio, Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{StatesList, TokenFlags};
@@ -160,7 +160,6 @@ async fn main() {
     setup_logger();
 
     let (to_core, from_core) = channel::<Messages>(1);
-    let from_core = Arc::new(Mutex::new(from_core));
 
     let context = tauri::generate_context!("tauri.conf.json");
 
@@ -223,7 +222,7 @@ async fn main() {
     let config = Configuration::new(local_handler, to_core, from_core);
 
     // Create the Core
-    let core = Core::new(config, states);
+    let core = Server::new(config, states);
 
     // Run the core in a separate thread
     tokio::task::spawn(async move { core.run().await });

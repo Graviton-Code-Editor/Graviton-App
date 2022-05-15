@@ -2,7 +2,7 @@ use std::sync::Arc;
 use std::thread;
 
 use gveditor_core::handlers::HTTPHandler;
-use gveditor_core::{Configuration, Core};
+use gveditor_core::{Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::Messages;
 use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
@@ -12,7 +12,6 @@ use tokio::sync::mpsc::channel;
 #[tokio::main]
 async fn main() {
     let (to_core, from_core) = channel::<Messages>(1);
-    let from_core = Arc::new(Mutex::new(from_core));
 
     let states = {
         let sample_state = State::new(
@@ -32,7 +31,7 @@ async fn main() {
 
     let config = Configuration::new(http_handler, to_core, from_core);
 
-    let core = Core::new(config, states);
+    let core = Server::new(config, states);
 
     core.run().await;
 

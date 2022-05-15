@@ -45,8 +45,7 @@ impl StatusBarItem {
             .unwrap();
     }
 
-    pub async fn set_label(&mut self, label: &str){
-
+    pub async fn set_label(&mut self, label: &str) {
         *self.label.lock().await = label.to_string();
 
         self.show().await

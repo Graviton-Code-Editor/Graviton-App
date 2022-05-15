@@ -57,7 +57,7 @@ export class HTTPClient extends Emittery implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public get_state_by_id(): Promise<StateData> {
+  public get_state_by_id(): Promise<CoreResponse<StateData>> {
     return this.rpc.call("get_state_by_id", [
       this.config.state_id,
       this.config.token,

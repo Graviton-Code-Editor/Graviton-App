@@ -1,50 +1,96 @@
-use crate::configuration::Handler;
 use crate::handlers::TransportHandler;
 use crate::Configuration;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
 use gveditor_core_api::messaging::{ExtensionMessages, Messages};
 use gveditor_core_api::state::{StateData, StatesList};
-use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex};
+use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex, State};
 use jsonrpc_core::BoxFuture;
 use jsonrpc_derive::rpc;
 
 use std::sync::Arc;
-use tokio::sync::mpsc::Receiver;
 
 pub struct Server {
     states: Arc<Mutex<StatesList>>,
     config: Configuration,
 }
 
+/// Graviton Server entry point
+///
+/// # Example
+/// ```rust
+/// # use std::sync::Arc;
+/// # use gveditor_core::{
+///     # handlers::HTTPHandler,
+///     # Configuration,
+///     # Server,
+/// # };
+///  # use gveditor_core_api::{
+///     # extensions::manager::ExtensionsManager,
+///     # messaging::Messages,
+///     # state::{
+///     #    StatesList,
+///     #    TokenFlags,
+///     #    MemoryPersistor,
+///     # },
+///     # State
+///  # };
+/// # use tokio::sync::{
+///    # mpsc::channel,
+///    # Mutex
+/// # };
+///  # tokio_test::block_on(async {
+///  let (to_core, from_core) = channel::<Messages>(1);
+///
+///  // A pointer to a StatesList
+///  let states = {
+///     // A basic State with ID '1' and no extensions
+///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone(), None), Box::new(MemoryPersistor::new()));
+///
+///     // A StatesList with the previous state
+///     let states = StatesList::new()
+///         .with_state(sample_state);
+///
+///     Arc::new(Mutex::new(states))
+///  };
+///  
+///  // Crate a HTTP TransportHandler and a configuration
+///  let http_handler = HTTPHandler::builder().build();
+///
+///  // Create the configuration
+///  let config = Configuration::new(Box::new(http_handler), to_core, from_core);
+///
+///  // Create a Core
+///  let core = Server::new(config, states);
+///
+///  // Run the core
+///  core.run();
+///  # })
+/// ```
+///
 impl Server {
     /// Create a new Server
-    pub fn new(config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        Self::create_receiver(
-            states.clone(),
-            config.receiver.clone(),
-            config.handler.clone(),
-        );
+    ///
+    /// # Arguments
+    ///
+    /// * `config`   - The Core configuration
+    /// * `states`   - The States list the Core will launch with
+    ///
+    pub fn new(mut config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
+        let receiver = config.receiver.take();
+        let handler = config.handler.clone();
+        let states_list = states.clone();
 
-        Self { config, states }
-    }
-
-    /// Receive all incoming messages
-    pub fn create_receiver(
-        states: Arc<Mutex<StatesList>>,
-        receiver: Arc<Mutex<Receiver<Messages>>>,
-        handler: Handler,
-    ) {
-        std::thread::spawn(move || {
-            let rt = tokio::runtime::Runtime::new().unwrap();
-            rt.block_on(async move {
-                let mut receiver = receiver.lock().await;
+        tokio::spawn(async move {
+            if let Some(mut receiver) = receiver {
                 loop {
                     if let Some(message) = receiver.recv().await {
-                        Self::process_message(states.clone(), message, handler.clone()).await;
+                        Self::process_message(states_list.clone(), message, handler.clone()).await;
                     }
                 }
-            });
+            }
         });
+
+        Self { config, states }
     }
 
     /// Run the configured handler
@@ -145,7 +191,7 @@ pub trait RpcMethods {
         &self,
         state_id: u8,
         token: String,
-    ) -> BoxFuture<RPCResult<Option<StateData>>>;
+    ) -> BoxFuture<RPCResult<Result<Option<StateData>, Errors>>>;
 
     #[rpc(name = "set_state_data_by_id")]
     fn set_state_by_id(
@@ -214,6 +260,27 @@ pub trait RpcMethods {
     ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 }
 
+async fn verify_state(
+    states: Arc<Mutex<StatesList>>,
+    state_id: u8,
+    token: String,
+) -> Result<Arc<Mutex<State>>, Errors> {
+    let states = states.lock().await;
+    // Try to get the requested state
+    if let Some(state) = states.get_state_by_id(state_id) {
+        let state_g = state.lock().await;
+        // Make sure the token is valid
+        if state_g.has_token(&token) {
+            drop(state_g);
+            Ok(state)
+        } else {
+            Err(Errors::BadToken)
+        }
+    } else {
+        Err(Errors::StateNotFound)
+    }
+}
+
 /// JSON RPC manager
 pub struct RpcManager {
     pub states: Arc<Mutex<StatesList>>,
@@ -226,22 +293,18 @@ impl RpcMethods for RpcManager {
         &self,
         state_id: u8,
         token: String,
-    ) -> BoxFuture<RPCResult<Option<StateData>>> {
+    ) -> BoxFuture<RPCResult<Result<Option<StateData>, Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+                if let Ok(state) = state {
+                    let state = state.lock().await;
                     Ok(Some(state.data.clone()))
                 } else {
-                    Ok(None)
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(None)
-            }
+            })
         })
     }
 
@@ -254,21 +317,20 @@ impl RpcMethods for RpcManager {
     ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let mut state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
                     tracing::info!("Updated state by id <{}>", state.data.id);
                     state.update(new_state_data).await;
-                    Ok(Ok(()))
+
+                    Ok(())
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -283,13 +345,12 @@ impl RpcMethods for RpcManager {
     ) -> BoxFuture<RPCResult<Result<FileInfo, Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested filesystem implementation
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
                     if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
                         let filesystem = filesystem.lock().await;
                         let result = filesystem.read_file_by_path(&path);
@@ -300,16 +361,15 @@ impl RpcMethods for RpcManager {
                             filesystem_name,
                             result.clone(),
                         ));
-                        Ok(result)
+
+                        result
                     } else {
-                        Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                        Err(Errors::Fs(FilesystemErrors::FilesystemNotFound))
                     }
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -323,14 +383,14 @@ impl RpcMethods for RpcManager {
         token: String,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
         let states = self.states.clone();
+
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested filesystem implementation
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
                     if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
                         let filesystem = filesystem.lock().await;
                         let result = filesystem.write_file_by_path(&path, &content);
@@ -342,16 +402,15 @@ impl RpcMethods for RpcManager {
                             content,
                             result.clone(),
                         ));
-                        Ok(result)
+
+                        result
                     } else {
-                        Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                        Err(Errors::Fs(FilesystemErrors::FilesystemNotFound))
                     }
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -365,14 +424,14 @@ impl RpcMethods for RpcManager {
         token: String,
     ) -> BoxFuture<RPCResult<Result<Vec<DirItemInfo>, Errors>>> {
         let states = self.states.clone();
+
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested filesystem implementation
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
                     if let Some(filesystem) = state.get_fs_by_name(&filesystem_name) {
                         let filesystem = filesystem.lock().await;
                         let result = filesystem.list_dir_by_path(&path);
@@ -385,16 +444,14 @@ impl RpcMethods for RpcManager {
                             result.clone(),
                         ));
 
-                        Ok(result)
+                        result
                     } else {
-                        Ok(Err(Errors::Fs(FilesystemErrors::FilesystemNotFound)))
+                        Err(Errors::Fs(FilesystemErrors::FilesystemNotFound))
                     }
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -406,21 +463,19 @@ impl RpcMethods for RpcManager {
         token: String,
     ) -> BoxFuture<RPCResult<Result<ManifestInfo, Errors>>> {
         let states = self.states.clone();
+
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested info about the extension
-                    Ok(state.get_ext_info_by_id(&extension_id))
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
+                    state.get_ext_info_by_id(&extension_id)
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
     /// Returns the list of extensions in the specified state
@@ -431,20 +486,17 @@ impl RpcMethods for RpcManager {
     ) -> BoxFuture<RPCResult<Result<Vec<String>, Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested info about the extension
-                    Ok(Ok(state.get_ext_list_by_id()))
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
+                    Ok(state.get_ext_list_by_id())
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -456,20 +508,17 @@ impl RpcMethods for RpcManager {
     ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested info about the extension
-                    Ok(Ok(state.get_all_language_servers().await))
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
+                    Ok(state.get_all_language_servers().await)
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 
@@ -481,21 +530,19 @@ impl RpcMethods for RpcManager {
     ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
-            let states = states.lock().await;
-            // Try to get the requested state
-            if let Some(state) = states.get_state_by_id(state_id) {
-                let state = state.lock().await;
-                // Make sure the token is valid
-                if state.has_token(&token) {
-                    // Try to get the requested info about the extension
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
                     state.notify_extensions(message);
-                    Ok(Ok(()))
+
+                    Ok(())
                 } else {
-                    Ok(Err(Errors::BadToken))
+                    Err(state.unwrap_err())
                 }
-            } else {
-                Ok(Err(Errors::StateNotFound))
-            }
+            })
         })
     }
 }

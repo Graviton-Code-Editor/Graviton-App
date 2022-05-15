@@ -10,19 +10,19 @@ pub type Handler = Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>;
 pub struct Configuration {
     pub handler: Handler,
     pub sender: Sender<Messages>,
-    pub receiver: Arc<Mutex<Receiver<Messages>>>,
+    pub receiver: Option<Receiver<Messages>>,
 }
 
 impl Configuration {
     pub fn new(
         handler: Box<dyn TransportHandler + Send + Sync>,
         sender: Sender<Messages>,
-        receiver: Arc<Mutex<Receiver<Messages>>>,
+        receiver: Receiver<Messages>,
     ) -> Self {
         Self {
             handler: Arc::new(Mutex::new(handler)),
             sender,
-            receiver,
+            receiver: Some(receiver),
         }
     }
 }

@@ -1,11 +1,11 @@
-use git2::{Repository, Error};
+use git2::{Error, Repository};
 use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::ExtensionMessages;
-use gveditor_core_api::tokio::sync::mpsc::{Receiver, Sender, channel};
-use gveditor_core_api::{ManifestExtension, ManifestInfo, Mutex, tokio};
+use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
+use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Mutex};
 use std::sync::Arc;
 
 struct GitExtension {
@@ -21,7 +21,7 @@ impl GitExtension {
         let repo = Repository::discover(path);
         let repo = repo?;
         let head = repo.head()?;
-        Ok(head.shorthand().map(|v|v.to_string()))
+        Ok(head.shorthand().map(|v| v.to_string()))
     }
 }
 
@@ -39,7 +39,8 @@ impl Extension for GitExtension {
         tokio::spawn(async move {
             let mut receiver = receiver.lock().await;
             loop {
-                if let Some(ExtensionMessages::ListDir(_, fs_name, path, _)) = receiver.recv().await {
+                if let Some(ExtensionMessages::ListDir(_, fs_name, path, _)) = receiver.recv().await
+                {
                     // Only react when using the local file system
                     if fs_name == "local" {
                         let branch = Self::get_repo_branch(path);

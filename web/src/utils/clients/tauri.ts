@@ -43,7 +43,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public get_state_by_id(): Promise<StateData> {
+  public get_state_by_id(): Promise<CoreResponse<StateData>> {
     return invoke("get_state_by_id", {
       stateId: this.config.state_id,
       token: this.config.token,

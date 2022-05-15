@@ -11,7 +11,7 @@ pub async fn get_state_by_id(
     state_id: u8,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
-) -> RPCResult<Option<StateData>> {
+) -> RPCResult<Result<Option<StateData>, Errors>> {
     let res = tauri_state.client.get_state_by_id(state_id, token.clone());
     Ok(res.await.unwrap())
 }

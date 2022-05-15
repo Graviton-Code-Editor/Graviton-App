@@ -302,14 +302,15 @@ mod tests {
 
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::{Mutex, State};
-    use hyper_tungstenite::tungstenite::{connect, Message};
+    use hyper_tungstenite::tungstenite::{Message};
+    use jsonrpc_core::futures_util::{SinkExt, StreamExt};
     use jsonrpc_core::serde_json;
     use tokio::sync::mpsc::channel;
     use tokio::time::sleep;
     use url::Url;
 
     use crate::handlers::Messages;
-    use crate::{Configuration, Core, StatesList};
+    use crate::{Configuration, Server, StatesList};
 
     use super::HTTPHandler;
 
@@ -318,7 +319,6 @@ mod tests {
         // RUN THE SERVER
 
         let (to_core, from_core) = channel::<Messages>(1);
-        let from_core = Arc::new(Mutex::new(from_core));
 
         let states = {
             let sample_state = State::default();
@@ -334,7 +334,7 @@ mod tests {
 
         let config = Configuration::new(http_handler, to_core, from_core);
 
-        let core = Core::new(config, states);
+        let core = Server::new(config, states);
 
         core.run().await;
 
@@ -342,9 +342,9 @@ mod tests {
 
         // RUN A WEBSOCKETS CLIENT
 
-        let (mut socket, _) =
-            connect(Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap())
-                .expect("Can't connect");
+        let (socket, _) = tokio_tungstenite::connect_async(Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap()).await.unwrap();
+
+        let (mut writer, mut reader) = socket.split();
 
         let listen_to_state_msg = Messages::ListenToState {
             state_id: 1,
@@ -353,11 +353,11 @@ mod tests {
 
         let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
 
-        socket
-            .write_message(Message::Text(listen_to_state_msg))
-            .unwrap();
-
-        let msg = socket.read_message().expect("Error reading message");
+        tokio::spawn(async move {
+            writer.send(Message::Text(listen_to_state_msg)).await.unwrap();
+        });
+        
+        let msg = reader.next().await.unwrap().unwrap();
 
         assert!(msg.is_text());
 
@@ -365,8 +365,8 @@ mod tests {
 
         let state_updated_msg = serde_json::from_str(&msg).unwrap();
 
-        assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }))
+        assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }));
 
-        // TO-DO TEST JSON RPC CLIENT
+        // TODO(marc2332) TEST JSON RPC CLIENT
     }
 }

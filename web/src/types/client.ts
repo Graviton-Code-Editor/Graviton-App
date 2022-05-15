@@ -49,7 +49,7 @@ export interface LanguageServer {
 
 export interface Client extends Emittery {
   config: Configuration<string | null>;
-  get_state_by_id: () => Promise<StateData>;
+  get_state_by_id: () => Promise<CoreResponse<StateData>>;
   set_state_by_id: (state: Omit<StateData, "id">) => Promise<void>;
   read_file_by_path: (
     path: string,
