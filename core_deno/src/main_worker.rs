@@ -2,6 +2,7 @@ use deno_core::error::AnyError;
 use deno_core::FsModuleLoader;
 use deno_runtime::deno_broadcast_channel::InMemoryBroadcastChannel;
 use deno_runtime::deno_web::BlobStore;
+use deno_runtime::ops::io::Stdio;
 use deno_runtime::permissions::Permissions;
 use deno_runtime::worker::{MainWorker, WorkerOptions};
 use deno_runtime::BootstrapOptions;
@@ -34,16 +35,17 @@ pub async fn create_main_worker(
         todo!("Web workers are not supported");
     });
 
+    let main_module = deno_core::resolve_path(main_path).unwrap();
+
     let options = WorkerOptions {
         bootstrap: BootstrapOptions {
-            apply_source_maps: false,
             args: vec![],
             cpu_count: 1,
             debug_flag: false,
             enable_testing_features: false,
-            location: None,
+            location: Some(main_module.clone()),
             no_color: false,
-            runtime_version: "1.20.5".to_string(),
+            runtime_version: "1.21.3".to_string(),
             ts_version: "4.6.2".to_string(),
             unstable: false,
             is_tty: false,
@@ -57,7 +59,6 @@ pub async fn create_main_worker(
         root_cert_store: None,
         user_agent: "graviton".to_string(),
         seed: None,
-        js_error_create_fn: None,
         web_worker_preload_module_cb,
         create_web_worker_cb,
         maybe_inspector_server: None,
@@ -69,12 +70,12 @@ pub async fn create_main_worker(
         broadcast_channel: InMemoryBroadcastChannel::default(),
         shared_array_buffer_store: None,
         compiled_wasm_module_store: None,
+        format_js_error_fn: None,
+        source_map_getter: None,
+        stdio: Stdio::default(),
     };
 
-    let main_module = deno_core::resolve_path(main_path).unwrap();
-
-    // Enable all permissions
-    // TODO: it would be interesting to be able to specify what permissions the extensions have in it's manifest file, this would make them more secure too
+    // TODO(marc2332) Add ability to specify what permissions the extensions should run with
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);
