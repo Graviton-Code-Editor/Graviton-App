@@ -2030,7 +2030,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "async-trait",
  "gveditor-core-api",
@@ -2049,7 +2049,7 @@ dependencies = [
 
 [[package]]
 name = "gveditor-core-api"
-version = "0.1.6"
+version = "0.1.7"
 dependencies = [
  "async-trait",
  "serde",
