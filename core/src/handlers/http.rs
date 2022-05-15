@@ -302,7 +302,7 @@ mod tests {
 
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::{Mutex, State};
-    use hyper_tungstenite::tungstenite::{Message};
+    use hyper_tungstenite::tungstenite::Message;
     use jsonrpc_core::futures_util::{SinkExt, StreamExt};
     use jsonrpc_core::serde_json;
     use tokio::sync::mpsc::channel;
@@ -342,7 +342,11 @@ mod tests {
 
         // RUN A WEBSOCKETS CLIENT
 
-        let (socket, _) = tokio_tungstenite::connect_async(Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap()).await.unwrap();
+        let (socket, _) = tokio_tungstenite::connect_async(
+            Url::parse("ws://localhost:50010/websockets?token=test&state_id=1").unwrap(),
+        )
+        .await
+        .unwrap();
 
         let (mut writer, mut reader) = socket.split();
 
@@ -354,9 +358,12 @@ mod tests {
         let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
 
         tokio::spawn(async move {
-            writer.send(Message::Text(listen_to_state_msg)).await.unwrap();
+            writer
+                .send(Message::Text(listen_to_state_msg))
+                .await
+                .unwrap();
         });
-        
+
         let msg = reader.next().await.unwrap().unwrap();
 
         assert!(msg.is_text());
