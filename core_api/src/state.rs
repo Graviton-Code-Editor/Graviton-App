@@ -203,7 +203,7 @@ impl State {
             if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let ext_plugin = plugin.clone();
                 let message = message.clone();
-                tokio::task::spawn(async move {
+                tokio::spawn(async move {
                     let mut ext_plugin = ext_plugin.lock().await;
                     ext_plugin.notify(message.clone());
                 });
