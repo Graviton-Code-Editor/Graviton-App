@@ -54,6 +54,8 @@ jobs:
         uses: taiki-e/install-action@nextest
 
       - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
 
       - name: Running rust tests
         run: nextest run
