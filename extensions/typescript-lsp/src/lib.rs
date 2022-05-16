@@ -10,6 +10,8 @@ use std::collections::HashMap;
 use std::process::Stdio;
 use std::sync::Arc;
 
+static EXTENSION_NAME: &str = "TypeScript/JavaScript Intellisense";
+
 #[cfg(windows)]
 pub const NPX_BINARY: &str = "npx.cmd";
 
@@ -27,7 +29,7 @@ impl Extension for TSLSPExtension {
     fn get_info(&self) -> ExtensionInfo {
         ExtensionInfo {
             id: env!("CARGO_PKG_NAME").to_string(),
-            name: env!("CARGO_PKG_NAME").to_string(),
+            name: EXTENSION_NAME.to_string(),
         }
     }
 
@@ -179,7 +181,7 @@ pub fn get_info() -> ManifestInfo {
     ManifestInfo {
         extension: ManifestExtension {
             id: env!("CARGO_PKG_NAME").to_string(),
-            name: env!("CARGO_PKG_NAME").to_string(),
+            name: EXTENSION_NAME.to_string(),
             author: "Marc Espín".to_string(),
             version: env!("CARGO_PKG_VERSION").to_string(),
             repository: "https://github.com/Graviton-Code-Editor/Graviton-App".to_string(),

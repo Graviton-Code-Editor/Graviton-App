@@ -8,6 +8,8 @@ use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
 use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Mutex};
 use std::sync::Arc;
 
+static EXTENSION_NAME: &str = "Git";
+
 struct GitExtension {
     rx: Arc<Mutex<Receiver<ExtensionMessages>>>,
     tx: Sender<ExtensionMessages>,
@@ -29,7 +31,7 @@ impl Extension for GitExtension {
     fn get_info(&self) -> ExtensionInfo {
         ExtensionInfo {
             id: env!("CARGO_PKG_NAME").to_string(),
-            name: env!("CARGO_PKG_NAME").to_string(),
+            name: EXTENSION_NAME.to_string(),
         }
     }
 
@@ -80,7 +82,7 @@ pub fn get_info() -> ManifestInfo {
     ManifestInfo {
         extension: ManifestExtension {
             id: env!("CARGO_PKG_NAME").to_string(),
-            name: env!("CARGO_PKG_NAME").to_string(),
+            name: EXTENSION_NAME.to_string(),
             author: "Marc Espín".to_string(),
             version: env!("CARGO_PKG_VERSION").to_string(),
             repository: "https://github.com/Graviton-Code-Editor/Graviton-App".to_string(),
