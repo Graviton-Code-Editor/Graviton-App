@@ -71,7 +71,9 @@ export interface Client extends Emittery {
   listenToState: () => void;
   whenConnected: () => Promise<void>;
   get_all_language_servers: () => Promise<CoreResponse<Array<LanguageServer>>>;
-  emitMessage: <T>(message:  Omit<Omit<T, "state_id">, "trigger">) => Promise<void>;
+  emitMessage: <T>(
+    message: Omit<Omit<T, "state_id">, "trigger">
+  ) => Promise<void>;
 }
 
 export type EventsInterface = Record<

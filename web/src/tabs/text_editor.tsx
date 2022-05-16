@@ -17,7 +17,11 @@ import { languageServerWithTransport } from "codemirror-languageserver";
 import { useEffect, useState } from "react";
 import TabText from "../components/TabText";
 import LoadingTabContent from "../components/tabs/LoadingTabContent";
-import { LanguageServerInitialization, LanguageServerNotification, NotifyLanguageServers } from "../types/messages";
+import {
+  LanguageServerInitialization,
+  LanguageServerNotification,
+  NotifyLanguageServers,
+} from "../types/messages";
 
 interface SavedState {
   scrollHeight: number;
@@ -342,7 +346,9 @@ class TextEditorTab extends Tab {
       eventEmitter.addListener("/req", async (data) => {
         const jsonData = JSON.stringify(data);
 
-        await client.emitMessage<NotifyLanguageServers<LanguageServerNotification>>({
+        await client.emitMessage<
+          NotifyLanguageServers<LanguageServerNotification>
+        >({
           msg_type: "NotifyLanguageServers",
           message: {
             msg_type: "Notification",
