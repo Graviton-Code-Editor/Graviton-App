@@ -56,9 +56,7 @@ jobs:
 
       - name: Running rust tests
         uses: taiki-e/install-action@nextest
-        with:
-          command: nextest
-          args: run
+        run: nextest run
 
       - name: Running web tests
         run: yarn --cwd web run test
