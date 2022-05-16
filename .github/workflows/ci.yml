@@ -51,11 +51,16 @@ jobs:
         run: brew install gcc
 
       - name: Install nextest (test runner for rust)
-        run: cargo install cargo-nextest
+        uses: taiki-e/install-action@nextest
 
       - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: nightly
 
-      - name: Running unit tests
-        run: yarn test
+      - name: Running rust tests
+        with:
+          command: nextest 
+          args: run 
+
+      - name: Running web tests
+        with:
+          command: yarn 
+          args: --cwd web run test 
