@@ -50,15 +50,15 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install gcc
 
-      - name: Install nextest (test runner for rust)
-        uses: taiki-e/install-action@nextest
-
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
 
       - name: Running rust tests
-        run: nextest run
+        uses: taiki-e/install-action@nextest
+        with:
+          command: nextest
+          args: run
 
       - name: Running web tests
         run: yarn --cwd web run test
