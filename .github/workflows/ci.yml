@@ -54,9 +54,14 @@ jobs:
         with:
           toolchain: stable
 
-      - name: Running rust tests
+      - name: Install latest nextest release
         uses: taiki-e/install-action@nextest
-        run: nextest run
+
+      - name: Running rust tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: nextest
+          args: run
 
       - name: Running web tests
         run: yarn --cwd web run test
