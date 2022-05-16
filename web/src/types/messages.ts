@@ -18,11 +18,23 @@ export interface StateUpdated {
   state_data: StateData;
 }
 
-export interface LanguageServerInitialization {
-  state_id: number;
+
+interface LanguageServerMessageBase {
+  msg_type: string
 }
 
-export interface LanguageServerNotification {
-  state_id: number;
+export interface LanguageServerInitialization extends LanguageServerMessageBase {
+  id: string;
+}
+
+export interface LanguageServerNotification  extends LanguageServerMessageBase {
+  id: string;
   content: string;
+}
+
+type LanguageServerMessage = LanguageServerInitialization | LanguageServerNotification
+
+export interface NotifyLanguageServers<T = LanguageServerMessage> extends BaseMessage {
+  state_id: number;
+  message: T
 }

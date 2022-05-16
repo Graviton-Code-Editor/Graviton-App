@@ -162,7 +162,11 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     });
   }
 
-  public async emitMessage(message: any) {
-    await emit("to_core", JSON.stringify(message));
+  public async emitMessage<T>(message:  Omit<Omit<T, "state_id">, "trigger">) {
+    await emit("to_core", JSON.stringify({
+      ...message,
+      state_id: this.config.state_id,
+      trigger: "client"
+    }));
   }
 }

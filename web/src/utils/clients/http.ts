@@ -175,7 +175,10 @@ export class HTTPClient extends Emittery implements Client {
     ]);
   }
 
-  public async emitMessage(message: any) {
-    this.socket.send(JSON.stringify(message));
+  public async emitMessage<T>(message:  Omit<Omit<T, "state_id">, "trigger">) {
+    this.socket.send(JSON.stringify({
+      ...message,
+      state_id: this.config.state_id,
+    }));
   }
 }
