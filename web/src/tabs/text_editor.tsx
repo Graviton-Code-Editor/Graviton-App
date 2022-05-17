@@ -21,7 +21,7 @@ import {
   LanguageServerInitialization,
   LanguageServerNotification,
   NotifyLanguageServers,
-} from "../types/messages";
+} from "../types/messaging";
 
 interface SavedState {
   scrollHeight: number;
@@ -307,8 +307,8 @@ class TextEditorTab extends Tab {
 
       // Emit the initialization of the language server
       client.emitMessage<NotifyLanguageServers<LanguageServerInitialization>>({
-        msg_type: "NotifyLanguageServers",
-        message: {
+        NotifyLanguageServers: {
+          state_id: client.config.state_id,
           msg_type: "Initialization",
           id: languageId,
         },
@@ -349,8 +349,8 @@ class TextEditorTab extends Tab {
         await client.emitMessage<
           NotifyLanguageServers<LanguageServerNotification>
         >({
-          msg_type: "NotifyLanguageServers",
-          message: {
+          NotifyLanguageServers: {
+            state_id: client.config.state_id,
             msg_type: "Notification",
             id: languageId,
             content: JSON.stringify(jsonData),

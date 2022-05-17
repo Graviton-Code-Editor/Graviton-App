@@ -8,7 +8,7 @@ pub mod modules;
 pub mod settings;
 
 /// Extensions errors
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub enum ExtensionErrors {
     ExtensionNotFound,
 }

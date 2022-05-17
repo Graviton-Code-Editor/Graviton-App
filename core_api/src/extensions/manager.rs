@@ -5,7 +5,7 @@ use tokio::sync::mpsc::{channel, Sender};
 use tokio::sync::Mutex;
 
 use crate::extensions::base::Extension;
-use crate::messaging::Messages;
+use crate::messaging::ClientMessages;
 use crate::{Manifest, ManifestInfo};
 
 use super::base::ExtensionInfo;
@@ -15,13 +15,13 @@ use super::client::ExtensionClient;
 #[derive(Clone)]
 pub struct ExtensionsManager {
     pub extensions: Vec<LoadedExtension>,
-    pub sender: Sender<Messages>,
+    pub sender: Sender<ClientMessages>,
     pub settings_path: Option<PathBuf>,
 }
 
 impl Default for ExtensionsManager {
     fn default() -> Self {
-        let (sender, _) = channel::<Messages>(1);
+        let (sender, _) = channel::<ClientMessages>(1);
         Self {
             extensions: Vec::new(),
             sender,
@@ -31,7 +31,7 @@ impl Default for ExtensionsManager {
 }
 
 impl ExtensionsManager {
-    pub fn new(sender: Sender<Messages>, settings_path: Option<PathBuf>) -> Self {
+    pub fn new(sender: Sender<ClientMessages>, settings_path: Option<PathBuf>) -> Self {
         Self {
             extensions: Vec::new(),
             sender,

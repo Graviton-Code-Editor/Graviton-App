@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::Mutex;
 use std::sync::Arc;
 use tokio::sync::mpsc::Sender;
@@ -19,7 +19,7 @@ pub use local::LocalHandler;
 #[async_trait]
 pub trait TransportHandler {
     /// Run the handler
-    async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>);
+    async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>);
     /// Send a message to the handler
-    async fn send(&self, message: Messages);
+    async fn send(&self, message: ServerMessages);
 }

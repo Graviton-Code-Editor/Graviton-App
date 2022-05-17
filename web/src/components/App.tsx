@@ -29,7 +29,7 @@ import {
   ShowPopup,
   ShowStatusBarItem,
   StateUpdated,
-} from "../types/messages";
+} from "../types/messaging";
 import StatusBarView from "./StatusBarView";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { Tab } from "../modules/tab";

@@ -239,7 +239,7 @@ function FilesystemExplorer({
 
     // When the item is clicked
     function onClick() {
-      // Trigger the select callback
+      // Trigger the selected callback
       onSelected(itemInfo);
 
       // If folder

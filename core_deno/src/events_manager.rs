@@ -1,13 +1,13 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use gveditor_core_api::messaging::ExtensionMessages;
+use gveditor_core_api::messaging::ClientMessages;
 use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
-type EventGroup = HashMap<Uuid, Sender<ExtensionMessages>>;
+type EventGroup = HashMap<Uuid, Sender<ClientMessages>>;
 
 /**
  * Manages the events bridge from Deno to Rust
@@ -29,7 +29,7 @@ impl EventsManager {
         &self,
         name: String,
         listener_id: Uuid,
-        listener: Sender<ExtensionMessages>,
+        listener: Sender<ClientMessages>,
     ) {
         // Add event group if doesn't exist
         if !self.listeners.lock().await.contains_key(&name) {
@@ -64,10 +64,7 @@ impl EventsManager {
     /**
      * Send an event from Deno to Rust
      */
-    pub async fn send(
-        &self,
-        message: ExtensionMessages,
-    ) -> Result<(), SendError<ExtensionMessages>> {
+    pub async fn send(&self, message: ClientMessages) -> Result<(), SendError<ClientMessages>> {
         let name = message.get_name();
         let all_listeners = self.listeners.lock().await;
         let listeners = all_listeners.get(name);

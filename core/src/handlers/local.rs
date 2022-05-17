@@ -3,7 +3,7 @@ use crate::server::gen_client::Client;
 use crate::server::{RpcManager, RpcMethods};
 use crate::StatesList;
 use async_trait::async_trait;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::Mutex;
 use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
@@ -13,22 +13,22 @@ use tokio::sync::mpsc::{channel, Receiver, Sender};
 
 /// This a local handler, meaning that you can use the JSON RPC Server directly
 pub struct LocalHandler {
-    receiver_to_local: Arc<Mutex<Receiver<Messages>>>,
-    channel_sender: Sender<Messages>,
+    receiver_to_local: Arc<Mutex<Receiver<ClientMessages>>>,
+    channel_sender: Sender<ServerMessages>,
 }
 
 impl LocalHandler {
     pub fn new(
         states: Arc<Mutex<StatesList>>,
-        channel_sender: Sender<Messages>,
-    ) -> (Self, Client, Sender<Messages>) {
+        channel_sender: Sender<ServerMessages>,
+    ) -> (Self, Client, Sender<ClientMessages>) {
         // Create the RPC Handler
         let mut local_io = IoHandler::new();
         let manager = RpcManager { states };
         local_io.extend_with(manager.to_delegate());
 
         // Create the channel handler
-        let (sender_to_local, receiver_to_local) = channel::<Messages>(1);
+        let (sender_to_local, receiver_to_local) = channel::<ClientMessages>(1);
         let receiver_to_local = Arc::new(Mutex::new(receiver_to_local));
 
         // Create the local JSON RPC instance
@@ -46,7 +46,7 @@ impl LocalHandler {
 
 #[async_trait]
 impl TransportHandler for LocalHandler {
-    async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
+    async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>) {
         let rv = self.receiver_to_local.clone();
 
         thread::spawn(move || {
@@ -62,7 +62,7 @@ impl TransportHandler for LocalHandler {
         });
     }
 
-    async fn send(&self, message: Messages) {
+    async fn send(&self, message: ServerMessages) {
         self.channel_sender.send(message).await.unwrap();
     }
 }
@@ -85,6 +85,7 @@ mod tests {
     #[tokio::test]
     async fn json_rpc_works() {
         let (core_sender, _) = channel(1);
+        let (client_sender, _) = channel(1);
 
         // Sample StatesList
         let states = {
@@ -102,7 +103,7 @@ mod tests {
         };
 
         // Crate the local handler
-        let (_, client, _) = LocalHandler::new(states, core_sender);
+        let (_, client, _) = LocalHandler::new(states, client_sender);
 
         // Use the client to call JSON RPC Methods
         let req = client

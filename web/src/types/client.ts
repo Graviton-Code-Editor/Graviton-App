@@ -1,11 +1,10 @@
-import { ShowPopup, StateUpdated } from "./messages";
+import { ShowPopup, StateUpdated } from "./messaging";
 import Emittery from "emittery";
 import { StateData } from "../utils/state/state_data";
 import Configuration from "../utils/config";
 
 export interface BaseMessage {
   state_id: number;
-  trigger: string;
   msg_type: string;
 }
 export interface CoreResponse<T> {
@@ -71,9 +70,7 @@ export interface Client extends Emittery {
   listenToState: () => void;
   whenConnected: () => Promise<void>;
   get_all_language_servers: () => Promise<CoreResponse<Array<LanguageServer>>>;
-  emitMessage: <T>(
-    message: Omit<Omit<T, "state_id">, "trigger">
-  ) => Promise<void>;
+  emitMessage: <T>(message: T) => Promise<void>;
 }
 
 export type EventsInterface = Record<

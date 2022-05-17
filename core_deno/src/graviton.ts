@@ -31,11 +31,43 @@ function whenUnload(){
     return listenTo("unload")
 }
 
+class StatusBarItem {
+
+    constructor(public itemID: string, public label: string = ""){
+
+    }
+
+    show(){
+        //@ts-ignore
+        return Deno.core.opAsync("show_statusbar_item", this.itemID)
+    }
+
+    hide(){
+        //@ts-ignore
+        return Deno.core.opAsync("hide_statusbar_item", this.itemID)
+    }
+
+    onClick(){
+        // TODO(marc2332)
+    }
+}
+
+class StatusBarItemBuilder {
+    static async create(label: string = ""): Promise<StatusBarItem> {
+        //@ts-ignore
+        const itemID = await Deno.core.opAsync("new_statusbar_item", label);
+
+        return new StatusBarItem(itemID, label);
+    }
+}
+
 (globalThis as any).Graviton = {
     send,
     listen,
     listenTo,
     exit,
     whenUnload,
+    StatusBarItemBuilder
 }
+
 

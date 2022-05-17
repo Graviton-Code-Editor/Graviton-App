@@ -10,8 +10,6 @@ async fn create_settings() {
     let target_path = cwd.join("target");
     let temp_file = target_path.join("tests");
 
-    println!("{temp_file:?}");
-
     fs::remove_file(&temp_file).await.ok();
 
     let mut settings = ExtensionSettings::new(temp_file).await;

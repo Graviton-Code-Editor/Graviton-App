@@ -2,28 +2,38 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tokio::sync::mpsc::error::SendError;
+use tokio::sync::Mutex as AsyncMutex;
 
-use crate::messaging::Messages;
+use crate::messaging::{ClientMessages, ServerMessages, UIEvent};
 use crate::tokio::sync::mpsc::Sender as AsyncSender;
 use crate::LanguageServer;
 
 use super::settings::ExtensionSettings;
+
+pub enum EventActions {
+    OnClick {
+        id_owner: String,
+        callback: Box<dyn Fn() + Send>,
+    },
+    Nothing,
+}
 
 #[derive(Clone)]
 pub struct ExtensionClient {
     extension_id: String,
     name: String,
     id_count: Arc<Mutex<i32>>,
-    sender: AsyncSender<Messages>,
+    sender: AsyncSender<ClientMessages>,
     #[allow(dead_code)]
     settings_path: Option<PathBuf>,
+    pub event_actions: Arc<AsyncMutex<Vec<EventActions>>>,
 }
 
 impl ExtensionClient {
     pub fn new(
         extension_id: &str,
         name: &str,
-        sender: AsyncSender<Messages>,
+        sender: AsyncSender<ClientMessages>,
         settings_path: Option<PathBuf>,
     ) -> Self {
         Self {
@@ -32,6 +42,7 @@ impl ExtensionClient {
             id_count: Arc::new(Mutex::new(0)),
             sender,
             settings_path: settings_path.map(|path| path.join(extension_id)),
+            event_actions: Arc::new(AsyncMutex::new(Vec::new())),
         }
     }
 
@@ -40,7 +51,7 @@ impl ExtensionClient {
         format!("{}/{}", self.name, self.id_count.lock().unwrap())
     }
 
-    pub async fn send(&self, message: Messages) -> Result<(), SendError<Messages>> {
+    pub async fn send(&self, message: ClientMessages) -> Result<(), SendError<ClientMessages>> {
         self.sender.send(message).await
     }
 
@@ -48,13 +59,15 @@ impl ExtensionClient {
         &self,
         state_id: u8,
         languages: HashMap<String, LanguageServer>,
-    ) -> Result<(), SendError<Messages>> {
+    ) -> Result<(), SendError<ClientMessages>> {
         self.sender
-            .send(Messages::RegisterLanguageServers {
-                state_id,
-                languages,
-                extension_id: self.extension_id.clone(),
-            })
+            .send(ClientMessages::ServerMessage(
+                ServerMessages::RegisterLanguageServers {
+                    state_id,
+                    languages,
+                    extension_id: self.extension_id.clone(),
+                },
+            ))
             .await
     }
 
@@ -62,5 +75,18 @@ impl ExtensionClient {
     pub async fn get_settings(&self) -> Option<ExtensionSettings> {
         let path = self.settings_path.as_ref()?;
         Some(ExtensionSettings::new(path.clone()).await)
+    }
+
+    pub async fn process_message(&mut self, message: ClientMessages) {
+        let actions = &*self.event_actions.lock().await;
+        if let ClientMessages::UIEvent(UIEvent::StatusBarItemClicked { id, .. }) = message {
+            for action in actions {
+                if let EventActions::OnClick { id_owner, callback } = action {
+                    if id_owner == &id {
+                        callback()
+                    }
+                }
+            }
+        }
     }
 }

@@ -1,7 +1,7 @@
 use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
-use gveditor_core_api::messaging::{ExtensionMessages, LanguageServerMessage, Messages};
+use gveditor_core_api::messaging::{ClientMessages, LanguageServerMessage, ServerMessages};
 use gveditor_core_api::tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
 use gveditor_core_api::tokio::process::Command;
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver};
@@ -21,8 +21,8 @@ pub const NPX_BINARY: &str = "npx";
 struct TSLSPExtension {
     client: ExtensionClient,
     state_id: u8,
-    rx: Arc<Mutex<Receiver<ExtensionMessages>>>,
-    tx: Sender<ExtensionMessages>,
+    rx: Arc<Mutex<Receiver<ClientMessages>>>,
+    tx: Sender<ClientMessages>,
 }
 
 impl Extension for TSLSPExtension {
@@ -94,10 +94,12 @@ impl Extension for TSLSPExtension {
 
                             // Send the message to the LSP Client
                             ls_client
-                                .send(Messages::NotifyLanguageServersClient {
-                                    state_id,
-                                    content: message.clone(),
-                                })
+                                .send(ClientMessages::ServerMessage(
+                                    ServerMessages::NotifyLanguageServersClient {
+                                        state_id,
+                                        content: message.clone(),
+                                    },
+                                ))
                                 .await
                                 .unwrap();
                         }
@@ -143,10 +145,7 @@ impl Extension for TSLSPExtension {
                 .unwrap();
 
             loop {
-                if let Some(ExtensionMessages::CoreMessage(Messages::NotifyLanguageServers {
-                    message,
-                    ..
-                })) = receiver.recv().await
+                if let Some(ClientMessages::NotifyLanguageServers(message)) = receiver.recv().await
                 {
                     lsp_tx.send(message).await.unwrap();
                 }
@@ -156,7 +155,7 @@ impl Extension for TSLSPExtension {
 
     fn unload(&mut self) {}
 
-    fn notify(&mut self, message: ExtensionMessages) {
+    fn notify(&mut self, message: ClientMessages) {
         let tx = self.tx.clone();
         tokio::spawn(async move {
             tx.send(message).await.unwrap();
@@ -165,7 +164,7 @@ impl Extension for TSLSPExtension {
 }
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
-    let (tx, rx) = channel::<ExtensionMessages>(1);
+    let (tx, rx) = channel::<ClientMessages>(1);
     let rx = Arc::new(Mutex::new(rx));
     let plugin = Box::new(TSLSPExtension {
         client,

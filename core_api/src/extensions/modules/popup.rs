@@ -1,5 +1,5 @@
 use crate::extensions::client::ExtensionClient;
-use crate::messaging::Messages;
+use crate::messaging::{ClientMessages, ServerMessages};
 
 /// Dialog-like message
 #[allow(dead_code)]
@@ -24,12 +24,12 @@ impl Popup {
 
     pub async fn show(&self) {
         self.client
-            .send(Messages::ShowPopup {
+            .send(ClientMessages::ServerMessage(ServerMessages::ShowPopup {
                 state_id: self.state_id,
                 popup_id: self.id.clone(),
                 title: self.title.clone(),
                 content: self.content.clone(),
-            })
+            }))
             .await
             .unwrap();
     }

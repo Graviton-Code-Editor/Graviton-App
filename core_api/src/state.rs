@@ -1,7 +1,7 @@
 use crate::extensions::base::ExtensionInfo;
 use crate::extensions::manager::{ExtensionsManager, LoadedExtension};
 use crate::filesystems::{FileFormat, Filesystem, LocalFilesystem};
-use crate::messaging::ExtensionMessages;
+use crate::messaging::ClientMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
 use crate::{Errors, ExtensionErrors, LanguageServer, ManifestInfo};
@@ -61,7 +61,7 @@ impl StatesList {
     }
 
     /// Notify all the extensions in a state about a message
-    pub async fn notify_extensions(&self, message: ExtensionMessages) {
+    pub async fn notify_extensions(&self, message: ClientMessages) {
         let state_id = message.get_state_id();
         let state = self.states.get(&state_id);
         if let Some(state) = state {
@@ -72,7 +72,7 @@ impl StatesList {
 }
 
 /// A Tab data
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(tag = "tab_type")]
 pub enum TabData {
     // Text Editor tab
@@ -89,7 +89,7 @@ pub enum TabData {
         id: String,
     },
 }
-#[derive(Serialize, Deserialize, Clone, Debug, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
 struct ViewPanel {
     selected_tab_id: Option<String>,
     tabs: Vec<TabData>,
@@ -98,7 +98,7 @@ struct ViewPanel {
 type TabsViews = Vec<ViewPanel>;
 
 /// The data of a state
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct StateData {
     pub id: u8,
     opened_tabs: Vec<TabsViews>,
@@ -198,7 +198,7 @@ impl State {
     }
 
     /// Notify all the extensions in a state about a message, asynchronously and independently
-    pub fn notify_extensions(&self, message: ExtensionMessages) {
+    pub fn notify_extensions(&self, message: ClientMessages) {
         for ext in &self.extensions_manager.extensions {
             if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let ext_plugin = plugin.clone();
@@ -305,7 +305,7 @@ mod tests {
 
     use crate::extensions::base::{Extension, ExtensionInfo};
     use crate::extensions::manager::ExtensionsManager;
-    use crate::messaging::ExtensionMessages;
+    use crate::messaging::ClientMessages;
     use crate::state::MemoryPersistor;
 
     use super::State;
@@ -333,7 +333,7 @@ mod tests {
                 todo!()
             }
 
-            fn notify(&mut self, _message: ExtensionMessages) {
+            fn notify(&mut self, _message: ClientMessages) {
                 todo!()
             }
         }

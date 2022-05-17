@@ -1,6 +1,8 @@
 import { ReactElement } from "react";
 import { atom, RecoilState, useRecoilValue } from "recoil";
 import StatusBarItemContainer from "../components/StatusBarItem";
+import { clientState } from "../utils/state";
+import { StatusBarItemClicked, UIEvent } from "../types/messaging";
 
 function StatusBarItemElement({
   state,
@@ -8,8 +10,20 @@ function StatusBarItemElement({
   state: RecoilState<StatusBarItemOptions>;
 }) {
   const options = useRecoilValue(state);
+  const client = useRecoilValue(clientState);
+
+  function onClick() {
+    client.emitMessage<UIEvent<StatusBarItemClicked>>({
+      UIEvent: {
+        msg_type: "StatusBarItemClicked",
+        state_id: client.config.state_id,
+        id: options.statusbar_item_id,
+      },
+    });
+  }
+
   return (
-    <StatusBarItemContainer>
+    <StatusBarItemContainer onClick={onClick}>
       <div>
         <span>{options.label}</span>
       </div>

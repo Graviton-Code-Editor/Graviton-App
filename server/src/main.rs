@@ -4,14 +4,14 @@ use std::thread;
 use gveditor_core::handlers::HTTPHandler;
 use gveditor_core::{Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
 use gveditor_core_api::tokio::sync::mpsc::channel;
 use gveditor_core_api::{Mutex, State};
 
 #[tokio::main]
 async fn main() {
-    let (to_core, from_core) = channel::<Messages>(1);
+    let (to_core, from_core) = channel::<ClientMessages>(1);
 
     let extensions_manager = ExtensionsManager::new(to_core.clone(), None)
         .load_extension_from_entry(git_for_graviton::entry, git_for_graviton::get_info(), 1)

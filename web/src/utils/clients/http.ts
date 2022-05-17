@@ -161,7 +161,6 @@ export class HTTPClient extends Emittery implements Client {
   public listenToState() {
     this.socket.send(
       JSON.stringify({
-        trigger: "client",
         msg_type: "ListenToState",
         state_id: this.config.state_id,
       })
@@ -175,11 +174,10 @@ export class HTTPClient extends Emittery implements Client {
     ]);
   }
 
-  public async emitMessage<T>(message: Omit<Omit<T, "state_id">, "trigger">) {
+  public async emitMessage<T>(message: T) {
     this.socket.send(
       JSON.stringify({
         ...message,
-        state_id: this.config.state_id,
       })
     );
   }

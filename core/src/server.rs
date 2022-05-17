@@ -1,7 +1,7 @@
 use crate::handlers::TransportHandler;
 use crate::Configuration;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
-use gveditor_core_api::messaging::{ExtensionMessages, Messages};
+use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::state::{StateData, StatesList};
 use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex, State};
 use jsonrpc_core::BoxFuture;
@@ -76,10 +76,11 @@ impl Server {
     /// * `states`   - The States list the Core will launch with
     ///
     pub fn new(mut config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        let receiver = config.receiver.take();
+        let receiver = config.from_core.take();
         let handler = config.handler.clone();
         let states_list = states.clone();
 
+        // Listen messages incoming from the handler
         tokio::spawn(async move {
             if let Some(mut receiver) = receiver {
                 loop {
@@ -99,21 +100,18 @@ impl Server {
         let mut handler = self.config.handler.lock().await;
 
         handler
-            .run(states.clone(), self.config.sender.clone())
+            .run(states.clone(), self.config.to_core.clone())
             .await;
     }
 
     /// Process every message
     pub async fn process_message(
         states: Arc<Mutex<StatesList>>,
-        msg: Messages,
+        msg: ClientMessages,
         handler: Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>,
     ) {
-        match msg {
-            Messages::ListenToState {
-                state_id,
-                trigger: _,
-            } => {
+        match msg.clone() {
+            ClientMessages::ListenToState { state_id } => {
                 // Make sure if there is already an existing state
                 let state = {
                     let states = states.lock().await;
@@ -123,7 +121,7 @@ impl Server {
                 if let Some(state) = state {
                     let handler = handler.lock().await;
                     // Send the loaded state to the handler
-                    let message = Messages::StateUpdated {
+                    let message = ServerMessages::StateUpdated {
                         state_data: state.lock().await.data.clone(),
                     };
                     handler.send(message).await;
@@ -131,17 +129,9 @@ impl Server {
                     state.lock().await.run_extensions().await;
                 }
             }
-            Messages::StateUpdated { .. } => {
-                let states = states.lock().await;
-                states
-                    .notify_extensions(ExtensionMessages::CoreMessage(msg))
-                    .await;
-            }
-            Messages::RegisterLanguageServers {
-                state_id,
-                languages,
-                ..
-            } => {
+            ClientMessages::NotifyLanguageServers(message) => {
+                let state_id = message.get_state_id();
+
                 let state = {
                     let states = states.lock().await;
                     states.get_state_by_id(state_id)
@@ -151,32 +141,53 @@ impl Server {
                     state
                         .lock()
                         .await
-                        .register_language_servers(languages)
-                        .await;
+                        .notify_extensions(ClientMessages::NotifyLanguageServers(message));
                 }
             }
-            Messages::NotifyLanguageServers {
-                state_id, message, ..
-            } => {
+            ClientMessages::UIEvent(event) => {
+                let state_id = event.get_state_id();
+
                 let state = {
                     let states = states.lock().await;
                     states.get_state_by_id(state_id)
                 };
 
                 if let Some(state) = state {
-                    state
-                        .lock()
-                        .await
-                        .notify_extensions(ExtensionMessages::CoreMessage(
-                            Messages::NotifyLanguageServers { state_id, message },
-                        ));
+                    state.lock().await.notify_extensions(msg);
                 }
             }
-            _ => {
-                // Forward to the handler messages not handled here
-                let handler = handler.lock().await;
-                handler.send(msg).await;
+            ClientMessages::ServerMessage(server_msg) => {
+                match server_msg {
+                    ServerMessages::RegisterLanguageServers {
+                        state_id,
+                        languages,
+                        ..
+                    } => {
+                        let state = {
+                            let states = states.lock().await;
+                            states.get_state_by_id(state_id)
+                        };
+
+                        if let Some(state) = state {
+                            state
+                                .lock()
+                                .await
+                                .register_language_servers(languages)
+                                .await;
+                        }
+                    }
+                    ServerMessages::StateUpdated { .. } => {
+                        let states = states.lock().await;
+                        states.notify_extensions(msg).await;
+                    }
+                    _ => {
+                        // Forward to the handler messages not handled here
+                        let handler = handler.lock().await;
+                        handler.send(server_msg).await;
+                    }
+                }
             }
+            _ => {}
         }
     }
 }
@@ -256,7 +267,7 @@ pub trait RpcMethods {
         &self,
         state_id: u8,
         token: String,
-        message: ExtensionMessages,
+        message: ClientMessages,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 }
 
@@ -356,7 +367,7 @@ impl RpcMethods for RpcManager {
                         let result = filesystem.read_file_by_path(&path);
                         let result = result.await;
 
-                        state.notify_extensions(ExtensionMessages::ReadFile(
+                        state.notify_extensions(ClientMessages::ReadFile(
                             state_id,
                             filesystem_name,
                             result.clone(),
@@ -396,7 +407,7 @@ impl RpcMethods for RpcManager {
                         let result = filesystem.write_file_by_path(&path, &content);
                         let result = result.await;
 
-                        state.notify_extensions(ExtensionMessages::WriteFile(
+                        state.notify_extensions(ClientMessages::WriteFile(
                             state_id,
                             filesystem_name,
                             content,
@@ -437,7 +448,7 @@ impl RpcMethods for RpcManager {
                         let result = filesystem.list_dir_by_path(&path);
                         let result = result.await;
 
-                        state.notify_extensions(ExtensionMessages::ListDir(
+                        state.notify_extensions(ClientMessages::ListDir(
                             state_id,
                             filesystem_name,
                             path,
@@ -526,7 +537,7 @@ impl RpcMethods for RpcManager {
         &self,
         state_id: u8,
         token: String,
-        message: ExtensionMessages,
+        message: ClientMessages,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {

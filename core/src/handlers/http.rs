@@ -1,7 +1,7 @@
 use crate::server::{RpcManager, RpcMethods};
 use crate::StatesList;
 use async_trait::async_trait;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use hyper_tungstenite::hyper::upgrade::Upgraded;
 use hyper_tungstenite::tungstenite::{self, Message};
 use hyper_tungstenite::{hyper, HyperWebsocket, WebSocketStream};
@@ -63,7 +63,7 @@ impl HTTPHandlerBuilder {
 pub struct WSMessages;
 
 impl WSMessages {
-    pub fn from_message(message: &Messages) -> Option<Message> {
+    pub fn from_message(message: &ServerMessages) -> Option<Message> {
         let message_str = serde_json::to_string(message);
         if let Ok(message_str) = message_str {
             Some(Message::text(message_str))
@@ -85,7 +85,7 @@ type SocketsRegistry = Arc<
 /// WebSockets middleware for HTTP JSON RPC
 struct WebSocketsManager {
     sockets: SocketsRegistry,
-    core_sender: Sender<Messages>,
+    core_sender: Sender<ClientMessages>,
     states: Arc<Mutex<StatesList>>,
 }
 
@@ -128,7 +128,7 @@ impl WebSocketsManager {
     /// * `states`               - A States list
     pub fn new(
         sockets: SocketsRegistry,
-        core_sender: Sender<Messages>,
+        core_sender: Sender<ClientMessages>,
         states: Arc<Mutex<StatesList>>,
     ) -> Self {
         Self {
@@ -178,7 +178,7 @@ impl WebSocketsManager {
     /// * `websocket`           - The Websockets connection
     pub fn handle_ws(
         sockets: SocketsRegistry,
-        core_sender: Sender<Messages>,
+        core_sender: Sender<ClientMessages>,
         websocket: HyperWebsocket,
     ) {
         std::thread::spawn(move || {
@@ -192,9 +192,9 @@ impl WebSocketsManager {
                 // Handle new incoming message in the ws connection
                 while let Some(Ok(message)) = recv.next().await {
                     if let Message::Text(msg) = message {
-                        if let Ok(message) = serde_json::from_str::<Messages>(&msg) {
+                        if let Ok(message) = serde_json::from_str::<ClientMessages>(&msg) {
                             // Save the WebSocket if it just subscribed
-                            if let Messages::ListenToState { state_id, .. } = message {
+                            if let ClientMessages::ListenToState { state_id, .. } = message {
                                 sockets.lock().await.push((sender.clone(), state_id));
                             }
 
@@ -238,7 +238,7 @@ impl HTTPHandler {
     }
 
     /// Easily send a message to all websockets in it's state ID
-    async fn send_message_to_web_socket(&self, message: Messages) {
+    async fn send_message_to_web_socket(&self, message: ServerMessages) {
         let msg_state_id = message.get_state_id();
         let sockets = &*self.sockets.lock().await;
         for (websocket, state_id) in sockets {
@@ -257,7 +257,11 @@ impl HTTPHandler {
     }
 
     // Create the HTTP JSON RPC Server
-    async fn create_server(&self, states: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
+    async fn create_server(
+        &self,
+        states: Arc<Mutex<StatesList>>,
+        core_sender: Sender<ClientMessages>,
+    ) {
         // Create a WebSockets Manager which acts as Middleware
         let ws_middleware =
             WebSocketsManager::new(self.sockets.clone(), core_sender, states.clone());
@@ -285,11 +289,11 @@ impl HTTPHandler {
 
 #[async_trait]
 impl TransportHandler for HTTPHandler {
-    async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<Messages>) {
+    async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>) {
         self.create_server(states, core_sender).await;
     }
 
-    async fn send(&self, message: Messages) {
+    async fn send(&self, message: ServerMessages) {
         self.send_message_to_web_socket(message).await;
     }
 }
@@ -300,6 +304,7 @@ mod tests {
     use std::sync::Arc;
     use std::time::Duration;
 
+    use gveditor_core_api::messaging::ClientMessages;
     use gveditor_core_api::state::TokenFlags;
     use gveditor_core_api::{Mutex, State};
     use hyper_tungstenite::tungstenite::Message;
@@ -309,7 +314,7 @@ mod tests {
     use tokio::time::sleep;
     use url::Url;
 
-    use crate::handlers::Messages;
+    use crate::handlers::ServerMessages;
     use crate::{Configuration, Server, StatesList};
 
     use super::HTTPHandler;
@@ -318,7 +323,7 @@ mod tests {
     async fn json_rpc_works() {
         // RUN THE SERVER
 
-        let (to_core, from_core) = channel::<Messages>(1);
+        let (to_core, from_core) = channel::<ClientMessages>(1);
 
         let states = {
             let sample_state = State::default();
@@ -350,10 +355,7 @@ mod tests {
 
         let (mut writer, mut reader) = socket.split();
 
-        let listen_to_state_msg = Messages::ListenToState {
-            state_id: 1,
-            trigger: "client".to_string(),
-        };
+        let listen_to_state_msg = ClientMessages::ListenToState { state_id: 1 };
 
         let listen_to_state_msg = serde_json::to_string(&listen_to_state_msg).unwrap();
 
@@ -372,7 +374,10 @@ mod tests {
 
         let state_updated_msg = serde_json::from_str(&msg).unwrap();
 
-        assert!(matches!(state_updated_msg, Messages::StateUpdated { .. }));
+        assert!(matches!(
+            state_updated_msg,
+            ServerMessages::StateUpdated { .. }
+        ));
 
         // TODO(marc2332) TEST JSON RPC CLIENT
     }

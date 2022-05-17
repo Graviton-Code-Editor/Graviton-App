@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::messaging::ExtensionMessages;
+use crate::messaging::ClientMessages;
 
 /// Information about a extension instance
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -20,7 +20,7 @@ pub trait Extension {
     fn unload(&mut self);
 
     /// Forward messages to the extension
-    fn notify(&mut self, message: ExtensionMessages);
+    fn notify(&mut self, message: ClientMessages);
 
     /// Retrieve info from the exension
     fn get_info(&self) -> ExtensionInfo;

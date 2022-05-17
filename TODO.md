@@ -7,7 +7,6 @@
 
 # core / core_api
 - [x] Make use of the native (OS-builtin) filesystem explorer to open folder and files
-- [ ] Return the language codename or "unknown" when reading a file in the Core
 - [ ] Implement a workspace system
 - [ ] Implement a frontend-agnostic theme standard
 - [x] Use CORS to maximize security of Core with HTTP transport
@@ -25,14 +24,18 @@
 - [ ] Implement Theme extensions support
 - [ ] Add `ProjectOpened` message event (useful for the git extension)
 - [x] Ability to write files (XD)
-- [ ] State shouldn't have a global `opened_tabs` array but a opened_tabs per folder
 - [x] Make it possible to persist states
 - [x] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
 - [ ] Add support for buttons in popup module
 
 # core_deno
 - [x] Send messages to the Core
-- [ ] Bridge gveditor_core_api::extensions::modules over Deno
+- [ ] Extension Modules:
+    - StatusBarItems
+        - [x] Show
+        - [x] Hide
+        - [ ] Support onClick
+    - [ ] Popups
 - [x] Extension messages listener using async function generators
 - [x] Unload event
 - [x] Unit tests
@@ -48,7 +51,7 @@ WIP = Work in progress, aka exists but is not finished
 - [ ] Create a settings tab (WIP)
 - [x] Add a custom hook to easily open a tab 
 - [ ] Experimental LSP support (https://github.com/FurqanSoftware/codemirror-languageserver) (WIP)
-- [ ] Ability to create multiple panels
+- [x] Ability to create multiple panels
 - [ ] Avoid use recoil-nexus
 ### server
 - [ ] Use JSON Web Woken

@@ -148,9 +148,9 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     emit(
       "to_core",
       JSON.stringify({
-        trigger: "client",
-        msg_type: "ListenToState",
-        state_id: this.config.state_id,
+        ListenToState: {
+          state_id: this.config.state_id,
+        },
       })
     );
   }
@@ -162,13 +162,11 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     });
   }
 
-  public async emitMessage<T>(message: Omit<Omit<T, "state_id">, "trigger">) {
+  public async emitMessage<T>(message: T) {
     await emit(
       "to_core",
       JSON.stringify({
         ...message,
-        state_id: this.config.state_id,
-        trigger: "client",
       })
     );
   }

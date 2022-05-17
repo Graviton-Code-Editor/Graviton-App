@@ -9,7 +9,7 @@ use gveditor_core::handlers::{LocalHandler, TransportHandler};
 use gveditor_core::tokio::sync::mpsc::{channel, Receiver, Sender};
 use gveditor_core::{tokio, Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::state::{StatesList, TokenFlags};
 use gveditor_core_api::state_persistors::file::FilePersistor;
 use gveditor_core_api::{Mutex, State};
@@ -42,8 +42,8 @@ pub struct TauriState {
 fn open_tauri(
     context: Context<EmbeddedAssets>,
     client: Client,
-    sender_to_handler: Sender<Messages>,
-    receiver_from_handler: Receiver<Messages>,
+    sender_to_handler: Sender<ClientMessages>,
+    receiver_from_handler: Receiver<ServerMessages>,
 ) {
     let receiver_from_handler = Arc::new(Mutex::new(receiver_from_handler));
     let sender_to_handler = Arc::new(Mutex::new(sender_to_handler));
@@ -60,7 +60,7 @@ fn open_tauri(
             // Forward messages from the webview to the core
             window.listen("to_core", move |event| {
                 let sender_to_handler = sender_to_handler.clone();
-                let msg: Messages = serde_json::from_str(event.payload().unwrap()).unwrap();
+                let msg: ClientMessages = serde_json::from_str(event.payload().unwrap()).unwrap();
 
                 tokio::task::spawn(async move {
                     let sender_to_handler = sender_to_handler.lock().await;
@@ -159,7 +159,7 @@ static STATE_ID: u8 = 1;
 async fn main() {
     setup_logger();
 
-    let (to_core, from_core) = channel::<Messages>(1);
+    let (to_core, from_core) = channel::<ClientMessages>(1);
 
     let context = tauri::generate_context!("tauri.conf.json");
 
@@ -211,17 +211,17 @@ async fn main() {
         Arc::new(Mutex::new(states))
     };
 
-    // Core sender and receiver
+    // Sender and receiver for the webview window
     let (to_webview, from_webview) = channel(1);
 
-    // Local handler
+    // Local handler transport
     let (local_handler, client, to_local) = LocalHandler::new(states.clone(), to_webview);
     let local_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(local_handler);
 
     // Create the configuration
     let config = Configuration::new(local_handler, to_core, from_core);
 
-    // Create the Core
+    // Create the Core server
     let core = Server::new(config, states);
 
     // Run the core in a separate thread

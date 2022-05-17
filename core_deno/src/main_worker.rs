@@ -13,7 +13,7 @@ use std::sync::Arc;
 use gveditor_core_api::extensions::client::ExtensionClient;
 
 use crate::events_manager::EventsManager;
-use crate::worker_extension;
+use crate::exts::{events, statusbar_items};
 
 // Load up the Graviton JavaScript api, aka, fancy wrapper over Deno.core.opSync/opAsync
 static GRAVITON_DENO_API: &str = include_str!(concat!(env!("OUT_DIR"), "/graviton.js"));
@@ -23,6 +23,7 @@ pub async fn create_main_worker(
     main_path: &str,
     client: ExtensionClient,
     events_manager: EventsManager,
+    state_id: u8,
 ) -> MainWorker {
     let worker_handle = Arc::new(Mutex::new(None));
 
@@ -50,11 +51,10 @@ pub async fn create_main_worker(
             unstable: false,
             is_tty: false,
         },
-        extensions: vec![worker_extension::new(
-            client,
-            events_manager,
-            worker_handle.clone(),
-        )],
+        extensions: vec![
+            events::new(client.clone(), events_manager, worker_handle.clone()),
+            statusbar_items::new(client, state_id),
+        ],
         unsafely_ignore_certificate_errors: None,
         root_cert_store: None,
         user_agent: "graviton".to_string(),
@@ -75,7 +75,7 @@ pub async fn create_main_worker(
         stdio: Stdio::default(),
     };
 
-    // TODO(marc2332) Add ability to specify what permissions the extensions should run with
+    // TODO(marc2332) Add ability to specify what permissions the extension should run with
     let permissions = Permissions::allow_all();
 
     let mut worker = MainWorker::bootstrap_from_options(main_module.clone(), permissions, options);

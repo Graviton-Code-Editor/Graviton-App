@@ -4,14 +4,14 @@ use std::thread;
 use gveditor_core::handlers::HTTPHandler;
 use gveditor_core::{Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
-use gveditor_core_api::messaging::Messages;
+use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
 use gveditor_core_api::{Mutex, State};
 use tokio::sync::mpsc::channel;
 
 #[tokio::main]
 async fn main() {
-    let (to_core, from_core) = channel::<Messages>(1);
+    let (to_core, from_core) = channel::<ClientMessages>(1);
 
     let states = {
         let sample_state = State::new(

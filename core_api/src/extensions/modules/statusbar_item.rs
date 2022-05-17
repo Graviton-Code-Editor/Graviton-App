@@ -2,13 +2,13 @@ use std::sync::Arc;
 
 use tokio::sync::Mutex;
 
-use crate::extensions::client::ExtensionClient;
-use crate::messaging::Messages;
+use crate::extensions::client::{EventActions, ExtensionClient};
+use crate::messaging::{ClientMessages, ServerMessages};
 
 /// StatusBarItem
 #[derive(Clone)]
 pub struct StatusBarItem {
-    id: String,
+    pub id: String,
     label: Arc<Mutex<String>>,
     client: ExtensionClient,
     state_id: u8,
@@ -26,21 +26,25 @@ impl StatusBarItem {
 
     pub async fn show(&self) {
         self.client
-            .send(Messages::ShowStatusBarItem {
-                state_id: self.state_id,
-                statusbar_item_id: self.id.clone(),
-                label: self.label.lock().await.to_string(),
-            })
+            .send(ClientMessages::ServerMessage(
+                ServerMessages::ShowStatusBarItem {
+                    state_id: self.state_id,
+                    statusbar_item_id: self.id.clone(),
+                    label: self.label.lock().await.to_string(),
+                },
+            ))
             .await
             .unwrap();
     }
 
     pub async fn hide(&self) {
         self.client
-            .send(Messages::HideStatusBarItem {
-                state_id: self.state_id,
-                statusbar_item_id: self.id.clone(),
-            })
+            .send(ClientMessages::ServerMessage(
+                ServerMessages::HideStatusBarItem {
+                    state_id: self.state_id,
+                    statusbar_item_id: self.id.clone(),
+                },
+            ))
             .await
             .unwrap();
     }
@@ -49,5 +53,13 @@ impl StatusBarItem {
         *self.label.lock().await = label.to_string();
 
         self.show().await
+    }
+
+    pub async fn on_click(&mut self, callback: impl Fn() + 'static + Send) {
+        let mut event_actions = self.client.event_actions.lock().await;
+        event_actions.push(EventActions::OnClick {
+            id_owner: self.id.clone(),
+            callback: Box::new(callback),
+        });
     }
 }

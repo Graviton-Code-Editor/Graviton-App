@@ -3,7 +3,7 @@ use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
-use gveditor_core_api::messaging::ExtensionMessages;
+use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
 use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Mutex};
 use std::sync::Arc;
@@ -11,8 +11,8 @@ use std::sync::Arc;
 static EXTENSION_NAME: &str = "Git";
 
 struct GitExtension {
-    rx: Arc<Mutex<Receiver<ExtensionMessages>>>,
-    tx: Sender<ExtensionMessages>,
+    rx: Arc<Mutex<Receiver<ClientMessages>>>,
+    tx: Sender<ClientMessages>,
     status_bar_item: StatusBarItem,
 }
 
@@ -38,11 +38,11 @@ impl Extension for GitExtension {
     fn init(&mut self) {
         let receiver = self.rx.clone();
         let mut status_bar_item = self.status_bar_item.clone();
+
         tokio::spawn(async move {
             let mut receiver = receiver.lock().await;
             loop {
-                if let Some(ExtensionMessages::ListDir(_, fs_name, path, _)) = receiver.recv().await
-                {
+                if let Some(ClientMessages::ListDir(_, fs_name, path, _)) = receiver.recv().await {
                     // Only react when using the local file system
                     if fs_name == "local" {
                         let branch = Self::get_repo_branch(path);
@@ -57,7 +57,7 @@ impl Extension for GitExtension {
 
     fn unload(&mut self) {}
 
-    fn notify(&mut self, message: ExtensionMessages) {
+    fn notify(&mut self, message: ClientMessages) {
         let tx = self.tx.clone();
         tokio::spawn(async move {
             tx.send(message).await.unwrap();
@@ -66,7 +66,7 @@ impl Extension for GitExtension {
 }
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
-    let (tx, rx) = channel::<ExtensionMessages>(1);
+    let (tx, rx) = channel::<ClientMessages>(1);
     let rx = Arc::new(Mutex::new(rx));
     let status_bar_item = StatusBarItem::new(client, state_id, "");
     let plugin = Box::new(GitExtension {

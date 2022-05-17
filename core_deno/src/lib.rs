@@ -4,7 +4,7 @@ use events_manager::EventsManager;
 use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
-use gveditor_core_api::messaging::ExtensionMessages;
+use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender};
 use std::collections::HashMap;
 use std::sync::Arc;
@@ -15,12 +15,12 @@ use tokio_stream::StreamExt;
 use uuid::Uuid;
 
 mod events_manager;
+mod exts;
 mod main_worker;
-mod worker_extension;
 
 use main_worker::create_main_worker;
 
-pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ExtensionMessages>>>>>;
+pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ClientMessages>>>>>;
 pub type WorkerHandle = Arc<Mutex<Option<IsolateHandle>>>;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
@@ -56,13 +56,14 @@ impl Extension for DenoExtension {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
         let events_manager = self.events_manager.clone();
+        let state_id = self.state_id;
 
         // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
                 let mut worker =
-                    create_main_worker(&main_path, client, events_manager.clone()).await;
+                    create_main_worker(&main_path, client, events_manager.clone(), state_id).await;
 
                 worker.run_event_loop(false).await.ok();
             });
@@ -76,10 +77,10 @@ impl Extension for DenoExtension {
     }
 
     fn unload(&mut self) {
-        self.notify(ExtensionMessages::Unload(self.state_id));
+        self.notify(ClientMessages::Unload(self.state_id));
     }
 
-    fn notify(&mut self, message: ExtensionMessages) {
+    fn notify(&mut self, message: ClientMessages) {
         let events_manager = self.events_manager.clone();
         tokio::spawn(async move {
             events_manager.send(message).await.unwrap();
