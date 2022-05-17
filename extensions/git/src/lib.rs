@@ -5,13 +5,12 @@ use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
-use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Mutex};
-use std::sync::Arc;
+use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo};
 
 static EXTENSION_NAME: &str = "Git";
 
 struct GitExtension {
-    rx: Arc<Mutex<Receiver<ClientMessages>>>,
+    rx: Option<Receiver<ClientMessages>>,
     tx: Sender<ClientMessages>,
     status_bar_item: StatusBarItem,
 }
@@ -36,23 +35,27 @@ impl Extension for GitExtension {
     }
 
     fn init(&mut self) {
-        let receiver = self.rx.clone();
-        let mut status_bar_item = self.status_bar_item.clone();
+        let receiver = self.rx.take();
 
-        tokio::spawn(async move {
-            let mut receiver = receiver.lock().await;
-            loop {
-                if let Some(ClientMessages::ListDir(_, fs_name, path, _)) = receiver.recv().await {
-                    // Only react when using the local file system
-                    if fs_name == "local" {
-                        let branch = Self::get_repo_branch(path);
-                        if let Ok(Some(branch)) = branch {
-                            status_bar_item.set_label(&branch).await;
+        if let Some(mut receiver) = receiver {
+            let mut status_bar_item = self.status_bar_item.clone();
+
+            tokio::spawn(async move {
+                loop {
+                    if let Some(ClientMessages::ListDir(_, fs_name, path, _)) =
+                        receiver.recv().await
+                    {
+                        // Only react when using the local file system
+                        if fs_name == "local" {
+                            let branch = Self::get_repo_branch(path);
+                            if let Ok(Some(branch)) = branch {
+                                status_bar_item.set_label(&branch).await;
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     }
 
     fn unload(&mut self) {}
@@ -67,10 +70,9 @@ impl Extension for GitExtension {
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
     let (tx, rx) = channel::<ClientMessages>(1);
-    let rx = Arc::new(Mutex::new(rx));
     let status_bar_item = StatusBarItem::new(client, state_id, "");
     let plugin = Box::new(GitExtension {
-        rx,
+        rx: Some(rx),
         tx,
         status_bar_item,
     });

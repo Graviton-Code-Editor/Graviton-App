@@ -5,10 +5,9 @@ use gveditor_core_api::messaging::{ClientMessages, LanguageServerMessage, Server
 use gveditor_core_api::tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
 use gveditor_core_api::tokio::process::Command;
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver};
-use gveditor_core_api::{tokio, LanguageServer, ManifestExtension, ManifestInfo, Mutex, Sender};
+use gveditor_core_api::{tokio, LanguageServer, ManifestExtension, ManifestInfo, Sender};
 use std::collections::HashMap;
 use std::process::Stdio;
-use std::sync::Arc;
 
 static EXTENSION_NAME: &str = "TypeScript/JavaScript Intellisense";
 
@@ -21,7 +20,7 @@ pub const NPX_BINARY: &str = "npx";
 struct TSLSPExtension {
     client: ExtensionClient,
     state_id: u8,
-    rx: Arc<Mutex<Receiver<ClientMessages>>>,
+    rx: Option<Receiver<ClientMessages>>,
     tx: Sender<ClientMessages>,
 }
 
@@ -34,7 +33,6 @@ impl Extension for TSLSPExtension {
     }
 
     fn init(&mut self) {
-        let receiver = self.rx.clone();
         let client = self.client.clone();
         let state_id = self.state_id;
 
@@ -124,33 +122,36 @@ impl Extension for TSLSPExtension {
             }
         });
 
-        // Register the language server and wait for initialization
-        tokio::spawn(async move {
-            let mut receiver = receiver.lock().await;
+        let receiver = self.rx.take();
 
-            let mut languages = HashMap::new();
+        if let Some(mut receiver) = receiver {
+            // Register the language server and wait for initialization
+            tokio::spawn(async move {
+                let mut languages = HashMap::new();
 
-            languages.insert(
-                "TypeScript".to_string(),
-                LanguageServer {
-                    name: "TypeScript".to_string(),
-                    id: "typescript".to_string(),
-                    extension_id: env!("CARGO_PKG_NAME").to_string(),
-                },
-            );
+                languages.insert(
+                    "TypeScript".to_string(),
+                    LanguageServer {
+                        name: "TypeScript".to_string(),
+                        id: "typescript".to_string(),
+                        extension_id: env!("CARGO_PKG_NAME").to_string(),
+                    },
+                );
 
-            client
-                .register_language_server(state_id, languages)
-                .await
-                .unwrap();
+                client
+                    .register_language_server(state_id, languages)
+                    .await
+                    .unwrap();
 
-            loop {
-                if let Some(ClientMessages::NotifyLanguageServers(message)) = receiver.recv().await
-                {
-                    lsp_tx.send(message).await.unwrap();
+                loop {
+                    if let Some(ClientMessages::NotifyLanguageServers(message)) =
+                        receiver.recv().await
+                    {
+                        lsp_tx.send(message).await.unwrap();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     fn unload(&mut self) {}
@@ -165,11 +166,10 @@ impl Extension for TSLSPExtension {
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
     let (tx, rx) = channel::<ClientMessages>(1);
-    let rx = Arc::new(Mutex::new(rx));
     let plugin = Box::new(TSLSPExtension {
         client,
         state_id,
-        rx,
+        rx: Some(rx),
         tx,
     });
     let parent_id = env!("CARGO_PKG_NAME");
