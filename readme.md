@@ -20,27 +20,24 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 **NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
 
 ### 🏥 Rewrite Changes
-- Ditch ElectronJS in favor of Tauri
+- Ditch ElectronJS (NodeJS) in favor of [Tauri](https://tauri.studio/) (Rust)
 - Use [Deno](https://deno.land/) as a runtime for third-party extensions
-- Move from [PuffinJS](https://github.com/PuffinJS/puffin) to React for the Web frontend
-- Core is declouped from the frontend itself
-- Third-party clients (desktop, mobile, etc) can be built upon the core
-- Core and built-in extensions are written in Rust rather than NodeJS (this is only used for the dev workflow)
+- Move from [PuffinJS](https://github.com/PuffinJS/puffin) to [React](https://reactjs.org/) for the Web frontend
+- Core is declouped from the frontend itself, third-party editors can be built upon it
 
 See [TODO](./TODO.md)
 
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
 | [gveditor-core](./core)       | Graviton core engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
-| [gveditor-core-api](./core_api)   | Graviton API for extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
+| [gveditor-core-api](./core_api)   | Shared API for core and extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
 | [gveditor-core-deno](./core_deno)   | Deno runtime for Graviton extensions | WIP  |
-| [extensions/git](./extensions/git)      | Git Extension | WIP |
-| [extensions/typescript-lsp](./extensions/typescript-lsp)      | TypeScript/JavaScript extension | WIP |
+| [extensions/git](./extensions/git)      | Built-in Git Extension | WIP |
+| [extensions/typescript-lsp](./extensions/typescript-lsp)      | Built-in TypeScript/JavaScript extension | WIP |
 | [desktop](./desktop)             | Desktop web-based app | WIP |
-| [server](./server)               | HTTP Core + web app served  | WIP |
+| [server](./server)               | Self-hosted browser version  | WIP |
 | [@gveditor/web](./web)                 | Web frontend  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Fweb&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Fweb%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
-| [@gveditor/languages](./languges)             | Language translations  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Flanguages&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Flanguages%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
-
+| [@gveditor/languages](./languages)             | Language translations  | [![](https://img.shields.io/badge/dynamic/json?color=red&label=%40gveditor%2Flanguages&query=version&url=https%3A%2F%2Fraw.githubusercontent.com%2FGraviton-Code-Editor%2FGraviton-App%2Fmain%2Flanguages%2Fpackage.json)](https://github.com/Graviton-Code-Editor/Graviton-App/tree/main/core) |
 
 ## 📑 Goals
 - No freezes or lags
@@ -50,6 +47,7 @@ See [TODO](./TODO.md)
 - Flexible workspace configurations
 - Respect privacy
 - Easy to use and pleasant UI
+- Stable Intellisense (LSP)
 
 ## 📣 Community
 
