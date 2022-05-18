@@ -19,6 +19,10 @@ See [this](./book/src/building.md) to run / compile it, by yourself. (There aren
 
 **NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
 
+Current state of the rewrite:
+
+[![Screenshot of Graviton Rewrite](./screenshot.png)](./screenshot.png)
+
 ### 🏥 Rewrite Changes
 - Ditch ElectronJS (NodeJS) in favor of [Tauri](https://tauri.studio/) (Rust)
 - Use [Deno](https://deno.land/) as a runtime for third-party extensions
