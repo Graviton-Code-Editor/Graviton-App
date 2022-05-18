@@ -1,4 +1,4 @@
-import { MouseEvent, PropsWithChildren } from "react";
+import { MouseEvent, PropsWithChildren, ReactElement } from "react";
 import { ReactSVG } from "react-svg";
 import { keyframes, default as styled } from "styled-components";
 import UnSavedIndicator from "./UnSavedIndicator";
@@ -40,15 +40,16 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
     flex: 1;
     white-space: pre;
     display: block;
+    font-size: 12px;
   }
   & > button {
-    width: 0px;
+    width: 20px;
     border: none;
     background: transparent;
     cursor: pointer;
     & svg {
-      width: 11px;
-      height: 11px;
+      width: 10px;
+      height: 10px;
       & > path {
         stroke: ${({ theme }) => theme.elements.tab.button.fill};
       }
@@ -58,7 +59,16 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
     }
   }
   & .indicator {
-    margin-left: 7px;
+    margin-right: 5px;
+  }
+`;
+
+const TabButtonIcon = styled.div`
+  width: 24px;
+  height: 24px;
+  & svg {
+    height: 24px;
+    width: 24px;
   }
 `;
 
@@ -69,6 +79,7 @@ interface TabButtonOptions {
   select: () => void;
   close: () => void;
   save: () => void;
+  icon: ReactElement;
 }
 
 export default function TabButton({
@@ -78,6 +89,7 @@ export default function TabButton({
   close,
   isEdited,
   save,
+  icon,
 }: TabButtonOptions) {
   function closeTab(event: MouseEvent) {
     event.stopPropagation();
@@ -91,6 +103,7 @@ export default function TabButton({
 
   return (
     <TabButtonStyle className={isSelected && "selected"} onClick={select}>
+      <TabButtonIcon>{icon}</TabButtonIcon>
       <p>{title}</p>
       {isEdited ? (
         <UnSavedIndicator className="indicator" onClick={saveTab} />

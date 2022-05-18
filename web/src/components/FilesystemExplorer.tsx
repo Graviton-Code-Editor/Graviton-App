@@ -8,6 +8,7 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { ReactSVG } from "react-svg";
 import { DirItemInfo } from "../types/client";
+import FileIcon from "./FileIcon";
 
 const ExplorerContainer = styled.div`
   margin: 5px;
@@ -266,13 +267,7 @@ function FilesystemExplorer({
         {!itemInfo.isFile && (
           <ReactSVG src="/icons/collapse_arrow.svg" className="arrow" />
         )}
-        {itemInfo.isFile ? (
-          <ReactSVG src="/icons/files/unknown.svg" className="file" />
-        ) : isOpened ? (
-          <ReactSVG src="/icons/files/folder_opened.svg" className="file" />
-        ) : (
-          <ReactSVG src="/icons/files/folder_closed.svg" className="file" />
-        )}
+        <FileIcon item={itemInfo} isOpened={isOpened} />
         <span>{itemInfo.name}</span>
       </ExplorerItemContainer>
     );

@@ -49,6 +49,11 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
     this.container = () => <div />;
   }
 
+  /* eslint-disable */
+  public icon(_: { tab: Tab }) {
+    return <></>;
+  }
+
   /**
    * Called when the tab is closed
    */

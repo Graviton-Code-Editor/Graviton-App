@@ -129,9 +129,11 @@ export default function TabsPanel({
         {tabs.map((tab, i) => {
           const isSelected = tab.id == selected_tab_id;
           const isEdited = states.get(tab.id) as boolean;
+          const { icon: TabIcon } = tab;
           return (
             <TabButton
               key={tab.id}
+              icon={<TabIcon tab={tab} />}
               title={tab.title}
               isEdited={isEdited}
               isSelected={isSelected}

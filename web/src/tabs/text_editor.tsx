@@ -10,7 +10,7 @@ import { Popup } from "../modules/popup";
 import * as commands from "@codemirror/commands";
 import { SaveTabOptions, Tab, TextEditorTabData } from "../modules/tab";
 import { rust } from "@codemirror/lang-rust";
-import { dirname, basename } from "path";
+import { basename, dirname } from "path";
 import { EventEmitterTransport } from "@open-rpc/client-js";
 import { EventEmitter } from "events";
 import { languageServerWithTransport } from "codemirror-languageserver";
@@ -22,6 +22,7 @@ import {
   LanguageServerNotification,
   NotifyLanguageServers,
 } from "../types/messaging";
+import FileIcon from "../components/FileIcon";
 
 interface SavedState {
   scrollHeight: number;
@@ -34,8 +35,8 @@ class TextEditorTab extends Tab {
   private state: SavedState = {
     scrollHeight: 0,
   };
-  private path: string;
-  private filename: string;
+  public path: string;
+  public filename: string;
   private format: FileFormat;
   private lastSavedStateText: string[] = [];
   private view?: EditorView;
@@ -116,6 +117,21 @@ class TextEditorTab extends Tab {
         );
       }
     };
+  }
+
+  public icon({ tab }: { tab: Tab }) {
+    const textEditorTab = tab as TextEditorTab;
+    return (
+      <FileIcon
+        isOpened={false}
+        item={{
+          isFile: true,
+          name: textEditorTab.filename,
+          depth: 1,
+          path: textEditorTab.path,
+        }}
+      />
+    );
   }
 
   /**
