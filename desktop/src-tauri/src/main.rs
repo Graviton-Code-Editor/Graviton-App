@@ -23,6 +23,8 @@ use tauri::utils::assets::EmbeddedAssets;
 use tauri::{Context, Env, Manager};
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::{fmt, EnvFilter, Registry};
+
+#[cfg(any(target_os = "windows"))]
 use window_shadows::set_shadow;
 
 /// The app backend state

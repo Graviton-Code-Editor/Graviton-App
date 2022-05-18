@@ -1,7 +1,7 @@
 [package]
 name = "graviton"
-version = "0.1.0"
-description = "Code Editor"
+version = "0.1.1"
+description = "Desktop Code Editor"
 authors = ["Marc Espín Sanz"]
 license = "MIT"
 repository = "https://github.com/Graviton-Code-Editor/Graviton-App"
@@ -9,12 +9,12 @@ edition = "2021"
 build = "src/build.rs"
 
 [build-dependencies]
-tauri-build = { version = "1.0.0-rc.5", features = [] }
+tauri-build = { version = "1.0.0-rc.8", features = [] }
 
 [dependencies]
 serde_json = "1.0.79"
 serde = { version = "1.0.136", features = ["derive"] }
-tauri = { version = "1.0.0-rc.6", features = ["dialog-all", "shell-open", "window-close", "window-maximize", "window-minimize", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
+tauri = { version = "1.0.0-rc.10", features = ["dialog-all", "shell-open", "window-close", "window-maximize", "window-minimize", "window-start-dragging", "window-unmaximize", "window-unminimize"] }
 gveditor-core = { path = "../../core", features = ["local_client"] }
 gveditor-core-api  = { path = "../../core_api"}
 gveditor-core-deno = { path = "../../core_deno"}
@@ -22,6 +22,8 @@ tracing = "0.1.31"
 tracing-subscriber = {version="0.3.9", features= ["env-filter", "std"] }
 git-for-graviton = { path = "../../extensions/git" }
 typescript-lsp-graviton = { path = "../../extensions/typescript-lsp" }
+
+[target.'cfg(windows)'.dependencies]
 window-shadows = "0.1.0"
 
 [features]

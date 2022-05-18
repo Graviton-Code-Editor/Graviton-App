@@ -24,7 +24,6 @@ pub type EventListeners = Arc<Mutex<HashMap<String, HashMap<Uuid, Sender<ClientM
 pub type WorkerHandle = Arc<Mutex<Option<IsolateHandle>>>;
 
 /// DenoExtension is a wrapper around Graviton extension api that makes use of deno_runtime to execute the extensions
-#[allow(dead_code)]
 struct DenoExtension {
     main_path: String,
     info: ManifestInfo,

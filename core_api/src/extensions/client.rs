@@ -24,7 +24,6 @@ pub struct ExtensionClient {
     name: String,
     id_count: Arc<Mutex<i32>>,
     sender: AsyncSender<ClientMessages>,
-    #[allow(dead_code)]
     settings_path: Option<PathBuf>,
     pub event_actions: Arc<AsyncMutex<Vec<EventActions>>>,
 }
@@ -71,7 +70,6 @@ impl ExtensionClient {
             .await
     }
 
-    #[allow(dead_code)]
     pub async fn get_settings(&self) -> Option<ExtensionSettings> {
         let path = self.settings_path.as_ref()?;
         Some(ExtensionSettings::new(path.clone()).await)

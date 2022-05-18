@@ -2,7 +2,6 @@ use crate::extensions::client::ExtensionClient;
 use crate::messaging::{ClientMessages, ServerMessages};
 
 /// Dialog-like message
-#[allow(dead_code)]
 pub struct Popup {
     id: String,
     title: String,
