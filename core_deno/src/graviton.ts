@@ -61,13 +61,11 @@ class StatusBarItem {
     }
 }
 
-class StatusBarItemBuilder {
-    static async create(label: string = ""): Promise<StatusBarItem> {
-        //@ts-ignore
-        const itemID = await Deno.core.opAsync("new_statusbar_item", label);
+async function crateStatusbarItem(label: string = ""): Promise<StatusBarItem> {
+    //@ts-ignore
+    const itemID = await Deno.core.opAsync("new_statusbar_item", label);
 
-        return new StatusBarItem(itemID, label);
-    }
+    return new StatusBarItem(itemID, label);
 }
 
 (globalThis as any).Graviton = {
@@ -76,7 +74,7 @@ class StatusBarItemBuilder {
     listenTo,
     exit,
     whenUnload,
-    StatusBarItemBuilder
+    crateStatusbarItem
 }
 
 
