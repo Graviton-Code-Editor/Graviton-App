@@ -10,7 +10,6 @@ import {
 } from "../utils/state";
 import {
   RecoilRoot,
-  useRecoilCallback,
   useRecoilState,
   useRecoilValue,
   useSetRecoilState,
@@ -123,28 +122,6 @@ function StateRoot({
     });
   }, [usePrompts]);
 
-  // Show a statusbar button if not shown, and update it if it's already shown
-  const showStatusBarItem = useRecoilCallback(
-    ({ set }) =>
-      async (statusBarItem: ShowStatusBarItem) => {
-        setShowedStatusBarItems((statusBarItems) => {
-          const itemIfFound = statusBarItems[statusBarItem.statusbar_item_id];
-          if (itemIfFound != null) {
-            set(itemIfFound.state, statusBarItem);
-            return statusBarItems;
-          } else {
-            return {
-              ...statusBarItems,
-              [statusBarItem.statusbar_item_id]: new StatusBarItem(
-                statusBarItem
-              ),
-            };
-          }
-        });
-      },
-    []
-  );
-
   useEffect(() => {
     if (client != null) {
       client.listenToState();
@@ -179,8 +156,23 @@ function StateRoot({
         ]);
       });
 
-      // Display StatusBarItems
-      client.on("ShowStatusBarItem", showStatusBarItem);
+      // Show a statusbar button if not shown, and update it if it's already shown
+      client.on("ShowStatusBarItem", (statusBarItem: ShowStatusBarItem) => {
+        setShowedStatusBarItems((statusBarItems) => {
+          const itemIfFound = statusBarItems[statusBarItem.statusbar_item_id];
+          if (itemIfFound != null) {
+            itemIfFound.options = statusBarItem;
+            return { ...statusBarItems };
+          } else {
+            return {
+              ...statusBarItems,
+              [statusBarItem.statusbar_item_id]: new StatusBarItem(
+                statusBarItem
+              ),
+            };
+          }
+        });
+      });
 
       // Hide StatusBarItems
       client.on("HideStatusBarItem", (e: HideStatusBarItem) => {

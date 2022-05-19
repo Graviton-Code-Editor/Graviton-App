@@ -34,7 +34,10 @@ function WelcomeTabContainer() {
 class WelcomeTab extends Tab {
   constructor() {
     super("Welcome");
-    this.container = () => <WelcomeTabContainer />;
+  }
+
+  public container() {
+    return <WelcomeTabContainer />;
   }
 }
 

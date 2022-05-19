@@ -51,6 +51,8 @@ class TextEditorTab extends Tab {
     /**/
   };
 
+  private contentResolver: Promise<string | null>;
+
   /**
    * @param path - Path of the opened file
    * @param initialContent - Current content of the file
@@ -65,58 +67,69 @@ class TextEditorTab extends Tab {
     this.path = path;
     this.filename = filename;
     this.format = format;
+    this.contentResolver = contentResolver;
+  }
+
+  public container({
+    setEdited,
+    close,
+    tab,
+  }: {
+    setEdited: () => void;
+    close: () => void;
+    tab: Tab;
+  }) {
+    const textEditorTab = tab as TextEditorTab;
+
+    const [view, setView] = useState(textEditorTab.view);
+
+    useEffect(() => {
+      textEditorTab.setEditedComp = setEdited;
+      textEditorTab.closeTabComp = close;
+      textEditorTab.setViewComp = setView;
+
+      // Wait until the tab is mounted to read it's content
+      textEditorTab.contentResolver.then((initialValue) => {
+        if (initialValue) {
+          textEditorTab.view = new EditorView({
+            state: textEditorTab.createDefaulState({
+              initialValue,
+            }),
+            dispatch: (tx) => {
+              if (tx.docChanged) textEditorTab.setEdited(true);
+              (textEditorTab.view as EditorView).update([tx]);
+            },
+          });
+
+          // Update the view component
+          textEditorTab.setViewComp(textEditorTab.view);
+        } else {
+          // If there is no content to read then just close the tab
+          textEditorTab.close();
+          textEditorTab.closeTabComp();
+        }
+      });
+    }, []);
 
     const saveScroll = (height: number) => {
-      this.state.scrollHeight = height;
+      textEditorTab.state.scrollHeight = height;
     };
 
-    this.container = ({ setEdited, close }) => {
-      const [view, setView] = useState(this.view);
-
-      useEffect(() => {
-        this.setEditedComp = setEdited;
-        this.closeTabComp = close;
-        this.setViewComp = setView;
-
-        // Wait until the tab is mounted to read it's content
-        contentResolver.then((initialValue) => {
-          if (initialValue) {
-            this.view = new EditorView({
-              state: this.createDefaulState({
-                initialValue,
-              }),
-              dispatch: (tx) => {
-                if (tx.docChanged) this.setEdited(true);
-                (this.view as EditorView).update([tx]);
-              },
-            });
-
-            // Update the view component
-            this.setViewComp(this.view);
-          } else {
-            // If there is no content to read then just close the tab
-            this.close();
-            this.closeTabComp();
-          }
-        });
-      }, []);
-
-      if (view) {
-        return (
-          <TextEditor
-            view={view}
-            scrollHeight={this.state.scrollHeight}
-            saveScroll={saveScroll}
-          />
-        );
-      } else {
-        return (
-          <LoadingTabContent>
-            <TabText>Loading content...</TabText>
-          </LoadingTabContent>
-        );
-      }
-    };
+    if (view) {
+      return (
+        <TextEditor
+          view={view}
+          scrollHeight={textEditorTab.state.scrollHeight}
+          saveScroll={saveScroll}
+        />
+      );
+    } else {
+      return (
+        <LoadingTabContent>
+          <TabText>Loading content...</TabText>
+        </LoadingTabContent>
+      );
+    }
   }
 
   public icon({ tab }: { tab: Tab }) {

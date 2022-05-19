@@ -53,7 +53,10 @@ function SettingsTabContainer() {
 class SettingsTab extends Tab {
   constructor() {
     super("Settings");
-    this.container = () => (
+  }
+
+  public container() {
+    return (
       <BrowserRouter>
         <SettingsTabContainer />
       </BrowserRouter>

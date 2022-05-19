@@ -1,15 +1,9 @@
-import { ReactElement } from "react";
-import { atom, RecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import StatusBarItemContainer from "../components/StatusBarItem";
 import { clientState } from "../utils/state";
 import { StatusBarItemClicked, UIEvent } from "../types/messaging";
 
-function StatusBarItemElement({
-  state,
-}: {
-  state: RecoilState<StatusBarItemOptions>;
-}) {
-  const options = useRecoilValue(state);
+function StatusBarItemElement({ options }: { options: StatusBarItemOptions }) {
   const client = useRecoilValue(clientState);
 
   function onClick() {
@@ -40,16 +34,15 @@ export interface StatusBarItemOptions {
  * A button located in the Statusbar
  */
 export class StatusBarItem {
-  public container: () => ReactElement = () => <div />;
-  public state: RecoilState<StatusBarItemOptions>;
   public id: string;
+  public options: StatusBarItemOptions;
 
   constructor(options: StatusBarItemOptions) {
     this.id = options.statusbar_item_id;
-    this.state = atom<StatusBarItemOptions>({
-      key: `statusbar_item${this.id}`,
-      default: options,
-    });
-    this.container = () => <StatusBarItemElement state={this.state} />;
+    this.options = options;
+  }
+
+  public container({ options }: { options: StatusBarItemOptions }) {
+    return <StatusBarItemElement options={options} />;
   }
 }

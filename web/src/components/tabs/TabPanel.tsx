@@ -160,6 +160,7 @@ export default function TabsPanel({
             isSelected && (
               <div key={tab.id}>
                 <Container
+                  tab={tab}
                   setEdited={setEdited}
                   close={() => removeTab(tab, i)}
                 />
