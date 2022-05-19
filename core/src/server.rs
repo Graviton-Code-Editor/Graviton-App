@@ -26,7 +26,7 @@ pub struct Server {
 /// # };
 ///  # use gveditor_core_api::{
 ///     # extensions::manager::ExtensionsManager,
-///     # messaging::Messages,
+///     # messaging::ClientMessages,
 ///     # state::{
 ///     #    StatesList,
 ///     #    TokenFlags,
@@ -39,7 +39,7 @@ pub struct Server {
 ///    # Mutex
 /// # };
 ///  # tokio_test::block_on(async {
-///  let (to_core, from_core) = channel::<Messages>(1);
+///  let (to_core, from_core) = channel::<ClientMessages>(1);
 ///
 ///  // A pointer to a StatesList
 ///  let states = {
