@@ -1,2 +1,2 @@
-const item = await Graviton.StatusBarItemBuilder.create("test");
+const item = await Graviton.crateStatusbarItem("test");
 await item.show();
