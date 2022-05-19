@@ -1,23 +1,17 @@
-❗ This book and general development is WIP ❗
+❗ This book is WIP ❗
 
 # Introduction
-_Note: This book is written for developers._
 
-
-**Graviton** is a modularized code editor, meaning that the different modules can be used together to build different kind of editors.
-
- By design, it's frontend-agnostic, so different frontends (clients), even in different languages, can be built on it.
+**Graviton** is a modularized and composable code editor, meaning that the different modules can be used to build other editors, with for example, a different frontend.
 
 Modules:
 - `core`: The backend engine
-- `core-api`: A set of APIs for extensions to use
+- `core_api`: A set of APIs for extensions to use
+- `core_deno`: [Deno](https://deno.land/) runtime for third-party extension
 - `web`: A web-based frontend implementation
-- `web-components`: A set of React Components used in Graviton to be used elsewhere
 - `languages`: All the translations as NPM package
-- `Graviton Desktop`: A webview-based app that handles running the core and the web frontend
-- `Graviton Server`: A cli launcher for a Graviton HTTP Core + serving the web-based frontend
+- `desktop`: A desktop client for Graviton, powered by [Tauri](https://tauri.studio/)
+- `server`: A remote server for Graviton, **unsecure for now**
 
 Learn more:
 - [Building](./building.md)
-- [Extensions](./extensions.md)
-- [Core](./core.md)
