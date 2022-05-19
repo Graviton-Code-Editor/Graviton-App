@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex;
 
 use crate::extensions::client::{EventActions, ExtensionClient};
@@ -55,11 +56,19 @@ impl StatusBarItem {
         self.show().await
     }
 
-    pub async fn on_click(&mut self, callback: impl Fn() + 'static + Send) {
+    pub async fn on_click_callback(&mut self, callback: impl Fn() + 'static + Send) {
+        let mut event_actions = self.client.event_actions.lock().await;
+        event_actions.push(EventActions::OnClickCallback {
+            id_owner: self.id.clone(),
+            callback: Box::new(callback),
+        });
+    }
+
+    pub async fn on_click(&mut self, sender: Sender<()>) {
         let mut event_actions = self.client.event_actions.lock().await;
         event_actions.push(EventActions::OnClick {
             id_owner: self.id.clone(),
-            callback: Box::new(callback),
+            sender,
         });
     }
 }

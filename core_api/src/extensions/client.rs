@@ -2,6 +2,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 use tokio::sync::mpsc::error::SendError;
+use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex as AsyncMutex;
 
 use crate::messaging::{ClientMessages, ServerMessages, UIEvent};
@@ -11,9 +12,13 @@ use crate::LanguageServer;
 use super::settings::ExtensionSettings;
 
 pub enum EventActions {
-    OnClick {
+    OnClickCallback {
         id_owner: String,
         callback: Box<dyn Fn() + Send>,
+    },
+    OnClick {
+        id_owner: String,
+        sender: Sender<()>,
     },
     Nothing,
 }
@@ -75,16 +80,29 @@ impl ExtensionClient {
         Some(ExtensionSettings::new(path.clone()).await)
     }
 
-    pub async fn process_message(&mut self, message: ClientMessages) {
-        let actions = &*self.event_actions.lock().await;
+    pub async fn process_message(&mut self, message: &ClientMessages) {
+        let actions = &mut *self.event_actions.lock().await;
         if let ClientMessages::UIEvent(UIEvent::StatusBarItemClicked { id, .. }) = message {
-            for action in actions {
-                if let EventActions::OnClick { id_owner, callback } = action {
-                    if id_owner == &id {
+            actions.retain(|action| match action {
+                EventActions::OnClickCallback { id_owner, callback } => {
+                    if id_owner == id {
                         callback()
                     }
+                    true
                 }
-            }
+                EventActions::OnClick { id_owner, sender } => {
+                    if id_owner == id {
+                        let sender = sender.clone();
+                        tokio::spawn(async move {
+                            sender.send(()).await.unwrap();
+                        });
+                        false
+                    } else {
+                        true
+                    }
+                }
+                _ => true,
+            });
         }
     }
 }

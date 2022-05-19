@@ -47,8 +47,17 @@ class StatusBarItem {
         return Deno.core.opAsync("hide_statusbar_item", this.itemID)
     }
 
-    onClick(){
-        // TODO(marc2332)
+    async onClick(callback: () => void): Promise<never>{
+        while(true){
+            //@ts-ignore
+            await Deno.core.opAsync("on_click_statusbar_item", this.itemID)
+            callback();
+        }
+    }
+
+    setLabel(newLabel: String){
+        //@ts-ignore
+        return Deno.core.opAsync("set_statusbar_item_label", this.itemID, newLabel)
     }
 }
 

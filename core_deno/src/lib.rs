@@ -81,7 +81,9 @@ impl Extension for DenoExtension {
 
     fn notify(&mut self, message: ClientMessages) {
         let events_manager = self.events_manager.clone();
+        let mut client = self.client.clone();
         tokio::spawn(async move {
+            client.process_message(&message).await;
             events_manager.send(message).await.unwrap();
         });
     }

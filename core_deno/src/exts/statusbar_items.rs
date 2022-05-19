@@ -5,6 +5,7 @@ use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use std::cell::RefCell;
 use std::collections::HashMap;
 use std::rc::Rc;
+use tokio::sync::mpsc::channel;
 
 /// Create a status bar item
 #[op]
@@ -85,6 +86,58 @@ async fn hide_statusbar_item(
     Ok(())
 }
 
+/// Register an onClick listener for the given status bar item
+#[op]
+async fn on_click_statusbar_item(
+    state: Rc<RefCell<OpState>>,
+    item_id: String,
+    _: (),
+) -> Result<(), AnyError> {
+    let mut items = {
+        let state = state.borrow();
+        state
+            .try_borrow::<HashMap<String, StatusBarItem>>()
+            .unwrap()
+            .clone()
+    };
+
+    let item = items.get_mut(&item_id);
+
+    if let Some(item) = item {
+        let (tx, mut rv) = channel::<()>(1);
+
+        item.on_click(tx).await;
+
+        rv.recv().await;
+    }
+
+    Ok(())
+}
+
+#[op]
+async fn set_statusbar_item_label(
+    state: Rc<RefCell<OpState>>,
+    item_id: String,
+    label: String,
+    _: (),
+) -> Result<(), AnyError> {
+    let mut items = {
+        let state = state.borrow();
+        state
+            .try_borrow::<HashMap<String, StatusBarItem>>()
+            .unwrap()
+            .clone()
+    };
+
+    let item = items.get_mut(&item_id);
+
+    if let Some(item) = item {
+        item.set_label(&label).await;
+    }
+
+    Ok(())
+}
+
 /// Crate the extension to bridge Graviton Core and the Deno extension
 pub fn new(client: ExtensionClient, state_id: u8) -> Extension {
     Extension::builder()
@@ -92,6 +145,8 @@ pub fn new(client: ExtensionClient, state_id: u8) -> Extension {
             new_statusbar_item::decl(),
             show_statusbar_item::decl(),
             hide_statusbar_item::decl(),
+            on_click_statusbar_item::decl(),
+            set_statusbar_item_label::decl(),
         ])
         .state(move |s| {
             s.put(client.clone());

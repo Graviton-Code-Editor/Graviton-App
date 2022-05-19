@@ -36,4 +36,5 @@ export const showedWindows = atom<FloatingWindow[]>({
 export const showedStatusBarItem = atom<{ [key: string]: StatusBarItem }>({
   key: "showedStatusBarItem",
   default: {},
+  dangerouslyAllowMutability: true,
 });
