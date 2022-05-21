@@ -6,11 +6,29 @@ use gveditor_core::{Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
+use gveditor_core_api::tokio;
 use gveditor_core_api::tokio::sync::mpsc::channel;
 use gveditor_core_api::{Mutex, State};
+use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
+use tracing_subscriber::{fmt, EnvFilter, Registry};
+
+fn setup_logger() {
+    let filter = EnvFilter::default()
+        .add_directive("server=info".parse().unwrap())
+        .add_directive("graviton=info".parse().unwrap())
+        .add_directive("gveditor_core_api=info".parse().unwrap())
+        .add_directive("gveditor_core=info".parse().unwrap())
+        .add_directive("typescript_lsp_graviton=info".parse().unwrap());
+
+    let subscriber = Registry::default().with(filter).with(fmt::Layer::default());
+
+    tracing::subscriber::set_global_default(subscriber).expect("Unable to set global subscriber");
+}
 
 #[tokio::main]
 async fn main() {
+    setup_logger();
+
     let (to_core, from_core) = channel::<ClientMessages>(1);
 
     let extensions_manager = ExtensionsManager::new(to_core.clone(), None)

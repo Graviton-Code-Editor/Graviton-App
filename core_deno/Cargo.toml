@@ -13,7 +13,7 @@ license = "MIT"
 gveditor-core-api  = { path = "../core_api"}
 deno_core = "0.134.0"
 deno_runtime = "0.60.0"
-tokio = { version = "1.17.0", features = ["sync"]}
+tokio = { version = "1.18.2", features = ["sync"]}
 tokio-stream = { version = "0.1.8", features = ["fs"]}
 serde = { version = "1.0.136", features = ["derive"] }
 async-trait = "0.1.52"

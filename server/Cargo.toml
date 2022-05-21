@@ -9,8 +9,9 @@ homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
 license = "MIT"
 
 [dependencies]
+tracing = "0.1.31"
+tracing-subscriber = {version="0.3.9", features= ["env-filter", "std"] }
 serde_json = "1.0.79"
-tokio = { version = "1.17.0", features = ["sync", "macros"]}
 serde = { version = "1.0.136", features = ["derive"] }
 gveditor-core = { path = "../core", features = ["http_client"]}
 gveditor-core-api  = { path = "../core_api"}
