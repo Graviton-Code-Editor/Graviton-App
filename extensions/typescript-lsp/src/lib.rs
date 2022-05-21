@@ -36,7 +36,7 @@ impl Extension for TSLSPExtension {
         let client = self.client.clone();
         let state_id = self.state_id;
 
-        let (lsp_tx, mut lsp_rx) = channel::<LanguageServerMessage>(1);
+        let (lsp_tx, mut lsp_rx) = channel::<LanguageServerMessage>(20);
 
         let ls_client = client.clone();
 
@@ -165,7 +165,7 @@ impl Extension for TSLSPExtension {
 }
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
-    let (tx, rx) = channel::<ClientMessages>(1);
+    let (tx, rx) = channel::<ClientMessages>(20);
     let plugin = Box::new(TSLSPExtension {
         client,
         state_id,

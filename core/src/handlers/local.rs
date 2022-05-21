@@ -13,7 +13,7 @@ use tokio::sync::mpsc::{channel, Receiver, Sender};
 
 /// This a local handler, meaning that you can use the JSON RPC Server directly
 pub struct LocalHandler {
-    receiver_to_local: Arc<Mutex<Receiver<ClientMessages>>>,
+    receiver_to_local: Option<Receiver<ClientMessages>>,
     channel_sender: Sender<ServerMessages>,
 }
 
@@ -29,14 +29,13 @@ impl LocalHandler {
 
         // Create the channel handler
         let (sender_to_local, receiver_to_local) = channel::<ClientMessages>(1);
-        let receiver_to_local = Arc::new(Mutex::new(receiver_to_local));
 
         // Create the local JSON RPC instance
         let (client, server) = local::connect::<Client, _, _>(local_io);
         tokio::task::spawn(async { server.await });
 
         let local = Self {
-            receiver_to_local,
+            receiver_to_local: Some(receiver_to_local),
             channel_sender,
         };
 
@@ -47,12 +46,11 @@ impl LocalHandler {
 #[async_trait]
 impl TransportHandler for LocalHandler {
     async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>) {
-        let rv = self.receiver_to_local.clone();
+        let mut rv = self.receiver_to_local.take().unwrap();
 
         thread::spawn(move || {
             let runtime = tokio::runtime::Runtime::new().unwrap();
             runtime.block_on(async {
-                let mut rv = rv.lock().await;
                 loop {
                     if let Some(msg) = rv.recv().await {
                         core_sender.send(msg).await.unwrap();

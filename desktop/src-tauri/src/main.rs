@@ -161,7 +161,7 @@ static STATE_ID: u8 = 1;
 async fn main() {
     setup_logger();
 
-    let (to_core, from_core) = channel::<ClientMessages>(1);
+    let (to_core, from_core) = channel::<ClientMessages>(100);
 
     let context = tauri::generate_context!("tauri.conf.json");
 
