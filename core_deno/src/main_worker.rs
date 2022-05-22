@@ -50,6 +50,7 @@ pub async fn create_main_worker(
             ts_version: "4.6.2".to_string(),
             unstable: false,
             is_tty: false,
+            user_agent: "graviton".to_string(),
         },
         extensions: vec![
             events::new(client.clone(), events_manager, worker_handle.clone()),
@@ -57,7 +58,6 @@ pub async fn create_main_worker(
         ],
         unsafely_ignore_certificate_errors: None,
         root_cert_store: None,
-        user_agent: "graviton".to_string(),
         seed: None,
         web_worker_preload_module_cb,
         create_web_worker_cb,
