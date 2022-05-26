@@ -11,7 +11,7 @@ pub enum ManifestErrors {
 }
 
 /// Represents the [extension] section
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug, Default)]
 pub struct ManifestExtension {
     pub name: String,
     pub id: String,
@@ -22,7 +22,7 @@ pub struct ManifestExtension {
 }
 
 /// Represents the whole TOML file
-#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Debug, Default)]
 pub struct ManifestInfo {
     pub extension: ManifestExtension,
 }

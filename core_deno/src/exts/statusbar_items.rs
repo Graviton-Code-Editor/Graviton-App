@@ -9,27 +9,22 @@ use tokio::sync::mpsc::channel;
 
 /// Create a status bar item
 #[op]
-async fn new_statusbar_item(
+async fn op_new_statusbar_item(
     state: Rc<RefCell<OpState>>,
     label: String,
     _: (),
 ) -> Result<String, AnyError> {
-    let client: ExtensionClient = {
+    let (client, state_id) = {
         let state = state.borrow();
-        state.try_borrow::<ExtensionClient>().unwrap().clone()
-    };
-
-    let state_id = {
-        let state = state.borrow();
-        *state.try_borrow::<u8>().unwrap()
+        let client = state.borrow::<ExtensionClient>().to_owned();
+        let state_id = *state.borrow::<u8>();
+        (client, state_id)
     };
 
     let item = StatusBarItem::new(client, state_id, &label);
 
     let mut state = state.borrow_mut();
-    let items = state
-        .try_borrow_mut::<HashMap<String, StatusBarItem>>()
-        .unwrap();
+    let items = state.borrow_mut::<HashMap<String, StatusBarItem>>();
 
     let item_id = item.id.clone();
 
@@ -40,17 +35,14 @@ async fn new_statusbar_item(
 
 /// Show a status bar item
 #[op]
-async fn show_statusbar_item(
+async fn op_show_statusbar_item(
     state: Rc<RefCell<OpState>>,
     item_id: String,
     _: (),
 ) -> Result<(), AnyError> {
     let items = {
         let state = state.borrow();
-        state
-            .try_borrow::<HashMap<String, StatusBarItem>>()
-            .unwrap()
-            .clone()
+        state.borrow::<HashMap<String, StatusBarItem>>().to_owned()
     };
 
     let item = items.get(&item_id);
@@ -64,17 +56,14 @@ async fn show_statusbar_item(
 
 /// Hide a status bar item
 #[op]
-async fn hide_statusbar_item(
+async fn op_hide_statusbar_item(
     state: Rc<RefCell<OpState>>,
     item_id: String,
     _: (),
 ) -> Result<(), AnyError> {
     let items = {
         let state = state.borrow();
-        state
-            .try_borrow::<HashMap<String, StatusBarItem>>()
-            .unwrap()
-            .clone()
+        state.borrow::<HashMap<String, StatusBarItem>>().to_owned()
     };
 
     let item = items.get(&item_id);
@@ -88,17 +77,14 @@ async fn hide_statusbar_item(
 
 /// Register an onClick listener for the given status bar item
 #[op]
-async fn on_click_statusbar_item(
+async fn op_on_click_statusbar_item(
     state: Rc<RefCell<OpState>>,
     item_id: String,
     _: (),
 ) -> Result<(), AnyError> {
     let mut items = {
-        let state = state.borrow();
-        state
-            .try_borrow::<HashMap<String, StatusBarItem>>()
-            .unwrap()
-            .clone()
+        let state = state.borrow_mut();
+        state.borrow::<HashMap<String, StatusBarItem>>().to_owned()
     };
 
     let item = items.get_mut(&item_id);
@@ -115,18 +101,17 @@ async fn on_click_statusbar_item(
 }
 
 #[op]
-async fn set_statusbar_item_label(
+async fn op_set_statusbar_item_label(
     state: Rc<RefCell<OpState>>,
     item_id: String,
     label: String,
     _: (),
 ) -> Result<(), AnyError> {
     let mut items = {
-        let state = state.borrow();
+        let mut state = state.borrow_mut();
         state
-            .try_borrow::<HashMap<String, StatusBarItem>>()
-            .unwrap()
-            .clone()
+            .borrow_mut::<HashMap<String, StatusBarItem>>()
+            .to_owned()
     };
 
     let item = items.get_mut(&item_id);
@@ -142,11 +127,11 @@ async fn set_statusbar_item_label(
 pub fn new(client: ExtensionClient, state_id: u8) -> Extension {
     Extension::builder()
         .ops(vec![
-            new_statusbar_item::decl(),
-            show_statusbar_item::decl(),
-            hide_statusbar_item::decl(),
-            on_click_statusbar_item::decl(),
-            set_statusbar_item_label::decl(),
+            op_new_statusbar_item::decl(),
+            op_show_statusbar_item::decl(),
+            op_hide_statusbar_item::decl(),
+            op_on_click_statusbar_item::decl(),
+            op_set_statusbar_item_label::decl(),
         ])
         .state(move |s| {
             s.put(client.clone());

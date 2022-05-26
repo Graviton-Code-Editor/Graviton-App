@@ -12,7 +12,7 @@ use crate::WorkerHandle;
 
 /// Send Core Messages from deno
 #[op]
-async fn listen_messages_from_core(
+async fn op_listen_messages_from_core(
     state: Rc<RefCell<OpState>>,
     event_name: String,
     _: (),
@@ -39,14 +39,14 @@ async fn listen_messages_from_core(
 
 /// Send Core Messages from deno
 #[op]
-async fn send_message_to_core(
+async fn op_send_message_to_core(
     state: Rc<RefCell<OpState>>,
     msg: ClientMessages,
     _: (),
 ) -> Result<(), AnyError> {
     let client: ExtensionClient = {
         let state = state.borrow();
-        state.try_borrow::<ExtensionClient>().unwrap().clone()
+        state.try_borrow::<ExtensionClient>().unwrap().to_owned()
     };
 
     client.send(msg).await?;
@@ -56,10 +56,14 @@ async fn send_message_to_core(
 
 /// Terminate the worker
 #[op]
-async fn terminate_main_worker(state: Rc<RefCell<OpState>>, _: (), _: ()) -> Result<(), AnyError> {
+async fn op_terminate_main_worker(
+    state: Rc<RefCell<OpState>>,
+    _: (),
+    _: (),
+) -> Result<(), AnyError> {
     let worker_handle: WorkerHandle = {
         let state = state.borrow();
-        state.try_borrow::<WorkerHandle>().unwrap().clone()
+        state.try_borrow::<WorkerHandle>().unwrap().to_owned()
     };
 
     if let Some(handle) = &*worker_handle.lock().await {
@@ -77,9 +81,9 @@ pub fn new(
 ) -> Extension {
     Extension::builder()
         .ops(vec![
-            send_message_to_core::decl(),
-            listen_messages_from_core::decl(),
-            terminate_main_worker::decl(),
+            op_send_message_to_core::decl(),
+            op_listen_messages_from_core::decl(),
+            op_terminate_main_worker::decl(),
         ])
         .state(move |s| {
             s.put(client.clone());

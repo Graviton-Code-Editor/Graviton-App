@@ -1,7 +1,0 @@
-[extension]
-name = "Sample Extension"
-id = "sample-extension"
-author = "Marc"
-version = "0.1.0"
-repository = "..."
-main = "main.js"
