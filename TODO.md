@@ -27,14 +27,15 @@
 - [x] Make it possible to persist states
 - [x] Manifest files in TOML (Not Cargo.toml, but just for Graviton extensions)
 - [ ] Add support for buttons in popup module
+- [ ] Make the language server implementaion notify their clients of their implementation / status
 
 # core_deno
 - [x] Send messages to the Core
 - [ ] Extension Modules:
-    - StatusBarItems
+    - [x] StatusBarItems
         - [x] Show
         - [x] Hide
-        - [ ] Support onClick
+        - [x] Support onClick
     - [ ] Popups
 - [x] Extension messages listener using async function generators
 - [x] Unload event

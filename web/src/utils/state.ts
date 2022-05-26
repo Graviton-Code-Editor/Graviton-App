@@ -1,3 +1,4 @@
+import { LanguageServerClient } from "codemirror-languageserver";
 import { atom } from "recoil";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
@@ -36,5 +37,17 @@ export const showedWindows = atom<FloatingWindow[]>({
 export const showedStatusBarItem = atom<{ [key: string]: StatusBarItem }>({
   key: "showedStatusBarItem",
   default: {},
+  dangerouslyAllowMutability: true,
+});
+
+export interface LanguageServerConfig {
+  rootUri: string;
+  languageId: string;
+  client: LanguageServerClient;
+}
+
+export const lspClients = atom<Array<LanguageServerConfig>>({
+  key: "lspClients",
+  default: [],
   dangerouslyAllowMutability: true,
 });

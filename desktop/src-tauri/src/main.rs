@@ -216,17 +216,14 @@ async fn main() {
     // Sender and receiver for the webview window
     let (to_webview, from_webview) = channel(1);
 
-    // Local handler transport
+    // Create the Local handler transport
     let (local_handler, client, to_local) = LocalHandler::new(states.clone(), to_webview);
     let local_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(local_handler);
 
-    // Create the configuration
     let config = Configuration::new(local_handler, to_core, from_core);
 
-    // Create the Core server
     let core = Server::new(config, states);
 
-    // Run the core in a separate thread
     tokio::task::spawn(async move { core.run().await });
 
     // Open the window

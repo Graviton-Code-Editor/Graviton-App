@@ -13,7 +13,10 @@ import { rust } from "@codemirror/lang-rust";
 import { basename, dirname } from "path";
 import { EventEmitterTransport } from "@open-rpc/client-js";
 import { EventEmitter } from "events";
-import { languageServerWithTransport } from "codemirror-languageserver";
+import {
+  LanguageServerClient,
+  languageServerWithTransport,
+} from "codemirror-languageserver";
 import { useEffect, useState } from "react";
 import TabText from "../components/TabText";
 import LoadingTabContent from "../components/tabs/LoadingTabContent";
@@ -23,6 +26,7 @@ import {
   NotifyLanguageServers,
 } from "../types/messaging";
 import FileIcon from "../components/FileIcon";
+import useLSPClients from "../hooks/useLSPClients";
 
 interface SavedState {
   scrollHeight: number;
@@ -32,26 +36,26 @@ interface SavedState {
  * A tab that displays a CodeMirror editor inside it
  */
 class TextEditorTab extends Tab {
-  private state: SavedState = {
+  public state: SavedState = {
     scrollHeight: 0,
   };
   public path: string;
   public filename: string;
-  private format: FileFormat;
-  private lastSavedStateText: string[] = [];
-  private view?: EditorView;
+  public format: FileFormat;
+  public lastSavedStateText: string[] = [];
+  public view?: EditorView;
 
-  private setEditedComp: (state: boolean) => void = () => {
+  public setEditedComp: (state: boolean) => void = () => {
     /**/
   };
-  private closeTabComp: () => void = () => {
+  public closeTabComp: () => void = () => {
     /**/
   };
-  private setViewComp: (view: EditorView) => void = () => {
+  public setViewComp: (view: EditorView) => void = () => {
     /**/
   };
 
-  private contentResolver: Promise<string | null>;
+  public contentResolver: Promise<string | null>;
 
   /**
    * @param path - Path of the opened file
@@ -70,70 +74,10 @@ class TextEditorTab extends Tab {
     this.contentResolver = contentResolver;
   }
 
-  public container({
-    setEdited,
-    close,
-    tab,
-  }: {
-    setEdited: () => void;
-    close: () => void;
-    tab: Tab;
-  }) {
-    const textEditorTab = tab as TextEditorTab;
-
-    const [view, setView] = useState(textEditorTab.view);
-
-    useEffect(() => {
-      textEditorTab.setEditedComp = setEdited;
-      textEditorTab.closeTabComp = close;
-      textEditorTab.setViewComp = setView;
-
-      // Wait until the tab is mounted to read it's content
-      textEditorTab.contentResolver.then((initialValue) => {
-        if (initialValue) {
-          textEditorTab.view = new EditorView({
-            state: textEditorTab.createDefaulState({
-              initialValue,
-            }),
-            dispatch: (tx) => {
-              if (tx.docChanged) textEditorTab.setEdited(true);
-              (textEditorTab.view as EditorView).update([tx]);
-            },
-          });
-
-          // Update the view component
-          textEditorTab.setViewComp(textEditorTab.view);
-        } else {
-          // If there is no content to read then just close the tab
-          textEditorTab.close();
-          textEditorTab.closeTabComp();
-        }
-      });
-    }, []);
-
-    const saveScroll = (height: number) => {
-      textEditorTab.state.scrollHeight = height;
-    };
-
-    if (view) {
-      return (
-        <TextEditor
-          view={view}
-          scrollHeight={textEditorTab.state.scrollHeight}
-          saveScroll={saveScroll}
-        />
-      );
-    } else {
-      return (
-        <LoadingTabContent>
-          <TabText>Loading content...</TabText>
-        </LoadingTabContent>
-      );
-    }
-  }
+  public container = TabTextEditorContainer;
 
   public icon({ tab }: { tab: Tab }) {
-    const textEditorTab = tab as TextEditorTab;
+    const textEditorTab = tab as unknown as TextEditorTab;
     return (
       <FileIcon
         isOpened={false}
@@ -250,7 +194,7 @@ class TextEditorTab extends Tab {
   /**
    * Return the custom keymap
    */
-  private getKeymap() {
+  public getKeymap() {
     // Save command
     const save: Command = () => {
       this.saveFile();
@@ -296,112 +240,6 @@ class TextEditorTab extends Tab {
   }
 
   /**
-   * Create the initial state for the CodeMirror instance
-   */
-  private createDefaulState({
-    initialValue,
-  }: {
-    initialValue: string;
-  }): EditorState {
-    const extensions = [this.getKeymap(), basicSetup];
-    let lspLanguage: [string, string] | null = null;
-
-    if (typeof this.format !== "string") {
-      switch (this.format.Text) {
-        case "TypeScript":
-          lspLanguage = ["typescript", this.format.Text];
-          extensions.push(javascript());
-          break;
-        case "JavaScript":
-          lspLanguage = ["javascript", this.format.Text];
-          extensions.push(javascript());
-          break;
-        case "Rust":
-          lspLanguage = ["rust", this.format.Text];
-          extensions.push(rust());
-          break;
-        default:
-          lspLanguage = null;
-      }
-    }
-
-    // NOTE(marc2332):
-    // The current implementation is no near perfect.
-    // The Codemirror Language Server plugin should preserve the client among instances
-
-    if (lspLanguage != null) {
-      const [languageId] = lspLanguage;
-
-      const client = getRecoil(clientState);
-
-      // Emit the initialization of the language server
-      client.emitMessage<NotifyLanguageServers<LanguageServerInitialization>>({
-        NotifyLanguageServers: {
-          state_id: client.config.state_id,
-          msg_type: "Initialization",
-          id: languageId,
-        },
-      });
-
-      const unixPath = this.path.replace(/\\/g, "/");
-
-      const eventEmitter = new EventEmitter();
-
-      const eventEmitterTransport = new EventEmitterTransport(
-        eventEmitter,
-        "/req",
-        "/res"
-      );
-
-      const lspPlugin = languageServerWithTransport({
-        transport: eventEmitterTransport,
-        rootUri: `file:///${dirname(unixPath)}`,
-        documentUri: `file:///${unixPath}`,
-        languageId,
-        workspaceFolders: [
-          {
-            name: basename(dirname(unixPath)),
-            uri: unixPath,
-          },
-        ],
-      });
-
-      // Forward any request from the language server to the CodeMirror client
-      client.on("NotifyLanguageServersClient", (data) => {
-        eventEmitter.emit("/res", data.content);
-      });
-
-      // Forward any request from the CodeMirror client to the language server
-      eventEmitter.addListener("/req", async (data) => {
-        const jsonData = JSON.stringify(data);
-
-        await client.emitMessage<
-          NotifyLanguageServers<LanguageServerNotification>
-        >({
-          NotifyLanguageServers: {
-            state_id: client.config.state_id,
-            msg_type: "Notification",
-            id: languageId,
-            content: JSON.stringify(jsonData),
-          },
-        });
-      });
-
-      extensions.push(lspPlugin);
-    }
-
-    const state = EditorState.create({
-      extensions,
-      doc: initialValue,
-    });
-
-    // Leave the just created state as the latest one saved
-    this.lastSavedStateText = state.doc.toJSON();
-
-    return state;
-  }
-
-  /**
    * @returns The tab's data
    *
    * @alpha
@@ -415,6 +253,205 @@ class TextEditorTab extends Tab {
       filename: this.filename,
       id: this.id,
     };
+  }
+}
+
+function TabTextEditorContainer({
+  setEdited,
+  close,
+  tab,
+}: {
+  setEdited: () => void;
+  close: () => void;
+  tab: Tab;
+}) {
+  const textEditorTab = tab as unknown as TextEditorTab;
+
+  const [view, setView] = useState(textEditorTab.view);
+  const { find, add } = useLSPClients();
+
+  useEffect(() => {
+    textEditorTab.setEditedComp = setEdited;
+    textEditorTab.closeTabComp = close;
+    textEditorTab.setViewComp = setView;
+
+    // Wait until the tab is mounted to read it's content
+    textEditorTab.contentResolver.then((initialValue) => {
+      if (initialValue) {
+        textEditorTab.view = new EditorView({
+          state: createDefaulState({
+            initialValue,
+          }),
+          dispatch: (tx) => {
+            if (tx.docChanged) textEditorTab.setEdited(true);
+            (textEditorTab.view as EditorView).update([tx]);
+          },
+        });
+
+        // Update the view component
+        textEditorTab.setViewComp(textEditorTab.view);
+      } else {
+        // If there is no content to read then just close the tab
+        textEditorTab.close();
+        textEditorTab.closeTabComp();
+      }
+    });
+
+    /**
+     * Create the initial state for the CodeMirror instance
+     */
+    function createDefaulState({
+      initialValue,
+    }: {
+      initialValue: string;
+    }): EditorState {
+      const extensions = [textEditorTab.getKeymap(), basicSetup];
+      let lspLanguage: [string, string] | null = null;
+
+      if (typeof textEditorTab.format !== "string") {
+        switch (textEditorTab.format.Text) {
+          case "TypeScript":
+            lspLanguage = ["typescript", textEditorTab.format.Text];
+            extensions.push(javascript());
+            break;
+          case "JavaScript":
+            lspLanguage = ["javascript", textEditorTab.format.Text];
+            extensions.push(javascript());
+            break;
+          case "Rust":
+            lspLanguage = ["rust", textEditorTab.format.Text];
+            extensions.push(rust());
+            break;
+          default:
+            lspLanguage = null;
+        }
+      }
+
+      // TODO(marc2332):
+      // - This should not assume there is a language server implementation running
+      //   Instead, the language server must notify this frontend
+      // - Externalize the job of creating a language server client
+
+      if (lspLanguage != null) {
+        const [languageId] = lspLanguage;
+        const unixPath = textEditorTab.path.replace(/\\/g, "/");
+        const rootUri = `file:///${dirname(unixPath)}`;
+
+        let lsClient = find(rootUri, languageId);
+
+        if (!lsClient) {
+          const client = getRecoil(clientState);
+
+          // Emit the initialization of the language server
+          client.emitMessage<
+            NotifyLanguageServers<LanguageServerInitialization>
+          >({
+            NotifyLanguageServers: {
+              state_id: client.config.state_id,
+              msg_type: "Initialization",
+              id: languageId,
+            },
+          });
+
+          const eventEmitter = new EventEmitter();
+
+          const eventEmitterTransport = new EventEmitterTransport(
+            eventEmitter,
+            "/req",
+            "/res"
+          );
+
+          lsClient = new (LanguageServerClient as any)({
+            transport: eventEmitterTransport,
+            rootUri,
+            languageId,
+            workspaceFolders: [
+              {
+                name: basename(dirname(unixPath)),
+                uri: unixPath,
+              },
+            ],
+          });
+
+          let running = false;
+
+          // Forward any request from the language server to the CodeMirror client
+          client.on("NotifyLanguageServersClient", (data) => {
+            eventEmitter.emit("/res", data.content);
+            if (!running) {
+              add({
+                rootUri,
+                languageId,
+                client,
+              });
+            } else {
+              running = !running;
+            }
+          });
+
+          // Forward any request from the CodeMirror client to the language server
+          eventEmitter.addListener("/req", async (data) => {
+            const jsonData = JSON.stringify(data);
+
+            await client.emitMessage<
+              NotifyLanguageServers<LanguageServerNotification>
+            >({
+              NotifyLanguageServers: {
+                state_id: client.config.state_id,
+                msg_type: "Notification",
+                id: languageId,
+                content: JSON.stringify(jsonData),
+              },
+            });
+          });
+        }
+
+        const lspPlugin = (languageServerWithTransport as any)({
+          client: lsClient,
+          rootUri,
+          documentUri: `file:///${unixPath}`,
+          languageId,
+          workspaceFolders: [
+            {
+              name: basename(dirname(unixPath)),
+              uri: unixPath,
+            },
+          ],
+        });
+
+        extensions.push(lspPlugin);
+      }
+
+      const state = EditorState.create({
+        extensions,
+        doc: initialValue,
+      });
+
+      // Leave the just created state as the latest one saved
+      textEditorTab.lastSavedStateText = state.doc.toJSON();
+
+      return state;
+    }
+  }, []);
+
+  const saveScroll = (height: number) => {
+    textEditorTab.state.scrollHeight = height;
+  };
+
+  if (view) {
+    return (
+      <TextEditor
+        view={view}
+        scrollHeight={textEditorTab.state.scrollHeight}
+        saveScroll={saveScroll}
+      />
+    );
+  } else {
+    return (
+      <LoadingTabContent>
+        <TabText>Loading content...</TabText>
+      </LoadingTabContent>
+    );
   }
 }
 

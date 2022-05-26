@@ -7,7 +7,6 @@ function StatusBarItemElement({ options }: { options: StatusBarItemOptions }) {
   const client = useRecoilValue(clientState);
 
   function onClick() {
-    console.log("hi");
     client.emitMessage<UIEvent<StatusBarItemClicked>>({
       UIEvent: {
         msg_type: "StatusBarItemClicked",

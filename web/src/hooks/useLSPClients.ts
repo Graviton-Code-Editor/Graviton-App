@@ -1,0 +1,19 @@
+import { useRecoilState } from "recoil";
+import { LanguageServerConfig, lspClients } from "../utils/state";
+
+export default function useLSPClients(): Record<any, any> {
+  const [clients, setClients] = useRecoilState(lspClients);
+
+  return {
+    find: (rootUri: string, languageId: string) => {
+      for (const client of clients) {
+        if (client.rootUri === rootUri && client.languageId === languageId) {
+          return client.client;
+        }
+      }
+    },
+    add: (config: LanguageServerConfig) => {
+      setClients([...clients, config]);
+    },
+  };
+}

@@ -46,7 +46,7 @@ pub async fn create_main_worker(
             enable_testing_features: false,
             location: Some(main_module.clone()),
             no_color: false,
-            runtime_version: "1.21.3".to_string(),
+            runtime_version: "1.22.0".to_string(),
             ts_version: "4.6.2".to_string(),
             unstable: false,
             is_tty: false,
