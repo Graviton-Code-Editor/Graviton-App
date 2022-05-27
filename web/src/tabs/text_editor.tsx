@@ -332,7 +332,9 @@ function TabTextEditorContainer({
       //   Instead, the language server must notify this frontend
       // - Externalize the job of creating a language server client
 
-      if (lspLanguage != null) {
+      // LSP IS DISABLED FOR NOW
+      // @ts-ignore
+      if (lspLanguage != null && 1 === 2) {
         const [languageId] = lspLanguage;
         const unixPath = textEditorTab.path.replace(/\\/g, "/");
         const rootUri = `file:///${dirname(unixPath)}`;
