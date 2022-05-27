@@ -1,5 +1,5 @@
 import TextEditor from "../components/TextEditor";
-import { StateCommand } from "@codemirror/state";
+import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
 import { Command, KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
@@ -330,96 +330,29 @@ function TabTextEditorContainer({
       // TODO(marc2332):
       // - This should not assume there is a language server implementation running
       //   Instead, the language server must notify this frontend
-      // - Externalize the job of creating a language server client
 
       // LSP IS DISABLED FOR NOW
       // @ts-ignore
-      if (lspLanguage != null && 1 === 2) {
+      if (lspLanguage != null && true === false) {
         const [languageId] = lspLanguage;
         const unixPath = textEditorTab.path.replace(/\\/g, "/");
         const rootUri = `file:///${dirname(unixPath)}`;
 
-        let lsClient = find(rootUri, languageId);
+        const lsClient = find(rootUri, languageId);
 
-        if (!lsClient) {
-          const client = getRecoil(clientState);
-
-          // Emit the initialization of the language server
-          client.emitMessage<
-            NotifyLanguageServers<LanguageServerInitialization>
-          >({
-            NotifyLanguageServers: {
-              state_id: client.config.state_id,
-              msg_type: "Initialization",
-              id: languageId,
-            },
-          });
-
-          const eventEmitter = new EventEmitter();
-
-          const eventEmitterTransport = new EventEmitterTransport(
-            eventEmitter,
-            "/req",
-            "/res"
-          );
-
-          lsClient = new (LanguageServerClient as any)({
-            transport: eventEmitterTransport,
-            rootUri,
-            languageId,
-            workspaceFolders: [
-              {
-                name: basename(dirname(unixPath)),
-                uri: unixPath,
-              },
-            ],
-          });
-
-          let running = false;
-
-          // Forward any request from the language server to the CodeMirror client
-          client.on("NotifyLanguageServersClient", (data) => {
-            eventEmitter.emit("/res", data.content);
-            if (!running) {
-              add({
-                rootUri,
-                languageId,
-                client,
-              });
-            } else {
-              running = !running;
-            }
-          });
-
-          // Forward any request from the CodeMirror client to the language server
-          eventEmitter.addListener("/req", async (data) => {
-            const jsonData = JSON.stringify(data);
-
-            await client.emitMessage<
-              NotifyLanguageServers<LanguageServerNotification>
-            >({
-              NotifyLanguageServers: {
-                state_id: client.config.state_id,
-                msg_type: "Notification",
-                id: languageId,
-                content: JSON.stringify(jsonData),
-              },
-            });
-          });
-        }
-
-        const lspPlugin = (languageServerWithTransport as any)({
-          client: lsClient,
-          rootUri,
-          documentUri: `file:///${unixPath}`,
+        const lspPlugin = createLSPPlugin(
           languageId,
-          workspaceFolders: [
-            {
-              name: basename(dirname(unixPath)),
-              uri: unixPath,
-            },
-          ],
-        });
+          unixPath,
+          rootUri,
+          (client) => {
+            add({
+              rootUri,
+              languageId,
+              client,
+            });
+          },
+          lsClient
+        );
 
         extensions.push(lspPlugin);
       }
@@ -455,6 +388,90 @@ function TabTextEditorContainer({
       </LoadingTabContent>
     );
   }
+}
+
+function createLSPPlugin(
+  languageId: string,
+  unixPath: string,
+  rootUri: string,
+  clientCreated: (client: LanguageServerClient) => void,
+  lsClient?: LanguageServerClient
+): Extension {
+  if (!lsClient) {
+    const client = getRecoil(clientState);
+
+    // Emit the initialization of the language server
+    client.emitMessage<NotifyLanguageServers<LanguageServerInitialization>>({
+      NotifyLanguageServers: {
+        state_id: client.config.state_id,
+        msg_type: "Initialization",
+        id: languageId,
+      },
+    });
+
+    const eventEmitter = new EventEmitter();
+
+    const eventEmitterTransport = new EventEmitterTransport(
+      eventEmitter,
+      "/req",
+      "/res"
+    );
+
+    lsClient = new (LanguageServerClient as any)({
+      transport: eventEmitterTransport,
+      rootUri,
+      languageId,
+      workspaceFolders: [
+        {
+          name: basename(dirname(unixPath)),
+          uri: unixPath,
+        },
+      ],
+    });
+
+    let running = false;
+
+    // Forward any request from the language server to the CodeMirror client
+    client.on("NotifyLanguageServersClient", (data) => {
+      eventEmitter.emit("/res", data.content);
+      if (!running) {
+        clientCreated(lsClient as LanguageServerClient);
+      } else {
+        running = !running;
+      }
+    });
+
+    // Forward any request from the CodeMirror client to the language server
+    eventEmitter.addListener("/req", async (data) => {
+      const jsonData = JSON.stringify(data);
+
+      await client.emitMessage<
+        NotifyLanguageServers<LanguageServerNotification>
+      >({
+        NotifyLanguageServers: {
+          state_id: client.config.state_id,
+          msg_type: "Notification",
+          id: languageId,
+          content: JSON.stringify(jsonData),
+        },
+      });
+    });
+  }
+
+  const lspPlugin = (languageServerWithTransport as any)({
+    client: lsClient,
+    rootUri,
+    documentUri: `file:///${unixPath}`,
+    languageId,
+    workspaceFolders: [
+      {
+        name: basename(dirname(unixPath)),
+        uri: unixPath,
+      },
+    ],
+  });
+
+  return lspPlugin;
 }
 
 export default TextEditorTab;
