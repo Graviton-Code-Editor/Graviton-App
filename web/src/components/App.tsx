@@ -159,16 +159,15 @@ function StateRoot({
       // Show a statusbar button if not shown, and update it if it's already shown
       client.on("ShowStatusBarItem", (statusBarItem: ShowStatusBarItem) => {
         setShowedStatusBarItems((statusBarItems) => {
-          const itemIfFound = statusBarItems[statusBarItem.statusbar_item_id];
+          const itemIfFound = statusBarItems[statusBarItem.id];
+          // Update the statusbar item if found, or create it otherwise
           if (itemIfFound != null) {
             itemIfFound.options = statusBarItem;
             return { ...statusBarItems };
           } else {
             return {
               ...statusBarItems,
-              [statusBarItem.statusbar_item_id]: new StatusBarItem(
-                statusBarItem
-              ),
+              [statusBarItem.id]: new StatusBarItem(statusBarItem),
             };
           }
         });
@@ -178,7 +177,7 @@ function StateRoot({
       client.on("HideStatusBarItem", (e: HideStatusBarItem) => {
         setShowedStatusBarItems((currVal) => {
           const filteredStatusBarItems = { ...currVal };
-          delete filteredStatusBarItems[e.statusbar_item_id];
+          delete filteredStatusBarItems[e.id];
           return filteredStatusBarItems;
         });
       });

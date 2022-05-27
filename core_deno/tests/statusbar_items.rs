@@ -32,7 +32,7 @@ async fn show_hide_statusbar_item() {
         ClientMessages::ServerMessage(ServerMessages::ShowStatusBarItem {
             label: "test".to_string(),
             state_id: 0,
-            statusbar_item_id: "/1".to_string(),
+            id: "/1".to_string(),
         },)
     );
 
@@ -54,7 +54,7 @@ async fn show_hide_statusbar_item() {
         msg,
         ClientMessages::ServerMessage(ServerMessages::HideStatusBarItem {
             state_id: 0,
-            statusbar_item_id: "/1".to_string(),
+            id: "/1".to_string(),
         },)
     );
 }

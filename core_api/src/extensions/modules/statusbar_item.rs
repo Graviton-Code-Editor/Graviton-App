@@ -30,7 +30,7 @@ impl StatusBarItem {
             .send(ClientMessages::ServerMessage(
                 ServerMessages::ShowStatusBarItem {
                     state_id: self.state_id,
-                    statusbar_item_id: self.id.clone(),
+                    id: self.id.clone(),
                     label: self.label.lock().await.to_string(),
                 },
             ))
@@ -43,7 +43,7 @@ impl StatusBarItem {
             .send(ClientMessages::ServerMessage(
                 ServerMessages::HideStatusBarItem {
                     state_id: self.state_id,
-                    statusbar_item_id: self.id.clone(),
+                    id: self.id.clone(),
                 },
             ))
             .await

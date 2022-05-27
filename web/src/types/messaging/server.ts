@@ -11,7 +11,7 @@ export interface ShowPopup extends BaseMessage {
 export interface ShowStatusBarItem extends BaseMessage, StatusBarItemOptions {}
 
 export interface HideStatusBarItem extends BaseMessage {
-  statusbar_item_id: string;
+  id: string;
 }
 
 export interface StateUpdated {

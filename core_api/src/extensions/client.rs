@@ -45,11 +45,13 @@ impl ExtensionClient {
             name: name.to_string(),
             id_count: Arc::new(Mutex::new(0)),
             sender,
+            // TODO(marc2332) This should also take the State ID
             settings_path: settings_path.map(|path| path.join(extension_id)),
             event_actions: Arc::new(AsyncMutex::new(Vec::new())),
         }
     }
 
+    // TODO(marc2332) Remove this and use UUID
     pub fn get_id(&mut self) -> String {
         *self.id_count.lock().unwrap() += 1;
         format!("{}/{}", self.name, self.id_count.lock().unwrap())

@@ -11,7 +11,7 @@ function StatusBarItemElement({ options }: { options: StatusBarItemOptions }) {
       UIEvent: {
         msg_type: "StatusBarItemClicked",
         state_id: client.config.state_id,
-        id: options.statusbar_item_id,
+        id: options.id,
       },
     });
   }
@@ -26,7 +26,7 @@ function StatusBarItemElement({ options }: { options: StatusBarItemOptions }) {
 }
 
 export interface StatusBarItemOptions {
-  statusbar_item_id: string;
+  id: string;
   label: string;
 }
 
@@ -38,7 +38,7 @@ export class StatusBarItem {
   public options: StatusBarItemOptions;
 
   constructor(options: StatusBarItemOptions) {
-    this.id = options.statusbar_item_id;
+    this.id = options.id;
     this.options = options;
   }
 
