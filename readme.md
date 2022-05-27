@@ -29,8 +29,6 @@ Current state of the rewrite:
 - Move from [PuffinJS](https://github.com/PuffinJS/puffin) to [React](https://reactjs.org/) for the Web frontend
 - Core is declouped from the frontend itself, third-party editors can be built upon it
 
-See [TODO](./TODO.md)
-
 | Package             | Description | Version |
 |---------------------|-------------|-------------|
 | [gveditor-core](./core)       | Graviton core engine | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core)     |   
