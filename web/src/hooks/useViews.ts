@@ -2,20 +2,10 @@ import { useRecoilState } from "recoil";
 import { tabsState } from "../utils/state";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/views";
 
-interface ViewUtils {
-  newView: () => void;
-  closeViewPanel: (view: FocusedViewPanel) => void;
-  closeFocusedViewPanel: () => void;
-  closeView: ({ row }: { row: number }) => void;
-  closeFocusedView: () => void;
-  newViewPanel: ({ row }: { row: number }) => void;
-  newViewPanelInFocused: () => void;
-}
-
 /*
  * Utils for views and view panels
  */
-export default function useViews(): ViewUtils {
+export default function useViews() {
   const [tabPanels, setTabPanels] = useRecoilState(tabsState);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
 
@@ -47,7 +37,7 @@ export default function useViews(): ViewUtils {
       tabs: [],
     });
     setTabPanels([...tabPanels]);
-    setFocusedView({ col: tabPanels.length - 1, row });
+    setFocusedView({ col: tabPanels[focusedView.row].length - 1, row });
   };
 
   return {
