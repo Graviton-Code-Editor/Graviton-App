@@ -7,6 +7,7 @@ use deno_runtime::permissions::Permissions;
 use deno_runtime::worker::{MainWorker, WorkerOptions};
 use deno_runtime::BootstrapOptions;
 use gveditor_core_api::Mutex;
+use tracing::warn;
 use std::rc::Rc;
 use std::sync::Arc;
 
@@ -24,7 +25,7 @@ pub async fn create_main_worker(
     client: ExtensionClient,
     events_manager: EventsManager,
     state_id: u8,
-) -> MainWorker {
+) -> anyhow::Result<MainWorker> {
     let worker_handle = Arc::new(Mutex::new(None));
 
     let module_loader = Rc::new(FsModuleLoader);
@@ -86,13 +87,12 @@ pub async fn create_main_worker(
 
     // Load the Graviton namespace
     worker
-        .execute_script("<graviton>", GRAVITON_DENO_API)
-        .unwrap();
+        .execute_script("<graviton>", GRAVITON_DENO_API)?;
 
     // Load the extension's main module
-    worker.execute_main_module(&main_module).await.ok();
+    worker.execute_main_module(&main_module).await?;
 
-    worker
+    Ok(worker)
 }
 
 fn get_error_class_name(e: &AnyError) -> &'static str {

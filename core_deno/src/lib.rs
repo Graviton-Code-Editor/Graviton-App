@@ -6,6 +6,7 @@ use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
 use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender};
+use tracing::{error, info};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::fs;
@@ -56,22 +57,33 @@ impl Extension for DenoExtension {
         let client = self.client.clone();
         let events_manager = self.events_manager.clone();
         let state_id = self.state_id;
-
-        std::thread::spawn(move || {
-            let r = Runtime::new().unwrap();
-            r.block_on(async move {
-                let mut worker =
-                    create_main_worker(&main_path, client, events_manager.clone(), state_id).await;
-
-                worker.run_event_loop(false).await.ok();
-            });
-        });
+        let name = self.info.extension.name.clone();
 
         tracing::info!(
             "Loaded Deno Extension <{}> from {}",
-            self.info.extension.name,
+            name,
             self.main_path
         );
+
+        std::thread::spawn(move || {
+            let rt = Runtime::new().unwrap();
+            rt.block_on(async move {
+                let res =
+                    create_main_worker(&main_path, client, events_manager.clone(), state_id).await;
+
+                if let Err(err) = res {
+                    error!("Could not load Deno extension <{}> , error: {}", name, err);
+                } else if let Ok(mut worker) = res {
+                    let res = worker.run_event_loop(false).await;
+                    if let Err(err) = res {
+                        let msg = err.to_string();
+                        if msg != "Uncaught Error: execution terminated" {
+                            error!("Deno extension <{}> threw an error: {}", name, err);
+                        }     
+                    }
+                }
+            });
+        });
     }
 
     fn unload(&mut self) {
