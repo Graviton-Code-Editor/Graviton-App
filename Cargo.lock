@@ -1871,6 +1871,7 @@ dependencies = [
 name = "graviton"
 version = "0.1.1"
 dependencies = [
+ "anyhow",
  "git-for-graviton",
  "gveditor-core",
  "gveditor-core-api",

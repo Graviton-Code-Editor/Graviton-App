@@ -21,6 +21,7 @@ use std::sync::Arc;
 use tauri::api::path::{resolve_path, BaseDirectory};
 use tauri::utils::assets::EmbeddedAssets;
 use tauri::{Context, Env, Manager};
+use tracing::{error, info, warn};
 use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::{fmt, EnvFilter, Registry};
 
@@ -45,14 +46,10 @@ fn open_tauri(
     context: Context<EmbeddedAssets>,
     client: Client,
     sender_to_handler: Sender<ClientMessages>,
-    receiver_from_handler: Receiver<ServerMessages>,
-) {
-    let receiver_from_handler = Arc::new(Mutex::new(receiver_from_handler));
-    let sender_to_handler = Arc::new(Mutex::new(sender_to_handler));
-
+    mut receiver_from_handler: Receiver<ServerMessages>,
+) -> tauri::Result<()> {
     tauri::Builder::default()
         .setup(move |app| {
-            let receiver_from_handler = receiver_from_handler.clone();
 
             let window = app.get_window("main").unwrap();
 
@@ -62,21 +59,30 @@ fn open_tauri(
             // Forward messages from the webview to the core
             window.listen("to_core", move |event| {
                 let sender_to_handler = sender_to_handler.clone();
-                let msg: ClientMessages = serde_json::from_str(event.payload().unwrap()).unwrap();
+                let event_payload = event.payload();
 
-                tokio::task::spawn(async move {
-                    let sender_to_handler = sender_to_handler.lock().await;
-                    sender_to_handler.send(msg).await
-                });
+                if let Some(event_payload) = event_payload {
+                    let event: Result<ClientMessages, serde_json::Error> = serde_json::from_str(event_payload);
+
+                    if let Ok(event) = event {
+                        tokio::task::spawn(async move {
+                            info!("Event Webview -> Core, event: {event:?}");
+                            sender_to_handler.send(event).await.unwrap();
+                        });
+                    } else {
+                        error!("Received a message from webview with non-JSON payload, content: {event_payload}");
+                    }
+                } else {
+                    warn!("Received a message from webview without payload");
+                }
             });
 
             // Forward messages from the core to the webview
             tokio::spawn(async move {
-                let mut receiver_from_handler = receiver_from_handler.lock().await;
-
                 loop {
-                    if let Some(msg) = receiver_from_handler.recv().await {
-                        window.emit("to_webview", msg).unwrap();
+                    if let Some(event) = receiver_from_handler.recv().await {
+                        info!("Event Core -> Webview, event: {event:?}");
+                        window.emit("to_webview", event).unwrap();
                     }
                 }
             });
@@ -95,28 +101,30 @@ fn open_tauri(
             methods::get_all_language_servers
         ])
         .run(context)
-        .expect("failed to run tauri application");
 }
 
-/// Returns the location of the settings file
+/// Returns the location in which where to save the settings and state
 ///
 /// # Arguments
 ///
 /// * `context` - The Tauri Context
 ///
-fn get_settings_path(context: &Context<EmbeddedAssets>) -> PathBuf {
-    let states_path = resolve_path(
+fn get_settings_path(context: &Context<EmbeddedAssets>) -> anyhow::Result<(PathBuf, PathBuf)> {
+    let settings_path = resolve_path(
         context.config(),
         context.package_info(),
         &Env::default(),
         ".graviton/states",
         Some(BaseDirectory::Home),
-    )
-    .unwrap();
+    )?;
 
-    fs::create_dir_all(&states_path).ok();
+    fs::create_dir_all(&settings_path)?;
 
-    states_path
+    let settings_file_path = settings_path.join("settings.json");
+
+    File::create(&settings_file_path)?;
+
+    Ok((settings_path, settings_file_path))
 }
 
 /// Returns the path where third-party extensions are installed and loaded from
@@ -125,19 +133,18 @@ fn get_settings_path(context: &Context<EmbeddedAssets>) -> PathBuf {
 ///
 /// * `context` - The Tauri Context
 ///
-fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> PathBuf {
+fn get_extensions_installation_path(context: &Context<EmbeddedAssets>) -> anyhow::Result<PathBuf> {
     let extensions_installation_path = resolve_path(
         context.config(),
         context.package_info(),
         &Env::default(),
         ".graviton/extensions",
         Some(BaseDirectory::Home),
-    )
-    .unwrap();
+    )?;
 
-    fs::create_dir_all(&extensions_installation_path).ok();
+    fs::create_dir_all(&extensions_installation_path)?;
 
-    extensions_installation_path
+    Ok(extensions_installation_path)
 }
 
 /// Setup the logger
@@ -158,23 +165,32 @@ static TOKEN: &str = "graviton_token";
 static STATE_ID: u8 = 1;
 
 #[tokio::main]
-async fn main() {
+async fn main() -> anyhow::Result<()> {
     setup_logger();
 
     let (to_core, from_core) = channel::<ClientMessages>(100);
 
     let context = tauri::generate_context!("tauri.conf.json");
 
-    // Get the extension paths
-    let settings_path = get_settings_path(&context);
+    // Get the Settings paths
+    let settings_paths = get_settings_path(&context);
 
-    let settings_file_path = settings_path.join("settings.json");
+    if let Err(err) = &settings_paths {
+        error!("Could not get the settings path: {err}");
+    }
 
-    File::create(&settings_file_path).unwrap();
+    let (settings_path, settings_file_path) = settings_paths?;
+
+    let mut extensions_manager =
+        ExtensionsManager::new(to_core.clone(), Some(settings_path.clone()));
 
     let third_party_extensions_path = get_extensions_installation_path(&context);
 
-    let mut extensions_manager = ExtensionsManager::new(to_core.clone(), Some(settings_path));
+    if let Err(err) = &third_party_extensions_path {
+        error!("Could not get the settings path, error: {err}");
+    }
+
+    let third_party_extensions_path = third_party_extensions_path?;
 
     // Load built-in extensions
     extensions_manager
@@ -214,7 +230,7 @@ async fn main() {
     };
 
     // Sender and receiver for the webview window
-    let (to_webview, from_webview) = channel(1);
+    let (to_webview, from_handler) = channel(100);
 
     // Create the Local handler transport
     let (local_handler, client, to_local) = LocalHandler::new(states.clone(), to_webview);
@@ -227,5 +243,12 @@ async fn main() {
     tokio::task::spawn(async move { core.run().await });
 
     // Open the window
-    open_tauri(context, client, to_local, from_webview);
+    let res = open_tauri(context, client, to_local, from_handler);
+
+    if let Err(err) = res {
+        error!("Graviton crashed, error: {err}");
+        Err(anyhow::Error::from(err))
+    } else {
+        Ok(())
+    }
 }
