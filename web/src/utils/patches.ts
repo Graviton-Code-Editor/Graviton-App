@@ -12,7 +12,7 @@ export default function applyPatches() {
         event.preventDefault();
       }
     },
-    true
+    true,
   );
 
   /**
@@ -23,6 +23,6 @@ export default function applyPatches() {
     (event: MouseEvent) => {
       event.preventDefault();
     },
-    true
+    true,
   );
 }

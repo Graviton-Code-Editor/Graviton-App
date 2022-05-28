@@ -8,7 +8,6 @@ class Configuration<T> {
   public token: string;
 
   /**
-   *
    * @param http_uri - HTTP endpoint, if needed
    * @param ws_uri - WS endpoint, if needed
    * @param state_id - State's ID

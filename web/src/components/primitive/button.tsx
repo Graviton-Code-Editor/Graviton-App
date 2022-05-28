@@ -23,11 +23,11 @@ export const SecondaryButton = styled.button<{ expanded?: boolean }>`
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
     background: ${({ theme }) =>
-      theme.elements.secondaryButton.hover.background};
+  theme.elements.secondaryButton.hover.background};
   }
   &:active {
     background: ${({ theme }) =>
-      theme.elements.secondaryButton.hover.background};
+  theme.elements.secondaryButton.hover.background};
     transform: scale(0.98);
   }
 `;

@@ -9,7 +9,6 @@ export abstract class Panel {
   public icon: () => ReactElement<any>;
 
   /**
-   *
    * @param name - The name of the panel
    */
   constructor(name: string) {

@@ -12,7 +12,6 @@ export class Popup extends FloatingWindow {
   public container: () => ReactElement;
 
   /**
-   *
    * @param title - Title of the popup
    * @param content - Body of the popup
    * @param buttons - Collection of buttons
@@ -22,7 +21,7 @@ export class Popup extends FloatingWindow {
     title: TranslatedText,
     content: TranslatedText,
     buttons: PopupButtonOptions[] = [],
-    height = 200
+    height = 200,
   ) {
     super();
     this.container = () => {

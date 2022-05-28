@@ -7,9 +7,9 @@ import {
   CoreResponse,
   DirItemInfo,
   EventsInterface,
-  ManifestInfo as ManifestInfo,
   FileInfo,
   LanguageServer,
+  ManifestInfo as ManifestInfo,
 } from "../../types/client";
 import Configuration from "../config";
 import { StateData } from "../state/state_data";
@@ -71,7 +71,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    */
   public read_file_by_path(
     path: string,
-    filesystemName: string
+    filesystemName: string,
   ): Promise<CoreResponse<FileInfo>> {
     return invoke("read_file_by_path", {
       path,
@@ -88,7 +88,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
   public write_file_by_path(
     path: string,
     content: string,
-    filesystemName: string
+    filesystemName: string,
   ): Promise<CoreResponse<never>> {
     return invoke("write_file_by_path", {
       path,
@@ -105,7 +105,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    */
   public list_dir_by_path(
     path: string,
-    filesystemName: string
+    filesystemName: string,
   ): Promise<CoreResponse<Array<DirItemInfo>>> {
     return invoke("list_dir_by_path", {
       path,
@@ -120,7 +120,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    * @JsonRpcMethod
    */
   public get_ext_info_by_id(
-    extensionId: string
+    extensionId: string,
   ): Promise<CoreResponse<ManifestInfo>> {
     return invoke("get_ext_info_by_id", {
       extensionId,
@@ -151,7 +151,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
         ListenToState: {
           state_id: this.config.state_id,
         },
-      })
+      }),
     );
   }
 
@@ -167,7 +167,7 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
       "to_core",
       JSON.stringify({
         ...message,
-      })
+      }),
     );
   }
 }

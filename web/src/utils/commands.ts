@@ -8,7 +8,7 @@ export const isTauri = (globalThis as any).__TAURI__ != null;
  * Launches a filesystem picker, native if Tauri and web-based if not
  */
 export async function openFolderPicker(
-  filesystem_name: string
+  filesystem_name: string,
 ): Promise<string | null> {
   if (filesystem_name == "local" && isTauri) {
     const { dialog } = await import("@tauri-apps/api");

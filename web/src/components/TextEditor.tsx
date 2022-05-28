@@ -59,7 +59,7 @@ const CodeMirrorStyler = styled.div`
   }
   & .cm-activeLineGutter {
     color: ${({ theme }) =>
-      theme.elements.textEditor.gutters.gutter.active.color};
+  theme.elements.textEditor.gutters.gutter.active.color};
     background: transparent;
   }
   & .cm-content {
@@ -76,15 +76,15 @@ const CodeMirrorStyler = styled.div`
   }
   & .cm-activeLine {
     background: ${({ theme }) =>
-      theme.elements.textEditor.activeLine.background};
+  theme.elements.textEditor.activeLine.background};
   }
   & .cm-matchingBracket {
     background: ${({ theme }) =>
-      theme.elements.textEditor.matchingBracket.background};
+  theme.elements.textEditor.matchingBracket.background};
   }
   & .cm-selectionBackground {
     background: ${({ theme }) =>
-      theme.elements.textEditor.selection.background} !important;
+  theme.elements.textEditor.selection.background} !important;
     border-radius: 2px;
   }
 `;

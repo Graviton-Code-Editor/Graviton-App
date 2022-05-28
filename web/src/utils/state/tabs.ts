@@ -15,7 +15,7 @@ import { clientState } from "../state";
 import getAllStateData from "./state_data";
 
 async function toContentResolver(
-  reader: Promise<CoreResponse<FileInfo>>
+  reader: Promise<CoreResponse<FileInfo>>,
 ): Promise<string | null> {
   const res = await reader;
   if (res.Ok) {
@@ -36,7 +36,7 @@ export type TabsViews<T> = Array<ViewPanel<T>>;
 export function transformTabsDataToTabs(
   views: Array<TabsViews<TabData>>,
   getEditor: EditorFinder,
-  client: Client
+  client: Client,
 ): Array<TabsViews<undefined | TextEditorTab | Tab>> {
   return views.map((viewPanel) => {
     return viewPanel.map((viewPanel) => {
@@ -50,13 +50,13 @@ export function transformTabsDataToTabs(
               if (editor != null) {
                 const tabContentReader = client.read_file_by_path(
                   data.path,
-                  data.filesystem
+                  data.filesystem,
                 );
                 const tab = new editor(
                   data.filename,
                   data.path,
                   toContentResolver(tabContentReader),
-                  data.format
+                  data.format,
                 );
                 tab.id = tabData.id;
                 return tab;

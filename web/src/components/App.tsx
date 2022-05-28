@@ -132,7 +132,7 @@ function StateRoot({
         const openedTabs = transformTabsDataToTabs(
           state_data.opened_tabs,
           getEditor,
-          client
+          client,
         ) as Array<TabsViews<Tab>>;
 
         const allTabs = openedTabs

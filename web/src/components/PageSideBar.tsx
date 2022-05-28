@@ -10,7 +10,7 @@ export const SideBarButton = styled(PrimaryButton)`
   cursor: pointer;
   &:hover {
     background: ${({ theme }) =>
-      theme.elements.pageSideBar.button.hover.background};
+  theme.elements.pageSideBar.button.hover.background};
   }
 `;
 

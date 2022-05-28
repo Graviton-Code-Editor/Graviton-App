@@ -47,7 +47,7 @@ const ExplorerItemContainer = styled.div<{
     margin-top: 2px;
     width: 8px;
     transform: ${({ isOpened }) =>
-      isOpened ? " rotate(0deg)" : " rotate(-90deg)"};
+  isOpened ? " rotate(0deg)" : " rotate(-90deg)"};
     & > rect {
       fill: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
       stroke: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
@@ -124,7 +124,7 @@ function removeSubTreeByPath(tree: TreeItem, path: string): TreeItem {
 function addItemsToSubTreeByPath(
   tree: TreeItem,
   path: string,
-  subTreeItems: TreeItems
+  subTreeItems: TreeItems,
 ): TreeItem {
   Object.keys(tree.items).forEach((item_path) => {
     if (path === item_path) {
@@ -165,12 +165,11 @@ function mapItemsListToSubTreeItem(items: DirItemInfo[]): TreeItems {
   const subTreeItems: TreeItems = {};
 
   items.forEach(
-    (item) =>
-      (subTreeItems[item.path] = {
-        name: item.name,
-        isFile: item.is_file,
-        items: {},
-      })
+    (item) => (subTreeItems[item.path] = {
+      name: item.name,
+      isFile: item.is_file,
+      items: {},
+    }),
   );
 
   return subTreeItems;

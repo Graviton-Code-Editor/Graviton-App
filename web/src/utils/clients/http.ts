@@ -7,9 +7,9 @@ import {
   Client,
   CoreResponse,
   DirItemInfo,
-  ManifestInfo,
   FileInfo,
   LanguageServer,
+  ManifestInfo,
 } from "../../types/client";
 import { StateData } from "../state/state_data";
 
@@ -85,7 +85,7 @@ export class HTTPClient extends Emittery implements Client {
    */
   public read_file_by_path(
     path: string,
-    filesystem_name: string
+    filesystem_name: string,
   ): Promise<CoreResponse<FileInfo>> {
     return this.rpc.call("read_file_by_path", [
       path,
@@ -102,7 +102,7 @@ export class HTTPClient extends Emittery implements Client {
   public write_file_by_path(
     path: string,
     content: string,
-    filesystem_name: string
+    filesystem_name: string,
   ): Promise<CoreResponse<never>> {
     return this.rpc.call("write_file_by_path", [
       path,
@@ -119,7 +119,7 @@ export class HTTPClient extends Emittery implements Client {
    */
   public list_dir_by_path(
     path: string,
-    filesystem_name: string
+    filesystem_name: string,
   ): Promise<CoreResponse<Array<DirItemInfo>>> {
     return this.rpc.call("list_dir_by_path", [
       path,
@@ -134,7 +134,7 @@ export class HTTPClient extends Emittery implements Client {
    * @JsonRpcMethod
    */
   public get_ext_info_by_id(
-    extension_id: string
+    extension_id: string,
   ): Promise<CoreResponse<ManifestInfo>> {
     return this.rpc.call("get_ext_info_by_id", [
       extension_id,
@@ -163,7 +163,7 @@ export class HTTPClient extends Emittery implements Client {
       JSON.stringify({
         msg_type: "ListenToState",
         state_id: this.config.state_id,
-      })
+      }),
     );
   }
 
@@ -178,7 +178,7 @@ export class HTTPClient extends Emittery implements Client {
     this.socket.send(
       JSON.stringify({
         ...message,
-      })
+      }),
     );
   }
 }

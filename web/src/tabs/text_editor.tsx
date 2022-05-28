@@ -65,7 +65,7 @@ class TextEditorTab extends Tab {
     filename: string,
     path: string,
     contentResolver: Promise<string | null>,
-    format: FileFormat
+    format: FileFormat,
   ) {
     super(filename);
     this.path = path;
@@ -162,7 +162,7 @@ class TextEditorTab extends Tab {
             action: () => undefined,
           },
         ],
-        195
+        195,
       );
 
       setRecoil(showedWindows, (val) => [...val, message]);
@@ -351,7 +351,7 @@ function TabTextEditorContainer({
               client,
             });
           },
-          lsClient
+          lsClient,
         );
 
         extensions.push(lspPlugin);
@@ -395,7 +395,7 @@ function createLSPPlugin(
   unixPath: string,
   rootUri: string,
   clientCreated: (client: LanguageServerClient) => void,
-  lsClient?: LanguageServerClient
+  lsClient?: LanguageServerClient,
 ): Extension {
   if (!lsClient) {
     const client = getRecoil(clientState);
@@ -414,7 +414,7 @@ function createLSPPlugin(
     const eventEmitterTransport = new EventEmitterTransport(
       eventEmitter,
       "/req",
-      "/res"
+      "/res",
     );
 
     lsClient = new (LanguageServerClient as any)({

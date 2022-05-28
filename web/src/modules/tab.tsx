@@ -69,7 +69,6 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
   }
 
   /**
-   *
    * @returns The tab's data
    *
    * @alpha

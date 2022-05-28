@@ -52,19 +52,19 @@ export interface Client extends Emittery {
   set_state_by_id: (state: Omit<StateData, "id">) => Promise<void>;
   read_file_by_path: (
     path: string,
-    fs: string
+    fs: string,
   ) => Promise<CoreResponse<FileInfo>>;
   write_file_by_path: (
     path: string,
     content: string,
-    fs: string
+    fs: string,
   ) => Promise<CoreResponse<never>>;
   list_dir_by_path: (
     path: string,
-    fs: string
+    fs: string,
   ) => Promise<CoreResponse<Array<DirItemInfo>>>;
   get_ext_info_by_id: (
-    extensionId: string
+    extensionId: string,
   ) => Promise<CoreResponse<ManifestInfo>>;
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;

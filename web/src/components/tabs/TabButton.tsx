@@ -1,6 +1,6 @@
 import { MouseEvent, PropsWithChildren, ReactElement } from "react";
 import { ReactSVG } from "react-svg";
-import { keyframes, default as styled } from "styled-components";
+import { default as styled, keyframes } from "styled-components";
 import UnSavedIndicator from "./UnSavedIndicator";
 
 const tabOpening = keyframes`
@@ -105,13 +105,13 @@ export default function TabButton({
     <TabButtonStyle className={isSelected && "selected"} onClick={select}>
       <TabButtonIcon>{icon}</TabButtonIcon>
       <p>{title}</p>
-      {isEdited ? (
-        <UnSavedIndicator className="indicator" onClick={saveTab} />
-      ) : (
-        <button onClick={closeTab}>
-          <ReactSVG src="/icons/close_cross.svg" />
-        </button>
-      )}
+      {isEdited
+        ? <UnSavedIndicator className="indicator" onClick={saveTab} />
+        : (
+          <button onClick={closeTab}>
+            <ReactSVG src="/icons/close_cross.svg" />
+          </button>
+        )}
     </TabButtonStyle>
   );
 }

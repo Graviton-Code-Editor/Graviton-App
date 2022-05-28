@@ -14,7 +14,7 @@ export async function createClient(token: string): Promise<Client> {
       "http://localhost:50010",
       `ws://localhost:50010/websockets?token=${token}&state_id=1`,
       1,
-      token
+      token,
     );
     return new HTTPClient(config);
   }

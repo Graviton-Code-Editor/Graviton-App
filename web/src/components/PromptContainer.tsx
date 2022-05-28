@@ -17,9 +17,9 @@ const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   font-size: 13px;
   outline: none;
   background: ${({ isSelected, theme }) =>
-    isSelected
-      ? theme.elements.prompt.option.selected.background
-      : theme.elements.prompt.option.background};
+  isSelected
+    ? theme.elements.prompt.option.selected.background
+    : theme.elements.prompt.option.background};
   cursor: pointer;
   &:hover {
     background: ${({ theme }) => theme.elements.prompt.option.hover.background};

@@ -27,23 +27,23 @@ export const TitleBarContainer = styled.div`
       outline: 0;
       left: 0;
       background: ${({ theme }) =>
-        theme.elements.titleBar.controls.background} !important;
+  theme.elements.titleBar.controls.background} !important;
     }
 
     & button:hover {
       background: ${({ theme }) =>
-        theme.elements.titleBar.controls.hover.background} !important;
+  theme.elements.titleBar.controls.hover.background} !important;
     }
 
     & button:nth-child(3):hover {
       background: ${({ theme }) =>
-        theme.elements.titleBar.controls.hover.closeButton
-          .background} !important;
+  theme.elements.titleBar.controls.hover.closeButton
+    .background} !important;
     }
 
     & button:nth-child(3):hover rect.fill {
       fill: ${({ theme }) =>
-        theme.elements.titleBar.controls.hover.closeButton.color} !important;
+  theme.elements.titleBar.controls.hover.closeButton.color} !important;
     }
   }
 `;

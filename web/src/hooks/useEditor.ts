@@ -4,7 +4,7 @@ import { FileFormat } from "../types/client";
 import { editors } from "../utils/state";
 
 export type EditorFinder = (
-  format: FileFormat
+  format: FileFormat,
 ) => typeof TextEditorTab | undefined;
 
 /**

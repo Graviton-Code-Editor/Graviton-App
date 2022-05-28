@@ -16,7 +16,7 @@ const StatusBarItemContainer = styled.div`
   }
   &:hover {
     background: ${({ theme }) =>
-      theme.elements.statusbar.item.hover.background};
+  theme.elements.statusbar.item.hover.background};
   }
 `;
 

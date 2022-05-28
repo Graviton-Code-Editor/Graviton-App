@@ -30,7 +30,7 @@ function ExplorerPanelContainer() {
                 item.name,
                 item.path,
                 Promise.resolve(content),
-                format
+                format,
               );
               openTab(newTab);
             } else {

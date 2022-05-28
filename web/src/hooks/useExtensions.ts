@@ -20,7 +20,7 @@ export default function useExtensions() {
           extesions_list.map(async (id) => {
             const info_response = await client.get_ext_info_by_id(id);
             return info_response.Ok as ManifestInfo;
-          })
+          }),
         );
         setExtensions(extensions_info_list);
       }

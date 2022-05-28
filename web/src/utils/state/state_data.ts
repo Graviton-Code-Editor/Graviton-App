@@ -17,7 +17,7 @@ export default function getAllStateData(): Omit<StateData, "id"> {
 
 // Transform Tabs to TabDatas
 function transformTabsToData(
-  views: Array<TabsViews<Tab>>
+  views: Array<TabsViews<Tab>>,
 ): Array<TabsViews<TabData>> {
   return views.map((viewPanel) => {
     return viewPanel.map((view) => {
