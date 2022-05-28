@@ -11,6 +11,12 @@ const CodeMirrorStyler = styled.div`
     background: ${({ theme }) => theme.elements.textEditor.background};
     box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.1);
   }
+  & ::-webkit-scrollbar {
+    width: 10px !important; 
+  }
+  &:not(:hover) ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
   & .ͼa {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
   }
