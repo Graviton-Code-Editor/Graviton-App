@@ -6,13 +6,13 @@ use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
 use gveditor_core_api::messaging::ClientMessages;
 use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender};
-use tracing::{error, info};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::fs;
 use tokio::runtime::Runtime;
 use tokio_stream::wrappers::ReadDirStream;
 use tokio_stream::StreamExt;
+use tracing::error;
 use uuid::Uuid;
 
 mod events_manager;
@@ -59,11 +59,7 @@ impl Extension for DenoExtension {
         let state_id = self.state_id;
         let name = self.info.extension.name.clone();
 
-        tracing::info!(
-            "Loaded Deno Extension <{}> from {}",
-            name,
-            self.main_path
-        );
+        tracing::info!("Loaded Deno Extension <{}> from {}", name, self.main_path);
 
         std::thread::spawn(move || {
             let rt = Runtime::new().unwrap();
@@ -79,7 +75,7 @@ impl Extension for DenoExtension {
                         let msg = err.to_string();
                         if msg != "Uncaught Error: execution terminated" {
                             error!("Deno extension <{}> threw an error: {}", name, err);
-                        }     
+                        }
                     }
                 }
             });

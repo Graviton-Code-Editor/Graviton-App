@@ -12,7 +12,7 @@ const CodeMirrorStyler = styled.div`
     box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.1);
   }
   & ::-webkit-scrollbar {
-    width: 10px !important; 
+    width: 10px !important;
   }
   &:not(:hover) ::-webkit-scrollbar-thumb {
     background: transparent;

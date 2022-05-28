@@ -10,7 +10,7 @@ use uuid::Uuid;
 use crate::events_manager::EventsManager;
 use crate::WorkerHandle;
 
-/// Send Core Messages from deno
+/// Listen messages from Core in Deno
 #[op]
 async fn op_listen_messages_from_core(
     state: Rc<RefCell<OpState>>,
@@ -37,7 +37,7 @@ async fn op_listen_messages_from_core(
     Ok(event_response.unwrap())
 }
 
-/// Send Core Messages from deno
+/// Send messages from Deno to Core
 #[op]
 async fn op_send_message_to_core(
     state: Rc<RefCell<OpState>>,
@@ -54,7 +54,7 @@ async fn op_send_message_to_core(
     Ok(())
 }
 
-/// Terminate the worker
+/// Terminate the Deno worker
 #[op]
 async fn op_terminate_main_worker(
     state: Rc<RefCell<OpState>>,
@@ -71,16 +71,13 @@ async fn op_terminate_main_worker(
     if let Some(handle) = &*worker_handle.lock().await {
         handle.terminate_execution();
 
-        tracing::info!(
-            "Unloaded Deno Extension <{}>",
-            client.name
-        );
+        tracing::info!("Unloaded Deno Extension <{}>", client.name);
     }
 
     Ok(())
 }
 
-/// Crate the extension to bridge Graviton Core and the Deno extension
+/// Duplex Events channels for Graviton and Deno
 pub fn new(
     client: ExtensionClient,
     events_manager: EventsManager,

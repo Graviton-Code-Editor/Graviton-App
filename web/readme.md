@@ -1,15 +1,4 @@
-This is a web-based frontend implementation
-
-| Folder         | Description        |
-| -------------- | ------------------ |
-| src/components | General components |
-| src/editors    | Built-in editors   |
-| src/modules    | API utilities      |
-| src/panels     | Built-in panels    |
-| src/prompts    | Built-in prompts   |
-| src/tabs       | Built-in tabs      |
-| src/types      | General types      |
-| src/utils      | General utils      |
+This is a web-based frontend implementation for Graviton
 
 Install dependencies:
 

@@ -100,6 +100,7 @@ async fn op_on_click_statusbar_item(
     Ok(())
 }
 
+/// Set the label for the given status bar item
 #[op]
 async fn op_set_statusbar_item_label(
     state: Rc<RefCell<OpState>>,
@@ -123,7 +124,7 @@ async fn op_set_statusbar_item_label(
     Ok(())
 }
 
-/// Crate the extension to bridge Graviton Core and the Deno extension
+/// StatusBar Item module for Deno
 pub fn new(client: ExtensionClient, state_id: u8) -> Extension {
     Extension::builder()
         .ops(vec![
