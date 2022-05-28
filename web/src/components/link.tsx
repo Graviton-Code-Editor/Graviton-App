@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { isTauri } from "../utils/commands";
 import styled from "styled-components";
-import { SecondaryButton } from "./primitive/button";
+import { SecondaryButton } from "./primitive/Button";
 
 const StyledAnchor = styled.a`
   color: ${({ theme }) => theme.elements.link.color};

@@ -14,6 +14,7 @@ const NoTabsOpenedMessageContainer = styled.div`
   align-items: center;
   height: 100%;
   text-align: center;
+  user-select: none;
 `;
 
 function NoTabsOpenedMessage() {

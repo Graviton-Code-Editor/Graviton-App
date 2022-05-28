@@ -1,4 +1,4 @@
-import { WindowButton } from "./primitive/button";
+import { WindowButton } from "./primitive/Button";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";

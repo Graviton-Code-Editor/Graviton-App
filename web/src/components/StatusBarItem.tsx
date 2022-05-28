@@ -7,6 +7,7 @@ const StatusBarItemContainer = styled.div`
   padding: 0px 10px;
   user-select: none;
   height: 25px;
+  user-select: none;
   & > div {
     display: flex;
     justify-content: center;

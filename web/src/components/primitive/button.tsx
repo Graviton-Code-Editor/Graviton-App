@@ -7,17 +7,19 @@ export const PrimaryButton = styled.button`
   border-radius: 5px;
   border: none;
   cursor: pointer;
+  user-select: none;
 `;
 
 export const SecondaryButton = styled.button<{ expanded?: boolean }>`
   background: ${({ theme }) => theme.elements.secondaryButton.background};
   color: ${({ theme }) => theme.elements.secondaryButton.color};
-  padding: 7px;
+  padding: 9px 12px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   margin-top: 5px;
   transition: 0.1s;
+  user-select: none;
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
     background: ${({ theme }) =>
@@ -39,6 +41,7 @@ export const WindowButton = styled.button<{ expanded: boolean }>`
   cursor: pointer;
   margin-top: 5px;
   transition: 0.1s;
+  user-select: none;
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
     background: ${({ theme }) => theme.elements.windowButton.hover.background};

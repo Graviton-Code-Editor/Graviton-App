@@ -1,4 +1,4 @@
-import { PrimaryButton } from "./primitive/button";
+import { PrimaryButton } from "./primitive/Button";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";

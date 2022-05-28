@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import Link from "../components/link";
+import Link from "../components/Link";
 import { Tab } from "../modules/tab";
 
 const WelcomeTabContainerStyled = styled.div`
@@ -17,12 +17,12 @@ function WelcomeTabContainer() {
       <p>{t("tabs.Welcome.content")}</p>
       <Link
         href="https://github.com/Graviton-Code-Editor/Graviton-App/issues"
-        label={t("Report bugs here")}
+        label={t("Report issues")}
       />
       <br />
       <Link
         href="https://github.com/Graviton-Code-Editor/Graviton-App/issues"
-        label={t("Contribute here")}
+        label={t("Contribute")}
       />
     </WelcomeTabContainerStyled>
   );
