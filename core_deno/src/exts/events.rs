@@ -61,13 +61,20 @@ async fn op_terminate_main_worker(
     _: (),
     _: (),
 ) -> Result<(), AnyError> {
-    let worker_handle: WorkerHandle = {
+    let (worker_handle, client) = {
         let state = state.borrow();
-        state.try_borrow::<WorkerHandle>().unwrap().to_owned()
+        let worker_handle = state.borrow::<WorkerHandle>().to_owned();
+        let client = state.borrow::<ExtensionClient>().to_owned();
+        (worker_handle, client)
     };
 
     if let Some(handle) = &*worker_handle.lock().await {
         handle.terminate_execution();
+
+        tracing::info!(
+            "Unloaded Deno Extension <{}>",
+            client.name
+        );
     }
 
     Ok(())

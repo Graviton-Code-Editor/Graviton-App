@@ -26,7 +26,7 @@ pub enum EventActions {
 #[derive(Clone)]
 pub struct ExtensionClient {
     extension_id: String,
-    name: String,
+    pub name: String,
     id_count: Arc<Mutex<i32>>,
     sender: AsyncSender<ClientMessages>,
     settings_path: Option<PathBuf>,

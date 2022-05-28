@@ -57,7 +57,6 @@ impl Extension for DenoExtension {
         let events_manager = self.events_manager.clone();
         let state_id = self.state_id;
 
-        // TODO: Is there a better way rather than launching it in a different thread?
         std::thread::spawn(move || {
             let r = Runtime::new().unwrap();
             r.block_on(async move {
