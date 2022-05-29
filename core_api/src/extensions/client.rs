@@ -1,15 +1,16 @@
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
-use tokio::sync::Mutex as AsyncMutex;
+use tokio::sync::Mutex;
 
 use crate::messaging::{ClientMessages, ServerMessages, UIEvent};
 use crate::tokio::sync::mpsc::Sender as AsyncSender;
 use crate::LanguageServer;
 
 use super::settings::ExtensionSettings;
+use uuid::Uuid;
 
 pub enum EventActions {
     OnClickCallback {
@@ -27,10 +28,9 @@ pub enum EventActions {
 pub struct ExtensionClient {
     extension_id: String,
     pub name: String,
-    id_count: Arc<Mutex<i32>>,
     sender: AsyncSender<ClientMessages>,
     settings_path: Option<PathBuf>,
-    pub event_actions: Arc<AsyncMutex<Vec<EventActions>>>,
+    pub event_actions: Arc<Mutex<Vec<EventActions>>>,
 }
 
 impl ExtensionClient {
@@ -43,18 +43,15 @@ impl ExtensionClient {
         Self {
             extension_id: extension_id.to_string(),
             name: name.to_string(),
-            id_count: Arc::new(Mutex::new(0)),
             sender,
             // TODO(marc2332) This should also take the State ID
             settings_path: settings_path.map(|path| path.join(extension_id)),
-            event_actions: Arc::new(AsyncMutex::new(Vec::new())),
+            event_actions: Arc::new(Mutex::new(Vec::new())),
         }
     }
 
-    // TODO(marc2332) Remove this and use UUID
     pub fn get_id(&mut self) -> String {
-        *self.id_count.lock().unwrap() += 1;
-        format!("{}/{}", self.name, self.id_count.lock().unwrap())
+        format!("{}/{}", self.name, Uuid::new_v4())
     }
 
     pub async fn send(&self, message: ClientMessages) -> Result<(), SendError<ClientMessages>> {
