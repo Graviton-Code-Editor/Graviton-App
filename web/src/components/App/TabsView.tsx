@@ -51,7 +51,7 @@ function TabsView() {
                     panel={viewPanel}
                     row={r}
                     col={c}
-                    close={(i) => closeTab(r, c, i)}
+                    close={(i: number) => closeTab(r, c, i)}
                   />
                 );
               })}

@@ -1,4 +1,4 @@
-import Title from "../../../components/Primitive/title";
+import Title from "../../../components/Primitive/Title";
 import List from "../../../components/Primitive/List";
 import TabText from "../../../components/Tabs/TabText";
 import useExtensions from "../../../hooks/useExtensions";

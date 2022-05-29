@@ -1,4 +1,4 @@
-import { PrimaryButton } from "../Primitive/button";
+import { PrimaryButton } from "../Primitive/Button";
 import styled from "styled-components";
 
 export const SideBarButton = styled(PrimaryButton)`

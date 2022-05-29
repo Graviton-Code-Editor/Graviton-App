@@ -1,4 +1,4 @@
-import Title from "../../../components/Primitive/title";
+import Title from "../../../components/Primitive/Title";
 import TabText from "../../../components/Tabs/TabText";
 
 export default function AboutRoute() {

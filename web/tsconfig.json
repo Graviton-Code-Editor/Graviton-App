@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["./src/*/**/*", "./src/vite-env.d.ts"],
   "exclude": ["./node_modules"]

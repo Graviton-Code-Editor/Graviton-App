@@ -7,7 +7,7 @@ import { clientState, foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
-import { SecondaryButton } from "../components/Primitive/button";
+import { SecondaryButton } from "../components/Primitive/Button";
 import { openFolderPicker } from "../utils/commands";
 
 function ExplorerPanelContainer() {
