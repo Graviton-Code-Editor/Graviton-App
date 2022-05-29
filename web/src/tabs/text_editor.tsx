@@ -86,6 +86,7 @@ class TextEditorTab extends Tab {
           name: textEditorTab.filename,
           depth: 1,
           path: textEditorTab.path,
+          filesystem: "local",
         }}
       />
     );

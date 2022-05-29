@@ -19,7 +19,6 @@ function ExplorerPanelContainer() {
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
       try {
-        // TODO(marc2332): For better UX, a content resolver could be passed to the editor creator instead of waiting to read the file, this will make the tab creation faster in "big" files.
         client.read_file_by_path(item.path, "local").then((fileContent) => {
           if (fileContent.Ok) {
             const { content, format } = fileContent.Ok;
@@ -55,6 +54,7 @@ function ExplorerPanelContainer() {
       setOpenedFolders([
         {
           path: openedFolder,
+          filesystem: "local",
         },
       ]);
     }
@@ -64,24 +64,21 @@ function ExplorerPanelContainer() {
 
   return (
     <div style={{ height: "100%", paddingLeft: 5 }}>
-      {folders.map(({ path }) => {
-        // Note: path shouldn't really be the key and filesystem_name shouldn't be always local
-        return (
+      {folders.length === 0
+        ? (
+          <>
+            <SecondaryButton expanded={true} onClick={openFolder}>
+              Open folder
+            </SecondaryButton>
+          </>
+        )
+        : (
           <FilesystemExplorer
-            initialRoute={path}
+            folders={folders}
             onSelected={openFile}
-            key={path}
-            filesystem_name="local"
+            key="eplorer"
           />
-        );
-      })}
-      {folders.length === 0 && (
-        <>
-          <SecondaryButton expanded={true} onClick={openFolder}>
-            Open folder
-          </SecondaryButton>
-        </>
-      )}
+        )}
     </div>
   );
 }

@@ -18,7 +18,8 @@
             "Global":{
                 "OpenWelcome": "Open Welcome",
                 "OpenSettings": "Open Settings",
-                "OpenFolder": "Open Folder"
+                "OpenFolder": "Open Folder",
+                "AddFolder": "Add Folder"
             }
         },
         "Contribute": "Contribute issues",

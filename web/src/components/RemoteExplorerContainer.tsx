@@ -40,6 +40,10 @@ export interface RemoteExplorerOptions {
   onSelectedFolder: (path: string) => void;
 }
 
+const folders = [
+  { path: "\\", filesystem: "local" },
+];
+
 export default function RemoteExplorerContainer({
   onSelectedFolder,
 }: RemoteExplorerOptions) {
@@ -81,9 +85,8 @@ export default function RemoteExplorerContainer({
         <div className="explorer">
           <div className="topView">
             <FilesystemExplorer
-              initialRoute={"/"}
+              folders={folders}
               onSelected={selectedFolder}
-              filesystem_name="local"
             />
           </div>
           <div className="bottomView">

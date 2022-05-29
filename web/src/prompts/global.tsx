@@ -37,7 +37,26 @@ function GlobalPromptContainer() {
           setOpenedFolders([
             {
               path: openedFolder,
+              filesystem: "local",
             },
+          ]);
+        }
+      },
+    },
+    {
+      label: { text: "prompts.Global.AddFolder" },
+      async onSelected({ closePrompt }) {
+        closePrompt();
+        const openedFolder = await openFolderPicker("local");
+        // If a folder selected
+        if (openedFolder != null) {
+          // Clear all opened folders and open the selected one
+          setOpenedFolders((folders) => [
+            {
+              path: openedFolder,
+              filesystem: "local",
+            },
+            ...folders,
           ]);
         }
       },
