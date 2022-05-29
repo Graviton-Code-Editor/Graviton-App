@@ -21,15 +21,18 @@ vi.stubGlobal(
   }))
 );
 
+const folders = [
+  { path: "\\", filesystem: "local"}
+]
+
 describe("<FilesystemExplorer/>", () => {
   test("readme.md exists", async () => {
     act(() => {
       render(
         <FakeRoot>
           <FilesystemExplorer
-            initialRoute="/tests"
+            folders={folders}
             onSelected={() => {}}
-            filesystem_name="local"
           />
         </FakeRoot>
       );
