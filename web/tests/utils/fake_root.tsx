@@ -3,7 +3,7 @@ import { clientState } from "../../src/utils/state";
 import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
 import React, { PropsWithChildren, useEffect } from "react";
 import FakeClient from "./fake_client";
-import ThemeProvider from "../../src/components/ThemeProvider";
+import ThemeProvider from "../../src/components/Providers/ThemeProvider";
 
 function RootRenderer({ children }: PropsWithChildren<any>) {
   const [client, setClient] = useRecoilState(clientState);

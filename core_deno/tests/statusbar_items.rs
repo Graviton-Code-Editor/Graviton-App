@@ -27,14 +27,18 @@ async fn show_hide_statusbar_item() {
     // Wait for the button to be shown
     let msg = rv.recv().await.unwrap();
 
-    assert_eq!(
+    assert!(matches!(
         msg,
-        ClientMessages::ServerMessage(ServerMessages::ShowStatusBarItem {
-            label: "test".to_string(),
-            state_id: 0,
-            id: "/1".to_string(),
-        },)
-    );
+        ClientMessages::ServerMessage(ServerMessages::ShowStatusBarItem { .. },)
+    ));
+
+    let mut statusbar_item_id = "".to_string();
+
+    if let ClientMessages::ServerMessage(ServerMessages::ShowStatusBarItem { id, .. }) = msg {
+        statusbar_item_id = id;
+    }
+
+    let statusbar_item_id_on_click = statusbar_item_id.clone();
 
     // Simulate an onClick
     tokio::spawn(async move {
@@ -42,7 +46,7 @@ async fn show_hide_statusbar_item() {
             let mut ext_plugin = plugin.lock().await;
             ext_plugin.notify(ClientMessages::UIEvent(UIEvent::StatusBarItemClicked {
                 state_id: 0,
-                id: "/1".to_string(),
+                id: statusbar_item_id_on_click,
             }));
         }
     });
@@ -54,7 +58,7 @@ async fn show_hide_statusbar_item() {
         msg,
         ClientMessages::ServerMessage(ServerMessages::HideStatusBarItem {
             state_id: 0,
-            id: "/1".to_string(),
+            id: statusbar_item_id,
         },)
     );
 }

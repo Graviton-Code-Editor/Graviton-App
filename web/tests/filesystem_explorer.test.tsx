@@ -1,7 +1,7 @@
 import * as React from "react";
 import { render, screen, waitFor, act } from "@testing-library/react";
 import FakeRoot from "./utils/fake_root";
-import FilesystemExplorer from "../src/components/FilesystemExplorer";
+import FilesystemExplorer from "../src/components/FilesystemExplorer/FilesystemExplorer";
 import { test, describe, expect, vi } from "vitest";
 
 global.IS_REACT_ACT_ENVIRONMENT = true;

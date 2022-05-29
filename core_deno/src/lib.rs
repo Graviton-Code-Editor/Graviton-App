@@ -28,7 +28,7 @@ pub type WorkerHandle = Arc<Mutex<Option<IsolateHandle>>>;
 struct DenoExtension {
     main_path: String,
     info: ManifestInfo,
-    client: ExtensionClient,
+    pub(crate) client: ExtensionClient,
     state_id: u8,
     events_manager: EventsManager,
 }
