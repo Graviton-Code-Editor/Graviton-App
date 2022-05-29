@@ -8,10 +8,12 @@ import {
 } from "react-router-dom";
 import { Tab } from "../../modules/tab";
 import ExtensionsRoute from "./routes/extensions";
-import PageSideBar, { SideBarButton } from "../../components/PageSideBar";
+import PageSideBar, {
+  SideBarButton,
+} from "../../components/SideBar/PageSideBar";
 import AboutRoute from "./routes/about";
-import HorizontalView from "../../components/HorizontalView";
-import RouteView from "../../components/RouteView";
+import HorizontalView from "../../components/Primitive/HorizontalView";
+import RouteView from "../../components/App/RouteView";
 import { useEffect } from "react";
 
 const SettingsTabContainerStyled = styled.div`

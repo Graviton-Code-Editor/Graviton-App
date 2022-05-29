@@ -1,4 +1,4 @@
-import TextEditor from "../components/TextEditor";
+import TextEditor from "../components/TextEditor/TextEditor";
 import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
 import { Command, KeyBinding, keymap } from "@codemirror/view";
@@ -18,14 +18,14 @@ import {
   languageServerWithTransport,
 } from "codemirror-languageserver";
 import { useEffect, useState } from "react";
-import TabText from "../components/TabText";
-import LoadingTabContent from "../components/tabs/LoadingTabContent";
+import TabText from "../components/Tabs/TabText";
+import LoadingTabContent from "../components/Tabs/LoadingTabContent";
 import {
   LanguageServerInitialization,
   LanguageServerNotification,
   NotifyLanguageServers,
 } from "../types/messaging";
-import FileIcon from "../components/FileIcon";
+import FileIcon from "../components/Filesystem/FileIcon";
 import useLSPClients from "../hooks/useLSPClients";
 
 interface SavedState {

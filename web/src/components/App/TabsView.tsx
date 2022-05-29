@@ -1,8 +1,8 @@
 import { SplitPane } from "react-multi-split-pane";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { tabsState } from "../utils/state";
-import TabsPanel from "./tabs/TabPanel";
+import { tabsState } from "../../utils/state";
+import TabsPanel from "../Tabs/TabPanel";
 
 const TabsContainer = styled.div`
   overflow: hidden;

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { default as styled } from "styled-components";
-import { clientState } from "../utils/state";
+import { clientState } from "../../utils/state";
 //@ts-ignore
 import { FixedSizeList as List } from "react-window";
 //@ts-ignore
 import AutoSizer from "react-virtualized-auto-sizer";
 import { ReactSVG } from "react-svg";
-import { DirItemInfo } from "../types/client";
-import FileIcon from "./FileIcon";
-import { basename } from "../utils/path";
-import { FolderState } from "../utils/state/folders";
+import { DirItemInfo } from "../../types/client";
+import FileIcon from "../Filesystem/FileIcon";
+import { basename } from "../../utils/path";
+import { FolderState } from "../../utils/state/folders";
 
 const ExplorerContainer = styled.div`
   margin: 5px;

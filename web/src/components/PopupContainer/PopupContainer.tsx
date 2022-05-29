@@ -1,11 +1,11 @@
-import { WindowButton } from "./primitive/button";
+import { WindowButton } from "../Primitive/button";
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { TranslatedText } from "../types/types";
-import { showedWindows } from "../utils/state";
-import WindowBackground from "./WindowBackground";
+import { TranslatedText } from "../../types/types";
+import { showedWindows } from "../../utils/state";
+import WindowBackground from "../Window/WindowBackground";
 
 const StyledPopup = styled.div<{ height: number }>`
   user-select: none;

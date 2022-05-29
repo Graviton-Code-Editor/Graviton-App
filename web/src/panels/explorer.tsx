@@ -1,13 +1,13 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import FilesystemExplorer, {
   TreeItemInfo,
-} from "../components/FilesystemExplorer";
+} from "../components/FilesystemExplorer/FilesystemExplorer";
 import { Panel } from "../modules/panel";
 import { clientState, foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
-import { SecondaryButton } from "../components/primitive/button";
+import { SecondaryButton } from "../components/Primitive/button";
 import { openFolderPicker } from "../utils/commands";
 
 function ExplorerPanelContainer() {

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import Link from "../components/link";
+import Link from "../components/Primitive/Link";
 import { Tab } from "../modules/tab";
 
 const WelcomeTabContainerStyled = styled.div`

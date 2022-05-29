@@ -2,8 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { panelsState } from "../utils/state";
-import IconButton from "./panels/IconButton";
+import { panelsState } from "../../utils/state";
+import IconButton from "../SidePanel/PanelButton";
 
 const PanelsContainer = styled.div`
   display: flex;

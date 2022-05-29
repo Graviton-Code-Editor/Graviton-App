@@ -1,4 +1,6 @@
-import PromptContainer, { Option } from "../components/PromptContainer";
+import PromptContainer, {
+  Option,
+} from "../components/PromptContainer/PromptContainer";
 import { Prompt } from "../modules/prompt";
 import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";

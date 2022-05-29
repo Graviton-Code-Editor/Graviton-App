@@ -1,10 +1,12 @@
-import { PrimaryButton } from "./primitive/button";
+import { PrimaryButton } from "../Primitive/button";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../utils/state";
-import FilesystemExplorer, { TreeItemInfo } from "./FilesystemExplorer";
-import WindowBackground from "./WindowBackground";
+import { showedWindows } from "../../utils/state";
+import FilesystemExplorer, {
+  TreeItemInfo,
+} from "../FilesystemExplorer/FilesystemExplorer";
+import WindowBackground from "../Window/WindowBackground";
 
 const StyledExplorer = styled.div`
   user-select: none;

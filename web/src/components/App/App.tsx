@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from "react";
-import { createClient } from "../utils/client";
+import { createClient } from "../../utils/client";
 import {
   clientState,
   panelsState,
@@ -7,7 +7,7 @@ import {
   showedStatusBarItem,
   showedWindows,
   tabsState,
-} from "../utils/state";
+} from "../../utils/state";
 import {
   RecoilRoot,
   useRecoilState,
@@ -17,32 +17,32 @@ import {
 import RecoilNexus from "recoil-nexus";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
-import Theme from "./ThemeProvider";
+import Theme from "../Providers/ThemeProvider";
 import View from "./RootView";
 import { SplitPane } from "react-multi-split-pane";
-import { isTauri } from "../utils/commands";
-import ExplorerPanel from "../panels/explorer";
-import { Popup } from "../modules/popup";
+import { isTauri } from "../../utils/commands";
+import ExplorerPanel from "../../panels/explorer";
+import { Popup } from "../../modules/popup";
 import {
   HideStatusBarItem,
   ShowPopup,
   ShowStatusBarItem,
   StateUpdated,
-} from "../types/messaging";
+} from "../../types/messaging";
 import StatusBarView from "./StatusBarView";
-import { StatusBarItem } from "../modules/statusbar_item";
-import { Tab } from "../modules/tab";
-import useEditor from "../hooks/useEditor";
-import GlobalPrompt from "../prompts/global";
-import useHotkeys from "../hooks/useHotkey";
+import { StatusBarItem } from "../../modules/statusbar_item";
+import { Tab } from "../../modules/tab";
+import useEditor from "../../hooks/useEditor";
+import GlobalPrompt from "../../prompts/global";
+import useHotkeys from "../../hooks/useHotkey";
 import TitleBar from "./TitleBar";
 import {
   focusedTabState,
   TabsViews,
   transformTabsDataToTabs,
-} from "../utils/state/tabs";
-import useViews from "../hooks/useViews";
-import { focusedViewPanelState } from "../utils/state/views";
+} from "../../utils/state/tabs";
+import useViews from "../../hooks/useViews";
+import { focusedViewPanelState } from "../../utils/state/views";
 
 /*
  * Retrieve the authentication token

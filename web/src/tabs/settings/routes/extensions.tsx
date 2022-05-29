@@ -1,6 +1,6 @@
-import Title from "../../../components/primitive/title";
-import List from "../../../components/List";
-import TabText from "../../../components/TabText";
+import Title from "../../../components/Primitive/title";
+import List from "../../../components/Primitive/List";
+import TabText from "../../../components/Tabs/TabText";
 import useExtensions from "../../../hooks/useExtensions";
 
 export default function ExtensionsRoute() {

@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import StatusBarItemContainer from "../components/StatusBarItem";
+import StatusBarItemContainer from "../components/StatusBarItem/StatusBarItem";
 import { clientState } from "../utils/state";
 import { StatusBarItemClicked, UIEvent } from "../types/messaging";
 

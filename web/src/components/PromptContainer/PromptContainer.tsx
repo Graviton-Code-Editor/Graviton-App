@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../utils/state";
+import { showedWindows } from "../../utils/state";
 import { useTranslation } from "react-i18next";
-import WindowBackground from "./WindowBackground";
-import { TranslatedText } from "../types/types";
+import WindowBackground from "../Window/WindowBackground";
+import { TranslatedText } from "../../types/types";
 
 const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   color: white;

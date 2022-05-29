@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import RemoteExplorerContainer, {
   RemoteExplorerOptions,
-} from "../components/RemoteExplorerContainer";
+} from "../components/RemoteExplorer/RemoteExplorerContainer";
 import { FloatingWindow } from "./windows";
 
 /**
