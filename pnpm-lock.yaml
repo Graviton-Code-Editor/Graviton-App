@@ -46,6 +46,7 @@ importers:
       react: ^18.0.0
       react-dom: ^18.0.0
       react-i18next: ^11.14.3
+      react-is: ^18.1.0
       react-multi-split-pane: ^0.3.2
       react-router: ^6.3.0
       react-router-dom: ^6.3.0
@@ -79,6 +80,7 @@ importers:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-i18next: 11.16.9_mqft7h2hndup6oyqvtfsfspurq
+      react-is: 18.1.0
       react-multi-split-pane: 0.3.3_ef5jwxihqo6n7gxfmzogljlgcm
       react-router: 6.3.0_react@18.1.0
       react-router-dom: 6.3.0_ef5jwxihqo6n7gxfmzogljlgcm
