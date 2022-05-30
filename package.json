@@ -8,10 +8,6 @@
     "format": "jake format_core format_web",
     "lint": "jake lint_core"
   },
-  "workspaces": [
-    "web",
-    "languages"
-  ],
   "devDependencies": {
     "execa": "^6.0.0",
     "fs-extra": "^10.0.0",

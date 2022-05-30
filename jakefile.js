@@ -11,7 +11,7 @@ const run  = (what, args, where = './') => {
 
 desc('Run the server in develop mode');
 task('dev_server', async function () {
-    run('yarn', ['--cwd', 'web', 'run', 'dev'])
+    run('pnpm', ['run', '--filter', 'web', 'dev'])
     await run('cargo run', [], './server')
 });
 
@@ -30,7 +30,7 @@ task('core_tests', async function () {
     await run('cargo', ['nextest', 'run'])
 });
 task('web_tests', async function () {
-    await run('yarn', ['--cwd', './web','run','test'])
+    await run('pnpm', ['run', '--filter', 'web', 'test'])
 });
 
 desc('Format the code');
@@ -38,7 +38,7 @@ task('format_core', async function () {
     await run('cargo', ['fmt'])
 });
 task('format_web', async function () {
-    await run('yarn', ['--cwd', './web','run','format'])
+    await run('pnpm', ['run', '--filter', 'web', 'format'])
 });
 
 desc('Lint the code');

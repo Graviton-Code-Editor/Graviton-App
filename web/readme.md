@@ -3,29 +3,29 @@ This is a web-based frontend implementation for Graviton
 Install dependencies:
 
 ```
-yarn
+pnpm install
 ```
 
 Running in develop mode:
 
 ```
-yarn dev
+pnpm run dev
 ```
 
 Create a build:
 
 ```
-yarn dev
+pnpm run build
 ```
 
 Run tests:
 
 ```
-yarn test
+pnpm run test
 ```
 
 Format the code:
 
 ```
-yarn format
+pnpm run format
 ```

@@ -23,15 +23,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
         
-      - name: Installing nodejs dependencies
-        run: yarn
+      - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 7
+
+      - name: Installing Node dependencies
+        run: pnpm install
 
       - uses: denoland/setup-deno@v1
         with:
           deno-version: vx.x.x
 
       - name: Build web
-        run: yarn --cwd web run build
+        run: pnpm run --filter web build
 
       - name: Install linux dependencies
         if: runner.os == 'Linux'
@@ -64,4 +68,4 @@ jobs:
           args: run
 
       - name: Running web tests
-        run: yarn --cwd web run test
+        run: pnpm run --filter web web

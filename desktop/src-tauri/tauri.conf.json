@@ -6,8 +6,8 @@
   "build": {
     "distDir": "../../web/dist",
     "devPath": "http://localhost:8080",
-    "beforeDevCommand": "yarn --cwd ../web run dev",
-    "beforeBuildCommand": "yarn --cwd ../web run build"
+    "beforeDevCommand": "pnpm run --filter web dev",
+    "beforeBuildCommand": "pnpm run --filter web build"
   },
   "tauri": {
     "bundle": {
