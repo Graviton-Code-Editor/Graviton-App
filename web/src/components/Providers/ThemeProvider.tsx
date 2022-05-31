@@ -113,6 +113,10 @@ const theme = {
         border: "#222222",
         background: "#191919",
       },
+      input: {
+        background: "rgb(40,40,40)",
+        color: "white",
+      },
     },
     tab: {
       list: {

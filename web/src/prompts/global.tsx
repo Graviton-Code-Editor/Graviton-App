@@ -1,6 +1,5 @@
-import PromptContainer, {
-  Option,
-} from "../components/PromptContainer/PromptContainer";
+import PromptWindow from "../components/Prompt/Prompt";
+import { Option } from "../components/Prompt/Prompt.types";
 import { Prompt } from "../modules/prompt";
 import { openFolderPicker } from "../utils/commands";
 import WelcomeTab from "../tabs/welcome";
@@ -65,7 +64,7 @@ function GlobalPromptContainer() {
     },
   ];
 
-  return <PromptContainer options={options} />;
+  return <PromptWindow options={options} />;
 }
 
 /**
