@@ -10,7 +10,9 @@ export const PrimaryButton = styled.button`
   user-select: none;
 `;
 
-export const SecondaryButton = styled.button<{ expanded?: boolean }>`
+export const SecondaryButton = styled.button<
+  { expanded?: boolean; maxWidth?: number }
+>`
   background: ${({ theme }) => theme.elements.secondaryButton.background};
   color: ${({ theme }) => theme.elements.secondaryButton.color};
   padding: 9px 12px;
@@ -20,6 +22,7 @@ export const SecondaryButton = styled.button<{ expanded?: boolean }>`
   margin-top: 5px;
   transition: 0.1s;
   user-select: none;
+  ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}px;`}
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
     background: ${({ theme }) =>

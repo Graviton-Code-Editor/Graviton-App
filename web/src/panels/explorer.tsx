@@ -9,12 +9,16 @@ import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
 import { SecondaryButton } from "../components/Primitive/Button";
 import { openFolderPicker } from "../utils/commands";
+import HorizontalCentered from "../components/Primitive/HorizontalCentered";
+import SettingsTab from "../tabs/settings";
+import { useTranslation } from "react-i18next";
 
 function ExplorerPanelContainer() {
   const client = useRecoilValue(clientState);
   const { openTab } = useTabs();
   const getEditor = useEditor();
   const setOpenedFolders = useSetRecoilState(foldersState);
+  const { t } = useTranslation();
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
@@ -60,17 +64,34 @@ function ExplorerPanelContainer() {
     }
   }
 
+  function openSettings() {
+    openTab(new SettingsTab());
+  }
+
   const folders = useRecoilValue(foldersState);
 
   return (
     <div style={{ height: "100%", paddingLeft: 5 }}>
       {folders.length === 0
         ? (
-          <>
-            <SecondaryButton expanded={true} onClick={openFolder}>
-              Open folder
-            </SecondaryButton>
-          </>
+          <HorizontalCentered>
+            <div>
+              <SecondaryButton
+                expanded={true}
+                onClick={openFolder}
+                maxWidth={200}
+              >
+                {t("prompts.Global.OpenFolder")}
+              </SecondaryButton>
+              <SecondaryButton
+                expanded={true}
+                onClick={openSettings}
+                maxWidth={200}
+              >
+                {t("prompts.Global.OpenSettings")}
+              </SecondaryButton>
+            </div>
+          </HorizontalCentered>
         )
         : (
           <FilesystemExplorer

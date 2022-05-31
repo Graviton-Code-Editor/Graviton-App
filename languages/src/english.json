@@ -1,7 +1,6 @@
 {
     "code": "en",
     "translation": {
-        "Open Folder": "Open Folder",
         "popups":{
             "AskSaveFile":{
                 "title": "Do you want to save the changes in {{file_path}} ?",
