@@ -18,7 +18,7 @@ const PageSideBar = styled.div`
   padding: 10px;
   display: grid;
   height: 100%;
-  width: 100px;
+  width: 160px;
   grid-template-columns: auto;
 `;
 

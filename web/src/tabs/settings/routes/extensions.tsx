@@ -1,19 +1,30 @@
 import Title from "../../../components/Primitive/Title";
-import List from "../../../components/Primitive/List";
 import TabText from "../../../components/Tabs/TabText";
 import useExtensions from "../../../hooks/useExtensions";
+import { Card, CardContent, CardTitle } from "../../../components/Card/Card";
+import { CardsGrid } from "../../../components/Card/CardsGrid";
 
 export default function ExtensionsRoute() {
   const extensions = useExtensions();
   return (
     <div>
       <Title>Extensions</Title>
-      <TabText>These are the currently loaded extensions:</TabText>
-      <List>
-        {extensions.map((ext) => (
-          <li key={ext.extension.id}>{ext.extension.name}</li>
+      <TabText>Currently loaded extensions:</TabText>
+      <CardsGrid>
+        {extensions.map(({ extension }) => (
+          <Card key={extension.id} title={extension.id}>
+            <CardTitle>
+              {extension.name}
+            </CardTitle>
+            <CardContent>
+              {extension.author}
+            </CardContent>
+            <CardContent>
+              v{extension.version}
+            </CardContent>
+          </Card>
         ))}
-      </List>
+      </CardsGrid>
     </div>
   );
 }

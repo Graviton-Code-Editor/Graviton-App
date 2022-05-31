@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {
-  BrowserRouter,
   Link,
+  MemoryRouter,
   Route,
   Routes,
   useNavigate,
@@ -13,7 +13,7 @@ import PageSideBar, {
 } from "../../components/SideBar/PageSideBar";
 import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/Primitive/HorizontalView";
-import RouteView from "../../components/App/RouteView";
+import RouteView from "../../components/Primitive/RouteView";
 import { useEffect } from "react";
 
 const SettingsTabContainerStyled = styled.div`
@@ -26,6 +26,8 @@ function SettingsTabContainer() {
   useEffect(() => {
     navigate("/extensions");
   }, []);
+
+  console.log(location.href);
 
   return (
     <SettingsTabContainerStyled>
@@ -59,9 +61,9 @@ class SettingsTab extends Tab {
 
   public container() {
     return (
-      <BrowserRouter>
+      <MemoryRouter>
         <SettingsTabContainer />
-      </BrowserRouter>
+      </MemoryRouter>
     );
   }
 }
