@@ -28,6 +28,7 @@ pub enum ServerMessages {
     },
     NotifyLanguageServersClient {
         state_id: u8,
+        language: String,
         content: String,
     },
     StateUpdated {

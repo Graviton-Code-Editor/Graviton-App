@@ -1,32 +1,30 @@
-import TextEditor from "../components/TextEditor/TextEditor";
+import TextEditor from "../../components/TextEditor/TextEditor";
 import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
 import { Command, KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { clientState, showedWindows } from "../utils/state";
+import { clientState, showedWindows } from "../../utils/state";
 import { getRecoil, setRecoil } from "recoil-nexus";
-import { FileFormat } from "../types/client";
-import { Popup } from "../modules/popup";
+import { FileFormat } from "../../types/client";
+import { Popup } from "../../modules/popup";
 import * as commands from "@codemirror/commands";
-import { SaveTabOptions, Tab, TextEditorTabData } from "../modules/tab";
+import { SaveTabOptions, Tab, TextEditorTabData } from "../../modules/tab";
 import { rust } from "@codemirror/lang-rust";
 import { basename, dirname } from "path";
-import { EventEmitterTransport } from "@open-rpc/client-js";
-import { EventEmitter } from "events";
 import {
   LanguageServerClient,
   languageServerWithTransport,
 } from "codemirror-languageserver";
 import { useEffect, useState } from "react";
-import TabText from "../components/Tabs/TabText";
-import LoadingTabContent from "../components/Tabs/LoadingTabContent";
+import TabText from "../../components/Tabs/TabText";
+import LoadingTabContent from "../../components/Tabs/LoadingTabContent";
 import {
   LanguageServerInitialization,
-  LanguageServerNotification,
   NotifyLanguageServers,
-} from "../types/messaging";
-import FileIcon from "../components/Filesystem/FileIcon";
-import useLSPClients from "../hooks/useLSPClients";
+} from "../../types/messaging";
+import FileIcon from "../../components/Filesystem/FileIcon";
+import useLSPClients from "../../hooks/useLSPClients";
+import GravitonTransport from "./graviton_lsp_transport";
 
 interface SavedState {
   scrollHeight: number;
@@ -257,6 +255,9 @@ class TextEditorTab extends Tab {
   }
 }
 
+/*
+ * React Component used in TextEditorTab
+ */
 function TabTextEditorContainer({
   setEdited,
   close,
@@ -272,6 +273,8 @@ function TabTextEditorContainer({
   const { find, add } = useLSPClients();
 
   useEffect(() => {
+    if (view != null) return;
+
     textEditorTab.setEditedComp = setEdited;
     textEditorTab.closeTabComp = close;
     textEditorTab.setViewComp = setView;
@@ -330,7 +333,7 @@ function TabTextEditorContainer({
 
       // TODO(marc2332):
       // - This should not assume there is a language server implementation running
-      //   Instead, the language server must notify this frontend
+      //   Instead, the language server must notify this frontend, or maybe just ask the core
 
       // LSP IS DISABLED FOR NOW
       // @ts-ignore
@@ -368,7 +371,7 @@ function TabTextEditorContainer({
 
       return state;
     }
-  }, []);
+  }, [view]);
 
   const saveScroll = (height: number) => {
     textEditorTab.state.scrollHeight = height;
@@ -401,8 +404,9 @@ function createLSPPlugin(
   if (!lsClient) {
     const client = getRecoil(clientState);
 
-    // Emit the initialization of the language server
-    client.emitMessage<NotifyLanguageServers<LanguageServerInitialization>>({
+    client.emitMessage<
+      NotifyLanguageServers<LanguageServerInitialization>
+    >({
       NotifyLanguageServers: {
         state_id: client.config.state_id,
         msg_type: "Initialization",
@@ -410,16 +414,8 @@ function createLSPPlugin(
       },
     });
 
-    const eventEmitter = new EventEmitter();
-
-    const eventEmitterTransport = new EventEmitterTransport(
-      eventEmitter,
-      "/req",
-      "/res",
-    );
-
     lsClient = new (LanguageServerClient as any)({
-      transport: eventEmitterTransport,
+      transport: new GravitonTransport(languageId, client),
       rootUri,
       languageId,
       workspaceFolders: [
@@ -430,33 +426,7 @@ function createLSPPlugin(
       ],
     });
 
-    let running = false;
-
-    // Forward any request from the language server to the CodeMirror client
-    client.on("NotifyLanguageServersClient", (data) => {
-      eventEmitter.emit("/res", data.content);
-      if (!running) {
-        clientCreated(lsClient as LanguageServerClient);
-      } else {
-        running = !running;
-      }
-    });
-
-    // Forward any request from the CodeMirror client to the language server
-    eventEmitter.addListener("/req", async (data) => {
-      const jsonData = JSON.stringify(data);
-
-      await client.emitMessage<
-        NotifyLanguageServers<LanguageServerNotification>
-      >({
-        NotifyLanguageServers: {
-          state_id: client.config.state_id,
-          msg_type: "Notification",
-          id: languageId,
-          content: JSON.stringify(jsonData),
-        },
-      });
-    });
+    clientCreated(lsClient as LanguageServerClient);
   }
 
   const lspPlugin = (languageServerWithTransport as any)({

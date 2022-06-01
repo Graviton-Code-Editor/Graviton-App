@@ -95,6 +95,7 @@ impl Extension for TSLSPExtension {
                                 .send(ClientMessages::ServerMessage(
                                     ServerMessages::NotifyLanguageServersClient {
                                         state_id,
+                                        language: "typescript".to_string(),
                                         content: message.clone(),
                                     },
                                 ))

@@ -27,8 +27,6 @@ function SettingsTabContainer() {
     navigate("/extensions");
   }, []);
 
-  console.log(location.href);
-
   return (
     <SettingsTabContainerStyled>
       <HorizontalView>

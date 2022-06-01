@@ -8,7 +8,7 @@ import {
   TextEditorTabData,
 } from "../../modules/tab";
 import SettingsTab from "../../tabs/settings";
-import TextEditorTab from "../../tabs/text_editor";
+import TextEditorTab from "../../tabs/text_editor/text_editor";
 import WelcomeTab from "../../tabs/welcome";
 import { Client, CoreResponse, FileInfo } from "../../types/client";
 import { clientState } from "../state";

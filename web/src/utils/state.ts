@@ -3,7 +3,7 @@ import { atom } from "recoil";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { FloatingWindow } from "../modules/windows";
-import TextEditorTab from "../tabs/text_editor";
+import TextEditorTab from "../tabs/text_editor/text_editor";
 import { Client } from "../types/client";
 export { foldersState } from "./state/folders";
 export { tabsState } from "./state/tabs";
