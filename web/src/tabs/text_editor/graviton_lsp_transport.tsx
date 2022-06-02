@@ -1,7 +1,6 @@
 import { JSONRPCError } from "@open-rpc/client-js";
 import { ERR_UNKNOWN } from "@open-rpc/client-js/build/Error";
 import {
-  getBatchRequests,
   getNotifications,
   JSONRPCRequestData,
 } from "@open-rpc/client-js/build/Request";
@@ -25,7 +24,7 @@ export default class GravitonTransport extends Transport {
       "NotifyLanguageServersClient",
       (data) => {
         if (data.language === this.languageId) {
-          this.transportRequestManager.resolveResponse(data.content);
+          this.transportRequestManager.resolveResponse(data.content, false);
         }
       },
     );
@@ -35,6 +34,7 @@ export default class GravitonTransport extends Transport {
     data: JSONRPCRequestData,
     timeout: number | null = 5000,
   ): Promise<any> {
+    const parsedData = this.parseData(data);
     let prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     try {
@@ -45,8 +45,12 @@ export default class GravitonTransport extends Transport {
           state_id: this.client.config.state_id,
           msg_type: "Notification",
           id: this.languageId,
-          content: JSON.stringify(JSON.stringify(this.parseData(data))),
+          content: JSON.stringify(JSON.stringify(parsedData)),
         },
+      }).then(() => {
+        this.transportRequestManager.settlePendingRequest(
+          notifications,
+        );
       });
     } catch (err) {
       const jsonError = new JSONRPCError(
@@ -56,10 +60,6 @@ export default class GravitonTransport extends Transport {
       );
       this.transportRequestManager.settlePendingRequest(
         notifications,
-        jsonError,
-      );
-      this.transportRequestManager.settlePendingRequest(
-        getBatchRequests(data),
         jsonError,
       );
       prom = Promise.reject(jsonError);
