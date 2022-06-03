@@ -11,8 +11,8 @@ import {
   LanguageServer,
   ManifestInfo as ManifestInfo,
 } from "../../types/client";
-import Configuration from "../config";
-import { StateData } from "../state/state_data";
+import Configuration from "../../utils/config";
+import { StateData } from "../../utils/state/state_data";
 
 /**
  * Tauri Client

@@ -1,4 +1,4 @@
-import Configuration from "./config";
+import Configuration from "../utils/config";
 import { isTauri } from "./commands";
 import { Client } from "../types/client";
 

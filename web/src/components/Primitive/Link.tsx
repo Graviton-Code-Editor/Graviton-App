@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { isTauri } from "../../utils/commands";
+import { isTauri } from "../../services/commands";
 import styled from "styled-components";
 import { SecondaryButton } from "./Button";
 

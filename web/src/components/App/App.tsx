@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from "react";
-import { createClient } from "../../utils/client";
+import { createClient } from "../../services/client";
 import {
   clientState,
   panelsState,
@@ -20,7 +20,7 @@ import Tabs from "./TabsView";
 import Theme from "../Providers/ThemeProvider";
 import View from "./RootView";
 import { SplitPane } from "react-multi-split-pane";
-import { isTauri } from "../../utils/commands";
+import { isTauri } from "../../services/commands";
 import ExplorerPanel from "../../panels/explorer";
 import { Popup } from "../../modules/popup";
 import {

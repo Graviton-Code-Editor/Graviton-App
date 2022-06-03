@@ -1,7 +1,7 @@
 import PromptWindow from "../components/Prompt/Prompt";
 import { Option } from "../components/Prompt/Prompt.types";
 import { Prompt } from "../modules/prompt";
-import { openFolderPicker } from "../utils/commands";
+import { openFolderPicker } from "../services/commands";
 import WelcomeTab from "../tabs/welcome";
 import SettingsTab from "../tabs/settings";
 import useTabs from "../hooks/useTabs";

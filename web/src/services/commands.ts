@@ -1,6 +1,6 @@
 import { setRecoil } from "recoil-nexus";
 import { RemoteExplorer } from "../modules/remote_explorer";
-import { showedWindows } from "./state";
+import { showedWindows } from "../utils/state";
 
 export const isTauri = (globalThis as any).__TAURI__ != null;
 

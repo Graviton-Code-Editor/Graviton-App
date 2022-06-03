@@ -1,6 +1,6 @@
 //@ts-ignore
 import * as simple_jsonrpc from "simple-jsonrpc-js";
-import Configuration from "../config";
+import Configuration from "../../utils/config";
 import Emittery from "emittery";
 import {
   BaseMessage,
@@ -11,7 +11,7 @@ import {
   LanguageServer,
   ManifestInfo,
 } from "../../types/client";
-import { StateData } from "../state/state_data";
+import { StateData } from "../../utils/state/state_data";
 
 /**
  * HTTP + WebSockets client

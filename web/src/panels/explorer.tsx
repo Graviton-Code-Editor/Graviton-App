@@ -8,7 +8,7 @@ import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
 import { SecondaryButton } from "../components/Primitive/Button";
-import { openFolderPicker } from "../utils/commands";
+import { openFolderPicker } from "../services/commands";
 import HorizontalCentered from "../components/Primitive/HorizontalCentered";
 import SettingsTab from "../tabs/settings";
 import { useTranslation } from "react-i18next";
