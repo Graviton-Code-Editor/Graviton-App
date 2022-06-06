@@ -281,49 +281,6 @@ function FilesystemExplorer({
     });
   }
 
-  function ListItem({ index, style }: { index: number; style: any }) {
-    const itemInfo = folderItems[index];
-    const itemStyle = {
-      ...style,
-      marginLeft: itemInfo.depth * 10,
-    };
-    const isOpened = isSubTreeByPathOpened(folderTree, itemInfo.path);
-
-    // When the item is clicked
-    function onClick() {
-      // Trigger the selected callback
-      onSelected(itemInfo);
-
-      // If folder
-      if (!itemInfo.isFile) {
-        if (isOpened) {
-          // Close itself
-          closeFolder(itemInfo);
-        } else {
-          // Open itself
-          openFolder(itemInfo);
-        }
-      }
-    }
-
-    return (
-      <ExplorerItemContainer
-        key={itemInfo.path}
-        onClick={onClick}
-        style={itemStyle}
-        isFile={itemInfo.isFile}
-        isOpened={isOpened}
-        title={itemInfo.path}
-      >
-        {!itemInfo.isFile && (
-          <ReactSVG src="/icons/collapse_arrow.svg" className="arrow" />
-        )}
-        <FileIcon item={itemInfo} isOpened={isOpened} />
-        <span>{itemInfo.name}</span>
-      </ExplorerItemContainer>
-    );
-  }
-
   return (
     <ExplorerContainer>
       <AutoSizer>
@@ -336,12 +293,84 @@ function FilesystemExplorer({
               itemSize={26}
               overscanCount={10}
             >
-              {ListItem}
+              {(props: { index: number; style: Record<string, string> }) => (
+                <ListItem
+                  {...props}
+                  folderItems={folderItems}
+                  folderTree={folderTree}
+                  onSelected={onSelected}
+                  openFolder={openFolder}
+                  closeFolder={closeFolder}
+                />
+              )}
             </List>
           );
         }}
       </AutoSizer>
     </ExplorerContainer>
+  );
+}
+
+interface ListItemProps {
+  folderItems: TreeItemInfo[];
+  index: number;
+  style: Record<string, string>;
+  folderTree: TreeItem;
+  onSelected: (item: TreeItemInfo) => void;
+  closeFolder: (item: TreeItemInfo) => void;
+  openFolder: (item: TreeItemInfo) => void;
+}
+
+function ListItem(
+  {
+    index,
+    style,
+    folderItems,
+    folderTree,
+    onSelected,
+    closeFolder,
+    openFolder,
+  }: ListItemProps,
+) {
+  const itemInfo = folderItems[index];
+  const itemStyle = {
+    ...style,
+    marginLeft: itemInfo.depth * 10,
+  };
+  const isOpened = isSubTreeByPathOpened(folderTree, itemInfo.path);
+
+  // When the item is clicked
+  function onClick() {
+    // Trigger the selected callback
+    onSelected(itemInfo);
+
+    // If folder
+    if (!itemInfo.isFile) {
+      if (isOpened) {
+        // Close itself
+        closeFolder(itemInfo);
+      } else {
+        // Open itself
+        openFolder(itemInfo);
+      }
+    }
+  }
+
+  return (
+    <ExplorerItemContainer
+      key={itemInfo.path}
+      onClick={onClick}
+      style={itemStyle}
+      isFile={itemInfo.isFile}
+      isOpened={isOpened}
+      title={itemInfo.path}
+    >
+      {!itemInfo.isFile && (
+        <ReactSVG src="/icons/collapse_arrow.svg" className="arrow" />
+      )}
+      <FileIcon item={itemInfo} isOpened={isOpened} />
+      <span>{itemInfo.name}</span>
+    </ExplorerItemContainer>
   );
 }
 

@@ -67,6 +67,7 @@ class TextEditorTab extends Tab {
   ) {
     super(filename);
     this.path = path;
+    this.hint = path;
     this.filename = filename;
     this.format = format;
     this.contentResolver = contentResolver;

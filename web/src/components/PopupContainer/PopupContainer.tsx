@@ -18,7 +18,6 @@ const StyledPopup = styled.div<{ height: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: opening 0.1s;
   & .popup {
     padding: 25px;
     border: 1px solid ${({ theme }) => theme.elements.prompt.container.border};
@@ -36,14 +35,6 @@ const StyledPopup = styled.div<{ height: number }>`
   & p {
     font-size: 14px;
     margin: 5px 0px 18px 0px;
-  }
-  @keyframes opening {
-    from {
-      transform: scale(0.97);
-    }
-    to {
-      transform: scale(1);
-    }
   }
 `;
 

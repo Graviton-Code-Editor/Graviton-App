@@ -129,6 +129,7 @@ const theme = {
         },
         focused: {
           background: "#191919",
+          border: "rgb(150,150,150)",
         },
       },
       container: {

@@ -41,6 +41,7 @@ function ExplorerPanelContainer() {
             }
           } else {
             // Handle error
+            console.log(fileContent.Err);
           }
         });
       } catch (err) {

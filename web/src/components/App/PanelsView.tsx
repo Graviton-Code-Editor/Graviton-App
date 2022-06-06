@@ -8,21 +8,24 @@ import IconButton from "../SidePanel/PanelButton";
 const PanelsContainer = styled.div`
   display: flex;
   min-height: 100%;
+  background: ${(props) => props.theme.tones.dark1};
   & > .sidebar {
     background: ${(props) => props.theme.tones.dark1};
-    border-right: 1px solid
-      ${({ theme }) => theme.elements.sidebar.border.color};
     & svg {
       --sidebarButtonFill: ${({ theme }) => theme.elements.sidebar.button.fill};
     }
   }
   & > .sidepanel {
+    border-left: 1px solid
+    ${({ theme }) => theme.elements.sidebar.border.color};
     border-top: 1px solid
       ${({ theme }) => theme.elements.sidepanel.border.color};
     border-bottom: 1px solid
       ${({ theme }) => theme.elements.sidepanel.border.color};
     background: ${(props) => props.theme.tones.dark2};
     width: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
   }
 `;
 

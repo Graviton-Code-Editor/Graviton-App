@@ -4,16 +4,16 @@ import { default as styled, keyframes } from "styled-components";
 import UnSavedIndicator from "./UnSavedIndicator";
 
 const tabOpening = keyframes`
-    0% {
-        opacity: 0;
-        min-width: 0px;
-        width: 0px;
-    }
-    100% {
-        opacity: 1;
-        min-width: 125px;
-        width: 125px;
-    }
+  0% {
+    opacity: 0.1;
+    min-width: 15px;
+    width: 15px;
+  }
+  100% {
+    opacity: 1;
+    min-width: 125px;
+    width: 125px;
+  }
 `;
 
 const TabButtonStyle = styled.div<PropsWithChildren<any>>`
@@ -28,8 +28,11 @@ const TabButtonStyle = styled.div<PropsWithChildren<any>>`
   cursor: pointer;
   user-select: none;
   animation: ${tabOpening} ease-in 0.14s;
+  border-bottom: 1px solid transparent;
   &.selected {
     background: ${({ theme }) => theme.elements.tab.button.focused.background};
+    border-bottom-color: ${({ theme }) =>
+  theme.elements.tab.button.focused.border};
   }
   & > p {
     margin: 3px;
@@ -74,6 +77,7 @@ const TabButtonIcon = styled.div`
 
 interface TabButtonOptions {
   title: string;
+  hint?: string;
   isSelected: boolean;
   isEdited: boolean;
   select: () => void;
@@ -84,6 +88,7 @@ interface TabButtonOptions {
 
 export default function TabButton({
   title,
+  hint,
   isSelected,
   select,
   close,
@@ -102,7 +107,11 @@ export default function TabButton({
   }
 
   return (
-    <TabButtonStyle className={isSelected && "selected"} onClick={select}>
+    <TabButtonStyle
+      className={isSelected && "selected"}
+      onClick={select}
+      title={hint}
+    >
       <TabButtonIcon>{icon}</TabButtonIcon>
       <p>{title}</p>
       {isEdited

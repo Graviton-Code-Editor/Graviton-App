@@ -37,7 +37,10 @@ const TabsPanelContainer = styled.div`
       background: transparent;
     }
     &::-webkit-scrollbar {
-      height: 6px !important;
+      height: 3px !important;
+    }
+    &:not(:hover)::-webkit-scrollbar-thumb {
+      background: transparent;
     }
   }
   & .tabsContainer {
@@ -136,6 +139,7 @@ export default function TabsPanel({
               key={tab.id}
               icon={<TabIcon tab={tab} />}
               title={tab.title}
+              hint={tab.hint}
               isEdited={isEdited}
               isSelected={isSelected}
               select={() => selectPanelTab(tab)}

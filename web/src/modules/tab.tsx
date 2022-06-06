@@ -28,6 +28,7 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
   public id: string;
   public title: string;
   public edited: boolean;
+  public hint?: string;
 
   /**
    * @param title - Title of the tab

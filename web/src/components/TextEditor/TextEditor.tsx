@@ -11,6 +11,9 @@ const CodeMirrorStyler = styled.div`
     background: ${({ theme }) => theme.elements.textEditor.background};
     box-shadow: inset 0px 5px 10px rgba(0, 0, 0, 0.1);
   }
+  & .cm-editor {
+    outline: none !important;
+  }
   & .ͼa {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
   }
@@ -79,6 +82,14 @@ const CodeMirrorStyler = styled.div`
   & .cm-selectionBackground {
     background: ${({ theme }) =>
   theme.elements.textEditor.selection.background} !important;
+    border-radius: 2px;
+  }
+  & ::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+
+  & ::-webkit-scrollbar-thumb {
     border-radius: 2px;
   }
 `;

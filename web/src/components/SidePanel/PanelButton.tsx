@@ -14,9 +14,11 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
   align-items: center;
   border-radius: 5px;
   overflow: hidden;
-  margin: 3px;
+  margin: 0px 3px;
+  margin-bottom: 3px;
+  cursor: pointer;
+  transition: 0.1s;
   &:hover {
-    transition: 0.1s;
     background: ${({ selected, theme }) =>
   !selected && theme.elements.sidebar.button.hover.background};
   }
