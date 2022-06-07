@@ -39,22 +39,31 @@ body,
 }
 
 .Resizer {
-  background: rgba(50, 50, 50);
   box-sizing: border-box;
   background-clip: padding-box;
 }
 
 .Resizer.horizontal {
-  height: 11px;
-  border-top: 5px solid rgba(255, 255, 255, 0);
-  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  padding-top: 5px;
+  height: 2px;
   cursor: row-resize;
+  background: transparent;
+  border-bottom: 1px solid  rgb(50, 50, 50);
+}
+
+.Resizer.horizontal:hover {
+  border-bottom: 1px solid  rgb(100, 100, 100);
 }
 
 .Resizer.vertical {
-  width: 5px;
-  border-left: 4px solid rgba(255, 255, 255, 0);
+  width: 6px;
+  background: transparent;
+  border-right: 1px solid rgb(50, 50, 50);
   cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+  border-right: 1px solid rgb(100, 100, 100);
 }
 
 .DragLayer {
