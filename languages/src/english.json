@@ -21,6 +21,12 @@
                 "AddFolder": "Add Folder"
             }
         },
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Split horizontally",
+                "SplitVertically": "Split vertically"
+            }
+        },
         "Contribute": "Contribute issues",
         "Report issues": "Report issues",
         "Save": "Save",
