@@ -1,25 +1,14 @@
-import { PrimaryButton } from "../Primitive/Button";
 import styled from "styled-components";
-
-export const SideBarButton = styled(PrimaryButton)`
-  background: ${({ theme }) => theme.elements.pageSideBar.button.background};
-  width: 100%;
-  padding: 10px 12px;
-  margin: 2px;
-  text-align: left;
-  cursor: pointer;
-  &:hover {
-    background: ${({ theme }) =>
-  theme.elements.pageSideBar.button.hover.background};
-  }
-`;
 
 const PageSideBar = styled.div`
   padding: 10px;
   display: grid;
   height: 100%;
-  width: 160px;
+  min-width: 140px;
+  max-width: 140px;
   grid-template-columns: auto;
 `;
 
 export default PageSideBar;
+
+export { SideBarButton } from "./PageSideBarButton";

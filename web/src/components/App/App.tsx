@@ -1,14 +1,7 @@
 import { useEffect } from "react";
 import { createClient } from "../../services/client";
-import {
-  clientState,
-  panelsState,
-  prompts,
-} from "../../utils/state";
-import {
-  RecoilRoot,
-  useSetRecoilState,
-} from "recoil";
+import { clientState, panelsState, prompts } from "../../utils/state";
+import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
 import Panels from "./PanelsView";
 import Tabs from "./TabsView";
@@ -65,8 +58,6 @@ function ClientRoot() {
 
   return null;
 }
-
-
 
 function App() {
   const isWindows = window.navigator.platform === "Win32";

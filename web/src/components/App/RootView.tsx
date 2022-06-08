@@ -7,9 +7,24 @@ import useViews from "../../hooks/useViews";
 import { Popup } from "../../modules/popup";
 import { StatusBarItem } from "../../modules/statusbar_item";
 import { Tab } from "../../modules/tab";
-import { HideStatusBarItem, ShowPopup, ShowStatusBarItem, StateUpdated } from "../../types/messaging";
-import { clientState, prompts, showedStatusBarItem, showedWindowsState } from "../../utils/state";
-import { focusedTabState, tabsState, TabsViews, transformTabsDataToTabs } from "../../utils/state/tabs";
+import {
+  HideStatusBarItem,
+  ShowPopup,
+  ShowStatusBarItem,
+  StateUpdated,
+} from "../../types/messaging";
+import {
+  clientState,
+  prompts,
+  showedStatusBarItem,
+  showedWindowsState,
+} from "../../utils/state";
+import {
+  focusedTabState,
+  tabsState,
+  TabsViews,
+  transformTabsDataToTabs,
+} from "../../utils/state/tabs";
 import { focusedViewPanelState } from "../../utils/state/views";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
