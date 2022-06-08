@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import useContextMenu from "../../hooks/useContextMenu";
 import useTabs from "../../hooks/useTabs";
+import useViews from "../../hooks/useViews";
 import { Tab } from "../../modules/tab";
 import { ViewPanel } from "../../utils/state/tabs";
 import { focusedViewPanelState } from "../../utils/state/views";
@@ -69,6 +71,8 @@ export default function TabsPanel({
   row,
   close,
 }: TabPanelOptions) {
+  const { newView, newViewPanel } = useViews();
+  const { pushContextMenu } = useContextMenu();
   const { focusTab, selectTab } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
 
@@ -127,8 +131,35 @@ export default function TabsPanel({
     });
   }
 
+  function contextMenuClick(ev: React.MouseEvent) {
+    pushContextMenu({
+      menus: [
+        {
+          label: "Split horizontally",
+          action: () => {
+            newView({
+              afterRow: row + 1,
+            });
+            return false;
+          },
+        },
+        {
+          label: "Split vertically",
+          action: () => {
+            newViewPanel({
+              row,
+            });
+            return false;
+          },
+        },
+      ],
+      x: ev.pageX,
+      y: ev.pageY,
+    });
+  }
+
   return (
-    <TabsPanelContainer onClick={viewClicked}>
+    <TabsPanelContainer onClick={viewClicked} onContextMenu={contextMenuClick}>
       <div className="tabsList">
         {tabs.map((tab, i) => {
           const isSelected = tab.id == selected_tab_id;
@@ -143,8 +174,10 @@ export default function TabsPanel({
               isEdited={isEdited}
               isSelected={isSelected}
               select={() => selectPanelTab(tab)}
-              close={() => removeTab(tab, i)}
-              save={() => saveTab(tab)}
+              close={() =>
+                removeTab(tab, i)}
+              save={() =>
+                saveTab(tab)}
             />
           );
         })}

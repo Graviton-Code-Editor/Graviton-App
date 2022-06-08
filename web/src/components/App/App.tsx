@@ -43,6 +43,7 @@ import {
 } from "../../utils/state/tabs";
 import useViews from "../../hooks/useViews";
 import { focusedViewPanelState } from "../../utils/state/views";
+import ContextMenuView from "./ContextMenuView";
 
 /*
  * Retrieve the authentication token
@@ -103,7 +104,7 @@ function StateRoot({
   const getEditor = useEditor();
   const { pushHotkey } = useHotkeys();
   const {
-    newView,
+    newViewInFocused: newView,
     closeFocusedView,
     newViewPanelInFocused,
     closeFocusedViewPanel,
@@ -255,6 +256,7 @@ function App() {
               <Tabs />
             </SplitPane>
           </div>
+          <ContextMenuView />
           <StatusBarView />
         </StateRoot>
       </Theme>

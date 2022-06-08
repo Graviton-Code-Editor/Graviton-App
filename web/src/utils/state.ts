@@ -1,5 +1,6 @@
 import { LanguageServerClient } from "codemirror-languageserver";
 import { atom } from "recoil";
+import { ContextMenuConfig } from "../components/ContextMenu/ContextMenu";
 import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { FloatingWindow } from "../modules/windows";
@@ -50,4 +51,9 @@ export const lspClients = atom<Array<LanguageServerConfig>>({
   key: "lspClients",
   default: [],
   dangerouslyAllowMutability: true,
+});
+
+export const contextMenuOpened = atom<ContextMenuConfig | null>({
+  key: "contextMenuOpened",
+  default: null,
 });

@@ -33,18 +33,28 @@ export default function useViews() {
   };
 
   const newViewPanel = ({ row }: { row: number }) => {
-    tabPanels[focusedView.row].push({
+    tabPanels[row].push({
       tabs: [],
     });
     setTabPanels([...tabPanels]);
-    setFocusedView({ col: tabPanels[focusedView.row].length - 1, row });
+    setFocusedView({ col: tabPanels[row].length - 1, row });
+  };
+
+  const newView = ({ afterRow }: { afterRow: number }) => {
+    setTabPanels([
+      ...tabPanels.slice(0, afterRow),
+      [{ tabs: [] }],
+      ...tabPanels.slice(afterRow),
+    ]);
+    setFocusedView({ col: 0, row: afterRow });
   };
 
   return {
-    newView: () => {
-      tabPanels.push([{ tabs: [] }]);
-      setTabPanels([...tabPanels]);
-      setFocusedView({ col: 0, row: tabPanels.length - 1 });
+    newView,
+    newViewInFocused: () => {
+      newView({
+        afterRow: focusedView.row + 1,
+      });
     },
     closeViewPanel,
     closeFocusedViewPanel: () => {

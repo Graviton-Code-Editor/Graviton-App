@@ -99,6 +99,14 @@ const theme = {
         color: "rgb(255,255,255)",
       },
     },
+    contextMenu: {
+      background: "rgb(40, 40, 40)",
+      menus: {
+        hover: {
+          background: "rgb(55, 55, 55)",
+        },
+      },
+    },
     prompt: {
       option: {
         background: "transparent",
