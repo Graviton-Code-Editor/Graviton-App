@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../../utils/state";
+import { showedWindowsState } from "../../utils/state";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "../Window/WindowBackground";
 import { Option, PromptOptions, TransatedOption } from "./Prompt.types";
@@ -25,7 +25,7 @@ const StyledPrompt = styled.div`
 export default function PromptWindow({ options }: PromptOptions) {
   const refBackground = useRef(null);
   const refInput = useRef<HTMLInputElement>(null);
-  const setShowedWindows = useSetRecoilState(showedWindows);
+  const setShowedWindows = useSetRecoilState(showedWindowsState);
   const { t } = useTranslation();
   const [selectedOption, setSelectedOption] = useState<number>(0);
   const [inputSearch, setInputSearch] = useState("");

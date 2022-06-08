@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { TranslatedText } from "../../types/types";
-import { showedWindows } from "../../utils/state";
+import { showedWindowsState } from "../../utils/state";
 import WindowBackground from "../Window/WindowBackground";
 
 const StyledPopup = styled.div<{ height: number }>`
@@ -57,7 +57,7 @@ export default function PopupContainer({
 }: PopupOptions) {
   const { t } = useTranslation();
   const refBackground = useRef(null);
-  const setShowedWindows = useSetRecoilState(showedWindows);
+  const setShowedWindows = useSetRecoilState(showedWindowsState);
 
   function closePopup() {
     setShowedWindows((val) => {

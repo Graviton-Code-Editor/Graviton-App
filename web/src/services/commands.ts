@@ -1,6 +1,6 @@
 import { setRecoil } from "recoil-nexus";
 import { RemoteExplorer } from "../modules/remote_explorer";
-import { showedWindows } from "../utils/state";
+import { showedWindowsState } from "../utils/state";
 
 export const isTauri = (globalThis as any).__TAURI__ != null;
 
@@ -23,7 +23,7 @@ export async function openFolderPicker(
       function onSelectedFolder(folderPath: string) {
         resolve(folderPath);
       }
-      setRecoil(showedWindows, (val) => [
+      setRecoil(showedWindowsState, (val) => [
         ...val,
         new RemoteExplorer({ onSelectedFolder }),
       ]);

@@ -29,7 +29,7 @@ export const editors = atom<typeof TextEditorTab[]>({
 });
 
 // Opened windows (popup, prompts...)
-export const showedWindows = atom<FloatingWindow[]>({
+export const showedWindowsState = atom<FloatingWindow[]>({
   key: "showedWindows",
   default: [],
 });

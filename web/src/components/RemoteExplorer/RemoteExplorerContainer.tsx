@@ -2,7 +2,7 @@ import { PrimaryButton } from "../Primitive/Button";
 import { useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindows } from "../../utils/state";
+import { showedWindowsState } from "../../utils/state";
 import FilesystemExplorer, {
   TreeItemInfo,
 } from "../FilesystemExplorer/FilesystemExplorer";
@@ -50,7 +50,7 @@ export default function RemoteExplorerContainer({
   onSelectedFolder,
 }: RemoteExplorerOptions) {
   const refBackground = useRef(null);
-  const setShowedWindows = useSetRecoilState(showedWindows);
+  const setShowedWindows = useSetRecoilState(showedWindowsState);
   const [focusedFolder, setFocusedFolder] = useState<TreeItemInfo | null>(null);
 
   function closePopup() {

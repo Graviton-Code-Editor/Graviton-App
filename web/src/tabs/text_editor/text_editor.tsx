@@ -3,7 +3,7 @@ import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
 import { Command, KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { clientState, showedWindows } from "../../utils/state";
+import { clientState, showedWindowsState } from "../../utils/state";
 import { getRecoil, setRecoil } from "recoil-nexus";
 import { FileFormat } from "../../types/client";
 import { Popup } from "../../modules/popup";
@@ -165,7 +165,7 @@ class TextEditorTab extends Tab {
         195,
       );
 
-      setRecoil(showedWindows, (val) => [...val, message]);
+      setRecoil(showedWindowsState, (val) => [...val, message]);
     }
     return;
   }
