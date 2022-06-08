@@ -62,9 +62,9 @@ function santitizePositions(
   if ((window.innerWidth - 200) < x) {
     posX -= 190;
   }
-
+  console.log(menusHeight)
   // Move the dropdown up if it would pass the window bounds
-  if ((window.innerHeight - 200) < (posY + menusHeight)) {
+  if ((window.innerHeight - 10) < (posY + menusHeight)) {
     posY -= menusHeight + 10;
   }
 
