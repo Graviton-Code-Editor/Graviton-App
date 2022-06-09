@@ -144,7 +144,11 @@ export default function PromptWindow({ options }: PromptOptions) {
                 text={text}
               />
             ))}
-            {filteredOptions.length === 0 && <StyledPromptOption isSelected={true}>{t("prompts.NoResults")}</StyledPromptOption>}
+            {filteredOptions.length === 0 && (
+              <StyledPromptOption isSelected={true}>
+                {t("prompts.NoResults")}
+              </StyledPromptOption>
+            )}
           </PromptOptionsList>
         </PromptContainer>
       </StyledPrompt>

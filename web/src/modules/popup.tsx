@@ -23,7 +23,7 @@ export class Popup extends FloatingWindow {
     content: TranslatedText,
     buttons: PopupButtonOptions[] = [],
     height = 200,
-    width = 300
+    width = 300,
   ) {
     super();
     this.container = () => {

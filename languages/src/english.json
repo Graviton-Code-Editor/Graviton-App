@@ -32,6 +32,8 @@
         "Report issues": "Report issues",
         "Save": "Save",
         "Don't save": "Don't save",
-        "Cancel": "Cancel"
+        "Cancel": "Cancel",
+        "License": "License",
+        "Dismiss": "Dismiss"
     }
 }

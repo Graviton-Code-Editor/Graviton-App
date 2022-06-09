@@ -147,18 +147,24 @@ class TextEditorTab extends Tab {
         },
         [
           {
-            label: "Save",
+            label: {
+              text: "Save",
+            },
             action: this.saveFile.bind(this),
           },
           {
-            label: "Don't save",
+            label: {
+              text: "Don't save",
+            },
             action: () => {
               // User decided to not save the file, therefore close it
               this.closeTabComp();
             },
           },
           {
-            label: "Cancel",
+            label: {
+              text: "Cancel",
+            },
             action: () => undefined,
           },
         ],

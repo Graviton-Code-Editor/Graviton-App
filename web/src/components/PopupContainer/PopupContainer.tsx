@@ -7,7 +7,7 @@ import { TranslatedText } from "../../types/types";
 import { showedWindowsState } from "../../utils/state";
 import WindowBackground from "../Window/WindowBackground";
 
-const StyledPopup = styled.div<{ height: number, width: number }>`
+const StyledPopup = styled.div<{ height: number; width: number }>`
   user-select: none;
   top: 0;
   left: 0;
@@ -42,7 +42,7 @@ const StyledPopup = styled.div<{ height: number, width: number }>`
 `;
 
 export interface PopupButtonOptions {
-  label: string;
+  label: TranslatedText;
   action: () => void;
 }
 interface PopupOptions {
@@ -58,7 +58,7 @@ export default function PopupContainer({
   content,
   buttons,
   height,
-  width
+  width,
 }: PopupOptions) {
   const { t } = useTranslation();
   const refBackground = useRef(null);
@@ -98,7 +98,7 @@ export default function PopupContainer({
               };
               return (
                 <WindowButton expanded={true} key={i} onClick={buttonAction}>
-                  {t(label)}
+                  {t(label.text, label.props)}
                 </WindowButton>
               );
             })}
