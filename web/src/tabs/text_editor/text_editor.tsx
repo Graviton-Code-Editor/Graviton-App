@@ -288,7 +288,7 @@ function TabTextEditorContainer({
 
     // Wait until the tab is mounted to read it's content
     textEditorTab.contentResolver.then((initialValue) => {
-      if (initialValue) {
+      if (initialValue != null) {
         textEditorTab.view = new EditorView({
           state: createDefaulState({
             initialValue,
