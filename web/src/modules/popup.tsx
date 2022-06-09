@@ -16,12 +16,14 @@ export class Popup extends FloatingWindow {
    * @param content - Body of the popup
    * @param buttons - Collection of buttons
    * @param height - Height of the popup, default to 200
+   * @param width - Width of the popup, default to 200
    */
   constructor(
     title: TranslatedText,
     content: TranslatedText,
     buttons: PopupButtonOptions[] = [],
     height = 200,
+    width = 300
   ) {
     super();
     this.container = () => {
@@ -31,6 +33,7 @@ export class Popup extends FloatingWindow {
           content={content}
           buttons={buttons}
           height={height}
+          width={width}
         />
       );
     };

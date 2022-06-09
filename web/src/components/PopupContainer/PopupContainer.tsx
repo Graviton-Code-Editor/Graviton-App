@@ -7,7 +7,7 @@ import { TranslatedText } from "../../types/types";
 import { showedWindowsState } from "../../utils/state";
 import WindowBackground from "../Window/WindowBackground";
 
-const StyledPopup = styled.div<{ height: number }>`
+const StyledPopup = styled.div<{ height: number, width: number }>`
   user-select: none;
   top: 0;
   left: 0;
@@ -20,19 +20,22 @@ const StyledPopup = styled.div<{ height: number }>`
   align-items: center;
   & .popup {
     padding: 25px;
-    border: 1px solid ${({ theme }) => theme.elements.prompt.container.border};
-    width: 300px;
-    border-radius: 10px;
     height: ${({ height }) => `${height}px`};
+    width: ${({ width }) => `${width}px`};
+    max-width: 65%;
+    max-height: 65%;
+    border: 1px solid ${({ theme }) => theme.elements.prompt.container.border};
+    border-radius: 10px;
     background: ${({ theme }) => theme.elements.prompt.container.background};
     color: white;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
-    overflow: auto;
+    overflow-y: auto;
   }
   & h5 {
     margin-top: 0px;
   }
-  & p {
+  & pre {
+    white-space: pre-wrap;    
     font-size: 14px;
     margin: 5px 0px 18px 0px;
   }
@@ -47,6 +50,7 @@ interface PopupOptions {
   content: TranslatedText;
   buttons: PopupButtonOptions[];
   height: number;
+  width: number;
 }
 
 export default function PopupContainer({
@@ -54,6 +58,7 @@ export default function PopupContainer({
   content,
   buttons,
   height,
+  width
 }: PopupOptions) {
   const { t } = useTranslation();
   const refBackground = useRef(null);
@@ -80,10 +85,11 @@ export default function PopupContainer({
         onClick={closePopupOnClick}
         ref={refBackground}
         height={height}
+        width={width}
       >
         <div className="popup">
           <h5>{t(title.text, title.props)}</h5>
-          <p>{t(content.text, title.props)}</p>
+          <pre>{t(content.text, title.props)}</pre>
           <div>
             {buttons.map(({ label, action }, i) => {
               const buttonAction = () => {
