@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { PromptOptionArgs } from "./Prompt.types";
 
-const StyledPromptOption = styled.button<{ isSelected: boolean }>`
+export const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   color: white;
   margin-bottom: 3px;
   padding: 8px 10px;

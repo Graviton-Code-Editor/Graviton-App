@@ -5,7 +5,7 @@ import { showedWindowsState } from "../../utils/state";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "../Window/WindowBackground";
 import { Option, PromptOptions, TransatedOption } from "./Prompt.types";
-import { PromptOption } from "./PromptOption";
+import { PromptOption, StyledPromptOption } from "./PromptOption";
 import { PromptInput } from "./PromptInput";
 import PromptContainer from "./PromptContainer";
 import PromptOptionsList from "./PromptOptionsList";
@@ -144,6 +144,7 @@ export default function PromptWindow({ options }: PromptOptions) {
                 text={text}
               />
             ))}
+            {filteredOptions.length === 0 && <StyledPromptOption isSelected={true}>{t("prompts.NoResults")}</StyledPromptOption>}
           </PromptOptionsList>
         </PromptContainer>
       </StyledPrompt>
