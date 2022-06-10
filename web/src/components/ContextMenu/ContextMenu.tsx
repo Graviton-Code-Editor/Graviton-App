@@ -1,9 +1,10 @@
 import { PropsWithChildren, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import { TranslatedText } from "../../types/types";
 
 interface MenuHandler {
-  label: string;
+  label: TranslatedText;
   /**
    * In case of returning "true" the context menu will not be closed
    */
@@ -115,8 +116,8 @@ export default function ContextMenu(
         };
 
         return (
-          <ContextMenuButton key={label} onClick={onClick}>
-            {t(label)}
+          <ContextMenuButton key={label.text} onClick={onClick}>
+            {t(label.text, label.props)}
           </ContextMenuButton>
         );
       })}

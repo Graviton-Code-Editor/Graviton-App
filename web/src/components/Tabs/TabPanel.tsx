@@ -135,7 +135,9 @@ export default function TabsPanel({
     pushContextMenu({
       menus: [
         {
-          label: "contextMenus.panels.SplitHorizontally",
+          label: {
+            text: "contextMenus.panels.SplitHorizontally",
+          },
           action: () => {
             newView({
               afterRow: row + 1,
@@ -144,7 +146,9 @@ export default function TabsPanel({
           },
         },
         {
-          label: "contextMenus.panels.SplitVertically",
+          label: {
+            text: "contextMenus.panels.SplitVertically",
+          },
           action: () => {
             newViewPanel({
               row,

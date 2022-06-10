@@ -1,6 +1,7 @@
-import { MouseEvent, PropsWithChildren, ReactElement } from "react";
+import React, { MouseEvent, ReactElement } from "react";
 import { ReactSVG } from "react-svg";
 import { default as styled, keyframes } from "styled-components";
+import useContextMenu from "../../hooks/useContextMenu";
 import UnSavedIndicator from "./UnSavedIndicator";
 
 const tabOpening = keyframes`
@@ -16,7 +17,7 @@ const tabOpening = keyframes`
   }
 `;
 
-const TabButtonStyle = styled.div<PropsWithChildren<any>>`
+const TabButtonStyle = styled.div`
   color: white;
   background: transparent;
   padding: 5px 10px;
@@ -96,6 +97,8 @@ export default function TabButton({
   save,
   icon,
 }: TabButtonOptions) {
+  const { pushContextMenu } = useContextMenu();
+
   function closeTab(event: MouseEvent) {
     event.stopPropagation();
     close();
@@ -106,10 +109,34 @@ export default function TabButton({
     save();
   }
 
+  function contextMenu(ev: React.MouseEvent) {
+    pushContextMenu({
+      menus: [
+        {
+          label: {
+            text: "Close",
+          },
+          action: () => {
+            if (isEdited) {
+              save();
+            } else {
+              close();
+            }
+            return false;
+          },
+        },
+      ],
+      x: ev.clientX,
+      y: ev.clientY,
+    });
+    ev.stopPropagation();
+  }
+
   return (
     <TabButtonStyle
-      className={isSelected && "selected"}
+      className={isSelected ? "selected" : ""}
       onClick={select}
+      onContextMenu={contextMenu}
       title={hint}
     >
       <TabButtonIcon>{icon}</TabButtonIcon>
