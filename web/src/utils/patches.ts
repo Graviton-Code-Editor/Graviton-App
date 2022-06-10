@@ -7,7 +7,7 @@ export default function applyPatches() {
     (event: KeyboardEvent) => {
       if (
         (event.ctrlKey || event.metaKey || event.shiftKey) &&
-        event.key === "p"
+        (event.key === "p" || event.key === "k" || event.key === "l")
       ) {
         event.preventDefault();
       }

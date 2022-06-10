@@ -22,9 +22,9 @@ const StyledExplorer = styled.div`
     padding: 10px;
     border: 1px solid ${({ theme }) => theme.elements.prompt.container.border};
     margin-top: 10px;
-    width: 300px;
+    width: 350px;
     border-radius: 10px;
-    height: 300px;
+    height: 430px;
     background: ${({ theme }) => theme.elements.prompt.container.background};
     color: white;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
