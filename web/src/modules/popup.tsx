@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import PopupContainer, {
   PopupButtonOptions,
-} from "../components/PopupContainer/PopupContainer";
+} from "../components/Popup/PopupContainer";
 import { TranslatedText } from "../types/types";
 import { FloatingWindow } from "./windows";
 

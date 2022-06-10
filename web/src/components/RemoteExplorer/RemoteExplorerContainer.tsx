@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { showedWindowsState } from "../../utils/state";
 import FilesystemExplorer, {
   TreeItemInfo,
-} from "../FilesystemExplorer/FilesystemExplorer";
+} from "../Filesystem/FilesystemExplorer";
 import WindowBackground from "../Window/WindowBackground";
 
 const StyledExplorer = styled.div`

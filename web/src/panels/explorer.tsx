@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import FilesystemExplorer, {
   TreeItemInfo,
-} from "../components/FilesystemExplorer/FilesystemExplorer";
+} from "../components/Filesystem/FilesystemExplorer";
 import { Panel } from "../modules/panel";
 import { clientState, foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";

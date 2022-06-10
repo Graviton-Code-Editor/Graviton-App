@@ -1,4 +1,4 @@
-import { TreeItemInfo } from "../FilesystemExplorer/FilesystemExplorer";
+import { TreeItemInfo } from "./FilesystemExplorer";
 import { extname } from "path";
 import { ReactSVG } from "react-svg";
 

@@ -8,59 +8,14 @@ import { FixedSizeList as List } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { ReactSVG } from "react-svg";
 import { DirItemInfo } from "../../types/client";
-import FileIcon from "../Filesystem/FileIcon";
+import FileIcon from "./FileIcon";
 import { basename } from "../../utils/path";
 import { FolderState } from "../../utils/state/folders";
+import ExplorerItem from "./ExplorerItem";
 
 const ExplorerContainer = styled.div`
   margin: 5px;
   height: calc(100% - 10px);
-`;
-
-const ExplorerItemContainer = styled.div<{
-  isFile: boolean;
-  isOpened: boolean;
-}>`
-  max-width: 300px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  outline: 0;
-  white-space: nowrap;
-  position: relative;
-  background: ${({ theme }) => theme.elements.explorer.item.background};
-  color: ${({ theme }) => theme.elements.explorer.item.text.color};
-  font-size: 12px;
-  border-radius: 5px;
-  line-break: none;
-  text-overflow: elliptic;
-  overflow: hidden;
-  border: none;
-  min-width: 170px;
-  max-width: 200px;
-  text-align: left;
-  user-select: none;
-  &:hover {
-    background: ${({ theme }) => theme.elements.explorer.item.hover.background};
-  }
-  & .arrow svg {
-    margin-right: 7px;
-    margin-left: 15px;
-    margin-top: 2px;
-    width: 8px;
-    transform: ${({ isOpened }) =>
-  isOpened ? " rotate(0deg)" : " rotate(-90deg)"};
-    & > rect {
-      fill: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
-      stroke: ${({ theme }) => theme.elements.explorer.item.arrow.fill};
-    }
-  }
-  & .file svg {
-    width: 20px;
-    margin-right: 4px;
-    margin-top: 3px;
-    ${({ isFile }) => isFile && "padding-left: 29px;"}
-  }
 `;
 
 interface ExplorerOptions {
@@ -357,7 +312,7 @@ function ListItem(
   }
 
   return (
-    <ExplorerItemContainer
+    <ExplorerItem
       key={itemInfo.path}
       onClick={onClick}
       style={itemStyle}
@@ -370,7 +325,7 @@ function ListItem(
       )}
       <FileIcon item={itemInfo} isOpened={isOpened} />
       <span>{itemInfo.name}</span>
-    </ExplorerItemContainer>
+    </ExplorerItem>
   );
 }
 

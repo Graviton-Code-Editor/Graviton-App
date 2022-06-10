@@ -107,9 +107,6 @@ export default function TextEditor({
 }: TextEditorOptions) {
   const ref = useRef(null);
 
-  /*
-   * Save the scroll position
-   */
   function onEventScroll() {
     saveScroll(view.scrollDOM.scrollTop);
   }
