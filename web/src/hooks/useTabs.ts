@@ -4,7 +4,7 @@ import { tabsState } from "../utils/state";
 import { focusedTabState } from "../utils/state/tabs";
 import { focusedViewPanelState } from "../utils/state/views";
 
-interface TabsUtils {
+export interface TabsUtils {
   openTab: (newTab: Tab) => void;
   selectTab: ({
     tab,

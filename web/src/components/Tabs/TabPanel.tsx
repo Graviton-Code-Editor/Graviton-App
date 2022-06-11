@@ -4,7 +4,9 @@ import styled from "styled-components";
 import useContextMenu from "../../hooks/useContextMenu";
 import useTabs from "../../hooks/useTabs";
 import useViews from "../../hooks/useViews";
+import { Popup } from "../../modules/popup";
 import { Tab } from "../../modules/tab";
+import { showedWindowsState } from "../../utils/state";
 import { ViewPanel } from "../../utils/state/tabs";
 import { focusedViewPanelState } from "../../utils/state/views";
 import TabButton from "./TabButton";
@@ -75,6 +77,7 @@ export default function TabsPanel({
   const { pushContextMenu } = useContextMenu();
   const { focusTab, selectTab } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
+  const setWindows = useSetRecoilState(showedWindowsState);
 
   const tabsStates: Map<string, boolean> = new Map();
   tabs.forEach((tab) => tabsStates.set(tab.id, tab.edited));
@@ -120,7 +123,10 @@ export default function TabsPanel({
 
   // Save the tab
   function saveTab(tab: Tab) {
-    tab.save();
+    const popup = tab.save();
+    if (popup != null) {
+      setWindows((val) => [...val, popup as Popup]);
+    }
   }
 
   // Mark this view as focused

@@ -1,5 +1,4 @@
 import { atom } from "recoil";
-import { getRecoil } from "recoil-nexus";
 import { EditorFinder } from "../../hooks/useEditor";
 import {
   BasicTabData,
@@ -91,10 +90,10 @@ export const tabsState = atom({
   default: [[{ tabs: [] }]] as Array<TabsViews<Tab>>,
   dangerouslyAllowMutability: true,
   effects_UNSTABLE: [
-    ({ onSet }) => {
+    ({ onSet, getLoadable }) => {
       onSet(() => {
-        const data = getAllStateData();
-        const client = getRecoil(clientState);
+        const data = getAllStateData(getLoadable(tabsState).getValue());
+        const client = getLoadable(clientState).getValue();
         client.set_state_by_id(data);
       });
     },

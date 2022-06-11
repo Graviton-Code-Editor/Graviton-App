@@ -3,8 +3,8 @@ import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
 import { Command, KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
-import { clientState, showedWindowsState } from "../../utils/state";
-import { getRecoil, setRecoil } from "recoil-nexus";
+import { clientState } from "../../utils/state";
+import { getRecoil } from "recoil-nexus";
 import { FileFormat } from "../../types/client";
 import { Popup } from "../../modules/popup";
 import * as commands from "@codemirror/commands";
@@ -132,12 +132,12 @@ class TextEditorTab extends Tab {
    *
    * @param options - Different options to tweak the saving behavior
    */
-  public save({ force }: SaveTabOptions = { force: false }) {
+  public save({ force }: SaveTabOptions = { force: false }): Popup | null {
     // Save the tab forcefully, e.j, from a shortcut
-    if (force === true) return void this.saveFile();
-
-    if (this.edited) {
-      const message = new Popup(
+    if (force === true) {
+      this.saveFile();
+    } else if (this.edited) {
+      return new Popup(
         {
           text: "popups.AskSaveFile.title",
           props: { file_path: this.filename },
@@ -170,10 +170,8 @@ class TextEditorTab extends Tab {
         ],
         195,
       );
-
-      setRecoil(showedWindowsState, (val) => [...val, message]);
     }
-    return;
+    return null;
   }
 
   /**

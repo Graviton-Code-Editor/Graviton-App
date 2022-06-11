@@ -1,4 +1,5 @@
 import { FileFormat } from "../types/client";
+import { Popup } from "./popup";
 
 export interface TextEditorTabData {
   tab_type: string;
@@ -65,8 +66,8 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
    * @param options - Different options to tweak the saving behavior
    */
   /* eslint-disable */
-  public save(_options?: SaveTabOptions): void {
-    return undefined;
+  public save(_options?: SaveTabOptions): Popup | null {
+    return null;
   }
 
   /**
