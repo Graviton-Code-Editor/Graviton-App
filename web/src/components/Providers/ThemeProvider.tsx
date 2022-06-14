@@ -133,6 +133,7 @@ const theme = {
       button: {
         fill: "rgb(255,255,255)",
         hover: {
+          background: "#2e2e2e",
           fill: "rgb(180,180,180)",
         },
         focused: {

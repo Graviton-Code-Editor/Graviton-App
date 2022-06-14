@@ -30,6 +30,9 @@ const TabButtonStyle = styled.div`
   user-select: none;
   animation: ${tabOpening} ease-in 0.14s;
   border-bottom: 1px solid transparent;
+  &:not(.selected):hover {
+    background: ${({ theme }) => theme.elements.tab.button.hover.background};
+  }
   &.selected {
     background: ${({ theme }) => theme.elements.tab.button.focused.background};
     border-bottom-color: ${({ theme }) =>
