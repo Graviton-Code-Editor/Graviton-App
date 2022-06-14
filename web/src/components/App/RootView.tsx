@@ -23,6 +23,7 @@ import { openedViewsAndTabs, TabsViews } from "../../utils/state/views_tabs";
 import { focusedViewPanelState } from "../../utils/state/view";
 import { focusedTabState } from "../../utils/state/tab";
 import { transformTabsDataToTabs } from "../../utils/state_data";
+import { Prompt } from "../../modules/prompt";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
@@ -70,7 +71,24 @@ export function RootView({
       const prompt = new PromptClass();
       if (prompt.shortcut) {
         pushHotkey(prompt.shortcut, () => {
-          setShowedWindows((val) => [...val, prompt]);
+          setShowedWindows((windows) => {
+            let prompExists = false;
+
+            for (const win of windows) {
+              if (Prompt.isPrompt(win)) {
+                const winPrompt = win as Prompt;
+                if (winPrompt.promptName === prompt.promptName) {
+                  prompExists = true;
+                }
+              }
+            }
+
+            if (prompExists) {
+              return windows;
+            } else {
+              return [...windows, prompt];
+            }
+          });
         });
       }
     });

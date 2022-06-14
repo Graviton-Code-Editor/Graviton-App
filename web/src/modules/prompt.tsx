@@ -8,4 +8,8 @@ export class Prompt extends FloatingWindow {
   public promptName = "Prompt";
   public container: () => ReactElement = () => <div />;
   public shortcut: string | undefined;
+
+  public static isPrompt(val: FloatingWindow) {
+    return !!(val as any)["promptName"];
+  }
 }

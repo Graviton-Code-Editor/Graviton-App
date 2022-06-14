@@ -43,6 +43,10 @@ export default function useHotkeys() {
 
   useEffect(() => {
     function listener(e: globalThis.KeyboardEvent) {
+      if (e.repeat && e.key !== "Escape") return;
+
+      if (e.isComposing) return;
+
       for (const combo of Object.keys(hotkeys)) {
         const config = getHotkeyConfig(combo);
         const action = hotkeys[combo];
@@ -54,10 +58,10 @@ export default function useHotkeys() {
       e.stopPropagation();
     }
 
-    window.addEventListener("keyup", listener);
+    window.addEventListener("keydown", listener);
 
     return () => {
-      window.removeEventListener("keyup", listener);
+      window.removeEventListener("keydown", listener);
     };
   }, [hotkeys]);
 
