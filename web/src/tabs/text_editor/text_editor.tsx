@@ -1,7 +1,7 @@
 import TextEditor from "../../components/TextEditor/TextEditor";
 import { Extension, StateCommand } from "@codemirror/state";
 import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
-import { Command, KeyBinding, keymap } from "@codemirror/view";
+import { KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { clientState } from "../../utils/state";
 import { getRecoil } from "recoil-nexus";
@@ -199,12 +199,6 @@ class TextEditorTab extends Tab {
    * Return the custom keymap
    */
   public getKeymap() {
-    // Save command
-    const save: Command = () => {
-      this.saveFile();
-      return false;
-    };
-
     // Undo command
     const undo: StateCommand = (target) => {
       commands.undo(target);
@@ -235,7 +229,6 @@ class TextEditorTab extends Tab {
 
     // Define the custom keymap
     const customKeymap: readonly KeyBinding[] = [
-      { key: "mod-s", run: save },
       { key: "mod-y", run: redo, preventDefault: true },
       { key: "mod-z", run: undo, preventDefault: true },
     ];

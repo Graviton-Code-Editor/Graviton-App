@@ -206,7 +206,10 @@ export default function TabsPanel({
 
           return (
             isSelected && (
-              <div key={tab.id}>
+              <div
+                key={tab.id}
+                onClick={() => selectPanelTab(tab)}
+              >
                 <Container
                   tab={tab}
                   setEdited={setEdited}

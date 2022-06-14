@@ -15,6 +15,7 @@ import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/Primitive/HorizontalView";
 import RouteView from "../../components/Primitive/RouteView";
 import { useEffect } from "react";
+import HotkeysRoute from "./routes/hotkeys";
 
 const SettingsTabContainerStyled = styled.div`
   padding: 10px;
@@ -34,6 +35,9 @@ function SettingsTabContainer() {
           <Link to="/extensions">
             <SideBarButton>Extensions</SideBarButton>
           </Link>
+          <Link to="/hotkeys">
+            <SideBarButton>Hotkeys</SideBarButton>
+          </Link>
           <Link to="/about">
             <SideBarButton>About</SideBarButton>
           </Link>
@@ -41,6 +45,7 @@ function SettingsTabContainer() {
         <RouteView>
           <Routes>
             <Route path="/extensions" element={<ExtensionsRoute />} />
+            <Route path="/hotkeys" element={<HotkeysRoute />} />
             <Route path="/about" element={<AboutRoute />} />
           </Routes>
         </RouteView>

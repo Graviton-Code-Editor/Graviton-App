@@ -44,6 +44,9 @@ export default function useTabs(): TabsUtils {
       // Select the new tab
       tabPanels[row][col].selected_tab_id = newTab?.id;
       setTabPanels([...tabPanels]);
+
+      setFocusedTab({ col, row, tab: newTab, id: newTab ? newTab.id : null });
+      setFocusedView({ col, row });
     },
     selectTab: ({ tab, col, row }) => {
       tabPanels[row][col].selected_tab_id = tab?.id;

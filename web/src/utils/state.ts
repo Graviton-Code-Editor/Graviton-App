@@ -17,7 +17,7 @@ export const clientState = atom({
 });
 
 // Registered prompts launchers
-export const prompts = atom<typeof Prompt[]>({
+export const promptsState = atom<typeof Prompt[]>({
   key: "prompts",
   default: [],
 });

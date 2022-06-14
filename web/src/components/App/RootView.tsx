@@ -1,9 +1,7 @@
 import { PropsWithChildren, useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import useEditor from "../../hooks/useEditor";
-import useHotkeys from "../../hooks/useHotkey";
-import useViews from "../../hooks/useViews";
 import { Popup } from "../../modules/popup";
 import { StatusBarItem } from "../../modules/statusbar_item";
 import { Tab } from "../../modules/tab";
@@ -15,15 +13,11 @@ import {
 } from "../../types/messaging";
 import {
   clientState,
-  prompts,
   showedStatusBarItem,
   showedWindowsState,
 } from "../../utils/state";
 import { openedViewsAndTabs, TabsViews } from "../../utils/state/views_tabs";
-import { focusedViewPanelState } from "../../utils/state/view";
-import { focusedTabState } from "../../utils/state/tab";
 import { transformTabsDataToTabs } from "../../utils/state_data";
-import { Prompt } from "../../modules/prompt";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
@@ -50,49 +44,10 @@ export function RootView({
   isWindows,
 }: PropsWithChildren<{ isWindows: boolean }>) {
   const client = useRecoilValue(clientState);
-  const usePrompts = useRecoilValue(prompts);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
-  const [tabs, setTabs] = useRecoilState(openedViewsAndTabs);
-  const currentFocusedTab = useRecoilValue(focusedTabState);
+  const setTabs = useSetRecoilState(openedViewsAndTabs);
   const getEditor = useEditor();
-  const { pushHotkey } = useHotkeys();
-  const {
-    newViewInFocused: newView,
-    closeFocusedView,
-    newViewPanelInFocused,
-    closeFocusedViewPanel,
-  } = useViews();
-  const focusedView = useRecoilValue(focusedViewPanelState);
-
-  useEffect(() => {
-    // Register all prompts's shortcuts
-    usePrompts.forEach((PromptClass) => {
-      const prompt = new PromptClass();
-      if (prompt.shortcut) {
-        pushHotkey(prompt.shortcut, () => {
-          setShowedWindows((windows) => {
-            let prompExists = false;
-
-            for (const win of windows) {
-              if (Prompt.isPrompt(win)) {
-                const winPrompt = win as Prompt;
-                if (winPrompt.promptName === prompt.promptName) {
-                  prompExists = true;
-                }
-              }
-            }
-
-            if (prompExists) {
-              return windows;
-            } else {
-              return [...windows, prompt];
-            }
-          });
-        });
-      }
-    });
-  }, [usePrompts]);
 
   useEffect(() => {
     if (client != null) {
@@ -153,46 +108,8 @@ export function RootView({
           return filteredStatusBarItems;
         });
       });
-
-      // Close all the last opened window when ESC is pressed
-      pushHotkey("esc", () => {
-        setShowedWindows((val) => {
-          const newValue = [...val];
-          newValue.pop();
-          return newValue;
-        });
-      });
     }
   }, [client]);
-
-  useEffect(() => {
-    // Create a new view to the right
-    pushHotkey("ctrl+l", () => {
-      newView();
-    });
-
-    // Close the focused view
-    pushHotkey("ctrl+k", () => {
-      closeFocusedView();
-    });
-
-    // Create a new view panel in the focused view
-    pushHotkey("ctrl+.", () => {
-      newViewPanelInFocused();
-    });
-
-    // Close the focused view panel
-    pushHotkey("ctrl+,", () => {
-      closeFocusedViewPanel();
-    });
-  }, [tabs, focusedView]);
-
-  useEffect(() => {
-    // Save the current focused tab
-    pushHotkey("ctrl+s", () => {
-      currentFocusedTab.tab?.save({ force: true });
-    });
-  }, [currentFocusedTab]);
 
   return (
     <RootViewContainer isWindows={isWindows}>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createClient } from "../../services/client";
-import { clientState, panelsState, prompts } from "../../utils/state";
+import { clientState, panelsState, promptsState } from "../../utils/state";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
 import Panels from "./PanelsView";
@@ -15,6 +15,7 @@ import TitleBar from "./TitleBar";
 import ContextMenuView from "./ContextMenuView";
 import WindowsView from "./WindowsView";
 import { RootView } from "./RootView";
+import Commands from "./Commands";
 
 /*
  * Retrieve the authentication token
@@ -34,7 +35,7 @@ async function getToken() {
 function ClientRoot() {
   const setClient = useSetRecoilState(clientState);
   const setPanels = useSetRecoilState(panelsState);
-  const setPrompts = useSetRecoilState(prompts);
+  const setPrompts = useSetRecoilState(promptsState);
 
   useEffect(() => {
     // Retrieve the token and then create a new client
@@ -78,6 +79,7 @@ function App() {
           <WindowsView />
           <ContextMenuView />
           <StatusBarView />
+          <Commands />
         </RootView>
       </Theme>
     </RecoilRoot>
