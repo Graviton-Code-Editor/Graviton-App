@@ -4,7 +4,7 @@ import {
   CoreResponse,
   DirItemInfo,
   LanguageServer,
-} from "../../src/types/client";
+} from "../../src/services/clients/client.types";
 import Configuration from "../../src/utils/config";
 import { StateData } from "../../src/utils/state/state_data";
 

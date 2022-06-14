@@ -7,7 +7,7 @@ import { FixedSizeList as List } from "react-window";
 //@ts-ignore
 import AutoSizer from "react-virtualized-auto-sizer";
 import { ReactSVG } from "react-svg";
-import { DirItemInfo } from "../../types/client";
+import { DirItemInfo } from "../../services/clients/client.types";
 import FileIcon from "./FileIcon";
 import { basename } from "../../utils/path";
 import { FolderState } from "../../utils/state/folders";

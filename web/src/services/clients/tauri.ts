@@ -10,9 +10,9 @@ import {
   FileInfo,
   LanguageServer,
   ManifestInfo as ManifestInfo,
-} from "../../types/client";
+} from "./client.types";
 import Configuration from "../../utils/config";
-import { StateData } from "../../utils/state/state_data";
+import { StateData } from "../../utils/state_data";
 
 /**
  * Tauri Client

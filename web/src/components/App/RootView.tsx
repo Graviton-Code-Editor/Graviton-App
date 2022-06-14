@@ -19,13 +19,10 @@ import {
   showedStatusBarItem,
   showedWindowsState,
 } from "../../utils/state";
-import {
-  focusedTabState,
-  tabsState,
-  TabsViews,
-  transformTabsDataToTabs,
-} from "../../utils/state/tabs";
-import { focusedViewPanelState } from "../../utils/state/views";
+import { openedViewsAndTabs, TabsViews } from "../../utils/state/views_tabs";
+import { focusedViewPanelState } from "../../utils/state/view";
+import { focusedTabState } from "../../utils/state/tab";
+import { transformTabsDataToTabs } from "../../utils/state_data";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
@@ -55,7 +52,7 @@ export function RootView({
   const usePrompts = useRecoilValue(prompts);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
-  const [tabs, setTabs] = useRecoilState(tabsState);
+  const [tabs, setTabs] = useRecoilState(openedViewsAndTabs);
   const currentFocusedTab = useRecoilValue(focusedTabState);
   const getEditor = useEditor();
   const { pushHotkey } = useHotkeys();
@@ -85,7 +82,7 @@ export function RootView({
 
       // Load the received state
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
-        // Convert all tab datas into Tab instances
+        // Convert all Tab datas into Tab instances
         const openedTabs = transformTabsDataToTabs(
           state_data.opened_tabs,
           getEditor,

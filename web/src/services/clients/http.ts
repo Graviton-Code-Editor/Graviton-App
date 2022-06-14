@@ -10,8 +10,8 @@ import {
   FileInfo,
   LanguageServer,
   ManifestInfo,
-} from "../../types/client";
-import { StateData } from "../../utils/state/state_data";
+} from "./client.types";
+import { StateData } from "../../utils/state_data";
 
 /**
  * HTTP + WebSockets client

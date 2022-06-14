@@ -6,7 +6,7 @@ import {
 } from "@open-rpc/client-js/build/Request";
 import { Transport } from "@open-rpc/client-js/build/transports/Transport";
 import Emittery from "emittery";
-import { Client } from "../../types/client";
+import { Client } from "../../services/clients/client.types";
 import {
   LanguageServerNotification,
   NotifyLanguageServers,

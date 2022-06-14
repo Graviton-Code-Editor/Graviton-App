@@ -1,6 +1,6 @@
 import Configuration from "../utils/config";
 import { isTauri } from "./commands";
-import { Client } from "../types/client";
+import { Client } from "../services/clients/client.types";
 
 export async function createClient(token: string): Promise<Client> {
   if (isTauri) {

@@ -5,7 +5,7 @@ import { Command, KeyBinding, keymap } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { clientState } from "../../utils/state";
 import { getRecoil } from "recoil-nexus";
-import { FileFormat } from "../../types/client";
+import { FileFormat } from "../../services/clients/client.types";
 import { Popup } from "../../modules/popup";
 import * as commands from "@codemirror/commands";
 import { SaveTabOptions, Tab, TextEditorTabData } from "../../modules/tab";

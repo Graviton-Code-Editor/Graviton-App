@@ -1,4 +1,4 @@
-import { BaseMessage } from "../client";
+import { BaseMessage } from "../../services/clients/client.types";
 
 ///////// LSP Messages
 

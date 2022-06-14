@@ -1,7 +1,7 @@
 import { SplitPane } from "react-multi-split-pane";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { tabsState } from "../../utils/state";
+import { openedViewsAndTabs } from "../../utils/state";
 import TabsPanel from "../Tabs/TabPanel";
 
 const TabsContainer = styled.div`
@@ -26,7 +26,7 @@ const TabsContainer = styled.div`
  * Container that displays all the opened tabs
  */
 function TabsView() {
-  const [tabsPanels, setTabsPanels] = useRecoilState(tabsState);
+  const [tabsPanels, setTabsPanels] = useRecoilState(openedViewsAndTabs);
 
   function closeTab(row: number, column: number, index: number) {
     tabsPanels[row][column].tabs.splice(index, 1);

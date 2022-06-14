@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { ManifestInfo } from "../types/client";
+import { ManifestInfo } from "../services/clients/client.types";
 import { clientState } from "../utils/state";
 
 /**

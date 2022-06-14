@@ -5,9 +5,9 @@ import { Prompt } from "../modules/prompt";
 import { StatusBarItem } from "../modules/statusbar_item";
 import { FloatingWindow } from "../modules/windows";
 import TextEditorTab from "../tabs/text_editor/text_editor";
-import { Client } from "../types/client";
+import { Client } from "../services/clients/client.types";
 export { foldersState } from "./state/folders";
-export { tabsState } from "./state/tabs";
+export { openedViewsAndTabs as openedViewsAndTabs } from "./state/views_tabs";
 export { panelsState } from "./state/panels";
 
 // Client used across the app

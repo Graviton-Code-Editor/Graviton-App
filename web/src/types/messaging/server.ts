@@ -1,6 +1,6 @@
 import { StatusBarItemOptions } from "../../modules/statusbar_item";
-import { StateData } from "../../utils/state/state_data";
-import { BaseMessage } from "../client";
+import { StateData } from "../../utils/state_data";
+import { BaseMessage } from "../../services/clients/client.types";
 
 export interface ShowPopup extends BaseMessage {
   popup_id: string;

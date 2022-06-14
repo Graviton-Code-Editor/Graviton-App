@@ -1,35 +1,45 @@
-import { atom } from "recoil";
-import { EditorFinder } from "../../hooks/useEditor";
+import { EditorFinder } from "../hooks/useEditor";
+import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
 import {
-  BasicTabData,
-  Tab,
-  TabData,
-  TextEditorTabData,
-} from "../../modules/tab";
-import SettingsTab from "../../tabs/settings";
-import TextEditorTab from "../../tabs/text_editor/text_editor";
-import WelcomeTab from "../../tabs/welcome";
-import { Client, CoreResponse, FileInfo } from "../../types/client";
-import { clientState } from "../state";
-import getAllStateData from "./state_data";
+  Client,
+  CoreResponse,
+  FileInfo,
+} from "../services/clients/client.types";
+import SettingsTab from "../tabs/settings";
+import TextEditorTab from "../tabs/text_editor/text_editor";
+import WelcomeTab from "../tabs/welcome";
+import { TabsViews } from "./state/views_tabs";
 
-async function toContentResolver(
-  reader: Promise<CoreResponse<FileInfo>>,
-): Promise<string | null> {
-  const res = await reader;
-  if (res.Ok) {
-    return res.Ok.content;
-  } else {
-    return null;
-  }
+export interface StateData {
+  id: number;
+  opened_tabs: Array<TabsViews<TabData>>;
 }
 
-export interface ViewPanel<T> {
-  selected_tab_id?: string;
-  tabs: Array<T>;
+export default function getAllStateData(
+  views: TabsViews<Tab>[],
+): Omit<StateData, "id"> {
+  const opened_tabs = transformTabsToData(views);
+
+  return {
+    opened_tabs,
+  };
 }
 
-export type TabsViews<T> = Array<ViewPanel<T>>;
+// Transform Tabs to TabDatas
+function transformTabsToData(
+  views: Array<TabsViews<Tab>>,
+): Array<TabsViews<TabData>> {
+  return views.map((viewPanel) => {
+    return viewPanel.map((view) => {
+      return {
+        selected_tab_id: view.selected_tab_id,
+        tabs: view.tabs.map((tab) => {
+          return tab.toJson();
+        }),
+      };
+    });
+  });
+}
 
 // Transform TabDatas to Tabs
 export function transformTabsDataToTabs(
@@ -84,32 +94,13 @@ export function transformTabsDataToTabs(
   });
 }
 
-// Opened tabs
-export const tabsState = atom({
-  key: "openedTabs",
-  default: [[{ tabs: [] }]] as Array<TabsViews<Tab>>,
-  dangerouslyAllowMutability: true,
-  effects_UNSTABLE: [
-    ({ onSet, getLoadable }) => {
-      onSet(() => {
-        const data = getAllStateData(getLoadable(tabsState).getValue());
-        const client = getLoadable(clientState).getValue();
-        client.set_state_by_id(data);
-      });
-    },
-  ],
-});
-
-export interface FocusedTab {
-  row: number;
-  col: number;
-  id: string | null;
-  tab: Tab | null;
+async function toContentResolver(
+  reader: Promise<CoreResponse<FileInfo>>,
+): Promise<string | null> {
+  const res = await reader;
+  if (res.Ok) {
+    return res.Ok.content;
+  } else {
+    return null;
+  }
 }
-
-// Current focused (clicked) tab
-export const focusedTabState = atom<FocusedTab>({
-  key: "focusedTab",
-  default: { row: 0, col: 0, id: null, tab: null },
-  dangerouslyAllowMutability: true,
-});

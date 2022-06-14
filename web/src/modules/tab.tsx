@@ -1,4 +1,4 @@
-import { FileFormat } from "../types/client";
+import { FileFormat } from "../services/clients/client.types";
 import { Popup } from "./popup";
 
 export interface TextEditorTabData {

@@ -7,8 +7,8 @@ import useViews from "../../hooks/useViews";
 import { Popup } from "../../modules/popup";
 import { Tab } from "../../modules/tab";
 import { showedWindowsState } from "../../utils/state";
-import { ViewPanel } from "../../utils/state/tabs";
-import { focusedViewPanelState } from "../../utils/state/views";
+import { ViewPanel } from "../../utils/state/views_tabs";
+import { focusedViewPanelState } from "../../utils/state/view";
 import TabButton from "./TabButton";
 
 const NoTabsOpenedMessageContainer = styled.div`
@@ -79,9 +79,9 @@ export default function TabsPanel({
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
   const setWindows = useSetRecoilState(showedWindowsState);
 
-  const tabsStates: Map<string, boolean> = new Map();
-  tabs.forEach((tab) => tabsStates.set(tab.id, tab.edited));
-  const [states, setStates] = useState(tabsStates);
+  const openedViewsAndTabss: Map<string, boolean> = new Map();
+  tabs.forEach((tab) => openedViewsAndTabss.set(tab.id, tab.edited));
+  const [states, setStates] = useState(openedViewsAndTabss);
 
   useEffect(() => {
     // If there isn't any tab opened then set the selected tab to null

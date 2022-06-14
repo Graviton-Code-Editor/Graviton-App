@@ -3,7 +3,7 @@ import FakeRoot from "./utils/fake_root";
 import { beforeAll, describe, expect, test } from "vitest";
 import useViews from "../src/hooks/useViews";
 import { useRecoilValue } from "recoil";
-import { tabsState } from "../src/utils/state";
+import { openedViewsAndTabs } from "../src/utils/state";
 import { TabsViews } from "../src/utils/state/tabs";
 import { Tab } from "../src/modules/tab";
 import useTabs from "../src/hooks/useTabs";
@@ -18,7 +18,7 @@ describe("Views, ViewPanels and Tabs", () => {
 
   beforeAll(() => {
     hook = renderHook(() => {
-      return { views: useRecoilValue(tabsState), ...useViews(), ...useTabs() };
+      return { views: useRecoilValue(openedViewsAndTabs), ...useViews(), ...useTabs() };
     }, {
       wrapper: FakeRoot,
     });
