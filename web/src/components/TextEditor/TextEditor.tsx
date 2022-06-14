@@ -127,6 +127,9 @@ export default function TextEditor({
         view.scrollDOM.addEventListener("scroll", onEventScroll);
       }
 
+      // This will make the cursor appear again
+      view.focus();
+
       return () => {
         view.scrollDOM.removeEventListener("scroll", onEventScroll);
       };
