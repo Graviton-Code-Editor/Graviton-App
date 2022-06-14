@@ -35,12 +35,13 @@ function TabsView() {
 
   return (
     <TabsContainer>
-      <SplitPane split="vertical" minSize={20} className="row">
+      <SplitPane split="vertical" minSize={20} className="row" defaultSizes={new Array(tabsPanels.length).fill(200)}>
         {tabsPanels.map((columns, r) => {
           return (
             <SplitPane
               split="horizontal"
               minSize={20}
+              defaultSizes={new Array(columns.length).fill(200)}
               className="colunmn"
               key={`${r}_row`}
             >
