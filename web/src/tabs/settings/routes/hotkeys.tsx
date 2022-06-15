@@ -5,6 +5,9 @@ import useCommands from "../../../hooks/useCommands";
 
 export default function HotkeysRoute() {
   const { commands } = useCommands();
+
+  // TODO(marc2332): Ability to add shortcuts
+
   return (
     <div>
       <Title>Hotkeys</Title>

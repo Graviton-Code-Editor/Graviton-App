@@ -19,6 +19,8 @@ import HotkeysRoute from "./routes/hotkeys";
 
 const SettingsTabContainerStyled = styled.div`
   padding: 10px;
+  max-height: 100%;
+  overflow: auto;
 `;
 
 function SettingsTabContainer() {
