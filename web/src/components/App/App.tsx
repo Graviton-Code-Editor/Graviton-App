@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { createClient } from "../../services/client";
-import { clientState, panelsState, promptsState } from "../../utils/state";
+import { clientState, promptsState } from "../../utils/state";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
-import Panels from "./PanelsView";
+import Panels from "./SidePanelsView";
 import Tabs from "./TabsView";
 import Theme from "../Providers/ThemeProvider";
 import { SplitPane } from "react-multi-split-pane";
@@ -16,6 +16,7 @@ import ContextMenuView from "./ContextMenuView";
 import WindowsView from "./WindowsView";
 import { RootView } from "./RootView";
 import Commands from "./Commands";
+import useSidePanels from "../../hooks/useSidePanels";
 
 /*
  * Retrieve the authentication token
@@ -34,7 +35,7 @@ async function getToken() {
  */
 function ClientRoot() {
   const setClient = useSetRecoilState(clientState);
-  const setPanels = useSetRecoilState(panelsState);
+  const { pushSidePanel } = useSidePanels();
   const setPrompts = useSetRecoilState(promptsState);
 
   useEffect(() => {
@@ -46,11 +47,7 @@ function ClientRoot() {
         // Wait until it's connected
         client.whenConnected().then(() => {
           setClient(client);
-          setPanels([
-            {
-              panel: new ExplorerPanel(),
-            },
-          ]);
+          pushSidePanel(new ExplorerPanel());
           setPrompts((val) => [...val, GlobalPrompt]);
         });
       }

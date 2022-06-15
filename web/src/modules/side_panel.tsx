@@ -1,9 +1,9 @@
 import { ReactElement } from "react";
 
 /**
- * Panel API
+ * SidePanel API
  */
-export abstract class Panel {
+export abstract class SidePanel {
   public name: string;
   public container: () => ReactElement;
   public icon: () => ReactElement<any>;
@@ -16,4 +16,6 @@ export abstract class Panel {
     this.container = () => <div />;
     this.icon = () => <div />;
   }
+
+  public abstract focus(): void;
 }

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import useCommands from "../../hooks/useCommands";
+import useSidePanels from "../../hooks/useSidePanels";
 import useViews from "../../hooks/useViews";
 import { Prompt } from "../../modules/prompt";
 import GlobalPrompt from "../../prompts/global";
@@ -13,11 +14,14 @@ import { focusedTabState } from "../../utils/state/tab";
 
 export default function Commands() {
   const { registerCommandAction, registerCommands, commands } = useCommands();
-  const setShowedWindows = useSetRecoilState(showedWindowsState);
 
   // Register commands
   useEffect(() => {
     registerCommands([
+      ["focus.side.panel", {
+        name: "Focus selected side panel",
+        hotkey: "Ctrl+E",
+      }],
       ["close.window", {
         name: "Close Window",
         hotkey: "Esc",
@@ -49,7 +53,19 @@ export default function Commands() {
     ]);
   }, []);
 
+  // Focus the opened side panel
+
+  const { focusSelectedSidePanel } = useSidePanels();
+
+  useEffect(() => {
+    registerCommandAction("focus.side.panel", () => {
+      focusSelectedSidePanel();
+    });
+  }, [commands]);
+
   // Close current displayed window
+
+  const setShowedWindows = useSetRecoilState(showedWindowsState);
 
   useEffect(() => {
     registerCommandAction("close.window", () => {

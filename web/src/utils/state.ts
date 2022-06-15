@@ -8,7 +8,7 @@ import TextEditorTab from "../tabs/text_editor/text_editor";
 import { Client } from "../services/clients/client.types";
 export { foldersState } from "./state/folders";
 export { openedViewsAndTabs as openedViewsAndTabs } from "./state/views_tabs";
-export { panelsState } from "./state/panels";
+export { sidePanelsState } from "./state/side_panels";
 
 // Client used across the app
 export const clientState = atom({

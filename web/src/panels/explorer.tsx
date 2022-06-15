@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/Filesystem/FilesystemExplorer";
-import { Panel } from "../modules/panel";
+import { SidePanel } from "../modules/side_panel";
 import { clientState, foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";
 import useEditor from "../hooks/useEditor";
@@ -12,13 +12,35 @@ import { openFolderPicker } from "../services/commands";
 import HorizontalCentered from "../components/Primitive/HorizontalCentered";
 import SettingsTab from "../tabs/settings";
 import { useTranslation } from "react-i18next";
+import { useEffect, useRef } from "react";
+import styled from "styled-components";
 
-function ExplorerPanelContainer() {
+const StyledExplorer = styled.div`
+  height: 100%;
+  padding-left: 5px;
+  &:focus {
+    outline: none;
+  }
+`;
+
+interface ExplorerPanelOptions {
+  onFocus: (callback: () => void) => void;
+}
+
+function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
+  const folders = useRecoilValue(foldersState);
   const client = useRecoilValue(clientState);
   const { openTab } = useTabs();
   const getEditor = useEditor();
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
+  const refExplorer = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    onFocus(() => {
+      refExplorer.current?.focus();
+    });
+  }, []);
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
@@ -69,10 +91,8 @@ function ExplorerPanelContainer() {
     openTab(new SettingsTab());
   }
 
-  const folders = useRecoilValue(foldersState);
-
   return (
-    <div style={{ height: "100%", paddingLeft: 5 }}>
+    <StyledExplorer ref={refExplorer} tabIndex={0}>
       {folders.length === 0
         ? (
           <HorizontalCentered>
@@ -98,20 +118,27 @@ function ExplorerPanelContainer() {
           <FilesystemExplorer
             folders={folders}
             onSelected={openFile}
-            key="eplorer"
           />
         )}
-    </div>
+    </StyledExplorer>
   );
 }
 
 /**
  * Built-in panel that displays a filesystem explorer
  */
-export default class ExplorerPanel extends Panel {
+export default class ExplorerPanel extends SidePanel {
+  private callback = () => {/**/};
+
   constructor() {
     super("Explorer");
     this.icon = () => <ReactSVG src="/icons/folder_outlined.svg" />;
-    this.container = () => <ExplorerPanelContainer />;
+    this.container = () => (
+      <ExplorerPanelContainer onFocus={(c) => this.callback = c} />
+    );
+  }
+
+  public focus() {
+    this.callback();
   }
 }

@@ -20,7 +20,7 @@ export const SecondaryButton = styled.button<
   border: none;
   cursor: pointer;
   margin-top: 5px;
-  transition: 0.1s;
+  transition: background 0.1s;
   user-select: none;
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}px;`}
   ${({ expanded }) => expanded && "width: 100%;"}

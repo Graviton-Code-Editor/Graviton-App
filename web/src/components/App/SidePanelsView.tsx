@@ -1,8 +1,5 @@
-import React from "react";
-import { useState } from "react";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { panelsState } from "../../utils/state";
+import useSidePanels from "../../hooks/useSidePanels";
 import IconButton from "../SidePanel/PanelButton";
 
 const PanelsContainer = styled.div`
@@ -30,22 +27,22 @@ const PanelsContainer = styled.div`
 `;
 
 /*
- * Sidebar that contains all the loaded panels
+ * Sidebar that contains all the loaded side panels
  */
-function PanelsView() {
-  const loadedPanels = useRecoilValue(panelsState);
-  const [displayedPanelName, setDisplayedPanelName] = useState("Explorer");
+function SidePanelsView() {
+  const { sidePanels, selectSidePanel, selectedSidePanelName } =
+    useSidePanels();
 
   return (
     <PanelsContainer>
       <div className="sidebar">
-        {loadedPanels.map(({ panel }) => {
-          const isSelected = panel.name === displayedPanelName;
+        {sidePanels.map((panel) => {
+          const isSelected = panel.name === selectedSidePanelName;
           const PanelIcon = panel.icon;
           return (
             <IconButton
               key={panel.name}
-              onClick={() => setDisplayedPanelName(panel.name)}
+              onClick={() => selectSidePanel(panel.name)}
               selected={isSelected}
             >
               <PanelIcon />
@@ -54,8 +51,8 @@ function PanelsView() {
         })}
       </div>
       <div className="sidepanel">
-        {loadedPanels.map(({ panel }) => {
-          if (panel.name === displayedPanelName) {
+        {sidePanels.map((panel) => {
+          if (panel.name === selectedSidePanelName) {
             const PanelContainer = panel.container;
             return <PanelContainer key={panel.name} />;
           }
@@ -65,4 +62,4 @@ function PanelsView() {
   );
 }
 
-export default PanelsView;
+export default SidePanelsView;
