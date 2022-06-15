@@ -90,7 +90,7 @@ export default function Commands() {
 
   // Views hotkeys
 
-  const tabs = useRecoilValue(openedViewsAndTabs);
+  const viewsAndTabs = useRecoilValue(openedViewsAndTabs);
   const {
     newViewInFocused,
     closeFocusedViewPanel,
@@ -111,7 +111,7 @@ export default function Commands() {
     registerCommandAction("close.focused.view.panel", () => {
       closeFocusedViewPanel();
     });
-  }, [tabs, commands]);
+  }, [viewsAndTabs, commands]);
 
   // Save current focused tab
 

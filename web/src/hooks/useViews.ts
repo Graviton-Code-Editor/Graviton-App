@@ -57,11 +57,11 @@ export default function useViews() {
   const setWindows = useSetRecoilState(showedWindowsState);
   const { selectTab } = useTabs();
 
-  // TODO(marc2332): This should somehow check for the tabs state, just to make sure they are all saved, and if not, prompt the user to do it
   const closeViewPanel = ({ col, row }: FocusedViewPanel): boolean => {
     // Always leave at least one view panel opened
     if (tabPanels[row].length === 1) return false;
 
+    // Select the view from above if there is any, or leave the same position focused
     const nextFocusedCol = col > 1 ? col - 1 : 0;
 
     const canCloseViewPanel = canViewPanelBeClosed(tabPanels[row][col].tabs);
@@ -89,6 +89,7 @@ export default function useViews() {
     // Always leave at least one view opened
     if (tabPanels.length == 1) return false;
 
+    // Select the view to the left if there is any, or leave the same position focused
     const nextFocusedRow = row > 0 ? row - 1 : 0;
 
     const canCloseView = canViewBeClosed(tabPanels[row]);
@@ -96,7 +97,8 @@ export default function useViews() {
     if (canCloseView) {
       tabPanels.splice(row, 1);
       setTabPanels([...tabPanels]);
-      setFocusedView({ col: tabPanels.length - 1, row: nextFocusedRow });
+      // Select the first view panel in the new view
+      setFocusedView({ col: 0, row: nextFocusedRow });
     } else {
       for (let col = 0; col < tabPanels[row].length; col++) {
         const viewPanel = tabPanels[row][col];
@@ -115,6 +117,7 @@ export default function useViews() {
       tabs: [],
     });
     setTabPanels([...tabPanels]);
+    // Select the latest (new one) view panel from the view
     setFocusedView({ col: tabPanels[row].length - 1, row });
   };
 

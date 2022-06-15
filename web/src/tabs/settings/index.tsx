@@ -18,9 +18,10 @@ import { useEffect } from "react";
 import HotkeysRoute from "./routes/hotkeys";
 
 const SettingsTabContainerStyled = styled.div`
-  padding: 10px;
+  height: 100%;
   max-height: 100%;
-  overflow: auto;
+  padding-left: 20px;
+  padding-top: 20px;
 `;
 
 function SettingsTabContainer() {
