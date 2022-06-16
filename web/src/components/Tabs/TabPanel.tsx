@@ -64,18 +64,16 @@ interface TabPanelOptions {
   panel: ViewPanel<Tab>;
   col: number;
   row: number;
-  close: (i: number) => void;
 }
 
 export default function TabsPanel({
   panel: { tabs, selected_tab_id },
   col,
   row,
-  close,
 }: TabPanelOptions) {
   const { newView, newViewPanel } = useViews();
   const { pushContextMenu } = useContextMenu();
-  const { focusTab, selectTab } = useTabs();
+  const { focusTab, selectTab, closeTab } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
   const setWindows = useSetRecoilState(showedWindowsState);
 
@@ -109,16 +107,12 @@ export default function TabsPanel({
   }
 
   // Close the specified tab from this panel
-  function removeTab(tab: Tab, index: number) {
-    tab.close();
-    if (selected_tab_id === tab.id) {
-      if (tabs[index - 1]) {
-        selectTab({ col, row, tab: tabs[index - 1] });
-      } else {
-        selectTab({ col, row, tab: null });
-      }
-    }
-    close(index);
+  function removeTab(tab: Tab) {
+    closeTab({
+      col,
+      row,
+      tab,
+    });
   }
 
   // Save the tab
@@ -171,7 +165,7 @@ export default function TabsPanel({
   return (
     <TabsPanelContainer onClick={viewClicked} onContextMenu={contextMenuClick}>
       <div className="tabsList">
-        {tabs.map((tab, i) => {
+        {tabs.map((tab) => {
           const isSelected = tab.id == selected_tab_id;
           const isEdited = states.get(tab.id) as boolean;
           const { icon: TabIcon } = tab;
@@ -185,7 +179,7 @@ export default function TabsPanel({
               isSelected={isSelected}
               select={() => selectPanelTab(tab)}
               close={() =>
-                removeTab(tab, i)}
+                removeTab(tab)}
               save={() =>
                 saveTab(tab)}
             />
@@ -193,7 +187,7 @@ export default function TabsPanel({
         })}
       </div>
       <div className="tabsContainer">
-        {tabs.map((tab, i) => {
+        {tabs.map((tab) => {
           const isSelected = tab.id == selected_tab_id;
           const Container = tab.container;
 
@@ -213,7 +207,7 @@ export default function TabsPanel({
                 <Container
                   tab={tab}
                   setEdited={setEdited}
-                  close={() => removeTab(tab, i)}
+                  close={() => removeTab(tab)}
                 />
               </div>
             )

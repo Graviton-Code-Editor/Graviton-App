@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import useCommands from "../../hooks/useCommands";
 import useSidePanels from "../../hooks/useSidePanels";
+import useTabs from "../../hooks/useTabs";
 import useViews from "../../hooks/useViews";
 import { Prompt } from "../../modules/prompt";
 import GlobalPrompt from "../../prompts/global";
@@ -10,7 +11,6 @@ import {
   promptsState,
   showedWindowsState,
 } from "../../utils/state";
-import { focusedTabState } from "../../utils/state/tab";
 
 export default function Commands() {
   const { registerCommandAction, registerCommands, commands } = useCommands();
@@ -48,7 +48,11 @@ export default function Commands() {
       }],
       ["save.focused.tab", {
         name: "Save Focused tab",
-        hotkey: "Ctrl+s",
+        hotkey: "Ctrl+S",
+      }],
+      ["close.focused.tab", {
+        name: "Close Focused tab",
+        hotkey: "Ctrl+W",
       }],
     ]);
   }, []);
@@ -131,13 +135,22 @@ export default function Commands() {
 
   // Save current focused tab
 
-  const currentFocusedTab = useRecoilValue(focusedTabState);
+  const { focusedTab, focusedView, closeFocusedTab, saveFocusedTab } =
+    useTabs();
 
   useEffect(() => {
     registerCommandAction("save.focused.tab", () => {
-      currentFocusedTab.tab?.save({ force: true });
+      saveFocusedTab();
     });
-  }, [currentFocusedTab, commands]);
+  }, [focusedTab, commands]);
+
+  // Close current focused tab
+
+  useEffect(() => {
+    registerCommandAction("close.focused.tab", () => {
+      closeFocusedTab();
+    });
+  }, [focusedTab, focusedView, viewsAndTabs, commands]);
 
   return null;
 }
