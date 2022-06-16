@@ -102,6 +102,7 @@ type TabsViews = Vec<ViewPanel>;
 pub struct StateData {
     pub id: u8,
     opened_tabs: Vec<TabsViews>,
+    // TODO(marc2332): Hotkeys
 }
 
 impl Default for StateData {
