@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import useSidePanels from "../../hooks/useSidePanels";
-import IconButton from "../SidePanel/PanelButton";
+import IconButton from "../SideBar/SideBarButton";
 
 const PanelsContainer = styled.div`
   display: flex;

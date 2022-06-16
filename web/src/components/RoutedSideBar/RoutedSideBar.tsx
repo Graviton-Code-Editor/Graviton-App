@@ -7,4 +7,4 @@ const PageSideBar = styled.div`
 
 export default PageSideBar;
 
-export { SideBarButton } from "./PageSideBarButton";
+export { SideBarButton } from "./RoutedSideBarButton";

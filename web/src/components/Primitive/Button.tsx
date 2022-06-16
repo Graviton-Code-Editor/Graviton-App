@@ -20,8 +20,9 @@ export const SecondaryButton = styled.button<
   border: none;
   cursor: pointer;
   margin-top: 5px;
-  transition: background 0.1s;
+  transition: transform 0.1s;
   user-select: none;
+  border: 1px solid transparent;
   ${({ maxWidth }) => maxWidth && `max-width: ${maxWidth}px;`}
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
@@ -32,6 +33,15 @@ export const SecondaryButton = styled.button<
     background: ${({ theme }) =>
   theme.elements.secondaryButton.hover.background};
     transform: scale(0.98);
+  }
+  &:hover {
+    border: 1px solid ${({ theme }) =>
+  theme.elements.secondaryButton.hover.border};
+  }
+  &:focus:not(:active) {
+    outline: none;
+    border: 1px solid ${({ theme }) =>
+  theme.elements.secondaryButton.focus.border};
   }
 `;
 

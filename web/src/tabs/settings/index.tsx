@@ -10,7 +10,7 @@ import { Tab } from "../../modules/tab";
 import ExtensionsRoute from "./routes/extensions";
 import PageSideBar, {
   SideBarButton,
-} from "../../components/SideBar/PageSideBar";
+} from "../../components/RoutedSideBar/RoutedSideBar";
 import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/Primitive/HorizontalView";
 import RouteView from "../../components/Primitive/RouteView";

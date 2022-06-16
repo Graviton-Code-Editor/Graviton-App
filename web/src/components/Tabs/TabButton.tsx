@@ -61,6 +61,9 @@ const TabButtonStyle = styled.div`
         stroke: ${({ theme }) => theme.elements.tab.button.fill};
       }
     }
+    &:focus {
+      outline: none;
+    }
     &:hover svg > path {
       stroke: ${({ theme }) => theme.elements.tab.button.hover.fill};
     }

@@ -76,6 +76,10 @@ const theme = {
       color: "rgb(255,255,255)",
       hover: {
         background: "#3a3a3a",
+        border: "rgb(70, 70, 70)",
+      },
+      focus: {
+        border: "rgb(95, 95, 95)",
       },
     },
     windowButton: {
@@ -188,6 +192,10 @@ const theme = {
         fill: "white",
         hover: {
           background: "rgb(40,40,40)",
+          border: "rgb(70, 70, 70)",
+        },
+        focus: {
+          border: "rgb(95, 95, 95)",
         },
         selected: {
           background: "rgb(50,50,50)",
@@ -203,7 +211,7 @@ const theme = {
         },
       },
     },
-    pageSideBar: {
+    routedSideBar: {
       button: {
         background: "#222222",
         hover: {
