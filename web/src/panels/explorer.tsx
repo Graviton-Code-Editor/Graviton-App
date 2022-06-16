@@ -18,8 +18,9 @@ import styled from "styled-components";
 const StyledExplorer = styled.div`
   height: 100%;
   padding-left: 5px;
+
   &:focus {
-    outline: none;
+   
   }
 `;
 
@@ -34,7 +35,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   const getEditor = useEditor();
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
-  const refExplorer = useRef<HTMLDivElement>(null);
+  const refExplorer = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     onFocus(() => {
@@ -92,7 +93,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   }
 
   return (
-    <StyledExplorer ref={refExplorer} tabIndex={0}>
+    <StyledExplorer >
       {folders.length === 0
         ? (
           <HorizontalCentered>
@@ -101,6 +102,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
                 expanded={true}
                 onClick={openFolder}
                 maxWidth={200}
+                ref={refExplorer}
               >
                 {t("prompts.Global.OpenFolder")}
               </SecondaryButton>
