@@ -168,7 +168,7 @@ class TextEditorTab extends Tab {
             action: () => undefined,
           },
         ],
-        195,
+        212,
       );
     }
     return null;

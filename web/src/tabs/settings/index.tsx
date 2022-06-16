@@ -35,13 +35,13 @@ function SettingsTabContainer() {
     <SettingsTabContainerStyled>
       <HorizontalView>
         <PageSideBar>
-          <Link to="/extensions">
+          <Link to="/extensions" tabIndex={-1}>
             <SideBarButton>Extensions</SideBarButton>
           </Link>
-          <Link to="/hotkeys">
+          <Link to="/hotkeys" tabIndex={-1}>
             <SideBarButton>Hotkeys</SideBarButton>
           </Link>
-          <Link to="/about">
+          <Link to="/about" tabIndex={-1}>
             <SideBarButton>About</SideBarButton>
           </Link>
         </PageSideBar>

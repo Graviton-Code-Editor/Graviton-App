@@ -1,7 +1,7 @@
 import React, { MouseEvent, ReactElement } from "react";
-import { ReactSVG } from "react-svg";
 import { default as styled, keyframes } from "styled-components";
 import useContextMenu from "../../hooks/useContextMenu";
+import CloseTabIndicator from "./CloseIndicator";
 import UnSavedIndicator from "./UnSavedIndicator";
 
 const tabOpening = keyframes`
@@ -51,25 +51,19 @@ const TabButtonStyle = styled.div`
   }
   & > button {
     width: 20px;
-    border: none;
+    height: 20px;
+    border: 1px solid transparent;
     background: transparent;
     cursor: pointer;
-    & svg {
-      width: 10px;
-      height: 10px;
-      & > path {
-        stroke: ${({ theme }) => theme.elements.tab.button.fill};
-      }
-    }
+    border-radius: 100%;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:focus {
-      outline: none;
+      border: 1px solid ${({ theme }) =>
+  theme.elements.tab.button.indicator.focus.border};
     }
-    &:hover svg > path {
-      stroke: ${({ theme }) => theme.elements.tab.button.hover.fill};
-    }
-  }
-  & .indicator {
-    margin-right: 5px;
   }
 `;
 
@@ -147,13 +141,11 @@ export default function TabButton({
     >
       <TabButtonIcon>{icon}</TabButtonIcon>
       <p>{title}</p>
-      {isEdited
-        ? <UnSavedIndicator className="indicator" onClick={saveTab} />
-        : (
-          <button onClick={closeTab}>
-            <ReactSVG src="/icons/close_cross.svg" />
-          </button>
-        )}
+      <button onClick={isEdited ? saveTab : closeTab}>
+        {isEdited
+          ? <UnSavedIndicator className="indicator" />
+          : <CloseTabIndicator src="/icons/close_cross.svg" />}
+      </button>
     </TabButtonStyle>
   );
 }

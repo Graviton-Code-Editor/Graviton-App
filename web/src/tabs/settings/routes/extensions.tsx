@@ -12,7 +12,7 @@ export default function ExtensionsRoute() {
       <TabText>Currently loaded extensions:</TabText>
       <CardsGrid>
         {extensions.map(({ extension }) => (
-          <Card key={extension.id} title={extension.id}>
+          <Card key={extension.id} title={extension.id} tabIndex={1}>
             <CardTitle>
               {extension.name}
             </CardTitle>

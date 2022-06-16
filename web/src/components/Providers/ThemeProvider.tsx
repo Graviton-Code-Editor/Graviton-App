@@ -67,6 +67,15 @@ const theme = {
         background: "rgba(255, 255, 255, 0.1)",
       },
     },
+    card: {
+      background: "rgb(30, 30, 30);",
+      hover: {
+        border: "rgb(70, 70, 70);",
+      },
+      focus: {
+        border: "rgb(95, 95, 95);",
+      },
+    },
     primaryButton: {
       background: "#222222",
       color: "rgb(255,255,255)",
@@ -135,10 +144,17 @@ const theme = {
         background: "#222222",
       },
       button: {
-        fill: "rgb(255,255,255)",
         hover: {
           background: "#2e2e2e",
-          fill: "rgb(180,180,180)",
+        },
+        indicator: {
+          fill: "rgb(255,255,255)",
+          hover: {
+            fill: "rgb(180,180,180)",
+          },
+          focus: {
+            border: "rgb(70, 70, 70);",
+          },
         },
         focused: {
           background: "#191919",
@@ -216,6 +232,10 @@ const theme = {
         background: "#222222",
         hover: {
           background: "#2c2c2c",
+          border: "rgb(70, 70, 70)",
+        },
+        focus: {
+          border: "rgb(95, 95, 95)",
         },
       },
     },

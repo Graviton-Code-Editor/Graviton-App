@@ -26,10 +26,8 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
   }
   &:focus {
     outline: none;
-    &:not(:hover){
-      border: 1px solid  ${({ theme }) =>
+    border: 1px solid  ${({ theme }) =>
   theme.elements.sidebar.button.focus.border};
-    }
   }
   & svg {
     height: 18px;

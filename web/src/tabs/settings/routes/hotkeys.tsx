@@ -15,7 +15,7 @@ export default function HotkeysRoute() {
         {Object.keys(commands).map((commandID) => {
           const command = commands[commandID];
           return (
-            <Card key={commandID} title={commandID}>
+            <Card key={commandID} title={commandID} tabIndex={1}>
               <CardTitle>
                 {command.name}
               </CardTitle>

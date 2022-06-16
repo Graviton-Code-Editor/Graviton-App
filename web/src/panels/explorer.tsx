@@ -93,7 +93,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   }
 
   return (
-    <StyledExplorer >
+    <StyledExplorer>
       {folders.length === 0
         ? (
           <HorizontalCentered>
