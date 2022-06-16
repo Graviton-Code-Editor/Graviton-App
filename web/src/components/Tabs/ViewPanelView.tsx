@@ -66,7 +66,7 @@ interface TabPanelOptions {
   row: number;
 }
 
-export default function TabsPanel({
+export default function ViewPanelView({
   panel: { tabs, selected_tab_id },
   col,
   row,

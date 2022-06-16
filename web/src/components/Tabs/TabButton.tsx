@@ -143,7 +143,7 @@ export default function TabButton({
       <p>{title}</p>
       <button onClick={isEdited ? saveTab : closeTab}>
         {isEdited
-          ? <UnSavedIndicator className="indicator" />
+          ? <UnSavedIndicator />
           : <CloseTabIndicator src="/icons/close_cross.svg" />}
       </button>
     </TabButtonStyle>

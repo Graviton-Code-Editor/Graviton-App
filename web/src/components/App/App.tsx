@@ -3,8 +3,8 @@ import { createClient } from "../../services/client";
 import { clientState, promptsState } from "../../utils/state";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
-import Panels from "./SidePanelsView";
-import Tabs from "./TabsView";
+import SidePanelsView from "./SidePanelsView";
+import ViewsView from "./ViewsView";
 import Theme from "../Providers/ThemeProvider";
 import { SplitPane } from "react-multi-split-pane";
 import { isTauri } from "../../services/commands";
@@ -69,8 +69,8 @@ function App() {
           {isWindows && <TitleBar />}
           <div>
             <SplitPane split="vertical" minSize={250} defaultSizes={[2, 10]}>
-              <Panels />
-              <Tabs />
+              <SidePanelsView />
+              <ViewsView />
             </SplitPane>
           </div>
           <WindowsView />

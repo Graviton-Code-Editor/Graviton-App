@@ -2,7 +2,7 @@ import { SplitPane } from "react-multi-split-pane";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { openedViewsAndTabs } from "../../utils/state";
-import TabsPanel from "../Tabs/TabPanel";
+import ViewPanelView from "../Tabs/ViewPanelView";
 
 const TabsContainer = styled.div`
   overflow: hidden;
@@ -23,9 +23,9 @@ const TabsContainer = styled.div`
 `;
 
 /*
- * Container that displays all the opened tabs
+ * Container that displays all the opened views with their viewpanels and tabs
  */
-function TabsView() {
+function ViewsView() {
   const tabsPanels = useRecoilValue(openedViewsAndTabs);
 
   return (
@@ -47,7 +47,7 @@ function TabsView() {
             >
               {columns.map((viewPanel, c) => {
                 return (
-                  <TabsPanel
+                  <ViewPanelView
                     key={`${r}${c}_tabs_panel`}
                     panel={viewPanel}
                     row={r}
@@ -63,4 +63,4 @@ function TabsView() {
   );
 }
 
-export default TabsView;
+export default ViewsView;
