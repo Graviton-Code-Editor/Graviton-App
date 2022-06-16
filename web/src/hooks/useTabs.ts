@@ -1,6 +1,7 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
-import { openedViewsAndTabs } from "../utils/state";
+import { openedViewsAndTabs, showedWindowsState } from "../utils/state";
 import { FocusedTab, focusedTabState } from "../utils/state/tab";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
 import { TabsViews } from "../utils/state/views_tabs";
@@ -32,10 +33,12 @@ export interface TabsUtils {
     tab,
     col,
     row,
+    force,
   }: {
     tab: Tab;
     col: number;
     row: number;
+    force: boolean;
   }) => void;
   closeFocusedTab: () => void;
   saveFocusedTab: () => void;
@@ -48,8 +51,22 @@ export default function useTabs(): TabsUtils {
   const [viewsAndTabs, setViewsAndTabs] = useRecoilState(openedViewsAndTabs);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
   const [focusedTab, setFocusedTab] = useRecoilState(focusedTabState);
+  const setWindows = useSetRecoilState(showedWindowsState);
 
-  const closeTab: TabsUtils["closeTab"] = ({ tab, col, row }) => {
+  const closeTab: TabsUtils["closeTab"] = ({ tab, col, row, force }) => {
+    if (tab.edited && force === false) {
+      selectTab({
+        tab,
+        col,
+        row,
+      });
+      const popup = tab.save();
+      if (popup != null) {
+        setWindows((val) => [...val, popup as Popup]);
+      }
+      return;
+    }
+
     // Notify the tab
     tab.close();
 
@@ -73,6 +90,12 @@ export default function useTabs(): TabsUtils {
     setFocusedView({ col, row });
   };
 
+  const selectTab: TabsUtils["selectTab"] = ({ col, row, tab }) => {
+    viewsAndTabs[row][col].selected_tab_id = tab?.id;
+    setViewsAndTabs([...viewsAndTabs]);
+    setFocusedView({ col, row });
+  };
+
   return {
     viewsAndTabs,
     focusedTab,
@@ -90,11 +113,7 @@ export default function useTabs(): TabsUtils {
       setFocusedTab({ col, row, tab: newTab, id: newTab ? newTab.id : null });
       setFocusedView({ col, row });
     },
-    selectTab: ({ tab, col, row }) => {
-      viewsAndTabs[row][col].selected_tab_id = tab?.id;
-      setViewsAndTabs([...viewsAndTabs]);
-      setFocusedView({ col, row });
-    },
+    selectTab,
     focusTab: ({ tab, col, row }) => {
       setFocusedTab({ col, row, tab, id: tab ? tab.id : null });
       setFocusedView({ col, row });
@@ -105,6 +124,7 @@ export default function useTabs(): TabsUtils {
         closeTab({
           ...focusedTab,
           tab: focusedTab.tab,
+          force: false,
         });
       }
     },

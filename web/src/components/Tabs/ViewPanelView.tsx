@@ -107,11 +107,14 @@ export default function ViewPanelView({
   }
 
   // Close the specified tab from this panel
-  function removeTab(tab: Tab) {
+  // It will have a forced close if it's called from the container
+  function removeTab(tab: Tab, force: boolean) {
+    console.log(tab);
     closeTab({
       col,
       row,
       tab,
+      force,
     });
   }
 
@@ -119,6 +122,7 @@ export default function ViewPanelView({
   function saveTab(tab: Tab) {
     const popup = tab.save();
     if (popup != null) {
+      selectPanelTab(tab);
       setWindows((val) => [...val, popup as Popup]);
     }
   }
@@ -179,7 +183,7 @@ export default function ViewPanelView({
               isSelected={isSelected}
               select={() => selectPanelTab(tab)}
               close={() =>
-                removeTab(tab)}
+                removeTab(tab, false)}
               save={() =>
                 saveTab(tab)}
             />
@@ -207,7 +211,7 @@ export default function ViewPanelView({
                 <Container
                   tab={tab}
                   setEdited={setEdited}
-                  close={() => removeTab(tab)}
+                  close={() => removeTab(tab, true)}
                 />
               </div>
             )
