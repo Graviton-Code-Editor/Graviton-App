@@ -11,6 +11,12 @@ export default function FileIcon({
 }) {
   if (item.isFile) {
     switch (extname(item.name)) {
+      case ".jsx":
+      case ".js":
+        return <ReactSVG src="/icons/files/javascript.svg" className="file" />;
+      case ".tsx":
+      case ".ts":
+        return <ReactSVG src="/icons/files/typescript.svg" className="file" />;
       default:
         return <ReactSVG src="/icons/files/unknown.svg" className="file" />;
     }
