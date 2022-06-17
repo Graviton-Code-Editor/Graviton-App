@@ -125,9 +125,11 @@ const theme = {
         background: "transparent",
         hover: {
           background: "rgb(40,40,40)",
+          border: "rgb(55, 55, 55)",
         },
         selected: {
           background: "rgb(40,40,40)",
+          border: "rgb(55, 55, 55)",
         },
       },
       container: {
