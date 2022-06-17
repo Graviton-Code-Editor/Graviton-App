@@ -9,6 +9,7 @@ import { Client } from "../services/clients/client.types";
 export { foldersState } from "./state/folders";
 export { openedViewsAndTabs as openedViewsAndTabs } from "./state/views_tabs";
 export { sidePanelsState } from "./state/side_panels";
+import { Notification } from "../modules/notification";
 
 // Client used across the app
 export const clientState = atom({
@@ -56,4 +57,9 @@ export const lspClients = atom<Array<LanguageServerConfig>>({
 export const contextMenuOpened = atom<ContextMenuConfig | null>({
   key: "contextMenuOpened",
   default: null,
+});
+
+export const notificationsOpenedState = atom<Notification[]>({
+  key: "notificationsOpened",
+  default: [],
 });

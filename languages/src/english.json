@@ -28,6 +28,11 @@
                 "SplitVertically": "Split vertically"
             }
         },
+        "notifications": {
+            "EditorCompatibleNotFound": "Compatible editor not found",
+            "ErrorWhileReadingFile": "Error while reading {{file}}",
+            "UnknownError": "Unknown error"
+        },
         "Contribute": "Contribute",
         "Report issues": "Report issues",
         "Save": "Save",

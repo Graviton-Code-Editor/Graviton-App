@@ -17,6 +17,7 @@ import WindowsView from "./WindowsView";
 import { RootView } from "./RootView";
 import Commands from "./Commands";
 import useSidePanels from "../../hooks/useSidePanels";
+import NotificationsView from "./NotificationsView";
 
 /*
  * Retrieve the authentication token
@@ -76,6 +77,7 @@ function App() {
           <WindowsView />
           <ContextMenuView />
           <StatusBarView />
+          <NotificationsView />
           <Commands />
         </RootView>
       </Theme>

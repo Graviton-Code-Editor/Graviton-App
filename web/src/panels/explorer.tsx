@@ -14,14 +14,12 @@ import SettingsTab from "../tabs/settings";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
+import useNotifications from "../hooks/useNotifications";
+import { Notification } from "../modules/notification";
 
 const StyledExplorer = styled.div`
   height: 100%;
   padding-left: 5px;
-
-  &:focus {
-   
-  }
 `;
 
 interface ExplorerPanelOptions {
@@ -36,6 +34,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
   const refExplorer = useRef<HTMLButtonElement>(null);
+  const { pushNotification } = useNotifications();
 
   useEffect(() => {
     onFocus(() => {
@@ -60,16 +59,30 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
               );
               openTab(newTab);
             } else {
-              // Handle error
+              pushNotification(
+                new Notification({
+                  text: "notifications.EditorCompatibleNotFound",
+                }, { text: "" }),
+              );
             }
           } else {
-            // Handle error
+            // TODO(marc2332) Use the notification content to properly show the error
+            pushNotification(
+              new Notification({
+                text: "notifications.ErrorWhileReadingFile",
+                props: { file: item.name },
+              }, { text: "" }),
+            );
             console.log(fileContent.Err);
           }
         });
       } catch (err) {
+        pushNotification(
+          new Notification({ text: "notifications.UnknownError" }, {
+            text: "",
+          }),
+        );
         console.log(err);
-        // handle error
       }
     }
   }

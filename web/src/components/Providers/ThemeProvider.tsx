@@ -194,6 +194,18 @@ const theme = {
         },
       },
     },
+    notification: {
+      background: "rgb(35, 35, 35);",
+      text: {
+        color: "white",
+      },
+      close: {
+        fill: "white",
+        hover: {
+          fill: "rgb(180,180,180)",
+        },
+      },
+    },
     sidepanel: {
       border: {
         color: "rgba(48, 48, 48)",
