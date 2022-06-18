@@ -1,6 +1,9 @@
 {
     "code": "en",
     "translation": {
+        "messages": {
+            "NoTabsOpenedMessage": "Tip: Open the Global Prompt with '{{hotkey}}'"
+        },
         "popups":{
             "AskSaveFile":{
                 "title": "Do you want to save the changes in {{file_path}} ?",

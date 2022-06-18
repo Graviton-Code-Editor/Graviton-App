@@ -8,6 +8,8 @@ import { Tab } from "../../modules/tab";
 import { ViewPanel } from "../../utils/state/views_tabs";
 import { focusedViewPanelState } from "../../utils/state/view";
 import TabButton from "./TabButton";
+import { useTranslation } from "react-i18next";
+import useCommands from "../../hooks/useCommands";
 
 const NoTabsOpenedMessageContainer = styled.div`
   color: ${({ theme }) => theme.elements.tab.text.unfocused.color};
@@ -20,9 +22,11 @@ const NoTabsOpenedMessageContainer = styled.div`
 `;
 
 function NoTabsOpenedMessage() {
+  const { t } = useTranslation();
+  const { commands } = useCommands();
   return (
     <NoTabsOpenedMessageContainer>
-      <span>Tip: Open the Global Prompt with 'Ctrl+P'</span>
+      <span>{t("messages.NoTabsOpenedMessage", commands["global.prompt"])}</span>
     </NoTabsOpenedMessageContainer>
   );
 }
