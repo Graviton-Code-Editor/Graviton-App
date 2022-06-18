@@ -4,6 +4,7 @@ import useContextMenu from "../../hooks/useContextMenu";
 import CloseTabIndicator from "./CloseIndicator";
 import UnSavedIndicator from "./UnSavedIndicator";
 import { Transition } from "react-transition-group";
+import { Tab } from "../../modules/tab";
 
 const transitionStyles: Record<string, React.CSSProperties> = {
   entering: { opacity: 1, minWidth: 125, width: 125 },
@@ -73,8 +74,7 @@ const TabButtonIcon = styled.div`
 `;
 
 interface TabButtonOptions {
-  title: string;
-  hint?: string;
+  tab: Tab;
   isSelected: boolean;
   isEdited: boolean;
   select: () => void;
@@ -84,8 +84,7 @@ interface TabButtonOptions {
 }
 
 export default function TabButton({
-  title,
-  hint,
+  tab,
   isSelected,
   select,
   close,
@@ -125,6 +124,7 @@ export default function TabButton({
             return false;
           },
         },
+        ...tab.contextMenusTab({ close, save, tab }),
       ],
       x: ev.clientX,
       y: ev.clientY,
@@ -143,11 +143,11 @@ export default function TabButton({
           className={isSelected ? "selected" : ""}
           onClick={select}
           onContextMenu={contextMenu}
-          title={hint}
+          title={tab.hint}
           style={transitionStyles[state]}
         >
           <TabButtonIcon>{icon}</TabButtonIcon>
-          <p>{title}</p>
+          <p>{tab.title}</p>
           <button onClick={isEdited ? saveTab : closeTab}>
             {isEdited
               ? <UnSavedIndicator />

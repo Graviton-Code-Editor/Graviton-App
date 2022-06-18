@@ -8,7 +8,12 @@ import { getRecoil } from "recoil-nexus";
 import { FileFormat } from "../../services/clients/client.types";
 import { Popup } from "../../modules/popup";
 import * as commands from "@codemirror/commands";
-import { SaveTabOptions, Tab, TextEditorTabData } from "../../modules/tab";
+import {
+  SaveTabOptions,
+  Tab,
+  TabContextMenuHooks,
+  TextEditorTabData,
+} from "../../modules/tab";
 import { rust } from "@codemirror/lang-rust";
 import { basename, dirname } from "path";
 import {
@@ -79,6 +84,21 @@ class TextEditorTab extends Tab {
         }}
       />
     );
+  }
+
+  contextMenusTab({ tab }: TabContextMenuHooks) {
+    const textEditorTab = tab as unknown as TextEditorTab;
+    return [
+      {
+        label: {
+          text: "CopyPath",
+        },
+        action() {
+          navigator.clipboard.writeText(textEditorTab.path);
+          return false;
+        },
+      },
+    ];
   }
 
   /**

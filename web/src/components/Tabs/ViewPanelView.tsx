@@ -26,7 +26,9 @@ function NoTabsOpenedMessage() {
   const { commands } = useCommands();
   return (
     <NoTabsOpenedMessageContainer>
-      <span>{t("messages.NoTabsOpenedMessage", commands["global.prompt"])}</span>
+      <span>
+        {t("messages.NoTabsOpenedMessage", commands["global.prompt"])}
+      </span>
     </NoTabsOpenedMessageContainer>
   );
 }
@@ -174,8 +176,7 @@ export default function ViewPanelView({
             <TabButton
               key={tab.id}
               icon={<TabIcon tab={tab} />}
-              title={tab.title}
-              hint={tab.hint}
+              tab={tab}
               isEdited={isEdited}
               isSelected={isSelected}
               select={() => selectPanelTab(tab)}

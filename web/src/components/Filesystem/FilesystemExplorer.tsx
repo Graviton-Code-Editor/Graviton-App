@@ -12,6 +12,7 @@ import FileIcon from "./FileIcon";
 import { basename } from "../../utils/path";
 import { FolderState } from "../../utils/state/folders";
 import ExplorerItem from "./ExplorerItem";
+import useContextMenu from "../../hooks/useContextMenu";
 
 const ExplorerContainer = styled.div`
   margin: 5px;
@@ -293,6 +294,7 @@ function ListItem(
     marginLeft: itemInfo.depth * 10,
   };
   const isOpened = isSubTreeByPathOpened(folderTree, itemInfo.path);
+  const { pushContextMenu } = useContextMenu();
 
   // When the item is clicked
   function onClick() {
@@ -311,10 +313,38 @@ function ListItem(
     }
   }
 
+  function onContextMenu(ev: React.MouseEvent) {
+    pushContextMenu({
+      x: ev.pageX,
+      y: ev.pageY,
+      menus: [
+        {
+          label: {
+            text: "Open",
+          },
+          action() {
+            onClick();
+            return false;
+          },
+        },
+        {
+          label: {
+            text: "CopyPath",
+          },
+          action() {
+            navigator.clipboard.writeText(itemInfo.path);
+            return false;
+          },
+        },
+      ],
+    });
+  }
+
   return (
     <ExplorerItem
       key={itemInfo.path}
       onClick={onClick}
+      onContextMenu={onContextMenu}
       style={itemStyle}
       isFile={itemInfo.isFile}
       isOpened={isOpened}

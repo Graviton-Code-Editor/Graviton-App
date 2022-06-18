@@ -44,6 +44,8 @@
         "Cancel": "Cancel",
         "Close": "Close",
         "License": "License",
-        "Dismiss": "Dismiss"
+        "Dismiss": "Dismiss",
+        "CopyPath": "Copy Path",
+        "Open": "Open"
     }
 }

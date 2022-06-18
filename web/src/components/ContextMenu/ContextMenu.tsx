@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import { TranslatedText } from "../../types/types";
 
-interface MenuHandler {
+export interface MenuHandler {
   label: TranslatedText;
   /**
    * In case of returning "true" the context menu will not be closed

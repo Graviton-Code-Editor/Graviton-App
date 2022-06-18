@@ -1,3 +1,4 @@
+import { MenuHandler } from "../components/ContextMenu/ContextMenu";
 import { FileFormat } from "../services/clients/client.types";
 import { Popup } from "./popup";
 
@@ -26,6 +27,12 @@ export interface SaveTabOptions {
   setEdited: (state: boolean) => void;
 }
 
+export interface TabContextMenuHooks {
+  tab: Tab;
+  close: () => void;
+  save: () => void;
+}
+
 /**
  * Tab API
  */
@@ -42,6 +49,11 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
     this.id = Date.now().toString() + Math.random();
     this.title = title;
     this.edited = false;
+  }
+
+  /* eslint-disable */
+  contextMenusTab(_hooks: TabContextMenuHooks): MenuHandler[] {
+    return [];
   }
 
   /**
