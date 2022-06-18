@@ -18,11 +18,6 @@ export default function NotificationsView() {
     notificationsOpenedState,
   );
 
-  (window as any).a = () =>
-    setOpenedNotifications((
-      v,
-    ) => [...v, new Notification({ text: "test" }, { text: "Ok" })]);
-
   function closeNotification(notification: Notification) {
     const index = openedNotifications.indexOf(notification);
     const newNotifications = [...openedNotifications];
