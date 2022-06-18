@@ -24,7 +24,8 @@ const TabButtonStyle = styled.div`
   cursor: pointer;
   user-select: none;
   border-bottom: 1px solid transparent;
-  transition: 0.2s;
+  transition-property: opacity, min-width, width;
+  transition-duration: 0.2s;
   &:not(.selected):hover {
     background: ${({ theme }) => theme.elements.tab.button.hover.background};
   }
