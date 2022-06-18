@@ -23,7 +23,8 @@
                 "OpenWelcome": "Open Welcome",
                 "OpenSettings": "Open Settings",
                 "OpenFolder": "Open Folder",
-                "AddFolder": "Add Folder"
+                "AddFolder": "Add Folder",
+                "OpenFile": "Open File"
             }
         },
         "contextMenus": {

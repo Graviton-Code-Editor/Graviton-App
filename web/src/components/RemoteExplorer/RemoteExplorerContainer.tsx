@@ -39,7 +39,8 @@ const StyledExplorer = styled.div`
 `;
 
 export interface RemoteExplorerOptions {
-  onSelectedFolder: (path: string) => void;
+  kind: "folder" | "file";
+  onSelectedItem: (path: string) => void;
 }
 
 const folders = [
@@ -47,11 +48,12 @@ const folders = [
 ];
 
 export default function RemoteExplorerContainer({
-  onSelectedFolder,
+  kind,
+  onSelectedItem,
 }: RemoteExplorerOptions) {
   const refBackground = useRef(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
-  const [focusedFolder, setFocusedFolder] = useState<TreeItemInfo | null>(null);
+  const [focusedItem, setFocusedItem] = useState<TreeItemInfo | null>(null);
 
   function closePopup() {
     setShowedWindows((val) => {
@@ -67,15 +69,17 @@ export default function RemoteExplorerContainer({
     }
   }
 
-  function selectedFolder(item: TreeItemInfo) {
-    if (!item.isFile) {
-      setFocusedFolder(item);
+  function selectedItem(item: TreeItemInfo) {
+    if (item.isFile && kind === "file") {
+      setFocusedItem(item);
+    } else if (item.isFile === false && kind === "folder") {
+      setFocusedItem(item);
     }
   }
 
-  function openFolder() {
-    if (focusedFolder) {
-      onSelectedFolder(focusedFolder.path);
+  function openItem() {
+    if (focusedItem) {
+      onSelectedItem(focusedItem.path);
       closePopup();
     }
   }
@@ -88,12 +92,12 @@ export default function RemoteExplorerContainer({
           <div className="topView">
             <FilesystemExplorer
               folders={folders}
-              onSelected={selectedFolder}
+              onSelected={selectedItem}
             />
           </div>
           <div className="bottomView">
-            <PrimaryButton onClick={openFolder}>
-              {focusedFolder ? `Open ${focusedFolder.name}` : "Select a folder"}
+            <PrimaryButton onClick={openItem}>
+              {focusedItem ? `Open ${focusedItem.name}` : `Select a ${kind}`}
             </PrimaryButton>
           </div>
         </div>

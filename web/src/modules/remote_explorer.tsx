@@ -10,10 +10,12 @@ import { FloatingWindow } from "./windows";
 export class RemoteExplorer extends FloatingWindow {
   public container: () => ReactElement;
 
-  constructor({ onSelectedFolder }: RemoteExplorerOptions) {
+  constructor({ onSelectedItem, kind }: RemoteExplorerOptions) {
     super();
     this.container = () => {
-      return <RemoteExplorerContainer onSelectedFolder={onSelectedFolder} />;
+      return (
+        <RemoteExplorerContainer onSelectedItem={onSelectedItem} kind={kind} />
+      );
     };
   }
 }

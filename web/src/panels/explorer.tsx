@@ -3,19 +3,17 @@ import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/Filesystem/FilesystemExplorer";
 import { SidePanel } from "../modules/side_panel";
-import { clientState, foldersState } from "../utils/state";
+import { foldersState } from "../utils/state";
 import { ReactSVG } from "react-svg";
-import useEditor from "../hooks/useEditor";
 import useTabs from "../hooks/useTabs";
 import { SecondaryButton } from "../components/Primitive/Button";
-import { openFolderPicker } from "../services/commands";
+import { openFileSystemPicker } from "../services/commands";
 import HorizontalCentered from "../components/Primitive/HorizontalCentered";
 import SettingsTab from "../tabs/settings";
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
-import useNotifications from "../hooks/useNotifications";
-import { Notification } from "../modules/notification";
+import useTextEditorTab from "../hooks/useTextEditorTab";
 
 const StyledExplorer = styled.div`
   height: 100%;
@@ -28,13 +26,11 @@ interface ExplorerPanelOptions {
 
 function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   const folders = useRecoilValue(foldersState);
-  const client = useRecoilValue(clientState);
   const { openTab } = useTabs();
-  const getEditor = useEditor();
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
   const refExplorer = useRef<HTMLButtonElement>(null);
-  const { pushNotification } = useNotifications();
+  const { pushTextEditorTab } = useTextEditorTab();
 
   useEffect(() => {
     onFocus(() => {
@@ -44,51 +40,12 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
 
   async function openFile(item: TreeItemInfo) {
     if (item.isFile) {
-      try {
-        client.read_file_by_path(item.path, "local").then((fileContent) => {
-          if (fileContent.Ok) {
-            const { content, format } = fileContent.Ok;
-            const editor = getEditor(format);
-            // Make sure a compatible editor was found
-            if (editor != null) {
-              const newTab = new editor(
-                item.name,
-                item.path,
-                Promise.resolve(content),
-                format,
-              );
-              openTab(newTab);
-            } else {
-              pushNotification(
-                new Notification({
-                  text: "notifications.EditorCompatibleNotFound",
-                }, { text: "" }),
-              );
-            }
-          } else {
-            // TODO(marc2332) Use the notification content to properly show the error
-            pushNotification(
-              new Notification({
-                text: "notifications.ErrorWhileReadingFile",
-                props: { file: item.name },
-              }, { text: "" }),
-            );
-            console.log(fileContent.Err);
-          }
-        });
-      } catch (err) {
-        pushNotification(
-          new Notification({ text: "notifications.UnknownError" }, {
-            text: "",
-          }),
-        );
-        console.log(err);
-      }
+      pushTextEditorTab(item.path, item.filesystem);
     }
   }
 
   async function openFolder() {
-    const openedFolder = await openFolderPicker("local");
+    const openedFolder = await openFileSystemPicker("local", "folder");
     // If a folder selected
     if (openedFolder != null) {
       // Clear all opened folders and open the selected one
