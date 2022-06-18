@@ -2,7 +2,8 @@
     "code": "en",
     "translation": {
         "messages": {
-            "NoTabsOpenedMessage": "Tip: Open the Global Prompt with '{{hotkey}}'"
+            "NoTabsOpenedMessage": "Tip: Open the Global Prompt with '{{hotkey}}'",
+            "LoadingContent": "Loading content..."
         },
         "popups":{
             "AskSaveFile":{

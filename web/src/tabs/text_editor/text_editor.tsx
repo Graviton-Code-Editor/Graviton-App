@@ -25,6 +25,7 @@ import {
 import FileIcon from "../../components/Filesystem/FileIcon";
 import useLSPClients from "../../hooks/useLSPClients";
 import GravitonTransport from "./graviton_lsp_transport";
+import { useTranslation } from "react-i18next";
 
 interface SavedState {
   scrollHeight: number;
@@ -209,6 +210,7 @@ function TabTextEditorContainer({
 
   const [view, setView] = useState(textEditorTab.view);
   const { find, add } = useLSPClients();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (view != null) return;
@@ -354,7 +356,7 @@ function TabTextEditorContainer({
   } else {
     return (
       <LoadingTabContent>
-        <TabText>Loading content...</TabText>
+        <TabText>{t("messages.LoadingContent")}</TabText>
       </LoadingTabContent>
     );
   }
