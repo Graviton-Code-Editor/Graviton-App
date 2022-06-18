@@ -24,7 +24,7 @@ const TabButtonStyle = styled.div`
   cursor: pointer;
   user-select: none;
   border-bottom: 1px solid transparent;
-  transition: 0.1s;
+  transition: 0.2s;
   &:not(.selected):hover {
     background: ${({ theme }) => theme.elements.tab.button.hover.background};
   }
@@ -100,7 +100,7 @@ export default function TabButton({
     setMounted(false);
     setTimeout(() => {
       close();
-    }, 60);
+    }, 90);
   }
 
   function saveTab(event: MouseEvent) {
@@ -136,7 +136,7 @@ export default function TabButton({
   }, []);
 
   return (
-    <Transition in={mounted} timeout={mounted ? 100 : 50}>
+    <Transition in={mounted} timeout={mounted ? 100 : 80}>
       {(state) => (
         <TabButtonStyle
           className={isSelected ? "selected" : ""}
