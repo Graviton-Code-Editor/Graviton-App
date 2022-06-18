@@ -90,18 +90,21 @@ pub enum TabData {
     },
 }
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-struct ViewPanel {
+struct ViewDataPanel {
     selected_tab_id: Option<String>,
     tabs: Vec<TabData>,
 }
 
-type TabsViews = Vec<ViewPanel>;
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
+struct ViewsData {
+    view_panels: Vec<ViewDataPanel>,
+}
 
 /// The data of a state
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 pub struct StateData {
     pub id: u8,
-    opened_tabs: Vec<TabsViews>,
+    opened_tabs: Vec<ViewsData>,
     // TODO(marc2332): Hotkeys
 }
 

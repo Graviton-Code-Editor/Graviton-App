@@ -4,10 +4,10 @@ import { Tab } from "../modules/tab";
 import { openedViewsAndTabs, showedWindowsState } from "../utils/state";
 import { FocusedTab, focusedTabState } from "../utils/state/tab";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
-import { TabsViews } from "../utils/state/views_tabs";
+import { Views } from "../utils/state/views_tabs";
 
 export interface TabsUtils {
-  viewsAndTabs: TabsViews<Tab>[];
+  viewsAndTabs: Views<Tab>[];
   focusedTab: FocusedTab;
   focusedView: FocusedViewPanel;
   openTab: (newTab: Tab) => void;
@@ -71,17 +71,17 @@ export default function useTabs(): TabsUtils {
     tab.close();
 
     // Remove it
-    const index = viewsAndTabs[row][col].tabs.indexOf(tab);
-    viewsAndTabs[row][col].tabs.splice(index, 1);
+    const index = viewsAndTabs[row].view_panels[col].tabs.indexOf(tab);
+    viewsAndTabs[row].view_panels[col].tabs.splice(index, 1);
 
     // Select another tab if necessary
-    if (viewsAndTabs[row][col].selected_tab_id === tab.id) {
-      const newTab = viewsAndTabs[row][col].tabs[index - 1];
+    if (viewsAndTabs[row].view_panels[col].selected_tab_id === tab.id) {
+      const newTab = viewsAndTabs[row].view_panels[col].tabs[index - 1];
       if (newTab) {
-        viewsAndTabs[row][col].selected_tab_id = newTab.id;
+        viewsAndTabs[row].view_panels[col].selected_tab_id = newTab.id;
         setFocusedTab({ col, row, tab: newTab, id: newTab.id });
       } else {
-        viewsAndTabs[row][col].selected_tab_id = undefined;
+        viewsAndTabs[row].view_panels[col].selected_tab_id = undefined;
         setFocusedTab({ col, row, tab: null, id: null });
       }
     }
@@ -91,7 +91,7 @@ export default function useTabs(): TabsUtils {
   };
 
   const selectTab: TabsUtils["selectTab"] = ({ col, row, tab }) => {
-    viewsAndTabs[row][col].selected_tab_id = tab?.id;
+    viewsAndTabs[row].view_panels[col].selected_tab_id = tab?.id;
     setViewsAndTabs([...viewsAndTabs]);
     setFocusedView({ col, row });
   };
@@ -103,11 +103,14 @@ export default function useTabs(): TabsUtils {
     openTab: (newTab) => {
       const { col, row } = focusedView;
       // Push the new tab
-      viewsAndTabs[row][col].tabs = [...viewsAndTabs[row][col].tabs, newTab];
+      viewsAndTabs[row].view_panels[col].tabs = [
+        ...viewsAndTabs[row].view_panels[col].tabs,
+        newTab,
+      ];
       setViewsAndTabs([...viewsAndTabs]);
 
       // Select the new tab
-      viewsAndTabs[row][col].selected_tab_id = newTab?.id;
+      viewsAndTabs[row].view_panels[col].selected_tab_id = newTab?.id;
       setViewsAndTabs([...viewsAndTabs]);
 
       setFocusedTab({ col, row, tab: newTab, id: newTab ? newTab.id : null });

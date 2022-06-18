@@ -7,7 +7,8 @@ const NotificationsContainer = styled.div`
   position: absolute;
   bottom: 20px;
   right: 20px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   max-height: 70%;
   padding-right: 3px;
 `;
@@ -16,6 +17,11 @@ export default function NotificationsView() {
   const [openedNotifications, setOpenedNotifications] = useRecoilState(
     notificationsOpenedState,
   );
+
+  (window as any).a = () =>
+    setOpenedNotifications((
+      v,
+    ) => [...v, new Notification({ text: "test" }, { text: "Ok" })]);
 
   function closeNotification(notification: Notification) {
     const index = openedNotifications.indexOf(notification);

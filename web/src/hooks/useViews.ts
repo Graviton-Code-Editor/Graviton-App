@@ -2,7 +2,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
 import { openedViewsAndTabs, showedWindowsState } from "../utils/state";
-import { TabsViews } from "../utils/state/views_tabs";
+import { newEmptyView, newId, Views } from "../utils/state/views_tabs";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
 import useTabs, { TabsUtils } from "./useTabs";
 
@@ -15,10 +15,10 @@ function canViewPanelBeClosed(tabs: Tab[]): boolean {
   return canBeClosed;
 }
 
-function canViewBeClosed(view: TabsViews<Tab>): boolean {
+function canViewBeClosed(view: Views<Tab>): boolean {
   let canBeClosed = true;
 
-  for (const viewPanel of view) {
+  for (const viewPanel of view.view_panels) {
     if (!canViewPanelBeClosed(viewPanel.tabs)) canBeClosed = false;
   }
 
@@ -59,20 +59,22 @@ export default function useViews() {
 
   const closeViewPanel = ({ col, row }: FocusedViewPanel): boolean => {
     // Always leave at least one view panel opened
-    if (tabPanels[row].length === 1) return false;
+    if (tabPanels[row].view_panels.length === 1) return false;
 
     // Select the view from above if there is any, or leave the same position focused
     const nextFocusedCol = col > 1 ? col - 1 : 0;
 
-    const canCloseViewPanel = canViewPanelBeClosed(tabPanels[row][col].tabs);
+    const canCloseViewPanel = canViewPanelBeClosed(
+      tabPanels[row].view_panels[col].tabs,
+    );
 
     if (canCloseViewPanel) {
-      tabPanels[row].splice(col, 1);
+      tabPanels[row].view_panels.splice(col, 1);
       setTabPanels([...tabPanels]);
       setFocusedView({ col: nextFocusedCol, row });
     } else {
       const popup = trySavingTabs(
-        tabPanels[row][col].tabs,
+        tabPanels[row].view_panels[col].tabs,
         selectTab,
         col,
         row,
@@ -100,8 +102,8 @@ export default function useViews() {
       // Select the first view panel in the new view
       setFocusedView({ col: 0, row: nextFocusedRow });
     } else {
-      for (let col = 0; col < tabPanels[row].length; col++) {
-        const viewPanel = tabPanels[row][col];
+      for (let col = 0; col < tabPanels[row].view_panels.length; col++) {
+        const viewPanel = tabPanels[row].view_panels[col];
         const popup = trySavingTabs(viewPanel.tabs, selectTab, col, row);
         if (popup != null) {
           setWindows((val) => [...val, popup as Popup]);
@@ -113,18 +115,19 @@ export default function useViews() {
   };
 
   const newViewPanel = ({ row }: { row: number }) => {
-    tabPanels[row].push({
+    tabPanels[row].view_panels.push({
+      id: newId(),
       tabs: [],
     });
     setTabPanels([...tabPanels]);
     // Select the latest (new one) view panel from the view
-    setFocusedView({ col: tabPanels[row].length - 1, row });
+    setFocusedView({ col: tabPanels[row].view_panels.length - 1, row });
   };
 
   const newView = ({ afterRow }: { afterRow: number }) => {
     setTabPanels([
       ...tabPanels.slice(0, afterRow),
-      [{ tabs: [] }],
+      newEmptyView(),
       ...tabPanels.slice(afterRow),
     ]);
     setFocusedView({ col: 0, row: afterRow });

@@ -1,21 +1,16 @@
-import React, { MouseEvent, ReactElement } from "react";
-import { default as styled, keyframes } from "styled-components";
+import React, { MouseEvent, ReactElement, useEffect, useState } from "react";
+import { default as styled } from "styled-components";
 import useContextMenu from "../../hooks/useContextMenu";
 import CloseTabIndicator from "./CloseIndicator";
 import UnSavedIndicator from "./UnSavedIndicator";
+import { Transition } from "react-transition-group";
 
-const tabOpening = keyframes`
-  0% {
-    opacity: 0.1;
-    min-width: 15px;
-    width: 15px;
-  }
-  100% {
-    opacity: 1;
-    min-width: 125px;
-    width: 125px;
-  }
-`;
+const transitionStyles: Record<string, React.CSSProperties> = {
+  entering: { opacity: 1, minWidth: 125, width: 125 },
+  entered: { opacity: 1, minWidth: 125, width: 125 },
+  exiting: { opacity: 0, minWidth: 25, width: 25 },
+  exited: { opacity: 0, minWidth: 25, width: 25 },
+};
 
 const TabButtonStyle = styled.div`
   color: white;
@@ -28,8 +23,8 @@ const TabButtonStyle = styled.div`
   align-items: center;
   cursor: pointer;
   user-select: none;
-  animation: ${tabOpening} ease-in 0.14s;
   border-bottom: 1px solid transparent;
+  transition: 0.1s;
   &:not(.selected):hover {
     background: ${({ theme }) => theme.elements.tab.button.hover.background};
   }
@@ -98,10 +93,14 @@ export default function TabButton({
   icon,
 }: TabButtonOptions) {
   const { pushContextMenu } = useContextMenu();
+  const [mounted, setMounted] = useState(false);
 
   function closeTab(event: MouseEvent) {
     event.stopPropagation();
-    close();
+    setMounted(false);
+    setTimeout(() => {
+      close();
+    }, 60);
   }
 
   function saveTab(event: MouseEvent) {
@@ -132,20 +131,29 @@ export default function TabButton({
     ev.stopPropagation();
   }
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <TabButtonStyle
-      className={isSelected ? "selected" : ""}
-      onClick={select}
-      onContextMenu={contextMenu}
-      title={hint}
-    >
-      <TabButtonIcon>{icon}</TabButtonIcon>
-      <p>{title}</p>
-      <button onClick={isEdited ? saveTab : closeTab}>
-        {isEdited
-          ? <UnSavedIndicator />
-          : <CloseTabIndicator src="/icons/close_cross.svg" />}
-      </button>
-    </TabButtonStyle>
+    <Transition in={mounted} timeout={mounted ? 100 : 50}>
+      {(state) => (
+        <TabButtonStyle
+          className={isSelected ? "selected" : ""}
+          onClick={select}
+          onContextMenu={contextMenu}
+          title={hint}
+          style={transitionStyles[state]}
+        >
+          <TabButtonIcon>{icon}</TabButtonIcon>
+          <p>{title}</p>
+          <button onClick={isEdited ? saveTab : closeTab}>
+            {isEdited
+              ? <UnSavedIndicator />
+              : <CloseTabIndicator src="/icons/close_cross.svg" />}
+          </button>
+        </TabButtonStyle>
+      )}
+    </Transition>
   );
 }

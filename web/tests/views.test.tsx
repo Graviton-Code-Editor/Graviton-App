@@ -4,13 +4,13 @@ import { beforeAll, describe, expect, test } from "vitest";
 import useViews from "../src/hooks/useViews";
 import { useRecoilValue } from "recoil";
 import { openedViewsAndTabs } from "../src/utils/state";
-import { TabsViews } from "../src/utils/state/tabs";
 import { Tab } from "../src/modules/tab";
 import useTabs from "../src/hooks/useTabs";
 import TextEditorTab from "../src/tabs/text_editor/text_editor";
+import { Views } from "../src/utils/state/views_tabs";
 
 interface HookResult extends ReturnType<typeof useViews>, ReturnType<typeof useTabs>  {
-  views: TabsViews<Tab>[];
+  views: Views<Tab>[];
 }
 
 describe("Views, ViewPanels and Tabs", () => {
@@ -56,7 +56,7 @@ describe("Views, ViewPanels and Tabs", () => {
 
     //  |     1     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(1);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(1);
 
     // Split 2 times vertically
     act(() => {
@@ -70,7 +70,7 @@ describe("Views, ViewPanels and Tabs", () => {
     //  |-----------|
     //  |     3     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(3);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(3);
 
     // Close the last 2 view panels created from before
     act(() => {
@@ -82,14 +82,14 @@ describe("Views, ViewPanels and Tabs", () => {
 
     //  |     1     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(1);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(1);
   });
 
   test("Not close a view panel with edited tabs", async () => {
 
     //  |     1     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(1);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(1);
 
     // Split 1 time vertically
     act(() => {
@@ -100,7 +100,7 @@ describe("Views, ViewPanels and Tabs", () => {
     //  |-----------|
     //  |     2     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(2);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(2);
 
     // Open a fake edited file
     act(() => {
@@ -119,6 +119,6 @@ describe("Views, ViewPanels and Tabs", () => {
     //  |-----------|
     //  |     2     |
     expect(hook.result.current.views).toHaveLength(1);
-    expect(hook.result.current.views[0]).toHaveLength(2);
+    expect(hook.result.current.views[0].view_panels).toHaveLength(2);
   });
 });

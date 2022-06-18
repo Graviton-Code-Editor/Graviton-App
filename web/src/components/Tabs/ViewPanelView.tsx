@@ -109,7 +109,6 @@ export default function ViewPanelView({
   // Close the specified tab from this panel
   // It will have a forced close if it's called from the container
   function removeTab(tab: Tab, force: boolean) {
-    console.log(tab);
     closeTab({
       col,
       row,

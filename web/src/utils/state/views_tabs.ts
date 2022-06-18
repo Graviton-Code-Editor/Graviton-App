@@ -6,16 +6,36 @@ import getAllStateData from "../state_data";
 export interface ViewPanel<T> {
   selected_tab_id?: string;
   tabs: Array<T>;
+  id: string;
 }
 
-export type TabsViews<T> = Array<ViewPanel<T>>;
+export interface Views<T> {
+  view_panels: Array<ViewPanel<T>>;
+  id: string;
+}
+
+export function newId() {
+  return Math.random().toString();
+}
+
+export function newEmptyView(): Views<Tab> {
+  return {
+    id: newId(),
+    view_panels: [
+      {
+        id: newId(),
+        tabs: [],
+      },
+    ],
+  };
+}
 
 /*
  * Views and tabs openeds
  */
 export const openedViewsAndTabs = atom({
   key: "openedViewsAndTabs",
-  default: [[{ tabs: [] }]] as Array<TabsViews<Tab>>,
+  default: [newEmptyView()] as Array<Views<Tab>>,
   dangerouslyAllowMutability: true,
   effects_UNSTABLE: [
     ({ onSet, getLoadable }) => {

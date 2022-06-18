@@ -17,13 +17,12 @@ export const StyledPromptOption = styled.button<{ isSelected: boolean }>`
     ? theme.elements.prompt.option.selected.background
     : theme.elements.prompt.option.background};
   border: 1px solid ${({ isSelected, theme }) =>
-  isSelected
-    ? theme.elements.prompt.option.selected.border
-    : "transparent"};
+  isSelected ? theme.elements.prompt.option.selected.border : "transparent"};
   cursor: pointer;
   &:hover {
     background: ${({ theme }) => theme.elements.prompt.option.hover.background};
-    border: 1px solid ${({ theme }) => theme.elements.prompt.option.hover.border};
+    border: 1px solid ${({ theme }) =>
+  theme.elements.prompt.option.hover.border};
   }
 `;
 

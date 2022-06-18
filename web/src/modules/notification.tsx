@@ -1,9 +1,10 @@
 import NotificationContainer from "../components/Notification/NotificationContainer";
 import { TranslatedText } from "../types/types";
+import { newId } from "../utils/state/views_tabs";
 
 export class Notification {
   public container = NotificationContainer;
-  public id = Math.random();
+  public id = newId();
 
   /**
    * @param title - Title of the notification

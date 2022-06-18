@@ -16,7 +16,7 @@ import {
   showedStatusBarItem,
   showedWindowsState,
 } from "../../utils/state";
-import { openedViewsAndTabs, TabsViews } from "../../utils/state/views_tabs";
+import { openedViewsAndTabs, Views } from "../../utils/state/views_tabs";
 import { transformTabsDataToTabs } from "../../utils/state_data";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
@@ -60,9 +60,10 @@ export function RootView({
           state_data.opened_tabs,
           getEditor,
           client,
-        ) as Array<TabsViews<Tab>>;
+        ) as Array<Views<Tab>>;
 
         const allTabs = openedTabs
+          .map(({ view_panels }) => view_panels)
           .flat()
           .map((view) => view.tabs)
           .flat();
@@ -70,8 +71,6 @@ export function RootView({
         // Open the tabs
         if (allTabs.length > 0) {
           setTabs([...openedTabs]);
-        } else {
-          setTabs([[{ tabs: [] }]]);
         }
       });
 

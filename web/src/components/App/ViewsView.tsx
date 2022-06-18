@@ -36,19 +36,19 @@ function ViewsView() {
         className="row"
         defaultSizes={new Array(tabsPanels.length).fill(200)}
       >
-        {tabsPanels.map((columns, r) => {
+        {tabsPanels.map(({ view_panels, id }, r) => {
           return (
             <SplitPane
               split="horizontal"
               minSize={20}
-              defaultSizes={new Array(columns.length).fill(200)}
+              defaultSizes={new Array(view_panels.length).fill(200)}
               className="colunmn"
-              key={`${r}_row`}
+              key={id}
             >
-              {columns.map((viewPanel, c) => {
+              {view_panels.map((viewPanel, c) => {
                 return (
                   <ViewPanelView
-                    key={`${r}${c}_tabs_panel`}
+                    key={viewPanel.id}
                     panel={viewPanel}
                     row={r}
                     col={c}
