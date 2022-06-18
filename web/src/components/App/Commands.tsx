@@ -116,6 +116,7 @@ export default function Commands() {
     closeFocusedViewPanel,
     newViewPanelInFocused,
     closeFocusedView,
+    focusedView
   } = useViews();
 
   useEffect(() => {
@@ -131,11 +132,11 @@ export default function Commands() {
     registerCommandAction("close.focused.view.panel", () => {
       closeFocusedViewPanel();
     });
-  }, [viewsAndTabs, commands]);
+  }, [viewsAndTabs, commands, focusedView]);
 
   // Save current focused tab
 
-  const { focusedTab, focusedView, closeFocusedTab, saveFocusedTab } =
+  const { focusedTab, closeFocusedTab, saveFocusedTab } =
     useTabs();
 
   useEffect(() => {

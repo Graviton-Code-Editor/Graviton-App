@@ -134,6 +134,7 @@ export default function useViews() {
   };
 
   return {
+    focusedView,
     newView,
     newViewInFocused: () => {
       newView({
