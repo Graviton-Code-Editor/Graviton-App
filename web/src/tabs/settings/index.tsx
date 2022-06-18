@@ -1,11 +1,5 @@
 import styled from "styled-components";
-import {
-  Link,
-  MemoryRouter,
-  Route,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Link, MemoryRouter, Route, Routes } from "react-router-dom";
 import { Tab } from "../../modules/tab";
 import ExtensionsRoute from "./routes/extensions";
 import PageSideBar, {
@@ -14,7 +8,6 @@ import PageSideBar, {
 import AboutRoute from "./routes/about";
 import HorizontalView from "../../components/Primitive/HorizontalView";
 import RouteView from "../../components/Primitive/RouteView";
-import { useEffect } from "react";
 import HotkeysRoute from "./routes/hotkeys";
 
 const SettingsTabContainerStyled = styled.div`
@@ -25,17 +18,11 @@ const SettingsTabContainerStyled = styled.div`
 `;
 
 function SettingsTabContainer() {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    navigate("/extensions");
-  }, []);
-
   return (
     <SettingsTabContainerStyled>
       <HorizontalView>
         <PageSideBar>
-          <Link to="/extensions" tabIndex={-1}>
+          <Link to="/" tabIndex={-1}>
             <SideBarButton>Extensions</SideBarButton>
           </Link>
           <Link to="/hotkeys" tabIndex={-1}>
@@ -47,7 +34,7 @@ function SettingsTabContainer() {
         </PageSideBar>
         <RouteView>
           <Routes>
-            <Route path="/extensions" element={<ExtensionsRoute />} />
+            <Route path="/" element={<ExtensionsRoute />} />
             <Route path="/hotkeys" element={<HotkeysRoute />} />
             <Route path="/about" element={<AboutRoute />} />
           </Routes>
