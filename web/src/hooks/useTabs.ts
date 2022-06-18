@@ -11,37 +11,27 @@ export interface TabsUtils {
   focusedTab: FocusedTab;
   focusedView: FocusedViewPanel;
   openTab: (newTab: Tab) => void;
-  selectTab: ({
-    tab,
-    col,
-    row,
-  }: {
+  selectTab: (ops: {
     tab: Tab | null;
     col: number;
     row: number;
   }) => void;
-  focusTab: ({
-    tab,
-    col,
-    row,
-  }: {
+  focusTab: (ops: {
     tab: Tab | null;
     col: number;
     row: number;
   }) => void;
-  closeTab: ({
-    tab,
-    col,
-    row,
-    force,
-  }: {
+  closeTab: (ops: {
     tab: Tab;
     col: number;
     row: number;
-    force: boolean;
   }) => void;
   closeFocusedTab: () => void;
+  saveTab: (
+    ops: { tab: Tab; force: boolean; col: number; row: number },
+  ) => void;
   saveFocusedTab: () => void;
+  setTabEdited: (tab: Tab, state: boolean) => void;
 }
 
 /**
@@ -53,20 +43,7 @@ export default function useTabs(): TabsUtils {
   const [focusedTab, setFocusedTab] = useRecoilState(focusedTabState);
   const setWindows = useSetRecoilState(showedWindowsState);
 
-  const closeTab: TabsUtils["closeTab"] = ({ tab, col, row, force }) => {
-    if (tab.edited && force === false) {
-      selectTab({
-        tab,
-        col,
-        row,
-      });
-      const popup = tab.save();
-      if (popup != null) {
-        setWindows((val) => [...val, popup as Popup]);
-      }
-      return;
-    }
-
+  const closeTab: TabsUtils["closeTab"] = ({ tab, col, row }) => {
     // Notify the tab
     tab.close();
 
@@ -94,6 +71,26 @@ export default function useTabs(): TabsUtils {
     viewsAndTabs[row].view_panels[col].selected_tab_id = tab?.id;
     setViewsAndTabs([...viewsAndTabs]);
     setFocusedView({ col, row });
+  };
+
+  const saveTab: TabsUtils["saveTab"] = ({ tab, force, col, row }) => {
+    const close = () => closeTab({ tab, col, row });
+    const setEdited = (state: boolean) => setTabEdited(tab, state);
+
+    // For better UX, make the tab visible if it isn't
+    selectTab(focusedTab);
+
+    const popup = tab.save({ force, close, setEdited });
+
+    // Display the popup returned by the tab if there isn't
+    if (popup != null) {
+      setWindows((val) => [...val, popup as Popup]);
+    }
+  };
+
+  const setTabEdited: TabsUtils["setTabEdited"] = (tab, state) => {
+    tab.edited = state;
+    setViewsAndTabs((v) => [...v]);
   };
 
   return {
@@ -124,15 +121,19 @@ export default function useTabs(): TabsUtils {
     closeTab,
     closeFocusedTab: () => {
       if (focusedTab.tab != null) {
+        saveTab({ ...focusedTab, tab: focusedTab.tab, force: false });
         closeTab({
           ...focusedTab,
           tab: focusedTab.tab,
-          force: false,
         });
       }
     },
+    saveTab,
     saveFocusedTab() {
-      focusedTab.tab?.save({ force: true });
+      if (focusedTab.tab) {
+        saveTab({ ...focusedTab, tab: focusedTab.tab, force: true });
+      }
     },
+    setTabEdited,
   };
 }

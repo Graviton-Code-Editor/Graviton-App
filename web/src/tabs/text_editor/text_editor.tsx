@@ -42,17 +42,6 @@ class TextEditorTab extends Tab {
   public format: FileFormat;
   public lastSavedStateText: string[] = [];
   public view?: EditorView;
-
-  public setEditedComp: (state: boolean) => void = () => {
-    /**/
-  };
-  public closeTabComp: () => void = () => {
-    /**/
-  };
-  public setViewComp: (view: EditorView) => void = () => {
-    /**/
-  };
-
   public contentResolver: Promise<string | null>;
 
   /**
@@ -112,9 +101,6 @@ class TextEditorTab extends Tab {
    * @param state - Wether the editor is edited or not
    */
   public setEdited(state: boolean) {
-    if (this.edited != state) {
-      this.setEditedComp(state);
-    }
     this.edited = state;
   }
 
@@ -132,10 +118,16 @@ class TextEditorTab extends Tab {
    *
    * @param options - Different options to tweak the saving behavior
    */
-  public save({ force }: SaveTabOptions = { force: false }): Popup | null {
-    // Save the tab forcefully, e.j, from a shortcut
-    if (force === true) {
+  public save({ force, close, setEdited }: SaveTabOptions): Popup | null {
+    const safeSave = () => {
       this.saveFile();
+
+      // Mark the tab as saved
+      setEdited(false);
+    };
+
+    if (force === true) {
+      safeSave();
     } else if (this.edited) {
       return new Popup(
         {
@@ -150,7 +142,7 @@ class TextEditorTab extends Tab {
             label: {
               text: "Save",
             },
-            action: this.saveFile.bind(this),
+            action: () => safeSave(),
           },
           {
             label: {
@@ -158,7 +150,7 @@ class TextEditorTab extends Tab {
             },
             action: () => {
               // User decided to not save the file, therefore close it
-              this.closeTabComp();
+              close();
             },
           },
           {
@@ -168,7 +160,7 @@ class TextEditorTab extends Tab {
             action: () => undefined,
           },
         ],
-        212,
+        200,
       );
     }
     return null;
@@ -187,60 +179,11 @@ class TextEditorTab extends Tab {
       // Save the file
       await client.write_file_by_path(this.path, currentContent, "local");
 
-      // Mark the tab as saved
-      this.setEdited(false);
-
       // Update the last saved state text
       this.lastSavedStateText = this.view.state.doc.toJSON();
     }
   }
 
-  /**
-   * Return the custom keymap
-   */
-  public getKeymap() {
-    // Undo command
-    const undo: StateCommand = (target) => {
-      commands.undo(target);
-      return checkEditStatus(target);
-    };
-
-    // Redo command
-    const redo: StateCommand = (target) => {
-      commands.redo(target);
-      return checkEditStatus(target);
-    };
-
-    // If the new state doc is the same as the last saved one then set the tab as unedited
-    const checkEditStatus: StateCommand = (target) => {
-      const currentStateText = target.state.doc.toJSON();
-
-      if (
-        this.lastSavedStateText.length == currentStateText.length &&
-        this.lastSavedStateText.every((e, i) => e == currentStateText[i])
-      ) {
-        this.setEdited(false);
-      } else {
-        this.setEdited(true);
-      }
-
-      return false;
-    };
-
-    // Define the custom keymap
-    const customKeymap: readonly KeyBinding[] = [
-      { key: "mod-y", run: redo, preventDefault: true },
-      { key: "mod-z", run: undo, preventDefault: true },
-    ];
-
-    return keymap.of(customKeymap);
-  }
-
-  /**
-   * @returns The tab's data
-   *
-   * @alpha
-   */
   public toJson(): TextEditorTabData {
     return {
       tab_type: "TextEditor",
@@ -253,16 +196,13 @@ class TextEditorTab extends Tab {
   }
 }
 
-/*
- * React Component used in TextEditorTab
- */
 function TabTextEditorContainer({
-  setEdited,
   close,
+  setEdited,
   tab,
 }: {
-  setEdited: () => void;
   close: () => void;
+  setEdited: (state: boolean) => void;
   tab: Tab;
 }) {
   const textEditorTab = tab as unknown as TextEditorTab;
@@ -273,41 +213,69 @@ function TabTextEditorContainer({
   useEffect(() => {
     if (view != null) return;
 
-    textEditorTab.setEditedComp = setEdited;
-    textEditorTab.closeTabComp = close;
-    textEditorTab.setViewComp = setView;
-
     // Wait until the tab is mounted to read it's content
     textEditorTab.contentResolver.then((initialValue) => {
       if (initialValue != null) {
         textEditorTab.view = new EditorView({
-          state: createDefaulState({
-            initialValue,
-          }),
+          state: createDefaulState(initialValue),
           dispatch: (tx) => {
-            if (tx.docChanged) textEditorTab.setEdited(true);
+            if (tx.docChanged) setEdited(true);
             (textEditorTab.view as EditorView).update([tx]);
           },
         });
 
         // Update the view component
-        textEditorTab.setViewComp(textEditorTab.view);
+        setView(textEditorTab.view);
       } else {
         // If there is no content to read then just close the tab
         textEditorTab.close();
-        textEditorTab.closeTabComp();
+        close();
       }
     });
 
-    /**
-     * Create the initial state for the CodeMirror instance
-     */
-    function createDefaulState({
-      initialValue,
-    }: {
-      initialValue: string;
-    }): EditorState {
-      const extensions = [textEditorTab.getKeymap(), basicSetup];
+    function getKeymap() {
+      // Undo command
+      const undo: StateCommand = (target) => {
+        commands.undo(target);
+        return checkEditStatus(target);
+      };
+
+      // Redo command
+      const redo: StateCommand = (target) => {
+        commands.redo(target);
+        return checkEditStatus(target);
+      };
+
+      // If the new state doc is the same as the last saved one then set the tab as unedited
+      const checkEditStatus: StateCommand = (target) => {
+        const currentStateText = target.state.doc.toJSON();
+
+        if (
+          textEditorTab.lastSavedStateText.length == currentStateText.length &&
+          textEditorTab.lastSavedStateText.every((e, i) =>
+            e == currentStateText[i]
+          )
+        ) {
+          setEdited(false);
+        } else {
+          setEdited(true);
+        }
+
+        return false;
+      };
+
+      // Define the custom keymap
+      const customKeymap: readonly KeyBinding[] = [
+        { key: "mod-y", run: redo, preventDefault: true },
+        { key: "mod-z", run: undo, preventDefault: true },
+      ];
+
+      return keymap.of(customKeymap);
+    }
+
+    // Initialize the CodeMirror State
+    function createDefaulState(initialValue: string): EditorState {
+      const extensions = [getKeymap(), basicSetup];
       let lspLanguage: [string, string] | null = null;
 
       if (typeof textEditorTab.format !== "string") {

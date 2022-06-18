@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import useContextMenu from "../../hooks/useContextMenu";
 import useTabs from "../../hooks/useTabs";
 import useViews from "../../hooks/useViews";
-import { Popup } from "../../modules/popup";
 import { Tab } from "../../modules/tab";
-import { showedWindowsState } from "../../utils/state";
 import { ViewPanel } from "../../utils/state/views_tabs";
 import { focusedViewPanelState } from "../../utils/state/view";
 import TabButton from "./TabButton";
@@ -73,13 +71,8 @@ export default function ViewPanelView({
 }: TabPanelOptions) {
   const { newView, newViewPanel } = useViews();
   const { pushContextMenu } = useContextMenu();
-  const { focusTab, selectTab, closeTab } = useTabs();
+  const { focusTab, selectTab, closeTab, saveTab, setTabEdited } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
-  const setWindows = useSetRecoilState(showedWindowsState);
-
-  const openedViewsAndTabss: Map<string, boolean> = new Map();
-  tabs.forEach((tab) => openedViewsAndTabss.set(tab.id, tab.edited));
-  const [states, setStates] = useState(openedViewsAndTabss);
 
   useEffect(() => {
     // If there isn't any tab opened then set the selected tab to null
@@ -109,21 +102,22 @@ export default function ViewPanelView({
   // Close the specified tab from this panel
   // It will have a forced close if it's called from the container
   function removeTab(tab: Tab, force: boolean) {
+    saveTab({
+      tab,
+      force,
+      col,
+      row,
+    });
     closeTab({
       col,
       row,
       tab,
-      force,
     });
   }
 
   // Save the tab
-  function saveTab(tab: Tab) {
-    const popup = tab.save();
-    if (popup != null) {
-      selectPanelTab(tab);
-      setWindows((val) => [...val, popup as Popup]);
-    }
+  function safelySaveTab(tab: Tab) {
+    saveTab({ tab, row, col, force: false });
   }
 
   // Mark this view as focused
@@ -170,7 +164,7 @@ export default function ViewPanelView({
       <div className="tabsList">
         {tabs.map((tab) => {
           const isSelected = tab.id == selected_tab_id;
-          const isEdited = states.get(tab.id) as boolean;
+          const isEdited = tab.edited;
           const { icon: TabIcon } = tab;
           return (
             <TabButton
@@ -184,7 +178,7 @@ export default function ViewPanelView({
               close={() =>
                 removeTab(tab, false)}
               save={() =>
-                saveTab(tab)}
+                safelySaveTab(tab)}
             />
           );
         })}
@@ -194,13 +188,6 @@ export default function ViewPanelView({
           const isSelected = tab.id == selected_tab_id;
           const Container = tab.container;
 
-          const setEdited = (state: boolean) => {
-            setStates((states) => {
-              states.set(tab.id, state);
-              return new Map(states);
-            });
-          };
-
           return (
             isSelected && (
               <div
@@ -209,7 +196,7 @@ export default function ViewPanelView({
               >
                 <Container
                   tab={tab}
-                  setEdited={setEdited}
+                  setEdited={(state: boolean) => setTabEdited(tab, state)}
                   close={() => removeTab(tab, true)}
                 />
               </div>

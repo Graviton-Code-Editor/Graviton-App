@@ -1,7 +1,7 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
-import { openedViewsAndTabs, showedWindowsState } from "../utils/state";
+import { openedViewsAndTabs } from "../utils/state";
 import { newEmptyView, newId, Views } from "../utils/state/views_tabs";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
 import useTabs, { TabsUtils } from "./useTabs";
@@ -27,7 +27,7 @@ function canViewBeClosed(view: Views<Tab>): boolean {
 
 function trySavingTabs(
   tabs: Tab[],
-  selectTab: TabsUtils["selectTab"],
+  saveTab: TabsUtils["saveTab"],
   col: number,
   row: number,
 ): Popup | null {
@@ -38,12 +38,7 @@ function trySavingTabs(
     }
   }
   if (firstEditedTab) {
-    selectTab({
-      tab: firstEditedTab,
-      col,
-      row,
-    });
-    return firstEditedTab.save();
+    saveTab({ tab: firstEditedTab, force: false, col, row });
   }
   return null;
 }
@@ -54,8 +49,7 @@ function trySavingTabs(
 export default function useViews() {
   const [tabPanels, setTabPanels] = useRecoilState(openedViewsAndTabs);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
-  const setWindows = useSetRecoilState(showedWindowsState);
-  const { selectTab } = useTabs();
+  const { saveTab } = useTabs();
 
   const closeViewPanel = ({ col, row }: FocusedViewPanel): boolean => {
     // Always leave at least one view panel opened
@@ -73,15 +67,12 @@ export default function useViews() {
       setTabPanels([...tabPanels]);
       setFocusedView({ col: nextFocusedCol, row });
     } else {
-      const popup = trySavingTabs(
+      trySavingTabs(
         tabPanels[row].view_panels[col].tabs,
-        selectTab,
+        saveTab,
         col,
         row,
       );
-      if (popup != null) {
-        setWindows((val) => [...val, popup as Popup]);
-      }
     }
 
     return canCloseViewPanel;
@@ -104,10 +95,7 @@ export default function useViews() {
     } else {
       for (let col = 0; col < tabPanels[row].view_panels.length; col++) {
         const viewPanel = tabPanels[row].view_panels[col];
-        const popup = trySavingTabs(viewPanel.tabs, selectTab, col, row);
-        if (popup != null) {
-          setWindows((val) => [...val, popup as Popup]);
-        }
+        trySavingTabs(viewPanel.tabs, saveTab, col, row);
       }
     }
 

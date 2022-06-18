@@ -1,6 +1,7 @@
 import { FileFormat } from "../services/clients/client.types";
 import { Popup } from "./popup";
 
+// Serialized data of the TextEditor Tab
 export interface TextEditorTabData {
   tab_type: string;
   path: string;
@@ -10,6 +11,7 @@ export interface TextEditorTabData {
   id: string;
 }
 
+// Serialized data of any basic Tabs
 export interface BasicTabData {
   tab_type: string;
   title: string;
@@ -20,6 +22,8 @@ export type TabData = BasicTabData | TextEditorTabData;
 
 export interface SaveTabOptions {
   force: boolean;
+  close: () => void;
+  setEdited: (state: boolean) => void;
 }
 
 /**
@@ -40,6 +44,9 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
     this.edited = false;
   }
 
+  /**
+   * @param options - Different utils for the container
+   */
   /* eslint-disable */
   public container(_: {
     tab: Tab;
@@ -70,11 +77,7 @@ export abstract class Tab implements Omit<BasicTabData, "tab_type"> {
     return null;
   }
 
-  /**
-   * @returns The tab's data
-   *
-   * @alpha
-   */
+  // Serialize the Tab's data
   public toJson(): TabData {
     return {
       tab_type: "Basic",
