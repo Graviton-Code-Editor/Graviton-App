@@ -1740,6 +1740,8 @@ version = "0.1.0"
 dependencies = [
  "git2",
  "gveditor-core-api",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

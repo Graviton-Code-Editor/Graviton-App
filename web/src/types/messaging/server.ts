@@ -2,6 +2,12 @@ import { StatusBarItemOptions } from "../../modules/statusbar_item";
 import { StateData } from "../../utils/state_data";
 import { BaseMessage } from "../../services/clients/client.types";
 
+export interface MessageFromExtension extends BaseMessage {
+  state_id: number;
+  extension_id: string;
+  message: string;
+}
+
 export interface ShowPopup extends BaseMessage {
   popup_id: string;
   title: string;

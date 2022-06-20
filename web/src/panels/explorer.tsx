@@ -1,5 +1,11 @@
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import FilesystemExplorer, {
+  TreeItem,
   TreeItemInfo,
 } from "../components/Filesystem/FilesystemExplorer";
 import { SidePanel } from "../modules/side_panel";
@@ -24,6 +30,19 @@ interface ExplorerPanelOptions {
   onFocus: (callback: () => void) => void;
 }
 
+const explorerState = atom<[TreeItem, TreeItemInfo[]]>({
+  key: "explorerState",
+  dangerouslyAllowMutability: true,
+  default: [
+    {
+      name: "/",
+      isFile: false,
+      items: {},
+    },
+    [],
+  ],
+});
+
 function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   const folders = useRecoilValue(foldersState);
   const { openTab } = useTabs();
@@ -31,6 +50,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
   const { t } = useTranslation();
   const refExplorer = useRef<HTMLButtonElement>(null);
   const { pushTextEditorTab } = useTextEditorTab();
+  const [tree, setTree] = useRecoilState(explorerState);
 
   useEffect(() => {
     onFocus(() => {
@@ -90,11 +110,19 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
           <FilesystemExplorer
             folders={folders}
             onSelected={openFile}
+            tree={tree}
+            saveTree={(tree) => setTree([...tree])}
           />
         )}
     </StyledExplorer>
   );
 }
+
+const ExplorerIcon = styled(ReactSVG)`
+  & svg {
+    stroke: var(--sidebarButtonFill);
+  } 
+`;
 
 /**
  * Built-in panel that displays a filesystem explorer
@@ -104,7 +132,7 @@ export default class ExplorerPanel extends SidePanel {
 
   constructor() {
     super("Explorer");
-    this.icon = () => <ReactSVG src="/icons/folder_outlined.svg" />;
+    this.icon = () => <ExplorerIcon src="/icons/folder_outlined.svg" />;
     this.container = () => (
       <ExplorerPanelContainer onFocus={(c) => this.callback = c} />
     );

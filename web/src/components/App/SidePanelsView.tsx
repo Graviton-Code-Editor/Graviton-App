@@ -7,6 +7,7 @@ const PanelsContainer = styled.div`
   min-height: 100%;
   background: ${(props) => props.theme.tones.dark1};
   & > .sidebar {
+    width: 60px;
     background: ${(props) => props.theme.tones.dark1};
     & svg {
       --sidebarButtonFill: ${({ theme }) => theme.elements.sidebar.button.fill};

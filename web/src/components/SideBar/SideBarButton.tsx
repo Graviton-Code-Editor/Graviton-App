@@ -7,7 +7,6 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
     ? theme.elements.sidebar.button.selected.background
     : theme.elements.sidebar.button.background};
   border: 0;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   height: 50px;
   width: 50px;
   justify-content: center;
@@ -29,9 +28,8 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
     border: 1px solid  ${({ theme }) =>
   theme.elements.sidebar.button.focus.border};
   }
-  & svg {
+  & svg{
     height: 18px;
-    stroke: var(--sidebarButtonFill);
   }
 `;
 export default StyledIconButton;

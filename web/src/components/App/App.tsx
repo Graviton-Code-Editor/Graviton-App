@@ -18,6 +18,7 @@ import { RootView } from "./RootView";
 import Commands from "./Commands";
 import useSidePanels from "../../hooks/useSidePanels";
 import NotificationsView from "./NotificationsView";
+import GitPanel from "../../panels/git/git";
 
 /*
  * Retrieve the authentication token
@@ -49,6 +50,7 @@ function ClientRoot() {
         client.whenConnected().then(() => {
           setClient(client);
           pushSidePanel(new ExplorerPanel());
+          pushSidePanel(new GitPanel());
           setPrompts((val) => [...val, GlobalPrompt]);
         });
       }

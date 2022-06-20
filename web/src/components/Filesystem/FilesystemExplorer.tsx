@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { default as styled } from "styled-components";
 import { clientState } from "../../utils/state";
@@ -24,6 +24,10 @@ interface ExplorerOptions {
   folders: FolderState[];
   // Callback executed when a item is clicked
   onSelected: (path: TreeItemInfo) => void;
+
+  tree?: [TreeItem, TreeItemInfo[]];
+
+  saveTree?: (tree: [TreeItem, TreeItemInfo[]]) => void;
 }
 
 interface TreeItems {
@@ -37,7 +41,7 @@ export interface TreeItemInfo {
   depth: number;
   filesystem: string;
 }
-interface TreeItem {
+export interface TreeItem {
   items: TreeItems;
   name: string;
   isFile: boolean;
@@ -146,28 +150,19 @@ function mapItemsListToSubTreeItem(items: DirItemInfo[]): TreeItems {
 function FilesystemExplorer({
   folders,
   onSelected,
-}: ExplorerOptions) {
-  const client = useRecoilValue(clientState);
-  const defaultState: [TreeItem, TreeItemInfo[]] = [
+  tree = [
     {
       name: "/",
       isFile: false,
       items: {},
     },
     [],
-  ];
+  ],
+  saveTree,
+}: ExplorerOptions) {
+  const client = useRecoilValue(clientState);
 
-  if (folders.length > 1) {
-    folders.forEach(({ path }) => {
-      defaultState[0].items[path] = {
-        name: basename(path),
-        isFile: false,
-        items: {},
-      };
-    });
-  }
-
-  const [[folderTree, folderItems], setFolderData] = useState(defaultState);
+  const [folderTree, folderItems] = tree;
 
   useEffect(() => {
     const subTree: TreeItem = {
@@ -179,14 +174,17 @@ function FilesystemExplorer({
     // Load the given initial route
     folders.forEach(({ path, filesystem }) => {
       if (folderTree.name === path) {
+        // Folder is the root one
         subTree.items[path] = {
           ...folderTree,
         };
       } else if (path in folderTree.items) {
+        // There are multiple folders
         subTree.items[path] = {
           ...folderTree.items[path],
         };
       } else {
+        // If folder is not found, then open it
         client.list_dir_by_path(path, filesystem).then((pathItems) => {
           if (pathItems.Ok != null) {
             if (folders.length > 1) {
@@ -199,23 +197,27 @@ function FilesystemExplorer({
               subTree.name = basename(path);
               subTree.items = mapItemsListToSubTreeItem(pathItems.Ok);
             }
-
-            setFolderData([subTree, mapTree([], subTree, 0, filesystem)]);
+            const tree: [TreeItem, TreeItemInfo[]] = [
+              subTree,
+              mapTree([], subTree, 0, filesystem),
+            ];
+            saveTree?.(tree);
           } else {
             // handle error
           }
         });
       }
     });
-  }, [folders]); // InitialRoute
+  }, [folders]);
 
   function closeFolder(item: TreeItemInfo) {
     // Close the sub tree
     const newFolderTree = removeSubTreeByPath(folderTree, item.path);
-    setFolderData([
+    const tree: [TreeItem, TreeItemInfo[]] = [
       { ...newFolderTree },
       mapTree([], newFolderTree, 0, item.filesystem),
-    ]);
+    ];
+    saveTree?.(tree);
   }
 
   function openFolder(item: TreeItemInfo) {
@@ -226,11 +228,11 @@ function FilesystemExplorer({
 
         // Add the new items to the sub tree
         addItemsToSubTreeByPath(folderTree, item.path, subTreeItems);
-
-        setFolderData([
+        const tree: [TreeItem, TreeItemInfo[]] = [
           { ...folderTree },
           mapTree([], folderTree, 0, item.filesystem),
-        ]);
+        ];
+        saveTree?.(tree);
       } else {
         // handle error
       }

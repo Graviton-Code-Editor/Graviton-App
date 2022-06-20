@@ -156,6 +156,21 @@ impl Server {
                     state.lock().await.notify_extensions(msg);
                 }
             }
+            ClientMessages::NotifyExtension(event) => {
+                let state_id = event.get_state_id();
+                let extension_id = event.get_extension_id();
+
+                let state = {
+                    let states = states.lock().await;
+                    states.get_state_by_id(state_id)
+                };
+
+                if let Some(state) = state {
+                    let state = state.lock().await;
+
+                    state.notify_extension(extension_id, msg);
+                }
+            }
             ClientMessages::ServerMessage(server_msg) => {
                 match server_msg {
                     ServerMessages::RegisterLanguageServers {

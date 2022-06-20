@@ -3,9 +3,13 @@ use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
-use gveditor_core_api::messaging::ClientMessages;
+use gveditor_core_api::messaging::{ClientMessages, NotifyExtension, ServerMessages};
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
 use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo};
+
+mod messages;
+
+use messages::{FromExtension, ToExtension};
 
 static EXTENSION_NAME: &str = "Git";
 
@@ -13,6 +17,7 @@ struct GitExtension {
     rx: Option<Receiver<ClientMessages>>,
     tx: Sender<ClientMessages>,
     status_bar_item: StatusBarItem,
+    client: ExtensionClient,
 }
 
 impl GitExtension {
@@ -23,6 +28,40 @@ impl GitExtension {
         let repo = repo?;
         let head = repo.head()?;
         Ok(head.shorthand().map(|v| v.to_string()))
+    }
+
+    pub async fn handle_side_panel_messages(
+        client: &ExtensionClient,
+        state_id: u8,
+        extension_id: String,
+        message: ToExtension,
+    ) {
+        match message {
+            ToExtension::LoadBranch { path } => {
+                let branch = Self::get_repo_branch(path.clone());
+
+                // Default message is Repo not found
+                let mut message = FromExtension::RepoNotFound { path: path.clone() };
+
+                // Answer with the found branch
+                if let Ok(Some(branch)) = branch {
+                    message = FromExtension::Branch { path, name: branch };
+                }
+
+                // Send the message
+                let message = serde_json::to_string(&message).unwrap();
+                client
+                    .send(ClientMessages::ServerMessage(
+                        ServerMessages::MessageFromExtension {
+                            state_id,
+                            extension_id,
+                            message,
+                        },
+                    ))
+                    .await
+                    .ok();
+            }
+        }
     }
 }
 
@@ -36,21 +75,44 @@ impl Extension for GitExtension {
 
     fn init(&mut self) {
         let receiver = self.rx.take();
+        let client = self.client.clone();
 
         if let Some(mut receiver) = receiver {
             let mut status_bar_item = self.status_bar_item.clone();
 
             tokio::spawn(async move {
                 loop {
-                    if let Some(ClientMessages::ListDir(_, fs_name, path, _)) =
-                        receiver.recv().await
-                    {
-                        // Only react when using the local file system
-                        if fs_name == "local" {
-                            let branch = Self::get_repo_branch(path);
-                            if let Ok(Some(branch)) = branch {
-                                status_bar_item.set_label(&branch).await;
+                    if let Some(message) = receiver.recv().await {
+                        match message {
+                            ClientMessages::ListDir(_, fs_name, path, _) => {
+                                // Only react when using the local file system
+                                if fs_name == "local" {
+                                    let branch = Self::get_repo_branch(path);
+                                    if let Ok(Some(branch)) = branch {
+                                        status_bar_item.set_label(&branch).await;
+                                    }
+                                }
                             }
+                            ClientMessages::NotifyExtension(
+                                NotifyExtension::ExtensionMessage {
+                                    content,
+                                    state_id,
+                                    extension_id,
+                                },
+                            ) => {
+                                let message: Result<ToExtension, serde_json::Error> =
+                                    serde_json::from_str(&content);
+                                if let Ok(message) = message {
+                                    Self::handle_side_panel_messages(
+                                        &client,
+                                        state_id,
+                                        extension_id,
+                                        message,
+                                    )
+                                    .await;
+                                }
+                            }
+                            _ => {}
                         }
                     }
                 }
@@ -70,11 +132,13 @@ impl Extension for GitExtension {
 
 pub fn entry(extensions: &mut ExtensionsManager, client: ExtensionClient, state_id: u8) {
     let (tx, rx) = channel::<ClientMessages>(1);
-    let status_bar_item = StatusBarItem::new(client, state_id, "");
+    let status_bar_item = StatusBarItem::new(client.clone(), state_id, "");
+
     let plugin = Box::new(GitExtension {
         rx: Some(rx),
         tx,
         status_bar_item,
+        client,
     });
     let parent_id = env!("CARGO_PKG_NAME");
     extensions.register(parent_id, plugin);

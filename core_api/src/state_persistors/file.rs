@@ -17,7 +17,6 @@ impl FilePersistor {
     }
 }
 
-/// Note: I am opening the file on every read and write operation to avoid blocking when multiple states are using the same file (e.g. in the Desktop app situation with multiple windows windows)
 impl Persistor for FilePersistor {
     fn load(&mut self) -> StateData {
         let file_content = fs::read_to_string(&self.path).expect("Failed to read file");

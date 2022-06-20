@@ -11,6 +11,7 @@ pub enum ClientMessages {
         // The state ID
         state_id: u8,
     },
+    NotifyExtension(NotifyExtension),
     NotifyLanguageServers(LanguageServerMessage),
     ServerMessage(ServerMessages),
     UIEvent(UIEvent),
@@ -23,6 +24,7 @@ pub enum ClientMessages {
 impl ClientMessages {
     pub fn get_state_id(&self) -> u8 {
         match self {
+            Self::NotifyExtension(event, ..) => event.get_state_id(),
             Self::ServerMessage(msg) => msg.get_state_id(),
             Self::ListenToState { state_id, .. } => *state_id,
             Self::ReadFile(state_id, ..) => *state_id,
@@ -36,6 +38,7 @@ impl ClientMessages {
 
     pub fn get_name(&self) -> &str {
         match self {
+            Self::NotifyExtension(..) => "notifyExtension",
             Self::ServerMessage(..) => "serverMessage",
             Self::ListenToState { .. } => "listenToState",
             Self::ReadFile(..) => "readFile",
@@ -82,6 +85,30 @@ impl UIEvent {
     pub fn get_state_id(&self) -> u8 {
         match self {
             Self::StatusBarItemClicked { state_id, .. } => *state_id,
+        }
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[serde(tag = "msg_type")]
+pub enum NotifyExtension {
+    ExtensionMessage {
+        state_id: u8,
+        content: String,
+        extension_id: String,
+    },
+}
+
+impl NotifyExtension {
+    pub fn get_state_id(&self) -> u8 {
+        match self {
+            Self::ExtensionMessage { state_id, .. } => *state_id,
+        }
+    }
+
+    pub fn get_extension_id(&self) -> String {
+        match self {
+            Self::ExtensionMessage { extension_id, .. } => extension_id.clone(),
         }
     }
 }

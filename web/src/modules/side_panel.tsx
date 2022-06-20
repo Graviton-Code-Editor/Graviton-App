@@ -3,9 +3,8 @@ import { ReactElement } from "react";
 /**
  * SidePanel API
  */
-export abstract class SidePanel {
+export class SidePanel {
   public name: string;
-  public container: () => ReactElement;
   public icon: () => ReactElement<any>;
 
   /**
@@ -13,9 +12,14 @@ export abstract class SidePanel {
    */
   constructor(name: string) {
     this.name = name;
-    this.container = () => <div />;
     this.icon = () => <div />;
   }
 
-  public abstract focus(): void;
+  container() {
+    return <div />;
+  }
+
+  public focus() {
+    /**/
+  }
 }

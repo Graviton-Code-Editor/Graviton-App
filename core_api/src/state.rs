@@ -201,6 +201,24 @@ impl State {
         }
     }
 
+    pub fn notify_extension(&self, extension_id: String, message: ClientMessages) {
+        for ext in &self.extensions_manager.extensions {
+            if let LoadedExtension::ExtensionInstance {
+                plugin, parent_id, ..
+            } = ext
+            {
+                if parent_id == &extension_id {
+                    let ext_plugin = plugin.clone();
+                    let message = message.clone();
+                    tokio::spawn(async move {
+                        let mut ext_plugin = ext_plugin.lock().await;
+                        ext_plugin.notify(message.clone());
+                    });
+                }
+            }
+        }
+    }
+
     /// Notify all the extensions in a state about a message, asynchronously and independently
     pub fn notify_extensions(&self, message: ClientMessages) {
         for ext in &self.extensions_manager.extensions {
