@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showedWindowsState } from "../../utils/state";
 import FilesystemExplorer, {
+  TreeItem,
   TreeItemInfo,
 } from "../Filesystem/FilesystemExplorer";
 import WindowBackground from "../Window/WindowBackground";
@@ -54,6 +55,14 @@ export default function RemoteExplorerContainer({
   const refBackground = useRef(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const [focusedItem, setFocusedItem] = useState<TreeItemInfo | null>(null);
+  const [tree, setTree] = useState<[TreeItem, TreeItemInfo[]]>([
+    {
+      name: "/",
+      isFile: false,
+      items: {},
+    },
+    [],
+  ]);
 
   function closePopup() {
     setShowedWindows((val) => {
@@ -92,6 +101,8 @@ export default function RemoteExplorerContainer({
           <div className="topView">
             <FilesystemExplorer
               folders={folders}
+              tree={tree}
+              saveTree={(tree) => setTree(tree)}
               onSelected={selectedItem}
             />
           </div>
