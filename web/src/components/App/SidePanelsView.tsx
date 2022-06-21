@@ -24,6 +24,9 @@ const PanelsContainer = styled.div`
     width: 100%;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    overflow: auto;
+    max-height: 100%;
+    max-width: 100%;
   }
 `;
 

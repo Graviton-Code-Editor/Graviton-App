@@ -1,17 +1,36 @@
-use git2::{Error, Repository};
+use git2::{Error, Repository, StatusOptions};
 use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::{ClientMessages, NotifyExtension, ServerMessages};
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
-use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo};
+use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Serialize};
 
-mod messages;
+mod types;
 
-use messages::{FromExtension, ToExtension};
+use types::{FileState, FromExtension, ToExtension};
 
 static EXTENSION_NAME: &str = "Git";
+
+async fn send_message_to_client(
+    client: &ExtensionClient,
+    state_id: u8,
+    extension_id: String,
+    message: impl Serialize,
+) {
+    let message = serde_json::to_string(&message).unwrap();
+    client
+        .send(ClientMessages::ServerMessage(
+            ServerMessages::MessageFromExtension {
+                state_id,
+                extension_id,
+                message,
+            },
+        ))
+        .await
+        .ok();
+}
 
 struct GitExtension {
     rx: Option<Receiver<ClientMessages>>,
@@ -30,6 +49,27 @@ impl GitExtension {
         Ok(head.shorthand().map(|v| v.to_string()))
     }
 
+    pub fn get_repo_status(path: String) -> Result<Vec<FileState>, Error> {
+        let repo = Repository::discover(path);
+        let repo = repo?;
+        let mut files = Vec::new();
+        for file in repo
+            .statuses(Some(&mut StatusOptions::new()))
+            .unwrap()
+            .iter()
+        {
+            let status = file.status();
+            if let Some(path) = file.path() {
+                files.push(FileState {
+                    path: path.to_string(),
+                    status: status.bits(),
+                });
+            }
+        }
+
+        Ok(files)
+    }
+
     pub async fn handle_side_panel_messages(
         client: &ExtensionClient,
         state_id: u8,
@@ -37,7 +77,23 @@ impl GitExtension {
         message: ToExtension,
     ) {
         match message {
+            ToExtension::LoadFilesStates { path } => {
+                // Get the current files states
+                let files_states = Self::get_repo_status(path.clone());
+
+                // Default message is Repo not found
+                let mut message = FromExtension::RepoNotFound { path: path.clone() };
+
+                // Answer with the file states
+                if let Ok(files_states) = files_states {
+                    message = FromExtension::FilesState { path, files_states };
+                }
+
+                // Send the message
+                send_message_to_client(client, state_id, extension_id, message).await;
+            }
             ToExtension::LoadBranch { path } => {
+                // Get the current branch
                 let branch = Self::get_repo_branch(path.clone());
 
                 // Default message is Repo not found
@@ -49,17 +105,7 @@ impl GitExtension {
                 }
 
                 // Send the message
-                let message = serde_json::to_string(&message).unwrap();
-                client
-                    .send(ClientMessages::ServerMessage(
-                        ServerMessages::MessageFromExtension {
-                            state_id,
-                            extension_id,
-                            message,
-                        },
-                    ))
-                    .await
-                    .ok();
+                send_message_to_client(client, state_id, extension_id, message).await;
             }
         }
     }

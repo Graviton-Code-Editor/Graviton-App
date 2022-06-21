@@ -1,8 +1,12 @@
 import * as React from "react";
-import { render, screen, act } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import FakeRoot from "./utils/fake_root";
-import FilesystemExplorer from "../src/components/Filesystem/FilesystemExplorer";
-import { test, describe, expect, vi } from "vitest";
+import FilesystemExplorer, {
+  TreeItem,
+  TreeItemInfo,
+} from "../src/components/Filesystem/FilesystemExplorer";
+import { describe, expect, test, vi } from "vitest";
+import { useState } from "react";
 
 vi.mock("react-virtualized-auto-sizer", () => {
   return {
@@ -16,24 +20,35 @@ vi.stubGlobal(
     open: vi.fn(),
     send: vi.fn(),
     setRequestHeader: vi.fn(),
-  }))
+  })),
 );
 
 const folders = [
-  { path: "\\", filesystem: "local"}
-]
+  { path: "\\", filesystem: "local" },
+];
+
+function ExplorerWrapper(){
+  const [tree, setTree] = useState<TreeItem>({
+    name: "/",
+    isFile: false,
+    items: {},
+  });
+  return (
+    <FakeRoot>
+      <FilesystemExplorer
+        folders={folders}
+        onSelected={() => {}}
+        tree={tree}
+        saveTree={(t) => setTree(t)}
+      />
+    </FakeRoot>
+  );
+}
 
 describe("<FilesystemExplorer/>", () => {
   test("readme.md exists", async () => {
     act(() => {
-      render(
-        <FakeRoot>
-          <FilesystemExplorer
-            folders={folders}
-            onSelected={() => {}}
-          />
-        </FakeRoot>
-      );
+      render(<ExplorerWrapper/>);
     });
 
     await act(async () => {

@@ -9,23 +9,24 @@ const ExplorerItem = styled.div<{
     align-items: center;
     cursor: pointer;
     outline: 0;
-    white-space: nowrap;
     position: relative;
     background: ${({ theme }) => theme.elements.explorer.item.background};
     color: ${({ theme }) => theme.elements.explorer.item.text.color};
     font-size: 12px;
     border-radius: 5px;
-    line-break: none;
-    text-overflow: elliptic;
-    overflow: hidden;
     border: none;
     min-width: 170px;
     max-width: 200px;
-    text-align: left;
     user-select: none;
+    margin: 0px;
     &:hover {
       background: ${({ theme }) =>
   theme.elements.explorer.item.hover.background};
+    }
+    & > span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     & .arrow svg {
       margin-right: 7px;

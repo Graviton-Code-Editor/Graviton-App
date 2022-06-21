@@ -4,17 +4,59 @@ import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { clientState, foldersState } from "../../utils/state";
 import { MessageFromExtension, NotifyExtension } from "../../types/messaging";
-import { Branch, FromExtensionMessage } from "./git.types";
-import { RepoSection } from "../../components/Git/GitSection";
+import {
+  Branch,
+  FileStates,
+  FileStatus,
+  FromExtensionMessage,
+  RepoState,
+  ToExtensionMessage,
+} from "./git.types";
+import { RepoSection } from "../../components/Git/RepoSection";
 import styled from "styled-components";
 import { SecondaryButton } from "../../components/Primitive/Button";
 import HorizontalCentered from "../../components/Primitive/HorizontalCentered";
 import { useTranslation } from "react-i18next";
 import { openFileSystemPicker } from "../../services/commands";
+import { Client } from "../../services/clients/client.types";
+
+function getStatusFlag(code: number): FileStatus {
+  // TODO(marc2332): Add more status codes
+  switch (code) {
+    // Added
+    case 512:
+      return {
+        code,
+        char: "A",
+      };
+    // Modified
+    case 256:
+      return {
+        code,
+        char: "M",
+      };
+    default:
+      return {
+        code,
+        char: "?",
+      };
+  }
+}
+
+function sendMessage(client: Client, message: ToExtensionMessage) {
+  client.emitMessage<NotifyExtension>({
+    NotifyExtension: {
+      msg_type: "ExtensionMessage",
+      state_id: client.config.state_id,
+      extension_id: "git-for-graviton",
+      content: JSON.stringify(message),
+    },
+  });
+}
 
 function GitPanelContainer() {
   const client = useRecoilValue(clientState);
-  const [branchs, setBranchs] = useState<Record<string, string>>({});
+  const [repos, setRepos] = useState<Record<string, RepoState>>({});
   const folders = useRecoilValue(foldersState);
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
@@ -23,17 +65,9 @@ function GitPanelContainer() {
     folders.forEach((folder) => {
       // Ignore non-local folders
       if (folder.filesystem !== "local") return;
-
-      client.emitMessage<NotifyExtension>({
-        NotifyExtension: {
-          msg_type: "ExtensionMessage",
-          state_id: client.config.state_id,
-          extension_id: "git-for-graviton",
-          content: JSON.stringify({
-            LoadBranch: {
-              path: folder.path,
-            },
-          }),
+      sendMessage(client, {
+        LoadBranch: {
+          path: folder.path,
         },
       });
     });
@@ -47,10 +81,42 @@ function GitPanelContainer() {
             // Show the active branch
             case "Branch": {
               const content = message as Branch;
-              setBranchs((branchs) => ({
-                ...branchs,
-                [content.path]: content.name,
-              }));
+              setRepos((repos) => {
+                const repo = repos[content.path] ?? {
+                  files_states: [],
+                };
+                return {
+                  ...repos,
+                  [content.path]: {
+                    ...repo,
+                    branch: content.name,
+                  },
+                };
+              });
+
+              sendMessage(client, {
+                LoadFilesStates: {
+                  path: content.path,
+                },
+              });
+              break;
+            }
+            // Show the files states
+            case "FilesState": {
+              const content = message as FileStates;
+              setRepos((repos) => {
+                const repo = repos[content.path];
+                return {
+                  ...repos,
+                  [content.path]: {
+                    ...repo,
+                    files_states: content.files_states.map((file) => ({
+                      ...file,
+                      status: getStatusFlag(file.status),
+                    })),
+                  },
+                };
+              });
               break;
             }
             case "RepoNotFound": {
@@ -69,7 +135,7 @@ function GitPanelContainer() {
 
   // Remove branches from folders not opened anymore
   useEffect(() => {
-    for (const path of Object.keys(branchs)) {
+    for (const path of Object.keys(repos)) {
       let folderExists = false;
       for (const folder of folders) {
         if (folder.path === path) {
@@ -78,8 +144,8 @@ function GitPanelContainer() {
       }
 
       if (!folderExists) {
-        delete branchs[path];
-        setBranchs({ ...branchs });
+        delete repos[path];
+        setRepos({ ...repos });
       }
     }
   }, [folders]);
@@ -98,6 +164,14 @@ function GitPanelContainer() {
     }
   }
 
+  function fetchRepoState(repoPath: string) {
+    sendMessage(client, {
+      LoadBranch: {
+        path: repoPath,
+      },
+    });
+  }
+
   return (
     <>
       {folders.length == 0
@@ -113,9 +187,14 @@ function GitPanelContainer() {
           </HorizontalCentered>
         )
         : (
-          Object.keys(branchs).map((path) => {
+          Object.keys(repos).map((path) => {
             return (
-              <RepoSection key={path} path={path} branch={branchs[path]} />
+              <RepoSection
+                key={path}
+                path={path}
+                state={repos[path]}
+                fetchRepoState={() => fetchRepoState(path)}
+              />
             );
           })
         )}

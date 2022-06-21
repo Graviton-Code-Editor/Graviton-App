@@ -1,14 +1,18 @@
-import { TreeItemInfo } from "./FilesystemExplorer";
 import { extname } from "path";
 import { ReactSVG } from "react-svg";
+
+interface FileIconsOptions {
+  item: {
+    name: string;
+    isFile: boolean;
+  };
+  isOpened: boolean;
+}
 
 export default function FileIcon({
   item,
   isOpened,
-}: {
-  item: TreeItemInfo;
-  isOpened: boolean;
-}) {
+}: FileIconsOptions) {
   if (item.isFile) {
     switch (extname(item.name)) {
       case ".jsx":

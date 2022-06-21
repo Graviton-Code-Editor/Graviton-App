@@ -78,9 +78,6 @@ class TextEditorTab extends Tab {
         item={{
           isFile: true,
           name: textEditorTab.filename,
-          depth: 1,
-          path: textEditorTab.path,
-          filesystem: "local",
         }}
       />
     );

@@ -15,8 +15,9 @@ import ExplorerItem from "./ExplorerItem";
 import useContextMenu from "../../hooks/useContextMenu";
 
 const ExplorerContainer = styled.div`
-  margin: 5px;
+  padding: 5px;
   height: calc(100% - 10px);
+  overflow: hidden;
 `;
 
 interface ExplorerOptions {
@@ -25,9 +26,9 @@ interface ExplorerOptions {
   // Callback executed when a item is clicked
   onSelected: (path: TreeItemInfo) => void;
 
-  tree?: [TreeItem, TreeItemInfo[]];
+  tree?: TreeItem;
 
-  saveTree?: (tree: [TreeItem, TreeItemInfo[]]) => void;
+  saveTree?: (tree: TreeItem) => void;
 }
 
 interface TreeItems {
@@ -150,19 +151,17 @@ function mapItemsListToSubTreeItem(items: DirItemInfo[]): TreeItems {
 function FilesystemExplorer({
   folders,
   onSelected,
-  tree = [
-    {
-      name: "/",
-      isFile: false,
-      items: {},
-    },
-    [],
-  ],
+  tree = {
+    name: "/",
+    isFile: false,
+    items: {},
+  },
   saveTree,
 }: ExplorerOptions) {
   const client = useRecoilValue(clientState);
+  const folderItems = mapTree([], tree, 0, "local");
 
-  const [folderTree, folderItems] = tree;
+  const folderTree = tree;
 
   useEffect(() => {
     const subTree: TreeItem = {
@@ -173,7 +172,7 @@ function FilesystemExplorer({
 
     // Load the given initial route
     folders.forEach(({ path, filesystem }) => {
-      if (folderTree.name === path) {
+      if (folderTree.name === basename(path)) {
         // Folder is the root one
         subTree.items[path] = {
           ...folderTree,
@@ -197,11 +196,7 @@ function FilesystemExplorer({
               subTree.name = basename(path);
               subTree.items = mapItemsListToSubTreeItem(pathItems.Ok);
             }
-            const tree: [TreeItem, TreeItemInfo[]] = [
-              subTree,
-              mapTree([], subTree, 0, filesystem),
-            ];
-            saveTree?.(tree);
+            saveTree?.(subTree);
           } else {
             // handle error
           }
@@ -213,11 +208,7 @@ function FilesystemExplorer({
   function closeFolder(item: TreeItemInfo) {
     // Close the sub tree
     const newFolderTree = removeSubTreeByPath(folderTree, item.path);
-    const tree: [TreeItem, TreeItemInfo[]] = [
-      { ...newFolderTree },
-      mapTree([], newFolderTree, 0, item.filesystem),
-    ];
-    saveTree?.(tree);
+    saveTree?.({ ...newFolderTree });
   }
 
   function openFolder(item: TreeItemInfo) {
@@ -228,11 +219,7 @@ function FilesystemExplorer({
 
         // Add the new items to the sub tree
         addItemsToSubTreeByPath(folderTree, item.path, subTreeItems);
-        const tree: [TreeItem, TreeItemInfo[]] = [
-          { ...folderTree },
-          mapTree([], folderTree, 0, item.filesystem),
-        ];
-        saveTree?.(tree);
+        saveTree?.({ ...folderTree });
       } else {
         // handle error
       }

@@ -30,17 +30,14 @@ interface ExplorerPanelOptions {
   onFocus: (callback: () => void) => void;
 }
 
-const explorerState = atom<[TreeItem, TreeItemInfo[]]>({
+const explorerState = atom<TreeItem>({
   key: "explorerState",
   dangerouslyAllowMutability: true,
-  default: [
-    {
-      name: "/",
-      isFile: false,
-      items: {},
-    },
-    [],
-  ],
+  default: {
+    name: "/",
+    isFile: false,
+    items: {},
+  },
 });
 
 function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
@@ -111,7 +108,7 @@ function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
             folders={folders}
             onSelected={openFile}
             tree={tree}
-            saveTree={(tree) => setTree([...tree])}
+            saveTree={(tree) => setTree(tree)}
           />
         )}
     </StyledExplorer>

@@ -55,14 +55,11 @@ export default function RemoteExplorerContainer({
   const refBackground = useRef(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const [focusedItem, setFocusedItem] = useState<TreeItemInfo | null>(null);
-  const [tree, setTree] = useState<[TreeItem, TreeItemInfo[]]>([
-    {
-      name: "/",
-      isFile: false,
-      items: {},
-    },
-    [],
-  ]);
+  const [tree, setTree] = useState<TreeItem>({
+    name: "/",
+    isFile: false,
+    items: {},
+  });
 
   function closePopup() {
     setShowedWindows((val) => {
