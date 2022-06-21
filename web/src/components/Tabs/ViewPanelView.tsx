@@ -79,6 +79,7 @@ export default function ViewPanelView({
   const { pushContextMenu } = useContextMenu();
   const { focusTab, selectTab, closeTab, saveTab, setTabEdited } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
+  console.log(tabs, selected_tab_id )
 
   useEffect(() => {
     // If there isn't any tab opened then set the selected tab to null

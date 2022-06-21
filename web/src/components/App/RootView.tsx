@@ -2,9 +2,11 @@ import { PropsWithChildren, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import useEditor from "../../hooks/useEditor";
+import useTabs from "../../hooks/useTabs";
 import { Popup } from "../../modules/popup";
 import { StatusBarItem } from "../../modules/statusbar_item";
 import { Tab } from "../../modules/tab";
+import WelcomeTab from "../../tabs/welcome";
 import {
   HideStatusBarItem,
   ShowPopup,
@@ -47,7 +49,9 @@ export function RootView({
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
   const setTabs = useSetRecoilState(openedViewsAndTabs);
+  const { openTab } = useTabs();
   const getEditor = useEditor();
+  console.log(1)
 
   useEffect(() => {
     if (client != null) {
@@ -71,6 +75,8 @@ export function RootView({
         // Open the tabs
         if (allTabs.length > 0) {
           setTabs([...openedTabs]);
+        } else {
+          openTab(new WelcomeTab());
         }
       });
 

@@ -19,8 +19,6 @@ import Commands from "./Commands";
 import useSidePanels from "../../hooks/useSidePanels";
 import NotificationsView from "./NotificationsView";
 import GitPanel from "../../panels/git/git";
-import useTabs from "../../hooks/useTabs";
-import WelcomeTab from "../../tabs/welcome";
 
 /*
  * Retrieve the authentication token
@@ -40,7 +38,6 @@ async function getToken() {
 function ClientRoot() {
   const setClient = useSetRecoilState(clientState);
   const { pushSidePanel } = useSidePanels();
-  const { openTab } = useTabs();
   const setPrompts = useSetRecoilState(promptsState);
 
   useEffect(() => {
@@ -54,7 +51,6 @@ function ClientRoot() {
           setClient(client);
           pushSidePanel(new ExplorerPanel());
           pushSidePanel(new GitPanel());
-          openTab(new WelcomeTab());
           setPrompts((val) => [...val, GlobalPrompt]);
         });
       }
