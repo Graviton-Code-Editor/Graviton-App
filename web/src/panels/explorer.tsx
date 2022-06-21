@@ -1,9 +1,4 @@
-import {
-  atom,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from "recoil";
+import { atom, useRecoilState } from "recoil";
 import FilesystemExplorer, {
   TreeItem,
   TreeItemInfo,
@@ -41,9 +36,8 @@ const explorerState = atom<TreeItem>({
 });
 
 function ExplorerPanelContainer({ onFocus }: ExplorerPanelOptions) {
-  const folders = useRecoilValue(foldersState);
+  const [folders, setOpenedFolders] = useRecoilState(foldersState);
   const { openTab } = useTabs();
-  const setOpenedFolders = useSetRecoilState(foldersState);
   const { t } = useTranslation();
   const refExplorer = useRef<HTMLButtonElement>(null);
   const { pushTextEditorTab } = useTextEditorTab();

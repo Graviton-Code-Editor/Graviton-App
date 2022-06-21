@@ -1,7 +1,6 @@
-import { PropsWithChildren } from "react";
 import { isTauri } from "../../services/commands";
 import styled from "styled-components";
-import { SecondaryButton } from "./Button";
+import { PropsWithChildren } from "react";
 
 const StyledAnchor = styled.a`
   color: ${({ theme }) => theme.elements.link.color};
@@ -20,28 +19,19 @@ function openUrl(url: string) {
 
 interface LinkOptions {
   href: string;
-  label: string;
   onClick?: () => void;
-}
-
-function LinkButton(props: PropsWithChildren<LinkOptions>) {
-  return (
-    <StyledAnchor {...props}>
-      <SecondaryButton>{props.label}</SecondaryButton>
-    </StyledAnchor>
-  );
 }
 
 /*
  * Wrapper for <a>
  * When it runs in Tauri it will use `shell.open` instead of the default behavior
  */
-export default function Link(props: LinkOptions) {
+export default function Link(props: PropsWithChildren<LinkOptions>) {
   if (isTauri) {
     const href = props.href;
     props = { ...props, href: null } as any;
     return (
-      <LinkButton
+      <StyledAnchor
         {...props}
         onClick={() => {
           openUrl(href);
@@ -49,5 +39,5 @@ export default function Link(props: LinkOptions) {
       />
     );
   }
-  return <LinkButton {...props} />;
+  return <StyledAnchor {...props} />;
 }

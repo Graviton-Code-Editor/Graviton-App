@@ -1,3 +1,4 @@
+import { PropsWithChildren } from "react";
 import styled from "styled-components";
 
 export const PrimaryButton = styled.button`
@@ -11,7 +12,7 @@ export const PrimaryButton = styled.button`
 `;
 
 export const SecondaryButton = styled.button<
-  { expanded?: boolean; maxWidth?: number }
+  PropsWithChildren<{ expanded?: boolean; maxWidth?: number }>
 >`
   background: ${({ theme }) => theme.elements.secondaryButton.background};
   color: ${({ theme }) => theme.elements.secondaryButton.color};

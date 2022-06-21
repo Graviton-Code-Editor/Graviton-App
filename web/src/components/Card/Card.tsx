@@ -1,6 +1,17 @@
 import styled from "styled-components";
 
-export const Card = styled.div`
+export const CardLayout = styled.div`
+    padding: 15px;
+    margin: 3px;
+    width: 180px;
+    height: 65px;
+    display: inline-block;
+    font-size: 13px;
+    user-select: none;
+    outline: none;
+`;
+
+export const Card = styled(CardLayout)`
     padding: 15px;
     background: ${({ theme }) => theme.elements.card.background};
     border: none;
