@@ -68,4 +68,4 @@ jobs:
           args: run
 
       - name: Running web tests
-        run: pnpm run --filter web web
+        run: pnpm run --filter web test
