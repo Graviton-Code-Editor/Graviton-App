@@ -51,7 +51,6 @@ export function RootView({
   const setTabs = useSetRecoilState(openedViewsAndTabs);
   const { openTab } = useTabs();
   const getEditor = useEditor();
-  console.log(1)
 
   useEffect(() => {
     if (client != null) {
