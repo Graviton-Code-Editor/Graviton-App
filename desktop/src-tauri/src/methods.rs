@@ -1,6 +1,6 @@
 use gveditor_core::RPCResult;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo};
-use gveditor_core_api::state::StateData;
+use gveditor_core_api::states::StateData;
 use gveditor_core_api::{Errors, LanguageServer, ManifestInfo};
 
 use crate::TauriState;

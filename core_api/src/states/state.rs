@@ -1,137 +1,33 @@
 use crate::extensions::base::ExtensionInfo;
 use crate::extensions::manager::{ExtensionsManager, LoadedExtension};
-use crate::filesystems::{FileFormat, Filesystem, LocalFilesystem};
+use crate::filesystems::{Filesystem, LocalFilesystem};
 use crate::messaging::ClientMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
 use crate::{Errors, ExtensionErrors, LanguageServer, ManifestInfo};
-use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 use std::fmt;
 use std::sync::Arc;
 use tokio::sync::Mutex;
+use tracing::warn;
 
-#[derive(Clone)]
-pub enum TokenFlags {
-    All(String),
-}
-
-/// Internal list of states
-#[derive(Clone, Default)]
-pub struct StatesList {
-    states: HashMap<u8, Arc<Mutex<State>>>,
-    provided_tokens: Vec<TokenFlags>,
-}
-
-impl StatesList {
-    /// Create a new empty states list
-    pub fn new() -> Self {
-        Self {
-            states: HashMap::new(),
-            provided_tokens: Vec::new(),
-        }
-    }
-
-    pub fn with_tokens(mut self, tokens: &[TokenFlags]) -> Self {
-        self.provided_tokens = tokens.to_vec();
-        self
-    }
-
-    /// Return the state by the given ID if found
-    pub fn get_state_by_id(&self, id: u8) -> Option<Arc<Mutex<State>>> {
-        self.states.get(&id).cloned()
-    }
-
-    /// Return the state by the given ID if found
-    pub fn with_state(mut self, state: State) -> Self {
-        let mut state = state;
-
-        for token in &self.provided_tokens {
-            match token {
-                TokenFlags::All(token) => {
-                    state.tokens.push(token.clone());
-                }
-            }
-        }
-
-        self.states
-            .insert(state.data.id, Arc::new(Mutex::new(state.to_owned())));
-
-        self
-    }
-
-    /// Notify all the extensions in a state about a message
-    pub async fn notify_extensions(&self, message: ClientMessages) {
-        let state_id = message.get_state_id();
-        let state = self.states.get(&state_id);
-        if let Some(state) = state {
-            let state = state.lock().await;
-            state.notify_extensions(message);
-        }
-    }
-}
-
-/// A Tab data
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-#[serde(tag = "tab_type")]
-pub enum TabData {
-    // Text Editor tab
-    TextEditor {
-        path: String,
-        filesystem: String,
-        format: FileFormat,
-        filename: String,
-        id: String,
-    },
-    // Basic tab (e.g. Settings)
-    Basic {
-        title: String,
-        id: String,
-    },
-}
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-struct ViewDataPanel {
-    selected_tab_id: Option<String>,
-    tabs: Vec<TabData>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-struct ViewsData {
-    view_panels: Vec<ViewDataPanel>,
-}
-
-/// The data of a state
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct StateData {
-    pub id: u8,
-    opened_tabs: Vec<ViewsData>,
-    // TODO(marc2332): Hotkeys
-}
-
-impl Default for StateData {
-    fn default() -> Self {
-        Self {
-            id: 1,
-            opened_tabs: Vec::default(),
-        }
-    }
-}
+use super::StateData;
 
 /// A state is like a small configuration, like a profile
 #[derive(Clone)]
 pub struct State {
-    filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
-    extensions_manager: ExtensionsManager,
-    persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
+    pub filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
+    pub extensions_manager: ExtensionsManager,
+    pub persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
     pub data: StateData,
-    tokens: Vec<String>,
-    language_servers: HashMap<String, LanguageServer>,
+    pub tokens: Vec<String>,
+    pub language_servers: HashMap<String, LanguageServer>,
 }
 
 impl fmt::Debug for State {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("State")
-            .field("opened_tabs", &self.data.opened_tabs)
+            .field("opened_tabs", &self.data.views)
             .field("id", &self.data.id)
             .finish()
     }
@@ -295,10 +191,26 @@ impl State {
 
     // Merge a new state data
     pub async fn update(&mut self, new_data: StateData) {
-        self.data.opened_tabs = new_data.opened_tabs;
+        let mut any_diff = false;
+
+        if self.data.views != new_data.views {
+            any_diff = true;
+        }
+
+        if self.data.commands != new_data.commands {
+            any_diff = true;
+        }
 
         if let Some(persistor) = &self.persistor {
-            persistor.lock().await.save(&self.data);
+            // Only save it if there has been any mutation in the state data
+            if any_diff {
+                persistor.lock().await.save(&self.data);
+            }
+        } else {
+            warn!(
+                "Persistor not found for State by id <{}>, could not save",
+                self.data.id
+            );
         }
     }
 
@@ -328,7 +240,7 @@ mod tests {
     use crate::extensions::base::{Extension, ExtensionInfo};
     use crate::extensions::manager::ExtensionsManager;
     use crate::messaging::ClientMessages;
-    use crate::state::MemoryPersistor;
+    use crate::states::MemoryPersistor;
 
     use super::State;
 

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const LogoIcon = styled.img`
     width: 20px;
@@ -7,6 +7,6 @@ const LogoIcon = styled.img`
     left: 7px;
     top: 5px;
     user-selects: none;
-`
+`;
 
 export default LogoIcon;

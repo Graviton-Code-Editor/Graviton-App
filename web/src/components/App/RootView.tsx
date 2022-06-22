@@ -1,6 +1,7 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import useCommands from "../../hooks/useCommands";
 import useEditor from "../../hooks/useEditor";
 import useTabs from "../../hooks/useTabs";
 import { Popup } from "../../modules/popup";
@@ -19,7 +20,7 @@ import {
   showedWindowsState,
 } from "../../utils/state";
 import { openedViewsAndTabs, Views } from "../../utils/state/views_tabs";
-import { transformTabsDataToTabs } from "../../utils/state_data";
+import { deserializeViews } from "../../utils/state_data";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
@@ -51,6 +52,7 @@ export function RootView({
   const setTabs = useSetRecoilState(openedViewsAndTabs);
   const { openTab } = useTabs();
   const getEditor = useEditor();
+  const { setCommands } = useCommands();
 
   useEffect(() => {
     if (client != null) {
@@ -59,8 +61,8 @@ export function RootView({
       // Load the received state
       client.on("StateUpdated", ({ state_data }: StateUpdated) => {
         // Convert all Tab datas into Tab instances
-        const openedTabs = transformTabsDataToTabs(
-          state_data.opened_tabs,
+        const openedTabs = deserializeViews(
+          state_data.views,
           getEditor,
           client,
         ) as Array<Views<Tab>>;
@@ -77,6 +79,8 @@ export function RootView({
         } else {
           openTab(new WelcomeTab());
         }
+
+        setCommands(state_data.commands);
       });
 
       // Display Popups when

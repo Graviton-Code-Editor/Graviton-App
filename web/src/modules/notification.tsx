@@ -1,6 +1,6 @@
 import NotificationContainer from "../components/Notification/NotificationContainer";
 import { TranslatedText } from "../types/types";
-import { newId } from "../utils/state/views_tabs";
+import { newId } from "../utils/id";
 
 export class Notification {
   public container = NotificationContainer;

@@ -8,31 +8,40 @@ import {
 import SettingsTab from "../tabs/settings";
 import TextEditorTab from "../tabs/text_editor/text_editor";
 import WelcomeTab from "../tabs/welcome";
-import { newId, ViewPanel, Views } from "./state/views_tabs";
+import { newId } from "./id";
+import { CommandConfig } from "./state/commands";
+import { ViewPanel, Views } from "./state/views_tabs";
 
+// Serialized State
 export interface StateData {
   id: number;
-  opened_tabs: Array<ViewsData>;
+  views: Array<ViewsData>;
+  commands: Record<string, CommandConfig>;
 }
 
+// Serialized Data of a View Panel
 export type ViewPanelData = Omit<ViewPanel<TabData>, "id">;
 
+// Serialized Data of a View
 export interface ViewsData {
   view_panels: Array<ViewPanelData>;
 }
 
+// Serialize a State
 export default function getAllStateData(
-  views: Views<Tab>[],
+  raw_views: Views<Tab>[],
+  commands: Record<string, CommandConfig>,
 ): Omit<StateData, "id"> {
-  const opened_tabs = transformTabsToData(views);
+  const views = serializeViews(raw_views);
 
   return {
-    opened_tabs,
+    views,
+    commands,
   };
 }
 
 // Transform Tabs to TabDatas
-function transformTabsToData(
+function serializeViews(
   views: Array<Views<Tab>>,
 ): Array<ViewsData> {
   return views.map(({ view_panels }) => {
@@ -50,7 +59,7 @@ function transformTabsToData(
 }
 
 // Transform TabDatas to Tabs
-export function transformTabsDataToTabs(
+export function deserializeViews(
   views: Array<ViewsData>,
   getEditor: EditorFinder,
   client: Client,

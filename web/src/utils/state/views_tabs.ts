@@ -1,7 +1,9 @@
 import { atom } from "recoil";
 import { Tab } from "../../modules/tab";
+import { newId } from "../id";
 import { clientState } from "../state";
 import getAllStateData from "../state_data";
+import { commandsState } from "./commands";
 
 export interface ViewPanel<T> {
   selected_tab_id?: string;
@@ -12,10 +14,6 @@ export interface ViewPanel<T> {
 export interface Views<T> {
   view_panels: Array<ViewPanel<T>>;
   id: string;
-}
-
-export function newId() {
-  return Math.random().toString();
 }
 
 export function newEmptyView(): Views<Tab> {
@@ -42,6 +40,7 @@ export const openedViewsAndTabs = atom({
       onSet(() => {
         const data = getAllStateData(
           getLoadable(openedViewsAndTabs).getValue(),
+          getLoadable(commandsState).getValue(),
         );
         const client = getLoadable(clientState).getValue();
         client.set_state_by_id(data);

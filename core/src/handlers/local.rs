@@ -71,7 +71,7 @@ mod tests {
     use std::sync::Arc;
 
     use gveditor_core_api::extensions::manager::ExtensionsManager;
-    use gveditor_core_api::state::{MemoryPersistor, TokenFlags};
+    use gveditor_core_api::states::{MemoryPersistor, TokenFlags};
     use gveditor_core_api::{Mutex, State};
 
     use tokio::sync::mpsc::channel;

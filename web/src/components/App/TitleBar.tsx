@@ -79,7 +79,11 @@ export default function TitleBar() {
 
   return (
     <TitleBarContainer data-tauri-drag-region>
-      <LogoIcon src="/icons/icon.png" draggable={false} data-tauri-drag-region/>
+      <LogoIcon
+        src="/icons/icon.png"
+        draggable={false}
+        data-tauri-drag-region
+      />
       {isTauri && (
         <div className="window-controls">
           <button onClick={minimizeWindow}>

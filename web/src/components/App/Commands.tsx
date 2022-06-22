@@ -15,7 +15,7 @@ import {
 export default function Commands() {
   const { registerCommandAction, registerCommands, commands } = useCommands();
 
-  // Register commands
+  // Default Commands
   useEffect(() => {
     registerCommands([
       ["focus.side.panel", {

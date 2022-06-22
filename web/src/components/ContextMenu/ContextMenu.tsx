@@ -28,7 +28,7 @@ const openingAnimation = keyframes`
   to {
     transform: scale(1);
   }  
-`
+`;
 
 const ContextMenuContainer = styled.div<
   PropsWithChildren<{ x: number; y: number }>

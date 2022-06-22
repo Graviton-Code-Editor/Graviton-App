@@ -305,7 +305,7 @@ mod tests {
     use std::time::Duration;
 
     use gveditor_core_api::messaging::ClientMessages;
-    use gveditor_core_api::state::TokenFlags;
+    use gveditor_core_api::states::TokenFlags;
     use gveditor_core_api::{Mutex, State};
     use hyper_tungstenite::tungstenite::Message;
     use jsonrpc_core::futures_util::{SinkExt, StreamExt};

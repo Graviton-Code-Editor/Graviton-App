@@ -2,9 +2,10 @@ import { useRecoilState } from "recoil";
 import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
 import { openedViewsAndTabs } from "../utils/state";
-import { newEmptyView, newId, Views } from "../utils/state/views_tabs";
+import { newEmptyView, Views } from "../utils/state/views_tabs";
 import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
 import useTabs, { TabsUtils } from "./useTabs";
+import { newId } from "../utils/id";
 
 function canViewPanelBeClosed(tabs: Tab[]): boolean {
   let canBeClosed = true;

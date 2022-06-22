@@ -1,4 +1,4 @@
-use crate::{state::StateData, LanguageServer};
+use crate::{states::StateData, LanguageServer};
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 

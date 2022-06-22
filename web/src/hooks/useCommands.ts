@@ -73,6 +73,7 @@ export default function useCommands() {
   }, [loadedCommands]);
 
   return {
+    setCommands,
     commands,
     registerCommandAction,
     registerCommands,

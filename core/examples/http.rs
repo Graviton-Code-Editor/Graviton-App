@@ -5,7 +5,7 @@ use gveditor_core::handlers::HTTPHandler;
 use gveditor_core::{Configuration, Server};
 use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::messaging::ClientMessages;
-use gveditor_core_api::state::{MemoryPersistor, StatesList, TokenFlags};
+use gveditor_core_api::states::{MemoryPersistor, StatesList, TokenFlags};
 use gveditor_core_api::{Mutex, State};
 use tokio::sync::mpsc::channel;
 

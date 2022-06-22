@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-interface LoadedCommand {
+export interface LoadedCommand {
   id: string;
   action: () => void;
 }

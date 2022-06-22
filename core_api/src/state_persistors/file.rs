@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::PathBuf;
 
-use crate::state::StateData;
+use crate::states::StateData;
 
 use super::Persistor;
 

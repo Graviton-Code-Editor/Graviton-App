@@ -2,7 +2,7 @@ use crate::handlers::TransportHandler;
 use crate::Configuration;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
 use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
-use gveditor_core_api::state::{StateData, StatesList};
+use gveditor_core_api::states::{StateData, StatesList};
 use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex, State};
 use jsonrpc_core::BoxFuture;
 use jsonrpc_derive::rpc;
