@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { TranslatedText } from "../../types/types";
 
 export interface MenuHandler {
@@ -21,6 +21,15 @@ interface ContextMenuHooks {
   close: () => void;
 }
 
+const openingAnimation = keyframes`
+  from {
+    transform: scale(0.97);
+  }
+  to {
+    transform: scale(1);
+  }  
+`
+
 const ContextMenuContainer = styled.div<
   PropsWithChildren<{ x: number; y: number }>
 >`
@@ -33,6 +42,7 @@ const ContextMenuContainer = styled.div<
     left: ${({ x }) => x}px;
     top: ${({ y }) => y}px;
     box-shadow: 0px 0px 10px rgba(0,0,0, 0.2);
+    animation: ${openingAnimation} ease-in-out 0.05s;
 `;
 
 const ContextMenuButton = styled.button`
