@@ -97,6 +97,7 @@ impl State {
         }
     }
 
+    /// Notify a specific extension about a perticular message
     pub fn notify_extension(&self, extension_id: String, message: ClientMessages) {
         for ext in &self.extensions_manager.extensions {
             if let LoadedExtension::ExtensionInstance {
