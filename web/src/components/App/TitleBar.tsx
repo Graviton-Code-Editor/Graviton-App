@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
 import styled from "styled-components";
 import { isTauri } from "../../services/commands";
+import LogoIcon from "./LogoIcon";
 
 export const TitleBarContainer = styled.div`
   background: ${({ theme }) => theme.elements.titleBar.background};
@@ -78,6 +79,7 @@ export default function TitleBar() {
 
   return (
     <TitleBarContainer data-tauri-drag-region>
+      <LogoIcon src="/icons/icon.png" draggable={false} data-tauri-drag-region/>
       {isTauri && (
         <div className="window-controls">
           <button onClick={minimizeWindow}>
