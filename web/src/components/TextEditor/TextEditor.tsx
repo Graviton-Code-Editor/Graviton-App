@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { EditorView } from "@codemirror/basic-setup";
+import { EditorView } from "@codemirror/view";
 import styled from "styled-components";
 
 // I could have used EditorView.theme(),

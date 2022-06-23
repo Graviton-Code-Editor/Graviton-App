@@ -80,7 +80,7 @@ export function RootView({
           openTab(new WelcomeTab());
         }
 
-        setCommands((val) => ({...val, ...state_data.commands}));
+        setCommands((val) => ({ ...val, ...state_data.commands }));
       });
 
       // Display Popups when

@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use std::fmt;
 use std::sync::Arc;
 use tokio::sync::Mutex;
-use tracing::{warn, info};
+use tracing::{info, warn};
 
 use super::StateData;
 
@@ -192,7 +192,6 @@ impl State {
 
     // Merge a new state data
     pub async fn update(&mut self, new_data: StateData) {
-        
         let data_has_changed = new_data != self.data;
 
         if let Some(persistor) = &self.persistor {

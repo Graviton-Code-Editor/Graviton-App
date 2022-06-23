@@ -1,8 +1,5 @@
 import TextEditor from "../../components/TextEditor/TextEditor";
-import { Extension, StateCommand } from "@codemirror/state";
-import { basicSetup, EditorState, EditorView } from "@codemirror/basic-setup";
-import { KeyBinding, keymap } from "@codemirror/view";
-import { javascript } from "@codemirror/lang-javascript";
+
 import { clientState } from "../../utils/state";
 import { getRecoil } from "recoil-nexus";
 import { FileFormat } from "../../services/clients/client.types";
@@ -31,6 +28,38 @@ import FileIcon from "../../components/Filesystem/FileIcon";
 import useLSPClients from "../../hooks/useLSPClients";
 import GravitonTransport from "./graviton_lsp_transport";
 import { useTranslation } from "react-i18next";
+import {
+  crosshairCursor,
+  drawSelection,
+  dropCursor,
+  EditorView,
+  highlightActiveLine,
+  highlightActiveLineGutter,
+  highlightSpecialChars,
+  KeyBinding,
+  keymap,
+  lineNumbers,
+  rectangularSelection,
+} from "@codemirror/view";
+import {
+  bracketMatching,
+  defaultHighlightStyle,
+  foldGutter,
+  foldKeymap,
+  indentOnInput,
+  syntaxHighlighting,
+} from "@codemirror/language";
+import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
+import { highlightSelectionMatches, searchKeymap } from "@codemirror/search";
+import {
+  autocompletion,
+  closeBrackets,
+  closeBracketsKeymap,
+  completionKeymap,
+} from "@codemirror/autocomplete";
+import { lintKeymap } from "@codemirror/lint";
+import { EditorState, Extension, StateCommand } from "@codemirror/state";
+import { javascript } from "@codemirror/lang-javascript";
 
 interface SavedState {
   scrollHeight: number;
@@ -294,7 +323,35 @@ function TabTextEditorContainer({
 
     // Initialize the CodeMirror State
     function createDefaulState(initialValue: string): EditorState {
-      const extensions = [getKeymap(), basicSetup];
+      const extensions = [
+        getKeymap(),
+        lineNumbers(),
+        highlightActiveLineGutter(),
+        highlightSpecialChars(),
+        history(),
+        foldGutter(),
+        drawSelection(),
+        dropCursor(),
+        EditorState.allowMultipleSelections.of(true),
+        indentOnInput(),
+        syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+        bracketMatching(),
+        closeBrackets(),
+        autocompletion(),
+        rectangularSelection(),
+        crosshairCursor(),
+        highlightActiveLine(),
+        highlightSelectionMatches(),
+        keymap.of([
+          ...closeBracketsKeymap,
+          ...defaultKeymap,
+          ...searchKeymap,
+          ...historyKeymap,
+          ...foldKeymap,
+          ...completionKeymap,
+          ...lintKeymap,
+        ]),
+      ];
       let lspLanguage: [string, string] | null = null;
 
       if (typeof textEditorTab.format !== "string") {
