@@ -9,7 +9,7 @@ use std::collections::HashMap;
 use std::fmt;
 use std::sync::Arc;
 use tokio::sync::Mutex;
-use tracing::warn;
+use tracing::{warn, info};
 
 use super::StateData;
 
@@ -192,20 +192,19 @@ impl State {
 
     // Merge a new state data
     pub async fn update(&mut self, new_data: StateData) {
-        let mut any_diff = false;
-
-        if self.data.views != new_data.views {
-            any_diff = true;
-        }
-
-        if self.data.commands != new_data.commands {
-            any_diff = true;
-        }
+        
+        let data_has_changed = new_data != self.data;
 
         if let Some(persistor) = &self.persistor {
             // Only save it if there has been any mutation in the state data
-            if any_diff {
-                persistor.lock().await.save(&self.data);
+            if data_has_changed {
+                persistor.lock().await.save(&new_data);
+                self.data = new_data;
+            } else {
+                info!(
+                    "Data from State by id <{}>, hasn't been modified",
+                    self.data.id
+                );
             }
         } else {
             warn!(
