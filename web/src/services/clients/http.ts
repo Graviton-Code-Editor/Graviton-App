@@ -11,7 +11,7 @@ import {
   LanguageServer,
   ManifestInfo,
 } from "./client.types";
-import { StateData } from "../../utils/state_data";
+import { StateData } from "../../state/persistence";
 
 /**
  * HTTP + WebSockets client

@@ -4,7 +4,7 @@ import {
   CommandConfig,
   commandsState,
   loadedCommandsState,
-} from "../utils/state/commands";
+} from "../state/commands";
 
 export interface HotKeyConfig {
   isCtrl: boolean;

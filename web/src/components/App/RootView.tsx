@@ -18,9 +18,9 @@ import {
   clientState,
   showedStatusBarItem,
   showedWindowsState,
-} from "../../utils/state";
-import { openedViewsAndTabs, Views } from "../../utils/state/views_tabs";
-import { deserializeViews } from "../../utils/state_data";
+} from "../../state/state";
+import { deserializeViews } from "../../state/persistence";
+import { openedViewsAndTabs, Views } from "../../state/views_tabs";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};

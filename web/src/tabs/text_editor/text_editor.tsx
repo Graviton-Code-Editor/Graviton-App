@@ -1,6 +1,6 @@
 import TextEditor from "../../components/TextEditor/TextEditor";
 
-import { clientState } from "../../utils/state";
+import { clientState } from "../../state/state";
 import { getRecoil } from "recoil-nexus";
 import { FileFormat } from "../../services/clients/client.types";
 import { Popup } from "../../modules/popup";

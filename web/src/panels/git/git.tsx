@@ -2,7 +2,7 @@ import { SidePanel } from "../../modules/side_panel";
 import { ReactSVG } from "react-svg";
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { clientState, foldersState } from "../../utils/state";
+import { clientState, foldersState } from "../../state/state";
 import { MessageFromExtension, NotifyExtension } from "../../types/messaging";
 import {
   Branch,

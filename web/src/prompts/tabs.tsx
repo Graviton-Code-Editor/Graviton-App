@@ -12,7 +12,7 @@ import {
   StyledPromptOption,
   StyledPromptOptionIcon,
 } from "../components/Prompt/PromptOption";
-import { showedWindowsState } from "../utils/state";
+import { showedWindowsState } from "../state/state";
 
 function TabsPromptContainer() {
   const { viewsAndTabs, focusedView, selectTab } = useTabs();

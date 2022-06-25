@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { TranslatedText } from "../../types/types";
-import { showedWindowsState } from "../../utils/state";
+import { showedWindowsState } from "../../state/state";
 import WindowBackground from "../Window/WindowBackground";
 
 const StyledPopup = styled.div<{ height: number; width: number }>`

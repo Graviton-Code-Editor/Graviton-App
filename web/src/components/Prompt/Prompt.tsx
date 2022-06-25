@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import { showedWindowsState } from "../../utils/state";
+import { showedWindowsState } from "../../state/state";
 import { useTranslation } from "react-i18next";
 import WindowBackground from "../Window/WindowBackground";
 import { Option, PromptOptions, TransatedOption } from "./Prompt.types";

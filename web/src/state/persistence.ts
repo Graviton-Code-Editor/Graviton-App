@@ -1,5 +1,4 @@
-import { EditorFinder } from "../hooks/useEditor";
-import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
+import { Loadable, RecoilValue } from "recoil";
 import {
   Client,
   CoreResponse,
@@ -8,9 +7,28 @@ import {
 import SettingsTab from "../tabs/settings";
 import TextEditorTab from "../tabs/text_editor/text_editor";
 import WelcomeTab from "../tabs/welcome";
-import { newId } from "./id";
-import { CommandConfig } from "./state/commands";
-import { ViewPanel, Views } from "./state/views_tabs";
+import { newId } from "../utils/id";
+import { CommandConfig, commandsState } from "./commands";
+import { openedViewsAndTabs, ViewPanel, Views } from "./views_tabs";
+import { clientState } from "./state";
+import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
+import { EditorFinder } from "../hooks/useEditor";
+
+/**
+ * Serializes the value of different States into A StateData
+ * and sends it to the Core via the Client
+ */
+export function persistState(
+  getLoadable: <S>(v: RecoilValue<S>) => Loadable<S>,
+) {
+  const data = getAllStateData(
+    getLoadable(openedViewsAndTabs).getValue(),
+    getLoadable(commandsState).getValue(),
+  );
+  console.log(data);
+  const client = getLoadable(clientState).getValue();
+  client.set_state_by_id(data);
+}
 
 // Serialized State
 export interface StateData {
@@ -41,7 +59,7 @@ export default function getAllStateData(
 }
 
 // Transform Tabs to TabDatas
-function serializeViews(
+export function serializeViews(
   views: Array<Views<Tab>>,
 ): Array<ViewsData> {
   return views.map(({ view_panels }) => {

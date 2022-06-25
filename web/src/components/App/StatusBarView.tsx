@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { showedStatusBarItem } from "../../utils/state";
+import { showedStatusBarItem } from "../../state/state";
 
 const StatusBarContainer = styled.div`
   background: red;

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { createClient } from "../../services/client";
-import { clientState, promptsState } from "../../utils/state";
+import { clientState, promptsState } from "../../state/state";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
 import SidePanelsView from "./SidePanelsView";

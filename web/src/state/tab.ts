@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Tab } from "../../modules/tab";
+import { Tab } from "../modules/tab";
 
 export interface FocusedTab {
   row: number;

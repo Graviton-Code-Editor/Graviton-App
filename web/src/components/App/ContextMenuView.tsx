@@ -1,5 +1,5 @@
 import { useRecoilState } from "recoil";
-import { contextMenuOpened } from "../../utils/state";
+import { contextMenuOpened } from "../../state/state";
 import ContextMenu from "../ContextMenu/ContextMenu";
 
 export default function ContextMenuView() {

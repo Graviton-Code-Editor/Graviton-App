@@ -1,6 +1,6 @@
 import { useSetRecoilState } from "recoil";
 import { Notification } from "../modules/notification";
-import { notificationsOpenedState } from "../utils/state";
+import { notificationsOpenedState } from "../state/state";
 
 export default function useNotifications() {
   const setOpenedNotifications = useSetRecoilState(notificationsOpenedState);

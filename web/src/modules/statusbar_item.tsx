@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import StatusBarItemContainer from "../components/StatusBarItem/StatusBarItem";
-import { clientState } from "../utils/state";
+import { clientState } from "../state/state";
 import { StatusBarItemClicked, UIEvent } from "../types/messaging";
 
 function StatusBarItemElement({ options }: { options: StatusBarItemOptions }) {

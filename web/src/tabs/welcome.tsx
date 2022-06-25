@@ -6,7 +6,7 @@ import { SecondaryButton } from "../components/Primitive/Button";
 import Link from "../components/Primitive/Link";
 import useTextEditorTab from "../hooks/useTextEditorTab";
 import { Tab } from "../modules/tab";
-import { foldersState } from "../utils/state";
+import { foldersState } from "../state/state";
 import { openFileSystemPicker } from "../services/commands";
 
 const WelcomeTabContainerStyled = styled.div`

@@ -11,7 +11,7 @@ import {
   openedViewsAndTabs,
   promptsState,
   showedWindowsState,
-} from "../../utils/state";
+} from "../../state/state";
 
 export default function Commands() {
   const { registerCommandAction, registerCommands, commands } = useCommands();

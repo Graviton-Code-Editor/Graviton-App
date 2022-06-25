@@ -6,7 +6,7 @@ import WelcomeTab from "../tabs/welcome";
 import SettingsTab from "../tabs/settings";
 import useTabs from "../hooks/useTabs";
 import { useSetRecoilState } from "recoil";
-import { foldersState } from "../utils/state";
+import { foldersState } from "../state/state";
 import useTextEditorTab from "../hooks/useTextEditorTab";
 
 function GlobalPromptContainer() {

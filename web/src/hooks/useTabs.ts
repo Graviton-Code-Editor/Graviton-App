@@ -1,10 +1,10 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
-import { openedViewsAndTabs, showedWindowsState } from "../utils/state";
-import { FocusedTab, focusedTabState } from "../utils/state/tab";
-import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
-import { Views } from "../utils/state/views_tabs";
+import { openedViewsAndTabs, showedWindowsState } from "../state/state";
+import { FocusedTab, focusedTabState } from "../state/tab";
+import { FocusedViewPanel, focusedViewPanelState } from "../state/view";
+import { Views } from "../state/views_tabs";
 
 export interface TabsUtils {
   viewsAndTabs: Views<Tab>[];

@@ -1,4 +1,5 @@
 import { atom } from "recoil";
+import { persistState } from "./persistence";
 
 export interface LoadedCommand {
   id: string;
@@ -20,4 +21,9 @@ export interface CommandConfig {
 export const commandsState = atom<Record<string, CommandConfig>>({
   key: "registeredCommands",
   default: {},
+  effects: [
+    ({ onSet, getLoadable }) => {
+      onSet(() => persistState(getLoadable));
+    },
+  ],
 });

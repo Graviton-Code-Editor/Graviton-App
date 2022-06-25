@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { SidePanel } from "../../modules/side_panel";
+import { SidePanel } from "../modules/side_panel";
 
 // Opened side panels
 export const sidePanelsState = atom({

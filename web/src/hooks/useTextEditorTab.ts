@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { clientState } from "../utils/state";
+import { clientState } from "../state/state";
 import useEditor from "./useEditor";
 import useNotifications from "./useNotifications";
 import useTabs from "./useTabs";

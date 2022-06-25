@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { default as styled } from "styled-components";
-import { clientState } from "../../utils/state";
+import { clientState } from "../../state/state";
 //@ts-ignore
 import { FixedSizeList as List } from "react-window";
 //@ts-ignore
@@ -10,7 +10,7 @@ import { ReactSVG } from "react-svg";
 import { DirItemInfo } from "../../services/clients/client.types";
 import FileIcon from "./FileIcon";
 import { basename } from "../../utils/path";
-import { FolderState } from "../../utils/state/folders";
+import { FolderState } from "../../state/folders";
 import ExplorerItem from "./ExplorerItem";
 import useContextMenu from "../../hooks/useContextMenu";
 

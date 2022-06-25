@@ -4,7 +4,7 @@ import FilesystemExplorer, {
   TreeItemInfo,
 } from "../components/Filesystem/FilesystemExplorer";
 import { SidePanel } from "../modules/side_panel";
-import { foldersState } from "../utils/state";
+import { foldersState } from "../state/state";
 import { ReactSVG } from "react-svg";
 import useTabs from "../hooks/useTabs";
 import { SecondaryButton } from "../components/Primitive/Button";

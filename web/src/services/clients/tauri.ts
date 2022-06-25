@@ -12,7 +12,7 @@ import {
   ManifestInfo as ManifestInfo,
 } from "./client.types";
 import Configuration from "../../utils/config";
-import { StateData } from "../../utils/state_data";
+import { StateData } from "../../state/persistence";
 
 /**
  * Tauri Client

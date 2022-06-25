@@ -1,9 +1,9 @@
 import { useRecoilState } from "recoil";
 import { Popup } from "../modules/popup";
 import { Tab } from "../modules/tab";
-import { openedViewsAndTabs } from "../utils/state";
-import { newEmptyView, Views } from "../utils/state/views_tabs";
-import { FocusedViewPanel, focusedViewPanelState } from "../utils/state/view";
+import { openedViewsAndTabs } from "../state/state";
+import { newEmptyView, Views } from "../state/views_tabs";
+import { FocusedViewPanel, focusedViewPanelState } from "../state/view";
 import useTabs, { TabsUtils } from "./useTabs";
 import { newId } from "../utils/id";
 
