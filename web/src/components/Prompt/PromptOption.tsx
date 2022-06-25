@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { PropsWithChildren, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { PromptOptionArgs } from "./Prompt.types";
 
@@ -12,6 +12,9 @@ export const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   text-align: left;
   font-size: 13px;
   outline: none;
+  display: flex;
+  align-items: center;
+  height: 35px;
   background: ${({ isSelected, theme }) =>
   isSelected
     ? theme.elements.prompt.option.selected.background
@@ -26,8 +29,21 @@ export const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   }
 `;
 
+export const StyledPromptOptionIcon = styled.div`
+  & {
+    min-width: 25px;
+    min-height: 25px;
+    margin-right: 5px;
+  }
+  svg {
+    max-width: 25px;
+    max-height: 25px;
+  }
+`;
+
 export function PromptOption(
-  { option, closePrompt, selectedOption, indexOption, text }: PromptOptionArgs,
+  { option, closePrompt, selectedOption, indexOption, children }:
+    PropsWithChildren<PromptOptionArgs>,
 ) {
   const optionRef = useRef(null);
 
@@ -53,7 +69,7 @@ export function PromptOption(
       onClick={optionSelected}
       isSelected={isSelected}
     >
-      {text}
+      {children}
     </StyledPromptOption>
   );
 }

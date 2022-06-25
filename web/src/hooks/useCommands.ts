@@ -55,9 +55,9 @@ export default function useCommands() {
       for (const hotkey of Object.keys(loadedCommands)) {
         const hotkeyConfig = getHotkeyConfig(hotkey);
         const { action } = loadedCommands[hotkey];
-
         if (
-          e.key === hotkeyConfig.keyCode && e.ctrlKey === hotkeyConfig.isCtrl
+          e.key.toLowerCase() === hotkeyConfig.keyCode.toLowerCase() &&
+          e.ctrlKey === hotkeyConfig.isCtrl
         ) {
           action();
         }
@@ -72,11 +72,20 @@ export default function useCommands() {
     };
   }, [loadedCommands]);
 
+  function runCommand(id: string) {
+    for (const command of Object.values(loadedCommands)) {
+      if (command.id === id) {
+        command.action();
+      }
+    }
+  }
+
   return {
     setCommands,
     commands,
     registerCommandAction,
     registerCommands,
+    runCommand,
   };
 }
 

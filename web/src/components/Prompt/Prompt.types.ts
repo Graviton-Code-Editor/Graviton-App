@@ -5,7 +5,6 @@ export interface PromptOptionArgs {
   closePrompt: () => void;
   selectedOption: number;
   indexOption: number;
-  text: string;
 }
 
 export interface OptionUtils {
@@ -19,6 +18,7 @@ export interface Option {
 
 export interface PromptOptions {
   options: Option[];
+  selectedIndex?: number;
 }
 
 export interface TransatedOption {

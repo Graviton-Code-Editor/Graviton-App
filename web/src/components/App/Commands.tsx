@@ -6,6 +6,7 @@ import useTabs from "../../hooks/useTabs";
 import useViews from "../../hooks/useViews";
 import { Prompt } from "../../modules/prompt";
 import GlobalPrompt from "../../prompts/global";
+import TabsPrompt from "../../prompts/tabs";
 import {
   openedViewsAndTabs,
   promptsState,
@@ -54,6 +55,10 @@ export default function Commands() {
         name: "Close Focused tab",
         hotkey: "Ctrl+W",
       }],
+      ["iterate.tabs", {
+        name: "Iterate over tabs",
+        hotkey: "Ctrl+Tab",
+      }],
     ]);
   }, []);
 
@@ -81,7 +86,7 @@ export default function Commands() {
     });
   }, [commands]);
 
-  // Open Global Prompt
+  // Prompts
 
   const prompts = useRecoilValue(promptsState);
 
@@ -103,6 +108,26 @@ export default function Commands() {
           return windows;
         } else {
           return [...windows, new GlobalPrompt()];
+        }
+      });
+    });
+    registerCommandAction("iterate.tabs", () => {
+      setShowedWindows((windows) => {
+        let prompExists = false;
+
+        for (const win of windows) {
+          if (Prompt.isPrompt(win)) {
+            const winPrompt = win as Prompt;
+            if (winPrompt.promptName === "Tabs Prompt") {
+              prompExists = true;
+            }
+          }
+        }
+
+        if (prompExists) {
+          return windows;
+        } else {
+          return [...windows, new TabsPrompt()];
         }
       });
     });

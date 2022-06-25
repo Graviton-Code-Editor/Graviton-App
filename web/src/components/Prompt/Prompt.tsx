@@ -10,7 +10,7 @@ import { PromptInput } from "./PromptInput";
 import PromptContainer from "./PromptContainer";
 import PromptOptionsList from "./PromptOptionsList";
 
-const StyledPrompt = styled.div`
+export const StyledPrompt = styled.div`
   user-select: none;
   top: 0;
   left: 0;
@@ -22,12 +22,14 @@ const StyledPrompt = styled.div`
   justify-content: center;
 `;
 
-export default function PromptWindow({ options }: PromptOptions) {
+export default function PromptWindow(
+  { options, selectedIndex = 0 }: PromptOptions,
+) {
   const refBackground = useRef(null);
   const refInput = useRef<HTMLInputElement>(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const { t } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState<number>(0);
+  const [selectedOption, setSelectedOption] = useState<number>(selectedIndex);
   const [inputSearch, setInputSearch] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<
     Array<TransatedOption>
@@ -102,8 +104,8 @@ export default function PromptWindow({ options }: PromptOptions) {
   // Translate and filter all the options when the input is changed
   useEffect(() => {
     setFilteredOptions(options.map(translateOption).filter(filterOption));
-    setSelectedOption(0);
-  }, [inputSearch]);
+    setSelectedOption(selectedIndex);
+  }, [inputSearch, options]);
 
   // Listen for Up and Down arrows
   useEffect(() => {
@@ -141,8 +143,9 @@ export default function PromptWindow({ options }: PromptOptions) {
                 closePrompt={closePrompt}
                 selectedOption={selectedOption}
                 indexOption={indexOption}
-                text={text}
-              />
+              >
+                {text}
+              </PromptOption>
             ))}
             {filteredOptions.length === 0 && (
               <StyledPromptOption isSelected={true}>
