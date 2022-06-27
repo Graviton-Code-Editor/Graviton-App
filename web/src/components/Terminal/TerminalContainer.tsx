@@ -36,6 +36,7 @@ export function TerminalTabContainer(
   const client = useRecoilValue(clientState);
   const themeContext = useContext(ThemeContext);
 
+  // Load registered Shell builders
   useEffect(() => {
     client.get_terminal_shell_builders().then((list) => {
       if (list.Ok) {
@@ -44,6 +45,7 @@ export function TerminalTabContainer(
     });
   }, []);
 
+  // Handle read and write events
   useEffect(() => {
     if (terminal && id && isMounted && containerRef.current) {
       // Render latest changes from the shell
@@ -85,6 +87,7 @@ export function TerminalTabContainer(
     }
   }, [isMounted, containerRef.current, fit]);
 
+  // Render the terminal when mounted
   useEffect(() => {
     if (!isMounted && containerRef.current) {
       terminal?.open(containerRef.current);
@@ -95,6 +98,7 @@ export function TerminalTabContainer(
     }
   }, [terminal, containerRef.current, fit]);
 
+  // Create a terminal shell from a builder
   async function createTerminal(builder_id: string) {
     const id = newId();
     await client.create_terminal_shell(builder_id, id);

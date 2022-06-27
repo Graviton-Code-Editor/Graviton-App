@@ -124,6 +124,7 @@ export function deserializeViews(
                   tabs.push(welcomeTab);
                   break;
                 }
+                // TODO(marc2332) Support Terminal tabs?
                 default:
                   // Unselect the tab if it's not supported
                   if (viewPanel.selected_tab_id === tabData.id) {
