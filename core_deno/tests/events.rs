@@ -1,8 +1,9 @@
 use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
 use gveditor_core_api::messaging::ClientMessages;
-use gveditor_core_api::ManifestInfo;
+use gveditor_core_api::{ManifestInfo, Mutex, State};
 use gveditor_core_deno::DenoExtensionSupport;
 use std::env::current_dir;
+use std::sync::Arc;
 use tokio::sync::mpsc::channel;
 
 #[tokio::test]
@@ -17,7 +18,7 @@ async fn send_receive_events() {
     // Load
     if let LoadedExtension::ExtensionInstance { plugin, .. } = &manager.extensions[0] {
         let mut ext_plugin = plugin.lock().await;
-        ext_plugin.init();
+        ext_plugin.init(Arc::new(Mutex::new(State::default())));
     }
 
     // Wait for the javascript to send a response

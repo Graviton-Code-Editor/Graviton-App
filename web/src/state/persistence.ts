@@ -25,7 +25,7 @@ export function persistState(
     getLoadable(openedViewsAndTabs).getValue(),
     getLoadable(commandsState).getValue(),
   );
-  console.log(data);
+
   const client = getLoadable(clientState).getValue();
   client.set_state_by_id(data);
 }
@@ -86,47 +86,58 @@ export function deserializeViews(
     return {
       id: newId(),
       view_panels: view_panels.map((viewPanel) => {
+        const tabs: Tab[] = [];
+
+        viewPanel.tabs.forEach((tabData) => {
+          switch (tabData.tab_type) {
+            case "TextEditor": {
+              const data = tabData as TextEditorTabData;
+              const editor = getEditor(data.format);
+              if (editor != null) {
+                const tabContentReader = client.read_file_by_path(
+                  data.path,
+                  data.filesystem,
+                );
+                const tab = new editor(
+                  data.filename,
+                  data.path,
+                  toContentResolver(tabContentReader),
+                  data.format,
+                );
+                tab.id = tabData.id;
+                tabs.push(tab);
+              }
+              break;
+            }
+            default: {
+              const basicTabData = tabData as BasicTabData;
+              switch (basicTabData.title) {
+                case "Settings": {
+                  const settingsTab = new SettingsTab();
+                  settingsTab.id = basicTabData.id;
+                  tabs.push(settingsTab);
+                  break;
+                }
+                case "Welcome": {
+                  const welcomeTab = new WelcomeTab();
+                  welcomeTab.id = tabData.id;
+                  tabs.push(welcomeTab);
+                  break;
+                }
+                default:
+                  // Unselect the tab if it's not supported
+                  if (viewPanel.selected_tab_id === tabData.id) {
+                    viewPanel.selected_tab_id = undefined;
+                  }
+              }
+            }
+          }
+        });
+
         return {
           id: newId(),
           selected_tab_id: viewPanel.selected_tab_id,
-          tabs: viewPanel.tabs.map((tabData) => {
-            switch (tabData.tab_type) {
-              case "TextEditor": {
-                const data = tabData as TextEditorTabData;
-                const editor = getEditor(data.format);
-                if (editor != null) {
-                  const tabContentReader = client.read_file_by_path(
-                    data.path,
-                    data.filesystem,
-                  );
-                  const tab = new editor(
-                    data.filename,
-                    data.path,
-                    toContentResolver(tabContentReader),
-                    data.format,
-                  );
-                  tab.id = tabData.id;
-                  return tab;
-                }
-                break;
-              }
-              default: {
-                const basicTabData = tabData as BasicTabData;
-                switch (basicTabData.title) {
-                  case "Settings": {
-                    const settingsTab = new SettingsTab();
-                    settingsTab.id = basicTabData.id;
-                    return settingsTab;
-                  }
-                  case "Welcome": {
-                    const welcomeTab = new WelcomeTab();
-                    welcomeTab.id = tabData.id;
-                    return welcomeTab;
-                  }
-                }
-              }
-            }
-          }),
+          tabs,
         };
       }),
     };

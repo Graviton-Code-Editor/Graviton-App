@@ -7,6 +7,9 @@ const theme = {
     dark2: "#222222",
   },
   elements: {
+    terminal: {
+      background: "#191919",
+    },
     titleBar: {
       background: "#191919",
       controls: {

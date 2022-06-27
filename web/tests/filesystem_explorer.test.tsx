@@ -3,7 +3,6 @@ import { act, render, screen } from "@testing-library/react";
 import FakeRoot from "./utils/fake_root";
 import FilesystemExplorer, {
   TreeItem,
-  TreeItemInfo,
 } from "../src/components/Filesystem/FilesystemExplorer";
 import { describe, expect, test, vi } from "vitest";
 import { useState } from "react";

@@ -39,11 +39,17 @@ pub enum ServerMessages {
     StateUpdated {
         state_data: StateData,
     },
+    TerminalShellUpdated {
+        state_id: u8,
+        terminal_shell_id: String,
+        data: String,
+    },
 }
 
 impl ServerMessages {
     pub fn get_state_id(&self) -> u8 {
         match self {
+            Self::TerminalShellUpdated { state_id, .. } => *state_id,
             Self::MessageFromExtension { state_id, .. } => *state_id,
             Self::StateUpdated { state_data } => state_data.id,
             Self::ShowPopup { state_id, .. } => *state_id,

@@ -98,7 +98,12 @@ fn open_tauri(
             methods::set_state_by_id,
             methods::get_ext_info_by_id,
             methods::get_ext_list_by_id,
-            methods::get_all_language_servers
+            methods::get_all_language_servers,
+            methods::write_to_terminal_shell,
+            methods::create_terminal_shell,
+            methods::close_terminal_shell,
+            methods::get_terminal_shell_builders,
+            methods::resize_terminal_shell
         ])
         .run(context)
 }
@@ -205,6 +210,8 @@ async fn main() -> anyhow::Result<()> {
             typescript_lsp_graviton::get_info(),
             STATE_ID,
         )
+        .await
+        .load_extension_from_entry(native_shell::entry, native_shell::get_info(), STATE_ID)
         .await;
 
     // Load third party extensions

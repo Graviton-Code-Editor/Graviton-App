@@ -7,6 +7,7 @@ members = [
    "desktop/src-tauri",
    "extensions/git",
    "extensions/typescript-lsp",
+   "extensions/native-shell",
    "server"
 ]
 

@@ -23,3 +23,8 @@ export interface HideStatusBarItem extends BaseMessage {
 export interface StateUpdated {
   state_data: StateData;
 }
+
+export interface TerminalShellUpdated extends BaseMessage {
+  terminal_shell_id: string;
+  data: string;
+}

@@ -3,11 +3,10 @@ import FakeRoot from "./utils/fake_root";
 import { beforeAll, describe, expect, test } from "vitest";
 import useViews from "../src/hooks/useViews";
 import { useRecoilValue } from "recoil";
-import { openedViewsAndTabs } from "../src/utils/state";
 import { Tab } from "../src/modules/tab";
 import useTabs from "../src/hooks/useTabs";
 import TextEditorTab from "../src/tabs/text_editor/text_editor";
-import { Views } from "../src/utils/state/views_tabs";
+import { openedViewsAndTabs, Views } from "../src/state/views_tabs";
 
 interface HookResult extends ReturnType<typeof useViews>, ReturnType<typeof useTabs>  {
   views: Views<Tab>[];

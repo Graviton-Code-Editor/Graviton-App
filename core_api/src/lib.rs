@@ -4,6 +4,7 @@ pub mod language_servers;
 pub mod messaging;
 pub mod state_persistors;
 pub mod states;
+pub mod terminal_shells;
 pub use extensions::manifest::{Manifest, ManifestErrors, ManifestExtension, ManifestInfo};
 pub use extensions::ExtensionErrors;
 pub use filesystems::FilesystemErrors;

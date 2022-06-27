@@ -3,10 +3,9 @@ import {
   Client,
   CoreResponse,
   DirItemInfo,
-  LanguageServer,
 } from "../../src/services/clients/client.types";
+import { StateData } from "../../src/state/persistence";
 import Configuration from "../../src/utils/config";
-import { StateData } from "../../src/utils/state/state_data";
 
 /*
  * This simulates a real client
@@ -15,12 +14,13 @@ import { StateData } from "../../src/utils/state/state_data";
 export default class FakeClient extends Emittery implements Client {
   config: Configuration<string>;
   emitMessage: (message: any) => Promise<void>;
+  
   // TO-DO
   async write_file_by_path(
     path: string,
     content: string,
     fs: string
-  ): Promise<CoreResponse<never>> {
+  ): Promise<any> {
     return null;
   }
 
@@ -73,7 +73,33 @@ export default class FakeClient extends Emittery implements Client {
     return null;
   }
 
+  // TO-DO
   async get_all_language_servers(): Promise<any> {
+    return null;
+  }
+
+  // TO-DO
+  async get_terminal_shell_builders(): Promise<any>{
+    return null;
+  }
+
+  // TO-DO
+  async write_to_terminal_shell(terminal_shell_id: string, data: string): Promise<any>{
+    return null;
+  }
+
+  // TO-DO
+  async close_terminal_shell(terminal_shell_id: string): Promise<any>{
+    return null;
+  }
+
+  // TO-DO
+  async create_terminal_shell(terminal_shell_builder_id: string, terminal_shell_id: string): Promise<any>{
+    return null;
+  }
+
+  // TO-DO
+  async resize_terminal_shell(terminal_shell_id: string, cols: number, rows: number): Promise<any>{
     return null;
   }
 }

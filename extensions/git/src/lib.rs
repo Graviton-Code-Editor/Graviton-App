@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use git2::{Error, Repository, StatusOptions};
 use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
@@ -5,7 +7,7 @@ use gveditor_core_api::extensions::manager::ExtensionsManager;
 use gveditor_core_api::extensions::modules::statusbar_item::StatusBarItem;
 use gveditor_core_api::messaging::{ClientMessages, NotifyExtension, ServerMessages};
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver, Sender};
-use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Serialize};
+use gveditor_core_api::{tokio, ManifestExtension, ManifestInfo, Mutex, Serialize, State};
 
 mod types;
 
@@ -119,7 +121,7 @@ impl Extension for GitExtension {
         }
     }
 
-    fn init(&mut self) {
+    fn init(&mut self, _state: Arc<Mutex<State>>) {
         let receiver = self.rx.take();
         let client = self.client.clone();
 

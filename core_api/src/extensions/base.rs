@@ -1,6 +1,9 @@
-use serde::{Deserialize, Serialize};
+use std::sync::Arc;
 
-use crate::messaging::ClientMessages;
+use serde::{Deserialize, Serialize};
+use tokio::sync::Mutex;
+
+use crate::{messaging::ClientMessages, State};
 
 /// Information about a extension instance
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -13,7 +16,7 @@ pub struct ExtensionInfo {
 pub trait Extension {
     /// Init method of the extension
     /// This will be called when the extension is loaded
-    fn init(&mut self);
+    fn init(&mut self, state: Arc<Mutex<State>>);
 
     /// Unload method of the extension
     /// This will be called when the extension is unloaded

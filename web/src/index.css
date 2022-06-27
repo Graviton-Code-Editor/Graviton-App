@@ -20,6 +20,11 @@ body,
   font-family: "JetBrains Mono";
 }
 
+
+.xterm-screen canvas {
+  z-index: 0 !important;
+}
+
 * ::-webkit-scrollbar {
   height: 8px;
   width: 8px;

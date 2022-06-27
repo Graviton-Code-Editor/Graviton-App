@@ -8,11 +8,15 @@ import useTabs from "../hooks/useTabs";
 import { useSetRecoilState } from "recoil";
 import { foldersState } from "../state/state";
 import useTextEditorTab from "../hooks/useTextEditorTab";
+import TerminalTab from "../tabs/terminal/terminal";
+import useNotifications from "../hooks/useNotifications";
+import { Notification } from "../modules/notification";
 
 function GlobalPromptContainer() {
   const { openTab } = useTabs();
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { pushTextEditorTab } = useTextEditorTab();
+  const { pushNotification } = useNotifications();
 
   const options: Option[] = [
     {
@@ -74,6 +78,18 @@ function GlobalPromptContainer() {
             ...folders,
           ]);
         }
+      },
+    },
+    {
+      label: { text: "prompts.Global.OpenTerminal" },
+      async onSelected({ closePrompt }) {
+        closePrompt();
+        openTab(new TerminalTab());
+        pushNotification(
+          new Notification({
+            text: "notifications.TerminalShellUnstable.title",
+          }, { text: "notifications.TerminalShellUnstable.content" }),
+        );
       },
     },
   ];

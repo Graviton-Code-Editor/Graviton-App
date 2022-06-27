@@ -5,9 +5,12 @@ use gveditor_core_api::messaging::{ClientMessages, LanguageServerMessage, Server
 use gveditor_core_api::tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
 use gveditor_core_api::tokio::process::Command;
 use gveditor_core_api::tokio::sync::mpsc::{channel, Receiver};
-use gveditor_core_api::{tokio, LanguageServer, ManifestExtension, ManifestInfo, Sender};
+use gveditor_core_api::{
+    tokio, LanguageServer, ManifestExtension, ManifestInfo, Mutex, Sender, State,
+};
 use std::collections::HashMap;
 use std::process::Stdio;
+use std::sync::Arc;
 
 static EXTENSION_NAME: &str = "TypeScript/JavaScript Intellisense";
 
@@ -32,7 +35,7 @@ impl Extension for TSLSPExtension {
         }
     }
 
-    fn init(&mut self) {
+    fn init(&mut self, _state: Arc<Mutex<State>>) {
         let client = self.client.clone();
         let state_id = self.state_id;
 

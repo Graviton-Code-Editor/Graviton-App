@@ -46,6 +46,11 @@ export interface LanguageServer {
   extension_id: string;
 }
 
+export interface TerminalShellBuilderInfo {
+  name: string;
+  id: string;
+}
+
 export interface Client extends Emittery {
   config: Configuration<string | null>;
   get_state_by_id: () => Promise<CoreResponse<StateData>>;
@@ -71,6 +76,26 @@ export interface Client extends Emittery {
   whenConnected: () => Promise<void>;
   get_all_language_servers: () => Promise<CoreResponse<Array<LanguageServer>>>;
   emitMessage: <T>(message: T) => Promise<void>;
+
+  get_terminal_shell_builders: () => Promise<
+    CoreResponse<TerminalShellBuilderInfo[]>
+  >;
+  write_to_terminal_shell: (
+    terminal_shell_id: string,
+    data: string,
+  ) => Promise<CoreResponse<never>>;
+  close_terminal_shell: (
+    terminal_shell_id: string,
+  ) => Promise<CoreResponse<never>>;
+  create_terminal_shell: (
+    terminal_shell_builder_id: string,
+    terminal_shell_id: string,
+  ) => Promise<CoreResponse<never>>;
+  resize_terminal_shell: (
+    terminal_shell_id: string,
+    cols: number,
+    rows: number,
+  ) => Promise<CoreResponse<never>>;
 }
 
 export type EventsInterface = Record<

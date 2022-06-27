@@ -10,6 +10,7 @@ import {
   FileInfo,
   LanguageServer,
   ManifestInfo as ManifestInfo,
+  TerminalShellBuilderInfo,
 } from "./client.types";
 import Configuration from "../../utils/config";
 import { StateData } from "../../state/persistence";
@@ -169,5 +170,62 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
         ...message,
       }),
     );
+  }
+
+  public get_terminal_shell_builders(): Promise<
+    CoreResponse<TerminalShellBuilderInfo[]>
+  > {
+    return invoke("get_terminal_shell_builders", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+    });
+  }
+
+  public write_to_terminal_shell(
+    terminal_shell_id: string,
+    data: string,
+  ): Promise<CoreResponse<never>> {
+    return invoke("write_to_terminal_shell", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      terminalShellId: terminal_shell_id,
+      data,
+    });
+  }
+
+  public close_terminal_shell(
+    terminal_shell_id: string,
+  ): Promise<CoreResponse<never>> {
+    return invoke("close_terminal_shell", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      terminalShellId: terminal_shell_id,
+    });
+  }
+
+  public create_terminal_shell(
+    terminal_shell_builder_id: string,
+    terminal_shell_id: string,
+  ): Promise<CoreResponse<never>> {
+    return invoke("create_terminal_shell", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      terminalShellBuilderId: terminal_shell_builder_id,
+      terminalShellId: terminal_shell_id,
+    });
+  }
+
+  public resize_terminal_shell(
+    terminal_shell_id: string,
+    cols: number,
+    rows: number,
+  ): Promise<CoreResponse<never>> {
+    return invoke("resize_terminal_shell", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      terminalShellId: terminal_shell_id,
+      cols,
+      rows,
+    });
   }
 }

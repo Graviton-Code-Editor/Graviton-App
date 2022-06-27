@@ -2,6 +2,7 @@
     "code": "en",
     "translation": {
         "messages": {
+            "PickAShell": "Pick a Shell",
             "NoTabsOpenedMessage": "Tip: Open the Global Prompt with '{{hotkey}}'",
             "LoadingContent": "Loading content..."
         },
@@ -24,7 +25,8 @@
                 "OpenSettings": "Open Settings",
                 "OpenFolder": "Open Folder",
                 "AddFolder": "Add Folder",
-                "OpenFile": "Open File"
+                "OpenFile": "Open File",
+                "OpenTerminal": "Open Terminal"
             }
         },
         "contextMenus": {
@@ -36,7 +38,11 @@
         "notifications": {
             "EditorCompatibleNotFound": "Compatible editor not found",
             "ErrorWhileReadingFile": "Error while reading {{file}}",
-            "UnknownError": "Unknown error"
+            "UnknownError": "Unknown error",
+            "TerminalShellUnstable": {
+                "title": "Unstable feature",
+                "content": "Terminals are still very unstable. Proceed with caution."
+            }
         },
         "Contribute": "Contribute",
         "Report issues": "Report issues",

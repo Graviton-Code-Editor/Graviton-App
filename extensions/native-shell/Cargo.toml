@@ -1,0 +1,17 @@
+[package]
+name = "native-shell"
+version = "0.1.0"
+edition = "2021"
+authors = ["Marc Espín Sanz"]
+readme = "../readme.md"
+repository = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
+license = "MIT"
+
+[dependencies]
+gveditor-core-api  = { path = "../../core_api"}
+serde_json = "1.0.79"
+serde = { version = "1.0.136", features = ["derive"] }
+async-trait = "0.1.52"
+portable-pty = "0.7.0"
+utf8-chars = "2.0.2"

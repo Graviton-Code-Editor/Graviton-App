@@ -4,6 +4,7 @@ use crate::filesystems::{Filesystem, LocalFilesystem};
 use crate::messaging::ClientMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
+use crate::terminal_shells::{TerminalShell, TerminalShellBuilder, TerminalShellBuilderInfo};
 use crate::{Errors, ExtensionErrors, LanguageServer, ManifestInfo};
 use std::collections::HashMap;
 use std::fmt;
@@ -22,6 +23,12 @@ pub struct State {
     pub data: StateData,
     pub tokens: Vec<String>,
     pub language_servers: HashMap<String, LanguageServer>,
+
+    // Registered shells
+    pub terminal_shell_builders:
+        HashMap<String, Arc<Mutex<Box<dyn TerminalShellBuilder + Send + Sync>>>>,
+    // Created Shells by the client
+    pub terminal_shells: HashMap<String, Arc<Mutex<Box<dyn TerminalShell + Send + Sync>>>>,
 }
 
 impl fmt::Debug for State {
@@ -52,6 +59,8 @@ impl Default for State {
             tokens: Vec::new(),
             persistor: None,
             language_servers: HashMap::new(),
+            terminal_shell_builders: HashMap::new(),
+            terminal_shells: HashMap::new(),
         }
     }
 }
@@ -87,12 +96,12 @@ impl State {
     }
 
     /// Run all the extensions in the manager
-    pub async fn run_extensions(&self) {
+    pub async fn run_extensions(&self, state_handle: Arc<Mutex<State>>) {
         for ext in &self.extensions_manager.extensions {
             if let LoadedExtension::ExtensionInstance { plugin, .. } = ext {
                 let mut ext_plugin = plugin.lock().await;
                 ext_plugin.unload();
-                ext_plugin.init();
+                ext_plugin.init(state_handle.clone());
             }
         }
     }
@@ -228,13 +237,68 @@ impl State {
             .cloned()
             .collect::<Vec<LanguageServer>>()
     }
-}
 
-// NOTE: It would be interesting to implement https://doc.rust-lang.org/std/ops/trait.AddAssign.html
-// So it's easier to merge 2 states, old + new
+    pub async fn get_terminal_shell_builders(&self) -> Vec<TerminalShellBuilderInfo> {
+        let mut list = vec![];
+        let shell_builders = self.terminal_shell_builders.values();
+
+        for shell_builder in shell_builders {
+            list.push(shell_builder.lock().await.get_info());
+        }
+
+        list
+    }
+
+    pub async fn create_terminal_shell(
+        &mut self,
+        terminal_shell_builder_id: String,
+        terminal_shell_id: String,
+    ) {
+        let shell_builder = self.terminal_shell_builders.get(&terminal_shell_builder_id);
+
+        if let Some(shell_builder) = shell_builder {
+            let shell_builder = shell_builder.lock().await;
+            let shell = shell_builder.build(&terminal_shell_id);
+            self.terminal_shells
+                .insert(terminal_shell_id, Arc::new(Mutex::new(shell)));
+        } else {
+            warn!(
+                "Could not create a terminal shell, missing builder with id <{}>",
+                terminal_shell_builder_id
+            );
+        }
+    }
+
+    pub async fn write_to_terminal_shell(&self, terminal_shell_id: String, data: String) {
+        let shell = self.terminal_shells.get(&terminal_shell_id);
+        if let Some(shell) = shell {
+            let shell = shell.lock().await;
+            shell.write(data).await;
+        } else {
+            warn!(
+                "Could not write to non-existent terminal shell, id <{}>",
+                terminal_shell_id
+            );
+        }
+    }
+
+    pub async fn close_terminal_shell(&mut self, terminal_shell_id: String) {
+        self.terminal_shells.remove(&terminal_shell_id);
+    }
+
+    pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: u16, rows: u16) {
+        let shell = self.terminal_shells.get(&terminal_shell_id).unwrap();
+        let shell = shell.lock().await;
+        shell.resize(cols, rows).await;
+    }
+}
 
 #[cfg(test)]
 mod tests {
+
+    use std::sync::Arc;
+
+    use tokio::sync::Mutex;
 
     use crate::extensions::base::{Extension, ExtensionInfo};
     use crate::extensions::manager::ExtensionsManager;
@@ -258,7 +322,7 @@ mod tests {
                 get_sample_extension_info()
             }
 
-            fn init(&mut self) {
+            fn init(&mut self, _state: Arc<Mutex<State>>) {
                 todo!()
             }
 

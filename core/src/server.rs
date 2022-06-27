@@ -3,6 +3,7 @@ use crate::Configuration;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
 use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::states::{StateData, StatesList};
+use gveditor_core_api::terminal_shells::TerminalShellBuilderInfo;
 use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex, State};
 use jsonrpc_core::BoxFuture;
 use jsonrpc_derive::rpc;
@@ -126,7 +127,8 @@ impl Server {
                     };
                     handler.send(message).await;
 
-                    state.lock().await.run_extensions().await;
+                    let state_handle = state.clone();
+                    state.lock().await.run_extensions(state_handle).await;
                 }
             }
             ClientMessages::NotifyLanguageServers(message) => {
@@ -277,12 +279,55 @@ pub trait RpcMethods {
         token: String,
     ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>>;
 
-    #[rpc(name = "get_all_language_servers")]
+    #[rpc(name = "notify_extension")]
     fn notify_extension(
         &self,
         state_id: u8,
         token: String,
         message: ClientMessages,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "write_to_terminal_shell")]
+    fn write_to_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+        data: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "close_terminal_shell")]
+    fn close_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "create_terminal_shell")]
+    fn create_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_builder_id: String,
+        terminal_shell_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "get_terminal_shell_builders")]
+    fn get_terminal_shell_builders(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> BoxFuture<RPCResult<Result<Vec<TerminalShellBuilderInfo>, Errors>>>;
+
+    #[rpc(name = "resize_terminal_shell")]
+    fn resize_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+        cols: u16,
+        rows: u16,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 }
 
@@ -563,6 +608,131 @@ impl RpcMethods for RpcManager {
                     let state = state.lock().await;
 
                     state.notify_extensions(message);
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn write_to_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+        data: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
+                    state.write_to_terminal_shell(terminal_shell_id, data).await;
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn create_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_builder_id: String,
+        terminal_shell_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
+                    state
+                        .create_terminal_shell(terminal_shell_builder_id, terminal_shell_id)
+                        .await;
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn close_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
+                    state.close_terminal_shell(terminal_shell_id).await;
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn get_terminal_shell_builders(
+        &self,
+        state_id: u8,
+        token: String,
+    ) -> BoxFuture<RPCResult<Result<Vec<TerminalShellBuilderInfo>, Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let state = state.lock().await;
+
+                    Ok(state.get_terminal_shell_builders().await)
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn resize_terminal_shell(
+        &self,
+        state_id: u8,
+        token: String,
+        terminal_shell_id: String,
+        cols: u16,
+        rows: u16,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
+                    state
+                        .resize_terminal_shell(terminal_shell_id, cols, rows)
+                        .await;
 
                     Ok(())
                 } else {

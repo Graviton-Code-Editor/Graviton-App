@@ -10,6 +10,7 @@ import {
   FileInfo,
   LanguageServer,
   ManifestInfo,
+  TerminalShellBuilderInfo,
 } from "./client.types";
 import { StateData } from "../../state/persistence";
 
@@ -180,5 +181,62 @@ export class HTTPClient extends Emittery implements Client {
         ...message,
       }),
     );
+  }
+
+  public get_terminal_shell_builders(): Promise<
+    CoreResponse<TerminalShellBuilderInfo[]>
+  > {
+    return this.rpc.call("get_terminal_shell_builders", [
+      this.config.state_id,
+      this.config.token,
+    ]);
+  }
+
+  public write_to_terminal_shell(
+    terminal_shell_id: string,
+    data: string,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("write_to_terminal_shell", [
+      this.config.state_id,
+      this.config.token,
+      terminal_shell_id,
+      data,
+    ]);
+  }
+
+  public close_terminal_shell(
+    terminal_shell_id: string,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("close_terminal_shell", [
+      this.config.state_id,
+      this.config.token,
+      terminal_shell_id,
+    ]);
+  }
+
+  public create_terminal_shell(
+    terminal_shell_builder_id: string,
+    terminal_shell_id: string,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("create_terminal_shell", [
+      this.config.state_id,
+      this.config.token,
+      terminal_shell_builder_id,
+      terminal_shell_id,
+    ]);
+  }
+
+  public resize_terminal_shell(
+    terminal_shell_id: string,
+    cols: number,
+    rows: number,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("resize_terminal_shell", [
+      this.config.state_id,
+      this.config.token,
+      terminal_shell_id,
+      cols,
+      rows,
+    ]);
   }
 }

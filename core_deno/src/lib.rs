@@ -5,7 +5,7 @@ use gveditor_core_api::extensions::base::{Extension, ExtensionInfo};
 use gveditor_core_api::extensions::client::ExtensionClient;
 use gveditor_core_api::extensions::manager::{ExtensionsManager, LoadedExtension};
 use gveditor_core_api::messaging::ClientMessages;
-use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender};
+use gveditor_core_api::{Manifest, ManifestInfo, Mutex, Sender, State};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::fs;
@@ -52,7 +52,7 @@ impl DenoExtension {
 }
 
 impl Extension for DenoExtension {
-    fn init(&mut self) {
+    fn init(&mut self, _state: Arc<Mutex<State>>) {
         let main_path = self.main_path.clone();
         let client = self.client.clone();
         let events_manager = self.events_manager.clone();

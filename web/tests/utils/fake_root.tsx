@@ -1,9 +1,9 @@
 import Recoilnexus from "recoil-nexus";
-import { clientState } from "../../src/utils/state";
-import { RecoilRoot, useRecoilState, useSetRecoilState } from "recoil";
+import { RecoilRoot, useRecoilState } from "recoil";
 import React, { PropsWithChildren, useEffect } from "react";
 import FakeClient from "./fake_client";
 import ThemeProvider from "../../src/components/Providers/ThemeProvider";
+import { clientState } from "../../src/state/state";
 
 function RootRenderer({ children }: PropsWithChildren<any>) {
   const [client, setClient] = useRecoilState(clientState);

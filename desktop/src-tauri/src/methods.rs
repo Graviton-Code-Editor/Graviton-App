@@ -1,6 +1,7 @@
 use gveditor_core::RPCResult;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo};
 use gveditor_core_api::states::StateData;
+use gveditor_core_api::terminal_shells::TerminalShellBuilderInfo;
 use gveditor_core_api::{Errors, LanguageServer, ManifestInfo};
 
 use crate::TauriState;
@@ -110,5 +111,82 @@ pub async fn get_all_language_servers(
     tauri_state: tauri::State<'_, TauriState>,
 ) -> RPCResult<Result<Vec<LanguageServer>, Errors>> {
     let res = tauri_state.client.get_all_language_servers(state_id, token);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn write_to_terminal_shell(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    terminal_shell_id: String,
+    data: String,
+) -> RPCResult<Result<(), Errors>> {
+    let res = tauri_state
+        .client
+        .write_to_terminal_shell(state_id, token, terminal_shell_id, data);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn create_terminal_shell(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    terminal_shell_builder_id: String,
+    terminal_shell_id: String,
+) -> RPCResult<Result<(), Errors>> {
+    let res = tauri_state.client.create_terminal_shell(
+        state_id,
+        token,
+        terminal_shell_builder_id,
+        terminal_shell_id,
+    );
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn close_terminal_shell(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    terminal_shell_id: String,
+) -> RPCResult<Result<(), Errors>> {
+    let res = tauri_state
+        .client
+        .close_terminal_shell(state_id, token, terminal_shell_id);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn get_terminal_shell_builders(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+) -> RPCResult<Result<Vec<TerminalShellBuilderInfo>, Errors>> {
+    let res = tauri_state
+        .client
+        .get_terminal_shell_builders(state_id, token);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn resize_terminal_shell(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    terminal_shell_id: String,
+    cols: u16,
+    rows: u16,
+) -> RPCResult<Result<(), Errors>> {
+    let res =
+        tauri_state
+            .client
+            .resize_terminal_shell(state_id, token, terminal_shell_id, cols, rows);
     Ok(res.await.unwrap())
 }
