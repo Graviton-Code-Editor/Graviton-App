@@ -22,6 +22,8 @@ pub struct State {
     pub persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
     pub data: StateData,
     pub tokens: Vec<String>,
+
+    // TODO(marc2332) Change how language servers are registered, make them implement a common trait, like Terminal Shells
     pub language_servers: HashMap<String, LanguageServer>,
 
     // Registered shells
