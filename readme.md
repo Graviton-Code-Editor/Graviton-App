@@ -35,6 +35,7 @@ Current state of the rewrite:
 | [gveditor-core-api](./core_api)   | Shared API for core and extensions | [![](https://img.shields.io/crates/v/gveditor-core?style=plastic)](https://crates.io/crates/gveditor-core-api)  |
 | [gveditor-core-deno](./core_deno)   | Deno runtime for Graviton extensions | WIP  |
 | [extensions/git](./extensions/git)      | Built-in Git Extension | WIP |
+| [extensions/native-shell](./extensions/git)      | Native Shell Extension | WIP |
 | [extensions/typescript-lsp](./extensions/typescript-lsp)      | Built-in TypeScript/JavaScript extension | WIP |
 | [desktop](./desktop)             | Desktop web-based app | WIP |
 | [server](./server)               | Self-hosted browser version  | WIP |
