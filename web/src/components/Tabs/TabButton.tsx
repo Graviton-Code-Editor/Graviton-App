@@ -9,8 +9,8 @@ import { Tab } from "../../modules/tab";
 const transitionStyles: Record<string, React.CSSProperties> = {
   entering: { opacity: 1, minWidth: 125, width: 125 },
   entered: { opacity: 1, minWidth: 125, width: 125 },
-  exiting: { opacity: 0, minWidth: 25, width: 25 },
-  exited: { opacity: 0, minWidth: 25, width: 25 },
+  exiting: { opacity: 1, minWidth: 0, width: 0, padding: "5px 0px" },
+  exited: { opacity: 1, minWidth: 0, width: 0, padding: "5px 0px" },
 };
 
 const TabButtonStyle = styled.div`
@@ -25,8 +25,9 @@ const TabButtonStyle = styled.div`
   cursor: pointer;
   user-select: none;
   border-bottom: 1px solid transparent;
-  transition-property: opacity, min-width, width;
-  transition-duration: 0.2s;
+  transition-property: opacity, min-width, width, padding;
+  transition-duration: 0.140s;
+  overflow: hidden;
   &:not(.selected):hover {
     background: ${({ theme }) => theme.elements.tab.button.hover.background};
   }
@@ -100,7 +101,7 @@ export default function TabButton({
     setMounted(false);
     setTimeout(() => {
       close();
-    }, 90);
+    }, 140);
   }
 
   function saveTab(event: MouseEvent) {
