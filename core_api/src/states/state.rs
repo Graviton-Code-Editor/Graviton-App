@@ -1,6 +1,7 @@
 use crate::extensions::base::ExtensionInfo;
 use crate::extensions::manager::{ExtensionsManager, LoadedExtension};
 use crate::filesystems::{Filesystem, LocalFilesystem};
+use crate::language_servers::{LanguageServerBuilder, LanguageServerBuilderInfo};
 use crate::messaging::ClientMessages;
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
@@ -23,8 +24,11 @@ pub struct State {
     pub data: StateData,
     pub tokens: Vec<String>,
 
-    // TODO(marc2332) Change how language servers are registered, make them implement a common trait, like Terminal Shells
-    pub language_servers: HashMap<String, LanguageServer>,
+    // Registered Language Servers
+    pub language_server_builders:
+        HashMap<String, Arc<Mutex<Box<dyn LanguageServerBuilder + Send + Sync>>>>,
+    // Created Language Servers by the client
+    pub language_servers: HashMap<String, Arc<Mutex<Box<dyn LanguageServer + Send + Sync>>>>,
 
     // Registered shells
     pub terminal_shell_builders:
@@ -61,6 +65,7 @@ impl Default for State {
             tokens: Vec::new(),
             persistor: None,
             language_servers: HashMap::new(),
+            language_server_builders: HashMap::new(),
             terminal_shell_builders: HashMap::new(),
             terminal_shells: HashMap::new(),
         }
@@ -224,20 +229,16 @@ impl State {
         }
     }
 
-    // Register a new language server
-    pub async fn register_language_servers(
-        &mut self,
-        language_servers: HashMap<String, LanguageServer>,
-    ) {
-        self.language_servers.extend(language_servers);
-    }
+    // Return all the registered language server builders
+    pub async fn get_all_language_server_builders(&self) -> Vec<LanguageServerBuilderInfo> {
+        let mut list = vec![];
+        let language_server_builders = self.language_server_builders.values();
 
-    // Register a new language server
-    pub async fn get_all_language_servers(&self) -> Vec<LanguageServer> {
-        self.language_servers
-            .values()
-            .cloned()
-            .collect::<Vec<LanguageServer>>()
+        for language_server_builder in language_server_builders {
+            list.push(language_server_builder.lock().await.get_info());
+        }
+
+        list
     }
 
     pub async fn get_terminal_shell_builders(&self) -> Vec<TerminalShellBuilderInfo> {
@@ -292,6 +293,38 @@ impl State {
         let shell = self.terminal_shells.get(&terminal_shell_id).unwrap();
         let shell = shell.lock().await;
         shell.resize(cols, rows).await;
+    }
+
+    pub async fn create_language_server(&mut self, language_server_builder_id: String) {
+        let language_server_builder = self
+            .language_server_builders
+            .get(&language_server_builder_id);
+
+        if let Some(language_server_builder) = language_server_builder {
+            let language_server_builder = language_server_builder.lock().await;
+            let info = language_server_builder.get_info();
+            let language_server = language_server_builder.build();
+            self.language_servers
+                .insert(info.id, Arc::new(Mutex::new(language_server)));
+        } else {
+            warn!(
+                "Could not create a terminal shell, missing builder with id <{}>",
+                language_server_builder_id
+            );
+        }
+    }
+
+    pub async fn write_to_language_server(&mut self, language_server_id: String, data: String) {
+        let language_server = self.language_servers.get(&language_server_id);
+        if let Some(language_server) = language_server {
+            let mut language_server = language_server.lock().await;
+            language_server.write(data).await;
+        } else {
+            warn!(
+                "Language Server by id <{}> is not running",
+                language_server_id
+            );
+        }
     }
 }
 

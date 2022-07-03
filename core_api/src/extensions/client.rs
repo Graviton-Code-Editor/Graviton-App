@@ -1,13 +1,11 @@
-use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex;
 
-use crate::messaging::{ClientMessages, ServerMessages, UIEvent};
+use crate::messaging::{ClientMessages, UIEvent};
 use crate::tokio::sync::mpsc::Sender as AsyncSender;
-use crate::LanguageServer;
 
 use super::settings::ExtensionSettings;
 use uuid::Uuid;
@@ -26,7 +24,6 @@ pub enum EventActions {
 
 #[derive(Clone)]
 pub struct ExtensionClient {
-    extension_id: String,
     pub name: String,
     sender: AsyncSender<ClientMessages>,
     settings_path: Option<PathBuf>,
@@ -41,7 +38,6 @@ impl ExtensionClient {
         settings_path: Option<PathBuf>,
     ) -> Self {
         Self {
-            extension_id: extension_id.to_string(),
             name: name.to_string(),
             sender,
             // TODO(marc2332) This should also take the State ID
@@ -56,22 +52,6 @@ impl ExtensionClient {
 
     pub async fn send(&self, message: ClientMessages) -> Result<(), SendError<ClientMessages>> {
         self.sender.send(message).await
-    }
-
-    pub async fn register_language_server(
-        &self,
-        state_id: u8,
-        languages: HashMap<String, LanguageServer>,
-    ) -> Result<(), SendError<ClientMessages>> {
-        self.sender
-            .send(ClientMessages::ServerMessage(
-                ServerMessages::RegisterLanguageServers {
-                    state_id,
-                    languages,
-                    extension_id: self.extension_id.clone(),
-                },
-            ))
-            .await
     }
 
     pub async fn get_settings(&self) -> Option<ExtensionSettings> {

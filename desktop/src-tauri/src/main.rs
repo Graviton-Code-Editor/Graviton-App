@@ -98,12 +98,14 @@ fn open_tauri(
             methods::set_state_by_id,
             methods::get_ext_info_by_id,
             methods::get_ext_list_by_id,
-            methods::get_all_language_servers,
+            methods::get_all_language_server_builders,
             methods::write_to_terminal_shell,
             methods::create_terminal_shell,
             methods::close_terminal_shell,
             methods::get_terminal_shell_builders,
-            methods::resize_terminal_shell
+            methods::resize_terminal_shell,
+            methods::create_language_server,
+            methods::write_to_language_server
         ])
         .run(context)
 }
@@ -173,7 +175,7 @@ static STATE_ID: u8 = 1;
 async fn main() -> anyhow::Result<()> {
     setup_logger();
 
-    let (to_core, from_core) = channel::<ClientMessages>(100);
+    let (to_core, from_core) = channel::<ClientMessages>(10000);
 
     let context = tauri::generate_context!("tauri.conf.json");
 

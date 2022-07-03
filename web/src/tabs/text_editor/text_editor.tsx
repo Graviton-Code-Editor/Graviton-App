@@ -15,15 +15,11 @@ import { rust } from "@codemirror/lang-rust";
 import { basename, dirname } from "path";
 import {
   LanguageServerClient,
-  languageServerWithTransport,
+  languageServerWithClient,
 } from "codemirror-languageserver";
 import { useEffect, useState } from "react";
 import TabText from "../../components/Tabs/TabText";
 import LoadingTabContent from "../../components/Tabs/LoadingTabContent";
-import {
-  LanguageServerInitialization,
-  NotifyLanguageServers,
-} from "../../types/messaging";
 import FileIcon from "../../components/Filesystem/FileIcon";
 import useLSPClients from "../../hooks/useLSPClients";
 import GravitonTransport from "./graviton_lsp_transport";
@@ -379,7 +375,7 @@ function TabTextEditorContainer({
 
       // LSP IS DISABLED FOR NOW
       // @ts-ignore
-      if (lspLanguage != null && true === false) {
+      if (lspLanguage != null && true == false) {
         const [languageId] = lspLanguage;
         const unixPath = textEditorTab.path.replace(/\\/g, "/");
         const rootUri = `file:///${dirname(unixPath)}`;
@@ -446,20 +442,11 @@ function createLSPPlugin(
   if (!lsClient) {
     const client = getRecoil(clientState);
 
-    client.emitMessage<
-      NotifyLanguageServers<LanguageServerInitialization>
-    >({
-      NotifyLanguageServers: {
-        state_id: client.config.state_id,
-        msg_type: "Initialization",
-        id: languageId,
-      },
-    });
+    client.create_language_server(languageId);
 
-    lsClient = new (LanguageServerClient as any)({
+    lsClient = new LanguageServerClient({
       transport: new GravitonTransport(languageId, client),
       rootUri,
-      languageId,
       workspaceFolders: [
         {
           name: basename(dirname(unixPath)),
@@ -471,17 +458,10 @@ function createLSPPlugin(
     clientCreated(lsClient as LanguageServerClient);
   }
 
-  const lspPlugin = (languageServerWithTransport as any)({
-    client: lsClient,
-    rootUri,
-    documentUri: `file:///${unixPath}`,
+  const lspPlugin = languageServerWithClient({
     languageId,
-    workspaceFolders: [
-      {
-        name: basename(dirname(unixPath)),
-        uri: unixPath,
-      },
-    ],
+    documentUri: `file:///${unixPath}`,
+    client: lsClient,
   });
 
   return lspPlugin;

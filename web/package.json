@@ -24,7 +24,7 @@
     "@gveditor/languages": "*",
     "@open-rpc/client-js": "^1.7.1",
     "@tauri-apps/api": "^1.0.0-rc.6",
-    "codemirror-languageserver": "^1.8.0",
+    "codemirror-languageserver": "git://github.com/marc2332/codemirror-languageserver#fix\/fix-improve-ts-types",
     "emittery": "^0.10.0",
     "i18next": "^21.5.4",
     "react": "^18.0.0",

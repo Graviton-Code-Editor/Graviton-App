@@ -7,10 +7,6 @@ import {
 import { Transport } from "@open-rpc/client-js/build/transports/Transport";
 import Emittery from "emittery";
 import { Client } from "../../services/clients/client.types";
-import {
-  LanguageServerNotification,
-  NotifyLanguageServers,
-} from "../../types/messaging";
 
 export default class GravitonTransport extends Transport {
   closeListener?: Emittery.UnsubscribeFn;
@@ -38,16 +34,10 @@ export default class GravitonTransport extends Transport {
     let prom = this.transportRequestManager.addRequest(data, timeout);
     const notifications = getNotifications(data);
     try {
-      this.client.emitMessage<
-        NotifyLanguageServers<LanguageServerNotification>
-      >({
-        NotifyLanguageServers: {
-          state_id: this.client.config.state_id,
-          msg_type: "Notification",
-          id: this.languageId,
-          content: JSON.stringify(JSON.stringify(parsedData)),
-        },
-      }).then(() => {
+      this.client.write_to_language_server(
+        this.languageId,
+        JSON.stringify(JSON.stringify(parsedData)),
+      ).then(() => {
         this.transportRequestManager.settlePendingRequest(
           notifications,
         );

@@ -74,7 +74,7 @@ export default class FakeClient extends Emittery implements Client {
   }
 
   // TO-DO
-  async get_all_language_servers(): Promise<any> {
+  async get_all_language_server_builders(): Promise<any> {
     return null;
   }
 

@@ -62,7 +62,7 @@ impl TerminalShellBuilder for NativeShellBuilder {
                 while let Some(Ok(data)) = r.next() {
                     let client = client.clone();
                     let terminal_shell_id = terminal_shell_id.clone();
-                    println!("{}", data); // TODO(marc2332) This is very tricky...
+                    println!("{}", data); // TODO(marc2332): This is very tricky...
                     tokio::spawn(async move {
                         client
                             .send(ClientMessages::ServerMessage(

@@ -156,8 +156,10 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
     );
   }
 
-  public get_all_language_servers(): Promise<CoreResponse<LanguageServer[]>> {
-    return invoke("get_all_language_servers", {
+  public get_all_language_server_builders(): Promise<
+    CoreResponse<LanguageServer[]>
+  > {
+    return invoke("get_all_language_server_builders", {
       stateId: this.config.state_id,
       token: this.config.token,
     });
@@ -226,6 +228,28 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
       terminalShellId: terminal_shell_id,
       cols,
       rows,
+    });
+  }
+
+  public create_language_server(
+    language_server_builder_id: string,
+  ): Promise<CoreResponse<never>> {
+    return invoke("create_language_server", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      languageServerBuilderId: language_server_builder_id,
+    });
+  }
+
+  public write_to_language_server(
+    language_server_id: string,
+    data: string,
+  ): Promise<CoreResponse<never>> {
+    return invoke("write_to_language_server", {
+      stateId: this.config.state_id,
+      token: this.config.token,
+      languageServerId: language_server_id,
+      data,
     });
   }
 }

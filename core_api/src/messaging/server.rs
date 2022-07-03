@@ -1,6 +1,5 @@
-use crate::{states::StateData, LanguageServer};
+use crate::states::StateData;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 
 /// Messages sent from the Server to the Client
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
@@ -26,13 +25,9 @@ pub enum ServerMessages {
         state_id: u8,
         id: String,
     },
-    RegisterLanguageServers {
-        state_id: u8,
-        languages: HashMap<String, LanguageServer>,
-        extension_id: String,
-    },
     NotifyLanguageServersClient {
         state_id: u8,
+        id: String,
         language: String,
         content: String,
     },
@@ -55,7 +50,6 @@ impl ServerMessages {
             Self::ShowPopup { state_id, .. } => *state_id,
             Self::ShowStatusBarItem { state_id, .. } => *state_id,
             Self::HideStatusBarItem { state_id, .. } => *state_id,
-            Self::RegisterLanguageServers { state_id, .. } => *state_id,
             Self::NotifyLanguageServersClient { state_id, .. } => *state_id,
         }
     }

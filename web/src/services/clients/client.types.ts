@@ -74,7 +74,9 @@ export interface Client extends Emittery {
   get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
   whenConnected: () => Promise<void>;
-  get_all_language_servers: () => Promise<CoreResponse<Array<LanguageServer>>>;
+  get_all_language_server_builders: () => Promise<
+    CoreResponse<Array<LanguageServer>>
+  >;
   emitMessage: <T>(message: T) => Promise<void>;
 
   get_terminal_shell_builders: () => Promise<
@@ -95,6 +97,13 @@ export interface Client extends Emittery {
     terminal_shell_id: string,
     cols: number,
     rows: number,
+  ) => Promise<CoreResponse<never>>;
+  create_language_server: (
+    language_server_builder_id: string,
+  ) => Promise<CoreResponse<never>>;
+  write_to_language_server: (
+    language_server_id: string,
+    data: string,
   ) => Promise<CoreResponse<never>>;
 }
 

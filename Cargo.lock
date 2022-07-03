@@ -5332,6 +5332,7 @@ checksum = "b63708a265f51345575b27fe43f9500ad611579e764c79edbc2037b1121959ec"
 name = "typescript-lsp-graviton"
 version = "0.1.0"
 dependencies = [
+ "async-trait",
  "bytes",
  "gveditor-core-api",
  "interactive_process",

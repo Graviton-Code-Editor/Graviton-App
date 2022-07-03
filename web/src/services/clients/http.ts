@@ -168,8 +168,10 @@ export class HTTPClient extends Emittery implements Client {
     );
   }
 
-  public get_all_language_servers(): Promise<CoreResponse<LanguageServer[]>> {
-    return this.rpc.call("get_all_language_servers", [
+  public get_all_language_server_builders(): Promise<
+    CoreResponse<LanguageServer[]>
+  > {
+    return this.rpc.call("get_all_language_server_builders", [
       this.config.state_id,
       this.config.token,
     ]);
@@ -237,6 +239,28 @@ export class HTTPClient extends Emittery implements Client {
       terminal_shell_id,
       cols,
       rows,
+    ]);
+  }
+
+  public create_language_server(
+    language_server_builder_id: string,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("create_language_server", [
+      this.config.state_id,
+      this.config.token,
+      language_server_builder_id,
+    ]);
+  }
+
+  public write_to_language_server(
+    language_server_id: string,
+    data: string,
+  ): Promise<CoreResponse<never>> {
+    return this.rpc.call("write_to_language_server", [
+      this.config.state_id,
+      this.config.token,
+      language_server_id,
+      data,
     ]);
   }
 }

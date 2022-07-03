@@ -1,10 +1,11 @@
 use crate::handlers::TransportHandler;
 use crate::Configuration;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo, FilesystemErrors};
+use gveditor_core_api::language_servers::LanguageServerBuilderInfo;
 use gveditor_core_api::messaging::{ClientMessages, ServerMessages};
 use gveditor_core_api::states::{StateData, StatesList};
 use gveditor_core_api::terminal_shells::TerminalShellBuilderInfo;
-use gveditor_core_api::{Errors, LanguageServer, ManifestInfo, Mutex, State};
+use gveditor_core_api::{Errors, ManifestInfo, Mutex, State};
 use jsonrpc_core::BoxFuture;
 use jsonrpc_derive::rpc;
 
@@ -175,24 +176,6 @@ impl Server {
             }
             ClientMessages::ServerMessage(server_msg) => {
                 match server_msg {
-                    ServerMessages::RegisterLanguageServers {
-                        state_id,
-                        languages,
-                        ..
-                    } => {
-                        let state = {
-                            let states = states.lock().await;
-                            states.get_state_by_id(state_id)
-                        };
-
-                        if let Some(state) = state {
-                            state
-                                .lock()
-                                .await
-                                .register_language_servers(languages)
-                                .await;
-                        }
-                    }
                     ServerMessages::StateUpdated { .. } => {
                         let states = states.lock().await;
                         states.notify_extensions(msg).await;
@@ -272,12 +255,12 @@ pub trait RpcMethods {
         token: String,
     ) -> BoxFuture<RPCResult<Result<Vec<String>, Errors>>>;
 
-    #[rpc(name = "get_all_language_servers")]
-    fn get_all_language_servers(
+    #[rpc(name = "get_all_language_server_builders")]
+    fn get_all_language_server_builders(
         &self,
         state_id: u8,
         token: String,
-    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>>;
+    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServerBuilderInfo>, Errors>>>;
 
     #[rpc(name = "notify_extension")]
     fn notify_extension(
@@ -328,6 +311,23 @@ pub trait RpcMethods {
         terminal_shell_id: String,
         cols: u16,
         rows: u16,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "create_language_server")]
+    fn create_language_server(
+        &self,
+        state_id: u8,
+        token: String,
+        language_server_builder_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
+
+    #[rpc(name = "write_to_language_server")]
+    fn write_to_language_server(
+        &self,
+        state_id: u8,
+        token: String,
+        language_server_builder_id: String,
+        data: String,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 }
 
@@ -571,12 +571,12 @@ impl RpcMethods for RpcManager {
         })
     }
 
-    /// Returns the list of language servers services in the specified state
-    fn get_all_language_servers(
+    /// Returns the list of language servers builders registered in the specified state
+    fn get_all_language_server_builders(
         &self,
         state_id: u8,
         token: String,
-    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServer>, Errors>>> {
+    ) -> BoxFuture<RPCResult<Result<Vec<LanguageServerBuilderInfo>, Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
             Ok({
@@ -585,7 +585,7 @@ impl RpcMethods for RpcManager {
                 if let Ok(state) = state {
                     let state = state.lock().await;
 
-                    Ok(state.get_all_language_servers().await)
+                    Ok(state.get_all_language_server_builders().await)
                 } else {
                     Err(state.unwrap_err())
                 }
@@ -732,6 +732,59 @@ impl RpcMethods for RpcManager {
 
                     state
                         .resize_terminal_shell(terminal_shell_id, cols, rows)
+                        .await;
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn create_language_server(
+        &self,
+        state_id: u8,
+        token: String,
+        language_server_builder_id: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
+                    state
+                        .create_language_server(language_server_builder_id)
+                        .await;
+
+                    Ok(())
+                } else {
+                    Err(state.unwrap_err())
+                }
+            })
+        })
+    }
+
+    fn write_to_language_server(
+        &self,
+        state_id: u8,
+        token: String,
+        language_server_id: String,
+        data: String,
+    ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
+        let states = self.states.clone();
+        Box::pin(async move {
+            Ok({
+                let state = verify_state(states, state_id, token).await;
+
+                if let Ok(state) = state {
+                    let mut state = state.lock().await;
+
+                    state
+                        .write_to_language_server(language_server_id, data)
                         .await;
 
                     Ok(())

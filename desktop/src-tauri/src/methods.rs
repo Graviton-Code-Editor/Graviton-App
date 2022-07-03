@@ -1,8 +1,9 @@
 use gveditor_core::RPCResult;
 use gveditor_core_api::filesystems::{DirItemInfo, FileInfo};
+use gveditor_core_api::language_servers::LanguageServerBuilderInfo;
 use gveditor_core_api::states::StateData;
 use gveditor_core_api::terminal_shells::TerminalShellBuilderInfo;
-use gveditor_core_api::{Errors, LanguageServer, ManifestInfo};
+use gveditor_core_api::{Errors, ManifestInfo};
 
 use crate::TauriState;
 
@@ -105,12 +106,14 @@ pub async fn get_ext_list_by_id(
 
 /// Same as the JSON RPC Method
 #[tauri::command(async)]
-pub async fn get_all_language_servers(
+pub async fn get_all_language_server_builders(
     state_id: u8,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
-) -> RPCResult<Result<Vec<LanguageServer>, Errors>> {
-    let res = tauri_state.client.get_all_language_servers(state_id, token);
+) -> RPCResult<Result<Vec<LanguageServerBuilderInfo>, Errors>> {
+    let res = tauri_state
+        .client
+        .get_all_language_server_builders(state_id, token);
     Ok(res.await.unwrap())
 }
 
@@ -188,5 +191,36 @@ pub async fn resize_terminal_shell(
         tauri_state
             .client
             .resize_terminal_shell(state_id, token, terminal_shell_id, cols, rows);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn create_language_server(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    language_server_builder_id: String,
+) -> RPCResult<Result<(), Errors>> {
+    let res =
+        tauri_state
+            .client
+            .create_language_server(state_id, token, language_server_builder_id);
+    Ok(res.await.unwrap())
+}
+
+/// Same as the JSON RPC Method
+#[tauri::command(async)]
+pub async fn write_to_language_server(
+    state_id: u8,
+    token: String,
+    tauri_state: tauri::State<'_, TauriState>,
+    language_server_id: String,
+    data: String,
+) -> RPCResult<Result<(), Errors>> {
+    let res =
+        tauri_state
+            .client
+            .write_to_language_server(state_id, token, language_server_id, data);
     Ok(res.await.unwrap())
 }
