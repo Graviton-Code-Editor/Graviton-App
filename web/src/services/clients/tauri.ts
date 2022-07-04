@@ -134,8 +134,8 @@ export class TauriClient extends Emittery<EventsInterface> implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public get_ext_list_by_id(): Promise<CoreResponse<string[]>> {
-    return invoke("get_ext_list_by_id", {
+  public get_ext_list(): Promise<CoreResponse<string[]>> {
+    return invoke("get_ext_list", {
       stateId: this.config.state_id,
       token: this.config.token,
     });

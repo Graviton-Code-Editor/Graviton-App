@@ -148,8 +148,8 @@ export class HTTPClient extends Emittery implements Client {
    * Implemented in the Core
    * @JsonRpcMethod
    */
-  public get_ext_list_by_id(): Promise<CoreResponse<string[]>> {
-    return this.rpc.call("get_ext_list_by_id", [
+  public get_ext_list(): Promise<CoreResponse<string[]>> {
+    return this.rpc.call("get_ext_list", [
       this.config.state_id,
       this.config.token,
     ]);

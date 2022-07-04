@@ -189,7 +189,7 @@ impl State {
     }
 
     /// Return the list of loaded extensions
-    pub fn get_ext_list_by_id(&self) -> Vec<String> {
+    pub fn get_ext_list(&self) -> Vec<String> {
         let extensions = &self.extensions_manager.extensions;
 
         extensions

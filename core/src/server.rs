@@ -248,8 +248,8 @@ pub trait RpcMethods {
         token: String,
     ) -> BoxFuture<RPCResult<Result<ManifestInfo, Errors>>>;
 
-    #[rpc(name = "get_ext_list_by_id")]
-    fn get_ext_list_by_id(
+    #[rpc(name = "get_ext_list")]
+    fn get_ext_list(
         &self,
         state_id: u8,
         token: String,
@@ -550,7 +550,7 @@ impl RpcMethods for RpcManager {
         })
     }
     /// Returns the list of extensions in the specified state
-    fn get_ext_list_by_id(
+    fn get_ext_list(
         &self,
         state_id: u8,
         token: String,
@@ -563,7 +563,7 @@ impl RpcMethods for RpcManager {
                 if let Ok(state) = state {
                     let state = state.lock().await;
 
-                    Ok(state.get_ext_list_by_id())
+                    Ok(state.get_ext_list())
                 } else {
                     Err(state.unwrap_err())
                 }

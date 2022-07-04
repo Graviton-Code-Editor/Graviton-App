@@ -97,7 +97,7 @@ fn open_tauri(
             methods::read_file_by_path,
             methods::set_state_by_id,
             methods::get_ext_info_by_id,
-            methods::get_ext_list_by_id,
+            methods::get_ext_list,
             methods::get_all_language_server_builders,
             methods::write_to_terminal_shell,
             methods::create_terminal_shell,

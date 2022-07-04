@@ -95,12 +95,12 @@ pub async fn get_ext_info_by_id(
 
 /// Same as the JSON RPC Method
 #[tauri::command(async)]
-pub async fn get_ext_list_by_id(
+pub async fn get_ext_list(
     state_id: u8,
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
 ) -> RPCResult<Result<Vec<String>, Errors>> {
-    let res = tauri_state.client.get_ext_list_by_id(state_id, token);
+    let res = tauri_state.client.get_ext_list(state_id, token);
     Ok(res.await.unwrap())
 }
 

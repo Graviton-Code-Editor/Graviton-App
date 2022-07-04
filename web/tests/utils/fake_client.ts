@@ -64,7 +64,7 @@ export default class FakeClient extends Emittery implements Client {
   }
 
   // TO-DO
-  async get_ext_list_by_id(): Promise<any> {
+  async get_ext_list(): Promise<any> {
     return null;
   }
 
@@ -100,6 +100,16 @@ export default class FakeClient extends Emittery implements Client {
 
   // TO-DO
   async resize_terminal_shell(terminal_shell_id: string, cols: number, rows: number): Promise<any>{
+    return null;
+  }
+
+  // TO-DO
+  async create_language_server(language_server_builder_id: string): Promise<any> {
+    return null;
+  }
+
+  // TO-DO
+  async write_to_language_server(language_server_id: string, data: string): Promise<any>{
     return null;
   }
 }

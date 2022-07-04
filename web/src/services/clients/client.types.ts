@@ -71,7 +71,7 @@ export interface Client extends Emittery {
   get_ext_info_by_id: (
     extensionId: string,
   ) => Promise<CoreResponse<ManifestInfo>>;
-  get_ext_list_by_id: () => Promise<CoreResponse<string[]>>;
+  get_ext_list: () => Promise<CoreResponse<string[]>>;
   listenToState: () => void;
   whenConnected: () => Promise<void>;
   get_all_language_server_builders: () => Promise<
