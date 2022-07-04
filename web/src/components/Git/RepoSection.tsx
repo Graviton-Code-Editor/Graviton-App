@@ -89,6 +89,8 @@ export function RepoSection(
 
           return (
             <GitExplorerItem
+              recentlyOpened={false}
+              recentlyOpenedItems={false}
               key={path}
               onContextMenu={itemContextMenu}
               title={path}

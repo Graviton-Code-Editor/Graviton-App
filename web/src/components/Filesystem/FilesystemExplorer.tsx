@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { default as styled } from "styled-components";
 import { clientState } from "../../state/state";
@@ -13,6 +13,7 @@ import { basename } from "../../utils/path";
 import { FolderState } from "../../state/folders";
 import ExplorerItem from "./ExplorerItem";
 import useContextMenu from "../../hooks/useContextMenu";
+import { dirname } from "path";
 
 const ExplorerContainer = styled.div`
   padding: 5px;
@@ -160,6 +161,9 @@ function FilesystemExplorer({
 }: ExplorerOptions) {
   const client = useRecoilValue(clientState);
   const folderItems = mapTree([], tree, 0, "local");
+  const [recentlyOpenedItem, setRecentlyOpenedItem] = useState<
+    TreeItemInfo | null
+  >(null);
 
   const folderTree = tree;
 
@@ -219,7 +223,10 @@ function FilesystemExplorer({
 
         // Add the new items to the sub tree
         addItemsToSubTreeByPath(folderTree, item.path, subTreeItems);
-        saveTree?.({ ...folderTree });
+        setRecentlyOpenedItem(item);
+        setTimeout(() => {
+          setRecentlyOpenedItem(null);
+        }, 60);
       } else {
         // handle error
       }
@@ -238,16 +245,29 @@ function FilesystemExplorer({
               itemSize={26}
               overscanCount={10}
             >
-              {(props: { index: number; style: Record<string, string> }) => (
-                <ListItem
-                  {...props}
-                  folderItems={folderItems}
-                  folderTree={folderTree}
-                  onSelected={onSelected}
-                  openFolder={openFolder}
-                  closeFolder={closeFolder}
-                />
-              )}
+              {(props: { index: number; style: Record<string, string> }) => {
+                const itemPath = folderItems[props.index].path;
+                const unixItemPath = itemPath.replace(/\\/g, "/");
+                const itemParentPath = dirname(unixItemPath);
+                const recentlyOpenedItemUnixPath = recentlyOpenedItem?.path
+                  .replace(/\\/g, "/");
+                const recentlyOpenedItems =
+                  recentlyOpenedItemUnixPath === itemParentPath;
+                const recentlyOpened =
+                  recentlyOpenedItemUnixPath === unixItemPath;
+                return (
+                  <ListItem
+                    {...props}
+                    recentlyOpenedItems={recentlyOpenedItems}
+                    recentlyOpened={recentlyOpened}
+                    folderItems={folderItems}
+                    folderTree={folderTree}
+                    onSelected={onSelected}
+                    openFolder={openFolder}
+                    closeFolder={closeFolder}
+                  />
+                );
+              }}
             </List>
           );
         }}
@@ -264,6 +284,8 @@ interface ListItemProps {
   onSelected: (item: TreeItemInfo) => void;
   closeFolder: (item: TreeItemInfo) => void;
   openFolder: (item: TreeItemInfo) => void;
+  recentlyOpened: boolean;
+  recentlyOpenedItems: boolean;
 }
 
 function ListItem(
@@ -275,6 +297,8 @@ function ListItem(
     onSelected,
     closeFolder,
     openFolder,
+    recentlyOpenedItems,
+    recentlyOpened,
   }: ListItemProps,
 ) {
   const itemInfo = folderItems[index];
@@ -331,6 +355,8 @@ function ListItem(
 
   return (
     <ExplorerItem
+      recentlyOpened={recentlyOpened}
+      recentlyOpenedItems={recentlyOpenedItems}
       key={itemInfo.path}
       onClick={onClick}
       onContextMenu={onContextMenu}
