@@ -7,7 +7,6 @@ use gveditor_core_api::{Errors, ManifestInfo};
 
 use crate::TauriState;
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn get_state_by_id(
     state_id: u8,
@@ -18,7 +17,6 @@ pub async fn get_state_by_id(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn list_dir_by_path(
     path: String,
@@ -33,7 +31,6 @@ pub async fn list_dir_by_path(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn read_file_by_path(
     path: String,
@@ -48,7 +45,6 @@ pub async fn read_file_by_path(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn write_file_by_path(
     path: String,
@@ -65,7 +61,6 @@ pub async fn write_file_by_path(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn set_state_by_id(
     state_id: u8,
@@ -79,7 +74,6 @@ pub async fn set_state_by_id(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn get_ext_info_by_id(
     extension_id: String,
@@ -93,7 +87,6 @@ pub async fn get_ext_info_by_id(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn get_ext_list(
     state_id: u8,
@@ -104,7 +97,6 @@ pub async fn get_ext_list(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn get_all_language_server_builders(
     state_id: u8,
@@ -117,7 +109,6 @@ pub async fn get_all_language_server_builders(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn write_to_terminal_shell(
     state_id: u8,
@@ -132,7 +123,6 @@ pub async fn write_to_terminal_shell(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn create_terminal_shell(
     state_id: u8,
@@ -150,7 +140,6 @@ pub async fn create_terminal_shell(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn close_terminal_shell(
     state_id: u8,
@@ -164,7 +153,6 @@ pub async fn close_terminal_shell(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn get_terminal_shell_builders(
     state_id: u8,
@@ -177,7 +165,6 @@ pub async fn get_terminal_shell_builders(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn resize_terminal_shell(
     state_id: u8,
@@ -194,7 +181,6 @@ pub async fn resize_terminal_shell(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn create_language_server(
     state_id: u8,
@@ -209,7 +195,6 @@ pub async fn create_language_server(
     Ok(res.await.unwrap())
 }
 
-/// Same as the JSON RPC Method
 #[tauri::command(async)]
 pub async fn write_to_language_server(
     state_id: u8,

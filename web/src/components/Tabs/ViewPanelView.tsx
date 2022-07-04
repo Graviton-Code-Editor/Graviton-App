@@ -143,8 +143,8 @@ export default function ViewPanelView({
           },
           action: () => {
             closeViewPanelAndView({
-             col,
-             row
+              col,
+              row,
             });
             return false;
           },

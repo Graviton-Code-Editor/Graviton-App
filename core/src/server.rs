@@ -41,7 +41,7 @@ pub struct Server {
 ///    # Mutex
 /// # };
 ///  # tokio_test::block_on(async {
-///  let (to_core, from_core) = channel::<ClientMessages>(1);
+///  let (to_server, from_server) = channel::<ClientMessages>(1);
 ///
 ///  // A pointer to a StatesList
 ///  let states = {
@@ -59,13 +59,13 @@ pub struct Server {
 ///  let http_handler = HTTPHandler::builder().build();
 ///
 ///  // Create the configuration
-///  let config = Configuration::new(Box::new(http_handler), to_core, from_core);
+///  let config = Configuration::new(Box::new(http_handler), to_server, from_server);
 ///
-///  // Create a Core
-///  let core = Server::new(config, states);
+///  // Create a server
+///  let server = Server::new(config, states);
 ///
-///  // Run the core
-///  core.run();
+///  // Run the Server
+///  server.run();
 ///  # })
 /// ```
 ///
@@ -74,11 +74,11 @@ impl Server {
     ///
     /// # Arguments
     ///
-    /// * `config`   - The Core configuration
-    /// * `states`   - The States list the Core will launch with
+    /// * `config`   - The Server configuration
+    /// * `states`   - The States list the Server will launch with
     ///
     pub fn new(mut config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        let receiver = config.from_core.take();
+        let receiver = config.from_server.take();
         let handler = config.handler.clone();
         let states_list = states.clone();
 
@@ -96,38 +96,47 @@ impl Server {
         Self { config, states }
     }
 
-    /// Run the configured handler
+    /// Run the configuyred handler
     pub async fn run(&self) {
         let states = self.states.clone();
         let mut handler = self.config.handler.lock().await;
 
         handler
-            .run(states.clone(), self.config.to_core.clone())
+            .run(states.clone(), self.config.to_server.clone())
             .await;
     }
 
     /// Process every message
+    ///
+    /// # Arguments
+    ///
+    /// * `states`   - The States list the Server will launch with
+    /// * `message`  - The message to process
+    /// * `handler`  - The transport handler
+    ///
     pub async fn process_message(
         states: Arc<Mutex<StatesList>>,
-        msg: ClientMessages,
+        message: ClientMessages,
         handler: Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>,
     ) {
-        match msg.clone() {
+        match message.clone() {
             ClientMessages::ListenToState { state_id } => {
-                // Make sure if there is already an existing state
                 let state = {
                     let states = states.lock().await;
                     states.get_state_by_id(state_id)
                 };
 
                 if let Some(state) = state {
-                    let handler = handler.lock().await;
-                    // Send the loaded state to the handler
-                    let message = ServerMessages::StateUpdated {
-                        state_data: state.lock().await.data.clone(),
-                    };
-                    handler.send(message).await;
+                    {
+                        // Send the loaded state to the handler
+                        let handler = handler.lock().await;
+                        let message = ServerMessages::StateUpdated {
+                            state_data: state.lock().await.data.clone(),
+                        };
+                        handler.send(message).await;
+                    }
 
+                    // Execute the registered extensions in the State
                     let state_handle = state.clone();
                     state.lock().await.run_extensions(state_handle).await;
                 }
@@ -156,7 +165,7 @@ impl Server {
                 };
 
                 if let Some(state) = state {
-                    state.lock().await.notify_extensions(msg);
+                    state.lock().await.notify_extensions(message);
                 }
             }
             ClientMessages::NotifyExtension(event) => {
@@ -171,14 +180,14 @@ impl Server {
                 if let Some(state) = state {
                     let state = state.lock().await;
 
-                    state.notify_extension(extension_id, msg);
+                    state.notify_extension(extension_id, message);
                 }
             }
             ClientMessages::ServerMessage(server_msg) => {
                 match server_msg {
                     ServerMessages::StateUpdated { .. } => {
                         let states = states.lock().await;
-                        states.notify_extensions(msg).await;
+                        states.notify_extensions(message).await;
                     }
                     _ => {
                         // Forward to the handler messages not handled here

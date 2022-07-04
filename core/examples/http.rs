@@ -11,12 +11,12 @@ use tokio::sync::mpsc::channel;
 
 #[tokio::main]
 async fn main() {
-    let (to_core, from_core) = channel::<ClientMessages>(1);
+    let (to_server, from_server) = channel::<ClientMessages>(1);
 
     let states = {
         let sample_state = State::new(
             1,
-            ExtensionsManager::new(to_core.clone(), None),
+            ExtensionsManager::new(to_server.clone(), None),
             Box::new(MemoryPersistor::new()),
         );
 
@@ -29,11 +29,11 @@ async fn main() {
 
     let http_handler = HTTPHandler::builder().build().wrap();
 
-    let config = Configuration::new(http_handler, to_core, from_core);
+    let config = Configuration::new(http_handler, to_server, from_server);
 
-    let core = Server::new(config, states);
+    let server = Server::new(config, states);
 
-    core.run().await;
+    server.run().await;
 
     thread::park();
 }

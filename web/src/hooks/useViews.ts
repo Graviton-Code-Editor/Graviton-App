@@ -51,8 +51,6 @@ export default function useViews() {
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
   const { saveTab } = useTabs();
 
-
-
   const closeViewPanelForcefully = (
     { col, row }: FocusedViewPanel,
   ): boolean => {
@@ -120,7 +118,7 @@ export default function useViews() {
     } else {
       return closeViewPanelForcefully({ col, row });
     }
-}
+  };
 
   const newViewPanel = ({ row }: { row: number }) => {
     tabPanels[row].view_panels.push({

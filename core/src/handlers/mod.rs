@@ -20,6 +20,6 @@ pub use local::LocalHandler;
 pub trait TransportHandler {
     /// Run the handler
     async fn run(&mut self, states: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>);
-    /// Send a message to the handler
+    /// Send a message through the handler
     async fn send(&self, message: ServerMessages);
 }

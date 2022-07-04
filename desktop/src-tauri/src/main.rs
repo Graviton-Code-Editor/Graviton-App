@@ -33,16 +33,7 @@ pub struct TauriState {
     client: Client,
 }
 
-/// Launch the main window
-///
-/// # Arguments
-///
-/// * `context`                 - The Tauri context
-/// * `client`                  - The JSON RPC Local client
-/// * `sender_to_handler`       - A sender to the local handler
-/// * `receiver_from_handler`   - A receiver from the local handler
-///
-fn open_tauri(
+fn open_window(
     context: Context<EmbeddedAssets>,
     client: Client,
     sender_to_handler: Sender<ClientMessages>,
@@ -249,10 +240,10 @@ async fn main() -> anyhow::Result<()> {
 
     let core = Server::new(config, states);
 
-    tokio::task::spawn(async move { core.run().await });
+    core.run().await;
 
     // Open the window
-    let res = open_tauri(context, client, to_local, from_handler);
+    let res = open_window(context, client, to_local, from_handler);
 
     if let Err(err) = res {
         error!("Graviton crashed, error: {err}");

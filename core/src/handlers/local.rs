@@ -8,10 +8,10 @@ use gveditor_core_api::Mutex;
 use jsonrpc_core::IoHandler;
 use jsonrpc_core_client::transports::local;
 use std::sync::Arc;
-use std::thread;
 use tokio::sync::mpsc::{channel, Receiver, Sender};
 
-/// This a local handler, meaning that you can use the JSON RPC Server directly
+/// Local handler
+/// The JSON RPC methods can be called directly
 pub struct LocalHandler {
     receiver_to_local: Option<Receiver<ClientMessages>>,
     channel_sender: Sender<ServerMessages>,
@@ -48,15 +48,12 @@ impl TransportHandler for LocalHandler {
     async fn run(&mut self, _: Arc<Mutex<StatesList>>, core_sender: Sender<ClientMessages>) {
         let mut rv = self.receiver_to_local.take().unwrap();
 
-        thread::spawn(move || {
-            let runtime = tokio::runtime::Runtime::new().unwrap();
-            runtime.block_on(async {
-                loop {
-                    if let Some(msg) = rv.recv().await {
-                        core_sender.send(msg).await.unwrap();
-                    }
+        tokio::spawn(async move {
+            loop {
+                if let Some(msg) = rv.recv().await {
+                    core_sender.send(msg).await.unwrap();
                 }
-            });
+            }
         });
     }
 
@@ -93,7 +90,6 @@ mod tests {
                 Box::new(MemoryPersistor::new()),
             );
 
-            // A StatesList with the previous state
             let states = StatesList::new()
                 .with_tokens(&[TokenFlags::All("test_token".to_string())])
                 .with_state(sample_state);
@@ -104,7 +100,7 @@ mod tests {
         let (_, client, _) = LocalHandler::new(states, client_sender);
 
         // Use the client to call JSON RPC Methods
-        let req = client
+        let res = client
             .read_file_by_path(
                 "./readme.md".to_string(),
                 "local".to_string(),
@@ -113,6 +109,6 @@ mod tests {
             )
             .await;
 
-        assert!(req.is_ok());
+        assert!(res.is_ok());
     }
 }

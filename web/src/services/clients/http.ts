@@ -156,14 +156,15 @@ export class HTTPClient extends Emittery implements Client {
   }
 
   /*
-   * Listen for any mess in the websockets connection
+   * Subscribe to the State messages
    * @WSCommand
    */
   public listenToState() {
     this.socket.send(
       JSON.stringify({
-        msg_type: "ListenToState",
-        state_id: this.config.state_id,
+        ListenToState: {
+          state_id: this.config.state_id,
+        },
       }),
     );
   }

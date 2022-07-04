@@ -5,24 +5,22 @@ use tokio::sync::Mutex;
 
 use crate::handlers::TransportHandler;
 
-pub type Handler = Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>;
-
 pub struct Configuration {
-    pub handler: Handler,
-    pub to_core: Sender<ClientMessages>,
-    pub from_core: Option<Receiver<ClientMessages>>,
+    pub handler: Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>,
+    pub to_server: Sender<ClientMessages>,
+    pub from_server: Option<Receiver<ClientMessages>>,
 }
 
 impl Configuration {
     pub fn new(
         handler: Box<dyn TransportHandler + Send + Sync>,
-        to_core: Sender<ClientMessages>,
-        from_core: Receiver<ClientMessages>,
+        to_server: Sender<ClientMessages>,
+        from_server: Receiver<ClientMessages>,
     ) -> Self {
         Self {
             handler: Arc::new(Mutex::new(handler)),
-            to_core,
-            from_core: Some(from_core),
+            to_server,
+            from_server: Some(from_server),
         }
     }
 }
