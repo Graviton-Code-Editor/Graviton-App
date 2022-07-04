@@ -197,14 +197,14 @@ pub type RPCResult<T> = jsonrpc_core::Result<T>;
 /// Definition of all JSON RPC Methods
 #[rpc]
 pub trait RpcMethods {
-    #[rpc(name = "get_state_data_by_id")]
+    #[rpc(name = "get_state_by_id")]
     fn get_state_by_id(
         &self,
         state_id: u8,
         token: String,
     ) -> BoxFuture<RPCResult<Result<Option<StateData>, Errors>>>;
 
-    #[rpc(name = "set_state_data_by_id")]
+    #[rpc(name = "set_state_by_id")]
     fn set_state_by_id(
         &self,
         state_id: u8,
