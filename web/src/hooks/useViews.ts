@@ -12,7 +12,6 @@ function canViewPanelBeClosed(tabs: Tab[]): boolean {
   for (const tab of tabs) {
     if (tab.edited) canBeClosed = false;
   }
-
   return canBeClosed;
 }
 
@@ -52,10 +51,11 @@ export default function useViews() {
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
   const { saveTab } = useTabs();
 
-  const closeViewPanel = ({ col, row }: FocusedViewPanel): boolean => {
-    // Always leave at least one view panel opened
-    if (tabPanels[row].view_panels.length === 1) return false;
 
+
+  const closeViewPanelForcefully = (
+    { col, row }: FocusedViewPanel,
+  ): boolean => {
     // Select the view from above if there is any, or leave the same position focused
     const nextFocusedCol = col > 1 ? col - 1 : 0;
 
@@ -77,6 +77,13 @@ export default function useViews() {
     }
 
     return canCloseViewPanel;
+  };
+
+  const closeViewPanel = ({ col, row }: FocusedViewPanel): boolean => {
+    // Always leave at least one view panel opened
+    if (tabPanels[row].view_panels.length === 1) return false;
+
+    return closeViewPanelForcefully({ col, row });
   };
 
   const closeView = ({ row }: { row: number }): boolean => {
@@ -103,6 +110,18 @@ export default function useViews() {
     return canCloseView;
   };
 
+  const closeViewPanelAndView = ({ col, row }: FocusedViewPanel): boolean => {
+    if (tabPanels[row].view_panels.length == 1) {
+      if (tabPanels.length > 1) {
+        return closeView({ row });
+      } else {
+        return false;
+      }
+    } else {
+      return closeViewPanelForcefully({ col, row });
+    }
+}
+
   const newViewPanel = ({ row }: { row: number }) => {
     tabPanels[row].view_panels.push({
       id: newId(),
@@ -123,6 +142,7 @@ export default function useViews() {
   };
 
   return {
+    tabPanels,
     focusedView,
     newView,
     newViewInFocused: () => {
@@ -132,8 +152,9 @@ export default function useViews() {
     },
     closeViewPanel,
     closeFocusedViewPanel: (): boolean => {
-      return closeViewPanel(focusedView);
+      return closeViewPanelAndView(focusedView);
     },
+    closeViewPanelAndView,
     closeView,
     closeFocusedView: (): boolean => {
       return closeView({ row: focusedView.row });

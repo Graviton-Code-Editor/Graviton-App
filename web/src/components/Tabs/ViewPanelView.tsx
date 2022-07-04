@@ -75,7 +75,7 @@ export default function ViewPanelView({
   col,
   row,
 }: TabPanelOptions) {
-  const { newView, newViewPanel } = useViews();
+  const { newView, newViewPanel, closeViewPanelAndView } = useViews();
   const { pushContextMenu } = useContextMenu();
   const { focusTab, selectTab, closeTab, saveTab, setTabEdited } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
@@ -137,6 +137,18 @@ export default function ViewPanelView({
   function contextMenuClick(ev: React.MouseEvent) {
     pushContextMenu({
       menus: [
+        {
+          label: {
+            text: "Close",
+          },
+          action: () => {
+            closeViewPanelAndView({
+             col,
+             row
+            });
+            return false;
+          },
+        },
         {
           label: {
             text: "contextMenus.panels.SplitHorizontally",
