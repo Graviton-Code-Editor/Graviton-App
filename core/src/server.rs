@@ -29,7 +29,7 @@ pub struct Server {
 ///  # use gveditor_core_api::{
 ///     # extensions::manager::ExtensionsManager,
 ///     # messaging::ClientMessages,
-///     # state::{
+///     # states::{
 ///     #    StatesList,
 ///     #    TokenFlags,
 ///     #    MemoryPersistor,
@@ -46,7 +46,7 @@ pub struct Server {
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
-///     let sample_state = State::new(1, ExtensionsManager::new(to_core.clone(), None), Box::new(MemoryPersistor::new()));
+///     let sample_state = State::new(1, ExtensionsManager::new(to_server.clone(), None), Box::new(MemoryPersistor::new()));
 ///
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()

@@ -11,8 +11,8 @@ use jsonrpc_core::futures_util::stream::SplitSink;
 use jsonrpc_core::futures_util::SinkExt;
 use jsonrpc_core::IoHandler;
 use jsonrpc_http_server::{
-    AccessControlAllowOrigin, DomainsValidation, RequestMiddleware, RequestMiddlewareAction,
-    RestApi,
+    AccessControlAllowOrigin, CloseHandle, DomainsValidation, RequestMiddleware,
+    RequestMiddlewareAction, RestApi,
 };
 use std::collections::{BTreeMap, HashMap};
 use std::sync::Arc;
@@ -203,6 +203,7 @@ pub struct HTTPHandler {
     pub json_rpc_http_cors: DomainsValidation<AccessControlAllowOrigin>,
     pub sockets: SocketsRegistry,
     pub port: u16,
+    pub close_handle: Option<CloseHandle>,
 }
 
 impl HTTPHandler {
@@ -211,6 +212,7 @@ impl HTTPHandler {
             json_rpc_http_cors,
             sockets: Arc::new(Mutex::new(BTreeMap::new())),
             port,
+            close_handle: None,
         }
     }
 
@@ -244,7 +246,7 @@ impl HTTPHandler {
     /// Runs the JSON HTTP Server that handles
     /// both JSON RPC calls and WebSocket connections
     async fn run_server(
-        &self,
+        &mut self,
         states: Arc<Mutex<StatesList>>,
         server_sender: Sender<ClientMessages>,
     ) {
@@ -260,16 +262,25 @@ impl HTTPHandler {
         let http_cors = self.json_rpc_http_cors.clone();
         let http_port = self.port;
 
-        // Run the HTTP JSON RPC in a separate thread
+        let server = jsonrpc_http_server::ServerBuilder::new(http_io)
+            .request_middleware(ws_middleware)
+            .cors(http_cors)
+            .rest_api(RestApi::Unsecure)
+            .start_http(&format!("127.0.0.1:{}", http_port).parse().unwrap())
+            .expect("Unable to start RPC HTTP server");
+
+        self.close_handle = Some(server.close_handle());
+
         tokio::task::spawn_blocking(move || {
-            let server = jsonrpc_http_server::ServerBuilder::new(http_io)
-                .request_middleware(ws_middleware)
-                .cors(http_cors)
-                .rest_api(RestApi::Unsecure)
-                .start_http(&format!("127.0.0.1:{}", http_port).parse().unwrap())
-                .expect("Unable to start RPC HTTP server");
             server.wait();
         });
+    }
+}
+
+impl Drop for HTTPHandler {
+    fn drop(&mut self) {
+        let close_handle = self.close_handle.take().unwrap();
+        close_handle.close();
     }
 }
 
@@ -287,17 +298,14 @@ impl TransportHandler for HTTPHandler {
 #[cfg(test)]
 mod tests {
 
-    use std::sync::Arc;
-    use std::time::Duration;
-
     use gveditor_core_api::messaging::ClientMessages;
     use gveditor_core_api::states::TokenFlags;
     use gveditor_core_api::{Mutex, State};
     use hyper_tungstenite::tungstenite::Message;
     use jsonrpc_core::futures_util::{SinkExt, StreamExt};
     use jsonrpc_core::serde_json;
+    use std::sync::Arc;
     use tokio::sync::mpsc::channel;
-    use tokio::time::sleep;
     use url::Url;
 
     use crate::handlers::ServerMessages;
@@ -328,8 +336,6 @@ mod tests {
         let server = Server::new(config, states);
 
         server.run().await;
-
-        sleep(Duration::from_secs(2)).await;
 
         // RUN A WEBSOCKETS CLIENT
 
@@ -364,7 +370,5 @@ mod tests {
             state_updated_msg,
             ServerMessages::StateUpdated { .. }
         ));
-
-        // TODO(marc2332) TEST JSON RPC CLIENT
     }
 }
