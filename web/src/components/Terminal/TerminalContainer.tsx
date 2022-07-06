@@ -69,9 +69,7 @@ export function TerminalTabContainer(
       });
 
       const resizeObserver = new ResizeObserver(() => {
-        setTimeout(() => {
-          fit?.fit();
-        }, 1);
+        fit?.fit();
       });
 
       // Fit the terminal when the container is resized

@@ -17,7 +17,11 @@ export interface StatusBarItemClicked extends BaseMessage {
   id: string;
 }
 
-export type UIEvents = StatusBarItemClicked;
+export interface CommandActioned extends BaseMessage {
+  id: string;
+}
+
+export type UIEvents = StatusBarItemClicked | CommandActioned;
 
 export interface UIEvent<T = UIEvents> {
   UIEvent: T;

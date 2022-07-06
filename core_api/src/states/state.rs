@@ -2,7 +2,7 @@ use crate::extensions::base::ExtensionInfo;
 use crate::extensions::manager::{ExtensionsManager, LoadedExtension};
 use crate::filesystems::{Filesystem, LocalFilesystem};
 use crate::language_servers::{LanguageServerBuilder, LanguageServerBuilderInfo};
-use crate::messaging::ClientMessages;
+use crate::messaging::{ClientMessages, ServerMessages};
 pub use crate::state_persistors::memory::MemoryPersistor;
 use crate::state_persistors::Persistor;
 use crate::terminal_shells::{TerminalShell, TerminalShellBuilder, TerminalShellBuilderInfo};
@@ -308,7 +308,7 @@ impl State {
                 .insert(info.id, Arc::new(Mutex::new(language_server)));
         } else {
             warn!(
-                "Could not create a terminal shell, missing builder with id <{}>",
+                "Could not create a language server, missing builder with id <{}>",
                 language_server_builder_id
             );
         }
@@ -325,6 +325,22 @@ impl State {
                 language_server_id
             );
         }
+    }
+
+    pub async fn unload_language_server(&mut self, language_server_builder_id: &str) {
+        self.language_server_builders
+            .remove(language_server_builder_id);
+        self.language_servers.remove(language_server_builder_id);
+        self.extensions_manager
+            .sender
+            .send(ClientMessages::ServerMessage(
+                ServerMessages::UnloadedLanguageServer {
+                    id: language_server_builder_id.to_owned(),
+                    state_id: self.data.id,
+                },
+            ))
+            .await
+            .unwrap();
     }
 }
 

@@ -1,5 +1,4 @@
 import TextEditor from "../../components/TextEditor/TextEditor";
-
 import { clientState } from "../../state/state";
 import { getRecoil } from "recoil-nexus";
 import { FileFormat } from "../../services/clients/client.types";
@@ -12,17 +11,12 @@ import {
   TextEditorTabData,
 } from "../../modules/tab";
 import { rust } from "@codemirror/lang-rust";
-import { basename, dirname } from "path";
-import {
-  LanguageServerClient,
-  languageServerWithClient,
-} from "codemirror-languageserver";
+import { dirname } from "path";
 import { useEffect, useState } from "react";
 import TabText from "../../components/Tabs/TabText";
 import LoadingTabContent from "../../components/Tabs/LoadingTabContent";
 import FileIcon from "../../components/Filesystem/FileIcon";
 import useLSPClients from "../../hooks/useLSPClients";
-import GravitonTransport from "./graviton_lsp_transport";
 import { useTranslation } from "react-i18next";
 import {
   crosshairCursor,
@@ -54,8 +48,15 @@ import {
   completionKeymap,
 } from "@codemirror/autocomplete";
 import { lintKeymap } from "@codemirror/lint";
-import { EditorState, Extension, StateCommand } from "@codemirror/state";
+import { EditorState, StateCommand } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
+import { useRecoilValue } from "recoil";
+import {
+  LanguageServerClient,
+  languageServerWithClient,
+} from "codemirror-languageserver";
+import GravitonTransport from "./graviton_lsp_transport";
+import { basename } from "../../utils/path";
 
 interface SavedState {
   scrollHeight: number;
@@ -253,6 +254,7 @@ function TabTextEditorContainer({
   const [view, setView] = useState(textEditorTab.view);
   const { find, add } = useLSPClients();
   const { t } = useTranslation();
+  const client = useRecoilValue(clientState);
 
   useEffect(() => {
     if (view != null) return;
@@ -260,16 +262,18 @@ function TabTextEditorContainer({
     // Wait until the tab is mounted to read it's content
     textEditorTab.contentResolver.then((initialValue) => {
       if (initialValue != null) {
-        textEditorTab.view = new EditorView({
-          state: createDefaulState(initialValue),
-          dispatch: (tx) => {
-            if (tx.docChanged) setEdited(true);
-            (textEditorTab.view as EditorView).update([tx]);
-          },
-        });
+        createDefaulState(initialValue).then((state) => {
+          textEditorTab.view = new EditorView({
+            state,
+            dispatch: (tx) => {
+              if (tx.docChanged) setEdited(true);
+              (textEditorTab.view as EditorView).update([tx]);
+            },
+          });
 
-        // Update the view component
-        setView(textEditorTab.view);
+          // Update the view component
+          setView(textEditorTab.view);
+        });
       } else {
         // If there is no content to read then just close the tab
         textEditorTab.close();
@@ -318,7 +322,9 @@ function TabTextEditorContainer({
     }
 
     // Initialize the CodeMirror State
-    function createDefaulState(initialValue: string): EditorState {
+    async function createDefaulState(
+      initialValue: string,
+    ): Promise<EditorState> {
       const extensions = [
         getKeymap(),
         lineNumbers(),
@@ -369,34 +375,69 @@ function TabTextEditorContainer({
         }
       }
 
-      // TODO(marc2332):
-      // - This should not assume there is a language server implementation running
-      //   Instead, the language server must notify this frontend, or maybe just ask the core
+      // TODO(marc2332): Remove *somehow* the client if the language server is disabled/closed
 
-      // LSP IS DISABLED FOR NOW
-      // @ts-ignore
-      if (lspLanguage != null && true == false) {
+      // Use the first language server builder found
+      if (lspLanguage != null) {
         const [languageId] = lspLanguage;
+
         const unixPath = textEditorTab.path.replace(/\\/g, "/");
         const rootUri = `file:///${dirname(unixPath)}`;
 
-        const lsClient = find(rootUri, languageId);
+        const loadedLsClient = find(languageId);
 
-        const lspPlugin = createLSPPlugin(
-          languageId,
-          unixPath,
-          rootUri,
-          (client) => {
-            add({
-              rootUri,
-              languageId,
-              client,
-            });
-          },
-          lsClient,
-        );
+        if (loadedLsClient) {
+          // Reuse existing lsp clients
+          const lsPlugin = languageServerWithClient({
+            languageId,
+            documentUri: `file:///${unixPath}`,
+            client: loadedLsClient,
+          });
 
-        extensions.push(lspPlugin);
+          extensions.push(lsPlugin);
+        } else {
+          const available_language_servers = await client
+            .get_all_language_server_builders();
+
+          if (available_language_servers.Ok) {
+            const lang_servers = available_language_servers.Ok;
+
+            for (const lang_server of lang_servers) {
+              if (lang_server.id === languageId) {
+                // Initialize a language server
+                client.create_language_server(languageId);
+
+                // Create a client
+                const lsClient = new LanguageServerClient({
+                  transport: new GravitonTransport(languageId, client),
+                  rootUri,
+                  workspaceFolders: [
+                    {
+                      name: basename(dirname(unixPath)),
+                      uri: unixPath,
+                    },
+                  ],
+                });
+
+                // Create a plugin
+                const lsPlugin = languageServerWithClient({
+                  languageId,
+                  documentUri: `file:///${unixPath}`,
+                  client: lsClient,
+                });
+
+                // Save the client to re use for other editors
+                add({
+                  rootUri,
+                  languageId,
+                  client: lsClient,
+                });
+
+                extensions.push(lsPlugin);
+              }
+            }
+          }
+        }
       }
 
       const state = EditorState.create({
@@ -430,41 +471,6 @@ function TabTextEditorContainer({
       </LoadingTabContent>
     );
   }
-}
-
-function createLSPPlugin(
-  languageId: string,
-  unixPath: string,
-  rootUri: string,
-  clientCreated: (client: LanguageServerClient) => void,
-  lsClient?: LanguageServerClient,
-): Extension {
-  if (!lsClient) {
-    const client = getRecoil(clientState);
-
-    client.create_language_server(languageId);
-
-    lsClient = new LanguageServerClient({
-      transport: new GravitonTransport(languageId, client),
-      rootUri,
-      workspaceFolders: [
-        {
-          name: basename(dirname(unixPath)),
-          uri: unixPath,
-        },
-      ],
-    });
-
-    clientCreated(lsClient as LanguageServerClient);
-  }
-
-  const lspPlugin = languageServerWithClient({
-    languageId,
-    documentUri: `file:///${unixPath}`,
-    client: lsClient,
-  });
-
-  return lspPlugin;
 }
 
 export default TextEditorTab;

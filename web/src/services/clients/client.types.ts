@@ -78,7 +78,6 @@ export interface Client extends Emittery {
     CoreResponse<Array<LanguageServer>>
   >;
   emitMessage: <T>(message: T) => Promise<void>;
-
   get_terminal_shell_builders: () => Promise<
     CoreResponse<TerminalShellBuilderInfo[]>
   >;

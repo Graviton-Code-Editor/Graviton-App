@@ -1,8 +1,8 @@
-use std::process::Stdio;
+use std::{process::Stdio, sync::Arc};
 
 use async_trait::async_trait;
 use gveditor_core_api::{
-    extensions::client::ExtensionClient,
+    extensions::{client::ExtensionClient, modules::statusbar_item::StatusBarItem},
     language_servers::{LanguageServerBuilder, LanguageServerBuilderInfo},
     messaging::{ClientMessages, ServerMessages},
     tokio::{
@@ -10,7 +10,7 @@ use gveditor_core_api::{
         io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader},
         process::{ChildStdin, Command},
     },
-    LanguageServer,
+    LanguageServer, Mutex,
 };
 
 use crate::EXTENSION_NAME;
@@ -24,7 +24,14 @@ pub const NPX_BINARY: &str = "npx";
 pub struct JSTSLanguageServerBuilder {
     pub client: ExtensionClient,
     pub state_id: u8,
+    pub status_bar_item: StatusBarItem,
 }
+/*
+impl JSTSLanguageServerBuilder {
+    pub fn new(client: ExtensionClient, state_id: u8, status_bar_item: StatusBarItem) -> Self {
+        Self { client, state_id, status_bar_item, close: let (tx, rx) = oneshot::channel::<()>() }
+    }
+}*/
 
 impl LanguageServerBuilder for JSTSLanguageServerBuilder {
     fn get_info(&self) -> LanguageServerBuilderInfo {
@@ -38,6 +45,8 @@ impl LanguageServerBuilder for JSTSLanguageServerBuilder {
     fn build(&self) -> Box<dyn LanguageServer + Send + Sync> {
         let ls_client = self.client.clone();
         let state_id = self.state_id;
+        let mut status_bar_item = self.status_bar_item.clone();
+
         let mut proc = Command::new(NPX_BINARY)
             .arg("typescript-language-server")
             .arg("--stdio")
@@ -51,10 +60,24 @@ impl LanguageServerBuilder for JSTSLanguageServerBuilder {
         let stdout = proc.stdout.take().unwrap();
         let mut child_out = BufReader::new(stdout);
 
+        let close = Arc::new(Mutex::new(Some(())));
+
+        let ls = Box::new(JSTSLanguageServer {
+            stdin,
+            close: close.clone(),
+        });
+
         // Read the stdout of the language server process and parse the messages
         // Note(marc2332): To be honest, I had to look at how rust-analyzer did it.
         tokio::spawn(async move {
+            status_bar_item.set_label("tsserver (Running)").await;
+
             loop {
+                if close.lock().await.is_none() {
+                    tracing::info!("(ts-lsp) Stopping tsserver");
+                    break;
+                }
+
                 let mut size = None;
                 let mut buffer = String::new();
                 loop {
@@ -100,12 +123,31 @@ impl LanguageServerBuilder for JSTSLanguageServerBuilder {
             }
         });
 
-        Box::new(JSTSLanguageServer { stdin })
+        ls
+    }
+}
+
+impl Drop for JSTSLanguageServerBuilder {
+    fn drop(&mut self) {
+        let status_bar_item = self.status_bar_item.clone();
+        tokio::spawn(async move {
+            status_bar_item.hide().await;
+        });
     }
 }
 
 pub struct JSTSLanguageServer {
     stdin: ChildStdin,
+    close: Arc<Mutex<Option<()>>>,
+}
+
+impl Drop for JSTSLanguageServer {
+    fn drop(&mut self) {
+        let close = self.close.clone();
+        tokio::spawn(async move {
+            close.lock().await.take();
+        });
+    }
 }
 
 #[async_trait]

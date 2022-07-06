@@ -20,43 +20,33 @@ export default function Commands() {
   useEffect(() => {
     registerCommands([
       ["focus.side.panel", {
-        name: "Focus selected side panel",
         hotkey: "Ctrl+E",
       }],
       ["close.window", {
-        name: "Close Window",
         hotkey: "Esc",
       }],
       ["global.prompt", {
-        name: "Global Prompt",
         hotkey: "Ctrl+P",
       }],
       ["split.horizontally", {
-        name: "Split Horizontally",
         hotkey: "Ctrl+L",
       }],
       ["close.focused.view", {
-        name: "Close Focused View",
         hotkey: "Ctrl+K",
       }],
       ["split.vertically", {
-        name: "Split vertically",
         hotkey: "Ctrl+.",
       }],
       ["close.focused.view.panel", {
-        name: "Close Focused View Panel",
         hotkey: "Ctrl+,",
       }],
       ["save.focused.tab", {
-        name: "Save Focused tab",
         hotkey: "Ctrl+S",
       }],
       ["close.focused.tab", {
-        name: "Close Focused tab",
         hotkey: "Ctrl+W",
       }],
       ["iterate.tabs", {
-        name: "Iterate over tabs",
         hotkey: "Ctrl+Tab",
       }],
     ]);
@@ -67,9 +57,13 @@ export default function Commands() {
   const { focusSelectedSidePanel } = useSidePanels();
 
   useEffect(() => {
-    registerCommandAction("focus.side.panel", () => {
-      focusSelectedSidePanel();
-    });
+    registerCommandAction(
+      "focus.side.panel",
+      "Focus selected side panel",
+      () => {
+        focusSelectedSidePanel();
+      },
+    );
   }, [commands]);
 
   // Close current displayed window
@@ -77,7 +71,7 @@ export default function Commands() {
   const setShowedWindows = useSetRecoilState(showedWindowsState);
 
   useEffect(() => {
-    registerCommandAction("close.window", () => {
+    registerCommandAction("close.window", "Close Window", () => {
       setShowedWindows((val) => {
         const newValue = [...val];
         newValue.pop();
@@ -91,7 +85,7 @@ export default function Commands() {
   const prompts = useRecoilValue(promptsState);
 
   useEffect(() => {
-    registerCommandAction("global.prompt", () => {
+    registerCommandAction("global.prompt", "Global Prompt", () => {
       setShowedWindows((windows) => {
         let prompExists = false;
 
@@ -111,7 +105,7 @@ export default function Commands() {
         }
       });
     });
-    registerCommandAction("iterate.tabs", () => {
+    registerCommandAction("iterate.tabs", "Iterate over tabs", () => {
       setShowedWindows((windows) => {
         let prompExists = false;
 
@@ -145,18 +139,22 @@ export default function Commands() {
   } = useViews();
 
   useEffect(() => {
-    registerCommandAction("split.horizontally", () => {
+    registerCommandAction("split.horizontally", "Split Horizontally", () => {
       newViewInFocused();
     });
-    registerCommandAction("close.focused.view", () => {
+    registerCommandAction("close.focused.view", "Close Focused View", () => {
       closeFocusedView();
     });
-    registerCommandAction("split.vertically", () => {
+    registerCommandAction("split.vertically", "Split vertically", () => {
       newViewPanelInFocused();
     });
-    registerCommandAction("close.focused.view.panel", () => {
-      closeFocusedViewPanel();
-    });
+    registerCommandAction(
+      "close.focused.view.panel",
+      "Close Focused View Panel",
+      () => {
+        closeFocusedViewPanel();
+      },
+    );
   }, [viewsAndTabs, commands, focusedView]);
 
   // Save current focused tab
@@ -164,7 +162,7 @@ export default function Commands() {
   const { focusedTab, closeFocusedTab, saveFocusedTab } = useTabs();
 
   useEffect(() => {
-    registerCommandAction("save.focused.tab", () => {
+    registerCommandAction("save.focused.tab", "Save Focused tab", () => {
       saveFocusedTab();
     });
   }, [focusedTab, commands]);
@@ -172,7 +170,7 @@ export default function Commands() {
   // Close current focused tab
 
   useEffect(() => {
-    registerCommandAction("close.focused.tab", () => {
+    registerCommandAction("close.focused.tab", "Close Focused tab", () => {
       closeFocusedTab();
     });
   }, [focusedTab, focusedView, viewsAndTabs, commands]);

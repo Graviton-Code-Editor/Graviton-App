@@ -1,5 +1,5 @@
 import PromptWindow from "../components/Prompt/Prompt";
-import { Option } from "../components/Prompt/Prompt.types";
+import { Option, OptionUtils } from "../components/Prompt/Prompt.types";
 import { Prompt } from "../modules/prompt";
 import { openFileSystemPicker } from "../services/commands";
 import WelcomeTab from "../tabs/welcome";
@@ -11,12 +11,14 @@ import useTextEditorTab from "../hooks/useTextEditorTab";
 import TerminalTab from "../tabs/terminal/terminal";
 import useNotifications from "../hooks/useNotifications";
 import { Notification } from "../modules/notification";
+import useCommands from "../hooks/useCommands";
 
 function GlobalPromptContainer() {
   const { openTab } = useTabs();
   const setOpenedFolders = useSetRecoilState(foldersState);
   const { pushTextEditorTab } = useTextEditorTab();
   const { pushNotification } = useNotifications();
+  const { loadedCommands, runCommand } = useCommands();
 
   const options: Option[] = [
     {
@@ -92,6 +94,18 @@ function GlobalPromptContainer() {
         );
       },
     },
+    ...Object.keys(loadedCommands).map((cmdId) => {
+      const cmd = loadedCommands[cmdId];
+      return {
+        label: {
+          text: cmd.name,
+        },
+        async onSelected({ closePrompt }: OptionUtils) {
+          closePrompt();
+          runCommand(cmdId);
+        },
+      };
+    }),
   ];
 
   return <PromptWindow options={options} />;

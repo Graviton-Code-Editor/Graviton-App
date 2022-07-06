@@ -28,3 +28,12 @@ export interface TerminalShellUpdated extends BaseMessage {
   terminal_shell_id: string;
   data: string;
 }
+
+export interface RegisterCommand extends BaseMessage {
+  name: string;
+  id: string;
+}
+
+export interface UnloadedLanguageServer extends BaseMessage {
+  id: string;
+}

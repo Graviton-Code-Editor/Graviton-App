@@ -4,7 +4,7 @@ import { CardsGrid } from "../../../components/Card/CardsGrid";
 import useCommands from "../../../hooks/useCommands";
 
 export default function HotkeysRoute() {
-  const { commands } = useCommands();
+  const { commands, loadedCommands } = useCommands();
 
   // TODO(marc2332): Ability to add shortcuts
 
@@ -14,10 +14,11 @@ export default function HotkeysRoute() {
       <CardsGrid>
         {Object.keys(commands).map((commandID) => {
           const command = commands[commandID];
+          const { name } = loadedCommands[commandID];
           return (
             <Card key={commandID} title={commandID} tabIndex={1}>
               <CardTitle>
-                {command.name}
+                {name}
               </CardTitle>
               <CardContent>
                 {command.hotkey}

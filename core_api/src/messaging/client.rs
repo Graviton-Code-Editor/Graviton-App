@@ -55,10 +55,6 @@ impl ClientMessages {
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(tag = "msg_type")]
 pub enum LanguageServerMessage {
-    Initialization {
-        id: String,
-        state_id: u8,
-    },
     Notification {
         id: String,
         content: String,
@@ -69,7 +65,6 @@ pub enum LanguageServerMessage {
 impl LanguageServerMessage {
     pub fn get_state_id(&self) -> u8 {
         match self {
-            Self::Initialization { state_id, .. } => *state_id,
             Self::Notification { state_id, .. } => *state_id,
         }
     }
@@ -79,11 +74,20 @@ impl LanguageServerMessage {
 #[serde(tag = "msg_type")]
 pub enum UIEvent {
     StatusBarItemClicked { state_id: u8, id: String },
+    CommandActioned { state_id: u8, id: String },
 }
 
 impl UIEvent {
+    pub fn get_owner_id(&self) -> &str {
+        match self {
+            Self::CommandActioned { id, .. } => id,
+            Self::StatusBarItemClicked { id, .. } => id,
+        }
+    }
+
     pub fn get_state_id(&self) -> u8 {
         match self {
+            Self::CommandActioned { state_id, .. } => *state_id,
             Self::StatusBarItemClicked { state_id, .. } => *state_id,
         }
     }

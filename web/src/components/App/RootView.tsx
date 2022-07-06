@@ -10,9 +10,11 @@ import { Tab } from "../../modules/tab";
 import WelcomeTab from "../../tabs/welcome";
 import {
   HideStatusBarItem,
+  RegisterCommand,
   ShowPopup,
   ShowStatusBarItem,
   StateUpdated,
+  UnloadedLanguageServer,
 } from "../../types/messaging";
 import {
   clientState,
@@ -21,6 +23,8 @@ import {
 } from "../../state/state";
 import { deserializeViews } from "../../state/persistence";
 import { openedViewsAndTabs, Views } from "../../state/views_tabs";
+import useLSPClients from "../../hooks/useLSPClients";
+import { CommandActioned, UIEvent } from "../../types/messaging";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};
@@ -52,7 +56,8 @@ export function RootView({
   const setTabs = useSetRecoilState(openedViewsAndTabs);
   const { openTab } = useTabs();
   const getEditor = useEditor();
-  const { setCommands } = useCommands();
+  const { setCommands, loadCommandWithAction } = useCommands();
+  const { dispose } = useLSPClients();
 
   useEffect(() => {
     if (client != null) {
@@ -115,6 +120,24 @@ export function RootView({
           delete filteredStatusBarItems[e.id];
           return filteredStatusBarItems;
         });
+      });
+
+      // Register Commands
+      client.on("RegisterCommand", (e: RegisterCommand) => {
+        loadCommandWithAction(e.id, e.name, "", () => {
+          client.emitMessage<UIEvent<CommandActioned>>({
+            UIEvent: {
+              msg_type: "CommandActioned",
+              state_id: client.config.state_id,
+              id: e.id,
+            },
+          });
+        });
+      });
+
+      // Notify the client that a language server has stopped
+      client.on("UnloadedLanguageServer", (e: UnloadedLanguageServer) => {
+        dispose(e.id);
       });
     }
   }, [client]);

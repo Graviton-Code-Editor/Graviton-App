@@ -4,7 +4,7 @@ use tokio::sync::mpsc::error::SendError;
 use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex;
 
-use crate::messaging::{ClientMessages, UIEvent};
+use crate::messaging::ClientMessages;
 use crate::tokio::sync::mpsc::Sender as AsyncSender;
 
 use super::settings::ExtensionSettings;
@@ -59,9 +59,14 @@ impl ExtensionClient {
         Some(ExtensionSettings::new(path.clone()).await)
     }
 
+    pub fn unload(&mut self) {
+        self.event_actions = Arc::new(Mutex::new(Vec::new()));
+    }
+
     pub async fn process_message(&mut self, message: &ClientMessages) {
         let actions = &mut *self.event_actions.lock().await;
-        if let ClientMessages::UIEvent(UIEvent::StatusBarItemClicked { id, .. }) = message {
+        if let ClientMessages::UIEvent(event) = message {
+            let id = event.get_owner_id();
             actions.retain(|action| match action {
                 EventActions::OnClickCallback { id_owner, callback } => {
                     if id_owner == id {

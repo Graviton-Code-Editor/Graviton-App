@@ -2,8 +2,9 @@ import { atom } from "recoil";
 import { persistState } from "./persistence";
 
 export interface LoadedCommand {
-  id: string;
+  hotkey: string;
   action: () => void;
+  name: string;
 }
 
 // Actually loaded commands
@@ -13,7 +14,6 @@ export const loadedCommandsState = atom<Record<string, LoadedCommand>>({
 });
 
 export interface CommandConfig {
-  name: string;
   hotkey: string;
 }
 

@@ -19,15 +19,17 @@ export default function useCommands() {
 
   function registerCommandAction(
     commandID: string,
+    name: string,
     action: () => void,
   ) {
     if (commands[commandID] != null) {
-      const hotkey = commands[commandID].hotkey;
+      const { hotkey } = commands[commandID];
       setLoadedCommands((val) => {
         return {
           ...val,
-          [hotkey]: {
-            id: commandID,
+          [commandID]: {
+            hotkey,
+            name,
             action,
           },
         };
@@ -52,9 +54,9 @@ export default function useCommands() {
 
       if (e.isComposing) return;
 
-      for (const hotkey of Object.keys(loadedCommands)) {
+      for (const commandID of Object.keys(loadedCommands)) {
+        const { hotkey, action } = loadedCommands[commandID];
         const hotkeyConfig = getHotkeyConfig(hotkey);
-        const { action } = loadedCommands[hotkey];
         if (
           e.key.toLowerCase() === hotkeyConfig.keyCode.toLowerCase() &&
           e.ctrlKey === hotkeyConfig.isCtrl
@@ -73,19 +75,40 @@ export default function useCommands() {
   }, [loadedCommands]);
 
   function runCommand(id: string) {
-    for (const command of Object.values(loadedCommands)) {
-      if (command.id === id) {
+    for (const commandID of Object.keys(loadedCommands)) {
+      const command = loadedCommands[commandID];
+      if (commandID === id) {
         command.action();
       }
     }
   }
 
+  function loadCommandWithAction(
+    commandID: string,
+    name: string,
+    hotkey: string,
+    action: () => void,
+  ) {
+    setLoadedCommands((val) => {
+      return {
+        ...val,
+        [commandID]: {
+          hotkey,
+          name,
+          action,
+        },
+      };
+    });
+  }
+
   return {
     setCommands,
     commands,
+    loadedCommands,
     registerCommandAction,
     registerCommands,
     runCommand,
+    loadCommandWithAction,
   };
 }
 
