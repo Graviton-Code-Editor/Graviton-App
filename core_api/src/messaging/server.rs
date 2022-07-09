@@ -37,7 +37,7 @@ pub enum ServerMessages {
     TerminalShellUpdated {
         state_id: u8,
         terminal_shell_id: String,
-        data: String,
+        data: Vec<u8>,
     },
     RegisterCommand {
         state_id: u8,

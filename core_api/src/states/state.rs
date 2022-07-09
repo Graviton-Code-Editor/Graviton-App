@@ -275,7 +275,7 @@ impl State {
     pub async fn write_to_terminal_shell(&self, terminal_shell_id: String, data: String) {
         let shell = self.terminal_shells.get(&terminal_shell_id);
         if let Some(shell) = shell {
-            let shell = shell.lock().await;
+            let mut shell = shell.lock().await;
             shell.write(data).await;
         } else {
             warn!(
@@ -289,9 +289,9 @@ impl State {
         self.terminal_shells.remove(&terminal_shell_id);
     }
 
-    pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: u16, rows: u16) {
+    pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: i32, rows: i32) {
         let shell = self.terminal_shells.get(&terminal_shell_id).unwrap();
-        let shell = shell.lock().await;
+        let mut shell = shell.lock().await;
         shell.resize(cols, rows).await;
     }
 

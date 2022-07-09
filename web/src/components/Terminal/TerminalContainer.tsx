@@ -65,6 +65,7 @@ export function TerminalTabContainer(
 
       // Resize the shell when the terminal is resized
       const resizeListener = terminal.onResize(async ({ cols, rows }) => {
+        console.log(cols, rows)
         await client.resize_terminal_shell(id, cols, rows);
       });
 
