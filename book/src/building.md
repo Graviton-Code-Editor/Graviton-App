@@ -4,7 +4,7 @@
 Requisites:
 - nodejs + npm ([`https://nodejs.org`](https://nodejs.org))
 - cargo (**stable** channel) ([`https://www.rust-lang.org`](https://www.rust-lang.org))
-- tauri cli (`cargo install tauri-cli --version "^1.0.0"`)
+- tauri cli (`cargo install tauri-cli --version "^1.0"`)
 - tauri os-specific dependencies (See [this](https://tauri.studio/v1/guides/getting-started/prerequisites/#installing))
 - pnpm (`npm i -g pnpm`)
 - deno (See [this](https://deno.land/#installation))
