@@ -8,6 +8,8 @@ pub mod win;
 #[cfg(not(windows))]
 pub mod unix;
 
+// TODO(marc2332): Add a size parameter
+
 pub fn new_pty(
     command: &str,
     args: Vec<&str>,
