@@ -275,8 +275,11 @@ impl State {
     pub async fn write_to_terminal_shell(&self, terminal_shell_id: String, data: String) {
         let shell = self.terminal_shells.get(&terminal_shell_id);
         if let Some(shell) = shell {
-            let mut shell = shell.lock().await;
-            shell.write(data).await;
+            let shell = shell.clone();
+            tokio::spawn(async move {
+                let mut shell = shell.lock().await;
+                shell.write(data).await;
+            });
         } else {
             warn!(
                 "Could not write to non-existent terminal shell, id <{}>",

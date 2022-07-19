@@ -12,8 +12,8 @@ impl PtyUnix {
 
 #[async_trait]
 impl Pty for PtyUnix {
-    async fn write(&mut self, _data: &str) -> Result<u32, String> {
-        Ok(0)
+    async fn write(&mut self, _data: &str) -> Result<(), String> {
+        Ok(())
     }
 
     async fn resize(&mut self, (_cols, _rows): (i32, i32)) -> Result<(), String> {

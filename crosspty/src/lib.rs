@@ -4,7 +4,7 @@ pub mod platforms;
 
 #[async_trait]
 pub trait Pty {
-    async fn write(&mut self, data: &str) -> std::io::Result<usize>;
+    async fn write(&mut self, data: &str) -> Result<(), String>;
     async fn resize(&mut self, size: (i32, i32)) -> Result<(), String>;
 }
 

@@ -56,23 +56,19 @@ impl PtyWin {
 
 #[async_trait]
 impl Pty for PtyWin {
-    async fn write(&mut self, data: &str) -> std::io::Result<usize> {
+    async fn write(&mut self, data: &str) -> Result<(), String> {
         let pty = self.pty.clone();
         let data = OsString::from_str(&String::from_utf8_lossy(data.as_bytes())).unwrap();
-        tokio::spawn(async move {
-            pty.lock().await.write(data).ok();
-        });
-        Ok(1)
+        pty.lock().await.write(data).ok();
+        Ok(())
     }
 
     async fn resize(&mut self, (cols, rows): (i32, i32)) -> Result<(), String> {
         let pty = self.pty.clone();
-        tokio::spawn(async move {
-            pty.lock()
-                .await
-                .set_size(cols.try_into().unwrap(), rows.try_into().unwrap())
-                .unwrap();
-        });
+        pty.lock()
+            .await
+            .set_size(cols, rows)
+            .unwrap();
         Ok(())
     }
 }
