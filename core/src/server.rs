@@ -318,8 +318,8 @@ pub trait RpcMethods {
         state_id: u8,
         token: String,
         terminal_shell_id: String,
-        cols: u16,
-        rows: u16,
+        cols: i32,
+        rows: i32,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>>;
 
     #[rpc(name = "create_language_server")]
@@ -728,8 +728,8 @@ impl RpcMethods for RpcManager {
         state_id: u8,
         token: String,
         terminal_shell_id: String,
-        cols: u16,
-        rows: u16,
+        cols: i32,
+        rows: i32,
     ) -> BoxFuture<RPCResult<Result<(), Errors>>> {
         let states = self.states.clone();
         Box::pin(async move {
@@ -738,7 +738,6 @@ impl RpcMethods for RpcManager {
 
                 if let Ok(state) = state {
                     let mut state = state.lock().await;
-
                     state
                         .resize_terminal_shell(terminal_shell_id, cols, rows)
                         .await;

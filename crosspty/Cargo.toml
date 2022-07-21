@@ -1,0 +1,15 @@
+[package]
+name = "crosspty"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.18.2", features = ["sync", "rt", "process", "macros"]}
+async-trait = "0.1.52"
+futures = "0.3.21"
+
+[target.'cfg(windows)'.dependencies]
+winpty-rs = "0.3.7"
+
+[dev-dependencies]
+tokio = { version = "1.18.2", features = ["rt-multi-thread", "time", "io-util", "io-std"] }

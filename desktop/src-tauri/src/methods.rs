@@ -171,8 +171,8 @@ pub async fn resize_terminal_shell(
     token: String,
     tauri_state: tauri::State<'_, TauriState>,
     terminal_shell_id: String,
-    cols: u16,
-    rows: u16,
+    cols: i32,
+    rows: i32,
 ) -> RPCResult<Result<(), Errors>> {
     let res =
         tauri_state

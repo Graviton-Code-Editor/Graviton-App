@@ -204,7 +204,11 @@ async fn main() -> anyhow::Result<()> {
             STATE_ID,
         )
         .await
-        .load_extension_from_entry(native_shell::entry, native_shell::get_info(), STATE_ID)
+        .load_extension_from_entry(
+            native_shell_graviton::entry,
+            native_shell_graviton::get_info(),
+            STATE_ID,
+        )
         .await;
 
     // Load third party extensions

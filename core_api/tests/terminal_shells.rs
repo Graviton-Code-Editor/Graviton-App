@@ -11,7 +11,7 @@ impl TerminalShell for DummyShell {
         self.0.send(data).ok();
     }
 
-    async fn resize(&self, _cols: u16, _rows: u16) {
+    async fn resize(&self, _cols: i32, _rows: i32) {
         todo!()
     }
 }

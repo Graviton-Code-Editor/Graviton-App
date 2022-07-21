@@ -6,7 +6,7 @@ pub trait TerminalShell {
     // TODO(marc2332): Actually report errors
     async fn write(&self, data: String);
 
-    async fn resize(&self, cols: u16, rows: u16);
+    async fn resize(&self, cols: i32, rows: i32);
 }
 
 #[derive(Serialize, Deserialize, Clone)]

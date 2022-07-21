@@ -34,7 +34,7 @@ pub struct State {
     pub terminal_shell_builders:
         HashMap<String, Arc<Mutex<Box<dyn TerminalShellBuilder + Send + Sync>>>>,
     // Created Shells by the client
-    pub terminal_shells: HashMap<String, Arc<Mutex<Box<dyn TerminalShell + Send + Sync>>>>,
+    pub terminal_shells: HashMap<String, Arc<Box<dyn TerminalShell + Send + Sync>>>,
 }
 
 impl fmt::Debug for State {
@@ -263,7 +263,7 @@ impl State {
             let shell_builder = shell_builder.lock().await;
             let shell = shell_builder.build(&terminal_shell_id);
             self.terminal_shells
-                .insert(terminal_shell_id, Arc::new(Mutex::new(shell)));
+                .insert(terminal_shell_id, Arc::new(shell));
         } else {
             warn!(
                 "Could not create a terminal shell, missing builder with id <{}>",
@@ -275,7 +275,7 @@ impl State {
     pub async fn write_to_terminal_shell(&self, terminal_shell_id: String, data: String) {
         let shell = self.terminal_shells.get(&terminal_shell_id);
         if let Some(shell) = shell {
-            let shell = shell.lock().await;
+            let shell = shell.clone();
             shell.write(data).await;
         } else {
             warn!(
@@ -289,9 +289,8 @@ impl State {
         self.terminal_shells.remove(&terminal_shell_id);
     }
 
-    pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: u16, rows: u16) {
+    pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: i32, rows: i32) {
         let shell = self.terminal_shells.get(&terminal_shell_id).unwrap();
-        let shell = shell.lock().await;
         shell.resize(cols, rows).await;
     }
 
