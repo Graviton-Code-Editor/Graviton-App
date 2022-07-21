@@ -1,6 +1,7 @@
 use crosspty::platforms::new_pty;
 use tokio::sync::mpsc::channel;
 
+#[cfg(any(target_os = "windows"))]
 #[tokio::test]
 async fn boots_up() {
     let (tx, mut rx) = channel::<Vec<u8>>(1);
