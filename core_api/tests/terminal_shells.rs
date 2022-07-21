@@ -7,11 +7,11 @@ struct DummyShell(UnboundedSender<String>);
 
 #[async_trait]
 impl TerminalShell for DummyShell {
-    async fn write(&mut self, data: String) {
+    async fn write(&self, data: String) {
         self.0.send(data).ok();
     }
 
-    async fn resize(&mut self, _cols: i32, _rows: i32) {
+    async fn resize(&self, _cols: i32, _rows: i32) {
         todo!()
     }
 }
@@ -21,7 +21,7 @@ async fn terminal_shells() {
     let (in_writer, mut in_reader) = unbounded_channel::<String>();
     let (out_writer, mut out_reader) = unbounded_channel::<String>();
 
-    let mut shell = DummyShell(in_writer);
+    let shell = DummyShell(in_writer);
 
     tokio::spawn(async move {
         while let Some(_msg) = in_reader.recv().await {

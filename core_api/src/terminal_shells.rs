@@ -4,9 +4,9 @@ use serde::{Deserialize, Serialize};
 #[async_trait]
 pub trait TerminalShell {
     // TODO(marc2332): Actually report errors
-    async fn write(&mut self, data: String);
+    async fn write(&self, data: String);
 
-    async fn resize(&mut self, cols: i32, rows: i32);
+    async fn resize(&self, cols: i32, rows: i32);
 }
 
 #[derive(Serialize, Deserialize, Clone)]

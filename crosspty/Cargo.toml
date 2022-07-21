@@ -6,10 +6,10 @@ edition = "2021"
 [dependencies]
 tokio = { version = "1.18.2", features = ["sync", "rt", "process", "macros"]}
 async-trait = "0.1.52"
+futures = "0.3.21"
 
 [target.'cfg(windows)'.dependencies]
 winpty-rs = "0.3.7"
-futures = "0.3.21"
 
 [dev-dependencies]
 tokio = { features = ["rt-multi-thread", "time", "io-util", "io-std"] }

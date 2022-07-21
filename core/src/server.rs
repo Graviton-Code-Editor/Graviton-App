@@ -738,7 +738,6 @@ impl RpcMethods for RpcManager {
 
                 if let Ok(state) = state {
                     let mut state = state.lock().await;
-                    println!("{}", cols);
                     state
                         .resize_terminal_shell(terminal_shell_id, cols, rows)
                         .await;

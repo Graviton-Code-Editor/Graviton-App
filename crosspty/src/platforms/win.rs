@@ -2,14 +2,14 @@ use std::{ffi::OsString, str::FromStr, sync::Arc};
 
 use async_trait::async_trait;
 use futures::executor::block_on;
-use tokio::sync::{mpsc::Sender, Mutex};
+use tokio::sync::mpsc::Sender;
 use winptyrs::{AgentConfig, MouseMode, PTYArgs, PTYBackend, PTY};
 
 use crate::Pty;
 
 #[derive(Clone)]
 pub struct PtyWin {
-    pty: Arc<Mutex<PTY>>,
+    pty: Arc<PTY>,
 }
 
 impl PtyWin {
@@ -30,20 +30,18 @@ impl PtyWin {
 
         pty.spawn(cmd, None, None, None).unwrap();
 
-        let pty = Arc::new(Mutex::new(pty));
+        let pty = Arc::new(pty);
         {
             let pty = pty.clone();
             tokio::task::spawn_blocking(move || {
                 block_on(async move {
                     loop {
-                        let output = pty.lock().await.read(2000, false);
+                        let output = pty.read(1000, true);
                         if let Ok(output) = output {
-                            if !output.is_empty() {
-                                sender
-                                    .send(output.to_string_lossy().as_bytes().to_vec())
-                                    .await
-                                    .unwrap();
-                            }
+                            sender
+                                .send(output.to_string_lossy().as_bytes().to_vec())
+                                .await
+                                .unwrap();
                         }
                     }
                 })
@@ -56,19 +54,16 @@ impl PtyWin {
 
 #[async_trait]
 impl Pty for PtyWin {
-    async fn write(&mut self, data: &str) -> Result<(), String> {
+    async fn write(&self, data: &str) -> Result<(), String> {
         let pty = self.pty.clone();
         let data = OsString::from_str(&String::from_utf8_lossy(data.as_bytes())).unwrap();
-        pty.lock().await.write(data).ok();
+        pty.write(data).ok();
         Ok(())
     }
 
-    async fn resize(&mut self, (cols, rows): (i32, i32)) -> Result<(), String> {
+    async fn resize(&self, (cols, rows): (i32, i32)) -> Result<(), String> {
         let pty = self.pty.clone();
-        pty.lock()
-            .await
-            .set_size(cols, rows)
-            .unwrap();
+        pty.set_size(cols, rows).unwrap();
         Ok(())
     }
 }

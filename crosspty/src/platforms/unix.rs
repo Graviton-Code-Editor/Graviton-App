@@ -12,11 +12,11 @@ impl PtyUnix {
 
 #[async_trait]
 impl Pty for PtyUnix {
-    async fn write(&mut self, _data: &str) -> Result<(), String> {
+    async fn write(&self, _data: &str) -> Result<(), String> {
         Ok(())
     }
 
-    async fn resize(&mut self, (_cols, _rows): (i32, i32)) -> Result<(), String> {
+    async fn resize(&self, (_cols, _rows): (i32, i32)) -> Result<(), String> {
         Ok(())
     }
 }

@@ -1915,7 +1915,7 @@ dependencies = [
  "gveditor-core",
  "gveditor-core-api",
  "gveditor-core-deno",
- "native-shell",
+ "native-shell-graviton",
  "serde",
  "serde_json",
  "tauri",
@@ -2942,16 +2942,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "native-shell"
+name = "native-shell-graviton"
 version = "0.1.0"
 dependencies = [
  "async-trait",
  "crosspty",
  "gveditor-core-api",
- "libc",
  "serde",
  "serde_json",
- "utf8-chars",
 ]
 
 [[package]]
@@ -5459,15 +5457,6 @@ name = "utf-8"
 version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "09cc8ee72d2a9becf2f2febe0205bbed8fc6615b7cb429ad062dc7b7ddd036a9"
-
-[[package]]
-name = "utf8-chars"
-version = "2.0.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6ef0a4014b773d93a0fe487750589dc5c5b7d714457454e7e62f54d131c278af"
-dependencies = [
- "arrayvec",
-]
 
 [[package]]
 name = "uuid"

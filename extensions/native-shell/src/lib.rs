@@ -57,19 +57,7 @@ impl Extension for NativeShellExtension {
                 }))),
             );
 
-            #[cfg(not(windows))]
-            state.lock().await.terminal_shell_builders.insert(
-                "bash".to_string(),
-                Arc::new(Mutex::new(Box::new(NativeShellBuilder {
-                    client: client.clone(),
-                    state_id,
-                    command: "bash".to_string(),
-                    info: TerminalShellBuilderInfo {
-                        name: "Bash".to_string(),
-                        id: "bash".to_string(),
-                    },
-                }))),
-            );
+            // TODO(marc2332): Add bash shell for Linux and MacOS
         });
     }
 

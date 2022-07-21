@@ -1,9 +1,8 @@
 [package]
-name = "native-shell"
+name = "native-shell-graviton"
 version = "0.1.0"
 edition = "2021"
 authors = ["Marc Espín Sanz"]
-readme = "../readme.md"
 repository = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
 homepage = "https://github.com/Graviton-Code-Editor/Graviton-App/tree/main"
 license = "MIT"
@@ -14,5 +13,3 @@ serde_json = "1.0.79"
 serde = { version = "1.0.136", features = ["derive"] }
 async-trait = "0.1.52"
 crosspty = { path = "../../crosspty"}
-utf8-chars = "2.0.2"
-libc = "0.2.126"

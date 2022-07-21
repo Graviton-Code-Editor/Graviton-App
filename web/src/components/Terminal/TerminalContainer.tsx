@@ -13,9 +13,10 @@ import { TerminalShellPicker } from "./ShellPicker";
 
 const StyledTerminalContainer = styled.div`
   height: 100%;
-  padding: 18px;
+  padding-top: 18px;
+  padding-left: 18px;
   & > div {
-    height: calc(100% - 9px);
+    height: calc(100% - 18px);
   }
 `;
 
@@ -59,14 +60,13 @@ export function TerminalTabContainer(
       client.on("TerminalShellUpdated", shellListener);
 
       // Write to the shell
-      const dataListener = terminal.onData(async (data) => {
-        await client.write_to_terminal_shell(id, data);
+      const dataListener = terminal.onData((data) => {
+        client.write_to_terminal_shell(id, data);
       });
 
       // Resize the shell when the terminal is resized
-      const resizeListener = terminal.onResize(async ({ cols, rows }) => {
-        console.log(cols, rows)
-        await client.resize_terminal_shell(id, cols, rows);
+      const resizeListener = terminal.onResize(({ cols, rows }) => {
+        client.resize_terminal_shell(id, cols, rows);
       });
 
       const resizeObserver = new ResizeObserver(() => {
@@ -103,9 +103,11 @@ export function TerminalTabContainer(
     await client.create_terminal_shell(builder_id, id);
 
     const terminal = new Terminal({
-      windowsMode: true,
+      windowsMode: window.navigator.platform === "Win32",
       fontFamily: "JetBrains Mono",
       theme: themeForTerminal(themeContext),
+      cursorStyle: "bar",
+      cursorBlink: true
     });
     const fit = new FitAddon();
     terminal.loadAddon(fit);

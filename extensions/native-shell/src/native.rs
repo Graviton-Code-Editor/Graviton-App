@@ -57,11 +57,11 @@ pub struct NativeShell {
 
 #[async_trait]
 impl TerminalShell for NativeShell {
-    async fn write(&mut self, data: String) {
+    async fn write(&self, data: String) {
         self.pty.write(&data).await.unwrap();
     }
 
-    async fn resize(&mut self, cols: i32, rows: i32) {
+    async fn resize(&self, cols: i32, rows: i32) {
         self.pty.resize((cols, rows)).await.unwrap();
     }
 }
