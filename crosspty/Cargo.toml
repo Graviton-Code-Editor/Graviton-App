@@ -12,4 +12,4 @@ futures = "0.3.21"
 winpty-rs = "0.3.7"
 
 [dev-dependencies]
-tokio = { features = ["rt-multi-thread", "time", "io-util", "io-std"] }
+tokio = { version = "1.18.2", features = ["rt-multi-thread", "time", "io-util", "io-std"] }

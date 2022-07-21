@@ -36,12 +36,18 @@ impl PtyWin {
             tokio::task::spawn_blocking(move || {
                 block_on(async move {
                     loop {
+                        if sender.is_closed() {
+                            break;
+                        }
                         let output = pty.read(1000, true);
                         if let Ok(output) = output {
-                            sender
+                            let res = sender
                                 .send(output.to_string_lossy().as_bytes().to_vec())
-                                .await
-                                .unwrap();
+                                .await;
+
+                            if res.is_err() {
+                                break;
+                            }
                         }
                     }
                 })

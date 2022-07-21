@@ -6,7 +6,7 @@ use tokio::sync::mpsc::channel;
 #[tokio::main]
 async fn main() {
     let (tx, mut rx) = channel::<Vec<u8>>(1);
-    let mut pty = new_pty("powershell", vec!["-noprofile"], tx);
+    let pty = new_pty("powershell", vec!["-noprofile"], tx);
     tokio::spawn(async move {
         loop {
             let cmd = "echo 'hello world' \x0D";
