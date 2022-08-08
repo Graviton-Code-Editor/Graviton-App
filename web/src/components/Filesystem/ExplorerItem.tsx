@@ -69,6 +69,7 @@ const ExplorerItem = styled.div<{
     }
     & .file svg {
       width: 20px;
+      height: 20px;
       margin-right: 4px;
       margin-top: 3px;
       ${({ isFile }) => isFile && "padding-left: 29px;"}
