@@ -22,7 +22,7 @@ import {
   showedWindowsState,
 } from "../../state/state";
 import { deserializeViews } from "../../state/persistence";
-import { openedViewsAndTabs, Views } from "../../state/views_tabs";
+import { Views } from "../../state/views_tabs";
 import useLSPClients from "../../hooks/useLSPClients";
 import { CommandActioned, UIEvent } from "../../types/messaging";
 
@@ -53,8 +53,7 @@ export function RootView({
   const client = useRecoilValue(clientState);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const setShowedStatusBarItems = useSetRecoilState(showedStatusBarItem);
-  const setTabs = useSetRecoilState(openedViewsAndTabs);
-  const { openTab } = useTabs();
+  const { openTab, openTabs } = useTabs();
   const getEditor = useEditor();
   const { setCommands, loadCommandWithAction } = useCommands();
   const { dispose } = useLSPClients();
@@ -80,7 +79,7 @@ export function RootView({
 
         // Open the tabs
         if (allTabs.length > 0) {
-          setTabs([...openedTabs]);
+          openTabs([...openedTabs]);
         } else {
           openTab(new WelcomeTab());
         }

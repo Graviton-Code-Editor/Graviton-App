@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import useContextMenu from "../../hooks/useContextMenu";
 import useTabs from "../../hooks/useTabs";
@@ -10,6 +10,7 @@ import { focusedViewPanelState } from "../../state/view";
 import TabButton from "./TabButton";
 import { useTranslation } from "react-i18next";
 import useCommands from "../../hooks/useCommands";
+import { focusedTabState } from "../../state/tab";
 
 const NoTabsOpenedMessageContainer = styled.div`
   color: ${({ theme }) => theme.elements.tab.text.unfocused.color};
@@ -80,6 +81,7 @@ export default function ViewPanelView({
   const { pushContextMenu } = useContextMenu();
   const { focusTab, selectTab, closeTab, saveTab, setTabEdited } = useTabs();
   const setFocusedView = useSetRecoilState(focusedViewPanelState);
+  const focused_tab_id = useRecoilValue(focusedTabState).id;
 
   useEffect(() => {
     // If there isn't any tab opened then set the selected tab to null
@@ -190,6 +192,7 @@ export default function ViewPanelView({
       <div className="tabsList">
         {tabs.map((tab) => {
           const isSelected = tab.id == selected_tab_id;
+          const isFocused = tab.id == focused_tab_id;
           const isEdited = tab.edited;
           const { icon: TabIcon } = tab;
           return (
@@ -199,6 +202,7 @@ export default function ViewPanelView({
               tab={tab}
               isEdited={isEdited}
               isSelected={isSelected}
+              isFocused={isFocused}
               select={() => selectPanelTab(tab)}
               close={() =>
                 removeTab(tab, false)}

@@ -11,6 +11,7 @@ export interface TabsUtils {
   focusedTab: FocusedTab;
   focusedView: FocusedViewPanel;
   openTab: (newTab: Tab) => void;
+  openTabs: (newTabs: Array<Views<Tab>>) => void;
   selectTab: (ops: {
     tab: Tab | null;
     col: number;
@@ -112,6 +113,19 @@ export default function useTabs(): TabsUtils {
 
       setFocusedTab({ col, row, tab: newTab, id: newTab ? newTab.id : null });
       setFocusedView({ col, row });
+    },
+    openTabs: (newTabs) => {
+      const selectedTab = newTabs[0].view_panels[0].tabs.find((tab) =>
+        tab.id === newTabs[0].view_panels[0].selected_tab_id
+      );
+      setViewsAndTabs(newTabs);
+      setFocusedTab({
+        col: 0,
+        row: 0,
+        tab: selectedTab ? selectedTab : null,
+        id: selectedTab ? selectedTab.id : null,
+      });
+      setFocusedView({ col: 0, row: 0 });
     },
     selectTab,
     focusTab: ({ tab, col, row }) => {

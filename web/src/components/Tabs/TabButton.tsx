@@ -24,7 +24,9 @@ const TabButtonStyle = styled.div`
   align-items: center;
   cursor: pointer;
   user-select: none;
-  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-left: 1px solid transparent;
   transition-property: opacity, min-width, width, padding;
   transition-duration: 0.140s;
   overflow: hidden;
@@ -32,8 +34,19 @@ const TabButtonStyle = styled.div`
     background: ${({ theme }) => theme.elements.tab.button.hover.background};
   }
   &.selected {
-    background: ${({ theme }) => theme.elements.tab.button.focused.background};
-    border-bottom-color: ${({ theme }) =>
+    background: ${({ theme }) => theme.elements.tab.button.selected.background};
+    border-top-color: ${({ theme }) =>
+  theme.elements.tab.button.selected.accentBorder};
+    border-right: 1px solid ${({ theme }) =>
+  theme.elements.tab.button.selected.border};
+    &:not(:nth-child(1)){
+      border-left: 1px solid ${({ theme }) =>
+  theme.elements.tab.button.selected.border};
+    }
+    
+  }
+  &.focused {
+    border-top-color: ${({ theme }) =>
   theme.elements.tab.button.focused.border};
   }
   & > p {
@@ -78,6 +91,7 @@ interface TabButtonOptions {
   tab: Tab;
   isSelected: boolean;
   isEdited: boolean;
+  isFocused: boolean;
   select: () => void;
   close: () => void;
   save: () => void;
@@ -87,6 +101,7 @@ interface TabButtonOptions {
 export default function TabButton({
   tab,
   isSelected,
+  isFocused,
   select,
   close,
   isEdited,
@@ -141,7 +156,9 @@ export default function TabButton({
     <Transition in={mounted} timeout={mounted ? 100 : 80}>
       {(state) => (
         <TabButtonStyle
-          className={isSelected ? "selected" : ""}
+          className={`${isSelected ? "selected" : ""} ${
+            isFocused ? "focused" : ""
+          }`}
           onClick={select}
           onContextMenu={contextMenu}
           title={tab.hint}

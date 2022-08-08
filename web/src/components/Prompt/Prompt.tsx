@@ -29,7 +29,9 @@ export default function PromptWindow(
   const refInput = useRef<HTMLInputElement>(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const { t } = useTranslation();
-  const [selectedOption, setSelectedOption] = useState<number>(selectedIndex);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(
+    selectedIndex,
+  );
   const [inputSearch, setInputSearch] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<
     Array<TransatedOption>
@@ -58,20 +60,20 @@ export default function PromptWindow(
   function onArrowDown(e: KeyboardEvent) {
     switch (e.key) {
       case "ArrowUp":
-        setSelectedOption((selectedOption) => {
-          if (selectedOption > 0) {
-            return selectedOption - 1;
+        setSelectedOptionIndex((selectedOptionIndex) => {
+          if (selectedOptionIndex > 0) {
+            return selectedOptionIndex - 1;
           }
-          return selectedOption;
+          return selectedOptionIndex;
         });
         focusInput();
         break;
       case "ArrowDown":
-        setSelectedOption((selectedOption) => {
-          if (selectedOption < filteredOptions.length - 1) {
-            return selectedOption + 1;
+        setSelectedOptionIndex((selectedOptionIndex) => {
+          if (selectedOptionIndex < filteredOptions.length - 1) {
+            return selectedOptionIndex + 1;
           }
-          return selectedOption;
+          return selectedOptionIndex;
         });
         focusInput();
         break;
@@ -80,11 +82,15 @@ export default function PromptWindow(
 
   function onEnterDown(e: KeyboardEvent) {
     switch (e.key) {
-      case "Enter":
-        filteredOptions[selectedOption].option.onSelected({
-          closePrompt,
-        });
+      case "Enter": {
+        const selectedOption = filteredOptions[selectedOptionIndex];
+        if (selectedOption) {
+          selectedOption.option.onSelected({
+            closePrompt,
+          });
+        }
         break;
+      }
     }
   }
 
@@ -104,7 +110,7 @@ export default function PromptWindow(
   // Translate and filter all the options when the input is changed
   useEffect(() => {
     setFilteredOptions(options.map(translateOption).filter(filterOption));
-    setSelectedOption(selectedIndex);
+    setSelectedOptionIndex(selectedIndex);
   }, [inputSearch, options]);
 
   // Listen for Up and Down arrows
@@ -123,7 +129,7 @@ export default function PromptWindow(
     return () => {
       window.removeEventListener("keydown", onEnterDown);
     };
-  }, [filteredOptions, selectedOption]);
+  }, [filteredOptions, selectedOptionIndex]);
 
   return (
     <>
@@ -141,7 +147,7 @@ export default function PromptWindow(
                 key={indexOption}
                 option={option}
                 closePrompt={closePrompt}
-                selectedOption={selectedOption}
+                selectedOption={selectedOptionIndex}
                 indexOption={indexOption}
               >
                 {text}

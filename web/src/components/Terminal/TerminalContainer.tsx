@@ -107,7 +107,7 @@ export function TerminalTabContainer(
       fontFamily: "JetBrains Mono",
       theme: themeForTerminal(themeContext),
       cursorStyle: "bar",
-      cursorBlink: true
+      cursorBlink: true,
     });
     const fit = new FitAddon();
     terminal.loadAddon(fit);

@@ -161,9 +161,13 @@ const theme = {
             border: "rgb(70, 70, 70);",
           },
         },
-        focused: {
+        selected: {
           background: "#191919",
-          border: "rgb(150,150,150)",
+          border: "#464646",
+          accentBorder: "rgb(150,150,150)",
+        },
+        focused: {
+          border: "#9f8671",
         },
       },
       container: {
