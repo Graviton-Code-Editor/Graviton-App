@@ -14,7 +14,7 @@ const StyledIconButton = styled.button<{ selected: boolean }>`
   border-radius: 5px;
   overflow: hidden;
   margin: 0px 3px;
-  margin-bottom: 3px;
+  margin-top: 3px;
   cursor: pointer;
   transition: background 0.1s;
   &:hover {

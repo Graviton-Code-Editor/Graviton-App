@@ -4,10 +4,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+.cm-editor * {
+  font-family: "JetBrains Mono" !important;
+}
+
+html[platform="darwin"] * {
+  font-family: -apple-system, BlinkMacSystemFont, "Inter";
+}
+
+html[platform="linux"] * {
+  font-family: "Fira Sans", "Ubuntu", "Inter";
+}
+
+html[platform="win"] * {
+  font-family: "Inter", "Segoe UI";
 }
 
 html,
@@ -15,11 +25,6 @@ body,
 #root {
   height: 100%;
 }
-
-.cm-editor * {
-  font-family: "JetBrains Mono";
-}
-
 
 .xterm-screen canvas {
   z-index: 0 !important;
