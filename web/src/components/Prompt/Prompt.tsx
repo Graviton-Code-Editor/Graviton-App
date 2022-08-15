@@ -95,7 +95,7 @@ export default function PromptWindow(
   }
 
   function inputChanged(event: React.ChangeEvent<HTMLInputElement>) {
-    setInputSearch(event.target.value);
+    setInputSearch(event.target.value.toLowerCase());
   }
 
   function translateOption(option: Option) {

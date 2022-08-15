@@ -10,7 +10,7 @@ export const StyledPromptOption = styled.button<{ isSelected: boolean }>`
   width: 100%;
   border: none;
   text-align: left;
-  font-size: 13px;
+  font-size: 14px;
   outline: none;
   display: flex;
   align-items: center;

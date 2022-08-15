@@ -7,7 +7,8 @@ export const PromptInput = styled.input`
   border-radius: 5px;
   border: none;
   outline: none;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
+  font-size: 14px;
 `;
