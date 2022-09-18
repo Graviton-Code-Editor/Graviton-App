@@ -1,17 +1,9 @@
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import useCommands from "../../hooks/useCommands";
-import useSidePanels from "../../hooks/useSidePanels";
-import useTabs from "../../hooks/useTabs";
-import useViews from "../../hooks/useViews";
-import { Prompt } from "../../modules/prompt";
-import GlobalPrompt from "../../prompts/global";
-import TabsPrompt from "../../prompts/tabs";
-import {
-  openedViewsAndTabs,
-  promptsState,
-  showedWindowsState,
-} from "../../state/state";
+import { useCommands, useSidePanels, useTabs, useViews } from "hooks";
+import { Prompt } from "features/prompt/prompt";
+import { GlobalPrompt, TabsPrompt } from "prompts";
+import { openedViewsAndTabs, promptsState, showedWindowsState } from "state";
 
 export default function Commands() {
   const { registerCommandAction, registerCommands, commands } = useCommands();

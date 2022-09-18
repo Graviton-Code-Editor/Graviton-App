@@ -1,12 +1,10 @@
 import { useRecoilValue } from "recoil";
-import { clientState } from "../state/state";
-import useEditor from "./useEditor";
-import useNotifications from "./useNotifications";
-import useTabs from "./useTabs";
-import { Notification } from "../modules/notification";
+import { clientState } from "state";
+import { useEditor, useNotifications, useTabs } from "hooks";
+import { Notification } from "../features/notification/notification";
 import { basename } from "../utils/path";
 
-export default function useTextEditorTab() {
+export function useTextEditorTab() {
   const client = useRecoilValue(clientState);
   const { openTab } = useTabs();
   const getEditor = useEditor();

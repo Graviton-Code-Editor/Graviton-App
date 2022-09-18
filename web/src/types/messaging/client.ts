@@ -1,4 +1,4 @@
-import { BaseMessage } from "../../services/clients/client.types";
+import { BaseMessage } from "services/clients/client.types";
 
 ///////// NotifyExtension Messages
 

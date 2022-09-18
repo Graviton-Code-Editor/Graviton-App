@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
-import { LanguageServerConfig, lspClients } from "../state/lsp";
+import { LanguageServerConfig, lspClients } from "state";
 
-export default function useLSPClients() {
+export function useLSPClients() {
   const [clients, setClients] = useRecoilState(lspClients);
 
   return {

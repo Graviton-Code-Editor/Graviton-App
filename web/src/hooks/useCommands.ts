@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
-import {
-  CommandConfig,
-  commandsState,
-  loadedCommandsState,
-} from "../state/commands";
+import { CommandConfig, commandsState, loadedCommandsState } from "state";
 
 export interface HotKeyConfig {
   isCtrl: boolean;
   keyCode: string;
 }
 
-export default function useCommands() {
+export function useCommands() {
   const [commands, setCommands] = useRecoilState(commandsState);
   const [loadedCommands, setLoadedCommands] = useRecoilState(
     loadedCommandsState,

@@ -1,7 +1,7 @@
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
-import { notificationsOpenedState } from "../../state/state";
-import { Notification } from "../../modules/notification";
+import { notificationsOpenedState } from "atoms";
+import { Notification } from "features/notification/notification";
 
 const NotificationsContainer = styled.div`
   position: absolute;

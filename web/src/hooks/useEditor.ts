@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
-import TextEditorTab from "../tabs/text_editor/text_editor";
+import { TextEditorTab } from "modules/tabs";
 import { FileFormat } from "../services/clients/client.types";
-import { editors } from "../state/state";
+import { editors } from "state";
 
 export type EditorFinder = (
   format: FileFormat,
@@ -10,7 +10,7 @@ export type EditorFinder = (
 /**
  * Easily retrieve the best matching editor
  */
-export default function useEditor(): EditorFinder {
+export function useEditor(): EditorFinder {
   const loadedEditors = useRecoilValue(editors);
 
   return (format: FileFormat) =>

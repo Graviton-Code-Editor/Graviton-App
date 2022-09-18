@@ -12,8 +12,8 @@ import {
   ManifestInfo as ManifestInfo,
   TerminalShellBuilderInfo,
 } from "./client.types";
-import Configuration from "../../utils/config";
-import { StateData } from "../../state/persistence";
+import Configuration from "utils/config";
+import { StateData } from "state";
 
 /**
  * Tauri Client

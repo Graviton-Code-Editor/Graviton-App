@@ -2,7 +2,7 @@ import { WebviewWindow } from "@tauri-apps/api/window";
 import { useEffect, useState } from "react";
 import { ReactSVG } from "react-svg";
 import styled from "styled-components";
-import { isTauri } from "../../services/commands";
+import { isTauri } from "services/commands";
 import LogoIcon from "./LogoIcon";
 
 export const TitleBarContainer = styled.div`

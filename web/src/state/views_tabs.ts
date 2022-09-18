@@ -1,5 +1,5 @@
 import { atom } from "recoil";
-import { Tab } from "../modules/tab";
+import { Tab } from "../features/tab/tab";
 import { newId } from "../utils/id";
 import { persistState } from "./persistence";
 

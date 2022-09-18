@@ -1,10 +1,10 @@
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { Popup } from "../modules/popup";
-import { Tab } from "../modules/tab";
-import { openedViewsAndTabs, showedWindowsState } from "../state/state";
-import { FocusedTab, focusedTabState } from "../state/tab";
+import { Popup } from "../features/popup/popup";
+import { Tab } from "../features/tab/tab";
+import { openedViewsAndTabs, Views } from "../state/views_tabs";
 import { FocusedViewPanel, focusedViewPanelState } from "../state/view";
-import { Views } from "../state/views_tabs";
+import { showedWindowsState } from "atoms";
+import { FocusedTab, focusedTabState } from "state";
 
 export interface TabsUtils {
   viewsAndTabs: Views<Tab>[];
@@ -38,7 +38,7 @@ export interface TabsUtils {
 /**
  * Utils for Tabs
  */
-export default function useTabs(): TabsUtils {
+export function useTabs(): TabsUtils {
   const [viewsAndTabs, setViewsAndTabs] = useRecoilState(openedViewsAndTabs);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
   const [focusedTab, setFocusedTab] = useRecoilState(focusedTabState);

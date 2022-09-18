@@ -1,4 +1,4 @@
-import { isTauri } from "../../services/commands";
+import { isTauri } from "services/commands";
 import styled from "styled-components";
 import { PropsWithChildren } from "react";
 

@@ -4,14 +4,17 @@ import {
   CoreResponse,
   FileInfo,
 } from "../services/clients/client.types";
-import SettingsTab from "../tabs/settings";
-import TextEditorTab from "../tabs/text_editor/text_editor";
-import WelcomeTab from "../tabs/welcome";
+import { SettingsTab, TextEditorTab, WelcomeTab } from "tabs";
 import { newId } from "../utils/id";
 import { CommandConfig, commandsState } from "./commands";
 import { openedViewsAndTabs, ViewPanel, Views } from "./views_tabs";
 import { clientState } from "./state";
-import { BasicTabData, Tab, TabData, TextEditorTabData } from "../modules/tab";
+import {
+  BasicTabData,
+  Tab,
+  TabData,
+  TextEditorTabData,
+} from "../features/tab/tab";
 import { EditorFinder } from "../hooks/useEditor";
 
 /**

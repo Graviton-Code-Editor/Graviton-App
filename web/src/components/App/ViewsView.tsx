@@ -1,8 +1,8 @@
 import { SplitPane } from "react-multi-split-pane";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { openedViewsAndTabs } from "../../state/state";
-import ViewPanelView from "../Tabs/ViewPanelView";
+import { openedViewsAndTabs } from "state";
+import { ViewPanelView } from "features/tab/components/ViewPanelView";
 
 const TabsContainer = styled.div`
   overflow: hidden;

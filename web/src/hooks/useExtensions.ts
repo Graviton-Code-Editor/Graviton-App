@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { ManifestInfo } from "../services/clients/client.types";
-import { clientState } from "../state/state";
+import { clientState } from "state";
 
 /**
  * Easily retrieve the extensions using the client
  *
  * @returns All the loaded extensions manifests
  */
-export default function useExtensions() {
+export function useExtensions() {
   const [extensions, setExtensions] = useState<ManifestInfo[]>([]);
   const client = useRecoilValue(clientState);
 

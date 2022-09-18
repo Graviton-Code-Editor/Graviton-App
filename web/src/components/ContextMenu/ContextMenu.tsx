@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import styled, { keyframes } from "styled-components";
-import { TranslatedText } from "../../types/types";
+import { TranslatedText } from "types";
 
 export interface MenuHandler {
   label: TranslatedText;

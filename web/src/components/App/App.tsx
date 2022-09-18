@@ -1,24 +1,23 @@
 import { useEffect } from "react";
-import { createClient } from "../../services/client";
-import { clientState, promptsState } from "../../state/state";
+import { createClient } from "services/client";
+import { clientState, promptsState } from "atoms";
 import { RecoilRoot, useSetRecoilState } from "recoil";
 import RecoilNexus from "recoil-nexus";
 import SidePanelsView from "./SidePanelsView";
 import ViewsView from "./ViewsView";
 import Theme from "../Providers/ThemeProvider";
 import { SplitPane } from "react-multi-split-pane";
-import { isTauri } from "../../services/commands";
-import ExplorerPanel from "../../panels/explorer";
+import { isTauri } from "services/commands";
+import { ExplorerPanel, GitPanel } from "panels";
 import StatusBarView from "./StatusBarView";
-import GlobalPrompt from "../../prompts/global";
+import { GlobalPrompt } from "prompts";
 import TitleBar from "./TitleBar";
 import ContextMenuView from "./ContextMenuView";
 import WindowsView from "./WindowsView";
 import { RootView } from "./RootView";
 import Commands from "./Commands";
-import useSidePanels from "../../hooks/useSidePanels";
+import { useSidePanels } from "hooks";
 import NotificationsView from "./NotificationsView";
-import GitPanel from "../../panels/git/git";
 
 /*
  * Retrieve the authentication token

@@ -1,8 +1,8 @@
 import { useSetRecoilState } from "recoil";
 import { ContextMenuConfig } from "../components/ContextMenu/ContextMenu";
-import { contextMenuOpened } from "../state/state";
+import { contextMenuOpened } from "atoms";
 
-export default function useContextMenu() {
+export function useContextMenu() {
   const setContextMenu = useSetRecoilState(contextMenuOpened);
 
   return {

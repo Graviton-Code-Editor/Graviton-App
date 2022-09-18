@@ -10,15 +10,15 @@ import "./utils/translation";
 applyPatches();
 
 const os = (() => {
-    const platform = navigator.platform.toLowerCase();
-    if(platform.startsWith("mac")) {
-        return "darwin";
-    } else if(platform.startsWith("linux")) {
-        return "linux";
-    } else {
-        return "win";
-    }
-})()
+  const platform = navigator.platform.toLowerCase();
+  if (platform.startsWith("mac")) {
+    return "darwin";
+  } else if (platform.startsWith("linux")) {
+    return "linux";
+  } else {
+    return "win";
+  }
+})();
 
 document.documentElement.setAttribute("platform", os);
 

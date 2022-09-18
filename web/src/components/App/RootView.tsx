@@ -1,13 +1,10 @@
 import { PropsWithChildren, useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
-import useCommands from "../../hooks/useCommands";
-import useEditor from "../../hooks/useEditor";
-import useTabs from "../../hooks/useTabs";
-import { Popup } from "../../modules/popup";
-import { StatusBarItem } from "../../modules/statusbar_item";
-import { Tab } from "../../modules/tab";
-import WelcomeTab from "../../tabs/welcome";
+import { useCommands, useEditor, useTabs } from "hooks";
+import { Popup } from "features";
+import { StatusBarItem, Tab } from "features";
+import { WelcomeTab } from "tabs";
 import {
   HideStatusBarItem,
   RegisterCommand,
@@ -15,16 +12,11 @@ import {
   ShowStatusBarItem,
   StateUpdated,
   UnloadedLanguageServer,
-} from "../../types/messaging";
-import {
-  clientState,
-  showedStatusBarItem,
-  showedWindowsState,
-} from "../../state/state";
-import { deserializeViews } from "../../state/persistence";
-import { Views } from "../../state/views_tabs";
-import useLSPClients from "../../hooks/useLSPClients";
-import { CommandActioned, UIEvent } from "../../types/messaging";
+} from "types";
+import { clientState, showedStatusBarItem, showedWindowsState } from "state";
+import { deserializeViews, Views } from "state";
+import { useLSPClients } from "hooks";
+import { CommandActioned, UIEvent } from "types";
 
 const RootViewContainer = styled.div<{ isWindows: boolean }>`
   background: ${({ theme }) => theme.elements.view.background};

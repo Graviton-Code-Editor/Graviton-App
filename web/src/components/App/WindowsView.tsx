@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { showedWindowsState } from "../../state/state";
+import { showedWindowsState } from "atoms";
 
 export default function WindowsView() {
   const showedWindows = useRecoilValue(showedWindowsState);

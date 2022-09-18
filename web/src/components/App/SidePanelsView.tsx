@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import useSidePanels from "../../hooks/useSidePanels";
+import { useSidePanels } from "hooks";
 import IconButton from "../SideBar/SideBarButton";
 
 const PanelsContainer = styled.div`

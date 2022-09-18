@@ -1,6 +1,6 @@
-import { StatusBarItemOptions } from "../../modules/statusbar_item";
-import { BaseMessage } from "../../services/clients/client.types";
-import { StateData } from "../../state/persistence";
+import { StatusBarItemOptions } from "features";
+import { BaseMessage } from "services/clients/client.types";
+import { StateData } from "state";
 
 export interface MessageFromExtension extends BaseMessage {
   state_id: number;

@@ -1,9 +1,8 @@
 import { useRecoilState } from "recoil";
-import { SidePanel } from "../modules/side_panel";
-import { sidePanelsState } from "../state/state";
-import { selectedSidePanelState } from "../state/side_panels";
+import { SidePanel } from "../features/side_panel/side_panel";
+import { selectedSidePanelState, sidePanelsState } from "state";
 
-export default function useSidePanels() {
+export function useSidePanels() {
   const [sidePanels, setSidePanels] = useRecoilState(sidePanelsState);
   const [selectedSidePanelName, setSelectedSidePanelName] = useRecoilState(
     selectedSidePanelState,

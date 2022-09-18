@@ -1,15 +1,15 @@
 import { act, renderHook, RenderHookResult } from "@testing-library/react";
 import FakeRoot from "./utils/fake_root";
 import { beforeAll, describe, expect, test } from "vitest";
-import useViews from "../src/hooks/useViews";
+import { useViews, useTabs } from "../src/hooks";
 import { useRecoilValue } from "recoil";
-import { Tab } from "../src/modules/tab";
-import useTabs from "../src/hooks/useTabs";
-import TextEditorTab from "../src/tabs/text_editor/text_editor";
+import { Tab } from "../src/features";
+import { TextEditorTab } from "../src/modules/tabs";
 import { openedViewsAndTabs, Views } from "../src/state/views_tabs";
 
-interface HookResult extends ReturnType<typeof useViews>, ReturnType<typeof useTabs>  {
+interface HookResult extends ReturnType<typeof useViews>  {
   views: Views<Tab>[];
+  openTab: (newTab: Tab) => void;
 }
 
 describe("Views, ViewPanels and Tabs", () => {
@@ -17,7 +17,7 @@ describe("Views, ViewPanels and Tabs", () => {
 
   beforeAll(() => {
     hook = renderHook(() => {
-      return { views: useRecoilValue(openedViewsAndTabs), ...useViews(), ...useTabs() };
+      return { views: useRecoilValue(openedViewsAndTabs), ...useViews(), openTab: useTabs().openTab };
     }, {
       wrapper: FakeRoot,
     });
@@ -103,7 +103,7 @@ describe("Views, ViewPanels and Tabs", () => {
 
     // Open a fake edited file
     act(() => {
-      const textTab = new TextEditorTab("readme.md", "/readme.md", Promise.resolve("Hello World"), "Unknown");
+      const textTab = new TextEditorTab("readme.md", "/readme.md", Promise.resolve("Hello World"), "Unknown") as unknown as Tab;
       textTab.edited = true;
       hook.result.current.openTab(textTab)
     });

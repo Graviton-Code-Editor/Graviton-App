@@ -1,10 +1,9 @@
 import { useRecoilState } from "recoil";
-import { Popup } from "../modules/popup";
-import { Tab } from "../modules/tab";
-import { openedViewsAndTabs } from "../state/state";
-import { newEmptyView, Views } from "../state/views_tabs";
+import { Popup } from "../features/popup/popup";
+import { Tab } from "../features/tab/tab";
+import { newEmptyView, openedViewsAndTabs, Views } from "../state/views_tabs";
 import { FocusedViewPanel, focusedViewPanelState } from "../state/view";
-import useTabs, { TabsUtils } from "./useTabs";
+import { TabsUtils, useTabs } from "hooks";
 import { newId } from "../utils/id";
 
 function canViewPanelBeClosed(tabs: Tab[]): boolean {
@@ -46,7 +45,7 @@ function trySavingTabs(
 /*
  * Utils for views and view panels
  */
-export default function useViews() {
+export function useViews() {
   const [tabPanels, setTabPanels] = useRecoilState(openedViewsAndTabs);
   const [focusedView, setFocusedView] = useRecoilState(focusedViewPanelState);
   const { saveTab } = useTabs();
