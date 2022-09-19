@@ -14,7 +14,7 @@ import {
 import { showedWindowsState } from "state";
 
 function TabsPromptContainer() {
-  const { viewsAndTabs, focusedView, selectTab } = useTabs();
+  const { viewsAndTabs, focusedView, selectTab, focusTab } = useTabs();
   const refBackground = useRef(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
 
@@ -43,10 +43,12 @@ function TabsPromptContainer() {
         text: tab.title,
       },
       onSelected({ closePrompt }) {
-        selectTab({
+        const tabPos = {
           ...focusedView,
           tab,
-        });
+        };
+        selectTab(tabPos);
+        focusTab(tabPos);
         closePrompt();
       },
     };
@@ -133,7 +135,6 @@ function TabsPromptContainer() {
                 <StyledPromptOptionIcon>
                   <Icon tab={tab} />
                 </StyledPromptOptionIcon>
-
                 {option.label.text}
               </PromptOption>
             );
