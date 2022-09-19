@@ -63,6 +63,8 @@ pub fn get_format_from_path(path: &str) -> FileFormat {
             // Python
             "py" => FileFormat::Text("Python".to_string()),
             // Not identified
+            "md" => FileFormat::Text("Markdown".to_string()),
+            // Not identified
             _ => FileFormat::Unknown,
         }
     } else {

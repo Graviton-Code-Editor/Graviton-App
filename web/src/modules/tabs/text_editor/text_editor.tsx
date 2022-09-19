@@ -54,6 +54,7 @@ import {
 } from "codemirror-languageserver";
 import GravitonTransport from "./lib/graviton_lsp_transport";
 import { basename } from "utils/path";
+import { markdown } from "@codemirror/lang-markdown";
 
 interface SavedState {
   scrollHeight: number;
@@ -365,6 +366,9 @@ function TabTextEditorContainer({
           case "Rust":
             lspLanguage = ["rust", textEditorTab.format.Text];
             extensions.push(rust());
+            break;
+          case "Markdown":
+            extensions.push(markdown());
             break;
           default:
             lspLanguage = null;
