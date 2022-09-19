@@ -202,11 +202,16 @@ async function createDefaulState(
     switch (textEditorTab.format.Text) {
       case "TypeScript":
         lspLanguage = ["typescript", textEditorTab.format.Text];
-        extensions.push(javascript());
+        extensions.push(javascript({
+          jsx: true,
+          typescript: true
+        }));
         break;
       case "JavaScript":
         lspLanguage = ["javascript", textEditorTab.format.Text];
-        extensions.push(javascript());
+        extensions.push(javascript({
+          jsx: true,
+        }));
         break;
       case "Rust":
         lspLanguage = ["rust", textEditorTab.format.Text];
