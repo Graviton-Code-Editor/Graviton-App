@@ -50,7 +50,7 @@ export default function AboutRoute() {
             },
           },
         ],
-        535,
+        545,
         600,
       ),
     ]);

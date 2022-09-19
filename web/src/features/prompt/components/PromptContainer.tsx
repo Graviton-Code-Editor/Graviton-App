@@ -13,8 +13,9 @@ const PromptContainer = styled.div`
     top: 0;
     left: 0;
     position: fixed;
-    overflow: hidden;
     margin-left: calc(50% - 175px);
+    display: flex;
+    flex-direction: column;
 `;
 
 export default PromptContainer;

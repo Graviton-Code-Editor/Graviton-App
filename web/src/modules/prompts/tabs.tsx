@@ -1,4 +1,3 @@
-import { StyledPrompt } from "features/prompt/components/Prompt";
 import { Prompt } from "features/prompt/prompt";
 import { useTabs } from "hooks";
 import { Option } from "features/prompt/components/Prompt.types";
@@ -15,7 +14,7 @@ import { showedWindowsState } from "state";
 
 function TabsPromptContainer() {
   const { viewsAndTabs, focusedView, selectTab, focusTab } = useTabs();
-  const refBackground = useRef(null);
+  const refContainer = useRef<HTMLDivElement | null>(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
 
   const viewPanel = viewsAndTabs[focusedView.row].view_panels[focusedView.col];
@@ -112,41 +111,47 @@ function TabsPromptContainer() {
   }
 
   function closePromptOnClick(event: any) {
-    if (event.target === refBackground.current) {
+    if (
+      event.target !== refContainer.current &&
+      !refContainer.current?.contains(event.target)
+    ) {
       closePrompt();
     }
   }
 
+  useEffect(() => {
+    window.addEventListener("click", closePromptOnClick);
+    return () => window.removeEventListener("click", closePromptOnClick);
+  }, []);
+
   return (
-    <StyledPrompt onClick={closePromptOnClick} ref={refBackground}>
-      <PromptContainer>
-        <PromptOptionsList>
-          {options.map((option, indexOption) => {
-            const tab = orderedTabs[indexOption];
-            const Icon = orderedTabs[indexOption].icon;
-            return (
-              <PromptOption
-                key={indexOption}
-                option={option}
-                closePrompt={closePrompt}
-                selectedOption={selectedOption}
-                indexOption={indexOption}
-              >
-                <StyledPromptOptionIcon>
-                  <Icon tab={tab} />
-                </StyledPromptOptionIcon>
-                {option.label.text}
-              </PromptOption>
-            );
-          })}
-          {options.length === 0 && (
-            <StyledPromptOption isSelected={true}>
-              empty
-            </StyledPromptOption>
-          )}
-        </PromptOptionsList>
-      </PromptContainer>
-    </StyledPrompt>
+    <PromptContainer ref={refContainer}>
+      <PromptOptionsList>
+        {options.map((option, indexOption) => {
+          const tab = orderedTabs[indexOption];
+          const Icon = orderedTabs[indexOption].icon;
+          return (
+            <PromptOption
+              key={indexOption}
+              option={option}
+              closePrompt={closePrompt}
+              selectedOption={selectedOption}
+              indexOption={indexOption}
+            >
+              <StyledPromptOptionIcon>
+                <Icon tab={tab} />
+              </StyledPromptOptionIcon>
+              {option.label.text}
+            </PromptOption>
+          );
+        })}
+        {options.length === 0 && (
+          <StyledPromptOption isSelected={true}>
+            empty
+          </StyledPromptOption>
+        )}
+      </PromptOptionsList>
+    </PromptContainer>
   );
 }
 

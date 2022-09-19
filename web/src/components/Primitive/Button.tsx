@@ -56,6 +56,8 @@ export const WindowButton = styled.button<{ expanded: boolean }>`
   margin-top: 5px;
   transition: 0.1s;
   user-select: none;
+  max-width: 200px;
+  height: 35px;
   ${({ expanded }) => expanded && "width: 100%;"}
   &:hover:not(:active) {
     background: ${({ theme }) => theme.elements.windowButton.hover.background};

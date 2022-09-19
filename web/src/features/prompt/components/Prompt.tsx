@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import styled from "styled-components";
 import { showedWindowsState } from "atoms";
 import { useTranslation } from "react-i18next";
 import { Option, PromptOptions, TransatedOption } from "./Prompt.types";
@@ -8,17 +7,6 @@ import { PromptOption, StyledPromptOption } from "./PromptOption";
 import { PromptInput } from "./PromptInput";
 import PromptContainer from "./PromptContainer";
 import PromptOptionsList from "./PromptOptionsList";
-
-export const StyledPrompt = styled.div`
-  top: 0;
-  left: 0;
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-`;
 
 export function PromptWindow(
   { options, selectedIndex = 0 }: PromptOptions,
@@ -138,32 +126,30 @@ export function PromptWindow(
   }, [filteredOptions, selectedOptionIndex]);
 
   return (
-    <>
-      <PromptContainer ref={refContainer}>
-        <PromptInput
-          onChange={inputChanged}
-          value={inputSearch}
-          ref={refInput}
-        />
-        <PromptOptionsList>
-          {filteredOptions.map(({ option, text }, indexOption) => (
-            <PromptOption
-              key={indexOption}
-              option={option}
-              closePrompt={closePrompt}
-              selectedOption={selectedOptionIndex}
-              indexOption={indexOption}
-            >
-              {text}
-            </PromptOption>
-          ))}
-          {filteredOptions.length === 0 && (
-            <StyledPromptOption isSelected={true}>
-              {t("prompts.NoResults")}
-            </StyledPromptOption>
-          )}
-        </PromptOptionsList>
-      </PromptContainer>
-    </>
+    <PromptContainer ref={refContainer}>
+      <PromptInput
+        onChange={inputChanged}
+        value={inputSearch}
+        ref={refInput}
+      />
+      <PromptOptionsList>
+        {filteredOptions.map(({ option, text }, indexOption) => (
+          <PromptOption
+            key={indexOption}
+            option={option}
+            closePrompt={closePrompt}
+            selectedOption={selectedOptionIndex}
+            indexOption={indexOption}
+          >
+            {text}
+          </PromptOption>
+        ))}
+        {filteredOptions.length === 0 && (
+          <StyledPromptOption isSelected={true}>
+            {t("prompts.NoResults")}
+          </StyledPromptOption>
+        )}
+      </PromptOptionsList>
+    </PromptContainer>
   );
 }
