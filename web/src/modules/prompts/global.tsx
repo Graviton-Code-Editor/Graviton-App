@@ -1,8 +1,5 @@
 import { PromptWindow } from "features/prompt/components/Prompt";
-import {
-  Option,
-  OptionUtils,
-} from "features/prompt/components/Prompt.types";
+import { Option, OptionUtils } from "features/prompt/components/Prompt.types";
 import { Prompt } from "features/prompt/prompt";
 import { openFileSystemPicker } from "services/commands";
 import { SettingsTab, WelcomeTab } from "modules/tabs";

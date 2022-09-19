@@ -100,6 +100,9 @@ interface TextEditorOptions {
   saveScroll: (height: number) => void;
 }
 
+/**
+ * Simple Wrapper over CodeMirror
+ */
 export default function TextEditor({
   view,
   saveScroll,
