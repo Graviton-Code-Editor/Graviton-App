@@ -5,7 +5,6 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { TranslatedText } from "types";
 import { showedWindowsState } from "state";
-import { WindowBackground } from "features/window/components/WindowBackground";
 
 const StyledPopup = styled.div<{ height: number; width: number }>`
   user-select: none;
@@ -80,7 +79,6 @@ export default function PopupContainer({
 
   return (
     <>
-      <WindowBackground />
       <StyledPopup
         onClick={closePopupOnClick}
         ref={refBackground}

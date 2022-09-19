@@ -4,7 +4,6 @@ import { useTabs } from "hooks";
 import { Option } from "features/prompt/components/Prompt.types";
 import { useEffect, useRef, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { WindowBackground } from "features/window/components/WindowBackground";
 import PromptContainer from "features/prompt/components/PromptContainer";
 import PromptOptionsList from "features/prompt/components/PromptOptionsList";
 import {
@@ -117,39 +116,36 @@ function TabsPromptContainer() {
   }
 
   return (
-    <>
-      <WindowBackground />
-      <StyledPrompt onClick={closePromptOnClick} ref={refBackground}>
-        <PromptContainer>
-          <PromptOptionsList>
-            {options.map((option, indexOption) => {
-              const tab = orderedTabs[indexOption];
-              const Icon = orderedTabs[indexOption].icon;
-              return (
-                <PromptOption
-                  key={indexOption}
-                  option={option}
-                  closePrompt={closePrompt}
-                  selectedOption={selectedOption}
-                  indexOption={indexOption}
-                >
-                  <StyledPromptOptionIcon>
-                    <Icon tab={tab} />
-                  </StyledPromptOptionIcon>
+    <StyledPrompt onClick={closePromptOnClick} ref={refBackground}>
+      <PromptContainer>
+        <PromptOptionsList>
+          {options.map((option, indexOption) => {
+            const tab = orderedTabs[indexOption];
+            const Icon = orderedTabs[indexOption].icon;
+            return (
+              <PromptOption
+                key={indexOption}
+                option={option}
+                closePrompt={closePrompt}
+                selectedOption={selectedOption}
+                indexOption={indexOption}
+              >
+                <StyledPromptOptionIcon>
+                  <Icon tab={tab} />
+                </StyledPromptOptionIcon>
 
-                  {option.label.text}
-                </PromptOption>
-              );
-            })}
-            {options.length === 0 && (
-              <StyledPromptOption isSelected={true}>
-                empty
-              </StyledPromptOption>
-            )}
-          </PromptOptionsList>
-        </PromptContainer>
-      </StyledPrompt>
-    </>
+                {option.label.text}
+              </PromptOption>
+            );
+          })}
+          {options.length === 0 && (
+            <StyledPromptOption isSelected={true}>
+              empty
+            </StyledPromptOption>
+          )}
+        </PromptOptionsList>
+      </PromptContainer>
+    </StyledPrompt>
   );
 }
 

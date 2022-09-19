@@ -7,10 +7,14 @@ const PromptContainer = styled.div`
     border-radius: 10px;
     height: 300px;
     background: ${({ theme }) => theme.elements.prompt.container.background};
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.17);
     padding: 10px;
-    display: flex;
-    flex-direction: column;
+    user-select: none;
+    top: 0;
+    left: 0;
+    position: fixed;
+    overflow: hidden;
+    margin-left: calc(50% - 175px);
 `;
 
 export default PromptContainer;

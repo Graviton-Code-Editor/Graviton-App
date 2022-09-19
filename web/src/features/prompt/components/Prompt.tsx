@@ -3,7 +3,6 @@ import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { showedWindowsState } from "atoms";
 import { useTranslation } from "react-i18next";
-import { WindowBackground } from "features/window/components/WindowBackground";
 import { Option, PromptOptions, TransatedOption } from "./Prompt.types";
 import { PromptOption, StyledPromptOption } from "./PromptOption";
 import { PromptInput } from "./PromptInput";
@@ -11,7 +10,6 @@ import PromptContainer from "./PromptContainer";
 import PromptOptionsList from "./PromptOptionsList";
 
 export const StyledPrompt = styled.div`
-  user-select: none;
   top: 0;
   left: 0;
   position: fixed;
@@ -25,7 +23,7 @@ export const StyledPrompt = styled.div`
 export function PromptWindow(
   { options, selectedIndex = 0 }: PromptOptions,
 ) {
-  const refBackground = useRef(null);
+  const refContainer = useRef<HTMLDivElement | null>(null);
   const refInput = useRef<HTMLInputElement>(null);
   const setShowedWindows = useSetRecoilState(showedWindowsState);
   const { t } = useTranslation();
@@ -52,10 +50,18 @@ export function PromptWindow(
   }
 
   function closePromptOnClick(event: any) {
-    if (event.target === refBackground.current) {
+    if (
+      event.target !== refContainer.current &&
+      !refContainer.current?.contains(event.target)
+    ) {
       closePrompt();
     }
   }
+
+  useEffect(() => {
+    window.addEventListener("click", closePromptOnClick);
+    return () => window.removeEventListener("click", closePromptOnClick);
+  }, []);
 
   function onArrowDown(e: KeyboardEvent) {
     switch (e.key) {
@@ -133,34 +139,31 @@ export function PromptWindow(
 
   return (
     <>
-      <WindowBackground />
-      <StyledPrompt onClick={closePromptOnClick} ref={refBackground}>
-        <PromptContainer>
-          <PromptInput
-            onChange={inputChanged}
-            value={inputSearch}
-            ref={refInput}
-          />
-          <PromptOptionsList>
-            {filteredOptions.map(({ option, text }, indexOption) => (
-              <PromptOption
-                key={indexOption}
-                option={option}
-                closePrompt={closePrompt}
-                selectedOption={selectedOptionIndex}
-                indexOption={indexOption}
-              >
-                {text}
-              </PromptOption>
-            ))}
-            {filteredOptions.length === 0 && (
-              <StyledPromptOption isSelected={true}>
-                {t("prompts.NoResults")}
-              </StyledPromptOption>
-            )}
-          </PromptOptionsList>
-        </PromptContainer>
-      </StyledPrompt>
+      <PromptContainer ref={refContainer}>
+        <PromptInput
+          onChange={inputChanged}
+          value={inputSearch}
+          ref={refInput}
+        />
+        <PromptOptionsList>
+          {filteredOptions.map(({ option, text }, indexOption) => (
+            <PromptOption
+              key={indexOption}
+              option={option}
+              closePrompt={closePrompt}
+              selectedOption={selectedOptionIndex}
+              indexOption={indexOption}
+            >
+              {text}
+            </PromptOption>
+          ))}
+          {filteredOptions.length === 0 && (
+            <StyledPromptOption isSelected={true}>
+              {t("prompts.NoResults")}
+            </StyledPromptOption>
+          )}
+        </PromptOptionsList>
+      </PromptContainer>
     </>
   );
 }

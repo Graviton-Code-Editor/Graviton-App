@@ -7,7 +7,6 @@ import FilesystemExplorer, {
   TreeItem,
   TreeItemInfo,
 } from "modules/side_panels/explorer/components/FilesystemExplorer";
-import { WindowBackground } from "features/window/components/WindowBackground";
 
 const StyledExplorer = styled.div`
   user-select: none;
@@ -91,25 +90,22 @@ export default function RemoteExplorerContainer({
   }
 
   return (
-    <>
-      <WindowBackground />
-      <StyledExplorer onClick={closePopupOnClick} ref={refBackground}>
-        <div className="explorer">
-          <div className="topView">
-            <FilesystemExplorer
-              folders={folders}
-              tree={tree}
-              saveTree={(tree) => setTree(tree)}
-              onSelected={selectedItem}
-            />
-          </div>
-          <div className="bottomView">
-            <PrimaryButton onClick={openItem}>
-              {focusedItem ? `Open ${focusedItem.name}` : `Select a ${kind}`}
-            </PrimaryButton>
-          </div>
+    <StyledExplorer onClick={closePopupOnClick} ref={refBackground}>
+      <div className="explorer">
+        <div className="topView">
+          <FilesystemExplorer
+            folders={folders}
+            tree={tree}
+            saveTree={(tree) => setTree(tree)}
+            onSelected={selectedItem}
+          />
         </div>
-      </StyledExplorer>
-    </>
+        <div className="bottomView">
+          <PrimaryButton onClick={openItem}>
+            {focusedItem ? `Open ${focusedItem.name}` : `Select a ${kind}`}
+          </PrimaryButton>
+        </div>
+      </div>
+    </StyledExplorer>
   );
 }
