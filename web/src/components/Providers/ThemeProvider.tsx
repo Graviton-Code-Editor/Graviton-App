@@ -31,28 +31,28 @@ const theme = {
         background: "rgba(255, 255, 255, 0.1)",
       },
       variable: {
-        color: "#ca9feb",
+        color: "#d7a73a",
       },
       keyword: {
-        color: "#9969ff",
+        color: "#e74e78",
       },
       def: {
         color: "#ff6666",
       },
       string: {
-        color: "#a5e572",
+        color: "#7fa55f",
       },
       property: {
-        color: "#69a5ff",
+        color: "#9abbed",
       },
-      number: {
+      literal: {
         color: "#bd93f9",
       },
-      atom: {
-        color: "#fdbd5d",
+      bracket: {
+        color: "#fbcd65",
       },
       comment: {
-        color: "#858a99",
+        color: "#707070",
       },
       gutters: {
         background: "#191919",
@@ -68,6 +68,9 @@ const theme = {
       },
       selection: {
         background: "rgba(255, 255, 255, 0.1)",
+      },
+      functionCall: {
+        color: "#99bd43",
       },
     },
     card: {

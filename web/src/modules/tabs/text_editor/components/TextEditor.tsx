@@ -14,35 +14,34 @@ const CodeMirrorStyler = styled.div`
   & .cm-editor {
     outline: none !important;
   }
-  & .ͼa {
+  & .keyword {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
   }
-  & .ͼj {
-    color: ${({ theme }) => theme.elements.textEditor.def.color};
-  }
-  & .ͼd,
-  .ͼe {
+  & .string {
     color: ${({ theme }) => theme.elements.textEditor.string.color};
   }
-  & .ͼk {
+  & .functionCall {
+    color: ${({ theme }) => theme.elements.textEditor.functionCall.color};
+  }
+  & .property {
     color: ${({ theme }) => theme.elements.textEditor.property.color};
   }
-  & .ͼc {
-    color: ${({ theme }) => theme.elements.textEditor.number.color};
+  & .literal {
+    color: ${({ theme }) => theme.elements.textEditor.literal.color};
   }
-  & .ͼi {
+  & .definion {
     color: ${({ theme }) => theme.elements.textEditor.def.color};
   }
-  & .ͼl {
+  & .keyword {
     color: ${({ theme }) => theme.elements.textEditor.keyword.color};
   }
-  & .ͼm {
+  & .comment {
     color: ${({ theme }) => theme.elements.textEditor.comment.color};
   }
-  & .ͼb {
-    color: ${({ theme }) => theme.elements.textEditor.atom.color};
+  & .bracket {
+    color: ${({ theme }) => theme.elements.textEditor.bracket.color};
   }
-  & .ͼg {
+  & .variable {
     color: ${({ theme }) => theme.elements.textEditor.variable.color};
   }
   & .cm-gutters {

@@ -24,6 +24,7 @@ import {
   defaultHighlightStyle,
   foldGutter,
   foldKeymap,
+  HighlightStyle,
   indentOnInput,
   syntaxHighlighting,
 } from "@codemirror/language";
@@ -48,6 +49,8 @@ import { basename } from "utils/path";
 import { markdown } from "@codemirror/lang-markdown";
 import { TextEditorTab } from "../text_editor";
 import { Client } from "services/clients/client.types";
+// @ts-ignore
+import { tags } from "@lezer/highlight";
 
 interface IFeaturedTextEditorOptions {
   close: () => void;
@@ -167,6 +170,7 @@ async function createDefaulState(
   { find, add }: ReturnType<typeof useLSPClients>,
   client: Client,
 ): Promise<EditorState> {
+  console.log(defaultHighlightStyle);
   const extensions = [
     getKeymap(textEditorTab, setEdited),
     lineNumbers(),
@@ -178,7 +182,56 @@ async function createDefaulState(
     dropCursor(),
     EditorState.allowMultipleSelections.of(true),
     indentOnInput(),
-    syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
+    syntaxHighlighting(
+      HighlightStyle.define([
+        { tag: tags.meta, class: "meta" },
+        { tag: tags.link, class: "link" },
+        { tag: tags.heading, class: "heading" },
+        { tag: tags.emphasis, class: "emphasis" },
+        { tag: tags.strong, class: "strong" },
+        { tag: tags.strikethrough, class: "strikethrough" },
+        { tag: tags.keyword, class: "keyword" },
+        {
+          tag: [
+            tags.atom,
+            tags.bool,
+            tags.url,
+            tags.contentSeparator,
+            tags.labelName,
+          ],
+          class: "atom",
+        },
+        { tag: [tags.literal, tags.inserted], class: "literal" },
+        { tag: [tags.string, tags.deleted], class: "string" },
+        {
+          tag: [
+            tags.regexp,
+            tags.escape,
+            tags.special(tags.string),
+          ],
+          class: "regex",
+        },
+        {
+          tag: tags.definition(tags.variableName),
+          class: "variable",
+        },
+        { tag: [tags.typeName, tags.namespace], class: "type" },
+        { tag: tags.className, class: "classname" },
+        {
+          tag: [tags.special(tags.variableName), tags.macroName],
+          class: "macroname",
+        },
+        {
+          tag: tags.definition(tags.propertyName),
+          class: "property",
+        },
+        { tag: tags.comment, class: "comment" },
+        { tag: tags.invalid, class: "invalid" },
+        { tag: tags.bracket, class: "bracket" },
+        { tag: tags.function(tags.name), class: "functionCall" },
+      ]),
+      { fallback: true },
+    ),
     bracketMatching(),
     closeBrackets(),
     autocompletion(),
@@ -204,7 +257,7 @@ async function createDefaulState(
         lspLanguage = ["typescript", textEditorTab.format.Text];
         extensions.push(javascript({
           jsx: true,
-          typescript: true
+          typescript: true,
         }));
         break;
       case "JavaScript":

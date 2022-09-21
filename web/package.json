@@ -12,8 +12,8 @@
   "dependencies": {
     "@codemirror/autocomplete": "^6.0.0",
     "@codemirror/commands": "^6.0.0",
-    "@codemirror/lang-markdown": "^6.0.0",
-    "@codemirror/lang-javascript": "^6.0.0",
+    "@codemirror/lang-javascript": "^6.1.0",
+    "@codemirror/lang-markdown": "^6.0.1",
     "@codemirror/lang-rust": "^6.0.0",
     "@codemirror/language": "^6.0.0",
     "@codemirror/lint": "^6.0.0",
@@ -23,6 +23,7 @@
     "@fontsource/inter": "^4.5.1",
     "@fontsource/jetbrains-mono": "^4.5.0",
     "@gveditor/languages": "*",
+    "@lezer/highlight": "^1.1.0",
     "@open-rpc/client-js": "^1.7.1",
     "@tauri-apps/api": "^1.0.0-rc.6",
     "codemirror-languageserver": "git://github.com/marc2332/codemirror-languageserver#fix/fix-improve-ts-types",
