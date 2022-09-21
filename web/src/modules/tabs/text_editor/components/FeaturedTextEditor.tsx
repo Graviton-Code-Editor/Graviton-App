@@ -21,7 +21,6 @@ import {
 } from "@codemirror/view";
 import {
   bracketMatching,
-  defaultHighlightStyle,
   foldGutter,
   foldKeymap,
   HighlightStyle,
@@ -170,7 +169,6 @@ async function createDefaulState(
   { find, add }: ReturnType<typeof useLSPClients>,
   client: Client,
 ): Promise<EditorState> {
-  console.log(defaultHighlightStyle);
   const extensions = [
     getKeymap(textEditorTab, setEdited),
     lineNumbers(),
