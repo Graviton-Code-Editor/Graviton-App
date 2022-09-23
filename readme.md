@@ -13,11 +13,11 @@
 [![Open Source Love svg3](https://badges.frapsoft.com/os/v3/open-source.svg?v=103)](https://github.com/Graviton-Code-Editor/Graviton-App/)
 [![Discord Server](https://discordapp.com/api/guilds/536130219057086514/widget.png)](https://discord.gg/gg6CTYA)
 
-Graviton is a Code Editor, for Desktop or as server service (WIP). 
+Graviton is cross-platform Code Editor.
 
-See [this](./book/src/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
+**NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292). 
 
-**NOTE**: Graviton is being rewritten, if you are searching for the old version (v2.3.0) go to this other [branch](https://github.com/Graviton-Code-Editor/Graviton-App/tree/2.3.0). Learn more about [here](https://github.com/Graviton-Code-Editor/Graviton-App/discussions/292).
+See [this](./book/src/internals/building.md) to run / compile it, by yourself. (There aren't any releases of the new version)
 
 Current state of the rewrite:
 
@@ -26,7 +26,7 @@ Current state of the rewrite:
 ### 🏥 Rewrite Changes
 - Ditch ElectronJS (NodeJS) in favor of [Tauri](https://tauri.studio/) (Rust)
 - Use [Deno](https://deno.land/) as a runtime for third-party extensions
-- Move from [PuffinJS](https://github.com/PuffinJS/puffin) to [React](https://reactjs.org/) for the Web frontend
+- Use to [React](https://reactjs.org/) for the Web frontend
 - Core is declouped from the frontend itself, third-party editors can be built upon it
 
 | Package             | Description | Version |
@@ -62,9 +62,10 @@ Current state of the rewrite:
 
 Feel free to donate in any way you want, if you want to support this project :)
 
+- [Github Sponsors](https://github.com/sponsors/marc2332/)
+- [Paypal](https://www.paypal.me/mkenzo8)
 - BTC address: `1HCBeYD564Y3AjQ3Ci6Fp2zosfZvevJuu6`
 - Solana address: `5GzDDXyzhB9zA8vSHuEow5mQJ6Tk3kC4Bn2T9dp6nX3U`
-- Paypal: https://www.paypal.me/mkenzo8
 
 ### Donators
 
