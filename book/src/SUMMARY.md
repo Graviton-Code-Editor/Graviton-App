@@ -1,6 +1,7 @@
 # Summary
 
-- [🤗 Introduction](./introduction.md)
-- [👷 Building](./building.md)
-- [Internal](./internal/internal.md)
-    - [🏗️ Core](./internal/core.md)
+- [Introduction](./introduction.md)
+- [For Developers](./developers/developers.md)
+    - [Introduction to Extensions](./developers/extensions.md)
+- [For Contributors](./internals/internals.md)
+    - [Building from source](./internals/building.md)
