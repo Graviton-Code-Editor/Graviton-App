@@ -9,8 +9,8 @@ They are loaded pn startup from a specific folder of the user's system:
 | Name    | Description                   |
 |---------|-------------------------------|
 | Windows | $HOME\\.graviton\\extensions  |
-| Linux   | $USER/.graviton/extensions    |
-| MacOS   | $USER/.graviton/extensions    |
+| Linux   | $HOME/.graviton/extensions    |
+| MacOS   | $HOME/.graviton/extensions    |
 
 ## Creating a basic extension
 
