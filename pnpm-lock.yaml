@@ -8,11 +8,13 @@ importers:
       fs-extra: ^10.0.0
       jake: ^10.8.2
       rimraf: ^3.0.2
+      typescript: ^4.6.3
     devDependencies:
       execa: 6.1.0
       fs-extra: 10.1.0
       jake: 10.8.5
       rimraf: 3.0.2
+      typescript: 4.7.2
 
   languages:
     specifiers: {}

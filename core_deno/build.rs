@@ -10,13 +10,16 @@ fn main() {
     let out_file_dir = Path::new(&out_dir).join("graviton.js");
 
     // Transpile the deno api
-    let res = Command::new("deno")
+    let res = Command::new("node")
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
-        .arg("bundle")
-        .arg("--unstable")
+        .arg("../node_modules/typescript/lib/tsc.js")
         .arg("./src/graviton.ts")
+        .arg("--out")
         .arg(out_file_dir.to_str().unwrap())
+        .arg("--target")
+        .arg("esnext")
+        .arg("-D")
         .output()
         .expect("Could not compile graviton.ts");
 
