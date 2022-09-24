@@ -72,6 +72,11 @@ const theme = {
       functionCall: {
         color: "#99bd43",
       },
+      tooltip: {
+        background: "rgb(40, 40, 40)",
+        border: "rgb(65, 65, 65)",
+        color: "white"
+      }
     },
     card: {
       background: "rgb(30, 30, 30);",

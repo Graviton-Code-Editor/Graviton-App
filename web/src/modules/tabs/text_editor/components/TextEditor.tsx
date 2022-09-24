@@ -83,11 +83,29 @@ const CodeMirrorStyler = styled.div`
   theme.elements.textEditor.selection.background} !important;
     border-radius: 2px;
   }
+  & .cm-tooltip {
+   border-radius: 5px;
+   background: ${({ theme }) => theme.elements.textEditor.tooltip.background};
+   color: ${({ theme }) => theme.elements.textEditor.tooltip.color};
+   border: 1px solid ${({ theme }) => theme.elements.textEditor.tooltip.border};
+   & li {
+    height: 25px;
+    display: flex;
+    align-items: center;
+   }
+   & li:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+   }
+   & li:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+   }
+  }
   & ::-webkit-scrollbar {
     height: 10px;
     width: 10px;
   }
-
   & ::-webkit-scrollbar-thumb {
     border-radius: 2px;
   }
