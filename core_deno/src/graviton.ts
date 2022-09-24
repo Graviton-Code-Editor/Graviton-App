@@ -6,13 +6,13 @@ namespace Graviton {
     if (typeof msg !== "object") throw new Error("Message can't be parsed.");
   
     //@ts-ignore: Deno core usage
-    return Deno.core.opAsync("op_send_message_to_core", msg);
+    return Deno.core.opAsync("op_send_message_core_tx", msg);
   }
   
   export async function* listen() {
     while (true) {
       //@ts-ignore: Deno core usage
-      yield Deno.core.opAsync("op_listen_messages_from_core", "");
+      yield Deno.core.opAsync("op_listen_messages_core_rx", "");
     }
   }
   
@@ -20,7 +20,7 @@ namespace Graviton {
     if (typeof event !== "string") throw new Error("Event name must be string.");
   
     //@ts-ignore: Deno core usage
-    return Deno.core.opAsync("op_listen_messages_from_core", event);
+    return Deno.core.opAsync("op_listen_messages_core_rx", event);
   }
   
   export function exit() {

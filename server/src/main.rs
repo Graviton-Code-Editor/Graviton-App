@@ -29,9 +29,9 @@ fn setup_logger() {
 async fn main() {
     setup_logger();
 
-    let (to_core, from_core) = channel::<ClientMessages>(1);
+    let (core_tx, core_rx) = channel::<ClientMessages>(1);
 
-    let extensions_manager = ExtensionsManager::new(to_core.clone(), None)
+    let extensions_manager = ExtensionsManager::new(core_tx.clone(), None)
         .load_extension_from_entry(git_for_graviton::entry, git_for_graviton::get_info(), 1)
         .await
         .to_owned();
@@ -48,11 +48,11 @@ async fn main() {
 
     let http_handler = HTTPHandler::builder().build().wrap();
 
-    let config = Configuration::new(http_handler, to_core, from_core);
+    let config = Configuration::new(http_handler, core_tx, core_rx);
 
-    let core = Server::new(config, states);
+    let mut server = Server::new(config, states);
 
-    core.run().await;
+    server.run().await;
 
     println!("Open http://localhost:8080/?state=0&token=test");
 

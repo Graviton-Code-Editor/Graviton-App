@@ -39,6 +39,7 @@ impl ExtensionsManager {
         }
     }
 
+    /// Manually load an extension
     pub async fn load_extension_from_entry(
         &mut self,
         entry: fn(&mut Self, ExtensionClient, u8),

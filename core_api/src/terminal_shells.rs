@@ -3,9 +3,11 @@ use serde::{Deserialize, Serialize};
 
 #[async_trait]
 pub trait TerminalShell {
-    // TODO(marc2332): Actually report errors
+    /// Write data into the terminal shell
+    /// TODO(marc2332) This should return something like Result<(), T>
     async fn write(&self, data: String);
 
+    /// Resize the shell with a new size
     async fn resize(&self, cols: i32, rows: i32);
 }
 
@@ -17,7 +19,9 @@ pub struct TerminalShellBuilderInfo {
 
 #[async_trait]
 pub trait TerminalShellBuilder {
+    /// Retrieve Info about the shell
     fn get_info(&self) -> TerminalShellBuilderInfo;
 
+    /// Create an instance of the shell
     fn build(&self, terminal_shell_id: &str) -> Box<dyn TerminalShell + Send + Sync>;
 }

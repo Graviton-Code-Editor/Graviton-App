@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use tokio::fs::read_to_string;
 
 /// Possible errors when trying to read a manifest file
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum ManifestErrors {
     NotFound,
     CannotParse,

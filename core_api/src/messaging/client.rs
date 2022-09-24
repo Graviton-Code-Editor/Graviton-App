@@ -5,7 +5,7 @@ use serde::{Deserialize, Serialize};
 use super::ServerMessages;
 
 /// Messages sent from the Client to the Server
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum ClientMessages {
     ListenToState {
         // The state ID
@@ -52,7 +52,7 @@ impl ClientMessages {
 }
 
 /// Messages use to notify the language server of certain events
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(tag = "msg_type")]
 pub enum LanguageServerMessage {
     Notification {
@@ -70,7 +70,7 @@ impl LanguageServerMessage {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(tag = "msg_type")]
 pub enum UIEvent {
     StatusBarItemClicked { state_id: u8, id: String },
@@ -93,7 +93,7 @@ impl UIEvent {
     }
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(tag = "msg_type")]
 pub enum NotifyExtension {
     ExtensionMessage {

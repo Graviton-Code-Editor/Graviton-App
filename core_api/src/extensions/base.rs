@@ -6,7 +6,7 @@ use tokio::sync::Mutex;
 use crate::{messaging::ClientMessages, State};
 
 /// Information about a extension instance
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub struct ExtensionInfo {
     pub id: String,
     pub name: String,

@@ -8,6 +8,7 @@ use super::Persistor;
 /// File state persistor
 #[derive(Clone)]
 pub struct FilePersistor {
+    /// Where the state is persisted.
     path: PathBuf,
 }
 

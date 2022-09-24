@@ -2,7 +2,7 @@ use crate::states::StateData;
 use serde::{Deserialize, Serialize};
 
 /// Messages sent from the Server to the Client
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 #[serde(tag = "msg_type")]
 pub enum ServerMessages {
     MessageFromExtension {

@@ -5,22 +5,26 @@ use tokio::sync::Mutex;
 
 use crate::handlers::TransportHandler;
 
+/// Configuration for a Graviton Server
 pub struct Configuration {
+    /// The Transport handler
     pub handler: Arc<Mutex<Box<dyn TransportHandler + Send + Sync>>>,
-    pub to_server: Sender<ClientMessages>,
-    pub from_server: Option<Receiver<ClientMessages>>,
+    /// Sender to the Core Server
+    pub server_tx: Option<Sender<ClientMessages>>,
+    /// Receiver for the Core Server
+    pub server_rx: Option<Receiver<ClientMessages>>,
 }
 
 impl Configuration {
     pub fn new(
         handler: Box<dyn TransportHandler + Send + Sync>,
-        to_server: Sender<ClientMessages>,
-        from_server: Receiver<ClientMessages>,
+        server_tx: Sender<ClientMessages>,
+        server_rx: Receiver<ClientMessages>,
     ) -> Self {
         Self {
             handler: Arc::new(Mutex::new(handler)),
-            to_server,
-            from_server: Some(from_server),
+            server_tx: Some(server_tx),
+            server_rx: Some(server_rx),
         }
     }
 }

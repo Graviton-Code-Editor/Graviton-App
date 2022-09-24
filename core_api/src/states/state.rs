@@ -15,25 +15,37 @@ use tracing::{info, warn};
 
 use super::StateData;
 
-/// A state is like a small configuration, like a profile
+/// A State (similar to a profile) holds persisted data (configuration)
+/// but also runtime data such as active Terminals or running Language Servers
 #[derive(Clone)]
 pub struct State {
+    /// Registered FileSystems
     pub filesystems: HashMap<String, Arc<Mutex<Box<dyn Filesystem + Send>>>>,
+
+    /// Manages the extensions from this specific State
     pub extensions_manager: ExtensionsManager,
+
+    /// Handles how the state persisted configuration is saved and loaded
     pub persistor: Option<Arc<Mutex<Box<dyn Persistor + Send>>>>,
+
+    /// Diferent settings changed by the user
     pub data: StateData,
+
+    /// Tokens allowed to use this State
     pub tokens: Vec<String>,
 
     // Registered Language Servers
     pub language_server_builders:
         HashMap<String, Arc<Mutex<Box<dyn LanguageServerBuilder + Send + Sync>>>>,
-    // Created Language Servers by the client
+
+    // Active Language Servers
     pub language_servers: HashMap<String, Arc<Mutex<Box<dyn LanguageServer + Send + Sync>>>>,
 
     // Registered shells
     pub terminal_shell_builders:
         HashMap<String, Arc<Mutex<Box<dyn TerminalShellBuilder + Send + Sync>>>>,
-    // Created Shells by the client
+
+    // Active Shells
     pub terminal_shells: HashMap<String, Arc<Box<dyn TerminalShell + Send + Sync>>>,
 }
 
@@ -41,6 +53,7 @@ impl fmt::Debug for State {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("State")
             .field("opened_tabs", &self.data.views)
+            .field("commands", &self.data.commands)
             .field("id", &self.data.id)
             .finish()
     }
@@ -73,6 +86,12 @@ impl Default for State {
 }
 
 impl State {
+    /// Create a new State
+    ///
+    /// # Arguments
+    ///  * `id`                   - The Server's ID
+    ///  * `extensions_manager`   - An Extensions Manager for the State
+    ///  * `persistor`            - A Persistor from which to load and save the state'sdata
     pub fn new(
         id: u8,
         extensions_manager: ExtensionsManager,
@@ -206,7 +225,7 @@ impl State {
             .collect::<Vec<String>>()
     }
 
-    // Merge a new state data
+    /// Merge a new state data
     pub async fn update(&mut self, new_data: StateData) {
         let data_has_changed = new_data != self.data;
 
@@ -229,7 +248,7 @@ impl State {
         }
     }
 
-    // Return all the registered language server builders
+    /// Return all the registered language server builders
     pub async fn get_all_language_server_builders(&self) -> Vec<LanguageServerBuilderInfo> {
         let mut list = vec![];
         let language_server_builders = self.language_server_builders.values();
@@ -241,6 +260,7 @@ impl State {
         list
     }
 
+    /// Return all the registered terminal shell builders
     pub async fn get_terminal_shell_builders(&self) -> Vec<TerminalShellBuilderInfo> {
         let mut list = vec![];
         let shell_builders = self.terminal_shell_builders.values();
@@ -252,6 +272,7 @@ impl State {
         list
     }
 
+    /// Create a new terminal shell from a builder ID
     pub async fn create_terminal_shell(
         &mut self,
         terminal_shell_builder_id: String,
@@ -263,7 +284,7 @@ impl State {
             let shell_builder = shell_builder.lock().await;
             let shell = shell_builder.build(&terminal_shell_id);
             self.terminal_shells
-                .insert(terminal_shell_id, Arc::new(shell));
+                .insert(terminal_shell_id.to_string(), Arc::new(shell));
         } else {
             warn!(
                 "Could not create a terminal shell, missing builder with id <{}>",
@@ -272,6 +293,7 @@ impl State {
         }
     }
 
+    /// Write data to a terminal shell
     pub async fn write_to_terminal_shell(&self, terminal_shell_id: String, data: String) {
         let shell = self.terminal_shells.get(&terminal_shell_id);
         if let Some(shell) = shell {
@@ -285,15 +307,18 @@ impl State {
         }
     }
 
+    /// Terminate a terminal shell
     pub async fn close_terminal_shell(&mut self, terminal_shell_id: String) {
         self.terminal_shells.remove(&terminal_shell_id);
     }
 
+    /// Resize a terminal shell
     pub async fn resize_terminal_shell(&mut self, terminal_shell_id: String, cols: i32, rows: i32) {
         let shell = self.terminal_shells.get(&terminal_shell_id).unwrap();
         shell.resize(cols, rows).await;
     }
 
+    /// Create a Language Server instance from a Builder ID
     pub async fn create_language_server(&mut self, language_server_builder_id: String) {
         let language_server_builder = self
             .language_server_builders
@@ -313,6 +338,7 @@ impl State {
         }
     }
 
+    /// Write to a Language Server instance
     pub async fn write_to_language_server(&mut self, language_server_id: String, data: String) {
         let language_server = self.language_servers.get(&language_server_id);
         if let Some(language_server) = language_server {
@@ -326,6 +352,7 @@ impl State {
         }
     }
 
+    /// Terminate to a Language Server instance
     pub async fn unload_language_server(&mut self, language_server_builder_id: &str) {
         self.language_server_builders
             .remove(language_server_builder_id);

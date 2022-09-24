@@ -48,7 +48,7 @@ fn open_window(
             set_shadow(&window, true).unwrap();
 
             // Forward messages from the webview to the core
-            window.listen("to_core", move |event| {
+            window.listen("core_tx", move |event| {
                 let sender_to_handler = sender_to_handler.clone();
                 let event_payload = event.payload();
 
@@ -158,7 +158,8 @@ fn setup_logger() {
     tracing::subscriber::set_global_default(subscriber).expect("Unable to set global subscriber");
 }
 
-// Dummy token
+// Graviton Desktop is fully local therefore doesn't need authentication which the Core
+// could have needed if it was running remotely. So, this is a useless token.
 static TOKEN: &str = "graviton_token";
 static STATE_ID: u8 = 1;
 
@@ -166,7 +167,7 @@ static STATE_ID: u8 = 1;
 async fn main() -> anyhow::Result<()> {
     setup_logger();
 
-    let (to_core, from_core) = channel::<ClientMessages>(10000);
+    let (core_tx, core_rx) = channel::<ClientMessages>(10000);
 
     let context = tauri::generate_context!("tauri.conf.json");
 
@@ -180,7 +181,7 @@ async fn main() -> anyhow::Result<()> {
     let (settings_path, settings_file_path) = settings_paths?;
 
     let mut extensions_manager =
-        ExtensionsManager::new(to_core.clone(), Some(settings_path.clone()));
+        ExtensionsManager::new(core_tx.clone(), Some(settings_path.clone()));
 
     let third_party_extensions_path = get_extensions_installation_path(&context);
 
@@ -240,11 +241,11 @@ async fn main() -> anyhow::Result<()> {
     let (local_handler, client, to_local) = LocalHandler::new(states.clone(), to_webview);
     let local_handler: Box<dyn TransportHandler + Send + Sync> = Box::new(local_handler);
 
-    let config = Configuration::new(local_handler, to_core, from_core);
+    let config = Configuration::new(local_handler, core_tx, core_rx);
 
-    let core = Server::new(config, states);
+    let mut server = Server::new(config, states);
 
-    core.run().await;
+    server.run().await;
 
     // Open the window
     let res = open_window(context, client, to_local, from_handler);

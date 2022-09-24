@@ -41,12 +41,12 @@ pub struct Server {
 ///    # Mutex
 /// # };
 ///  # tokio_test::block_on(async {
-///  let (to_server, from_server) = channel::<ClientMessages>(1);
+///  let (server_tx, server_rx) = channel::<ClientMessages>(1);
 ///
 ///  // A pointer to a StatesList
 ///  let states = {
 ///     // A basic State with ID '1' and no extensions
-///     let sample_state = State::new(1, ExtensionsManager::new(to_server.clone(), None), Box::new(MemoryPersistor::new()));
+///     let sample_state = State::new(1, ExtensionsManager::new(server_tx.clone(), None), Box::new(MemoryPersistor::new()));
 ///
 ///     // A StatesList with the previous state
 ///     let states = StatesList::new()
@@ -59,10 +59,10 @@ pub struct Server {
 ///  let http_handler = HTTPHandler::builder().build();
 ///
 ///  // Create the configuration
-///  let config = Configuration::new(Box::new(http_handler), to_server, from_server);
+///  let config = Configuration::new(Box::new(http_handler), server_tx, server_rx);
 ///
 ///  // Create a server
-///  let server = Server::new(config, states);
+///  let mut server = Server::new(config, states);
 ///
 ///  // Run the Server
 ///  server.run();
@@ -78,15 +78,15 @@ impl Server {
     /// * `states`   - The States list the Server will launch with
     ///
     pub fn new(mut config: Configuration, states: Arc<Mutex<StatesList>>) -> Self {
-        let receiver = config.from_server.take();
+        let server_rx = config.server_rx.take();
         let handler = config.handler.clone();
         let states_list = states.clone();
 
         // Listen messages incoming from the handler
         tokio::spawn(async move {
-            if let Some(mut receiver) = receiver {
+            if let Some(mut server_rx) = server_rx {
                 loop {
-                    if let Some(message) = receiver.recv().await {
+                    if let Some(message) = server_rx.recv().await {
                         Self::process_message(states_list.clone(), message, handler.clone()).await;
                     }
                 }
@@ -96,13 +96,13 @@ impl Server {
         Self { config, states }
     }
 
-    /// Run the configuyred handler
-    pub async fn run(&self) {
+    /// Run the Server with the conigured handler
+    pub async fn run(&mut self) {
         let states = self.states.clone();
         let mut handler = self.config.handler.lock().await;
 
         handler
-            .run(states.clone(), self.config.to_server.clone())
+            .run(states.clone(), self.config.server_tx.take().unwrap())
             .await;
     }
 
@@ -110,7 +110,7 @@ impl Server {
     ///
     /// # Arguments
     ///
-    /// * `states`   - The States list the Server will launch with
+    /// * `states`   - The configured States list
     /// * `message`  - The message to process
     /// * `handler`  - The transport handler
     ///

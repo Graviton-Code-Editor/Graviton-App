@@ -79,14 +79,14 @@ mod tests {
 
     #[tokio::test]
     async fn json_rpc_works() {
-        let (core_sender, _) = channel(1);
-        let (client_sender, _) = channel(1);
+        let (server_tx, _) = channel(1);
+        let (client_tx, _) = channel(1);
 
         // Sample StatesList
         let states = {
             let sample_state = State::new(
                 1,
-                ExtensionsManager::new(core_sender.clone(), None),
+                ExtensionsManager::new(server_tx.clone(), None),
                 Box::new(MemoryPersistor::new()),
             );
 
@@ -97,7 +97,7 @@ mod tests {
         };
 
         // Crate the local handler
-        let (_, client, _) = LocalHandler::new(states, client_sender);
+        let (_, client, _) = LocalHandler::new(states, client_tx);
 
         // Use the client to call JSON RPC Methods
         let res = client

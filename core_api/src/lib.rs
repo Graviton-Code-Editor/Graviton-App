@@ -16,7 +16,7 @@ pub use tokio::sync::Mutex;
 pub use {serde, tokio};
 
 /// Global errors enum
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq)]
 pub enum Errors {
     StateNotFound,
     Fs(FilesystemErrors),

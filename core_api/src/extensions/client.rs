@@ -5,7 +5,6 @@ use tokio::sync::mpsc::Sender;
 use tokio::sync::Mutex;
 
 use crate::messaging::ClientMessages;
-use crate::tokio::sync::mpsc::Sender as AsyncSender;
 
 use super::settings::ExtensionSettings;
 use uuid::Uuid;
@@ -22,10 +21,11 @@ pub enum EventActions {
     Nothing,
 }
 
+/// Client for the Core and the frontend, for extensions
 #[derive(Clone)]
 pub struct ExtensionClient {
     pub name: String,
-    sender: AsyncSender<ClientMessages>,
+    sender: Sender<ClientMessages>,
     settings_path: Option<PathBuf>,
     pub event_actions: Arc<Mutex<Vec<EventActions>>>,
 }
@@ -34,7 +34,7 @@ impl ExtensionClient {
     pub fn new(
         extension_id: &str,
         name: &str,
-        sender: AsyncSender<ClientMessages>,
+        sender: Sender<ClientMessages>,
         settings_path: Option<PathBuf>,
     ) -> Self {
         Self {

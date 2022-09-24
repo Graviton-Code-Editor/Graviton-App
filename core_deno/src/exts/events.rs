@@ -12,7 +12,7 @@ use crate::WorkerHandle;
 
 /// Listen messages from Core in Deno
 #[op]
-async fn op_listen_messages_from_core(
+async fn op_listen_messages_core_rx(
     state: Rc<RefCell<OpState>>,
     event_name: String,
     _: (),
@@ -39,7 +39,7 @@ async fn op_listen_messages_from_core(
 
 /// Send messages from Deno to Core
 #[op]
-async fn op_send_message_to_core(
+async fn op_send_message_core_tx(
     state: Rc<RefCell<OpState>>,
     msg: ClientMessages,
     _: (),
@@ -85,8 +85,8 @@ pub fn new(
 ) -> Extension {
     Extension::builder()
         .ops(vec![
-            op_send_message_to_core::decl(),
-            op_listen_messages_from_core::decl(),
+            op_send_message_core_tx::decl(),
+            op_listen_messages_core_rx::decl(),
             op_terminate_main_worker::decl(),
         ])
         .state(move |s| {

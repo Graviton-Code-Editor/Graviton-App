@@ -26,7 +26,9 @@ use super::TransportHandler;
 
 /// HTTP Transport Builder, used to create an instance of the implementation
 pub struct HTTPHandlerBuilder {
+    /// Cors configuration
     cors: DomainsValidation<AccessControlAllowOrigin>,
+    /// Port in which to run the HTTP Server
     port: u16,
 }
 
@@ -76,7 +78,7 @@ type SocketsRegistry = Arc<Mutex<BTreeMap<u8, Arc<Mutex<WebSocket>>>>>;
 /// WebSockets middleware for HTTP JSON RPC
 struct WebSocketsMiddleware {
     sockets: SocketsRegistry,
-    server_sender: Sender<ClientMessages>,
+    server_tx: Sender<ClientMessages>,
     states: Arc<Mutex<StatesList>>,
 }
 
@@ -97,11 +99,11 @@ impl RequestMiddleware for WebSocketsMiddleware {
                 if hyper_tungstenite::is_upgrade_request(&request) {
                     let (response, websocket) = hyper_tungstenite::upgrade(request, None).unwrap();
                     let sockets = self.sockets.clone();
-                    let server_sender = self.server_sender.clone();
+                    let server_tx = self.server_tx.clone();
 
                     // Handle the WebSocket connection
                     tokio::spawn(async move {
-                        Self::handle_ws(sockets.clone(), server_sender.clone(), websocket).await;
+                        Self::handle_ws(sockets.clone(), server_tx.clone(), websocket).await;
                     });
 
                     // Return the response so the spawned future can continue.
@@ -119,16 +121,16 @@ impl WebSocketsMiddleware {
     /// Authenticate the Websocket by querying the URL
     ///
     /// * `sockets` - Active sockets
-    /// * `server_sender`  - A sender to communicate to the Server
+    /// * `server_tx`  - A sender to communicate to the Server
     /// * `states`  - A States list
     pub fn new(
         sockets: SocketsRegistry,
-        server_sender: Sender<ClientMessages>,
+        server_tx: Sender<ClientMessages>,
         states: Arc<Mutex<StatesList>>,
     ) -> Self {
         Self {
             sockets,
-            server_sender,
+            server_tx,
             states,
         }
     }
@@ -169,11 +171,11 @@ impl WebSocketsMiddleware {
     /// Handles a WebSockets connection
     ///
     /// * `states` - The list of registered States
-    /// * `server_sender` - A Sender to communicate to the Server
+    /// * `server_tx` - A Sender to communicate to the Server
     /// * `websocket` - The Websockets connection
     pub async fn handle_ws(
         sockets: SocketsRegistry,
-        server_sender: Sender<ClientMessages>,
+        server_tx: Sender<ClientMessages>,
         websocket: HyperWebsocket,
     ) {
         let websocket = websocket.await.unwrap();
@@ -189,7 +191,7 @@ impl WebSocketsMiddleware {
                         sockets.lock().await.insert(state_id, sender.clone());
                     }
                     // Forward the message to the Server
-                    server_sender.send(message).await.unwrap();
+                    server_tx.send(message).await.unwrap();
                 } else {
                     error!("Received non-JSON WebSockets message: {}", text_message);
                 }
@@ -248,11 +250,11 @@ impl HTTPHandler {
     async fn run_server(
         &mut self,
         states: Arc<Mutex<StatesList>>,
-        server_sender: Sender<ClientMessages>,
+        server_tx: Sender<ClientMessages>,
     ) {
-        // Create a WebSockets Middleware which acts as Middleware
+        // Create a WebSockets Middleware which acts as authenticator
         let ws_middleware =
-            WebSocketsMiddleware::new(self.sockets.clone(), server_sender, states.clone());
+            WebSocketsMiddleware::new(self.sockets.clone(), server_tx, states.clone());
 
         // Create the HTTP JSON RPC server
         let mut http_io = IoHandler::default();
@@ -286,8 +288,8 @@ impl Drop for HTTPHandler {
 
 #[async_trait]
 impl TransportHandler for HTTPHandler {
-    async fn run(&mut self, states: Arc<Mutex<StatesList>>, server_sender: Sender<ClientMessages>) {
-        self.run_server(states, server_sender).await;
+    async fn run(&mut self, states: Arc<Mutex<StatesList>>, server_tx: Sender<ClientMessages>) {
+        self.run_server(states, server_tx).await;
     }
 
     async fn send(&self, message: ServerMessages) {
@@ -317,7 +319,7 @@ mod tests {
     async fn json_rpc_works() {
         // RUN THE SERVER
 
-        let (to_server, from_server) = channel::<ClientMessages>(1);
+        let (server_tx, server_rx) = channel::<ClientMessages>(1);
 
         let states = {
             let sample_state = State::default();
@@ -331,9 +333,9 @@ mod tests {
 
         let http_handler = HTTPHandler::builder().build().wrap();
 
-        let config = Configuration::new(http_handler, to_server, from_server);
+        let config = Configuration::new(http_handler, server_tx, server_rx);
 
-        let server = Server::new(config, states);
+        let mut server = Server::new(config, states);
 
         server.run().await;
 

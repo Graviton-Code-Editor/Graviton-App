@@ -6,6 +6,7 @@ use super::Persistor;
 /// Useless for now
 #[derive(Clone, Default)]
 pub struct MemoryPersistor {
+    /// Persisted data
     data: StateData,
 }
 
@@ -19,7 +20,6 @@ impl Persistor for MemoryPersistor {
     fn load(&mut self) -> StateData {
         self.data.clone()
     }
-
     fn save(&mut self, data: &StateData) {
         self.data = data.clone();
     }
