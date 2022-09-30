@@ -1,0 +1,57 @@
+{
+    "code": "de",
+    "translation": {
+        "messages": {
+            "PickAShell": "Wählen Sie eine Shell",
+            "NoTabsOpenedMessage": "Tipp: Öffnen Sie den Globalen Prompt mit '{{hotkey}}'"
+        },
+        "popups":{
+            "AskSaveFile":{
+                "title": "Möchten Sie die Änderungen in {{file_path}} speichern?",
+                "content": "Sollten Sie ablehnen, gehen wichtige Änderungen möglicherweise verloren."
+            }
+        },
+        "tabs":{
+            "Welcome":{
+                "title": "Wilkommen",
+                "content": "Sie verwenden derzeit eine Pre-Alpha-Version von Graviton, erwarten Sie bugs oder unvollständige Features."
+            }
+        },
+        "prompts":{
+            "NoResults":"Es wuden keine Ergebnisse gefunden.",
+            "Global":{
+                "OpenWelcome": "Wilkommen öffnen",
+                "OpenSettings": "Einstellugen öffen",
+                "OpenFolder": "Ordner öffnen",
+                "AddFolder": "Ordner hinzufügen",
+                "OpenFile": "Datei öffnen",
+                "OpenTerminal": "Terminal öffnen"
+            }
+        },
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Horizontal teilen",
+                "SplitVertically": "Vertikal teilen"
+            }
+        },
+        "notifications": {
+            "EditorCompatibleNotFound": "Keine Kompatiblen Editor gefunden.",
+            "ErrorWhileReadingFile": "Beim lesen von {{file}} ist ein Fehler aufgetreten.",
+            "UnknownError": "Unbekannter Fehler",
+            "TerminalShellUnstable": {
+                "title": "Instabiles Feature",
+                "content": "Terminals sind noch sehr instabil. Seien Sie vorsichtig."
+            }
+        },
+        "Contribute": "Mitwirken",
+        "Report issues": "Fehler melden",
+        "Save": "Speichern",
+        "Don't save": "Nich speichern",
+        "Cancel": "Abbrechen",
+        "Close": "Schließen",
+        "License": "Lizenz",
+        "Dismiss": "Schließen",
+        "CopyPath": "Pfad kopieren",
+        "Open": "Öffnen"
+    }
+}
