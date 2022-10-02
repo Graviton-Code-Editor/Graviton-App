@@ -1,0 +1,57 @@
+{
+    "code": "cs",
+    "translation": {
+        "messages": {
+            "PickAShell": "Zvolte shell",
+            "NoTabsOpenedMessage": "Tip: Otevřete globální příkazový řádek pomocí klávesy '{{hotkey}}'"
+        },
+        "popups":{
+            "AskSaveFile":{
+                "title": "Chcete uložit změny do souboru {{file_path}}?",
+                "content": "Pokud odmítnete, důležité změny mohou být ztraceny."
+            }
+        },
+        "tabs":{
+            "Welcome":{
+                "title": "Vítejte",
+                "content": "Momentálně používáte aplikaci Graviton před verzí alfa. Můžete narazit na chyby či nedodělané funkce."
+            }
+        },
+        "prompts":{
+            "NoResults":"Žádné výsledky nebyly nalezeny",
+            "Global":{
+                "OpenWelcome": "Otevřít uvítací kartu",
+                "OpenSettings": "Otevřít nastavení",
+                "OpenFolder": "Otevřít složku",
+                "AddFolder": "Přidat složku",
+                "OpenFile": "Přidat soubor",
+                "OpenTerminal": "Otevřít terminál"
+            }
+        },
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Rozdělit vodorovně",
+                "SplitVertically": "Rozdělit svisle"
+            }
+        },
+        "notifications": {
+            "EditorCompatibleNotFound": "Kompatibilní editor nebyl nalezen",
+            "ErrorWhileReadingFile": "Chyba při čtení souboru {{file}}",
+            "UnknownError": "Neznámá chyba",
+            "TerminalShellUnstable": {
+                "title": "Nestabilní funkce",
+                "content": "Terminály jsou stále velmi nestabilní. Postupujte obezřetně."
+            }
+        },
+        "Contribute": "Přispět",
+        "Report issues": "Ohlásit chyby",
+        "Save": "Uložit",
+        "Don't save": "Neukládat",
+        "Cancel": "Zrušit",
+        "Close": "Zavřít",
+        "License": "Licence",
+        "Dismiss": "Zavřít",
+        "CopyPath": "Zkopírovat cestu",
+        "Open": "Otevřít"
+    }
+}
