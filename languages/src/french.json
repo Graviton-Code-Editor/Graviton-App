@@ -1,0 +1,57 @@
+{
+    "code": "fr",
+    "translation": {
+        "messages": {
+            "PickAShell": "Choisissez un interpréteur de commande",
+            "NoTabsOpenedMessage": "Astuce: Ouvrez l'invite de commande avec '{{hotkey}}'"
+        },
+        "popups":{
+            "AskSaveFile":{
+                "title": "Voulez-vous enregistrer les modifications dans le fichier {{file_path}} ?",
+                "content": "Des modifications importantes pourront être perdues si vous déclinez."
+            }
+        },
+        "tabs":{
+            "Welcome":{
+                "title": "Bienvenue",
+                "content": "Vous utilisez actuellement une version en pre-Alpha de Graviton, des bugs et des fonctionnalités incomplètes peuvent être présentes."
+            }
+        },
+        "prompts":{
+            "NoResults":"Pas de résultats trouvés",
+            "Global":{
+                "OpenWelcome": "Ouvrir la page d'accueil",
+                "OpenSettings": "Ouvrir les paramètres",
+                "OpenFolder": "Ouvrir un dossier",
+                "AddFolder": "Ajouter un dossier",
+                "OpenFile": "Ouvrir un fichier",
+                "OpenTerminal": "Ouvrir un terminal"
+            }
+        },
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Séparer horizontalement",
+                "SplitVertically": "Séparer verticalement"
+            }
+        },
+        "notifications": {
+            "EditorCompatibleNotFound": "Editeur compatible non trouvé",
+            "ErrorWhileReadingFile": "Erreur lors de la lecture du fichier {{file}}",
+            "UnknownError": "Erreur inconnue",
+            "TerminalShellUnstable": {
+                "title": "Fonctionnalité instable",
+                "content": "Les termninaux sont toujours très instables. Procédez avec précaution."
+            }
+        },
+        "Contribute": "Contributer",
+        "Report issues": "Signaler un problème",
+        "Save": "Sauvegarder",
+        "Don't save": "Ne pas sauvegarder",
+        "Cancel": "Annuler",
+        "Close": "Fermer",
+        "License": "Licence",
+        "Dismiss": "Rejeter",
+        "CopyPath": "Copier le chemin",
+        "Open": "Ouvrir"
+    }
+}
