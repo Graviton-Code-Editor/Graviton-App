@@ -4,6 +4,7 @@
   "license": "MIT",
   "exports": {
     "./english": "./src/english.json",
-    "./indonesian": "./src/indonesian.json"
+    "./indonesian": "./src/indonesian.json",
+    "./czech": "./src/czech.json"
   }
 }
