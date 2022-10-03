@@ -5,6 +5,7 @@
   "exports": {
     "./english": "./src/english.json",
     "./indonesian": "./src/indonesian.json",
-    "./czech": "./src/czech.json"
+    "./czech": "./src/czech.json",
+    "./french": "./src/french.json"
   }
 }
