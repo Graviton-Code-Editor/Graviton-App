@@ -6,6 +6,7 @@
     "./english": "./src/english.json",
     "./indonesian": "./src/indonesian.json",
     "./czech": "./src/czech.json",
+    "./german": "./src/german.json",
     "./french": "./src/french.json"
   }
 }
