@@ -1,6 +1,10 @@
 {
     "code": "id",
     "translation": {
+        "messages": {
+            "PickAShell": "Pilih shell",
+            "NoTabsOpenedMessage": "Tip: Buka prompt global dengan menekan '{{hotkey}}'"
+        },
         "Open Folder": "Buka Folder",
         "popups":{
             "AskSaveFile":{
@@ -18,13 +22,36 @@
             "Global":{
                 "OpenWelcome": "Buka kedatangan",
                 "OpenSettings": "Buka pengaturan",
-                "OpenFolder": "Buka folder"
+                "OpenFolder": "Buka folder",
+                "AddFolder": "Tambah folder",
+                "OpenFile": "Buka file",
+                "OpenTerminal": "Buka terminal"
             }
         },
-        "Contribute": "Berkontribusi",
-        "Report issues": "Laporkan issues",
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Pisah secara horizontal",
+                "SplitVertically": "Pisah secara vertikal"
+            }
+        },
+        "notifications": {
+            "EditorCompatibleNotFound": "Editor kompatibel tidak ditemukan",
+            "ErrorWhileReadingFile": "Ada masalah membaca {{file}}",
+            "UnknownError": "Error tidak diketahui",
+            "TerminalShellUnstable": {
+                "title": "Fitur instabil",
+                "content": "Fitur terminal ini masih instabil. Berhati-hatilah memakainya"
+            }
+        },
+        "Contribute": "Kontribusi",
+        "Report issues": "Laporkan masalah",
         "Save": "Simpan",
         "Don't save": "Jangan simpan",
-        "Cancel": "Batal"
+        "Cancel": "Batal",
+        "Close": "Tutup",
+        "License": "Lisensi",
+        "Dismiss": "Abaikan",
+        "CopyPath": "Salin Path",
+        "Open": "Buka"
     }
 }
