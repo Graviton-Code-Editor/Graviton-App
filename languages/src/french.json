@@ -8,7 +8,7 @@
         "popups":{
             "AskSaveFile":{
                 "title": "Voulez-vous enregistrer les modifications dans le fichier {{file_path}} ?",
-                "content": "Des modifications importantes pourront être perdues si vous déclinez."
+                "content": "Des modifications importantes pourraient être perdues si vous déclinez."
             }
         },
         "tabs":{
@@ -18,7 +18,7 @@
             }
         },
         "prompts":{
-            "NoResults":"Pas de résultats trouvés",
+            "NoResults":"Aucun résultat trouvé",
             "Global":{
                 "OpenWelcome": "Ouvrir la page d'accueil",
                 "OpenSettings": "Ouvrir les paramètres",
@@ -35,7 +35,7 @@
             }
         },
         "notifications": {
-            "EditorCompatibleNotFound": "Editeur compatible non trouvé",
+            "EditorCompatibleNotFound": "Aucun  éditeur compatible trouvé",
             "ErrorWhileReadingFile": "Erreur lors de la lecture du fichier {{file}}",
             "UnknownError": "Erreur inconnue",
             "TerminalShellUnstable": {
@@ -43,7 +43,7 @@
                 "content": "Les termninaux sont toujours très instables. Procédez avec précaution."
             }
         },
-        "Contribute": "Contributer",
+        "Contribute": "Contribuer",
         "Report issues": "Signaler un problème",
         "Save": "Sauvegarder",
         "Don't save": "Ne pas sauvegarder",
