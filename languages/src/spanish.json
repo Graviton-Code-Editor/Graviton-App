@@ -31,7 +31,7 @@
         "contextMenus": {
             "panels": {
                 "SplitHorizontally": "Dividir horizontalmente",
-                "SplitVertically": "Dividir1 verticalmente"
+                "SplitVertically": "Dividir verticalmente"
             }
         },
         "notifications": {
@@ -40,7 +40,7 @@
             "UnknownError": "Error desconocido",
             "TerminalShellUnstable": {
                 "title": "Funcionalidad inestable",
-                "content": "Los terminales siguen siendo muy inestables. Proceda con precaución1."
+                "content": "Las terminales siguen siendo muy inestables. Proceda con precaución."
             }
         },
         "Contribute": "Contribuir",
