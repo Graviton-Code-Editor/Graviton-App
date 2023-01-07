@@ -1,0 +1,57 @@
+{
+    "code": "es",
+    "translation": {
+        "messages": {
+            "PickAShell": "Elija un intérprete de comandos",
+            "NoTabsOpenedMessage": "Sugerencia: Abra el símbolo del sistema con '{{hotkey}}'"
+        },
+        "popups": {
+            "AskSaveFile": {
+                "title": "¿Quieres guardar los cambios en el archivo {{file_path}} ?",
+                "content": "Los cambios importantes podrían perderse si los rechaza."
+            }
+        },
+        "tabs": {
+            "Welcome": {
+                "title": "Bienvenido",
+                "content": "Actualmente está utilizando una versión pre-Alpha de Graviton, es posible que haya errores y funciones incompletas."
+            }
+        },
+        "prompts": {
+            "NoResults": "Ningún resultado encontrado",
+            "Global": {
+                "OpenWelcome": "Abrir la página de bienvenida",
+                "OpenSettings": "Abrir la configuración",
+                "OpenFolder": "Abrir una carpeta",
+                "AddFolder": "Añadir una carpeta",
+                "OpenFile": "Abrir un fichero",
+                "OpenTerminal": "Abrir un terminal"
+            }
+        },
+        "contextMenus": {
+            "panels": {
+                "SplitHorizontally": "Dividir horizontalmente",
+                "SplitVertically": "Dividir1 verticalmente"
+            }
+        },
+        "notifications": {
+            "EditorCompatibleNotFound": "No sé encontró ningún editor compatible",
+            "ErrorWhileReadingFile": "Error al leer el archivo {{file}}",
+            "UnknownError": "Error desconocido",
+            "TerminalShellUnstable": {
+                "title": "Funcionalidad inestable",
+                "content": "Los terminales siguen siendo muy inestables. Proceda con precaución1."
+            }
+        },
+        "Contribute": "Contribuir",
+        "Report issues": "Reportar un error",
+        "Save": "Guardar",
+        "Don't save": "No guardar",
+        "Cancel": "Cancelar",
+        "Close": "Cerrar",
+        "License": "Licencia",
+        "Dismiss": "Rechazar",
+        "CopyPath": "Copiar la ruta",
+        "Open": "Abrir"
+    }
+}
