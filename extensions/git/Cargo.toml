@@ -9,6 +9,6 @@ license = "MIT"
 
 [dependencies]
 gveditor-core-api  = { path = "../../core_api"}
-git2 = "0.13.25"
+git2 = "0.16.1"
 serde_json = "1.0.79"
 serde = { version = "1.0.136", features = ["derive"] }
