@@ -19,6 +19,7 @@ git clone https://github.com/Graviton-Code-Editor/Graviton-App.git --depth 1
 
 - `master`: Daily changes (default)
 - `stable`: Stable branch, but, does't mean it's released
+- `2.3.0`: Old Graviton Source Code
 - `1.3.0`: Old Graviton Source Code
 
 ## Setuping
@@ -29,10 +30,24 @@ Go inside the folder:
 cd Graviton-App
 ```
 
-Install the dependencies:
+Since node v17, there have been a few breaking changes. As a workaround, use some of the commands below.
+
+Setup environment variables (workaround):
+
+```
+// Unix-like
+export NODE_OPTIONS=--openssl-legacy-provider
+// Powershell
+$env:NODE_OPTIONS = "--openssl-legacy-provider"
+// CMD
+set NODE_OPTIONS=--openssl-legacy-provider
+```
+
+Install the dependencies using npm:
 
 ```shell
-yarn
+// Use npm instead of yarn for the flags.
+npm install --openssl_fips='' --legacy-peer-deps
 ```
 
 ## Developing (optional)
