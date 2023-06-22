@@ -19,6 +19,7 @@
             }
         },
         "prompts":{
+            "NoResults":"Tidak ada hasil yang ditemukan.",
             "Global":{
                 "OpenWelcome": "Buka kedatangan",
                 "OpenSettings": "Buka pengaturan",
